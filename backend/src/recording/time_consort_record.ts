@@ -7,7 +7,7 @@
  * Shared readers only establish data shape; historical success and failure
  * prefixes, causal cursors and feature-specific policy checks remain unchanged.
  */
-import { isTimeConsortPreset } from "@ai-werewolf-arena/game-text";
+import { isTimeConsortPreset } from "../verification/board-support";
 import {
   readTimeConsortChoiceFact,
   readTimeConsortSkipFact,

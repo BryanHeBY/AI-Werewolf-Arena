@@ -1,6 +1,14 @@
+/**
+ * Responsibility: assemble the existing World, role mechanisms and game runtime.
+ * Input: validated BoardConfig and explicit setup options; output: the original
+ * initialized game with its installed components, stage and tool contributions.
+ * Bootstrap owns initial assembly, never transport authentication or player
+ * decisions. Rulesets reject unsupported combinations before setup continues;
+ * role owners retain runtime resources and original component identities.
+ */
 import { installNobleBodyAuthority } from "../game/mechanisms/roles/noble_secret_body/authority";
 import { installAnimalAuthority } from "../game/mechanisms/roles/animal_dream/authority";
-import { boardPresetViolation } from "../game/mechanisms/roles/board_presets";
+import { boardPresetViolation } from "../rulesets";
 import { installRadiantEclipseBoard } from "../game/mechanisms/roles/radiant_eclipse/night_frame";
 import { installMistRavenBoard } from "../game/mechanisms/roles/mist_raven/night_frame";
 import { installScholarMentorBoard } from "../game/mechanisms/roles/scholar_mentor/night_frame";

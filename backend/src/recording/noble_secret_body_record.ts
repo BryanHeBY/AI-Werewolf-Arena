@@ -5,7 +5,7 @@
  * Boundary: runtime leases and actual protection state are not granted or written here.
  */
 import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
-import { isNobleSecretBodyPreset } from "@ai-werewolf-arena/game-text";
+import { isNobleSecretBodyPreset } from "../verification/board-support";
 import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
   readNobleSecretBodyFact,

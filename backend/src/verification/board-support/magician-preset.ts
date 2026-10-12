@@ -1,12 +1,23 @@
-import { copyEventData } from "./event-data";
+/**
+ * Responsibility: own the frozen archive support check for magician boards.
+ * Input: inert normalized board data from a replay archive; output: the finite
+ * supported-board verdict preserved from Git 80ce15f. Local verification owns
+ * this algorithm independently; it never calls production ruleset predicates,
+ * accepts raw configuration on schema alone, authorizes actions or writes state.
+ * Public contract supplies only inert copying, facts and stable policy IDs;
+ * Node ingress must reject hostile objects before this reader reflects data.
+ */
+import { isWolfSorcererPreset } from "./wolf-sorcerer-preset";
+import { isTricksterPreset } from "./trickster-preset";
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
 const deck: Readonly<Record<string, number>> = {
   wolf: 3,
-  eclipse_maid: 1,
+  wolf_king: 1,
   villager: 4,
   seer: 1,
-  radiant_count: 1,
-  dreamer: 1,
   witch: 1,
+  hunter: 1,
+  magician: 1,
 };
 function record(v: unknown): v is Record<string, unknown> {
   return !!v && typeof v === "object" && !Array.isArray(v);
@@ -18,21 +29,24 @@ function exact(v: unknown, expected: Record<string, unknown>): boolean {
     Object.entries(expected).every(([k, x]) => Object.hasOwn(v, k) && v[k] === x)
   );
 }
-/** Finite native twelve-player Radiant Count and Eclipse Maid board. */
-export function isRadiantEclipsePreset(input: unknown): boolean {
+/** Finite native twelve-player board; gun eligibility and night target mapping are independent. */
+export function isMagicianPreset(input: unknown): boolean {
+  if (isWolfSorcererPreset(input)) return true;
+  if (isTricksterPreset(input)) return true;
   try {
     const c = copyEventData(input);
     if (!record(c)) return false;
     const required = [
       "boardSize",
       "enableSheriff",
-      "radiantEclipse",
-      "dreamer",
-      "witch",
+      "magician",
+      "hunter",
+      "wolfKing",
       "roleSetups",
       "hooks",
       "selfDestruct",
       "seer",
+      "witch",
       "tieBreaker",
       "voting",
       "disclosure",
@@ -47,7 +61,18 @@ export function isRadiantEclipsePreset(input: unknown): boolean {
       c.enableSheriff !== true
     )
       return false;
-    if (!exact(c.radiantEclipse, { policy: "awa_radiant_eclipse_v1" })) return false;
+    const m = c.magician;
+    if (
+      !record(m) ||
+      (m.firstNight !== 1 && m.firstNight !== 2) ||
+      (m.deathShotTargetPolicy !== "original" && m.deathShotTargetPolicy !== "exchanged") ||
+      !exact(m, {
+        policy: "awa_magician_wolf_king_v1",
+        firstNight: m.firstNight,
+        deathShotTargetPolicy: m.deathShotTargetPolicy,
+      })
+    )
+      return false;
     if (!Array.isArray(c.roleSetups) || c.roleSetups.length !== Object.keys(deck).length)
       return false;
     const seen = new Set<string>();
@@ -72,17 +97,17 @@ export function isRadiantEclipsePreset(input: unknown): boolean {
     )
       return false;
     if (
-      !exact(c.dreamer, {
-        protectionPolicy: "netease_2026_night_immunity_v1",
+      !exact(c.hunter, { deathActionPolicy: "awa_qualified_sources_v1" }) ||
+      (!exact(c.wolfKing, { deathActionPolicy: "awa_qualified_sources_v1" }) &&
+        !exact(c.wolfKing, { deathActionPolicy: "awa_day_deaths_v1" })) ||
+      !exact(c.seer, {
+        targetPolicy: "awa_alive_v1",
+        actionPolicy: "awa_required_when_legal_v1",
       }) ||
       !exact(c.witch, {
         canSelfHeal: "disabled",
         knifeVisibility: "awa_with_heal_v1",
         potionPolicy: "awa_one_native_v1",
-      }) ||
-      !exact(c.seer, {
-        targetPolicy: "awa_alive_v1",
-        actionPolicy: "awa_required_when_legal_v1",
       }) ||
       !exact(c.voting, { exilePolicy: "awa_one_pk_v1" }) ||
       !exact(c.disclosure, { deathRevealPolicy: "awa_hidden_v1" }) ||
@@ -115,7 +140,7 @@ export function isRadiantEclipsePreset(input: unknown): boolean {
     return (
       w.length === 2 &&
       new Set(w).size === 2 &&
-      w.every((x) => ["on_pre_election", "on_pre_vote"].includes(x as string))
+      w.every((x) => x === "on_pre_election" || x === "on_pre_vote")
     );
   } catch {
     return false;

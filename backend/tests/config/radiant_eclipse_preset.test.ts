@@ -1,5 +1,12 @@
+/**
+ * Integration/scenario tests for radiant eclipse preset configuration and setup contracts.
+ * Input: the existing literal boards, original scenario actions and malformed
+ * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
+ * Fixed policies, recorded literal expectations and rejection cases are the
+ * oracle; these tests never generate replacement goldens from migrated rules.
+ */
 import { expect, test } from "bun:test";
-import { isRadiantEclipsePreset } from "@ai-werewolf-arena/game-text";
+import { isRadiantEclipsePreset } from "../../src/rulesets";
 import { boardConfigSchema } from "../../src/core/domain/board_schema";
 import {
   boardDefinitionFromConfig,

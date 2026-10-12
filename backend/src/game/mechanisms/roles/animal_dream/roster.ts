@@ -1,9 +1,14 @@
+/**
+ * Responsibility: validate the original finite animal-dream roster and scopes.
+ * Input: normalized board and original World/role identities; output: typed
+ * roster snapshots and current membership checks used by the feature owner.
+ * Node ingress rejects hostile objects before reflection. Runtime original-life
+ * ownership remains distinct from serialized seat data; this reader never pays
+ * effects or grants action authority merely from a copied roster.
+ */
 import { types } from "node:util";
-import {
-  isAnimalDreamPreset,
-  type CatSkippedVotePolicy,
-  type PufferBallotPolicy,
-} from "@ai-werewolf-arena/game-text";
+import { isAnimalDreamPreset } from "../../../../rulesets";
+import { type CatSkippedVotePolicy, type PufferBallotPolicy } from "@ai-werewolf-arena/game-text";
 import type { RoleId } from "@ai-werewolf-arena/game-catalog";
 import type { World } from "../../../../core/domain/world";
 import { Camp } from "../../../../core/domain/identity";

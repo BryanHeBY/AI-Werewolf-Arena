@@ -7,7 +7,7 @@
  * Shared readers only establish data shape; historical success and failure
  * prefixes, causal cursors and feature-specific policy checks remain unchanged.
  */
-import { isScholarMentorPreset } from "@ai-werewolf-arena/game-text";
+import { isScholarMentorPreset } from "../verification/board-support";
 import {
   readModifierChoiceFact,
   readModifierSkipFact,

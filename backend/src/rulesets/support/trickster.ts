@@ -1,40 +1,45 @@
-import { copyEventData } from "./event-data";
-import { FRAGRANT_PAIR_POLICY } from "./fragrant-pair-seer";
-
+/**
+ * Owns the existing finite trickster composition predicate for production setup.
+ * Inputs are inert normalized board data; outputs are the original support
+ * verdict with unchanged field, deck, goal and policy checks. It never applies
+ * game effects, chooses an actor or authorizes a turn. Archive verification has
+ * a separately owned predicate and must not call this production implementation.
+ */
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
 const deck: Readonly<Record<string, number>> = {
   wolf: 3,
-  fragrant_phantom: 1,
+  trickster: 1,
   villager: 4,
-  awakened_seer: 1,
+  seer: 1,
   witch: 1,
-  hunter: 1,
-  guard: 1,
+  order_prince: 1,
+  magician: 1,
 };
-function record(value: unknown): value is Record<string, unknown> {
-  return !!value && typeof value === "object" && !Array.isArray(value);
+function record(v: unknown): v is Record<string, unknown> {
+  return !!v && typeof v === "object" && !Array.isArray(v);
 }
-function exact(value: unknown, expected: Record<string, unknown>): boolean {
+function exact(v: unknown, expected: Record<string, unknown>): boolean {
   return (
-    record(value) &&
-    Object.keys(value).length === Object.keys(expected).length &&
-    Object.entries(expected).every(
-      ([key, item]) => Object.hasOwn(value, key) && value[key] === item,
-    )
+    record(v) &&
+    Object.keys(v).length === Object.keys(expected).length &&
+    Object.entries(expected).every(([k, x]) => Object.hasOwn(v, k) && v[k] === x)
   );
 }
-/** Exact native twelve-player Fragrant Phantom / Awakened Seer policy, no learned or gifted mixtures. */
-export function isFragrantPairSeerPreset(input: unknown): boolean {
+/** Finite native twelve-player Trickster/Magician/Order Prince combination. */
+export function isTricksterPreset(input: unknown): boolean {
   try {
     const c = copyEventData(input);
     if (!record(c)) return false;
     const required = [
       "boardSize",
       "enableSheriff",
-      "fragrantPairSeer",
-      "guard",
+      "magician",
+      "trickster",
+      "orderPrince",
       "roleSetups",
       "hooks",
       "selfDestruct",
+      "seer",
       "witch",
       "tieBreaker",
       "voting",
@@ -42,22 +47,24 @@ export function isFragrantPairSeerPreset(input: unknown): boolean {
       "lastWords",
       "sheriff",
     ];
-    const allowed = [...required, "winCondition", "winConditions", "hunter"];
+    const allowed = [...required, "winCondition", "winConditions"];
     if (
-      !required.every((key) => Object.hasOwn(c, key)) ||
-      Object.keys(c).some((key) => !allowed.includes(key)) ||
+      !required.every((k) => Object.hasOwn(c, k)) ||
+      Object.keys(c).some((k) => !allowed.includes(k)) ||
       c.boardSize !== 12 ||
       c.enableSheriff !== true
     )
       return false;
+    const m = c.magician;
     if (
-      !exact(c.fragrantPairSeer, { policy: FRAGRANT_PAIR_POLICY }) ||
-      !exact(c.guard, { repeatPolicy: "netease_consecutive_nights_v1" })
-    )
-      return false;
-    if (
-      c.hunter !== undefined &&
-      !exact(c.hunter, { deathActionPolicy: "awa_qualified_sources_v1" })
+      !record(m) ||
+      m.firstNight !== 1 ||
+      m.deathShotTargetPolicy !== "original" ||
+      !exact(m, {
+        policy: "awa_magician_wolf_king_v1",
+        firstNight: m.firstNight,
+        deathShotTargetPolicy: m.deathShotTargetPolicy,
+      })
     )
       return false;
     if (!Array.isArray(c.roleSetups) || c.roleSetups.length !== Object.keys(deck).length)
@@ -84,6 +91,12 @@ export function isFragrantPairSeerPreset(input: unknown): boolean {
     )
       return false;
     if (
+      !exact(c.trickster, { policy: "awa_trickster_exile_v1" }) ||
+      !exact(c.orderPrince, { policy: "awa_order_prince_first_ballot_v1" }) ||
+      !exact(c.seer, {
+        targetPolicy: "awa_alive_v1",
+        actionPolicy: "awa_required_when_legal_v1",
+      }) ||
       !exact(c.witch, {
         canSelfHeal: "disabled",
         knifeVisibility: "awa_with_heal_v1",
@@ -116,11 +129,11 @@ export function isFragrantPairSeerPreset(input: unknown): boolean {
       !Array.isArray(c.selfDestruct.enabledWindows)
     )
       return false;
-    const windows = c.selfDestruct.enabledWindows;
+    const w = c.selfDestruct.enabledWindows;
     return (
-      windows.length === 2 &&
-      new Set(windows).size === 2 &&
-      windows.every((window: unknown) => window === "on_pre_election" || window === "on_pre_vote")
+      w.length === 2 &&
+      new Set(w).size === 2 &&
+      w.every((x) => x === "on_pre_election" || x === "on_pre_vote")
     );
   } catch {
     return false;

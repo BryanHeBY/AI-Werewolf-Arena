@@ -1,4 +1,13 @@
-import { copyEventData } from "./event-data";
+/**
+ * Responsibility: own the frozen archive support check for order-prince boards.
+ * Input: inert normalized board data from a replay archive; output: the finite
+ * supported-board verdict preserved from Git 80ce15f. Local verification owns
+ * this algorithm independently; it never calls production ruleset predicates,
+ * accepts raw configuration on schema alone, authorizes actions or writes state.
+ * Public contract supplies only inert copying, facts and stable policy IDs;
+ * Node ingress must reject hostile objects before this reader reflects data.
+ */
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import { isTricksterPreset } from "./trickster-preset";
 import { isTimeConsortPreset } from "./time-consort-preset";
 const policy = "awa_order_prince_first_ballot_v1";

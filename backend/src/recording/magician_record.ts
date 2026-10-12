@@ -9,7 +9,7 @@
  */
 import { readWolfSorcererExchangeFact } from "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer";
 import { readTricksterExchangeFact } from "@ai-werewolf-arena/game-contract/facts/trickster";
-import { isMagicianPreset } from "@ai-werewolf-arena/game-text";
+import { isMagicianPreset } from "../verification/board-support";
 import {
   readMagicianExchangeFact,
   readMagicianOwnExchangeFact,

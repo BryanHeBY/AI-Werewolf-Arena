@@ -1,3 +1,10 @@
+/**
+ * Integration/scenario tests for fragrant pair seer config stock configuration and setup contracts.
+ * Input: the existing literal boards, original scenario actions and malformed
+ * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
+ * Fixed policies, recorded literal expectations and rejection cases are the
+ * oracle; these tests never generate replacement goldens from migrated rules.
+ */
 import path from "node:path";
 import { recordFragrantLiteral } from "../support/fragrant_pair_seer_recording";
 import { test, expect } from "bun:test";
@@ -11,7 +18,7 @@ import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
 import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
 import { bootstrapGame } from "../../src/app/bootstrap";
 import { fragrantPairSeerTwelveConfig as config } from "../../src/runtime/scenarios/fragrant_pair_seer_twelve";
-import { isFragrantPairSeerPreset } from "@ai-werewolf-arena/game-text";
+import { isFragrantPairSeerPreset } from "../../src/rulesets";
 import { Role, Camp } from "../../src/core/domain/identity";
 import { COMPONENT } from "../../src/core/domain/components/names";
 import {

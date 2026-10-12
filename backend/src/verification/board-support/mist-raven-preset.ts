@@ -1,44 +1,46 @@
-import { copyEventData } from "./event-data";
-import { DEMON_HUNTER_POLICY } from "./demon-hunter";
-
+/**
+ * Responsibility: own the frozen archive support check for mist-raven boards.
+ * Input: inert normalized board data from a replay archive; output: the finite
+ * supported-board verdict preserved from Git 80ce15f. Local verification owns
+ * this algorithm independently; it never calls production ruleset predicates,
+ * accepts raw configuration on schema alone, authorizes actions or writes state.
+ * Public contract supplies only inert copying, facts and stable policy IDs;
+ * Node ingress must reject hostile objects before this reader reflects data.
+ */
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
 const deck: Readonly<Record<string, number>> = {
   wolf: 3,
-  night_noble: 1,
+  raven_claw_wolf: 1,
   villager: 4,
   seer: 1,
-  witch: 1,
-  demon_hunter: 1,
-  awakened_idiot: 1,
+  alchemist: 1,
+  dreamer: 1,
+  idiot: 1,
 };
-function record(value: unknown): value is Record<string, unknown> {
-  return !!value && typeof value === "object" && !Array.isArray(value);
+function record(v: unknown): v is Record<string, unknown> {
+  return !!v && typeof v === "object" && !Array.isArray(v);
 }
-function exact(value: unknown, expected: Record<string, unknown>): boolean {
+function exact(v: unknown, expected: Record<string, unknown>): boolean {
   return (
-    record(value) &&
-    Object.keys(value).length === Object.keys(expected).length &&
-    Object.entries(expected).every(
-      ([key, item]) => Object.hasOwn(value, key) && value[key] === item,
-    )
+    record(v) &&
+    Object.keys(v).length === Object.keys(expected).length &&
+    Object.entries(expected).every(([k, x]) => Object.hasOwn(v, k) && v[k] === x)
   );
 }
-/** Only four named twelve-seat noble/body policy combinations; never authorizes arbitrary DemonHunter mixtures. */
-export function isNobleSecretBodyPreset(input: unknown): boolean {
+/** Finite native twelve-player Alchemist and Raven Claw Wolf board. */
+export function isMistRavenPreset(input: unknown): boolean {
   try {
     const c = copyEventData(input);
     if (!record(c)) return false;
     const required = [
       "boardSize",
       "enableSheriff",
-      "nobleSecretBody",
-      "nightNoble",
-      "awakenedIdiot",
-      "demonHunter",
+      "mistRaven",
+      "dreamer",
       "roleSetups",
       "hooks",
       "selfDestruct",
       "seer",
-      "witch",
       "tieBreaker",
       "voting",
       "disclosure",
@@ -47,25 +49,13 @@ export function isNobleSecretBodyPreset(input: unknown): boolean {
     ];
     const allowed = [...required, "winCondition", "winConditions"];
     if (
-      !required.every((key) => Object.hasOwn(c, key)) ||
-      Object.keys(c).some((key) => !allowed.includes(key)) ||
+      !required.every((k) => Object.hasOwn(c, k)) ||
+      Object.keys(c).some((k) => !allowed.includes(k)) ||
       c.boardSize !== 12 ||
       c.enableSheriff !== true
     )
       return false;
-    if (
-      !exact(c.nobleSecretBody, { policy: "awa_noble_secret_body_v1" }) ||
-      !record(c.nightNoble) ||
-      !["standard", "no_blast_no_self_knife"].includes(c.nightNoble.wolfActionPolicy as string) ||
-      !exact(c.nightNoble, { wolfActionPolicy: c.nightNoble.wolfActionPolicy }) ||
-      !record(c.awakenedIdiot) ||
-      !["awa_nonconsecutive_nights_v1", "awa_repeat_v1"].includes(
-        c.awakenedIdiot.protectionRepeatPolicy as string,
-      ) ||
-      !exact(c.awakenedIdiot, { protectionRepeatPolicy: c.awakenedIdiot.protectionRepeatPolicy }) ||
-      !exact(c.demonHunter, { policy: DEMON_HUNTER_POLICY })
-    )
-      return false;
+    if (!exact(c.mistRaven, { policy: "awa_mist_raven_v1" })) return false;
     if (!Array.isArray(c.roleSetups) || c.roleSetups.length !== Object.keys(deck).length)
       return false;
     const seen = new Set<string>();
@@ -90,14 +80,12 @@ export function isNobleSecretBodyPreset(input: unknown): boolean {
     )
       return false;
     if (
+      !exact(c.dreamer, {
+        protectionPolicy: "netease_2026_night_immunity_v1",
+      }) ||
       !exact(c.seer, {
         targetPolicy: "awa_alive_v1",
         actionPolicy: "awa_required_when_legal_v1",
-      }) ||
-      !exact(c.witch, {
-        canSelfHeal: "disabled",
-        knifeVisibility: "awa_with_heal_v1",
-        potionPolicy: "awa_one_native_v1",
       }) ||
       !exact(c.voting, { exilePolicy: "awa_one_pk_v1" }) ||
       !exact(c.disclosure, { deathRevealPolicy: "awa_hidden_v1" }) ||
@@ -113,10 +101,10 @@ export function isNobleSecretBodyPreset(input: unknown): boolean {
         exileVote: "no_elimination",
       }) ||
       !exact(c.hooks, {
-        onDaybreak: false,
+        onDaybreak: true,
         onPreElection: true,
         onPreVote: true,
-        onPerSpeechGap: false,
+        onPerSpeechGap: true,
       })
     )
       return false;
@@ -126,11 +114,15 @@ export function isNobleSecretBodyPreset(input: unknown): boolean {
       !Array.isArray(c.selfDestruct.enabledWindows)
     )
       return false;
-    const windows = c.selfDestruct.enabledWindows;
+    const w = c.selfDestruct.enabledWindows;
     return (
-      windows.length === 2 &&
-      new Set(windows).size === 2 &&
-      windows.every((window: unknown) => window === "on_pre_election" || window === "on_pre_vote")
+      w.length === 4 &&
+      new Set(w).size === 4 &&
+      w.every((x) =>
+        ["on_pre_election", "on_pre_vote", "on_daybreak", "on_per_speech_gap"].includes(
+          x as string,
+        ),
+      )
     );
   } catch {
     return false;

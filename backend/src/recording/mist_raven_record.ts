@@ -15,7 +15,7 @@ import {
 } from "./mist_raven_requests";
 import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
 import { validateMistRavenFeeds } from "./mist_raven_feed_record";
-import { isMistRavenPreset } from "@ai-werewolf-arena/game-text";
+import { isMistRavenPreset } from "../verification/board-support";
 import {
   MIST_RAVEN_EVENT_TYPES,
   readMistRavenFact,

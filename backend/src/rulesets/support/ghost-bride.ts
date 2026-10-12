@@ -1,5 +1,16 @@
-import { GHOST_BRIDE_GOAL, GHOST_BRIDE_POLICY, GHOST_BRIDE_ROLE } from "./ghost-bride";
-import { copyEventData } from "./event-data";
+/**
+ * Owns the existing finite ghost-bride composition predicate for production setup.
+ * Inputs are inert normalized board data; outputs are the original support
+ * verdict with unchanged field, deck, goal and policy checks. It never applies
+ * game effects, chooses an actor or authorizes a turn. Archive verification has
+ * a separately owned predicate and must not call this production implementation.
+ */
+import {
+  GHOST_BRIDE_GOAL,
+  GHOST_BRIDE_POLICY,
+  GHOST_BRIDE_ROLE,
+} from "@ai-werewolf-arena/game-contract";
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
 interface PresetCandidate {
   boardSize: number;
   enableSheriff: boolean;

@@ -22,7 +22,7 @@ import {
   type WeddingKnifeCapture,
   type WeddingVote,
 } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
-import { isGhostBridePreset } from "@ai-werewolf-arena/game-text";
+import { isGhostBridePreset } from "../verification/board-support";
 import { Role, Camp, Phase } from "../core/domain";
 import type { ReproductionRecord, RecordedCheckpoint, RecordedDecision } from "./reproduction";
 const setupStages = [

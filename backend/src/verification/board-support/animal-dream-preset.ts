@@ -1,12 +1,13 @@
 /**
- * Responsibility: validate the existing finite animal dream board configuration.
- * Input: inert candidate board data; output: the unchanged support verdict.
- * This temporary text-owned support implementation checks composition and policy
- * shape; it does not apply effects or grant player actions. Stable policy IDs are
- * contract-owned, and this algorithm moves to rulesets under C09 independently
- * of archive verification. Domain state and rendering are outside this module.
+ * Responsibility: own the frozen archive support check for animal-dream boards.
+ * Input: inert normalized board data from a replay archive; output: the finite
+ * supported-board verdict preserved from Git 80ce15f. Local verification owns
+ * this algorithm independently; it never calls production ruleset predicates,
+ * accepts raw configuration on schema alone, authorizes actions or writes state.
+ * Public contract supplies only inert copying, facts and stable policy IDs;
+ * Node ingress must reject hostile objects before this reader reflects data.
  */
-import { copyEventData } from "./event-data";
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
 
 import {
   ANIMAL_DREAM_POLICY,

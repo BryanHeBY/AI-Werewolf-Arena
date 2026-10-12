@@ -1,14 +1,12 @@
 /**
- * Responsibility: validate the existing finite pure white board configuration.
- * Input: inert candidate board data; output: the unchanged support verdict.
- * This temporary text-owned support implementation checks composition and policy
- * shape; it does not apply effects or grant player actions. Stable policy IDs are
- * contract-owned, and this algorithm moves to rulesets under C09 independently
- * of archive verification. Domain state and rendering are outside this module.
+ * Owns the existing finite nightmare composition predicate for production setup.
+ * Inputs are inert normalized board data; outputs are the original support
+ * verdict with unchanged field, deck, goal and policy checks. It never applies
+ * game effects, chooses an actor or authorizes a turn. Archive verification has
+ * a separately owned predicate and must not call this production implementation.
  */
-import { copyEventData } from "./event-data";
-import { PURE_WHITE_POLICY } from "@ai-werewolf-arena/game-contract";
-export { PURE_WHITE_POLICY } from "@ai-werewolf-arena/game-contract";
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
+import { NIGHTMARE_SHADOW_POLICY } from "@ai-werewolf-arena/game-contract";
 
 function exact(value: unknown, expected: Record<string, unknown>): boolean {
   return (
@@ -23,28 +21,28 @@ function exact(value: unknown, expected: Record<string, unknown>): boolean {
 }
 const deck: Readonly<Record<string, number>> = {
   wolf: 3,
-  wolf_witch: 1,
+  nightmare: 1,
   villager: 4,
-  pure_white_girl: 1,
+  seer: 1,
   witch: 1,
   hunter: 1,
-  guard: 1,
+  dreamer: 1,
 };
-/** Closed 12-player paired board; unrelated experimental mechanisms are rejected. */
-export function isPureWhitePreset(input: unknown): boolean {
+/** Closed 12-player nightmare/dreamer board; unrelated experimental mechanisms are rejected. */
+export function isNightmarePreset(input: unknown): boolean {
   try {
     const c = copyEventData(input) as Record<string, any>;
     const required = [
       "boardSize",
       "enableSheriff",
-      "pureWhite",
-      "wolfWitch",
+      "nightmareShadow",
+      "seer",
       "roleSetups",
       "hooks",
       "selfDestruct",
       "witch",
       "hunter",
-      "guard",
+      "dreamer",
       "sheriff",
       "tieBreaker",
       "voting",
@@ -84,15 +82,21 @@ export function isPureWhitePreset(input: unknown): boolean {
       (Object.hasOwn(c, "winCondition") && c.winCondition !== "slaughter_side")
     )
       return false;
-    const priority = c.pureWhite?.eliminationPriority;
+    const fearActionPolicy = c.nightmareShadow?.fearActionPolicy;
+    const wolfActionPolicy = c.nightmareShadow?.wolfActionPolicy;
     if (
-      !["awa_wolf_priority_v1", "awa_good_priority_v1"].includes(priority) ||
-      !exact(c.pureWhite, { policy: PURE_WHITE_POLICY, eliminationPriority: priority }) ||
-      !exact(c.wolfWitch, { policy: PURE_WHITE_POLICY })
+      !["optional", "required_when_legal"].includes(fearActionPolicy) ||
+      !["standard", "no_blast_no_self_knife"].includes(wolfActionPolicy) ||
+      !exact(c.nightmareShadow, {
+        policy: NIGHTMARE_SHADOW_POLICY,
+        fearActionPolicy,
+        wolfActionPolicy,
+      }) ||
+      !exact(c.seer, { targetPolicy: "awa_alive_v1", actionPolicy: "awa_required_when_legal_v1" })
     )
       return false;
     if (
-      !["disabled", "first_night_only"].includes(c.witch?.canSelfHeal) ||
+      c.witch?.canSelfHeal !== "disabled" ||
       !exact(c.witch, {
         canSelfHeal: c.witch.canSelfHeal,
         knifeVisibility: "awa_with_heal_v1",
@@ -102,7 +106,7 @@ export function isPureWhitePreset(input: unknown): boolean {
       return false;
     return (
       exact(c.hunter, { deathActionPolicy: "awa_knife_or_exile_v1" }) &&
-      exact(c.guard, { repeatPolicy: "netease_consecutive_nights_v1" }) &&
+      exact(c.dreamer, { protectionPolicy: "awa_night_damage_v1" }) &&
       exact(c.sheriff, {
         electionPolicy: "awa_nomination_offstage_pk_v1",
         badgePolicy: "awa_holder_choice_v1",

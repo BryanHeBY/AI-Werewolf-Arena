@@ -4,7 +4,7 @@
  * Output: consistency checks and reconstructed next-night and expiry evidence.
  * Boundary: never schedules live effects or uses domain resolution as its oracle.
  */
-import { isRedMoonPreset } from "@ai-werewolf-arena/game-text";
+import { isRedMoonPreset } from "../verification/board-support";
 import {
   readRedMoonNextNightFact,
   readRedMoonExpiryFact,

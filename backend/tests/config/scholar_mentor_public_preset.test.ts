@@ -1,10 +1,17 @@
+/**
+ * Integration/scenario tests for scholar mentor public preset configuration and setup contracts.
+ * Input: the existing literal boards, original scenario actions and malformed
+ * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
+ * Fixed policies, recorded literal expectations and rejection cases are the
+ * oracle; these tests never generate replacement goldens from migrated rules.
+ */
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../src/runtime/config/board_definition";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
-import { isScholarMentorPreset } from "@ai-werewolf-arena/game-text";
+import { isScholarMentorPreset } from "../../src/rulesets";
 import { bootstrapGame } from "../../src/app/bootstrap";
 import { scholarMentorTwelveConfig } from "../../src/runtime/scenarios/scholar_mentor_twelve";
 import { Role, type BoardConfig } from "../../src/core";

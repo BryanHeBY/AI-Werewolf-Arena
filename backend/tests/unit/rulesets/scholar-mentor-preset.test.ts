@@ -1,5 +1,11 @@
+/**
+ * Unit tests for the finite Scholar Mentor production support predicate.
+ * Literal canonical boards, reordered decks, removed fields and policy patches
+ * are the independent acceptance/rejection oracle. The original dynamic case
+ * tables and accessor counter remain unchanged; no World, model or game runs.
+ */
 import { test, expect } from "bun:test";
-import { isScholarMentorPreset as accepts } from "../../../../packages/game-text/src/scholar-mentor-preset";
+import { isScholarMentorPreset as accepts } from "../../../src/rulesets";
 const config = {
   boardSize: 12,
   scholarMentor: { policy: "awa_scholar_mentor_twelve_v1" },

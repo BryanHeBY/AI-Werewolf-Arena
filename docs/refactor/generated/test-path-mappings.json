@@ -86,11 +86,171 @@
       "targetRunner": "frontend-integration",
       "programBytesPreserved": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/scholar-mentor-preset-draft.test.ts",
+      "to": "backend/tests/unit/rulesets/scholar-mentor-preset.test.ts",
+      "reason": "C09 finite configuration support belongs to backend rulesets; exact original literal and dynamic test program retained except public owner import and responsibility head.",
+      "originalSha256": "2cce48468006fd43876237e03eed0b7ea6ea717579a81f8831dc2849ebc278ca",
+      "candidateSha256": "0774dd403c92246f055967ab4944a7d67654ddbddb743b40c4922337f96f83c0",
+      "originalBodySha256": "2cce48468006fd43876237e03eed0b7ea6ea717579a81f8831dc2849ebc278ca",
+      "baselineCases": [
+        {
+          "id": "b686d897baab0594478fd885205c2b4c49e6ab3b27547422ba40b3d880859c47",
+          "title": "finite Scholar Mentor preset accepts canonical deck and reordered rows",
+          "occurrence": 1
+        },
+        {
+          "id": "7b3c5d41ccd921f36168b4d49b02f72a62bdce6e52cfd52ef6166a7e5674b0e5",
+          "title": "finite preset requires boardSize",
+          "occurrence": 1
+        },
+        {
+          "id": "e12473981d284992f2f66882a8788bbbdb4f77e53cc87bb489eb3083a9f07107",
+          "title": "finite preset requires scholarMentor",
+          "occurrence": 1
+        },
+        {
+          "id": "332e5659ab37f09fdca57a0ff7fd1706989e037bf23097478643dd3393b8e163",
+          "title": "finite preset requires enableSheriff",
+          "occurrence": 1
+        },
+        {
+          "id": "a5cfe10edaa1759af05a4f9eadbee5165c48cfcbeeeb77b63a1bc62194534fb4",
+          "title": "finite preset requires seer",
+          "occurrence": 1
+        },
+        {
+          "id": "92c1c3a8075a7069b80685e862f21a665b75fb8973c61ac78e83e5a37e853b3c",
+          "title": "finite preset requires winConditions",
+          "occurrence": 1
+        },
+        {
+          "id": "44fd77316434338de3aebd672a6c5d5c7acfc2934afa23b9d897d04b05832b14",
+          "title": "finite preset requires hooks",
+          "occurrence": 1
+        },
+        {
+          "id": "94ee669a53604809e0056576335e7064a30180d3724848992c9bbf1a7b69216f",
+          "title": "finite preset requires selfDestruct",
+          "occurrence": 1
+        },
+        {
+          "id": "b78b3979b2e5d32ab682ddc5e1beb786029daf4310931d470677123154309fa7",
+          "title": "finite preset requires witch",
+          "occurrence": 1
+        },
+        {
+          "id": "c9171ca3306b302c720ba5214b51c11ff33bb45e9f5b858bea59c213aa3886c1",
+          "title": "finite preset requires guard",
+          "occurrence": 1
+        },
+        {
+          "id": "a01312bb87688682f92e30bb2515c9f06b28073fed27d58c73c2697ec40268f0",
+          "title": "finite preset requires sheriff",
+          "occurrence": 1
+        },
+        {
+          "id": "80f33f7a9aa7ed22eba13a97f2183fc201152ba8aed613b6b0359629cfeee736",
+          "title": "finite preset requires tieBreaker",
+          "occurrence": 1
+        },
+        {
+          "id": "55cee0d8358deb84a758758002c659555cd9be3e4332a3c5cffeb4d2b920491d",
+          "title": "finite preset requires voting",
+          "occurrence": 1
+        },
+        {
+          "id": "8df7fd2173b5482dfc56de3c3987ce52276546b93a7db56baa24ed7c715119a3",
+          "title": "finite preset requires disclosure",
+          "occurrence": 1
+        },
+        {
+          "id": "e93cbc0d44932a542fe2fa45b9debf4dd13a1e4cdc5648e81c9a3638a52f8ae4",
+          "title": "finite preset requires lastWords",
+          "occurrence": 1
+        },
+        {
+          "id": "c752a75e6187dce54e8cfd43ff2b0025db1ddbfa6b00cf2f9d348d1a7d20a399",
+          "title": "finite preset requires roleSetups",
+          "occurrence": 1
+        },
+        {
+          "id": "6e7948f57e6c6148300ccdad5002bb9722d23c89c74056894d9cac17413ea3ed",
+          "title": "finite preset rejects unknown",
+          "occurrence": 1
+        },
+        {
+          "id": "973391a9d908a61eb7a22c1055c225a4bc38cd645cf1a40c265485d2df9bc5ec",
+          "title": "finite preset rejects size",
+          "occurrence": 1
+        },
+        {
+          "id": "597147e5adf43184ad55e4cdba4c095b87553ff343b2e8666f24c93c71f459e7",
+          "title": "finite preset rejects sheriff",
+          "occurrence": 1
+        },
+        {
+          "id": "2d2e789a1896a829d1efe7b4fecdf14cdb921e08fe0129e0ca0301773c8cae39",
+          "title": "finite preset rejects policy",
+          "occurrence": 1
+        },
+        {
+          "id": "d66c3a679ad449978c0a27b2cd2cacaa89f49312bd1a99df52daae9ff762670c",
+          "title": "finite preset rejects overrides",
+          "occurrence": 1
+        },
+        {
+          "id": "1843a2993564ff4c99fe15b74fbc13c320ed7e35e54108dfc3d1dda2f95efc21",
+          "title": "finite preset rejects duplicate",
+          "occurrence": 1
+        },
+        {
+          "id": "36d638d2c7b9c8971b5732b58b0557d2396dae3da9541917fd4bfc2451854d47",
+          "title": "finite preset rejects count",
+          "occurrence": 1
+        },
+        {
+          "id": "64f6c8a779bd3c566793789551470cba9f74ea946bfd1035e2c7481d6c53f899",
+          "title": "finite preset rejects foreign",
+          "occurrence": 1
+        },
+        {
+          "id": "0f026856b511f8ac4d618076b96b79f8cad40999434d95cb611886e0cfa47dec",
+          "title": "finite preset rejects win",
+          "occurrence": 1
+        },
+        {
+          "id": "f67e6003b5de21b62f91ac62155ca50fc28419e536c0f6c2ad8c4dbe4bc4f129",
+          "title": "finite preset rejects mismatch",
+          "occurrence": 1
+        },
+        {
+          "id": "517c17a95fbd6d185a3397f852e0f322fa656e2feac472ae487751caf1330522",
+          "title": "finite preset rejects guard",
+          "occurrence": 1
+        },
+        {
+          "id": "eaa107f369c8e15135455aa7dec13065b8c73bca082aedfd239b9394d725eac6",
+          "title": "finite preset rejects witch",
+          "occurrence": 1
+        },
+        {
+          "id": "5c90fdc3d39a1ba7b9bd380d9e0e4cb2266d65d50773bbfa18528df7ce53393a",
+          "title": "finite preset rejects accessor without executing it",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "backend",
+      "programBytesPreserved": false,
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "files": 3,
-    "baselineCases": 8,
+    "files": 4,
+    "baselineCases": 37,
     "fixtureByteChanges": 0
   }
 }

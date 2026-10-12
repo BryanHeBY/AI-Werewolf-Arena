@@ -1,3 +1,10 @@
+/**
+ * Integration/scenario tests for time wolf consort initial world configuration and setup contracts.
+ * Input: the existing literal boards, original scenario actions and malformed
+ * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
+ * Fixed policies, recorded literal expectations and rejection cases are the
+ * oracle; these tests never generate replacement goldens from migrated rules.
+ */
 import { expect, test } from "bun:test";
 import { COMPONENT, createRandom, randomDraws, type RoleComponent } from "../../../src/core";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -5,7 +12,7 @@ import { timeConsortTwelveConfig } from "../../../src/runtime/scenarios/time_con
 import { getTimeConsortState } from "../../../src/game/mechanisms/roles/time_wolf_consort/state";
 import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
-import { isTimeConsortPreset } from "@ai-werewolf-arena/game-text";
+import { isTimeConsortPreset } from "../../../src/rulesets";
 for (const locale of ["zh-CN", "en"] as const)
   for (const scope of ["whole_night", "first_effect"] as const)
     test(

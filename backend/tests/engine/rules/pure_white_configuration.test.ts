@@ -1,5 +1,12 @@
+/**
+ * Integration/scenario tests for pure white configuration configuration and setup contracts.
+ * Input: the existing literal boards, original scenario actions and malformed
+ * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
+ * Fixed policies, recorded literal expectations and rejection cases are the
+ * oracle; these tests never generate replacement goldens from migrated rules.
+ */
 import { expect, test } from "bun:test";
-import { isPureWhitePreset } from "@ai-werewolf-arena/game-text";
+import { isPureWhitePreset } from "../../../src/rulesets";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { pureWhiteTwelveConfig } from "../../../src/runtime/scenarios/pure_white_twelve";
 import {

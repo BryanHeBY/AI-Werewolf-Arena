@@ -16,7 +16,7 @@ import {
   readDemonHunterState,
   readDemonHuntTool,
 } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
-import { isDemonHunterPreset } from "@ai-werewolf-arena/game-text";
+import { isDemonHunterPreset } from "../verification/board-support";
 import { Role, Camp, Phase, DeathCause } from "../core/domain";
 import { readFaultPlan } from "../core/domain/fault_plan";
 import type { ReproductionRecord } from "./reproduction";

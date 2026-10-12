@@ -1,4 +1,11 @@
-import { boardPresetViolation } from "../../game/mechanisms/roles/board_presets";
+/**
+ * Responsibility: validate and normalize the public board configuration format.
+ * Input: inert public JSON with registered role declarations; output: the original
+ * normalized BoardConfig, diagnostics and reverse serialized configuration.
+ * Parsing owns field/default normalization; rulesets own finite support verdicts.
+ * This module never reads credentials, executes a game or grants action leases.
+ */
+import { boardPresetViolation } from "../../rulesets";
 /** The single public board format. Unknown fields and unregistered roles fail closed. */
 import { supportsWallRoles } from "../../game/mechanisms/events/wall_notes/authority";
 import { z } from "zod";

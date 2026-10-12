@@ -1,38 +1,46 @@
-import { isWolfSorcererPreset } from "./wolf-sorcerer-preset";
-import { isTricksterPreset } from "./trickster-preset";
-import { copyEventData } from "./event-data";
+/**
+ * Responsibility: own the frozen archive support check for red-moon boards.
+ * Input: inert normalized board data from a replay archive; output: the finite
+ * supported-board verdict preserved from Git 80ce15f. Local verification owns
+ * this algorithm independently; it never calls production ruleset predicates,
+ * accepts raw configuration on schema alone, authorizes actions or writes state.
+ * Public contract supplies only inert copying, facts and stable policy IDs;
+ * Node ingress must reject hostile objects before this reader reflects data.
+ */
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
+import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
+
 const deck: Readonly<Record<string, number>> = {
   wolf: 3,
-  wolf_king: 1,
+  red_moon_apostle: 1,
   villager: 4,
   seer: 1,
   witch: 1,
-  hunter: 1,
-  magician: 1,
+  demon_hunter: 1,
+  idiot: 1,
 };
-function record(v: unknown): v is Record<string, unknown> {
-  return !!v && typeof v === "object" && !Array.isArray(v);
+function record(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === "object" && !Array.isArray(value);
 }
-function exact(v: unknown, expected: Record<string, unknown>): boolean {
+function exact(value: unknown, expected: Record<string, unknown>): boolean {
   return (
-    record(v) &&
-    Object.keys(v).length === Object.keys(expected).length &&
-    Object.entries(expected).every(([k, x]) => Object.hasOwn(v, k) && v[k] === x)
+    record(value) &&
+    Object.keys(value).length === Object.keys(expected).length &&
+    Object.entries(expected).every(
+      ([key, item]) => Object.hasOwn(value, key) && value[key] === item,
+    )
   );
 }
-/** Finite native twelve-player board; gun eligibility and night target mapping are independent. */
-export function isMagicianPreset(input: unknown): boolean {
-  if (isWolfSorcererPreset(input)) return true;
-  if (isTricksterPreset(input)) return true;
+/** Only two named twelve-seat native boards; never authorizes arbitrary DemonHunter mixtures. */
+export function isRedMoonPreset(input: unknown): boolean {
   try {
     const c = copyEventData(input);
     if (!record(c)) return false;
     const required = [
       "boardSize",
       "enableSheriff",
-      "magician",
-      "hunter",
-      "wolfKing",
+      "redMoon",
+      "demonHunter",
       "roleSetups",
       "hooks",
       "selfDestruct",
@@ -46,22 +54,21 @@ export function isMagicianPreset(input: unknown): boolean {
     ];
     const allowed = [...required, "winCondition", "winConditions"];
     if (
-      !required.every((k) => Object.hasOwn(c, k)) ||
-      Object.keys(c).some((k) => !allowed.includes(k)) ||
+      !required.every((key) => Object.hasOwn(c, key)) ||
+      Object.keys(c).some((key) => !allowed.includes(key)) ||
       c.boardSize !== 12 ||
       c.enableSheriff !== true
     )
       return false;
-    const m = c.magician;
     if (
-      !record(m) ||
-      (m.firstNight !== 1 && m.firstNight !== 2) ||
-      (m.deathShotTargetPolicy !== "original" && m.deathShotTargetPolicy !== "exchanged") ||
-      !exact(m, {
-        policy: "awa_magician_wolf_king_v1",
-        firstNight: m.firstNight,
-        deathShotTargetPolicy: m.deathShotTargetPolicy,
-      })
+      !record(c.redMoon) ||
+      (c.redMoon.lastWolfBlastPolicy !== "ends_game" &&
+        c.redMoon.lastWolfBlastPolicy !== "forbidden") ||
+      !exact(c.redMoon, {
+        policy: "awa_red_moon_demon_v1",
+        lastWolfBlastPolicy: c.redMoon.lastWolfBlastPolicy,
+      }) ||
+      !exact(c.demonHunter, { policy: DEMON_HUNTER_POLICY })
     )
       return false;
     if (!Array.isArray(c.roleSetups) || c.roleSetups.length !== Object.keys(deck).length)
@@ -88,9 +95,6 @@ export function isMagicianPreset(input: unknown): boolean {
     )
       return false;
     if (
-      !exact(c.hunter, { deathActionPolicy: "awa_qualified_sources_v1" }) ||
-      (!exact(c.wolfKing, { deathActionPolicy: "awa_qualified_sources_v1" }) &&
-        !exact(c.wolfKing, { deathActionPolicy: "awa_day_deaths_v1" })) ||
       !exact(c.seer, {
         targetPolicy: "awa_alive_v1",
         actionPolicy: "awa_required_when_legal_v1",
@@ -100,18 +104,18 @@ export function isMagicianPreset(input: unknown): boolean {
         knifeVisibility: "awa_with_heal_v1",
         potionPolicy: "awa_one_native_v1",
       }) ||
-      !exact(c.voting, { exilePolicy: "awa_one_pk_v1" }) ||
+      !exact(c.voting, { exilePolicy: "awa_direct_v1" }) ||
       !exact(c.disclosure, { deathRevealPolicy: "awa_hidden_v1" }) ||
       !exact(c.lastWords, { policy: "awa_initial_wave_v1" }) ||
       !exact(c.sheriff, {
-        electionPolicy: "awa_nomination_offstage_pk_v1",
-        badgePolicy: "awa_holder_choice_v1",
+        electionPolicy: "awa_final_candidates_v1",
+        badgePolicy: "awa_next_seat_v1",
         voteWeight: 1.5,
       }) ||
       !exact(c.tieBreaker, {
-        sheriffVote: "no_elimination",
+        sheriffVote: "min_seat",
         wolfKillVote: "min_id",
-        exileVote: "no_elimination",
+        exileVote: "min_id",
       }) ||
       !exact(c.hooks, {
         onDaybreak: false,
@@ -127,11 +131,11 @@ export function isMagicianPreset(input: unknown): boolean {
       !Array.isArray(c.selfDestruct.enabledWindows)
     )
       return false;
-    const w = c.selfDestruct.enabledWindows;
+    const windows = c.selfDestruct.enabledWindows;
     return (
-      w.length === 2 &&
-      new Set(w).size === 2 &&
-      w.every((x) => x === "on_pre_election" || x === "on_pre_vote")
+      windows.length === 2 &&
+      new Set(windows).size === 2 &&
+      windows.every((window: unknown) => window === "on_pre_election" || window === "on_pre_vote")
     );
   } catch {
     return false;

@@ -1,7 +1,7 @@
 /**
  * Public text and compatibility exit consumed by backend and browser rendering.
  * Exports frozen bilingual dictionaries, strict formatting, presentation mappings
- * and the existing fact/preset contributions. Machine message IDs and references
+ * and the existing fact compatibility contributions. Machine message IDs and references
  * are contract-owned named type exports; formatting retains parameter validation
  * and raw user text. This module never grants engine action or resource authority.
  */
@@ -744,8 +744,6 @@ export function lonelyGirlEventLabel(
 
 export * from "./ghost-bride";
 
-export * from "./ghost-bride-preset";
-
 import { readGhostBrideEventFact } from "./ghost-bride";
 export function ghostBrideEventLabel(
   type: string,
@@ -820,11 +818,10 @@ export function demonHunterEventLabel(
   });
 }
 
-export * from "./demon-hunter-preset";
-export * from "./pure-white-preset";
-export * from "./evil-knight-preset";
+export { PURE_WHITE_POLICY } from "@ai-werewolf-arena/game-contract";
+export { EVIL_KNIGHT_POLICY } from "@ai-werewolf-arena/game-contract";
 
-export * from "./nightmare-preset";
+export { NIGHTMARE_SHADOW_POLICY } from "@ai-werewolf-arena/game-contract";
 
 export * from "./nightmare";
 import { readNightmareFearFact, readNightmareOwnFearFact } from "./nightmare";
@@ -844,7 +841,6 @@ export function nightmareEventLabel(
 }
 
 export * from "./red-moon";
-export * from "./red-moon-preset";
 
 export function redMoonEventLabel(
   type: string,
@@ -868,7 +864,6 @@ export function redMoonEventLabel(
 }
 
 export * from "./magician";
-export * from "./magician-preset";
 
 import {
   readMagicianExchangeFact,
@@ -893,7 +888,7 @@ export function magicianEventLabel(
 }
 
 export * from "./order-prince";
-export * from "./order-prince-preset";
+
 import { readOrderPrinceRevoteFact } from "./order-prince";
 export function orderPrinceEventLabel(
   type: string,
@@ -918,8 +913,6 @@ export function orderPrinceEventLabel(
     ? text(locale, "event.order_prince_revote_started", { actor: fact.actorId })
     : text(locale, "replay.unknown");
 }
-
-export * from "./trickster-preset";
 
 export * from "./trickster";
 export function tricksterEventLabel(
@@ -961,7 +954,6 @@ export function tricksterEventLabel(
   return null;
 }
 
-export * from "./wolf-sorcerer-preset";
 export * from "./wolf-sorcerer";
 export function wolfSorcererEventLabel(
   type: string,
@@ -996,7 +988,6 @@ export function wolfSorcererEventLabel(
 }
 
 export * from "./time-consort";
-export * from "./time-consort-preset";
 
 export function timeConsortEventLabel(
   type: string,
@@ -1126,10 +1117,6 @@ export function scholarMentorEventLabel(
 }
 
 export * from "./scholar-mentor";
-export * from "./scholar-mentor-preset";
-
-export { isRadiantEclipsePreset } from "./radiant-eclipse-preset";
-export { isMistRavenPreset } from "./mist-raven-preset";
 
 export * from "./mist-raven";
 export function mistRavenEventLabel(
@@ -1195,8 +1182,6 @@ export function radiantEclipseEventLabel(
   );
 }
 
-export { isNobleSecretBodyPreset } from "./noble-secret-body-preset";
-
 export * from "./noble-secret-body";
 
 export function nobleSecretBodyEventLabel(
@@ -1240,7 +1225,6 @@ export function nobleSecretBodyEventLabel(
 
 export * from "./fragrant-pair-seer";
 
-export { isFragrantPairSeerPreset } from "./fragrant-pair-seer-preset";
 export function fragrantPairEventLabel(
   type: string,
   payload: unknown,
@@ -1294,13 +1278,12 @@ export {
   CAT_SKIPPED_VOTE_POLICIES,
   PUFFER_BALLOT_POLICIES,
   BEAR_SIGNAL_POLICIES,
-  isAnimalDreamPreset,
-} from "./animal-dream-preset";
+} from "@ai-werewolf-arena/game-contract";
 export type {
   CatSkippedVotePolicy,
   PufferBallotPolicy,
   BearSignalPolicy,
-} from "./animal-dream-preset";
+} from "@ai-werewolf-arena/game-contract";
 
 /** Shared labels validate the complete finite fact before reading any field. */
 export function animalDreamEventLabel(

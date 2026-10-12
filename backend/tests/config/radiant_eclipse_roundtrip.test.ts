@@ -1,3 +1,10 @@
+/**
+ * Integration/scenario tests for radiant eclipse roundtrip configuration and setup contracts.
+ * Input: the existing literal boards, original scenario actions and malformed
+ * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
+ * Fixed policies, recorded literal expectations and rejection cases are the
+ * oracle; these tests never generate replacement goldens from migrated rules.
+ */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import {
@@ -7,7 +14,7 @@ import {
 import { configDiagnostic } from "../../src/runtime/config/error_codes";
 import { bootstrapGame } from "../../src/app/bootstrap";
 import { getDefaultNightStageRegistry } from "../../src/game/mechanisms/stages/night/night_stage_registry";
-import { isRadiantEclipsePreset } from "@ai-werewolf-arena/game-text";
+import { isRadiantEclipsePreset } from "../../src/rulesets";
 const dir = new URL("../../../configs.example/boards/", import.meta.url);
 const raw = JSON.parse(await readFile(new URL("awa_radiant_eclipse_12_v1.json", dir), "utf8"));
 test("public example actually parses, roundtrips and bootstraps the exact sourced board", () => {

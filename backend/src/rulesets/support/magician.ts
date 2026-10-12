@@ -1,12 +1,21 @@
-import { copyEventData } from "./event-data";
+/**
+ * Owns the existing finite magician composition predicate for production setup.
+ * Inputs are inert normalized board data; outputs are the original support
+ * verdict with unchanged field, deck, goal and policy checks. It never applies
+ * game effects, chooses an actor or authorizes a turn. Archive verification has
+ * a separately owned predicate and must not call this production implementation.
+ */
+import { isWolfSorcererPreset } from "./wolf-sorcerer";
+import { isTricksterPreset } from "./trickster";
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
 const deck: Readonly<Record<string, number>> = {
   wolf: 3,
-  raven_claw_wolf: 1,
+  wolf_king: 1,
   villager: 4,
   seer: 1,
-  alchemist: 1,
-  dreamer: 1,
-  idiot: 1,
+  witch: 1,
+  hunter: 1,
+  magician: 1,
 };
 function record(v: unknown): v is Record<string, unknown> {
   return !!v && typeof v === "object" && !Array.isArray(v);
@@ -18,20 +27,24 @@ function exact(v: unknown, expected: Record<string, unknown>): boolean {
     Object.entries(expected).every(([k, x]) => Object.hasOwn(v, k) && v[k] === x)
   );
 }
-/** Finite native twelve-player Alchemist and Raven Claw Wolf board. */
-export function isMistRavenPreset(input: unknown): boolean {
+/** Finite native twelve-player board; gun eligibility and night target mapping are independent. */
+export function isMagicianPreset(input: unknown): boolean {
+  if (isWolfSorcererPreset(input)) return true;
+  if (isTricksterPreset(input)) return true;
   try {
     const c = copyEventData(input);
     if (!record(c)) return false;
     const required = [
       "boardSize",
       "enableSheriff",
-      "mistRaven",
-      "dreamer",
+      "magician",
+      "hunter",
+      "wolfKing",
       "roleSetups",
       "hooks",
       "selfDestruct",
       "seer",
+      "witch",
       "tieBreaker",
       "voting",
       "disclosure",
@@ -46,7 +59,18 @@ export function isMistRavenPreset(input: unknown): boolean {
       c.enableSheriff !== true
     )
       return false;
-    if (!exact(c.mistRaven, { policy: "awa_mist_raven_v1" })) return false;
+    const m = c.magician;
+    if (
+      !record(m) ||
+      (m.firstNight !== 1 && m.firstNight !== 2) ||
+      (m.deathShotTargetPolicy !== "original" && m.deathShotTargetPolicy !== "exchanged") ||
+      !exact(m, {
+        policy: "awa_magician_wolf_king_v1",
+        firstNight: m.firstNight,
+        deathShotTargetPolicy: m.deathShotTargetPolicy,
+      })
+    )
+      return false;
     if (!Array.isArray(c.roleSetups) || c.roleSetups.length !== Object.keys(deck).length)
       return false;
     const seen = new Set<string>();
@@ -71,12 +95,17 @@ export function isMistRavenPreset(input: unknown): boolean {
     )
       return false;
     if (
-      !exact(c.dreamer, {
-        protectionPolicy: "netease_2026_night_immunity_v1",
-      }) ||
+      !exact(c.hunter, { deathActionPolicy: "awa_qualified_sources_v1" }) ||
+      (!exact(c.wolfKing, { deathActionPolicy: "awa_qualified_sources_v1" }) &&
+        !exact(c.wolfKing, { deathActionPolicy: "awa_day_deaths_v1" })) ||
       !exact(c.seer, {
         targetPolicy: "awa_alive_v1",
         actionPolicy: "awa_required_when_legal_v1",
+      }) ||
+      !exact(c.witch, {
+        canSelfHeal: "disabled",
+        knifeVisibility: "awa_with_heal_v1",
+        potionPolicy: "awa_one_native_v1",
       }) ||
       !exact(c.voting, { exilePolicy: "awa_one_pk_v1" }) ||
       !exact(c.disclosure, { deathRevealPolicy: "awa_hidden_v1" }) ||
@@ -92,10 +121,10 @@ export function isMistRavenPreset(input: unknown): boolean {
         exileVote: "no_elimination",
       }) ||
       !exact(c.hooks, {
-        onDaybreak: true,
+        onDaybreak: false,
         onPreElection: true,
         onPreVote: true,
-        onPerSpeechGap: true,
+        onPerSpeechGap: false,
       })
     )
       return false;
@@ -107,13 +136,9 @@ export function isMistRavenPreset(input: unknown): boolean {
       return false;
     const w = c.selfDestruct.enabledWindows;
     return (
-      w.length === 4 &&
-      new Set(w).size === 4 &&
-      w.every((x) =>
-        ["on_pre_election", "on_pre_vote", "on_daybreak", "on_per_speech_gap"].includes(
-          x as string,
-        ),
-      )
+      w.length === 2 &&
+      new Set(w).size === 2 &&
+      w.every((x) => x === "on_pre_election" || x === "on_pre_vote")
     );
   } catch {
     return false;

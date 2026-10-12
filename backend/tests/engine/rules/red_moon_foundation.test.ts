@@ -1,3 +1,10 @@
+/**
+ * Integration/scenario tests for red moon foundation configuration and setup contracts.
+ * Input: the existing literal boards, original scenario actions and malformed
+ * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
+ * Fixed policies, recorded literal expectations and rejection cases are the
+ * oracle; these tests never generate replacement goldens from migrated rules.
+ */
 import { describe, expect, test } from "bun:test";
 import { Camp } from "../../../src/core/domain/identity";
 import type { RoleComponent } from "../../../src/core/domain/components/role";
@@ -140,7 +147,7 @@ test("Red Moon fact readers reject accessors without invoking getters", () => {
 });
 
 import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-text";
-import { isRedMoonPreset } from "@ai-werewolf-arena/game-text";
+import { isRedMoonPreset } from "../../../src/rulesets";
 function redMoonConfig(lastWolfBlastPolicy: "ends_game" | "forbidden" = "ends_game") {
   return {
     boardSize: 12,

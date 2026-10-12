@@ -1,8 +1,15 @@
+/**
+ * Integration/scenario tests for trickster combination configuration and setup contracts.
+ * Input: the existing literal boards, original scenario actions and malformed
+ * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
+ * Fixed policies, recorded literal expectations and rejection cases are the
+ * oracle; these tests never generate replacement goldens from migrated rules.
+ */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { tricksterTwelveConfig } from "../../../src/runtime/scenarios/trickster_twelve";
 import { Role, COMPONENT, type RoleComponent } from "../../../src/core";
-import { isTricksterPreset } from "@ai-werewolf-arena/game-text";
+import { isTricksterPreset } from "../../../src/rulesets";
 import {
   beginTricksterNight,
   commitTricksterExchange,

@@ -2,7 +2,7 @@
  * Responsibility: independently validate recorded radiant-eclipse actions and publication prefixes.
  * Replay evidence, original seats and checkpoints are the inputs; rejection or an audit result is the output. The archive verifier does not own runtime leases, pay resources or execute the domain settlement.
  */
-import { isRadiantEclipsePreset } from "@ai-werewolf-arena/game-text";
+import { isRadiantEclipsePreset } from "../verification/board-support";
 import {
   RADIANT_ECLIPSE_EVENT_TYPES,
   readRadiantEclipseFact,

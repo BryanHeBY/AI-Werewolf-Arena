@@ -1,14 +1,15 @@
 /**
- * Responsibility: validate the existing finite nightmare board configuration.
- * Input: inert candidate board data; output: the unchanged support verdict.
- * This temporary text-owned support implementation checks composition and policy
- * shape; it does not apply effects or grant player actions. Stable policy IDs are
- * contract-owned, and this algorithm moves to rulesets under C09 independently
- * of archive verification. Domain state and rendering are outside this module.
+ * Responsibility: own the frozen archive support check for evil-knight boards.
+ * Input: inert normalized board data from a replay archive; output: the finite
+ * supported-board verdict preserved from Git 80ce15f. Local verification owns
+ * this algorithm independently; it never calls production ruleset predicates,
+ * accepts raw configuration on schema alone, authorizes actions or writes state.
+ * Public contract supplies only inert copying, facts and stable policy IDs;
+ * Node ingress must reject hostile objects before this reader reflects data.
  */
-import { copyEventData } from "./event-data";
-import { NIGHTMARE_SHADOW_POLICY } from "@ai-werewolf-arena/game-contract";
-export { NIGHTMARE_SHADOW_POLICY } from "@ai-werewolf-arena/game-contract";
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
+import { EVIL_KNIGHT_POLICY } from "@ai-werewolf-arena/game-contract";
+export { EVIL_KNIGHT_POLICY } from "@ai-werewolf-arena/game-contract";
 
 function exact(value: unknown, expected: Record<string, unknown>): boolean {
   return (
@@ -23,28 +24,28 @@ function exact(value: unknown, expected: Record<string, unknown>): boolean {
 }
 const deck: Readonly<Record<string, number>> = {
   wolf: 3,
-  nightmare: 1,
+  evil_knight: 1,
   villager: 4,
   seer: 1,
   witch: 1,
   hunter: 1,
-  dreamer: 1,
+  guard: 1,
 };
-/** Closed 12-player nightmare/dreamer board; unrelated experimental mechanisms are rejected. */
-export function isNightmarePreset(input: unknown): boolean {
+/** Closed 12-player evil-knight board; unrelated experimental mechanisms are rejected. */
+export function isEvilKnightPreset(input: unknown): boolean {
   try {
     const c = copyEventData(input) as Record<string, any>;
     const required = [
       "boardSize",
       "enableSheriff",
-      "nightmareShadow",
+      "evilKnight",
       "seer",
       "roleSetups",
       "hooks",
       "selfDestruct",
       "witch",
       "hunter",
-      "dreamer",
+      "guard",
       "sheriff",
       "tieBreaker",
       "voting",
@@ -84,21 +85,15 @@ export function isNightmarePreset(input: unknown): boolean {
       (Object.hasOwn(c, "winCondition") && c.winCondition !== "slaughter_side")
     )
       return false;
-    const fearActionPolicy = c.nightmareShadow?.fearActionPolicy;
-    const wolfActionPolicy = c.nightmareShadow?.wolfActionPolicy;
+    const shotPolicy = c.evilKnight?.shotPolicy;
     if (
-      !["optional", "required_when_legal"].includes(fearActionPolicy) ||
-      !["standard", "no_blast_no_self_knife"].includes(wolfActionPolicy) ||
-      !exact(c.nightmareShadow, {
-        policy: NIGHTMARE_SHADOW_POLICY,
-        fearActionPolicy,
-        wolfActionPolicy,
-      }) ||
+      !["night_shot_immune", "hunter_shot_bypasses"].includes(shotPolicy) ||
+      !exact(c.evilKnight, { policy: EVIL_KNIGHT_POLICY, shotPolicy }) ||
       !exact(c.seer, { targetPolicy: "awa_alive_v1", actionPolicy: "awa_required_when_legal_v1" })
     )
       return false;
     if (
-      c.witch?.canSelfHeal !== "disabled" ||
+      !["disabled", "first_night_only"].includes(c.witch?.canSelfHeal) ||
       !exact(c.witch, {
         canSelfHeal: c.witch.canSelfHeal,
         knifeVisibility: "awa_with_heal_v1",
@@ -108,7 +103,7 @@ export function isNightmarePreset(input: unknown): boolean {
       return false;
     return (
       exact(c.hunter, { deathActionPolicy: "awa_knife_or_exile_v1" }) &&
-      exact(c.dreamer, { protectionPolicy: "awa_night_damage_v1" }) &&
+      exact(c.guard, { repeatPolicy: "netease_consecutive_nights_v1" }) &&
       exact(c.sheriff, {
         electionPolicy: "awa_nomination_offstage_pk_v1",
         badgePolicy: "awa_holder_choice_v1",

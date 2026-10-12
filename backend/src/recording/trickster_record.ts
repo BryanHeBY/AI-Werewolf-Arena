@@ -7,7 +7,7 @@
  * Shared readers only establish data shape; historical success and failure
  * prefixes, causal cursors and feature-specific policy checks remain unchanged.
  */
-import { isTricksterPreset } from "@ai-werewolf-arena/game-text";
+import { isTricksterPreset } from "../verification/board-support";
 import {
   readTricksterExchangeFact,
   readTricksterSkipFact,

@@ -1,4 +1,11 @@
-import { copyEventData } from "./event-data";
+/**
+ * Owns the existing finite scholar-mentor composition predicate for production setup.
+ * Inputs are inert normalized board data; outputs are the original support
+ * verdict with unchanged field, deck, goal and policy checks. It never applies
+ * game effects, chooses an actor or authorizes a turn. Archive verification has
+ * a separately owned predicate and must not call this production implementation.
+ */
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
 const deck: Readonly<Record<string, number>> = {
   wolf: 3,
   night_mentor: 1,

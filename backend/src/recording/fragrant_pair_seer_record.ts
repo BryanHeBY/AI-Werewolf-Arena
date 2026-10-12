@@ -12,7 +12,7 @@ import {
   FRAGRANT_PAIR_EVENT_TYPES,
   readFragrantPairFact,
 } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
-import { isFragrantPairSeerPreset } from "@ai-werewolf-arena/game-text";
+import { isFragrantPairSeerPreset } from "../verification/board-support";
 import { Camp, Role, Phase } from "../core/domain/identity";
 import type { ReproductionRecord, RecordedDecision, RecordedCheckpoint } from "./reproduction";
 import type { RecordedFragrantState } from "./fragrant_pair_seer_checkpoint";

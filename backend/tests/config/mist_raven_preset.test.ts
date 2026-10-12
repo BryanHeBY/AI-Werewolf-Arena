@@ -1,5 +1,12 @@
+/**
+ * Integration/scenario tests for mist raven preset configuration and setup contracts.
+ * Input: the existing literal boards, original scenario actions and malformed
+ * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
+ * Fixed policies, recorded literal expectations and rejection cases are the
+ * oracle; these tests never generate replacement goldens from migrated rules.
+ */
 import { expect, test } from "bun:test";
-import { isMistRavenPreset } from "@ai-werewolf-arena/game-text";
+import { isMistRavenPreset } from "../../src/rulesets";
 function preset() {
   return {
     boardSize: 12,

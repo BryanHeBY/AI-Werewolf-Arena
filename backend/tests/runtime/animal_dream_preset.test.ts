@@ -1,5 +1,12 @@
+/**
+ * Integration/scenario tests for animal dream preset configuration and setup contracts.
+ * Input: the existing literal boards, original scenario actions and malformed
+ * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
+ * Fixed policies, recorded literal expectations and rejection cases are the
+ * oracle; these tests never generate replacement goldens from migrated rules.
+ */
 import { expect, test } from "bun:test";
-import { isAnimalDreamPreset } from "@ai-werewolf-arena/game-text";
+import { isAnimalDreamPreset } from "../../src/rulesets";
 const base = {
   boardSize: 12,
   enableSheriff: true,

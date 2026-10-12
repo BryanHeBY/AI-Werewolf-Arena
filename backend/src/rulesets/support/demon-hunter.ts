@@ -1,7 +1,14 @@
-import { isNobleSecretBodyPreset } from "./noble-secret-body-preset";
-import { isRedMoonPreset } from "./red-moon-preset";
-import { copyEventData } from "./event-data";
-import { DEMON_HUNTER_POLICY } from "./demon-hunter";
+/**
+ * Owns the existing finite demon-hunter composition predicate for production setup.
+ * Inputs are inert normalized board data; outputs are the original support
+ * verdict with unchanged field, deck, goal and policy checks. It never applies
+ * game effects, chooses an actor or authorizes a turn. Archive verification has
+ * a separately owned predicate and must not call this production implementation.
+ */
+import { isNobleSecretBodyPreset } from "./noble-secret-body";
+import { isRedMoonPreset } from "./red-moon";
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
+import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-contract";
 function exactDemonData(value: unknown, keys: readonly string[]): value is Record<string, unknown> {
   return (
     !!value &&

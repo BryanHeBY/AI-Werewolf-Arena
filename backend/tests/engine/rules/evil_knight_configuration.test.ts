@@ -1,5 +1,12 @@
+/**
+ * Integration/scenario tests for evil knight configuration configuration and setup contracts.
+ * Input: the existing literal boards, original scenario actions and malformed
+ * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
+ * Fixed policies, recorded literal expectations and rejection cases are the
+ * oracle; these tests never generate replacement goldens from migrated rules.
+ */
 import { expect, test } from "bun:test";
-import { isEvilKnightPreset } from "@ai-werewolf-arena/game-text";
+import { isEvilKnightPreset } from "../../../src/rulesets";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { evilKnightTwelveConfig } from "../../../src/runtime/scenarios/evil_knight_twelve";
 import {

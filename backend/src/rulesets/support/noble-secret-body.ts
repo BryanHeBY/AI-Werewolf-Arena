@@ -1,34 +1,46 @@
-import { copyEventData } from "./event-data";
+/**
+ * Owns the existing finite noble-secret-body composition predicate for production setup.
+ * Inputs are inert normalized board data; outputs are the original support
+ * verdict with unchanged field, deck, goal and policy checks. It never applies
+ * game effects, chooses an actor or authorizes a turn. Archive verification has
+ * a separately owned predicate and must not call this production implementation.
+ */
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
+import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-contract";
+
 const deck: Readonly<Record<string, number>> = {
   wolf: 3,
-  time_wolf_consort: 1,
+  night_noble: 1,
   villager: 4,
   seer: 1,
   witch: 1,
-  guard: 1,
-  order_prince: 1,
+  demon_hunter: 1,
+  awakened_idiot: 1,
 };
-function record(v: unknown): v is Record<string, unknown> {
-  return !!v && typeof v === "object" && !Array.isArray(v);
+function record(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === "object" && !Array.isArray(value);
 }
-function exact(v: unknown, expected: Record<string, unknown>): boolean {
+function exact(value: unknown, expected: Record<string, unknown>): boolean {
   return (
-    record(v) &&
-    Object.keys(v).length === Object.keys(expected).length &&
-    Object.entries(expected).every(([k, x]) => Object.hasOwn(v, k) && v[k] === x)
+    record(value) &&
+    Object.keys(value).length === Object.keys(expected).length &&
+    Object.entries(expected).every(
+      ([key, item]) => Object.hasOwn(value, key) && value[key] === item,
+    )
   );
 }
-/** Finite native twelve-player Time-Wolf Consort and Order Prince board. */
-export function isTimeConsortPreset(input: unknown): boolean {
+/** Only four named twelve-seat noble/body policy combinations; never authorizes arbitrary DemonHunter mixtures. */
+export function isNobleSecretBodyPreset(input: unknown): boolean {
   try {
     const c = copyEventData(input);
     if (!record(c)) return false;
     const required = [
       "boardSize",
       "enableSheriff",
-      "timeConsort",
-      "guard",
-      "orderPrince",
+      "nobleSecretBody",
+      "nightNoble",
+      "awakenedIdiot",
+      "demonHunter",
       "roleSetups",
       "hooks",
       "selfDestruct",
@@ -42,17 +54,23 @@ export function isTimeConsortPreset(input: unknown): boolean {
     ];
     const allowed = [...required, "winCondition", "winConditions"];
     if (
-      !required.every((k) => Object.hasOwn(c, k)) ||
-      Object.keys(c).some((k) => !allowed.includes(k)) ||
+      !required.every((key) => Object.hasOwn(c, key)) ||
+      Object.keys(c).some((key) => !allowed.includes(key)) ||
       c.boardSize !== 12 ||
       c.enableSheriff !== true
     )
       return false;
-    const t = c.timeConsort;
     if (
-      !record(t) ||
-      (t.reflectionScope !== "whole_night" && t.reflectionScope !== "first_effect") ||
-      !exact(t, { policy: "awa_time_consort_reflection_v1", reflectionScope: t.reflectionScope })
+      !exact(c.nobleSecretBody, { policy: "awa_noble_secret_body_v1" }) ||
+      !record(c.nightNoble) ||
+      !["standard", "no_blast_no_self_knife"].includes(c.nightNoble.wolfActionPolicy as string) ||
+      !exact(c.nightNoble, { wolfActionPolicy: c.nightNoble.wolfActionPolicy }) ||
+      !record(c.awakenedIdiot) ||
+      !["awa_nonconsecutive_nights_v1", "awa_repeat_v1"].includes(
+        c.awakenedIdiot.protectionRepeatPolicy as string,
+      ) ||
+      !exact(c.awakenedIdiot, { protectionRepeatPolicy: c.awakenedIdiot.protectionRepeatPolicy }) ||
+      !exact(c.demonHunter, { policy: DEMON_HUNTER_POLICY })
     )
       return false;
     if (!Array.isArray(c.roleSetups) || c.roleSetups.length !== Object.keys(deck).length)
@@ -79,8 +97,6 @@ export function isTimeConsortPreset(input: unknown): boolean {
     )
       return false;
     if (
-      !exact(c.orderPrince, { policy: "awa_order_prince_first_ballot_v1" }) ||
-      !exact(c.guard, { repeatPolicy: "awa_last_action_v1" }) ||
       !exact(c.seer, {
         targetPolicy: "awa_alive_v1",
         actionPolicy: "awa_required_when_legal_v1",
@@ -117,11 +133,11 @@ export function isTimeConsortPreset(input: unknown): boolean {
       !Array.isArray(c.selfDestruct.enabledWindows)
     )
       return false;
-    const w = c.selfDestruct.enabledWindows;
+    const windows = c.selfDestruct.enabledWindows;
     return (
-      w.length === 2 &&
-      new Set(w).size === 2 &&
-      w.every((x) => x === "on_pre_election" || x === "on_pre_vote")
+      windows.length === 2 &&
+      new Set(windows).size === 2 &&
+      windows.every((window: unknown) => window === "on_pre_election" || window === "on_pre_vote")
     );
   } catch {
     return false;

@@ -1,5 +1,12 @@
+/**
+ * Integration/scenario tests for red moon candidate configuration and setup contracts.
+ * Input: the existing literal boards, original scenario actions and malformed
+ * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
+ * Fixed policies, recorded literal expectations and rejection cases are the
+ * oracle; these tests never generate replacement goldens from migrated rules.
+ */
 import { expect, test } from "bun:test";
-import { isDemonHunterPreset, isRedMoonPreset } from "@ai-werewolf-arena/game-text";
+import { isDemonHunterPreset, isRedMoonPreset } from "../../../src/rulesets";
 import { COMPONENT, type RoleComponent } from "../../../src/core";
 import { redMoonCandidateWorld } from "../../support/red_moon_candidate_world";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";

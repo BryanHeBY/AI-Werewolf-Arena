@@ -1,12 +1,19 @@
-import { copyEventData } from "./event-data";
+/**
+ * Owns the existing finite time-consort composition predicate for production setup.
+ * Inputs are inert normalized board data; outputs are the original support
+ * verdict with unchanged field, deck, goal and policy checks. It never applies
+ * game effects, chooses an actor or authorizes a turn. Archive verification has
+ * a separately owned predicate and must not call this production implementation.
+ */
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
 const deck: Readonly<Record<string, number>> = {
   wolf: 3,
-  wolf_sorcerer: 1,
+  time_wolf_consort: 1,
   villager: 4,
-  psychic: 1,
+  seer: 1,
   witch: 1,
-  hunter: 1,
-  magician: 1,
+  guard: 1,
+  order_prince: 1,
 };
 function record(v: unknown): v is Record<string, unknown> {
   return !!v && typeof v === "object" && !Array.isArray(v);
@@ -18,21 +25,21 @@ function exact(v: unknown, expected: Record<string, unknown>): boolean {
     Object.entries(expected).every(([k, x]) => Object.hasOwn(v, k) && v[k] === x)
   );
 }
-/** Finite native twelve-player ordered Magician/Wolf Sorcerer combination. */
-export function isWolfSorcererPreset(input: unknown): boolean {
+/** Finite native twelve-player Time-Wolf Consort and Order Prince board. */
+export function isTimeConsortPreset(input: unknown): boolean {
   try {
     const c = copyEventData(input);
     if (!record(c)) return false;
     const required = [
       "boardSize",
       "enableSheriff",
-      "magician",
-      "wolfSorcerer",
-      "hunter",
+      "timeConsort",
+      "guard",
+      "orderPrince",
       "roleSetups",
       "hooks",
       "selfDestruct",
-      "psychic",
+      "seer",
       "witch",
       "tieBreaker",
       "voting",
@@ -48,16 +55,11 @@ export function isWolfSorcererPreset(input: unknown): boolean {
       c.enableSheriff !== true
     )
       return false;
-    const m = c.magician;
+    const t = c.timeConsort;
     if (
-      !record(m) ||
-      (m.firstNight !== 1 && m.firstNight !== 2) ||
-      (m.deathShotTargetPolicy !== "original" && m.deathShotTargetPolicy !== "exchanged") ||
-      !exact(m, {
-        policy: "awa_magician_wolf_king_v1",
-        firstNight: m.firstNight,
-        deathShotTargetPolicy: m.deathShotTargetPolicy,
-      })
+      !record(t) ||
+      (t.reflectionScope !== "whole_night" && t.reflectionScope !== "first_effect") ||
+      !exact(t, { policy: "awa_time_consort_reflection_v1", reflectionScope: t.reflectionScope })
     )
       return false;
     if (!Array.isArray(c.roleSetups) || c.roleSetups.length !== Object.keys(deck).length)
@@ -84,9 +86,12 @@ export function isWolfSorcererPreset(input: unknown): boolean {
     )
       return false;
     if (
-      !exact(c.wolfSorcerer, { policy: "awa_wolf_sorcerer_seats_v1", firstNight: m.firstNight }) ||
-      !exact(c.hunter, { deathActionPolicy: "awa_qualified_sources_v1" }) ||
-      !exact(c.psychic, { inspectionPolicy: "awa_repeat_optional_v1" }) ||
+      !exact(c.orderPrince, { policy: "awa_order_prince_first_ballot_v1" }) ||
+      !exact(c.guard, { repeatPolicy: "awa_last_action_v1" }) ||
+      !exact(c.seer, {
+        targetPolicy: "awa_alive_v1",
+        actionPolicy: "awa_required_when_legal_v1",
+      }) ||
       !exact(c.witch, {
         canSelfHeal: "disabled",
         knifeVisibility: "awa_with_heal_v1",

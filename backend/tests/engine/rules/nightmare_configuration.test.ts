@@ -1,5 +1,12 @@
+/**
+ * Integration/scenario tests for nightmare configuration configuration and setup contracts.
+ * Input: the existing literal boards, original scenario actions and malformed
+ * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
+ * Fixed policies, recorded literal expectations and rejection cases are the
+ * oracle; these tests never generate replacement goldens from migrated rules.
+ */
 import { expect, test } from "bun:test";
-import { isNightmarePreset } from "@ai-werewolf-arena/game-text";
+import { isNightmarePreset } from "../../../src/rulesets";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { nightmareTwelveConfig } from "../../../src/runtime/scenarios/nightmare_twelve";
 import {

@@ -1,5 +1,12 @@
+/**
+ * Integration/scenario tests for noble secret body roundtrip configuration and setup contracts.
+ * Input: the existing literal boards, original scenario actions and malformed
+ * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
+ * Fixed policies, recorded literal expectations and rejection cases are the
+ * oracle; these tests never generate replacement goldens from migrated rules.
+ */
 import { expect, test } from "bun:test";
-import { isNobleSecretBodyPreset, isDemonHunterPreset } from "@ai-werewolf-arena/game-text";
+import { isNobleSecretBodyPreset, isDemonHunterPreset } from "../../src/rulesets";
 import { nobleSecretBodyTwelveConfig } from "../../src/runtime/scenarios/noble_secret_body_twelve";
 import {
   boardDefinitionFromConfig,

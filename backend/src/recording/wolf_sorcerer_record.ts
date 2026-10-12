@@ -7,7 +7,7 @@
  * Shared readers only establish data shape; historical success and failure
  * prefixes, causal cursors and feature-specific policy checks remain unchanged.
  */
-import { isWolfSorcererPreset } from "@ai-werewolf-arena/game-text";
+import { isWolfSorcererPreset } from "../verification/board-support";
 import {
   readWolfSorcererExchangeFact,
   readWolfSorcererSkipFact,

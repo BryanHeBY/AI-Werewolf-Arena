@@ -7,8 +7,8 @@
  * Shared readers only establish data shape; historical success and failure
  * prefixes, causal cursors and feature-specific policy checks remain unchanged.
  */
-import { isTimeConsortPreset } from "@ai-werewolf-arena/game-text";
-import { isTricksterPreset } from "@ai-werewolf-arena/game-text";
+import { isTimeConsortPreset } from "../verification/board-support";
+import { isTricksterPreset } from "../verification/board-support";
 import { readExileMappingFact } from "@ai-werewolf-arena/game-contract/facts/trickster";
 import { sanitizeSpeechText } from "../utils/speech_text";
 import {
