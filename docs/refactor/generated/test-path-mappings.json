@@ -85368,13 +85368,501 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/knight.test.ts",
+      "to": "backend/tests/unit/features/knight/duel-authority-boundaries.test.ts",
+      "sourceCommit": "9695d888c13a780583c3f2aea7e06540373f93af",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "d942b6c120681168c643d9fdf17bb32c4dd235ecf56a92d7f54fce9c1a2f5006",
+      "candidateSha256": "276a117f4922b2e47402df71ee062ca7f6ab608c48715a7bbab7d2069a68aa5b",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1181,
+          "end": 1234,
+          "original": "../../../src/game/mechanisms/llm/target_hint_registry",
+          "value": "../../../../src/game/mechanisms/llm/target_hint_registry",
+          "originalResolved": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/llm/target_hint_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1087,
+          "end": 1135,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1008,
+          "end": 1053,
+          "original": "../../../src/game/mechanisms/roles/inspection",
+          "value": "../../../../src/game/mechanisms/roles/inspection",
+          "originalResolved": "backend/src/game/mechanisms/roles/inspection.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/inspection.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 928,
+          "end": 970,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 827,
+          "end": 873,
+          "original": "../../../src/ai/agents/player/action_reception",
+          "value": "../../../../src/ai/agents/player/action_reception",
+          "originalResolved": "backend/src/ai/agents/player/action_reception.ts",
+          "expectedResolved": "backend/src/ai/agents/player/action_reception.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 753,
+          "end": 791,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 674,
+          "end": 721,
+          "original": "../../../src/game/engine/action_request_factory",
+          "value": "../../../../src/game/engine/action_request_factory",
+          "originalResolved": "backend/src/game/engine/action_request_factory.ts",
+          "expectedResolved": "backend/src/game/engine/action_request_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 586,
+          "end": 629,
+          "original": "../../../src/game/engine/knight_duel_window",
+          "value": "../../../../src/game/engine/knight_duel_window",
+          "originalResolved": "backend/src/game/engine/knight_duel_window.ts",
+          "expectedResolved": "backend/src/game/engine/knight_duel_window.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 484,
+          "end": 532,
+          "original": "../../../src/game/mechanisms/roles/knight/commit",
+          "value": "../../../../src/game/mechanisms/roles/knight/commit",
+          "originalResolved": "backend/src/game/mechanisms/roles/knight/commit.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/knight/commit.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 399,
+          "end": 447,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 303,
+          "end": 348,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 247,
+          "end": 264,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "71b8c80e757612dfca0b723deba3568b1895f4fdd15f7aceb8dd11964ffc6469",
+          "title": "zh-CN: inspection disguise and revealed Idiot immunity neither alter true-camp duels nor leak through target hints",
+          "occurrence": 1
+        },
+        {
+          "id": "1b62a4d05aa73c846c550e1b19f3091efe9b17a11e8b056d9dfea53ce1f5b96a",
+          "title": "en: inspection disguise and revealed Idiot immunity neither alter true-camp duels nor leak through target hints",
+          "occurrence": 1
+        },
+        {
+          "id": "4aeebf4eecf514e755fbb18b876ac04c4e7922e1d251ee805a5e7cd4f2aa974f",
+          "title": "an optional duel provider failure propagates unchanged and consumes no resource or public fact",
+          "occurrence": 1
+        },
+        {
+          "id": "463bd5a0a81668b6a482c94f2642465726bcc927080ed175515c70fddaf9824b",
+          "title": "zh-CN: strict readonly duel receipt and true-camp commit hide non-wolf third-party identity",
+          "occurrence": 1
+        },
+        {
+          "id": "9570ac64580c9703adade4508973d2473dad3327b2d2ff9a6af5705abbd64864",
+          "title": "en: strict readonly duel receipt and true-camp commit hide non-wolf third-party identity",
+          "occurrence": 1
+        },
+        {
+          "id": "c3831e594116e2cc8f1083767df41d7ad8d6d25424a3bd1a121a04ba5ebef982",
+          "title": "zh-CN: multiple Knights use the smallest eligible actor and discard role/resource/target-life changes without spending others",
+          "occurrence": 1
+        },
+        {
+          "id": "32489c5f29d8f607f643bcf5444518754d73efd6e8cc7e1304cd6b68ecce1ed0",
+          "title": "en: multiple Knights use the smallest eligible actor and discard role/resource/target-life changes without spending others",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Role,\n  Camp,\n  Phase,\n  KnightDuelWindow,\n  ActionWindow,\n  WinCondition,\n  COMPONENT,\n  DeathCause,\n  type RoleComponent,\n  type GameEvent,\n  type ActionRequest,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Role, Camp, Phase, KnightDuelWindow, WinCondition, COMPONENT, DeathCause, type RoleComponent, type GameEvent, type ActionRequest } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "ActionWindow",
+              "imported": "ActionWindow",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/knight.test.ts",
+      "to": "backend/tests/scenarios/features/knight/native-day-duel-settlement.test.ts",
+      "sourceCommit": "9695d888c13a780583c3f2aea7e06540373f93af",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "d942b6c120681168c643d9fdf17bb32c4dd235ecf56a92d7f54fce9c1a2f5006",
+      "candidateSha256": "830b932cdee42c7c4f5a94f87d3d868d3a811a538cc188326a12170ade9b95fc",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 349,
+          "end": 397,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 269,
+          "end": 314,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 213,
+          "end": 230,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "94a479b2ed3dc541f1b35f819659ced80629cca95c3cfd9ac2b47cb41374168d",
+          "title": "zh-CN: the last speech gap and after-speeches are separate windows; disabled windows issue no requests",
+          "occurrence": 1
+        },
+        {
+          "id": "b572def77240514f261438d397d12d347fa03ed5cb7b208fe73bc921b8064ffc",
+          "title": "en: the last speech gap and after-speeches are separate windows; disabled windows issue no requests",
+          "occurrence": 1
+        },
+        {
+          "id": "44885c5f81b82ddf38609a9b079acfc0ad813008112aaf64014c17f6b9e60dde",
+          "title": "before_speeches: an actual earlier public blast interrupts the day before the corresponding duel request",
+          "occurrence": 1
+        },
+        {
+          "id": "d4035f386c62ad2a5f0b7bb479b3769e481a858fa29fef85bef8523c0cf7a9f9",
+          "title": "between_speeches: an actual earlier public blast interrupts the day before the corresponding duel request",
+          "occurrence": 1
+        },
+        {
+          "id": "351eb2885e1a72e4d8cabb50c4947c48d53567ec25cdd413555b90ab55715e85",
+          "title": "zh-CN/before_speeches: hitting Wolf King spends one duel, forbids its gun and stops before voting",
+          "occurrence": 1
+        },
+        {
+          "id": "216c42d45a6ac13bcd833174d08866ef4900fb9c34eed2c95e5467233cc7f555",
+          "title": "zh-CN/between_speeches: hitting Wolf King spends one duel, forbids its gun and stops before voting",
+          "occurrence": 1
+        },
+        {
+          "id": "b3b92a90d5ff9d319189d764a9f42efe152c8ebae7f78a82521e1fd0373dfe81",
+          "title": "zh-CN/after_speeches: hitting Wolf King spends one duel, forbids its gun and stops before voting",
+          "occurrence": 1
+        },
+        {
+          "id": "b78869197bd00da71c73440d43404060e0005127710eeea33a970c66cbb428fa",
+          "title": "en/before_speeches: hitting Wolf King spends one duel, forbids its gun and stops before voting",
+          "occurrence": 1
+        },
+        {
+          "id": "9852ad9578fc462086e3d15f2e56721d222a02806b3c1a64160c7ea6e842e6be",
+          "title": "en/between_speeches: hitting Wolf King spends one duel, forbids its gun and stops before voting",
+          "occurrence": 1
+        },
+        {
+          "id": "375ac8d8a36c91c7b53faeb3547c3c791aa35ffa81a152b28df736521637c100",
+          "title": "en/after_speeches: hitting Wolf King spends one duel, forbids its gun and stops before voting",
+          "occurrence": 1
+        },
+        {
+          "id": "ff47a961d695531a3d9c61f8a8c7304d85da3b65953f64c2dda53eb636682f7a",
+          "title": "zh-CN: a missed Knight sheriff receives authorized last words and transfers its badge before surviving players speak and vote",
+          "occurrence": 1
+        },
+        {
+          "id": "58684d78c2c98d5bac7dc3667cc58fcea365e8bb4cc1827d7d6f3b41a8c80783",
+          "title": "en: a missed Knight sheriff receives authorized last words and transfers its badge before surviving players speak and vote",
+          "occurrence": 1
+        },
+        {
+          "id": "55f1f5dc9f80bcc9be1efc29999dcd99fb3a48ac65fabd84c1f8bcde05dad704",
+          "title": "zh-CN: the last wolf duel seals one exact victory after settlement without any later action",
+          "occurrence": 1
+        },
+        {
+          "id": "2d680d9fe738c68eb1316efefd85b5becb0ea60b79069b52548d5c799e67774a",
+          "title": "en: the last wolf duel seals one exact victory after settlement without any later action",
+          "occurrence": 1
+        },
+        {
+          "id": "d8d0aaed0e3862b4468ab8832625ff2b6419a49ca1aa1c02a3dc4d8500f178ae",
+          "title": "zh-CN: the last good special role misses, receives its authorized words and badge settlement, then seals Wolf victory with no later speech/vote",
+          "occurrence": 1
+        },
+        {
+          "id": "80a5e97c7db41ea72043fcd448f30b3a6f8f92b8d7878fdf7d2ff020b2dd3324",
+          "title": "en: the last good special role misses, receives its authorized words and badge settlement, then seals Wolf victory with no later speech/vote",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Role,\n  Camp,\n  Phase,\n  KnightDuelWindow,\n  ActionWindow,\n  WinCondition,\n  COMPONENT,\n  DeathCause,\n  type RoleComponent,\n  type GameEvent,\n  type ActionRequest,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Role, Camp, Phase, KnightDuelWindow, ActionWindow, WinCondition, COMPONENT, type RoleComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "DeathCause",
+              "imported": "DeathCause",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import { getKnightState, setKnightState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": "import { getKnightState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "droppedBindings": [
+            {
+              "name": "setKnightState",
+              "imported": "setKnightState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/knight/commit",
+          "originalImport": "import { commitKnightDuel } from \"../../../src/game/mechanisms/roles/knight/commit\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "commitKnightDuel",
+              "imported": "commitKnightDuel",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/knight_duel_window",
+          "originalImport": "import { KnightDuelWindow as DuelCollector } from \"../../../src/game/engine/knight_duel_window\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DuelCollector",
+              "imported": "KnightDuelWindow",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/action_request_factory",
+          "originalImport": "import { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameActionRequestFactory",
+              "imported": "GameActionRequestFactory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/action_reception",
+          "originalImport": "import { ActionReception } from \"../../../src/ai/agents/player/action_reception\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ActionReception",
+              "imported": "ActionReception",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/catalog",
+          "originalImport": "import { RoleCatalog, getDefaultRoleCatalog } from \"../../../src/game/mechanisms/roles/catalog\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "RoleCatalog",
+              "imported": "RoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/inspection",
+          "originalImport": "import { resolveInspection } from \"../../../src/game/mechanisms/roles/inspection\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "resolveInspection",
+              "imported": "resolveInspection",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import { setIdiotState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "setIdiotState",
+              "imported": "setIdiotState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/llm/target_hint_registry",
+          "originalImport": "import { DefaultTargetHintRegistry } from \"../../../src/game/mechanisms/llm/target_hint_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DefaultTargetHintRegistry",
+              "imported": "DefaultTargetHintRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 553,
-    "targetFiles": 609,
-    "mappingEntries": 609,
-    "baselineCases": 7106,
+    "sourceFiles": 554,
+    "targetFiles": 611,
+    "mappingEntries": 611,
+    "baselineCases": 7129,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
