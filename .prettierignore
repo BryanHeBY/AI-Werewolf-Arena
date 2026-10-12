@@ -18,5 +18,6 @@ frontend/test-results/
 frontend/playwright-report/
 # Recorded fixtures are historical evidence, including hashes and original bytes.
 frontend/tests/fixtures/*.json
+frontend/tests/fixtures/player-views/*.json
 packages/replay-contract/fixtures/*.json
 *.log
