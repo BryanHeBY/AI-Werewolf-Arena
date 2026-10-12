@@ -1,14 +1,19 @@
-import { mistPrefix } from "../support/mist_raven_prefix";
+/**
+ * Reproduction scenarios verify real Mist/Raven unpublished native, badge, election and spent-skill feeds remain compatible and private.
+ * Input: Original cached actual phase prefixes, recording metadata and copied private-canary/feed alterations.
+ * Output and oracle: Literal request/event/state expectations and parser rejection preserve original cache and setup evaluation; no pure decoder fixture replaces the played prefix.
+ */
+import { mistPrefix } from "../../../support/mist_raven_prefix";
 import { test, expect } from "bun:test";
-import { bootstrapGame } from "../../src/app/bootstrap";
-import { Phase, createRandom, type ActionRequest, type ToolCall } from "../../src/core";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { Phase, createRandom, type ActionRequest, type ToolCall } from "../../../../src/core";
 import {
   ReproductionTrace,
   parseReproductionRecord,
   type ReproductionRecord,
-} from "../../src/recording/reproduction";
-import { captureCheckpoint } from "../../src/runtime/simulation/reproduction_context";
-import { mistRecording, mistBoard, mistAction, MIST_ROLES } from "../support/mist_raven_recording";
+} from "../../../../src/recording/reproduction";
+import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
+import { mistRecording, mistBoard, mistAction, MIST_ROLES } from "../../../support/mist_raven_recording";
 const cache = new Map<string, Promise<ReproductionRecord>>();
 function prefix(
   stage: string,

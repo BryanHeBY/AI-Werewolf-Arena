@@ -1,10 +1,15 @@
+/**
+ * Interaction scenarios verify Mist/Raven chain-final victory waits for actual pending rescue and rejects illegal late self-heal.
+ * Input: Original last-villager/last-god recording plans, locale matrix and captured request observations.
+ * Output and oracle: Literal terminal timing, live-state, stock and failed-prefix assertions remain tied to actual recordings; failed healing is not repaired into a legal action.
+ */
 import { expect, test } from "bun:test";
-import { Camp, Phase } from "../../src/core";
+import { Camp, Phase } from "../../../../src/core";
 import {
   mistRecording,
   type MistRecordVariant,
   type MistRequestObservation,
-} from "../support/mist_raven_recording";
+} from "../../../support/mist_raven_recording";
 for (const variant of ["last-villager-pass", "last-villager-heal", "last-god"] as const)
   for (const locale of ["en", "zh-CN"] as const)
     test(`Mist actual pending slaughter-side victory with full Tape ${variant}/${locale}`, async () => {

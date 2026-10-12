@@ -1,17 +1,21 @@
-// Main task ports independently reviewed unpublished-prefix regressions into the maintained suite.
+/**
+ * Reproduction scenarios verify Mist/Raven incremental request prefixes retain predecessor settlement and private state through publication.
+ * Input: Actual phase/prefix drivers, original cached sources and copied action, candidate, stock or co-deletion forgeries.
+ * Output and oracle: Explicit legitimate-prefix acceptance and malformed-record rejection retain the original causal source; shared setup, matrices and source archives are not regenerated.
+ */
 import { test, expect } from "bun:test";
-import { bootstrapGame } from "../../src/app/bootstrap";
-import { createRandom, type ActionRequest, type ToolCall } from "../../src/core";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { createRandom, type ActionRequest, type ToolCall } from "../../../../src/core";
 import {
   ReproductionTrace,
   parseReproductionRecord,
   type ReproductionRecord,
-} from "../../src/recording/reproduction";
-import { validateMistRavenRecord } from "../../src/recording/mist_raven_record";
-import { captureCheckpoint } from "../../src/runtime/simulation/reproduction_context";
-import { mistRecording, mistBoard, mistAction, MIST_ROLES } from "../support/mist_raven_recording";
+} from "../../../../src/recording/reproduction";
+import { validateMistRavenRecord } from "../../../../src/recording/mist_raven_record";
+import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
+import { mistRecording, mistBoard, mistAction, MIST_ROLES } from "../../../support/mist_raven_recording";
 
-import { mistPrefix as prefix } from "../support/mist_raven_prefix";
+import { mistPrefix as prefix } from "../../../support/mist_raven_prefix";
 
 function erase(r: ReproductionRecord, stage: string, day = 1) {
   const removed = r.decisions.find((d) => d.day === day && d.stage === stage)!;

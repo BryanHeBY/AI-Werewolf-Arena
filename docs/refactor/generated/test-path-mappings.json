@@ -59016,13 +59016,1042 @@
       "targetRunner": "backend-integration",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/mist_raven_complete_interactions.test.ts",
+      "to": "backend/tests/scenarios/interactions/mist-raven/complete-mechanism-interactions.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Every original callback/fixture-publication callback drives mistRecording/mistPrefix or actual cycles before prefix/feed/state mutation. Shared cache/producers and hidden/public/pending facts remain causal. Opt-in archive publication remains conditionally skipped when its explicit directory is absent, with no pass claim.",
+      "originalSha256": "776d28997dca898bc97b35c73173d1fbe318f8e630c7ad35722784fcf73167b2",
+      "candidateSha256": "e2a3ff5599818659117b2041d53ae26a7bfff9327ebf09b1b898cc75a832b799",
+      "moduleAndLocationEdits": [
+        {
+          "start": 135,
+          "end": 166,
+          "value": "../../../support/mist_raven_recording",
+          "kind": "module-specifier",
+          "original": "../support/mist_raven_recording",
+          "originalResolved": "backend/tests/support/mist_raven_recording.ts",
+          "expectedResolved": "backend/tests/support/mist_raven_recording.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 63,
+          "end": 77,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "ae7be7fcd1464b584f2b319c77e5a8693fd987489d8177228a17fc3a4990e837",
+          "title": "Mist complete manual interaction with finalized exact Tape pure-saved-dreamer/en",
+          "occurrence": 1
+        },
+        {
+          "id": "6322292453bbad70fce6dc5d99f42254645b2c2f7d0e5dfa570bab0b5b58a4ac",
+          "title": "Mist complete manual interaction with finalized exact Tape pure-saved-dreamer/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "68c315d74ce3616cd61b14182b0ec96dfd46fd3623a54674e10be100943121d2",
+          "title": "Mist complete manual interaction with finalized exact Tape consecutive-heal/en",
+          "occurrence": 1
+        },
+        {
+          "id": "a3a7681e790b64fec18e7e066d3c8cb681d0630f6986681205c498900110b702",
+          "title": "Mist complete manual interaction with finalized exact Tape consecutive-heal/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "4f25644e0d84d452327e122bd11cbdabd44eec2f267adf425eb8f0171e9f2dda",
+          "title": "Mist complete manual interaction with finalized exact Tape ordinary-double/en",
+          "occurrence": 1
+        },
+        {
+          "id": "7f9252f8181cd921431fab59b9b8f3d4fa94e8b3cdbb6f72cd5b51944eb10ec4",
+          "title": "Mist complete manual interaction with finalized exact Tape ordinary-double/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "eb52515a4ca225ddb8aedd41ee3c4751867bf83898798339cc31854a1da9bc67",
+          "title": "Mist complete manual interaction with finalized exact Tape mixed-order/en",
+          "occurrence": 1
+        },
+        {
+          "id": "a3635a98f091a1d96ec159857e0a1e5a2b509f656ecfe3d8f40388253e04f521",
+          "title": "Mist complete manual interaction with finalized exact Tape mixed-order/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "dc0c885cb6d465390c6b0d7d9dae0bd6f791f0e30d6f93be7b310f5495ac7fca",
+          "title": "Mist complete manual interaction with finalized exact Tape self-heal/en",
+          "occurrence": 1
+        },
+        {
+          "id": "7eda708ed0671597b040da56e1bdb6bde2f9e0cb6705f717a747e00725e1c040",
+          "title": "Mist complete manual interaction with finalized exact Tape self-heal/zh-CN",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/mist_raven_complete_victory.test.ts",
+      "to": "backend/tests/scenarios/interactions/mist-raven/chain-final-victory.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Every original callback/fixture-publication callback drives mistRecording/mistPrefix or actual cycles before prefix/feed/state mutation. Shared cache/producers and hidden/public/pending facts remain causal. Opt-in archive publication remains conditionally skipped when its explicit directory is absent, with no pass claim.",
+      "originalSha256": "c000c56617a279126e200e8c29c96c234cfe2103c836412eee82a209db3a4208",
+      "candidateSha256": "6a81cb2fa147c04d8fe63dbb6c60b2d13ebb4ef687eb50e246753e56fd36c0d4",
+      "moduleAndLocationEdits": [
+        {
+          "start": 178,
+          "end": 209,
+          "value": "../../../support/mist_raven_recording",
+          "kind": "module-specifier",
+          "original": "../support/mist_raven_recording",
+          "originalResolved": "backend/tests/support/mist_raven_recording.ts",
+          "expectedResolved": "backend/tests/support/mist_raven_recording.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 70,
+          "end": 84,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "4143988e6b5d8a5756fbaaee238ccaf9f993d452d892393fee7dbd938eadf629",
+          "title": "Mist actual pending slaughter-side victory with full Tape last-villager-pass/en",
+          "occurrence": 1
+        },
+        {
+          "id": "736bafd9c4fff61ab78a17742ca23e5ef00b54b914e8d5c20f36391514baeaff",
+          "title": "Mist actual pending slaughter-side victory with full Tape last-villager-pass/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "b89cf737e9654cf21b6592ed0916a2a00548cc64a251a3dc369e63bff8a097a4",
+          "title": "Mist actual pending slaughter-side victory with full Tape last-villager-heal/en",
+          "occurrence": 1
+        },
+        {
+          "id": "fb229445c7c910b68534ed466554dae538b7e0c6c0f7138e287059736dab770d",
+          "title": "Mist actual pending slaughter-side victory with full Tape last-villager-heal/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "4255188be370fa78a8645b283b45be23e4eaa955a36f2c826f2eb12a70ad8fab",
+          "title": "Mist actual pending slaughter-side victory with full Tape last-god/en",
+          "occurrence": 1
+        },
+        {
+          "id": "68fb5e7605fe0fed01785b190bc4aff55cf6440b0faa0485d26401e78c849201",
+          "title": "Mist actual pending slaughter-side victory with full Tape last-god/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "f62d0357f4bf5024ff4514e5755d7e314d853eb15fd662aaf907530f2ff4c95c",
+          "title": "Mist later self-heal is a finalized failure prefix without spending or dying/en",
+          "occurrence": 1
+        },
+        {
+          "id": "915818618cb8df9f10e11f4ae380ecfdf0ab0a14f892f0469e683f937990a115",
+          "title": "Mist later self-heal is a finalized failure prefix without spending or dying/zh-CN",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/mist_raven_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/mist-raven/required-response-prefix.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Every original callback/fixture-publication callback drives mistRecording/mistPrefix or actual cycles before prefix/feed/state mutation. Shared cache/producers and hidden/public/pending facts remain causal. Opt-in archive publication remains conditionally skipped when its explicit directory is absent, with no pass claim.",
+      "originalSha256": "3b49ab33f9ccb607c2ab144338e6c2a28e6209191d357bd59270afcb871b12eb",
+      "candidateSha256": "856504439abc902f7434e5316889ea8ca5952cacdfcca0cc70c60e0844ce0af7",
+      "moduleAndLocationEdits": [
+        {
+          "start": 343,
+          "end": 372,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 265,
+          "end": 306,
+          "value": "../../../support/mist_raven_transport_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/mist_raven_transport_scenarios",
+          "originalResolved": "backend/tests/support/mist_raven_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/mist_raven_transport_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 209,
+          "end": 223,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 136,
+          "end": 172,
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "original": "../support/foundation_transport_plan",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "d050096254cf3b4837617a08cc41d5ef4e2cf8b707aab596c9356db30036587b",
+          "title": "Mist precise required failure 1/alchemist_mist/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "3c1e82cbe8ab6b2c5751ed592daa3375c634394bad33fb7a8b50ffbba90d49dc",
+          "title": "Mist precise required failure 1/alchemist_mist/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "1a76cbdb74c4eb5b6121d1d29110041cf557fddc315a1bec743b4d4634b5a60c",
+          "title": "Mist precise required failure 1/alchemist_mist/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "1b298ee6b3f5f979a81e3c0fdccd7fb1bdc5f742a9f85874896b3c362cddd655",
+          "title": "Mist precise required failure 1/alchemist_mist/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "ae38d11a49de52b722f64b4e4c3f92acf2b2d83dac48bb13338ab4c4968c55d8",
+          "title": "Mist precise required failure 1/alchemist_mist/invalid/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "5365fdcfd7c5c691617ef49be2c52f8458ea48dd2991d2a26522846d30cd1361",
+          "title": "Mist precise required failure 1/alchemist_mist/invalid/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "89139a862c39ca8bd8673007af448eec9e07b6a42ab6e497a458f79092450d31",
+          "title": "Mist precise required failure 1/alchemist_snake/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "2ef1491bd581bdf63c517e1900f423309336a7119c1d2c23f46aa962d0d74201",
+          "title": "Mist precise required failure 1/alchemist_snake/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "5ef89a5db1cd070e3890bf627cc82dc451ef17cecad327f0914638118b4a59d0",
+          "title": "Mist precise required failure 1/alchemist_snake/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "e30971d24aead33977497760dbfba79450c371e564a1ab9d85678592b40b0dc3",
+          "title": "Mist precise required failure 1/alchemist_snake/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "6d265e8af1d23e2091b515dd2f230feaee981b6cb82a82ba1fb881f673fb7143",
+          "title": "Mist precise required failure 1/alchemist_snake/invalid/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "19fd8379030069ea6bc1eae70c7f612e2d3f9453523671bb84ef59d4f4704011",
+          "title": "Mist precise required failure 1/alchemist_snake/invalid/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "13b911c497ec8ac968ec6c6c6df51279355e8df3e3eec3dd8791f5bf65cefbe5",
+          "title": "Mist precise required failure 2/alchemist_snake/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "d7f3f857b249d68f9b9f1fa79185e5bc08430c340966672b03b5935247afc61d",
+          "title": "Mist precise required failure 2/alchemist_snake/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "c79f866035a1d70df9a49286f9b1d6f6d84999d7ff812669f0e8263678f1a2b6",
+          "title": "Mist precise required failure 2/alchemist_snake/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "5312648829dca58a4d89c265282dc577bfd01c8546d2309c7c5a67f894487bc2",
+          "title": "Mist precise required failure 2/alchemist_snake/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "8d77ac0d28f70e39a9c4a64ea8915946d3e848903697c31586f07c6cee250251",
+          "title": "Mist precise required failure 2/alchemist_snake/invalid/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "e4d028b8a10d0004c9f7c3d7f7f6c5419c3f4853f986407d9ada59e9dd7d599c",
+          "title": "Mist precise required failure 2/alchemist_snake/invalid/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "913544ce84d1e85eb2474772da81d6b16dc7a7f42637af4deafbadda33b06971",
+          "title": "Mist precise required failure 2/raven_knife/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "b654071ef2d9945d32805faedf1e98a2cb9e81decad481fd960c9807405218d4",
+          "title": "Mist precise required failure 2/raven_knife/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "ddc6c167495cea731bd1e335a8210d45399201c1660dcf9e8643765c6ccb4448",
+          "title": "Mist precise required failure 2/raven_knife/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "b33dc5ccf3c8c4cbecf7799b0edff416cb8c169914c6c00c2d13855d359039d0",
+          "title": "Mist precise required failure 2/raven_knife/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "e1db60584ecfa8ef6fb28b87389e17a7d800f662cba03a1c38dcb8a56ab82183",
+          "title": "Mist precise required failure 2/raven_knife/invalid/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "d83e508ceeb39e3bcbf29fc258580c6189164aaf4c7af599c9e732fe74849666",
+          "title": "Mist precise required failure 2/raven_knife/invalid/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "7153ea19a40f0573fa87a23e9336ee344fe7790f24274371e9421012f7c500e5",
+          "title": "Mist precise required failure 2/wolf_discussion/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "4bb73613c6fa5727cebffc0d730401e36151c4ae8915821daca6fa31f1613145",
+          "title": "Mist precise required failure 2/wolf_discussion/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "78b2ab5d36d28ce5704313c858e9d44479eaa3ca154e63b826cbb736eea61b8c",
+          "title": "Mist precise required failure 2/wolf_discussion/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "d8a438e235b9e4db9cf6ea6160894563aed8674dcee2bbcf52fd45336561641a",
+          "title": "Mist precise required failure 2/wolf_discussion/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "c58cc67e36f758105f0842d6500b4bb4c98376065b6b3bc9ac894909b886f97f",
+          "title": "Mist precise required failure 2/wolf_vote/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "1201fee7e88c891f95c36a2e776e209f76e045262407813e64610d15a04eeae8",
+          "title": "Mist precise required failure 2/wolf_vote/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "60d7ce21208fc18c9f244682dd3956df4de28132005cf380b1e8992e503e2a51",
+          "title": "Mist precise required failure 2/wolf_vote/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "8dd19cc07c268c58f7845ae87a8eae4872caea7b6ce87ffb3d7d458b5423f659",
+          "title": "Mist precise required failure 2/wolf_vote/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "b52920ff473bc1dc12a4452a5ab0ef761b5527b69837f14b0652bdde62d6d2d3",
+          "title": "Mist precise required failure 2/seer/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "23a9a4dff630146be60c0419e41d8fb1a99634898669cea601424ade7ae69f71",
+          "title": "Mist precise required failure 2/seer/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "7897a98cba303478f8bba0159807bc7d63a28c1d0e69c7db834f79e55e700780",
+          "title": "Mist precise required failure 2/seer/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "28f9baf83206fa3f19976469c4cb2de5c72ab42c956560b7fcf04f4bd0a6a6d8",
+          "title": "Mist precise required failure 2/seer/late/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "1fc57810b92c91ff1e5f54db1bae655d4fe353db7413809c211d3d9aee587a46",
+          "title": "Mist active circle never turns transport failure into random knife/missing/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "816774a79329f1d98506e71594596e9da5b50310d27ef479d5539dc687986868",
+          "title": "Mist active circle never turns transport failure into random knife/missing/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "710f64fa1132a8534ec9f0e3629e99eff3cbda830e7d14c305d68ec8fd185947",
+          "title": "Mist active circle never turns transport failure into random knife/late/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "317c86bc0c8e717767cf21267fef1a244ff6723f00489dad36cc5f236e2a9c10",
+          "title": "Mist active circle never turns transport failure into random knife/late/acp",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/mist_raven_feed.test.ts",
+      "to": "backend/tests/scenarios/reproduction/mist-raven/knowledge-feed-forgery.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Every original callback/fixture-publication callback drives mistRecording/mistPrefix or actual cycles before prefix/feed/state mutation. Shared cache/producers and hidden/public/pending facts remain causal. Opt-in archive publication remains conditionally skipped when its explicit directory is absent, with no pass claim.",
+      "originalSha256": "1ac60c8f3a823aceaf833ae1a2ba0d038c3d9dfa2454d2ff2d69d1aa4ce0265c",
+      "candidateSha256": "3329c951f5ef51c5c5c3fbf1fb6c0688b24ea3e5a67cb0d58dcd78616ec5d2cf",
+      "moduleAndLocationEdits": [
+        {
+          "start": 235,
+          "end": 263,
+          "value": "../../../support/mist_raven_prefix",
+          "kind": "module-specifier",
+          "original": "../support/mist_raven_prefix",
+          "originalResolved": "backend/tests/support/mist_raven_prefix.ts",
+          "expectedResolved": "backend/tests/support/mist_raven_prefix.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 173,
+          "end": 204,
+          "value": "../../../support/mist_raven_recording",
+          "kind": "module-specifier",
+          "original": "../support/mist_raven_recording",
+          "originalResolved": "backend/tests/support/mist_raven_recording.ts",
+          "expectedResolved": "backend/tests/support/mist_raven_recording.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 107,
+          "end": 139,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "316ec43b3212dcd54349fc3d7506c60fedbf3e400bca0317ed21793ff1bfa5cb",
+          "title": "Mist feed rejects unknown inventory",
+          "occurrence": 1
+        },
+        {
+          "id": "0faa300fe37389f52e03623e3527710be206ab28ad5524296a6e84796b2553c7",
+          "title": "Mist feed rejects another player's Seer result",
+          "occurrence": 1
+        },
+        {
+          "id": "362a4e6c9be02c60a87b2d843bb5af8f7e38eb1736ac8f3e55698b6a572fb22b",
+          "title": "Mist feed rejects own future Snake result",
+          "occurrence": 1
+        },
+        {
+          "id": "c88a3b2b65ab9222fb25b1a3319bc01b3b2c90c80c5277be4a90f1266f0e6548",
+          "title": "Mist feed rejects early night death",
+          "occurrence": 1
+        },
+        {
+          "id": "afc800417cecf6900ac1ce3f7410f5039cf884d5d4e70376269b65d0b4ce3ed0",
+          "title": "Mist feed rejects future Seer result",
+          "occurrence": 1
+        },
+        {
+          "id": "e385568058a30208426b9c5769663bd201a33df151f19c4eabaae41b999499fb",
+          "title": "Mist feed rejects parallel nomination result",
+          "occurrence": 1
+        },
+        {
+          "id": "054b6bd6e48cafa18e844fa26c88907cecfc58086eafca3e27da5caad8d53063",
+          "title": "Mist feed rejects future wolf snapshot",
+          "occurrence": 1
+        },
+        {
+          "id": "720fff19de33410f647396998ea04938caa3f1ec20c976abfbe7b285ba8c257a",
+          "title": "Mist feed rejects derived tally",
+          "occurrence": 1
+        },
+        {
+          "id": "a4edfd408961103ca182b6ecec648a5f243d2f0ef83da1cdbed72013b62f874f",
+          "title": "Mist feed rejects sequence gap",
+          "occurrence": 1
+        },
+        {
+          "id": "e4784437bf067705cc3cf935e50a7463e6d38351d893236b838bd2474b5cabf6",
+          "title": "Mist feed rejects reordered known prefix",
+          "occurrence": 1
+        },
+        {
+          "id": "ee7744e05708268a92b605344b0e13060d7094e3b522a590d8e281cfe6bfdff8",
+          "title": "Mist feed rejects omitted event with continuous numbering",
+          "occurrence": 1
+        },
+        {
+          "id": "48e82e3cede1580a518c7993c4373a1c28bcd71c0d037b52bcc69d0d742d3c23",
+          "title": "Mist feed rejects duplicate event with continuous numbering",
+          "occurrence": 1
+        },
+        {
+          "id": "56b361ba15eb333db6a1e1f769d2e4a2d96b80281871aa771b6a4b41abaadb8c",
+          "title": "Mist feed rejects dead wolf added to unseal knowledge",
+          "occurrence": 1
+        },
+        {
+          "id": "41ed1d5fc4be2178464328896a5be06e0ffdb5c704ba87b9e74acd4f1ce010a1",
+          "title": "Mist feed rejects old sealed Night chat re-injected",
+          "occurrence": 1
+        },
+        {
+          "id": "ba3310bbfb5b1332d4f615d6b5c3fc775635c740527ef4c23222ea02745957e9",
+          "title": "Mist feed real unpublished/published prefixes seer/1/2",
+          "occurrence": 1
+        },
+        {
+          "id": "c18a716ebbf2e9337337e10fa18c342cb5367b0d219a284894ebfac4057be8be",
+          "title": "Mist feed real unpublished/published prefixes sheriff_nomination/1/9",
+          "occurrence": 1
+        },
+        {
+          "id": "ff34ca55340b84c9af69f84dc098b4973925ea0519e3d27e512044cdec8420ad",
+          "title": "Mist feed real unpublished/published prefixes day_speech/1/5",
+          "occurrence": 1
+        },
+        {
+          "id": "b4883080150cef9d7653badd7d771a82d6acea83ff309ca3aee6690eb635fc9c",
+          "title": "Mist feed real unpublished/published prefixes alchemist_snake/1/1",
+          "occurrence": 1
+        },
+        {
+          "id": "a447b1605ae345c3ab7eea8c1bb68f0cb847b699650f20d6624f857237e3101d",
+          "title": "Mist feed real unpublished/published prefixes raven_knife/2/9",
+          "occurrence": 1
+        },
+        {
+          "id": "baf6e92d4f1989cc08d1a902476cfe7a0115e115f153eaf51e7b46c087dcac73",
+          "title": "Mist feed real unpublished/published prefixes last_words/1/11",
+          "occurrence": 1
+        },
+        {
+          "id": "8a50f5666da9a2482b7ba29a06050f9aeb17f0c69ffc07d277e7c0461ec382de",
+          "title": "Mist feed real unpublished/published prefixes on_pre_vote/1/10",
+          "occurrence": 1
+        },
+        {
+          "id": "f54d9d6127437cab2ba7883804cd335d5c9e5090bc1c7c80c4407f5b5751d483",
+          "title": "Mist unpublished feed rejects duplicate-phase",
+          "occurrence": 1
+        },
+        {
+          "id": "eaa521ebcac395478d5e341e03509a8327b02606c87489fc0a2058d6dc191c02",
+          "title": "Mist unpublished feed rejects drop-ready-speeches",
+          "occurrence": 1
+        },
+        {
+          "id": "06f03307a84cde55aedb579a552a581b843fb22c283cea2ad7292dc9bcf21f24",
+          "title": "Mist unpublished feed rejects reorder-ready-speeches",
+          "occurrence": 1
+        },
+        {
+          "id": "03449cc19c139f84b12a714541637f0e6abcff5465d18e11074e2b1784774563",
+          "title": "Mist unpublished feed rejects duplicate-unseal",
+          "occurrence": 1
+        },
+        {
+          "id": "f1f61d31e8f52fad75a0ede883d8e168ca654ffa14377eb1d14b567d9a666f17",
+          "title": "Mist unpublished feed rejects incomplete-second-order",
+          "occurrence": 1
+        },
+        {
+          "id": "219f1cedfc4e1230ae8a1f398343a3192742be088a6cdd199ebc0408a14198c4",
+          "title": "Mist unpublished feed rejects backward-phase",
+          "occurrence": 1
+        },
+        {
+          "id": "6c22792ed271efe0bd2f7463bdaaaa738d3ab2b85aebcb95c03c647063846219",
+          "title": "Mist unpublished publication order rejects omit-lastwords-wave",
+          "occurrence": 1
+        },
+        {
+          "id": "3d08ca41a66ab0528c0ed1ad951bbad46772b6f6c6535eb919a0e79990e97966",
+          "title": "Mist unpublished publication order rejects duplicate-lastwords",
+          "occurrence": 1
+        },
+        {
+          "id": "833bb6672420f71c2c1935599918cb79479cb4234a6f5f8329aeaa0f5330e77d",
+          "title": "Mist unpublished publication order rejects phase-before-private-result",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/mist_raven_feed_compatibility.test.ts",
+      "to": "backend/tests/scenarios/reproduction/mist-raven/unpublished-feed-compatibility.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Every original callback/fixture-publication callback drives mistRecording/mistPrefix or actual cycles before prefix/feed/state mutation. Shared cache/producers and hidden/public/pending facts remain causal. Opt-in archive publication remains conditionally skipped when its explicit directory is absent, with no pass claim.",
+      "originalSha256": "b388469a7372b4dfc8c5c5592e6cb11cf6221c65921a19b74499ac7873ab84b3",
+      "candidateSha256": "25d7f375b745a7ec2550e49985e19e78f744c0a2af4db0ceacacb3a16a7b187a",
+      "moduleAndLocationEdits": [
+        {
+          "start": 526,
+          "end": 557,
+          "value": "../../../support/mist_raven_recording",
+          "kind": "module-specifier",
+          "original": "../support/mist_raven_recording",
+          "originalResolved": "backend/tests/support/mist_raven_recording.ts",
+          "expectedResolved": "backend/tests/support/mist_raven_recording.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 408,
+          "end": 457,
+          "value": "../../../../src/runtime/simulation/reproduction_context",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 338,
+          "end": 370,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 229,
+          "end": 243,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 131,
+          "end": 154,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 28,
+          "end": 56,
+          "value": "../../../support/mist_raven_prefix",
+          "kind": "module-specifier",
+          "original": "../support/mist_raven_prefix",
+          "originalResolved": "backend/tests/support/mist_raven_prefix.ts",
+          "expectedResolved": "backend/tests/support/mist_raven_prefix.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "0a1d6a91157c76f98e4680ae5ee1f2f2de205afe034c0f61498028f5b2b76625",
+          "title": "real N2 Seer pending without new cycle checkpoint remains accepted",
+          "occurrence": 1
+        },
+        {
+          "id": "7aad4c3fe419b6c05146551c6d2d9baa1b960dc6cc4b8bf1365ae0d0549cba83",
+          "title": "unpublished N2 night deaths cannot leak into N2 Seer before Day/Snake",
+          "occurrence": 1
+        },
+        {
+          "id": "5ae8f9a593a93d5731057aec615b0abeb62a29474af7c10a669e5899b1164975",
+          "title": "real N2 Snake receives spent-Mist skipped fact without a phantom Mist request",
+          "occurrence": 1
+        },
+        {
+          "id": "ac6701d06a05b00c3759c95b2d9cee0af841406427fdf4dd5e4e38fa14369b92",
+          "title": "real unpublished vote summary preserves four-try abstain/soft-null",
+          "occurrence": 1
+        },
+        {
+          "id": "65ffd5aa897cddfac194526fab653eb174973be430038c605b34047889ee3e29",
+          "title": "real unpublished vote summary preserves four-try abstain/soft-invalid",
+          "occurrence": 1
+        },
+        {
+          "id": "3d93f65d6f68adba9d3092906b00f3fe5c4234518fd33acd700bfa0f7d13aaee",
+          "title": "real unpublished sheriff badge prefix remains accepted",
+          "occurrence": 1
+        },
+        {
+          "id": "b5c29d8c6bb9639c15edf0d9c9a4743988210a6b35a9c8ff515e421d5b9f5292",
+          "title": "unpublished authorized badge cannot carry an unrelated private canary",
+          "occurrence": 1
+        },
+        {
+          "id": "4b944b20cb8b13ab70017616ced073973fdcc99fb7b31e1e468bb896de27423a",
+          "title": "unpublished public sheriff summary cannot carry an unrelated private canary",
+          "occurrence": 1
+        },
+        {
+          "id": "9e06a3fb9af4005053388c43f2f85b70f3d01881373e0c7c441e7cfd73bb03a1",
+          "title": "real finite feed compatibility/chat-ended",
+          "occurrence": 1
+        },
+        {
+          "id": "a8369f757c5845cfe2d0eb2e118f4945ef4e149bd6c4c6fbeed89ce2c6042009",
+          "title": "real finite feed compatibility/chat-message",
+          "occurrence": 1
+        },
+        {
+          "id": "5ccb3e7a1352df29765d7bcc66a0ec9b4a998e9ff180b0e820feaf4241627bdc",
+          "title": "real finite feed compatibility/repeat-speech",
+          "occurrence": 1
+        },
+        {
+          "id": "45593f2f74cad69bdd10e0343c614ebcbde4f466bff6d78fd6be8ce13c77df7c",
+          "title": "real finite feed compatibility/badge-weight",
+          "occurrence": 1
+        },
+        {
+          "id": "2caf5c860c4d99ac7a7f826ad9f905cce773540080ca74db4f65acd972d198b8",
+          "title": "real finite feed compatibility/nomination-invalid",
+          "occurrence": 1
+        },
+        {
+          "id": "14c9a092a26edafe19e1ef6d314c323786af5fea9645384012e1ef185cf4f946",
+          "title": "real finite feed compatibility/sheriff-vote-invalid",
+          "occurrence": 1
+        },
+        {
+          "id": "7b876e554a676a04a57d3875af6695d435c5bf24058857d8548b33e7d24377dd",
+          "title": "real finite feed compatibility/sheriff-abstain-invalid",
+          "occurrence": 1
+        },
+        {
+          "id": "770585caae1d4cbbbeee32cb215c4578bede15c6ee474c48d43d8aa8fd687944",
+          "title": "real finite feed compatibility/self-vote",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/mist_raven_frontend_fixtures.test.ts",
+      "to": "backend/tests/scenarios/reproduction/mist-raven/frontend-fixture-publication.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Every original callback/fixture-publication callback drives mistRecording/mistPrefix or actual cycles before prefix/feed/state mutation. Shared cache/producers and hidden/public/pending facts remain causal. Opt-in archive publication remains conditionally skipped when its explicit directory is absent, with no pass claim.",
+      "originalSha256": "d00bfcfdc967747b4e81a65e3731b8d5a231a82da14eaedea852058721482f0c",
+      "candidateSha256": "9444e227d052f59b9d521f486cfe4326c17e1fb221b73f78a3c6694f0ecf034f",
+      "moduleAndLocationEdits": [
+        {
+          "start": 72,
+          "end": 103,
+          "value": "../../../support/mist_raven_recording",
+          "kind": "module-specifier",
+          "original": "../support/mist_raven_recording",
+          "originalResolved": "backend/tests/support/mist_raven_recording.ts",
+          "expectedResolved": "backend/tests/support/mist_raven_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "629e2a31a2cc9c70c52f5cbb638b1237ebdc628c0f53ac29a5578441c37ed839",
+          "title": "Mist actual finalized manual front fixtures with exact Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/mist_raven_incremental.test.ts",
+      "to": "backend/tests/scenarios/reproduction/mist-raven/incremental-settlement-forgery.test.ts",
+      "sourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+      "reason": "Every original callback/fixture-publication callback drives mistRecording/mistPrefix or actual cycles before prefix/feed/state mutation. Shared cache/producers and hidden/public/pending facts remain causal. Opt-in archive publication remains conditionally skipped when its explicit directory is absent, with no pass claim.",
+      "originalSha256": "b4b33033744a55d796e59e8824c0b76d820d1ca3a1f1f771d75d0b3de9a9743b",
+      "candidateSha256": "13778f840222728d40cb891141be6652a543e7b6761941c0946af65097015f59",
+      "moduleAndLocationEdits": [
+        {
+          "start": 714,
+          "end": 742,
+          "value": "../../../support/mist_raven_prefix",
+          "kind": "module-specifier",
+          "original": "../support/mist_raven_prefix",
+          "originalResolved": "backend/tests/support/mist_raven_prefix.ts",
+          "expectedResolved": "backend/tests/support/mist_raven_prefix.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 641,
+          "end": 672,
+          "value": "../../../support/mist_raven_recording",
+          "kind": "module-specifier",
+          "original": "../support/mist_raven_recording",
+          "originalResolved": "backend/tests/support/mist_raven_recording.ts",
+          "expectedResolved": "backend/tests/support/mist_raven_recording.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 523,
+          "end": 572,
+          "value": "../../../../src/runtime/simulation/reproduction_context",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 448,
+          "end": 485,
+          "value": "../../../../src/recording/mist_raven_record",
+          "kind": "module-specifier",
+          "original": "../../src/recording/mist_raven_record",
+          "originalResolved": "backend/src/recording/mist_raven_record.ts",
+          "expectedResolved": "backend/src/recording/mist_raven_record.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 372,
+          "end": 404,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 263,
+          "end": 277,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 172,
+          "end": 195,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "680d6887415dd4df06be88c3098b768a3ab49ffab89ac7f5f76ed77d169ccab2",
+          "title": "real N1 Seer/N1 Sheriff/N2 Raven pending and preceding settled prepublication prefixes remain valid",
+          "occurrence": 1
+        },
+        {
+          "id": "891a60930fa1d4eca578a11dcedb102529e582d635fa65ace30d85509f72624e",
+          "title": "unpublished Seer request cannot erase prerequisite alchemist_mist",
+          "occurrence": 1
+        },
+        {
+          "id": "bd69f6969fe4960de9e13260b0ded4c77a1762a85f3f919f3487f02d43220479",
+          "title": "unpublished Seer request cannot erase prerequisite dreamer",
+          "occurrence": 1
+        },
+        {
+          "id": "aab716d4307d6d03c38c83327667b684191b560dbfef53120b353dbe7f217445",
+          "title": "unpublished Seer request cannot erase prerequisite wolf_vote",
+          "occurrence": 1
+        },
+        {
+          "id": "aad239722fbb9556316eb533efb2e7ee078787bbc9cbf89ebfd06224ca9dd304",
+          "title": "unpublished Seer cannot follow pending Mist action",
+          "occurrence": 1
+        },
+        {
+          "id": "57ff8ed621f2cae5f9a493ba1ad33ee1905f460420512dbd12a02c19ca13ce0f",
+          "title": "unpublished Seer cannot follow error Mist action",
+          "occurrence": 1
+        },
+        {
+          "id": "4f821fb3e80292a9803a5cf8b7c10c63f9ac0f97dd1c4e5c1e8692c08ef1d8fb",
+          "title": "unpublished Seer cannot open before Mist settles",
+          "occurrence": 1
+        },
+        {
+          "id": "112f61e5162a4dc0572c56b7a89bf230ee79697f093a35fa3fedbbe993dc86d0",
+          "title": "unpublished settled Mist action validates target cardinality and legal IDs",
+          "occurrence": 1
+        },
+        {
+          "id": "7c079d977e3e25ccc780aae8d0226c04beff04f329bed376a6b947289d57864c",
+          "title": "first Day pending nomination still requires preceding native Seer action",
+          "occurrence": 1
+        },
+        {
+          "id": "59f707a9637c9fa46ffdfdd61d5032ab96bfb5cd697199200163c5d36f8b294f",
+          "title": "unpublished N2 Raven may not regain spent Mist stock",
+          "occurrence": 1
+        },
+        {
+          "id": "127f7905988024f3ad636a0124ce5ff776f3bae47cab94bdcf26673b9d189b57",
+          "title": "unpublished first Night cannot grant sealed Raven a turn",
+          "occurrence": 1
+        },
+        {
+          "id": "fd7ba18930308dd4b57c8ffe0e434bc00a717f3b02107f8fbe74bfc751e1f152",
+          "title": "unpublished Snake window validates raw knife, candidate and source Night before Day rescue",
+          "occurrence": 1
+        },
+        {
+          "id": "a8d05b74709f5225fd621ea7b47974e9eff6bb98415307bcf33aba927cc6ab77",
+          "title": "settled unpublished Seer must validate actual tool and self target",
+          "occurrence": 1
+        },
+        {
+          "id": "6ae116c1cc14aae9b6c78fac366120a956c42b328d52c5ebbf8948f792395d73",
+          "title": "real Mist one-cycle record preserves ordinary behavior/soft-null",
+          "occurrence": 1
+        },
+        {
+          "id": "1133df932c1e05c0e994a906170d873b4b52f60f979ae9da8de5d674c6c345ab",
+          "title": "real Mist one-cycle record preserves ordinary behavior/soft-invalid",
+          "occurrence": 1
+        },
+        {
+          "id": "babc1957413a01c0359759403e2f6ae1090a2af96b21340ac759cc8ec8b9caee",
+          "title": "real Mist one-cycle record preserves ordinary behavior/sheriff-clockwise",
+          "occurrence": 1
+        },
+        {
+          "id": "5c1a8a891740ea4a010d3a5b9ae4b90b45fe9a50aa4c681a1e091b8caa979b55",
+          "title": "real Mist one-cycle record preserves ordinary behavior/sheriff-counter-clockwise",
+          "occurrence": 1
+        },
+        {
+          "id": "2f4ef54713bcbcbb0fb6a2f0476dedf19d25d1f62fd9d4d42fb49676f1352196",
+          "title": "real Mist one-cycle record preserves ordinary behavior/sheriff-invalid",
+          "occurrence": 1
+        },
+        {
+          "id": "175869a895b46f50b10589c36acf11ae7f0321fb79e0b1a595be234ee4eeb0ef",
+          "title": "unpublished Seer cannot follow pending dreamer",
+          "occurrence": 1
+        },
+        {
+          "id": "16ed19add08c9a94ebddb8b48c4347efbc99c98c94714811babf05b7b82a6d83",
+          "title": "unpublished Seer cannot follow error dreamer",
+          "occurrence": 1
+        },
+        {
+          "id": "4bf9317cc4a26c69f626319c34926f36c53ecc868b4c9ace4cab11449bfc531d",
+          "title": "unpublished Seer cannot follow pending wolf_vote",
+          "occurrence": 1
+        },
+        {
+          "id": "8bc408dcd959a23638fb3ec9d0d0150e1f7eb39ff09a73460d1da15a895c4cf2",
+          "title": "unpublished Seer cannot follow error wolf_vote",
+          "occurrence": 1
+        },
+        {
+          "id": "a4910e4b65ba13d723132e4b9bbcb115c7e473b3afc966ab302099e11b135b65",
+          "title": "actual explicit-pass Mist prerequisite may not become missing",
+          "occurrence": 1
+        },
+        {
+          "id": "cd4de3b941a17224f3de356f9dcb4ff84b81b0e2a5b8ae7bd4d972bd854407fc",
+          "title": "actual explicit-pass Mist prerequisite may not become pending",
+          "occurrence": 1
+        },
+        {
+          "id": "662318d7bab71e5465b8c06b2182f2701b3643eb08c6af63a4094650dde4c591",
+          "title": "actual explicit-pass Mist prerequisite may not become error",
+          "occurrence": 1
+        },
+        {
+          "id": "cc77b8d6757cf217dbb2c41248c09580fb62971568050975b2045638128adbc8",
+          "title": "published Day still rejects jointly erased Seer action and fact with stock rolled to cp0",
+          "occurrence": 1
+        },
+        {
+          "id": "702a71c7c8825d8ed28acf4e36fb2eb1d4cf7aca9243e4c4301a147b678df9f0",
+          "title": "published Night successor still rejects jointly erased Mist action and fact with stock rolled to cp0",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 479,
-    "targetFiles": 485,
-    "mappingEntries": 485,
-    "baselineCases": 5891,
+    "sourceFiles": 486,
+    "targetFiles": 492,
+    "mappingEntries": 492,
+    "baselineCases": 6023,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

@@ -1,9 +1,14 @@
+/**
+ * Failure scenarios verify required Mist/Raven responses retain precise paid prefixes without fallback or random knife substitution.
+ * Input: Original day/stage/actor boundary table and missing/late/invalid transport/locale matrices.
+ * Output and oracle: Explicit failed decision, incomplete checkpoint and committed-state assertions preserve the actual prefix; source action and failure plans stay unchanged.
+ */
 import { expect, test } from "bun:test";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
-import type { PlannedTurn } from "../support/foundation_transport_plan";
-import type { ActionStage } from "../../src/core";
-import { mistTransportScenario } from "../support/mist_raven_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import type { ActionStage } from "../../../../src/core";
+import { mistTransportScenario } from "../../../support/mist_raven_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 
 const boundaries = [
   { day: 1, stage: "alchemist_mist", actor: "alchemist", rank: 50 },

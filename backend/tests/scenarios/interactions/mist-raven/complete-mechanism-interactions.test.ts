@@ -1,6 +1,11 @@
+/**
+ * Interaction scenarios verify complete Mist/Raven recordings preserve declared rescue, dream, knowledge and death-chain interactions.
+ * Input: Original recording variants, locale matrix and literal deaths, Snake/extra targets, knowledge and dream-reason tables.
+ * Output and oracle: Explicit event/checkpoint/result assertions retain actual causal replay; no expected table or archive fixture is regenerated.
+ */
 import { expect, test } from "bun:test";
-import { Camp } from "../../src/core";
-import { mistRecording, type MistRecordVariant } from "../support/mist_raven_recording";
+import { Camp } from "../../../../src/core";
+import { mistRecording, type MistRecordVariant } from "../../../support/mist_raven_recording";
 const cases: Array<{
   variant: MistRecordVariant;
   deaths: number[][];
