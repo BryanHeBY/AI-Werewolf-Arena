@@ -7,6 +7,7 @@ import { expect } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { assertControlOwnerClosed } from "./control_owner_probe";
+import { authenticatedSyntheticModelFetch, syntheticModelToken } from "./synthetic_model_fetch";
 import { assertReplayDocument, assertReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
 import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
@@ -57,6 +58,7 @@ export async function runTransportGame(
   locale: "zh-CN" | "en",
 ) {
   const root = await createTestTempDirectory("awa-role-transport-"),
+    sdkToken = syntheticModelToken(),
     plans = new Map<number, ActorTransportPlan>();
   for (const [actorId, turns] of scenario.turns)
     plans.set(actorId, {
@@ -127,7 +129,7 @@ export async function runTransportGame(
       ? Bun.serve({
           hostname: "127.0.0.1",
           port: 0,
-          async fetch(request) {
+          fetch: authenticatedSyntheticModelFetch(sdkToken, async (request) => {
             try {
               const body = (await request.json()) as any;
               const actor = Number(/^synthetic-player-(\d+)$/.exec(body.model)?.[1]);
@@ -289,7 +291,7 @@ export async function runTransportGame(
                 { status: 400 },
               );
             }
-          },
+          }),
         })
       : undefined;
   try {
@@ -298,7 +300,7 @@ export async function runTransportGame(
       players: Record<string, unknown> = {};
     providers.sdk = {
       type: "openai",
-      apiKey: "synthetic-only",
+      apiKey: sdkToken,
       baseURL: `${server?.url.origin ?? "http://127.0.0.1"}/v1`,
       maxConcurrentRequests: 2,
     };
