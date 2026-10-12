@@ -1,3 +1,10 @@
+/**
+ * Owns Lonely Girl choice bindings, copied camp and selected-target lifetime. Receives
+ * original World participants and first-night requests; writes accepted target choice and
+ * later target-death settlement only while current. Closed or replaced participant scopes
+ * revoke local permission, including deadline aliases.
+ */
+import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { copyEventData } from "@ai-werewolf-arena/game-text";
 import {
   COMPONENT,
@@ -231,8 +238,10 @@ export function bindLonelyGirlRequest(world: World, request: ActionRequest): voi
     request.context.stage === "lonely_girl" &&
     request.context.day === 1 &&
     validLonelyGirlChoice(b)
-  )
+  ) {
     requests.set(request, { binding: b, context: request.context });
+    registerRequestAliasPropagation(request, 40, inheritLonelyGirlDeadlineRequest);
+  }
 }
 export function lonelyGirlRequestScope(
   world: World,
@@ -261,8 +270,10 @@ export function inheritLonelyGirlDeadlineRequest(
   if (
     keys.length === other.length &&
     keys.every((k) => other.includes(k) && (source as any)[k] === (target as any)[k])
-  )
+  ) {
     requests.set(target, a);
+    registerRequestAliasPropagation(target, 40, inheritLonelyGirlDeadlineRequest);
+  }
 }
 export function commitLonelyGirlChoice(b: LonelyGirlBinding, targetId: number): Camp | null {
   const target = b.participants.get(targetId);

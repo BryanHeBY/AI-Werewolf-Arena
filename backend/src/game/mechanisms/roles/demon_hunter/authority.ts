@@ -1,3 +1,10 @@
+/**
+ * Owns Demon Hunter choice, native ability snapshots and audited resource commits. Receives
+ * original World/state/request references; writes only current sealed turns and accepted
+ * deadline aliases. Invalid or retired scopes fail locally, preserving partial-write and
+ * settlement order; alias routing adds no capability.
+ */
+import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { recordNobleContractClosure } from "../noble_secret_body/facts";
 import type { NobleContractClosedFact } from "@ai-werewolf-arena/game-text";
 import {
@@ -553,6 +560,7 @@ export function bindDemonHunterRequest(world: World, request: DemonHunterRequest
       fields: Object.getOwnPropertyDescriptors(request),
       deadline: t.deadline,
     });
+    registerRequestAliasPropagation(request, 60, inheritDemonHunterDeadlineRequest);
   } catch {
     return;
   }
@@ -612,6 +620,7 @@ export function inheritDemonHunterDeadlineRequest(
     );
     a.turn.deadline = typeof deadline === "number" ? deadline : null;
     requests.set(target, { ...a, fields, deadline: a.turn.deadline });
+    registerRequestAliasPropagation(target, 60, inheritDemonHunterDeadlineRequest);
   } catch {
     return;
   }

@@ -1,3 +1,10 @@
+/**
+ * Owns native Demon-board Witch request bindings and shared earliest deadlines. Receives
+ * original turn/context references and bounded aliases; writes local bindings only after
+ * native scope and body validation. Expired, replaced or invalid original requests revoke
+ * delivery; completion stays owned by the original scope.
+ */
+import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import {
   Phase,
   PotionType,
@@ -90,6 +97,7 @@ function bindDemonNativeRequest(
     r = { turn, context, deadline };
   bindRequestDeliveryGuard(request, () => current(request, r), scope);
   requests.set(request, r);
+  registerRequestAliasPropagation(request, 70, inheritDemonWitchDeadlineRequest);
 }
 export function bindDemonWitchRequest(
   world: World,
@@ -180,6 +188,7 @@ export function inheritDemonWitchDeadlineRequest(
   bindRequestDeliveryGuard(clone, () => current(clone, copied), r.turn.scope);
   r.turn.deadline = deadline;
   requests.set(clone, copied);
+  registerRequestAliasPropagation(clone, 70, inheritDemonWitchDeadlineRequest);
 }
 export function readDemonPotionTool(
   value: unknown,

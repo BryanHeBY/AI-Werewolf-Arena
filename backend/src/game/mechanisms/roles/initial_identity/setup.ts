@@ -1,3 +1,10 @@
+/**
+ * Owns initial Thief/Shapeshifter selection scopes and request bindings. Receives original
+ * World participants and first-night requests; writes choices and accepted aliases only while
+ * the setup scope is current. Failed selection and closed setup remain local terminal
+ * decisions; metadata carries no permission.
+ */
+import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { copyEventData } from "@ai-werewolf-arena/game-text";
 import {
   COMPONENT,
@@ -171,8 +178,10 @@ export function bindInitialIdentityRequest(world: World, request: ActionRequest)
     request.phase === Phase.Night &&
     request.context.day === 1 &&
     request.context.stage === scope.kind
-  )
+  ) {
     requests.set(request, { scope, context: request.context });
+    registerRequestAliasPropagation(request, 20, inheritInitialIdentityDeadlineRequest);
+  }
 }
 export function initialIdentityRequestScope(
   world: World,
@@ -204,6 +213,7 @@ export function inheritInitialIdentityDeadlineRequest(
   )
     return;
   requests.set(target, binding);
+  registerRequestAliasPropagation(target, 20, inheritInitialIdentityDeadlineRequest);
 }
 export function initialIdentityRequestChoices(
   world: World,

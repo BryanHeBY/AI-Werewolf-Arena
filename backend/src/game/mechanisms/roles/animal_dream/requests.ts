@@ -1,3 +1,10 @@
+/**
+ * Owns Animal Dream turn scopes, request envelopes and transactional completion. Receives
+ * original World/choice/envelope references; writes accepted bindings and tool commits only
+ * through current monotonic authority. Closed, cancelled or invalid envelopes revoke delivery
+ * and all aliases; routing metadata never grants permission.
+ */
+import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { z } from "zod";
 import type { World } from "../../../../core/domain/world";
 import { Phase } from "../../../../core/domain/identity";
@@ -91,6 +98,7 @@ export function openAnimalRequest(
   bindRequestDeliveryGuard(request, () => current(t), scope);
   turns.set(scope, t);
   requests.set(request, t);
+  registerRequestAliasPropagation(request, 100, inheritAnimalDeadlineRequest);
   return scope;
 }
 export function animalRequestScope(world: World, request: object): object | undefined {
@@ -103,6 +111,7 @@ export function inheritAnimalDeadlineRequest(original: ActionRequest, clone: Act
   inheritAnimalRequestEnvelope(t.envelope, original, clone);
   bindRequestDeliveryGuard(clone, () => current(t), t.scope);
   requests.set(clone, t);
+  registerRequestAliasPropagation(clone, 100, inheritAnimalDeadlineRequest);
 }
 export function readAnimalTool(raw: unknown): Call | null {
   try {

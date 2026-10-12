@@ -1,3 +1,10 @@
+/**
+ * Owns the active wall, original author stock and request bindings. Reads the World and
+ * original request context; writes accepted wall actions and aliases only for the same
+ * author/window. A closed wall and replaced participants revoke its local authority; alias
+ * routing never bypasses these checks.
+ */
+import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { readWallNoteData } from "@ai-werewolf-arena/game-text";
 import {
   COMPONENT,
@@ -59,7 +66,7 @@ export function bindWallRequest(world: World, request: ActionRequest): void {
     author &&
     request.context.wall_id === a.token &&
     request.context.item_instance_id === author.instanceId
-  )
+  ) {
     requestScopes.set(request, {
       scope: a,
       world,
@@ -67,6 +74,8 @@ export function bindWallRequest(world: World, request: ActionRequest): void {
       instanceId: author.instanceId,
       context: request.context,
     });
+    registerRequestAliasPropagation(request, 10, inheritWallDeadlineRequest);
+  }
 }
 export function wallRequestScope(world: World, request: ActionRequest): WallAuthority | undefined {
   const binding = requestScopes.get(request);
@@ -216,4 +225,5 @@ export function inheritWallDeadlineRequest(source: ActionRequest, target: Action
   )
     return;
   requestScopes.set(target, binding);
+  registerRequestAliasPropagation(target, 10, inheritWallDeadlineRequest);
 }

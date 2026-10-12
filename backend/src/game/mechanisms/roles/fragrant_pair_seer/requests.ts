@@ -1,3 +1,10 @@
+/**
+ * Owns Fragrant Pair choice turns, request bodies and shared deadline bindings. Receives
+ * original World/context references and bounded aliases; writes validated pair choices and
+ * completion receipts only through the current turn. Closed, expired or replaced scopes
+ * revoke delivery; aliases retain local validation and original settlement order.
+ */
+import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { types } from "node:util";
 import type { ActionRequest, ToolCall } from "../../../../core/domain/actions";
 import { Phase } from "../../../../core/domain/identity";
@@ -139,6 +146,7 @@ export function openFragrantPairRequest(
   bindRequestDeliveryGuard(request, () => current(request, alias), scope);
   turns.set(scope, turn);
   requests.set(request, alias);
+  registerRequestAliasPropagation(request, 90, inheritFragrantPairDeadlineRequest);
   return scope;
 }
 export function fragrantPairRequestScope(world: World, request: object): object | undefined {
@@ -167,6 +175,7 @@ export function inheritFragrantPairDeadlineRequest(
   bindRequestDeliveryGuard(clone, () => current(clone, alias), r.turn.scope);
   r.turn.deadline = deadline;
   requests.set(clone, alias);
+  registerRequestAliasPropagation(clone, 90, inheritFragrantPairDeadlineRequest);
 }
 export function readFragrantPairTool(raw: unknown): ChoiceTool | null {
   try {

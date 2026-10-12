@@ -1,3 +1,10 @@
+/**
+ * Owns Ghost Bride wedding turns, participant snapshots and transactional commits. Receives
+ * original World objects and sealed requests; writes accepted choices and bound aliases only
+ * through current wedding authority. Cancellation and failed commits keep their original
+ * settlement order; alias routing never replaces local validation.
+ */
+import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { types } from "node:util";
 import {
   GHOST_BRIDE_POLICY,
@@ -641,6 +648,7 @@ export function bindGhostBrideRequest(world: World, request: WeddingRequest): vo
       () => ghostBrideRequestScope(world, request) !== undefined,
       t.scope,
     );
+    registerRequestAliasPropagation(request, 50, inheritGhostBrideDeadlineRequest);
   }
 }
 export function ghostBrideRequestScope(world: World, request: WeddingRequest): object | undefined {
@@ -690,6 +698,7 @@ export function inheritGhostBrideDeadlineRequest(
       () => ghostBrideRequestScope(a.turn.binding.world, target) !== undefined,
       a.turn.scope,
     );
+    registerRequestAliasPropagation(target, 50, inheritGhostBrideDeadlineRequest);
   }
 }
 function targetCurrent(t: Turn, id: number): boolean {

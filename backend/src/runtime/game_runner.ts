@@ -1,20 +1,17 @@
-import { inheritNobleBodyDeadlineRequest } from "../game/mechanisms/roles/noble_secret_body/requests";
-import { inheritFragrantPairDeadlineRequest } from "../game/mechanisms/roles/fragrant_pair_seer/requests";
-import { inheritAnimalDeadlineRequest } from "../game/mechanisms/roles/animal_dream/requests";
+/**
+ * Owns game assembly, absolute deadline budgets, resource shutdown and failure aggregation.
+ * Inputs are resolved setup and execution dependencies; outputs are recorded outcomes and
+ * optional audit results. The runner delegates local request alias validation to its bound
+ * owners and closes only its own resources, preserving cleanup/error order.
+ */
+import { deriveBoundedRequest } from "../core/domain/request_delivery";
 import {
   animalOriginalAuditIds,
   animalOriginalAuditPlayer,
 } from "../game/mechanisms/roles/animal_dream/roster";
 import { aliveLifeDescriptor } from "../core/domain/components/alive";
-import { inheritDemonWitchDeadlineRequest } from "../game/mechanisms/roles/demon_hunter/native_potion_requests";
-import { inheritDemonHunterDeadlineRequest } from "../game/mechanisms/roles/demon_hunter/authority";
-import { inheritGhostBrideDeadlineRequest } from "../game/mechanisms/roles/ghost_bride/authority";
-import { inheritLonelyGirlDeadlineRequest } from "../game/mechanisms/roles/lonely_girl/lifecycle";
 import { initialPlayerIdentity } from "../core/domain/initial_roster";
-import { inheritWildChildDeadlineRequest } from "../game/mechanisms/roles/wild_child/lifecycle";
 import { initialIdentityDeal } from "../game/mechanisms/roles/initial_identity/deal";
-import { inheritInitialIdentityDeadlineRequest } from "../game/mechanisms/roles/initial_identity/setup";
-import { inheritWallDeadlineRequest } from "../game/mechanisms/events/wall_notes/authority";
 import { text } from "@ai-werewolf-arena/game-text";
 import { formatErrorDiagnostic } from "../utils/error_diagnostic";
 /** Owns one game's resources, deadline, failure policy, and final replay. */
@@ -113,17 +110,7 @@ class DeadlineAwareActionProvider implements ActionProvider {
       retryAttempt > 0 ? (this.budgets.get(key) ?? Infinity) : Infinity,
     );
     this.budgets.set(key, deadline);
-    const timed = { ...request, deadlineAtMs: deadline };
-    inheritWallDeadlineRequest(request, timed);
-    inheritInitialIdentityDeadlineRequest(request, timed);
-    inheritWildChildDeadlineRequest(request, timed);
-    inheritLonelyGirlDeadlineRequest(request, timed);
-    inheritGhostBrideDeadlineRequest(request, timed);
-    inheritDemonHunterDeadlineRequest(request, timed);
-    inheritDemonWitchDeadlineRequest(request, timed);
-    inheritNobleBodyDeadlineRequest(request, timed);
-    inheritFragrantPairDeadlineRequest(request, timed);
-    inheritAnimalDeadlineRequest(request, timed);
+    const timed = deriveBoundedRequest(request, deadline);
     return this.delegate.getAction(timed);
   }
 }

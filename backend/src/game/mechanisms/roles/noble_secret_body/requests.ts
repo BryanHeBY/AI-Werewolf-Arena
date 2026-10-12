@@ -1,3 +1,11 @@
+/**
+ * Owns Noble/Secret Body choice and reveal request bindings plus delivery completion.
+ * Receives original contexts, turn scopes and deadline aliases; writes only accepted current
+ * local bindings and committed tools. Closed or invalid requests fail current checks; this
+ * mechanical routing change preserves the existing restoration behavior until the separate
+ * revocation correction.
+ */
+import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { types } from "node:util";
 import { Phase } from "../../../../core/domain/identity";
 import type { ActionRequest, ToolCall } from "../../../../core/domain/actions";
@@ -125,6 +133,7 @@ export function openNobleBodyRequest(
   bindRequestDeliveryGuard(request, () => current(request, r), scope);
   turns.set(scope, turn);
   requests.set(request, r);
+  registerRequestAliasPropagation(request, 80, inheritNobleBodyDeadlineRequest);
   return scope;
 }
 export function nobleBodyRequestScope(world: World, request: object): object | undefined {
@@ -155,6 +164,7 @@ export function inheritNobleBodyDeadlineRequest(
   bindRequestDeliveryGuard(clone, () => current(clone, alias), r.turn.scope);
   r.turn.deadline = deadline;
   requests.set(clone, alias);
+  registerRequestAliasPropagation(clone, 80, inheritNobleBodyDeadlineRequest);
 }
 export function readNobleBodyTool(raw: unknown): ChoiceTool | null {
   try {
@@ -277,6 +287,7 @@ export function openNobleBodyRevealRequest(
   bindRequestDeliveryGuard(request, () => current(request, r), scope);
   turns.set(scope, turn);
   requests.set(request, r);
+  registerRequestAliasPropagation(request, 80, inheritNobleBodyDeadlineRequest);
   return scope;
 }
 export function commitNobleBodyRevealSpeech(world: World, scope: object, raw: unknown) {

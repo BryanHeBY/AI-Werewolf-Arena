@@ -1,13 +1,10 @@
-import { inheritNobleBodyDeadlineRequest } from "../../../game/mechanisms/roles/noble_secret_body/requests";
-import { inheritFragrantPairDeadlineRequest } from "../../../game/mechanisms/roles/fragrant_pair_seer/requests";
-import { inheritAnimalDeadlineRequest } from "../../../game/mechanisms/roles/animal_dream/requests";
-import { inheritDemonWitchDeadlineRequest } from "../../../game/mechanisms/roles/demon_hunter/native_potion_requests";
-import { inheritDemonHunterDeadlineRequest } from "../../../game/mechanisms/roles/demon_hunter/authority";
-import { inheritGhostBrideDeadlineRequest } from "../../../game/mechanisms/roles/ghost_bride/authority";
-import { inheritLonelyGirlDeadlineRequest } from "../../../game/mechanisms/roles/lonely_girl/lifecycle";
-import { inheritWildChildDeadlineRequest } from "../../../game/mechanisms/roles/wild_child/lifecycle";
-import { inheritInitialIdentityDeadlineRequest } from "../../../game/mechanisms/roles/initial_identity/setup";
-import { inheritWallDeadlineRequest } from "../../../game/mechanisms/events/wall_notes/authority";
+/**
+ * Adapts engine requests to owned ACP sessions and session-bound MCP actions. Inputs are
+ * World, resolved provider options and requests; outputs are accepted tools and round
+ * records. Deadline timers, cancellation and session close stay provider-owned; bound request
+ * owners retain local authority and text updates never commit game actions.
+ */
+import { inheritRequestAlias } from "../../../core/domain/request_delivery";
 import { allowsActionFallback, resolveTurnConstraints } from "../player/turn_constraints";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { describeError, formatErrorDiagnostic } from "../../../utils/error_diagnostic";
@@ -171,16 +168,7 @@ export class AcpActionProvider implements ActionProvider {
         startedAt + (this.options.turnTimeoutMs ?? 45_000),
       ),
     };
-    inheritWallDeadlineRequest(request, bounded);
-    inheritInitialIdentityDeadlineRequest(request, bounded);
-    inheritWildChildDeadlineRequest(request, bounded);
-    inheritLonelyGirlDeadlineRequest(request, bounded);
-    inheritGhostBrideDeadlineRequest(request, bounded);
-    inheritDemonHunterDeadlineRequest(request, bounded);
-    inheritDemonWitchDeadlineRequest(request, bounded);
-    inheritNobleBodyDeadlineRequest(request, bounded);
-    inheritFragrantPairDeadlineRequest(request, bounded);
-    inheritAnimalDeadlineRequest(request, bounded);
+    inheritRequestAlias(request, bounded);
     const controller = new AbortController();
     this.controllers.set(request.actorId, controller);
     const timer = setTimeout(

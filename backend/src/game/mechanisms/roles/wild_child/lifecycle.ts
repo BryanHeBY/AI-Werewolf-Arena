@@ -1,3 +1,10 @@
+/**
+ * Owns Wild Child model selection, participant snapshots and conversion lifetime. Receives
+ * original World components and first-night requests; writes choice bindings and later
+ * model-death conversion only through current local windows. Replacement or closed choice
+ * invalidates local authority; deadline aliases preserve its checks.
+ */
+import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { copyEventData } from "@ai-werewolf-arena/game-text";
 import {
   COMPONENT,
@@ -210,8 +217,10 @@ export function bindWildChildRequest(world: World, request: ActionRequest): void
     request.context.day === 1 &&
     request.actorId === b.actorId &&
     validWildChildChoice(b)
-  )
+  ) {
     requests.set(request, { binding: b, context: request.context });
+    registerRequestAliasPropagation(request, 30, inheritWildChildDeadlineRequest);
+  }
 }
 export function wildChildRequestScope(
   world: World,
@@ -240,8 +249,10 @@ export function inheritWildChildDeadlineRequest(
   if (
     keys.length === other.length &&
     keys.every((k) => other.includes(k) && Reflect.get(source, k) === Reflect.get(target, k))
-  )
+  ) {
     requests.set(target, b);
+    registerRequestAliasPropagation(target, 30, inheritWildChildDeadlineRequest);
+  }
 }
 export function commitWildChildChoice(b: WildChildBinding, targetId: number): boolean {
   const target = windows.get(b.world)?.targets.get(targetId);

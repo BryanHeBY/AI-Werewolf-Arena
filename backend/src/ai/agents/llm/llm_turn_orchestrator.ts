@@ -1,13 +1,10 @@
-import { inheritNobleBodyDeadlineRequest } from "../../../game/mechanisms/roles/noble_secret_body/requests";
-import { inheritFragrantPairDeadlineRequest } from "../../../game/mechanisms/roles/fragrant_pair_seer/requests";
-import { inheritAnimalDeadlineRequest } from "../../../game/mechanisms/roles/animal_dream/requests";
-import { inheritDemonWitchDeadlineRequest } from "../../../game/mechanisms/roles/demon_hunter/native_potion_requests";
-import { inheritDemonHunterDeadlineRequest } from "../../../game/mechanisms/roles/demon_hunter/authority";
-import { inheritGhostBrideDeadlineRequest } from "../../../game/mechanisms/roles/ghost_bride/authority";
-import { inheritLonelyGirlDeadlineRequest } from "../../../game/mechanisms/roles/lonely_girl/lifecycle";
-import { inheritWildChildDeadlineRequest } from "../../../game/mechanisms/roles/wild_child/lifecycle";
-import { inheritInitialIdentityDeadlineRequest } from "../../../game/mechanisms/roles/initial_identity/setup";
-import { inheritWallDeadlineRequest } from "../../../game/mechanisms/events/wall_notes/authority";
+/**
+ * Orchestrates one native SDK turn from an engine request and prompt session. Produces
+ * validated tools, retry/fallback outcomes and player records; owns controllers, deadline
+ * timers and pending tasks. Request alias owners retain their authority checks; cancellation
+ * and close drain only this provider’s resources.
+ */
+import { inheritRequestAlias } from "../../../core/domain/request_delivery";
 import { text } from "@ai-werewolf-arena/game-text";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { describeError, formatErrorDiagnostic } from "../../../utils/error_diagnostic";
@@ -76,16 +73,7 @@ export class LlmTurnOrchestrator {
       ...request,
       deadlineAtMs: Math.min(request.deadlineAtMs ?? Infinity, startedAt + this.options.timeoutMs),
     };
-    inheritWallDeadlineRequest(request, bounded);
-    inheritInitialIdentityDeadlineRequest(request, bounded);
-    inheritWildChildDeadlineRequest(request, bounded);
-    inheritLonelyGirlDeadlineRequest(request, bounded);
-    inheritGhostBrideDeadlineRequest(request, bounded);
-    inheritDemonHunterDeadlineRequest(request, bounded);
-    inheritDemonWitchDeadlineRequest(request, bounded);
-    inheritNobleBodyDeadlineRequest(request, bounded);
-    inheritFragrantPairDeadlineRequest(request, bounded);
-    inheritAnimalDeadlineRequest(request, bounded);
+    inheritRequestAlias(request, bounded);
     const controller = new AbortController();
     this.controllers.add(controller);
     const timer = setTimeout(
