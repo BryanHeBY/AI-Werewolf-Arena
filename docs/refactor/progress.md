@@ -105,3 +105,5 @@
 - C22注册政策：same-handler sharing+Ghost4显式声明，distinct sameID与dynamic第二ID占用的两原输入保留并明确拒绝策略加强；其余compiler/getStages/C21opaque原样。15focused/0/87+原Ghost1/0/3、final有限types0、四heads/newdeps0，独立原Map/getter/spread/receiver probe0；完整tool/schema/actor与RulePlan仍未完成。
 
 - C12独立seed模拟8：46旧IDs、53relative bindings与原完整seed/policy/i18n矩阵保持；Scholar实际40seed头修准确，Demon125seed来源保留。8heads/0、一次finite types0、独立actualGit/目标/body审查0；不重跑20/40/125 World批次。统一mapping383files/4585IDs，剩余100mixed/1847与110其它/1680继续。
+
+- C23寻香具体night unit：原acquired/closed与opening/normal/abort归单机制owner，World/events委托每读、lazy RNG原位、requiredrecord仍enginecallback，finally顺序/paid前缀不变。5AST/4heads0、独立8源项/cold6同exports；新4/0/24+原N1knife1/0/6。固定Gitd3c6f1d+C23三src的667source isolatedtypes0，排除未提交C24 context候选且红harnesslog保留；全C23仍继续。

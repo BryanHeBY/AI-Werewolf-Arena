@@ -7,6 +7,12 @@
  * their original lazy iteration. Handlers retain their receiver and query actors live.
  */
 import {
+  FragrantNightUnit,
+  isFragrantPairBoard,
+  fragrantAuthoritySnapshot,
+  FRAGRANT_PAIR_POLICY,
+} from "../../mechanisms/roles/fragrant_pair_seer/ports";
+import {
   checkpointNobleBodyAuthority,
   beginNobleBodyNight,
   abortNobleBodyNight,
@@ -20,13 +26,6 @@ import {
 } from "../../mechanisms/roles/animal_dream/authority";
 import { appendAnimalFact } from "../../mechanisms/roles/animal_dream/facts";
 import { appendNobleBodyNotices } from "../../mechanisms/roles/noble_secret_body/facts";
-import {
-  isFragrantPairBoard,
-  beginFragrantNight,
-  closeFragrantNight,
-  fragrantAuthoritySnapshot,
-} from "../../mechanisms/roles/fragrant_pair_seer/authority";
-import { FRAGRANT_PAIR_POLICY } from "../../mechanisms/roles/fragrant_pair_seer/state";
 import {
   isRadiantEclipseBoard,
   beginRadiantNight,
@@ -264,8 +263,35 @@ export class NightPipeline {
     const ownsAnimal = config.animalDream !== undefined;
     let animalAcquired = false,
       animalClosed = false;
-    let fragrantAcquired = false,
-      fragrantClosed = false;
+    const pipeline = this;
+    const fragrantNight = new FragrantNightUnit(
+      {
+        get world() {
+          return pipeline.world;
+        },
+        get events() {
+          return pipeline.events;
+        },
+        drawKnowledge() {
+          return randomDraws(pipeline.random.fork("fragrant-known-wolf"));
+        },
+        recordOpening(day, notice) {
+          getSessionRecorder()?.recordRequiredLogicOp({
+            scope: "phase_pipeline",
+            op: "fragrant_night_opened",
+            phase: Phase.Night,
+            status: "ok",
+            output: {
+              policy: FRAGRANT_PAIR_POLICY,
+              day,
+              notice,
+              knowledgeDrawCount: day === 1 ? 1 : 0,
+            },
+          });
+        },
+      },
+      day,
+    );
     let nobleHandedOff = false,
       nobleAcquired = false;
     const ownsRadiant = config.radiantEclipse !== undefined;
@@ -284,63 +310,7 @@ export class NightPipeline {
           day,
         });
       }
-      if (ownsFragrant) {
-        const before = fragrantAuthoritySnapshot(this.world),
-          notice = beginFragrantNight(
-            this.world,
-            day,
-            randomDraws(this.random.fork("fragrant-known-wolf")),
-            isCurrent,
-          ),
-          after = fragrantAuthoritySnapshot(this.world);
-        fragrantAcquired = true;
-        this.events.push({
-          timestamp: Date.now(),
-          type: "fragrant_night_opened",
-          payload: {
-            policy: FRAGRANT_PAIR_POLICY,
-            actorId: after.phantomId,
-            day,
-            knowledgeDrawCount: day === 1 ? 1 : 0,
-          },
-          audience: Object.freeze([]),
-        });
-        for (const old of before.fragrant.bindings.filter((b) => b.status.kind === "pending")) {
-          if (after.fragrant.bindings.find((b) => b.id === old.id)?.status.kind === "expired")
-            this.events.push({
-              timestamp: Date.now(),
-              type: "fragrant_binding_expired",
-              payload: {
-                policy: FRAGRANT_PAIR_POLICY,
-                actorId: this.world.getEntityIdsByRole(Role.FragrantPhantom)[0]!,
-                day,
-                bindingId: old.id,
-                createdNight: old.createdNight,
-                pairIds: old.pairIds,
-              },
-              audience: Object.freeze([]),
-            });
-        }
-        if (notice)
-          this.events.push({
-            timestamp: Date.now(),
-            type: "fragrant_night_notified",
-            payload: { policy: FRAGRANT_PAIR_POLICY, ...notice },
-            audience: Object.freeze([notice.actorId]),
-          });
-        getSessionRecorder()?.recordRequiredLogicOp({
-          scope: "phase_pipeline",
-          op: "fragrant_night_opened",
-          phase: Phase.Night,
-          status: "ok",
-          output: {
-            policy: FRAGRANT_PAIR_POLICY,
-            day,
-            notice,
-            knowledgeDrawCount: day === 1 ? 1 : 0,
-          },
-        });
-      }
+      if (ownsFragrant) fragrantNight.open(isCurrent);
       if (ownsNoble) {
         const notices = beginNobleBodyNight(this.world, day, isCurrent);
         nobleAcquired = true;
@@ -672,10 +642,7 @@ export class NightPipeline {
         closeAnimalNight(this.world, day, "normal");
         animalClosed = true;
       }
-      if (ownsFragrant) {
-        closeFragrantNight(this.world, day, "normal");
-        fragrantClosed = true;
-      }
+      if (ownsFragrant) fragrantNight.closeNormally();
       nobleHandedOff = ownsNoble;
       weddingHandedOff = ownsWedding;
       demonHandedOff = ownsDemon;
@@ -698,7 +665,7 @@ export class NightPipeline {
       };
     } finally {
       if (animalAcquired && !animalClosed) closeAnimalNight(this.world, day, "aborted");
-      if (fragrantAcquired && !fragrantClosed) closeFragrantNight(this.world, day, "aborted");
+      fragrantNight.abortIfOwned();
       if (nobleAcquired && !nobleHandedOff) abortNobleBodyNight(this.world, day);
       if (radiantAcquired) closeRadiantNight(this.world, day, "aborted", this.events);
       if (ownsMist && !mistHandedOff) abortMistNight(this.world);
