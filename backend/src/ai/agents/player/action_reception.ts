@@ -3,7 +3,9 @@
  * Inputs are requests and raw tool arguments; outputs are detached sanitized actions
  * or the existing structured refusals. Feature owners retain their scope predicates;
  * this validator never commits inventory or settles domain completion, and suppresses
- * a second validation Tape operation. The legacy ActionTurn export names its real owner.
+ * a second validation Tape operation. Tool registration checks do not replace this
+ * original lazy parameter read, first-use schema cache or argument/feature preflight.
+ * The legacy ActionTurn export names its real owner.
  */
 import { nobleBodyRequestScope } from "../../../game/mechanisms/roles/noble_secret_body/requests";
 import { animalRequestScope } from "../../../game/mechanisms/roles/animal_dream/requests";
@@ -47,12 +49,14 @@ import { ActionValidator } from "../../../game/gateway/action_validator";
 import { ToolGateway } from "../../../game/gateway/tool_gateway";
 import {
   getDefaultToolCallRepairRegistry,
-  getDefaultToolSpecRegistry,
   getDefaultToolValidationRuleRegistry,
   type ToolCallRepairRegistry,
-  type ToolSpecRegistry,
   type ToolValidationRuleRegistry,
 } from "../../../game/mechanisms";
+import {
+  getDefaultToolSpecRegistry,
+  type ToolSpecRegistry,
+} from "../../../game/mechanisms/registries/tool_spec_registry";
 import { evaluateTurnConstraints, resolveTurnConstraints } from "./turn_constraints";
 import type { ActionValidation as Validation } from "./action-turn";
 export { ActionTurn } from "./action-turn";

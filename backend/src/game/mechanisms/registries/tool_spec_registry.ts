@@ -1,5 +1,14 @@
+/**
+ * Owns the domain-tool index and ordered localized hints/directives from common,
+ * sheriff and role declarations. Inputs are original specs and directive arrays;
+ * outputs are selected original specs and presentation text, never action permission.
+ * Duplicate own-data schemas must match completely; compatible or opaque legacy
+ * overrides retain the last original reference and its prose. Parameters getters
+ * and runtime schema parsing remain deferred to ActionReception's existing first use.
+ * This index does not merge the separate three SDK/MCP transport tools or write state.
+ */
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
-/** 文件说明：汇总工具规格与阶段提示规则。 */
+import { registerToolSpecs } from "../../../rulesets/tool-spec-registration";
 import { ToolName } from "../../../core/domain/model";
 import { COMMON_TOOL_SPECS } from "../common/tool_specs";
 import { StageDirectiveRule, ToolSpec } from "../contracts";
@@ -38,9 +47,7 @@ export class ToolSpecRegistry {
   ) {
     const effectiveSpecs = specs ?? buildDefaultSpecs(roleProfileRegistry);
     const effectiveDirectives = stageDirectives ?? buildDefaultStageDirectives(roleProfileRegistry);
-    for (const spec of effectiveSpecs) {
-      this.specByName.set(spec.name, spec);
-    }
+    registerToolSpecs(this.specByName, effectiveSpecs);
     this.stageDirectives = [...effectiveDirectives];
   }
 
