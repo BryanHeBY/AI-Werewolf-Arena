@@ -63029,13 +63029,277 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/noble_secret_body_runtime.test.ts",
+      "to": "backend/tests/scenarios/interactions/noble-secret-body/contract-and-reveal-cycles.test.ts",
+      "sourceCommit": "f4757a1f3e732d73ff235eba2aab8c62fa4524f7",
+      "reason": "All callbacks execute real contract/reveal cycles or runUntilGameOver, often through the cycles helper; immunity/clearing/backlash/expiry/badge/knife and strict provider failures remain one domain interaction trace.",
+      "originalSha256": "65b2d70764b6b165d78b280c993255e6645cc077945fa335dbb3634830d084e4",
+      "candidateSha256": "a663c8bf3f92b4e7223b337d37dc9e5425cc78da449390c6eb53bad9446075b2",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1094,
+          "end": 1143,
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "kind": "module-specifier",
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 985,
+          "end": 1047,
+          "value": "../../../../src/game/mechanisms/roles/noble_secret_body/authority",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/noble_secret_body/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 872,
+          "end": 908,
+          "value": "../../../support/demon_hunter_scenarios",
+          "kind": "module-specifier",
+          "original": "../../support/demon_hunter_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 814,
+          "end": 835,
+          "value": "../../../../src/rulesets",
+          "kind": "module-specifier",
+          "original": "../../../src/rulesets",
+          "originalResolved": "backend/src/rulesets/index.ts",
+          "expectedResolved": "backend/src/rulesets/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 715,
+          "end": 770,
+          "value": "../../../../src/runtime/scenarios/noble_secret_body_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/noble_secret_body_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 650,
+          "end": 667,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 491,
+          "end": 517,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "c5f685eb841794a599473a8aaa4297c9e923c1d2e1f8ca152f954079e60c14b9",
+          "title": "standard/awa_nonconsecutive_nights_v1: real N2 creation, occupied N3 expiry/block, N4 new contract, natural Good finish",
+          "occurrence": 1
+        },
+        {
+          "id": "8ed9940d0f6861da4c1cd8bdab59808183241913211ac50061a4dd9027035532",
+          "title": "standard/awa_repeat_v1: real N2 creation, occupied N3 expiry/block, N4 new contract, natural Good finish",
+          "occurrence": 1
+        },
+        {
+          "id": "1baf09aa28c1aef67e2b86fe79e1641006e7c92cbe9c064d8f6a67827751a786",
+          "title": "no_blast_no_self_knife/awa_nonconsecutive_nights_v1: real N2 creation, occupied N3 expiry/block, N4 new contract, natural Good finish",
+          "occurrence": 1
+        },
+        {
+          "id": "f5f9ae0b8a83f6d27633fcce3199010cd19eb427ee2779e4d0865cc3aafa0928",
+          "title": "no_blast_no_self_knife/awa_repeat_v1: real N2 creation, occupied N3 expiry/block, N4 new contract, natural Good finish",
+          "occurrence": 1
+        },
+        {
+          "id": "e5fd50b5edcb8b105b944b0a0de102306ca7b9d383293f7110fbd1be7c4bcfb0",
+          "title": "real N2 hunt clears new good servant without hunt/backlash, knife remains",
+          "occurrence": 1
+        },
+        {
+          "id": "0fd68d17ad739356c5f782501155824f0b6c65d2c3e7fd687e009cf97a23eeeb",
+          "title": "real N2 hunt clears new wolf servant without hunt/backlash, knife remains",
+          "occurrence": 1
+        },
+        {
+          "id": "5b57d8fd35487e743aea2d6808bf8bbdd2fe41f7503317acb92677f13fc0ed57",
+          "title": "real intact Body exile reveals alive, speaks once, retains vote and badge; next exile kills",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/noble_secret_body_runtime_rules_review.test.ts",
+      "to": "backend/tests/scenarios/interactions/noble-secret-body/cross-mechanism-rule-cycles.test.ts",
+      "sourceCommit": "f4757a1f3e732d73ff235eba2aab8c62fa4524f7",
+      "reason": "All callbacks execute real contract/reveal cycles or runUntilGameOver, often through the cycles helper; immunity/clearing/backlash/expiry/badge/knife and strict provider failures remain one domain interaction trace.",
+      "originalSha256": "4498817676740c5f93427eb4d2bf78199156cf672e51f351b00df7144b6ad587",
+      "candidateSha256": "70a859f6c15447accd6ff5e912ae5743bf32f1bf366f76c95eaafd67cad095f6",
+      "moduleAndLocationEdits": [
+        {
+          "start": 521,
+          "end": 583,
+          "value": "../../../../src/game/mechanisms/roles/noble_secret_body/authority",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/noble_secret_body/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 438,
+          "end": 474,
+          "value": "../../../support/demon_hunter_scenarios",
+          "kind": "module-specifier",
+          "original": "../../support/demon_hunter_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 346,
+          "end": 401,
+          "value": "../../../../src/runtime/scenarios/noble_secret_body_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/noble_secret_body_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 275,
+          "end": 298,
+          "value": "../../../../src/core/index",
+          "kind": "module-specifier",
+          "original": "../../../src/core/index",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 138,
+          "end": 164,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "870c3603057ca6c9a4bf58bac849471de77b574f26541ae8ce06053e0dc0285a",
+          "title": "real PM toxin immunity filters before Body, which remains intact",
+          "occurrence": 1
+        },
+        {
+          "id": "e77411aee1d429da092380cfa3f40e37d621c9766b937895d551c0c72fe5dd82",
+          "title": "real PM immunity plus mis-hunt: Body removes backlash, not already-immune toxin",
+          "occurrence": 1
+        },
+        {
+          "id": "4dd8038a2164e453a0c5ce29b676970ed355d618b659fbfe9654971a4fd24dbe",
+          "title": "real N3 A knife+poison and Body expiry remove only A knife, no second fallback",
+          "occurrence": 1
+        },
+        {
+          "id": "7359cf131c648076e9c241c54d11723507d120fec98a10bfdff1bed98083add8",
+          "title": "real N3 saved chosen A has no effective source so Body protects itself from expiry",
+          "occurrence": 1
+        },
+        {
+          "id": "c7294d2063897ebaa716f09d559f77ab4a7ea8f86d2f426b2b954bd9f5941b34",
+          "title": "dead Noble retains original pending servant until actual N3 expiry; true final wolf ends game",
+          "occurrence": 1
+        },
+        {
+          "id": "4c90509eee99615e6d3342e77302bc46a29ca7c39f87d4976c2069963bcbbde5",
+          "title": "night deaths before first sheriff; last Noble ends D2 with still-pending contract and no N3 notification",
+          "occurrence": 1
+        },
+        {
+          "id": "7f31cd4833fe0fc28d1431ec4a3b88d25ba591a11ed0a4823c1c61deeabf8bd8",
+          "title": "real strict board rejects chat-null",
+          "occurrence": 1
+        },
+        {
+          "id": "c941be75fb7ea60591987976384509d6e5a51de85256068caba1b0dad5708dd9",
+          "title": "real strict board rejects chat-invalid",
+          "occurrence": 1
+        },
+        {
+          "id": "5b154a8b923f27cbd27623a787010292de3ffa94300b83113081f690945d94a7",
+          "title": "real strict board rejects knife-null",
+          "occurrence": 1
+        },
+        {
+          "id": "80c53c28da4497008280490311af0aa3b496730770f02bc3130842b266a4a963",
+          "title": "real strict board rejects knife-invalid",
+          "occurrence": 1
+        },
+        {
+          "id": "6990c49ca0d50455ca1793b1ae623e3c851d7b1d05195c27ed81615bf9a0424b",
+          "title": "actual target death closure precedes last words, stays hidden in current Noble DTO, next N3 can choose",
+          "occurrence": 1
+        },
+        {
+          "id": "2af0e9758add065448abf8aaf8574d45f76a3f97946040730aa2001f96a87fcb",
+          "title": "real old servant cleared before N3 expiry with same target knife independent",
+          "occurrence": 1
+        },
+        {
+          "id": "8d7b90175dcde6945ba19d4d33e7a7a7e947ce48d12fd1171419d70aa7965ce6",
+          "title": "actual standard blast eligibility only changes Noble; ordinary wolf still can blast",
+          "occurrence": 1
+        },
+        {
+          "id": "2fa24dd786af0ad17ec5533857ef000e1411b5a07d5f52919f7b5efb396f7c41",
+          "title": "actual no_blast_no_self_knife blast eligibility only changes Noble; ordinary wolf still can blast",
+          "occurrence": 1
+        },
+        {
+          "id": "45a1729fac5799470fab7d36c70643bc484979524ebde27017e7a79052b8c090",
+          "title": "failed strict reveal preserves public reveal, alive sheriff and vote but no completed speech/death",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 503,
-    "targetFiles": 509,
-    "mappingEntries": 509,
-    "baselineCases": 6330,
+    "sourceFiles": 505,
+    "targetFiles": 511,
+    "mappingEntries": 511,
+    "baselineCases": 6352,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

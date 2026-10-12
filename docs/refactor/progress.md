@@ -189,3 +189,5 @@
 - C12 mist-native native causal contracts：2原文件/28旧IDs实际完整录制/复现场景迁移；13whole程序/78callbacks精确path span外/84relative imports+2URL保真，Root独立actualGit全部语句/91top-level imports+4实际dynamic imports/同目标/278unique IDs复核0；13heads0与一次finite13 types0，不跑games/full。四Demon constant动态import和两Mist URL仅同target rebase，其他callback/matrix/setup保持；无raw全callback字节同声称，未发现或执行对局。mapping现499source/505target/6224IDs。
 
 - C12 suppression-modifiers native causal contracts：4原文件/106旧IDs实际完整录制/复现场景迁移；13whole程序/78callbacks精确path span外/84relative imports+2URL保真，Root独立actualGit全部语句/91top-level imports+4实际dynamic imports/同目标/278unique IDs复核0；13heads0与一次finite13 types0，不跑games/full。四Demon constant动态import和两Mist URL仅同target rebase，其他callback/matrix/setup保持；无raw全callback字节同声称，未发现或执行对局。mapping现503source/509target/6330IDs。
+
+- C12 noble-native native causal contracts：2原文件/22旧IDs实际完整录制/复现场景迁移；13whole程序/78callbacks精确path span外/84relative imports+2URL保真，Root独立actualGit全部语句/91top-level imports+4实际dynamic imports/同目标/278unique IDs复核0；13heads0与一次finite13 types0，不跑games/full。四Demon constant动态import和两Mist URL仅同target rebase，其他callback/matrix/setup保持；无raw全callback字节同声称，未发现或执行对局。mapping现505source/511target/6352IDs。

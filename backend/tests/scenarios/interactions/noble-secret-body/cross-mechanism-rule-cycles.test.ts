@@ -1,6 +1,10 @@
-// Independent readonly reviewer cases; original inputs retained.
+/**
+ * Interaction scenarios verify Noble and Secret Body cross-mechanism rules preserve immunity, expiry, clearing and strict reveal prefixes.
+ * Input: Original deterministic cycle plans, knife/poison/hunt combinations, blast policy and required-action failures.
+ * Output and oracle: Literal paid sources, pending contract/knowledge and final death assertions retain exact real-cycle order; review provenance does not turn these traces into isolated unit tests.
+ */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   Role,
   Phase,
@@ -9,10 +13,10 @@ import {
   PotionType,
   type ActionRequest,
   type ToolCall,
-} from "../../../src/core/index";
-import { nobleSecretBodyTwelveConfig } from "../../../src/runtime/scenarios/noble_secret_body_twelve";
-import { demonNightChoice } from "../../support/demon_hunter_scenarios";
-import { snapshotNobleBodyAuthority } from "../../../src/game/mechanisms/roles/noble_secret_body/authority";
+} from "../../../../src/core/index";
+import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { snapshotNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
 const game = () => {
   const c = nobleSecretBodyTwelveConfig();
   return bootstrapGame(c, {

@@ -1,12 +1,10 @@
 /**
- * Integration/scenario tests for noble secret body runtime configuration and setup contracts.
- * Input: the existing literal boards, original scenario actions and malformed
- * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
- * Fixed policies, recorded literal expectations and rejection cases are the
- * oracle; these tests never generate replacement goldens from migrated rules.
+ * Interaction scenarios verify Noble and Secret Body actual cycles preserve servant creation, expiry, hunt clearing and reveal authority.
+ * Input: Original wolf/body policies, deterministic choices, pending contracts and real reveal/exile cycles.
+ * Output and oracle: Explicit contract, knife, last-word, badge/vote and natural terminal assertions remain causal; original expected policies and archived formats are unchanged.
  */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   Phase,
   Role,
@@ -16,15 +14,15 @@ import {
   type ActionRequest,
   type ToolCall,
   type RoleComponent,
-} from "../../../src/core";
-import { nobleSecretBodyTwelveConfig } from "../../../src/runtime/scenarios/noble_secret_body_twelve";
-import { isNobleSecretBodyPreset } from "../../../src/rulesets";
-import { demonNightChoice } from "../../support/demon_hunter_scenarios";
+} from "../../../../src/core";
+import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { isNobleSecretBodyPreset } from "../../../../src/rulesets";
+import { demonNightChoice } from "../../../support/demon_hunter_scenarios";
 import {
   snapshotNobleBodyAuthority,
   getNobleBodyPlayerState,
-} from "../../../src/game/mechanisms/roles/noble_secret_body/authority";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 function game(
   wolf: "standard" | "no_blast_no_self_knife" = "standard",
   body: "awa_nonconsecutive_nights_v1" | "awa_repeat_v1" = "awa_nonconsecutive_nights_v1",
