@@ -8,6 +8,8 @@
 
 实际前端切片：64真录制fixtures、872unit、18+4+2 Chromium与双语Remotion PNG；公开翻牌显示和玩家公开警长summary授徽缺口已修，见[前端审查](reviews/p9-noble-secret-body-frontend.md)。正式仍48/64，剩余窗口／撤权和最终冻结同源门禁接续。
 
+实际窗口／撤权补证：24自爆完整局、12拒绝后更正完整局和20回复后提交前原生命撤权局，逐局wire／独立golden或失败CP／严格Tape及资源回收；范围与独立审查见[窗口审查](reviews/p9-noble-secret-body-windows.md)。计数仍48/64，最终冻结同源全支持门禁继续。
+
 用户于 2026-10-07 明确授权启动完整目标，P0 结束后的等待要求已满足。持续目标覆盖 P1–P10；长期候选不自动纳入。
 
 **当前执行边界（2026-10-09持续授权）**：原P7交接已结束；按[持续实施契约](contracts/p8-p10-continuation.md)直接在main线性推进P8–P10、实际离线验收和本地原子提交。不push/部署/真实模型调用或改用户configs/秘密，总体仍待用户最终验收。

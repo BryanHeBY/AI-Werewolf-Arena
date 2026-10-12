@@ -18,6 +18,78 @@ import type { TransportGameScenario } from "./run_transport_game";
 
 /** Literal role-relative expectations. Neither decisions nor expected damage query World. */
 const plans = {
+  noble_pre_election_blast: {
+    blast: { day: 1, stage: "on_pre_election", actor: 1 },
+    body: [6, 7, 6, 7],
+    servant: [null, null, null, null],
+    knife: [null, null, null, null],
+    hunt: [null, null, null, null],
+    exile: [10, 10, 11, 12],
+    deaths: [[], [], [], []],
+    alive: [
+      [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      [2, 3, 4, 5, 6, 7, 8, 9, 11, 12],
+      [2, 3, 4, 5, 6, 7, 8, 9, 12],
+      [2, 3, 4, 5, 6, 7, 8, 9],
+    ],
+    bodyActive: [true, true, true, true],
+    nobleActive: [false, false, false, false],
+    sheriff: null,
+  },
+  noble_pre_vote_blast: {
+    blast: { day: 2, stage: "on_pre_vote", actor: 1 },
+    body: [6, 7, 6, null],
+    servant: [null, 6, null, null],
+    knife: [null, null, null, null],
+    hunt: [null, null, null, null],
+    exile: [10, 11, 11, 12],
+    deaths: [[], [], [], []],
+    alive: [
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12],
+      [2, 3, 4, 5, 6, 7, 8, 9, 11, 12],
+      [2, 3, 4, 5, 6, 7, 8, 9, 12],
+      [2, 3, 4, 5, 6, 7, 8, 9],
+    ],
+    bodyActive: [true, true, true, false],
+    nobleActive: [false, true, false, false],
+    sheriff: null,
+  },
+  ordinary_pre_election_blast: {
+    blast: { day: 1, stage: "on_pre_election", actor: 10 },
+    body: [6, 7, 6, 7],
+    servant: [null, null, null, null],
+    knife: [null, null, null, null],
+    hunt: [null, null, null, null],
+    exile: [10, 11, 12, 1],
+    deaths: [[], [], [], []],
+    alive: [
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 12],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      [2, 3, 4, 5, 6, 7, 8, 9],
+    ],
+    bodyActive: [true, true, true, true],
+    nobleActive: [false, true, true, true],
+    sheriff: null,
+  },
+  ordinary_pre_vote_blast: {
+    blast: { day: 2, stage: "on_pre_vote", actor: 10 },
+    body: [6, 7, 6, null],
+    servant: [null, 6, null, 7],
+    knife: [null, null, null, null],
+    hunt: [null, null, null, null],
+    exile: [11, 10, 12, 1],
+    deaths: [[], [], [], []],
+    alive: [
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 12],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      [2, 3, 4, 5, 6, 7, 8, 9],
+    ],
+    bodyActive: [true, true, true, false],
+    nobleActive: [false, true, false, true],
+    sheriff: null,
+  },
   healed_target_fallback_then_exile: {
     body: [7, 8, 6, null],
     servant: [null, 5, null, 7],
@@ -313,6 +385,11 @@ export function nobleTransportScenario(
         .push({ day, stage, action: typeof action === "function" ? action(old) : action });
   };
   const wolves = [1, 10, 11, 12];
+  const blast = "blast" in plan ? plan.blast : null,
+    blastAction = (old: number): ToolCall | null =>
+      old === blast?.actor
+        ? { name: "self_destruct", args: { confirm: true, reason: "Literal window interruption." } }
+        : null;
   let sheriff: number | null = plan.sheriff;
   for (let i = 0; i < plan.exile.length; i++) {
     const day = i + 1,
@@ -379,8 +456,9 @@ export function nobleTransportScenario(
         day,
         canBlast.filter((id) => live.includes(id)),
         ActionWindow.OnPreElection,
-        null,
+        blast?.day === day && blast.stage === "on_pre_election" ? blastAction : null,
       );
+      if (blast?.day === day && blast.stage === "on_pre_election") continue;
       add(day, live, "sheriff_nomination", (old) => ({
         name: "run_for_sheriff",
         args: { run: old === sheriff },
@@ -403,8 +481,9 @@ export function nobleTransportScenario(
       day,
       canBlast.filter((id) => live.includes(id)),
       ActionWindow.OnPreVote,
-      null,
+      blast?.day === day && blast.stage === "on_pre_vote" ? blastAction : null,
     );
+    if (blast?.day === day && blast.stage === "on_pre_vote") continue;
     const exile = plan.exile[i]!;
     add(day, live, "voting", (old) => ({
       name: "vote",

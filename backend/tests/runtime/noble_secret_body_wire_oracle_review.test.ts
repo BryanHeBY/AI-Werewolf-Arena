@@ -139,6 +139,14 @@ function run(kind: "sdk" | "acp", locale: "en" | "zh-CN" = "en"): NobleWireRun {
 function messages(r: NobleWireRun, ordinal = 1) {
   return r.sdkWireMessages[ordinal - 1]!.messages as Array<{ role: string; content: string }>;
 }
+test("generic unavailable action feedback is legal and does not reveal a God fact", () => {
+  const r = run("sdk");
+  r.sdkWireMessages[0]!.messages.push({
+    role: "tool",
+    content: JSON.stringify({ ok: false, error: "noble_body_unavailable" }),
+  });
+  expect(() => assertNobleTransportWire(r)).not.toThrow();
+});
 for (const locale of ["en", "zh-CN"] as const)
   for (const kind of ["sdk", "acp"] as const) {
     test(`literal valid feed/known state ${kind}/${locale}`, () => {

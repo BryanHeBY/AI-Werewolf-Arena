@@ -105,7 +105,11 @@ export function assertNobleTransportWire(run: NobleWireRun) {
   const covered = new Set<string>();
   const privacy = (actor: number, content: string, requireCanary = false) => {
     for (const f of [
-      "noble_body_",
+      "noble_body_night_opened",
+      "noble_body_knife_committed",
+      "noble_body_native_damage_committed",
+      "noble_body_sources_committed",
+      "noble_body_death_committed",
       "noble_contract_closed",
       "secret_body_blocked",
       "night_spent",

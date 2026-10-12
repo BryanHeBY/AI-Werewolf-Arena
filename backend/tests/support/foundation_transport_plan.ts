@@ -5,7 +5,7 @@ export interface PlannedTurn {
   radiantBorrow?: { id: string; state: Record<string, unknown> };
   responseDelayMs?: number;
   currentTeammateIds?: number[];
-  terminalFailure?: "missing" | "late";
+  terminalFailure?: "missing" | "late" | "revoked";
   hybridChoice?: { targetId: number } | null;
   mechanicalStatus?: {
     learned: [string, string] | null;
