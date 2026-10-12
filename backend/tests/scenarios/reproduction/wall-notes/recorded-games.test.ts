@@ -1,8 +1,13 @@
+/**
+ * Reproduction scenarios verify complete recorded games preserve anonymous wall-note publication and strict required request handling.
+ * Input: Original six/twelve-player write/skip plans across transport and locale matrices.
+ * Output and oracle: Literal publication count/text count, anonymous audience and terminal assertions retain exact replay; original diagnostic temporary output is unchanged.
+ */
 import { promises as fs } from "node:fs";
 import { expect, test } from "bun:test";
-import { Camp } from "../../src/core";
-import { wallScenario } from "../support/wall_notes_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { Camp } from "../../../../src/core";
+import { wallScenario } from "../../../support/wall_notes_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 for (const size of [6, 12] as const)
   for (const mode of ["write", "skip"] as const)
     for (const transport of ["llm", "acp", "mixed"] as const)

@@ -1,9 +1,14 @@
+/**
+ * Reproduction scenarios verify White Wolf King complete recorded games preserve legal detonation windows and coupled death-chain outcomes.
+ * Input: Original enum-derived window matrix and none/poison/knife/king/twelve-player plans across transports and locales.
+ * Output and oracle: Handwritten survivor, last-word, checkpoint and winner assertions retain exact replay; declared action-window and temporary-output bytes stay unchanged.
+ */
 import type { VictoryPoint } from "@ai-werewolf-arena/game-catalog";
-import { ActionWindow, Camp, DeathCause, Phase } from "../../src/core";
+import { ActionWindow, Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { whiteWolfScenario, type WhiteWolfScenario } from "../support/white_wolf_king_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { whiteWolfScenario, type WhiteWolfScenario } from "../../../support/white_wolf_king_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 
 const cases: Array<[WhiteWolfScenario, ActionWindow]> = Object.values(ActionWindow).map(
   (window) => ["hunter", window],

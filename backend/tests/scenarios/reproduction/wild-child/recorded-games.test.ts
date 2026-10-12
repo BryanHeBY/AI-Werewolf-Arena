@@ -1,9 +1,14 @@
+/**
+ * Reproduction scenarios verify Wild Child complete recorded games retain original admiration, committed model death and next-night pack affiliation.
+ * Input: Original board-size, model/death-chain, transport and locale matrices with copied original-record mutations.
+ * Output and oracle: Explicit original identity, later affiliation and terminal-membership assertions remain attached to actual replay; source role/record fixtures are not rewritten.
+ */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
-import { Camp, Role } from "../../src/core";
-import { WILD_CHILD_CASES, wildChildScenario } from "../support/wild_child_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
-import { parseReproductionRecord } from "../../src/recording/reproduction";
+import { Camp, Role } from "../../../../src/core";
+import { WILD_CHILD_CASES, wildChildScenario } from "../../../support/wild_child_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 for (const size of [6, 12] as const)
   for (const kind of WILD_CHILD_CASES.filter(
     (k) => size === 6 || ["wolf_exile", "good_knife", "hunter_chain"].includes(k),

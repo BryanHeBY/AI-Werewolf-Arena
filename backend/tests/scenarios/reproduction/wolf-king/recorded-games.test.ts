@@ -1,9 +1,14 @@
+/**
+ * Reproduction scenarios verify Wolf King complete recorded games preserve native gun consumption, knowledge and chain-final settlement.
+ * Input: Original exile, poison, twelve-player, blast and shot-chain plans across transport and locale matrices.
+ * Output and oracle: Literal gun/death/last-word/winner facts retain exact reproduction; failure, skip and chain order remain the supplied policy expectations.
+ */
 import type { VictoryPoint } from "@ai-werewolf-arena/game-catalog";
-import { Camp, DeathCause, Phase } from "../../src/core";
+import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { wolfKingScenario, type WolfKingScenario } from "../support/wolf_king_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { wolfKingScenario, type WolfKingScenario } from "../../../support/wolf_king_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 
 for (const scenario of [
   "exile_chain",

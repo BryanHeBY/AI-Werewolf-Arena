@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+  "observedSourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -55192,13 +55192,1544 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/ghost_bride_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/ghost-bride/recorded-games.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "All original callbacks call runTransportGame for complete bilingual games plus same-prefix archive mutations. Role swap/initial deal, affiliation/relations, wall notes, death chains and declared terminal outcomes remain the whole causal contract.",
+      "originalSha256": "c2880e4eac41ac817625b5b70344cc804c667066e8a57615cf21f87fc7838855",
+      "candidateSha256": "d1b735d3678752167801e64b0911e474aad5ac74d01f2f3904a147f21b8b0f77",
+      "moduleAndLocationEdits": [
+        {
+          "start": 188,
+          "end": 217,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 119,
+          "end": 151,
+          "value": "../../../support/ghost_bride_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/ghost_bride_scenarios",
+          "originalResolved": "backend/tests/support/ghost_bride_scenarios.ts",
+          "expectedResolved": "backend/tests/support/ghost_bride_scenarios.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "d6f82031038bf79ab834dbae3e578edb017cb48bd5c0427e36be3eff96567629",
+          "title": "good/llm: actual bilingual marriage, independent goals, single knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ec1714da8a285e627de7f2807c55d6b28553247c9d51fd0e904c4e6065697113",
+          "title": "good/acp: actual bilingual marriage, independent goals, single knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "59ca3870a971b79d1599a63b5c64d632c0f2c4a65d7fa2d298bc03fbcae44c7c",
+          "title": "good/mixed: actual bilingual marriage, independent goals, single knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "0b342afc97757258283ea5e9e45bcefbeda5a6683e512c3cbcc7753e9a991669",
+          "title": "wolf/llm: actual bilingual marriage, independent goals, single knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "b738abc861f6036ae1f38d8666491ad7fa81fa7d4c1fe022774c8d44b32f9733",
+          "title": "wolf/acp: actual bilingual marriage, independent goals, single knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "bb9936a9e6e841d5c1c7d5680152c8be7f5c426c5a6490398173caaac28bd3a4",
+          "title": "wolf/mixed: actual bilingual marriage, independent goals, single knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ac78f96d05bb46ecd44f5b5cb7a8eb4f54cb284914fef7b5a1368c2f0cfa45d3",
+          "title": "pair/llm: actual bilingual marriage, independent goals, single knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "05e6577f7842f5ac616103ea2874e8c6d09c66283f0fe6a8299a112e2c604d7e",
+          "title": "pair/acp: actual bilingual marriage, independent goals, single knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "13254e79a8819a7a5d8b66f2c7aa47dbfbb085b9fab346806fd4489c2f4dee13",
+          "title": "pair/mixed: actual bilingual marriage, independent goals, single knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ec25ae1f245fffe8e888c09eddf0bd84453e6e74ced653ac71fd95a023ccdf48",
+          "title": "witness/llm: actual bilingual marriage, independent goals, single knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6ee4f7577fbf548f2f0a582c1480a1ee60221868fba5f451dd51008d7f9d61cb",
+          "title": "witness/acp: actual bilingual marriage, independent goals, single knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d0c38c4b561ed27566c97f1511f42b87d49d853e4d8366b270da39ee23efbd19",
+          "title": "witness/mixed: actual bilingual marriage, independent goals, single knife and strict Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/lonely_girl_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/lonely-girl/recorded-games.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "All original callbacks call runTransportGame for complete bilingual games plus same-prefix archive mutations. Role swap/initial deal, affiliation/relations, wall notes, death chains and declared terminal outcomes remain the whole causal contract.",
+      "originalSha256": "05f9150f03eae925382e31124c3035bfdd4ad24b48e3e35e26a5744c53a48998",
+      "candidateSha256": "3d821f1593f99c7dd10aba63cde5207c2802d8224c2f4c49a495688910b28a92",
+      "moduleAndLocationEdits": [
+        {
+          "start": 360,
+          "end": 392,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 268,
+          "end": 297,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 199,
+          "end": 231,
+          "value": "../../../support/lonely_girl_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/lonely_girl_scenarios",
+          "originalResolved": "backend/tests/support/lonely_girl_scenarios.ts",
+          "expectedResolved": "backend/tests/support/lonely_girl_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 127,
+          "end": 141,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "b79e439655a92aa5f103c521f94c4a333d053e9d648ec2f29e0167b3b7e6842b",
+          "title": "6/good_alive/llm: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "051260b4a7441ca8f301524a1b7111f5d57f5bcc998df483bb9741e69c43a554",
+          "title": "6/good_alive/acp: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f6c8bf529f3eb24144ce4e5d2369d84d7dfb1c6f751f3ef866c72527d711bc53",
+          "title": "6/good_alive/mixed: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "2c971823e90383cfcab06f4b8e4c61642a8a0a296f7129992a9d03e0f9ac7fea",
+          "title": "6/wolf_alive/llm: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f1824b4fddf03cbabd4001a2f2991bde6fdfb386b760389243293b8e4591878b",
+          "title": "6/wolf_alive/acp: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "de769bf426371c688ec96fb2350a9f70ddbd19e0fab902803db9b73c31857e57",
+          "title": "6/wolf_alive/mixed: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "74e23fcdb30d2dfa58ee69ee05989c45517402c633007c25bdbfeac5d487101e",
+          "title": "6/good_dead/llm: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e7de3ec3f8411dbafb37791ed7f16ce1e721696d91b0a54ecc31df13aac886b9",
+          "title": "6/good_dead/acp: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1f797958dc1c28855457e4d47a757bf7d5835d52281faf90b5b22bc5cf36949f",
+          "title": "6/good_dead/mixed: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "9d14671137644c6a8ce934d30fe11e3100222cebf085ac9f573ff12e37b653d7",
+          "title": "6/wolf_dead/llm: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d5e41cbd3897fb0d154f6892e772c4079093a94d82aa50b5559143fa66fe0cda",
+          "title": "6/wolf_dead/acp: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "dcac7313ffce37d29f117007b3e01bec425c2c1a20ceb568a02601611ba44d8e",
+          "title": "6/wolf_dead/mixed: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "5cb5fb058733dca95e6defd6cb5c8de5cdfefa3bc2dfe75d495b5caba8a9e15a",
+          "title": "6/wolf_win/llm: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d4eb649bc7099e1c083aa849890babff0c8603b0aab5ac2925121f71825dc7b2",
+          "title": "6/wolf_win/acp: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "5e762fc16dab8e4d6211d2da2e41d6d8cfbae2e870f48b4cfa97a7665edfe657",
+          "title": "6/wolf_win/mixed: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "7dc43c76dfc962d7080feb5d78579061956e0ffe4f0353d2162172c307d8b4ac",
+          "title": "6/wolf_needs_girl/llm: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f5752083343b2b1a8ab4dffd94cdd3c8b72ded7816c6593f81ce50e20f63e3ff",
+          "title": "6/wolf_needs_girl/acp: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "cb372e639b9bc3abd895a8d84b6587baa41bb1f1656189137504572a3cd3b928",
+          "title": "6/wolf_needs_girl/mixed: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "99830960b5f13e48514359fbb095c837e958fd7a8c67df70bd2ec378ca935920",
+          "title": "6/target_dead/llm: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d88d26592634ab7cbea42d413046c511f31f579623bb431a44690322de2bdd86",
+          "title": "6/target_dead/acp: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "589f7b9884a565eb2c9fbfc5cb89026d36770479830fdb7436ef3befe64ffac3",
+          "title": "6/target_dead/mixed: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a0cb32cd0810b359b05e3bbc2a5719bf1a53a14258656dea46aae860e3036ad5",
+          "title": "6/same_wave/llm: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "8207d02103625add0b37b27acd94f1d999309bf9af46c40583e30386820b09ea",
+          "title": "6/same_wave/acp: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "349a53b4ec5ccf45c53d63e1fbf3685986a1dd851ad3dd31472d1011a6880427",
+          "title": "6/same_wave/mixed: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "9e7f7000c9f92cb3d73c2fd4394e2234f08517cf68e5fa454ecfc4c8af6a9e3d",
+          "title": "6/hunter_chain/llm: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "c735917af57b3dacb77ef9ac68d157219cafb8122510f0056ab9b9ef81061af2",
+          "title": "6/hunter_chain/acp: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ad632982f2fcdcf8b32211793d6e854e3a3e6716f11303bcf674cdcd77c4fee7",
+          "title": "6/hunter_chain/mixed: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "615ea35dad550aabeab8a63bef5f3ba657a35f3cb6280551e498720d3a992456",
+          "title": "12/good_alive/llm: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6969930def5a960d8b670280db6a326f1142cfa0812834a549f4710607cfee37",
+          "title": "12/good_alive/acp: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "218a3d72311ce77909c81a3a6b1ac38bbf993acd4bdbe16585c220609cd903f2",
+          "title": "12/good_alive/mixed: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "590a559d1ab84091bd3e2431ff24a1a4eb3c5e5bf4ab086ae631a9930792e32c",
+          "title": "12/wolf_alive/llm: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "eebc165cd29763d610979aa8a088be196dc408a64a5c3eced2aa35d2bd9ea7ef",
+          "title": "12/wolf_alive/acp: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "9dcff12cfc28101e30506c8719cb03e3624623b01daa4495631b3523ae4880e6",
+          "title": "12/wolf_alive/mixed: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "122e891ac55b846c3856446674c0937caceab9189be5ce8947c2d24d32b163d2",
+          "title": "12/wolf_win/llm: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "938d3e53ea2e0a9d6010f97360b53ae3cd99c4697648190f0c0bb0bf59eeee1b",
+          "title": "12/wolf_win/acp: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "358ef3423e3201e7eb1e9728b54409059974f9d901b285b60066686959c7604a",
+          "title": "12/wolf_win/mixed: actual bilingual isolated affiliation, private archives and strict Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/shapeshifter_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/shapeshifter/recorded-games.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "All original callbacks call runTransportGame for complete bilingual games plus same-prefix archive mutations. Role swap/initial deal, affiliation/relations, wall notes, death chains and declared terminal outcomes remain the whole causal contract.",
+      "originalSha256": "dd7cdf4b5e84ec64210fca7115701a1bff0f694c608df4c82c6cd51a946ccb4b",
+      "candidateSha256": "1b3f227fd2e6593d5d6ee73e98d24857d483e027f73d0097bebb2556e6281f3e",
+      "moduleAndLocationEdits": [
+        {
+          "start": 329,
+          "end": 361,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 256,
+          "end": 285,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 186,
+          "end": 219,
+          "value": "../../../support/shapeshifter_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/shapeshifter_scenarios",
+          "originalResolved": "backend/tests/support/shapeshifter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/shapeshifter_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 111,
+          "end": 125,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "7171d8723797bb25dc6eed93e27935b70a802614c113bdd663972cd4726c61ec",
+          "title": "6/both0/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "00b639007486227e6ff9274b0fec1df8ae926ebe9a304f15afb07806bc382188",
+          "title": "6/both0/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "2293882d34ea5d2fc4adf273185ede3cac165f22c1d37106476f7b33bcb7dac0",
+          "title": "6/both0/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "2517e7b2babfe07b2184afd23da7652089378b52d5c92666f308c04e98be9543",
+          "title": "6/both1/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3e789001f8f83535bb305a6fe7063b14f4074968e569fcfe9bbdea6643627846",
+          "title": "6/both1/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "764a01fba616205b84fc2dd9daa7442732747bd1350a1ae12cd36ab69e82f591",
+          "title": "6/both1/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f28ef0af9ac243cfc6b90e718de00856263179c41179324f9d8ef3b5d9b71b70",
+          "title": "6/one1/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "038ea7786cad00da6717f4d3833c1c370c915394b6bd996f6600f25ac07f1297",
+          "title": "6/one1/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "4b36fc344db53737f8a03492564c0d254510997db2e7ecde2896a8db5ad0b396",
+          "title": "6/one1/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "15ccff1bd1c1198ebf225d6b8c598d929d11706c848048f225e675f783d63a1a",
+          "title": "6/wolf/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "c99f7750a655f57ac0556cbae5c98c6accb4c3a56a80c805d31ad54cb3e06f69",
+          "title": "6/wolf/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "bc544e04a91869992ae3329aa65a1901f1eb70ae81d979ede5a0f316288ca1ed",
+          "title": "6/wolf/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "fbfad19fcb496e4b73463bedca80a0463803037b59a3442fa96af1227e6c4f26",
+          "title": "6/seer/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "56dba852d5a2d8ca7227ced8698c09076f328f7f8477638c43d7273c53b447cd",
+          "title": "6/seer/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "779e9a91251aae500d8773f0c0b8f6e9736608ef56c9af91bafe92786cf56d80",
+          "title": "6/seer/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a2976789c18e2daa485ffcab884a27ec06294b8f9dd6960e22741210a2f07a43",
+          "title": "6/witch/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ca7c9f74f24a41f78d13256977915a5c49ece79523025093567dcd75ed5de3b9",
+          "title": "6/witch/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "81cab4d1a742be5ecd93f81fefc7e2d4d53251c84b25d7440fcfb0a45bac6157",
+          "title": "6/witch/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "b24df0f0a84858cc06f963d98a0ff1d742f39ae9030effbe20d670c5f6242dbf",
+          "title": "6/hunter/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f774566bdb415240917e9b1f7281c74adde01831d3550822e7eb6d454ac6439e",
+          "title": "6/hunter/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "83dcca2b455dfda7c9489301fb7854550d626acd0f50c6fd9fb67589d7ff0975",
+          "title": "6/hunter/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a5b0790a33deafa4fb6971456de88d4c1e922c939f9bc262f68214503dcaa255",
+          "title": "6/guard/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d6e705d3552bbde9fe3bafe34cecbcda825c23fc923a026f454d3d7614061bc3",
+          "title": "6/guard/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "7dee1d6eb24e128a8da2d4714f51f0dc8d2f143130c38fafbadf228c45747b74",
+          "title": "6/guard/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "446eed934014312d844f0806007704fd251f5d740ff95449a8c88804920fbbac",
+          "title": "6/idiot/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6b16278b12bd562ea093376e364042a9658dbcad5819030d95487dd2f4f08b10",
+          "title": "6/idiot/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "299a2128eb99a4e26d6d071fa3ac58648052353add2e9c23bac43c46bfb0ea9b",
+          "title": "6/idiot/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "04219b34e8e2108c342ea28f3a2db618441dbeb2284b89956d98270cfe6db2d2",
+          "title": "6/villager/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "5ae087c66192ff590b702479009596712d0105eadcc9d40ae473e1bac1c37936",
+          "title": "6/villager/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e9b3eddacf79283f3cdf9e1e5c9f4a30cf1e6849818429a27acb78e239ee56cc",
+          "title": "6/villager/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "16c8ea49fc863b9b392836f6dc0530da211f7fba3a410e23c97dd80f6777e7fb",
+          "title": "6/bottom/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1239d8052a5c30028cfda12106156477ba4190d6775c725fd579740784886991",
+          "title": "6/bottom/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e1b153b9bf769edb0687f80120559465f4a83701fa0c33ac3183f9076d0165f9",
+          "title": "6/bottom/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "85ea0a50cefe6f2962182c3fdaa737952cab39f227079ac181b83751bc87c073",
+          "title": "12/both0/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "8ba6c3b50d74c15b95979712b2a4a07698251942bdd4ae39b6fa10a921cef421",
+          "title": "12/both0/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "762a096812811fe93598831c0693fe0be2344f90ecfce639768de4a700e2e9d5",
+          "title": "12/both0/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "714ba3522c3f96378201562e0dd2f54c7022f314e16dad32136498c3587896fd",
+          "title": "12/one1/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6f4d5e3e31fa08fe59223c9ef6227823f64f60226491ccd84f62fc4cd18042be",
+          "title": "12/one1/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "9a45a4b6516be9cb56432500cecd37359217d4aedc3f4775ffbe8bfd2742bf44",
+          "title": "12/one1/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "81733d0fab783db8540ecbbbaf1f8af7570f8ac8f295203fa956bea797b56afa",
+          "title": "12/seer/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e0afef3294f8c0bec220637a4bc01e31f9255957fb9cf48781e828b0b6e1c238",
+          "title": "12/seer/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d55e5621ea243b1ef187d4c0ad664cd8ec40aa49b25b698664d94a6632a2f5ca",
+          "title": "12/seer/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "b5c3895ef63ec5e4547ccc3919892fb8222104125c67459d5522fdc337db2678",
+          "title": "12/hunter/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "23df2a63eeed6c2f270770eb61958b01bb43db066e04e10c268fe5ff23f75f03",
+          "title": "12/hunter/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3f5c5c2e13c8ca9be03e186628fd657cd8f8b6e6f5b0c3ca629b4244181b4b47",
+          "title": "12/hunter/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "89230a21abcdb12ad1bf40ace0c90bd7d3a321835f99fefb95aa3a14e1df3e30",
+          "title": "12/bottom/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "fbd5cce50ff301d1ed39d4d476f80ce020971cda2bdaabf65aaaba3a8e8937eb",
+          "title": "12/bottom/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1d1f98c8ba1db037e88aa62e5753c4aef52e7a6d5c5144a216fbb809c0a62f16",
+          "title": "12/bottom/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/thief_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/thief/recorded-games.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "All original callbacks call runTransportGame for complete bilingual games plus same-prefix archive mutations. Role swap/initial deal, affiliation/relations, wall notes, death chains and declared terminal outcomes remain the whole causal contract.",
+      "originalSha256": "8f63981fa863f1e028773a451cc67e6ee932e5bc29e81aad80baaf022894ff46",
+      "candidateSha256": "384190ad5dc5a0ef77fe0b43d9e9e5dda961c6669e27695d7b3620408e9b6766",
+      "moduleAndLocationEdits": [
+        {
+          "start": 308,
+          "end": 340,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 235,
+          "end": 264,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 172,
+          "end": 198,
+          "value": "../../../support/thief_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/thief_scenarios",
+          "originalResolved": "backend/tests/support/thief_scenarios.ts",
+          "expectedResolved": "backend/tests/support/thief_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 111,
+          "end": 125,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "11faec88878a6a378242419f6bbab9086f4161036e77999a5554c1192be1b9cf",
+          "title": "6/both0/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "c9f128555b479d08c2cdcf52c0399cdd0548226ed259a38ae856ab7c1cfad917",
+          "title": "6/both0/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "59d9963c867f73047bacca6c70e1579913c81c7f35258bb2b45c798c0bfe4f1d",
+          "title": "6/both0/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "5aced53bb4ad9e28258dfa8250ee36178ddbb262ab4054380ca2d9746f93f985",
+          "title": "6/both1/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "8b8fa0a466acf5a7ecd6b4a55c203b58bb16773f0d77ac38142aeededaf94cf5",
+          "title": "6/both1/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f2ed3bd0f11d01c4fd8da28a781e3a9e45d0701e8d7afcfe165ee789d0d8697b",
+          "title": "6/both1/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "2cf1bec855a45aa4984683f5985f9515cfc010024d7d46ea946f955cb0edacab",
+          "title": "6/keep/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6406a0f263bf7bfba3f8a8210f529a8ec584460c3ab3e632cf5f30ab5f64cc7d",
+          "title": "6/keep/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "7e72c0d3010ab81220ea66b26210a3d0a535b9156297ce10bd2e1c5281c9484d",
+          "title": "6/keep/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f7d46bb4c1972c4391e80da3bb7e62a7b35040b3b1b4c6c49466851059a317d4",
+          "title": "6/wolf/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "8085115178e5a0158cc3aca90d77345f5b201a67216fededc6653ba976e24e95",
+          "title": "6/wolf/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "190ca24b02fa7f3b01655cb70b74c4c4b510bcfc98156386c9839dae841b5f3c",
+          "title": "6/wolf/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "96d1d7374f230408366cd499648108ce943eb631e477e0987d974526c3f648fa",
+          "title": "6/seer/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "766973686d9a2b7d4595f0e948981470d46a1f8c3b75279ad3db75f8ad99bb14",
+          "title": "6/seer/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "7fe9107878a341efd567fd854720dc82f557e83fa39efca22e33719e5c45d4e3",
+          "title": "6/seer/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1e1c229228cba89929ad248d9054ade2ecc345d1fb66a2a78879d910934f0503",
+          "title": "6/witch/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "77d6ecbedf35c1f3236ccf0e0238fd48dda4c175301876a76044bd01d44f948e",
+          "title": "6/witch/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "dd334ad007a6e6b327f7125d2c2ee35af8dac3778694544aacfa1a8b8240b5aa",
+          "title": "6/witch/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "10d2c466a86f6eef462d14af378657a56b13970f8ee3df7fa9949d45d941b972",
+          "title": "6/hunter/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f93892bacc02d7f2359939e75d3684f1954fa5c4d98651b3726f283e5512506c",
+          "title": "6/hunter/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3672493a3fb249c549b44983f635b2213cc99a78a046cb5b85601f82b9668a09",
+          "title": "6/hunter/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d63d1d68233cf6fd0cc622779b4a3e4395ab7e45743ff32214846c440c8df98b",
+          "title": "6/guard/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ecbc9ab2282bd5c057f096ddd23e6716500549906c39f8e36a38ded840ac55c8",
+          "title": "6/guard/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1ca64de3a6e18eb9851ecf30bc0bd2bd3434e63edd092825eb62c5fdb829ccbd",
+          "title": "6/guard/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "5304cf494562f1cd81678b4834abe9a0aa0556ae34b8985a1c7fa1164856cc97",
+          "title": "6/idiot/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "dc85f4ac515d46f2e8ec531ea7d0a9ce914d9451c597b8dd291975fc5c2af4c2",
+          "title": "6/idiot/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "2c9edec387372c5d15a07e3d21ae32b1ca70a83548674cfe00619da5d53123ff",
+          "title": "6/idiot/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1816b5cb03234fe97badb42a1bdf87e9de3cee7cb798cf3e1b83c4bb6d433822",
+          "title": "6/villager/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "175fc41f2b4faf1f1d97c6c36640c9b0175cb39f0e657b8fb199e8736984cbb4",
+          "title": "6/villager/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e188f5c488bfeeaeaeed7e6c1f9faf9473c3d82accdc5e60668540d07207629a",
+          "title": "6/villager/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6fad8aff0ee3db7ff373be0951b1826799694688434cdcd5f54e2c108a0028f3",
+          "title": "6/bottom/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a39a67edd674afbeee56195627640932942bd761b67944fe46662c3d8dea17ef",
+          "title": "6/bottom/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d80a8b074da8bbd3de603c05d456877e8287e5b4399f225442ff0252a0d98b1c",
+          "title": "6/bottom/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "8c8c0bd4f645c38e5db09a56aa65c8afb168a0f13af3c29761220972663852b9",
+          "title": "12/both0/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "2aff535f9650e0e45319771ed15dbc2000866fb7978a2319bd1036b179e918ee",
+          "title": "12/both0/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ec5bb18a096afecdc7117f585cd3d4721c1c4cdac8cd11f915bc28640d25bbcc",
+          "title": "12/both0/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1553ad6e16a08054b11948caa3b4bfcc97a54d03f2c697ea246d55bfd5213f65",
+          "title": "12/keep/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f87e2cb63f7ced29957262691b9e1662da6e4b604e604325bcacd565eba4b5f5",
+          "title": "12/keep/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "874fd50dd2fa8973ad1d07a24bfc9c27439a66b51d7c75aa3f8c5c332da858ab",
+          "title": "12/keep/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "39f9ef17c96863c300965fa84bee83c4a25de1896f60f19e24a4b6641131ecb7",
+          "title": "12/seer/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "4b70c3c1042755fcda915b945a838a8a2c6b25285a28d4319304d0299981c94f",
+          "title": "12/seer/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "35ce20de724dd91c18aff7a30de7db7771d971fdf56ba1cb4e5d6f27195aefa5",
+          "title": "12/seer/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "89915e5aaf61ff4745e03a106b74cd26988950a838561c1ebf66117f7a7a54e9",
+          "title": "12/hunter/llm: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "819620dc1df2e1eec446a292d05f618a3e4a3768230dbc5be5a59aa6729f2128",
+          "title": "12/hunter/acp: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "561560af606c710b061bf2b69db16d6040632ea3ac42dc5f5105397acd1c1052",
+          "title": "12/hunter/mixed: actual bilingual SDK/ACP-MCP initial role swap and strict full-deal Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/wall_notes_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/wall-notes/recorded-games.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "All original callbacks call runTransportGame for complete bilingual games plus same-prefix archive mutations. Role swap/initial deal, affiliation/relations, wall notes, death chains and declared terminal outcomes remain the whole causal contract.",
+      "originalSha256": "c95cf80ae7791a627bb29c621b4afb88b01067f15df4e40494ca11de7e9aeb34",
+      "candidateSha256": "7bda4936b29ea8013ddf2bc082928d2e18b8d739f802693d43f5ceb395e28a17",
+      "moduleAndLocationEdits": [
+        {
+          "start": 220,
+          "end": 249,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 152,
+          "end": 183,
+          "value": "../../../support/wall_notes_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/wall_notes_scenarios",
+          "originalResolved": "backend/tests/support/wall_notes_scenarios.ts",
+          "expectedResolved": "backend/tests/support/wall_notes_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 105,
+          "end": 119,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "3b14d46c06b4b65108c5f1b508f717ee002deacbe40fb553ab01643f9f79f225",
+          "title": "6/write/llm: bilingual full local SDK/ACP-MCP transport and strict wall Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a6d3bdccb9c160ee4609693af287a39a845d6590603728dc2bedc3c377486302",
+          "title": "6/write/acp: bilingual full local SDK/ACP-MCP transport and strict wall Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "c0a66aa7c8ec866f58d32316baead3b4b07336d75504188ea56e8c34f34a29be",
+          "title": "6/write/mixed: bilingual full local SDK/ACP-MCP transport and strict wall Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "af3f7a3d3e5937c12108e93b0b8de14955926031657c2f479cbf1cd44f6a512f",
+          "title": "6/skip/llm: bilingual full local SDK/ACP-MCP transport and strict wall Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "b449d0fe307e5a310ce6aa89d1bd2a49463a66118bb4d3c9dc5eada5dfe1681e",
+          "title": "6/skip/acp: bilingual full local SDK/ACP-MCP transport and strict wall Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f119a77b41a52ab38c7909bd479cfa882b2f0471e0dc33a9f6366427019bece5",
+          "title": "6/skip/mixed: bilingual full local SDK/ACP-MCP transport and strict wall Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "b52655d1c9636c119a2c7e67f7cab93ace65a4a125c510d188a43c4e240c0ff6",
+          "title": "12/write/llm: bilingual full local SDK/ACP-MCP transport and strict wall Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e9e54aeb123ad4cf3660b0ea2e7ba2fcc2f243a0785e8efc9947a991ae805110",
+          "title": "12/write/acp: bilingual full local SDK/ACP-MCP transport and strict wall Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "4ad0f2ab1f9d890e2783238dbc808eac0b18264261cede634fac93948651cbb3",
+          "title": "12/write/mixed: bilingual full local SDK/ACP-MCP transport and strict wall Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "681cc64651468418947f0dfc977dcc1f542549683d6cc86e8bf1d8a81067af79",
+          "title": "12/skip/llm: bilingual full local SDK/ACP-MCP transport and strict wall Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "fda998695ab6af22823329eb358878ef702a0eec13130b4ed29202d7970f8a8d",
+          "title": "12/skip/acp: bilingual full local SDK/ACP-MCP transport and strict wall Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "655a7e1347b266b758394513f03ee076e7233479f39c664544e8cbe0287aa9e3",
+          "title": "12/skip/mixed: bilingual full local SDK/ACP-MCP transport and strict wall Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/white_wolf_king_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/white-wolf-king/recorded-games.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "All original callbacks call runTransportGame for complete bilingual games plus same-prefix archive mutations. Role swap/initial deal, affiliation/relations, wall notes, death chains and declared terminal outcomes remain the whole causal contract.",
+      "originalSha256": "ae52537bec7373ca2fd3e21f030ae4e6f033c26aa786ffd4b4732f3b74d1e467",
+      "candidateSha256": "8ee281662d709d03d645414aca2e55e9145ddfeb13f1f7f6b6a8957de475ba48",
+      "moduleAndLocationEdits": [
+        {
+          "start": 360,
+          "end": 389,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 287,
+          "end": 323,
+          "value": "../../../support/white_wolf_king_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/white_wolf_king_scenarios",
+          "originalResolved": "backend/tests/support/white_wolf_king_scenarios.ts",
+          "expectedResolved": "backend/tests/support/white_wolf_king_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 124,
+          "end": 138,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "6637c8e6a4f031ec3f66b58ce6a6f6afbe8713ee4088589506721c5793bc4680",
+          "title": "hunter/on_daybreak/llm: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "622f19cf5767b8de3b1ec197217656a9531ae4c62b92e2ad4d9960911da50d35",
+          "title": "hunter/on_daybreak/acp: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "744a5da3a2b1e0066e23c8b117e80dd398b0c2064836899bca7c282236acccf0",
+          "title": "hunter/on_daybreak/mixed: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "7cfd9422655561c195a44658b64b0f5715add6f24e3f189b6c5e4c9379667507",
+          "title": "hunter/on_pre_election/llm: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "e462dd59afc8946a172f8b40d7b4fa141cd6a386e897148959ecff191e19a1d2",
+          "title": "hunter/on_pre_election/acp: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "2175b316369133667a76b748149ea5c7faf1572bdaef58dbbd0a9c3dfc4d6a02",
+          "title": "hunter/on_pre_election/mixed: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "f5bd664fcb11401c51dd518baddb89ab9f27858cf67ba3de7588ddc9a7269045",
+          "title": "hunter/on_pre_vote/llm: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "59e972a3ee9d49dfc59fc0c69cb8bc1d817dd0b9556a7581b0b352ead438aeeb",
+          "title": "hunter/on_pre_vote/acp: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "bda7c847adf2923cc9cbc167fcf768ef83e5422da18c7616cfadacbde3751e88",
+          "title": "hunter/on_pre_vote/mixed: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "47c8945467465ce63329ed48f5221a50d1be52296470313783f2bd665b7b4f44",
+          "title": "hunter/on_per_speech_gap/llm: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "785ea38db4a71fe0e6341e77c6ec9b267899b8114c27f2e0794434eb0799e695",
+          "title": "hunter/on_per_speech_gap/acp: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "d2d9df933b2b531d2e9de802c44f3b43bd21bcea6bf1969643d33fc5504c196f",
+          "title": "hunter/on_per_speech_gap/mixed: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "c34ebe964488901246aa16e24b3426368fb019e953a30137e77e3102d6a91df9",
+          "title": "none/on_pre_vote/llm: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "1e628f94087130d015467912185ee415580dc80946b757badda108c93c8c1777",
+          "title": "none/on_pre_vote/acp: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "207e4a1a9d4733a13910b16c2188ca674b7b87c33daed11a70513d066aee8d94",
+          "title": "none/on_pre_vote/mixed: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "5fa42300abc77875c2397dfcb689f3b921d3879d5c7014a4a9adff63a98c00ac",
+          "title": "pending_poison/on_pre_vote/llm: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "d7f1abaf63cde8c75e47e41ca6d29e8e939c82139a5f7f561a98a2404a776249",
+          "title": "pending_poison/on_pre_vote/acp: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "c4a28800d149bb4d9462c9041d3c36ab20d2f1db07e8ebfe4f8b2dc68129edf6",
+          "title": "pending_poison/on_pre_vote/mixed: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "4cfc16a26f372d284d3f38cb762c1ad50cae90a0a326e28899894b35cabbc949",
+          "title": "pending_knife/on_pre_vote/llm: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "8d67511975478e37d462a7803d7c373af89e65a1efc8ff39bc1083b26e70277e",
+          "title": "pending_knife/on_pre_vote/acp: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "f571c2b0fa030704ea2003afd3e17e30db28434fb467de0577fc4b3dcd10ce92",
+          "title": "pending_knife/on_pre_vote/mixed: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "154fa9745c2b5d1ba19128d4a1ce7ad5611b5e1cec941e7c2160cd6da606e7e0",
+          "title": "wolf_king/on_pre_vote/llm: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "51bae8c2ebfcbfc10392420994bcf0e34ecefdb94ee40b37294a9f3de540ace0",
+          "title": "wolf_king/on_pre_vote/acp: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "1bbef3a6e69435c0a91016de6df1b1d0fe56295fae3c51e13dc80b0c07e1e2cd",
+          "title": "wolf_king/on_pre_vote/mixed: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "878a943b54c9b539e396d37432818c8bda272b1361cdc7621bd8444cfd4bc8dc",
+          "title": "twelve/on_pre_vote/llm: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "44e42c758270b933108c0d62f0d5c65b14804ec801ee1bcc2352f63a5a59bb47",
+          "title": "twelve/on_pre_vote/acp: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "7c2b27c9260c5880028085b6c4d8a34cd223ac659d0a12b30611a996e2621f86",
+          "title": "twelve/on_pre_vote/mixed: actual bilingual White Wolf King full games and strict Tape match literal outcomes",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/wild_child_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/wild-child/recorded-games.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "All original callbacks call runTransportGame for complete bilingual games plus same-prefix archive mutations. Role swap/initial deal, affiliation/relations, wall notes, death chains and declared terminal outcomes remain the whole causal contract.",
+      "originalSha256": "d550c1194cfc135e40585b274c8fcd842053654af9ea58b69a0c633ec2c3f3dc",
+      "candidateSha256": "cb10bf201b62625b4b1e5fcd99e473e18e0aecbdc090011d8e98f3a4a005aff9",
+      "moduleAndLocationEdits": [
+        {
+          "start": 322,
+          "end": 354,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 249,
+          "end": 278,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 181,
+          "end": 212,
+          "value": "../../../support/wild_child_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/wild_child_scenarios",
+          "originalResolved": "backend/tests/support/wild_child_scenarios.ts",
+          "expectedResolved": "backend/tests/support/wild_child_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 111,
+          "end": 125,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "483f467c247bbbb0655496fc3035a906600cf1a01ef6b6f622fa80646251d754",
+          "title": "6/wolf_exile/llm: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a1b9a6d720f698942e47c38c901acdcea0bfa404059fc81ac0ba2ca5cb391c7a",
+          "title": "6/wolf_exile/acp: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "68e6a8ce60bd6df9d6fca9dde9fe4fd613db00dc1fc9222bda7d99188aaf01ad",
+          "title": "6/wolf_exile/mixed: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "dd1bfe250fee21247767ffe2926021be26a4d74a134eb508aa2eda0e829acd2f",
+          "title": "6/good_knife/llm: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "48b3d946b1bada34ac0ea674a9d51cefcd9d7d177b4e380562cc9cb59d418b82",
+          "title": "6/good_knife/acp: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a250e328ec5373eb87359f12759801c3cfbb920f7d9fa318b91aa57d1d1fdb31",
+          "title": "6/good_knife/mixed: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "9c8f5f0fcd79572a2b44fdd48952fd58c27815b9aabef5847cb696dfc9dd68d1",
+          "title": "6/poison/llm: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "fc4cf412a70af3624b2355c2ba96708b58009548919b6d37412eac202fc33a6c",
+          "title": "6/poison/acp: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e5a1e82ef450d4e1e3b4e54ece272124e89f5be52fb437a00faf682bd2069d4a",
+          "title": "6/poison/mixed: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "bb1ca8f9e49a700065226336749f100690f6969325feaa3fd3513716c70a8cb2",
+          "title": "6/hunter_chain/llm: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3bc00d59a560df1b1e552433ee1aba97212f676b3b11dca42ee175a6d644fe2a",
+          "title": "6/hunter_chain/acp: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3683014603e1c468b13241c9bcdf9d6183a5ebad6e349470fe4842c962f3aebb",
+          "title": "6/hunter_chain/mixed: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "0ab9b13c627e8646786f3ac47179a8ad1d7d7e997742dc15d4b8bade4f7d3267",
+          "title": "6/same_wave/llm: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "803ab6e6642bf75a80af49d9de393cde1ac12535cbbd6de1833fc0a402bd4581",
+          "title": "6/same_wave/acp: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "eb68267f80feaf845126759a750324a8565eec22c08cccd233c64c6f6c136bc3",
+          "title": "6/same_wave/mixed: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1228046146874287ed0c8dfe9c2908e1635157c622436e8d4bd05f37ddcbcbe6",
+          "title": "6/self_destruct/llm: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "00277be4ed2f50db288fce89a89361f25c8d75df6ca7455d0ee4a55bf5a097d7",
+          "title": "6/self_destruct/acp: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1261a32e9e418032ce586b3f7da0d5652bcb4ddb04a1a178dd5498d57ec9fe08",
+          "title": "6/self_destruct/mixed: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ce30bff307e2562c5d9da334a052eb4baa5ecefdeb5ded821129c3899cbcf548",
+          "title": "6/model_alive/llm: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "85cc2833fa4c63428035a40688dff5046445e4ebe2429f0dce9880e1a6ba834a",
+          "title": "6/model_alive/acp: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "174e3ee0864218f6d6dff6d722f41dd87507f94ccce250a236bc9314550c398b",
+          "title": "6/model_alive/mixed: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "56aa9efbad4d2c20cb324a000f8f648feb4df1578e5ae48d777db9ea1852b084",
+          "title": "12/wolf_exile/llm: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "26e2ce17ab5bb3df9442fa226f5a272c0d4678f5936141c199ff3b95e0727f4c",
+          "title": "12/wolf_exile/acp: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "7336927db3dde4cc0b40d63fec3a1e41e61684560f5b59c24091fae71041eea9",
+          "title": "12/wolf_exile/mixed: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "06b9da79f8f4db7665a72c2c70a3f74e3aba5c783abb8b29f01803e79406cd74",
+          "title": "12/good_knife/llm: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "8453a937dd0d951ab51d9e4a5ebdf762cc451db3f3bf4ca7b2b98d5feedb3e8c",
+          "title": "12/good_knife/acp: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "39acd2b85babb89bf44de63c1040c6753d438c670e4fed6494021c01f2c0b160",
+          "title": "12/good_knife/mixed: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e959d197a49cdb95eda74034e795801c5da6d097e268e8f4f52d2c8e7f330b4f",
+          "title": "12/hunter_chain/llm: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "86bc9235fec2518cbedd5b36278f3715e515c81bba5b23b3b9372a15b2a6e4cd",
+          "title": "12/hunter_chain/acp: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "b3770403bc761820e7990834531803351e2c5ff0eed199ac3cd5d0f3a0698c9e",
+          "title": "12/hunter_chain/mixed: actual bilingual model/committed death/next-night pack and strict Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/wolf_king_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/wolf-king/recorded-games.test.ts",
+      "sourceCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+      "reason": "All original callbacks call runTransportGame for complete bilingual games plus same-prefix archive mutations. Role swap/initial deal, affiliation/relations, wall notes, death chains and declared terminal outcomes remain the whole causal contract.",
+      "originalSha256": "e0415e0f18f120fcddc5ad0ea3e075453d17ec10931cb15f24af6c19b656da5f",
+      "candidateSha256": "484121b7dd8644910a564af0dbb2dc9efea902e1556e960ae6d9207a9f9d7fea",
+      "moduleAndLocationEdits": [
+        {
+          "start": 338,
+          "end": 367,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 271,
+          "end": 301,
+          "value": "../../../support/wolf_king_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/wolf_king_scenarios",
+          "originalResolved": "backend/tests/support/wolf_king_scenarios.ts",
+          "expectedResolved": "backend/tests/support/wolf_king_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 110,
+          "end": 124,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "242a11913c730f44e2165a104c1dabc8d22031ce06408d69a414e3961d96d8ee",
+          "title": "exile_chain/llm: real bilingual complete wolf-king games preserve literal outcomes, knowledge and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1f1e365bb1589006297d3e64f354b12877e47de5e716e7879c9fff9d38cc840c",
+          "title": "exile_chain/acp: real bilingual complete wolf-king games preserve literal outcomes, knowledge and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e12353ac92fb630f65a8d02ae84434642d440eab8968defb5fef7026df782818",
+          "title": "exile_chain/mixed: real bilingual complete wolf-king games preserve literal outcomes, knowledge and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "5404f426cd8e17fe13c9cdca9b670f682fae1bb86e7a3578074699aa02fec589",
+          "title": "poison/llm: real bilingual complete wolf-king games preserve literal outcomes, knowledge and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "93b7ab686d736320539993bac781f24ea754ac9f453a1630274e0a33b42e47d1",
+          "title": "poison/acp: real bilingual complete wolf-king games preserve literal outcomes, knowledge and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "fa220e9bdcf05c7f5b97f06ae7015eb2676b52815c9c6064fd882aa83c8ddad6",
+          "title": "poison/mixed: real bilingual complete wolf-king games preserve literal outcomes, knowledge and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1bb8ce2641a07b8b10cee3af8f06a0b1bb8d53d57f837245e71aa89f6fa74828",
+          "title": "twelve/llm: real bilingual complete wolf-king games preserve literal outcomes, knowledge and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "14df8dce7d19071bf2c751353c6b2feb1b693638b6af7d9b2edfe16d11e414a4",
+          "title": "twelve/acp: real bilingual complete wolf-king games preserve literal outcomes, knowledge and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3edd357922b034f87af17586a41fd369924330b393935d7afaa022158a6c0244",
+          "title": "twelve/mixed: real bilingual complete wolf-king games preserve literal outcomes, knowledge and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "0f33f57822852fd9b39c5178ca45a1a7d73e24d05df409a81476486d8df24a5f",
+          "title": "blast/llm: real bilingual complete wolf-king games preserve literal outcomes, knowledge and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "4d18487050ee05d5edaed055fd7856cb873948561022ba442d883a4033dc5ba0",
+          "title": "blast/acp: real bilingual complete wolf-king games preserve literal outcomes, knowledge and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "b05bf9fb987236d8f5892840d76d9cf30f73982bb75b820a0135e8972ed1ee38",
+          "title": "blast/mixed: real bilingual complete wolf-king games preserve literal outcomes, knowledge and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "b318f2c4366500c84ca6dc9b704de80531cf77d13c74fff6bcbdf874a3afb0d1",
+          "title": "shot_chain/llm: real bilingual complete wolf-king games preserve literal outcomes, knowledge and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "7aed63e0f7ea8a16d3c15385e6d30e8b88c4ae4041c7f761d8fd2efdb641ef4d",
+          "title": "shot_chain/acp: real bilingual complete wolf-king games preserve literal outcomes, knowledge and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "9ec5bd325a3018749bb20cec7acccde4cbb307d5d10d3aac5082b506f5ca2e20",
+          "title": "shot_chain/mixed: real bilingual complete wolf-king games preserve literal outcomes, knowledge and strict Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 452,
-    "targetFiles": 458,
-    "mappingEntries": 458,
-    "baselineCases": 5416,
+    "sourceFiles": 460,
+    "targetFiles": 466,
+    "mappingEntries": 466,
+    "baselineCases": 5641,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
