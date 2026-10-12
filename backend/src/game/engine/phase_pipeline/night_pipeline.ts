@@ -23,11 +23,9 @@ import {
   isNobleBodyBoard,
 } from "../../mechanisms/roles/noble_secret_body/authority";
 import {
-  beginAnimalNight,
-  closeAnimalNight,
+  AnimalNightUnit,
   animalAuthoritySnapshot,
-} from "../../mechanisms/roles/animal_dream/authority";
-import { appendAnimalFact } from "../../mechanisms/roles/animal_dream/facts";
+} from "../../mechanisms/roles/animal_dream/ports";
 import { appendNobleBodyNotices } from "../../mechanisms/roles/noble_secret_body/facts";
 import {
   isRadiantEclipseBoard,
@@ -264,9 +262,18 @@ export class NightPipeline {
     const ownsNoble = config.nobleSecretBody !== undefined;
     const ownsFragrant = config.fragrantPairSeer !== undefined;
     const ownsAnimal = config.animalDream !== undefined;
-    let animalAcquired = false,
-      animalClosed = false;
     const pipeline = this;
+    const animalNight = new AnimalNightUnit(
+      {
+        get world() {
+          return pipeline.world;
+        },
+        get events() {
+          return pipeline.events;
+        },
+      },
+      day,
+    );
     const fragrantNight = new FragrantNightUnit(
       {
         get world() {
@@ -305,14 +312,7 @@ export class NightPipeline {
       demonHandedOff = false,
       demonAcquired = false;
     try {
-      if (ownsAnimal) {
-        beginAnimalNight(this.world, day, isCurrent);
-        animalAcquired = true;
-        appendAnimalFact(this.world, this.events, "animal_night_opened", {
-          policy: "awa_animal_dream_v1",
-          day,
-        });
-      }
+      if (ownsAnimal) animalNight.open(isCurrent);
       if (ownsFragrant) fragrantNight.open(isCurrent);
       if (ownsNoble) {
         const notices = beginNobleBodyNight(this.world, day, isCurrent);
@@ -644,10 +644,7 @@ export class NightPipeline {
             }),
           );
       if (ownsRadiant) closeRadiantNight(this.world, day, "committed", this.events);
-      if (ownsAnimal) {
-        closeAnimalNight(this.world, day, "normal");
-        animalClosed = true;
-      }
+      if (ownsAnimal) animalNight.closeNormally();
       if (ownsFragrant) fragrantNight.closeNormally();
       nobleHandedOff = ownsNoble;
       weddingHandedOff = ownsWedding;
@@ -670,7 +667,7 @@ export class NightPipeline {
         ...(demonSources ? { demonSources, demonWolfSourceCurrent, demonKnifeProtection } : {}),
       };
     } finally {
-      if (animalAcquired && !animalClosed) closeAnimalNight(this.world, day, "aborted");
+      animalNight.abortIfOwned();
       fragrantNight.abortIfOwned();
       if (nobleAcquired && !nobleHandedOff) abortNobleBodyNight(this.world, day);
       if (radiantAcquired) closeRadiantNight(this.world, day, "aborted", this.events);
