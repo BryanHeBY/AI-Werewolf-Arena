@@ -25,3 +25,13 @@
 新增九项有限测试、63 次断言通过；源码及该测试的有限类型检查通过。既有阶段收集算法、动态角色/资源读取、去重和 Ghost Bride 操作不变；无新增 clock/RNG/current/actor 查询。原阶段闭包与真实中途赠予的两项局部证据沿用，未重复完整游戏。
 
 这仍是夜间阶段成员计划，完整 RulePlan 的参数、支持范围、判胜检查点及共享/替换声明继续 C22 和后续切片。未写入新 checkpoint revision，存档 writer/reader 不变。
+
+## C22 显式共享与替换
+
+阶段注册由 `night-stage-registration.ts` 拥有。同一个 observed ID 只有同一个原 handler 引用可共享，涵盖既有 wolf_discussion/wolf_kill_vote（各 21 个 profile）、Scholar/Mentor 的五个共同阶段，以及原查验、幸运、黑市和 Demon compiler/profile reservation 重叠。声明没有放宽板子组合，也不比较函数源码或任意对象的 stringify。
+
+不同对象的同 ID 注册现在抛出 `night_stage_handler_conflict:<id>`，即使 priority 和 execute 相同。这是明确政策加强：旧版选第一个，现版拒绝冲突。另一个原动态 getter 反例在第一次 ID 读取为空键、第二次为占用键时曾覆盖已有 handler；现版保持两次读取并拒绝不同对象覆盖。两项原输入及原结果保留，没有用更换 handler 或重生成 golden 隐藏差异。重复项不额外读取 priority/execute；诊断不强制转换外来 ID。
+
+鬼新娘的冻结声明只有原四项有限操作：移除普通狼刀、安装婚礼聊天、安装婚礼刀、已有普通狼聊改 priority 350。原 map/ID/getter/spread 顺序及没有普通狼聊时的行为保持，不建立泛型替换图。
+
+15 项局部、87 次断言，以及原 Ghost 实际阶段一项、3 次断言通过。必要类型、四个职责头、源程序逆向映射及独立原输入探针通过。C21 snapshot/opaque 与原角色、当前能力、clock/RNG 查询保持。十份原工具声明及七项实际阶段/工具关系只构成有限静态证据；完整工具 schema/动态 actor 一致性检查和完整 RulePlan 仍是后续要求，C22 尚不登记全部完成。

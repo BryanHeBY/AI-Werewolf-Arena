@@ -150,7 +150,7 @@ test("accessor, inherited and Proxy stage metadata is opaque without invoking ge
   expect(plan.stages[2]).toBe(proxy);
 });
 
-test("original first-ID winner and priority/ID order retain the same catalog read sequence", () => {
+test("C22 explicitly rejects the original distinct-handler collision with the same catalog read sequence", () => {
   const beta: NightStageHandler = { id: "beta", priority: 10, async execute() {} },
     alpha: NightStageHandler = { id: "alpha", priority: 10, async execute() {} },
     conflict: NightStageHandler = { id: "beta", priority: -1, async execute() {} },
@@ -165,21 +165,18 @@ test("original first-ID winner and priority/ID order retain the same catalog rea
       return super.get(role);
     }
   }
-  const registry = new NightStageRegistry(new ObservedCatalog(profiles)),
-    plan = registry.getPlan({
+  const registry = new NightStageRegistry(new ObservedCatalog(profiles));
+  // Fixed f4bbd7b accepted the first handler for this literal collision. C22
+  // strengthens that policy; the original conflicting input is preserved.
+  expect(() =>
+    registry.getPlan({
       ...config,
       roleSetups: [
         { role: Role.Wolf, count: 1 },
         { role: Role.Seer, count: 1 },
       ],
-    });
-  if (plan.mode !== "snapshot") throw new Error("expected_snapshot_plan");
-  expect(plan.stages).toEqual([alpha, beta]);
-  expect(plan.stages[1]).toBe(beta);
-  expect(plan.metadata).toEqual([
-    { ordinal: 0, kind: "data", id: "alpha", priority: 10 },
-    { ordinal: 1, kind: "data", id: "beta", priority: 10 },
-  ]);
+    }),
+  ).toThrow("night_stage_handler_conflict:beta");
   expect(reads).toEqual([Role.Wolf, Role.Seer, Role.Wolf, Role.Seer, Role.Wolf, Role.Seer]);
 });
 

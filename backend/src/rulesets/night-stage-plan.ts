@@ -7,7 +7,8 @@
  * accessor fields remain opaque without extra getter calls. Only ordinary native
  * dense arrays become frozen membership; custom/lazy sources keep original iteration
  * and failure prefixes. Original handlers, World and ability instances remain mutable;
- * this is not a complete RulePlan or immutable callback policy.
+ * this is not a complete RulePlan or immutable callback policy. Registration explicitly
+ * shares the same original handler and rejects distinct-handler ID conflicts.
  */
 /**
  * Collects, deduplicates and orders registered night stages for present and declared abilities.
@@ -39,6 +40,7 @@ import { BLACK_MARKET_RECIPIENT_STAGE } from "../game/mechanisms/roles/black_mar
 import { LUCKY_ABILITY_STAGE } from "../game/mechanisms/roles/miracle_merchant/lucky_stage";
 import { allDeathGuns } from "../game/mechanisms/roles/death_abilities";
 import { DEATH_ABILITY_ACTIVATION_STAGE } from "../game/mechanisms/roles/death_ability_activation";
+import { registerNightStages, applyGhostBrideStageRegistration } from "./night-stage-registration";
 
 const abilityRole: Record<NightAbilityKind, Role> = {
   pair_check: Role.AwakenedSeer,
@@ -192,19 +194,9 @@ export class NightStageRegistry {
         )
     )
       collected.push(BLACK_MARKET_RECIPIENT_STAGE);
-    // 去重并按显式优先级排序（priority 越小越先执行）。
-    const dedup = new Map<string, NightStageHandler>();
-    for (const stage of collected) {
-      if (!dedup.has(stage.id)) {
-        dedup.set(stage.id, stage);
-      }
-    }
+    const dedup = registerNightStages(collected);
     if (roleSet.has(Role.GhostBride)) {
-      dedup.delete("wolf_kill_vote");
-      dedup.set(WEDDING_CHAT_STAGE.id, WEDDING_CHAT_STAGE);
-      dedup.set(WEDDING_KNIFE_STAGE.id, WEDDING_KNIFE_STAGE);
-      const chat = dedup.get("wolf_discussion");
-      if (chat) dedup.set(chat.id, { ...chat, priority: 350 });
+      applyGhostBrideStageRegistration(dedup, WEDDING_CHAT_STAGE, WEDDING_KNIFE_STAGE);
     }
     return Array.from(dedup.values()).sort((a, b) => {
       const diff = a.priority - b.priority;
