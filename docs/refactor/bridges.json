@@ -65,6 +65,14 @@
       "exports": ["MessageKey", "MessageRef"],
       "currentConsumers": "AI turn rendering and frontend offline-replay mixed format/type imports; recording messageRefSchema still preserves strict text parameter refinement",
       "exit": "C44 named types once consumers use contract; text formatter remains text; parameter validation is not dropped"
+    },
+    {
+      "id": "text-inert-event-copy",
+      "path": "packages/game-text/src/event-data.ts",
+      "owner": "game-contract",
+      "exports": ["copyEventData"],
+      "currentConsumers": "23 feature data/preset readers via old relative exit; text public copy export",
+      "exit": "C44 after feature readers use contract-owned inert data; Node guards retain their own limits and Proxy ingress"
     }
   ]
 }

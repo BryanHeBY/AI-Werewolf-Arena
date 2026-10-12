@@ -21,6 +21,8 @@ export { LOCALES, isLocale } from "./locale";
 export type { Locale } from "./locale";
 export { EVENT_PACK_IDS, EVENT_IDS, ITEM_IDS } from "./event-ids";
 
+export { copyEventData } from "./inert-event-data";
+
 export * from "./outcomes";
 export * from "./inspection";
 export * from "./errors";
