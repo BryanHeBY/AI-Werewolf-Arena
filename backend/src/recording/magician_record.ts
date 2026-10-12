@@ -1,11 +1,20 @@
-import { readWolfSorcererExchangeFact } from "@ai-werewolf-arena/game-text";
-import { readTricksterExchangeFact } from "@ai-werewolf-arena/game-text";
+/**
+ * Responsibility: independently verify recorded magician execution evidence.
+ * Input: immutable reproduction decisions, facts, operations and checkpoints;
+ * output: accepted evidence or the existing stable reproduction rejection.
+ * This verifier owns its reconstructed arithmetic/state and never authorizes
+ * engine actions, pays resources or invokes production settlement as its oracle.
+ * Shared readers only establish data shape; historical success and failure
+ * prefixes, causal cursors and feature-specific policy checks remain unchanged.
+ */
+import { readWolfSorcererExchangeFact } from "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer";
+import { readTricksterExchangeFact } from "@ai-werewolf-arena/game-contract/facts/trickster";
+import { isMagicianPreset } from "@ai-werewolf-arena/game-text";
 import {
-  isMagicianPreset,
   readMagicianExchangeFact,
   readMagicianOwnExchangeFact,
   readDeathShotMissFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/magician";
 import { Camp, Role, Phase, DeathCause } from "../core/domain";
 import type { RecordedDecision, ReproductionRecord } from "./reproduction";
 import { inferMagicianGunSources } from "./magician_action_evidence";

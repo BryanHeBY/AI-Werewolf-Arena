@@ -1,3 +1,12 @@
+/**
+ * Responsibility: define and validate native reproduction evidence and track decisions.
+ * Input: normalized requests, committed facts/operations and checkpoints;
+ * output: strict Tape data with existing version, causal and parameter constraints.
+ * The trace owns request opening/settlement evidence, not domain resource commit.
+ * Feature verifiers reconstruct recorded rules; runtime authorization and original
+ * component references are never serialized. Exact source/lock admission belongs
+ * to replay execution; raw user messages remain untouched by locale formatting.
+ */
 import { animalCheckpointSchema } from "./animal_dream_checkpoint";
 import { validateAnimalDreamRecord } from "./animal_dream_record";
 import {
@@ -34,31 +43,34 @@ import {
   readModifierSkipFact,
   readModifierBonusFact,
   readModifierConflictFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/scholar-mentor";
 import {
   readTimeConsortChoiceFact,
   readTimeConsortSkipFact,
   readTimeConsortReflectionFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/time-consort";
 import { validateTimeConsortRecord } from "./time_consort_record";
 import {
   readWolfSorcererExchangeFact,
   readWolfSorcererSkipFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer";
 import { validateWolfSorcererRecord } from "./wolf_sorcerer_record";
 import {
   readTricksterExchangeFact,
   readTricksterSkipFact,
   readExileMappingFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/trickster";
 import { validateTricksterRecord } from "./trickster_record";
-import { readOrderPrinceChoiceFact, readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-text";
-import { validateOrderPrinceRecord } from "./order_prince_record";
 import {
-  readNightmareFearFact,
+  readOrderPrinceChoiceFact,
+  readOrderPrinceRevoteFact,
+} from "@ai-werewolf-arena/game-contract/facts/order-prince";
+import { validateOrderPrinceRecord } from "./order_prince_record";
+import { readNightmareFearFact } from "@ai-werewolf-arena/game-text";
+import {
   readMagicianExchangeFact,
   readDeathShotMissFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/magician";
 import { validateDemonHunterRecord } from "./demon_hunter_record";
 import { validateMagicianRecord } from "./magician_record";
 import { readFaultPlan, type FaultPlan } from "../core/domain/fault_plan";

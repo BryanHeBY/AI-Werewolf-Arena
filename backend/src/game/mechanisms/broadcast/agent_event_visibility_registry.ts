@@ -1,3 +1,11 @@
+/**
+ * Responsibility: evaluate event audience policies for agent-facing projections.
+ * Input: World identity/permission view and already snapshotted inert facts;
+ * output: visibility decisions from the existing feature rules. Historical facts
+ * retain their recorded audience; unknown events stay hidden. FEED owns Node
+ * hostile-object ingress; this registry owns policy dispatch, not a second snapshot
+ * or any state/payment commit.
+ */
 import {
   ANIMAL_DREAM_EVENT_TYPES,
   readAnimalDreamFact,
@@ -23,19 +31,25 @@ import {
   readModifierChoiceFact,
   readModifierSkipFact,
   readModifierBonusFact,
-} from "@ai-werewolf-arena/game-text";
-import { readTimeConsortChoiceFact, readTimeConsortSkipFact } from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/scholar-mentor";
+import {
+  readTimeConsortChoiceFact,
+  readTimeConsortSkipFact,
+} from "@ai-werewolf-arena/game-contract/facts/time-consort";
 import {
   readWolfSorcererExchangeFact,
   readWolfSorcererSkipFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer";
 import {
   readTricksterExchangeFact,
   readTricksterSkipFact,
   readExileMappingFact,
-} from "@ai-werewolf-arena/game-text";
-import { readOrderPrinceChoiceFact } from "@ai-werewolf-arena/game-text";
-import { readMagicianExchangeFact, readDeathShotMissFact } from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/trickster";
+import { readOrderPrinceChoiceFact } from "@ai-werewolf-arena/game-contract/facts/order-prince";
+import {
+  readMagicianExchangeFact,
+  readDeathShotMissFact,
+} from "@ai-werewolf-arena/game-contract/facts/magician";
 import { readNightmareFearFact } from "@ai-werewolf-arena/game-text";
 import { demonHunterActorId } from "../roles/demon_hunter/authority";
 import { GHOST_BRIDE_EVENT_TYPES } from "@ai-werewolf-arena/game-text";

@@ -1,7 +1,20 @@
+/**
+ * Responsibility: independently verify recorded order prince execution evidence.
+ * Input: immutable reproduction decisions, facts, operations and checkpoints;
+ * output: accepted evidence or the existing stable reproduction rejection.
+ * This verifier owns its reconstructed arithmetic/state and never authorizes
+ * engine actions, pays resources or invokes production settlement as its oracle.
+ * Shared readers only establish data shape; historical success and failure
+ * prefixes, causal cursors and feature-specific policy checks remain unchanged.
+ */
 import { isTimeConsortPreset } from "@ai-werewolf-arena/game-text";
-import { isTricksterPreset, readExileMappingFact } from "@ai-werewolf-arena/game-text";
+import { isTricksterPreset } from "@ai-werewolf-arena/game-text";
+import { readExileMappingFact } from "@ai-werewolf-arena/game-contract/facts/trickster";
 import { sanitizeSpeechText } from "../utils/speech_text";
-import { readOrderPrinceChoiceFact, readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-text";
+import {
+  readOrderPrinceChoiceFact,
+  readOrderPrinceRevoteFact,
+} from "@ai-werewolf-arena/game-contract/facts/order-prince";
 import { Camp, Role, Phase, WinCondition } from "../core/domain";
 import type { ReproductionRecord, RecordedDecision } from "./reproduction";
 const choiceType = "order_prince_choice_committed",

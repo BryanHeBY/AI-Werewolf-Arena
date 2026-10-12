@@ -1,3 +1,11 @@
+/**
+ * Responsibility: snapshot engine facts and project each player's authorized event feed.
+ * Input: original World and committed game events; output: detached local-sequence
+ * observations under the audience at publication. Node ingress rejects Proxy,
+ * accessors, cycles and malformed arrays before reader reflection. Domain state
+ * and turn authorization stay with the engine; this projection never commits
+ * actions or backfills old secrets when membership changes.
+ */
 import {
   ANIMAL_DREAM_EVENT_TYPES,
   readAnimalDreamFact,
@@ -23,15 +31,18 @@ import { types } from "node:util";
 import {
   readWolfSorcererExchangeFact,
   readWolfSorcererSkipFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer";
 import {
   readTricksterExchangeFact,
   readTricksterSkipFact,
   readExileMappingFact,
-} from "@ai-werewolf-arena/game-text";
-import { readOrderPrinceChoiceFact } from "@ai-werewolf-arena/game-text";
-import { readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-text";
-import { readMagicianExchangeFact, readDeathShotMissFact } from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/trickster";
+import { readOrderPrinceChoiceFact } from "@ai-werewolf-arena/game-contract/facts/order-prince";
+import { readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-contract/facts/order-prince";
+import {
+  readMagicianExchangeFact,
+  readDeathShotMissFact,
+} from "@ai-werewolf-arena/game-contract/facts/magician";
 import { readRedMoonNextNightFact, readRedMoonExpiryFact } from "@ai-werewolf-arena/game-text";
 import { readNightmareFearFact } from "@ai-werewolf-arena/game-text";
 import { DEMON_HUNTER_EVENT_TYPES, readDemonHunterEventFact } from "@ai-werewolf-arena/game-text";

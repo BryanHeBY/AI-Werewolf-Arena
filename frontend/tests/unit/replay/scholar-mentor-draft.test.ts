@@ -1,10 +1,17 @@
+/**
+ * Unit contract regression for Scholar/Mentor facts consumed by replay clients.
+ * Original literal payloads, invalid matrices and handwritten expectations are
+ * the independent oracle. The public pure reader owns validation; no frontend
+ * projection, engine state, model, Node proxy guard or fixture is substituted.
+ * Case titles and test bodies remain the existing baseline discovery contract.
+ */
 import { test, expect } from "bun:test";
 import {
   readModifierChoiceFact as choice,
   readModifierSkipFact as skip,
   readModifierConflictFact as conflict,
   readModifierBonusFact as bonus,
-} from "../../../../packages/game-text/src/scholar-mentor";
+} from "@ai-werewolf-arena/game-contract/facts/scholar-mentor";
 const rows = [
   [choice, "modifier_choice_committed", { actorId: 1, day: 2, mode: "enhance", targetId: 2 }],
   [skip, "modifier_choice_skipped", { actorId: 1, day: 1, reason: "first_night" }],

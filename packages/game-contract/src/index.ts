@@ -1,7 +1,8 @@
 /**
  * Responsibility: expose pure protocol data for backend, catalog and browser consumers.
  * Outputs include machine identities, messages, results, errors and inert payload readers.
- * Runtime authorization, rules, catalog metadata and presentation stay outside.
+ * This package never grants runtime authority, executes rules, owns catalog
+ * metadata or renders presentation. Its interfaces and readers describe inert data.
  */
 export {
   Camp,
@@ -32,3 +33,15 @@ export * from "./results";
 export { MESSAGE_IDS, isMessageKey } from "./message-ids";
 export type { MessageKey } from "./message-ids";
 export type { MessageRef } from "./message-refs";
+
+export * from "./facts/scholar-mentor";
+
+export * from "./facts/time-consort";
+
+export * from "./facts/wolf-sorcerer";
+
+export * from "./facts/trickster";
+
+export * from "./facts/order-prince";
+
+export * from "./facts/magician";

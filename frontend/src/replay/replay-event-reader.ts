@@ -1,3 +1,11 @@
+/**
+ * Responsibility: read inert replay events into player references and visual effects.
+ * Input: JSON archive event data; output: normalized read results or rejection,
+ * preserving feature-specific malformed/unknown behavior and user text.
+ * Shared fact contracts own structural parsing; this browser layer owns replay
+ * interpretation and grants no game permission. It does not promise zero Proxy
+ * traps for arbitrary runtime objects supplied outside the inert archive boundary.
+ */
 import { ANIMAL_DREAM_EVENT_TYPES, readAnimalDreamFact } from "@ai-werewolf-arena/game-text";
 import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
@@ -11,28 +19,28 @@ import {
   readModifierSkipFact,
   readModifierConflictFact,
   readModifierBonusFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/scholar-mentor";
 import {
   readTimeConsortChoiceFact,
   readTimeConsortSkipFact,
   readTimeConsortReflectionFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/time-consort";
 import {
   readWolfSorcererExchangeFact,
   readWolfSorcererSkipFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer";
 import {
   readTricksterExchangeFact,
   readTricksterSkipFact,
   readExileMappingFact,
-} from "@ai-werewolf-arena/game-text";
-import { readOrderPrinceChoiceFact } from "@ai-werewolf-arena/game-text";
-import { readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/trickster";
+import { readOrderPrinceChoiceFact } from "@ai-werewolf-arena/game-contract/facts/order-prince";
+import { readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-contract/facts/order-prince";
 import {
   readMagicianExchangeFact,
   readMagicianOwnExchangeFact,
   readDeathShotMissFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/magician";
 import { readRedMoonNextNightFact, readRedMoonExpiryFact } from "@ai-werewolf-arena/game-text";
 import { readNightmareFearFact, readNightmareOwnFearFact } from "@ai-werewolf-arena/game-text";
 import {

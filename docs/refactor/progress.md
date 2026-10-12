@@ -35,3 +35,5 @@
 - C07-B：1513中立消息IDs封闭类型及MessageRef、两语exact type coverage和真实纯类型consumer；字典/42函数body不改，独立审查通过。header局部gate修完；不迁丢backend严格参数refine。
 
 - C08共同inert-data准备：copier原1495字符逐字保持，depth3/default128/null-proto/错误码/原文不改；4测试0与独立review，Node零trap入口仍不同职责，未将facts全部迁完。
+
+- C08首六facts组：三agent实现并交换审查；10 actual consumers只换public进口与职责头，non-import statements全部原byte。每组局部/必要类型，public subpaths legacy TS精确解析修好；其他17facts仍待迁。

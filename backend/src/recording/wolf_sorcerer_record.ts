@@ -1,9 +1,18 @@
+/**
+ * Responsibility: independently verify recorded wolf sorcerer execution evidence.
+ * Input: immutable reproduction decisions, facts, operations and checkpoints;
+ * output: accepted evidence or the existing stable reproduction rejection.
+ * This verifier owns its reconstructed arithmetic/state and never authorizes
+ * engine actions, pays resources or invokes production settlement as its oracle.
+ * Shared readers only establish data shape; historical success and failure
+ * prefixes, causal cursors and feature-specific policy checks remain unchanged.
+ */
+import { isWolfSorcererPreset } from "@ai-werewolf-arena/game-text";
 import {
-  isWolfSorcererPreset,
   readWolfSorcererExchangeFact,
   readWolfSorcererSkipFact,
-  readMagicianExchangeFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer";
+import { readMagicianExchangeFact } from "@ai-werewolf-arena/game-contract/facts/magician";
 import { Camp, Role, Phase } from "../core/domain";
 import type { ReproductionRecord } from "./reproduction";
 const exchange = "wolf_sorcerer_exchange_committed",

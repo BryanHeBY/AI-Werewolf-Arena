@@ -5,7 +5,13 @@
   "type": "module",
   "types": "./src/index.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./facts/scholar-mentor": "./src/facts/scholar-mentor.ts",
+    "./facts/time-consort": "./src/facts/time-consort.ts",
+    "./facts/wolf-sorcerer": "./src/facts/wolf-sorcerer.ts",
+    "./facts/trickster": "./src/facts/trickster.ts",
+    "./facts/order-prince": "./src/facts/order-prince.ts",
+    "./facts/magician": "./src/facts/magician.ts"
   },
   "scripts": {
     "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
@@ -14,5 +20,15 @@
   "devDependencies": {
     "bun-types": "^1.4.2",
     "typescript": "^5.9.3"
+  },
+  "typesVersions": {
+    "*": {
+      "facts/scholar-mentor": ["src/facts/scholar-mentor.ts"],
+      "facts/time-consort": ["src/facts/time-consort.ts"],
+      "facts/wolf-sorcerer": ["src/facts/wolf-sorcerer.ts"],
+      "facts/trickster": ["src/facts/trickster.ts"],
+      "facts/order-prince": ["src/facts/order-prince.ts"],
+      "facts/magician": ["src/facts/magician.ts"]
+    }
   }
 }

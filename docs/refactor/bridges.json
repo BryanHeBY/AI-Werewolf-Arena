@@ -73,6 +73,14 @@
       "exports": ["copyEventData"],
       "currentConsumers": "23 feature data/preset readers via old relative exit; text public copy export",
       "exit": "C44 after feature readers use contract-owned inert data; Node guards retain their own limits and Proxy ingress"
+    },
+    {
+      "id": "text-first-fact-leaves",
+      "path": "packages/game-text/src/{scholar-mentor,time-consort,wolf-sorcerer,trickster,order-prince,magician}.ts",
+      "owner": "game-contract/facts",
+      "exports": "named unchanged fact readers/types",
+      "currentConsumers": "game-text labels/public compatibility, existing application parser tests",
+      "exit": "C44 after remaining facade consumers use public contract; preset support remains separate C09"
     }
   ]
 }
