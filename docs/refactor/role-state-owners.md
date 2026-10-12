@@ -45,3 +45,9 @@ reset、self-heal refresh、terminal pass/second-turn close、native heal/poison
 原 marks/claims、use accounting、Time Consort commit、reflection、事件/记录次序不变。Demon sealed stock 与独立 verifier 的自有可写账本不调用这些生产命令。WitchState 的其他只读 API、codec 和全部 writer 权限仍须后续收敛，本批不冒完整 C17。
 
 原三份全 token 语法经六调用逆映射一致，安装/读取原文不变，五个职责头通过。六项 setter/day/state-getter 前缀测试、20 次断言，原 second-turn pass 一项与有限类型检查通过。独立 reset 的 ctx receiver、第三 RHS state 读与原 LHS 引用、八个 fresh stage/recipient/catalog/bootstrap import 均核对。最初测试从 public port 误导入安装函数导致加载红，改为直接 state owner，生产端口未因此扩权；原红日志保留。
+
+## Seer / Guard 目标政策入口
+
+两个既有目标谓词归各自机制的公共 port，实际 night stage、profile 与提示候选使用同一函数。删除已无消费者的 target_policy/repeat_policy 叶子；原新鲜自查、重复守护政策、历史/day getter 的短路与错误顺序保持。Guard 没有新增最终提交重查。
+
+七项原程序与既有 Guard 命令比较、七个职责头通过；新增四项、13 次断言及原 Seer await 后自查一项、五次断言通过，一次有限类型检查通过。独立源审和十个原/现 cold entry 的结果、出口相同。本批只整理目标政策归属，完整目标资格和状态编码仍继续。

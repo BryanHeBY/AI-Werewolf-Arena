@@ -1,3 +1,11 @@
+/**
+ * Assembles Seer's native inspection policy, initialization, tools and stage contributions.
+ * Inputs are board configuration and original runtime contexts; output is the profile
+ * with the same gateway, prompt and production fallback behavior. Freshness reads use
+ * the feature's public query owner; this assembly does not commit inspections or encode
+ * checkpoints. The registered fallback retains its existing privileged World exception
+ * until the separately tracked production-observation migration.
+ */
 import { scholarMentorBlocks } from "../scholar_mentor/night_frame";
 import { z } from "zod";
 import {
@@ -5,7 +13,7 @@ import {
   SEER_ACTION_POLICIES,
   DEFAULT_SEER_ACTION_POLICY,
 } from "../../../../core/domain/board";
-import { seerTargetAllowed } from "./target_policy";
+import { seerTargetAllowed } from "./ports";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text, term, inspectionLabel } from "@ai-werewolf-arena/game-text";
 /** 文件说明：预言家角色 profile。 */

@@ -19,7 +19,7 @@ import { commitEvilKnightReflection } from "../evil_knight/state";
 import { isEvilKnightBoard, assertEvilKnightNativeActor } from "../evil_knight/night_frame";
 /** 文件说明：预言家夜间查验阶段处理。 */
 import { demonHunterActorId } from "../demon_hunter/authority";
-import { seerTargetAllowed } from "./target_policy";
+import { seerTargetAllowed } from "./ports";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Phase, Role } from "../../../../core/domain/model";

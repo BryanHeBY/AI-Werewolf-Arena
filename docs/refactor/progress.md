@@ -133,3 +133,5 @@
 - 当前机制迁移台账：基线89rows/原hash不改，另current-only query owner，共90rows900cells42partial/858pending/0complete或N/A；具体C17–24交付子项注明真实owner/commit/doc，补Wall alias与Guard/Wolf实际parts。独立增量8parts/20committed pointers0，C08/C09等未登部分明确scope未全覆盖；禁止据pilot或静态presence标整格done。
 
 - C17 Witch普通payload owner：reset/refresh/close/native heal&poison/recipient--六具体命令，原flag-before-day/ctxreceiver/LHSstate-before-RHS/不同付款语义保，marks/claims/use/pub原序。三whole token inverse/5heads0、独立2额外前缀/cold8同exports，new6/0/20+原secondturnpass1/0、finite types0；Demon与verifier账本独立，全部readonly/schema/CP仍pending。
+
+- C24 Seer/Guard目标政策：两原predicate归实际feature公共port，四consumer同函数，旧两薄leaf删；原history/day短路与getter错序不变，Guard无新增final重查。七程序/七heads0，new4/0/13+原Seer fresh-after-await1/0/5、finite types0；独立原Git正文与cold10同success/exports。全targets/RulePlan仍继续。
