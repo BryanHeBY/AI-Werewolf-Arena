@@ -13,7 +13,8 @@
  * cancellation checks; changed subsequent parameters refuse before any acquisition.
  * Mist's concrete unit owns opening facts and the late cleanup transfer; damage
  * handoff remains earlier, and configured failure cleanup does not require acquisition.
- * Time Consort's late cleanup transfer never moves its priority-50 stage opening.
+ * Time Consort and Scholar/Mentor retain stage-owned priority-50 opening; their
+ * concrete units only own the original late cleanup transfer and failure abort.
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bindBoardParameters } from "../../../rulesets/board-parameters";
@@ -45,8 +46,8 @@ import {
 import {
   isScholarMentorBoard,
   assertScholarMentorRosterCurrent,
-  abortScholarMentorNight,
-} from "../../mechanisms/roles/scholar_mentor/night_frame";
+  ScholarMentorNightUnit,
+} from "../../mechanisms/roles/scholar_mentor/ports";
 import {
   mistKnifeTargets,
   isMistRavenBoard,
@@ -275,7 +276,11 @@ export class NightPipeline {
         return pipeline.world;
       },
     });
-    let scholarMentorHandedOff = false;
+    const scholarMentorNight = new ScholarMentorNightUnit({
+      get world() {
+        return pipeline.world;
+      },
+    });
     const ownsNoble = config.nobleSecretBody !== undefined;
     const ownsFragrant = config.fragrantPairSeer !== undefined;
     const ownsAnimal = config.animalDream !== undefined;
@@ -676,7 +681,7 @@ export class NightPipeline {
       demonHandedOff = ownsDemon;
       magicianHandedOff = config.magician !== undefined;
       timeConsortNight.transferToManager(config.timeConsort !== undefined);
-      scholarMentorHandedOff = config.scholarMentor !== undefined;
+      scholarMentorNight.transferToManager(config.scholarMentor !== undefined);
       mistNight.transferToManager(ownsMist);
       return attachNobleNightReceiver(
         {
@@ -704,7 +709,7 @@ export class NightPipeline {
       if (config.wolfSorcerer && !magicianHandedOff) abortWolfSorcererNight(this.world);
       if (config.magician && !magicianHandedOff) abortMagicianNight(this.world);
       if (config.timeConsort) timeConsortNight.abortIfOwned();
-      if (config.scholarMentor && !scholarMentorHandedOff) abortScholarMentorNight(this.world);
+      if (config.scholarMentor) scholarMentorNight.abortIfOwned();
       if (demonAcquired && !demonHandedOff) closeDemonHunterNight(this.world);
       if (ownsWedding && !weddingHandedOff) closeWeddingNight(this.world);
       closeThiefNight();

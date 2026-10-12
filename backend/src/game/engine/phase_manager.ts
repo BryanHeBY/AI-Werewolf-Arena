@@ -8,7 +8,8 @@
  * cannot replace that binding, while original actor and phase ownership remains.
  * Mist's terminal port receives current manager World/day at each original site;
  * normal completion retains both inner and outer abort and pending-object order.
- * Time Consort's manager close and repeated abort retain their original guards.
+ * Time Consort and Scholar/Mentor keep separate currentness checks and repeated
+ * terminal reads; frame authority alone decides whether a closed night may restart.
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bindBoardParameters } from "../../rulesets/board-parameters";
@@ -21,10 +22,7 @@ import {
 } from "../mechanisms/roles/noble_secret_body/ports";
 import type { SecretBodySources } from "../mechanisms/roles/noble_secret_body/damage";
 import { hasRadiantNight } from "../mechanisms/roles/radiant_eclipse/night_frame";
-import {
-  closeScholarMentorNight,
-  abortScholarMentorNight,
-} from "../mechanisms/roles/scholar_mentor/night_frame";
+import { scholarMentorNightTerminal } from "../mechanisms/roles/scholar_mentor/ports";
 import { assertMistRosterCurrent, mistNightTerminal } from "../mechanisms/roles/mist_raven/ports";
 import { MistPendingNight } from "../mechanisms/roles/mist_raven/pending_night";
 import { decideSnake } from "../mechanisms/roles/mist_raven/snake_window";
@@ -403,7 +401,7 @@ export class PhaseManager {
         mistNightTerminal.abort(this.world);
       }
       if (this.config.timeConsort) timeConsortNightTerminal.abort(this.world);
-      if (this.config.scholarMentor) abortScholarMentorNight(this.world);
+      if (this.config.scholarMentor) scholarMentorNightTerminal.abort(this.world);
       if (this.config.wolfSorcerer) abortWolfSorcererNight(this.world);
       if (this.config.magician) abortMagicianNight(this.world);
     }
@@ -989,7 +987,7 @@ export class PhaseManager {
         if (this.config.timeConsort && dayIsCurrent())
           timeConsortNightTerminal.closeNormally(this.world, cycleDay);
         if (this.config.scholarMentor && dayIsCurrent())
-          closeScholarMentorNight(this.world, cycleDay);
+          scholarMentorNightTerminal.closeNormally(this.world, cycleDay);
         if (this.config.mistRaven && dayIsCurrent())
           mistNightTerminal.closeNormally(this.world, cycleDay);
       } finally {
@@ -998,7 +996,7 @@ export class PhaseManager {
         if (this.config.wolfSorcerer) abortWolfSorcererNight(this.world);
         if (this.config.magician) abortMagicianNight(this.world);
         if (this.config.timeConsort) timeConsortNightTerminal.abort(this.world);
-        if (this.config.scholarMentor) abortScholarMentorNight(this.world);
+        if (this.config.scholarMentor) scholarMentorNightTerminal.abort(this.world);
       }
       if (!dayIsCurrent()) return this.state.gameOver;
       if (animalSkip) {

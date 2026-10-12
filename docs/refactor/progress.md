@@ -255,3 +255,5 @@
 - C23 Mist具体night unit：原cleanup-transfer唯一owner，完整begin/unseal公告与较早business damage handoff分开、原较晚才移交清理。manager pending.abort→frameabort/World-day-current读取/normal后两finally原位；三族独立28源码检查、17原files byte同、公开7func identity/8cold/3中间候选依赖同，本族原real1/0/43+三族new12/0/38、finalfinite78345与scopedgate9048实际closed0。engine public ports接真实函数，初4条binding红保存且0新增依赖，61原债未清；其他Mist机制边界仍partial。
 
 - C23 Time Consort具体night unit：cleanup-transfer原flag归feature唯一owner；priority50 begin仍stage、stock/exchange/damage/frame状态原bytes。manager条件/currentness与normal后inner+outer abort World读取、重复normal-close原error保；同原public query函数经ports，无新frame store。原realcycle1/0/5+三族new12/0/38，最终有限type78345/依赖9048均actual0，独立整源/17prefix/公开引用/cold/中间候选0；完整时妃资格/权限/效果/编码等仍partial。
+
+- C23 Scholar/Mentor具体night unit：仅原cleanup-transfer状态及原manager终结port，priority50 begin、赠予库存/paid/frame算法原bytes；normal后abort仍由frame closed guard决定，不毒化nextnight，未完成close后abort仍原拒绝。原realcycle1/0/14+三族new12/0/38，finaltype78345/scoped9048 actual0，独立28源检查/17byte原文件/7fn身份/8cold/3逐功能候选闭合。最后11scope实际bytes同已审final；原4binding门禁红与harness误红保留，不改债务/fixture，无重runtime/fullsuite。完整师徒矩阵与其他C23机制仍partial。
