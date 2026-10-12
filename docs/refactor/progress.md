@@ -6,8 +6,8 @@
 | ---------------------- | ------ | ------------------------------------------------------------------------------------ |
 | P0 基线与契约          | 已完成 | C01 `144f48b` 已提交；C02 `aba9347`；C03 `b56d282`；七样例、89行静态台账与三方向审查 |
 | P1 依赖与共享契约      | 已完成 | C04–C09 数据/支持职责与 public consumer 闭合；零基础包循环，兼容桥按 C44 退出        |
-| P2 测试、fixture、词典 | 进行中 | C10 真实分层入口；C11 首69单测、C12 首9场景/进程；C15 完成，C13/C14 及余项继续       |
-| P3 状态与请求授权      | 进行中 | C16 组件名/类型基础与原引用保真；实际 state slots、统一传播及 F02 继续               |
+| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；C11首69单测/C12首89场景进程，余tests/support继续             |
+| P3 状态与请求授权      | 进行中 | C16生产读取/C18传播/F02/C19完成；Seer/Fragrant试点，其余状态继续                     |
 | P4 规则计划与生命周期  | 进行中 | C21原阶段编译owner迁rulesets；immutable计划/C22–C24继续                              |
 | P5 效果、死亡与判胜    | 待执行 | C25–C29                                                                              |
 | P6 能力、观察与展示    | 待执行 | C30–C36、C33a                                                                        |
@@ -89,3 +89,5 @@
 - C14命名小修：旧localized player role字符串经ASCII slug得到空后缀，改明确1-localized-role.player.json；Root原1179bytes逐字保持，仍字面狼人/缺locale，不推machineID。global/local/2实际reader及当前ledger同步，原legacyreader1/0/15，未重复全CLI。
 
 - C21准备：existing夜间闭包/动态能力/排序完整算法迁rulesets真实owner，pipeline直连、旧入口named同class/singleton。两全程序/实际bindings/identity Root+独立0，source类型0，原7selected/0/138；无actorfreeze/IO/fixedpoint改写。immutable RulePlan、显式合法duplicate/replacement及未知冲突政策仍下一slice。
+
+- C12后80真实场景：1009旧IDs、499relative modules+21目录/board scope literals、679targets保持，80head/0。Root逐actualGit与明确edit重放原全文核0，80 scopedtypes0；代表3文件/12cases仅skip加载，exit1非testpass。implicitindex真实TS5097修回原目录形式，未放宽tsconfig；统一mapping237files/3212IDs，全游戏后置。
