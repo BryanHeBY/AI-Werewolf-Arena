@@ -87,3 +87,7 @@ export * from "./facts/wild-child";
 export * from "./facts/lonely-girl";
 
 export * from "./facts/wall-notes";
+
+export * from "./events";
+
+export * from "./requests";

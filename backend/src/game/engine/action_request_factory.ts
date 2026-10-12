@@ -11,16 +11,15 @@ import { bindWildChildRequest } from "../mechanisms/roles/wild_child/lifecycle";
 import { bindInitialIdentityRequest } from "../mechanisms/roles/initial_identity/setup";
 import { bindWallRequest } from "../mechanisms/events/wall_notes/authority";
 import type { MessageRef } from "@ai-werewolf-arena/game-contract";
-import {
-  ActionRequest,
-  ActionRequestExtras,
+import type { ActionRequest, ActionRequestExtras } from "@ai-werewolf-arena/game-contract/requests";
+import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
+import type {
   ActionStage,
   ActionWindow,
   EntityId,
-  GameEvent,
   Phase,
   ToolName,
-} from "../../core/domain/model";
+} from "@ai-werewolf-arena/game-contract";
 import { World } from "../../core/domain/world";
 import { buildAgentVisibleEventFeed } from "./agent_visible_event_feed";
 import { buildTurnConstraintContext } from "./turn_constraints_context";

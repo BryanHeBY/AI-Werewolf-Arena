@@ -97,6 +97,14 @@
       "exports": "named original DTOs, fact/tool readers and pure JSON template",
       "currentConsumers": "remaining feature imports, game-text labels and original application tests",
       "exit": "C44 after direct public contract imports; never moves actual resources or runtime identity"
+    },
+    {
+      "id": "core-action-event-data",
+      "path": "backend/src/core/domain/{actions,events}.ts",
+      "owner": "game-contract",
+      "exports": "named pure tool, stage, event, ActionRequest/Context/Extras contracts",
+      "currentConsumers": "core/model/core aggregators and remaining engine/features/agents/tests",
+      "exit": "C44 after all machine data consumers use public contract; Provider and domain commit selections remain domain"
     }
   ]
 }

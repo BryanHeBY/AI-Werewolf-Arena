@@ -47,3 +47,5 @@
 - C08关系/初始化/道具八组：原声明与数据默认模板迁纯包，作者24/0与独立3/0；原FE显示27/0/349。5实际consumer非import原样，必要类型通过；内嵌label解析与C44桥退出仍未完成。
 
 - C09有限支持完整迁移：17生产谓词/独立17归档谓词，各自owner无回导；原dispatch拒绝顺序与Node入口保真。三方向审查，40 consumer/test及42 formatter正文相同，原focused138/0与必要类型通过；text17算法及出口删除，Scholar29旧ID迁后端默认发现。
+
+- C07完整事件/请求：事实依赖闭合后迁11 event/3request声明与真实factory/recorder；独立逐字段/正文相同，4 public/type项与FE原3覆盖通过，contract及backend源码必要类型0。运行Provider/selection/WeakMap仍领域；C07数据边界完成，桥待C44。

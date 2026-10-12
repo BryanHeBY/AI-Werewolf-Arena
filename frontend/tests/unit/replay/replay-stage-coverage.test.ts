@@ -64,7 +64,7 @@ function eventTypes() {
     FragrantPairPayloadMap: "packages/game-contract/src/facts/fragrant-pair-seer.ts",
   };
   const declaration = find(
-    source("backend/src/core/domain/events.ts"),
+    source("packages/game-contract/src/events.ts"),
     (node): node is ts.InterfaceDeclaration =>
       ts.isInterfaceDeclaration(node) && node.name.text === "EventPayloadMap",
   );

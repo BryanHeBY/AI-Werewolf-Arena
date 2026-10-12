@@ -1,5 +1,13 @@
+/**
+ * Responsibility: record each committed event and its authorized player view.
+ * Input: original World and event deltas; output: persisted God/player evidence
+ * and the recorded delta for presentation. This recorder owns its event cursor,
+ * replay phase/day cursor and per-player sequence; it never advances game phases
+ * or selects actions. Recording failures propagate with already written prefixes,
+ * while domain commit and current audience authorization keep their own owners.
+ */
 import type { World } from "../core/domain/world";
-import type { GameEvent } from "../core";
+import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
 import { COMPONENT, RoleComponent } from "../core";
 import { buildAgentVisibleEvent } from "../game/engine/agent_visible_event_feed";
 import { getDefaultScriptEventRenderRegistry } from "../game";
