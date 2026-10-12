@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "f4757a1f3e732d73ff235eba2aab8c62fa4524f7",
+  "observedSourceCommit": "ff8ebd7f309936a1b68eca77a8200c5b1181d264",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -63293,13 +63293,631 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/llm_action_provider_protocol.test.ts",
+      "to": "backend/tests/unit/agents/llm/tool-reception.test.ts",
+      "sourceCommit": "ff8ebd7f309936a1b68eca77a8200c5b1181d264",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "fc878f521c14bc645087147ea471107370cac0dae1e60831328eef29812a22f3",
+      "candidateSha256": "f7be22704ebd7655f42e210235ad38d4a611fbf8b27958da4f19d7bb66926ebf",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 617,
+          "end": 651,
+          "original": "../../support/llm_provider_clients",
+          "value": "../../../support/llm_provider_clients",
+          "originalResolved": "backend/tests/support/llm_provider_clients.ts",
+          "expectedResolved": "backend/tests/support/llm_provider_clients.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 431,
+          "end": 477,
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 348,
+          "end": 393,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 279,
+          "end": 309,
+          "original": "../../../src/core/domain/model",
+          "value": "../../../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 213,
+          "end": 253,
+          "original": "../../../src/core/domain/components/role",
+          "value": "../../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 138,
+          "end": 179,
+          "original": "../../../src/core/domain/components/names",
+          "value": "../../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 82,
+          "end": 108,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "82bb0d23e6fecd03002cac7d094dfccca19be7b4d3da31db4a9a15a32d945d3d",
+          "title": "LlmActionProvider protocol > accepts a native tool callback",
+          "occurrence": 1
+        },
+        {
+          "id": "4ccfe38d957078adf159c8cfc9aebd1e39aa65d0fb50ca796e26725108d54210",
+          "title": "LlmActionProvider protocol > accepts a native vote callback",
+          "occurrence": 1
+        },
+        {
+          "id": "28d982723a210579dacf0477be22b9bba7424cc0c4d0c05bbf24ec4fe50fe0df",
+          "title": "LlmActionProvider protocol > accepts a native role-action callback",
+          "occurrence": 1
+        },
+        {
+          "id": "660dd4b28754cbc54b45392cc920102925001a48cee41f325d6b0d284d71be69",
+          "title": "LlmActionProvider protocol > accepts a native speak callback without text recovery",
+          "occurrence": 1
+        },
+        {
+          "id": "c73e6183d3e3253337b8bef21f83d654351f5c9c036d0a86ebc05f92546f1f46",
+          "title": "LlmActionProvider protocol > passes the callback arguments through the native protocol",
+          "occurrence": 1
+        },
+        {
+          "id": "508f79b105d0065835f8f8ac1b1431d7a85f831bc23dae4fc8c218a95f723f2c",
+          "title": "LlmActionProvider protocol > uses sdk tool loop as primary path",
+          "occurrence": 1
+        },
+        {
+          "id": "853ebbb6504ae19c512b12222032252ab12b878ba3ef99f9ce9334a876ef2aab",
+          "title": "LlmActionProvider protocol > accepts game actions through the shared submit_action contract",
+          "occurrence": 1
+        },
+        {
+          "id": "23b5b7a4373946f3ca042a820cfdc7248a80b676ad5297aa9c6342f7260b2d06",
+          "title": "LlmActionProvider protocol > exposes the generic game tool contract",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { PotionType } from \"../../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalImport": "import { twelvePlayerStandardConfig } from \"../../../src/runtime/scenarios/twelve_player_standard\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "twelvePlayerStandardConfig",
+              "imported": "twelvePlayerStandardConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalImport": "import { AiSdkClient } from \"../../../src/ai/integrations/llm/ai_sdk_client\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AiSdkClient",
+              "imported": "AiSdkClient",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/recording_context",
+          "originalImport": "import { runWithSessionRecorder } from \"../../../src/recording/recording_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "runWithSessionRecorder",
+              "imported": "runWithSessionRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/session_recorder",
+          "originalImport": "import { SessionRecordManager } from \"../../../src/recording/session_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SessionRecordManager",
+              "imported": "SessionRecordManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "path",
+          "originalImport": "import path from \"path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "fs",
+          "originalImport": "import { promises as fs } from \"fs\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "fs",
+              "imported": "promises",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. Bilingual schema shared request remains a single integration allocation. Guard fixture cast changes raw type syntax only; whole callback emitted bytes remain exact.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 82 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/llm_action_provider_protocol.test.ts",
+      "to": "backend/tests/integration/filesystem/agents/turn-refusal-recording.test.ts",
+      "sourceCommit": "ff8ebd7f309936a1b68eca77a8200c5b1181d264",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "fc878f521c14bc645087147ea471107370cac0dae1e60831328eef29812a22f3",
+      "candidateSha256": "9536f9fe884f85210a0efb15308c69ad48671e4f911ec7d9454fd50fcf91b86f",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 914,
+          "end": 948,
+          "original": "../../support/llm_provider_clients",
+          "value": "../../../support/llm_provider_clients",
+          "originalResolved": "backend/tests/support/llm_provider_clients.ts",
+          "expectedResolved": "backend/tests/support/llm_provider_clients.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 810,
+          "end": 848,
+          "original": "../../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 665,
+          "end": 704,
+          "original": "../../../src/recording/session_recorder",
+          "value": "../../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 584,
+          "end": 624,
+          "original": "../../../src/recording/recording_context",
+          "value": "../../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 495,
+          "end": 541,
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 404,
+          "end": 457,
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "value": "../../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 327,
+          "end": 357,
+          "original": "../../../src/core/domain/model",
+          "value": "../../../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 261,
+          "end": 301,
+          "original": "../../../src/core/domain/components/role",
+          "value": "../../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 186,
+          "end": 227,
+          "original": "../../../src/core/domain/components/names",
+          "value": "../../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 130,
+          "end": 156,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 79,
+          "end": 96,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "866bd4e05c9362497aa0b8e59f988ada6933068c07247d57070f8493799c8ef9",
+          "title": "LlmActionProvider protocol > returns actionable turn-id feedback and accepts a corrected witch action",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig } from \"../../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "sixPlayerMvpConfig",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalImport": "import { AiSdkClient } from \"../../../src/ai/integrations/llm/ai_sdk_client\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AiSdkClient",
+              "imported": "AiSdkClient",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/llm_provider_clients",
+          "originalImport": "import {\n  REQUIRED_ACTION_CONSTRAINTS,\n  ToolLoopClient,\n  GenericSubmitActionClient,\n  CaptureToolsClient,\n  FallbackProvider,\n} from \"../../support/llm_provider_clients\";",
+          "currentImportBeforeRebase": "import { REQUIRED_ACTION_CONSTRAINTS, FallbackProvider } from \"../../support/llm_provider_clients\";",
+          "droppedBindings": [
+            {
+              "name": "ToolLoopClient",
+              "imported": "ToolLoopClient",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "GenericSubmitActionClient",
+              "imported": "GenericSubmitActionClient",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "CaptureToolsClient",
+              "imported": "CaptureToolsClient",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. Bilingual schema shared request remains a single integration allocation. Guard fixture cast changes raw type syntax only; whole callback emitted bytes remain exact.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 82 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/llm_action_provider_protocol.test.ts",
+      "to": "backend/tests/integration/agents/llm/required-tool-http-retry.test.ts",
+      "sourceCommit": "ff8ebd7f309936a1b68eca77a8200c5b1181d264",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "fc878f521c14bc645087147ea471107370cac0dae1e60831328eef29812a22f3",
+      "candidateSha256": "b6cd92414430d6a6d478b871cd424429db71270f92f6dadc88696df3a390fa0b",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 685,
+          "end": 719,
+          "original": "../../support/llm_provider_clients",
+          "value": "../../../support/llm_provider_clients",
+          "originalResolved": "backend/tests/support/llm_provider_clients.ts",
+          "expectedResolved": "backend/tests/support/llm_provider_clients.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 573,
+          "end": 619,
+          "original": "../../../src/ai/integrations/llm/ai_sdk_client",
+          "value": "../../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts",
+          "expectedResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 495,
+          "end": 541,
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 404,
+          "end": 457,
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "value": "../../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 327,
+          "end": 357,
+          "original": "../../../src/core/domain/model",
+          "value": "../../../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 261,
+          "end": 301,
+          "original": "../../../src/core/domain/components/role",
+          "value": "../../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 186,
+          "end": 227,
+          "original": "../../../src/core/domain/components/names",
+          "value": "../../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 130,
+          "end": 156,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 79,
+          "end": 96,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "26c6469fe9a87b2580cfefa5d9b2708e0bd1090d7be1d511337d1db91e3f267a",
+          "title": "LlmActionProvider protocol > retries a text-only required-tool response and completes the witch turn",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig } from \"../../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "sixPlayerMvpConfig",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/recording_context",
+          "originalImport": "import { runWithSessionRecorder } from \"../../../src/recording/recording_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "runWithSessionRecorder",
+              "imported": "runWithSessionRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/session_recorder",
+          "originalImport": "import { SessionRecordManager } from \"../../../src/recording/session_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SessionRecordManager",
+              "imported": "SessionRecordManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "path",
+          "originalImport": "import path from \"path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "fs",
+          "originalImport": "import { promises as fs } from \"fs\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "fs",
+              "imported": "promises",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/llm_provider_clients",
+          "originalImport": "import {\n  REQUIRED_ACTION_CONSTRAINTS,\n  ToolLoopClient,\n  GenericSubmitActionClient,\n  CaptureToolsClient,\n  FallbackProvider,\n} from \"../../support/llm_provider_clients\";",
+          "currentImportBeforeRebase": "import { REQUIRED_ACTION_CONSTRAINTS, FallbackProvider } from \"../../support/llm_provider_clients\";",
+          "droppedBindings": [
+            {
+              "name": "ToolLoopClient",
+              "imported": "ToolLoopClient",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "GenericSubmitActionClient",
+              "imported": "GenericSubmitActionClient",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "CaptureToolsClient",
+              "imported": "CaptureToolsClient",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. Bilingual schema shared request remains a single integration allocation. Guard fixture cast changes raw type syntax only; whole callback emitted bytes remain exact.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 82 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 505,
-    "targetFiles": 511,
-    "mappingEntries": 511,
-    "baselineCases": 6352,
+    "sourceFiles": 506,
+    "targetFiles": 514,
+    "mappingEntries": 514,
+    "baselineCases": 6362,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
