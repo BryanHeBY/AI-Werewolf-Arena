@@ -1,6 +1,6 @@
 {
   "schema": "awa-current-mechanism-migration-v1",
-  "observedCommit": "588e755418b124b5e415c98d9cd78a6afb3b7e63",
+  "observedCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
   "baseline": {
     "path": "docs/refactor/generated/mechanism-matrix.json",
     "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
@@ -5090,10 +5090,26 @@
       "baselineOwner": "feature:config",
       "cells": {
         "state": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "One immutable World-bound complete board parameter owner with actual engine, agent, simulation and recording consumers",
+              "commit": "cb2957ac",
+              "owners": [
+                "backend/src/rulesets/board-parameters.ts",
+                "packages/game-contract/src/board-parameters.ts",
+                "backend/src/app/bootstrap.ts",
+                "backend/src/runtime/simulation/reproduction_context.ts"
+              ],
+              "evidence": [
+                "docs/refactor/owned-board-parameters.md",
+                "docs/refactor/generated/owned-board-parameters-evidence.json"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Complete full RulePlan stage/tool/interaction composition and all relevant parameter consumers; this delivered part does not close other configuration or mechanism cells.",
+            "Keep loading/resolution and runtime parameter ownership explicit; finish remaining configuration facade/export and final dependency/zero-debt gates."
           ]
         },
         "lease": {
@@ -7677,8 +7693,8 @@
     "currentOnlyRows": 1,
     "rows": 90,
     "cells": 900,
-    "pending": 856,
-    "partial": 44,
+    "pending": 855,
+    "partial": 45,
     "complete": 0,
     "not-applicable": 0
   },
