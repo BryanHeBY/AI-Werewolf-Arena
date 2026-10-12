@@ -138,11 +138,11 @@ import {
 } from "../../../core/domain/systems/damage_resolution_system";
 import { World } from "../../../core/domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
+import { NightStageState } from "../../mechanisms";
 import {
   getDefaultNightStageRegistry,
   NightStageRegistry,
-  NightStageState,
-} from "../../mechanisms";
+} from "../../../rulesets/night-stage-plan";
 import { getSessionRecorder } from "../../../recording/recording_context";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { GameActionRequestFactory } from "../action_request_factory";

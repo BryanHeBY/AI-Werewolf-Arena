@@ -8,7 +8,7 @@
 | P1 依赖与共享契约      | 已完成 | C04–C09 数据/支持职责与 public consumer 闭合；零基础包循环，兼容桥按 C44 退出        |
 | P2 测试、fixture、词典 | 进行中 | C10 真实分层入口；C11 首69单测、C12 首9场景/进程；C15 完成，C13/C14 及余项继续       |
 | P3 状态与请求授权      | 进行中 | C16 组件名/类型基础与原引用保真；实际 state slots、统一传播及 F02 继续               |
-| P4 规则计划与生命周期  | 待执行 | C21–C24                                                                              |
+| P4 规则计划与生命周期  | 进行中 | C21原阶段编译owner迁rulesets；immutable计划/C22–C24继续                              |
 | P5 效果、死亡与判胜    | 待执行 | C25–C29                                                                              |
 | P6 能力、观察与展示    | 待执行 | C30–C36、C33a                                                                        |
 | P7 记录与独立复现      | 待执行 | C37–C40                                                                              |
@@ -87,3 +87,5 @@
 - C14 archive完整路径切片：904实体迁移原byte/oldgone均0漂移、256local精确subset、258stable suite；最终66TS+7activeMD+global闭合，Root Git907逐摘要核，独立66wholeprogram/原253God与112private范围0。17动态loader与CLI真实sample遗漏修复，66heads/0、62实际FE focusedtypes/0、原CLI3/0，actual loaders成功、PW原362/23 discovery保留。所有acceptance仍pending，未重复full/browser。
 
 - C14命名小修：旧localized player role字符串经ASCII slug得到空后缀，改明确1-localized-role.player.json；Root原1179bytes逐字保持，仍字面狼人/缺locale，不推machineID。global/local/2实际reader及当前ledger同步，原legacyreader1/0/15，未重复全CLI。
+
+- C21准备：existing夜间闭包/动态能力/排序完整算法迁rulesets真实owner，pipeline直连、旧入口named同class/singleton。两全程序/实际bindings/identity Root+独立0，source类型0，原7selected/0/138；无actorfreeze/IO/fixedpoint改写。immutable RulePlan、显式合法duplicate/replacement及未知冲突政策仍下一slice。

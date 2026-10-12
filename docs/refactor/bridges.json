@@ -141,6 +141,15 @@
       "currentConsumers": "remaining old public imports and existing action reception tests; both SDK and ACP production transports use the real owner",
       "exit": "C44 after remaining old consumers target the action selection owner",
       "runtime": "same original class object, submission is preflight applied:false; no extra settlement subscriber"
+    },
+    {
+      "id": "night-stage-registry-ruleset-owner",
+      "path": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts",
+      "owner": "rulesets/night-stage-plan.ts",
+      "exports": ["NightStageRegistry", "getDefaultNightStageRegistry"],
+      "currentConsumers": "remaining mechanics aggregates and original tests; production NightPipeline directly imports the ruleset compiler",
+      "exit": "C44 after public aggregates and remaining test consumers import the ruleset public owner",
+      "runtime": "same class and lazy default singleton; closure/dedup/explicit Ghost replacement/ordering body unchanged"
     }
   ]
 }
