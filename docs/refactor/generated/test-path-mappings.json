@@ -66548,13 +66548,415 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 64 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/agent_log_flags.test.ts",
+      "to": "backend/tests/unit/agents/acp/trace-and-close-logging.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "ec1d5f3db0af3b28808d3064971b4e6e46d24557c6b62191599c0ad97146beab",
+      "candidateSha256": "60f2e2fb4f07590024d3b7aaa9672c665b480e7637c737de6ce5b4292d92ce74",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 2134,
+          "end": 2182,
+          "original": "../../src/ai/agents/player/player_round_recorder",
+          "value": "../../../../src/ai/agents/player/player_round_recorder",
+          "originalResolved": "backend/src/ai/agents/player/player_round_recorder.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_round_recorder.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 2031,
+          "end": 2074,
+          "original": "../../src/ai/agents/acp/acp_action_provider",
+          "value": "../../../../src/ai/agents/acp/acp_action_provider",
+          "originalResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/acp/acp_action_provider.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 694,
+          "end": 737,
+          "original": "../../src/ai/agents/acp/acp_action_provider",
+          "value": "../../../../src/ai/agents/acp/acp_action_provider",
+          "originalResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/acp/acp_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 282,
+          "end": 296,
+          "original": "../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 194,
+          "end": 236,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 132,
+          "end": 155,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "originalExpression": "import(\"../../src/ai/agents/acp/acp_action_provider\")",
+          "currentExpression": "import(\"../../../../src/ai/agents/acp/acp_action_provider\")",
+          "currentHead": "../../../../src/ai/agents/acp/acp_action_provider",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "originalExpression": "import(\"../../src/ai/agents/acp/acp_action_provider\")",
+          "currentExpression": "import(\"../../../../src/ai/agents/acp/acp_action_provider\")",
+          "currentHead": "../../../../src/ai/agents/acp/acp_action_provider",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/ai/agents/player/player_round_recorder.ts",
+          "originalExpression": "import(\"../../src/ai/agents/player/player_round_recorder\")",
+          "currentExpression": "import(\"../../../../src/ai/agents/player/player_round_recorder\")",
+          "currentHead": "../../../../src/ai/agents/player/player_round_recorder",
+          "kind": "dynamic-module-path"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "16952be1c18bb4f31aaffc9c03d4c3a853d812e78044e719d3f65529ce038b43",
+          "title": "ACP trace is independent of payload flags and retains safe display diagnostics",
+          "occurrence": 1
+        },
+        {
+          "id": "fcadbdd6f41243b137d0582912882b95b8f67bdabbc34b2bf38dfe3e88efe126",
+          "title": "ACP logging close at request_start suppresses late actions and private round writes",
+          "occurrence": 1
+        },
+        {
+          "id": "3b23c833d2d28a6364cff3afd109ac5bd2ae3486d534a0004f8c54f34aeba7cc",
+          "title": "ACP logging close at prompt_system suppresses late actions and private round writes",
+          "occurrence": 1
+        },
+        {
+          "id": "40534a807b04b82cdf95f33fc0636816a76bba210d21e9a98d595ce3ca1baf6a",
+          "title": "ACP logging close at prompt_user suppresses late actions and private round writes",
+          "occurrence": 1
+        },
+        {
+          "id": "8952d6c15d1168b9b672651e8484d44e4e2095d293d32dcbbdc6fd4040611881",
+          "title": "ACP logging close at request_ok suppresses late actions and private round writes",
+          "occurrence": 1
+        },
+        {
+          "id": "3653acaf05a0bac069e4519cbd8d0d537100f3980f9212f71efdb394bcb48294",
+          "title": "ACP logging close at request_recovered suppresses late actions and private round writes",
+          "occurrence": 1
+        },
+        {
+          "id": "bad9e57db66f4385ed47aa80687121a94b9e92dd11bf68aa489f4f96f35b682b",
+          "title": "ACP logging close at request_transport_fail suppresses late actions and private round writes",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../support/fixtures/manifest",
+          "originalImport": "import { acpAdapterEntry } from \"../support/fixtures/manifest\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "acpAdapterEntry",
+              "imported": "acpAdapterEntry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:path",
+          "originalImport": "import path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readFile } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readFile",
+              "imported": "readFile",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/player_agent_factory",
+          "originalImport": "import { createPlayerAgentRuntime } from \"../../src/runtime/player_agent_factory\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createPlayerAgentRuntime",
+              "imported": "createPlayerAgentRuntime",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/console_presenter",
+          "originalImport": "import { createAcpConsoleLogger } from \"../../src/runtime/console_presenter\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAcpConsoleLogger",
+              "imported": "createAcpConsoleLogger",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/contracts",
+          "originalImport": "import type { ResolvedAgentRuntimeProfile } from \"../../src/runtime/config/contracts\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ResolvedAgentRuntimeProfile",
+              "imported": "ResolvedAgentRuntimeProfile",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/session_recorder",
+          "originalImport": "import { SessionRecordManager } from \"../../src/recording/session_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SessionRecordManager",
+              "imported": "SessionRecordManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/recording_context",
+          "originalImport": "import { runWithSessionRecorder } from \"../../src/recording/recording_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "runWithSessionRecorder",
+              "imported": "runWithSessionRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 64 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/agent_log_flags.test.ts",
+      "to": "backend/tests/integration/agents/protocol/logging-flags-records.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "ec1d5f3db0af3b28808d3064971b4e6e46d24557c6b62191599c0ad97146beab",
+      "candidateSha256": "271729cf8f1aff0cb89f271a2a40fca350d3db27ffc01d85936f5af15d406543",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 884,
+          "end": 919,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 803,
+          "end": 840,
+          "original": "../../src/recording/recording_context",
+          "value": "../../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 724,
+          "end": 760,
+          "original": "../../src/recording/session_recorder",
+          "value": "../../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 649,
+          "end": 683,
+          "original": "../../src/runtime/config/contracts",
+          "value": "../../../../src/runtime/config/contracts",
+          "originalResolved": "backend/src/runtime/config/contracts.ts",
+          "expectedResolved": "backend/src/runtime/config/contracts.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 582,
+          "end": 596,
+          "original": "../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 501,
+          "end": 536,
+          "original": "../../src/runtime/console_presenter",
+          "value": "../../../../src/runtime/console_presenter",
+          "originalResolved": "backend/src/runtime/console_presenter.ts",
+          "expectedResolved": "backend/src/runtime/console_presenter.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 420,
+          "end": 458,
+          "original": "../../src/runtime/player_agent_factory",
+          "value": "../../../../src/runtime/player_agent_factory",
+          "originalResolved": "backend/src/runtime/player_agent_factory.ts",
+          "expectedResolved": "backend/src/runtime/player_agent_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 333,
+          "end": 375,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 271,
+          "end": 294,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 33,
+          "end": 61,
+          "original": "../support/fixtures/manifest",
+          "value": "../../../support/fixtures/manifest",
+          "originalResolved": "backend/tests/support/fixtures/manifest.ts",
+          "expectedResolved": "backend/tests/support/fixtures/manifest.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "6ded992b8b4318d29cd6a26eb0beecbb34d5e731b9cba15c63caec457362977b",
+          "title": "zh-CN: SDK and actual ACP share IO/thinking flag semantics (false/false) without affecting records",
+          "occurrence": 1
+        },
+        {
+          "id": "506f0e9b4e6b82f73c5fb43c8b6beeae2f6a5a1cc9cd2eed2f06e0d7280a0a7d",
+          "title": "zh-CN: SDK and actual ACP share IO/thinking flag semantics (true/false) without affecting records",
+          "occurrence": 1
+        },
+        {
+          "id": "1940723a844679c8bbb3b0b8051e56e20b9833d5da89d1075729ec4ff70b548f",
+          "title": "zh-CN: SDK and actual ACP share IO/thinking flag semantics (false/true) without affecting records",
+          "occurrence": 1
+        },
+        {
+          "id": "69bc524e363435cf082ad2bec9b21e846a39bc46d5f4fe4a6a257474d4703e48",
+          "title": "zh-CN: SDK and actual ACP share IO/thinking flag semantics (true/true) without affecting records",
+          "occurrence": 1
+        },
+        {
+          "id": "879d8518b50808e808651c462a10a1bbc00dfa7a512ca7421ebacca892a9ace4",
+          "title": "en: SDK and actual ACP share IO/thinking flag semantics (false/false) without affecting records",
+          "occurrence": 1
+        },
+        {
+          "id": "335f2c9ec6e3f8a2a840366b592036995f2900f833963ec2d6fe0cde6c550de3",
+          "title": "en: SDK and actual ACP share IO/thinking flag semantics (true/false) without affecting records",
+          "occurrence": 1
+        },
+        {
+          "id": "77fb9dc8847f5bed619439ed2c5e56703cc0f7983c4b4646c48caf996dc242d2",
+          "title": "en: SDK and actual ACP share IO/thinking flag semantics (false/true) without affecting records",
+          "occurrence": 1
+        },
+        {
+          "id": "b89a44e5dfe4b55b68c068d4ac13f6cd829b5af25544d65bb8ae78b7f17a3f39",
+          "title": "en: SDK and actual ACP share IO/thinking flag semantics (true/true) without affecting records",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 64 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 514,
-    "targetFiles": 530,
-    "mappingEntries": 530,
-    "baselineCases": 6429,
+    "sourceFiles": 515,
+    "targetFiles": 532,
+    "mappingEntries": 532,
+    "baselineCases": 6444,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
