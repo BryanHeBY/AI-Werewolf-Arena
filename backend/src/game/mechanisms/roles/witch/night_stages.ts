@@ -32,7 +32,14 @@ import {
 import { type NightAbility } from "../abilities";
 import { nativePotionsCanCombine, witchKnifeVisible } from "./policies";
 import { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
-import { getWitchState } from "../private_state";
+import {
+  getWitchState,
+  resetWitchNightState,
+  refreshWitchSelfHeal,
+  closeWitchPotionTurn,
+  consumeWitchHeal,
+  consumeWitchPoison,
+} from "./state";
 import { activeNightAbility, allNightAbilities, recordNightAbilityUse } from "../abilities";
 import { recordOwnNightAction, luckyTargetAllowed } from "../night_action_history";
 import { captureNightAbilityScope } from "../ability_scope";
@@ -47,11 +54,7 @@ const resetNightRoleStateStage: NightStageHandler = {
       for (const ability of allNightAbilities(role)) {
         if (ability.kind !== "potion") continue;
         const witchState = ability.state;
-        witchState.healUsedThisNight = false;
-        witchState.poisonUsedThisNight = false;
-        witchState.canSelfHeal =
-          witchState.selfHealRule === WitchSelfHealRule.Always ||
-          (witchState.selfHealRule === WitchSelfHealRule.FirstNightOnly && ctx.currentDay() === 1);
+        resetWitchNightState(witchState, () => ctx.currentDay());
       }
     }
   },
@@ -98,7 +101,7 @@ const witchActionStage: NightStageHandler = {
       if (!ownership?.isEligible()) continue;
       const close = () => {
         if (ownership.isOwnerCurrent() && !ability.disabled && !ability.deathExpired)
-          ability.state.potionTurnClosedDay = day;
+          closeWitchPotionTurn(ability, day);
       };
       const both = nativePotionsCanCombine(ability);
       for (let turn = 0; turn < (both ? 2 : 1); turn++) {
@@ -146,9 +149,7 @@ async function executePotionTurn(
     () => ctx.isCurrent() && ctx.currentDay() === day,
   );
   if (!scope?.isEligible()) return false;
-  ability.state.canSelfHeal =
-    ability.state.selfHealRule === WitchSelfHealRule.Always ||
-    (ability.state.selfHealRule === WitchSelfHealRule.FirstNightOnly && day === 1);
+  refreshWitchSelfHeal(ability, day);
   const targets = new Map(
     ctx.world.getAliveEntityIds().map((id) => [id, captureNightLife(ctx.world, id)]),
   );
@@ -296,8 +297,7 @@ async function executePotionTurn(
       return false;
     recordNightAbilityUse(ability, day, true);
     ctx.ensureMarks(effectiveId).add(StatusMark.HealMark);
-    witchState.heal -= 1;
-    witchState.healUsedThisNight = true;
+    consumeWitchHeal(witchState);
     ctx.events.push({
       timestamp: Date.now(),
       type: "witch_potion_used",
@@ -319,8 +319,7 @@ async function executePotionTurn(
     recordNightAbilityUse(ability, day, true);
     (ctx.state.poisonClaims ??= []).push({ source, target });
     ctx.ensureMarks(effectiveId).add(StatusMark.PoisonMark);
-    witchState.poison -= 1;
-    witchState.poisonUsedThisNight = true;
+    consumeWitchPoison(witchState);
     if (isEvilKnightBoard(ctx.world)) {
       if (ability.source.kind !== "native" || ability.source.role !== Role.Witch)
         throw new Error("evil_knight_witch_source_invalid");

@@ -37,3 +37,11 @@ Knight 的公开状态字段 `canDuel` 为只读类型视图，仍是原 private
 原 native captured-state 与 recipient 两条 lastTarget 写入归 Guard owner，公开读取字段只读。Native 仍在原 marks/claims、事件和 logic op 之后、ability use 之前写入；recipient 仍在原 marks/claims 之后、事件之前写入。Recipient 命令先取得原 ability.state 的赋值引用，再读 target.id，target getter 更换 slot 不能把已选择的写入转移到新对象。Demon sealed 第三 writer 与原生/赠予库存政策保持原 owner。
 
 原三份完整非 import 正文经明确调用/type 标记逆向一致，五个职责头通过。三项 getter 换槽/抛错、setter 拒绝测试、13 次断言及原 repeat/night abilities 消费者有限类型检查通过。独立直接比较固定 Git 赋值与新 helper 的三种错误/引用前缀，并核八个 fresh stage/recipient/catalog/bootstrap import 同成功及同出口。没有新重查、clone、refund、use accounting 或归档字段。
+
+## Witch 普通 payload 写入
+
+reset、self-heal refresh、terminal pass/second-turn close、native heal/poison 消费及 recipient postfix poison 各有具体 owner 命令。reset 保两项 flag 写入后才按原 short circuit 调 currentDay，原方法 receiver 保持；refresh 先保 LHS state，再按原规则重复读 RHS ability.state。Native -= 与 recipient --/两次 state 读取分别保留，没有统一成一个通用库存操作。
+
+原 marks/claims、use accounting、Time Consort commit、reflection、事件/记录次序不变。Demon sealed stock 与独立 verifier 的自有可写账本不调用这些生产命令。WitchState 的其他只读 API、codec 和全部 writer 权限仍须后续收敛，本批不冒完整 C17。
+
+原三份全 token 语法经六调用逆映射一致，安装/读取原文不变，五个职责头通过。六项 setter/day/state-getter 前缀测试、20 次断言，原 second-turn pass 一项与有限类型检查通过。独立 reset 的 ctx receiver、第三 RHS state 读与原 LHS 引用、八个 fresh stage/recipient/catalog/bootstrap import 均核对。最初测试从 public port 误导入安装函数导致加载红，改为直接 state owner，生产端口未因此扩权；原红日志保留。

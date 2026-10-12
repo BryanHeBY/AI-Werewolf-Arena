@@ -131,3 +131,5 @@
 - C24狼刀目标：4实际feature公开bool/ID贡献+wolf组合owner，6calls/4consumer保原World/target求值及Mist→Noble(2Role)→alive→Evil→Nightmare(2Role)短路；旧targetleaf无consumer直接删。原terms/fullconsumer/imports/10heads0，new7/0/37+原Mistknife1/0/19、finite types0；独立cold正常3入口同success/direct2同原TDZ，harness删leaf红保留后精确恢复oldinput。全native/targets/RulePlan仍pending。
 
 - 当前机制迁移台账：基线89rows/原hash不改，另current-only query owner，共90rows900cells42partial/858pending/0complete或N/A；具体C17–24交付子项注明真实owner/commit/doc，补Wall alias与Guard/Wolf实际parts。独立增量8parts/20committed pointers0，C08/C09等未登部分明确scope未全覆盖；禁止据pilot或静态presence标整格done。
+
+- C17 Witch普通payload owner：reset/refresh/close/native heal&poison/recipient--六具体命令，原flag-before-day/ctxreceiver/LHSstate-before-RHS/不同付款语义保，marks/claims/use/pub原序。三whole token inverse/5heads0、独立2额外前缀/cold8同exports，new6/0/20+原secondturnpass1/0、finite types0；Demon与verifier账本独立，全部readonly/schema/CP仍pending。

@@ -22,6 +22,7 @@ import { luckyTargetAllowed, recordOwnNightAction } from "./night_action_history
 import { resolveInspection } from "./inspection";
 import { recordRecipientSeerInspection } from "./seer/state";
 import { recordRecipientGuardTarget } from "./guard/ports";
+import { consumeRecipientPoison } from "./witch/ports";
 
 type RecipientPolicy = "lucky" | "black_market";
 const committed = new WeakMap<World, Map<RecipientPolicy, Set<number>>>();
@@ -215,8 +216,7 @@ export function recipientAbilityStage(
                   : {}),
               });
               ctx.ensureMarks(target.id).add(StatusMark.PoisonMark);
-              ability.state.poison--;
-              ability.state.poisonUsedThisNight = true;
+              consumeRecipientPoison(ability);
               ctx.events.push({
                 timestamp: Date.now(),
                 type: "witch_potion_used",
