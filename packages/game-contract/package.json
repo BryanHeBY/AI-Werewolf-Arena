@@ -21,7 +21,8 @@
     "./facts/mist-raven": "./src/facts/mist-raven.ts",
     "./facts/noble-secret-body": "./src/facts/noble-secret-body.ts",
     "./facts/fragrant-pair-seer": "./src/facts/fragrant-pair-seer.ts",
-    "./facts/animal-dream": "./src/facts/animal-dream.ts"
+    "./facts/animal-dream": "./src/facts/animal-dream.ts",
+    "./actions": "./src/actions.ts"
   },
   "scripts": {
     "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
@@ -51,7 +52,8 @@
       "facts/mist-raven": ["src/facts/mist-raven.ts"],
       "facts/noble-secret-body": ["src/facts/noble-secret-body.ts"],
       "facts/fragrant-pair-seer": ["src/facts/fragrant-pair-seer.ts"],
-      "facts/animal-dream": ["src/facts/animal-dream.ts"]
+      "facts/animal-dream": ["src/facts/animal-dream.ts"],
+      "actions": ["src/actions.ts"]
     }
   }
 }

@@ -69,3 +69,5 @@ export * from "./facts/noble-secret-body";
 export * from "./facts/fragrant-pair-seer";
 
 export * from "./facts/animal-dream";
+
+export * from "./actions";

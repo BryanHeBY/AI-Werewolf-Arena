@@ -5,7 +5,12 @@
  * output: coverage assertions. Literal expected stages and complete set equality
  * are the oracle; no backend game or rule settlement is executed by this test.
  */
-import { Phase, ActionWindow, KnightDuelWindow } from "@ai-werewolf-arena/game-contract";
+import {
+  Phase,
+  ActionWindow,
+  KnightDuelWindow,
+  ACTION_STAGES,
+} from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
 import { readFileSync, readdirSync } from "node:fs";
 import ts from "typescript";
@@ -82,8 +87,6 @@ function eventTypes() {
   });
 }
 function currentStageIds(): string[] {
-  const actions = variable("backend/src/core/domain/actions.ts", "ACTION_STAGES");
-  if (!actions.initializer) throw new Error("stage_actions_missing");
   const registry = variable(
     "backend/src/game/mechanisms/script/event_render_registry.ts",
     "REPLAY_STAGE_HANDLERS",
@@ -95,7 +98,7 @@ function currentStageIds(): string[] {
     return strings(property.initializer);
   });
   const stages = new Set([
-    ...strings(actions.initializer),
+    ...ACTION_STAGES,
     ...enumValues("ActionWindow"),
     ...enumValues("KnightDuelWindow"),
     ...enumValues("Phase"),
