@@ -79078,13 +79078,641 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/black_market_merchant.test.ts",
+      "to": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "d55564f09b45092007a0095b77fb773bbf90db18594b7d11169bfd76e22c2f41",
+      "candidateSha256": "a3c8a0128a70925b69e5ad95dad189bb9e3b116ef1b0f57195de2bdd1be4077a",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1547,
+          "end": 1596,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1449,
+          "end": 1500,
+          "original": "../../../src/game/mechanisms/stages/night/contracts",
+          "value": "../../../../src/game/mechanisms/stages/night/contracts",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/contracts.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/contracts.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1359,
+          "end": 1406,
+          "original": "../../../src/game/engine/action_request_factory",
+          "value": "../../../../src/game/engine/action_request_factory",
+          "originalResolved": "backend/src/game/engine/action_request_factory.ts",
+          "expectedResolved": "backend/src/game/engine/action_request_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1272,
+          "end": 1314,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1180,
+          "end": 1230,
+          "original": "../../../src/game/mechanisms/roles/ability_changes",
+          "value": "../../../../src/game/mechanisms/roles/ability_changes",
+          "originalResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/ability_changes.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1095,
+          "end": 1139,
+          "original": "../../../src/game/mechanisms/roles/abilities",
+          "value": "../../../../src/game/mechanisms/roles/abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1011,
+          "end": 1055,
+          "original": "../../../src/game/mechanisms/roles/abilities",
+          "value": "../../../../src/game/mechanisms/roles/abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 905,
+          "end": 973,
+          "original": "../../../src/game/mechanisms/roles/black_market_merchant/night_stage",
+          "value": "../../../../src/game/mechanisms/roles/black_market_merchant/night_stage",
+          "originalResolved": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 763,
+          "end": 825,
+          "original": "../../../src/game/mechanisms/roles/black_market_merchant/state",
+          "value": "../../../../src/game/mechanisms/roles/black_market_merchant/state",
+          "originalResolved": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 678,
+          "end": 723,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 582,
+          "end": 639,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 501,
+          "end": 539,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 428,
+          "end": 469,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 344,
+          "end": 361,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 174,
+          "end": 200,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 44,
+          "end": 99,
+          "original": "../../../src/game/mechanisms/roles/night-ability-actors",
+          "value": "../../../../src/game/mechanisms/roles/night-ability-actors",
+          "originalResolved": "backend/src/game/mechanisms/roles/night-ability-actors.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/night-ability-actors.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "8305941205cf36a9e1f36b5cc740938dfd18a95870716679743072c5b669f8c2",
+          "title": "check: true Good gift keeps original identity and uses a fresh stock without immediate native-skill activation",
+          "occurrence": 1
+        },
+        {
+          "id": "085126f3ce22aa61eb63fce655e4c305df411896d4df6d94ca4f3030dc00a56a",
+          "title": "poison: true Good gift keeps original identity and uses a fresh stock without immediate native-skill activation",
+          "occurrence": 1
+        },
+        {
+          "id": "d8ac12e96430c258d0776147238eaaf8bd8f5169924d8853e8932bb9200c8929",
+          "title": "gun: true Good gift keeps original identity and uses a fresh stock without immediate native-skill activation",
+          "occurrence": 1
+        },
+        {
+          "id": "fe3b45d98b6b6d056d2fe4a5cbe424692f7f8c958e978ffc7ce1593f8068bb72",
+          "title": "clean optional wait closes only that night, does not expose success and allows a later-night trade",
+          "occurrence": 1
+        },
+        {
+          "id": "961d6ddc02b9024f607bc9ea458b2a0497a467a57da7488de4658bea6f25650d",
+          "title": "actor_revive: a late trade never spends a replacement owner or uses changed hidden truth",
+          "occurrence": 1
+        },
+        {
+          "id": "e8a4311058986f8ce39bc1e4e49f0e6f28189b6b7c835e722ed4661aba406b96",
+          "title": "actor_replace: a late trade never spends a replacement owner or uses changed hidden truth",
+          "occurrence": 1
+        },
+        {
+          "id": "71e1ab08fbeb5421b90776ce2895d967f61cd06fbcbd6a1806369353ef9f1775",
+          "title": "actor_private: a late trade never spends a replacement owner or uses changed hidden truth",
+          "occurrence": 1
+        },
+        {
+          "id": "050bed287d76c4d950d8c613e8dc42a3f4bbfecb2f4c759d46594202529a28c2",
+          "title": "target_revive: a late trade never spends a replacement owner or uses changed hidden truth",
+          "occurrence": 1
+        },
+        {
+          "id": "2255942fbbf381eb842d311eebe59c1085d4930f96e32cccb0b51a867a5a19a8",
+          "title": "target_role: a late trade never spends a replacement owner or uses changed hidden truth",
+          "occurrence": 1
+        },
+        {
+          "id": "5d3c05a00f414f34cbe76f1f6b298f6d04058588d00b4a3de11e51e7608ce54e",
+          "title": "target_camp: a late trade never spends a replacement owner or uses changed hidden truth",
+          "occurrence": 1
+        },
+        {
+          "id": "39dde56d43e742067e408ad210d1818187b1a63a1c75afb83f0b5f9e3a305e60",
+          "title": "three invalid choices while targets remain throw instead of becoming a wait or spending stock",
+          "occurrence": 1
+        },
+        {
+          "id": "0f86633d4e3dad0357c61f3203dc723f1c08261ebc65c3d02717795c829409db",
+          "title": "true Wolf gets no gift/notification and Black backlash is not stopped by heal, guard or Dream",
+          "occurrence": 1
+        },
+        {
+          "id": "4f5356988c0512101a01eb0ad1fed3484bb7e68c480d8c9a10042f8c5a73382f",
+          "title": "paid Black backlash ignores consumption/closure but revokes on changed state owner and never kills a revived body",
+          "occurrence": 1
+        },
+        {
+          "id": "6c4146122e3df1aa45e45aa7d7b98dff0160ff05ab2a8a2972ffd2ead375bb11",
+          "title": "the final check target disappearing during the third rejected reply closes without spending",
+          "occurrence": 1
+        },
+        {
+          "id": "5e8ffa04a941bb7bf177defbe850aa4eb314fb323ab26be6ddbc98f3a784ba45",
+          "title": "activation: a transfer callback cannot turn a spent Black gift into new inventory or another body's resource",
+          "occurrence": 1
+        },
+        {
+          "id": "26243a8b85476a9920be03057f48b0ec2f766f83329a81e1d9fd1247979c15da",
+          "title": "resources: a transfer callback cannot turn a spent Black gift into new inventory or another body's resource",
+          "occurrence": 1
+        },
+        {
+          "id": "cad140d6bc444c2f8384a4fdcecae438e79de2395d95edaf0feaeffd48d53e1b",
+          "title": "source_camp: a transfer callback cannot turn a spent Black gift into new inventory or another body's resource",
+          "occurrence": 1
+        },
+        {
+          "id": "a406c2d1d2da827b535c2d1de39742e2a1ec80a6c343e5fa98a63e88fa5e8287",
+          "title": "source_life: a transfer callback cannot turn a spent Black gift into new inventory or another body's resource",
+          "occurrence": 1
+        },
+        {
+          "id": "f4834b4f1081dc985f59cdd0c88905e32b094e77052d4af1d0ce89e3a3824331",
+          "title": "private: a transfer callback cannot turn a spent Black gift into new inventory or another body's resource",
+          "occurrence": 1
+        },
+        {
+          "id": "ca934e37a2c6d8898f9a6aefbc2654ccd4e4711038f6cc10a8d70dabe8d52ff2",
+          "title": "target_life: a transfer callback cannot turn a spent Black gift into new inventory or another body's resource",
+          "occurrence": 1
+        },
+        {
+          "id": "fac52405bf2af9f17edcf629b23dfa6576b54a086c5af1acfd51ce9cd1186da5",
+          "title": "Black seer state and nested reports select declared fields without reading unknown getters",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { PotionType } from \"../../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Role,\n  Phase,\n  Camp,\n  DeathCause,\n  StatusMark,\n  WinCondition,\n  type RoleComponent,\n  type ActionProvider,\n  type GameEvent,\n  type ToolCall,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, Role, Phase, Camp, DeathCause, StatusMark, WinCondition, type RoleComponent, type ActionProvider, type GameEvent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalImport": "import { NightPipeline } from \"../../../src/game/engine/phase_pipeline/night_pipeline\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightPipeline",
+              "imported": "NightPipeline",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/last_words/last_words_mechanism",
+          "originalImport": "import { LastWordsMechanism } from \"../../../src/game/mechanisms/last_words/last_words_mechanism\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "LastWordsMechanism",
+              "imported": "LastWordsMechanism",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/black_market_merchant.test.ts",
+      "to": "backend/tests/scenarios/features/black-market-merchant/first-night-backlash.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "d55564f09b45092007a0095b77fb773bbf90db18594b7d11169bfd76e22c2f41",
+      "candidateSha256": "0e6591df2e1d16cbc6e64c4104c13a0577f8bc7eb2319c3bb52a9e7e45c19b95",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 375,
+          "end": 435,
+          "original": "../../../src/game/mechanisms/last_words/last_words_mechanism",
+          "value": "../../../../src/game/mechanisms/last_words/last_words_mechanism",
+          "originalResolved": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts",
+          "expectedResolved": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 291,
+          "end": 336,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 235,
+          "end": 252,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 120,
+          "end": 146,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 28,
+          "end": 45,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "c60ebc02acf80805af67ad309f4342d6e147daf217f6c8d0d34fbc54304f3924",
+          "title": "a pure first-night Black backlash gets actual last words before day voting",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/game/mechanisms/roles/night-ability-actors",
+          "originalImport": "import { bindNightAbilityActorQuery } from \"../../../src/game/mechanisms/roles/night-ability-actors\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "bindNightAbilityActorQuery",
+              "imported": "bindNightAbilityActorQuery",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Role,\n  Phase,\n  Camp,\n  DeathCause,\n  StatusMark,\n  WinCondition,\n  type RoleComponent,\n  type ActionProvider,\n  type GameEvent,\n  type ToolCall,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, Role, Phase, DeathCause, WinCondition, type RoleComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "Camp",
+              "imported": "Camp",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "StatusMark",
+              "imported": "StatusMark",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionProvider",
+              "imported": "ActionProvider",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import {\n  createAliveComponent,\n  type AliveComponent,\n} from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAliveComponent",
+              "imported": "createAliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "AliveComponent",
+              "imported": "AliveComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalImport": "import { NightPipeline } from \"../../../src/game/engine/phase_pipeline/night_pipeline\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightPipeline",
+              "imported": "NightPipeline",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalImport": "import { DamageResolutionSystem } from \"../../../src/core/domain/systems/damage_resolution_system\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DamageResolutionSystem",
+              "imported": "DamageResolutionSystem",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/black_market_merchant/state",
+          "originalImport": "import { getBlackMarketState } from \"../../../src/game/mechanisms/roles/black_market_merchant/state\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getBlackMarketState",
+              "imported": "getBlackMarketState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/black_market_merchant/night_stage",
+          "originalImport": "import {\n  BLACK_MARKET_TRADE_STAGE,\n  BLACK_MARKET_RECIPIENT_STAGE,\n} from \"../../../src/game/mechanisms/roles/black_market_merchant/night_stage\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "BLACK_MARKET_TRADE_STAGE",
+              "imported": "BLACK_MARKET_TRADE_STAGE",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "BLACK_MARKET_RECIPIENT_STAGE",
+              "imported": "BLACK_MARKET_RECIPIENT_STAGE",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/abilities",
+          "originalImport": "import { allNightAbilities } from \"../../../src/game/mechanisms/roles/abilities\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "allNightAbilities",
+              "imported": "allNightAbilities",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/abilities",
+          "originalImport": "import { projectNightAbility } from \"../../../src/game/mechanisms/roles/abilities\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "projectNightAbility",
+              "imported": "projectNightAbility",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/ability_changes",
+          "originalImport": "import { transferNightAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "transferNightAbility",
+              "imported": "transferNightAbility",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/catalog",
+          "originalImport": "import { getDefaultRoleCatalog } from \"../../../src/game/mechanisms/roles/catalog\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/action_request_factory",
+          "originalImport": "import { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameActionRequestFactory",
+              "imported": "GameActionRequestFactory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/stages/night/contracts",
+          "originalImport": "import type { NightStageContext } from \"../../../src/game/mechanisms/stages/night/contracts\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightStageContext",
+              "imported": "NightStageContext",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/agent_visible_event_feed",
+          "originalImport": "import { buildAgentVisibleEventFeed } from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "buildAgentVisibleEventFeed",
+              "imported": "buildAgentVisibleEventFeed",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 542,
-    "targetFiles": 589,
-    "mappingEntries": 589,
-    "baselineCases": 6838,
+    "sourceFiles": 543,
+    "targetFiles": 591,
+    "mappingEntries": 591,
+    "baselineCases": 6860,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

@@ -1,50 +1,34 @@
 /**
- * Mechanism integration tests for Black Market trade, recipient timing and source-bound resource/backlash ownership.
- * Inputs are literal rosters, actions and targeted owner/life edits; outputs are
- * checked against the original explicit resource, event and rejection assertions.
- * Controlled contexts bind read-only actor queries at the original World read
- * position. No billed agent, fixture rewrite or production-generated oracle runs.
+ * Unit tests verify Black Market Merchant direct trade/recipient stages preserve original identity, opaque gifts and stale-resource refusal.
+ * Input: Original skill/change/transfer matrices, bounded night contexts and explicit damage operations.
+ * Output and oracle: Exact independent stock, wait/backlash/privacy and zero-getter assertions remain unchanged; no complete PM cycle or recorded game runs.
  */
-import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
-import { PotionType } from "../../../src/core";
+import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import {
-  COMPONENT,
-  Role,
-  Phase,
-  Camp,
-  DeathCause,
-  StatusMark,
-  WinCondition,
-  type RoleComponent,
-  type ActionProvider,
-  type GameEvent,
-  type ToolCall,
-} from "../../../src/core";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { COMPONENT, Role, Phase, Camp, DeathCause, StatusMark, WinCondition, type RoleComponent, type ActionProvider, type GameEvent } from "../../../../src/core";
 import {
   createAliveComponent,
   type AliveComponent,
-} from "../../../src/core/domain/components/alive";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { getBlackMarketState } from "../../../src/game/mechanisms/roles/black_market_merchant/state";
+} from "../../../../src/core/domain/components/alive";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { getBlackMarketState } from "../../../../src/game/mechanisms/roles/black_market_merchant/state";
 import {
   BLACK_MARKET_TRADE_STAGE,
   BLACK_MARKET_RECIPIENT_STAGE,
-} from "../../../src/game/mechanisms/roles/black_market_merchant/night_stage";
-import { allNightAbilities } from "../../../src/game/mechanisms/roles/abilities";
-import { projectNightAbility } from "../../../src/game/mechanisms/roles/abilities";
-import { transferNightAbility } from "../../../src/game/mechanisms/roles/ability_changes";
-import { LastWordsMechanism } from "../../../src/game/mechanisms/last_words/last_words_mechanism";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/game/mechanisms/roles/black_market_merchant/night_stage";
+import { allNightAbilities } from "../../../../src/game/mechanisms/roles/abilities";
+import { projectNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { transferNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
+import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 
 const deck = [Role.Wolf, Role.Wolf, Role.BlackMarketMerchant, Role.Seer, Role.Witch, Role.Villager];
+
 function fixture() {
   const config = {
     ...sixPlayerMvpConfig,
@@ -58,10 +42,14 @@ function fixture() {
   };
   return { ...bootstrapGame(config, { fixedRoles: deck }), config };
 }
+
 type Game = ReturnType<typeof fixture>;
+
 const role = (game: Game, id = 3) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+
 const life = (game: Game, id: number) =>
   game.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+
 function context(game: Game, getAction: ActionProvider["getAction"], day = 1): NightStageContext {
   const events: GameEvent[] = [],
     factory = new GameActionRequestFactory(game.world, events, day);
@@ -105,6 +93,7 @@ function context(game: Game, getAction: ActionProvider["getAction"], day = 1): N
     },
   };
 }
+
 for (const skill of ["check", "poison", "gun"] as const)
   test(`${skill}: true Good gift keeps original identity and uses a fresh stock without immediate native-skill activation`, async () => {
     const game = fixture(),
@@ -145,6 +134,7 @@ for (const skill of ["check", "poison", "gun"] as const)
     await BLACK_MARKET_RECIPIENT_STAGE.execute(ctx);
     expect(calls).toBe(0);
   });
+
 test("clean optional wait closes only that night, does not expose success and allows a later-night trade", async () => {
   const game = fixture();
   const first = context(game, async () => null);
@@ -158,6 +148,7 @@ test("clean optional wait closes only that night, does not expose success and al
   await BLACK_MARKET_TRADE_STAGE.execute(second);
   expect(allNightAbilities(role(game, 6))[0].startsOnDay).toBe(3);
 });
+
 for (const change of [
   "actor_revive",
   "actor_replace",
@@ -194,6 +185,7 @@ for (const change of [
     expect(ctx.events).toEqual([]);
     expect(allNightAbilities(role(game, 6))).toEqual([]);
   });
+
 test("three invalid choices while targets remain throw instead of becoming a wait or spending stock", async () => {
   const game = fixture(),
     ctx = context(game, async () => ({
@@ -206,6 +198,7 @@ test("three invalid choices while targets remain throw instead of becoming a wai
   expect(getBlackMarketState(role(game))!.remaining).toBe(1);
   expect(ctx.events).toEqual([]);
 });
+
 test("true Wolf gets no gift/notification and Black backlash is not stopped by heal, guard or Dream", async () => {
   const game = fixture(),
     ctx = context(game, async () => ({
@@ -226,6 +219,7 @@ test("true Wolf gets no gift/notification and Black backlash is not stopped by h
   expect(buildAgentVisibleEventFeed(game.world, ctx.events, 1)).toEqual([]);
   expect(JSON.stringify(getBlackMarketState(role(game)))).not.toMatch(/outcome|success|camp|gift:/);
 });
+
 test("paid Black backlash ignores consumption/closure but revokes on changed state owner and never kills a revived body", async () => {
   for (const change of ["none", "private", "revive"]) {
     const game = fixture(),
@@ -245,37 +239,6 @@ test("paid Black backlash ignores consumption/closure but revokes on changed sta
       }).deaths,
     ).toEqual(change === "none" ? [3] : []);
   }
-});
-
-test("a pure first-night Black backlash gets actual last words before day voting", async () => {
-  const game = fixture();
-  expect(
-    new LastWordsMechanism().shouldGrantLastWords(Phase.Night, 1, [DeathCause.BlackMarketBacklash]),
-  ).toBe(true);
-  await game.phaseManager.runSingleCycle({
-    async getAction(request) {
-      if (request.allowedTools.includes("black_market_trade"))
-        return { name: "black_market_trade", args: { target_id: 1, skill: "check" } };
-      if (request.allowedTools.includes("speak_to_wolves"))
-        return { name: "speak_to_wolves", args: { text: "Raw", end_chat: true } };
-      if (request.allowedTools.includes("kill_vote"))
-        return { name: "kill_vote", args: { target_id: 3, abstain: false } };
-      if (request.allowedTools.includes("use_potion"))
-        return { name: "use_potion", args: { target_id: 3, potion_type: PotionType.Heal } };
-      if (request.allowedTools.includes("check_identity"))
-        return { name: "check_identity", args: { target_id: 1 } };
-      if (request.allowedTools.includes("speak")) return { name: "speak", args: { text: "Raw" } };
-      if (request.allowedTools.includes("vote"))
-        return { name: "vote", args: { target_id: 1, abstain: false } };
-      throw new Error("unexpected_request");
-    },
-  });
-  expect(
-    game.phaseManager
-      .getEvents()
-      .filter((e) => e.type === "last_words_spoken")
-      .map((e) => e.payload.playerId),
-  ).toEqual([3, 1]);
 });
 
 test("the final check target disappearing during the third rejected reply closes without spending", async () => {
