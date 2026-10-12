@@ -11,6 +11,8 @@
  * actor qualification remains read-only and never moves into pipeline lifecycle commits.
  * Board binding occurs at the original first acquisition World argument, after
  * cancellation checks; changed subsequent parameters refuse before any acquisition.
+ * Mist's concrete unit owns opening facts and the late cleanup transfer; damage
+ * handoff remains earlier, and configured failure cleanup does not require acquisition.
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bindBoardParameters } from "../../../rulesets/board-parameters";
@@ -47,11 +49,9 @@ import {
 import {
   mistKnifeTargets,
   isMistRavenBoard,
-  beginMistNight,
   assertMistRosterCurrent,
-  handOffMistNight,
-  abortMistNight,
-} from "../../mechanisms/roles/mist_raven/night_frame";
+  MistNightUnit,
+} from "../../mechanisms/roles/mist_raven/ports";
 import { assertScholarMentorBonusEffects } from "../../mechanisms/roles/scholar_mentor/night_stages";
 import { isTimeConsortBoard } from "../../mechanisms/roles/time_wolf_consort/night_frame";
 import {
@@ -347,7 +347,17 @@ export class NightPipeline {
       day,
     );
     const ownsMist = config.mistRaven !== undefined;
-    let mistHandedOff = false;
+    const mistNight = new MistNightUnit(
+      {
+        get world() {
+          return pipeline.world;
+        },
+        get events() {
+          return pipeline.events;
+        },
+      },
+      day,
+    );
     let weddingHandedOff = false,
       demonHandedOff = false,
       demonAcquired = false;
@@ -360,16 +370,7 @@ export class NightPipeline {
         beginDemonHunterNight(this.world, day, isCurrent);
         demonAcquired = true;
       }
-      if (ownsMist) {
-        const unsealed = beginMistNight(this.world, day);
-        if (unsealed)
-          this.events.push({
-            timestamp: Date.now(),
-            type: "raven_unsealed",
-            payload: { ...unsealed, day, awakened: true },
-            audience: Object.freeze([unsealed.actorId]),
-          });
-      }
+      if (ownsMist) mistNight.open();
       const assertReadable = () => {
         if (ownsAnimal && !animalAuthoritySnapshot(this.world))
           throw new Error("animal_authority_revoked");
@@ -624,7 +625,9 @@ export class NightPipeline {
           type: "mechanical_poison_reflected",
           payload: { ...reflection, day },
         });
-      const mist = ownsMist ? handOffMistNight(this.world, day, stageState.wolfTarget) : null;
+      const mist = ownsMist
+        ? mistNight.captureDamage(this.world, day, stageState.wolfTarget)
+        : null;
       if (mist?.extra && livingNightLife(this.world, mist.extra)) {
         const id = mist.extra.id;
         if (!damage.deaths.includes(id)) damage.deaths.push(id);
@@ -669,7 +672,7 @@ export class NightPipeline {
       magicianHandedOff = config.magician !== undefined;
       timeConsortHandedOff = config.timeConsort !== undefined;
       scholarMentorHandedOff = config.scholarMentor !== undefined;
-      mistHandedOff = ownsMist;
+      mistNight.transferToManager(ownsMist);
       return attachNobleNightReceiver(
         {
           interrupted: false,
@@ -691,7 +694,7 @@ export class NightPipeline {
       fragrantNight.abortIfOwned();
       nobleNight.abortIfOwned();
       radiantNight.abortIfAcquired();
-      if (ownsMist && !mistHandedOff) abortMistNight(this.world);
+      if (ownsMist) mistNight.abortIfOwned();
       if (config.trickster && !magicianHandedOff) abortTricksterNight(this.world);
       if (config.wolfSorcerer && !magicianHandedOff) abortWolfSorcererNight(this.world);
       if (config.magician && !magicianHandedOff) abortMagicianNight(this.world);

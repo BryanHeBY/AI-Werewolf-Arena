@@ -6,6 +6,8 @@
  * further cycle work.
  * Runtime policy reads reuse the World-bound immutable board; direct construction
  * cannot replace that binding, while original actor and phase ownership remains.
+ * Mist's terminal port receives current manager World/day at each original site;
+ * normal completion retains both inner and outer abort and pending-object order.
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bindBoardParameters } from "../../rulesets/board-parameters";
@@ -22,11 +24,7 @@ import {
   closeScholarMentorNight,
   abortScholarMentorNight,
 } from "../mechanisms/roles/scholar_mentor/night_frame";
-import {
-  assertMistRosterCurrent,
-  closeMistNight,
-  abortMistNight,
-} from "../mechanisms/roles/mist_raven/night_frame";
+import { assertMistRosterCurrent, mistNightTerminal } from "../mechanisms/roles/mist_raven/ports";
 import { MistPendingNight } from "../mechanisms/roles/mist_raven/pending_night";
 import { decideSnake } from "../mechanisms/roles/mist_raven/snake_window";
 import {
@@ -404,7 +402,7 @@ export class PhaseManager {
       if (this.config.animalDream && !completed) abortAnimalGame(this.world);
       if (this.config.mistRaven) {
         this.mistPending?.abort();
-        abortMistNight(this.world);
+        mistNightTerminal.abort(this.world);
       }
       if (this.config.timeConsort) abortTimeConsortNight(this.world);
       if (this.config.scholarMentor) abortScholarMentorNight(this.world);
@@ -905,7 +903,7 @@ export class PhaseManager {
       );
       assertMistRosterCurrent(this.world);
       pending.finish(current);
-      closeMistNight(this.world, cycleDay);
+      mistNightTerminal.closeNormally(this.world, cycleDay);
       nightSettled = true;
       return this.checkAndSealResult(interrupted ? "day_interrupted" : "night_settled");
     };
@@ -993,9 +991,10 @@ export class PhaseManager {
         if (this.config.timeConsort && dayIsCurrent()) closeTimeConsortNight(this.world, cycleDay);
         if (this.config.scholarMentor && dayIsCurrent())
           closeScholarMentorNight(this.world, cycleDay);
-        if (this.config.mistRaven && dayIsCurrent()) closeMistNight(this.world, cycleDay);
+        if (this.config.mistRaven && dayIsCurrent())
+          mistNightTerminal.closeNormally(this.world, cycleDay);
       } finally {
-        if (this.config.mistRaven) abortMistNight(this.world);
+        if (this.config.mistRaven) mistNightTerminal.abort(this.world);
         if (this.config.trickster) abortTricksterNight(this.world);
         if (this.config.wolfSorcerer) abortWolfSorcererNight(this.world);
         if (this.config.magician) abortMagicianNight(this.world);
