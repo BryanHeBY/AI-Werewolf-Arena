@@ -1,10 +1,13 @@
 /**
  * Owns the existing finite night-stage closure, collection and ordering algorithm.
  * Inputs are the configured role set, role catalog and optional current World;
- * outputs are the same live-ability stage handlers, first-ID winners and explicit
- * Ghost Bride replacements sorted by priority then ID. It never freezes actors
- * or ability instances, changes support policy, advances a phase or commits an
- * action. Immutable plan metadata and declared duplicate policy follow separately.
+ * outputs are the same stage handlers with explicit snapshot or opaque source mode.
+ * Compilation delegates through getStages so injected overrides retain control.
+ * Metadata only inspects ordinary own data descriptors; Proxy, inherited and
+ * accessor fields remain opaque without extra getter calls. Only ordinary native
+ * dense arrays become frozen membership; custom/lazy sources keep original iteration
+ * and failure prefixes. Original handlers, World and ability instances remain mutable;
+ * this is not a complete RulePlan or immutable callback policy.
  */
 /**
  * Collects, deduplicates and orders registered night stages for present and declared abilities.
@@ -12,6 +15,7 @@
  * stage list. It does not freeze which player will act or instantiate an ability resource.
  */
 import { demonHunterActorId } from "../game/mechanisms/roles/demon_hunter/authority";
+import { types } from "node:util";
 import { DEMON_HUNTER_NIGHT_STAGE } from "../game/mechanisms/roles/demon_hunter/night_stages";
 import {
   WEDDING_CHAT_STAGE,
@@ -46,12 +50,92 @@ const abilityRole: Record<NightAbilityKind, Role> = {
   dream: Role.Dreamer,
 };
 
+export type NightStageMetadata =
+  | Readonly<{ ordinal: number; kind: "data"; id: string; priority: number }>
+  | Readonly<{ ordinal: number; kind: "opaque" }>;
+
+/** Snapshot arrays/data are owned; opaque foreign iteration is retained without freezing. */
+export type NightStagePlan =
+  | Readonly<{
+      mode: "snapshot";
+      stages: readonly NightStageHandler[];
+      metadata: readonly NightStageMetadata[];
+    }>
+  | Readonly<{
+      mode: "opaque";
+      stages: Iterable<NightStageHandler>;
+      metadata: readonly NightStageMetadata[];
+    }>;
+
+/** Inspect plain numeric data without pulling a foreign iterator or index accessor. */
+function snapshotMembers(source: NightStageHandler[]): NightStageHandler[] | null {
+  if (
+    types.isProxy(source) ||
+    !Array.isArray(source) ||
+    Object.getPrototypeOf(source) !== Array.prototype ||
+    Object.getOwnPropertyDescriptor(source, Symbol.iterator) !== undefined
+  )
+    return null;
+  const iterator = Object.getOwnPropertyDescriptor(Array.prototype, Symbol.iterator),
+    values = Object.getOwnPropertyDescriptor(Array.prototype, "values");
+  if (
+    !iterator ||
+    !("value" in iterator) ||
+    !values ||
+    !("value" in values) ||
+    typeof iterator.value !== "function" ||
+    iterator.value !== values.value
+  )
+    return null;
+  const length = Object.getOwnPropertyDescriptor(source, "length");
+  if (!length || !("value" in length)) return null;
+  const members: NightStageHandler[] = [];
+  for (let index = 0; index < length.value; index++) {
+    const entry = Object.getOwnPropertyDescriptor(source, String(index));
+    if (!entry || !("value" in entry)) return null;
+    members.push(entry.value);
+  }
+  return members;
+}
+
+function describeStage(stage: NightStageHandler, ordinal: number): NightStageMetadata {
+  if (
+    stage !== null &&
+    (typeof stage === "object" || typeof stage === "function") &&
+    !types.isProxy(stage)
+  ) {
+    const id = Object.getOwnPropertyDescriptor(stage, "id"),
+      priority = Object.getOwnPropertyDescriptor(stage, "priority");
+    if (
+      id &&
+      "value" in id &&
+      typeof id.value === "string" &&
+      priority &&
+      "value" in priority &&
+      typeof priority.value === "number"
+    )
+      return Object.freeze({ ordinal, kind: "data", id: id.value, priority: priority.value });
+  }
+  return Object.freeze({ ordinal, kind: "opaque" });
+}
+
 /** 夜间阶段注册表。 */
 export class NightStageRegistry {
   readonly roleCatalog: RoleCatalog;
 
   constructor(roleProfileRegistry: RoleCatalog = getDefaultRoleCatalog()) {
     this.roleCatalog = roleProfileRegistry;
+  }
+
+  /** Snapshot safe native membership; preserve virtual overrides and opaque lazy sources. */
+  getPlan(config: BoardConfig, world?: World): NightStagePlan {
+    const source = this.getStages(config, world),
+      members = snapshotMembers(source);
+    if (members === null)
+      return Object.freeze({ mode: "opaque", stages: source, metadata: Object.freeze([]) });
+    const stages = Object.freeze(members);
+    const metadata = Object.freeze(stages.map(describeStage));
+    return Object.freeze({ mode: "snapshot", stages, metadata });
   }
 
   getStages(config: BoardConfig, world?: World): NightStageHandler[] {

@@ -3,6 +3,8 @@
  * current World components, stage registrations and the action provider; outputs are night
  * summaries, death proposals and pipeline events. It does not replace an ability owner or
  * collapse paid effects into unsourced marks.
+ * Safe native stage arrays use frozen plan membership; opaque custom sources keep
+ * their original lazy iteration. Handlers retain their receiver and query actors live.
  */
 import {
   checkpointNobleBodyAuthority,
@@ -503,7 +505,7 @@ export class NightPipeline {
         state: stageState,
       };
 
-      for (const stage of this.stageRegistry.getStages(config, this.world)) {
+      for (const stage of this.stageRegistry.getPlan(config, this.world).stages) {
         assertEvilKnightRosterCurrent(this.world);
         if (!isCurrent()) return { interrupted: true };
         assertReadable();
