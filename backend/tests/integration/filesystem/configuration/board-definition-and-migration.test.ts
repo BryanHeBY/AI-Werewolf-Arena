@@ -1,26 +1,25 @@
 /**
- * Board configuration integration verify canonical shape, role parameters and opposing-camp setup.
- * Input: Literal valid/invalid boards, declared implementations and temporary provider/game files.
- * Output and independent oracle: Exact field-path/rejection expectations, implemented-only semantics and no fallback from invalid files.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Configuration filesystem integration tests verify canonical board rejection, source migration, backup conflicts and resolved setup metadata.
+ * Input: Original public twelve-player definition reads, actual temporary board/runtime files and literal invalid overrides.
+ * Output and oracle: Exact diagnostic paths, backup bytes and redacted setup values preserve loader/migration behavior; private markers are synthetic test literals and no model or game runs.
  */
-import { ActionWindow, WinCondition } from "../../src/core/domain/identity";
+import { ActionWindow } from "../../../../src/core/domain/identity";
 import { expect, test } from "bun:test";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
-import { parseBoardDefinition } from "../../src/runtime/config/board_definition";
-import { convertLegacyBoard } from "../../src/runtime/config/migrate_board";
-import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
-import { describeResolvedSetup } from "../../src/runtime/config/describe_setup";
-import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
-import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
-import { migrateBoards, migrateBoardSource } from "../../src/runtime/cli/migrate_configs";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { convertLegacyBoard } from "../../../../src/runtime/config/migrate_board";
+import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
+import { describeResolvedSetup } from "../../../../src/runtime/config/describe_setup";
+import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
+import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
+import { migrateBoards, migrateBoardSource } from "../../../../src/runtime/cli/migrate_configs";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 async function definition() {
   return JSON.parse(
     await readFile(
-      path.resolve(import.meta.dir, "../../../configs.example/boards/twelve_player_standard.json"),
+      path.resolve(import.meta.dir, "../../../../../configs.example/boards/twelve_player_standard.json"),
       "utf8",
     ),
   );
@@ -96,26 +95,6 @@ test("legacy collections validate all fields and select a source independently o
   await expect(
     migrateBoardSource(root, "custom_twelve", source, "twelve_player_standard", true),
   ).rejects.toThrow("board_config_migration_target_exists");
-});
-
-test("legacy empty win arrays materialize the conditions the engine actually used", () => {
-  const fallback = convertLegacyBoard({ winConditions: [] }, "twelve_player_standard");
-  expect(fallback.definition.rules.winConditions).toEqual([WinCondition.SlaughterCity]);
-  const single = convertLegacyBoard(
-    { winConditions: [], winCondition: "wolf_reach_half" },
-    "twelve_player_standard",
-  );
-  expect(single.definition.rules.winConditions).toEqual([WinCondition.WolfReachHalf]);
-  expect(single.warnings).not.toContain(
-    "legacy_single_win_condition_shadowed_by_effective_win_conditions",
-  );
-  const shadowed = convertLegacyBoard(
-    { winCondition: "wolf_reach_half" },
-    "twelve_player_standard",
-  );
-  expect(shadowed.warnings).toContain(
-    "legacy_single_win_condition_shadowed_by_effective_win_conditions",
-  );
 });
 
 test("migration reuses identical backups and refuses conflicting backups before any board write", async () => {

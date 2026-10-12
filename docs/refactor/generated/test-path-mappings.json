@@ -67982,13 +67982,394 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 64 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/board_definition.test.ts",
+      "to": "backend/tests/unit/configuration/legacy-win-array.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "7a9969d7913f85c927f8e37a66fcb0f4b7f784d1f4d305c0bf992a6b002b2515",
+      "candidateSha256": "4c3ce1219f387b9d1673f561b46658c66ec46d6af0238734d78eb3bd1e2581b0",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 140,
+          "end": 178,
+          "original": "../../src/runtime/config/migrate_board",
+          "value": "../../../src/runtime/config/migrate_board",
+          "originalResolved": "backend/src/runtime/config/migrate_board.ts",
+          "expectedResolved": "backend/src/runtime/config/migrate_board.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 30,
+          "end": 60,
+          "original": "../../src/core/domain/identity",
+          "value": "../../../src/core/domain/identity",
+          "originalResolved": "backend/src/core/domain/identity.ts",
+          "expectedResolved": "backend/src/core/domain/identity.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "e3e03a21f7d69ad885ac9cafa3aa0c284ab315dce7d13da0447138c3b76ba39a",
+          "title": "legacy empty win arrays materialize the conditions the engine actually used",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../src/core/domain/identity",
+          "originalImport": "import { ActionWindow, WinCondition } from \"../../src/core/domain/identity\";",
+          "currentImportBeforeRebase": "import { WinCondition } from \"../../src/core/domain/identity\";",
+          "droppedBindings": [
+            {
+              "name": "ActionWindow",
+              "imported": "ActionWindow",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readFile, writeFile, mkdir } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readFile",
+              "imported": "readFile",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "writeFile",
+              "imported": "writeFile",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "mkdir",
+              "imported": "mkdir",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:path",
+          "originalImport": "import path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/board_definition",
+          "originalImport": "import { parseBoardDefinition } from \"../../src/runtime/config/board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "parseBoardDefinition",
+              "imported": "parseBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/load_board_definition",
+          "originalImport": "import { loadBoardDefinition } from \"../../src/runtime/config/load_board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "loadBoardDefinition",
+              "imported": "loadBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/describe_setup",
+          "originalImport": "import { describeResolvedSetup } from \"../../src/runtime/config/describe_setup\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "describeResolvedSetup",
+              "imported": "describeResolvedSetup",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/resolve_game_setup",
+          "originalImport": "import { resolveGameSetup } from \"../../src/runtime/config/resolve_game_setup\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "resolveGameSetup",
+              "imported": "resolveGameSetup",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/parse_config",
+          "originalImport": "import { parseRuntimeConfig } from \"../../src/runtime/config/parse_config\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "parseRuntimeConfig",
+              "imported": "parseRuntimeConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/cli/migrate_configs",
+          "originalImport": "import { migrateBoards, migrateBoardSource } from \"../../src/runtime/cli/migrate_configs\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "migrateBoards",
+              "imported": "migrateBoards",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "migrateBoardSource",
+              "imported": "migrateBoardSource",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 577 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/board_definition.test.ts",
+      "to": "backend/tests/integration/filesystem/configuration/board-definition-and-migration.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "7a9969d7913f85c927f8e37a66fcb0f4b7f784d1f4d305c0bf992a6b002b2515",
+      "candidateSha256": "e15cf5b92e185c25f626b26ec480ae1f2636fbd5af534d4c4474b7402f9bedba",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "public-directory-anchor",
+          "start": 958,
+          "end": 1017,
+          "original": "../../../configs.example/boards/twelve_player_standard.json",
+          "value": "../../../../../configs.example/boards/twelve_player_standard.json",
+          "originalResolved": "configs.example/boards/twelve_player_standard.json"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 811,
+          "end": 846,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 730,
+          "end": 767,
+          "original": "../../src/runtime/cli/migrate_configs",
+          "value": "../../../../src/runtime/cli/migrate_configs",
+          "originalResolved": "backend/src/runtime/cli/migrate_configs.ts",
+          "expectedResolved": "backend/src/runtime/cli/migrate_configs.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 639,
+          "end": 676,
+          "original": "../../src/runtime/config/parse_config",
+          "value": "../../../../src/runtime/config/parse_config",
+          "originalResolved": "backend/src/runtime/config/parse_config.ts",
+          "expectedResolved": "backend/src/runtime/config/parse_config.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 557,
+          "end": 600,
+          "original": "../../src/runtime/config/resolve_game_setup",
+          "value": "../../../../src/runtime/config/resolve_game_setup",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 481,
+          "end": 520,
+          "original": "../../src/runtime/config/describe_setup",
+          "value": "../../../../src/runtime/config/describe_setup",
+          "originalResolved": "backend/src/runtime/config/describe_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/describe_setup.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 393,
+          "end": 439,
+          "original": "../../src/runtime/config/load_board_definition",
+          "value": "../../../../src/runtime/config/load_board_definition",
+          "originalResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/load_board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 315,
+          "end": 353,
+          "original": "../../src/runtime/config/migrate_board",
+          "value": "../../../../src/runtime/config/migrate_board",
+          "originalResolved": "backend/src/runtime/config/migrate_board.ts",
+          "expectedResolved": "backend/src/runtime/config/migrate_board.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 235,
+          "end": 276,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 30,
+          "end": 60,
+          "original": "../../src/core/domain/identity",
+          "value": "../../../../src/core/domain/identity",
+          "originalResolved": "backend/src/core/domain/identity.ts",
+          "expectedResolved": "backend/src/core/domain/identity.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "configs.example/boards/twelve_player_standard.json",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../../configs.example/boards/twelve_player_standard.json\")",
+          "currentExpression": "path.resolve(import.meta.dir, \"../../../../../configs.example/boards/twelve_player_standard.json\")",
+          "currentHead": "../../../../../configs.example/boards/twelve_player_standard.json",
+          "kind": "public-directory-anchor",
+          "originalHelperSpan": {
+            "start": 1367,
+            "end": 1459,
+            "line": 23
+          }
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "5e948c7e02d744b3a2d58ac04ae7e5d3c08b6abbbf4ac2f8dcc7f4d5b7e6e7c8",
+          "title": "canonical boards reject nested misspellings, planned roles and incomplete setup",
+          "occurrence": 1
+        },
+        {
+          "id": "687540e4cd55e5e57186f1d8a55bac2a67469a4edceeaf5998d202ea02e378b3",
+          "title": "parameters require the corresponding role and implemented semantics",
+          "occurrence": 1
+        },
+        {
+          "id": "f46f5d520de79047654f6d3160e40dfba3fc28258599017b9829eb5c1f6a503f",
+          "title": "boards require opposing camps before a game can start",
+          "occurrence": 1
+        },
+        {
+          "id": "2511f4394b2619292726de851907b9e338c20d0e0a6178d6901d41ed9468648f",
+          "title": "legacy collections validate all fields and select a source independently of the new id",
+          "occurrence": 1
+        },
+        {
+          "id": "849a849a844f59a9c6788f3487e80b1518657595a846463b7d44ad14978ba0e8",
+          "title": "migration reuses identical backups and refuses conflicting backups before any board write",
+          "occurrence": 1
+        },
+        {
+          "id": "b1f5934e69f772b123758aeeaec2132e40d47ff5ae6f0bd1bf5a1b7459e00592",
+          "title": "custom board ids load from one canonical file with matching metadata",
+          "occurrence": 1
+        },
+        {
+          "id": "82b9d11e733f9d491ea3a7c627e28919a163fef9f95b0e81082fd41e66a4c0f7",
+          "title": "legacy conversion preserves effective hooks and backup without touching runtime files",
+          "occurrence": 1
+        },
+        {
+          "id": "c155143635ccf4bf6e11e4e5772b14cbf082ca63569735ae8c85d56684fc5166",
+          "title": "legacy files are refused by normal loading instead of silently falling back",
+          "occurrence": 1
+        },
+        {
+          "id": "7da09b7542d8183e49265a1a99dc7c3e2bc7ad19994a02dacd7955adb31c1cd4",
+          "title": "game bindings and CLI number overrides are validated after board resolution",
+          "occurrence": 1
+        },
+        {
+          "id": "5bdcaaefc4da2d4086d1e1a57e2debd386e0245d25f4122ee2d3bdab78054309",
+          "title": "the public twelve-player window example loads through normal v2 setup with all four hooks",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../src/core/domain/identity",
+          "originalImport": "import { ActionWindow, WinCondition } from \"../../src/core/domain/identity\";",
+          "currentImportBeforeRebase": "import { ActionWindow } from \"../../src/core/domain/identity\";",
+          "droppedBindings": [
+            {
+              "name": "WinCondition",
+              "imported": "WinCondition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 577 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 518,
-    "targetFiles": 538,
-    "mappingEntries": 538,
-    "baselineCases": 6519,
+    "sourceFiles": 519,
+    "targetFiles": 540,
+    "mappingEntries": 540,
+    "baselineCases": 6530,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
