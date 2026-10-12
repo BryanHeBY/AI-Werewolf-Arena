@@ -1,3 +1,8 @@
+/**
+ * Architecture tests verify five initial-identity import orders initialize public setup constructors without a temporal dead zone.
+ * Input: Fresh interpreter processes rooted at the backend and the original entry-order matrix.
+ * Output and oracle: Literal successful exit and constructor checks are asserted; process isolation is used only for module initialization, not a played game.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
 const base = "./src/game/mechanisms/roles/";

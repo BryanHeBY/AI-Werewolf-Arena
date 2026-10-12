@@ -47611,13 +47611,117 @@
       "targetRunner": "backend-integration",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/import_boundaries.test.ts",
+      "to": "backend/tests/architecture/engine-import-boundaries.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Actual checker CLI over an isolated synthetic source tree; structural dependency rejection is the oracle, not a generic filesystem store.",
+      "originalSha256": "9c356c5d23b6678ce1f26fa15e576e89bc561fcc9038c4f9b12d51f41ae17b6a",
+      "candidateSha256": "0ba5fef24a235f34b22cd98dfd442e1ebe16c5db8caa962280b2ce06d763aa26",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1238,
+          "end": 1279,
+          "value": "../../scripts/check_import_boundaries.mjs",
+          "kind": "location-directory-prefix",
+          "original": "../../scripts/check_import_boundaries.mjs",
+          "originalResolved": "backend/scripts/check_import_boundaries.mjs"
+        },
+        {
+          "start": 590,
+          "end": 625,
+          "value": "../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [
+        {
+          "kind": "directory-anchor",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../scripts/check_import_boundaries.mjs\")",
+          "anchor": "backend/scripts/check_import_boundaries.mjs",
+          "currentHead": "../../scripts/check_import_boundaries.mjs"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "4f410b0cdf9f2eb4f2f2178a5536632f6e7e938f57e7bc097e05dc6a2eceda25",
+          "title": "boundary checker rejects illegal game engine imports",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-architecture",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/initial_identity_import_order.test.ts",
+      "to": "backend/tests/architecture/identity-import-initialization.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Fresh interpreter import of five entry orders verifies no temporal dead zone and public setup constructors; subprocess is isolation for the architecture contract.",
+      "originalSha256": "4f40b74925b357880c38ca7e62ebc96f5d66ff26efbb22461cd879d2242934d6",
+      "candidateSha256": "f4661b1376ae372c41e1bb44d3f8f81d70a7ea7752d2dafe59f51ebd4a7e9ce4",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1218,
+          "end": 1223,
+          "value": "../..",
+          "kind": "location-directory-prefix",
+          "original": "../..",
+          "originalResolved": "backend"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "kind": "directory-anchor",
+          "originalExpression": "path.resolve(import.meta.dir, \"../..\")",
+          "anchor": "backend",
+          "currentHead": "../.."
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "bb8ef883888c1b141d513381c15b68c07f035ebf6e90b10c357de6c0fb4259f0",
+          "title": "fresh process imports identity setup from initial_identity/setup without a temporal dead zone",
+          "occurrence": 1
+        },
+        {
+          "id": "28d0f34acf056f882cea8b0f54953e5ae033b4fa5467764a91e1d775aecc8873",
+          "title": "fresh process imports identity setup from shapeshifter/setup without a temporal dead zone",
+          "occurrence": 1
+        },
+        {
+          "id": "d3c49ecfd3804b1ecedd5df489f64775d587b42b9f6f0d5c51bc6a185ad72cd1",
+          "title": "fresh process imports identity setup from thief/setup without a temporal dead zone",
+          "occurrence": 1
+        },
+        {
+          "id": "b1dc78c19f2edaf43e4b75f7a5539e178d5efec267634f9c232eb34d1215a71e",
+          "title": "fresh process imports identity setup from catalog without a temporal dead zone",
+          "occurrence": 1
+        },
+        {
+          "id": "da92a78129c5ab0f805e92497f1169a20941f935dce3c3ac3aca2eedbce7b592",
+          "title": "fresh process imports identity setup from ../../engine/phase_manager without a temporal dead zone",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-architecture",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 395,
-    "targetFiles": 400,
-    "mappingEntries": 400,
-    "baselineCases": 4640,
+    "sourceFiles": 397,
+    "targetFiles": 402,
+    "mappingEntries": 402,
+    "baselineCases": 4646,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
