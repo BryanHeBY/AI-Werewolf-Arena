@@ -1337,7 +1337,17 @@ export async function generateFixtureManifest(repository: string): Promise<Fixtu
     else if (info.isFile() && publicFixturePath(relative)) currentPaths.push(relative);
     else fail("unexpected_fixture_kind");
   }
-  for (const directory of fixtureRoots) await scan(directory);
+  for (const directory of fixtureRoots) {
+    // lstat of a whole path can follow an earlier component; verify each public
+    // directory ancestor before recursion is allowed to enumerate any children.
+    const parts = directory.split("/");
+    for (let index = 1; index <= parts.length; index++) {
+      const info = await fs.lstat(path.join(root, ...parts.slice(0, index)));
+      if (info.isSymbolicLink()) fail("symlink_rejected");
+      if (!info.isDirectory()) fail("public_fixture_directory_required");
+    }
+    await scan(directory);
+  }
   const expectedPaths = new Set([
     ...layout.files.map((file) => file.currentPath),
     ...layout.derivedManifests.map((entry) => entry.path),

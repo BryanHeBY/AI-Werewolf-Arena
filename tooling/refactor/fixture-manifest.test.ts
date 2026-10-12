@@ -7,7 +7,7 @@
  * executing games, transport adapters, existing test suites or billed models.
  */
 import { expect, test } from "bun:test";
-import { mkdtemp, mkdir, writeFile, unlink, symlink, rm, readFile } from "node:fs/promises";
+import { mkdtemp, mkdir, writeFile, unlink, symlink, rm, readFile, cp } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import {
@@ -418,6 +418,42 @@ test("generator rejects repository-root and ancestor symbolic links before openi
     await expect(
       generateFixtureManifest(path.join(ancestor, "synthetic-private-repository")),
     ).rejects.toThrow("repository_symlink_rejected");
+  } finally {
+    await rm(temporary, { recursive: true, force: true });
+  }
+});
+
+test("fixture-root ancestor links are rejected before directory enumeration", async () => {
+  const repository = path.resolve(import.meta.dir, "../..");
+  const temporary = await mkdtemp(path.join(tmpdir(), "awa-fixture-scan-ancestor-"));
+  const isolated = path.join(temporary, "repository"),
+    canary = path.join(temporary, "canary");
+  try {
+    const layout = parseFixtureManifest(JSON.stringify(publicSourceManifest));
+    for (const relative of [
+      "docs/refactor/generated/baseline-fixtures.json",
+      fixtureManifestPath,
+      "backend/package.json",
+      ...layout.sourceAssets.map((asset) => asset.currentPath),
+    ]) {
+      await mkdir(path.dirname(path.join(isolated, relative)), { recursive: true });
+      await cp(path.join(repository, relative), path.join(isolated, relative));
+    }
+    await symlink(path.join(repository, ".git"), path.join(isolated, ".git"));
+    await symlink(
+      path.join(repository, "backend/node_modules"),
+      path.join(isolated, "backend/node_modules"),
+    );
+    await mkdir(path.join(isolated, "packages/replay-contract/fixtures"), { recursive: true });
+    await mkdir(path.join(canary, "tests/fixtures"), { recursive: true });
+    await writeFile(
+      path.join(canary, "tests/fixtures/outside-sentinel.json"),
+      '{"literal":"must-not-enumerate"}',
+    );
+    await symlink(canary, path.join(isolated, "frontend"));
+    await expect(generateFixtureManifest(isolated)).rejects.toThrow(
+      "fixture_manifest_invalid: symlink_rejected",
+    );
   } finally {
     await rm(temporary, { recursive: true, force: true });
   }
