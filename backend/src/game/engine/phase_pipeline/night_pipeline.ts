@@ -13,6 +13,7 @@
  * cancellation checks; changed subsequent parameters refuse before any acquisition.
  * Mist's concrete unit owns opening facts and the late cleanup transfer; damage
  * handoff remains earlier, and configured failure cleanup does not require acquisition.
+ * Time Consort's late cleanup transfer never moves its priority-50 stage opening.
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bindBoardParameters } from "../../../rulesets/board-parameters";
@@ -53,11 +54,11 @@ import {
   MistNightUnit,
 } from "../../mechanisms/roles/mist_raven/ports";
 import { assertScholarMentorBonusEffects } from "../../mechanisms/roles/scholar_mentor/night_stages";
-import { isTimeConsortBoard } from "../../mechanisms/roles/time_wolf_consort/night_frame";
 import {
+  isTimeConsortBoard,
+  TimeConsortNightUnit,
   assertTimeConsortRosterCurrent,
-  abortTimeConsortNight,
-} from "../../mechanisms/roles/time_wolf_consort/night_frame";
+} from "../../mechanisms/roles/time_wolf_consort/ports";
 import {
   assertWolfSorcererRosterCurrent,
   abortWolfSorcererNight,
@@ -269,7 +270,11 @@ export class NightPipeline {
     const ownsWedding = weddingSetup(this.world) !== null;
     const ownsDemon = demonHunterActorId(this.world) !== null;
     let magicianHandedOff = false;
-    let timeConsortHandedOff = false;
+    const timeConsortNight = new TimeConsortNightUnit({
+      get world() {
+        return pipeline.world;
+      },
+    });
     let scholarMentorHandedOff = false;
     const ownsNoble = config.nobleSecretBody !== undefined;
     const ownsFragrant = config.fragrantPairSeer !== undefined;
@@ -670,7 +675,7 @@ export class NightPipeline {
       weddingHandedOff = ownsWedding;
       demonHandedOff = ownsDemon;
       magicianHandedOff = config.magician !== undefined;
-      timeConsortHandedOff = config.timeConsort !== undefined;
+      timeConsortNight.transferToManager(config.timeConsort !== undefined);
       scholarMentorHandedOff = config.scholarMentor !== undefined;
       mistNight.transferToManager(ownsMist);
       return attachNobleNightReceiver(
@@ -698,7 +703,7 @@ export class NightPipeline {
       if (config.trickster && !magicianHandedOff) abortTricksterNight(this.world);
       if (config.wolfSorcerer && !magicianHandedOff) abortWolfSorcererNight(this.world);
       if (config.magician && !magicianHandedOff) abortMagicianNight(this.world);
-      if (config.timeConsort && !timeConsortHandedOff) abortTimeConsortNight(this.world);
+      if (config.timeConsort) timeConsortNight.abortIfOwned();
       if (config.scholarMentor && !scholarMentorHandedOff) abortScholarMentorNight(this.world);
       if (demonAcquired && !demonHandedOff) closeDemonHunterNight(this.world);
       if (ownsWedding && !weddingHandedOff) closeWeddingNight(this.world);
