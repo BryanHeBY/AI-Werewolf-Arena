@@ -1,0 +1,41 @@
+{
+  "locale": "zh-CN",
+  "maxDays": 8,
+  "id": "basic-six",
+  "board": {
+    "boardSize": 6,
+    "enableSheriff": false,
+    "winConditions": ["slaughter_city", "wolf_reach_half"],
+    "hooks": {
+      "onDaybreak": false,
+      "onPreElection": false,
+      "onPreVote": false,
+      "onPerSpeechGap": false
+    },
+    "roleSetups": [
+      {
+        "role": "wolf",
+        "count": 2
+      },
+      {
+        "role": "villager",
+        "count": 2
+      },
+      {
+        "role": "seer",
+        "count": 1
+      },
+      {
+        "role": "guard",
+        "count": 1
+      }
+    ]
+  },
+  "boardId": "six_player_mvp",
+  "fixedRoles": ["wolf", "wolf", "villager", "villager", "seer", "guard"],
+  "seed": "refactor-basic-v1",
+  "transcript": {
+    "family": "basic",
+    "plan": "basic"
+  }
+}

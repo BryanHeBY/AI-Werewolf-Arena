@@ -1,0 +1,47 @@
+{
+  "baseline": "96046949753726c91ead9ac2b29c24ac156e7382b57445f468b021cb1e1e1d66",
+  "candidate": "b8abc4f4603b932efd356decae92b6782ee59f3a008dc78e5a42f5801275b07f",
+  "driverHash": "777d642b96b0326f6885aa1280ca63c4c157a733d815f068a2b66f2093641431",
+  "cases": [
+    {
+      "scenario": "animal-cat-expire.json",
+      "inputHash": "af7bb8b6918ae46895a6661470d6355b3b0a724ca737c905fd56da685a38472b",
+      "difference": null
+    },
+    {
+      "scenario": "animal-cat-wait.json",
+      "inputHash": "c9854e9b53e1dce4fef794ed49848b52ad61dc8d351d5ab3e61e005c1eb95e16",
+      "difference": null
+    },
+    {
+      "scenario": "animal-link.json",
+      "inputHash": "64b76a79fda00de86ed0fc2f8d37b3cd241902dcfba9c8125a10aebcd7239862",
+      "difference": null
+    },
+    {
+      "scenario": "basic-six.json",
+      "inputHash": "3564fef5ee39fd33029a35759cfa1f7b05feb015bfc8832a5b0debb5028946c1",
+      "difference": null
+    },
+    {
+      "scenario": "fragrant-failed-provider.json",
+      "inputHash": "780dbbd62f972f6cbacf9524bada93128a7c253441897b48c2d2a0affb5c278b",
+      "difference": null
+    },
+    {
+      "scenario": "fragrant-gun.json",
+      "inputHash": "ae05f75209d08d139484f999183bb47ddb88b9cb3d00c8c3a9d3713a4d785c06",
+      "difference": null
+    },
+    {
+      "scenario": "fragrant-link.json",
+      "inputHash": "291cbb42be209bfbbb92ef79be384b79d6236511e185bd0d311addb931214ef7",
+      "difference": null
+    }
+  ],
+  "evidence": {
+    "full": "/tmp/awa-refactor-differential-p0-final",
+    "formattedFaultInput": "/tmp/awa-refactor-differential-p0-format-fault",
+    "fixedBuilds": "/tmp/awa-refactor-differential-p0-fourth"
+  }
+}
