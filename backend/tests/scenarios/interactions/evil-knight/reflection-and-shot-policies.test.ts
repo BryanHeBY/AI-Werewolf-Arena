@@ -1,6 +1,11 @@
+/**
+ * Interaction scenarios verify Evil Knight reflection and Hunter shot policies preserve actual inspection, death and winner order.
+ * Input: Original locale/policy matrices, controlled night/day replies and in-flight role/ability/currentness mutations.
+ * Output and oracle: Literal reflected results, death announcements, stock and failed/reentry prefixes remain tied to real phase cycles; no detached unit expectation replaces the interaction.
+ */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { evilKnightTwelveConfig } from "../../../src/runtime/scenarios/evil_knight_twelve";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { evilKnightTwelveConfig } from "../../../../src/runtime/scenarios/evil_knight_twelve";
 import {
   Camp,
   Role,
@@ -8,11 +13,11 @@ import {
   PotionType,
   type ActionRequest,
   type ToolCall,
-} from "../../../src/core/domain/model";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import type { RoleComponent } from "../../../src/core/domain/components/role";
-import type { AliveComponent } from "../../../src/core/domain/components/alive";
-import { getHunterState, getSeerState } from "../../../src/game/mechanisms/roles/private_state";
+} from "../../../../src/core/domain/model";
+import { COMPONENT } from "../../../../src/core/domain/components/names";
+import type { RoleComponent } from "../../../../src/core/domain/components/role";
+import type { AliveComponent } from "../../../../src/core/domain/components/alive";
+import { getHunterState, getSeerState } from "../../../../src/game/mechanisms/roles/private_state";
 function fixture(
   locale: "zh-CN" | "en",
   shotPolicy: "night_shot_immune" | "hunter_shot_bypasses" = "night_shot_immune",

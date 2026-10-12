@@ -1,5 +1,10 @@
+/**
+ * Interaction scenarios verify Magician original requested targets map through actual knife, potion, inspection and death-gun cycles.
+ * Input: Original exchange/shot policy plans, controlled role actions and required or stale replies.
+ * Output and oracle: Explicit mapped effects, requested-number privacy and paid/failure assertions retain original night-origin scope; expected target/action tables are unchanged.
+ */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   COMPONENT,
   PotionType,
@@ -7,14 +12,14 @@ import {
   type RoleComponent,
   type ActionRequest,
   type ToolCall,
-} from "../../../src/core";
-import type { AliveComponent } from "../../../src/core/domain/components/alive";
-import { magicianTwelveConfig } from "../../../src/runtime/scenarios/magician_twelve";
-import { getWitchState } from "../../../src/game/mechanisms/roles/private_state";
+} from "../../../../src/core";
+import type { AliveComponent } from "../../../../src/core/domain/components/alive";
+import { magicianTwelveConfig } from "../../../../src/runtime/scenarios/magician_twelve";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/private_state";
 import {
   isMagicianBoard,
   resolveMagicianNightTarget,
-} from "../../../src/game/mechanisms/roles/magician/night_frame";
+} from "../../../../src/game/mechanisms/roles/magician/night_frame";
 function fixture(shot: "original" | "exchanged" = "original") {
   const config = structuredClone(magicianTwelveConfig);
   config.magician!.deathShotTargetPolicy = shot;

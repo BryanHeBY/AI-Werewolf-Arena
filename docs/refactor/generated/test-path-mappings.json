@@ -61371,13 +61371,549 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/evil_knight_runtime.test.ts",
+      "to": "backend/tests/scenarios/interactions/evil-knight/reflection-and-shot-policies.test.ts",
+      "sourceCommit": "f4757a1f3e732d73ff235eba2aab8c62fa4524f7",
+      "reason": "Every callback executes actual cycles or rejects an actual attempted cycle. Reflection/shot priority, original-target mapping, role/ability revocation, private inspection and terminal/reentry order remain one feature interaction scenario.",
+      "originalSha256": "b2617a819892d0296817b0535ea456ba2935aeebd70fa71200fd3c88b4a02e4b",
+      "candidateSha256": "77f8561691f0f33fefd9848adfbb75d405c54b5eb2977cabae372ac78f651268",
+      "moduleAndLocationEdits": [
+        {
+          "start": 598,
+          "end": 646,
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 508,
+          "end": 549,
+          "value": "../../../../src/core/domain/components/alive",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 428,
+          "end": 468,
+          "value": "../../../../src/core/domain/components/role",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 348,
+          "end": 389,
+          "value": "../../../../src/core/domain/components/names",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 288,
+          "end": 318,
+          "value": "../../../../src/core/domain/model",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 141,
+          "end": 190,
+          "value": "../../../../src/runtime/scenarios/evil_knight_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/evil_knight_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/evil_knight_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/evil_knight_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 72,
+          "end": 98,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "bb3fd03f2dca0e5af7dc46a30b4b8b35cfb541e4c5f0f590f96f21b9359d42ed",
+          "title": "night Hunter shot observes night_shot_immune/zh-CN before winner and announcement",
+          "occurrence": 1
+        },
+        {
+          "id": "f10638b438b9054b195fb8b0af4fee87dc7c25e36e12dc19740f8872f774cf10",
+          "title": "daytime exile Hunter shot bypasses night immunity night_shot_immune/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "320c6ad9b1d75283671f7da7350fd97c049bd95668309247c90ea5c000c42fa8",
+          "title": "night Hunter shot observes hunter_shot_bypasses/zh-CN before winner and announcement",
+          "occurrence": 1
+        },
+        {
+          "id": "f1b062c1c9290133b473b73adddb00b3d60301d0c39567f87374c138189f9956",
+          "title": "daytime exile Hunter shot bypasses night immunity hunter_shot_bypasses/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "c5f51778637b5f12bce13b0554fab4e41d549ef6a0ee7697e86a9b876c7aadbb",
+          "title": "pending knife does not cancel the reflected Seer report zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "697d51214701f63f9ce5fa8e1fc3c2143ad974f00715be8ac698305b7a186887",
+          "title": "Witch-first ordering preserves simultaneous Seer result zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "da3bd600d110d3a255a1a3d1f63c304526224510d112b024fa515e988eac3ca1",
+          "title": "night Hunter shot observes night_shot_immune/en before winner and announcement",
+          "occurrence": 1
+        },
+        {
+          "id": "cfb18d486be29850ab18cde8110fdddde06cf179c297472b8e6d2b1646bbc817",
+          "title": "daytime exile Hunter shot bypasses night immunity night_shot_immune/en",
+          "occurrence": 1
+        },
+        {
+          "id": "c40e37e778093ed7314cb78f6f699a583b676471477a9c471d209e1874847e7c",
+          "title": "night Hunter shot observes hunter_shot_bypasses/en before winner and announcement",
+          "occurrence": 1
+        },
+        {
+          "id": "a7334b99b4a059273b937dd087b79c4b209433c1a08d34abc4f1c8dd838fd6bb",
+          "title": "daytime exile Hunter shot bypasses night immunity hunter_shot_bypasses/en",
+          "occurrence": 1
+        },
+        {
+          "id": "9675c1af25cc268a9e039d1aafeff43d4b4a73cf94b42ae425fb37af5d7f9ffd",
+          "title": "pending knife does not cancel the reflected Seer report en",
+          "occurrence": 1
+        },
+        {
+          "id": "fc594cc3f8bb82a34ec7fac2a1e05849414b44780ae236a7dda70b02bff50deb",
+          "title": "Witch-first ordering preserves simultaneous Seer result en",
+          "occurrence": 1
+        },
+        {
+          "id": "15448c36655b363315ad83f48b026c4a3bf0e7411f49405dbebf6eef23f2d3b4",
+          "title": "evil knight cycle rejects reentry and cannot resume an incomplete required night",
+          "occurrence": 1
+        },
+        {
+          "id": "40c1e8ca601927ec4bbb8c5d8156f4d1b7477dd4aa63f2b3051015cea37e73b7",
+          "title": "required guard response cannot silently skip: invalid=false",
+          "occurrence": 1
+        },
+        {
+          "id": "723e5d6677a4e44c9714ec522558c7e90be002f3170bb7cefae2ccf9fe3175c5",
+          "title": "required guard response cannot silently skip: invalid=true",
+          "occurrence": 1
+        },
+        {
+          "id": "b17a8537bb4c18afd8cd36dbdab0a103306eef77dc047943b89b125ac0349428",
+          "title": "required wolf_discussion response cannot silently skip: invalid=false",
+          "occurrence": 1
+        },
+        {
+          "id": "e689a1563a664e1d939c49459d62b8db51dfbe649af221bf9e9ac3c5b7fe9deb",
+          "title": "required wolf_discussion response cannot silently skip: invalid=true",
+          "occurrence": 1
+        },
+        {
+          "id": "83e2e85e38f816868815a9e57a773b005b16e513495720c85d5ed03cf6605fa6",
+          "title": "original seer cannot carry native authority into a replacement role",
+          "occurrence": 1
+        },
+        {
+          "id": "a69015fcdf58c82e1859655c5e489ff25a70e797fc075551ed4db4fc0c4f89e0",
+          "title": "original witch cannot carry native authority into a replacement role",
+          "occurrence": 1
+        },
+        {
+          "id": "7e4fe07a08a3d742d2303674246ee2fc3e26d165f1e755a06c81e7675a75a35d",
+          "title": "original guard cannot carry native authority into a replacement role",
+          "occurrence": 1
+        },
+        {
+          "id": "35092dcc6aa9fd4e14fe4f3e665cd2203543c0cf3aeaa6f0192a4dfe70c54007",
+          "title": "witch target role replacement aborts before potion consumption",
+          "occurrence": 1
+        },
+        {
+          "id": "7d5e4056c5982a05d0a9677b5d4fc4929e1b9b8ded17325009938b038d93caa3",
+          "title": "seer ability replacement during wolf_discussion cannot skip required inspection",
+          "occurrence": 1
+        },
+        {
+          "id": "fab01cce28466b1b28725a57b356f618898163defce2f551e074d2d03fe33b77",
+          "title": "seer ability replacement during seer cannot skip required inspection",
+          "occurrence": 1
+        },
+        {
+          "id": "73cc846090f6d857abba7428824593e24acfd6aee7ed28ed8e63e380cc643b23",
+          "title": "seer authority edit state during await fails before commitment",
+          "occurrence": 1
+        },
+        {
+          "id": "53b81c7865cb8c937818f94ad603941ffbe0653159dfb7ba586c16a5469ea877",
+          "title": "seer authority edit source during await fails before commitment",
+          "occurrence": 1
+        },
+        {
+          "id": "056c154813eb48b3bbd7b1dd299d21cb3524b2e742fb737f095742576268d990",
+          "title": "seer authority edit source_role during await fails before commitment",
+          "occurrence": 1
+        },
+        {
+          "id": "689a5ef73bcb4522d7ba1a08f0333a8ab432460f4de1a9b3b53a43c63ba83938",
+          "title": "seer authority edit kind during await fails before commitment",
+          "occurrence": 1
+        },
+        {
+          "id": "a3ce6693e3d93a08d2e38ec54461e0ec62377ecc8a4b66fa7e2277666405fcc9",
+          "title": "seer authority edit id during await fails before commitment",
+          "occurrence": 1
+        },
+        {
+          "id": "ca06bcb5c4ec550818096e6ed2c2df0e3722ca7780624a22c2151cd464c9cae3",
+          "title": "seer authority edit activation during await fails before commitment",
+          "occurrence": 1
+        },
+        {
+          "id": "43fd1ad81a192830560b12bff1707a282873bb94767325f423c32ae289bdfaa1",
+          "title": "seer authority edit starts during await fails before commitment",
+          "occurrence": 1
+        },
+        {
+          "id": "f8ac7ef914709b98fced7ef2f4f0f6bdec7c45ed0e78781c205fe04770b73436",
+          "title": "seer authority edit expires during await fails before commitment",
+          "occurrence": 1
+        },
+        {
+          "id": "0f9091bb368e9805603245430f801a05dde93f97f4f605672eb3a1d8228e67df",
+          "title": "seer authority edit max_uses during await fails before commitment",
+          "occurrence": 1
+        },
+        {
+          "id": "3f9088145d83bca18fb0dc63bc2b78553e8d9f1755c979f76877c7a25f244b73",
+          "title": "seer authority edit disclosed during await fails before commitment",
+          "occurrence": 1
+        },
+        {
+          "id": "99205a239dfc1cd711c2ece7eee0237f6d02b93d64aa71cdd21e47ac980d769f",
+          "title": "seer authority edit policy during await fails before commitment",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/magician_world.test.ts",
+      "to": "backend/tests/scenarios/interactions/magician/original-target-mapping.test.ts",
+      "sourceCommit": "f4757a1f3e732d73ff235eba2aab8c62fa4524f7",
+      "reason": "Every callback executes actual cycles or rejects an actual attempted cycle. Reflection/shot priority, original-target mapping, role/ability revocation, private inspection and terminal/reentry order remain one feature interaction scenario.",
+      "originalSha256": "9f2c05a9bd533fcddc9ec783301b03f159ba4119bbf7cd318b6dc5c88d9421ac",
+      "candidateSha256": "8d83a35f30fc98ac98276dee571c7f0db333f07572f0106e801bd9e95ff82312",
+      "moduleAndLocationEdits": [
+        {
+          "start": 550,
+          "end": 605,
+          "value": "../../../../src/game/mechanisms/roles/magician/night_frame",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/magician/night_frame",
+          "originalResolved": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 433,
+          "end": 481,
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 353,
+          "end": 399,
+          "value": "../../../../src/runtime/scenarios/magician_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/magician_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/magician_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/magician_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 271,
+          "end": 312,
+          "value": "../../../../src/core/domain/components/alive",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 214,
+          "end": 231,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 72,
+          "end": 98,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "c1600702394a449387ea42a92a9c4faabbf6491a7b1e021bd13f34bbbcc63431",
+          "title": "Magician actual World maps knife and camp check while retaining original requested number",
+          "occurrence": 1
+        },
+        {
+          "id": "33958872eacb7adb2da6f14f668720b0a1f6cd86d224522b0005168393d2afcc",
+          "title": "Magician allows an original other-player heal to land on the Witch herself",
+          "occurrence": 1
+        },
+        {
+          "id": "1ebd04237980acf54958a21e9f2081037425810ac628674adca76b071729f19f",
+          "title": "Magician rejects healing an original self knife before spending a potion",
+          "occurrence": 1
+        },
+        {
+          "id": "1070d9a7db45d598b17b77335140f5455749f159de2efe1ea7a52188e67f92c2",
+          "title": "Magician maps poison onto the Witch without changing her requested target",
+          "occurrence": 1
+        },
+        {
+          "id": "fd60ac8db8deb86919a4a3d1083d1bb2e5005d03aaac7d2c18d4bac4588bce8a",
+          "title": "Magician delayed first-day night gun resolves explicit policy/original",
+          "occurrence": 1
+        },
+        {
+          "id": "903aa0be735b018ff3eb7a0bb385203fb79ca6df37e65417c013080f6d3e622b",
+          "title": "Magician delayed first-day night gun resolves explicit policy/exchanged",
+          "occurrence": 1
+        },
+        {
+          "id": "3efd7a26d637d168acea933107850e718a6e349b01d191cf564a1b8ffacdbc26",
+          "title": "Magician keeps night-origin mapping through the subsequent Wolf King gun wave",
+          "occurrence": 1
+        },
+        {
+          "id": "64d670a03f71780ca94245d9681d7d77bd0f3a9c411a385819e30bb6260e8e6a",
+          "title": "Magician required action fails explicitly and closes its frame/swap_targets",
+          "occurrence": 1
+        },
+        {
+          "id": "258da629b193de8a675f68bf6f33fd8a06978de543e301193177caf28806ea5d",
+          "title": "Magician required action fails explicitly and closes its frame/speak_to_wolves",
+          "occurrence": 1
+        },
+        {
+          "id": "5eff4b1743d634d08210fb0dfeb453ffff1f558820b5566a3c82fe2bd96ced56",
+          "title": "Magician required action fails explicitly and closes its frame/kill_vote",
+          "occurrence": 1
+        },
+        {
+          "id": "bcf1475988f4ff66f5fd52bcc6739342cf0bfd9b3030092e089155a6120d4f01",
+          "title": "Magician required action fails explicitly and closes its frame/use_potion",
+          "occurrence": 1
+        },
+        {
+          "id": "aa85769ba49a89fd56918762ec9213a3dbe40c67e40da2ab377ade687ca8968e",
+          "title": "Magician required action fails explicitly and closes its frame/check_identity",
+          "occurrence": 1
+        },
+        {
+          "id": "82fdb52e7f56f42633cefaf838080407bd262d40646bbd493aa13797c4fe5401",
+          "title": "Magician required action fails explicitly and closes its frame/shoot",
+          "occurrence": 1
+        },
+        {
+          "id": "6a6d84f0d657cb9fca2d0c55b3d6e4ad16d124f2a3e8656c6c75c2559e75dee2",
+          "title": "Magician refuses a late reply after in-place original identity mutation",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/pure_white_runtime.test.ts",
+      "to": "backend/tests/scenarios/interactions/pure-white/mutual-inspection-settlement.test.ts",
+      "sourceCommit": "f4757a1f3e732d73ff235eba2aab8c62fa4524f7",
+      "reason": "Every callback executes actual cycles or rejects an actual attempted cycle. Reflection/shot priority, original-target mapping, role/ability revocation, private inspection and terminal/reentry order remain one feature interaction scenario.",
+      "originalSha256": "29ffdc24f8e49dee4d2fa6347a769dc0783400454a64da1f00a71e11dab5be5f",
+      "candidateSha256": "983d14f24001b07c67cdaf63c0c5ccf37a459f814699e10d5a4da1b75f4633d9",
+      "moduleAndLocationEdits": [
+        {
+          "start": 590,
+          "end": 638,
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 506,
+          "end": 547,
+          "value": "../../../../src/core/domain/components/alive",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 426,
+          "end": 466,
+          "value": "../../../../src/core/domain/components/role",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 346,
+          "end": 387,
+          "value": "../../../../src/core/domain/components/names",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 286,
+          "end": 316,
+          "value": "../../../../src/core/domain/model",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 140,
+          "end": 188,
+          "value": "../../../../src/runtime/scenarios/pure_white_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/pure_white_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/pure_white_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/pure_white_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 72,
+          "end": 98,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "1f211fa56b7f89a7c8d81c416550297cbdbfdb2c78f29c16c689877d3c5f8dd6",
+          "title": "actual paired mutual kill seals one complete night with awa_wolf_priority_v1/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "a0942f529ce6f70620d7d00fe6f723d34b131febe7967e9d9e8d03f11dc31600",
+          "title": "actual paired mutual kill seals one complete night with awa_good_priority_v1/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "59ed707656c784fd49b06f0f6450f0a6b575ac75048642fb208787b007f9d260",
+          "title": "pending first-night knife does not suppress either inspection zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "3c0f90beae3655bb8e38401eec9242324bd82f3817b46f51ae107d753ec1bd92",
+          "title": "terminal wolf inspection still completes hunter shot before death announcement zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "587150bb65a11fe265422b0c732ba62e2ec58c2a3d5422265a16d501065251db",
+          "title": "actual paired mutual kill seals one complete night with awa_wolf_priority_v1/en",
+          "occurrence": 1
+        },
+        {
+          "id": "9a6562a683863e657daf058b6726422384ad435809b0f90585ea7e4338b0ad49",
+          "title": "actual paired mutual kill seals one complete night with awa_good_priority_v1/en",
+          "occurrence": 1
+        },
+        {
+          "id": "ede06f636f367e60c93e0bca75623f1c23afc67e6e595aa6ab4bffeaf35a6f62",
+          "title": "pending first-night knife does not suppress either inspection en",
+          "occurrence": 1
+        },
+        {
+          "id": "9529cb995bdbca6bc07b5857510b4002e334052e571ce035d43553c33759b20a",
+          "title": "terminal wolf inspection still completes hunter shot before death announcement en",
+          "occurrence": 1
+        },
+        {
+          "id": "1f3eebb392c1446f814c7aed0ae5c29d36c5dc9f6b56995f43d95f82fa4ee3a1",
+          "title": "a pure-white cycle cannot reenter during an awaited choice or restart a failed night",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 494,
-    "targetFiles": 500,
-    "mappingEntries": 500,
-    "baselineCases": 6139,
+    "sourceFiles": 497,
+    "targetFiles": 503,
+    "mappingEntries": 503,
+    "baselineCases": 6196,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

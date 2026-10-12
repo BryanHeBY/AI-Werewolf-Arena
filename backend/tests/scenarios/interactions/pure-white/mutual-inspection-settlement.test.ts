@@ -1,6 +1,11 @@
+/**
+ * Interaction scenarios verify actual Pure White/Wolf Witch nights preserve inspection priority, mutual death and terminal Hunter timing.
+ * Input: Original locale/elimination-priority matrices, controlled paired actions and awaited reentry or failed-night replies.
+ * Output and oracle: Literal private results, complete-night/death announcement order and permanent reentry rejection retain actual phase execution; no action or expectation is regenerated.
+ */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { pureWhiteTwelveConfig } from "../../../src/runtime/scenarios/pure_white_twelve";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { pureWhiteTwelveConfig } from "../../../../src/runtime/scenarios/pure_white_twelve";
 import {
   Camp,
   Role,
@@ -8,11 +13,11 @@ import {
   PotionType,
   type ActionRequest,
   type ToolCall,
-} from "../../../src/core/domain/model";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import type { RoleComponent } from "../../../src/core/domain/components/role";
-import type { AliveComponent } from "../../../src/core/domain/components/alive";
-import { getRoleInspectionState } from "../../../src/game/mechanisms/roles/private_state";
+} from "../../../../src/core/domain/model";
+import { COMPONENT } from "../../../../src/core/domain/components/names";
+import type { RoleComponent } from "../../../../src/core/domain/components/role";
+import type { AliveComponent } from "../../../../src/core/domain/components/alive";
+import { getRoleInspectionState } from "../../../../src/game/mechanisms/roles/private_state";
 
 function fixture(
   locale: "zh-CN" | "en",
