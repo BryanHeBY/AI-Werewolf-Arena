@@ -1,24 +1,18 @@
+/**
+ * Engine scenarios verify actual full game, Day/Voting pipelines and Hunter request context under the original PhaseManager describe prefix.
+ * Input: Original controlled providers, configured worlds and retry/vote/order matrices.
+ * Output and oracle: Exact snapshot, weight, retry and request-context assertions retain original behavior; production-derived targeting is existing debt, not a new independent oracle.
+ */
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
-import { AliveComponent } from "../../../src/core/domain/components/alive";
 import { RoleComponent } from "../../../src/core/domain/components/role";
-import {
-  ActionProvider,
-  ActionRequest,
-  Camp,
-  Phase,
-  ToolCall,
-  Role,
-  WinCondition,
-} from "../../../src/core/domain/model";
+import { ActionProvider, ActionRequest, Camp, Phase, ToolCall, Role } from "../../../src/core/domain/model";
 import { VotingPipeline } from "../../../src/game/engine/phase_pipeline/voting_pipeline";
 import { DayPipeline } from "../../../src/game/engine/phase_pipeline/day_pipeline";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
-import { ConditionRegistry } from "../../../src/core/domain/registries/condition_registry";
-import { getDefaultWinConditionRegistry } from "../../../src/game/mechanisms/registries/win_condition_registry";
 import { createDefaultRoleRegistry } from "../../../src/game/mechanisms";
 
 class WolfOnlyNightProvider implements ActionProvider {
@@ -50,23 +44,6 @@ class WolfOnlyNightProvider implements ActionProvider {
 }
 
 describe("PhaseManager", () => {
-  test("bootstrap should emit god_private_game_info as initial event", async () => {
-    const context = bootstrapGame(sixPlayerMvpConfig);
-    const events = context.phaseManager.getEvents();
-    const init = events.find((event) => event.type === "god_private_game_info");
-
-    expect(init).toBeTruthy();
-    const players = Array.isArray(init?.payload.players) ? init?.payload.players : [];
-    expect(players.length).toBe(sixPlayerMvpConfig.boardSize);
-    expect(
-      players.every(
-        (item: any) =>
-          typeof item.seat === "number" &&
-          typeof item.role === "string" &&
-          typeof item.camp === "string",
-      ),
-    ).toBe(true);
-  });
 
   test("6-player scenario reaches wolf win with wolf-only night kills", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
@@ -235,26 +212,6 @@ describe("PhaseManager", () => {
     for (const voter of context.world.getAliveEntityIds()) {
       expect(attempts.get(voter)).toBe(4);
     }
-  });
-
-  test("wolf_reach_half condition should trigger wolf win when wolves equal good", async () => {
-    const context = bootstrapGame(sixPlayerMvpConfig);
-    const aliveIds = context.world.getAliveEntityIds();
-    const goodIds = aliveIds.filter((id) => {
-      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
-      return role?.camp === Camp.Good;
-    });
-    // 6人局初始 2狼4好，击杀两名好人后达到 2狼2好，满足“狼人达半”。
-    for (let i = 0; i < 2; i++) {
-      const alive = context.world.getComponent<AliveComponent>(goodIds[i], COMPONENT.Alive);
-      if (alive) {
-        alive.alive = false;
-      }
-    }
-    const registry = new ConditionRegistry(getDefaultWinConditionRegistry());
-    const result = registry.evaluateMany(context.world, [WinCondition.WolfReachHalf]);
-    expect(result?.winner).toBe(Camp.Wolf);
-    expect(result?.reason).toBe("wolves_reach_half");
   });
 
   test("hunter death shoot request should carry current day and hunter_shot stage", async () => {

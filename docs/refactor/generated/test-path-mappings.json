@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+  "observedSourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -77631,13 +77631,437 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/phases/phase_manager.test.ts",
+      "to": "backend/tests/unit/engine/bootstrap-and-condition.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "67bb410bc244da64ca5ddce4584d8b59828eca30f113ee3286f7438beb04785b",
+      "candidateSha256": "791982e86892f981608fbb003a10ea2c0c293bb361ece18c9430d5050071b813",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 574,
+          "end": 636,
+          "original": "../../../src/game/mechanisms/registries/win_condition_registry",
+          "value": "../../../src/game/mechanisms/registries/win_condition_registry",
+          "originalResolved": "backend/src/game/mechanisms/registries/win_condition_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/registries/win_condition_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 469,
+          "end": 523,
+          "original": "../../../src/core/domain/registries/condition_registry",
+          "value": "../../../src/core/domain/registries/condition_registry",
+          "originalResolved": "backend/src/core/domain/registries/condition_registry.ts",
+          "expectedResolved": "backend/src/core/domain/registries/condition_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 386,
+          "end": 431,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 317,
+          "end": 347,
+          "original": "../../../src/core/domain/model",
+          "value": "../../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 238,
+          "end": 278,
+          "original": "../../../src/core/domain/components/role",
+          "value": "../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 163,
+          "end": 204,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 87,
+          "end": 128,
+          "original": "../../../src/core/domain/components/names",
+          "value": "../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 31,
+          "end": 57,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "6b924d6d408b772accc5b0b828983b9da04e5565a96b5a53865ad07bc4ca8fb5",
+          "title": "PhaseManager > bootstrap should emit god_private_game_info as initial event",
+          "occurrence": 1
+        },
+        {
+          "id": "c488b9d0d2e29cc1c89f27398c9b4efaf3628e5c39df11327657c06aca80d968",
+          "title": "PhaseManager > wolf_reach_half condition should trigger wolf win when wolves equal good",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core/domain/model",
+          "originalImport": "import {\n  ActionProvider,\n  ActionRequest,\n  Camp,\n  Phase,\n  ToolCall,\n  Role,\n  WinCondition,\n} from \"../../../src/core/domain/model\";",
+          "currentImportBeforeRebase": "import { Camp, WinCondition } from \"../../../src/core/domain/model\";",
+          "droppedBindings": [
+            {
+              "name": "ActionProvider",
+              "imported": "ActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/phase_pipeline/voting_pipeline",
+          "originalImport": "import { VotingPipeline } from \"../../../src/game/engine/phase_pipeline/voting_pipeline\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "VotingPipeline",
+              "imported": "VotingPipeline",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/phase_pipeline/day_pipeline",
+          "originalImport": "import { DayPipeline } from \"../../../src/game/engine/phase_pipeline/day_pipeline\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DayPipeline",
+              "imported": "DayPipeline",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/event_registry",
+          "originalImport": "import { EventRegistry } from \"../../../src/game/engine/event_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "EventRegistry",
+              "imported": "EventRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalImport": "import { twelvePlayerStandardConfig } from \"../../../src/runtime/scenarios/twelve_player_standard\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "twelvePlayerStandardConfig",
+              "imported": "twelvePlayerStandardConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import { createDefaultRoleRegistry } from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createDefaultRoleRegistry",
+              "imported": "createDefaultRoleRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/phases/phase_manager.test.ts",
+      "to": "backend/tests/scenarios/engine/phase-pipelines.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "67bb410bc244da64ca5ddce4584d8b59828eca30f113ee3286f7438beb04785b",
+      "candidateSha256": "c82817d83f21e8fb16e6f708757a356fac3a680bbae02d9eac84fb3682e9ca0f",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 858,
+          "end": 886,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 759,
+          "end": 812,
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "value": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 667,
+          "end": 712,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 589,
+          "end": 628,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 517,
+          "end": 555,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 433,
+          "end": 485,
+          "original": "../../../src/game/engine/phase_pipeline/day_pipeline",
+          "value": "../../../src/game/engine/phase_pipeline/day_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/day_pipeline.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 346,
+          "end": 401,
+          "original": "../../../src/game/engine/phase_pipeline/voting_pipeline",
+          "value": "../../../src/game/engine/phase_pipeline/voting_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 281,
+          "end": 311,
+          "original": "../../../src/core/domain/model",
+          "value": "../../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 162,
+          "end": 202,
+          "original": "../../../src/core/domain/components/role",
+          "value": "../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 87,
+          "end": 128,
+          "original": "../../../src/core/domain/components/names",
+          "value": "../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 31,
+          "end": 57,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "dcbe00bb3eeee347c609050268583ffddbea62563d86fbc9f2e10a6dfebdcb7d",
+          "title": "PhaseManager > 6-player scenario reaches wolf win with wolf-only night kills",
+          "occurrence": 1
+        },
+        {
+          "id": "54748fec447412cf37dcc4ef50fe5cb688aa0b91f7430d5eb3226b541bd0a0ac",
+          "title": "PhaseManager > sheriff can choose counter-clockwise speech order",
+          "occurrence": 1
+        },
+        {
+          "id": "6624bc6bfc81a3ce07c423fd43cab8aaf07952c728c23ca82c1bcffe4e9e5b0f",
+          "title": "PhaseManager > without elected sheriff, total vote weight remains 12",
+          "occurrence": 1
+        },
+        {
+          "id": "8e7010d56327cdc338ec5be7d21340b59ad41b2779372ed0859c12a704d7ec36",
+          "title": "PhaseManager > vote abstain should not be counted into tally",
+          "occurrence": 1
+        },
+        {
+          "id": "fadb18fae9359d6b88d85ce12ab2ec67cd9bb48d8f9637328447ee2bddce5f29",
+          "title": "PhaseManager > vote should retry up to three times before accepting a valid vote",
+          "occurrence": 1
+        },
+        {
+          "id": "a92a953d9b5be7025c5f6c1bf2b7174c85275fae7c962d405df710477808ef0f",
+          "title": "PhaseManager > hunter death shoot request should carry current day and hunter_shot stage",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import { AliveComponent } from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AliveComponent",
+              "imported": "AliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/model",
+          "originalImport": "import {\n  ActionProvider,\n  ActionRequest,\n  Camp,\n  Phase,\n  ToolCall,\n  Role,\n  WinCondition,\n} from \"../../../src/core/domain/model\";",
+          "currentImportBeforeRebase": "import { ActionProvider, ActionRequest, Camp, Phase, ToolCall, Role } from \"../../../src/core/domain/model\";",
+          "droppedBindings": [
+            {
+              "name": "WinCondition",
+              "imported": "WinCondition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/registries/condition_registry",
+          "originalImport": "import { ConditionRegistry } from \"../../../src/core/domain/registries/condition_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ConditionRegistry",
+              "imported": "ConditionRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/registries/win_condition_registry",
+          "originalImport": "import { getDefaultWinConditionRegistry } from \"../../../src/game/mechanisms/registries/win_condition_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultWinConditionRegistry",
+              "imported": "getDefaultWinConditionRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 538,
-    "targetFiles": 582,
-    "mappingEntries": 582,
-    "baselineCases": 6789,
+    "sourceFiles": 539,
+    "targetFiles": 584,
+    "mappingEntries": 584,
+    "baselineCases": 6797,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
