@@ -105,6 +105,14 @@
       "exports": "named pure tool, stage, event, ActionRequest/Context/Extras contracts",
       "currentConsumers": "core/model/core aggregators and remaining engine/features/agents/tests",
       "exit": "C44 after all machine data consumers use public contract; Provider and domain commit selections remain domain"
+    },
+    {
+      "id": "text-inline-event-identifiers",
+      "path": "packages/game-text/src/index.ts",
+      "owner": "game-contract/facts",
+      "exports": ["AWAKENED_EVENT_TYPES", "MECHANICAL_EVENT_TYPES"],
+      "currentConsumers": "text labels and original application tests",
+      "exit": "C44 named machine-ID bridges; C35 moves composite labels separately"
     }
   ]
 }

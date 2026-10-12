@@ -91,3 +91,15 @@ export * from "./facts/wall-notes";
 export * from "./events";
 
 export * from "./requests";
+
+export * from "./facts/hybrid";
+
+export * from "./facts/awakened";
+
+export * from "./facts/mechanical";
+
+export * from "./facts/merchant";
+
+export * from "./facts/death-ability";
+
+export * from "./facts/black-market";

@@ -5,6 +5,26 @@
  * are contract-owned named type exports; formatting retains parameter validation
  * and raw user text. This module never grants engine action or resource authority.
  */
+import { readHybridEventFact } from "@ai-werewolf-arena/game-contract/facts/hybrid";
+import {
+  AWAKENED_EVENT_TYPES,
+  readAwakenedEventFact,
+} from "@ai-werewolf-arena/game-contract/facts/awakened";
+export { AWAKENED_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/awakened";
+import {
+  MECHANICAL_EVENT_TYPES,
+  readMechanicalEventFact,
+} from "@ai-werewolf-arena/game-contract/facts/mechanical";
+export { MECHANICAL_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/mechanical";
+import {
+  readMerchantRenderableFact,
+  readMerchantOutcome,
+} from "@ai-werewolf-arena/game-contract/facts/merchant";
+import { readDeathAbilityEventFact } from "@ai-werewolf-arena/game-contract/facts/death-ability";
+import {
+  readBlackMarketRenderableFact,
+  readBlackMarketOutcome,
+} from "@ai-werewolf-arena/game-contract/facts/black-market";
 import type { MessageKey, MessageRef } from "@ai-werewolf-arena/game-contract";
 import { readNobleSecretBodyFact } from "./noble-secret-body";
 import { readAnimalDreamFact } from "./animal-dream";
@@ -56,7 +76,6 @@ export {
   readWallNoteData,
 } from "./wall-notes";
 import {
-  isRoleId,
   isLocale,
   roleName as catalogRoleName,
   type Locale,
@@ -149,39 +168,15 @@ export function errorMessage(locale: Locale, code: string): string {
 export function hybridEventLabel(type: string, payload: unknown, locale: Locale): string | null {
   if (type !== "hybrid_exemplar_chosen" && type !== "hybrid_affiliation_resolved") return null;
   const unknown = () => text(locale, "replay.unknown");
-  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return unknown();
-  const prototype = Object.getPrototypeOf(payload),
-    descriptors = Object.getOwnPropertyDescriptors(payload);
-  if (
-    (prototype !== Object.prototype && prototype !== null) ||
-    Object.values(descriptors).some((field) => !Object.hasOwn(field, "value") || !field.enumerable)
-  )
-    return unknown();
-  const p = Object.fromEntries(
-    Object.entries(descriptors).map(([key, field]) => [key, field.value]),
-  );
-  const positive = (value: unknown): value is number =>
-    typeof value === "number" && Number.isSafeInteger(value) && value > 0;
-  const allowed =
-    type === "hybrid_exemplar_chosen"
-      ? ["actorId", "day", "targetId"]
-      : ["actorId", "day", "targetId", "faction"];
-  if (
-    Object.keys(p).some((key) => !allowed.includes(key)) ||
-    !positive(p.actorId) ||
-    p.day !== 1 ||
-    !positive(p.targetId) ||
-    p.actorId === p.targetId
-  )
-    return unknown();
-  const parameters = { actor: p.actorId, day: p.day, target: p.targetId };
-  if (type === "hybrid_exemplar_chosen") return text(locale, "console.hybrid.choice", parameters);
-  return p.faction === "good" || p.faction === "wolf"
-    ? text(locale, "console.hybrid.affiliation", {
-        ...parameters,
-        faction: term("camp", p.faction, locale),
-      })
-    : unknown();
+  const fact = readHybridEventFact(type, payload);
+  if (!fact) return unknown();
+  const parameters = { actor: fact.actorId, day: fact.day, target: fact.targetId };
+  if (fact.type === "hybrid_exemplar_chosen")
+    return text(locale, "console.hybrid.choice", parameters);
+  return text(locale, "console.hybrid.affiliation", {
+    ...parameters,
+    faction: term("camp", fact.faction, locale),
+  });
 }
 export function cupidEventLabel(type: string, payload: unknown, locale: Locale): string | null {
   if (!(CUPID_EVENT_TYPES as readonly string[]).includes(type)) return null;
@@ -302,93 +297,53 @@ export function victoryPointLabel(point: VictoryPoint, locale: Locale = "zh-CN")
   });
 }
 
-export const MECHANICAL_EVENT_TYPES = [
-  "mechanical_awakened",
-  "mechanical_mode_selected",
-  "mechanical_mimicked",
-  "mechanical_mimic_skipped",
-  "mechanical_skill_skipped",
-  "mechanical_poison_used",
-  "mechanical_guard_chosen",
-  "mechanical_attack_chosen",
-  "mechanical_poison_reflected",
-  "mechanical_shot",
-] as const;
-
-export const AWAKENED_EVENT_TYPES = [
-  "awakened_inherited",
-  "awakened_mimicked",
-  "awakened_mimic_skipped",
-  "awakened_ready",
-  "awakened_skill_skipped",
-  "awakened_poison_used",
-  "awakened_guard_chosen",
-  "awakened_attack_chosen",
-] as const;
 /** Private learning/choice facts never imply deaths or change true God seat identities. */
 export function awakenedEventLabel(type: string, payload: unknown, locale: Locale): string | null {
   if (!(AWAKENED_EVENT_TYPES as readonly string[]).includes(type)) return null;
   const unknown = () => text(locale, "replay.unknown");
-  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return unknown();
-  const prototype = Object.getPrototypeOf(payload),
-    descriptors = Object.getOwnPropertyDescriptors(payload);
-  if (
-    (prototype !== Object.prototype && prototype !== null) ||
-    Object.values(descriptors).some((field) => !Object.hasOwn(field, "value") || !field.enumerable)
-  )
-    return unknown();
-  const p = Object.fromEntries(
-    Object.entries(descriptors).map(([key, field]) => [key, field.value]),
-  );
-  const positive = (value: unknown): value is number =>
-    typeof value === "number" && Number.isSafeInteger(value) && value > 0;
-  const actor = p.actorId,
-    day = p.day,
-    target = p.targetId;
-  if (!positive(actor) || (type !== "awakened_ready" && !positive(day))) return unknown();
-  switch (type) {
+  const fact = readAwakenedEventFact(type, payload);
+  if (!fact) return unknown();
+  const actor = fact.actorId;
+  switch (fact.type) {
     case "awakened_inherited":
-      return positive(p.firstKnifeNight)
-        ? text(locale, "console.awakened.inherited", { actor, day, first: p.firstKnifeNight })
-        : unknown();
+      return text(locale, "console.awakened.inherited", {
+        actor,
+        day: fact.day,
+        first: fact.firstKnifeNight,
+      });
     case "awakened_mimicked":
-      return positive(target) && target !== actor && isRoleId(p.role)
-        ? text(locale, "console.awakened.mimic", {
-            actor,
-            day,
-            target,
-            role: roleName(p.role, locale),
-          })
-        : unknown();
+      return text(locale, "console.awakened.mimic", {
+        actor,
+        day: fact.day,
+        target: fact.targetId,
+        role: roleName(fact.role, locale),
+      });
     case "awakened_ready":
-      return positive(p.activationNight) &&
-        positive(p.activeFromNight) &&
-        p.activeFromNight === p.activationNight + 1 &&
-        isRoleId(p.role)
-        ? text(locale, "console.awakened.ready", {
-            actor,
-            activation: p.activationNight,
-            ready: p.activeFromNight,
-            role: roleName(p.role, locale),
-          })
-        : unknown();
+      return text(locale, "console.awakened.ready", {
+        actor,
+        activation: fact.activationNight,
+        ready: fact.activeFromNight,
+        role: roleName(fact.role, locale),
+      });
     case "awakened_mimic_skipped":
-      return text(locale, "console.awakened.mimic_skip", { actor, day });
+      return text(locale, "console.awakened.mimic_skip", { actor, day: fact.day });
     case "awakened_skill_skipped":
-      return text(locale, "console.awakened.skill_skip", { actor, day });
+      return text(locale, "console.awakened.skill_skip", { actor, day: fact.day });
     case "awakened_poison_used":
-      return positive(target)
-        ? text(locale, "console.awakened.poison", { actor, day, target })
-        : unknown();
+      return text(locale, "console.awakened.poison", {
+        actor,
+        day: fact.day,
+        target: fact.targetId,
+      });
     case "awakened_guard_chosen":
     case "awakened_attack_chosen":
-      return target === null || positive(target)
-        ? text(
-            locale,
-            type === "awakened_guard_chosen" ? "console.awakened.guard" : "console.awakened.attack",
-            { actor, day, target: target ?? text(locale, "common.none") },
-          )
-        : unknown();
+      return text(
+        locale,
+        fact.type === "awakened_guard_chosen"
+          ? "console.awakened.guard"
+          : "console.awakened.attack",
+        { actor, day: fact.day, target: fact.targetId ?? text(locale, "common.none") },
+      );
   }
   return unknown();
 }
@@ -401,87 +356,62 @@ export function mechanicalEventLabel(
 ): string | null {
   if (!(MECHANICAL_EVENT_TYPES as readonly string[]).includes(type)) return null;
   const unknown = () => text(locale, "replay.unknown");
-  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return unknown();
-  const prototype = Object.getPrototypeOf(payload);
-  if (prototype !== Object.prototype && prototype !== null) return unknown();
-  const descriptors = Object.getOwnPropertyDescriptors(payload);
-  if (
-    Object.values(descriptors).some((field) => !Object.hasOwn(field, "value") || !field.enumerable)
-  )
-    return unknown();
-  const p = Object.fromEntries(
-    Object.entries(descriptors).map(([name, field]) => [name, field.value]),
-  );
-  const positive = (value: unknown): value is number =>
-    typeof value === "number" && Number.isSafeInteger(value) && value > 0;
-  const actor = p.actorId,
-    day = p.day,
-    target = p.targetId;
-  if (!positive(actor) || (type !== "mechanical_shot" && !positive(day))) return unknown();
-  switch (type) {
+  const fact = readMechanicalEventFact(type, payload);
+  if (!fact) return unknown();
+  const actor = fact.actorId;
+  switch (fact.type) {
     case "mechanical_awakened":
-      return positive(p.firstKnifeNight)
-        ? text(locale, "console.mechanical.awakened", { actor, day, first: p.firstKnifeNight })
-        : unknown();
+      return text(locale, "console.mechanical.awakened", {
+        actor,
+        day: fact.day,
+        first: fact.firstKnifeNight,
+      });
     case "mechanical_mode_selected":
-      return p.mode === "kill" || p.mode === "skill"
-        ? text(locale, "console.mechanical.mode", {
-            actor,
-            day,
-            mode: text(
-              locale,
-              p.mode === "kill" ? "mechanical.mode.kill" : "mechanical.mode.skill",
-            ),
-          })
-        : unknown();
+      return text(locale, "console.mechanical.mode", {
+        actor,
+        day: fact.day,
+        mode: text(locale, fact.mode === "kill" ? "mechanical.mode.kill" : "mechanical.mode.skill"),
+      });
     case "mechanical_mimicked":
-      return positive(target) && isRoleId(p.role) && positive(p.readyOnNight)
-        ? text(locale, "console.mechanical.mimic", {
-            actor,
-            day,
-            target,
-            role: roleName(p.role, locale),
-            ready: p.readyOnNight,
-          })
-        : unknown();
+      return text(locale, "console.mechanical.mimic", {
+        actor,
+        day: fact.day,
+        target: fact.targetId,
+        role: roleName(fact.role, locale),
+        ready: fact.readyOnNight,
+      });
     case "mechanical_mimic_skipped":
-      return text(locale, "console.mechanical.mimic_skip", { actor, day });
+      return text(locale, "console.mechanical.mimic_skip", { actor, day: fact.day });
     case "mechanical_skill_skipped":
-      return text(locale, "console.mechanical.skill_skip", { actor, day });
+      return text(locale, "console.mechanical.skill_skip", { actor, day: fact.day });
     case "mechanical_poison_used":
-      return positive(target)
-        ? text(locale, "console.mechanical.poison", { actor, day, target })
-        : unknown();
+      return text(locale, "console.mechanical.poison", {
+        actor,
+        day: fact.day,
+        target: fact.targetId,
+      });
     case "mechanical_guard_chosen":
-      return (target === null || positive(target)) && typeof p.failed === "boolean"
-        ? text(locale, "console.mechanical.guard", {
-            actor,
-            day,
-            target: target ?? text(locale, "common.none"),
-            failed: text(locale, p.failed ? "common.yes" : "common.no"),
-          })
-        : unknown();
+      return text(locale, "console.mechanical.guard", {
+        actor,
+        day: fact.day,
+        target: fact.targetId ?? text(locale, "common.none"),
+        failed: text(locale, fact.failed ? "common.yes" : "common.no"),
+      });
     case "mechanical_attack_chosen":
-      return target === null || positive(target)
-        ? text(locale, "console.mechanical.attack", {
-            actor,
-            day,
-            target: target ?? text(locale, "common.none"),
-          })
-        : unknown();
+      return text(locale, "console.mechanical.attack", {
+        actor,
+        day: fact.day,
+        target: fact.targetId ?? text(locale, "common.none"),
+      });
     case "mechanical_poison_reflected":
-      return positive(p.protectedTargetId) && positive(p.casterId)
-        ? text(locale, "console.mechanical.reflection", {
-            actor,
-            day,
-            target: p.protectedTargetId,
-            caster: p.casterId,
-          })
-        : unknown();
+      return text(locale, "console.mechanical.reflection", {
+        actor,
+        day: fact.day,
+        target: fact.protectedTargetId,
+        caster: fact.casterId,
+      });
     case "mechanical_shot":
-      return positive(target)
-        ? text(locale, "console.mechanical.shot", { actor, target })
-        : unknown();
+      return text(locale, "console.mechanical.shot", { actor, target: fact.targetId });
     default:
       return unknown();
   }
@@ -496,37 +426,25 @@ export function merchantEventLabel(type: string, payload: unknown, locale: Local
   )
     return null;
   const unknown = () => text(locale, "replay.unknown");
-  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return unknown();
-  const prototype = Object.getPrototypeOf(payload),
-    descriptors = Object.getOwnPropertyDescriptors(payload);
-  if (
-    (prototype !== Object.prototype && prototype !== null) ||
-    Object.values(descriptors).some((field) => !Object.hasOwn(field, "value") || !field.enumerable)
-  )
-    return unknown();
-  const p = Object.fromEntries(
-    Object.entries(descriptors).map(([key, field]) => [key, field.value]),
-  );
-  const positive = (value: unknown): value is number =>
-    typeof value === "number" && Number.isSafeInteger(value) && value > 0;
-  if (!positive(p.actorId) || !positive(p.day)) return unknown();
-  const actor = p.actorId,
-    day = p.day;
-  if (type === "merchant_trade_skipped")
+  const fact = readMerchantRenderableFact(type, payload);
+  if (!fact) return unknown();
+  const actor = fact.actorId,
+    day = fact.day;
+  if (fact.type === "merchant_trade_skipped")
     return text(locale, "console.merchant.skip", { actor, day });
-  if (!positive(p.targetId) || !["check", "poison", "guard"].includes(p.skill)) return unknown();
   const skill = text(
       locale,
-      p.skill === "check"
+      fact.skill === "check"
         ? "merchant.skill.check"
-        : p.skill === "poison"
+        : fact.skill === "poison"
           ? "merchant.skill.poison"
           : "merchant.skill.guard",
     ),
-    target = p.targetId;
-  if (type === "merchant_trade_committed")
+    target = fact.targetId;
+  if (fact.type === "merchant_trade_committed")
     return text(locale, "console.merchant.trade", { actor, day, target, skill });
-  return p.outcome === "granted" || p.outcome === "backlash"
+  const outcome = readMerchantOutcome(fact.outcome);
+  return outcome !== null
     ? text(locale, "console.merchant.outcome", {
         actor,
         day,
@@ -534,7 +452,7 @@ export function merchantEventLabel(type: string, payload: unknown, locale: Local
         skill,
         outcome: text(
           locale,
-          p.outcome === "granted" ? "merchant.outcome.granted" : "merchant.outcome.backlash",
+          outcome === "granted" ? "merchant.outcome.granted" : "merchant.outcome.backlash",
         ),
       })
     : unknown();
@@ -548,44 +466,12 @@ export function deathAbilityEventLabel(
 ): string | null {
   if (type !== "death_ability_changed") return null;
   const unknown = () => text(locale, "replay.unknown");
-  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return unknown();
-  const prototype = Object.getPrototypeOf(payload),
-    descriptors = Object.getOwnPropertyDescriptors(payload);
-  if (
-    (prototype !== Object.prototype && prototype !== null) ||
-    Object.values(descriptors).some((field) => !Object.hasOwn(field, "value") || !field.enumerable)
-  )
-    return unknown();
-  const p = Object.fromEntries(
-    Object.entries(descriptors).map(([key, field]) => [key, field.value]),
-  );
-  const positive = (value: unknown): value is number =>
-    typeof value === "number" && Number.isSafeInteger(value) && value > 0;
-  if (
-    !positive(p.actorId) ||
-    typeof p.abilityId !== "string" ||
-    !/^[a-z][a-z0-9:_-]{0,127}$/.test(p.abilityId) ||
-    p.abilityId.startsWith("native:") ||
-    !positive(p.grantedNight) ||
-    !(p.armedOnNight === null || (positive(p.armedOnNight) && p.armedOnNight >= p.grantedNight)) ||
-    ![0, 1].includes(p.remaining) ||
-    typeof p.disabled !== "boolean" ||
-    typeof p.deathExpired !== "boolean" ||
-    !["granted", "armed", "disabled", "enabled", "transferred_out"].includes(p.operation)
-  )
-    return unknown();
-  if (
-    (p.operation === "armed" &&
-      (p.armedOnNight === null || p.disabled || p.deathExpired || p.remaining !== 1)) ||
-    (p.operation === "disabled" && !p.disabled) ||
-    (p.operation === "enabled" && (p.disabled || p.deathExpired)) ||
-    (p.deathExpired && (!p.disabled || p.remaining !== 0))
-  )
-    return unknown();
+  const fact = readDeathAbilityEventFact(type, payload);
+  if (!fact) return unknown();
   return text(locale, "ability.death_gun.change", {
-    actor: p.actorId,
-    id: p.abilityId,
-    operation: text(locale, `ability.operation.${p.operation}` as MessageKey),
+    actor: fact.actorId,
+    id: fact.abilityId,
+    operation: text(locale, `ability.operation.${fact.operation}` as MessageKey),
   });
 }
 
@@ -603,42 +489,25 @@ export function blackMarketEventLabel(
   )
     return null;
   const unknown = () => text(locale, "replay.unknown");
-  if (!payload || typeof payload !== "object" || Array.isArray(payload)) return unknown();
-  const prototype = Object.getPrototypeOf(payload),
-    descriptors = Object.getOwnPropertyDescriptors(payload);
-  if (
-    (prototype !== Object.prototype && prototype !== null) ||
-    Object.values(descriptors).some((field) => !Object.hasOwn(field, "value") || !field.enumerable)
-  )
-    return unknown();
-  const p = Object.fromEntries(
-    Object.entries(descriptors).map(([key, field]) => [key, field.value]),
-  );
-  const positive = (v: unknown): v is number =>
-    typeof v === "number" && Number.isSafeInteger(v) && v > 0;
-  if (!positive(p.actorId) || !positive(p.day)) return unknown();
-  if (type === "black_market_trade_skipped")
-    return text(locale, "console.black_market.skip", { actor: p.actorId, day: p.day });
-  if (
-    !positive(p.targetId) ||
-    p.actorId === p.targetId ||
-    !["check", "poison", "gun"].includes(p.skill)
-  )
-    return unknown();
+  const fact = readBlackMarketRenderableFact(type, payload);
+  if (!fact) return unknown();
+  if (fact.type === "black_market_trade_skipped")
+    return text(locale, "console.black_market.skip", { actor: fact.actorId, day: fact.day });
   const args = {
-    actor: p.actorId,
-    day: p.day,
-    target: p.targetId,
-    skill: text(locale, `black_market.skill.${p.skill}` as MessageKey),
+    actor: fact.actorId,
+    day: fact.day,
+    target: fact.targetId,
+    skill: text(locale, `black_market.skill.${fact.skill}` as MessageKey),
   };
-  if (type === "black_market_trade_committed")
+  if (fact.type === "black_market_trade_committed")
     return text(locale, "console.black_market.choice", args);
-  return p.outcome === "granted" || p.outcome === "backlash"
+  const outcome = readBlackMarketOutcome(fact.outcome);
+  return outcome !== null
     ? text(locale, "console.black_market.result", {
         ...args,
         outcome: text(
           locale,
-          p.outcome === "granted" ? "merchant.outcome.granted" : "merchant.outcome.backlash",
+          outcome === "granted" ? "merchant.outcome.granted" : "merchant.outcome.backlash",
         ),
       })
     : unknown();

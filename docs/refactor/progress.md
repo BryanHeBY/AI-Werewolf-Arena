@@ -49,3 +49,5 @@
 - C09有限支持完整迁移：17生产谓词/独立17归档谓词，各自owner无回导；原dispatch拒绝顺序与Node入口保真。三方向审查，40 consumer/test及42 formatter正文相同，原focused138/0与必要类型通过；text17算法及出口删除，Scholar29旧ID迁后端默认发现。
 
 - C07完整事件/请求：事实依赖闭合后迁11 event/3request声明与真实factory/recorder；独立逐字段/正文相同，4 public/type项与FE原3覆盖通过，contract及backend源码必要类型0。运行Provider/selection/WeakMap仍领域；C07数据边界完成，桥待C44。
+
+- C08内嵌六组读取：浅descriptor与late outcome顺序保真，作者18+54/0、4965旧函数差分0；Root38独立输出/反射项0、第三方逐guard审查0。原36其它formatter与2ID数组不改；C08数据职责边界完成，兼容桥及C34全观察统一仍待后续。

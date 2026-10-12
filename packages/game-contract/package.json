@@ -32,7 +32,13 @@
     "./facts/lonely-girl": "./src/facts/lonely-girl.ts",
     "./facts/wall-notes": "./src/facts/wall-notes.ts",
     "./events": "./src/events.ts",
-    "./requests": "./src/requests.ts"
+    "./requests": "./src/requests.ts",
+    "./facts/hybrid": "./src/facts/hybrid.ts",
+    "./facts/awakened": "./src/facts/awakened.ts",
+    "./facts/mechanical": "./src/facts/mechanical.ts",
+    "./facts/merchant": "./src/facts/merchant.ts",
+    "./facts/death-ability": "./src/facts/death-ability.ts",
+    "./facts/black-market": "./src/facts/black-market.ts"
   },
   "scripts": {
     "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
@@ -127,6 +133,24 @@
       ],
       "requests": [
         "src/requests.ts"
+      ],
+      "facts/hybrid": [
+        "src/facts/hybrid.ts"
+      ],
+      "facts/awakened": [
+        "src/facts/awakened.ts"
+      ],
+      "facts/mechanical": [
+        "src/facts/mechanical.ts"
+      ],
+      "facts/merchant": [
+        "src/facts/merchant.ts"
+      ],
+      "facts/death-ability": [
+        "src/facts/death-ability.ts"
+      ],
+      "facts/black-market": [
+        "src/facts/black-market.ts"
       ]
     }
   }
