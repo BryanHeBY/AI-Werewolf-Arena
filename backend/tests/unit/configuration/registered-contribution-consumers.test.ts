@@ -1,15 +1,12 @@
 /**
- * Configuration contribution integration verify registered board fields round-trip and reach their runtime/prompt consumers.
- * Input: Public example boards, explicit rule/window variants and temporary check inputs.
- * Output and independent oracle: Literal registered/default field values, bilingual prompt markers and rejection of ownerless internal fields.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Unit tests verify registered configuration contributions round-trip into bounded role, gateway, Knight-window and bilingual prompt consumers.
+ * Input: Original Witch-rule/window matrix, fixed literal role rows and controlled null-action requests.
+ * Output and oracle: Handwritten self-heal/window/prompt and unknown-field assertions remain unchanged; no full phase, record file, transport or replacement golden is executed.
  */
 import { expect, spyOn, test } from "bun:test";
-import { readdir, mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
 import { text, term } from "@ai-werewolf-arena/game-text";
-import { bootstrapGame } from "../../src/app/bootstrap";
+import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
   COMPONENT,
   KnightDuelWindow,
@@ -20,26 +17,23 @@ import {
   WitchSelfHealRule,
   type BoardConfig,
   type GameEvent,
-} from "../../src/core";
-import type { RoleComponent } from "../../src/core/domain/components/role";
-import type { StatusMarksComponent } from "../../src/core/domain/components/status_marks";
-import { boardConfigSchema } from "../../src/core/domain/board_schema";
-import { GameActionRequestFactory } from "../../src/game/engine/action_request_factory";
-import { KnightDuelWindow as DuelExecutor } from "../../src/game/engine/knight_duel_window";
-import { ToolGateway } from "../../src/game/gateway/tool_gateway";
-import { getDefaultConfigRenderRegistry } from "../../src/game/mechanisms/prompt/config_render_registry";
-import { getDefaultRoleCatalog } from "../../src/game/mechanisms/roles/catalog";
-import { getWitchState } from "../../src/game/mechanisms/roles/private_state";
+} from "../../../src/core";
+import type { RoleComponent } from "../../../src/core/domain/components/role";
+import type { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
+import { boardConfigSchema } from "../../../src/core/domain/board_schema";
+import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
+import { KnightDuelWindow as DuelExecutor } from "../../../src/game/engine/knight_duel_window";
+import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms/prompt/config_render_registry";
+import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { getWitchState } from "../../../src/game/mechanisms/roles/private_state";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../src/runtime/config/board_definition";
-import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
-import { convertLegacyBoard } from "../../src/runtime/config/migrate_board";
-import { checkConfig } from "../../src/runtime/cli/check_config";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+} from "../../../src/runtime/config/board_definition";
 
 const roleIds = [Role.Wolf, Role.Witch, Role.Knight, Role.Villager, Role.Villager, Role.Villager];
+
 const base: BoardConfig = {
   ...sixPlayerBase(),
   roleSetups: [...new Set(roleIds)].map((role) => ({
@@ -47,6 +41,7 @@ const base: BoardConfig = {
     count: roleIds.filter((id) => id === role).length,
   })),
 };
+
 function sixPlayerBase(): BoardConfig {
   return {
     boardSize: 6,
@@ -146,23 +141,6 @@ for (const rule of Object.values(WitchSelfHealRule))
     });
   }
 
-test("all public example boards round-trip through every registered contribution, including empty schemas", async () => {
-  const root = path.resolve(import.meta.dir, "../../../configs.example");
-  for (const file of await readdir(path.join(root, "boards"))) {
-    if (!file.endsWith(".json")) continue;
-    const resolved = await loadBoardDefinition(root, file.slice(0, -5));
-    const serialized = boardDefinitionFromConfig(resolved.definition.id, resolved.config);
-    expect(serialized).toEqual(resolved.definition);
-    expect(parseBoardDefinition(serialized).config).toEqual(resolved.config);
-    for (const [id, value] of Object.entries(serialized.roles))
-      expect(
-        getDefaultRoleCatalog()
-          .require(id as Role)
-          .configuration!.schema.parse(value),
-      ).toEqual(value);
-  }
-});
-
 test("reverse writing calls the contributor and rejects internal fields which have no consumer", () => {
   const contribution = getDefaultRoleCatalog().require(Role.Witch).configuration!;
   const serialize = spyOn(contribution, "serialize");
@@ -176,52 +154,4 @@ test("reverse writing calls the contributor and rejects internal fields which ha
   expect(() => boardDefinitionFromConfig("closure_test", extra)).toThrow("config.witch.selfHela");
   const unknown = { ...base, unusedRule: true };
   expect(() => boardDefinitionFromConfig("closure_test", unknown)).toThrow("config.unusedRule");
-});
-
-test("normal loading never probes legacy fallbacks; explicit migration remains active", async () => {
-  const root = await createTestTempDirectory("awa-closure-legacy-");
-  const legacy = { boardSize: 6 };
-  await mkdir(path.join(root, "runtime"));
-  await mkdir(path.join(root, "games"));
-  await writeFile(
-    path.join(root, "runtime/providers.json"),
-    JSON.stringify({
-      default: "fake",
-      items: { fake: { type: "openai", apiKey: "synthetic-unused" } },
-    }),
-  );
-  await writeFile(
-    path.join(root, "runtime/agents.json"),
-    JSON.stringify({
-      default: "fake",
-      items: { fake: { kind: "llm", provider: "fake", model: "unused" } },
-    }),
-  );
-  await writeFile(
-    path.join(root, "games/six_player_mvp.json"),
-    JSON.stringify({ board: "six_player_mvp", agent: "fake" }),
-  );
-  await writeFile(path.join(root, "game-config.json"), JSON.stringify(legacy));
-  await writeFile(path.join(root, "six_player_mvp.json"), JSON.stringify(legacy));
-  await expect(loadBoardDefinition(root, "six_player_mvp")).rejects.toThrow(
-    "board_config_file_missing",
-  );
-  await expect(checkConfig(root, "six_player_mvp")).rejects.toThrow("board_config_file_missing");
-  await mkdir(path.join(root, "boards"));
-  await writeFile(path.join(root, "boards/six_player_mvp.json"), JSON.stringify(legacy));
-  await expect(loadBoardDefinition(root, "six_player_mvp")).rejects.toThrow(
-    "board_config_migration_required",
-  );
-  await expect(checkConfig(root, "six_player_mvp")).rejects.toThrow(
-    "board_config_migration_required",
-  );
-  const migrated = convertLegacyBoard(legacy, "six_player_mvp");
-  await writeFile(
-    path.join(root, "boards/six_player_mvp.json"),
-    JSON.stringify(migrated.definition),
-  );
-  expect((await loadBoardDefinition(root, "six_player_mvp")).config).toEqual(
-    parseBoardDefinition(migrated.definition).config,
-  );
-  await expect(checkConfig(root, "six_player_mvp")).resolves.toBeDefined();
 });

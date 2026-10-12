@@ -68363,13 +68363,642 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 577 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/board_config_closure.test.ts",
+      "to": "backend/tests/unit/configuration/registered-contribution-consumers.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "88f118db46faf35e73ed9e7b4697ea7d2f6c5b77a5918f35a42c5bcaa5b4ef00",
+      "candidateSha256": "1c94ca1a0e7e84f65b353c4b87d1a8e096d5749ea1404da458344153dccf1359",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1218,
+          "end": 1259,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1100,
+          "end": 1145,
+          "original": "../../src/game/mechanisms/roles/private_state",
+          "value": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1027,
+          "end": 1066,
+          "original": "../../src/game/mechanisms/roles/catalog",
+          "value": "../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 930,
+          "end": 985,
+          "original": "../../src/game/mechanisms/prompt/config_render_registry",
+          "value": "../../../src/game/mechanisms/prompt/config_render_registry",
+          "originalResolved": "backend/src/game/mechanisms/prompt/config_render_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/prompt/config_render_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 844,
+          "end": 879,
+          "original": "../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 772,
+          "end": 812,
+          "original": "../../src/game/engine/knight_duel_window",
+          "value": "../../../src/game/engine/knight_duel_window",
+          "originalResolved": "backend/src/game/engine/knight_duel_window.ts",
+          "expectedResolved": "backend/src/game/engine/knight_duel_window.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 675,
+          "end": 719,
+          "original": "../../src/game/engine/action_request_factory",
+          "value": "../../../src/game/engine/action_request_factory",
+          "originalResolved": "backend/src/game/engine/action_request_factory.ts",
+          "expectedResolved": "backend/src/game/engine/action_request_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 596,
+          "end": 630,
+          "original": "../../src/core/domain/board_schema",
+          "value": "../../../src/core/domain/board_schema",
+          "originalResolved": "backend/src/core/domain/board_schema.ts",
+          "expectedResolved": "backend/src/core/domain/board_schema.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 513,
+          "end": 558,
+          "original": "../../src/core/domain/components/status_marks",
+          "value": "../../../src/core/domain/components/status_marks",
+          "originalResolved": "backend/src/core/domain/components/status_marks.ts",
+          "expectedResolved": "backend/src/core/domain/components/status_marks.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 430,
+          "end": 467,
+          "original": "../../src/core/domain/components/role",
+          "value": "../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 377,
+          "end": 391,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 197,
+          "end": 220,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "eefd204064494799e25c791fa5c7688a4dd479ae39b211b9921af871a25265b3",
+          "title": "disabled/: registered parameters survive public defaults, runtime consumption and both prompt locales",
+          "occurrence": 1
+        },
+        {
+          "id": "e2506243865be1f6b8ba473b81100fb0776394c51078068354f5da0c11b2d256",
+          "title": "disabled/before_speeches: registered parameters survive public defaults, runtime consumption and both prompt locales",
+          "occurrence": 1
+        },
+        {
+          "id": "d0d069b522c618bca207f5699619bee893f02218ab96712074f24765dd550928",
+          "title": "disabled/between_speeches: registered parameters survive public defaults, runtime consumption and both prompt locales",
+          "occurrence": 1
+        },
+        {
+          "id": "df336659397441cb170f7d5591c2643d6cb09d632c19df3efc1d79983e3501e7",
+          "title": "disabled/after_speeches: registered parameters survive public defaults, runtime consumption and both prompt locales",
+          "occurrence": 1
+        },
+        {
+          "id": "def51d117f6a0b1b48697c9d2531a4f7127f3419e33b6e964346b1165a2828c5",
+          "title": "disabled/before_speeches+between_speeches+after_speeches: registered parameters survive public defaults, runtime consumption and both prompt locales",
+          "occurrence": 1
+        },
+        {
+          "id": "851bfd853fbfc149ef2c24ea5e1a2ec3b8fefb9de01d54fe27c5731b174b77e1",
+          "title": "first_night_only/: registered parameters survive public defaults, runtime consumption and both prompt locales",
+          "occurrence": 1
+        },
+        {
+          "id": "c75b07dcd4dcfd230f7b7ea1851e5f1f2085738d69cd361b56100ba7fa65d685",
+          "title": "first_night_only/before_speeches: registered parameters survive public defaults, runtime consumption and both prompt locales",
+          "occurrence": 1
+        },
+        {
+          "id": "cc5c31bbfc80d34568689a43d539f98584317c809873cc72f6247e93006d9a6c",
+          "title": "first_night_only/between_speeches: registered parameters survive public defaults, runtime consumption and both prompt locales",
+          "occurrence": 1
+        },
+        {
+          "id": "99d46755f56e6fd4488d8a092040966efdb52b1879423864f4beafb84e401096",
+          "title": "first_night_only/after_speeches: registered parameters survive public defaults, runtime consumption and both prompt locales",
+          "occurrence": 1
+        },
+        {
+          "id": "ad2f375dd3d0b50f56d6abf6580364e440185761e326da6bd49d2eda657e3b62",
+          "title": "first_night_only/before_speeches+between_speeches+after_speeches: registered parameters survive public defaults, runtime consumption and both prompt locales",
+          "occurrence": 1
+        },
+        {
+          "id": "3c9cd44688a98d8ebee15e80dca8b2b850197f95d681d95107085a76a8b3ac62",
+          "title": "always/: registered parameters survive public defaults, runtime consumption and both prompt locales",
+          "occurrence": 1
+        },
+        {
+          "id": "c6ec812250bda4c2a6ff8e9d995af6aad5d1cffc28b15c6099dff0adaa59d372",
+          "title": "always/before_speeches: registered parameters survive public defaults, runtime consumption and both prompt locales",
+          "occurrence": 1
+        },
+        {
+          "id": "4a495f06ec1873471b715166d586f7aebb6919470286f02ca943b79a15af5bc6",
+          "title": "always/between_speeches: registered parameters survive public defaults, runtime consumption and both prompt locales",
+          "occurrence": 1
+        },
+        {
+          "id": "0aa0e19d1a29ab30c4c744a89461e89f505bbdd58c1408fc1cb14953d7e0acc5",
+          "title": "always/after_speeches: registered parameters survive public defaults, runtime consumption and both prompt locales",
+          "occurrence": 1
+        },
+        {
+          "id": "e2517a4274230f74820927be0f38c72ae78a5f47fd6eadfef7475adabc5b4539",
+          "title": "always/before_speeches+between_speeches+after_speeches: registered parameters survive public defaults, runtime consumption and both prompt locales",
+          "occurrence": 1
+        },
+        {
+          "id": "7087ff61521eef78e772d5f13cfa14e2297e40f43d00e2cbc3e6e1db53af8422",
+          "title": "reverse writing calls the contributor and rejects internal fields which have no consumer",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readdir, mkdir, writeFile } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readdir",
+              "imported": "readdir",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "mkdir",
+              "imported": "mkdir",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "writeFile",
+              "imported": "writeFile",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:path",
+          "originalImport": "import path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/load_board_definition",
+          "originalImport": "import { loadBoardDefinition } from \"../../src/runtime/config/load_board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "loadBoardDefinition",
+              "imported": "loadBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/migrate_board",
+          "originalImport": "import { convertLegacyBoard } from \"../../src/runtime/config/migrate_board\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "convertLegacyBoard",
+              "imported": "convertLegacyBoard",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/cli/check_config",
+          "originalImport": "import { checkConfig } from \"../../src/runtime/cli/check_config\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "checkConfig",
+              "imported": "checkConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 577 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/board_config_closure.test.ts",
+      "to": "backend/tests/integration/filesystem/configuration/registered-contribution-files.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "88f118db46faf35e73ed9e7b4697ea7d2f6c5b77a5918f35a42c5bcaa5b4ef00",
+      "candidateSha256": "31fcd43c38b1d877d5ee3daf6b26d379bc3ba81f0da7866ab3699cd4e657feef",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "public-directory-anchor",
+          "start": 844,
+          "end": 868,
+          "original": "../../../configs.example",
+          "value": "../../../../../configs.example",
+          "originalResolved": "configs.example"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 637,
+          "end": 672,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 559,
+          "end": 593,
+          "original": "../../src/runtime/cli/check_config",
+          "value": "../../../../src/runtime/cli/check_config",
+          "originalResolved": "backend/src/runtime/cli/check_config.ts",
+          "expectedResolved": "backend/src/runtime/cli/check_config.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 489,
+          "end": 527,
+          "original": "../../src/runtime/config/migrate_board",
+          "value": "../../../../src/runtime/config/migrate_board",
+          "originalResolved": "backend/src/runtime/config/migrate_board.ts",
+          "expectedResolved": "backend/src/runtime/config/migrate_board.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 404,
+          "end": 450,
+          "original": "../../src/runtime/config/load_board_definition",
+          "value": "../../../../src/runtime/config/load_board_definition",
+          "originalResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/load_board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 323,
+          "end": 364,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 211,
+          "end": 250,
+          "original": "../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 155,
+          "end": 169,
+          "original": "../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "configs.example",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../../configs.example\")",
+          "currentExpression": "path.resolve(import.meta.dir, \"../../../../../configs.example\")",
+          "currentHead": "../../../../../configs.example",
+          "kind": "public-directory-anchor"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "ad34eba3298e1632a5e7e93047fcbc4d99a170f352bfeb2a112aefba9cc86e01",
+          "title": "all public example boards round-trip through every registered contribution, including empty schemas",
+          "occurrence": 1
+        },
+        {
+          "id": "fc3c05227709989fde843429b9996b6d828cd46e011052b9c3cf34845b9107e5",
+          "title": "normal loading never probes legacy fallbacks; explicit migration remains active",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "bun:test",
+          "originalImport": "import { expect, spyOn, test } from \"bun:test\";",
+          "currentImportBeforeRebase": "import { expect, test } from \"bun:test\";",
+          "droppedBindings": [
+            {
+              "name": "spyOn",
+              "imported": "spyOn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-catalog",
+          "originalImport": "import { RULESET } from \"@ai-werewolf-arena/game-catalog\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "RULESET",
+              "imported": "RULESET",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "originalImport": "import { text, term } from \"@ai-werewolf-arena/game-text\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "text",
+              "imported": "text",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "term",
+              "imported": "term",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/app/bootstrap",
+          "originalImport": "import { bootstrapGame } from \"../../src/app/bootstrap\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "bootstrapGame",
+              "imported": "bootstrapGame",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  KnightDuelWindow,\n  Phase,\n  PotionType,\n  Role,\n  StatusMark,\n  WitchSelfHealRule,\n  type BoardConfig,\n  type GameEvent,\n} from \"../../src/core\";",
+          "currentImportBeforeRebase": "import { Role } from \"../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "KnightDuelWindow",
+              "imported": "KnightDuelWindow",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "StatusMark",
+              "imported": "StatusMark",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "WitchSelfHealRule",
+              "imported": "WitchSelfHealRule",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "BoardConfig",
+              "imported": "BoardConfig",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core/domain/components/role",
+          "originalImport": "import type { RoleComponent } from \"../../src/core/domain/components/role\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core/domain/components/status_marks",
+          "originalImport": "import type { StatusMarksComponent } from \"../../src/core/domain/components/status_marks\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "StatusMarksComponent",
+              "imported": "StatusMarksComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core/domain/board_schema",
+          "originalImport": "import { boardConfigSchema } from \"../../src/core/domain/board_schema\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "boardConfigSchema",
+              "imported": "boardConfigSchema",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/game/engine/action_request_factory",
+          "originalImport": "import { GameActionRequestFactory } from \"../../src/game/engine/action_request_factory\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameActionRequestFactory",
+              "imported": "GameActionRequestFactory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/game/engine/knight_duel_window",
+          "originalImport": "import { KnightDuelWindow as DuelExecutor } from \"../../src/game/engine/knight_duel_window\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DuelExecutor",
+              "imported": "KnightDuelWindow",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/game/mechanisms/prompt/config_render_registry",
+          "originalImport": "import { getDefaultConfigRenderRegistry } from \"../../src/game/mechanisms/prompt/config_render_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import { getWitchState } from \"../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getWitchState",
+              "imported": "getWitchState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 577 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 519,
-    "targetFiles": 540,
-    "mappingEntries": 540,
-    "baselineCases": 6530,
+    "sourceFiles": 520,
+    "targetFiles": 542,
+    "mappingEntries": 542,
+    "baselineCases": 6548,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
