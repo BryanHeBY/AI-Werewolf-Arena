@@ -700,3 +700,5 @@ Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster
 三份原资源 owner、预约真实开夜、Fox 同步付款及固定期限／单向撤销的 opaque 请求凭据完成；回调快照漏 alias、末回调撤旧授权及开夜生命变化反例修复。最终维护60／151断言、R独立5／24、A独立15／47及双端类型／backend lint通过，见[资源与请求底座](reviews/p9e-animal-authority-foundation.md)。无实际请求 envelope、角色注册或对局验收声明，52/64不变；接续Cat真实单位／死亡过滤、Puffer原票、许可／知情和全部交付。
 
 Cat单位／致死过滤底座完成，opaque真实单位、默认skip不计实际放逐／另一政策combined到期、首次不改Alive和重复挡死、prepare后新时钟重结算、normalclose待原Cat真首死均有约束。维护77／225、R独立8／37、A独立13／52及全类型／backend lint通过，五类原反例闭环见[单位基础](reviews/p9e-animal-cat-unit-foundation.md)。仍无PM/profile/event/真实交付声明，52/64不变；继续Puffer原票／被动与真实运行接入。
+
+河豚原票／主动与刀死owner底座完成：完整原选民、首末轮／PK、自票／1.5一体、mandatorybool及全目标付款；normalclose待目标真首死／猫实际延期，刀死需夜初原活人该夜正常handoff后首死。原票首次回调前快照、非法票权不漏选民、旧死亡不重领被动反例关闭，维护98／305、A独立16／38、R独立2／7及类型／lint通过，见[河豚基础](reviews/p9e-animal-puffer-authority-foundation.md)。trusted来源入口不冒称gateway或PM已运行；52/64不变，实际许可／知情与流程交付继续。

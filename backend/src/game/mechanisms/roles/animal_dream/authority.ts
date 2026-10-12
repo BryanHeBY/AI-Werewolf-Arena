@@ -3,6 +3,7 @@ import type { World } from "../../../../core/domain/world";
 import { Camp } from "../../../../core/domain/identity";
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
 import { aliveLifeVersion } from "../../../../core/domain/components/alive";
+import { COMPONENT } from "../../../../core/domain/components/names";
 import { bindCharm } from "../wolf_beauty/relation";
 import {
   installAnimalRoster,
@@ -22,6 +23,8 @@ import {
   payFoxCubChoice,
   deferWhiteCat,
   expireWhiteCat,
+  payPufferfishChoice,
+  notePufferfishKnifeDeath,
   type AnimalDeathUnit,
   type FoxCubState,
   type PufferfishState,
@@ -49,6 +52,8 @@ interface AnimalNight {
   readonly current: () => boolean;
   status: "starting" | "open" | "closing" | "normal" | "aborted";
   readonly requiresFox: boolean;
+  readonly pufferWasAlive: boolean;
+  readonly pufferVersion: number;
   readonly fox: FoxLease;
 }
 interface FoxEffect {
@@ -68,6 +73,21 @@ interface Owner {
   completedUnits: number;
   lastUnitDay: number;
   unit: OwnedUnit | null;
+  beautyLinkBlockedDay: number | null;
+}
+interface AcceptedBallot {
+  readonly voter: AnimalOriginalPlayer;
+  readonly target: AnimalOriginalPlayer | null;
+  readonly abstain: boolean;
+  readonly weight: number;
+  readonly voting: object;
+}
+interface PufferLease {
+  readonly targets: readonly AnimalOriginalPlayer[];
+  readonly requests: Set<object>;
+  paid: boolean;
+  closed: boolean;
+  activated: boolean;
 }
 interface OwnedUnit {
   readonly token: object;
@@ -76,6 +96,9 @@ interface OwnedUnit {
   status: "starting" | "open" | "closing" | "closed" | "aborted";
   expiryPrepared: boolean;
   expiryCatId: number | null;
+  readonly rounds: Map<1 | 2, readonly AcceptedBallot[]>;
+  finalRound: 1 | 2 | null;
+  puffer: PufferLease | null;
 }
 const owners = new WeakMap<World, Owner>();
 interface FoxRequest {
@@ -85,6 +108,15 @@ interface FoxRequest {
   revoked: boolean;
 }
 const foxRequests = new WeakMap<object, FoxRequest>();
+const pufferRequests = new WeakMap<
+  object,
+  {
+    world: World;
+    unit: OwnedUnit;
+    deadlineAtMs: number | null;
+    revoked: boolean;
+  }
+>();
 const now = Date.now.bind(Date);
 function descriptor(value: unknown, key: string): PropertyDescriptor | undefined {
   if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
@@ -129,6 +161,7 @@ function stop(owner: Owner): void {
     owner.night.fox.closed = true;
   }
   if (owner.unit && owner.unit.status !== "closed") owner.unit.status = "aborted";
+  if (owner.unit?.puffer) owner.unit.puffer.closed = true;
 }
 function rejectDeathReentry(owner: Owner): void {
   if (!owner.checkingDeath) return;
@@ -183,6 +216,7 @@ export function installAnimalAuthority(world: World, config: unknown): void {
     completedUnits: 0,
     lastUnitDay: 0,
     unit: null,
+    beautyLinkBlockedDay: null,
   });
 }
 /** Reservation precedes the phase callback, so reentry or a failed callback never reopens this night. */
@@ -213,6 +247,8 @@ export function beginAnimalNight(world: World, day: number, isCurrent: () => boo
     current: isCurrent,
     status: "starting",
     requiresFox: day >= 2 && state.usedNight === null && owner.fox.actor.scope.life.alive,
+    pufferWasAlive: owner.puffer.actor.scope.life.alive,
+    pufferVersion: aliveLifeVersion(owner.puffer.actor.scope.life)!,
     fox: {
       opened: false,
       paid: false,
@@ -233,6 +269,7 @@ export function beginAnimalNight(world: World, day: number, isCurrent: () => boo
     )
       throw Error("animal_night_revoked");
     owner.effect = null;
+    owner.beautyLinkBlockedDay = null;
     night.status = "open";
   } catch (error) {
     stop(owner);
@@ -458,6 +495,9 @@ export function beginAnimalExileUnit(
       status: "starting",
       expiryPrepared: false,
       expiryCatId: null,
+      rounds: new Map(),
+      finalRound: null,
+      puffer: null,
     };
   const lives = world.entityIds().map((id) => {
     const player = animalOriginalPlayer(world, id, false)!;
@@ -569,6 +609,11 @@ export function filterAnimalLethalWave(
 /** Prepare the clock before this unit's final wave. No historical cause grants death or last words. */
 export function prepareAnimalCatExpiry(world: World, token: object): number | null {
   const { owner, unit } = ownedUnit(world, token);
+  if (
+    unit.value.kind === "exile" &&
+    (unit.finalRound === null || (unit.puffer && !unit.puffer.paid))
+  )
+    throw Error("animal_exile_unit_not_complete");
   if (unit.expiryPrepared) throw Error("animal_cat_expiry_already_prepared");
   const before = readWhiteCatState(JSON.parse(owner.cat.json)),
     policy = animalRosterPolicies(world)!.skippedVotePolicy,
@@ -587,6 +632,21 @@ export function prepareAnimalCatExpiry(world: World, token: object): number | nu
 export function closeAnimalExileUnit(world: World, token: object): void {
   const { owner, unit } = ownedUnit(world, token);
   if (!unit.expiryPrepared) throw Error("animal_exile_unit_not_complete");
+  if (unit.value.kind === "exile" && unit.finalRound === null)
+    throw Error("animal_exile_unit_not_complete");
+  if (unit.puffer && !unit.puffer.paid) throw Error("animal_exile_unit_not_complete");
+  if (unit.puffer?.activated) {
+    const catState = readWhiteCatState(JSON.parse(owner.cat.json));
+    for (const target of unit.puffer.targets) {
+      const original = animalOriginalPlayer(world, target.scope.id, false);
+      if (
+        !original ||
+        (original.scope.life.alive &&
+          !(original === owner.cat.actor && catState.form.kind === "deferred"))
+      )
+        throw Error("animal_exile_unit_not_complete");
+    }
+  }
   if (unit.expiryCatId !== null) {
     const cat = animalOriginalPlayer(world, unit.expiryCatId, false);
     if (!cat || cat.scope.life.alive) throw Error("animal_exile_unit_not_complete");
@@ -597,6 +657,294 @@ export function closeAnimalExileUnit(world: World, token: object): void {
     owner.completedUnits = unit.value.number;
   owner.lastUnitDay = unit.value.day;
   unit.status = "closed";
+  if (unit.puffer) unit.puffer.closed = true;
+}
+function pkCandidates(unit: OwnedUnit): number[] {
+  const tally = new Map<number, number>();
+  for (const vote of unit.rounds.get(1) ?? []) {
+    if (!vote.abstain && vote.target)
+      tally.set(vote.target.scope.id, (tally.get(vote.target.scope.id) ?? 0) + vote.weight);
+  }
+  const max = Math.max(0, ...tally.values()),
+    tied = [...tally]
+      .filter(([, weight]) => weight === max)
+      .map(([id]) => id)
+      .sort((a, b) => a - b);
+  return tied.length > 1 ? tied : [];
+}
+function votingState(
+  world: World,
+  id: number,
+): { value: object; canVote: boolean; weight: number } | null {
+  const value = world.getComponent<object>(id, COMPONENT.VotingRight),
+    canVote = descriptor(value, "canVote")?.value,
+    weight = descriptor(value, "weight")?.value;
+  return value && typeof canVote === "boolean" && (weight === 1 || weight === 1.5)
+    ? { value, canVote, weight }
+    : null;
+}
+function eligibleAnimalVoters(world: World, candidates: readonly number[]): number[] | null {
+  const ids: number[] = [];
+  for (const id of world.entityIds()) {
+    if (!animalOriginalPlayer(world, id)) continue;
+    const voting = votingState(world, id);
+    if (!voting) return null;
+    if (voting.canVote && !candidates.includes(id)) ids.push(id);
+  }
+  return ids;
+}
+/** Trusted VotingPipeline records the entire accepted round, including abstentions,
+ * at its real acceptance boundary. No model-supplied target subset is accepted. */
+export function recordAnimalBallotRound(
+  world: World,
+  token: object,
+  round: 1 | 2,
+  rawVotes: readonly {
+    actorId: number;
+    targetId: number | null;
+    abstain: boolean;
+    weight: number;
+  }[],
+  rawPkCandidates: readonly number[] = [],
+): void {
+  // Snapshot the accepted input before the first external unit guard can touch it.
+  const votes = snapshotPlainData(rawVotes) as typeof rawVotes,
+    candidates = snapshotPlainData(rawPkCandidates) as number[];
+  const { owner, unit } = ownedUnit(world, token);
+  if (
+    unit.value.kind !== "exile" ||
+    unit.finalRound !== null ||
+    round !== unit.rounds.size + 1 ||
+    (round !== 1 && round !== 2)
+  )
+    throw Error("animal_ballot_round_unavailable");
+  if (
+    !Array.isArray(votes) ||
+    !Array.isArray(candidates) ||
+    new Set(candidates).size !== candidates.length ||
+    (round === 1 ? candidates.length !== 0 : candidates.length < 2) ||
+    candidates.some((id) => !animalOriginalPlayer(world, id))
+  )
+    throw Error("animal_ballot_round_invalid");
+  if (
+    round === 2 &&
+    JSON.stringify([...candidates].sort((a, b) => a - b)) !== JSON.stringify(pkCandidates(unit))
+  )
+    throw Error("animal_ballot_round_invalid");
+  const expected = eligibleAnimalVoters(world, candidates);
+  if (!expected) throw Error("animal_ballot_round_invalid");
+  if (
+    votes.length !== expected.length ||
+    new Set(votes.map((v) => v.actorId)).size !== votes.length
+  )
+    throw Error("animal_ballot_round_invalid");
+  const accepted: AcceptedBallot[] = votes.map((v) => {
+    if (
+      !v ||
+      typeof v !== "object" ||
+      Array.isArray(v) ||
+      Object.keys(v).length !== 4 ||
+      Object.keys(v).some((key) => !["actorId", "targetId", "abstain", "weight"].includes(key))
+    )
+      throw Error("animal_ballot_round_invalid");
+    const voter = animalOriginalPlayer(world, v.actorId),
+      voting = votingState(world, v.actorId),
+      target = v.targetId === null ? null : animalOriginalPlayer(world, v.targetId, !v.abstain);
+    if (
+      !voter ||
+      !voting?.canVote ||
+      !expected.includes(v.actorId) ||
+      typeof v.abstain !== "boolean" ||
+      (v.targetId !== null &&
+        (!Number.isSafeInteger(v.targetId) || v.targetId < 1 || v.targetId > 12)) ||
+      v.weight !== (v.abstain ? 0 : voting.weight) ||
+      (!v.abstain && (!target || (round === 2 && !candidates.includes(v.targetId!))))
+    )
+      throw Error("animal_ballot_round_invalid");
+    return Object.freeze({
+      voter,
+      target,
+      abstain: v.abstain,
+      weight: v.weight,
+      voting: voting.value,
+    });
+  });
+  // Final guard is followed only by data checks, then the receipt is installed.
+  checkDeathScope(world, owner, unit.current);
+  if (
+    JSON.stringify(eligibleAnimalVoters(world, candidates)) !== JSON.stringify(expected) ||
+    accepted.some(
+      (v) =>
+        animalOriginalPlayer(world, v.voter.scope.id) !== v.voter ||
+        (!v.abstain && animalOriginalPlayer(world, v.target!.scope.id) !== v.target) ||
+        votingState(world, v.voter.scope.id)?.value !== v.voting ||
+        votingState(world, v.voter.scope.id)?.canVote !== true ||
+        (!v.abstain && votingState(world, v.voter.scope.id)?.weight !== v.weight),
+    )
+  ) {
+    stop(owner);
+    throw Error("animal_ballot_round_revoked");
+  }
+  unit.rounds.set(round, Object.freeze(accepted));
+}
+export function sealAnimalBallots(world: World, token: object): void {
+  const { owner, unit } = ownedUnit(world, token);
+  if (unit.value.kind !== "exile" || unit.finalRound !== null || !unit.rounds.size)
+    throw Error("animal_ballot_round_unavailable");
+  if (unit.rounds.size === 1 && pkCandidates(unit).length) throw Error("animal_ballot_pk_required");
+  unit.finalRound = unit.rounds.size === 2 ? 2 : 1;
+  const policy = animalRosterPolicies(world)!.ballotPolicy,
+    selected = unit.rounds.get(policy === "awa_first_ballot_v1" ? 1 : unit.finalRound)!,
+    targets = selected
+      .filter((v) => !v.abstain && v.target?.scope.id === owner.puffer.actor.scope.id)
+      .map((v) => v.voter)
+      .sort((a, b) => a.scope.id - b.scope.id),
+    stock = readPufferfishState(JSON.parse(owner.puffer.json));
+  if (
+    targets.length &&
+    stock.usedDay === null &&
+    stock.knifeDeathDay === null &&
+    animalOriginalPlayer(world, owner.puffer.actor.scope.id)
+  )
+    unit.puffer = {
+      targets: Object.freeze(targets),
+      requests: new Set(),
+      paid: false,
+      closed: false,
+      activated: false,
+    };
+}
+export function animalPufferChoiceActor(world: World, token: object): number | null {
+  const { owner, unit } = ownedUnit(world, token);
+  return unit.puffer && !unit.puffer.paid && !unit.puffer.closed
+    ? owner.puffer.actor.scope.id
+    : null;
+}
+function pufferCurrent(
+  world: World,
+  token: object,
+): { owner: Owner; unit: OwnedUnit; lease: PufferLease } {
+  const { owner, unit } = ownedUnit(world, token),
+    lease = unit.puffer;
+  if (
+    !lease ||
+    lease.paid ||
+    lease.closed ||
+    !animalOriginalPlayer(world, owner.puffer.actor.scope.id) ||
+    lease.targets.some((v) => animalOriginalPlayer(world, v.scope.id) !== v)
+  )
+    throw Error("animal_puffer_choice_unavailable");
+  const checkedAt = now();
+  for (const permit of lease.requests) {
+    const r = pufferRequests.get(permit);
+    if (
+      !r ||
+      r.world !== world ||
+      r.unit !== unit ||
+      r.revoked ||
+      (r.deadlineAtMs !== null && r.deadlineAtMs <= checkedAt)
+    ) {
+      lease.closed = true;
+      throw Error("animal_puffer_choice_unavailable");
+    }
+  }
+  return { owner, unit, lease };
+}
+export function createAnimalPufferRequest(world: World, token: object, deadlineAtMs?: number) {
+  const { unit, lease } = pufferCurrent(world, token);
+  if (deadlineAtMs !== undefined && (!Number.isFinite(deadlineAtMs) || deadlineAtMs <= now()))
+    throw Error("animal_puffer_request_unavailable");
+  const permit = Object.freeze({}),
+    r = { world, unit, deadlineAtMs: deadlineAtMs ?? null, revoked: false };
+  pufferRequests.set(permit, r);
+  return Object.freeze({
+    token: permit,
+    revoke: () => {
+      r.revoked = true;
+      lease.closed = true;
+    },
+  });
+}
+export function openAnimalPufferChoice(world: World, token: object, requestToken?: object) {
+  const { owner, unit, lease } = pufferCurrent(world, token),
+    r = requestToken === undefined ? undefined : pufferRequests.get(requestToken);
+  if (requestToken !== undefined && (!r || r.world !== world || r.unit !== unit || r.revoked))
+    throw Error("animal_puffer_request_unavailable");
+  if (requestToken !== undefined) lease.requests.add(requestToken);
+  return Object.freeze({
+    actorId: owner.puffer.actor.scope.id,
+    isCurrent: () => {
+      try {
+        pufferCurrent(world, token);
+        return true;
+      } catch {
+        lease.closed = true;
+        return false;
+      }
+    },
+    close: () => {
+      lease.closed = true;
+    },
+    commit: (activate: boolean) => {
+      pufferCurrent(world, token);
+      const targetIds = lease.targets.map((v) => v.scope.id),
+        next = payPufferfishChoice(
+          readPufferfishState(JSON.parse(owner.puffer.json)),
+          unit.value.day,
+          activate,
+          targetIds,
+        ),
+        encoded = JSON.stringify(next);
+      pufferCurrent(world, token);
+      replaceResource(owner.puffer, next, encoded);
+      lease.paid = true;
+      lease.activated = activate;
+      return Object.freeze({ day: unit.value.day, activate });
+    },
+  });
+}
+/** God/engine receipt only; already-paid effects retain original first deaths. */
+export function animalPufferReaction(world: World, token: object): readonly number[] {
+  const { unit } = ownedUnit(world, token),
+    lease = unit.puffer;
+  return Object.freeze(lease?.paid && lease.activated ? lease.targets.map((v) => v.scope.id) : []);
+}
+/** Actual original knife death, never a pending mark or an uncommitted proposal. */
+export function commitAnimalPufferKnifeDeath(
+  world: World,
+  day: number,
+  rawSources: readonly string[],
+  scope: object | (() => boolean),
+): void {
+  const owner = currentOwner(world);
+  if (owner) rejectDeathReentry(owner);
+  const puffer = owner && animalOriginalPlayer(world, owner.puffer.actor.scope.id, false),
+    sources = snapshotPlainData(rawSources) as string[],
+    unit = owner?.unit?.status === "open" && owner.unit.value.day === day ? owner.unit : null;
+  if (
+    !owner ||
+    owner.night?.day !== day ||
+    owner.night.status !== "normal" ||
+    !owner.night.pufferWasAlive ||
+    !puffer ||
+    puffer.scope.life.alive ||
+    aliveLifeVersion(puffer.scope.life) !== owner.night.pufferVersion + 1 ||
+    !Array.isArray(sources) ||
+    !sources.includes("wolf_kill") ||
+    (unit ? scope !== unit.token : typeof scope !== "function")
+  )
+    throw Error("animal_puffer_knife_death_unavailable");
+  const next = notePufferfishKnifeDeath(readPufferfishState(JSON.parse(owner.puffer.json)), day),
+    encoded = JSON.stringify(next);
+  checkDeathScope(world, owner, unit ? unit.current : (scope as () => boolean));
+  if (animalOriginalPlayer(world, puffer.scope.id, false) !== puffer || puffer.scope.life.alive)
+    throw Error("animal_puffer_knife_death_unavailable");
+  replaceResource(owner.puffer, next, encoded);
+  owner.beautyLinkBlockedDay = day;
+}
+export function animalBeautyLinkBlocked(world: World, day: number): boolean {
+  const owner = currentOwner(world);
+  return owners.has(world) && (!owner || owner.beautyLinkBlockedDay === day);
 }
 /** God-only paid effect. Actor prompts use a separate publication-aware knowledge projection. */
 export function animalFoxEffect(world: World): Readonly<FoxEffect> | null {
@@ -623,11 +971,28 @@ export function animalAuthoritySnapshot(world: World, complete = true) {
     },
     effect: owner.effect && { ...owner.effect },
     completedUnits: owner.completedUnits,
+    beautyLinkBlockedDay: owner.beautyLinkBlockedDay,
     unit: owner.unit && {
       ...owner.unit.value,
       status: owner.unit.status,
       expiryPrepared: owner.unit.expiryPrepared,
       expiryCatId: owner.unit.expiryCatId,
+      finalRound: owner.unit.finalRound,
+      ballots: [...owner.unit.rounds].map(([round, votes]) => ({
+        round,
+        votes: votes.map((v) => ({
+          actorId: v.voter.scope.id,
+          targetId: v.target?.scope.id ?? null,
+          abstain: v.abstain,
+          weight: v.weight,
+        })),
+      })),
+      puffer: owner.unit.puffer && {
+        targetIds: owner.unit.puffer.targets.map((v) => v.scope.id),
+        paid: owner.unit.puffer.paid,
+        activated: owner.unit.puffer.activated,
+        closed: owner.unit.puffer.closed,
+      },
     },
   };
 }

@@ -11,6 +11,8 @@ import {
   closeAnimalExileUnit,
   filterAnimalLethalWave,
   animalAuthoritySnapshot,
+  recordAnimalBallotRound,
+  sealAnimalBallots,
 } from "../../../src/game/mechanisms/roles/animal_dream/authority";
 const fixture = (skip = false) => {
   const f = animalRosterFixture(undefined, (world, raw) =>
@@ -29,7 +31,22 @@ function unit(
   kind: "exile" | "skipped_day",
   current = () => true,
 ) {
-  return (f.token = beginAnimalExileUnit(f.world, day, kind, current));
+  f.token = beginAnimalExileUnit(f.world, day, kind, current);
+  if (kind === "exile") {
+    recordAnimalBallotRound(
+      f.world,
+      f.token,
+      1,
+      f.world.getAliveEntityIds().map((actorId) => ({
+        actorId,
+        targetId: null,
+        abstain: true,
+        weight: 0,
+      })),
+    );
+    sealAnimalBallots(f.world, f.token);
+  }
+  return f.token;
 }
 function night(f: ReturnType<typeof fixture>, day: number) {
   beginAnimalNight(f.world, day, () => true);
@@ -125,12 +142,7 @@ test("default skips do not advance actual exile count or renew a pending clock",
     expect(animalAuthoritySnapshot(f.world)!.completedUnits).toBe(0);
   }
   night(f, 4);
-  expect(
-    prepareAnimalCatExpiry(
-      f.world,
-      beginAnimalExileUnit(f.world, 4, "exile", () => true),
-    ),
-  ).toBe(9);
+  expect(prepareAnimalCatExpiry(f.world, unit(f, 4, "exile"))).toBe(9);
 });
 test("default new combined-wave Cat expires after the next actual exile rather than an extra unit", () => {
   const f = fixture();
@@ -220,7 +232,7 @@ test("forged, foreign, prior unit and incomplete tokens cannot grant expiry or a
     foreign = fixture();
   night(f, 1);
   night(foreign, 1);
-  const token = beginAnimalExileUnit(f.world, 1, "exile", () => true),
+  const token = unit(f, 1, "exile"),
     other = beginAnimalExileUnit(foreign.world, 1, "exile", () => true);
   expect(() => prepareAnimalCatExpiry(f.world, {})).toThrow();
   expect(() => prepareAnimalCatExpiry(f.world, other)).toThrow();

@@ -4,6 +4,7 @@ import { COMPONENT } from "../../src/core/domain/components/names";
 import { createRoleComponent, type RoleComponent } from "../../src/core/domain/components/role";
 import { createAliveComponent, type AliveComponent } from "../../src/core/domain/components/alive";
 import { createCampComponent } from "../../src/core/domain/components/camp";
+import { createVotingRightComponent } from "../../src/core/domain/components/voting_right";
 import { createVictoryComponent } from "../../src/core/domain/components/victory";
 import { createIdentityComponent } from "../../src/core/domain/entities/player";
 import {
@@ -84,6 +85,7 @@ export function animalRosterFixture(
     world.addComponent(id, COMPONENT.Role, role);
     world.addComponent(id, COMPONENT.Camp, createCampComponent(camp));
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());
+    world.addComponent(id, COMPONENT.VotingRight, createVotingRightComponent());
     world.addComponent(id, COMPONENT.Identity, createIdentityComponent(id, id, `p${id}`));
     world.addComponent(
       id,
