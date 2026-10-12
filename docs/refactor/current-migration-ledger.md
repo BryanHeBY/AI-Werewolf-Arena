@@ -16,4 +16,6 @@ Git `4e39548` 检查点新增 Witch 普通 payload 写权、Seer/Guard 既有目
 
 Git `588e7554` 检查点补入四类普通选择/反馈历史写入与 Radiant acquired night unit，共新增五个部分。该检查点 44 格 partial、856 格 pending，仍零 complete/N/A。状态的 schema、编码、剩余写权和 Radiant 的租借/抑制/已付效果等其他边界继续待验收。
 
-Git `cb2957ac` 检查点登记配置行的唯一 World 参数 owner：真实引擎、Agent、模拟与复盘共享只读规则数据，独立 DTO 不授予写权。该项只让配置 state 格从 pending 进入 partial；完整 RulePlan、其他配置边界与最终门禁仍待完成。当前共 45 格 partial、855 格 pending，零 complete/N/A；冻结基线矩阵字节未变。
+Git `cb2957ac` 检查点登记配置行的唯一 World 参数 owner：真实引擎、Agent、模拟与复盘共享只读规则数据，独立 DTO 不授予写权。该项只让配置 state 格从 pending 进入 partial；完整 RulePlan、其他配置边界与最终门禁仍待完成。该检查点共 45 格 partial、855 格 pending，零 complete/N/A；冻结基线矩阵字节未变。
+
+Git `709dc222`、`73943cac`、`5a5d5b8d` 分别登记迷雾、时妃、师徒的 cleanup-transfer 与 manager 终结入口。三格 lifecycle 由 pending 进入 partial；开夜、已付资源、伤害及其他完整生命周期要求未被这些局部交付关闭。当前 48 格 partial、852 格 pending，零 complete/N/A；90 行、900 格和冻结基线保持。

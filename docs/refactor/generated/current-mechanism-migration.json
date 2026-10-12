@@ -1,6 +1,6 @@
 {
   "schema": "awa-current-mechanism-migration-v1",
-  "observedCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+  "observedCommit": "5a5d5b8d98d87dd6e40b9d462d8aa9a6dd7bd168",
   "baseline": {
     "path": "docs/refactor/generated/mechanism-matrix.json",
     "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
@@ -2389,10 +2389,23 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Concrete pipeline cleanup-transfer ownership and original manager terminal calls through public feature ports; opening remains at its declared original site",
+              "commit": "709dc222",
+              "owners": [
+                "backend/src/game/mechanisms/roles/mist_raven/night-lifecycle.ts",
+                "backend/src/game/mechanisms/roles/mist_raven/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/mist-night-lifecycle.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Finish every role-specific runtime lifecycle, lease/resource/effect/death interaction, full current consumer coverage and old internal exports before this lifecycle cell can close.",
+            "The delivered cleanup-transfer part retains the original frame authority and normal/abort behavior; it does not replace complete mechanism or final same-source acceptance."
           ]
         },
         "effect": {
@@ -3231,10 +3244,23 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Concrete pipeline cleanup-transfer ownership and original manager terminal calls through public feature ports; opening remains at its declared original site",
+              "commit": "5a5d5b8d",
+              "owners": [
+                "backend/src/game/mechanisms/roles/scholar_mentor/night-lifecycle.ts",
+                "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/scholar-mentor-night-lifecycle.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Finish every role-specific runtime lifecycle, lease/resource/effect/death interaction, full current consumer coverage and old internal exports before this lifecycle cell can close.",
+            "The delivered cleanup-transfer part retains the original frame authority and normal/abort behavior; it does not replace complete mechanism or final same-source acceptance."
           ]
         },
         "effect": {
@@ -3576,10 +3602,23 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Concrete pipeline cleanup-transfer ownership and original manager terminal calls through public feature ports; opening remains at its declared original site",
+              "commit": "73943cac",
+              "owners": [
+                "backend/src/game/mechanisms/roles/time_wolf_consort/night-lifecycle.ts",
+                "backend/src/game/mechanisms/roles/time_wolf_consort/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/time-consort-night-lifecycle.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Finish every role-specific runtime lifecycle, lease/resource/effect/death interaction, full current consumer coverage and old internal exports before this lifecycle cell can close.",
+            "The delivered cleanup-transfer part retains the original frame authority and normal/abort behavior; it does not replace complete mechanism or final same-source acceptance."
           ]
         },
         "effect": {
@@ -7693,8 +7732,8 @@
     "currentOnlyRows": 1,
     "rows": 90,
     "cells": 900,
-    "pending": 855,
-    "partial": 45,
+    "pending": 852,
+    "partial": 48,
     "complete": 0,
     "not-applicable": 0
   },
