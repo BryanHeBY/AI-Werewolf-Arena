@@ -4,6 +4,7 @@
  * through current wedding authority. Cancellation and failed commits keep their original
  * settlement order; alias routing never replaces local validation.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { types } from "node:util";
 import {
@@ -30,7 +31,6 @@ import {
   Phase,
   createVictoryComponent,
   type World,
-  type BoardConfig,
   type RoleComponent,
   type CampComponent,
   type VictoryComponent,
@@ -117,7 +117,7 @@ interface Participant {
 type TurnKind = "bridegroom" | "chat" | "witness" | "knife";
 interface Binding {
   world: World;
-  config: BoardConfig;
+  config: ReadonlyBoardConfig;
   configJson: string;
   actorId: number;
   participants: Map<number, Participant>;
@@ -313,7 +313,7 @@ function third(b: Binding, id: number): void {
   p.victoryJson = json(victory.affiliations)!;
 }
 /** Installation is deliberately separate from catalog activation and runtime setup. */
-export function installGhostBride(world: World, config: BoardConfig): void {
+export function installGhostBride(world: World, config: ReadonlyBoardConfig): void {
   if (bindings.has(world)) throw new Error("ghost_bride_already_installed");
   assertGhostBridePreset(config);
   const participants = new Map(world.entityIds().map((id) => [id, capture(world, id)])),
@@ -366,7 +366,7 @@ export function installGhostBride(world: World, config: BoardConfig): void {
 }
 export function beginWeddingSetup(
   world: World,
-  config: BoardConfig,
+  config: ReadonlyBoardConfig,
   isCurrent: () => boolean,
 ): void {
   const b = bindings.get(world);

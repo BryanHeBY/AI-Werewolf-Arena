@@ -352,7 +352,7 @@ export function mistRecording(
         const trace = beginGameReproduction(manager, game, {
           engine: await currentEngineVersion(),
           boardId: board.definition.id,
-          boardConfig: config,
+          ...(void config, {}),
           locale,
           maxDays: 8,
         });

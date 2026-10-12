@@ -106,7 +106,8 @@ test("reverse writing and Tape reject the same unknown nested configuration fiel
   };
   expect(boardConfigSchema.safeParse(config).success).toBe(false);
   expect(() => boardDefinitionFromConfig("closure_test", config)).toThrow("config.witch.unused");
-  expect(() => trace(config)).toThrow("reproduction_record_invalid");
+  // Same original bad field now fails at owned runtime-parameter compilation before Tape creation.
+  expect(() => trace(config)).toThrow("rule_parameters_invalid");
 });
 
 for (const targetPolicy of ["awa_alive_v1", "awa_fresh_others_v1"] as const)

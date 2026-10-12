@@ -4,6 +4,7 @@
  * evidence and the selected exile result. Sheriff election and wolf knife ballots remain
  * separate mechanisms.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import {
   checkpointNobleBodyAuthority,
   consumeSecretBodyExile,
@@ -31,7 +32,6 @@ import { VotingRightComponent } from "../../../core/domain/components/voting_rig
 import {
   ActionProvider,
   ActionWindow,
-  BoardConfig,
   EntityId,
   GameEvent,
   Phase,
@@ -116,7 +116,7 @@ export class VotingPipeline {
   }
 
   async execute(
-    config: BoardConfig,
+    config: ReadonlyBoardConfig,
     actionProvider: ActionProvider,
     options: VotingPipelineOptions,
   ): Promise<VotingPipelineResult> {

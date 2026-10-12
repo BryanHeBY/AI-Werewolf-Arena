@@ -1,13 +1,14 @@
 /**
  * Owns ordered supported-board rejection and role-deck construction for bootstrap.
- * Inputs are the original BoardConfig, optional exact fixed cards and narrow readonly
+ * Inputs are the original ReadonlyBoardConfig, optional exact fixed cards and narrow readonly
  * catalog/event support queries; outputs are the original mutable card sequence or
  * original first rejection. The catalog factory and profile fields are observed at
  * their existing repeated read sites, without copying or freezing either source.
  * This owner never creates World/components, draws RNG, parses external configuration
  * or grants actor authority; bootstrap retains deal shuffle and assembly timing.
  */
-import { Camp, Role, WinCondition, type BoardConfig } from "@ai-werewolf-arena/game-contract";
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
+import { Camp, Role, WinCondition } from "@ai-werewolf-arena/game-contract";
 import { boardPresetViolation } from "./board-support";
 
 /** Read-only metadata queries preserve the original catalog and profile identities. */
@@ -21,7 +22,7 @@ export interface SupportedRoleDeckCatalog {
 }
 
 export function buildSupportedRoleDeck(
-  config: BoardConfig,
+  config: ReadonlyBoardConfig,
   fixedRoles: readonly Role[] | undefined,
   getDefaultRoleCatalog: () => SupportedRoleDeckCatalog,
   supportsWallRoles: (roles: readonly Role[]) => boolean,

@@ -49,7 +49,7 @@ for (const skill of ["fox", "puffer"] as const)
       const trace = beginGameReproduction(manager, g, {
         engine,
         boardId: "animal_dream",
-        boardConfig: animalBoard(),
+        ...(void animalBoard(), {}),
         locale: "zh-CN",
         maxDays: 8,
       });

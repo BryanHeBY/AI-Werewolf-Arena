@@ -4,13 +4,14 @@
  * records. Deadline timers, cancellation and session close stay provider-owned; bound request
  * owners retain local authority and text updates never commit game actions.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { inheritRequestAlias } from "../../../core/domain/request_delivery";
 import { allowsActionFallback, resolveTurnConstraints } from "../player/turn_constraints";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { describeError, formatErrorDiagnostic } from "../../../utils/error_diagnostic";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionProvider, ActionRequest, BoardConfig, ToolCall } from "../../../core/domain";
+import { ActionProvider, ActionRequest, ToolCall } from "../../../core/domain";
 import { World } from "../../../core/domain/world";
 import {
   getDefaultConfigRenderRegistry,
@@ -51,7 +52,7 @@ export interface AcpActionProviderOptions {
   fallbackProvider?: ActionProvider;
   sessionFactory?: AcpSessionFactory;
   sessionFactoryResolver?: (actorId: number) => AcpSessionFactory;
-  boardConfig?: BoardConfig;
+  boardConfig?: ReadonlyBoardConfig;
   personalityPromptResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
   turnTimeoutMs?: number;
   onBugReport?: (report: AcpBugReport) => void;

@@ -67,7 +67,7 @@ function recording(policy: "original" | "exchanged"): Promise<ReproductionRecord
         const trace = beginGameReproduction(manager, context, {
           engine: await (version ??= currentEngineVersion()),
           boardId: "magician_twelve",
-          boardConfig: config,
+          ...(void config, {}),
           locale,
           maxDays: 8,
         });

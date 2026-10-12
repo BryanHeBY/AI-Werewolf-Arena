@@ -4,7 +4,11 @@
  * final result. It still prepares night death proposals before delegating wave commits to
  * DeathResolution. Mechanism lifetimes retain their concrete owners; sealed games accept no
  * further cycle work.
+ * Runtime policy reads reuse the World-bound immutable board; direct construction
+ * cannot replace that binding, while original actor and phase ownership remains.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
+import { bindBoardParameters } from "../../rulesets/board-parameters";
 import {
   nobleNightReceiver,
   expireServantAtNightEnd,
@@ -167,6 +171,7 @@ import { victoryDecision } from "../mechanisms/win_conditions/results";
  * 负责串行驱动夜晚/白天/投票，并在每个阶段后执行死亡钩子与胜负裁决。
  */
 export class PhaseManager {
+  private readonly config: ReadonlyBoardConfig;
   private readonly events: GameEvent[] = [];
   private readonly eventRegistry: EventRegistry;
   private readonly nightPipeline: NightPipeline;
@@ -187,7 +192,7 @@ export class PhaseManager {
 
   constructor(
     private readonly world: World,
-    private readonly config: BoardConfig,
+    config: ReadonlyBoardConfig,
     private readonly toolGateway: ToolGateway,
     private readonly roleRegistry: RoleRegistry,
     private readonly conditionRegistry: ConditionRegistry,
@@ -195,6 +200,8 @@ export class PhaseManager {
     private readonly random: RandomSource = createRandom(),
     options: { faultPlan?: unknown } = {},
   ) {
+    config = bindBoardParameters(world, config).board;
+    this.config = config;
     if (config.fragrantPairSeer)
       installFragrantPairAuthority(
         world,
@@ -1320,7 +1327,7 @@ export class PhaseManager {
   /**
    * 解析板子胜利条件配置，兼容旧字段 winCondition。
    */
-  private resolveWinConditions(): WinCondition[] {
+  private resolveWinConditions(): readonly WinCondition[] {
     if (weddingSetup(this.world)) {
       const conditions =
         this.config.winConditions ?? (this.config.winCondition ? [this.config.winCondition] : []);

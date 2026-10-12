@@ -1,9 +1,14 @@
-/** Renders normalized board rules without holding mutable language state. */
+/**
+ * Owns bilingual rendering of configured board rules and policy descriptions.
+ * Inputs are readonly complete board data and the requested locale; output is
+ * the existing rule prompt text. Rendering never validates finite composition,
+ * mutates parameters, advances gameplay or holds mutable language state.
+ */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { settlesNightBeforeDay } from "../night_death_timing";
 import { renderDeathActionPolicy } from "../roles/death_action_policy";
 import { renderInspectionPolicy } from "../roles/role_inspection/policies";
 import {
-  BoardConfig,
   WinCondition,
   WitchSelfHealRule,
   Role,
@@ -12,11 +17,11 @@ import {
 import { roleName, term, text, type Locale } from "@ai-werewolf-arena/game-text";
 
 export interface ConfigRenderRegistry {
-  renderBoardConfigPrompt(config: BoardConfig, locale?: Locale): string;
+  renderBoardConfigPrompt(config: ReadonlyBoardConfig, locale?: Locale): string;
 }
 
 export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
-  renderBoardConfigPrompt(config: BoardConfig, locale: Locale = "zh-CN"): string {
+  renderBoardConfigPrompt(config: ReadonlyBoardConfig, locale: Locale = "zh-CN"): string {
     const winConditions = this.resolveWinConditions(config)
       .map((item) => term("rule", item, locale))
       .join("; ");
@@ -338,7 +343,7 @@ export class DefaultConfigRenderRegistry implements ConfigRenderRegistry {
     ].join("\n");
   }
 
-  private resolveWinConditions(config: BoardConfig): WinCondition[] {
+  private resolveWinConditions(config: ReadonlyBoardConfig): readonly WinCondition[] {
     if (config.winConditions?.length) return config.winConditions;
     return config.winCondition ? [config.winCondition] : [WinCondition.SlaughterCity];
   }

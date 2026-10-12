@@ -1,3 +1,11 @@
+/**
+ * Owns role profile metadata, initialization callbacks and declared contributions.
+ * Inputs are role IDs, schemas and concrete feature callbacks; output describes
+ * catalog assembly without granting runtime authority. Initialization sees deeply
+ * readonly board parameters; configuration builders retain mutable serialization
+ * DTOs and return their own data. Role owners alone mutate resources and state.
+ */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
 import type { VictoryAffiliation } from "@ai-werewolf-arena/game-catalog";
 import type { InspectionCamp, RoleId } from "@ai-werewolf-arena/game-catalog";
@@ -16,7 +24,7 @@ import type { World } from "../../../core/domain/world";
 /** 角色初始化上下文。 */
 export interface RoleInitContext {
   locale?: Locale;
-  boardConfig?: BoardConfig;
+  boardConfig?: ReadonlyBoardConfig;
   world?: World;
 }
 

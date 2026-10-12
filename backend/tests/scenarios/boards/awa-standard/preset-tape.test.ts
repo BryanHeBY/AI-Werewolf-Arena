@@ -72,7 +72,7 @@ for (const locale of ["zh-CN", "en"] as const)
     const trace = beginGameReproduction(manager, game, {
       engine: await currentEngineVersion(),
       boardId: "awa_classic_pk_choice_12_v1",
-      boardConfig: config,
+      ...(void config, {}),
       locale,
       maxDays: 2,
     });

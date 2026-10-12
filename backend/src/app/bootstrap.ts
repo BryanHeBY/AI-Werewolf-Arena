@@ -7,10 +7,14 @@
  * role owners retain runtime resources and original component identities. The support
  * owner consumes original catalog/event-query bindings after the existing deal fork;
  * bootstrap alone shuffles the accepted deck at the original draw position.
+ * The checked board clone freezes before role initialization; the new context wrapper
+ * fixes its owner aliases without freezing callers, World, actors or RNG.
  */
 import { installNobleBodyAuthority } from "../game/mechanisms/roles/noble_secret_body/authority";
 import { installAnimalAuthority } from "../game/mechanisms/roles/animal_dream/authority";
 import { buildSupportedRoleDeck } from "../rulesets/supported-role-deck";
+import { BoardParameters, bindBoardParameters } from "../rulesets/board-parameters";
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { installRadiantEclipseBoard } from "../game/mechanisms/roles/radiant_eclipse/night_frame";
 import { installMistRavenBoard } from "../game/mechanisms/roles/mist_raven/night_frame";
 import { installScholarMentorBoard } from "../game/mechanisms/roles/scholar_mentor/night_frame";
@@ -63,6 +67,8 @@ import type { Locale } from "@ai-werewolf-arena/game-catalog";
  */
 export interface BootstrapResult {
   world: World;
+  readonly boardConfig: ReadonlyBoardConfig;
+  readonly parameters: BoardParameters;
   phaseManager: PhaseManager;
   playerIds: EntityId[];
   random: RandomSource;
@@ -89,16 +95,19 @@ export function bootstrapGame(
   const world = new World(options.locale);
   const random = options.random ?? createRandom();
   // 先完成实体与组件初始化，再创建系统与管理器，避免空引用。
-  const playerIds = createPlayers(world, config, options, random);
-  assignInitialSheriff(world, config, playerIds);
+  const initialized = createPlayers(world, config, options, random);
+  const playerIds = initialized.playerIds;
+  const parameters = initialized.parameters;
+  const boardConfig = parameters.board;
+  assignInitialSheriff(world, boardConfig, playerIds);
 
   const roleRegistry = createDefaultRoleRegistry();
   const damageResolutionSystem = new DamageResolutionSystem();
   const conditionRegistry = new ConditionRegistry(
-    config.pureWhite || config.animalDream
+    boardConfig.pureWhite || boardConfig.animalDream
       ? new PureWhiteWinRegistry(
           createEliminationWinConditionSpecs(
-            config.pureWhite?.eliminationPriority ?? "awa_wolf_priority_v1",
+            boardConfig.pureWhite?.eliminationPriority ?? "awa_wolf_priority_v1",
           ),
         )
       : getDefaultWinConditionRegistry(),
@@ -107,7 +116,7 @@ export function bootstrapGame(
 
   const phaseManager = new PhaseManager(
     world,
-    config,
+    boardConfig,
     toolGateway,
     roleRegistry,
     conditionRegistry,
@@ -116,22 +125,29 @@ export function bootstrapGame(
     { faultPlan: options.faultPlan },
   );
 
-  return {
+  return Object.freeze({
     world,
+    boardConfig,
+    parameters,
     phaseManager,
     playerIds,
     random,
     dealMode: options.fixedRoles ? "fixed" : "random",
-  };
+  });
 }
 
 function createPlayers(
   world: World,
-  config: BoardConfig,
+  inputConfig: BoardConfig,
   options: BootstrapOptions,
   random: RandomSource,
-): EntityId[] {
-  const roles = buildRoleDeck(config, options.fixedRoles, random.fork("deal"));
+): { playerIds: EntityId[]; parameters: BoardParameters } {
+  const fixedRoles = options.fixedRoles;
+  const dealRandom = random.fork("deal");
+  const candidateParameters = BoardParameters.compile(inputConfig);
+  const config = candidateParameters.board;
+  const roles = buildRoleDeck(config, fixedRoles, dealRandom);
+  const parameters = bindBoardParameters(world, candidateParameters);
   const ids: EntityId[] = [];
   const roleCatalog = getDefaultRoleCatalog();
 
@@ -202,11 +218,11 @@ function createPlayers(
   if (roles.includes(Role.GhostBride)) installGhostBride(world, config);
   installWildChild(world, config);
   installLonelyGirl(world, config);
-  return ids;
+  return { playerIds: ids, parameters };
 }
 
 function buildRoleDeck(
-  config: BoardConfig,
+  config: ReadonlyBoardConfig,
   fixedRoles: readonly Role[] | undefined,
   random: RandomSource,
 ): Role[] {

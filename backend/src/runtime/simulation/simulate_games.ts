@@ -3,6 +3,7 @@
  * board/runtime options and independent game executions; outputs are existing reports, branch
  * counts and saved reproduction evidence. It does not turn the baseline provider into a
  * player-knowledge oracle or change per-game RNG order.
+ * Observed-player decisions and native recording consume the same bound rules.
  */
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
 import { bootstrapGame } from "../../app/bootstrap";
@@ -139,7 +140,11 @@ export async function simulateGames(
         ),
       ]),
     );
-    const observed = new ObservedPlayersActionProvider(context.world, strategies, board.config);
+    const observed = new ObservedPlayersActionProvider(
+      context.world,
+      strategies,
+      context.boardConfig,
+    );
     const provider: ActionProvider = {
       async getAction(request) {
         if (context.phaseManager.getSnapshot().gameOver)
@@ -184,7 +189,6 @@ export async function simulateGames(
       const reproduction = beginGameReproduction(manager, context, {
         engine,
         boardId: board.definition.id,
-        boardConfig: board.config,
         locale: context.world.locale,
         maxDays,
       });

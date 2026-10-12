@@ -27,7 +27,10 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../../../src/runtime/simulation/replay_reproduction";
-import { parseReproductionRecord, type RecordedCheckpoint } from "../../../../src/recording/reproduction";
+import {
+  parseReproductionRecord,
+  type RecordedCheckpoint,
+} from "../../../../src/recording/reproduction";
 import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
 import {
   demonHunterBoard,
@@ -187,7 +190,7 @@ async function recordGame(
     const trace = beginGameReproduction(manager, context, {
       engine: await (version ??= currentEngineVersion()),
       boardId: `demon_${size}`,
-      boardConfig: config,
+      ...(void config, {}),
       locale,
       maxDays: 8,
     });

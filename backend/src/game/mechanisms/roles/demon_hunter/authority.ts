@@ -4,6 +4,7 @@
  * deadline aliases. Invalid or retired scopes fail locally, preserving partial-write and
  * settlement order; alias routing adds no capability.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { recordNobleContractClosure } from "../noble_secret_body/facts";
 import type { NobleContractClosedFact } from "@ai-werewolf-arena/game-text";
@@ -34,7 +35,6 @@ import {
   type RoleComponent,
   type CampComponent,
   type VictoryComponent,
-  type BoardConfig,
   type World,
 } from "../../../../core";
 import {
@@ -83,7 +83,7 @@ interface Participant {
 }
 interface Binding {
   world: World;
-  config: BoardConfig;
+  config: ReadonlyBoardConfig;
   configJson: string;
   actorId: number;
   players: Map<number, Participant>;
@@ -371,7 +371,7 @@ function validBinding(b: Binding): boolean {
   );
 }
 /** Captures native objects once. A public profile registration is a separate later step. */
-export function installDemonHunter(world: World, config: BoardConfig): void {
+export function installDemonHunter(world: World, config: ReadonlyBoardConfig): void {
   if (bindings.has(world)) throw new Error("demon_hunter_already_installed");
   assertDemonHunterPreset(config);
   if (config.nobleSecretBody) {

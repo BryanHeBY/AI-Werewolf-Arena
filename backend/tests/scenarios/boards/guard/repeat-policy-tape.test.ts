@@ -54,7 +54,7 @@ for (const repeatPolicy of ["awa_last_action_v1", "netease_consecutive_nights_v1
     const trace = beginGameReproduction(manager, game, {
       engine: await currentEngineVersion(),
       boardId: "guard_branch",
-      boardConfig: config,
+      ...(void config, {}),
       locale: "zh-CN",
       maxDays: 3,
     });

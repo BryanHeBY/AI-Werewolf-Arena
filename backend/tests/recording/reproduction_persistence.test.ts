@@ -36,7 +36,7 @@ async function fixture() {
   const trace = beginGameReproduction(manager, context, {
     engine: await currentEngineVersion(),
     boardId: "six_player_mvp",
-    boardConfig: sixPlayerMvpConfig,
+    ...(void sixPlayerMvpConfig, {}),
     locale: "zh-CN",
     maxDays: 30,
   });
@@ -213,7 +213,7 @@ test("a fixed deal with an injected named root stream reproduces in its declared
   const trace = beginGameReproduction(manager, context, {
     engine: await currentEngineVersion(),
     boardId: "six_player_mvp",
-    boardConfig: sixPlayerMvpConfig,
+    ...(void sixPlayerMvpConfig, {}),
     locale: "zh-CN",
     maxDays: 30,
   });

@@ -1,6 +1,14 @@
+/**
+ * Adapts engine requests to the existing SDK turn orchestrator and prompt session.
+ * Inputs are original World, readonly board parameters and model options; outputs
+ * are recorded tool decisions or existing fallback failures. Provider lifecycle owns
+ * deadlines and cancellation, while domain owners alone commit actor resources.
+ * This adapter never changes board parameters or treats preflight as a domain commit.
+ */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { RoleComponent } from "../../../core/domain/components/role";
-import { ActionProvider, ActionRequest, BoardConfig, ToolCall } from "../../../core/domain";
+import { ActionProvider, ActionRequest, ToolCall } from "../../../core/domain";
 import { World } from "../../../core/domain/world";
 import {
   ConfigRenderRegistry,
@@ -52,7 +60,7 @@ export interface LlmActionProviderOptions {
   toolCallRepairRegistry?: ToolCallRepairRegistry;
   targetHintRegistry?: TargetHintRegistry;
   phaseStageLocalizationRegistry?: PhaseStageLocalizationRegistry;
-  boardConfig?: BoardConfig;
+  boardConfig?: ReadonlyBoardConfig;
   configRenderRegistry?: ConfigRenderRegistry;
   maxConcurrentRequests?: number;
 }

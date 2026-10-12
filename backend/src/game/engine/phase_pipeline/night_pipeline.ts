@@ -9,7 +9,11 @@
  * grants actor eligibility or moves the original stage commitment boundaries.
  * The context query getter captures its current World before the stage's day argument;
  * actor qualification remains read-only and never moves into pipeline lifecycle commits.
+ * Board binding occurs at the original first acquisition World argument, after
+ * cancellation checks; changed subsequent parameters refuse before any acquisition.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
+import { bindBoardParameters } from "../../../rulesets/board-parameters";
 import { bindNightAbilityActorQuery } from "../../mechanisms/roles/night-ability-actors";
 import {
   FragrantNightUnit,
@@ -237,7 +241,7 @@ export class NightPipeline {
    * 执行完整夜间流程并返回结算摘要与伤害结果。
    */
   async execute(
-    config: BoardConfig,
+    config: ReadonlyBoardConfig,
     actionProvider: ActionProvider,
     day: number,
     options: NightPipelineOptions = {},
@@ -253,7 +257,13 @@ export class NightPipeline {
     const isCurrent = options.isCurrent ?? (() => true);
     if (!isCurrent())
       return attachNobleNightReceiver({ interrupted: true }, createNobleNightAbortReceiver());
-    const closeLonelyGirlNight = openLonelyGirlNight(this.world, day);
+    let parameterWorld: World;
+    const closeLonelyGirlNight = openLonelyGirlNight(
+      ((parameterWorld = this.world),
+      (config = bindBoardParameters(parameterWorld, config).board),
+      parameterWorld),
+      day,
+    );
     const closeWildChildNight = openWildChildNight(this.world, day, this.events);
     const closeThiefNight = openInitialIdentityNight(this.world, day);
     const ownsWedding = weddingSetup(this.world) !== null;

@@ -1,6 +1,6 @@
 /**
  * Owns the production finite-board rejection dispatch used before game assembly.
- * Input is a normalized BoardConfig; output is the original first violation or
+ * Input is a normalized ReadonlyBoardConfig; output is the original first violation or
  * null in exactly the existing order. No roles, state or effects are created.
  * DemonHunter uses the owned Node snapshot ingress before its inert support
  * predicate, preserving the existing rejection boundary. A verdict alone grants
@@ -26,11 +26,11 @@ import {
   isGhostBridePreset,
 } from "./support";
 import { Role, WinCondition } from "@ai-werewolf-arena/game-contract";
-import type { BoardConfig } from "@ai-werewolf-arena/game-contract";
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { isDemonHunterPreset } from "./node-board-support";
 
 /** Shared finite-board eligibility for configuration checks and direct bootstrap callers. */
-export function boardPresetViolation(config: BoardConfig) {
+export function boardPresetViolation(config: ReadonlyBoardConfig) {
   if (
     (config.animalDream ||
       config.bear?.signalPolicy === "netease_dawn_live_v1" ||

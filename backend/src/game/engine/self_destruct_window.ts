@@ -4,6 +4,7 @@
  * unchanged window result. Only the selected current actor may commit, without reusing a
  * replaced body.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { RED_MOON_ROLE } from "../mechanisms/roles/red_moon_apostle/state";
 import { demonRedMoonCanBlast } from "../mechanisms/roles/demon_hunter/authority";
 import { canRoleSelfDestruct } from "../mechanisms/roles/self_destruct_capability";
@@ -19,7 +20,6 @@ import { RoleComponent } from "../../core/domain/components/role";
 import {
   ActionProvider,
   ActionWindow,
-  BoardConfig,
   Phase,
   type SelfDestructSelection,
 } from "../../core/domain/model";
@@ -162,7 +162,10 @@ export class SelfDestructWindow {
   }
 }
 
-export function isSelfDestructWindowEnabled(config: BoardConfig, window: ActionWindow): boolean {
+export function isSelfDestructWindowEnabled(
+  config: ReadonlyBoardConfig,
+  window: ActionWindow,
+): boolean {
   return config.selfDestruct?.enabledWindows === undefined
     ? window === ActionWindow.OnPreVote
     : config.selfDestruct.enabledWindows.includes(window);

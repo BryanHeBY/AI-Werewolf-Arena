@@ -18,7 +18,12 @@ import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 import { animalAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/animal_dream/authority";
 import { animalCatKnowledge } from "../../../../src/game/mechanisms/roles/animal_dream/facts";
-import { COMPONENT, type ActionRequest, type ToolCall, type AliveComponent } from "../../../../src/core";
+import {
+  COMPONENT,
+  type ActionRequest,
+  type ToolCall,
+  type AliveComponent,
+} from "../../../../src/core";
 import { aliveLifeVersion } from "../../../../src/core/domain/components/alive";
 for (const point of ["deferred", "actually_dead"] as const)
   test(`R actual PM+Trace Cat ${point} publication-failure archive`, async () => {
@@ -44,7 +49,7 @@ for (const point of ["deferred", "actually_dead"] as const)
       const trace = beginGameReproduction(manager, g, {
         engine,
         boardId: "animal_dream",
-        boardConfig: animalBoard(),
+        ...(void animalBoard(), {}),
         locale: "zh-CN",
         maxDays: 8,
       });

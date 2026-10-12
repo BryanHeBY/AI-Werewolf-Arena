@@ -115,7 +115,7 @@ export async function recordNobleLiteral(
       const trace = beginGameReproduction(activeManager, game, {
         engine: await currentEngineVersion(),
         boardId: "awa_noble_secret_body_12_v1",
-        boardConfig: config,
+        ...(void config, {}),
         locale,
         maxDays: 8,
       });

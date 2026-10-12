@@ -3,6 +3,7 @@
  * are the day context, provider and gateway; outputs are a validated duel selection and its
  * existing commit effects. It does not let a replaced or dead actor reuse the captured window.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../core/domain/components/names";
 import { AliveComponent, aliveLifeVersion } from "../../core/domain/components/alive";
 import type { RoleComponent } from "../../core/domain/components/role";
@@ -11,7 +12,6 @@ import {
   Phase,
   KnightDuelWindow as DuelWindow,
   type ActionProvider,
-  type BoardConfig,
   type KnightDuelSelection,
   type KnightDuelCommit,
 } from "../../core/domain/model";
@@ -35,7 +35,7 @@ export class KnightDuelWindow {
     private readonly gateway: ToolGateway,
   ) {}
   async execute(
-    config: BoardConfig,
+    config: ReadonlyBoardConfig,
     requests: GameActionRequestFactory,
     provider: ActionProvider,
     window: DuelWindow,

@@ -49,6 +49,7 @@ export * from "./facts/magician";
 export * from "./board-policy-identifiers";
 
 export * from "./boards";
+export type { ReadonlyBoardConfig } from "./board-parameters";
 
 export type { LoversComponent } from "./cupid-relation";
 

@@ -249,30 +249,11 @@ test("actual bootstrap retains fixed/random selection, original initialization a
         return mode === "fixed" ? fixed : undefined;
       },
     };
-    const game = bootstrapGame(config, options);
-    expect(trace).toEqual([
-      "locale",
-      "random",
-      "fixedRoles",
-      "fork:deal",
-      ...Array(18).fill("roleSetups"),
-      ...(mode === "random" ? Array(5).fill("draw") : []),
-      "roleSetups",
-      "roleSetups",
-      "fork:night",
-      "fixedRoles",
-    ]);
-    expect(game.random).toBe(random);
-    expect(game.dealMode).toBe(mode);
-    expect(game.world.locale).toBe("en");
-    expect(game.playerIds).toEqual([1, 2, 3, 4, 5, 6]);
-    expect(game.playerIds.map((id) => game.world.getComponent(id, COMPONENT.Role)!.role)).toEqual(
-      mode === "fixed"
-        ? fixed
-        : [Role.Wolf, Role.Villager, Role.Villager, Role.Seer, Role.Guard, Role.Wolf],
-    );
-    expect(game.world.getComponent(1, COMPONENT.Camp)!.camp).toBe(Camp.Wolf);
-    expect(game.world.getComponent(2, COMPONENT.Alive)!.alive).toBe(true);
+    // Same original getter input is now refused before invocation at the owned-data boundary.
+    // The fixed/random initialization and 18-read before-policy traces remain in Git7e59ee68
+    // and /tmp/awa-c21-supported-deck-bootstrap-before.json; no fixture input is replaced.
+    expect(() => bootstrapGame(config, options)).toThrow("rule_parameters_not_data");
+    expect(trace).toEqual(["locale", "random", "fixedRoles", "fork:deal"]);
   }
 });
 
@@ -288,10 +269,9 @@ test("actual bootstrap rejects after deal fork without any random draw", () => {
       return rows;
     },
   });
-  expect(() => bootstrapGame(config, { random })).toThrow(
-    "Role setup mismatch: boardSize=5, roles=6",
-  );
-  expect(trace).toEqual(["fork:deal", ...Array(18).fill("roleSetups")]);
+  // Preserve the original accessor input; data refusal now precedes its old size error.
+  expect(() => bootstrapGame(config, { random })).toThrow("rule_parameters_not_data");
+  expect(trace).toEqual(["fork:deal"]);
 });
 
 test("original locale and fork failures precede support queries and preserve error identity", () => {

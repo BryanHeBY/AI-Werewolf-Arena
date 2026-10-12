@@ -3,6 +3,7 @@
  * request and prompt policy options; outputs preserve player knowledge, role text and board
  * context. It never commits submitted actions or changes role state.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { getWhiteWolfKingState } from "../../../game/mechanisms/roles/white_wolf_king/ports";
 import { isAnimalDreamBoard } from "../../../game/mechanisms/roles/animal_dream/authority";
 import {
@@ -108,14 +109,7 @@ import {
 import { readEclipseState } from "../../../game/mechanisms/roles/radiant_eclipse/state";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
-import {
-  ActionRequest,
-  ActionWindow,
-  BoardConfig,
-  EntityId,
-  Role,
-  ToolName,
-} from "../../../core/domain";
+import { ActionRequest, ActionWindow, EntityId, Role, ToolName } from "../../../core/domain";
 import {
   getActionRequestDay,
   getActionRequestStage,
@@ -156,7 +150,7 @@ export interface PlayerPromptPolicyOptions {
   targetHintRegistry: TargetHintRegistry;
   phaseStageLocalizationRegistry: PhaseStageLocalizationRegistry;
   configRenderRegistry: ConfigRenderRegistry;
-  boardConfig?: BoardConfig;
+  boardConfig?: ReadonlyBoardConfig;
 }
 
 /** Shared game prompt policy; SDK and ACP adapters only choose transport instructions. */

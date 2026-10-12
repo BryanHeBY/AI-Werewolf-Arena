@@ -3,6 +3,7 @@
  * speech, duel/self-destruct interruptions and the returned day result. Inputs use the assembled
  * gateway and role mechanisms; it does not own final phase changes or victory sealing.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { hasActiveDebate } from "../../mechanisms/roles/debater/authority";
 import { DebaterWindow } from "../../mechanisms/roles/debater/window";
 import { AliveComponent } from "../../../core/domain/components/alive";
@@ -10,7 +11,6 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import {
   ActionProvider,
   ActionWindow,
-  BoardConfig,
   DaySummary,
   EntityId,
   GameEvent,
@@ -88,7 +88,7 @@ export class DayPipeline {
   }
 
   async execute(
-    config: BoardConfig,
+    config: ReadonlyBoardConfig,
     actionProvider: ActionProvider,
     options: DayPipelineOptions,
   ): Promise<DayPipelineResult> {

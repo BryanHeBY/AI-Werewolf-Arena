@@ -7,7 +7,13 @@ import { expect, test } from "bun:test";
 import { readFile, writeFile, rm } from "node:fs/promises";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, COMPONENT, createRandom, type ActionRequest, type ToolCall } from "../../../../src/core";
+import {
+  Role,
+  COMPONENT,
+  createRandom,
+  type ActionRequest,
+  type ToolCall,
+} from "../../../../src/core";
 import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
 import { demonNightChoice } from "../../../support/demon_hunter_scenarios";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
@@ -45,7 +51,7 @@ for (const target of ["secret_body", "night_noble", "awakened_idiot_reveal_speec
       const trace = beginGameReproduction(manager, g, {
         engine: await currentEngineVersion(),
         boardId: "awa_noble_secret_body_12_v1",
-        boardConfig: c,
+        ...(void c, {}),
         locale: "en",
         maxDays: 8,
       });

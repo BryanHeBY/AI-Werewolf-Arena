@@ -4,6 +4,7 @@
  * the setup scope is current. Failed selection and closed setup remain local terminal
  * decisions; metadata carries no permission.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { copyEventData } from "@ai-werewolf-arena/game-text";
 import {
@@ -16,7 +17,6 @@ import {
   createVictoryComponent,
   type ActionProvider,
   type ActionRequest,
-  type BoardConfig,
   type CampComponent,
   type GameEvent,
   type RoleComponent,
@@ -76,7 +76,7 @@ export interface InitialIdentityScope {
   camp: CampComponent;
   victory: VictoryComponent;
   victoryJson: string;
-  config: BoardConfig;
+  config: ReadonlyBoardConfig;
   configJson: string;
   isCurrent: () => boolean;
   required: boolean;
@@ -245,7 +245,7 @@ export class InitialIdentitySetupWindow {
     private readonly kind: InitialIdentityKind,
   ) {}
   async execute(
-    config: BoardConfig,
+    config: ReadonlyBoardConfig,
     provider: ActionProvider,
     day: number,
     isCurrent: () => boolean,

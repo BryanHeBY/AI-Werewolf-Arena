@@ -1,9 +1,16 @@
+/**
+ * Assembles seat-specific LLM or ACP providers from resolved profiles and readonly rules.
+ * Inputs are the original World, bound board view and explicit transport options;
+ * outputs are player providers and their owned close operations. This factory retains
+ * process/session ownership without writing rules, actor resources or game phases.
+ */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { promises as fs } from "node:fs";
 import * as path from "node:path";
 import { isDeepStrictEqual } from "node:util";
 import { World } from "../core/domain/world";
-import { ActionProvider, BoardConfig } from "../core/domain/model";
+import { ActionProvider } from "../core/domain/model";
 import {
   AcpActionProvider,
   AcpProcessClient,
@@ -26,7 +33,7 @@ export interface PlayerAgentRuntime {
 
 export interface PlayerAgentFactoryOptions {
   world: World;
-  boardConfig: BoardConfig;
+  boardConfig: ReadonlyBoardConfig;
   profilesByActor: ReadonlyMap<number, ResolvedAgentRuntimeProfile>;
   acpWorkspaceRoot: string;
   llmTimeoutMs: number;

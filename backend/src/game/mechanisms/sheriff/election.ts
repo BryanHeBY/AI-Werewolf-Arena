@@ -4,13 +4,13 @@
  * and the elected sheriff. It does not apply exile ballot rules or wolf knife rules to this
  * election.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { weddingBadgeSwallowed } from "../roles/ghost_bride/authority";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { IdentityComponent } from "../../../core/domain/entities/player";
 import {
   ActionProvider,
-  BoardConfig,
   EntityId,
   GameEvent,
   Phase,
@@ -30,7 +30,7 @@ export interface SheriffElectionInput {
   actionProvider: ActionProvider;
   day: number;
   enableSheriff: boolean;
-  config?: BoardConfig;
+  config?: ReadonlyBoardConfig;
   roleCatalog?: RoleCatalog;
   isCurrent?: () => boolean;
 }

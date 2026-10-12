@@ -1,10 +1,11 @@
-import {
-  Phase,
-  type World,
-  type GameEvent,
-  type BoardConfig,
-  type ActionProvider,
-} from "../../../../core/domain";
+/**
+ * Runs the first-night Wild Child model-selection window with original participants.
+ * Inputs are readonly board policy, provider and request factory; output is the
+ * existing selected model or interrupted setup. Local lifecycle owns choice commits
+ * and cancellation; this window never changes board parameters or grants a stale turn.
+ */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
+import { Phase, type World, type GameEvent, type ActionProvider } from "../../../../core/domain";
 import { GameActionRequestFactory } from "../../../engine/action_request_factory";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import { readWildChildTool } from "./state";
@@ -24,7 +25,7 @@ export class WildChildSetupWindow {
     private readonly events: GameEvent[],
   ) {}
   async execute(
-    config: BoardConfig,
+    config: ReadonlyBoardConfig,
     provider: ActionProvider,
     day: number,
     isCurrent: () => boolean,

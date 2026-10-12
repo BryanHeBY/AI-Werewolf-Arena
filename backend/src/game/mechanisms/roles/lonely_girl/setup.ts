@@ -1,10 +1,11 @@
-import {
-  Phase,
-  type World,
-  type GameEvent,
-  type BoardConfig,
-  type ActionProvider,
-} from "../../../../core/domain";
+/**
+ * Drives Lonely Girl's first-night admired-player choice and existing retry path.
+ * Inputs are readonly rules, original roster and action provider; output is the
+ * selected target or setup interruption. Participant validity and stock remain
+ * lifecycle-owned, and a failed or closed choice never rewrites game parameters.
+ */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
+import { Phase, type World, type GameEvent, type ActionProvider } from "../../../../core/domain";
 import { GameActionRequestFactory } from "../../../engine/action_request_factory";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import { LONELY_GIRL_POLICY, readLonelyGirlTool } from "./state";
@@ -24,7 +25,7 @@ export class LonelyGirlSetupWindow {
     private readonly events: GameEvent[],
   ) {}
   async execute(
-    config: BoardConfig,
+    config: ReadonlyBoardConfig,
     provider: ActionProvider,
     day: number,
     isCurrent: () => boolean,

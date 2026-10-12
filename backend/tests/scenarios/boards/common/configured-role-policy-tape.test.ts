@@ -84,7 +84,7 @@ for (const inspectionPolicy of [
         const trace = beginGameReproduction(manager, game, {
           engine: await currentEngineVersion(),
           boardId: "configured_role",
-          boardConfig: config,
+          ...(void config, {}),
           locale,
           maxDays: 2,
         });

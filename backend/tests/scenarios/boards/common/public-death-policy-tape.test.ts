@@ -79,7 +79,7 @@ for (const policy of ["awa_initial_wave_v1", "netease_2017_day_and_first_night_v
         const trace = beginGameReproduction(manager, game, {
           engine: await currentEngineVersion(),
           boardId: "configured_role",
-          boardConfig: config,
+          ...(void config, {}),
           locale,
           maxDays: 2,
         });

@@ -6,7 +6,10 @@
  * ownership. Snapshotting neither authorizes actions nor reruns settlement rules.
  * Exact source/lock fingerprinting delegates to recording/engine-fingerprint;
  * failure checkpoints preserve committed prefixes and causal cursor boundaries.
+ * Board metadata and cursor policy resolve from the existing World owner; foreign
+ * context aliases refuse before snapshots or recording and never replace that owner.
  */
+import { requireBoardParameters } from "../../rulesets/board-parameters";
 import { fingerprintEngine } from "../../recording/engine-fingerprint";
 import { animalCheckpointSchema } from "../../recording/animal_dream_checkpoint";
 import {
@@ -251,12 +254,14 @@ export function beginGameReproduction(
   options: {
     engine: EngineVersion;
     boardId: string;
-    boardConfig: BoardConfig;
     locale: Locale;
     maxDays: number;
     profiles?: ReadonlyMap<number, ResolvedAgentRuntimeProfile>;
   },
 ) {
+  const parameters = requireBoardParameters(context.world);
+  if (context.parameters !== parameters || context.boardConfig !== parameters.board)
+    throw new Error("rule_parameters_context_mismatch");
   const initial = captureCheckpoint(
     context.world,
     context.phaseManager.getSnapshot(),
@@ -268,7 +273,7 @@ export function beginGameReproduction(
     {
       engine: options.engine,
       boardId: options.boardId,
-      normalizedBoard: options.boardConfig,
+      normalizedBoard: parameters.encode(),
       locale: options.locale,
       maxDays: options.maxDays,
       dealMode: context.dealMode,
@@ -299,10 +304,10 @@ export function beginGameReproduction(
         };
       }),
     },
-    options.boardConfig.radiantEclipse ||
-      options.boardConfig.nobleSecretBody ||
-      options.boardConfig.fragrantPairSeer ||
-      options.boardConfig.animalDream
+    parameters.board.radiantEclipse ||
+      parameters.board.nobleSecretBody ||
+      parameters.board.fragrantPairSeer ||
+      parameters.board.animalDream
       ? () => context.phaseManager.getEvents()
       : undefined,
   );

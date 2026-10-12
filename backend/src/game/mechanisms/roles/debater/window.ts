@@ -4,13 +4,13 @@
  * debate event and window result. It never bypasses participant identity checks after the
  * provider await.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import {
   COMPONENT,
   Role,
   Camp,
   Phase,
   type World,
-  type BoardConfig,
   type ActionProvider,
   type GameEvent,
   type BadgeComponent,
@@ -40,7 +40,7 @@ export class DebaterWindow {
     private readonly events: GameEvent[],
   ) {}
   async execute(
-    config: BoardConfig,
+    config: ReadonlyBoardConfig,
     requests: GameActionRequestFactory,
     provider: ActionProvider,
     targetId: number,

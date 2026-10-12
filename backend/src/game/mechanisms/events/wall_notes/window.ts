@@ -1,8 +1,14 @@
+/**
+ * Opens the configured wall-note opportunity and collects its existing author actions.
+ * Inputs are readonly event policy, original World, provider and named RNG factory;
+ * outputs are wall-note facts and window completion. Wall authority owns author stock
+ * and request closure; this window never changes rules or acquires unrelated capabilities.
+ */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import {
   COMPONENT,
   Phase,
   type World,
-  type BoardConfig,
   type ActionProvider,
   type GameEvent,
   type ToolCall,
@@ -27,7 +33,7 @@ export class WallNotesWindow {
     private readonly events: GameEvent[],
   ) {}
   async execute(
-    config: BoardConfig,
+    config: ReadonlyBoardConfig,
     requests: GameActionRequestFactory,
     provider: ActionProvider,
     day: number,

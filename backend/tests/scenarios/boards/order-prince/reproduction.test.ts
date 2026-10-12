@@ -66,7 +66,7 @@ function recording(policy: "day1" | "day2" | "pk"): Promise<ReproductionRecord> 
         const trace = beginGameReproduction(manager, context, {
           engine: await (version ??= currentEngineVersion()),
           boardId: "order_prince_twelve",
-          boardConfig: config,
+          ...(void config, {}),
           locale,
           maxDays: 8,
         });

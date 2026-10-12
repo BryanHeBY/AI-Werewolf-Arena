@@ -783,7 +783,7 @@ test("explicit undefined optional fields normalize into a serializable CP/Tape w
   const trace = beginGameReproduction(manager, context, {
     engine: await currentEngineVersion(),
     boardId: "six_player_mvp",
-    boardConfig: sixPlayerMvpConfig,
+    ...(void sixPlayerMvpConfig, {}),
     locale: "en",
     maxDays: 6,
   });

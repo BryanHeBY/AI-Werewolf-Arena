@@ -90,7 +90,7 @@ function recording(locale: "en" | "zh-CN", cancel: boolean, seed = 0): Promise<R
         const trace = beginGameReproduction(manager, context, {
           engine: await (version ??= currentEngineVersion()),
           boardId: "trickster_twelve",
-          boardConfig: config,
+          ...(void config, {}),
           locale,
           maxDays: 30,
         });

@@ -231,7 +231,7 @@ for (const kind of ["poison", "hunter", "wolf_king", "black_backlash"] as const)
         const trace = beginGameReproduction(manager, game, {
           engine: await currentEngineVersion(),
           boardId: "historical_policy",
-          boardConfig: normalized,
+          ...(void normalized, {}),
           locale,
           maxDays: 1,
         });

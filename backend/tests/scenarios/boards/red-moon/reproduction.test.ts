@@ -7,7 +7,13 @@
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { createRandom, Camp, PotionType, type ActionRequest, type ToolCall } from "../../../../src/core";
+import {
+  createRandom,
+  Camp,
+  PotionType,
+  type ActionRequest,
+  type ToolCall,
+} from "../../../../src/core";
 import { redMoonTwelveConfig } from "../../../../src/runtime/scenarios/red_moon_twelve";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
@@ -20,7 +26,10 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../../../src/runtime/simulation/replay_reproduction";
-import { parseReproductionRecord, type RecordedCheckpoint } from "../../../../src/recording/reproduction";
+import {
+  parseReproductionRecord,
+  type RecordedCheckpoint,
+} from "../../../../src/recording/reproduction";
 import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
 import { demonNightChoice } from "../../../support/demon_hunter_scenarios";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
@@ -100,7 +109,7 @@ for (const mode of ["expire", "knife", "blast"] as const)
               const trace = beginGameReproduction(manager, context, {
                 engine: await (version ??= currentEngineVersion()),
                 boardId: "red_moon_twelve",
-                boardConfig: config,
+                ...(void config, {}),
                 locale,
                 maxDays: 8,
               });

@@ -3,6 +3,8 @@
  * Inputs are resolved setup and execution dependencies; outputs are recorded outcomes and
  * optional audit results. The runner delegates local request alias validation to its bound
  * owners and closes only its own resources, preserving cleanup/error order.
+ * Agents and trace share the bound board source; persisted maxDays captures at its
+ * original metadata read and is reused by cycles without changing clocks or deadlines.
  */
 import { deriveBoundedRequest } from "../core/domain/request_delivery";
 import {
@@ -172,6 +174,7 @@ export async function runGame(
     const inFlight = new Set<Promise<ToolCall | null>>();
     const actionFailures: unknown[] = [];
     const cleanupFailures: unknown[] = [];
+    let maxDays: number;
     const closeRuntime = (): Promise<void> => {
       stopping = true;
       closing ??= Promise.resolve()
@@ -189,14 +192,13 @@ export async function runGame(
       const reproduction = beginGameReproduction(replayManager, context, {
         engine: await currentEngineVersion(),
         boardId: options.board,
-        boardConfig: setup.boardConfig,
-        locale: setup.context.locale,
-        maxDays: options.maxDays,
+        locale: context.world.locale,
+        maxDays: (maxDays = options.maxDays),
         profiles: profilesByActor,
       });
       agentRuntime = await createPlayerAgentRuntime({
         world: context.world,
-        boardConfig: setup.boardConfig,
+        boardConfig: context.boardConfig,
         profilesByActor,
         acpWorkspaceRoot: path.join(recordRoot, sessionId, "acp-workspaces"),
         llmTimeoutMs: options.llmTimeoutMs,
@@ -290,7 +292,7 @@ export async function runGame(
         let complete = false;
         let cycleFailure: unknown;
         try {
-          await context.phaseManager.runSingleCycle(provider, options.maxDays);
+          await context.phaseManager.runSingleCycle(provider, maxDays);
           complete = true;
         } catch (error) {
           cycleFailure = error;

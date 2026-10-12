@@ -191,7 +191,7 @@ export async function radiantRecording(
       const trace = beginGameReproduction(manager, game, {
         engine: await currentEngineVersion(),
         boardId: board.definition.id,
-        boardConfig: board.config,
+        ...(void board.config, {}),
         locale,
         maxDays: 6,
       });

@@ -97,7 +97,7 @@ function recording(
         const trace = beginGameReproduction(manager, context, {
           engine: await (version ??= currentEngineVersion()),
           boardId: "wolf_sorcerer_twelve",
-          boardConfig: config,
+          ...(void config, {}),
           locale,
           maxDays: 30,
         });

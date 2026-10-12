@@ -1,4 +1,11 @@
-import type { ActionProvider, ActionRequest, BoardConfig, ToolCall, World } from "../../../core";
+/**
+ * Adapts original World observations to per-player unprivileged strategy decisions.
+ * Inputs are the readonly board view and seat strategy map; outputs are returned
+ * tools using the shared player projection and prompt policy. It never supplies
+ * hidden camp truth as player knowledge or changes runtime rule parameters.
+ */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
+import type { ActionProvider, ActionRequest, ToolCall, World } from "../../../core";
 import { PlayerPromptPolicy } from "../player/player_prompt_policy";
 import type { ObservedPlayerStrategy } from "../player/observation";
 import {
@@ -16,7 +23,7 @@ export class ObservedPlayersActionProvider implements ActionProvider {
   constructor(
     world: World,
     private readonly strategies: ReadonlyMap<number, ObservedPlayerStrategy>,
-    boardConfig: BoardConfig,
+    boardConfig: ReadonlyBoardConfig,
   ) {
     this.policy = new PlayerPromptPolicy(world, {
       boardConfig,

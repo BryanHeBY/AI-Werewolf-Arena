@@ -4,6 +4,7 @@
  * model-death conversion only through current local windows. Replacement or closed choice
  * invalidates local authority; deadline aliases preserve its checks.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { copyEventData } from "@ai-werewolf-arena/game-text";
 import {
@@ -14,7 +15,6 @@ import {
   createCampComponent,
   createVictoryComponent,
   type World,
-  type BoardConfig,
   type ActionRequest,
   type RoleComponent,
   type CampComponent,
@@ -35,7 +35,7 @@ export interface WildChildBinding {
   actorId: number;
   actor: DebateParticipant;
   state: WildChildState;
-  config: BoardConfig;
+  config: ReadonlyBoardConfig;
   configJson: string;
   camp: CampComponent;
   victory: VictoryComponent;
@@ -65,7 +65,7 @@ function safeJson(value: unknown): string {
     return "invalid";
   }
 }
-export function installWildChild(world: World, config: BoardConfig): void {
+export function installWildChild(world: World, config: ReadonlyBoardConfig): void {
   if (bindings.has(world)) throw new Error("wild_child_already_installed");
   const actorId = world
     .entityIds()

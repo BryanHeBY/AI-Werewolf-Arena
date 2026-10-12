@@ -17,6 +17,7 @@
  * Inputs are catalog profiles, current roles and possible ability roles; output is the assembled
  * stage list. It does not freeze which player will act or instantiate an ability resource.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { demonHunterActorId } from "../game/mechanisms/roles/demon_hunter/authority";
 import { types } from "node:util";
 import { DEMON_HUNTER_NIGHT_STAGE } from "../game/mechanisms/roles/demon_hunter/night_stages";
@@ -25,7 +26,7 @@ import {
   WEDDING_KNIFE_STAGE,
 } from "../game/mechanisms/roles/ghost_bride/night_stages";
 /** 文件说明：根据板子角色集合构建夜间阶段列表。 */
-import { BoardConfig, Role } from "../core/domain/model";
+import { Role } from "../core/domain/model";
 import { RoleCatalog, getDefaultRoleCatalog } from "../game/mechanisms/roles/catalog";
 import { NightStageHandler } from "../game/mechanisms/stages/night/contracts";
 import type { World } from "../core/domain/world";
@@ -161,7 +162,7 @@ export class NightStageRegistry {
   }
 
   /** Snapshot safe native membership; preserve virtual overrides and opaque lazy sources. */
-  getPlan(config: BoardConfig, world?: World): NightStagePlan {
+  getPlan(config: ReadonlyBoardConfig, world?: World): NightStagePlan {
     const source = this.getStages(config, world),
       members = snapshotMembers(source);
     if (members === null)
@@ -186,7 +187,7 @@ export class NightStageRegistry {
     return Object.freeze({ mode: "snapshot", stages, entries, metadata });
   }
 
-  getStages(config: BoardConfig, world?: World): NightStageHandler[] {
+  getStages(config: ReadonlyBoardConfig, world?: World): NightStageHandler[] {
     const roleSet = new Set<Role>(config.roleSetups.map((item) => item.role));
     let hasRoleChecks = false;
     for (const role of [...roleSet])

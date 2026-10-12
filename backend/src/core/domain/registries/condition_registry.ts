@@ -1,3 +1,9 @@
+/**
+ * Owns ordered delegation of victory conditions and override-first selection.
+ * Inputs are original World, readonly condition IDs and checkpoint/override data;
+ * output is the first original decision or null. This boundary neither changes
+ * parameter arrays nor seals results; PhaseManager retains executed checkpoints.
+ */
 import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-catalog";
 import { WinDecision, WinCondition } from "../model";
 import { World } from "../world";
@@ -39,7 +45,7 @@ export class ConditionRegistry {
    */
   evaluateMany(
     world: World,
-    conditions: WinCondition[],
+    conditions: readonly WinCondition[],
     checkpoint?: VictoryCheckpoint,
     overrides: Partial<Record<WinCondition, WinDecision>> = {},
   ): WinDecision | null {

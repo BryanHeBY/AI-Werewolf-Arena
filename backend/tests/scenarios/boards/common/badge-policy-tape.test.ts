@@ -59,7 +59,7 @@ for (const choice of [false, true])
     const trace = beginGameReproduction(manager, game, {
       engine: await currentEngineVersion(),
       boardId: "badge_branch",
-      boardConfig: config,
+      ...(void config, {}),
       locale: "zh-CN",
       maxDays: 2,
     });

@@ -63,7 +63,7 @@ export async function recordFragrantLiteral(
       const trace = beginGameReproduction(active, game, {
         engine: await currentEngineVersion(),
         boardId: "awa_fragrant_pair_seer_12_v1",
-        boardConfig: fragrantPairSeerTwelveConfig,
+        ...(void fragrantPairSeerTwelveConfig, {}),
         locale,
         maxDays: 8,
       });

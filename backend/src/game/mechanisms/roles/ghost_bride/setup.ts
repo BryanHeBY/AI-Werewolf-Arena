@@ -1,10 +1,16 @@
+/**
+ * Collects Ghost Bride's groom and witness choices through the existing wedding authority.
+ * Inputs are readonly board policy, current roster and requests; outputs are ordered
+ * setup facts or interruption. This coordinator never rewrites rules or bypasses
+ * the authority's original identity, failure and deadline checks.
+ */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import { GHOST_BRIDE_POLICY, readWeddingTool } from "@ai-werewolf-arena/game-text";
 import {
   Phase,
   type World,
   type GameEvent,
-  type BoardConfig,
   type ActionProvider,
   type ActionStage,
   type ToolName,
@@ -175,7 +181,7 @@ export class GhostBrideSetupWindow {
     private readonly events: GameEvent[],
   ) {}
   async execute(
-    config: BoardConfig,
+    config: ReadonlyBoardConfig,
     provider: ActionProvider,
     day: number,
     isCurrent: () => boolean,

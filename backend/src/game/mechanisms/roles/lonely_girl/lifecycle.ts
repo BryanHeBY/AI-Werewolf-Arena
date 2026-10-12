@@ -4,6 +4,7 @@
  * later target-death settlement only while current. Closed or replaced participant scopes
  * revoke local permission, including deadline aliases.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { copyEventData } from "@ai-werewolf-arena/game-text";
 import {
@@ -13,7 +14,6 @@ import {
   Phase,
   createVictoryComponent,
   type World,
-  type BoardConfig,
   type ActionRequest,
   type RoleComponent,
   type CampComponent,
@@ -46,7 +46,7 @@ export interface LonelyGirlBinding {
   actor: Participant;
   participants: ReadonlyMap<number, Participant>;
   state: LonelyGirlState;
-  config: BoardConfig;
+  config: ReadonlyBoardConfig;
   configJson: string;
   victory: VictoryComponent;
   affiliations: VictoryComponent["affiliations"];
@@ -126,7 +126,7 @@ function same(world: World, p: Participant): boolean {
     lonelyData(p.camp, "camp") === p.campValue
   );
 }
-export function installLonelyGirl(world: World, config: BoardConfig): void {
+export function installLonelyGirl(world: World, config: ReadonlyBoardConfig): void {
   if (bindings.has(world)) throw new Error("lonely_girl_already_installed");
   const actorId = world
     .entityIds()

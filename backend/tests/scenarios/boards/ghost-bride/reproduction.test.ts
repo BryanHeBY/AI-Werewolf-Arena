@@ -213,7 +213,7 @@ async function recordGame(
     const trace = beginGameReproduction(manager, context, {
       engine: await currentEngineVersion(),
       boardId: "ghost_bride_12",
-      boardConfig: config,
+      ...(void config, {}),
       locale: context.world.locale,
       maxDays: 15,
     });

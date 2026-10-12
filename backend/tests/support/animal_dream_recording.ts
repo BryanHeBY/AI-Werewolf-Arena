@@ -50,7 +50,7 @@ export async function recordAnimalLiteral(
     const trace = beginGameReproduction(manager, g, {
       engine: await currentEngineVersion(),
       boardId: "animal_dream",
-      boardConfig: animalBoard(skip, first),
+      ...(void animalBoard(skip, first), {}),
       locale,
       maxDays: 8,
     });

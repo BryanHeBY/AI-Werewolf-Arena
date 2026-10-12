@@ -4,6 +4,7 @@
  * identity and weights. A destroyed badge does not silently restore itself through a replacement
  * component.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { openDemonBadgeFrame, assertDemonBadgeReadable } from "../roles/demon_hunter/authority";
 import { weddingBadgeSwallowed } from "../roles/ghost_bride/authority";
 /** 文件说明：警徽流转、销毁与授予逻辑。 */
@@ -12,7 +13,7 @@ import { BadgeComponent } from "../../../core/domain/components/badge";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { VotingRightComponent } from "../../../core/domain/components/voting_right";
 import { IdentityComponent } from "../../../core/domain/entities/player";
-import { BoardConfig, EntityId, GameEvent } from "../../../core/domain/model";
+import { EntityId, GameEvent } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
 import { canBeSheriff } from "../common/participation";
 import type { RoleCatalog } from "../roles/catalog";
@@ -28,7 +29,7 @@ export interface SheriffBadgeTransferResult {
 export function assignSheriff(
   world: World,
   sheriffId: EntityId,
-  config?: BoardConfig,
+  config?: ReadonlyBoardConfig,
   catalog?: RoleCatalog,
 ): boolean {
   assertDemonBadgeReadable(world);
@@ -180,7 +181,7 @@ export function findSheriffId(world: World, catalog?: RoleCatalog): EntityId | n
 
 export function assignInitialSheriff(
   world: World,
-  config: BoardConfig,
+  config: ReadonlyBoardConfig,
   playerIds: EntityId[],
 ): void {
   if (!config.enableSheriff || config.initialSheriffSeat === undefined) return;

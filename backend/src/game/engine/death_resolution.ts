@@ -3,7 +3,9 @@
  * are proposed deaths with causes and original-life permissions; outputs are committed deaths
  * and their ordered events. It does not advance phases or seal final victory; PhaseManager owns
  * those decisions.
+ * Its board-policy input is the same deeply readonly execution view as the manager.
  */
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { getSessionRecorder } from "../../recording/recording_context";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
 import {
@@ -218,7 +220,7 @@ export class DeathResolution {
     private readonly toolGateway: ToolGateway,
     private readonly eventRegistry: EventRegistry,
     private readonly state: RuntimeSnapshot,
-    private readonly config?: BoardConfig,
+    private readonly config?: ReadonlyBoardConfig,
   ) {}
 
   async resolve(

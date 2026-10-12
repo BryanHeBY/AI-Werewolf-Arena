@@ -134,7 +134,7 @@ for (const locale of ["zh-CN", "en"] as const)
             const reproduction = beginGameReproduction(manager, game, {
               engine: await currentEngineVersion(),
               boardId: "hybrid_fault",
-              boardConfig: config,
+              ...(void config, {}),
               locale,
               maxDays: 8,
             });
