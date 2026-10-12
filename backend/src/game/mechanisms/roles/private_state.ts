@@ -1,3 +1,10 @@
+/**
+ * Defines existing private role-state contracts and legacy accessors.
+ * Inputs are role components and state values; outputs preserve stored references
+ * or the existing ability owner's installation copies. Seer data/access ownership
+ * now belongs to its named feature leaves; this facade never keeps a second slot
+ * or changes ability lifetime, use counts, authorization or player projection.
+ */
 import type { HiddenWolfCampInspectionPolicy } from "../../../core/domain/board";
 /** 文件说明：角色私有状态的统一读写封装。 */
 import { EntityId, WitchSelfHealRule, type GuardRepeatPolicy } from "../../../core/domain/model";
@@ -5,6 +12,8 @@ import { RoleComponent } from "../../../core/domain/components/role";
 import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
 import type { ExileFeedback } from "../../../core/domain/events";
 import { findNightAbility, installNativeAbility, type RoleInspectionPolicy } from "./abilities";
+export type { SeerState } from "./seer/state-contracts";
+export { getSeerState, setSeerState } from "./seer/state";
 
 const PRIVATE_STATE_KEYS = {
   hunter: "hunter",
@@ -97,20 +106,6 @@ export interface RoleInspectionState {
 /** 白痴私有状态。 */
 export interface IdiotState {
   revealed: boolean;
-}
-
-/** 预言家私有状态。 */
-export interface SeerState {
-  targetPolicy?: import("../../../core/domain/board").SeerTargetPolicy;
-  actionPolicy?: import("../../../core/domain/board").SeerActionPolicy;
-  lastTarget: EntityId | null;
-  lastIsWerewolf: boolean | null;
-  lastResult?: InspectionResult | null;
-  history: Array<{
-    targetId: EntityId;
-    isWerewolf: boolean;
-    result?: InspectionResult;
-  }>;
 }
 
 function getState<T>(roleComp: RoleComponent, key: string): T | undefined {
@@ -238,14 +233,4 @@ export function setIdiotState(roleComp: RoleComponent, state: IdiotState): Idiot
 /** 读取白痴私有状态。 */
 export function getIdiotState(roleComp: RoleComponent): IdiotState | undefined {
   return getState(roleComp, PRIVATE_STATE_KEYS.idiot);
-}
-
-/** 写入预言家私有状态。 */
-export function setSeerState(roleComp: RoleComponent, state: SeerState): SeerState {
-  return installNativeAbility(roleComp, "seer_check", state);
-}
-
-/** 读取预言家私有状态。 */
-export function getSeerState(roleComp: RoleComponent, abilityId?: string): SeerState | undefined {
-  return findNightAbility(roleComp, "seer_check", abilityId)?.state;
 }

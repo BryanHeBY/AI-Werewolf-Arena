@@ -1,3 +1,10 @@
+/**
+ * Executes the late lucky or black-market recipient ability stage.
+ * Inputs are captured recipient instances and validated night actions; outputs
+ * preserve original effect, use-count and recipient-commit ordering. Seer writes
+ * use its concrete owner before Fox effects; this stage never replaces the state
+ * slot or adds a new retry, lease check or rollback boundary around that command.
+ */
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import { Camp, Phase, PotionType, StatusMark, type ToolName } from "../../../core/domain/model";
@@ -13,6 +20,7 @@ import {
 import { captureNightAbilityScope } from "./ability_scope";
 import { luckyTargetAllowed, recordOwnNightAction } from "./night_action_history";
 import { resolveInspection } from "./inspection";
+import { recordRecipientSeerInspection } from "./seer/state";
 
 type RecipientPolicy = "lucky" | "black_market";
 const committed = new WeakMap<World, Map<RecipientPolicy, Set<number>>>();
@@ -158,14 +166,7 @@ export function recipientAbilityStage(
               )
                 continue;
               const isWerewolf = result.camp === Camp.Wolf;
-              ability.state.lastTarget = target.id;
-              ability.state.lastIsWerewolf = isWerewolf;
-              ability.state.lastResult = { ...result };
-              ability.state.history.push({
-                targetId: target.id,
-                isWerewolf,
-                result: { ...result },
-              });
+              recordRecipientSeerInspection(ability, target, isWerewolf, result);
               commitFoxInspection(ctx.world, ctx.state, target, day, () =>
                 scope.isOwnerCurrent(true),
               );

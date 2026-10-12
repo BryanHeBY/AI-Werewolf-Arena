@@ -1,3 +1,10 @@
+/**
+ * Owns ability instances, their copied state slots and lifecycle metadata.
+ * Inputs are role-owned instances, installation data and day eligibility queries;
+ * outputs are stored references, status and detached player projections. Seer
+ * payload writes belong to its feature owner; this store never infers player
+ * knowledge from true camp or executes a Seer inspection command.
+ */
 import { scholarMentorBlocks } from "./scholar_mentor/night_frame";
 import { readPairSeerState, type PairSeerState } from "./fragrant_pair_seer/state";
 import { readShelterState } from "./radiant_eclipse/state";
@@ -6,13 +13,8 @@ import { INSPECTION_POLICIES } from "../../../core/domain/board";
 import { nativePotionSecondTurn } from "./witch/policies";
 import { Role, type EntityId, type EventPayloadMap } from "../../../core/domain/model";
 import type { RoleComponent } from "../../../core/domain/components/role";
-import type {
-  GuardState,
-  SeerState,
-  WitchState,
-  DreamerState,
-  RoleInspectionState,
-} from "./private_state";
+import type { GuardState, WitchState, DreamerState, RoleInspectionState } from "./private_state";
+import type { SeerState } from "./seer/state-contracts";
 import { COMPONENT } from "../../../core/domain/components/names";
 import {
   projectDreamerState,

@@ -1,3 +1,10 @@
+/**
+ * Executes ordinary Seer requests against captured ability and target authority.
+ * Inputs are the night-stage context and validated check actions; outputs retain
+ * original inspection, resource and event effects. State writes use the captured
+ * Seer slot after Time Consort and before Fox effects, without rollback or a new
+ * eligibility check; Demon Hunter's sealed native controller remains separate.
+ */
 import { isRadiantEclipseBoard } from "../radiant_eclipse/night_frame";
 import {
   isScholarMentorBoard,
@@ -16,7 +23,7 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Phase, Role } from "../../../../core/domain/model";
 import { NightStageHandler } from "../../stages/night/contracts";
-import { getSeerState } from "../private_state";
+import { getSeerState, recordSeerInspection } from "./state";
 import { resolveInspection } from "../inspection";
 import { activeNightAbility, nightAbilityActors, recordNightAbilityUse } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";
@@ -179,10 +186,7 @@ const seerCheckStage: NightStageHandler = {
         throw new Error("time_consort_inspection_target_stale");
       commitTimeConsortEffect(ctx, receipt, day, seerId, "check");
       if (seerState) {
-        seerState.lastTarget = targetId;
-        seerState.lastIsWerewolf = isWerewolf;
-        seerState.lastResult = { ...inspection };
-        seerState.history.push({ targetId, isWerewolf, result: { ...inspection } });
+        recordSeerInspection(seerState, targetId, isWerewolf, inspection);
       }
 
       commitFoxInspection(ctx.world, ctx.state, target, day, () => scope.isOwnerCurrent(true));

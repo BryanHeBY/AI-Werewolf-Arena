@@ -122,6 +122,15 @@
       "currentConsumers": "existing explicit generic source/test reads and named hostile negative injections",
       "exit": "C44 removes unchecked public overloads after all source reads/writes use mapped names; tests keep explicit privileged negative injection casts only in test support",
       "runtime": "same stores, original object identity, life revision and method bodies; overloads erase"
+    },
+    {
+      "id": "seer-private-state-accessors",
+      "path": "backend/src/game/mechanisms/roles/private_state.ts",
+      "owner": "seer/state.ts and state-contracts.ts",
+      "exports": ["SeerState", "getSeerState", "setSeerState"],
+      "currentConsumers": "remaining role profiles, agent prompts, projection/runtime and tests through named legacy facade",
+      "exit": "C44 after remaining consumers target the Seer owner; no duplicate state or compatibility algorithm",
+      "runtime": "same functions and stored ability-state reference; existing installation input copy unchanged"
     }
   ]
 }

@@ -67,3 +67,5 @@
 - C16基础：11 typed组件映射/default slot约束，17World方法与全module typeerase原byte；独立验证真实错槽/两向RoleCamp及customextras、3运行项通过。backend源码0，9负例/10explicitunknown注入原JS保持后tests0；legacy只显式T、C44退出，全consumer/state迁移尚未完成。
 
 - C13消费者职责头收口：145原程序/imports/fixture逐字保持，仅补真实139测试/preload与6记录driver职责；actual comment checker145/0，Root14跨层抽审及全部原文独立核对通过。未重复全量测试。
+
+- C17预言家试点：原abilities slot/ref保留，具体owner接两普通writer；4新/0/31+9原selected/0/75，13声明/body/caller保真与Root独立accessor核对通过，整合source/tests类型0。recipient重复读取和Demon第三sealed writer明确保留，其余机制与codec贡献未冒称完成。
