@@ -2,9 +2,9 @@
  * Checks the sourced wolf knife and discards it when its original life or mark scope is stale.
  * Inputs are World and the captured knife claim; outputs clear the captured and current knife
  * marks and reset the night target. It does not create a replacement attack or kill a revived
- * target.
+ * target. The public target query remains after the original life/marks checks.
  */
-import { wolfKnifeTargetAllowed } from "./target_policy";
+import { bindWolfKnifeTargetQuery } from "./ports";
 import { aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { StatusMark } from "../../../../core/domain/model";
@@ -21,7 +21,7 @@ export function discardStaleWolfKnife(world: World, state: NightStageState): voi
     scope.life.alive &&
     aliveLifeVersion(scope.life) === scope.version &&
     world.getComponent(scope.targetId, COMPONENT.StatusMarks) === scope.marks &&
-    wolfKnifeTargetAllowed(world, scope.targetId)
+    bindWolfKnifeTargetQuery(world).allows(scope.targetId)
   )
     return;
   scope.marks.remove(StatusMark.WolfKillMark);

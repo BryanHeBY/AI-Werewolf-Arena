@@ -1,5 +1,12 @@
+/**
+ * Owns wolf chat, knife and self-destruct validation rule contributions.
+ * Inputs are trusted actor permissions, phase/window and submitted wolf tools;
+ * outputs retain the original first rule violation or accepted preflight result.
+ * Ordinary knife targets consume a public read-only query after existing pass
+ * checks. Validation never spends stock, creates a knife or commits an effect.
+ */
 import { canRoleSelfDestruct } from "../self_destruct_capability";
-import { wolfKnifeTargetAllowed } from "./target_policy";
+import { bindWolfKnifeTargetQuery } from "./ports";
 import {
   weddingMember,
   weddingSetup,
@@ -38,7 +45,7 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
     }
     if (
       toolCall.args.target_id === null ||
-      !wolfKnifeTargetAllowed(world, toolCall.args.target_id)
+      !bindWolfKnifeTargetQuery(world).allows(toolCall.args.target_id)
     ) {
       return { code: RuleError.KillTarget };
     }

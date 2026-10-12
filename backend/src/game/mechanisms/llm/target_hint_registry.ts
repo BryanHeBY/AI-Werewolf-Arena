@@ -2,7 +2,8 @@
  * Builds actionable target hints from the request, role and registered target rules. Inputs
  * include current component state and candidate context; outputs are localized prompt hints. A
  * hint is not a capability, and actual validation and commitment still belong to the gateway and
- * mechanism.
+ * mechanism. Wolf candidates consume the public target query without acquiring
+ * role state or knife-commit rights.
  */
 import { nobleBodyChoiceTargets } from "../roles/noble_secret_body/authority";
 import {
@@ -12,7 +13,7 @@ import {
 } from "../roles/radiant_eclipse/night_frame";
 import { nightmareFearTargets } from "../roles/nightmare_shadow/state";
 import { magicianChoiceTargets } from "../roles/magician/night_frame";
-import { wolfKnifeTargetAllowed } from "../roles/wolf/target_policy";
+import { bindWolfKnifeTargetQuery } from "../roles/wolf/ports";
 import { prohibitsLoversVote } from "../roles/cupid/relation";
 import { seerTargetAllowed } from "../roles/seer/target_policy";
 import { guardTargetRepeated } from "../roles/guard/repeat_policy";
@@ -209,7 +210,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
               nightmareFearTargets(ctx.world, ctx.actorId, ctx.day ?? 1).includes(id)) &&
             (tool !== "swap_targets" ||
               magicianChoiceTargets(ctx.world, ctx.day ?? 1).includes(id)) &&
-            (tool !== "kill_vote" || wolfKnifeTargetAllowed(ctx.world, id)) &&
+            (tool !== "kill_vote" || bindWolfKnifeTargetQuery(ctx.world).allows(id)) &&
             (tool !== "inspect_night_identity" ||
               ctx.actorRole !== Role.WolfWitch ||
               ctx.world.getComponent(id, COMPONENT.Role)?.camp !== "wolf") &&

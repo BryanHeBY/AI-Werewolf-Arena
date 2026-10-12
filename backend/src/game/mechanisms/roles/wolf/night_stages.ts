@@ -2,7 +2,8 @@
  * Runs wolf discussion rounds and knife ballot retries with captured actor/target scopes. Inputs
  * are current pack permissions and validated wolf tools; outputs preserve chat, consensus and
  * sourced knife claims. It never lets rejected or replaced voters create a fresh pack
- * opportunity or bypass the retry limit.
+ * opportunity or bypass the retry limit. Public target queries retain their
+ * original preflight, captured-life and final accepted-target call boundaries.
  */
 import { checkpointNobleBodyAuthority, isNobleBodyBoard } from "../noble_secret_body/authority";
 import { isFragrantPairBoard } from "../fragrant_pair_seer/authority";
@@ -17,7 +18,7 @@ import {
 import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { isRedMoonBoard } from "../demon_hunter/authority";
 import { nightmareKnifeBlocked, isNightmareBoard } from "../nightmare_shadow/night_frame";
-import { wolfKnifeTargetAllowed } from "./target_policy";
+import { bindWolfKnifeTargetQuery } from "./ports";
 import { isEvilKnightBoard } from "../evil_knight/night_frame";
 /** 文件说明：狼人夜聊与刀人投票阶段处理。 */
 import { EntityId, Phase, StatusMark } from "../../../../core/domain/model";
@@ -266,7 +267,7 @@ const wolfKillVoteStage: NightStageHandler = {
           result.sanitizedCall?.args.abstain === true ||
           target === null ||
           (!!snapshot &&
-            wolfKnifeTargetAllowed(ctx.world, target as number) &&
+            bindWolfKnifeTargetQuery(ctx.world).allows(target as number) &&
             ctx.world.getComponent(target as number, COMPONENT.Alive) === snapshot.life &&
             snapshot.life.alive &&
             snapshot.version !== undefined &&
@@ -366,7 +367,7 @@ const wolfKillVoteStage: NightStageHandler = {
         ctx.world.getComponent(target.targetId, COMPONENT.Alive) === target.life &&
         target.life.alive &&
         aliveLifeVersion(target.life) === target.version &&
-        wolfKnifeTargetAllowed(ctx.world, target.targetId);
+        bindWolfKnifeTargetQuery(ctx.world).allows(target.targetId);
       if (!current && mistVoteScopes) throw new Error("mist_wolf_target_stale");
       if (current)
         ctx.state.wolfVotes[target.targetId] = (ctx.state.wolfVotes[target.targetId] ?? 0) + 1;
@@ -422,7 +423,7 @@ const wolfKillVoteStage: NightStageHandler = {
             ctx.world.getComponent(item.targetId, COMPONENT.Alive) === item.life &&
             item.life.alive &&
             aliveLifeVersion(item.life) === item.version &&
-            wolfKnifeTargetAllowed(ctx.world, item.targetId),
+            bindWolfKnifeTargetQuery(ctx.world).allows(item.targetId),
         );
       if (target) {
         const mapping = isMagicianBoard(ctx.world)

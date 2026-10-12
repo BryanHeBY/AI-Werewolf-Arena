@@ -127,3 +127,5 @@
 - C17隐狼/石像鬼继承事实写权：各readonly字段/各具体true命令，原lastwolf/camp/inspection资格与pub顺序不变；不合并当前刀权或学习资源。4wholebody/5heads0，独立cold8同exports，new4/0/18与旧消费者finite types0；同slot/ref、无退款/死亡/CP变。
 
 - C17 Guard普通payload写权：native/recipient原两个lastTarget赋值归owner、readonly读字段、recipient取LHSstate再RHSid；原marks/claims/pub/use顺序不变、Demon sealed第三writer保留。3wholebody/5heads0、独立Git赋值3getter/error前缀/cold8同exports；new3/0/13与旧repeat/nightAbilities finite types0。
+
+- C24狼刀目标：4实际feature公开bool/ID贡献+wolf组合owner，6calls/4consumer保原World/target求值及Mist→Noble(2Role)→alive→Evil→Nightmare(2Role)短路；旧targetleaf无consumer直接删。原terms/fullconsumer/imports/10heads0，new7/0/37+原Mistknife1/0/19、finite types0；独立cold正常3入口同success/direct2同原TDZ，harness删leaf红保留后精确恢复oldinput。全native/targets/RulePlan仍pending。
