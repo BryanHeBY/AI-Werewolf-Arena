@@ -1,8 +1,7 @@
 /**
- * Fault scenario integration verify Demon Hunter executed fault boundaries and paid-prefix cancellation.
- * Input: Real phase cycles, committed choices, injected fault/recording hooks and checkpoints.
- * Output and independent oracle: Literal committed prefixes, one cancellation, absent hunt damage and rejection of unused fabricated faults.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Failure scenarios verify Demon Hunter executed fault boundaries preserve committed choices and exactly one native cancellation.
+ * Input: Original phase cycles, injected source/recording faults, current-life replacements and real session stores.
+ * Output and oracle: Literal paid prefixes, absent hunt damage, fault evidence order and closed-recorder rejection retain the actual causal state; unused future faults are never fabricated.
  */
 import { expect, test, spyOn } from "bun:test";
 import {
@@ -11,14 +10,14 @@ import {
   type ActionRequest,
   type AliveComponent,
   type RoleComponent,
-} from "../../../src/core";
+} from "../../../../src/core";
 import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-text";
-import { demonHunterFixture, demonNightChoice } from "../../support/demon_hunter_scenarios";
-import { getWitchState } from "../../../src/game/mechanisms/roles/private_state";
-import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { createTestTempDirectory } from "../../support/drivers/temp-directories";
+import { demonHunterFixture, demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/private_state";
+import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
+import { SessionRecordManager } from "../../../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 function plan(actorId: number, playerId = actorId, day = 2) {
   return {
     version: "awa_fault_plan_v1",

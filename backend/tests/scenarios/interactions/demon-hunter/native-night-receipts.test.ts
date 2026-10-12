@@ -1,3 +1,8 @@
+/**
+ * Interaction scenarios verify Demon Hunter native night receipts and stocks remain bound across strict delivery and source revocation.
+ * Input: Original native Guard/Seer matrices, controlled SDK/ACP providers, target/mark replacements and actual phase cycles.
+ * Output and oracle: Explicit stock, mark, receipt and zero-fallback assertions retain the executed night prefix; same-target dynamic import rebasing changes only module paths.
+ */
 import { expect, test, spyOn } from "bun:test";
 import {
   COMPONENT,
@@ -8,10 +13,10 @@ import {
   type ActionRequest,
   type RoleComponent,
   type StatusMarksComponent,
-} from "../../../src/core";
-import { demonHunterFixture, demonNightChoice } from "../../support/demon_hunter_scenarios";
-import { demonHunterAuditPlayer } from "../../../src/game/mechanisms/roles/demon_hunter/authority";
-import { inheritDemonWitchDeadlineRequest } from "../../../src/game/mechanisms/roles/demon_hunter/native_potion_requests";
+} from "../../../../src/core";
+import { demonHunterFixture, demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { demonHunterAuditPlayer } from "../../../../src/game/mechanisms/roles/demon_hunter/authority";
+import { inheritDemonWitchDeadlineRequest } from "../../../../src/game/mechanisms/roles/demon_hunter/native_potion_requests";
 const audit = (f: ReturnType<typeof demonHunterFixture>, id: number) =>
   demonHunterAuditPlayer(f.world, id)!;
 for (const name of ["guard", "check_identity"] as const)
@@ -48,7 +53,7 @@ for (const name of ["guard", "check_identity"] as const)
               const clone = { ...r, deadlineAtMs: Date.now() + 1000 };
               if (variant === "clone") inheritDemonWitchDeadlineRequest(r, clone);
               const { ActionReception } =
-                await import("../../../src/ai/agents/player/action_reception");
+                await import("../../../../src/ai/agents/player/action_reception");
               const reception = new ActionReception(f.world);
               const result = reception.validate(
                 clone,
@@ -74,7 +79,7 @@ for (const name of ["guard", "check_identity"] as const)
                 },
                 enumerable: true,
               });
-            return { name, args } as import("../../../src/core").ToolCall;
+            return { name, args } as import("../../../../src/core").ToolCall;
           },
         },
         10,
@@ -177,8 +182,8 @@ for (const transport of ["sdk", "acp"] as const)
           const f = demonHunterFixture(12, undefined, locale),
             id = name === "guard" ? 11 : 8;
           const { LlmActionProvider } =
-              await import("../../../src/ai/agents/llm/llm_action_provider"),
-            { AcpActionProvider } = await import("../../../src/ai/agents/acp/acp_action_provider");
+              await import("../../../../src/ai/agents/llm/llm_action_provider"),
+            { AcpActionProvider } = await import("../../../../src/ai/agents/acp/acp_action_provider");
           let fallbackCalls = 0,
             submits = 0;
           const fallbackProvider = {
@@ -191,14 +196,14 @@ for (const transport of ["sdk", "acp"] as const)
             name === "guard"
               ? { target_id: outcome === "valid" ? 12 : "12", abstain: false }
               : { target_id: outcome === "valid" ? 1 : "1" };
-          const client: import("../../../src/ai/integrations/llm/transport").ChatModelClient = {
+          const client: import("../../../../src/ai/integrations/llm/transport").ChatModelClient = {
             async chat() {
               throw new Error("unexpected_chat");
             },
             async runToolLoop<T>(
-              _messages: import("../../../src/ai/integrations/llm/transport").ChatMessage[],
-              _tools: import("../../../src/ai/integrations/llm/transport").ToolSchema[],
-              callbacks: import("../../../src/ai/integrations/llm/transport").ToolLoopCallbacks<T>,
+              _messages: import("../../../../src/ai/integrations/llm/transport").ChatMessage[],
+              _tools: import("../../../../src/ai/integrations/llm/transport").ToolSchema[],
+              callbacks: import("../../../../src/ai/integrations/llm/transport").ToolLoopCallbacks<T>,
             ) {
               if (outcome !== "missing")
                 for (let i = 0; i < (outcome === "valid" ? 1 : 3); i++) {
@@ -283,7 +288,7 @@ for (const transport of ["sdk", "acp"] as const)
 for (const mark of [StatusMark.GuardMark, StatusMark.HealMark])
   for (const replacement of [false, true])
     test(`late unknown ${mark}/${replacement} survives with no native protection claim`, async () => {
-      const { createStatusMarksComponent } = await import("../../../src/core");
+      const { createStatusMarksComponent } = await import("../../../../src/core");
       const f = demonHunterFixture(12);
       await f.phaseManager.runSingleCycle({ getAction: async (r) => demonNightChoice(r, 9) }, 10);
       const original = f.damage.resolve.bind(f.damage),

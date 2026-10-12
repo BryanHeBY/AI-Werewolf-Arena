@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "bd4b55e63a9840308cb02b51a2232371652578bd",
+  "observedSourceCommit": "f4757a1f3e732d73ff235eba2aab8c62fa4524f7",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -60812,13 +60812,572 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/demon_hunter_fault_runtime.test.ts",
+      "to": "backend/tests/scenarios/failures/demon-hunter/committed-fault-boundaries.test.ts",
+      "sourceCommit": "f4757a1f3e732d73ff235eba2aab8c62fa4524f7",
+      "reason": "All callbacks execute actual PhaseManager cycles before native guard/check/potion delivery, source revocation, received stock/fault mutation, required recording or cancellation assertions. Synthetic SDK/ACP classes are decision ports inside those causal cycles, not isolated transport/reader unit cases.",
+      "originalSha256": "93399bb766525f6b718724192879ebfa8ff7132c9da1c68f6b623011d1688b9b",
+      "candidateSha256": "364336365a427570af8b0bafcfd7421b1578a06219abe22055d384932581a0a6",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1148,
+          "end": 1186,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1064,
+          "end": 1104,
+          "value": "../../../../src/recording/recording_context",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 982,
+          "end": 1021,
+          "value": "../../../../src/recording/session_recorder",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 889,
+          "end": 941,
+          "value": "../../../../src/runtime/simulation/reproduction_context",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 803,
+          "end": 851,
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 733,
+          "end": 769,
+          "value": "../../../support/demon_hunter_scenarios",
+          "kind": "module-specifier",
+          "original": "../../support/demon_hunter_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 591,
+          "end": 608,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "aae1a248a36d8a8a9d469b211991155c56b4ef861569ea2c23b2c1c35c7849bc",
+          "title": "actual fault boundary 6/zh-CN/actor: committed prefix, one cancellation, no hunt damage",
+          "occurrence": 1
+        },
+        {
+          "id": "28a0ad8351a7fb78c0b88f5725b804e22d72418e84305344984032c1f2d1c16a",
+          "title": "actual fault boundary 6/zh-CN/target: committed prefix, one cancellation, no hunt damage",
+          "occurrence": 1
+        },
+        {
+          "id": "4eafcb49c75db8be854e46d51de5842527ae3f96b1c712ee14cfc207ec78b64f",
+          "title": "actual fault boundary 6/en/actor: committed prefix, one cancellation, no hunt damage",
+          "occurrence": 1
+        },
+        {
+          "id": "5bfa2da2f1b61d3db259def21f6f442ce3feb4e3d15c6428ed382a0dd99ffa17",
+          "title": "actual fault boundary 6/en/target: committed prefix, one cancellation, no hunt damage",
+          "occurrence": 1
+        },
+        {
+          "id": "72be61433c77717d94f7e0110f94f9732266c9d35bce49d1bf30475ca312813a",
+          "title": "actual fault boundary 12/zh-CN/actor: committed prefix, one cancellation, no hunt damage",
+          "occurrence": 1
+        },
+        {
+          "id": "e803520a19046ca47bf0e5537f6ecadbeb861ff4428cc179e9e7fd56312528d4",
+          "title": "actual fault boundary 12/zh-CN/target: committed prefix, one cancellation, no hunt damage",
+          "occurrence": 1
+        },
+        {
+          "id": "e73f2b701d961ed100130d7b840afe10e8dda73198328d70920124cff15afc48",
+          "title": "actual fault boundary 12/en/actor: committed prefix, one cancellation, no hunt damage",
+          "occurrence": 1
+        },
+        {
+          "id": "b8e5e065ddab9d144092e2b272741bb33d7aac6184200b73e02575a8d1f78d20",
+          "title": "actual fault boundary 12/en/target: committed prefix, one cancellation, no hunt damage",
+          "occurrence": 1
+        },
+        {
+          "id": "3d17f23b29308c4efe6c8e4d74b3e387b005af6f2cf489c8101604c1e7651d1f",
+          "title": "fault boundary requires a real nonempty committed choice and never fabricates cancellation",
+          "occurrence": 1
+        },
+        {
+          "id": "5b1e283652e9a605a32b477d648304d2fbf176762439fb14d5c9cab8d77670b4",
+          "title": "unused future fault cannot be accepted at end of a finite run",
+          "occurrence": 1
+        },
+        {
+          "id": "07ec3c69c466037f150424c237327fcc9a515eef26db84a001fd011418f6a694",
+          "title": "actual session records fault input and source result once in order; accepted choice remains",
+          "occurrence": 1
+        },
+        {
+          "id": "6751bbeb82c11e43a1ae9f64401d65636659b570cc07bd58f3c131fa11274097",
+          "title": "mandatory fault recorder failure keeps actual mutation and accepted history, prevents successful source op",
+          "occurrence": 1
+        },
+        {
+          "id": "eaef2263a97580bc579a182eea174a3b45826f801f9c99737fe0c609d2f802b5",
+          "title": "mandatory fault cannot silently append to closing recorder",
+          "occurrence": 1
+        },
+        {
+          "id": "f36a897c0753e5662e0069aa5c6e9552992b352ba86cef2e2284752e1d7a5b3a",
+          "title": "mandatory fault cannot silently append to closed recorder",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/demon_hunter_native_night.test.ts",
+      "to": "backend/tests/scenarios/interactions/demon-hunter/native-night-receipts.test.ts",
+      "sourceCommit": "f4757a1f3e732d73ff235eba2aab8c62fa4524f7",
+      "reason": "All callbacks execute actual PhaseManager cycles before native guard/check/potion delivery, source revocation, received stock/fault mutation, required recording or cancellation assertions. Synthetic SDK/ACP classes are decision ports inside those causal cycles, not isolated transport/reader unit cases.",
+      "originalSha256": "973e6b61ecf99a84bc6eb3672c9960b20de291e5ee2b9b3858b6a9de9170371a",
+      "candidateSha256": "f49e439b977ad2c0b46a927e78803ebcef4fa484d9e5993986c027942a1f3e42",
+      "moduleAndLocationEdits": [
+        {
+          "start": 11952,
+          "end": 11969,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 8418,
+          "end": 8460,
+          "value": "../../../../src/ai/integrations/llm/transport",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/llm/transport",
+          "originalResolved": "backend/src/ai/integrations/llm/transport.ts",
+          "expectedResolved": "backend/src/ai/integrations/llm/transport.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 8326,
+          "end": 8368,
+          "value": "../../../../src/ai/integrations/llm/transport",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/llm/transport",
+          "originalResolved": "backend/src/ai/integrations/llm/transport.ts",
+          "expectedResolved": "backend/src/ai/integrations/llm/transport.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 8236,
+          "end": 8278,
+          "value": "../../../../src/ai/integrations/llm/transport",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/llm/transport",
+          "originalResolved": "backend/src/ai/integrations/llm/transport.ts",
+          "expectedResolved": "backend/src/ai/integrations/llm/transport.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 8012,
+          "end": 8054,
+          "value": "../../../../src/ai/integrations/llm/transport",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/integrations/llm/transport",
+          "originalResolved": "backend/src/ai/integrations/llm/transport.ts",
+          "expectedResolved": "backend/src/ai/integrations/llm/transport.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 7513,
+          "end": 7559,
+          "value": "../../../../src/ai/agents/acp/acp_action_provider",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/acp/acp_action_provider",
+          "originalResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 7413,
+          "end": 7459,
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 3243,
+          "end": 3260,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 2092,
+          "end": 2138,
+          "value": "../../../../src/ai/agents/player/action_reception",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/player/action_reception",
+          "originalResolved": "backend/src/ai/agents/player/action_reception.ts",
+          "expectedResolved": "backend/src/ai/agents/player/action_reception.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 490,
+          "end": 560,
+          "value": "../../../../src/game/mechanisms/roles/demon_hunter/native_potion_requests",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/demon_hunter/native_potion_requests",
+          "originalResolved": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 380,
+          "end": 437,
+          "value": "../../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 301,
+          "end": 337,
+          "value": "../../../support/demon_hunter_scenarios",
+          "kind": "module-specifier",
+          "original": "../../support/demon_hunter_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 227,
+          "end": 244,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "4c9208664638e181d26ff3d5fac3cac595c2bfb917eefc38932dd0a6bbb81664",
+          "title": "actual strict native guard/valid: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "299a62cd4a0d8ffe603ecba62c2542bdcda7a0c14f19fdb3500c3141c4bbe0fc",
+          "title": "actual strict native guard/null: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "ac9ef8f723cdd9d72f549e9f8b0f5b3bcd9f73115f91c291e944a851db1e4646",
+          "title": "actual strict native guard/string: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "9b8440463defd148be1fa53015286288be6521fbd9a665bc6048c7c9a219f784",
+          "title": "actual strict native guard/extra: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "84a77372c0d97352f5d30b045ba2632d298fd087992ce59a42ea39f1929524ab",
+          "title": "actual strict native guard/missing: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "3e1f26e9240b4c5d0cf9582c1e9d8af8421a616b72306d93a4ec659e054e5b23",
+          "title": "actual strict native guard/late: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "17554c19e5ff83356a42e17007aba2c5a6ae433e14dd48f1866829fa7d0876f3",
+          "title": "actual strict native guard/copy: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "0044a4a6210c1004468e40655a66ad367d9d4a4449562ddc4083c5ae59a42f69",
+          "title": "actual strict native guard/clone: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "4dcf5390bcc3f0ab191d9694d8d852c369fa8055abfb73994828bdae60555ee2",
+          "title": "actual strict native check_identity/valid: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "c53803073166a325c23ca41872d757bdf282593261627e6518a1d8937799b94b",
+          "title": "actual strict native check_identity/null: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "f96abba0cb271c8d05c570067db667161d7c5d1af3d39da61b1c8bdbdecb97a7",
+          "title": "actual strict native check_identity/string: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "e06ac13c5300978e291b044fed5a0b6768608f2d5ceea0bd59c13e9daa1efae0",
+          "title": "actual strict native check_identity/extra: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "d25aaecfb78949a0f985b25adbae3857ebfb8cf4a532d85d68eb35eab4e017fd",
+          "title": "actual strict native check_identity/missing: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "4d4698bbc1ad2e54eb9f93380106dff4cdd02634533d5e4e7b5269a66eb42ff5",
+          "title": "actual strict native check_identity/late: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "56f47e53d79b5b892b1241a5d0709ea19d624caadbd2110e653e9e464c916e42",
+          "title": "actual strict native check_identity/copy: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "90c8831e4d91904ff42bbce495de4ff9b8c4492b1fc5876c1b4186b6eb76dc93",
+          "title": "actual strict native check_identity/clone: owned receipts and stock",
+          "occurrence": 1
+        },
+        {
+          "id": "fdf599de76652128e9ce2e68ad3e32d391d0761d182d63c9d3d94e21d814e195",
+          "title": "actual native Guard source revocation seer/false: ordinary collision recomputes",
+          "occurrence": 1
+        },
+        {
+          "id": "7081191fa26677945f1bb426914a5a562f0a9188dcdab8adfee9862f6d8086aa",
+          "title": "actual native Guard source revocation seer/true: ordinary collision recomputes",
+          "occurrence": 1
+        },
+        {
+          "id": "95a73a80a804582a21d31e8ce63c2f819255247a8c200d30a76ed67021de23c0",
+          "title": "actual native Guard source revocation after_damage/false: ordinary collision recomputes",
+          "occurrence": 1
+        },
+        {
+          "id": "52af67391b97e60ddfda8161667453624a87e6f9b37b42954436eaa90c39e32d",
+          "title": "actual native Guard source revocation after_damage/true: ordinary collision recomputes",
+          "occurrence": 1
+        },
+        {
+          "id": "fcd71591327cfa56236bc82459f0e0b1d2b9036bf2372f0abd30119457fc82e2",
+          "title": "unknown Guard survives native source revocation before_native",
+          "occurrence": 1
+        },
+        {
+          "id": "6d1bcebdd2db0177c2ca327b8ae68adbf7673a5d4f3e152d57c296e3ac1a053b",
+          "title": "unknown Guard survives native source revocation after_native",
+          "occurrence": 1
+        },
+        {
+          "id": "59c27b3ee6e6005c24fb06bcf450e9fcd0c252e111f4fc8bc828bed665878e1e",
+          "title": "unknown Guard survives native source revocation after_damage",
+          "occurrence": 1
+        },
+        {
+          "id": "5ebb798edac04fb83571fbdde2ad496df39d94ce4dc8997f2e79b5678166e927",
+          "title": "actual sdk provider class/zh-CN/guard/valid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "6165c1a7bc6d3f4371b432ee4e3dc960c234dd729166d54ddab46b30200bc62e",
+          "title": "actual sdk provider class/zh-CN/guard/invalid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "02d2405dffeee4d45b8c7a6c80015a797ed16ea94b9534876d4b5b6f5dc557c3",
+          "title": "actual sdk provider class/zh-CN/guard/missing: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "f3fc2d25562418942673a3f58686d0bb23b90556906d4a4d2590f78560f1a8f0",
+          "title": "actual sdk provider class/zh-CN/check_identity/valid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "cc8628a3604a62db9c03f9d66704746094a5e2df92bcf6aefb3e727a66fca1fc",
+          "title": "actual sdk provider class/zh-CN/check_identity/invalid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "95095ec1c97ab2eff799af2cbc6da8206774ca9c95d2f43a4dcc8f092e013e9c",
+          "title": "actual sdk provider class/zh-CN/check_identity/missing: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "b33089a8950ee9d522c09daaa1260c444549d2345e7f5ba17c1df5714d7b8907",
+          "title": "actual sdk provider class/en/guard/valid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "ae9d156d7d4cb2b4db32e8657758f1dadfd5407a4735a7da965f9de112b868b4",
+          "title": "actual sdk provider class/en/guard/invalid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "740f9d4aab7a7ac351e92906b16dfaf8d73fe20159ab0092e47f2485cd0ddc97",
+          "title": "actual sdk provider class/en/guard/missing: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "2badf4305c0ec15c374d6b53705f6290b54d30e58f8de2bb7b3557abcfb7d7ca",
+          "title": "actual sdk provider class/en/check_identity/valid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "6bd73e7f47d68c8235e3f12badc4172996a86673338522ea886dca08be2fe354",
+          "title": "actual sdk provider class/en/check_identity/invalid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "017961f1c1def911c36434e3265cadd192afafcd946d1ff225843e2f29813cab",
+          "title": "actual sdk provider class/en/check_identity/missing: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "5f48441acc9ad0f3072b50324e682ac9ed3505c3023a8d31ff4ecb6d081ccbb8",
+          "title": "actual acp provider class/zh-CN/guard/valid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "529cb06ec3a78dc25df875b562f4d42516af3b120ed823e9945c088b2e692dd5",
+          "title": "actual acp provider class/zh-CN/guard/invalid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "baaf38e28f27be3db1305df2d6288211911410fce5ad86e6ea5826279cbdcd89",
+          "title": "actual acp provider class/zh-CN/guard/missing: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "17a0c6951ce393c8e29219f55d130989692c01db215b2ed928f2eccecddba7ae",
+          "title": "actual acp provider class/zh-CN/check_identity/valid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "b6abc9343bc1002908e6a0173bca54af055d760466400918f7c5941cd95b29a8",
+          "title": "actual acp provider class/zh-CN/check_identity/invalid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "7dd26216d1b63b302187eb760493fe9aff479a62d1f12748eca49e51e3f2b65e",
+          "title": "actual acp provider class/zh-CN/check_identity/missing: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "ea10f7b1f2a850b8e9a6fc8e4ed6b91685aba6830774c252c663e841f4505c94",
+          "title": "actual acp provider class/en/guard/valid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "5040a58d337885e792e5df3f1eb31a922e8a843ac8bd2be1d52c628ec2e9bce8",
+          "title": "actual acp provider class/en/guard/invalid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "d29a165629b4ba4aebf007cdd8e1fb6737df5f3b21e0c9db5f3851f702fbb080",
+          "title": "actual acp provider class/en/guard/missing: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "63a8906f0a03a7f3212838e7f55cc9740090aae27c65f2d5bc278670d5691454",
+          "title": "actual acp provider class/en/check_identity/valid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "7c5d4a520067d707761c8f558c1cf3bb0795e5a6aaa40ec78f201a363ecb6367",
+          "title": "actual acp provider class/en/check_identity/invalid: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "58e11ee463d417e4f55ffe06c47757196970de13493232f803e8fe89d4eb5457",
+          "title": "actual acp provider class/en/check_identity/missing: strict native delivery fallback zero",
+          "occurrence": 1
+        },
+        {
+          "id": "b1fa3b441f169bc178d05ea3d55f41809146571db4fac82be94ef2d73eaadb7c",
+          "title": "late unknown GuardMark/false survives with no native protection claim",
+          "occurrence": 1
+        },
+        {
+          "id": "46341316733eb9b4c56bcbcc0d76d958d19bed83f66138ac9726f8cf7389e9c5",
+          "title": "late unknown GuardMark/true survives with no native protection claim",
+          "occurrence": 1
+        },
+        {
+          "id": "974ce94a07453484cb43ab6bc5beb4db5e4dca78187c2b1f3b09e4bc560776a7",
+          "title": "late unknown HealMark/false survives with no native protection claim",
+          "occurrence": 1
+        },
+        {
+          "id": "1cc7975fa359dfad0388f6fc32e7f69953a80f63a2f43302c8ca02827f170dee",
+          "title": "late unknown HealMark/true survives with no native protection claim",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 492,
-    "targetFiles": 498,
-    "mappingEntries": 498,
-    "baselineCases": 6074,
+    "sourceFiles": 494,
+    "targetFiles": 500,
+    "mappingEntries": 500,
+    "baselineCases": 6139,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
