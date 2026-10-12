@@ -22,6 +22,7 @@ test("only published relation-member deaths reveal consumption, with no root or 
     "lastChoice",
     "activeBinding",
     "used",
+    "knifeNotices",
   ]);
   expect(readFragrantKnowledge({ ...b, rootId: 7 })).toBeNull();
   expect(readFragrantKnowledge({ ...b, lastChoice: null })).toBeNull();

@@ -678,3 +678,7 @@ Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster
 ## P9d 寻香识命基础接续
 
 固定夜序、唯一随机路径及知情／刀权发布契约提交ed27a6c；纯状态、知情journal及双目标原Alive／Role／独立Camp基础已迁入并三路复核，18项通过，见[基础审查](reviews/p9-fragrant-pair-state-foundation.md)。两角色仍planned，正式50/64不变；唯一World owner、独立双查能力／请求、绑定和完整死亡链及交付继续。
+
+## P9d 寻香识命唯一 owner 接续
+
+组件 owner、真实开夜占有／抽样失败不重领、夜初刀权通知、单向租约撤权及跨昼夜已付关系、实际全波 receipt 与同周期公开知情凭据完成，49维护测试通过；三路原反例和后复验见[owner基础审查](reviews/p9-fragrant-pair-authority-foundation.md)。fixture 使用已有身份占位，不冒称原生角色、普通能力或真实 PM／传输／Tape 已接通。正式50/64不变，两角色仍planned；独立双查能力／请求、实际夜序与死亡链、全部交付继续，main本地功能提交、不推送。

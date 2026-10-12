@@ -60,19 +60,28 @@ export function capturePairTarget(world: World, id: number): PairTargetScope | n
   captured.set(scope, world);
   return scope;
 }
-export function pairTargetCurrent(world: World, s: PairTargetScope): boolean {
+/** Paid effects may retain the first original death, never a replacement or revival. */
+export function pairTargetOriginal(
+  world: World,
+  s: PairTargetScope,
+  allowFirstDeath = false,
+): boolean {
   return (
     captured.get(s) === world &&
     world.getComponent(s.id, COMPONENT.Alive) === s.life &&
     safeAlive(s.life) &&
-    aliveLifeVersion(s.life) === s.version &&
-    s.life.alive &&
+    (s.life.alive
+      ? aliveLifeVersion(s.life) === s.version
+      : allowFirstDeath && aliveLifeVersion(s.life) === s.version + 1) &&
     world.getComponent(s.id, COMPONENT.Role) === s.role &&
     world.getComponent(s.id, COMPONENT.Camp) === s.camp &&
     own(s.role, "role") === s.roleId &&
     own(s.role, "camp") === s.roleCamp &&
     own(s.camp, "camp") === s.campValue
   );
+}
+export function pairTargetCurrent(world: World, s: PairTargetScope): boolean {
+  return pairTargetOriginal(world, s);
 }
 /** Both original identities must be live before producing the sole aggregate boolean. */
 export function capturedPairContainsWolf(

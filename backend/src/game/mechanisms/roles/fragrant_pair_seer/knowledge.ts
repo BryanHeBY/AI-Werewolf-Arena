@@ -7,6 +7,7 @@ export interface FragrantKnowledge {
   lastChoice: { day: number; pairIds: Pair | null } | null;
   activeBinding: { createdNight: number; expiresNight: number; pairIds: Pair } | null;
   used: boolean;
+  knifeNotices: readonly { day: number; eligible: boolean }[];
 }
 const id = (v: unknown): v is number =>
   typeof v === "number" && Number.isSafeInteger(v) && v > 0 && v < Number.MAX_SAFE_INTEGER - 1;
@@ -25,18 +26,43 @@ export function freshFragrantKnowledge(): FragrantKnowledge {
     lastChoice: null,
     activeBinding: null,
     used: false,
+    knifeNotices: [],
   };
 }
 export function readFragrantKnowledge(value: unknown): FragrantKnowledge | null {
   try {
     const v = snapshotPlainData(value);
     if (
-      !exact(v, ["knownWolfId", "lastOpenedNight", "lastChoice", "activeBinding", "used"]) ||
+      !exact(v, [
+        "knownWolfId",
+        "lastOpenedNight",
+        "lastChoice",
+        "activeBinding",
+        "used",
+        "knifeNotices",
+      ]) ||
       (v.knownWolfId !== null && !id(v.knownWolfId)) ||
       (!id(v.lastOpenedNight) && v.lastOpenedNight !== 0) ||
-      typeof v.used !== "boolean"
+      typeof v.used !== "boolean" ||
+      !Array.isArray(v.knifeNotices)
     )
       return null;
+    let previous = 0,
+      inherited = false;
+    for (const notice of v.knifeNotices) {
+      if (
+        !exact(notice, ["day", "eligible"]) ||
+        !id(notice.day) ||
+        notice.day <= previous ||
+        notice.day > Number(v.lastOpenedNight) ||
+        typeof notice.eligible !== "boolean" ||
+        (inherited && !notice.eligible) ||
+        v.knownWolfId === null
+      )
+        return null;
+      previous = notice.day;
+      inherited ||= notice.eligible;
+    }
     if (
       v.lastChoice !== null &&
       (!exact(v.lastChoice, ["day", "pairIds"]) ||
@@ -82,6 +108,24 @@ export function readFragrantKnowledge(value: unknown): FragrantKnowledge | null 
   } catch {
     return null;
   }
+}
+/** Eligibility was frozen by the real night owner; history grants no live permission. */
+export function knowFragrantKnife(
+  value: FragrantKnowledge,
+  day: number,
+  eligible: boolean,
+): FragrantKnowledge {
+  const s = valid(value);
+  if (
+    day !== s.lastOpenedNight ||
+    !id(day) ||
+    typeof eligible !== "boolean" ||
+    s.knownWolfId === null ||
+    (s.knifeNotices.at(-1)?.day ?? 0) >= day ||
+    (s.knifeNotices.some((n) => n.eligible) && !eligible)
+  )
+    throw Error("fragrant_knife_notice_invalid");
+  return { ...s, knifeNotices: [...s.knifeNotices, { day, eligible }] };
 }
 function valid(v: FragrantKnowledge) {
   const s = readFragrantKnowledge(v);
