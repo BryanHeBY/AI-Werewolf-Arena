@@ -59,6 +59,10 @@
     "packages/game-catalog": {
       "name": "@ai-werewolf-arena/game-catalog",
       "version": "0.1.0",
+      "devDependencies": {
+        "bun-types": "^1.4.2",
+        "typescript": "^5.9.3",
+      },
     },
     "packages/game-text": {
       "name": "@ai-werewolf-arena/game-text",
@@ -66,12 +70,20 @@
       "dependencies": {
         "@ai-werewolf-arena/game-catalog": "workspace:*",
       },
+      "devDependencies": {
+        "bun-types": "^1.4.2",
+        "typescript": "^5.9.3",
+      },
     },
     "packages/replay-contract": {
       "name": "@ai-werewolf-arena/replay-contract",
       "version": "0.1.0",
       "dependencies": {
         "@ai-werewolf-arena/game-catalog": "workspace:*",
+      },
+      "devDependencies": {
+        "bun-types": "^1.4.2",
+        "typescript": "^5.9.3",
       },
     },
   },
