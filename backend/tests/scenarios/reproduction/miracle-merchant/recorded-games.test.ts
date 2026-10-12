@@ -1,12 +1,17 @@
-import { Camp, DeathCause, Phase } from "../../src/core";
+/**
+ * Reproduction scenarios verify Miracle Merchant and Lucky complete recorded games retain actor-local gifted resources and private effects.
+ * Input: Original skill, hold, late, backlash and compound scenario matrices with handwritten targets, survivors and last words.
+ * Output and oracle: Literal gift, use/consumption, privacy and terminal assertions remain tied to actual replay; existing archived fixture bytes remain unchanged.
+ */
+import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import {
   MERCHANT_CASES,
   merchantScenario,
   type MerchantScenario,
-} from "../support/merchant_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+} from "../../../support/merchant_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 const facts: Record<
   MerchantScenario,
   {

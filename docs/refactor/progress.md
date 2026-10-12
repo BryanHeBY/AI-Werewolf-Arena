@@ -147,3 +147,5 @@
 - 固定Git02b3fe3后台整合检查点：后端6987pass/1skip/1fail，sole漏规则docs准备错；原4catalog补测0fail但原red保留，不记complete-input全套all-pass。FE1159/pkg182/真实Chromium362均0fail；after3113public SHA+原dependencybytes/links全保持，仅exact frontend.vite新增19ownedregular输出。结果见integration-checkpoints.md，tooling/后续提交/P9最终同源验收未宣完成。
 
 - C12 knowledge-passive recorded games：6原文件/138旧IDs实际完整录制/复现场景迁移；20whole程序/24callbacks/70relative imports保真，Root独立actualGit全部语句/113完整import语法/同目标/522unique IDs复核0；20heads0与一次finite20 types0，不跑games/full。原literal survivor与scenario计划保持，支持模块oracle欠项不据迁移关闭。mapping现438source/444target/5032IDs。
+
+- C12 skill-inheritance recorded games：6原文件/180旧IDs实际完整录制/复现场景迁移；20whole程序/24callbacks/70relative imports保真，Root独立actualGit全部语句/113完整import语法/同目标/522unique IDs复核0；20heads0与一次finite20 types0，不跑games/full。原literal survivor与scenario计划保持，支持模块oracle欠项不据迁移关闭。mapping现444source/450target/5212IDs。

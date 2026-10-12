@@ -1,12 +1,17 @@
-import { Camp, DeathCause, Phase } from "../../src/core";
+/**
+ * Reproduction scenarios verify Hidden Wolf complete recorded games retain one-way knowledge, masking and actual knife inheritance.
+ * Input: Original scenario/transport/locale matrices with handwritten check, roar, awakening, survivor and last-word facts.
+ * Output and oracle: Literal private-view, inheritance and chain-final outcome assertions remain attached to the real replay; expected survivors are not generated from another World.
+ */
+import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import {
   HIDDEN_CASES,
   hiddenWolfScenario,
   type HiddenScenario,
-} from "../support/hidden_wolf_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+} from "../../../support/hidden_wolf_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 const facts: Record<
   HiddenScenario,
   {

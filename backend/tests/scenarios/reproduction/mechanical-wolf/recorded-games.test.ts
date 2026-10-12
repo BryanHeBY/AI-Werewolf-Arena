@@ -1,12 +1,17 @@
-import { Camp, DeathCause, Phase } from "../../src/core";
+/**
+ * Reproduction scenarios verify Mechanical Wolf complete recorded games preserve independent learned abilities, readiness and source authority.
+ * Input: Original scenario/transport/locale matrices with handwritten learned-role, ready-day, survivor and last-word facts.
+ * Output and oracle: Explicit private resource, knowledge, death and terminal assertions retain exact replay; no copy state or expected table is regenerated.
+ */
+import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import {
   MECHANICAL_CASES,
   mechanicalScenario,
   type MechanicalScenario,
-} from "../support/mechanical_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+} from "../../../support/mechanical_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 
 const facts: Record<
   MechanicalScenario,

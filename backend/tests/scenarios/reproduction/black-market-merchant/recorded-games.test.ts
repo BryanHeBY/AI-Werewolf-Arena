@@ -1,12 +1,17 @@
-import { Camp, DeathCause, Phase } from "../../src/core";
+/**
+ * Reproduction scenarios verify Black Market Merchant complete recorded games preserve private gifts and paid resource prefixes.
+ * Input: Original cross-skill, compound-gun, hold, backlash and terminal scenario matrices with handwritten survivor and last-word facts.
+ * Output and oracle: Literal gift/source/stock, private-view and terminal assertions remain attached to actual replay; no expected table or archival fixture is rewritten.
+ */
+import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import {
   BLACK_CASES,
   blackMarketScenario,
   type BlackScenario,
-} from "../support/black_market_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+} from "../../../support/black_market_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 
 const facts: Record<
   BlackScenario,

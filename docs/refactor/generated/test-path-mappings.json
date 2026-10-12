@@ -52524,13 +52524,1195 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/awakened_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/awakened-hidden-wolf/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify handwritten learning/death/inheritance facts, phase ownership and exact recorded state.",
+      "originalSha256": "9566602e52abcf52e8d0ccb7c8468eac6ee5cde52da2aa06da94aabfbce8a2b5",
+      "candidateSha256": "9772e31d2aea326022d703bcf70ccc6ec18b37257cb621675ab7311a5d8c651e",
+      "moduleAndLocationEdits": [
+        {
+          "start": 291,
+          "end": 320,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 225,
+          "end": 254,
+          "value": "../../../support/awakened_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/awakened_scenarios",
+          "originalResolved": "backend/tests/support/awakened_scenarios.ts",
+          "expectedResolved": "backend/tests/support/awakened_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "f93b0591cbd8b1e14298a2ef2c6d36a15d4f26fd0fe1fd9ac245b20d5eb23cd0",
+          "title": "villager/llm: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "628c885639c75f4a83543dc846e8204481d34f470b580606e190e3fcc6b7b1ee",
+          "title": "villager/acp: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a24185ceff8dd41cfd7ebec79bda3e5e6967b7d6171bfbffef7c8357d3496794",
+          "title": "villager/mixed: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "4d979b5fe7ab3cf9ff4377fe183448acee7f4554b76c8e83d3734888bdb5c042",
+          "title": "mirror/llm: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6942bfc12a7875aedeb8a5a4608280ba8462ec5ff248372657340af985d40943",
+          "title": "mirror/acp: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3fcceefc803bc8bf5c88abc6d3519f6a83392c371727e03b1a2aa57cdd39bd12",
+          "title": "mirror/mixed: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1d2df132a9869f660a02bd0282aca066a39ab00a31dfde567ae1a77a33f558e9",
+          "title": "poison/llm: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "5ad3160de8e7bad966974e24145e57ff5575b4c4da928bda158debf8285fc2d6",
+          "title": "poison/acp: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d05b8e8742b1d197774b348c68e7c057e69601d017635fff0ff0b80f563bd16f",
+          "title": "poison/mixed: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "aff38573e8a17e4e96c387eddd50bf89f0212760df88af6e769416fa03ee406d",
+          "title": "guard/llm: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "8aad9a3ba31f08f5d95d2de9388e8031c8d73f34dd7b77d6de2b9028d496b6ae",
+          "title": "guard/acp: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "aacaf25db718f589b832c80beee87e8099788d8cc7cbe42dc90fdc492844cc99",
+          "title": "guard/mixed: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "c988fe6c393e6a3c44373eae3d271305a1f6b90596e2289bab992cec8c470369",
+          "title": "hunter_first/llm: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a8ae82c15d8bf455b10969481c84e0a89ad7b6544881e59fa86e5ef5e81d40a1",
+          "title": "hunter_first/acp: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a10c7627035f8b10c30175f7ee6b55be509259bcefd25162c3634daee70045b5",
+          "title": "hunter_first/mixed: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a6744a4bdb647125e935fc78aea939c2aa5e4bbef7d49e314d5aa92c6005d7f5",
+          "title": "hunter/llm: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "8185ddd6015f5eedb5bbd7989db845d00cc4e278291115ddd5453406247b7799",
+          "title": "hunter/acp: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "18e0d98ae0a45b9b6e7f24f40737e10252692b105c56d0e1bb33a4ea694e91a7",
+          "title": "hunter/mixed: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "5366e400c52ec4948f690c83790bbba0c88e45cfc68cc314b9b7a6e720e9f51d",
+          "title": "extra/llm: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a4b36544fb846137e9566b7c4a5af01e6c59d16a1b48dabbfd8f7e4269c8fd81",
+          "title": "extra/acp: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d9dcaf470bbcc960fedd60d72482100b3f90eaa03d818f3ee6758971ecbba3e1",
+          "title": "extra/mixed: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "c3df3adfd3fd094c2b6ab6c166d9cfd8b44a5c0e1a00089e883e3325c24d2b51",
+          "title": "extra_hold/llm: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ef046c71ab91ceff96abe13c62d53b2946c83b20d56fe461779d265c5b6f7ad5",
+          "title": "extra_hold/acp: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d1ad1d5a56168842e15cc93a9ebe7230adf1e47b23594bf9ba04f6475be304a6",
+          "title": "extra_hold/mixed: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d28a9343161b0a9747d061e7a9927af1ad9ed092c67a2095a3a6d44de45e11e4",
+          "title": "late/llm: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ae022a4fae3d93989eaacee52a2f954f7503fc2affd18820c0fb3fda7b59ad36",
+          "title": "late/acp: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ae5b1c359ba6f3a2749758fcfee44b6cb7102069cdbb18b6c9cb401728c57884",
+          "title": "late/mixed: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "949f768bedfcb05de4f0739f72ceed52f806adaf923c0b76b5105b283823bc6e",
+          "title": "twelve/llm: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f4f749571aafe41e500a606cb873fe8621bbe8a83434a1e14182b9493f9451fe",
+          "title": "twelve/acp: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a9eafbd1977b3f71ba50653dbc4f279054302b46b3c3391a4a71e18bd4a7993b",
+          "title": "twelve/mixed: literal bilingual Awakened games preserve night-end ownership and strict Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/black_market_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/black-market-merchant/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify handwritten gift/copy/resource/paid-prefix/backlash facts and chain-final outcomes.",
+      "originalSha256": "926b1e7f4035a44d2f37d21c99e56c2201441fe7c3dfbc008b03df72d6a8b9d9",
+      "candidateSha256": "6934d1116959ae291692bb585438fbbad1861b4c664f220d92314b40e5fbd779",
+      "moduleAndLocationEdits": [
+        {
+          "start": 292,
+          "end": 321,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 222,
+          "end": 255,
+          "value": "../../../support/black_market_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/black_market_scenarios",
+          "originalResolved": "backend/tests/support/black_market_scenarios.ts",
+          "expectedResolved": "backend/tests/support/black_market_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "bcc9674e7957a2c41f8ec608f5635d6b820670fd837daeb84511713688a11b52",
+          "title": "check_cross/llm: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e6bc67b263551a92a46a8e37d8af3c078704f2d785e8f206ebf75ee154386ef2",
+          "title": "check_cross/acp: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d420ee7f75df939cb38c99c51dc80e3c1fa7f157b6eab622f55f8dd0bf7bc389",
+          "title": "check_cross/mixed: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "c311384d79b41b82893083e8bcaeaf2a7debb59feb267e461251f82d836409c9",
+          "title": "check_duplicate/llm: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ff8158eb584178be1d219b116c2f524ddb90908a67419c279307099dc6849b72",
+          "title": "check_duplicate/acp: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "955473d2130de10770b99f8534517c3491b6ddc4266229afee3541bcebd74fe4",
+          "title": "check_duplicate/mixed: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "64766266c9f642ffdd900418b010d01ddc5b51938904e6c519f680fdf96ee293",
+          "title": "poison_duplicate/llm: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ff6563fbff494621862616817aba51921aaaee1fa517f5c6e2a3d400b2b6512a",
+          "title": "poison_duplicate/acp: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d6ce57c5c31ab2d29a16b7760f598f15ef8c84b11a8424be00a8b937118f76aa",
+          "title": "poison_duplicate/mixed: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f5191466389af9d21642d9e268de198580fef5f4408dd441345073e391af5e01",
+          "title": "late_hold/llm: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "fa79e4095620ed3268c538a9c6ecc62fa005b55e3b60e993bcdc7be6d79a1bec",
+          "title": "late_hold/acp: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "725feaecf9f100b34b4a640538079b76998116cd9ac2624eae578b10631119ad",
+          "title": "late_hold/mixed: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "dbf31a32267addd1bc7ea466d9c03d2d628a8826cf7c2dd66aa146dbac44eba1",
+          "title": "hidden_backlash/llm: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "4e5174728b676f32565bc063a8b01f163562fe60260dfca3598bce7f0ce9838b",
+          "title": "hidden_backlash/acp: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "2f89adcc046e2b7441ae2a55b1939553e8f6268c0a7174946d92799daa98c700",
+          "title": "hidden_backlash/mixed: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "562e2d24102c046a7150851ea55237a7f52c8dd0157f438053167836d28c372a",
+          "title": "seer_gun/llm: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "2077d96bed90ca2b5badcf812679711404c16119d22df31a5fc9e8dbf508f23d",
+          "title": "seer_gun/acp: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "7c4f535310b139ccd72a5772ba75d6e6d9cd8f56de14c5af060a60bd65c9ed54",
+          "title": "seer_gun/mixed: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "280245f56bcf48a20478a86a9a4c3f79ca9643a3086de11f01954cbc765a63f3",
+          "title": "gun_poison/llm: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "02eeb25102ad5d74f1a0aeb53a0d61edd57bb4fc982cabb1d1f63fa6ea92ffa4",
+          "title": "gun_poison/acp: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "4f3c21cea6b69a85f7ed7092e79833cfdb42dc9c4609edf57642b38d12c42586",
+          "title": "gun_poison/mixed: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3e9019e9bed5cb1d3dff6e33ab6a4301e937071e14b8dd4cd0852c8aa9210c43",
+          "title": "gun_compound/llm: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "881b80cd8b3016f7deec8f720ed9df91e0c3f53f3c705ab00a6a3ca4ef66a58d",
+          "title": "gun_compound/acp: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a7017d2407f07043469774ed9073d563fc535935302afdd40a5b5e8b2317edea",
+          "title": "gun_compound/mixed: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "27680c060eccfca35c8e9c4d18051be952216fae30c7b50152d8ee491095a33e",
+          "title": "native_double/llm: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "55f6637d25877ede2eb3c011975d90c4881bd94e651b3b683ac1a8b3e52eea30",
+          "title": "native_double/acp: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "003482dde05aaeb2b14bd676e518415f0d65ca664ffec53d9c071a74f797624c",
+          "title": "native_double/mixed: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f101d49c6055feeddbff062782aab688bba753690beaf74c8bf5cc11103142a6",
+          "title": "native_pass/llm: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3fbb416d4fb677557d186688980efc9480e5000534e00e1bb49f36206b206172",
+          "title": "native_pass/acp: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "63cfcae344676d4d5fd0f4fea89fdebf4c924a3267436112bf728fab79848ef3",
+          "title": "native_pass/mixed: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "9324875c2610171db3db5cdc1d8039df6e2cdd44e75519a89f593ca2642124e8",
+          "title": "last_wolf/llm: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "fbd1fd328e7c4dc0f59b03de9f5943e22dbcefdb2ab45bf96a3eaded89471683",
+          "title": "last_wolf/acp: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "0ebc8c2241ec239f2d39b2dada7552029f49492569a167eb9b38d9a6bc7fe1ca",
+          "title": "last_wolf/mixed: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "210064f317edfae6997d2d8b09352a2555f8515a18c28b40635be1f45e03ad05",
+          "title": "last_god/llm: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "0ff95f0b8677e74543c27a650732cea2f54545518ca8f05341d9195d49615b8b",
+          "title": "last_god/acp: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "bce41cddef649e6b59ff914f18705a7f64da5d23810ad5550886ade172ae8619",
+          "title": "last_god/mixed: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "781d525944ea741bcfcb2ad5e1579feaba7e31d0bd96b9272fba9fafbd7a0f5e",
+          "title": "twelve_gun/llm: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "dde5dcae386b1e6e29d538b7aa759774229efdbbb137e8e13baf1e3e634727ab",
+          "title": "twelve_gun/acp: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "b1976d65feba8be68cb5c1aa839abbd841c405da4725af424703071d2de5ce12",
+          "title": "twelve_gun/mixed: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "47d80df29fa354cd90d63190645fab8e3b408832e0f120049112107e406ffdb5",
+          "title": "twelve_backlash/llm: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "0e4dac9a18b90d0996d214515f64d5bffd030eaca51b2258c5369112bee35eb8",
+          "title": "twelve_backlash/acp: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "96d00296a670648b29fe9e8eb8465435843fa987081aafecf44eddc059020c3e",
+          "title": "twelve_backlash/mixed: literal Black Market bilingual complete games preserve private gifts and strict Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/gargoyle_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/gargoyle/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify handwritten private role knowledge, check-before-knife, inheritance and result facts.",
+      "originalSha256": "c3947fb20a9a196d0d65277adabf886966e653a4e8d0d2a9ed56bd2a5871fb19",
+      "candidateSha256": "a24a791b08a2dfe19b62654494e42bd8673cee16900d4772e52f78920360dac2",
+      "moduleAndLocationEdits": [
+        {
+          "start": 291,
+          "end": 320,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 225,
+          "end": 254,
+          "value": "../../../support/gargoyle_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/gargoyle_scenarios",
+          "originalResolved": "backend/tests/support/gargoyle_scenarios.ts",
+          "expectedResolved": "backend/tests/support/gargoyle_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "66e03c4fb0d21013a4b6540abf630f5331ec7fd3905c69c10a014e291fb48a2f",
+          "title": "day_good/llm: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a4862484a32055010d22c12a056f24377b923df91c8c0d18e33f9d71b9975c02",
+          "title": "day_good/acp: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ccb0b8a0186bf71a46689ca5e01c7a6b069057382080af79e424d6f866feb82c",
+          "title": "day_good/mixed: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "2fa3284a37144f8ee3a8231176dfb3bef4eb5800404aae27a2c90fcc628a4ade",
+          "title": "night_wolf/llm: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d027b39b1d2de448a84c847a49597e25c4b3a087fbefc9cff80bbecf6f75c7d5",
+          "title": "night_wolf/acp: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d15b73f829255a114bdc71151cf49b95a08af96b23a05376d78053654e24a695",
+          "title": "night_wolf/mixed: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "552b39b12661caa0a2e53fb75197a660b3b7bb43c297de676d84b699da75baf9",
+          "title": "king_link/llm: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f64c35ae84b8ae8cc09ce27b35ac41c4a19ab04b82742cb5ed22cc8857f0fcd5",
+          "title": "king_link/acp: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "5267a049d67baff7025502d60b5add6ec1084329dc4ac3f38986999087f75ae4",
+          "title": "king_link/mixed: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "93bf66583dbe0163eed78756c7191950fd808dabd83be1e9789232f4554ee341",
+          "title": "same_wave/llm: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "5c67a81e590344294c9c577f3108fd0548426176f9c0dd5c2d4491572e3e877f",
+          "title": "same_wave/acp: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6d052a998619b644364d83c7e49ecc531eaa3c73551f3a983d870aeacdb0d8f3",
+          "title": "same_wave/mixed: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ea10a33e452bf9816ef1592bc8025301fbb7df4d207bc6baadc402b51d602601",
+          "title": "solo_self/llm: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "181b8f8f13313dea0f9fc92b42ac44b482d739aac7ea7746de9ea0eb42e7f58e",
+          "title": "solo_self/acp: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "4f7a82fa88d8ca157872b87ebb45ec2b1abf3c77ceec2390bc7c6dfc0679e647",
+          "title": "solo_self/mixed: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3a7d60ed27197b4baf62d200a21df4f80fe36b86fd4e33697eb3ca443633e568",
+          "title": "twelve/llm: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "0dec4c6c32d1777df8eef6c17c8d5920d96fdfebe5dbd823b7f7df4f219e6b3e",
+          "title": "twelve/acp: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "13c2ff1316071bd12acf895b858d65f1b094433b52e0f59f51cd4cbc56ec3a4b",
+          "title": "twelve/mixed: actual bilingual Gargoyle complete games preserve private role labels, native check-before-knife and strict Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/hidden_wolf_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/hidden-wolf/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify handwritten mask/recognition/inheritance/roar/death-chain facts and terminal results.",
+      "originalSha256": "4584438b5e5e776bbe8e019105f65998d06354a18ba4702098297fee77452e13",
+      "candidateSha256": "6424b4010b24e821172f3d9efdcaf946e013589891adc7c61ab6cd2a1261a3b3",
+      "moduleAndLocationEdits": [
+        {
+          "start": 292,
+          "end": 321,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 223,
+          "end": 255,
+          "value": "../../../support/hidden_wolf_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/hidden_wolf_scenarios",
+          "originalResolved": "backend/tests/support/hidden_wolf_scenarios.ts",
+          "expectedResolved": "backend/tests/support/hidden_wolf_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "b443e1d2263df5f8b4e0b34ceb77f70df8776777f2cb380e4406caa7269e834f",
+          "title": "day_good/llm: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "1f074881cd9b444f6376aa31bef5fece05d59809f45f953c1071367d58711b72",
+          "title": "day_good/acp: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "b7fc59ab635dd04d78de810bf353c3513c10ebfddce88a1931d6e1d7d4310a24",
+          "title": "day_good/mixed: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "476a786a2c9b5b5232f39927e69fc7d68b1ebde8791265e92aa97add5923b415",
+          "title": "night_wolf/llm: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "6bbe1cb5f97ff9e4b0f33bfbba25c6470eedf16a394f3bef5f5839b374fe1475",
+          "title": "night_wolf/acp: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "015154adea73cc8a786ef132c162e0b530490476e75e5a0bb24ccc0d2b005d42",
+          "title": "night_wolf/mixed: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "35e16a702b4b8c3a7219c877c5af9075930a4d59aaa7d5938e8f8d3e84770fbb",
+          "title": "bear_update/llm: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "885c9eb35e4df641c9f9a818ab3cc01e90691082822188303f9b75e75e8339e4",
+          "title": "bear_update/acp: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "2c109dd3d750473706e17038bae1135db8e04a1bf79943f3a3ea489ff40a5f25",
+          "title": "bear_update/mixed: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "66b39e3ecb30a7dc6160e10076129071efc47faff9bcac5f3034f9f3d2fd6a9f",
+          "title": "night_inherit/llm: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "8f53c4e5e08f90858ab53c28cd218a634330b01d4ff3c6758246f092e6783c7f",
+          "title": "night_inherit/acp: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "a94b3b5928adfc33e3ee877c03e3574f224d0d16c4a9d89e324a0c3e23e17b34",
+          "title": "night_inherit/mixed: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "2bf4beb6569113678dac2a1f0ddfdf4d016dd39ac47479a7b7278b71c98a7bff",
+          "title": "masked_exile/llm: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "9d57bbf1363a81fdad56544fc1bd00a74ce43bc434c36b3924b47e56e8b08841",
+          "title": "masked_exile/acp: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "ca6dfc2befa9634c63a326b0567ccd535e3d05d1926b50995cd75f72d3344d8f",
+          "title": "masked_exile/mixed: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "a5446a674c8ad853aa3d749d4a26def08d7d66c2170b4933793eb85ee1fdc55f",
+          "title": "knight/llm: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "cf426d816db32fa4234aafd8ebccd5396a7a841c7d058b8f79622e8532ae7288",
+          "title": "knight/acp: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "25279c16bb98a341fd55fe1d59f18ec39b82ca60920e003ebc97630b030e6050",
+          "title": "knight/mixed: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "2e432e763e59678e00a1d7b94f21e2a999de1b4605bef4070f7170a393767e51",
+          "title": "king_link/llm: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "eccc5052b38140120742b71f957fa986149f7127e1e1ccdff2540235ce229db2",
+          "title": "king_link/acp: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "1580e1f527aeba16b6d863c919b8e012bd8d7f39f7644657cc85ab431638b6dd",
+          "title": "king_link/mixed: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "49064a55e926ddda85205b896d7b5e5f2f37e8687c8e4a9aa6707958e8f32669",
+          "title": "same_wave/llm: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "54b94164169864d1872ffc77e41231022bc0f93421767d0555ba026fed0ff6db",
+          "title": "same_wave/acp: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "72c43b013932e1a8103d897e5648154b9facdf4e687c7c9717d867622ea5225f",
+          "title": "same_wave/mixed: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "136a0ee1432b889a60d4044432c91215de8824740e7da8851a5f6136a54386d8",
+          "title": "solo_guard/llm: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "285517d5d388bb7357d650c613344420e9ee999acf28c86b0ae3cb7fdeccf14b",
+          "title": "solo_guard/acp: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "f085aa93a72e62035b960a33de0e381dca3a865f9c4a88fa292c436afed831b9",
+          "title": "solo_guard/mixed: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "5acf37c00c9b559ae35360ad6c00240e0047d34ea945a5591ac48a2a91edd9f0",
+          "title": "solo_self/llm: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "83253908ee066e2d094d5e5ea914af4da376afa45bce0f66dfc35a9a8ba509e6",
+          "title": "solo_self/acp: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "55c1284e698b3a373521b46804b166c1344b6d856d75e8a85dfd02b175802f79",
+          "title": "solo_self/mixed: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "21e1526670ee039b5d9078bd8a65124e319ee61db1bc5c78d8fd9ccd7b128aab",
+          "title": "twelve/llm: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "b93e2f7ff5eeec4fd2238b45c9bc4c75e127840a8c6fcf9f0994d3861e8a5199",
+          "title": "twelve/acp: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "9be86d961cf0578f276562c8b9836ddf82b09350c0cc04d3fd0bfa64805d7309",
+          "title": "twelve/mixed: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "e9bce400cdac3d50a6b013f3e59edd533a0e6721a89884706534d7a6fcd29d1c",
+          "title": "poison_inherit/llm: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "d3e323b213c5f7ea969b7366109dd3234ecf31194b97adbb67feeadf29a64997",
+          "title": "poison_inherit/acp: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "067fc0f4799951be47bb6a04b782077d1e24de2bfbda7369f546484765efdd80",
+          "title": "poison_inherit/mixed: actual bilingual Hidden Wolf complete games preserve unilateral knowledge, real inheritance, mask and strict replay",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/mechanical_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/mechanical-wolf/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify handwritten learned role, ready day, independent copy resources and final results.",
+      "originalSha256": "f2097ef895a361d52eeb3c82c62b1aae1b792fe168473acc81b4823458af79b9",
+      "candidateSha256": "2758bbf532ff2e26d140d56034e4d71e2e32059eb4411cd654417c158d0feeff",
+      "moduleAndLocationEdits": [
+        {
+          "start": 299,
+          "end": 328,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 231,
+          "end": 262,
+          "value": "../../../support/mechanical_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/mechanical_scenarios",
+          "originalResolved": "backend/tests/support/mechanical_scenarios.ts",
+          "expectedResolved": "backend/tests/support/mechanical_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "ec5778b660e6afa065d01fbbaf485cd51b2d1c1b2652bc2364475187ec7b69a5",
+          "title": "villager/llm: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "52fa9d97a0c2ac7ce7df74edf03d6afd894d23691e952230aa320c0f2d39c966",
+          "title": "villager/acp: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "0f509d33468ad3d4af172c15760c036368894bcabb4465e9967f9f9dda2f495b",
+          "title": "villager/mixed: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d9cabd82337f866432054daf9d36519b410480c061754350b6124f58d8d7185b",
+          "title": "inspection/llm: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "fab26ef9e00282ae830a9ea9f38a776a311983e32602066f70ae1d0b4d161fb2",
+          "title": "inspection/acp: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "88ecc7fdf99fcfec2e5a61dfe22366b7607194f9a47e105138e04bfa8821f1e2",
+          "title": "inspection/mixed: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "595f1296bc395bb4e77c9851505ab5824f139a681b95e805f6b8a1796e6c65f9",
+          "title": "poison/llm: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "2cdab523b6ea1ee3124e5d53f50fcb2adcab4a5fa1c4f59c7318bab99c828c5d",
+          "title": "poison/acp: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "19c6787890fc67a11618753d8ebdc632b429c4040cc7a0d25a55bd1c4db279c3",
+          "title": "poison/mixed: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "dcdd9119dfd0a92ebea76117c7d0255ce8af9e413259647477c963881611e827",
+          "title": "reflection/llm: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "2559236775d419210801c6667cab9e6c45c1f7ac32aa571b6f45536800734655",
+          "title": "reflection/acp: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d18f584e403ffb851c3e11a40cf6c401a8ae4d5cdf1f80a91df3c909dce76148",
+          "title": "reflection/mixed: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "df36e30af5f76f06f1bc9e83fe5195360913e775f82e06684052e4738ec22c6e",
+          "title": "guard_failure/llm: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "8b40abff8fa0b417d995f581153b3314f12ad654f403eb99380edff1bfa3aa14",
+          "title": "guard_failure/acp: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1c6a3ff3d58d437b8889b1896c6d8412ab247571ec954da23832edb75664deda",
+          "title": "guard_failure/mixed: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "a95cbd787ff014b31b1722c8a0749e22ebad021cc395ef72deeaf0b9b94a7308",
+          "title": "hunter/llm: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1db3187daed841bc345a9a26b7c97ba316a1d6da311ce8455865b42d3dc2bec3",
+          "title": "hunter/acp: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "18632c4a0baeddec2694ad342fb60ef56df7121f272f2e2cd228ce9086e2a48e",
+          "title": "hunter/mixed: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "9b93f549e23423539bf8a2a66aa6312d41fe72668b9f2dc04d9d74fa40562779",
+          "title": "extra/llm: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "dae78650daed77e9865bae29bf735295caf3b07bedaa6479e1d5355de31f2f8e",
+          "title": "extra/acp: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "f563c8e33851996a0a7a30fd8a491c144d00d785fc2ecf627b2810d3a0c978d1",
+          "title": "extra/mixed: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "106770fb8abc46be96105f851ba2592b53c5bc2640e1d1e6a3104a367596cad8",
+          "title": "late/llm: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ace3e754e58be489e531d70ec5d802b1da57332112eaa69e3f70299500ecf33a",
+          "title": "late/acp: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "5ec19bb71c109c05da5ee27ae0296244da7241df09730d1af3804cf937644996",
+          "title": "late/mixed: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "9945ca391e81dfdb1ec978ed325061144e1728e2ae94198f222fba77e6c1b3d4",
+          "title": "twelve/llm: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "13aa2f3acf8fa02f240d0da6340ed45d87324dba815d2b264806aeab605f8cde",
+          "title": "twelve/acp: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d474f06879b1811124aab119f5a59b99ac14ed524dd3a1afe6e4909360b41dad",
+          "title": "twelve/mixed: real bilingual mechanical games preserve independent skills, authority, privacy and strict Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/merchant_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/miracle-merchant/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify handwritten gifted actor-local resource use, backlash, privacy and final results.",
+      "originalSha256": "73d7f5a214f0d71b84421b39e973ccaa9a08e97cf43aff2798c2fd789972a99d",
+      "candidateSha256": "040e32afdf006e927dfec1b1a1a0de0f518359248254e6b0643b0381781c9eba",
+      "moduleAndLocationEdits": [
+        {
+          "start": 291,
+          "end": 320,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 225,
+          "end": 254,
+          "value": "../../../support/merchant_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/merchant_scenarios",
+          "originalResolved": "backend/tests/support/merchant_scenarios.ts",
+          "expectedResolved": "backend/tests/support/merchant_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "556c206d695c8953dacc2aa26e020513a8abb9292f5a8077382cd075496852c1",
+          "title": "check/llm: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "8c32e5b08f7d7fa464865f30a08ba352f62281ce0b7b4dbea0302ae938e11fbd",
+          "title": "check/acp: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "761d2acc095c8da61ca44ea1b77fdaf44153d4fba02eb90faf6f9cbfc9ac5952",
+          "title": "check/mixed: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "882a979ab3c710ea23ab27697058c6c04185eefbfdc457b6a79c03fe052409a7",
+          "title": "poison/llm: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "dfcc4062909660e4c6ad334da14a23916328258424f317843808157f549660d1",
+          "title": "poison/acp: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "608d8a950a67dae5b7c0185210741a43dee34063473855cc7a23a2d01ba5a893",
+          "title": "poison/mixed: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "18ece45a17f5de7c67502bde816af1ba2cb3c890c318b89fb72a287538b1da58",
+          "title": "guard/llm: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "d40dd1fde7d79fd05b663ffee5ed2a57266839c0534d0ad8d6d22d59448a2286",
+          "title": "guard/acp: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "6ad570661ca399a3a31fc4bfe5e1d743db24ea19bd2fd8ad8f703792ebeb3adc",
+          "title": "guard/mixed: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "41ebaa563b8d23d04b765d810bd124cbd58724b7528bf881abdeadfe70eefb89",
+          "title": "hold/llm: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "5862edfe7d44175d7ea4e5cbc35599fb25fd4001fff3245904cd1297ab7ce9be",
+          "title": "hold/acp: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "e01982479552324bd927e3fef6c5adf9a1d7f08d9e12c413341208286282c823",
+          "title": "hold/mixed: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "534c13d4702c11fc12c8dbd58198dc7b548b25a8ed19fbcbcf769cd558428a46",
+          "title": "late/llm: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "f77aacca02cbc2a7f6495c29610f00ee8cd7f32c975f679603848cddf0fde50e",
+          "title": "late/acp: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "f7981750ff734ad7d6eb5811f68a3a85604f5b795be0536b97129020e7dcb31e",
+          "title": "late/mixed: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "d477491b2ad5e6670f78bc896342a19fcca4a705ca68b58215075ced34728899",
+          "title": "backlash/llm: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "0a04b57751218b31e33670d492394c8a530fe9dd0becf23e435318a50b8fdaf7",
+          "title": "backlash/acp: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "63f5a12fb700af6bee6432beb2e40acf676befc4af3c535e1c6ec0229f8699c7",
+          "title": "backlash/mixed: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "2959d64ecd3880564efa1773f45320d15fe35ab9fcfc2ba0469403f9253e7856",
+          "title": "dream/llm: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "017e59754b330a8d2389e9fc015e03846cf66709659de32fa31428a4b7f47b3d",
+          "title": "dream/acp: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "437b80395572848a46b979632736b960b10eb265e4aa830123711f95e2c38081",
+          "title": "dream/mixed: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "a2ad0a0effb47793d7ff40917c8c86275646e2f1be84b68923fd6fdbc35bee9e",
+          "title": "hidden/llm: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "83ee744218b5da630af07abd0a897febb2c3ddd9039c21acbbc833fe7339211a",
+          "title": "hidden/acp: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "d3cf9814b62ae4c3d712ca20621b2da37cc8f6694c40c862fd04274560ef0a6c",
+          "title": "hidden/mixed: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "7e3523f396ba7b88ec446e7893aeeae417d36e3b436937864486471f7ee56c02",
+          "title": "twelve/llm: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "9960e4bbbef64ac5598c9d32f425208948483d960d24a808f970d3a62d82ff66",
+          "title": "twelve/acp: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "09f33dae33bc0f3e95f5b5a3acc0e764403e5cfd4793ec62abad3c6490e5b6e7",
+          "title": "twelve/mixed: actual bilingual Merchant and Lucky complete games preserve actor-local resources, privacy and strict replay",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 438,
-    "targetFiles": 444,
-    "mappingEntries": 444,
-    "baselineCases": 5032,
+    "sourceFiles": 444,
+    "targetFiles": 450,
+    "mappingEntries": 450,
+    "baselineCases": 5212,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

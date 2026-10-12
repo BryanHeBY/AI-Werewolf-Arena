@@ -1,12 +1,17 @@
-import { Camp, DeathCause, Phase } from "../../src/core";
+/**
+ * Reproduction scenarios verify Awakened Hidden Wolf complete recorded games preserve learning, native ownership and inheritance timing.
+ * Input: Original scenario/transport/locale matrices and handwritten terminal, learned-template, death and last-word facts.
+ * Output and oracle: Explicit archived resource, phase, private-view and result assertions retain the original action replay; no fixture or declared expected table is regenerated.
+ */
+import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import {
   AWAKENED_CASES,
   awakenedScenario,
   type AwakenedScenario,
-} from "../support/awakened_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+} from "../../../support/awakened_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 
 const facts: Record<
   AwakenedScenario,

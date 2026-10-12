@@ -1,12 +1,17 @@
-import { Camp, DeathCause, Phase } from "../../src/core";
+/**
+ * Reproduction scenarios verify Gargoyle complete recorded games retain private role knowledge, native check-before-knife and inheritance.
+ * Input: Original scenario/transport/locale matrices with handwritten role-label, awakening, survivor and terminal facts.
+ * Output and oracle: Explicit private history, knife timing, inheritance and result assertions remain causal with exact replay; no production World computes the expected table.
+ */
+import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import {
   GARGOYLE_CASES,
   gargoyleScenario,
   type GargoyleScenario,
-} from "../support/gargoyle_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+} from "../../../support/gargoyle_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 const facts: Record<
   GargoyleScenario,
   {
