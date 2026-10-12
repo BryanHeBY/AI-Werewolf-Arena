@@ -72016,13 +72016,326 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/fragrant_pair_seer_runtime.test.ts",
+      "to": "backend/tests/unit/rulesets/fragrant-roster-policy.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "3d0e9c6c196395e81772405ca653656d4c51332f66aad2d7878b33f450fe55fc",
+      "candidateSha256": "0251279829d54a88b3ebf25ee5b828a267b62bf5727e697f46666a2f0e375109",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 188,
+          "end": 209,
+          "original": "../../../src/rulesets",
+          "value": "../../../src/rulesets",
+          "originalResolved": "backend/src/rulesets/index.ts",
+          "expectedResolved": "backend/src/rulesets/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 87,
+          "end": 143,
+          "original": "../../../src/runtime/scenarios/fragrant_pair_seer_twelve",
+          "value": "../../../src/runtime/scenarios/fragrant_pair_seer_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/fragrant_pair_seer_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/fragrant_pair_seer_twelve.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "c0b40751f12468dd2451c99f28b5e4f125466362f4522d1ee5e23bade117f9ae",
+          "title": "finite preset accepts only its native roster and fixed source policies",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core/domain/random",
+          "originalImport": "import { createRandom, type RandomSource } from \"../../../src/core/domain/random\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createRandom",
+              "imported": "createRandom",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "RandomSource",
+              "imported": "RandomSource",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/identity",
+          "originalImport": "import { Camp, Phase } from \"../../../src/core/domain/identity\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Camp",
+              "imported": "Camp",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/names",
+          "originalImport": "import { COMPONENT } from \"../../../src/core/domain/components/names\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import type { AliveComponent } from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AliveComponent",
+              "imported": "AliveComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/actions",
+          "originalImport": "import type { ActionRequest } from \"../../../src/core/domain/actions\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/fragrant_pair_seer/authority",
+          "originalImport": "import { fragrantAuthoritySnapshot } from \"../../../src/game/mechanisms/roles/fragrant_pair_seer/authority\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "fragrantAuthoritySnapshot",
+              "imported": "fragrantAuthoritySnapshot",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/fragrant_pair_seer_scenarios",
+          "originalImport": "import {\n  fragrantRuntimeGame as game,\n  fragrantRuntimeAction as act,\n  type FragrantRuntimePlan as Plan,\n} from \"../../support/fragrant_pair_seer_scenarios\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "game",
+              "imported": "fragrantRuntimeGame",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "act",
+              "imported": "fragrantRuntimeAction",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Plan",
+              "imported": "FragrantRuntimePlan",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/fragrant_pair_seer_runtime.test.ts",
+      "to": "backend/tests/scenarios/features/fragrant-pair-seer/native-runtime.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "3d0e9c6c196395e81772405ca653656d4c51332f66aad2d7878b33f450fe55fc",
+      "candidateSha256": "e88f05af439494d0731902d6f9b79832358a6ba0b17e3cfcd612b6462d238347",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 637,
+          "end": 679,
+          "original": "../../support/fragrant_pair_seer_scenarios",
+          "value": "../../../support/fragrant_pair_seer_scenarios",
+          "originalResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts",
+          "expectedResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 455,
+          "end": 518,
+          "original": "../../../src/game/mechanisms/roles/fragrant_pair_seer/authority",
+          "value": "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 377,
+          "end": 409,
+          "original": "../../../src/core/domain/actions",
+          "value": "../../../../src/core/domain/actions",
+          "originalResolved": "backend/src/core/domain/actions.ts",
+          "expectedResolved": "backend/src/core/domain/actions.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 297,
+          "end": 338,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 216,
+          "end": 257,
+          "original": "../../../src/core/domain/components/names",
+          "value": "../../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 153,
+          "end": 186,
+          "original": "../../../src/core/domain/identity",
+          "value": "../../../../src/core/domain/identity",
+          "originalResolved": "backend/src/core/domain/identity.ts",
+          "expectedResolved": "backend/src/core/domain/identity.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 90,
+          "end": 121,
+          "original": "../../../src/core/domain/random",
+          "value": "../../../../src/core/domain/random",
+          "originalResolved": "backend/src/core/domain/random.ts",
+          "expectedResolved": "backend/src/core/domain/random.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "ac3f6a0e146252d50f19222ac4d9b6f4aabe49046a2a72eae23a20e10f80cb78",
+          "title": "literal seed golden uses one reserved draw across three actual nights regardless of unrelated streams",
+          "occurrence": 1
+        },
+        {
+          "id": "c80727fe04a37966ffa6ea3a84899df4352f63e215d117668d992dbdde1b1509",
+          "title": "N1 real knife adds linked death, both actual last words precede badge and any gun",
+          "occurrence": 1
+        },
+        {
+          "id": "a22b3973b496a09b79e2ef699c4777dc72215155e93fd46a317e9f05fb126420",
+          "title": "N2 real link has no night words, while N1 pass never extends a relation",
+          "occurrence": 1
+        },
+        {
+          "id": "b8e5442253ba09a26397a40554a1231c68f8684ee4940295fbac808051d9f31e",
+          "title": "D1 exile gives only root words; link-only Hunter receives no gun",
+          "occurrence": 1
+        },
+        {
+          "id": "d30ae591ef1a99ee0433c21d5f3d0b9784f8b1198787de5889ac8d1460450937",
+          "title": "both independent knife/poison deaths consume once without removing Hunter's original gun",
+          "occurrence": 1
+        },
+        {
+          "id": "9c4ecaa554ac375943919378496b295c3bc0c17a1a40e65c3adc9d61b2aac961",
+          "title": "dead original Phantom's paid pair still links a later actual Hunter gun; no extra words",
+          "occurrence": 1
+        },
+        {
+          "id": "fb99b0e5ffc7b158ca77161c2db98218c085f0a643dd3df6b41abec265f89fad",
+          "title": "three real nights inherit one knife, then last wolf and last god die in one gun chain before unique Good victory",
+          "occurrence": 1
+        },
+        {
+          "id": "3bd9c0e4cfb8e51718eda3be2ae3edf4f998423c475e6e184b1f88d9776b4bdd",
+          "title": "N1 knife and pre-election blast overlap keeps explicit Day origin for the link and grants neither words",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/runtime/scenarios/fragrant_pair_seer_twelve",
+          "originalImport": "import { fragrantPairSeerTwelveConfig } from \"../../../src/runtime/scenarios/fragrant_pair_seer_twelve\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "fragrantPairSeerTwelveConfig",
+              "imported": "fragrantPairSeerTwelveConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/rulesets",
+          "originalImport": "import { isFragrantPairSeerPreset } from \"../../../src/rulesets\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "isFragrantPairSeerPreset",
+              "imported": "isFragrantPairSeerPreset",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 526,
-    "targetFiles": 558,
-    "mappingEntries": 558,
-    "baselineCases": 6592,
+    "sourceFiles": 527,
+    "targetFiles": 560,
+    "mappingEntries": 560,
+    "baselineCases": 6601,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

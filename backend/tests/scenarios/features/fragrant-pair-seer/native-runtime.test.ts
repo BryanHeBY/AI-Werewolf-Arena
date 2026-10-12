@@ -1,24 +1,21 @@
 /**
- * Integration/scenario tests for fragrant pair seer runtime configuration and setup contracts.
- * Input: the existing literal boards, original scenario actions and malformed
- * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
- * Fixed policies, recorded literal expectations and rejection cases are the
- * oracle; these tests never generate replacement goldens from migrated rules.
+ * Fragrant runtime scenarios verify native linking, source deaths, inherited knife, ordering and final victory through actual cycles.
+ * Input: Original literal plans, fixed roles, controlled action providers and reserved RNG canary.
+ * Output and oracle: Handwritten draw, death, binding, words/badge/gun and faction outcomes preserve assertions; existing golden values are not produced from new rules.
  */
 import { expect, test } from "bun:test";
-import { createRandom, type RandomSource } from "../../../src/core/domain/random";
-import { fragrantPairSeerTwelveConfig } from "../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
-import { Camp, Phase } from "../../../src/core/domain/identity";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import type { AliveComponent } from "../../../src/core/domain/components/alive";
-import type { ActionRequest } from "../../../src/core/domain/actions";
-import { fragrantAuthoritySnapshot } from "../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
-import { isFragrantPairSeerPreset } from "../../../src/rulesets";
+import { createRandom, type RandomSource } from "../../../../src/core/domain/random";
+import { Camp, Phase } from "../../../../src/core/domain/identity";
+import { COMPONENT } from "../../../../src/core/domain/components/names";
+import type { AliveComponent } from "../../../../src/core/domain/components/alive";
+import type { ActionRequest } from "../../../../src/core/domain/actions";
+import { fragrantAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
 import {
   fragrantRuntimeGame as game,
   fragrantRuntimeAction as act,
   type FragrantRuntimePlan as Plan,
-} from "../../support/fragrant_pair_seer_scenarios";
+} from "../../../support/fragrant_pair_seer_scenarios";
+
 async function cycle(g: ReturnType<typeof game>, plan: Plan, seen: ActionRequest[] = []) {
   return await g.phaseManager.runSingleCycle(
     {
@@ -30,22 +27,13 @@ async function cycle(g: ReturnType<typeof game>, plan: Plan, seen: ActionRequest
     8,
   );
 }
+
 function dead(g: ReturnType<typeof game>) {
   return g.world
     .entityIds()
     .filter((id) => !g.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive);
 }
-test("finite preset accepts only its native roster and fixed source policies", () => {
-  expect(isFragrantPairSeerPreset(fragrantPairSeerTwelveConfig)).toBe(true);
-  for (const changed of [
-    { boardSize: 10 },
-    { guard: { repeatPolicy: "awa_last_action_v1" } },
-    { witch: { ...fragrantPairSeerTwelveConfig.witch, canSelfHeal: "first_night_only" } },
-    { seer: { targetPolicy: "awa_alive_v1" } },
-    { mistRaven: { policy: "awa_mist_raven_v1" } },
-  ])
-    expect(isFragrantPairSeerPreset({ ...fragrantPairSeerTwelveConfig, ...changed })).toBe(false);
-});
+
 test("literal seed golden uses one reserved draw across three actual nights regardless of unrelated streams", async () => {
   let reservedDraws = 0;
   const wrap = (source: RandomSource): RandomSource => ({
@@ -72,6 +60,7 @@ test("literal seed golden uses one reserved draw across three actual nights rega
   ]);
   expect(reservedDraws).toBe(1);
 });
+
 test("N1 real knife adds linked death, both actual last words precede badge and any gun", async () => {
   const g = game(),
     seen: ActionRequest[] = [];
@@ -97,6 +86,7 @@ test("N1 real knife adds linked death, both actual last words precede badge and 
       .map((e) => e.payload.deaths),
   ).toEqual([[6]]);
 });
+
 test("N2 real link has no night words, while N1 pass never extends a relation", async () => {
   const g = game(),
     seen: ActionRequest[] = [];
@@ -114,6 +104,7 @@ test("N2 real link has no night words, while N1 pass never extends a relation", 
     { day: 2, targetIds: [2, 9], containsWerewolf: true },
   ]);
 });
+
 test("D1 exile gives only root words; link-only Hunter receives no gun", async () => {
   const g = game(),
     seen: ActionRequest[] = [];
@@ -128,6 +119,7 @@ test("D1 exile gives only root words; link-only Hunter receives no gun", async (
       .map((e) => e.payload.rootPhase),
   ).toEqual([Phase.Voting]);
 });
+
 test("both independent knife/poison deaths consume once without removing Hunter's original gun", async () => {
   const g = game(),
     seen: ActionRequest[] = [];
@@ -138,6 +130,7 @@ test("both independent knife/poison deaths consume once without removing Hunter'
   expect(g.phaseManager.getEvents().filter((e) => e.type === "additional_deaths")).toEqual([]);
   expect(fragrantAuthoritySnapshot(g.world).known.used).toBe(true);
 });
+
 test("dead original Phantom's paid pair still links a later actual Hunter gun; no extra words", async () => {
   const g = game(),
     seen: ActionRequest[] = [];
@@ -170,6 +163,7 @@ test("dead original Phantom's paid pair still links a later actual Hunter gun; n
   ]);
   expect(g.phaseManager.getEvents().filter((e) => e.type === "game_over")).toHaveLength(0);
 });
+
 test("three real nights inherit one knife, then last wolf and last god die in one gun chain before unique Good victory", async () => {
   const g = game(),
     seen: ActionRequest[] = [];
@@ -209,6 +203,7 @@ test("three real nights inherit one knife, then last wolf and last god die in on
   );
   expect(seen.filter((r) => r.context.day === 3 && r.context.stage === "last_words")).toEqual([]);
 });
+
 test("N1 knife and pre-election blast overlap keeps explicit Day origin for the link and grants neither words", async () => {
   const g = game(),
     seen: ActionRequest[] = [];
