@@ -73174,13 +73174,379 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/demon_hunter_facts.test.ts",
+      "to": "backend/tests/unit/features/demon-hunter/exact-fact-projections.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "d7ee373ab97cec4f6798d5fcb700fd4db0f10881dc8f8cd970fde5bbbd680167",
+      "candidateSha256": "0364ed6a5d0199ff8a30b8c3361975104c61ccf577ebfd08caadaf35e1f90011",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 356,
+          "end": 405,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 273,
+          "end": 309,
+          "original": "../../support/demon_hunter_scenarios",
+          "value": "../../../support/demon_hunter_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 217,
+          "end": 234,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "8cf13e87346eac1098464fda439377fb671da595c68abbe480617a688108c8a2",
+          "title": "strict God fact demon_hunter_chosen/{\"policy\":\"awa_netease_demon_hunter_v1\",\"actorId\":6,\"day\":2,\"targetId\":1}",
+          "occurrence": 1
+        },
+        {
+          "id": "a8dc18c06875e9e5560f041d73798fc1037b1103a0010b3b3a271b71e795113f",
+          "title": "strict God fact demon_hunter_chosen/{\"policy\":\"awa_netease_demon_hunter_v1\",\"actorId\":6,\"day\":2,\"targetId\":null}",
+          "occurrence": 1
+        },
+        {
+          "id": "f19fef3a93da43d08b36e6beb4704ea890edfd2579ef8d26d3a3a8c4088673f9",
+          "title": "strict God fact demon_hunter_cancelled/{\"policy\":\"awa_netease_demon_hunter_v1\",\"actorId\":6,\"day\":2,\"targetId\":1,\"reason\":\"authority_revoked\",\"faultId\":null}",
+          "occurrence": 1
+        },
+        {
+          "id": "d8fe2bae4392ab8e24217634795e33fabf05743d50b4a042aeba834aebd8ecb6",
+          "title": "strict God fact demon_hunter_cancelled/{\"policy\":\"awa_netease_demon_hunter_v1\",\"actorId\":6,\"day\":2,\"targetId\":1,\"reason\":\"authority_revoked\",\"faultId\":\"actual-fault-1\"}",
+          "occurrence": 1
+        },
+        {
+          "id": "cf6ee26f0b3999059bb52b0b9460130e97c495383de73f3684f088bf34f36572",
+          "title": "strict God fact demon_hunter_poison_immune/{\"policy\":\"awa_netease_demon_hunter_v1\",\"actorId\":6,\"day\":1,\"witchId\":5}",
+          "occurrence": 1
+        },
+        {
+          "id": "0b1671a61e6496f8433bf2cacdd0b7c97766673463e986781e70ef7d371e9aa7",
+          "title": "own choice exact fields, no actor/source/outcome and malformed getters execute zero",
+          "occurrence": 1
+        },
+        {
+          "id": "0c1df6265a1157fc146a6ad87d39c0a9764a25821f3059f746d3e106cb0ec0d2",
+          "title": "forged audience never exposes cancellation/immunity; copied or malformed choice fails closed",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "bun:test",
+          "originalImport": "import { expect, test, spyOn } from \"bun:test\";",
+          "currentImportBeforeRebase": "import { expect, test } from \"bun:test\";",
+          "droppedBindings": [
+            {
+              "name": "spyOn",
+              "imported": "spyOn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "originalImport": "import {\n  DEMON_HUNTER_POLICY,\n  DEMON_HUNTER_EVENT_TYPES,\n  readDemonHunterEventFact,\n  readDemonHunterPlayerFact,\n  demonHunterEventLabel,\n} from \"@ai-werewolf-arena/game-text\";",
+          "currentImportBeforeRebase": "import { DEMON_HUNTER_POLICY, readDemonHunterEventFact, readDemonHunterPlayerFact, demonHunterEventLabel } from \"@ai-werewolf-arena/game-text\";",
+          "droppedBindings": [
+            {
+              "name": "DEMON_HUNTER_EVENT_TYPES",
+              "imported": "DEMON_HUNTER_EVENT_TYPES",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  PotionType,\n  createAliveComponent,\n  type ActionRequest,\n  type RoleComponent,\n  type GameEvent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { type GameEvent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "createAliveComponent",
+              "imported": "createAliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/demon_hunter_scenarios",
+          "originalImport": "import { demonHunterFixture, demonNightChoice } from \"../../support/demon_hunter_scenarios\";",
+          "currentImportBeforeRebase": "import { demonHunterFixture } from \"../../support/demon_hunter_scenarios\";",
+          "droppedBindings": [
+            {
+              "name": "demonNightChoice",
+              "imported": "demonNightChoice",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import { getDefaultScriptEventRenderRegistry } from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultScriptEventRenderRegistry",
+              "imported": "getDefaultScriptEventRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/session_recorder",
+          "originalImport": "import { SessionRecordManager } from \"../../../src/recording/session_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SessionRecordManager",
+              "imported": "SessionRecordManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/recording_context",
+          "originalImport": "import { runWithSessionRecorder } from \"../../../src/recording/recording_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "runWithSessionRecorder",
+              "imported": "runWithSessionRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/game_event_recorder",
+          "originalImport": "import { GameEventRecorder } from \"../../../src/runtime/game_event_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameEventRecorder",
+              "imported": "GameEventRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/demon_hunter_facts.test.ts",
+      "to": "backend/tests/scenarios/features/demon-hunter/native-fact-recording.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "d7ee373ab97cec4f6798d5fcb700fd4db0f10881dc8f8cd970fde5bbbd680167",
+      "candidateSha256": "6101e685f49ae368c954d4c515f169f3af4f837a2e0d9083a1248064483810b5",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 847,
+          "end": 885,
+          "original": "../../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 763,
+          "end": 803,
+          "original": "../../../src/runtime/game_event_recorder",
+          "value": "../../../../src/runtime/game_event_recorder",
+          "originalResolved": "backend/src/runtime/game_event_recorder.ts",
+          "expectedResolved": "backend/src/runtime/game_event_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 685,
+          "end": 725,
+          "original": "../../../src/recording/recording_context",
+          "value": "../../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 603,
+          "end": 642,
+          "original": "../../../src/recording/session_recorder",
+          "value": "../../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 534,
+          "end": 562,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 429,
+          "end": 478,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 346,
+          "end": 382,
+          "original": "../../support/demon_hunter_scenarios",
+          "value": "../../../support/demon_hunter_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 272,
+          "end": 289,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "900e74e14f37b86c075bd544494998f144011a638d8db0487bca1ac082888868",
+          "title": "actual first and second Night zh-CN: only God knows source immunity; owner receives exact choice",
+          "occurrence": 1
+        },
+        {
+          "id": "bf1c3b8e09bc4865a6c842c7f2a569f63215623894c02510701854ec426ef48d",
+          "title": "actual first and second Night en: only God knows source immunity; owner receives exact choice",
+          "occurrence": 1
+        },
+        {
+          "id": "993333227131036afe244ad02c4ce52ae5fd60a170b59420fb50f2c415785db6",
+          "title": "actual late cancellation is God-only, actual submitted choice remains visible without inferred outcome",
+          "occurrence": 1
+        },
+        {
+          "id": "51eed3b3ce43bfe8aa958316198e2c0fd584205979e0c21097dd00949fc5cdb8",
+          "title": "actual event recorder keeps complete God facts and source operations; all player archives keep only exact own choice",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "originalImport": "import {\n  DEMON_HUNTER_POLICY,\n  DEMON_HUNTER_EVENT_TYPES,\n  readDemonHunterEventFact,\n  readDemonHunterPlayerFact,\n  demonHunterEventLabel,\n} from \"@ai-werewolf-arena/game-text\";",
+          "currentImportBeforeRebase": "import { DEMON_HUNTER_POLICY, DEMON_HUNTER_EVENT_TYPES } from \"@ai-werewolf-arena/game-text\";",
+          "droppedBindings": [
+            {
+              "name": "readDemonHunterEventFact",
+              "imported": "readDemonHunterEventFact",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "readDemonHunterPlayerFact",
+              "imported": "readDemonHunterPlayerFact",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "demonHunterEventLabel",
+              "imported": "demonHunterEventLabel",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 529,
-    "targetFiles": 564,
-    "mappingEntries": 564,
-    "baselineCases": 6612,
+    "sourceFiles": 530,
+    "targetFiles": 566,
+    "mappingEntries": 566,
+    "baselineCases": 6623,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

@@ -1,17 +1,10 @@
 /**
- * Fact/engine integration verify Demon Hunter God facts and limited owner knowledge.
- * Input: Literal malformed fact DTOs plus actual first/second-night fixtures and scoped recording.
- * Output and independent oracle: Exact God/owner field sets, zero accessor reads and manually expected source immunity visibility.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Demon Hunter scenarios verify actual two-night facts, late cancellation and persisted God/player evidence retain precise sources.
+ * Input: Original controlled potion/hunt plans, damage spy restoration and real temporary recording scope.
+ * Output and oracle: Handwritten source facts, audience/sequence checks and recorder outputs remain exact; complete causal cycles stay scenario coverage rather than transport integration.
  */
 import { expect, test, spyOn } from "bun:test";
-import {
-  DEMON_HUNTER_POLICY,
-  DEMON_HUNTER_EVENT_TYPES,
-  readDemonHunterEventFact,
-  readDemonHunterPlayerFact,
-  demonHunterEventLabel,
-} from "@ai-werewolf-arena/game-text";
+import { DEMON_HUNTER_POLICY, DEMON_HUNTER_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
 import {
   COMPONENT,
   PotionType,
@@ -19,59 +12,31 @@ import {
   type ActionRequest,
   type RoleComponent,
   type GameEvent,
-} from "../../../src/core";
-import { demonHunterFixture, demonNightChoice } from "../../support/demon_hunter_scenarios";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
-import { getDefaultScriptEventRenderRegistry } from "../../../src/game/mechanisms";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
-import { createTestTempDirectory } from "../../support/drivers/temp-directories";
+} from "../../../../src/core";
+import { demonHunterFixture, demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+import { getDefaultScriptEventRenderRegistry } from "../../../../src/game/mechanisms";
+import { SessionRecordManager } from "../../../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
+
 const chosen = { policy: DEMON_HUNTER_POLICY, actorId: 6, day: 2, targetId: 1 },
   own = { policy: DEMON_HUNTER_POLICY, day: 2, targetId: 1 };
+
 const isDemon = (type: string) => (DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(type);
+
 type DemonEvent = Extract<
   GameEvent,
   { type: "demon_hunter_chosen" | "demon_hunter_cancelled" | "demon_hunter_poison_immune" }
 >;
+
 const isDemonEvent = (event: GameEvent): event is DemonEvent => isDemon(event.type);
+
 function provider(witch: number) {
   return { getAction: async (request: ActionRequest) => demonNightChoice(request, witch) };
 }
-for (const [type, full] of [
-  ["demon_hunter_chosen", chosen],
-  ["demon_hunter_chosen", { ...chosen, targetId: null }],
-  ["demon_hunter_cancelled", { ...chosen, reason: "authority_revoked", faultId: null }],
-  ["demon_hunter_cancelled", { ...chosen, reason: "authority_revoked", faultId: "actual-fault-1" }],
-  ["demon_hunter_poison_immune", { policy: DEMON_HUNTER_POLICY, actorId: 6, day: 1, witchId: 5 }],
-] as const)
-  test(`strict God fact ${type}/${JSON.stringify(full)}`, () => {
-    expect(readDemonHunterEventFact(type, full)).toEqual(full);
-    expect(readDemonHunterPlayerFact(type, full)).toBeNull();
-    for (const locale of ["zh-CN", "en"] as const)
-      expect(demonHunterEventLabel(type, full, locale)).not.toBeNull();
-    for (const field of ["camp", "role", "immune", "casterId", "remaining", "damage", "winner"]) {
-      expect(readDemonHunterEventFact(type, { ...full, [field]: "wolf" })).toBeNull();
-      expect(demonHunterEventLabel(type, { ...full, [field]: "wolf" }, "en")).toBeNull();
-    }
-  });
-test("own choice exact fields, no actor/source/outcome and malformed getters execute zero", () => {
-  expect(readDemonHunterPlayerFact("demon_hunter_chosen", own)).toEqual(own);
-  expect(readDemonHunterEventFact("demon_hunter_chosen", own)).toBeNull();
-  for (const field of ["actorId", "witchId", "faultId", "reason", "camp", "immune"])
-    expect(readDemonHunterPlayerFact("demon_hunter_chosen", { ...own, [field]: 6 })).toBeNull();
-  let reads = 0;
-  const malformed = Object.defineProperty({ ...chosen }, "targetId", {
-    get() {
-      reads++;
-      return 1;
-    },
-    enumerable: true,
-  });
-  expect(readDemonHunterEventFact("demon_hunter_chosen", malformed)).toBeNull();
-  expect(demonHunterEventLabel("demon_hunter_chosen", malformed, "en")).toBeNull();
-  expect(reads).toBe(0);
-});
+
 for (const locale of ["zh-CN", "en"] as const)
   test(`actual first and second Night ${locale}: only God knows source immunity; owner receives exact choice`, async () => {
     const f = demonHunterFixture(6, undefined, locale);
@@ -109,6 +74,7 @@ for (const locale of ["zh-CN", "en"] as const)
       );
     }
   });
+
 test("actual late cancellation is God-only, actual submitted choice remains visible without inferred outcome", async () => {
   const f = demonHunterFixture();
   await f.phaseManager.runSingleCycle(provider(5), 10);
@@ -141,39 +107,7 @@ test("actual late cancellation is God-only, actual submitted choice remains visi
     calls.mockRestore();
   }
 });
-test("forged audience never exposes cancellation/immunity; copied or malformed choice fails closed", () => {
-  const f = demonHunterFixture();
-  const facts: GameEvent[] = [
-    {
-      timestamp: 0,
-      type: "demon_hunter_chosen",
-      payload: { ...chosen, actorId: 5 },
-      audience: [5],
-    },
-    {
-      timestamp: 1,
-      type: "demon_hunter_cancelled",
-      payload: { ...chosen, targetId: 1, reason: "authority_revoked", faultId: null },
-      audience: [6],
-    },
-    {
-      timestamp: 2,
-      type: "demon_hunter_poison_immune",
-      payload: { policy: DEMON_HUNTER_POLICY, actorId: 6, day: 1, witchId: 5 },
-      audience: [6],
-    },
-    { timestamp: 3, type: "demon_hunter_chosen", payload: chosen, audience: [5] },
-    { timestamp: 4, type: "demon_hunter_chosen", payload: chosen, audience: [5, 6] },
-    {
-      timestamp: 5,
-      type: "demon_hunter_chosen",
-      payload: { ...chosen, camp: "wolf" } as any,
-      audience: [6],
-    },
-  ];
-  for (const id of f.world.entityIds())
-    expect(buildAgentVisibleEventFeed(f.world, facts, id)).toEqual([]);
-});
+
 test("actual event recorder keeps complete God facts and source operations; all player archives keep only exact own choice", async () => {
   const f = demonHunterFixture(),
     root = await createTestTempDirectory("awa-demon-facts-"),
