@@ -1,3 +1,8 @@
+/**
+ * Unit tests verify Idiot participation and the bounded sheriff election API use original eligibility, candidate and tie rules.
+ * Input: All original locale/mode matrices, controlled local role profiles and direct election/badge/death operations.
+ * Output and oracle: Exact reception, nomination/vote/candidate/lifecycle and late eligibility assertions remain unchanged; no whole Day/PM pipeline or recorder runs.
+ */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -52,8 +57,10 @@ const roles = [
   Role.Villager,
   Role.Villager,
 ];
+
 const fixture = (locale: "zh-CN" | "en") =>
   bootstrapGame(twelvePlayerStandardConfig, { locale, fixedRoles: roles });
+
 function request(
   actorId: number,
   tool: ActionRequest["allowedTools"][number],
@@ -71,6 +78,7 @@ function request(
     },
   };
 }
+
 function policy(world: ReturnType<typeof fixture>["world"], catalog = getDefaultRoleCatalog()) {
   return new PlayerPromptPolicy(world, {
     roleCatalog: catalog,

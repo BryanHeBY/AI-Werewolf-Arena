@@ -81433,13 +81433,259 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/participation.test.ts",
+      "to": "backend/tests/unit/mechanisms/participation-and-election.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "19399afd226a1152a8bd579f506a48e9ae2c422a6abd2da1ec7c88c5ee8d4668",
+      "candidateSha256": "2dcae375b855352c1534dcf6a12f83addc4d73ae56e9c3eaed817cec9f7f0d43",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1608,
+          "end": 1639,
+          "original": "../../../src/core/domain/deaths",
+          "value": "../../../src/core/domain/deaths",
+          "originalResolved": "backend/src/core/domain/deaths.ts",
+          "expectedResolved": "backend/src/core/domain/deaths.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1536,
+          "end": 1577,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1452,
+          "end": 1500,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1349,
+          "end": 1418,
+          "original": "../../../src/game/mechanisms/validation/tool_validation_rule_registry",
+          "value": "../../../src/game/mechanisms/validation/tool_validation_rule_registry",
+          "originalResolved": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1274,
+          "end": 1302,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1029,
+          "end": 1074,
+          "original": "../../../src/game/mechanisms/sheriff/election",
+          "value": "../../../src/game/mechanisms/sheriff/election",
+          "originalResolved": "backend/src/game/mechanisms/sheriff/election.ts",
+          "expectedResolved": "backend/src/game/mechanisms/sheriff/election.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 946,
+          "end": 988,
+          "original": "../../../src/game/mechanisms/sheriff/badge",
+          "value": "../../../src/game/mechanisms/sheriff/badge",
+          "originalResolved": "backend/src/game/mechanisms/sheriff/badge.ts",
+          "expectedResolved": "backend/src/game/mechanisms/sheriff/badge.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 810,
+          "end": 859,
+          "original": "../../../src/game/mechanisms/common/participation",
+          "value": "../../../src/game/mechanisms/common/participation",
+          "originalResolved": "backend/src/game/mechanisms/common/participation.ts",
+          "expectedResolved": "backend/src/game/mechanisms/common/participation.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 710,
+          "end": 748,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 639,
+          "end": 678,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 556,
+          "end": 605,
+          "original": "../../../src/ai/agents/providers/action_providers",
+          "value": "../../../src/ai/agents/providers/action_providers",
+          "originalResolved": "backend/src/ai/agents/providers/action_providers.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/action_providers.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 460,
+          "end": 510,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 375,
+          "end": 421,
+          "original": "../../../src/ai/agents/player/action_reception",
+          "value": "../../../src/ai/agents/player/action_reception",
+          "originalResolved": "backend/src/ai/agents/player/action_reception.ts",
+          "expectedResolved": "backend/src/ai/agents/player/action_reception.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 274,
+          "end": 327,
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "value": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 210,
+          "end": 227,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "91a374a5dd74dec344603c78eff17615dce8281e01231fa7573b13f3fc114913",
+          "title": "zh-CN: Idiot reveals once, retains speech, and permanently loses public vote, exile and sheriff eligibility",
+          "occurrence": 1
+        },
+        {
+          "id": "72e0e022ee6b07edaaaf96fc5c9ad79f6ab9f862e45f24cbed2852b443978633",
+          "title": "en: Idiot reveals once, retains speech, and permanently loses public vote, exile and sheriff eligibility",
+          "occurrence": 1
+        },
+        {
+          "id": "317ad9ef1ec090644b33a6fe233c810236858013c9932fe40d461996ac0fc022",
+          "title": "zh-CN: no_nominations produces no sheriff without inventing or restoring candidates",
+          "occurrence": 1
+        },
+        {
+          "id": "795b6098036965bc47c7f2a243915942bb95a2b93473ef3cfd2b431a31dbab28",
+          "title": "zh-CN: all_withdraw produces no sheriff without inventing or restoring candidates",
+          "occurrence": 1
+        },
+        {
+          "id": "ff3d8149a97d7bb856dc02ba68e70c70865b228499b2dbaf4f990dce18ee9674",
+          "title": "zh-CN: zero_votes produces no sheriff without inventing or restoring candidates",
+          "occurrence": 1
+        },
+        {
+          "id": "2ec4482ebe06cad91f692e331adad3f053becacb56a5df5f92d24c0f7c5d0eb3",
+          "title": "zh-CN: all_candidates produces no sheriff without inventing or restoring candidates",
+          "occurrence": 1
+        },
+        {
+          "id": "7751ff6b25c71e661ad6577887511d7643cb3d67c5cb2b2a51f89986e1e20633",
+          "title": "en: no_nominations produces no sheriff without inventing or restoring candidates",
+          "occurrence": 1
+        },
+        {
+          "id": "7fbbe08f47b10b578364e9cb212047fd7c21523702dada30aec1a939f1feaf0a",
+          "title": "en: all_withdraw produces no sheriff without inventing or restoring candidates",
+          "occurrence": 1
+        },
+        {
+          "id": "8f7fda57e78c1d13f64f0e9cffac2498b3046c2fdd2caf7f4f204de3580ac438",
+          "title": "en: zero_votes produces no sheriff without inventing or restoring candidates",
+          "occurrence": 1
+        },
+        {
+          "id": "d9cd238dfedb12adb10df0431881c8e28c7fb6dc74f0fde34f375aa1a47a2461",
+          "title": "en: all_candidates produces no sheriff without inventing or restoring candidates",
+          "occurrence": 1
+        },
+        {
+          "id": "4885e160e8be99efba8a61542d0ec029917f592488797382fede8c9a85ace2cc",
+          "title": "zh-CN: withdrawn eligible candidates vote, invalid targets are never retargeted, and positive ties follow the configured strategy",
+          "occurrence": 1
+        },
+        {
+          "id": "7759fd8d48a8e7ab90e5ad09af84ee5ad3f398a262d092f40ebc023fb9e9472e",
+          "title": "en: withdrawn eligible candidates vote, invalid targets are never retargeted, and positive ties follow the configured strategy",
+          "occurrence": 1
+        },
+        {
+          "id": "1668adf26bc620280e2d33cd6980cb94733056ee1f853439860aa252eb37e9a5",
+          "title": "zh-CN: revealed Idiot is excluded from nominations, sheriff votes and future badge transfer",
+          "occurrence": 1
+        },
+        {
+          "id": "11edb4ede3fc99184e528d87633fcfc7d45abee740c27b5ccd42a13b9feaaf9f",
+          "title": "en: revealed Idiot is excluded from nominations, sheriff votes and future badge transfer",
+          "occurrence": 1
+        },
+        {
+          "id": "90c649bb1eacb6dccc400a1c7180f8cb7eba91a47f0d2285efe8c49baa595bb3",
+          "title": "candidate snapshots cannot be changed by one provider; late loss of eligibility cannot elect or record a vote",
+          "occurrence": 1
+        },
+        {
+          "id": "2ddf4d0bd581f851d5747fd200d263aae135020b1ef659006bce765b83dfc1b2",
+          "title": "injected participation profiles govern reception, baseline targets, hints and election assignment",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 546,
-    "targetFiles": 596,
-    "mappingEntries": 596,
-    "baselineCases": 6936,
+    "sourceFiles": 547,
+    "targetFiles": 597,
+    "mappingEntries": 597,
+    "baselineCases": 6952,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
