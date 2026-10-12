@@ -86407,13 +86407,455 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/witch_policies.test.ts",
+      "to": "backend/tests/unit/features/witch/native-policy-resource-boundaries.test.ts",
+      "sourceCommit": "9695d888c13a780583c3f2aea7e06540373f93af",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "61473563ec03b545ba4700b075a3e36d2b85cb680b06219511c170675bd85430",
+      "candidateSha256": "2913e5ad5b0d51de26f774395c62d32993e39fa63c19127c97d343176883f89b",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1041,
+          "end": 1063,
+          "original": "../night_stage_fixture",
+          "value": "../../../engine/night_stage_fixture",
+          "originalResolved": "backend/tests/engine/night_stage_fixture.ts",
+          "expectedResolved": "backend/tests/engine/night_stage_fixture.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 958,
+          "end": 1003,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 875,
+          "end": 919,
+          "original": "../../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 744,
+          "end": 802,
+          "original": "../../../src/game/mechanisms/prompt/config_render_registry",
+          "value": "../../../../src/game/mechanisms/prompt/config_render_registry",
+          "originalResolved": "backend/src/game/mechanisms/prompt/config_render_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/prompt/config_render_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 649,
+          "end": 693,
+          "original": "../../../src/game/mechanisms/roles/abilities",
+          "value": "../../../../src/game/mechanisms/roles/abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 521,
+          "end": 569,
+          "original": "../../../src/game/mechanisms/roles/witch/profile",
+          "value": "../../../../src/game/mechanisms/roles/witch/profile",
+          "originalResolved": "backend/src/game/mechanisms/roles/witch/profile.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/witch/profile.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 429,
+          "end": 482,
+          "original": "../../../src/game/mechanisms/roles/witch/night_stages",
+          "value": "../../../../src/game/mechanisms/roles/witch/night_stages",
+          "originalResolved": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/witch/night_stages.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 343,
+          "end": 390,
+          "original": "../../../src/game/engine/action_request_factory",
+          "value": "../../../../src/game/engine/action_request_factory",
+          "originalResolved": "backend/src/game/engine/action_request_factory.ts",
+          "expectedResolved": "backend/src/game/engine/action_request_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 281,
+          "end": 298,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "f5ce50021d5e2194f3bdad59363b626e009763ef866333fa7e7852246fa4391f",
+          "title": "awa_with_heal_v1/heal=0: actual request discloses only the configured knife information",
+          "occurrence": 1
+        },
+        {
+          "id": "d28baa5ded77cdfe84053bc3d7b315b1968e3192189e54a6f3db2015c1702b87",
+          "title": "awa_with_heal_v1/heal=1: actual request discloses only the configured knife information",
+          "occurrence": 1
+        },
+        {
+          "id": "ac7da24d09b08cf06fbcddd5cb674c88ebf429619f9c6eb0064b0d7f52ad5209",
+          "title": "awa_always_v1/heal=0: actual request discloses only the configured knife information",
+          "occurrence": 1
+        },
+        {
+          "id": "348d518bdae617c6ce59b8bd53b792617ddae1bb70308f22eb08c3120c4a7b47",
+          "title": "awa_always_v1/heal=1: actual request discloses only the configured knife information",
+          "occurrence": 1
+        },
+        {
+          "id": "0ba06ff79b1199d5fba12262ff63b5db459c67cc0a5779115cf443982713543e",
+          "title": "awa_one_native_v1/heal→poison: only the native opt-in opens exactly one second turn",
+          "occurrence": 1
+        },
+        {
+          "id": "3eeb35262fa5d5252c3d65de8c53eaceb9e6395fe989d6fe78eec059447034b6",
+          "title": "awa_one_native_v1/poison→heal: only the native opt-in opens exactly one second turn",
+          "occurrence": 1
+        },
+        {
+          "id": "8d823e4300838523cb4c8aceffa380d39fedac746f7628a57c48e0654ff8219f",
+          "title": "awa_both_native_experimental_v1/heal→poison: only the native opt-in opens exactly one second turn",
+          "occurrence": 1
+        },
+        {
+          "id": "c2a820b75e80b8beca2bd7ce20d822640ab0e0ee4a2dda0f8eb46b63987f691c",
+          "title": "awa_both_native_experimental_v1/poison→heal: only the native opt-in opens exactly one second turn",
+          "occurrence": 1
+        },
+        {
+          "id": "b2070cd78c4b1b04086ef4ae9d64084ab0d2a4894860a8b146da50e57afc724e",
+          "title": "both policy: initial no_action/ is terminal with no resource consumption",
+          "occurrence": 1
+        },
+        {
+          "id": "15e61b4b8b39a18344646db4582cf1cd1c8eedbab50e872c9e7837aa15e3de63",
+          "title": "both policy: initial none/2 is terminal with no resource consumption",
+          "occurrence": 1
+        },
+        {
+          "id": "52fb61eba14532c42669d73ecc67692ef8a398f44ac3c116696627a905f52da1",
+          "title": "both policy: initial heal/999 is terminal with no resource consumption",
+          "occurrence": 1
+        },
+        {
+          "id": "c5e018bfade7b3757a74823737b2140d1e746ad8cf07149a30fece332efba51c",
+          "title": "passing the second native turn closes it without consuming the other bottle",
+          "occurrence": 1
+        },
+        {
+          "id": "29bebe7e62862f1c6ab3e10cb36e176be28f2b1401b5b6e2ee64d77625b8e384",
+          "title": "copy: native two-potion and always-disclose policies cannot widen a foreign resource",
+          "occurrence": 1
+        },
+        {
+          "id": "09d35e616a233863593c45fb337001b0e044de6a5f7856123c24d688d7d3d304",
+          "title": "transfer: native two-potion and always-disclose policies cannot widen a foreign resource",
+          "occurrence": 1
+        },
+        {
+          "id": "82d91291eed08cfe38fcc0a79fee7e1bc647a1c3091a18940a9db9314688bf45",
+          "title": "gift: native two-potion and always-disclose policies cannot widen a foreign resource",
+          "occurrence": 1
+        },
+        {
+          "id": "6d93b0623ac04d24d992c6c2ca792d7fc46ab25607080d2dbd50cff95002b100",
+          "title": "second turn disabled revocation does not apply or consume",
+          "occurrence": 1
+        },
+        {
+          "id": "66a2528138d6177765da616e670b51b517adb75b29884b1302610394176362f0",
+          "title": "second turn source revocation does not apply or consume",
+          "occurrence": 1
+        },
+        {
+          "id": "6a841e04b4422524ac8282d9c3efcce04692516c8d6902610d1f48494d9f466b",
+          "title": "second turn day revocation does not apply or consume",
+          "occurrence": 1
+        },
+        {
+          "id": "4cd84d57c3a6d9e950ee55728ddd52ed808e4579247ce894301e7e36599f0d56",
+          "title": "zh-CN: role and board disclose both native policy boundaries",
+          "occurrence": 1
+        },
+        {
+          "id": "a6d20ea0be6cefbf1dd507c0280bbce799a59d46d806605b43cf98104798fbfa",
+          "title": "en: role and board disclose both native policy boundaries",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Phase,\n  Role,\n  PotionType,\n  DeathCause,\n  StatusMark,\n  type BoardConfig,\n  type ActionRequest,\n  type GameEvent,\n  type RoleComponent,\n  type ToolCall,\n  type StatusMarksComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, Phase, Role, PotionType, StatusMark, type BoardConfig, type ActionRequest, type GameEvent, type RoleComponent, type ToolCall, type StatusMarksComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "DeathCause",
+              "imported": "DeathCause",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalImport": "import { NightPipeline } from \"../../../src/game/engine/phase_pipeline/night_pipeline\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightPipeline",
+              "imported": "NightPipeline",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalImport": "import { DamageResolutionSystem } from \"../../../src/core/domain/systems/damage_resolution_system\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DamageResolutionSystem",
+              "imported": "DamageResolutionSystem",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/witch_policies.test.ts",
+      "to": "backend/tests/scenarios/features/witch/two-potion-native-night.test.ts",
+      "sourceCommit": "9695d888c13a780583c3f2aea7e06540373f93af",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "61473563ec03b545ba4700b075a3e36d2b85cb680b06219511c170675bd85430",
+      "candidateSha256": "0122eee9677f8681fff0d5f86b053a5eac6f26b0b90a90e5669d3168ac212d56",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1097,
+          "end": 1119,
+          "original": "../night_stage_fixture",
+          "value": "../../../engine/night_stage_fixture",
+          "originalResolved": "backend/tests/engine/night_stage_fixture.ts",
+          "expectedResolved": "backend/tests/engine/night_stage_fixture.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1021,
+          "end": 1059,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 932,
+          "end": 989,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 835,
+          "end": 889,
+          "original": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "value": "../../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 756,
+          "end": 801,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 673,
+          "end": 717,
+          "original": "../../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 556,
+          "end": 600,
+          "original": "../../../src/game/mechanisms/roles/abilities",
+          "value": "../../../../src/game/mechanisms/roles/abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 466,
+          "end": 519,
+          "original": "../../../src/game/mechanisms/roles/witch/night_stages",
+          "value": "../../../../src/game/mechanisms/roles/witch/night_stages",
+          "originalResolved": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/witch/night_stages.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 380,
+          "end": 427,
+          "original": "../../../src/game/engine/action_request_factory",
+          "value": "../../../../src/game/engine/action_request_factory",
+          "originalResolved": "backend/src/game/engine/action_request_factory.ts",
+          "expectedResolved": "backend/src/game/engine/action_request_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 318,
+          "end": 335,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "efd254cc900ed88ea6825fcd4b88662fd25a489a3744d6bbf0dc3ee8beda8ad8",
+          "title": "native potion experiment/heal→poison: full offline night settles both bottles after all actions",
+          "occurrence": 1
+        },
+        {
+          "id": "5dd36fa9a7a2ae87b49b34aecfcc178429043ae4023e09ebf1eef42bdcb6a9b8",
+          "title": "native potion experiment/poison→heal: full offline night settles both bottles after all actions",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/game/mechanisms/roles/witch/profile",
+          "originalImport": "import { WITCH_ROLE_PROFILE } from \"../../../src/game/mechanisms/roles/witch/profile\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "WITCH_ROLE_PROFILE",
+              "imported": "WITCH_ROLE_PROFILE",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/abilities",
+          "originalImport": "import {\n  abilityStatus,\n  findNightAbility,\n  projectNightAbility,\n} from \"../../../src/game/mechanisms/roles/abilities\";",
+          "currentImportBeforeRebase": "import { findNightAbility } from \"../../../src/game/mechanisms/roles/abilities\";",
+          "droppedBindings": [
+            {
+              "name": "abilityStatus",
+              "imported": "abilityStatus",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "projectNightAbility",
+              "imported": "projectNightAbility",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/prompt/config_render_registry",
+          "originalImport": "import { getDefaultConfigRenderRegistry } from \"../../../src/game/mechanisms/prompt/config_render_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 555,
-    "targetFiles": 613,
-    "mappingEntries": 613,
-    "baselineCases": 7137,
+    "sourceFiles": 556,
+    "targetFiles": 615,
+    "mappingEntries": 615,
+    "baselineCases": 7159,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
