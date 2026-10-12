@@ -82928,13 +82928,858 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/gift_gun.test.ts",
+      "to": "backend/tests/unit/mechanisms/gifted-gun-resource-boundaries.test.ts",
+      "sourceCommit": "9695d888c13a780583c3f2aea7e06540373f93af",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "ca0f50ca4c95cfbbc447315b648d889e253da0a7c0d9cf4820bc272ba2e9958f",
+      "candidateSha256": "da1268261e4065778a0e5bb5b4552cf056a7cfa67a2f720b2cbebef1a9aafbac",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1400,
+          "end": 1438,
+          "original": "../../../src/core/domain/night_effects",
+          "value": "../../../src/core/domain/night_effects",
+          "originalResolved": "backend/src/core/domain/night_effects.ts",
+          "expectedResolved": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1309,
+          "end": 1363,
+          "original": "../../../src/game/mechanisms/roles/gift_gun_death_hook",
+          "value": "../../../src/game/mechanisms/roles/gift_gun_death_hook",
+          "originalResolved": "backend/src/game/mechanisms/roles/gift_gun_death_hook.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/gift_gun_death_hook.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1224,
+          "end": 1272,
+          "original": "../../../src/game/mechanisms/hooks/hook_registry",
+          "value": "../../../src/game/mechanisms/hooks/hook_registry",
+          "originalResolved": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/hooks/hook_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1161,
+          "end": 1191,
+          "original": "../../../src/core/domain/world",
+          "value": "../../../src/core/domain/world",
+          "originalResolved": "backend/src/core/domain/world.ts",
+          "expectedResolved": "backend/src/core/domain/world.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1086,
+          "end": 1135,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 991,
+          "end": 1039,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 910,
+          "end": 956,
+          "original": "../../../src/ai/agents/player/action_reception",
+          "value": "../../../src/ai/agents/player/action_reception",
+          "originalResolved": "backend/src/ai/agents/player/action_reception.ts",
+          "expectedResolved": "backend/src/ai/agents/player/action_reception.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 836,
+          "end": 874,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 765,
+          "end": 804,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 690,
+          "end": 731,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 604,
+          "end": 654,
+          "original": "../../../src/game/mechanisms/roles/death_abilities",
+          "value": "../../../src/game/mechanisms/roles/death_abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/death_abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/death_abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 396,
+          "end": 441,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 316,
+          "end": 357,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 232,
+          "end": 249,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "c5af3d47db212b2824001cd3aeed06ef3dd72a29054500b1adf693354e2ddccb",
+          "title": "sharing original component references with another World never transfers a gifted gun's authorization",
+          "occurrence": 1
+        },
+        {
+          "id": "0488da95557997eba12e8f2bf99f96b95d69efcc173cb05348cb85bd7fe2184b",
+          "title": "a direct gift hook refuses a numeric target ID paired with another player's life scope",
+          "occurrence": 1
+        },
+        {
+          "id": "eca5cf61e8dc99fc0bcbdde297c1843f022b62bb3736023ff8d5110ee74aea29",
+          "title": "zh-CN/null: actual native then gifted gun commits each death before opening a fresh bound request",
+          "occurrence": 1
+        },
+        {
+          "id": "19df3e78b45bcf018bc6bf5f2e75467d7887b7d147ee70a6b6f73d8054d16bfc",
+          "title": "zh-CN/1: actual native then gifted gun commits each death before opening a fresh bound request",
+          "occurrence": 1
+        },
+        {
+          "id": "f7a480b7a3b4892594c9fda9e90924013c2a27dc51e496945e0e0c8d5d5802e0",
+          "title": "en/null: actual native then gifted gun commits each death before opening a fresh bound request",
+          "occurrence": 1
+        },
+        {
+          "id": "43893842373288b0b38f879e16768e228740635b0864284650f6bb40c33df652",
+          "title": "en/1: actual native then gifted gun commits each death before opening a fresh bound request",
+          "occurrence": 1
+        },
+        {
+          "id": "e0a8337ec64e5212f544059ca1116f0fcb92648951e3ae3b45f0d1a92d2a357d",
+          "title": "the second request rejects the first target's now-dead ID then accepts a new living target",
+          "occurrence": 1
+        },
+        {
+          "id": "82084e2d2a0b9f4769ab3a2c2235724ffbd04d9139672181dfa59c1c71fb7ddf",
+          "title": "none: accepted gifted shots preserve consumption but recheck ownership at the actual death commit",
+          "occurrence": 1
+        },
+        {
+          "id": "90905c492197f7a3dff46307c252b06c2fb5993fe40aa480102f6f03a0ee5bea",
+          "title": "private: accepted gifted shots preserve consumption but recheck ownership at the actual death commit",
+          "occurrence": 1
+        },
+        {
+          "id": "d6599d237a269e661ec4e46b067a18a0589febb40db433b8f6a49ea747c3a1e1",
+          "title": "revive: accepted gifted shots preserve consumption but recheck ownership at the actual death commit",
+          "occurrence": 1
+        },
+        {
+          "id": "8f24d5f1527cd8c8f62b2d5388219d8f91cab0b225988073a636b26f1cc00bb9",
+          "title": "target_replace: accepted gifted shots preserve consumption but recheck ownership at the actual death commit",
+          "occurrence": 1
+        },
+        {
+          "id": "777aa6aa100ebb2876535b7fb7e478388bbbd0de4fee1949461d55eb64b7bb61",
+          "title": "metadata: accepted gifted shots preserve consumption but recheck ownership at the actual death commit",
+          "occurrence": 1
+        },
+        {
+          "id": "32b4600d64c6ff618e4d80268fb3d9400101fc1220cc99017582b303ebde3207",
+          "title": "three invalid gifted choices throw and expire the already-dead owner's gun without a fake public shot",
+          "occurrence": 1
+        },
+        {
+          "id": "545d3ee6f66fcbd175b45e0b3abd3f448c7cc3bfc12dbc63eb939bbfd0622ccc",
+          "title": "a donor's later death does not revoke a paid gift owned by the recipient",
+          "occurrence": 1
+        },
+        {
+          "id": "380ae60f95874505e18883ead18cdfabb286a061c5f50cf1d18f03829f70e35a",
+          "title": "poison: a gifted Villager never gets a gun request for a forbidden or compound death",
+          "occurrence": 1
+        },
+        {
+          "id": "589b4e50be810e2f742d8eb4a6d5c4f5ae8b64e0f0a4f1c255e0033a430b8f85",
+          "title": "wolf_kill,poison: a gifted Villager never gets a gun request for a forbidden or compound death",
+          "occurrence": 1
+        },
+        {
+          "id": "85cdbd70b88b0d0b56d7cdc14a55fa6557a201bf3d2d768304fe4be091b6e373",
+          "title": "dream: a gifted Villager never gets a gun request for a forbidden or compound death",
+          "occurrence": 1
+        },
+        {
+          "id": "5753065e7fa9f03196746296291d4fd8162c9f0ca8038ae4e9f624198368a5a4",
+          "title": "charm: a gifted Villager never gets a gun request for a forbidden or compound death",
+          "occurrence": 1
+        },
+        {
+          "id": "8cebbc7ea8c6b9404b014629b972db0614a0e6616fc3e9eb2c58193004637421",
+          "title": "duel: a gifted Villager never gets a gun request for a forbidden or compound death",
+          "occurrence": 1
+        },
+        {
+          "id": "80b58ecdcedf41e13328fce2fd1e1ae71441e36950e73970879158ba01af867f",
+          "title": "duel_failure: a gifted Villager never gets a gun request for a forbidden or compound death",
+          "occurrence": 1
+        },
+        {
+          "id": "790148b4dbd5da5fca5b7e477c1ac56abdb54598445edc9733183914ec4388e9",
+          "title": "ability: a gifted Villager never gets a gun request for a forbidden or compound death",
+          "occurrence": 1
+        },
+        {
+          "id": "81fc8dcbf43d15a293e68edb04c84f4b76a3d3abc399637234041597c5819f9f",
+          "title": "a pending unarmed gun expires on its first real death without a request",
+          "occurrence": 1
+        },
+        {
+          "id": "18c6865355923ba7dacdd122456db56a9329745a01667176efc5d9c6719a1fb6",
+          "title": "death expiry emits only captured facts without evaluating unknown private getters",
+          "occurrence": 1
+        },
+        {
+          "id": "86ea2c164fd6d59b0228e840c1d119bd1ee29bfa6452ae7720d0e5f5609e691f",
+          "title": "revive: a late gifted gun reply cannot spend another owner or kill a target",
+          "occurrence": 1
+        },
+        {
+          "id": "392aa51548f62d5d28c6742a5626a2c1cfe0dae8bf308c062046060763e52e42",
+          "title": "replace: a late gifted gun reply cannot spend another owner or kill a target",
+          "occurrence": 1
+        },
+        {
+          "id": "e40c37d71c1955f413b8ca88b9027f6f9dfd13cb06d5cb842e6667b9cc64ecaa",
+          "title": "private: a late gifted gun reply cannot spend another owner or kill a target",
+          "occurrence": 1
+        },
+        {
+          "id": "de3509d19c48a109e8450ad224d8944422250bc530b56cf3b77b31cd3d6090e4",
+          "title": "role: a late gifted gun reply cannot spend another owner or kill a target",
+          "occurrence": 1
+        },
+        {
+          "id": "8e53b16f05f90ec44bf285f23f9e93f44275c2f6818ce0b494d52ed7aeaea837",
+          "title": "camp: a late gifted gun reply cannot spend another owner or kill a target",
+          "occurrence": 1
+        },
+        {
+          "id": "116a856448c3c54ebdd68722f1738f25b033fa2ba25c8c9884af1d4dfb432165",
+          "title": "source: a late gifted gun reply cannot spend another owner or kill a target",
+          "occurrence": 1
+        },
+        {
+          "id": "7b883e4d0e601948db7a55171ddace61fbf3dc6caeb00b4d2f4e20e3d38b30dd",
+          "title": "metadata: a late gifted gun reply cannot spend another owner or kill a target",
+          "occurrence": 1
+        },
+        {
+          "id": "b12bcce1febb1d314955b5d2f831c5b7cdd2ae75e2d6522ad2a19e5d3c65459c",
+          "title": "clock: a late gifted gun reply cannot spend another owner or kill a target",
+          "occurrence": 1
+        },
+        {
+          "id": "31cd759318eedc82ddfb774cb7067a655882efb5b19be92d7369060c76dc292c",
+          "title": "cancel: a late gifted gun reply cannot spend another owner or kill a target",
+          "occurrence": 1
+        },
+        {
+          "id": "8b03ca1e83a2f1866def70b6b894b166c69242befb0cd491e9a7b24b8463fa4b",
+          "title": "transfer preserves pending/armed, spent/disabled resources and source identity never enters private events",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalImport": "import { NightPipeline } from \"../../../src/game/engine/phase_pipeline/night_pipeline\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightPipeline",
+              "imported": "NightPipeline",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalImport": "import { DamageResolutionSystem } from \"../../../src/core/domain/systems/damage_resolution_system\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DamageResolutionSystem",
+              "imported": "DamageResolutionSystem",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/session_recorder",
+          "originalImport": "import { SessionRecordManager } from \"../../../src/recording/session_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SessionRecordManager",
+              "imported": "SessionRecordManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/recording_context",
+          "originalImport": "import { runWithSessionRecorder } from \"../../../src/recording/recording_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "runWithSessionRecorder",
+              "imported": "runWithSessionRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/game_event_recorder",
+          "originalImport": "import { GameEventRecorder } from \"../../../src/runtime/game_event_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameEventRecorder",
+              "imported": "GameEventRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readFile, writeFile } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readFile",
+              "imported": "readFile",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "writeFile",
+              "imported": "writeFile",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:path",
+          "originalImport": "import path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/catalog",
+          "originalImport": "import { RoleCatalog, getDefaultRoleCatalog } from \"../../../src/game/mechanisms/roles/catalog\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "RoleCatalog",
+              "imported": "RoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalImport": "import { NightStageRegistry } from \"../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightStageRegistry",
+              "imported": "NightStageRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/gift_gun.test.ts",
+      "to": "backend/tests/scenarios/mechanisms/gifted-gun-native-night.test.ts",
+      "sourceCommit": "9695d888c13a780583c3f2aea7e06540373f93af",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "ca0f50ca4c95cfbbc447315b648d889e253da0a7c0d9cf4820bc272ba2e9958f",
+      "candidateSha256": "acc50ec27af1ab5b1564dec73bf342641639e351fc3b11610a29d246ae519d3a",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "import-type-module-specifier",
+          "start": 9472,
+          "end": 9523,
+          "original": "../../../src/game/mechanisms/stages/night/contracts",
+          "value": "../../../src/game/mechanisms/stages/night/contracts",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/contracts.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/contracts.ts",
+          "typeOnly": true
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1205,
+          "end": 1267,
+          "original": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "value": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1124,
+          "end": 1166,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 945,
+          "end": 983,
+          "original": "../../support/drivers/temp-directories",
+          "value": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 861,
+          "end": 901,
+          "original": "../../../src/runtime/game_event_recorder",
+          "value": "../../../src/runtime/game_event_recorder",
+          "originalResolved": "backend/src/runtime/game_event_recorder.ts",
+          "expectedResolved": "backend/src/runtime/game_event_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 783,
+          "end": 823,
+          "original": "../../../src/recording/recording_context",
+          "value": "../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 701,
+          "end": 740,
+          "original": "../../../src/recording/session_recorder",
+          "value": "../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 603,
+          "end": 660,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 506,
+          "end": 560,
+          "original": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "value": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 434,
+          "end": 472,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 352,
+          "end": 402,
+          "original": "../../../src/game/mechanisms/roles/death_abilities",
+          "value": "../../../src/game/mechanisms/roles/death_abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/death_abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/death_abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 259,
+          "end": 304,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 203,
+          "end": 220,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/game/mechanisms/stages/night/contracts.ts",
+          "originalExpression": "import(\"../../../src/game/mechanisms/stages/night/contracts\").NightStageContext",
+          "currentExpression": "import(\"../../../src/game/mechanisms/stages/night/contracts\").NightStageContext",
+          "currentHead": "../../../src/game/mechanisms/stages/night/contracts",
+          "kind": "type-module-path",
+          "typeOnly": true
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "031346c574b5cf30534938869a82825100c34c2c84fa86671583b9b20caae4b2",
+          "title": "1/zh-CN: a complete PhaseManager night finishes both guns and deaths before judging last Wolf or last God",
+          "occurrence": 1
+        },
+        {
+          "id": "b7511ebff4f62716805704dbe4f8db5d0b5b59ac80a42765b6bfb9dde303eef4",
+          "title": "1/en: a complete PhaseManager night finishes both guns and deaths before judging last Wolf or last God",
+          "occurrence": 1
+        },
+        {
+          "id": "4427ae1c0a892c7a48f44eb869750fbca347b855075d6d2ae7027a0a5f23aeed",
+          "title": "3/zh-CN: a complete PhaseManager night finishes both guns and deaths before judging last Wolf or last God",
+          "occurrence": 1
+        },
+        {
+          "id": "84daf64fcc5ad8179996234a7514fc5a0c5ef1a3523de53410deccd516147b46",
+          "title": "3/en: a complete PhaseManager night finishes both guns and deaths before judging last Wolf or last God",
+          "occurrence": 1
+        },
+        {
+          "id": "495ac09f78ad9f75508bff54ae3da8c1e8544a246aac217db19adb9cd4c29163",
+          "title": "only actual final night activation arms a gift; same World/night cannot replay its committed activation",
+          "occurrence": 1
+        },
+        {
+          "id": "2d90e7195405c09fcc6da0e8251f72a9981e4b83ca8dbe93715e8f1a89f2f169",
+          "title": "a declared death capability collects final activation before a gift is produced during the night",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Camp,\n  DeathCause,\n  Phase,\n  Role,\n  type ActionRequest,\n  type GameEvent,\n  type RoleComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, Camp, Phase, Role, type ActionRequest, type GameEvent, type RoleComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "DeathCause",
+              "imported": "DeathCause",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import {\n  createAliveComponent,\n  type AliveComponent,\n} from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAliveComponent",
+              "imported": "createAliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "AliveComponent",
+              "imported": "AliveComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/death_abilities",
+          "originalImport": "import {\n  allDeathGuns,\n  grantDeathGun,\n  armDeathGun,\n  activeDeathGun,\n  projectDeathGun,\n  transferDeathGun,\n  setDeathGunEnabled,\n  copyDeathGun,\n} from \"../../../src/game/mechanisms/roles/death_abilities\";",
+          "currentImportBeforeRebase": "import { allDeathGuns, grantDeathGun } from \"../../../src/game/mechanisms/roles/death_abilities\";",
+          "droppedBindings": [
+            {
+              "name": "armDeathGun",
+              "imported": "armDeathGun",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "activeDeathGun",
+              "imported": "activeDeathGun",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "projectDeathGun",
+              "imported": "projectDeathGun",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "transferDeathGun",
+              "imported": "transferDeathGun",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "setDeathGunEnabled",
+              "imported": "setDeathGunEnabled",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "copyDeathGun",
+              "imported": "copyDeathGun",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/death_resolution",
+          "originalImport": "import { DeathResolution } from \"../../../src/game/engine/death_resolution\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DeathResolution",
+              "imported": "DeathResolution",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/event_registry",
+          "originalImport": "import { EventRegistry } from \"../../../src/game/engine/event_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "EventRegistry",
+              "imported": "EventRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/action_reception",
+          "originalImport": "import { ActionReception } from \"../../../src/ai/agents/player/action_reception\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ActionReception",
+              "imported": "ActionReception",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import { getHunterState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getHunterState",
+              "imported": "getHunterState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/agent_visible_event_feed",
+          "originalImport": "import { buildAgentVisibleEventFeed } from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "buildAgentVisibleEventFeed",
+              "imported": "buildAgentVisibleEventFeed",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/world",
+          "originalImport": "import { World } from \"../../../src/core/domain/world\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "World",
+              "imported": "World",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/hooks/hook_registry",
+          "originalImport": "import { HookRegistry } from \"../../../src/game/mechanisms/hooks/hook_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "HookRegistry",
+              "imported": "HookRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/gift_gun_death_hook",
+          "originalImport": "import { giftGunDeathHook } from \"../../../src/game/mechanisms/roles/gift_gun_death_hook\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "giftGunDeathHook",
+              "imported": "giftGunDeathHook",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/night_effects",
+          "originalImport": "import { captureNightLife } from \"../../../src/core/domain/night_effects\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "captureNightLife",
+              "imported": "captureNightLife",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 549,
-    "targetFiles": 602,
-    "mappingEntries": 602,
-    "baselineCases": 7005,
+    "sourceFiles": 550,
+    "targetFiles": 604,
+    "mappingEntries": 604,
+    "baselineCases": 7044,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
