@@ -5422,7 +5422,7 @@
     },
     {
       "originPath": "packages/replay-contract/fixtures/legacy-player-view.json",
-      "currentPath": "packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-.player.json",
+      "currentPath": "packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-localized-role.player.json",
       "sha256": "e1cda01a49461a8850ce499da4172efb3af60876afe33e2e09836220a7883669",
       "bytes": 1179
     }
@@ -5431,7 +5431,7 @@
     {
       "path": "backend/tests/recording/private_record_contract.test.ts",
       "originalSha256": "3e9271bb5866d4e98899d75a5453b68064feee45d50b0179c48333c434d974aa",
-      "currentSha256": "47d6555ac03367589ea239e4267629ad0a53e5b78a124095a11af484c2ebbe3b",
+      "currentSha256": "bf30958a021d2a49209059620117b7e0a6c1c45bed9073946006284fca65c506",
       "testTitleExpressionBytesIdentical": true,
       "allArrayLiteralBytesIdentical": true,
       "explicitFixtureInputMatrixExceptions": [],
@@ -5441,10 +5441,10 @@
         {
           "start": 1259,
           "end": 1319,
-          "value": "../packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-.player.json",
+          "value": "../packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-localized-role.player.json",
           "kind": "workspace-cwd-package-artifact",
           "originalTarget": "packages/replay-contract/fixtures/legacy-player-view.json",
-          "target": "packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-.player.json"
+          "target": "packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-localized-role.player.json"
         }
       ]
     },
@@ -7113,7 +7113,7 @@
     {
       "path": "packages/replay-contract/tests/package-contract.test.ts",
       "originalSha256": "6d4c2c95000977860fc6e11cb74faa2aa0954304a3922dff99b33359cff295d0",
-      "currentSha256": "089ef75dd64e398713066f369f1494e00b6b0fe87aaf63ce4eac24b1555e6d12",
+      "currentSha256": "81dc505f6114de73c11de1b3655182811f2f81bca43b86329f039294f803014e",
       "testTitleExpressionBytesIdentical": true,
       "allArrayLiteralBytesIdentical": true,
       "explicitFixtureInputMatrixExceptions": [],
@@ -7123,10 +7123,10 @@
         {
           "start": 772,
           "end": 807,
-          "value": "../fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-.player.json",
+          "value": "../fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-localized-role.player.json",
           "kind": "static-module-or-package-URL",
           "originalTarget": "packages/replay-contract/fixtures/legacy-player-view.json",
-          "target": "packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-.player.json"
+          "target": "packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-localized-role.player.json"
         },
         {
           "start": 710,
@@ -9032,7 +9032,7 @@
     {
       "path": "packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/manifest.json",
       "candidateFile": "/tmp/awa-c14-archive-candidates/packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/manifest.json",
-      "sha256": "bb0d7901923733777dfb366e1317b2dd49a63b75e99ca1350630a9ddd2649612",
+      "sha256": "bc3505bd4773d9ea0435cc7dcc0a49bf7e9132540a071be5b40591f793c13b46",
       "suiteIds": ["fixture:packages/replay-contract/fixtures/legacy-player-view.json"]
     }
   ],
@@ -9102,5 +9102,16 @@
       "scope": "Actual support functions and configured sample read relocated immutable archives. No browser/model/game execution; the role loops are the original consumer input matrices."
     }
   },
-  "scope": "904 JSON bytes and semantic fields are unchanged. Test title expressions and every original array literal remains exact except the single explicitly registered CLI fixture-input path; specific physical input anchors and manifest-backed enumeration are listed as source exceptions. Temporary output43 recipes and immutable origin identities are retained. No whole suite/model/browser execution."
+  "scope": "904 JSON bytes and semantic fields are unchanged. Test title expressions and every original array literal remains exact except the single explicitly registered CLI fixture-input path; specific physical input anchors and manifest-backed enumeration are listed as source exceptions. Temporary output43 recipes and immutable origin identities are retained. No whole suite/model/browser execution.",
+  "pathCorrections": [
+    {
+      "previousCommit": "d3ca759",
+      "originPath": "packages/replay-contract/fixtures/legacy-player-view.json",
+      "from": "packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-.player.json",
+      "to": "packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-localized-role.player.json",
+      "sha256": "e1cda01a49461a8850ce499da4172efb3af60876afe33e2e09836220a7883669",
+      "bytes": 1179,
+      "reason": "The literal localized role 狼人 is preserved in the unchanged archive. A descriptive localized-role filename avoids an empty ASCII role slug; no machine RoleID or locale is inferred."
+    }
+  ]
 }

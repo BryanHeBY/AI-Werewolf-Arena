@@ -85,3 +85,5 @@
 - C20 Fragrant原生pair切片：2真实creation/commit消费者迁owned typed slot，CP alias同ref、5写prefix及3helpers原文保持；4new/0/34+9oldselected/0/59，source/单newtest types0，14作者证明与独立source/coldimport审通过。原/现catalog55同序，原direct-profile TDZ同位保留待注册/出口收口，非新cycle；整合架构0新增失败。所有机制状态/生命周期矩阵未冒称已完成。
 
 - C14 archive完整路径切片：904实体迁移原byte/oldgone均0漂移、256local精确subset、258stable suite；最终66TS+7activeMD+global闭合，Root Git907逐摘要核，独立66wholeprogram/原253God与112private范围0。17动态loader与CLI真实sample遗漏修复，66heads/0、62实际FE focusedtypes/0、原CLI3/0，actual loaders成功、PW原362/23 discovery保留。所有acceptance仍pending，未重复full/browser。
+
+- C14命名小修：旧localized player role字符串经ASCII slug得到空后缀，改明确1-localized-role.player.json；Root原1179bytes逐字保持，仍字面狼人/缺locale，不推machineID。global/local/2实际reader及当前ledger同步，原legacyreader1/0/15，未重复全CLI。

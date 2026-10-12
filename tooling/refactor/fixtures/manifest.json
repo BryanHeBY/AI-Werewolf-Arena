@@ -98854,7 +98854,7 @@
     },
     {
       "originPath": "packages/replay-contract/fixtures/legacy-player-view.json",
-      "currentPath": "packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-.player.json",
+      "currentPath": "packages/replay-contract/fixtures/board-unrecorded/legacy-player-view/locale-unrecorded/players/1-localized-role.player.json",
       "sha256": "e1cda01a49461a8850ce499da4172efb3af60876afe33e2e09836220a7883669",
       "bytes": 1179,
       "owner": "replay-contract",
