@@ -1,7 +1,14 @@
+/**
+ * Scenario tests for complete nightmare games over real local transports.
+ * Input: original fixed scenario actions, transport and language matrices;
+ * output: unchanged terminal, player-view and strict reproduction assertions.
+ * Literal winners, alive seats and causal facts are the independent oracle.
+ * Synthetic local model/ACP processes exercise the wire; no billed model runs.
+ */
 import { writeFile } from "node:fs/promises";
 import { expect, test } from "bun:test";
-import { nightmareScenario } from "../support/nightmare_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { nightmareScenario } from "../../../support/nightmare_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 for (const transport of ["llm", "acp", "mixed"] as const)
   test(`nightmare bilingual real transport and private fear exports/${transport}`, async () => {
     const scenario = nightmareScenario(),

@@ -1,8 +1,15 @@
+/**
+ * Scenario tests for complete trickster games over real local transports.
+ * Input: original fixed scenario actions, transport and language matrices;
+ * output: unchanged terminal, player-view and strict reproduction assertions.
+ * Literal winners, alive seats and causal facts are the independent oracle.
+ * Synthetic local model/ACP processes exercise the wire; no billed model runs.
+ */
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { expect, test } from "bun:test";
-import { tricksterScenario } from "../support/trickster_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { tricksterScenario } from "../../../support/trickster_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 for (const variant of ["mapped", "cancel", "pk"] as const)
   for (const transport of ["llm", "acp", "mixed"] as const)
     test(

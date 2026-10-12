@@ -248,6 +248,553 @@
       "fixturesChanged": false
     },
     {
+      "from": "backend/tests/integration/evil_knight_game_execution.test.ts",
+      "to": "backend/tests/scenarios/boards/evil-knight/transport-game.test.ts",
+      "layer": "scenarios",
+      "feature": "evil-knight",
+      "importPaths": [
+        {
+          "old": "../../src/core",
+          "new": "../../../../src/core",
+          "resolved": "backend/src/core"
+        },
+        {
+          "old": "../support/evil_knight_transport_scenarios",
+          "new": "../../../support/evil_knight_transport_scenarios",
+          "resolved": "backend/tests/support/evil_knight_transport_scenarios"
+        },
+        {
+          "old": "../support/run_transport_game",
+          "new": "../../../support/run_transport_game",
+          "resolved": "backend/tests/support/run_transport_game"
+        }
+      ],
+      "originalSha256": "641629037a94da2ab2b1766ca363826c8446fafbb54f0bfe830cf231b73eb321",
+      "candidateSha256": "89f1fd70147c15cd6ec185f8dab2c73f5f9fc017dbbb91f80073896ce0166637",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false,
+      "baselineCases": [
+        {
+          "id": "0d2c6e538baa040da9d2809e1ea0fb2bebdc127b4c7ad994c6e0191b0c059c11",
+          "title": "evil knight night_immune_wolf/llm: bilingual real transport, terminal state and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "85b20accc5be4d259f2ef1bf694c4d7c43bebcf87422c043553bd36c67043416",
+          "title": "evil knight night_immune_wolf/acp: bilingual real transport, terminal state and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d7c98dab0a0f5eb2e122ca90ba9e9a864136f15801ae3f09ed7f260d6c0a2d4e",
+          "title": "evil knight night_immune_wolf/mixed: bilingual real transport, terminal state and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "51b0a10beb7a813da14dbeb497b9c7f0aaee798d19279856d304dddf6e850044",
+          "title": "evil knight shot_bypass_good/llm: bilingual real transport, terminal state and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3dd5692f6dd42a384b555400f1346d89aa1c3f99930e98150434c4c313e92c47",
+          "title": "evil knight shot_bypass_good/acp: bilingual real transport, terminal state and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "c0f28d09a3b2f9329f89e890feaaf2f049b33d4bd1ce4a5bafd7a11a39a3ab25",
+          "title": "evil knight shot_bypass_good/mixed: bilingual real transport, terminal state and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6de5410740ee7ed801b805583d50120e9ecd8332c00dd4849f828fe1dec9c7a2",
+          "title": "evil knight day_shot_good/llm: bilingual real transport, terminal state and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "082acd18c8bbfafe4cea421d9a1028adbf71bb4a915019d786f3ac82cdf15c4b",
+          "title": "evil knight day_shot_good/acp: bilingual real transport, terminal state and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e8a9b01784d6419a2d7640448a507fdb4b020e99d06b9a1ac054b763f8fa7bc0",
+          "title": "evil knight day_shot_good/mixed: bilingual real transport, terminal state and strict Tape",
+          "occurrence": 1
+        }
+      ],
+      "reason": "C12 real local transport complete-game scenario or ACP child process integration; source program and matrices preserved while relative imports keep original targets.",
+      "baselineRunner": "backend",
+      "targetRunner": "backend",
+      "programBytesPreserved": false
+    },
+    {
+      "from": "backend/tests/integration/wolf_sorcerer_transport.test.ts",
+      "to": "backend/tests/scenarios/boards/wolf-sorcerer/transport-game.test.ts",
+      "layer": "scenarios",
+      "feature": "wolf-sorcerer",
+      "importPaths": [
+        {
+          "old": "../support/wolf_sorcerer_transport_scenarios",
+          "new": "../../../support/wolf_sorcerer_transport_scenarios",
+          "resolved": "backend/tests/support/wolf_sorcerer_transport_scenarios"
+        },
+        {
+          "old": "../support/run_transport_game",
+          "new": "../../../support/run_transport_game",
+          "resolved": "backend/tests/support/run_transport_game"
+        }
+      ],
+      "originalSha256": "6586486a663145dbe95b750f16860b2996e19ef3167257957b056e708a990967",
+      "candidateSha256": "a9bcff92b578069e4a7c308af02b509ba224682dc6c54467522316d552fb61eb",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false,
+      "baselineCases": [
+        {
+          "id": "6bef51a4d2aaa9f3d1cafde37e6162576a7404b8d5090a6f01a88c34ed356e8d",
+          "title": "Wolf Sorcerer bilingual real transport/overlap/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "50b02ef2485cce8a3b3962fa63068922500f0e5d15340e34e6e6658dc6ec8331",
+          "title": "Wolf Sorcerer bilingual real transport/overlap/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "050de792011e1f7cb0a4833ab50f04cb94a0e23ea873dde1dc5753b6de94eddc",
+          "title": "Wolf Sorcerer bilingual real transport/overlap/mixed",
+          "occurrence": 1
+        },
+        {
+          "id": "d73fb870b5457aecd5d37fa89162418b0a3ba7c5c010d12020b5b837f948b160",
+          "title": "Wolf Sorcerer bilingual real transport/cancel/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "e72a4b61c7f8a4817e9bea5d058a787706bc340bb30ceb3088dc596ef46c5266",
+          "title": "Wolf Sorcerer bilingual real transport/cancel/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "803d2b784e3619d372c0edacaeb30a8a9ea83f9550e15ea61e49dad47d1dd276",
+          "title": "Wolf Sorcerer bilingual real transport/cancel/mixed",
+          "occurrence": 1
+        },
+        {
+          "id": "a380c641c64834bd7fa86bf5a8423d0b1b77ac4414fe4be1a0f47247b217e25a",
+          "title": "Wolf Sorcerer bilingual real transport/disjoint/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "430c2494dc90846bf5065b2520febccd026826fc934fba4f84d150345af5146f",
+          "title": "Wolf Sorcerer bilingual real transport/disjoint/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "5edd502480993847117f4929ac78f28654c9ad9ff84c8472ed0739b693aa3889",
+          "title": "Wolf Sorcerer bilingual real transport/disjoint/mixed",
+          "occurrence": 1
+        }
+      ],
+      "reason": "C12 real local transport complete-game scenario or ACP child process integration; source program and matrices preserved while relative imports keep original targets.",
+      "baselineRunner": "backend",
+      "targetRunner": "backend",
+      "programBytesPreserved": false
+    },
+    {
+      "from": "backend/tests/integration/magician_game_execution.test.ts",
+      "to": "backend/tests/scenarios/boards/magician/transport-game.test.ts",
+      "layer": "scenarios",
+      "feature": "magician",
+      "importPaths": [
+        {
+          "old": "../support/magician_transport_scenarios",
+          "new": "../../../support/magician_transport_scenarios",
+          "resolved": "backend/tests/support/magician_transport_scenarios"
+        },
+        {
+          "old": "../support/run_transport_game",
+          "new": "../../../support/run_transport_game",
+          "resolved": "backend/tests/support/run_transport_game"
+        }
+      ],
+      "originalSha256": "df75ee302e356b0e7f458bbef2d0859d7a33aa6c99ddbe7418cc5ebdc7ef798d",
+      "candidateSha256": "78ca5e19c043baab0dd7ce2358146b7b8d3e36f0483b886a627172a9330a2fa8",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false,
+      "baselineCases": [
+        {
+          "id": "cfd6e8e8ad44547b130a96b6efd7e88be1bcca7370dadbaba4d1ff67a620b04f",
+          "title": "Magician bilingual real transport, private exchange and night gun/original/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "6936a9897ae32f258b24642a4cdde20b9d191c6586227bc2a5d8e3b3a56adc7a",
+          "title": "Magician bilingual real transport, private exchange and night gun/original/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "c4c1faa81200dc886a66eb1a71e3043e186d9476ed49f2c4de34320964dee24f",
+          "title": "Magician bilingual real transport, private exchange and night gun/original/mixed",
+          "occurrence": 1
+        },
+        {
+          "id": "e3ccd6fecf11c64da94a247d0662917d246896ce256f8e5d710c112cd8538e1c",
+          "title": "Magician bilingual real transport, private exchange and night gun/exchanged/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "ecf2c45e9310186a7cb7d80502cfaa17989f2b1bb65fa2bac002eecbc5878d11",
+          "title": "Magician bilingual real transport, private exchange and night gun/exchanged/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "cec0148643621ffcbfe1689d3109726b9e9883e87af978771b8a2a2002c45c4a",
+          "title": "Magician bilingual real transport, private exchange and night gun/exchanged/mixed",
+          "occurrence": 1
+        }
+      ],
+      "reason": "C12 real local transport complete-game scenario or ACP child process integration; source program and matrices preserved while relative imports keep original targets.",
+      "baselineRunner": "backend",
+      "targetRunner": "backend",
+      "programBytesPreserved": false
+    },
+    {
+      "from": "backend/tests/integration/red_moon_game_execution.test.ts",
+      "to": "backend/tests/scenarios/boards/red-moon/transport-game.test.ts",
+      "layer": "scenarios",
+      "feature": "red-moon",
+      "importPaths": [
+        {
+          "old": "../support/red_moon_transport_scenarios",
+          "new": "../../../support/red_moon_transport_scenarios",
+          "resolved": "backend/tests/support/red_moon_transport_scenarios"
+        },
+        {
+          "old": "../support/run_transport_game",
+          "new": "../../../support/run_transport_game",
+          "resolved": "backend/tests/support/run_transport_game"
+        }
+      ],
+      "originalSha256": "b74a6402ed302cacbe5fbe39b5f2d0e7b4a9c1777a9a3de8b2cac0c85c1c4514",
+      "candidateSha256": "734d2a2691cd983b219303ef07330151e6782712efd3cd4db0fd18072d0e7abc",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false,
+      "baselineCases": [
+        {
+          "id": "da5c330fc036b40d16baa9144b0dce31177b81e689d2064723e796aa94658754",
+          "title": "Red Moon true transport expire/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "2c7a6c34747d4fbd744b770d822f1b4cf7cb1284ede5477590fd867b13e9c500",
+          "title": "Red Moon true transport expire/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "937867003bc4e583ae2891b2705b164ef3b574c6ef99fbdd1c001e8819fb5d52",
+          "title": "Red Moon true transport expire/mixed",
+          "occurrence": 1
+        },
+        {
+          "id": "6945c829f6f6315cb82f90c8581f406ffddefc3d9df95e28971b7c4e8182d357",
+          "title": "Red Moon true transport knife/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "1ae075e12c2cbd696e906bd9748ec638041640009b992980838d89bd2d1f95f8",
+          "title": "Red Moon true transport knife/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "81fd03f11fe989bba733f2c2f60b121d795d2e822abb1bcc1cd968df86b5f9ed",
+          "title": "Red Moon true transport knife/mixed",
+          "occurrence": 1
+        },
+        {
+          "id": "6971f47c8a774e26951d35411eb2533794b58e4acda10033f01d26fea0cee5b7",
+          "title": "Red Moon true transport blast/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "65277d4513ccbda4719278c489a8fa2554667343c922722c694ae3185f627e70",
+          "title": "Red Moon true transport blast/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "e2c11822fb5856a018ab2b40e179309977ad58c25d8b813ee51766df5f0d3730",
+          "title": "Red Moon true transport blast/mixed",
+          "occurrence": 1
+        }
+      ],
+      "reason": "C12 real local transport complete-game scenario or ACP child process integration; source program and matrices preserved while relative imports keep original targets.",
+      "baselineRunner": "backend",
+      "targetRunner": "backend",
+      "programBytesPreserved": false
+    },
+    {
+      "from": "backend/tests/integration/order_prince_pk_execution.test.ts",
+      "to": "backend/tests/scenarios/boards/order-prince/transport-pk.test.ts",
+      "layer": "scenarios",
+      "feature": "order-prince",
+      "importPaths": [
+        {
+          "old": "../support/order_prince_transport_scenarios",
+          "new": "../../../support/order_prince_transport_scenarios",
+          "resolved": "backend/tests/support/order_prince_transport_scenarios"
+        },
+        {
+          "old": "../support/run_transport_game",
+          "new": "../../../support/run_transport_game",
+          "resolved": "backend/tests/support/run_transport_game"
+        }
+      ],
+      "originalSha256": "b1f0805ab14e667d10c73f987ae1f56ca6b7fb4bde477e6cf0dd49cf9b3f3a23",
+      "candidateSha256": "275e60343fc5231d553113a90665ffdb6b26cb9900db056e086a5a9372d5acbd",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false,
+      "baselineCases": [
+        {
+          "id": "b01eb021175cc0d7b9808d23daf6eb54ee2de5e297bcae6851fe1f70c4e33cbc",
+          "title": "Order Prince bilingual real transport/pk/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "c29463e5372e08d270b23ea5a7c9603dec7da072635bc554749ceec805f2879e",
+          "title": "Order Prince bilingual real transport/pk/acp",
+          "occurrence": 1
+        }
+      ],
+      "reason": "C12 real local transport complete-game scenario or ACP child process integration; source program and matrices preserved while relative imports keep original targets.",
+      "baselineRunner": "backend",
+      "targetRunner": "backend",
+      "programBytesPreserved": false
+    },
+    {
+      "from": "backend/tests/integration/order_prince_game_execution.test.ts",
+      "to": "backend/tests/scenarios/boards/order-prince/transport-game.test.ts",
+      "layer": "scenarios",
+      "feature": "order-prince",
+      "importPaths": [
+        {
+          "old": "../support/order_prince_transport_scenarios",
+          "new": "../../../support/order_prince_transport_scenarios",
+          "resolved": "backend/tests/support/order_prince_transport_scenarios"
+        },
+        {
+          "old": "../support/run_transport_game",
+          "new": "../../../support/run_transport_game",
+          "resolved": "backend/tests/support/run_transport_game"
+        }
+      ],
+      "originalSha256": "dd359d3ad59f9e08ba44d3e3ae9c45012d7468899c2871e9b8e8e6513ffdbd30",
+      "candidateSha256": "da0caead0cd9928a2353f6757d2ce2f1df15c509c8b24f5383e45e191fd780f1",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false,
+      "baselineCases": [
+        {
+          "id": "d86a2a6342f92ae03d43094e616ebb4ba86f990cac47236c8939c1838492a2a5",
+          "title": "Order Prince bilingual real transport/day1/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "d9d7720b06ae291dcb470cb93edd2e72e4966e291ba19a234d628ebdc5cb178e",
+          "title": "Order Prince bilingual real transport/day1/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "aa1a3bdf3bd00850c9c2d57a188adf48b45da0302da99a3376d46d0624b39b44",
+          "title": "Order Prince bilingual real transport/day1/mixed",
+          "occurrence": 1
+        },
+        {
+          "id": "8a915de20197af9b399aea66e7e847cba501caadd8234f9a30bb78d230ce4163",
+          "title": "Order Prince bilingual real transport/day2/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "af3b5ae4bb04503eb4b5bf36397c9664b0216a3b69340aba776bf086ebe6393a",
+          "title": "Order Prince bilingual real transport/day2/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "d2beb7aec19a9c78d55c9151a75023875c96e30b18614a9f805f0b35afc6af19",
+          "title": "Order Prince bilingual real transport/day2/mixed",
+          "occurrence": 1
+        }
+      ],
+      "reason": "C12 real local transport complete-game scenario or ACP child process integration; source program and matrices preserved while relative imports keep original targets.",
+      "baselineRunner": "backend",
+      "targetRunner": "backend",
+      "programBytesPreserved": false
+    },
+    {
+      "from": "backend/tests/integration/trickster_game_execution.test.ts",
+      "to": "backend/tests/scenarios/boards/trickster/transport-game.test.ts",
+      "layer": "scenarios",
+      "feature": "trickster",
+      "importPaths": [
+        {
+          "old": "../support/trickster_transport_scenarios",
+          "new": "../../../support/trickster_transport_scenarios",
+          "resolved": "backend/tests/support/trickster_transport_scenarios"
+        },
+        {
+          "old": "../support/run_transport_game",
+          "new": "../../../support/run_transport_game",
+          "resolved": "backend/tests/support/run_transport_game"
+        }
+      ],
+      "originalSha256": "9514b0f1a57545faee0d9ce5c474e41021c37d00cf4be700eeacb36bf4caae0b",
+      "candidateSha256": "2f1d2fd31d7e11dcbef149522aab7b597fac27c49df31200fd0e66aaaa8f3970",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false,
+      "baselineCases": [
+        {
+          "id": "930437c1a9dedc95d2d9e5c83c99f8c654e246debeb56060fcd112aeeacf7768",
+          "title": "Trickster bilingual real transport/mapped/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "63a8d23bde7f03363a01efff8e009a29c25b8cea2c64e87ccaa11e464711b240",
+          "title": "Trickster bilingual real transport/mapped/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "f2d89b9bc3d98bae1a6b9cb2126223a051d5e9a003a18675f39f3e3f3eb804e6",
+          "title": "Trickster bilingual real transport/mapped/mixed",
+          "occurrence": 1
+        },
+        {
+          "id": "fd984e50a2519ab26137d2f2df050068403074cd992b3c320f61ec5f56c0581a",
+          "title": "Trickster bilingual real transport/cancel/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "c3633a297f5e62509a37d26fd6aca627d9752d947243936d0c7042b6b54249d0",
+          "title": "Trickster bilingual real transport/cancel/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "9d66360cede3d502ac6657644578b9d6ba195f7963c41f6ec6fd8b52dd02d655",
+          "title": "Trickster bilingual real transport/cancel/mixed",
+          "occurrence": 1
+        },
+        {
+          "id": "9e970c8aed0db64952dd2d2bb805532c70b78e7c4cac918a408e769b3c2a70f9",
+          "title": "Trickster bilingual real transport/pk/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "c24faa4e7322ae7e9277ca84cc82a7de5980305b42f5cd7b3b07b5dc83f6e8ec",
+          "title": "Trickster bilingual real transport/pk/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "b1f12f7f38201a7b16d80d5001c281e16c9d670f8af118f5d0cefaedb6fcb224",
+          "title": "Trickster bilingual real transport/pk/mixed",
+          "occurrence": 1
+        }
+      ],
+      "reason": "C12 real local transport complete-game scenario or ACP child process integration; source program and matrices preserved while relative imports keep original targets.",
+      "baselineRunner": "backend",
+      "targetRunner": "backend",
+      "programBytesPreserved": false
+    },
+    {
+      "from": "backend/tests/integration/nightmare_game_execution.test.ts",
+      "to": "backend/tests/scenarios/boards/nightmare/transport-game.test.ts",
+      "layer": "scenarios",
+      "feature": "nightmare",
+      "importPaths": [
+        {
+          "old": "../support/nightmare_transport_scenarios",
+          "new": "../../../support/nightmare_transport_scenarios",
+          "resolved": "backend/tests/support/nightmare_transport_scenarios"
+        },
+        {
+          "old": "../support/run_transport_game",
+          "new": "../../../support/run_transport_game",
+          "resolved": "backend/tests/support/run_transport_game"
+        }
+      ],
+      "originalSha256": "17df0160981b0e335adcdddb942966639c639ad05282a51222a64b3ea2203c3b",
+      "candidateSha256": "36285ec13c2162d8fd121fab2e085ae79957c45dd0e64f19f52ebdd8354fb403",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false,
+      "baselineCases": [
+        {
+          "id": "566e0edc6c82abf091b607ae07bf04c56df8b23c8d6da6533efb1a711b2d219b",
+          "title": "nightmare bilingual real transport and private fear exports/llm",
+          "occurrence": 1
+        },
+        {
+          "id": "77178947fe022db6d234630474b27f5a4d9bd3d29dc2f61bf113cab66bcdf0b3",
+          "title": "nightmare bilingual real transport and private fear exports/acp",
+          "occurrence": 1
+        },
+        {
+          "id": "aebfa4f485745b6a3bb6ab45cf9a0143d839325938863966453d1b647aa941c9",
+          "title": "nightmare bilingual real transport and private fear exports/mixed",
+          "occurrence": 1
+        }
+      ],
+      "reason": "C12 real local transport complete-game scenario or ACP child process integration; source program and matrices preserved while relative imports keep original targets.",
+      "baselineRunner": "backend",
+      "targetRunner": "backend",
+      "programBytesPreserved": false
+    },
+    {
+      "from": "backend/tests/ai/integrations/acp_process_client.test.ts",
+      "to": "backend/tests/integration/agents/acp-process-client.test.ts",
+      "layer": "integration",
+      "feature": "ACP process initialization",
+      "importPaths": [
+        {
+          "old": "../../../src/runtime/scenarios/six_player_mvp",
+          "new": "../../../src/runtime/scenarios/six_player_mvp",
+          "resolved": "backend/src/runtime/scenarios/six_player_mvp"
+        },
+        {
+          "old": "../../../src/app/bootstrap",
+          "new": "../../../src/app/bootstrap",
+          "resolved": "backend/src/app/bootstrap"
+        },
+        {
+          "old": "../../../src/ai/integrations/acp/acp_process_client",
+          "new": "../../../src/ai/integrations/acp/acp_process_client",
+          "resolved": "backend/src/ai/integrations/acp/acp_process_client"
+        },
+        {
+          "old": "../../../src/ai/integrations/acp/acp_turn_registry",
+          "new": "../../../src/ai/integrations/acp/acp_turn_registry",
+          "resolved": "backend/src/ai/integrations/acp/acp_turn_registry"
+        },
+        {
+          "old": "../../support/temp_directory",
+          "new": "../../support/temp_directory",
+          "resolved": "backend/tests/support/temp_directory"
+        }
+      ],
+      "originalSha256": "9777c809031266799a0f603858712584bf08a043e4bd720639183303e61d6464",
+      "candidateSha256": "63b6c0081cdcfacdee85334eb6797a693ed157bfbb18b1d9b9ce66220087b0ab",
+      "nonImportStatementsPreserved": true,
+      "fixturesChanged": false,
+      "baselineCases": [
+        {
+          "id": "0fc2983c6f39a0d405ee8a8b745c1df9a9dc07294e540a1248a9065fe03ab7f4",
+          "title": "AcpProcessClient initialization deadlines > terminates a real child when ACP initialization never responds",
+          "occurrence": 1
+        },
+        {
+          "id": "be34e3e3d132bba409dba0e0b4e88b93d4de3ce059360c13cfe10e137ca275ea",
+          "title": "drains final ACP chunks on success, failure and forced closure",
+          "occurrence": 1
+        }
+      ],
+      "reason": "C12 real local transport complete-game scenario or ACP child process integration; source program and matrices preserved while relative imports keep original targets.",
+      "baselineRunner": "backend",
+      "targetRunner": "backend",
+      "programBytesPreserved": false
+    },
+    {
       "from": "backend/tests/ai/agents/acp_turn_registry.test.ts",
       "to": "backend/tests/unit/agents/acp-turn-registry.test.ts",
       "reason": "in-memory acp-turn-registry decision/turn/client control with supplied mocks or DTOs; no physical transport",
@@ -6479,8 +7026,8 @@
     }
   ],
   "counts": {
-    "files": 73,
-    "baselineCases": 980,
+    "files": 82,
+    "baselineCases": 1035,
     "fixtureByteChanges": 0
   }
 }

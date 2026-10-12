@@ -1,6 +1,13 @@
+/**
+ * Scenario tests for complete red-moon games over real local transports.
+ * Input: original fixed scenario actions, transport and language matrices;
+ * output: unchanged terminal, player-view and strict reproduction assertions.
+ * Literal winners, alive seats and causal facts are the independent oracle.
+ * Synthetic local model/ACP processes exercise the wire; no billed model runs.
+ */
 import { expect, test } from "bun:test";
-import { redMoonScenario } from "../support/red_moon_transport_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { redMoonScenario } from "../../../support/red_moon_transport_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 for (const mode of ["expire", "knife", "blast"] as const)
   for (const transport of ["llm", "acp", "mixed"] as const)
     test(

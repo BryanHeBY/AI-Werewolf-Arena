@@ -1,3 +1,10 @@
+/**
+ * Integration tests for ACP process initialization deadlines and child cleanup.
+ * Input: real local child commands, deadlines and temporary PID evidence;
+ * output: the original process termination and initialization assertions.
+ * Child liveness and literal error/timing bounds are independent oracles;
+ * synthetic children never connect to a billed model or read authentication.
+ */
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { describe, expect, test } from "bun:test";
