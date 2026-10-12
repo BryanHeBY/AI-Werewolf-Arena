@@ -1,11 +1,16 @@
+/**
+ * Unit tests verify ReproductionTrace takes one detached live-event snapshot per build and preserves trace inputs after source failure.
+ * Input: Initial bootstrapped events/checkpoints, public board/build metadata arrangement and controlled event-reader callbacks; no game cycle is run.
+ * Output and oracle: Explicit read counts, source/copy equality and original read-error assertions test snapshot ownership rather than filesystem behavior or role settlement.
+ */
 import { expect, test } from "bun:test";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
-import { ReproductionTrace, type ReproductionMetadata } from "../../src/recording/reproduction";
+import { ReproductionTrace, type ReproductionMetadata } from "../../../src/recording/reproduction";
 import {
   captureCheckpoint,
   currentEngineVersion,
-} from "../../src/runtime/simulation/reproduction_context";
-import { radiantFixture } from "../support/radiant_eclipse";
+} from "../../../src/runtime/simulation/reproduction_context";
+import { radiantFixture } from "../../support/radiant_eclipse";
 async function fixture() {
   const f = await radiantFixture();
   const events = f.phaseManager.getEvents();

@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+  "observedSourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -45750,21 +45750,27 @@
         {
           "title": "\"queue time belongs to the turn deadline: expired waiter is removed and never starts a model request\"",
           "describePrefix": [],
-          "oldIds": ["466e33e6a03675e51931b741649b493c02dbbcb29f71f70079d959310b33e823"],
+          "oldIds": [
+            "466e33e6a03675e51931b741649b493c02dbbcb29f71f70079d959310b33e823"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "a484d6af091b85a00ca568def27449e897edc0d56857d6f903f6a1aa3a2598c8"
         },
         {
           "title": "\"required-action retries share one budget instead of resetting timeout for each attempt\"",
           "describePrefix": [],
-          "oldIds": ["2c7cd11e555371c1e55a03f0f581f4a8237d7e2486fe5050ef31deb8789e69e2"],
+          "oldIds": [
+            "2c7cd11e555371c1e55a03f0f581f4a8237d7e2486fe5050ef31deb8789e69e2"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "0b57dafde14a7a9efc20d949bcbf16564ea0fcde11517499e9fc52789c30d41b"
         },
         {
           "title": "\"provider close aborts active and queued turns without fallback, waits for owners, and rejects future work\"",
           "describePrefix": [],
-          "oldIds": ["3c6d7a9a54ee0f223a0bdf236c7ac653f2a69fe87b98447f249f39b60eb9a9c4"],
+          "oldIds": [
+            "3c6d7a9a54ee0f223a0bdf236c7ac653f2a69fe87b98447f249f39b60eb9a9c4"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "c3050b8c9f3e64cdb4b9d1a43ef6443cb34d586bedeccc82086f7bc290b33af2"
         },
@@ -45781,7 +45787,9 @@
         {
           "title": "\"hanging asynchronous fallback uses the remaining turn deadline and a real fallback failure propagates once\"",
           "describePrefix": [],
-          "oldIds": ["630f894373d400bbf057f05b55d7d71cb1aec3f5455b289b8d41ec07892352b5"],
+          "oldIds": [
+            "630f894373d400bbf057f05b55d7d71cb1aec3f5455b289b8d41ec07892352b5"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "5f4abd8fa2ef02c5dd80b4fd1ee25dcf4e507a91fa267dae6786ddbec97e98f6"
         },
@@ -45798,14 +45806,18 @@
         {
           "title": "\"close preserves an already rejected turn error while releasing all logical owners\"",
           "describePrefix": [],
-          "oldIds": ["8ab1aba429b7eb30f1c2e464661a6d5ce386c742f68c117c142c6d052fa355b2"],
+          "oldIds": [
+            "8ab1aba429b7eb30f1c2e464661a6d5ce386c742f68c117c142c6d052fa355b2"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "02cb8b774710e0fbcdeae810f5cbd3d9f4dfc93907ab9a8b921a378c6ec7cea6"
         },
         {
           "title": "\"closing during successful action finalization cannot return the selected action\"",
           "describePrefix": [],
-          "oldIds": ["13df8ba4688b424665bc845ffc94f5e2662389d0fc05882b5ea0e7a78e126a78"],
+          "oldIds": [
+            "13df8ba4688b424665bc845ffc94f5e2662389d0fc05882b5ea0e7a78e126a78"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "6a6800fd6d9e9b99aa044dffdc3684e34ec4f82514d676c837600130b3258efc"
         }
@@ -45948,7 +45960,9 @@
         {
           "title": "\"real SDK HTTP response is cancelled when the owning provider closes\"",
           "describePrefix": [],
-          "oldIds": ["3894ca108c8cd79ad63d10df8d2433ac9ed795db8d13483f585c63f857113ae6"],
+          "oldIds": [
+            "3894ca108c8cd79ad63d10df8d2433ac9ed795db8d13483f585c63f857113ae6"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "55156cdc77d5c912b7d9ae53e5a61b5bd9ebf07f3e0d69d12008f9a0a2e9f0b4"
         }
@@ -46030,15 +46044,23 @@
       "caseStatementMappings": [
         {
           "title": "\"isolates sessions, enforces modes, and owns finding source\"",
-          "describePrefix": ["\"AuditToolTurnRegistry\""],
-          "oldIds": ["f91b366606fb7543ba3e7030f52794b7eb7bad5671ae16741082039887ae9545"],
+          "describePrefix": [
+            "\"AuditToolTurnRegistry\""
+          ],
+          "oldIds": [
+            "f91b366606fb7543ba3e7030f52794b7eb7bad5671ae16741082039887ae9545"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "6ffeccbbc97502215d16a9556e051fd9951cf79866db1e5a937fec2f0e8d2132"
         },
         {
           "title": "\"uses the same semantic tools without embedding audit payload in prompts\"",
-          "describePrefix": ["\"SdkAuditAgentExecutor\""],
-          "oldIds": ["ceafe046549727a25adf0647c616a1f8807392677d43154afa79b47e4c35a909"],
+          "describePrefix": [
+            "\"SdkAuditAgentExecutor\""
+          ],
+          "oldIds": [
+            "ceafe046549727a25adf0647c616a1f8807392677d43154afa79b47e4c35a909"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "b14dab084d60c0c204df674705094e9027e842a55b869bece1da2fba27ab906e"
         }
@@ -46146,8 +46168,12 @@
       "caseStatementMappings": [
         {
           "title": "\"exposes the same semantic audit contract and resolves a registry turn\"",
-          "describePrefix": ["\"Audit ACP MCP bridge\""],
-          "oldIds": ["536030bfc40a4f60aa1dae9752a3656a7b1a4052808136ef75597aff5b022d22"],
+          "describePrefix": [
+            "\"Audit ACP MCP bridge\""
+          ],
+          "oldIds": [
+            "536030bfc40a4f60aa1dae9752a3656a7b1a4052808136ef75597aff5b022d22"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "84e600149c0eb5ba980f14a77deddb58dfa4e4e4a4438feea1ae04436db6670a"
         }
@@ -46213,14 +46239,18 @@
         {
           "title": "\"private record reader converts only metadata paths and leaves prompts/events/tool results original\"",
           "describePrefix": [],
-          "oldIds": ["f0d3ce33d5dcb7bd638560b18ee577c01169c572b329b24d15dcc97c08ae095c"],
+          "oldIds": [
+            "f0d3ce33d5dcb7bd638560b18ee577c01169c572b329b24d15dcc97c08ae095c"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "7de6a6879b3c18e5c51f36607ef563cfde83b27a6928ecf86fc08a996a23e4bd"
         },
         {
           "title": "\"private record versions and nested shapes fail explicitly\"",
           "describePrefix": [],
-          "oldIds": ["afaaf841ab002db93e743519e9943b9c98eccd4ff04875180bea2dccfc25a01d"],
+          "oldIds": [
+            "afaaf841ab002db93e743519e9943b9c98eccd4ff04875180bea2dccfc25a01d"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "3b4802cb3752626fd6ef6d5d687f6c7c739b8ac8e21bdd0f3424efcda125bca0"
         }
@@ -46487,35 +46517,45 @@
         {
           "title": "\"legacy normalization follows explicit metadata paths, preserving unknown IDs and original text\"",
           "describePrefix": [],
-          "oldIds": ["07de3edcf71f5cdd4eadaafcdd2dad93e76376c0ac6f38d46b5a1ea1f444812b"],
+          "oldIds": [
+            "07de3edcf71f5cdd4eadaafcdd2dad93e76376c0ac6f38d46b5a1ea1f444812b"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "9ee3975f8ff437458f9bca1492dfbb5f6b85497790ec7710727eabb3d4b6b11b"
         },
         {
           "title": "\"future/malformed version values fail before legacy conversion and canonical v2 is not guessed\"",
           "describePrefix": [],
-          "oldIds": ["1200f96323f9dab23312f2005ef2bff610d4e57ce8d5dab13b7eb3aaa6d67238"],
+          "oldIds": [
+            "1200f96323f9dab23312f2005ef2bff610d4e57ce8d5dab13b7eb3aaa6d67238"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "9e2d621b51f4876bc4a3d3a64fa4a7e6385dbed1c4cf2d3db596a0e357177049"
         },
         {
           "title": "\"new writer emits an explicit version and supplied game locale while excluding private metadata\"",
           "describePrefix": [],
-          "oldIds": ["7c0d85261832feebfaf17d68e396006017fb66f8b908dfce1e2b437a90b9cafa"],
+          "oldIds": [
+            "7c0d85261832feebfaf17d68e396006017fb66f8b908dfce1e2b437a90b9cafa"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "57550faee907402c819bc3f3462e1e9628cef80c41174ad1260f19e12b9f18c9"
         },
         {
           "title": "\"declared phase and initial-role paths normalize while their other content stays original\"",
           "describePrefix": [],
-          "oldIds": ["039757451fa502df1f36fbf1f2dd5a4ca2918442c96949f41bdadb8729c92606"],
+          "oldIds": [
+            "039757451fa502df1f36fbf1f2dd5a4ca2918442c96949f41bdadb8729c92606"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "d3341ac71e6e3fa52482ba71b01afe136cc6f2a619912f24f580bb449216cd13"
         },
         {
           "title": "\"English archived payload metadata follows the same exact path contract\"",
           "describePrefix": [],
-          "oldIds": ["ea018748a888327b40b7ae42b7d3de14673c0db612ac96aa19fd5b196138f41a"],
+          "oldIds": [
+            "ea018748a888327b40b7ae42b7d3de14673c0db612ac96aa19fd5b196138f41a"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "1eaf14d6226bf567120a47259610493c72844ddb7634d41659770b4f7f38d561"
         }
@@ -46650,14 +46690,18 @@
         {
           "title": "\"the existing exporter uses the same reader and writes v2 without rewriting the archived source\"",
           "describePrefix": [],
-          "oldIds": ["11e1fbb1c95b6073789dbdc45bef731faf930e05556a9b49db19ac3ae6061029"],
+          "oldIds": [
+            "11e1fbb1c95b6073789dbdc45bef731faf930e05556a9b49db19ac3ae6061029"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "ffac2198003812b065bb35c18204c1cb7cd16b622ba67e4cc043d9dca2e4adb3"
         },
         {
           "title": "\"export refuses direct and filesystem aliases of its source\"",
           "describePrefix": [],
-          "oldIds": ["02239f5fa02b28b327bc6c9826d17633d9c27952bd7f0445d7c82a1541be50f2"],
+          "oldIds": [
+            "02239f5fa02b28b327bc6c9826d17633d9c27952bd7f0445d7c82a1541be50f2"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "4a979b6222bae083d663648ecfa06f48aaa3b10f06a1f344ad2cf18f0060b805"
         }
@@ -46767,14 +46811,18 @@
         {
           "title": "\"named random streams have frozen versioned vectors and do not consume their parent\"",
           "describePrefix": [],
-          "oldIds": ["5736c48a8fe94c973f23164b07a24e548a6bda7019540f0fafe7c3673b58375e"],
+          "oldIds": [
+            "5736c48a8fe94c973f23164b07a24e548a6bda7019540f0fafe7c3673b58375e"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "a38151346f5c6cce25e1d60ae7f66b252f39bb2a9d0c78712b58b33915711388"
         },
         {
           "title": "\"fixed role fixtures preserve deck counts and never bypass board rules\"",
           "describePrefix": [],
-          "oldIds": ["a6f5dc3008c3b6876eb6551cc317591abf2b5974d0ab3cb5cead32f26b5bebca"],
+          "oldIds": [
+            "a6f5dc3008c3b6876eb6551cc317591abf2b5974d0ab3cb5cead32f26b5bebca"
+          ],
           "oldIdCount": 1,
           "originalCallbackSha256": "9bcfcf6bfdd63e0f662ed1f73bf1c54f498e83bc6da1c6eea8f38a6fd89f3fcb"
         }
@@ -48867,13 +48915,443 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/death_action_authority.test.ts",
+      "to": "backend/tests/unit/engine/death/request-authority.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Bounded death-permit contract: direct World permits, ActionReception/gateway, resolver scopes and injected microtask revocation. No NightPipeline/full-game/network/filesystem execution; expected permissions, gun state, hidden-generation projections and errors are explicit.",
+      "originalSha256": "dd59775921f0838e3d00378c6709f711e3e8a702c52d1a18e333d23f6d4bfc6b",
+      "candidateSha256": "6cc3de47694fe585ab56453627902f1e3c04ff96569058fa4aabd7cdb182380d",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1094,
+          "end": 1122,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "start": 859,
+          "end": 909,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../../src/ai/agents/player/player_prompt_policy",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "start": 779,
+          "end": 820,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "start": 690,
+          "end": 738,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "start": 617,
+          "end": 655,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "start": 546,
+          "end": 585,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../../src/game/engine/event_registry",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "start": 471,
+          "end": 512,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../../src/game/engine/death_resolution",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "start": 389,
+          "end": 435,
+          "original": "../../../src/ai/agents/player/action_reception",
+          "value": "../../../../src/ai/agents/player/action_reception",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/ai/agents/player/action_reception.ts",
+          "expectedResolved": "backend/src/ai/agents/player/action_reception.ts"
+        },
+        {
+          "start": 288,
+          "end": 341,
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "value": "../../../../src/runtime/scenarios/twelve_player_standard",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts"
+        },
+        {
+          "start": 224,
+          "end": 241,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "275cbf78dfd05f935ffa06cfb69e91d9c107f290c66f958975c718cf82b2db12",
+          "title": "zh-CN: a death permit binds actor, tool, day, phase and generation; metadata alone grants nothing",
+          "occurrence": 1
+        },
+        {
+          "id": "e9e09afff150e8d2572054c6c51c132ae19a970d3164d1e0e8b8862b39f1ded0",
+          "title": "en: a death permit binds actor, tool, day, phase and generation; metadata alone grants nothing",
+          "occurrence": 1
+        },
+        {
+          "id": "2222eb84f9866e085d779f1c1dd5a40109ca15a07a90de22b54279aa2260fe76",
+          "title": "zh-CN: living or resurrected players cannot use a death scope",
+          "occurrence": 1
+        },
+        {
+          "id": "5c3706398c4e5ee9223d321cfb0cc15b105cee0d955d6ede5629dfede3303864",
+          "title": "en: living or resurrected players cannot use a death scope",
+          "occurrence": 1
+        },
+        {
+          "id": "46170fa8b59e25276f982b8cdf170310a0c59b3eff56c733792cf09908ca766c",
+          "title": "zh-CN: resolver closes scopes on success, pass, exhaustion, original errors and stage interruption",
+          "occurrence": 1
+        },
+        {
+          "id": "08ec708bdacf71edeca490a7d2984c9788f23e346488f8e5b544a4f32d565c6a",
+          "title": "en: resolver closes scopes on success, pass, exhaustion, original errors and stage interruption",
+          "occurrence": 1
+        },
+        {
+          "id": "63c4933de1d8fcfb93cb51ed34aec8cec2855a00a9acca0e7eb968a02fc7873a",
+          "title": "zh-CN: last words use their own scope, preserve errors and cannot survive a PhaseManager phase change",
+          "occurrence": 1
+        },
+        {
+          "id": "c0030649f24149c91001e8e42a6a9cbd7c432ecee04cbfcb28847a22782fb149",
+          "title": "en: last words use their own scope, preserve errors and cannot survive a PhaseManager phase change",
+          "occurrence": 1
+        },
+        {
+          "id": "46bc8db28d16d24ccace8f252e1f55421af83fec5faafa176736ba97ec866eec",
+          "title": "zh-CN: death-revival-death and component replacement permanently expire the old generation",
+          "occurrence": 1
+        },
+        {
+          "id": "398bd0ac5aca3968be52a1d48a5ca1ca8dfa6ef79d4b929151f48da17cb7726c",
+          "title": "en: death-revival-death and component replacement permanently expire the old generation",
+          "occurrence": 1
+        },
+        {
+          "id": "0cad5ba6c0fd4ea8afcded25687e145adff2555d9d88efc432d006c29eb6857c",
+          "title": "zh-CN: revocation after final gateway validation but before hook consumption discards shots and passes",
+          "occurrence": 1
+        },
+        {
+          "id": "ed84cc9104e4b46b7ce7cc3976aee73dd05cbe83b3bc02ea5fa76202898b9fbc",
+          "title": "en: revocation after final gateway validation but before hook consumption discards shots and passes",
+          "occurrence": 1
+        },
+        {
+          "id": "a5324972246745cdec04f5fe42360409c3f8ae40fc88b3617cd631d87cf757be",
+          "title": "zh-CN: private engine generations cannot reveal other actors' hidden windows through player observation",
+          "occurrence": 1
+        },
+        {
+          "id": "4e33749a8038fefae9db6c7811faad81731358accf8be1dc13179d53caf67fa0",
+          "title": "en: private engine generations cannot reveal other actors' hidden windows through player observation",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/engine/rules/death_shot_life_scope.test.ts",
+      "to": "backend/tests/unit/engine/death/target-life-scope.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "Bounded target-life/death-scope contract: direct DeathResolution and Hunter hook with injected replacement/revival/clock. Every old-life request, consumed prefix and missing public hit is asserted against literal values; expected alive arrays are handwritten rather than queried to generate an oracle.",
+      "originalSha256": "94b2f84f340084071f2982d63427748a25782398059b38a31402c4f453885dbe",
+      "candidateSha256": "876fbe4efee476a10eda2adc9d678248f7dc6ad22c822929b22c6d8cb5d6c264",
+      "moduleAndLocationEdits": [
+        {
+          "start": 993,
+          "end": 1041,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "start": 920,
+          "end": 958,
+          "original": "../../../src/core/domain/night_effects",
+          "value": "../../../../src/core/domain/night_effects",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/core/domain/night_effects.ts",
+          "expectedResolved": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "start": 842,
+          "end": 883,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "start": 763,
+          "end": 801,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "start": 679,
+          "end": 731,
+          "original": "../../../src/game/mechanisms/roles/hunter/death_hook",
+          "value": "../../../../src/game/mechanisms/roles/hunter/death_hook",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/mechanisms/roles/hunter/death_hook.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/hunter/death_hook.ts"
+        },
+        {
+          "start": 595,
+          "end": 643,
+          "original": "../../../src/game/mechanisms/hooks/hook_registry",
+          "value": "../../../../src/game/mechanisms/hooks/hook_registry",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/hooks/hook_registry.ts"
+        },
+        {
+          "start": 514,
+          "end": 562,
+          "original": "../../../src/game/mechanisms/hooks/hook_registry",
+          "value": "../../../../src/game/mechanisms/hooks/hook_registry",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/hooks/hook_registry.ts"
+        },
+        {
+          "start": 434,
+          "end": 473,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../../src/game/engine/event_registry",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "start": 359,
+          "end": 400,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../../src/game/engine/death_resolution",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "start": 278,
+          "end": 323,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "start": 222,
+          "end": 239,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "c8956f605218eec67e39578162456593f6f2c7db30d861e16cafa287d31d43ea",
+          "title": "revive: every old shot request is rejected without consuming the gun or publicly killing a new target life",
+          "occurrence": 1
+        },
+        {
+          "id": "07df81e3f2d7d95cdaf217ec9c3658ca345052bdd9d92385774bc4243e81039b",
+          "title": "replace: every old shot request is rejected without consuming the gun or publicly killing a new target life",
+          "occurrence": 1
+        },
+        {
+          "id": "ec1b60acbc615bcda58ab1049a7ee4170abf0c8050ee6d2ee1e582244bef3a9c",
+          "title": "a new retry request can bind the current new life after the first reply was correctly rejected",
+          "occurrence": 1
+        },
+        {
+          "id": "ca10376409e0d1663f6099f0c76fbae9828d116a70df4aeeb453fc6c9ba141c7",
+          "title": "gateway target replacement cannot turn an accepted numeric ID into a new-life shot",
+          "occurrence": 1
+        },
+        {
+          "id": "6e145d4a26d6f5c1cd2d39aa4df82834e997aa72acf97598ee5a27b883e03f0c",
+          "title": "false: an invalid pending Shot does not produce public death or erase a separately valid death source",
+          "occurrence": 1
+        },
+        {
+          "id": "3e12e0063449620622756c8516c0e61ada23aebcad0ab11a2d42777ba8eba062",
+          "title": "true: an invalid pending Shot does not produce public death or erase a separately valid death source",
+          "occurrence": 1
+        },
+        {
+          "id": "4f7e7622ab8bd6c259adc2f1e5a07b55fa56e799c0702cd403ee08483e4bb082",
+          "title": "a accepted shot invalidated between hook completion and actual owner commit preserves consumption but emits no false public hit",
+          "occurrence": 1
+        },
+        {
+          "id": "3ef00230fceb0b14a73f6eeb0733c11545e805176502a4bc03a9168bafee9658",
+          "title": "actor_revive: original death permit stays bound and cleanup preserves only legitimately consumed prefixes",
+          "occurrence": 1
+        },
+        {
+          "id": "47784ada69357690d55a6e19754ac08c39920c85db23b995136e8d5e3a02b412",
+          "title": "actor_replace: original death permit stays bound and cleanup preserves only legitimately consumed prefixes",
+          "occurrence": 1
+        },
+        {
+          "id": "aadf8dba20dbe260f9b90ddf633d0844ef5898b712c47908efcfee1f6417aa85",
+          "title": "clock: original death permit stays bound and cleanup preserves only legitimately consumed prefixes",
+          "occurrence": 1
+        },
+        {
+          "id": "d5016d68267dacb226e3474110de28278af5392ec6dc2d7b5d8bc7fd27ff9102",
+          "title": "accepted_clock: original death permit stays bound and cleanup preserves only legitimately consumed prefixes",
+          "occurrence": 1
+        },
+        {
+          "id": "4ada25e748c5b0f4b50eee3c0f01c65bfd8667ae5b15b6e20dbe0b70d83a44b6",
+          "title": "legacy direct hook callers without a target scope still bind the target life before choose",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_live_events.test.ts",
+      "to": "backend/tests/unit/recording/live-event-snapshot.test.ts",
+      "sourceCommit": "0d1ecd1dfd6f28ee846f470c835615946bc83cf8",
+      "reason": "ReproductionTrace snapshot contract: fixture only bootstraps and captures initial events; no cycle runs. Public board-file and engine-fingerprint reads are metadata arrangement, not the assertion boundary. Exact snapshot detachment/read-once/source-error behavior compares declared source input and copies, not inferred rule state.",
+      "originalSha256": "e7d90424f176dda1c82a5f18a9781282ce5cb2966e17b09744e276f06f97ace7",
+      "candidateSha256": "51ec4f9f74b76cb54ddf0160f6102e034aaf224871cecae1165e09cd12dedd1b",
+      "moduleAndLocationEdits": [
+        {
+          "start": 343,
+          "end": 369,
+          "original": "../support/radiant_eclipse",
+          "value": "../../support/radiant_eclipse",
+          "kind": "module-specifier",
+          "originalResolved": "backend/tests/support/radiant_eclipse.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse.ts"
+        },
+        {
+          "start": 259,
+          "end": 308,
+          "original": "../../src/runtime/simulation/reproduction_context",
+          "value": "../../../src/runtime/simulation/reproduction_context",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts"
+        },
+        {
+          "start": 162,
+          "end": 194,
+          "original": "../../src/recording/reproduction",
+          "value": "../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "aca1f3adad7f14f7075ecadadbd767562c832d9172f2a0a3935750fad12ffbaf",
+          "title": "one owner snapshot per build is detached from source and returned mutable archive",
+          "occurrence": 1
+        },
+        {
+          "id": "354a76bb3fc798c9ebac9f5fbc7519a3d4c6e92b36d526dff02d9d76f9c9ae8b",
+          "title": "short live stream is rejected without changing the checkpoint snapshot",
+          "occurrence": 1
+        },
+        {
+          "id": "c05bafe3450f7eb9696240d5bf2c10677ccb2dd70ce27a0e51751d2687a0cb41",
+          "title": "callback failure is propagated and a later valid snapshot has unchanged trace input",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "fixturesChanged": false,
+      "programBytesPreservedAfterRegisteredEdits": true
     }
   ],
   "counts": {
-    "sourceFiles": 413,
-    "targetFiles": 418,
-    "mappingEntries": 418,
-    "baselineCases": 4684,
+    "sourceFiles": 416,
+    "targetFiles": 421,
+    "mappingEntries": 421,
+    "baselineCases": 4713,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
