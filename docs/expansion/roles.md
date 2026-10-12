@@ -100,15 +100,15 @@
 
 ## 8. 娱乐与流程互动：7 项
 
-| #   | 计划 ID         | 中文     | English         | 机制标签             | 阶段 / 来源                       |
-| --- | --------------- | -------- | --------------- | -------------------- | --------------------------------- |
-| 49  | `debater`       | 杠精     | Debater         | 挑战、辩论、投票资格 | P8 / [S24][debater]               |
-| 50  | `silence_elder` | 禁言长老 | Silencing Elder | 表达权限与翻译       | P9 / [S25][silence]               |
-| 51  | `crow`          | 乌鸦     | Crow            | 额外放逐票           | P9 / [S01][cards]                 |
-| 52  | `white_cat`     | 白猫     | White Cat       | 延迟死亡             | P9 / [S01][cards]                 |
-| 53  | `fox_cub`       | 子狐     | Fox Cub         | 迷惑及目标交互       | P9 / [S01][cards]；完整技能待核验 |
-| 54  | `pufferfish`    | 河豚     | Pufferfish      | 投票反击、特殊死亡   | P9 / [S01][cards]；边界判例待核验 |
-| 55  | `warden`        | 典狱长   | Warden          | 秘密交易/背叛决策    | P9 / [S26][warden]                |
+| #   | 计划 ID         | 中文     | English         | 机制标签             | 阶段 / 来源                                                               |
+| --- | --------------- | -------- | --------------- | -------------------- | ------------------------------------------------------------------------- |
+| 49  | `debater`       | 杠精     | Debater         | 挑战、辩论、投票资格 | P8 / [S24][debater]                                                       |
+| 50  | `silence_elder` | 禁言长老 | Silencing Elder | 表达权限与翻译       | P9 / [S25][silence]                                                       |
+| 51  | `crow`          | 乌鸦     | Crow            | 额外放逐票           | P9 / [S01][cards]                                                         |
+| 52  | `white_cat`     | 白猫     | White Cat       | 延迟死亡             | planned；P9e [规则卡](rules/awa-animal-dream-twelve-v1.md) / [S01][cards] |
+| 53  | `fox_cub`       | 子狐     | Fox Cub         | 迷惑及目标交互       | planned；P9e [规则卡](rules/awa-animal-dream-twelve-v1.md) / [S01][cards] |
+| 54  | `pufferfish`    | 河豚     | Pufferfish      | 投票反击、特殊死亡   | planned；P9e [规则卡](rules/awa-animal-dream-twelve-v1.md) / [S01][cards] |
+| 55  | `warden`        | 典狱长   | Warden          | 秘密交易/背叛决策    | P9 / [S26][warden]                                                        |
 
 ## 9. 本次觉醒目标子集：9 项
 
