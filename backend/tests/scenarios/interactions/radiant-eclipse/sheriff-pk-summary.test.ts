@@ -1,5 +1,10 @@
+/**
+ * Interaction scenarios verify an actual sheriff primary tie and completed PK retain the first summary in later PK speech requests.
+ * Input: Original candidate/vote choices and the existing Radiant Eclipse recording provider.
+ * Output and oracle: Explicit speech/vote counters and visible-summary assertions retain election timing; no generic vote engine or regenerated expectation is used.
+ */
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../support/radiant_eclipse_recording";
+import { radiantRecording } from "../../../support/radiant_eclipse_recording";
 test("real primary sheriff tie and completed PK keeps first summary visible in PK speech requests", async () => {
   let pkSpeeches = 0,
     pkVotes = 0;

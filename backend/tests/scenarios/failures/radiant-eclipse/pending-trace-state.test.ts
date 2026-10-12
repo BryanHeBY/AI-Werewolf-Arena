@@ -1,6 +1,11 @@
+/**
+ * Failure scenarios verify pending Radiant Eclipse traces use the prior complete checkpoint and current unarchived request.
+ * Input: The real Seer-failure recording and original incremental or finalized terminal-request mutations.
+ * Output and oracle: Explicit parser acceptance and rejection preserve pending/finalized distinctions; the original record is not rewritten as a new golden.
+ */
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../support/radiant_eclipse_recording";
-import { parseReproductionRecord } from "../../src/recording/reproduction";
+import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 async function failed(): Promise<any> {
   return await radiantRecording({ failureStage: "seer" });
 }

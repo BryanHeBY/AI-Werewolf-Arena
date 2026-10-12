@@ -1,25 +1,24 @@
 /**
- * Concurrent runner failure integration verify drain/cancel/close preserve every original failure.
- * Input: Held parallel actions, optional disk write failure and actual runner cleanup.
- * Output and independent oracle: Literal close-once counters, original aggregate error identities and replayable accepted prefixes.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Failure scenarios verify the runner drains parallel actions and closes owners while retaining concurrent original errors.
+ * Input: Held action responses, the original optional file failure and actual runner/recording cleanup.
+ * Output and oracle: Literal close-once counts, aggregate error identities and replayable-prefix checks remain causal; accepted actions are not regenerated from a production oracle.
  */
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
 import { readFile, readdir } from "node:fs/promises";
-import * as factory from "../../src/runtime/player_agent_factory";
-import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
-import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
-import { runGame } from "../../src/runtime/game_runner";
-import { BaselineBotActionProvider } from "../../src/ai/agents/providers/action_providers";
+import * as factory from "../../../../src/runtime/player_agent_factory";
+import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
+import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
+import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
+import { runGame } from "../../../../src/runtime/game_runner";
+import { BaselineBotActionProvider } from "../../../../src/ai/agents/providers/action_providers";
 import {
   readReproduction,
   replayReproduction,
-} from "../../src/runtime/simulation/replay_reproduction";
-import { ReplayFileStore } from "../../src/recording/file_store";
-import { getSessionRecorder } from "../../src/recording/recording_context";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+} from "../../../../src/runtime/simulation/replay_reproduction";
+import { ReplayFileStore } from "../../../../src/recording/file_store";
+import { getSessionRecorder } from "../../../../src/recording/recording_context";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 for (const diskFailure of [false, true])
   for (const lateSuccess of [false, true])

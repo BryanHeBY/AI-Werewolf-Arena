@@ -1,6 +1,11 @@
+/**
+ * Failure scenarios verify an incremental Radiant Eclipse checkpoint retains completed cleanup after a real cycle failure.
+ * Input: A recorded Seer-failure cycle and the original copied checkpoint/lease mutations.
+ * Output and oracle: Explicit parser acceptance or rejection distinguishes completed cleanup from a forged active lease; the generated record is input, not an independent expected-state oracle.
+ */
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../support/radiant_eclipse_recording";
-import { parseReproductionRecord } from "../../src/recording/reproduction";
+import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 async function checkpointedFailure(): Promise<any> {
   const r = await radiantRecording({ failureStage: "seer" });
   r.finalized = false;

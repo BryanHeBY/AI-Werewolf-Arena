@@ -1,6 +1,11 @@
+/**
+ * Failure scenarios verify finalized Radiant Eclipse lease and borrowed-stock facts remain consistent after controlled archive mutations.
+ * Input: The existing real Seer-failure recording and the original copied event, decision, abort and stock alterations.
+ * Output and oracle: Literal acceptance/rejection assertions retain lifecycle invariants; the production-generated archive supplies test input rather than independently computed expected state.
+ */
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../support/radiant_eclipse_recording";
-import { parseReproductionRecord } from "../../src/recording/reproduction";
+import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 async function failed(): Promise<any> {
   return await radiantRecording({ failureStage: "seer" });
 }

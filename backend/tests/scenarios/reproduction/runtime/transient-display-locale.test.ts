@@ -1,18 +1,17 @@
 /**
- * Simulation/recording integration verify transient display locale does not rewrite game metadata.
- * Input: Recorder creation spy, actual simulation and offline replay inputs.
- * Output and independent oracle: Explicit display-versus-game locale assertions; no dictionary or archived field is changed.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Reproduction scenarios verify transient display locale is passed to recording without replacing game metadata locale.
+ * Input: The original recorder-creation spy, actual simulation and subsequent offline reproduction.
+ * Output and oracle: Explicit display-versus-game locale assertions cover both executions; dictionary contents and archived metadata are not changed.
  */
 import { expect, spyOn, test } from "bun:test";
-import { SessionRecordManager } from "../../src/recording/session_recorder";
-import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
-import { simulateGames } from "../../src/runtime/simulation/simulate_games";
+import { SessionRecordManager } from "../../../../src/recording/session_recorder";
+import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
+import { simulateGames } from "../../../../src/runtime/simulation/simulate_games";
 import {
   readReproduction,
   replayReproduction,
-} from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+} from "../../../../src/runtime/simulation/replay_reproduction";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import path from "node:path";
 
 test("simulation and offline replay pass transient display locale to recording without changing game metadata", async () => {

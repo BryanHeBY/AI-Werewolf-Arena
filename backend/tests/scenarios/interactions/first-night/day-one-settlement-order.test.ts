@@ -1,6 +1,11 @@
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { RoleComponent } from "../../../src/core/domain/components/role";
+/**
+ * Interaction scenarios verify first-night settlement, day-one election, deaths and last words retain their causal PhaseManager order.
+ * Input: Fixed role assignments and the original deterministic action provider and terminal-stop cases.
+ * Output and oracle: Explicit event ordering, request history and once-only assertions stay attached to the actual cycles; no production result is substituted for those literal expectations.
+ */
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { RoleComponent } from "../../../../src/core/domain/components/role";
 import {
   ActionProvider,
   ActionRequest,
@@ -9,8 +14,8 @@ import {
   PotionType,
   Role,
   ToolCall,
-} from "../../../src/core/domain/model";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
+} from "../../../../src/core/domain/model";
+import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
 
 class DeterministicFlowProvider implements ActionProvider {
   private readonly firstNightKillTargetId: number | null;

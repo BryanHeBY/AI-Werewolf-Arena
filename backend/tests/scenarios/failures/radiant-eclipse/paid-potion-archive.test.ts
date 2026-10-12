@@ -1,14 +1,13 @@
 /**
- * Failed-archive integration verify paid Radiant borrowed potion remains after abort without false disclosure.
- * Input: The existing recording driver, controlled provider failure and real saved replay/checkpoints.
- * Output and independent oracle: Literal paid stock, absent invented night facts and exact original failed archive fields.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Failure scenarios verify paid Radiant Eclipse borrowed potions survive an aborted recorded game without false night disclosure.
+ * Input: The existing recording driver, controlled Seer failure, two original locales and temporary saved replay/checkpoints.
+ * Output and oracle: Literal stock and disclosure assertions inspect the actual failed prefix; source archives and expected fixture bytes remain unchanged.
  */
 import { expect, test } from "bun:test";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { radiantRecording } from "../support/radiant_eclipse_recording";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 for (const locale of ["en", "zh-CN"] as const)
   test(`actual paid borrowed potion survives aborted archive without false night disclosure/${locale}`, async () => {
     const root = await createTestTempDirectory("awa-radiant-failed-front-");

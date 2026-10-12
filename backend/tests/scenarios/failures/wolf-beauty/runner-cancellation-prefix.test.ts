@@ -1,31 +1,30 @@
 /**
- * Runner cancellation scenarios verify Charm recording failure does not consume a null/late cancellation.
- * Input: Injected factory/action/recording callbacks, actual runner and held late/null Charm return.
- * Output and independent oracle: Original paid-state snapshots, absence of consuming skip and matching exact partial replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Failure scenarios verify runner cancellation preserves a paid Wolf Beauty charm when recording fails during a held response.
+ * Input: Original factory/recording injections and late or null Charm results on the real runner.
+ * Output and oracle: Literal paid-relation snapshots, absent consuming skip and partial-replay equality are asserted; cancellation is not converted into a consuming role action.
  */
-import { PotionType } from "../../src/core/domain/identity";
+import { PotionType } from "../../../../src/core/domain/identity";
 import { expect, spyOn, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
-import * as factory from "../../src/runtime/player_agent_factory";
-import { GameEventRecorder } from "../../src/runtime/game_event_recorder";
-import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
+import * as factory from "../../../../src/runtime/player_agent_factory";
+import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
+import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
+import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../src/runtime/config/board_definition";
-import { runGame } from "../../src/runtime/game_runner";
-import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
-import { COMPONENT, Role, type ToolCall, type World, type RoleComponent } from "../../src/core";
-import { getWolfBeautyState } from "../../src/game/mechanisms/roles/private_state";
-import { activeCharm } from "../../src/game/mechanisms/roles/wolf_beauty/relation";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+} from "../../../../src/runtime/config/board_definition";
+import { runGame } from "../../../../src/runtime/game_runner";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { COMPONENT, Role, type ToolCall, type World, type RoleComponent } from "../../../../src/core";
+import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/private_state";
+import { activeCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import {
   readReproduction,
   replayReproduction,
-} from "../../src/runtime/simulation/replay_reproduction";
+} from "../../../../src/runtime/simulation/replay_reproduction";
 
 for (const late of [null, { name: "charm", args: { target_id: null } }] as const)
   test(`runner recording failure during Charm never converts cancellation into a consuming skip (${late ? "late action" : "null"})`, async () => {

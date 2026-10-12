@@ -1,6 +1,10 @@
-// Independent R final owner fault: original operation/choice inputs retained.
+/**
+ * Failure scenarios verify a delivered Noble Secret Body hunt clear remains paid before later source publication fails.
+ * Input: Original role actions, required God-operation failures and exact delivered-choice inputs.
+ * Output and oracle: Literal operation ordering, once-only publication and paid-state checks remain tied to the real failed cycles; no golden record is rewritten.
+ */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   Role,
   Phase,
@@ -9,10 +13,10 @@ import {
   PotionType,
   type ActionRequest,
   type ToolCall,
-} from "../../../src/core/index";
-import { nobleSecretBodyTwelveConfig } from "../../../src/runtime/scenarios/noble_secret_body_twelve";
-import { demonNightChoice } from "../../support/demon_hunter_scenarios";
-import { snapshotNobleBodyAuthority } from "../../../src/game/mechanisms/roles/noble_secret_body/authority";
+} from "../../../../src/core/index";
+import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { snapshotNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
 const game = () => {
   const c = nobleSecretBodyTwelveConfig();
   return bootstrapGame(c, {
@@ -65,9 +69,9 @@ async function cycles(plans: Plan[]) {
   return { g, seen };
 }
 
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { checkpointNobleBodyAuthority } from "../../../src/game/mechanisms/roles/noble_secret_body/authority";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
+import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { checkpointNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { writeFileSync } from "node:fs";
 
 test("actual delivered hunt clear has required God op before subsequent FINAL-source failure", async () => {

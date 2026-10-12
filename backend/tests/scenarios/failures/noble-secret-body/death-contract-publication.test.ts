@@ -1,10 +1,15 @@
+/**
+ * Failure scenarios verify Noble Secret Body death publication cannot separate an actual death from closure of its servant contract.
+ * Input: Fixed roles, two real phase cycles and the original required death-operation failure.
+ * Output and oracle: Explicit dead-target, closed-contract and original failure assertions remain causal; the test does not derive expected state from a replay verifier.
+ */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Role, COMPONENT, type ActionRequest, type ToolCall } from "../../../src/core";
-import { nobleSecretBodyTwelveConfig } from "../../../src/runtime/scenarios/noble_secret_body_twelve";
-import { demonNightChoice } from "../../support/demon_hunter_scenarios";
-import { checkpointNobleBodyAuthority } from "../../../src/game/mechanisms/roles/noble_secret_body/authority";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { Role, COMPONENT, type ActionRequest, type ToolCall } from "../../../../src/core";
+import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
+import { demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { checkpointNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
+import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 
 test("required death-op failure must not split actual death from closing its original servant contract", async () => {
   const c = nobleSecretBodyTwelveConfig();

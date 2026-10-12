@@ -1,17 +1,22 @@
+/**
+ * Failure scenarios verify Fragrant Pair Seer death waves retain paid deaths when required publication fails.
+ * Input: Original initial/gun wave actions and a required-logic recorder that throws the supplied failure.
+ * Output and oracle: Literal death, binding-trigger and once-only checks preserve the original error and unpublished prefix; recording failure is not treated as an unpaid wave.
+ */
 import { expect, test } from "bun:test";
 import {
   fragrantRuntimeGame as game,
   fragrantRuntimeAction as act,
   type FragrantRuntimePlan,
-} from "../../support/fragrant_pair_seer_scenarios";
+} from "../../../support/fragrant_pair_seer_scenarios";
 import {
   fragrantAuthoritySnapshot,
   prepareFragrantDeathWave,
-} from "../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import type { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import type { AliveComponent } from "../../../src/core/domain/components/alive";
+} from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
+import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import type { SessionRecordManager } from "../../../../src/recording/session_recorder";
+import { COMPONENT } from "../../../../src/core/domain/components/names";
+import type { AliveComponent } from "../../../../src/core/domain/components/alive";
 for (const path of ["initial", "gun"] as const)
   test(`${path} wave record failure preserves the paid real deaths and original error`, async () => {
     const g = game(),

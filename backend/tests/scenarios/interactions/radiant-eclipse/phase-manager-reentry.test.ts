@@ -1,6 +1,11 @@
+/**
+ * Interaction scenarios verify PhaseManager rejects Radiant Eclipse reentry while retaining the original stage owner.
+ * Input: The original held swallow/day-speech requests and a second call on the same PhaseManager.
+ * Output and oracle: Explicit phase, lifetime and rejection checks retain the first cycle's ownership; the second invocation never becomes a new owner.
+ */
 import { expect, test } from "bun:test";
-import { radiantFixture, radiantProvider } from "../../support/radiant_eclipse";
-import { Phase } from "../../../src/core";
+import { radiantFixture, radiantProvider } from "../../../support/radiant_eclipse";
+import { Phase } from "../../../../src/core";
 for (const moment of ["swallow", "day_speech"] as const)
   test(`same PM rejected reentry preserves original ${moment} owner and phase`, async () => {
     const f = await radiantFixture();

@@ -1,10 +1,15 @@
+/**
+ * Failure scenarios verify Fragrant Pair Seer checkpoint state agrees with canonical God facts after controlled stock corruption.
+ * Input: The original runtime game, pair/phantom forgeries or a hostile getter and an injected phase failure.
+ * Output and oracle: Literal canonical stock, getter-call counts and original error identity are asserted after the real failed cycle; no expected archive is regenerated.
+ */
 import { test, expect } from "bun:test";
 import {
   fragrantRuntimeGame as game,
   fragrantRuntimeAction as act,
-} from "../../support/fragrant_pair_seer_scenarios";
-import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
-import { COMPONENT } from "../../../src/core/domain/components/names";
+} from "../../../support/fragrant_pair_seer_scenarios";
+import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
+import { COMPONENT } from "../../../../src/core/domain/components/names";
 for (const alteration of ["pair_forgery", "pair_getter", "phantom_forgery"] as const)
   test(`failure CP canonical God state and original player stock agree after ${alteration}`, async () => {
     const g = game(),

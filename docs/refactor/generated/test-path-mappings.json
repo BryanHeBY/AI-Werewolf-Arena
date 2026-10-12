@@ -47715,13 +47715,1165 @@
       "targetRunner": "backend-architecture",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/phases/first_day_flow_order.test.ts",
+      "to": "backend/tests/scenarios/interactions/first-night/day-one-settlement-order.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Actual PhaseManager night/day/election/death/last-word ordering. Cross-mechanism history and natural terminal stop remain a scenario, not a single-module permit test.",
+      "originalSha256": "40334a4bb168d218a5a3d186a3fa4903145fb54aa2e94d7334d3fa82d6655374",
+      "candidateSha256": "c1a625df1c18b6971e2ef3fd8ff004b23e8cd6e407bd0bf253293907eba76e22",
+      "moduleAndLocationEdits": [
+        {
+          "start": 385,
+          "end": 438,
+          "value": "../../../../src/runtime/scenarios/twelve_player_standard",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 308,
+          "end": 338,
+          "value": "../../../../src/core/domain/model",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 162,
+          "end": 202,
+          "value": "../../../../src/core/domain/components/role",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 87,
+          "end": 128,
+          "value": "../../../../src/core/domain/components/names",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 31,
+          "end": 57,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "d59fb53b9a1528e4a15f70fa7f19cf359ac234358249de035e36d7a9fb05c074",
+          "title": "first day flow order > terminal first-night deaths stop day actions after sheriff election and last words",
+          "occurrence": 1
+        },
+        {
+          "id": "9d09695eadb7af75f557a3db63240738b5e456fc89d4c93bca23d68d7da291b6",
+          "title": "first day flow order > day1 should elect sheriff before announcing previous night deaths",
+          "occurrence": 1
+        },
+        {
+          "id": "e38cb88694893b871c7229a140d180b5b57860de1c3930a935ffda856fa4f516",
+          "title": "first day flow order > day1 night deaths should still join sheriff vote before death announcement",
+          "occurrence": 1
+        },
+        {
+          "id": "45ce50aa3d9b16e4ec98693ff1124436ccc5c4adb2a8dce259ff4a22f84a6b20",
+          "title": "first day flow order > night deaths should write last_words events with day phase",
+          "occurrence": 1
+        },
+        {
+          "id": "72c96e9d56dad47523c407bc8ec9883cc3dfe751e191d45ec3ec5e1752eeaa06",
+          "title": "first day flow order > night_resolved should not expose wolf target in public payload",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/fragrant_pair_seer_checkpoint_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/fragrant-pair-seer/checkpoint-state.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Real phase failure plus canonical checkpoint/God/native-stock reconciliation; zero hostile-getter execution and original error identity are exact literal expectations.",
+      "originalSha256": "2e7afa73854fe919d0cc06d997f1ded92967a310ab60e56182b4aa701ebe81ee",
+      "candidateSha256": "d1925efc5039f530a0b5be663aa19a1a3ccda870598d7853c10d93cc5d802a98",
+      "moduleAndLocationEdits": [
+        {
+          "start": 283,
+          "end": 324,
+          "value": "../../../../src/core/domain/components/names",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 201,
+          "end": 253,
+          "value": "../../../../src/runtime/simulation/reproduction_context",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 121,
+          "end": 163,
+          "value": "../../../support/fragrant_pair_seer_scenarios",
+          "kind": "module-specifier",
+          "original": "../../support/fragrant_pair_seer_scenarios",
+          "originalResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts",
+          "expectedResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "9a9fca7c911697e92837e2f58bbf682b3e6cb25c61b87592bf472905031265d9",
+          "title": "failure CP canonical God state and original player stock agree after pair_forgery",
+          "occurrence": 1
+        },
+        {
+          "id": "e48ddef4d6169008cd2629a6900e2ddc34b1158cec2ca5845e0a45d00f85648d",
+          "title": "failure CP canonical God state and original player stock agree after pair_getter",
+          "occurrence": 1
+        },
+        {
+          "id": "36b3bda7c665685862a20085ba0dea739dcd3953d8472830cbe612b487b60f9b",
+          "title": "failure CP canonical God state and original player stock agree after phantom_forgery",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/fragrant_pair_seer_record_error.test.ts",
+      "to": "backend/tests/scenarios/failures/fragrant-pair-seer/death-wave-publication.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Real initial/gun death wave under a throwing required logic recorder; paid deaths, binding trigger, original failure and unpublished prefix cannot be detached into a pure verifier.",
+      "originalSha256": "0c7e1fa23d4fbf6da55f30bc5d610de5d934425ca1cd46e7419093da1463aecf",
+      "candidateSha256": "a682d8f251e92b9bccc857592b5fe1039f97d01c3185f7a160a2a095679b2968",
+      "moduleAndLocationEdits": [
+        {
+          "start": 610,
+          "end": 651,
+          "value": "../../../../src/core/domain/components/alive",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 529,
+          "end": 570,
+          "value": "../../../../src/core/domain/components/names",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 460,
+          "end": 499,
+          "value": "../../../../src/recording/session_recorder",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 374,
+          "end": 414,
+          "value": "../../../../src/recording/recording_context",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 268,
+          "end": 331,
+          "value": "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/fragrant_pair_seer/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 149,
+          "end": 191,
+          "value": "../../../support/fragrant_pair_seer_scenarios",
+          "kind": "module-specifier",
+          "original": "../../support/fragrant_pair_seer_scenarios",
+          "originalResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts",
+          "expectedResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "f816f90b73ff2aa5747c839893ce70b57cd60e81f3cc3df14130229b76785e58",
+          "title": "initial wave record failure preserves the paid real deaths and original error",
+          "occurrence": 1
+        },
+        {
+          "id": "b361b550a3d225cc37f05c5a863f28359846190b2709ffec8c7ff6849c36f95f",
+          "title": "gun wave record failure preserves the paid real deaths and original error",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/noble_secret_body_death_record_failure.test.ts",
+      "to": "backend/tests/scenarios/failures/noble-secret-body/death-contract-publication.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Two actual cycles plus required death-op failure; actual target death and servant contract closure must stay causal together.",
+      "originalSha256": "d1b3994d05b8a7cba169412f45ea833b0624236c271a0c7e298c6a04dd7354a3",
+      "candidateSha256": "3cd46b935874e0bba5cc828f060a5f1b0108a34c9f2af085fa0c45ebbe2bb487",
+      "moduleAndLocationEdits": [
+        {
+          "start": 516,
+          "end": 556,
+          "value": "../../../../src/recording/recording_context",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 411,
+          "end": 473,
+          "value": "../../../../src/game/mechanisms/roles/noble_secret_body/authority",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/noble_secret_body/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 326,
+          "end": 362,
+          "value": "../../../support/demon_hunter_scenarios",
+          "kind": "module-specifier",
+          "original": "../../support/demon_hunter_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 234,
+          "end": 289,
+          "value": "../../../../src/runtime/scenarios/noble_secret_body_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/noble_secret_body_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 169,
+          "end": 186,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 72,
+          "end": 98,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "ed757488cdbce09c9e8ea667bb42c6a910156b19983fe024b1da7cb1d856b4e2",
+          "title": "required death-op failure must not split actual death from closing its original servant contract",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/noble_secret_body_clear_failure_review.test.ts",
+      "to": "backend/tests/scenarios/failures/noble-secret-body/hunt-clear-publication.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Actual delivered hunt clear before subsequent source publication failure; original required God op order and exact once count stay with the generated prefix.",
+      "originalSha256": "7fc4e6af92c7fc8e28b92d1d7d359e2a67302e5721dd40f9606c335b28f534f0",
+      "candidateSha256": "e2fa4879602811721f8b6f0b545119e7ef4f7ae344551e09c6bc9583f347ff70",
+      "moduleAndLocationEdits": [
+        {
+          "start": 2715,
+          "end": 2764,
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "kind": "module-specifier",
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 2606,
+          "end": 2668,
+          "value": "../../../../src/game/mechanisms/roles/noble_secret_body/authority",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/noble_secret_body/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 2517,
+          "end": 2557,
+          "value": "../../../../src/recording/recording_context",
+          "kind": "module-specifier",
+          "original": "../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 534,
+          "end": 596,
+          "value": "../../../../src/game/mechanisms/roles/noble_secret_body/authority",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/noble_secret_body/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 451,
+          "end": 487,
+          "value": "../../../support/demon_hunter_scenarios",
+          "kind": "module-specifier",
+          "original": "../../support/demon_hunter_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 359,
+          "end": 414,
+          "value": "../../../../src/runtime/scenarios/noble_secret_body_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/noble_secret_body_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/noble_secret_body_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 288,
+          "end": 311,
+          "value": "../../../../src/core/index",
+          "kind": "module-specifier",
+          "original": "../../../src/core/index",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 151,
+          "end": 177,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "1bd36b54d2ae9035d9d0b0c4e328984a0572a4546b44593c240ecbe251d37aae",
+          "title": "actual delivered hunt clear has required God op before subsequent FINAL-source failure",
+          "occurrence": 1
+        },
+        {
+          "id": "f5bffad9ef0db258caadb665013372754bc00df868470da2dd844afdaa656a9a",
+          "title": "successful clear required God op appears once; original hunt payload and all player feeds stay private",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/radiant_eclipse_pm_reentry.test.ts",
+      "to": "backend/tests/scenarios/interactions/radiant-eclipse/phase-manager-reentry.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Actual shared PhaseManager reentry rejection with a held original night owner; original phase/lifetime is primary, not a standalone DTO shape.",
+      "originalSha256": "64c73265073a04d35b3223298ed2b1d383d827c0075175119ccf22877efb6496",
+      "candidateSha256": "4460af0f41a71f6e982d6be4b1e09d0f6d3187b5aa6a18673383e9f9b60f93b1",
+      "moduleAndLocationEdits": [
+        {
+          "start": 145,
+          "end": 162,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 90,
+          "end": 119,
+          "value": "../../../support/radiant_eclipse",
+          "kind": "module-specifier",
+          "original": "../../support/radiant_eclipse",
+          "originalResolved": "backend/tests/support/radiant_eclipse.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "b00a262024397e17331703c260769fb4a92f83f5bf82ee3d63c64ddbe0945816",
+          "title": "same PM rejected reentry preserves original swallow owner and phase",
+          "occurrence": 1
+        },
+        {
+          "id": "98b29772c676ed7020572692e0133dcb3414e0b6293920aa5b624edf4e1f45eb",
+          "title": "same PM rejected reentry preserves original day_speech owner and phase",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_async_recording.test.ts",
+      "to": "backend/tests/scenarios/interactions/radiant-eclipse/pending-recording-flush.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Actual automatic recording while a supplied role stage is pending; native checkpoints/live event prefix and cleanup remain tied to the running cycle.",
+      "originalSha256": "65ee5c8c5a3aab0c1c4c54ca97f1fa9cce5ac4e0cd1ffcdc746ada8351d144e7",
+      "candidateSha256": "0a8dd1db7510daf7a48bff8e76f9ce96bdd29e1c8eafbdae376ff988b8000a06",
+      "moduleAndLocationEdits": [
+        {
+          "start": 75,
+          "end": 111,
+          "value": "../../../support/radiant_eclipse_recording",
+          "kind": "module-specifier",
+          "original": "../support/radiant_eclipse_recording",
+          "originalResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "f0fc6865ee5fd041918ae31cb0cabc348daa3e766bb04203e45ed59ce01048db",
+          "title": "real automatic recording flush during pending sheriff_nomination",
+          "occurrence": 1
+        },
+        {
+          "id": "9c4b26854c9469861945be8e7aa09fd41de0db685d615d65b63e20d9dc3167d7",
+          "title": "real automatic recording flush during pending day_speech",
+          "occurrence": 1
+        },
+        {
+          "id": "c45d4dc58eda9c2f1b42a8f8cdc47332365665ac1eec1640fe11d33135d57e18",
+          "title": "real automatic recording flush during pending voting",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_failed_archive.test.ts",
+      "to": "backend/tests/scenarios/failures/radiant-eclipse/paid-potion-archive.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Real paid borrowed potion then aborted archive; literal stock/private paid prefix and absent false night disclosure define the failure scenario.",
+      "originalSha256": "06d521bae069a8ad24b4300e29a93a2e959b1f50bd3e0bd817d9233af17a4b0f",
+      "candidateSha256": "e4450f182e5fba2a54f24258340825bab6e6e96f83b4c19dea55d5d0d323cb60",
+      "moduleAndLocationEdits": [
+        {
+          "start": 676,
+          "end": 711,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 596,
+          "end": 632,
+          "value": "../../../support/radiant_eclipse_recording",
+          "kind": "module-specifier",
+          "original": "../support/radiant_eclipse_recording",
+          "originalResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "b63e7c0c0f53407b0e55a55e4cc55e46de04bcb98d0282160db0f17969ee78d1",
+          "title": "actual paid borrowed potion survives aborted archive without false night disclosure/en",
+          "occurrence": 1
+        },
+        {
+          "id": "6bf28416917f5d241967e7a7e76e72d5eeccb3d8f3e44e546bfa521c8fd54133",
+          "title": "actual paid borrowed potion survives aborted archive without false night disclosure/zh-CN",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_failed_checkpoint.test.ts",
+      "to": "backend/tests/scenarios/failures/radiant-eclipse/incremental-cleanup-checkpoint.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Existing driver actually generates the failed record; copied incremental mutations test the same cleanup/lease prefix. Keep generator and verifier mutations causally together.",
+      "originalSha256": "91c9837bb29ca296806064688ddf6f40c6b59a0f7aeac461c9edc1f8c9f010ea",
+      "candidateSha256": "52edae3b2d6ed68ba98506ea60fb6279c3e4ea280053316c2f35aa2b81fde5ef",
+      "moduleAndLocationEdits": [
+        {
+          "start": 155,
+          "end": 187,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 75,
+          "end": 111,
+          "value": "../../../support/radiant_eclipse_recording",
+          "kind": "module-specifier",
+          "original": "../support/radiant_eclipse_recording",
+          "originalResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "b032bd6fd53a9dc7af94cc59e002277b92f6e25425bf0c1197f7073a37b05bfd",
+          "title": "actual failed cycle checkpoint before finalization retains its completed cleanup",
+          "occurrence": 1
+        },
+        {
+          "id": "bd84dfeca820b8d7a5e69fc8d1172471e94a0da38659895bada077ebf54b9de8",
+          "title": "already failed cycle checkpoint cannot retain active lease merely because file is incremental",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_lifecycle_review.test.ts",
+      "to": "backend/tests/scenarios/failures/radiant-eclipse/lease-finalization.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Existing real finalized failure archive and mutations of copied authority/abort/stock facts; observed generation does not become an independent expected oracle.",
+      "originalSha256": "68853ce390a05c11001e67b06de75304a825889201a8f9f64911a420ec3a5cfe",
+      "candidateSha256": "1c33a8029ce475089a51f4be0afd5ace88853086c479813385d4729963a62d38",
+      "moduleAndLocationEdits": [
+        {
+          "start": 155,
+          "end": 187,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 75,
+          "end": 111,
+          "value": "../../../support/radiant_eclipse_recording",
+          "kind": "module-specifier",
+          "original": "../support/radiant_eclipse_recording",
+          "originalResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "31ed4cbed8ba1fdad45869c77ecdbb22157c60805884fee4cab4757a6469c7d4",
+          "title": "original finalized actual Seer failure remains accepted",
+          "occurrence": 1
+        },
+        {
+          "id": "c9a26045c3db0324566be0df97a5b20274a28946ff736ae8bc283b37a6d44a20",
+          "title": "finalized failed checkpoint cannot retain active copy and original suppression by deleting abort closure",
+          "occurrence": 1
+        },
+        {
+          "id": "8622a220b5bf6a7bf01ff92f4ccec95783d272feb1e4739401af2888b6b63432",
+          "title": "later Seer failure proves earlier required borrowed potion; cannot double-delete payment and restore stock",
+          "occurrence": 1
+        },
+        {
+          "id": "2c3500468f292b0fdfc10d83577c5affb1f7b15521c4bf94bc5b4bfda1aeb657",
+          "title": "an unrelated future aborted lease cannot be appended to a finalized failed night",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_pending_review.test.ts",
+      "to": "backend/tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Real seer-failed recording driver then pending/incremental/finalized mutations; prior complete checkpoint and unarchived request timing are the semantic target.",
+      "originalSha256": "a4aaf2a21497965a12bcf1dd2389edf54250ae79a60521c101401f14c54fc692",
+      "candidateSha256": "0fcd7684fd3747990c98252e209cd1e83f848b028ad51266a498ffc39268c1d1",
+      "moduleAndLocationEdits": [
+        {
+          "start": 155,
+          "end": 187,
+          "value": "../../../../src/recording/reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 75,
+          "end": 111,
+          "value": "../../../support/radiant_eclipse_recording",
+          "kind": "module-specifier",
+          "original": "../support/radiant_eclipse_recording",
+          "originalResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "03f53d8e5da11bf66874cf367cecfd115476855687692f8ce2bce88703ac840a",
+          "title": "legitimate pending Trace uses only previous complete checkpoint and current unarchived requests",
+          "occurrence": 1
+        },
+        {
+          "id": "b1f54dca7ecaa0b77191618ca089c01ea8e03de534a18deffe0f2e95622fc2dd",
+          "title": "a finalized failed archive cannot still contain a pending terminal request",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_raw_failure.test.ts",
+      "to": "backend/tests/scenarios/reproduction/radiant-eclipse/raw-domain-failure.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Actual same-tool missing-target failures finalize and replay their original raw prefix; argument shapes and failed outcome remain unchanged.",
+      "originalSha256": "bbc66514ca0a70403b769fa38f54404e57dcff73eae9346a8ace62504eb2995b",
+      "candidateSha256": "0afa57f90e662a1d329ffe2fea4106e0aed899c72e121a7200acda7a7d78e0d0",
+      "moduleAndLocationEdits": [
+        {
+          "start": 75,
+          "end": 111,
+          "value": "../../../support/radiant_eclipse_recording",
+          "kind": "module-specifier",
+          "original": "../support/radiant_eclipse_recording",
+          "originalResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "e53ce908324840f26ad8aac50ac852b75c182ecdee634624a0bbab60ac8f8364",
+          "title": "a real eclipse_swallow same-tool missing-target failure can finalize and replay its raw failed prefix",
+          "occurrence": 1
+        },
+        {
+          "id": "481e0f63dea70329b397279f3fbc5d77ed2d0800cbaca795f25e494c460b8d7a",
+          "title": "a real radiant_shelter same-tool missing-target failure can finalize and replay its raw failed prefix",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_sheriff_pk.test.ts",
+      "to": "backend/tests/scenarios/interactions/radiant-eclipse/sheriff-pk-summary.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Actual election primary tie/PK with original summary visible in later requests; inter-mechanism timing and sequence are the assertion owner.",
+      "originalSha256": "f8648b38d5774598b6f3010cbf2ab5741537feddede7ec5c330143c3157a4b55",
+      "candidateSha256": "085946db601f587ae61996677f80cc95080c35ea981472ab5574a9d3a91f9e78",
+      "moduleAndLocationEdits": [
+        {
+          "start": 75,
+          "end": 111,
+          "value": "../../../support/radiant_eclipse_recording",
+          "kind": "module-specifier",
+          "original": "../support/radiant_eclipse_recording",
+          "originalResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "37f729cd543e007bd9dc45760e64496890892ab6a477218e06241e7062eb1178",
+          "title": "real primary sheriff tie and completed PK keeps first summary visible in PK speech requests",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/runner_charm_cancellation.test.ts",
+      "to": "backend/tests/scenarios/failures/wolf-beauty/runner-cancellation-prefix.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Actual runner/recording fail while a Charm response is held; original paid relation, nonconsuming cancellation and replay of partial prefix stay together.",
+      "originalSha256": "388115e6bc5aad8201aaf0630034bba98ebdd726ff56cbe02e8612bd69d13269",
+      "candidateSha256": "6c6ee9a7cf2d79d4a8a5d1fc43f1f08ae41cdc4d469e3629c9d8920baaed900b",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1569,
+          "end": 1617,
+          "value": "../../../../src/runtime/simulation/replay_reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/simulation/replay_reproduction",
+          "originalResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "expectedResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1472,
+          "end": 1507,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1376,
+          "end": 1428,
+          "value": "../../../../src/game/mechanisms/roles/wolf_beauty/relation",
+          "kind": "module-specifier",
+          "original": "../../src/game/mechanisms/roles/wolf_beauty/relation",
+          "originalResolved": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1299,
+          "end": 1344,
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "kind": "module-specifier",
+          "original": "../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1246,
+          "end": 1260,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1121,
+          "end": 1163,
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1053,
+          "end": 1082,
+          "value": "../../../../src/runtime/game_runner",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/game_runner",
+          "originalResolved": "backend/src/runtime/game_runner.ts",
+          "expectedResolved": "backend/src/runtime/game_runner.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 984,
+          "end": 1025,
+          "value": "../../../../src/runtime/config/board_definition",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 868,
+          "end": 911,
+          "value": "../../../../src/runtime/config/resolve_game_setup",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/resolve_game_setup",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 794,
+          "end": 831,
+          "value": "../../../../src/runtime/config/parse_config",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/parse_config",
+          "originalResolved": "backend/src/runtime/config/parse_config.ts",
+          "expectedResolved": "backend/src/runtime/config/parse_config.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 718,
+          "end": 755,
+          "value": "../../../../src/runtime/game_event_recorder",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/game_event_recorder",
+          "originalResolved": "backend/src/runtime/game_event_recorder.ts",
+          "expectedResolved": "backend/src/runtime/game_event_recorder.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 642,
+          "end": 680,
+          "value": "../../../../src/runtime/player_agent_factory",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/player_agent_factory",
+          "originalResolved": "backend/src/runtime/player_agent_factory.ts",
+          "expectedResolved": "backend/src/runtime/player_agent_factory.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 451,
+          "end": 481,
+          "value": "../../../../src/core/domain/identity",
+          "kind": "module-specifier",
+          "original": "../../src/core/domain/identity",
+          "originalResolved": "backend/src/core/domain/identity.ts",
+          "expectedResolved": "backend/src/core/domain/identity.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "f8937549670c343116549d54ca1588a73bb3830f233ab31daabb43431b6615f5",
+          "title": "runner recording failure during Charm never converts cancellation into a consuming skip (null)",
+          "occurrence": 1
+        },
+        {
+          "id": "46a0b5f742d73f180fba40a536dae7968c1c07480589cf8c2a6259f46f58e042",
+          "title": "runner recording failure during Charm never converts cancellation into a consuming skip (late action)",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/runner_concurrent_failures.test.ts",
+      "to": "backend/tests/scenarios/failures/runtime/concurrent-error-prefix.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Actual runner parallel actions, held replies and optional file failure; original primary/cleanup errors, close-once counts and replayable prefix share one owner.",
+      "originalSha256": "99108fcba1e7033013af46b7093ec97a345578a8a7aba259795b9dd42b416766",
+      "candidateSha256": "6422b9303f8fdfa706e81c9f88588d6f3dbc789b22106e2adf615bd6acb5831a",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1292,
+          "end": 1327,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1211,
+          "end": 1248,
+          "value": "../../../../src/recording/recording_context",
+          "kind": "module-specifier",
+          "original": "../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1142,
+          "end": 1172,
+          "value": "../../../../src/recording/file_store",
+          "kind": "module-specifier",
+          "original": "../../src/recording/file_store",
+          "originalResolved": "backend/src/recording/file_store.ts",
+          "expectedResolved": "backend/src/recording/file_store.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1058,
+          "end": 1106,
+          "value": "../../../../src/runtime/simulation/replay_reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/simulation/replay_reproduction",
+          "originalResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "expectedResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 950,
+          "end": 996,
+          "value": "../../../../src/ai/agents/providers/action_providers",
+          "kind": "module-specifier",
+          "original": "../../src/ai/agents/providers/action_providers",
+          "originalResolved": "backend/src/ai/agents/providers/action_providers.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/action_providers.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 875,
+          "end": 904,
+          "value": "../../../../src/runtime/game_runner",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/game_runner",
+          "originalResolved": "backend/src/runtime/game_runner.ts",
+          "expectedResolved": "backend/src/runtime/game_runner.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 801,
+          "end": 847,
+          "value": "../../../../src/runtime/config/load_board_definition",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/load_board_definition",
+          "originalResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 718,
+          "end": 761,
+          "value": "../../../../src/runtime/config/resolve_game_setup",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/resolve_game_setup",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 644,
+          "end": 681,
+          "value": "../../../../src/runtime/config/parse_config",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/parse_config",
+          "originalResolved": "backend/src/runtime/config/parse_config.ts",
+          "expectedResolved": "backend/src/runtime/config/parse_config.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 567,
+          "end": 605,
+          "value": "../../../../src/runtime/player_agent_factory",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/player_agent_factory",
+          "originalResolved": "backend/src/runtime/player_agent_factory.ts",
+          "expectedResolved": "backend/src/runtime/player_agent_factory.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "1abbcdbaeb192adf9a39cbc5a23daccff642bd13bbd5a26e477f59cc9e6eb8a6",
+          "title": "runner drains concurrent failure/cancellation and closes once, retaining every original error (replayable/cancelled)",
+          "occurrence": 1
+        },
+        {
+          "id": "bb0be20552b56a460c632566133a90cf5de0688ac57565de1fc75225b2bb28da",
+          "title": "runner drains concurrent failure/cancellation and closes once, retaining every original error (replayable/late success)",
+          "occurrence": 1
+        },
+        {
+          "id": "8efad217a539c59eb3003097ba6fcb5392e0c7f4e8e3770c47dc071f793c3475",
+          "title": "runner drains concurrent failure/cancellation and closes once, retaining every original error (with disk failure/cancelled)",
+          "occurrence": 1
+        },
+        {
+          "id": "ecacb3b207f8b2186caa4f022fadc90d31413c288f5b00a1c9cd83b1ae2324d6",
+          "title": "runner drains concurrent failure/cancellation and closes once, retaining every original error (with disk failure/late success)",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/simulation_display_locale.test.ts",
+      "to": "backend/tests/scenarios/reproduction/runtime/transient-display-locale.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Actual simulateGames then replayReproduction with recording spy; original game locale and transient display language across both executions remain the primary lifecycle contract.",
+      "originalSha256": "49f0a7103d23dc08f916c8f3ce60ed4aeca22ae19070697ec67694ce3d90ce90",
+      "candidateSha256": "63c898e7b6707e15725e86fabd554b41f2e93b382262cf0287aab9cbb4cc86f2",
+      "moduleAndLocationEdits": [
+        {
+          "start": 831,
+          "end": 866,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 739,
+          "end": 787,
+          "value": "../../../../src/runtime/simulation/replay_reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/simulation/replay_reproduction",
+          "originalResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "expectedResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 634,
+          "end": 677,
+          "value": "../../../../src/runtime/simulation/simulate_games",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/simulation/simulate_games",
+          "originalResolved": "backend/src/runtime/simulation/simulate_games.ts",
+          "expectedResolved": "backend/src/runtime/simulation/simulate_games.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 554,
+          "end": 600,
+          "value": "../../../../src/runtime/config/load_board_definition",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/load_board_definition",
+          "originalResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 478,
+          "end": 514,
+          "value": "../../../../src/recording/session_recorder",
+          "kind": "module-specifier",
+          "original": "../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "70485fe036d659640d0da1307b1630298f15110d56d1aef45e1be2930fc0523a",
+          "title": "simulation and offline replay pass transient display locale to recording without changing game metadata",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 397,
-    "targetFiles": 402,
-    "mappingEntries": 402,
-    "baselineCases": 4646,
+    "sourceFiles": 413,
+    "targetFiles": 418,
+    "mappingEntries": 418,
+    "baselineCases": 4684,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
