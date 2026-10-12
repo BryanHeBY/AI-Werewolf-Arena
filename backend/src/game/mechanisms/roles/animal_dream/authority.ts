@@ -20,6 +20,9 @@ import {
   readPufferfishState,
   readWhiteCatState,
   payFoxCubChoice,
+  deferWhiteCat,
+  expireWhiteCat,
+  type AnimalDeathUnit,
   type FoxCubState,
   type PufferfishState,
   type WhiteCatState,
@@ -61,6 +64,18 @@ interface Owner {
   stopped: boolean;
   night: AnimalNight | null;
   effect: FoxEffect | null;
+  checkingDeath: boolean;
+  completedUnits: number;
+  lastUnitDay: number;
+  unit: OwnedUnit | null;
+}
+interface OwnedUnit {
+  readonly token: object;
+  readonly value: Readonly<AnimalDeathUnit>;
+  readonly current: () => boolean;
+  status: "starting" | "open" | "closing" | "closed" | "aborted";
+  expiryPrepared: boolean;
+  expiryCatId: number | null;
 }
 const owners = new WeakMap<World, Owner>();
 interface FoxRequest {
@@ -113,6 +128,12 @@ function stop(owner: Owner): void {
     owner.night.status = "aborted";
     owner.night.fox.closed = true;
   }
+  if (owner.unit && owner.unit.status !== "closed") owner.unit.status = "aborted";
+}
+function rejectDeathReentry(owner: Owner): void {
+  if (!owner.checkingDeath) return;
+  stop(owner);
+  throw Error("animal_death_scope_reentry");
 }
 function currentOwner(world: World): Owner | null {
   const owner = owners.get(world);
@@ -151,16 +172,29 @@ export function installAnimalAuthority(world: World, config: unknown): void {
     ),
     cat = captureResource(world, "white_cat", "whiteCat", readWhiteCatState, freshWhiteCatState());
   if (!beautyState(world)) throw Error("animal_initial_resource_invalid");
-  owners.set(world, { fox, puffer, cat, stopped: false, night: null, effect: null });
+  owners.set(world, {
+    fox,
+    puffer,
+    cat,
+    stopped: false,
+    night: null,
+    effect: null,
+    checkingDeath: false,
+    completedUnits: 0,
+    lastUnitDay: 0,
+    unit: null,
+  });
 }
 /** Reservation precedes the phase callback, so reentry or a failed callback never reopens this night. */
 export function beginAnimalNight(world: World, day: number, isCurrent: () => boolean): void {
   const owner = currentOwner(world);
+  if (owner) rejectDeathReentry(owner);
   if (
     !owner ||
     !Number.isSafeInteger(day) ||
     day !== (owner.night?.day ?? 0) + 1 ||
     (owner.night && owner.night.status !== "normal") ||
+    (owner.unit && owner.unit.status !== "closed") ||
     typeof isCurrent !== "function"
   )
     throw Error("animal_night_unavailable");
@@ -265,6 +299,7 @@ function replaceResource<T extends object>(r: Resource<T>, next: T, encoded: str
 export function openAnimalFoxChoice(world: World, day: number, requestToken?: object) {
   const owner = currentOwner(world),
     night = owner?.night;
+  if (owner) rejectDeathReentry(owner);
   if (night?.fox.checking) {
     night.fox.closed = true;
     throw Error("animal_fox_choice_unavailable");
@@ -324,6 +359,7 @@ export function openAnimalFoxChoice(world: World, day: number, requestToken?: ob
 export function createAnimalFoxRequest(world: World, day: number, deadlineAtMs?: number) {
   const owner = currentOwner(world),
     night = owner?.night;
+  if (owner) rejectDeathReentry(owner);
   if (night?.fox.checking) {
     night.fox.closed = true;
     throw Error("animal_fox_request_unavailable");
@@ -357,6 +393,7 @@ export function createAnimalFoxRequest(world: World, day: number, deadlineAtMs?:
 export function closeAnimalNight(world: World, day: number, status: "normal" | "aborted"): void {
   const owner = owners.get(world),
     night = owner?.night;
+  if (owner) rejectDeathReentry(owner);
   if (!owner || !night || night.day !== day) throw Error("animal_night_unavailable");
   if (status === "aborted") {
     stop(owner);
@@ -379,6 +416,187 @@ export function closeAnimalNight(world: World, day: number, status: "normal" | "
     stop(owner);
     throw error;
   }
+}
+function checkDeathScope(world: World, owner: Owner, isCurrent: () => boolean): void {
+  rejectDeathReentry(owner);
+  if (typeof isCurrent !== "function") throw Error("animal_death_scope_unavailable");
+  owner.checkingDeath = true;
+  try {
+    if (isCurrent() !== true || currentOwner(world) !== owner)
+      throw Error("animal_death_scope_revoked");
+  } catch (error) {
+    stop(owner);
+    throw error;
+  } finally {
+    owner.checkingDeath = false;
+  }
+}
+/** Manager-issued actual exile/skip unit. PK belongs to the same token, never another unit. */
+export function beginAnimalExileUnit(
+  world: World,
+  day: number,
+  kind: AnimalDeathUnit["kind"],
+  isCurrent: () => boolean,
+): object {
+  const owner = currentOwner(world);
+  if (owner) rejectDeathReentry(owner);
+  if (
+    !owner ||
+    owner.night?.day !== day ||
+    owner.night.status !== "normal" ||
+    day <= owner.lastUnitDay ||
+    (owner.unit && owner.unit.status !== "closed") ||
+    !["exile", "skipped_day"].includes(kind) ||
+    typeof isCurrent !== "function"
+  )
+    throw Error("animal_exile_unit_unavailable");
+  const token = Object.freeze({}),
+    unit: OwnedUnit = {
+      token,
+      value: Object.freeze({ number: owner.completedUnits + 1, day, kind }),
+      current: isCurrent,
+      status: "starting",
+      expiryPrepared: false,
+      expiryCatId: null,
+    };
+  const lives = world.entityIds().map((id) => {
+    const player = animalOriginalPlayer(world, id, false)!;
+    return { player, version: aliveLifeVersion(player.scope.life) };
+  });
+  owner.unit = unit;
+  try {
+    checkDeathScope(world, owner, isCurrent);
+    if (
+      unit.status !== "starting" ||
+      lives.some(({ player, version }) => aliveLifeVersion(player.scope.life) !== version)
+    )
+      throw Error("animal_exile_unit_revoked");
+    unit.status = "open";
+    return token;
+  } catch (error) {
+    stop(owner);
+    throw error;
+  }
+}
+function ownedUnit(world: World, token: object): { owner: Owner; unit: OwnedUnit } {
+  const owner = currentOwner(world),
+    unit = owner?.unit;
+  if (owner) rejectDeathReentry(owner);
+  if (!owner || !unit || unit.token !== token || unit.status !== "open")
+    throw Error("animal_exile_unit_unavailable");
+  checkDeathScope(world, owner, unit.current);
+  if (unit.status !== "open") throw Error("animal_exile_unit_revoked");
+  return { owner, unit };
+}
+/** Filter at the real lethal commit boundary, before seen/Alive/words/badge/hooks.
+ * The returned ids are proposals only; DeathResolution remains the sole life writer. */
+export function filterAnimalLethalWave(
+  world: World,
+  day: number,
+  phase: "night" | "day" | "voting",
+  rawIds: readonly number[],
+  rawSources: Readonly<Record<number, readonly string[]>>,
+  scope: object | (() => boolean),
+) {
+  const owner = currentOwner(world);
+  if (owner) rejectDeathReentry(owner);
+  if (
+    !owner ||
+    owner.night?.day !== day ||
+    owner.night.status !== "normal" ||
+    !["night", "day", "voting"].includes(phase) ||
+    (owner.unit?.value.day === day && owner.unit.status !== "open") ||
+    (phase === "voting" &&
+      (!owner.unit ||
+        owner.unit.value.kind !== "exile" ||
+        owner.unit.value.day !== day ||
+        owner.unit.status !== "open"))
+  )
+    throw Error("animal_death_scope_unavailable");
+  const ids = snapshotPlainData(rawIds) as number[],
+    sources = snapshotPlainData(rawSources) as Record<number, string[]>;
+  if (
+    !Array.isArray(ids) ||
+    new Set(ids).size !== ids.length ||
+    ids.some((id) => !animalOriginalPlayer(world, id))
+  )
+    throw Error("animal_death_proposals_invalid");
+  const catId = owner.cat.actor.scope.id,
+    before = readWhiteCatState(JSON.parse(owner.cat.json)),
+    hasCat = ids.includes(catId),
+    unit = owner.unit?.status === "open" && owner.unit.value.day === day ? owner.unit : null,
+    countedUnit =
+      unit &&
+      (unit.value.kind === "exile" ||
+        animalRosterPolicies(world)!.skippedVotePolicy === "awa_expire_on_skipped_day_v1")
+        ? unit
+        : null,
+    next =
+      hasCat && before.form.kind === "veiled"
+        ? deferWhiteCat(
+            before,
+            day,
+            phase,
+            sources[catId] ?? [],
+            owner.completedUnits,
+            countedUnit?.value ?? null,
+          )
+        : before,
+    encoded = JSON.stringify(next);
+  if (unit ? scope !== unit.token : typeof scope !== "function")
+    throw Error("animal_death_scope_unavailable");
+  checkDeathScope(world, owner, unit ? unit.current : (scope as () => boolean));
+  // A callback may have legally changed a life without replacing its original body.
+  if (ids.some((id) => !animalOriginalPlayer(world, id))) {
+    stop(owner);
+    throw Error("animal_death_scope_revoked");
+  }
+  const blocked = hasCat && next.form.kind !== "expired";
+  if (encoded !== owner.cat.json) {
+    replaceResource(owner.cat, next, encoded);
+    if (unit) {
+      // A prior empty preparation cannot settle a clock created by a later wave.
+      unit.expiryPrepared = false;
+      unit.expiryCatId = null;
+    }
+  }
+  return Object.freeze({
+    deaths: Object.freeze(blocked ? ids.filter((id) => id !== catId) : [...ids]),
+    revealedCatId: hasCat && before.form.kind === "veiled" ? catId : null,
+    blockedCatId: blocked ? catId : null,
+  });
+}
+/** Prepare the clock before this unit's final wave. No historical cause grants death or last words. */
+export function prepareAnimalCatExpiry(world: World, token: object): number | null {
+  const { owner, unit } = ownedUnit(world, token);
+  if (unit.expiryPrepared) throw Error("animal_cat_expiry_already_prepared");
+  const before = readWhiteCatState(JSON.parse(owner.cat.json)),
+    policy = animalRosterPolicies(world)!.skippedVotePolicy,
+    next = expireWhiteCat(before, unit.value, policy),
+    encoded = JSON.stringify(next);
+  const expires = before.form.kind === "deferred" && next.form.kind === "expired";
+  if (expires && !animalOriginalPlayer(world, owner.cat.actor.scope.id)) {
+    stop(owner);
+    throw Error("animal_death_scope_revoked");
+  }
+  if (encoded !== owner.cat.json) replaceResource(owner.cat, next, encoded);
+  unit.expiryPrepared = true;
+  unit.expiryCatId = expires ? owner.cat.actor.scope.id : null;
+  return expires ? owner.cat.actor.scope.id : null;
+}
+export function closeAnimalExileUnit(world: World, token: object): void {
+  const { owner, unit } = ownedUnit(world, token);
+  if (!unit.expiryPrepared) throw Error("animal_exile_unit_not_complete");
+  if (unit.expiryCatId !== null) {
+    const cat = animalOriginalPlayer(world, unit.expiryCatId, false);
+    if (!cat || cat.scope.life.alive) throw Error("animal_exile_unit_not_complete");
+  }
+  unit.status = "closing";
+  const policy = animalRosterPolicies(world)!.skippedVotePolicy;
+  if (unit.value.kind === "exile" || policy === "awa_expire_on_skipped_day_v1")
+    owner.completedUnits = unit.value.number;
+  owner.lastUnitDay = unit.value.day;
+  unit.status = "closed";
 }
 /** God-only paid effect. Actor prompts use a separate publication-aware knowledge projection. */
 export function animalFoxEffect(world: World): Readonly<FoxEffect> | null {
@@ -404,5 +622,12 @@ export function animalAuthoritySnapshot(world: World, complete = true) {
       foxPaid: owner.night.fox.paid,
     },
     effect: owner.effect && { ...owner.effect },
+    completedUnits: owner.completedUnits,
+    unit: owner.unit && {
+      ...owner.unit.value,
+      status: owner.unit.status,
+      expiryPrepared: owner.unit.expiryPrepared,
+      expiryCatId: owner.unit.expiryCatId,
+    },
   };
 }

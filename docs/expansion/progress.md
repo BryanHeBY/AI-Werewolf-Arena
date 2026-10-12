@@ -698,3 +698,5 @@ Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster
 动物板原牌池／原体证明已补真实十二人counts/camps、72根组件全局独立、身份／Victory／private容器和观察到漂移后的永久撤权。维护15／30、A独立7／36及R原样复核通过，范围见[原体底座](reviews/p9e-animal-roster-foundation.md)；资源对象、夜／日unit、deadline及实际角色运行继续下一owner，52/64不变。
 
 三份原资源 owner、预约真实开夜、Fox 同步付款及固定期限／单向撤销的 opaque 请求凭据完成；回调快照漏 alias、末回调撤旧授权及开夜生命变化反例修复。最终维护60／151断言、R独立5／24、A独立15／47及双端类型／backend lint通过，见[资源与请求底座](reviews/p9e-animal-authority-foundation.md)。无实际请求 envelope、角色注册或对局验收声明，52/64不变；接续Cat真实单位／死亡过滤、Puffer原票、许可／知情和全部交付。
+
+Cat单位／致死过滤底座完成，opaque真实单位、默认skip不计实际放逐／另一政策combined到期、首次不改Alive和重复挡死、prepare后新时钟重结算、normalclose待原Cat真首死均有约束。维护77／225、R独立8／37、A独立13／52及全类型／backend lint通过，五类原反例闭环见[单位基础](reviews/p9e-animal-cat-unit-foundation.md)。仍无PM/profile/event/真实交付声明，52/64不变；继续Puffer原票／被动与真实运行接入。
