@@ -83773,13 +83773,582 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/gravekeeper.test.ts",
+      "to": "backend/tests/unit/features/gravekeeper/private-feedback-boundaries.test.ts",
+      "sourceCommit": "9695d888c13a780583c3f2aea7e06540373f93af",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "eb959daef1a6ce681225d3ccd46242d687afd775e5baae6a84020af7357bb68e",
+      "candidateSha256": "b734cd17e5a2a4ffbecfdefdb57941855a8f5a501d9320b1783c61e401df15d1",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1060,
+          "end": 1117,
+          "original": "../../../src/game/mechanisms/script/event_render_registry",
+          "value": "../../../../src/game/mechanisms/script/event_render_registry",
+          "originalResolved": "backend/src/game/mechanisms/script/event_render_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/script/event_render_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 954,
+          "end": 1004,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 887,
+          "end": 915,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 564,
+          "end": 612,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 443,
+          "end": 498,
+          "original": "../../../src/game/mechanisms/roles/gravekeeper/feedback",
+          "value": "../../../../src/game/mechanisms/roles/gravekeeper/feedback",
+          "originalResolved": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 351,
+          "end": 396,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 295,
+          "end": 312,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 132,
+          "end": 158,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 35,
+          "end": 57,
+          "original": "../night_stage_fixture",
+          "value": "../../../engine/night_stage_fixture",
+          "originalResolved": "backend/tests/engine/night_stage_fixture.ts",
+          "expectedResolved": "backend/tests/engine/night_stage_fixture.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "ab9cf47456e939e8099d08be9dee7cf7b67b97f338595a4ace26977ea1697b75",
+          "title": "zh-CN: strict feedback readers and private rendering reject role/combined labels, bad IDs/dates, extra fields and accessors without exposing an exact role",
+          "occurrence": 1
+        },
+        {
+          "id": "b48e0fb7fe5a1c0ef5e67d622ea88ec4b5f11d7d11fa2a17991e270a4406d43e",
+          "title": "en: strict feedback readers and private rendering reject role/combined labels, bad IDs/dates, extra fields and accessors without exposing an exact role",
+          "occurrence": 1
+        },
+        {
+          "id": "5dbbb997ffb8907281a9de7456aead30f6d6cfe4a11a6e905197e603142227c2",
+          "title": "zh-CN: multiple native keepers only learn the immediately preceding exile once per night, and dead/transformed keepers receive nothing",
+          "occurrence": 1
+        },
+        {
+          "id": "98db5ecbd3ca79cf7ab74611647fd8e55624b8f6bb742ff471e39c038ee86723",
+          "title": "en: multiple native keepers only learn the immediately preceding exile once per night, and dead/transformed keepers receive nothing",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { PotionType } from \"../../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Camp,\n  Role,\n  Phase,\n  COMPONENT,\n  WinCondition,\n  ActionWindow,\n  KnightDuelWindow,\n  type RoleComponent,\n  type GameEvent,\n  type BoardConfig,\n  type ActionRequest,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Camp, Role, Phase, COMPONENT, WinCondition, type RoleComponent, type GameEvent, type BoardConfig, type ActionRequest } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "ActionWindow",
+              "imported": "ActionWindow",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "KnightDuelWindow",
+              "imported": "KnightDuelWindow",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/gravekeeper/feedback",
+          "originalImport": "import {\n  captureExileFeedback,\n  GRAVEKEEPER_FEEDBACK_STAGE,\n} from \"../../../src/game/mechanisms/roles/gravekeeper/feedback\";",
+          "currentImportBeforeRebase": "import { GRAVEKEEPER_FEEDBACK_STAGE } from \"../../../src/game/mechanisms/roles/gravekeeper/feedback\";",
+          "droppedBindings": [
+            {
+              "name": "captureExileFeedback",
+              "imported": "captureExileFeedback",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import {\n  RoleCatalog,\n  getDefaultRoleCatalog,\n  getDefaultToolSpecRegistry,\n  getDefaultTargetHintRegistry,\n  getDefaultPhaseStageLocalizationRegistry,\n  getDefaultConfigRenderRegistry,\n} from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": "import { getDefaultRoleCatalog, getDefaultToolSpecRegistry, getDefaultTargetHintRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultConfigRenderRegistry } from \"../../../src/game/mechanisms\";",
+          "droppedBindings": [
+            {
+              "name": "RoleCatalog",
+              "imported": "RoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalImport": "import { NightStageRegistry } from \"../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightStageRegistry",
+              "imported": "NightStageRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalImport": "import { NightPipeline } from \"../../../src/game/engine/phase_pipeline/night_pipeline\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightPipeline",
+              "imported": "NightPipeline",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalImport": "import { DamageResolutionSystem } from \"../../../src/core/domain/systems/damage_resolution_system\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DamageResolutionSystem",
+              "imported": "DamageResolutionSystem",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/agent_visible_event_feed",
+          "originalImport": "import { buildAgentVisibleEventFeed } from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "buildAgentVisibleEventFeed",
+              "imported": "buildAgentVisibleEventFeed",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/stages/night/contracts",
+          "originalImport": "import type { NightStageContext } from \"../../../src/game/mechanisms/stages/night/contracts\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightStageContext",
+              "imported": "NightStageContext",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/ability_changes",
+          "originalImport": "import { grantNightAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "grantNightAbility",
+              "imported": "grantNightAbility",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/gravekeeper.test.ts",
+      "to": "backend/tests/scenarios/features/gravekeeper/native-exile-feedback.test.ts",
+      "sourceCommit": "9695d888c13a780583c3f2aea7e06540373f93af",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "eb959daef1a6ce681225d3ccd46242d687afd775e5baae6a84020af7357bb68e",
+      "candidateSha256": "d536d50a9c223c86d3c57939d2134498de3e8469be82715c2919eeea7454d4ce",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1579,
+          "end": 1629,
+          "original": "../../../src/game/mechanisms/roles/ability_changes",
+          "value": "../../../../src/game/mechanisms/roles/ability_changes",
+          "originalResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/ability_changes.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1484,
+          "end": 1541,
+          "original": "../../../src/game/mechanisms/script/event_render_registry",
+          "value": "../../../../src/game/mechanisms/script/event_render_registry",
+          "originalResolved": "backend/src/game/mechanisms/script/event_render_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/script/event_render_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1378,
+          "end": 1428,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1290,
+          "end": 1339,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1205,
+          "end": 1243,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1116,
+          "end": 1173,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1019,
+          "end": 1073,
+          "original": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "value": "../../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 923,
+          "end": 985,
+          "original": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "value": "../../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 856,
+          "end": 884,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 608,
+          "end": 656,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 513,
+          "end": 568,
+          "original": "../../../src/game/mechanisms/roles/gravekeeper/feedback",
+          "value": "../../../../src/game/mechanisms/roles/gravekeeper/feedback",
+          "originalResolved": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/gravekeeper/feedback.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 394,
+          "end": 439,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 338,
+          "end": 355,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 120,
+          "end": 146,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 28,
+          "end": 45,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "0c2da915434439424058b3845f3ccd140242438b70c74af0b08f37f29c51090c",
+          "title": "leave_night: phase revision interrupts the real second night before feedback, damage or subsequent turns, and a fresh run can still deliver once",
+          "occurrence": 1
+        },
+        {
+          "id": "8b8604f6909628765cf37096bb8131607724d73911b7a4d1ce4bbc26a1e9860f",
+          "title": "leave_and_restore: phase revision interrupts the real second night before feedback, damage or subsequent turns, and a fresh run can still deliver once",
+          "occurrence": 1
+        },
+        {
+          "id": "767e242df95204f61d8e8ee5fe2599ecfa5c5b8c6a76a2f49cc2f238de3cbf6d",
+          "title": "same_phase_jump: phase revision interrupts the real second night before feedback, damage or subsequent turns, and a fresh run can still deliver once",
+          "occurrence": 1
+        },
+        {
+          "id": "0ed9d75dcd7944fcf440b6dc712638326f1a6c5b7e81c6111b8d1be2a240612e",
+          "title": "knight: a public kill interrupts the day without becoming a next-night exile feedback",
+          "occurrence": 1
+        },
+        {
+          "id": "d7051a05f455e4d3f0ce80ce95fefc645592fc2fbde5e0e57a691f373efa68ff",
+          "title": "white_wolf_king: a public kill interrupts the day without becoming a next-night exile feedback",
+          "occurrence": 1
+        },
+        {
+          "id": "9194872d88173bbd6b37302441108d7bb03a4b67125b2530fe687549ecfae51d",
+          "title": "zh-CN: frozen camp labels are delivered after Witch/before Seer, remain actor-private and expose no pending fact or exact role",
+          "occurrence": 1
+        },
+        {
+          "id": "ff87bd850ed2ce8424b568137b650a2239b481e4fd42afd656ae27f71d6a359f",
+          "title": "en: frozen camp labels are delivered after Witch/before Seer, remain actor-private and expose no pending fact or exact role",
+          "occurrence": 1
+        },
+        {
+          "id": "94c07fc7a5d080028eb416fe006e0a5625680f3d679020040a705b97e8bb95c8",
+          "title": "zh-CN: passive exile feedback coexists with a separately granted Seer ability, using independent history and one-use authority",
+          "occurrence": 1
+        },
+        {
+          "id": "b2f08f2e9fb5747b2517233c66423c4c7416751bdaf7ece350322b3e2b9c6079",
+          "title": "en: passive exile feedback coexists with a separately granted Seer ability, using independent history and one-use authority",
+          "occurrence": 1
+        },
+        {
+          "id": "732e693f155070eac29f1e47e5beb2394f8f2f6063d895354a13881d6230f5b6",
+          "title": "actual exile 1: no early state, next night camp feedback, and terminal exile opens no extra night",
+          "occurrence": 1
+        },
+        {
+          "id": "b2fe34ac6a42cd057f402fe67aad54958029675fdcdfa8c6e3d3379e36c8c289",
+          "title": "actual exile 4: no early state, next night camp feedback, and terminal exile opens no extra night",
+          "occurrence": 1
+        },
+        {
+          "id": "9a12e3780c59cd8d44ec70355c7e91358fa28098fa2ed5b9086094477e2435d9",
+          "title": "idiot: non-exiles and prior death give no feedback; current-night pending damage does not suppress an eligible keeper",
+          "occurrence": 1
+        },
+        {
+          "id": "c50481f968cecce84a0340e47c51d279da63b26f9842385504516e42b2ee8d15",
+          "title": "abstain: non-exiles and prior death give no feedback; current-night pending damage does not suppress an eligible keeper",
+          "occurrence": 1
+        },
+        {
+          "id": "9e4f49b9975d1d7e06e1667aa2a3236512765dd5c7315b64807831a43fa68f18",
+          "title": "keeper_dead: non-exiles and prior death give no feedback; current-night pending damage does not suppress an eligible keeper",
+          "occurrence": 1
+        },
+        {
+          "id": "15f922601fea7ffbc31865db9e4bc76eacd5e766183ca1d136626ba9f7d03b85",
+          "title": "pending_knife: non-exiles and prior death give no feedback; current-night pending damage does not suppress an eligible keeper",
+          "occurrence": 1
+        },
+        {
+          "id": "b991c5aaf259a97942478a89d23d14814b0ddb5fd05df20e3986f3c4e95aeacd",
+          "title": "pending_poison: non-exiles and prior death give no feedback; current-night pending damage does not suppress an eligible keeper",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../night_stage_fixture",
+          "originalImport": "import { nightStageContext } from \"../night_stage_fixture\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "nightStageContext",
+              "imported": "nightStageContext",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import {\n  getGravekeeperState,\n  setGravekeeperState,\n} from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": "import { getGravekeeperState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "droppedBindings": [
+            {
+              "name": "setGravekeeperState",
+              "imported": "setGravekeeperState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "originalImport": "import { readGravekeeperReport, readGravekeeperFeedback } from \"@ai-werewolf-arena/replay-contract\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readGravekeeperReport",
+              "imported": "readGravekeeperReport",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "readGravekeeperFeedback",
+              "imported": "readGravekeeperFeedback",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/stages/night/contracts",
+          "originalImport": "import type { NightStageContext } from \"../../../src/game/mechanisms/stages/night/contracts\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightStageContext",
+              "imported": "NightStageContext",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 550,
-    "targetFiles": 604,
-    "mappingEntries": 604,
-    "baselineCases": 7044,
+    "sourceFiles": 551,
+    "targetFiles": 606,
+    "mappingEntries": 606,
+    "baselineCases": 7064,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
