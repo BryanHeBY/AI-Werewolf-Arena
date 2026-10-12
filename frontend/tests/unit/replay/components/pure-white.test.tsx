@@ -1,0 +1,54 @@
+/**
+ * Unit component tests for pure white replay display.
+ * Input: existing recorded or literal replay data, event cursors and explicit
+ * language/frame settings; output: the original seat, timeline and rendered
+ * frame assertions. Handwritten visibility/state expectations and immutable
+ * archives are independent oracles. No live game or model transport executes.
+ */
+import { expect, test } from "bun:test";
+import { renderToStaticMarkup } from "react-dom/server";
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import { eventLabel } from "../../../../src/replay/event-labels";
+import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
+import {
+  createReplayRenderInput,
+  buildReplayFrame,
+  FRAMES_PER_EVENT,
+} from "../../../../src/replay/replay-frame";
+import { ReplayFrame } from "../../../../src/replay/ReplayComposition";
+import wolf from "../../../fixtures/pure-white-wolf.replay.json";
+import good from "../../../fixtures/pure-white-good.replay.json";
+for (const locale of ["zh-CN", "en"] as const)
+  for (const kind of ["wolf", "good"] as const)
+    test(`${locale}/${kind}: inspection is private knowledge, not premature death, and dead faction members win`, () => {
+      const raw = structuredClone(kind === "wolf" ? wolf : good);
+      raw.meta.locale = locale;
+      const before = structuredClone(raw);
+      const replay = readReplayDocument(raw);
+      const reports = replay.events.filter((e) => e.type === "role_inspected");
+      expect(reports).toHaveLength(4);
+      const input = createReplayRenderInput(replay, { locale, timeZone: "UTC" });
+      for (const report of reports) {
+        const index = replay.events.indexOf(report);
+        const snapshot = buildReplaySnapshot(replay, index);
+        expect(snapshot.players).toEqual(buildReplaySnapshot(replay, index - 1).players);
+        expect(snapshot.decision).toBeNull();
+        const label = eventLabel(report, locale);
+        expect(label).not.toBe(locale === "en" ? "Unknown" : "未知");
+        if (locale === "en") expect(label).not.toMatch(/[\u3400-\u9fff]/);
+        const frame =
+          input.replay.events.findIndex((e) => e.seq === report.seq) * FRAMES_PER_EVENT + 10;
+        expect(buildReplayFrame(input, frame).label).toBe(label);
+        const markup = renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />);
+        expect(markup).toContain(label.replaceAll("'", "&#x27;"));
+        expect(markup).toBe(renderToStaticMarkup(<ReplayFrame input={input} frame={frame} />));
+      }
+      const final = buildReplaySnapshot(replay, replay.events.length - 1);
+      expect(final.players.filter((p) => p.isWinner)).toHaveLength(kind === "wolf" ? 4 : 8);
+      expect(final.players.filter((p) => !p.alive)).toHaveLength(kind === "wolf" ? 6 : 7);
+      const deadWinnerId = reports[kind === "wolf" ? 1 : 0]!.payload.actorId;
+      const deadWinner = final.players.find((p) => p.playerId === deadWinnerId);
+      expect(deadWinner?.alive).toBe(false);
+      expect(deadWinner?.isWinner).toBe(true);
+      expect(raw).toEqual(before);
+    });

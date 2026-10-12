@@ -9,13 +9,14 @@
     "build": "bunx vite build",
     "preview": "bunx vite preview",
     "typecheck": "bunx tsc -p tsconfig.json --noEmit",
-    "test": "bun run test:unit && bun run test:integration",
+    "test": "bun run test:unit && bun run test:integration && bun run test:architecture",
     "test:e2e": "http_proxy= https_proxy= all_proxy= HTTP_PROXY= HTTPS_PROXY= ALL_PROXY= bun ./node_modules/@playwright/test/cli.js test",
     "test:ui": "bun ./node_modules/@playwright/test/cli.js test --ui",
     "replay:render": "bun scripts/render-replay.ts",
     "lint": "eslint . --max-warnings=0",
     "test:unit": "bun test tests/unit",
-    "test:integration": "bun test tests/integration"
+    "test:integration": "bun test tests/integration",
+    "test:architecture": "bun --no-env-file test tests/architecture"
   },
   "dependencies": {
     "@ai-werewolf-arena/replay-contract": "workspace:*",
