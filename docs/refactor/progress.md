@@ -257,3 +257,7 @@
 - C23 Time Consort具体night unit：cleanup-transfer原flag归feature唯一owner；priority50 begin仍stage、stock/exchange/damage/frame状态原bytes。manager条件/currentness与normal后inner+outer abort World读取、重复normal-close原error保；同原public query函数经ports，无新frame store。原realcycle1/0/5+三族new12/0/38，最终有限type78345/依赖9048均actual0，独立整源/17prefix/公开引用/cold/中间候选0；完整时妃资格/权限/效果/编码等仍partial。
 
 - C23 Scholar/Mentor具体night unit：仅原cleanup-transfer状态及原manager终结port，priority50 begin、赠予库存/paid/frame算法原bytes；normal后abort仍由frame closed guard决定，不毒化nextnight，未完成close后abort仍原拒绝。原realcycle1/0/14+三族new12/0/38，finaltype78345/scoped9048 actual0，独立28源检查/17byte原文件/7fn身份/8cold/3逐功能候选闭合。最后11scope实际bytes同已审final；原4binding门禁红与harness误红保留，不改债务/fixture，无重runtime/fullsuite。完整师徒矩阵与其他C23机制仍partial。
+
+- 当前台账追加三已commit C23生命周期owner：709dc222/73943cac/5a5d5b8d，精确3cell pending→partial、90rows900cells=48partial852pending/0complete/N/A；baseline原SHA保持，余机制矩阵和最终门禁仍待闭合。
+
+- C12 mixed8f death-causes：1原file→2targets/20旧IDs实际unit/scenario边界；overall8→16/166IDs=103unit63scenario，76callbacks75raw+1两精确ImportType path、该callback完整JSbyte同；47helpers/全部arrays/loop/describe原raw、148bindings/16heads0。Root与第三向actualGit/原ID singleowner/实际World写权限路径及11removedmodules无必需hook/fixture/IO损失审0；pruning94=78whole16partial，0added。初finite16 actualexit2仅这两路径红保存，仅修后单target58868actualexit0，不误称初16通过，不重16/tests/discovery/game。caseSplit/selected程序保真，不称wholefile/initorder；mapping现531source/568target/6643IDs。

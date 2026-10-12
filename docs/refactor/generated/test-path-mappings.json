@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+  "observedSourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -73540,13 +73540,419 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/death_causes.test.ts",
+      "to": "backend/tests/unit/mechanisms/hunter-death-causes.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "4f17445ba6092cf97e1393bac6f6aa52721d4cf98a052e6a8336db9de034df97",
+      "candidateSha256": "ef3a9febfa5a79617e14b2e0980050d26e330e73fa37b5d8d5a36b92c4aba682",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 897,
+          "end": 943,
+          "original": "../../../src/ai/agents/player/action_reception",
+          "value": "../../../src/ai/agents/player/action_reception",
+          "originalResolved": "backend/src/ai/agents/player/action_reception.ts",
+          "expectedResolved": "backend/src/ai/agents/player/action_reception.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 811,
+          "end": 849,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 740,
+          "end": 779,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 665,
+          "end": 706,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 577,
+          "end": 629,
+          "original": "../../../src/game/mechanisms/roles/hunter/death_hook",
+          "value": "../../../src/game/mechanisms/roles/hunter/death_hook",
+          "originalResolved": "backend/src/game/mechanisms/roles/hunter/death_hook.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/hunter/death_hook.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 493,
+          "end": 541,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 397,
+          "end": 442,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 305,
+          "end": 358,
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "value": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 241,
+          "end": 258,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "7143a31ff3c984f71e8363e48d86bfcb804fad10fa880cbc74902232d980c897",
+          "title": "zh-CN: death causes explicitly permit or block Hunter actions without counting gods",
+          "occurrence": 1
+        },
+        {
+          "id": "fea7e71af8913a19f3f95e1b55ad0121d8c6f30088f3e55188882e175a2eca3d",
+          "title": "en: death causes explicitly permit or block Hunter actions without counting gods",
+          "occurrence": 1
+        },
+        {
+          "id": "c16eedf8118478944a20840819e466c271a6f9478ad6401f7cbeb05f63cc1fb2",
+          "title": "the last god is not excluded from the death hook (slaughter_city)",
+          "occurrence": 1
+        },
+        {
+          "id": "280e7a811696e13f00f7fb4c0e397e40815fa853ff02982db5aa3781c8a7f467",
+          "title": "the last god is not excluded from the death hook (slaughter_side)",
+          "occurrence": 1
+        },
+        {
+          "id": "c50a22f43f92718ff0a59713a4860e89f243cd1cd4d8e97ada35eef41ea09d2e",
+          "title": "the last god is not excluded from the death hook (wolf_reach_half)",
+          "occurrence": 1
+        },
+        {
+          "id": "0177395ee8c12439803bccb05f1b1f545de6f8ad70de4a93b5e3bafd7ab02d98",
+          "title": "a living Hunter cannot enter the death hook; invalid or thrown selection preserves the gun, while explicit pass spends it",
+          "occurrence": 1
+        },
+        {
+          "id": "72fb2819e9bf64675b18143b26f3f85ea8fa28fea4d2e0800fff71f315bd5b0a",
+          "title": "zh-CN: the real death resolver bounds invalid decisions and accepts a corrected shot or explicit empty shot",
+          "occurrence": 1
+        },
+        {
+          "id": "6b525ef18e3fd8d4b78872fbb2f26edec8662c4bc77b91b500afa619db0e2d26",
+          "title": "en: the real death resolver bounds invalid decisions and accepts a corrected shot or explicit empty shot",
+          "occurrence": 1
+        },
+        {
+          "id": "13393553f77551b2c5822bd0de8f25d563c1837c8e5c581e0756467ce7e63640",
+          "title": "zh-CN: shared reception accepts schema-valid null as an explicit gun pass and seals the turn once",
+          "occurrence": 1
+        },
+        {
+          "id": "b6d91fbe3903c863e943336bcd48fadc59e6a744f09ba5889823f5b1d64cdcd5",
+          "title": "en: shared reception accepts schema-valid null as an explicit gun pass and seals the turn once",
+          "occurrence": 1
+        },
+        {
+          "id": "66fc502494b86b7491a5a27bb3fd768dd2d59cb519e171c37fb2bf26ba7c02bc",
+          "title": "zh-CN: an additional shot death carries its own cause and actual phase",
+          "occurrence": 1
+        },
+        {
+          "id": "051db1a201ad4e749f4b395e06000501c3357a1e8ee2fe6bd28eb018b5843e83",
+          "title": "en: an additional shot death carries its own cause and actual phase",
+          "occurrence": 1
+        },
+        {
+          "id": "185b624b8cd1adb1806be33ba28045e5fae7dfa624c9a7c520342ba598774494",
+          "title": "zh-CN: revoked, replaced or resurrected Hunter state discards a late selection",
+          "occurrence": 1
+        },
+        {
+          "id": "88272c9d377b1e7a63c29a8b6c620b090afbdd3ea1d6ddef428f8221cc858951",
+          "title": "en: revoked, replaced or resurrected Hunter state discards a late selection",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Camp,\n  DeathCause,\n  Phase,\n  Role,\n  WinCondition,\n  permitsHunterShot,\n  type GameEvent,\n  type RoleComponent,\n  type DeathSources,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, DeathCause, Phase, Role, WinCondition, permitsHunterShot, type GameEvent, type RoleComponent, type DeathSources } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "Camp",
+              "imported": "Camp",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/death_causes.test.ts",
+      "to": "backend/tests/scenarios/mechanisms/hunter-last-god.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "4f17445ba6092cf97e1393bac6f6aa52721d4cf98a052e6a8336db9de034df97",
+      "candidateSha256": "e67afcedb26e583333fcb3a386abdd59564f6a2a43f1737e5a3223cdbb94db4a",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 329,
+          "end": 374,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 237,
+          "end": 290,
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "value": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 173,
+          "end": 190,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "ce0887244ac270006b69b2fed044d35bf9f9e29458b1022dc04599c5f4fca5eb",
+          "title": "zh-CN: PhaseManager resolves the last god's gun and then seals a good victory (slaughter_city)",
+          "occurrence": 1
+        },
+        {
+          "id": "5020725818e2f20ef4e4a2ee48ec661f5c4bdac979ae97b21956bb8b0b59162a",
+          "title": "zh-CN: PhaseManager resolves the last god's gun and then seals a good victory (slaughter_side)",
+          "occurrence": 1
+        },
+        {
+          "id": "01b246023b81168ca0daac05b304856630a642e3d6ebe36ef3736a1c890ba988",
+          "title": "zh-CN: PhaseManager resolves the last god's gun and then seals a good victory (wolf_reach_half)",
+          "occurrence": 1
+        },
+        {
+          "id": "d61592bae40405ad7c87a77171a5c1a6b7a33d7bf838076e11c6cdcb827f24a4",
+          "title": "en: PhaseManager resolves the last god's gun and then seals a good victory (slaughter_city)",
+          "occurrence": 1
+        },
+        {
+          "id": "226b7b5507969fe5fc4dc8a2c8194d35b72fa939c58e9d9792cd3bc0c0a85f5a",
+          "title": "en: PhaseManager resolves the last god's gun and then seals a good victory (slaughter_side)",
+          "occurrence": 1
+        },
+        {
+          "id": "f8868ce2be20afc73f71dfec096ddaf39ec54d7e2a6bef23d04584a65f4e997e",
+          "title": "en: PhaseManager resolves the last god's gun and then seals a good victory (wolf_reach_half)",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Camp,\n  DeathCause,\n  Phase,\n  Role,\n  WinCondition,\n  permitsHunterShot,\n  type GameEvent,\n  type RoleComponent,\n  type DeathSources,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, Camp, DeathCause, Phase, Role, WinCondition } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "permitsHunterShot",
+              "imported": "permitsHunterShot",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "DeathSources",
+              "imported": "DeathSources",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import { getHunterState, setHunterState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getHunterState",
+              "imported": "getHunterState",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "setHunterState",
+              "imported": "setHunterState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/hunter/death_hook",
+          "originalImport": "import { hunterDeathHook } from \"../../../src/game/mechanisms/roles/hunter/death_hook\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "hunterDeathHook",
+              "imported": "hunterDeathHook",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/death_resolution",
+          "originalImport": "import { DeathResolution } from \"../../../src/game/engine/death_resolution\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DeathResolution",
+              "imported": "DeathResolution",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/event_registry",
+          "originalImport": "import { EventRegistry } from \"../../../src/game/engine/event_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "EventRegistry",
+              "imported": "EventRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/action_reception",
+          "originalImport": "import { ActionReception, ActionTurn } from \"../../../src/ai/agents/player/action_reception\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ActionReception",
+              "imported": "ActionReception",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionTurn",
+              "imported": "ActionTurn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 530,
-    "targetFiles": 566,
-    "mappingEntries": 566,
-    "baselineCases": 6623,
+    "sourceFiles": 531,
+    "targetFiles": 568,
+    "mappingEntries": 568,
+    "baselineCases": 6643,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
