@@ -1,4 +1,11 @@
-import type { MessageKey, MessageRef } from "@ai-werewolf-arena/game-text";
+/**
+ * Responsibility: define audit task/evidence data and neutral result descriptions.
+ * Input: recorded execution evidence and configured audit requirements;
+ * output: audit request/result contracts, preserving raw model content separately.
+ * The audit subsystem owns these evidence/task shapes; recording owns stored sessions.
+ * These declarations do not run audits, select game actions or render translations.
+ */
+import type { MessageKey, MessageRef } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
 import type {
   ReplayDebugReport,

@@ -57,6 +57,14 @@
       "exports": "GameResult and summaries; DeathCause/DeathSources only",
       "currentConsumers": "engine and features via core/model or core index; strict recording and tests",
       "exit": "C44 data bridges; death-shot selection/callbacks and eligibility algorithms stay domain"
+    },
+    {
+      "id": "text-message-types",
+      "path": "packages/game-text/src/index.ts and zh-CN.ts",
+      "owner": "game-contract",
+      "exports": ["MessageKey", "MessageRef"],
+      "currentConsumers": "AI turn rendering and frontend offline-replay mixed format/type imports; recording messageRefSchema still preserves strict text parameter refinement",
+      "exit": "C44 named types once consumers use contract; text formatter remains text; parameter validation is not dropped"
     }
   ]
 }

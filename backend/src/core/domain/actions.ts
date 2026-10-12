@@ -1,4 +1,12 @@
-import type { MessageRef } from "@ai-werewolf-arena/game-text";
+/**
+ * Responsibility: define domain action/request data and the existing action-provider port.
+ * Input: machine identities, player-visible facts and neutral message references;
+ * output: typed tools, arguments, request contexts and validation results.
+ * Declarations grant no runtime authority or resources; engine-owned leases and
+ * current-state checks remain separate. ActionProvider is an execution interface,
+ * not serialized data. Existing optional extras and strict turn fields are preserved.
+ */
+import type { MessageRef } from "@ai-werewolf-arena/game-contract";
 import {
   ActionWindow,
   KnightDuelWindow,

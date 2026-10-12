@@ -31,3 +31,5 @@
 - C10（首runner/前端清楚integration组）：默认unit+integration发现入口，三原program只加职责头，8旧ID/fixture字节不变；局部8/0。其余P2分类仍proposal，未宣称C11–C14全完成。
 
 - C07-A：结果/查验/错误/死亡data迁唯一contract，runtime句柄与permits留domain且body1221byte相同；独立审查10身份项，局部10+33/0；新source自动进入精确指纹。
+
+- C07-B：1513中立消息IDs封闭类型及MessageRef、两语exact type coverage和真实纯类型consumer；字典/42函数body不改，独立审查通过。header局部gate修完；不迁丢backend严格参数refine。

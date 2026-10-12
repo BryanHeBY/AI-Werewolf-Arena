@@ -1,3 +1,11 @@
+/**
+ * Public text and compatibility exit consumed by backend and browser rendering.
+ * Exports frozen bilingual dictionaries, strict formatting, presentation mappings
+ * and the existing fact/preset contributions. Machine message IDs and references
+ * are contract-owned named type exports; formatting retains parameter validation
+ * and raw user text. This module never grants engine action or resource authority.
+ */
+import type { MessageKey, MessageRef } from "@ai-werewolf-arena/game-contract";
 import { readNobleSecretBodyFact } from "./noble-secret-body";
 import { readAnimalDreamFact } from "./animal-dream";
 export * from "./animal-dream";
@@ -61,10 +69,10 @@ import { DEBATE_EVENT_TYPES, readDebateEventFact } from "./debate";
 export { DEBATE_EVENT_TYPES, readDebateEventFact } from "./debate";
 import { CUPID_EVENT_TYPES, readCupidEventFact } from "./cupid";
 export { CUPID_EVENT_TYPES, readCupidEventFact } from "./cupid";
-import { zhCN, type MessageKey } from "./zh-CN";
+import { zhCN } from "./zh-CN";
 import { en } from "./en";
 
-export type { Locale, MessageKey };
+export type { Locale, MessageKey, MessageRef };
 export const dictionaries = Object.freeze({ "zh-CN": zhCN, en });
 const placeholderPattern = /\{([a-zA-Z][a-zA-Z0-9_]*)\}/g;
 export function placeholders(template: string): string[] {
@@ -226,10 +234,6 @@ export function toolFailure(locale: Locale, error: string, originalMessage?: str
   return { ok: false as const, error, message: originalMessage ?? errorMessage(locale, error) };
 }
 
-export interface MessageRef {
-  key: MessageKey;
-  parameters?: Readonly<Record<string, string | number>>;
-}
 export function renderMessage(locale: Locale, message: MessageRef): string {
   return text(locale, message.key, message.parameters);
 }

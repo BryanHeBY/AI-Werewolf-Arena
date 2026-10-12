@@ -27,3 +27,6 @@ export * from "./errors";
 export { DeathCause } from "./death-facts";
 export type { DeathSources } from "./death-facts";
 export * from "./results";
+export { MESSAGE_IDS, isMessageKey } from "./message-ids";
+export type { MessageKey } from "./message-ids";
+export type { MessageRef } from "./message-refs";

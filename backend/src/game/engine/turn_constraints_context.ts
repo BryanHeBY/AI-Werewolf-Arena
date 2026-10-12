@@ -1,4 +1,10 @@
-import type { MessageRef } from "@ai-werewolf-arena/game-text";
+/**
+ * Responsibility: construct turn-constraint request data from explicit engine requirements.
+ * Input: valid action counts, required tools and neutral retry message references;
+ * output: the existing constraint context, preserving optional fields and defaults.
+ * This data builder owns no player state, deadline, authorization or text rendering.
+ */
+import type { MessageRef } from "@ai-werewolf-arena/game-contract";
 import { ToolName, TurnConstraints } from "../../core/domain/model";
 
 /**

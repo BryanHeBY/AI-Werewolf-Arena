@@ -1,9 +1,16 @@
+/**
+ * Responsibility: assemble engine action requests from the original World and explicit stage.
+ * Input: actor/window, projected visible facts, allowed tools and neutral summaries;
+ * output: native requests with existing role-owned scope and delivery bindings.
+ * Domain mechanisms own authorization and resource commit. This factory neither
+ * renders localized text nor serializes runtime scopes; copied DTOs are not leases.
+ */
 import { bindGhostBrideRequest } from "../mechanisms/roles/ghost_bride/authority";
 import { bindLonelyGirlRequest } from "../mechanisms/roles/lonely_girl/lifecycle";
 import { bindWildChildRequest } from "../mechanisms/roles/wild_child/lifecycle";
 import { bindInitialIdentityRequest } from "../mechanisms/roles/initial_identity/setup";
 import { bindWallRequest } from "../mechanisms/events/wall_notes/authority";
-import type { MessageRef } from "@ai-werewolf-arena/game-text";
+import type { MessageRef } from "@ai-werewolf-arena/game-contract";
 import {
   ActionRequest,
   ActionRequestExtras,

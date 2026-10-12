@@ -1,4 +1,12 @@
-import type { MessageKey } from "./zh-CN";
+/**
+ * Owns the English built-in dictionary consumed by shared text formatting.
+ * Input is the contract-owned closed MessageKey set; output is its complete,
+ * frozen translation map. User names, personas, speech and model text stay raw;
+ * this dictionary supplies translations rather than declaring machine IDs.
+ * This dictionary never parses facts or executes rules; text formatting owns
+ * interpolation and parameter validation without rewriting user content.
+ */
+import type { MessageKey } from "@ai-werewolf-arena/game-contract";
 
 export const en = Object.freeze({
   "replay.stage.animal_night_opened": "Actual night opening",

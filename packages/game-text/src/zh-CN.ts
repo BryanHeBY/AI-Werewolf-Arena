@@ -1,4 +1,12 @@
-/** Built-in text only. Player names, personas, speech and model output are never translated here. */
+/**
+ * Owns the Chinese built-in dictionary consumed by shared text formatting.
+ * Input is the contract-owned closed MessageKey set; output is its complete,
+ * frozen translation map with literal value types preserved. Player names,
+ * personas, speech and model output are raw inputs outside this dictionary.
+ * This dictionary never parses facts or executes rules; text formatting owns
+ * interpolation and parameter validation without rewriting user content.
+ */
+import type { MessageKey } from "@ai-werewolf-arena/game-contract";
 export const zhCN = Object.freeze({
   "replay.stage.animal_night_opened": "实际开夜",
   "replay.stage.animal_fox_chosen": "子狐选择",
@@ -1852,6 +1860,6 @@ export const zhCN = Object.freeze({
   "prompt.config.badge_next":
     "警徽：出局后按存活座位顺序自动移交；白痴翻牌直接撕毁。不提供原警长自行选择移交目标的行动。",
   "prompt.config.badge_choice": "警徽：死亡持有者选择合格活人继任或撕毁；白痴翻牌直接撕毁。",
-} as const);
+} as const satisfies Record<MessageKey, string>);
 
-export type MessageKey = keyof typeof zhCN;
+export type { MessageKey } from "@ai-werewolf-arena/game-contract";
