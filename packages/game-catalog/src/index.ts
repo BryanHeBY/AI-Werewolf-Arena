@@ -1,16 +1,23 @@
-export const EVENT_PACK_IDS = ["awa_wall_notes_once_v1"] as const;
-/** Stable catalog shared by configuration, engine metadata and presentation.
- * Catalog inclusion is not execution permission: the engine requires a registered profile.
+/**
+ * Owns role metadata consumed by configuration, engine assembly and presentation.
+ * Inputs are game-contract IDs; outputs are bilingual names, delivery status and
+ * rule references in the existing catalog order. Metadata describes a role and
+ * never grants execution permission. Stable IDs/enums/locales remain contract
+ * owned; named compatibility exports preserve existing public consumers.
  */
-export const EVENT_IDS = ["awa_wall_notes_v1"] as const;
-export const ITEM_IDS = ["anonymous_note"] as const;
-export const LOCALES = ["zh-CN", "en"] as const;
+import { Role, PLANNED_ROLE_IDS, type Locale } from "@ai-werewolf-arena/game-contract";
+export {
+  EVENT_PACK_IDS,
+  EVENT_IDS,
+  ITEM_IDS,
+  LOCALES,
+  isLocale,
+  ROLE_IDS,
+  isRoleId,
+} from "@ai-werewolf-arena/game-contract";
+export type { Locale, RoleId } from "@ai-werewolf-arena/game-contract";
 export * from "./outcomes";
 export type { InspectionCamp, InspectionResult, InspectionKind } from "./inspection";
-export type Locale = (typeof LOCALES)[number];
-export function isLocale(value: unknown): value is Locale {
-  return typeof value === "string" && (LOCALES as readonly string[]).includes(value);
-}
 export type RoleStatus = "planned" | "rules_frozen" | "implemented" | "verified";
 export interface RoleDefinition {
   readonly id: string;
@@ -23,7 +30,7 @@ export interface RoleDefinition {
 
 export const ROLE_DEFINITIONS = [
   {
-    id: "wolf",
+    id: `${Role.Wolf}`,
     names: { "zh-CN": "狼人", en: "Werewolf" },
     status: "verified",
     targetPhase: "P1",
@@ -31,7 +38,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "夜聊、狼刀、自爆",
   },
   {
-    id: "villager",
+    id: `${Role.Villager}`,
     names: { "zh-CN": "平民", en: "Villager" },
     status: "verified",
     targetPhase: "P1",
@@ -39,7 +46,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "发言、投票",
   },
   {
-    id: "seer",
+    id: `${Role.Seer}`,
     names: { "zh-CN": "预言家", en: "Seer" },
     status: "verified",
     targetPhase: "P1",
@@ -47,7 +54,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "阵营查验",
   },
   {
-    id: "witch",
+    id: `${Role.Witch}`,
     names: { "zh-CN": "女巫", en: "Witch" },
     status: "verified",
     targetPhase: "P1",
@@ -55,7 +62,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "解药、毒药",
   },
   {
-    id: "hunter",
+    id: `${Role.Hunter}`,
     names: { "zh-CN": "猎人", en: "Hunter" },
     status: "verified",
     targetPhase: "P1",
@@ -63,7 +70,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "死亡开枪",
   },
   {
-    id: "guard",
+    id: `${Role.Guard}`,
     names: { "zh-CN": "守卫", en: "Guard" },
     status: "verified",
     targetPhase: "P1",
@@ -71,7 +78,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "狼刀保护",
   },
   {
-    id: "idiot",
+    id: `${Role.Idiot}`,
     names: { "zh-CN": "白痴", en: "Village Idiot" },
     status: "verified",
     targetPhase: "P1",
@@ -79,7 +86,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "放逐豁免、投票权",
   },
   {
-    id: "wolf_king",
+    id: `${Role.WolfKing}`,
     names: { "zh-CN": "狼王", en: "Wolf King" },
     status: "verified",
     targetPhase: "P5",
@@ -87,7 +94,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "死亡带人、死因限制",
   },
   {
-    id: "white_wolf_king",
+    id: `${Role.WhiteWolfKing}`,
     names: { "zh-CN": "白狼王", en: "White Wolf King" },
     status: "verified",
     targetPhase: "P5",
@@ -95,7 +102,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "自爆带人、流程中断",
   },
   {
-    id: "knight",
+    id: `${Role.Knight}`,
     names: { "zh-CN": "骑士", en: "Knight" },
     status: "verified",
     targetPhase: "P5",
@@ -103,7 +110,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "白天决斗",
   },
   {
-    id: "gravekeeper",
+    id: `${Role.Gravekeeper}`,
     names: { "zh-CN": "守墓人", en: "Gravekeeper" },
     status: "verified",
     targetPhase: "P5",
@@ -111,7 +118,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "放逐后的信息反馈",
   },
   {
-    id: "dreamer",
+    id: `${Role.Dreamer}`,
     names: { "zh-CN": "摄梦人", en: "Dreamer" },
     status: "verified",
     targetPhase: "P6",
@@ -119,7 +126,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "持续关系、保护/伤害",
   },
   {
-    id: "wolf_beauty",
+    id: `${Role.WolfBeauty}`,
     names: { "zh-CN": "狼美人", en: "Wolf Beauty" },
     status: "verified",
     targetPhase: "P6",
@@ -127,7 +134,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "魅惑、死亡牵连",
   },
   {
-    id: "bear",
+    id: `${Role.Bear}`,
     names: { "zh-CN": "熊", en: "Bear" },
     status: "verified",
     targetPhase: "P6",
@@ -135,7 +142,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "邻接的公开反馈",
   },
   {
-    id: "hidden_wolf",
+    id: `${Role.HiddenWolf}`,
     names: { "zh-CN": "隐狼", en: "Hidden Wolf" },
     status: "verified",
     targetPhase: "P6",
@@ -143,7 +150,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "特殊互认、查验和接刀",
   },
   {
-    id: "gargoyle",
+    id: `${Role.Gargoyle}`,
     names: { "zh-CN": "石像鬼", en: "Gargoyle" },
     status: "verified",
     targetPhase: "P6",
@@ -151,7 +158,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "独立狼、身份查验",
   },
   {
-    id: "psychic",
+    id: `${Role.Psychic}`,
     names: { "zh-CN": "通灵师", en: "Spirit Seer" },
     status: "verified",
     targetPhase: "P7",
@@ -159,7 +166,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "具体身份查验",
   },
   {
-    id: "mirror_girl",
+    id: `${Role.MirrorGirl}`,
     names: { "zh-CN": "魔镜少女", en: "Mirror Girl" },
     status: "verified",
     targetPhase: "P7",
@@ -167,7 +174,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "具体身份、查验限制",
   },
   {
-    id: "mechanical_wolf",
+    id: `${Role.MechanicalWolf}`,
     names: { "zh-CN": "机械狼", en: "Mechanical Wolf" },
     status: "verified",
     targetPhase: "P7",
@@ -175,7 +182,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "复制技能、资源和接刀",
   },
   {
-    id: "miracle_merchant",
+    id: `${Role.MiracleMerchant}`,
     names: { "zh-CN": "奇迹商人", en: "Miracle Merchant" },
     status: "verified",
     targetPhase: "P7",
@@ -183,7 +190,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "授予限次能力",
   },
   {
-    id: "black_market_merchant",
+    id: `${Role.BlackMarketMerchant}`,
     names: { "zh-CN": "黑市商人", en: "Black Market Merchant" },
     status: "verified",
     targetPhase: "P7",
@@ -191,7 +198,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "技能交易、反噬",
   },
   {
-    id: "hybrid",
+    id: `${Role.Hybrid}`,
     names: { "zh-CN": "混血儿", en: "Hybrid" },
     status: "verified",
     targetPhase: "P7",
@@ -199,7 +206,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "榜样、独立胜利归属",
   },
   {
-    id: "thief",
+    id: `${Role.Thief}`,
     names: { "zh-CN": "盗贼", en: "Thief" },
     status: "implemented",
     targetPhase: "P9",
@@ -207,7 +214,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "额外底牌、初始身份选择",
   },
   {
-    id: "shapeshifter",
+    id: `${Role.Shapeshifter}`,
     names: { "zh-CN": "千面人", en: "Many-Faced One" },
     status: "implemented",
     targetPhase: "P9",
@@ -215,7 +222,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "首夜必选身份、有狼强制狼槽",
   },
   {
-    id: "lonely_girl",
+    id: `${Role.LonelyGirl}`,
     names: { "zh-CN": "孤独少女", en: "Lonely Girl" },
     status: "implemented",
     targetPhase: "P9",
@@ -223,7 +230,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "崇拜对象、胜利归属",
   },
   {
-    id: "wild_child",
+    id: `${Role.WildChild}`,
     names: { "zh-CN": "野孩子", en: "Wild Child" },
     status: "implemented",
     targetPhase: "P9",
@@ -231,7 +238,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "榜样死亡、阵营变化",
   },
   {
-    id: "ghost_bride",
+    id: `${Role.GhostBride}`,
     names: { "zh-CN": "鬼魂新娘", en: "Ghost Bride" },
     status: "implemented",
     targetPhase: "P9",
@@ -239,7 +246,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "伴侣、第三方目标",
   },
   {
-    id: "cupid",
+    id: `${Role.Cupid}`,
     names: { "zh-CN": "丘比特", en: "Cupid" },
     status: "implemented",
     targetPhase: "P8",
@@ -247,7 +254,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "情侣、殉情和目标变化",
   },
   {
-    id: "cursed_fox",
+    id: `${Role.CursedFox}`,
     names: { "zh-CN": "咒狐", en: "Cursed Fox" },
     status: "implemented",
     targetPhase: "P8",
@@ -255,7 +262,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "特殊生存、查验和胜利",
   },
   {
-    id: "demon_hunter",
+    id: `${Role.DemonHunter}`,
     names: { "zh-CN": "猎魔人", en: "Demon Hunter" },
     status: "implemented",
     targetPhase: "P9",
@@ -263,7 +270,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "夜间对决、伤害资格",
   },
   {
-    id: "pure_white_girl",
+    id: `${Role.PureWhiteGirl}`,
     names: { "zh-CN": "纯白之女", en: "Pure White Girl" },
     status: "implemented",
     targetPhase: "P9",
@@ -271,7 +278,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "查验与伤害",
   },
   {
-    id: "wolf_witch",
+    id: `${Role.WolfWitch}`,
     names: { "zh-CN": "狼巫", en: "Wolf Witch" },
     status: "implemented",
     targetPhase: "P9",
@@ -279,7 +286,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "狼队身份查验",
   },
   {
-    id: "evil_knight",
+    id: `${Role.EvilKnight}`,
     names: { "zh-CN": "恶夜骑士", en: "Dark Knight" },
     status: "implemented",
     targetPhase: "P9",
@@ -287,7 +294,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "夜间免疫、反伤",
   },
   {
-    id: "red_moon_apostle",
+    id: `${Role.RedMoonApostle}`,
     names: { "zh-CN": "赤月使徒", en: "Red Moon Apostle" },
     status: "implemented",
     targetPhase: "P9",
@@ -295,7 +302,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "自爆、封夜、特殊死亡",
   },
   {
-    id: "alchemist",
+    id: `${Role.Alchemist}`,
     names: { "zh-CN": "炼金魔女", en: "Alchemist" },
     status: "implemented",
     targetPhase: "P9",
@@ -303,7 +310,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "刀口约束、特殊救人流程",
   },
   {
-    id: "raven_claw_wolf",
+    id: `${Role.RavenClawWolf}`,
     names: { "zh-CN": "狼鸦之爪", en: "Raven-Claw Wolf" },
     status: "implemented",
     targetPhase: "P9",
@@ -311,7 +318,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "解封、特殊攻击",
   },
   {
-    id: "radiant_count",
+    id: `${Role.RadiantCount}`,
     names: { "zh-CN": "流光伯爵", en: "Radiant Count" },
     status: "implemented",
     targetPhase: "P9",
@@ -319,7 +326,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "保护范围和限制",
   },
   {
-    id: "eclipse_maid",
+    id: `${Role.EclipseMaid}`,
     names: { "zh-CN": "蚀日侍女", en: "Eclipse Maid" },
     status: "implemented",
     targetPhase: "P9",
@@ -327,7 +334,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "技能吞噬与临时失效",
   },
   {
-    id: "night_noble",
+    id: `${Role.NightNoble}`,
     names: { "zh-CN": "夜之贵族", en: "Night Noble" },
     status: "implemented",
     targetPhase: "P9",
@@ -335,7 +342,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "持续夜间状态",
   },
   {
-    id: "fragrant_phantom",
+    id: `${Role.FragrantPhantom}`,
     names: { "zh-CN": "寻香魅影", en: "Fragrant Phantom" },
     status: "implemented",
     targetPhase: "P9",
@@ -343,7 +350,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "绑定、牵连、接刀",
   },
   {
-    id: "nightmare",
+    id: `${Role.NightmareShadow}`,
     names: { "zh-CN": "噩梦之影", en: "Nightmare" },
     status: "implemented",
     targetPhase: "P9",
@@ -351,7 +358,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "恐惧、行动封锁",
   },
   {
-    id: "magician",
+    id: `${Role.Magician}`,
     names: { "zh-CN": "魔术师", en: "Magician" },
     status: "implemented",
     targetPhase: "P9",
@@ -359,7 +366,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "夜间技能目标映射",
   },
   {
-    id: "trickster",
+    id: `${Role.Trickster}`,
     names: { "zh-CN": "诡术师", en: "Trickster" },
     status: "implemented",
     targetPhase: "P9",
@@ -367,7 +374,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "号码映射及公开结果",
   },
   {
-    id: "wolf_sorcerer",
+    id: `${Role.WolfSorcerer}`,
     names: { "zh-CN": "狼术师", en: "Wolf Sorcerer" },
     status: "implemented",
     targetPhase: "P9",
@@ -375,7 +382,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "狼队目标/座位映射",
   },
   {
-    id: "order_prince",
+    id: `${Role.OrderPrince}`,
     names: { "zh-CN": "定序王子", en: "Order Prince" },
     status: "implemented",
     targetPhase: "P9",
@@ -383,7 +390,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "限次重投与发言",
   },
   {
-    id: "time_wolf_consort",
+    id: `${Role.TimeWolfConsort}`,
     names: { "zh-CN": "蚀时狼妃", en: "Time-Wolf Consort" },
     status: "implemented",
     targetPhase: "P9",
@@ -391,7 +398,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "反弹与封锁",
   },
   {
-    id: "day_scholar",
+    id: `${Role.DayScholar}`,
     names: { "zh-CN": "白昼学者", en: "Day Scholar" },
     status: "implemented",
     targetPhase: "P9",
@@ -399,7 +406,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "技能增幅/削弱",
   },
   {
-    id: "night_mentor",
+    id: `${Role.NightMentor}`,
     names: { "zh-CN": "寂夜导师", en: "Night Mentor" },
     status: "implemented",
     targetPhase: "P9",
@@ -407,7 +414,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "技能增幅/削弱",
   },
   {
-    id: "debater",
+    id: `${Role.Debater}`,
     names: { "zh-CN": "杠精", en: "Debater" },
     status: "implemented",
     targetPhase: "P8",
@@ -415,7 +422,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "挑战、辩论、投票资格",
   },
   {
-    id: "silence_elder",
+    id: PLANNED_ROLE_IDS.SilenceElder,
     names: { "zh-CN": "禁言长老", en: "Silencing Elder" },
     status: "planned",
     targetPhase: "P9",
@@ -423,7 +430,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "表达权限与翻译",
   },
   {
-    id: "crow",
+    id: PLANNED_ROLE_IDS.Crow,
     names: { "zh-CN": "乌鸦", en: "Crow" },
     status: "planned",
     targetPhase: "P9",
@@ -431,7 +438,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "额外放逐票",
   },
   {
-    id: "white_cat",
+    id: `${Role.WhiteCat}`,
     names: { "zh-CN": "白猫", en: "White Cat" },
     status: "implemented",
     targetPhase: "P9",
@@ -439,7 +446,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "延迟死亡",
   },
   {
-    id: "fox_cub",
+    id: `${Role.FoxCub}`,
     names: { "zh-CN": "子狐", en: "Fox Cub" },
     status: "implemented",
     targetPhase: "P9",
@@ -447,7 +454,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "迷惑及目标交互",
   },
   {
-    id: "pufferfish",
+    id: `${Role.Pufferfish}`,
     names: { "zh-CN": "河豚", en: "Pufferfish" },
     status: "implemented",
     targetPhase: "P9",
@@ -455,7 +462,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "投票反击、特殊死亡",
   },
   {
-    id: "warden",
+    id: PLANNED_ROLE_IDS.Warden,
     names: { "zh-CN": "典狱长", en: "Warden" },
     status: "planned",
     targetPhase: "P9",
@@ -463,7 +470,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "秘密交易/背叛决策",
   },
   {
-    id: "awakened_idiot",
+    id: `${Role.AwakenedIdiot}`,
     names: { "zh-CN": "觉醒愚者", en: "Awakened Village Idiot" },
     status: "implemented",
     targetPhase: "P9",
@@ -471,7 +478,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "秘密之身/伤害替代",
   },
   {
-    id: "awakened_seer",
+    id: `${Role.AwakenedSeer}`,
     names: { "zh-CN": "觉醒预言家", en: "Awakened Seer" },
     status: "implemented",
     targetPhase: "P9",
@@ -479,7 +486,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "双目标信息",
   },
   {
-    id: "awakened_wolf_king",
+    id: PLANNED_ROLE_IDS.AwakenedWolfKing,
     names: { "zh-CN": "觉醒狼王", en: "Awakened Wolf King" },
     status: "planned",
     targetPhase: "P9",
@@ -487,7 +494,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "多次死亡技能、能力转移",
   },
   {
-    id: "awakened_hidden_wolf",
+    id: `${Role.AwakenedHiddenWolf}`,
     names: { "zh-CN": "觉醒隐狼", en: "Awakened Hidden Wolf" },
     status: "verified",
     targetPhase: "P7",
@@ -495,7 +502,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "复制、生效时机、独立狼",
   },
   {
-    id: "awakened_wolf_beauty",
+    id: PLANNED_ROLE_IDS.AwakenedWolfBeauty,
     names: { "zh-CN": "觉醒狼美人", en: "Awakened Wolf Beauty" },
     status: "planned",
     targetPhase: "P9",
@@ -503,7 +510,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "替死/关系结算",
   },
   {
-    id: "awakened_witch",
+    id: PLANNED_ROLE_IDS.AwakenedWitch,
     names: { "zh-CN": "觉醒女巫", en: "Awakened Witch" },
     status: "planned",
     targetPhase: "P9",
@@ -511,7 +518,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "多次调配、协助者秘密决策",
   },
   {
-    id: "awakened_hunter",
+    id: PLANNED_ROLE_IDS.AwakenedHunter,
     names: { "zh-CN": "觉醒猎人", en: "Awakened Hunter" },
     status: "planned",
     targetPhase: "P9",
@@ -519,7 +526,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "巡猎及死亡动作",
   },
   {
-    id: "awakened_guard",
+    id: PLANNED_ROLE_IDS.AwakenedGuard,
     names: { "zh-CN": "觉醒守卫", en: "Awakened Guard" },
     status: "planned",
     targetPhase: "P9",
@@ -527,7 +534,7 @@ export const ROLE_DEFINITIONS = [
     mechanismSummary: "特殊保护",
   },
   {
-    id: "awakened_knight",
+    id: PLANNED_ROLE_IDS.AwakenedKnight,
     names: { "zh-CN": "觉醒骑士", en: "Awakened Knight" },
     status: "planned",
     targetPhase: "P9",
@@ -536,11 +543,6 @@ export const ROLE_DEFINITIONS = [
   },
 ] as const satisfies readonly RoleDefinition[];
 
-export type RoleId = (typeof ROLE_DEFINITIONS)[number]["id"];
-export const ROLE_IDS = ROLE_DEFINITIONS.map((item) => item.id);
-export function isRoleId(value: unknown): value is RoleId {
-  return typeof value === "string" && ROLE_DEFINITIONS.some((item) => item.id === value);
-}
 export function roleDefinition(id: string): RoleDefinition | undefined {
   return ROLE_DEFINITIONS.find((item) => item.id === id);
 }

@@ -1,3 +1,13 @@
+/**
+ * Responsibility: assemble privileged native reproduction metadata and checkpoints.
+ * Input: original World, engine phase snapshot, exact board/RNG and recorder;
+ * output: archival God-state snapshots and a decision trace, never player knowledge.
+ * The recorder owns persistence; domain authorities retain original-state write
+ * ownership. Snapshotting neither authorizes actions nor reruns settlement rules.
+ * Exact source/lock fingerprinting delegates to recording/engine-fingerprint;
+ * failure checkpoints preserve committed prefixes and causal cursor boundaries.
+ */
+import { fingerprintEngine } from "../../recording/engine-fingerprint";
 import { animalCheckpointSchema } from "../../recording/animal_dream_checkpoint";
 import {
   animalAuthoritySnapshot,
@@ -55,8 +65,6 @@ import { projectThiefSetup } from "../../game/mechanisms/roles/thief/deal";
 import { projectShapeshifterSetup } from "../../game/mechanisms/roles/shapeshifter/deal";
 import { projectWallNote } from "../../game/mechanisms/events/wall_notes/authority";
 import path from "node:path";
-import { readdir, readFile } from "node:fs/promises";
-import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import {
   COMPONENT,
@@ -83,33 +91,7 @@ export async function currentEngineVersion(
   sourceRoot: string = path.resolve(__dirname, "../../../.."),
 ): Promise<EngineVersion> {
   const root = path.resolve(sourceRoot);
-  const hash = createHash("sha256");
-  const walk = async (directory: string) => {
-    for (const entry of (await readdir(directory, { withFileTypes: true })).sort((a, b) =>
-      a.name < b.name ? -1 : a.name > b.name ? 1 : 0,
-    )) {
-      const file = path.join(directory, entry.name);
-      if (entry.isDirectory()) await walk(file);
-      else if (entry.name.endsWith(".ts")) {
-        hash.update(path.relative(root, file).replaceAll(path.sep, "/"));
-        hash.update("\0");
-        hash.update(await readFile(file));
-        hash.update("\0");
-      }
-    }
-  };
-  for (const directory of [
-    "backend/src/core",
-    "backend/src/game",
-    "backend/src/app",
-    "packages/game-catalog/src",
-    "packages/game-text/src",
-    "packages/replay-contract/src",
-  ])
-    await walk(path.join(root, directory));
-  const lockHash = createHash("sha256")
-    .update(await readFile(path.join(root, "bun.lock")))
-    .digest("hex");
+  const { sourceHash, lockHash } = await fingerprintEngine(root);
   let commit: string | undefined;
   try {
     const value = execFileSync("git", ["rev-parse", "HEAD"], {
@@ -124,7 +106,7 @@ export async function currentEngineVersion(
   }
   return {
     id: "awa-engine",
-    sourceHash: hash.digest("hex"),
+    sourceHash,
     lockHash,
     ...(commit ? { commit } : {}),
   };

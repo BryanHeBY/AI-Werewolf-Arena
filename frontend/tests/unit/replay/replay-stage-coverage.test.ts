@@ -1,3 +1,11 @@
+/**
+ * Responsibility: verify replay integration coverage of public stage identifiers
+ * and the current producer event contract across Chinese and English fixtures.
+ * Input: public identity enums, existing source contributions and fixture bytes;
+ * output: coverage assertions. Literal expected stages and complete set equality
+ * are the oracle; no backend game or rule settlement is executed by this test.
+ */
+import { Phase, ActionWindow, KnightDuelWindow } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
 import { readFileSync, readdirSync } from "node:fs";
 import ts from "typescript";
@@ -41,16 +49,8 @@ function variable(path: string, name: string) {
       ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === name,
   );
 }
-function enumValues(name: string): string[] {
-  const declaration = find(
-    source("backend/src/core/domain/identity.ts"),
-    (node): node is ts.EnumDeclaration => ts.isEnumDeclaration(node) && node.name.text === name,
-  );
-  return declaration.members.map((member) => {
-    if (!member.initializer || !ts.isStringLiteral(member.initializer))
-      throw new Error("stage_enum_not_literal");
-    return member.initializer.text;
-  });
+function enumValues(name: "Phase" | "ActionWindow" | "KnightDuelWindow"): string[] {
+  return Object.values({ Phase, ActionWindow, KnightDuelWindow }[name]);
 }
 function eventTypes() {
   const parentContracts: Readonly<Record<string, string>> = {

@@ -14,5 +14,8 @@
   "devDependencies": {
     "bun-types": "^1.4.2",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@ai-werewolf-arena/game-contract": "workspace:*"
   }
 }

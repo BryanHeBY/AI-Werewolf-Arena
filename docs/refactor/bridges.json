@@ -1,0 +1,46 @@
+{
+  "schema": "awa-refactor-bridges-v1",
+  "entries": [
+    {
+      "id": "core-identity",
+      "path": "backend/src/core/domain/identity.ts",
+      "owner": "game-contract",
+      "exports": [
+        "Role",
+        "Camp",
+        "Phase",
+        "ActionWindow",
+        "KnightDuelWindow",
+        "StatusMark",
+        "WinCondition",
+        "PotionType",
+        "WitchSelfHealRule",
+        "EntityId",
+        "TieBreakerStrategy"
+      ],
+      "consumerEvidence": "generated/identity-baseline-consumers.json",
+      "currentConsumers": "core/model and core index, engine, features, agents and existing test imports",
+      "exit": "C44 after each consumer targets contract public exports; C36 moves PromptRenderable presentation type",
+      "runtime": "same enum object, no duplicate definition"
+    },
+    {
+      "id": "catalog-machine-identifiers",
+      "path": "packages/game-catalog/src/index.ts",
+      "owner": "game-contract",
+      "exports": [
+        "ROLE_IDS",
+        "RoleId",
+        "isRoleId",
+        "LOCALES",
+        "Locale",
+        "isLocale",
+        "EVENT_IDS",
+        "EVENT_PACK_IDS",
+        "ITEM_IDS"
+      ],
+      "currentConsumers": "game-text and replay-contract; backend and frontend identity types/metadata tests",
+      "exit": "C44 after direct machine-contract imports replace catalog identity imports",
+      "runtime": "metadata names/status remain catalog; IDs and guards are re-exports"
+    }
+  ]
+}

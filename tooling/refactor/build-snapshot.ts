@@ -31,12 +31,65 @@ export interface BuildSnapshot {
   dependencies: { root: string; digest: string };
 }
 const hash = (data: string | Uint8Array) => createHash("sha256").update(data).digest("hex");
+const buildMetadata = [
+  "package.json",
+  "bun.lock",
+  "bunfig.toml",
+  "tsconfig.json",
+  "backend/package.json",
+  "frontend/package.json",
+  "backend/tsconfig.json",
+  "frontend/tsconfig.json",
+];
+
+async function rejectSourceSymlinkAncestors(root: string, relative: string): Promise<void> {
+  let current = root;
+  for (const segment of relative.split("/")) {
+    current = path.join(current, segment);
+    if ((await lstat(current)).isSymbolicLink()) throw Error("snapshot_source_ancestor_symlink");
+  }
+}
+
+async function existingBuildMetadata(root: string): Promise<string[]> {
+  const result: string[] = [];
+  for (const name of buildMetadata) {
+    try {
+      await rejectSourceSymlinkAncestors(root, name);
+      if (!(await lstat(path.join(root, name))).isFile())
+        throw Error(`snapshot_source_not_file: ${name}`);
+      result.push(name);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+    }
+  }
+  for (const owner of ["", "backend", "frontend"]) {
+    let entries: import("node:fs").Dirent[];
+    try {
+      if (owner) await rejectSourceSymlinkAncestors(root, owner);
+      entries = await readdir(path.join(root, owner), { withFileTypes: true });
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") continue;
+      throw error;
+    }
+    for (const entry of entries) {
+      if (!/^tsconfig(?:\.[^.]+)*\.json$/.test(entry.name)) continue;
+      if (!entry.isFile()) throw Error("snapshot_compiler_metadata_not_file");
+      result.push(path.posix.join(owner, entry.name));
+    }
+  }
+  return [...new Set(result)];
+}
+
 const sourcePath = (name: string) =>
   isPublicInventoryPath(name) &&
-  (/^(backend\/src\/|packages\/[^/]+\/(?:src\/|package\.json$))/.test(name) ||
-    ["backend/package.json", "frontend/package.json", "package.json", "bun.lock"].includes(name));
+  (/^(backend\/src\/|packages\/[^/]+\/(?:src\/|package\.json$|tsconfig(?:\.[^.]+)*\.json$))/.test(
+    name,
+  ) ||
+    buildMetadata.includes(name) ||
+    /^(?:backend\/|frontend\/)?tsconfig(?:\.[^.]+)*\.json$/.test(name));
 
 async function listFiles(root: string, directory: string): Promise<string[]> {
+  await rejectSourceSymlinkAncestors(root, directory);
   const result: string[] = [];
   for (const entry of (await readdir(path.join(root, directory), { withFileTypes: true })).sort(
     (a, b) => a.name.localeCompare(b.name),
@@ -101,7 +154,12 @@ async function installDependencies(repository: string, root: string): Promise<vo
     };
     return JSON.stringify(
       Object.entries(parsed.packages)
-        .filter(([, value]) => typeof value[0] === "string" && !value[0].startsWith("workspace:"))
+        .filter(
+          ([, value]) =>
+            typeof value[0] === "string" &&
+            !value[0].startsWith("workspace:") &&
+            !value[0].includes("@workspace:"),
+        )
         .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)),
     );
   };
@@ -217,10 +275,7 @@ export async function freezeBuild(
     execFileSync("tar", ["-xf", "-", "-C", root], { input: archive });
   } else {
     files = [
-      "package.json",
-      "bun.lock",
-      "backend/package.json",
-      "frontend/package.json",
+      ...(await existingBuildMetadata(repository)),
       ...(await listFiles(repository, "backend/src")),
       ...(await listFiles(repository, "packages")),
     ].sort();
@@ -251,12 +306,12 @@ export async function freezeBuild(
   return snapshot;
 }
 
-export async function assertSnapshotUnchanged(snapshot: BuildSnapshot): Promise<void> {
+export async function assertSnapshotUnchanged(
+  snapshot: BuildSnapshot,
+  options: { dependencies?: boolean } = {},
+): Promise<void> {
   const currentFiles = [
-    "package.json",
-    "bun.lock",
-    "backend/package.json",
-    "frontend/package.json",
+    ...(await existingBuildMetadata(snapshot.root)),
     ...(await listFiles(snapshot.root, "backend/src")),
     ...(await listFiles(snapshot.root, "packages")),
   ].sort();
@@ -270,6 +325,7 @@ export async function assertSnapshotUnchanged(snapshot: BuildSnapshot): Promise<
       throw Error(`snapshot_input_changed: ${file.path}`);
   }
   if (
+    options.dependencies !== false &&
     (await installedDependencyDigest(snapshot.dependencies.root)) !== snapshot.dependencies.digest
   )
     throw Error("snapshot_dependencies_changed");

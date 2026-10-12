@@ -46,7 +46,7 @@ export function firstDifference(a: unknown, b: unknown, prefix = "$ "): string |
 }
 
 async function trace(build: BuildSnapshot, scenario: string, scratch: string, layout?: string) {
-  await assertSnapshotUnchanged(build);
+  await assertSnapshotUnchanged(build, { dependencies: false });
   const args = [
     process.execPath,
     "--no-env-file",
@@ -67,7 +67,7 @@ async function trace(build: BuildSnapshot, scenario: string, scratch: string, la
     new Response(child.stdout).text(),
     new Response(child.stderr).text(),
   ]);
-  await assertSnapshotUnchanged(build);
+  await assertSnapshotUnchanged(build, { dependencies: false });
   if (code !== 0) throw Error(`differential_child_failed: ${code}\n${stdout}\n${stderr}`);
   return JSON.parse(await readFile(path.join(scratch, "trace.json"), "utf8"));
 }
@@ -117,35 +117,52 @@ export async function compareBuilds(options: {
   };
   const driverHash = await driverDigest();
   const report = [];
-  for (const [index, scenario] of options.scenarios.entries()) {
-    const input = path.resolve(scenario),
-      bytes = await readFile(input);
-    const previous = await trace(baseline, input, path.join(scratch, `case-${index}/baseline`));
-    if ((await driverDigest()) !== driverHash) throw Error("differential_driver_changed");
-    const current = await trace(
-      candidate,
-      input,
-      path.join(scratch, `case-${index}/candidate`),
-      options.candidateLayout,
-    );
-    if (!bytes.equals(await readFile(input))) throw Error("differential_scenario_changed");
-    if ((await driverDigest()) !== driverHash) throw Error("differential_driver_changed");
-    const difference = firstDifference(comparableTrace(previous), comparableTrace(current));
-    report.push({
-      scenario: path.basename(input),
-      inputHash: createHash("sha256").update(bytes).digest("hex"),
-      difference,
-    });
-    await writeFile(
-      path.join(scratch, "report.json"),
-      JSON.stringify(
-        { baseline: baseline.digest, candidate: candidate.digest, driverHash, cases: report },
-        null,
-        2,
-      ) + "\n",
-    );
-    if (difference) throw Error(`differential_mismatch: ${scenario} at ${difference}`);
+  let failure: unknown;
+  try {
+    for (const [index, scenario] of options.scenarios.entries()) {
+      const input = path.resolve(scenario),
+        bytes = await readFile(input);
+      const previous = await trace(baseline, input, path.join(scratch, `case-${index}/baseline`));
+      if ((await driverDigest()) !== driverHash) throw Error("differential_driver_changed");
+      const current = await trace(
+        candidate,
+        input,
+        path.join(scratch, `case-${index}/candidate`),
+        options.candidateLayout,
+      );
+      if (!bytes.equals(await readFile(input))) throw Error("differential_scenario_changed");
+      if ((await driverDigest()) !== driverHash) throw Error("differential_driver_changed");
+      const difference = firstDifference(comparableTrace(previous), comparableTrace(current));
+      report.push({
+        scenario: path.basename(input),
+        inputHash: createHash("sha256").update(bytes).digest("hex"),
+        difference,
+      });
+      await writeFile(
+        path.join(scratch, "report.json"),
+        JSON.stringify(
+          { baseline: baseline.digest, candidate: candidate.digest, driverHash, cases: report },
+          null,
+          2,
+        ) + "\n",
+      );
+      if (difference) throw Error(`differential_mismatch: ${scenario} at ${difference}`);
+    }
+  } catch (error) {
+    failure = error;
   }
+  // Verify large dependency inventories around the complete batch. Per-child
+  // source/metadata byte and membership verification remains immediate.
+  const verified = await Promise.allSettled([
+    assertSnapshotUnchanged(baseline),
+    assertSnapshotUnchanged(candidate),
+  ]);
+  const errors = [
+    ...(failure ? [failure] : []),
+    ...verified.flatMap((result) => (result.status === "rejected" ? [result.reason] : [])),
+  ];
+  if (errors.length === 1) throw errors[0];
+  if (errors.length) throw new AggregateError(errors, "differential_batch_failed");
 }
 
 if (import.meta.main) {
