@@ -1,36 +1,19 @@
+/**
+ * Unit tests verify Hybrid count and unsupported-role composition fail consistently at direct and normalized board entrances.
+ * Input: The original ten unsupported-role values, duplicate count and literal board configuration.
+ * Output and oracle: Explicit diagnostic codes/paths and direct rejection retain finite scope; no filesystem config tree or played game is needed.
+ */
 import { expect, test } from "bun:test";
 import path from "node:path";
-import { readFile } from "node:fs/promises";
-import { Role, type BoardConfig } from "../../src/core";
-import { bootstrapGame } from "../../src/app/bootstrap";
-import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
+import { Role, type BoardConfig } from "../../../src/core";
+import { bootstrapGame } from "../../../src/app/bootstrap";
+import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   parseBoardDefinition,
   boardDefinitionFromConfig,
-} from "../../src/runtime/config/board_definition";
-import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
-import { configDiagnostic } from "../../src/runtime/config/error_codes";
-for (const id of ["six_player_hybrid", "twelve_player_hybrid"])
-  test(`${id}: finite examples load without arbitrary policies and direct bootstrap applies the same count/combination rules`, async () => {
-    const root = path.resolve(import.meta.dir, "../../../configs.example"),
-      board = await loadBoardDefinition(root, id);
-    expect(board.config.boardSize).toBe(id.startsWith("six") ? 6 : 12);
-    expect(board.definition.roles.hybrid).toEqual({});
-    expect(JSON.parse(await readFile(path.join(root, "games", `${id}.json`), "utf8")).board).toBe(
-      id,
-    );
-    expect(() => bootstrapGame(board.config)).not.toThrow();
-    for (const params of [
-      { remaining: 2 },
-      { reselect: true },
-      { recognition: true },
-      { followCurrentCamp: true },
-    ]) {
-      const invalid = structuredClone(board.definition);
-      invalid.roles.hybrid = params;
-      expect(() => parseBoardDefinition(invalid)).toThrow("board_config_invalid_field");
-    }
-  });
+} from "../../../src/runtime/config/board_definition";
+import { configDiagnostic } from "../../../src/runtime/config/error_codes";
+
 for (const unsupported of [
   Role.MiracleMerchant,
   Role.MechanicalWolf,
@@ -64,6 +47,7 @@ for (const unsupported of [
       });
     }
   });
+
 test("native hybrid count is one in both entrypoints", () => {
   const config: BoardConfig = {
     ...sixPlayerMvpConfig,

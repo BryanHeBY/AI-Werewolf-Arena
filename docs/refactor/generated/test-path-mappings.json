@@ -65969,13 +65969,296 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 426 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/hybrid_configuration.test.ts",
+      "to": "backend/tests/unit/configuration/hybrid-composition.test.ts",
+      "sourceCommit": "588e755418b124b5e415c98d9cd78a6afb3b7e63",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "b64c779ea5b9e5f62f7ecc08bf049edf696a1bb6e1829e8b7f8a454d3225e630",
+      "candidateSha256": "4a4b5421b303a63c267c9f7287fb949fde090ca31b5a5970739474c8228b8b1a",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 414,
+          "end": 450,
+          "original": "../../src/runtime/config/error_codes",
+          "value": "../../../src/runtime/config/error_codes",
+          "originalResolved": "backend/src/runtime/config/error_codes.ts",
+          "expectedResolved": "backend/src/runtime/config/error_codes.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 336,
+          "end": 377,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 221,
+          "end": 263,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 159,
+          "end": 182,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 111,
+          "end": 125,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "07a2c4a1e91ec219648d973310c1e0c7f2e4103f69642b85198fea05a0ff2995",
+          "title": "miracle_merchant: Hybrid board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "432cf95e939a26455b447678740075e9b59b9e9e871e4d18a335dcc3d1d33677",
+          "title": "mechanical_wolf: Hybrid board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "103464e0f8181303970d70567553484592fe707d97de4effd48a1aa10b2eb4fd",
+          "title": "psychic: Hybrid board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "8753a42cd0a2be4066db967727360d487ad1186105fda4e19d7a28e0aa85f2be",
+          "title": "gargoyle: Hybrid board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "d3f0ba4f70f763333ff2d0805ea4bbfe8c25bbbf2db756ca86f62264f3deeae0",
+          "title": "bear: Hybrid board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "8c250b4d8624cc565e4fd00519852e0480db559f85abd0177998e41b1e619b9f",
+          "title": "wolf_beauty: Hybrid board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "9eb3d0606c23fc8b1760a4be77e472923615586ef558de3f23b5de79c58ce91b",
+          "title": "white_wolf_king: Hybrid board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "978d0d42fbe746afd1d64336afe3c431b5bc0dfa31c2b81a7b51b7b8b6fb0154",
+          "title": "knight: Hybrid board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "5af25cc6df5e53cd952adebd9402eb8e35a218663b81881f0ff2f792d073f2eb",
+          "title": "dreamer: Hybrid board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "17b2ddf4021e736921b6423b4a206e289d3c856283ea7ebf3a88f3fc2b71f452",
+          "title": "gravekeeper: Hybrid board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "fb32d7460f3a77aa19be1cbcfe4c303a5d759a6a9d8b16b617275381fec242f3",
+          "title": "native hybrid count is one in both entrypoints",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readFile } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readFile",
+              "imported": "readFile",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/load_board_definition",
+          "originalImport": "import { loadBoardDefinition } from \"../../src/runtime/config/load_board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "loadBoardDefinition",
+              "imported": "loadBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 426 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/hybrid_configuration.test.ts",
+      "to": "backend/tests/integration/filesystem/configuration/hybrid-examples.test.ts",
+      "sourceCommit": "588e755418b124b5e415c98d9cd78a6afb3b7e63",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "b64c779ea5b9e5f62f7ecc08bf049edf696a1bb6e1829e8b7f8a454d3225e630",
+      "candidateSha256": "447605b3029b2e36053e291fe304d371b4e4ebf4212098525d65c65a62cce3cf",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "public-directory-anchor",
+          "start": 595,
+          "end": 619,
+          "original": "../../../configs.example",
+          "value": "../../../../../configs.example",
+          "originalResolved": "configs.example"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 292,
+          "end": 338,
+          "original": "../../src/runtime/config/load_board_definition",
+          "value": "../../../../src/runtime/config/load_board_definition",
+          "originalResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/load_board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 211,
+          "end": 252,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 147,
+          "end": 170,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "configs.example",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../../configs.example\")",
+          "currentExpression": "path.resolve(import.meta.dir, \"../../../../../configs.example\")",
+          "currentHead": "../../../../../configs.example",
+          "kind": "public-directory-anchor"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "a81ebcbabb2238d0f8cd44393b8cd0c8d53b764ecab2aba1614c9471ebb7f232",
+          "title": "six_player_hybrid: finite examples load without arbitrary policies and direct bootstrap applies the same count/combination rules",
+          "occurrence": 1
+        },
+        {
+          "id": "f60a3586b7cee4ea1cf4455a4653270091c7d82b4eaf9fb431befb7ce5a6a478",
+          "title": "twelve_player_hybrid: finite examples load without arbitrary policies and direct bootstrap applies the same count/combination rules",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import { Role, type BoardConfig } from \"../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "BoardConfig",
+              "imported": "BoardConfig",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig } from \"../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "sixPlayerMvpConfig",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/board_definition",
+          "originalImport": "import {\n  parseBoardDefinition,\n  boardDefinitionFromConfig,\n} from \"../../src/runtime/config/board_definition\";",
+          "currentImportBeforeRebase": "import { parseBoardDefinition } from \"../../src/runtime/config/board_definition\";",
+          "droppedBindings": [
+            {
+              "name": "boardDefinitionFromConfig",
+              "imported": "boardDefinitionFromConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/error_codes",
+          "originalImport": "import { configDiagnostic } from \"../../src/runtime/config/error_codes\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "configDiagnostic",
+              "imported": "configDiagnostic",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 426 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 512,
-    "targetFiles": 526,
-    "mappingEntries": 526,
-    "baselineCases": 6409,
+    "sourceFiles": 513,
+    "targetFiles": 528,
+    "mappingEntries": 528,
+    "baselineCases": 6422,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
