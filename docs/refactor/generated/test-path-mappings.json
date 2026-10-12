@@ -54479,13 +54479,726 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/knight_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/knight/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify enum-derived legal window matrix with literal hit/miss, last words/death chains and checkpoint/winners.",
+      "originalSha256": "b715db24f44113bb936060efd6b4549205f6322ffd77d06e6c39c267f0c290f5",
+      "candidateSha256": "59bacb88df03ee463f846561569471e0f51e0b99d057b3c772b849d1b32260ff",
+      "moduleAndLocationEdits": [
+        {
+          "start": 349,
+          "end": 378,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 285,
+          "end": 312,
+          "value": "../../../support/knight_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/knight_scenarios",
+          "originalResolved": "backend/tests/support/knight_scenarios.ts",
+          "expectedResolved": "backend/tests/support/knight_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 128,
+          "end": 142,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "f66950d621566e441b3079489d38fcf0b3de08131a0f14e8f1630397b09c199c",
+          "title": "hit/before_speeches/llm: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "ed9fb23a5f7d37cf03cccc201a736dcd2fb869c40cce0ff75190f3f9d79422bc",
+          "title": "hit/before_speeches/acp: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "906db64ee72a101a95e4bc404b66b46f62bd194f855bc51774ff755008871741",
+          "title": "hit/before_speeches/mixed: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "c9d34953bc564abfc829943ccf10684701d5e41f796b61cdcad1ef003f7811eb",
+          "title": "hit/between_speeches/llm: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "521c5c9743b536f1cc355a09fd7dfb77de358cfb8e7703d2cbcb003b2018a5d9",
+          "title": "hit/between_speeches/acp: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "64ed4d47ef7bad3ee839f63fa7cf8fc286b9d9d2ed18c006958a27d99adead97",
+          "title": "hit/between_speeches/mixed: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "61bfd97f1298dead1ce3eb157a0c8584b381a79e5402d490475f45e39aee37d9",
+          "title": "hit/after_speeches/llm: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "0ebd13f9032422dfea830fbe40f3730d240d137cbbbe3f7c1ddc2bc836bdb507",
+          "title": "hit/after_speeches/acp: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "f919f189e6b0fc5596a04184ec4f985c246e4a0a545cbd54ee96f2db2fd7b06e",
+          "title": "hit/after_speeches/mixed: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "870f98dad9cbfadf327405e5b645649dbc9d112e31e613752c8b688d6bbd1365",
+          "title": "miss/after_speeches/llm: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "43527638a5a8eb77fe09fb182a5f139645b16472ba916872a004c58a437cd197",
+          "title": "miss/after_speeches/acp: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "9ea982d67e3c2401ccb69d3758999fed3785c6428fac74b227c892e1751fd0dd",
+          "title": "miss/after_speeches/mixed: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "2239615e5d89794c9298eeaae3d87aed37928b6b098921ec01760bdc50148d46",
+          "title": "last_god_miss/before_speeches/llm: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "2839239d5ec14210a22765727c8ab758c5cae6c17c08dcc761bc4479bd167715",
+          "title": "last_god_miss/before_speeches/acp: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "504fc16d41b1181dc0f3be78ddc9ae3121b46f434af8f431e139c44bab045dd0",
+          "title": "last_god_miss/before_speeches/mixed: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "5b9a881734f6bb9d8097e4daf0a05415af7f0b87a2a7425fa254e1e854720271",
+          "title": "king_hit/after_speeches/llm: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "b47a2a2268a2c0be809f76e4f05f81be37c77a3145a225e41b1d2102e1cb6215",
+          "title": "king_hit/after_speeches/acp: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "efd9ff3ecfb33f26181eaff35e4217fb5b71b93a03fb6b9f101680280105f77f",
+          "title": "king_hit/after_speeches/mixed: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "e3b475e89c9714f21183f1b52e036cf7789788a705ae03f5ea017edef44a3d9a",
+          "title": "white_hit/after_speeches/llm: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "d1067251fe327abf6b51f5244bca8964e6f1d37cb032162ff7575dfadd1efac7",
+          "title": "white_hit/after_speeches/acp: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "b5df3fd9e0593f6307dbe5613b677e55d59406f9cbf1e2290ac81e76277b8b1a",
+          "title": "white_hit/after_speeches/mixed: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "8e679fadd1df3082beb2d349447b5ffc82647eb9a48db6af1ed3f289d492463d",
+          "title": "twelve/after_speeches/llm: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "b1d10b74f82a88c8f7ed08764add56992ef36a87e0539e884a8b7f5fe718d4cb",
+          "title": "twelve/after_speeches/acp: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        },
+        {
+          "id": "8fce1b071d7afc7ef09e2d9c32278c4132d9fbd002533059e7483d00646e234d",
+          "title": "twelve/after_speeches/mixed: actual bilingual Knight complete games preserve literal results, words and strict replay",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/debater_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/debater/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Actual complete transport games verify literal challenge/ballot/blocking counts, strict decisions, privacy and terminal day.",
+      "originalSha256": "98cd5238ebd27acbf4cdbd144f4bdc0083a35b71330845ccd13f9dcd9d38a905",
+      "candidateSha256": "e93b8df08b99162809071c5c72e55b937bb231424ed2eb9f9320adccc24c496a",
+      "moduleAndLocationEdits": [
+        {
+          "start": 233,
+          "end": 262,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 168,
+          "end": 196,
+          "value": "../../../support/debater_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/debater_scenarios",
+          "originalResolved": "backend/tests/support/debater_scenarios.ts",
+          "expectedResolved": "backend/tests/support/debater_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 118,
+          "end": 132,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "51d0f4bbc26796ca92937f2b0e0b7c567a4440ba4236a8394eb9bfc2766cc76c",
+          "title": "6/success/llm: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ac465d703dc99e26357d8baaba6337420a80dcf854dc76bd23f10fe27c8238d9",
+          "title": "6/success/acp: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "13280dbb86eaf24eda488e41cf78246880213af794338ca31d4e5f9ca97b1502",
+          "title": "6/success/mixed: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "47568769e94422454a1a362b4b6e4d18a82871c7a2b1d5b4ebd2ca8bc393e6c4",
+          "title": "6/tie/llm: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "237010273d40926f8d5ae4cccd0a20eed03b8721eb18a3e9832a6a95b54522fb",
+          "title": "6/tie/acp: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ff1f82eab2fb2132c64c8ec02373435d84db51df8140f747aa48c7b25f60809c",
+          "title": "6/tie/mixed: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ad78c603afb51fda8256f39b6b756efad2eccd127e587724ba66b0d135d02886",
+          "title": "6/abstain/llm: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "ba5d3589d8d35dc5db0d5634af879b3190314d43a941cb7e3747cd2a69d937f1",
+          "title": "6/abstain/acp: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "323a3540fadb58d2502122571aaf1cdb1983a3c1b0e302ea6b1cfb385ccf618c",
+          "title": "6/abstain/mixed: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "81b33235e5d9ee9cd09b5c199b3502f066846fd2d29be3377440b65456205e51",
+          "title": "12/success/llm: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6bb236f6fa2c5fc557480e3aa975777a20fdc29ea09d38623f1e79059b5eaf64",
+          "title": "12/success/acp: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3882c12942c132fd89b7213e1289c191ce15ee08f901ec334779978e65a36392",
+          "title": "12/success/mixed: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "7947892735b1317db0ca6edfbbb99c79c1c60ea200737da5cf2672a018b34f50",
+          "title": "12/tie/llm: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "979a0c9fc4cc0370e28d336d7c7d28a23340cb2040fbad6c11d6ce54a0fe76f3",
+          "title": "12/tie/acp: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "24ef1a87e209b34a2a6504c79434ca6493c057c8ffba129f823e1f6e72f652d1",
+          "title": "12/tie/mixed: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "3143b7c615271d371df92f0f316e0c538a3d61f4e5fbbd1fa53c17159bcf5a6e",
+          "title": "12/abstain/llm: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "629da837f11942744974c4a38e865d42ae99e9fb01c3d1e1848f1b5754d9e073",
+          "title": "12/abstain/acp: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "9df335a249bc7213851ca427ee26d0bdbd33a561cf7cc30fd882b7c43df65b1e",
+          "title": "12/abstain/mixed: bilingual complete local transports and strict Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/demon_hunter_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/demon-hunter/recorded-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Whole role-specific recorded-game scenario contract: complete native toxin/hunt/gun games and required hunt-failure prefixes all use real runTransportGame; no isolated reader/unit cases.",
+      "originalSha256": "02044bf9c508bd9e3582b4e876c4328c2919c214f5369e559421648582c0a4c9",
+      "candidateSha256": "d65afac2933cc7f38c83b0cc4f54f20196231bdd05ccf8a1c47b28bc024933fa",
+      "moduleAndLocationEdits": [
+        {
+          "start": 289,
+          "end": 318,
+          "value": "../../../support/run_transport_game",
+          "kind": "module-specifier",
+          "original": "../support/run_transport_game",
+          "originalResolved": "backend/tests/support/run_transport_game.ts",
+          "expectedResolved": "backend/tests/support/run_transport_game.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 209,
+          "end": 252,
+          "value": "../../../support/demon_hunter_transport_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/demon_hunter_transport_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_transport_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 113,
+          "end": 127,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "efb6e47d19be7b91c28de10ad40c56a8b39838513e66fb655820714c3c987913",
+          "title": "6/slaughter_city/llm: actual bilingual native toxin immunity, hunt, gun and full strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d10c0c54ca013ad40c08a32d11b4fbbe979992f32705c6a6aa11ea3cae6295b4",
+          "title": "6/slaughter_city/acp: actual bilingual native toxin immunity, hunt, gun and full strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "87d33a00f7ca5fa98f56500ac9cb6d1663d152b88e92affe4cb523591ff37147",
+          "title": "6/slaughter_city/mixed: actual bilingual native toxin immunity, hunt, gun and full strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "c362733631063225e99d6e83e7101fb76229397f4a588509c6ef20bb955fb9bb",
+          "title": "6/slaughter_side/llm: actual bilingual native toxin immunity, hunt, gun and full strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "2e1b521da617df4633915f9071a6f0d63c139235c1106ee9d923ac8207b0e321",
+          "title": "6/slaughter_side/acp: actual bilingual native toxin immunity, hunt, gun and full strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6d139b3b767de108f49dd81c5c21e446bf586580bd374cca17b15d68fb908ec8",
+          "title": "6/slaughter_side/mixed: actual bilingual native toxin immunity, hunt, gun and full strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "03760ceb1c38b01599f547d83857fb560d2d6a003fe7a32e49db93e4524f9e17",
+          "title": "12/slaughter_city/llm: actual bilingual native toxin immunity, hunt, gun and full strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d11e91f06d14e3ca280a793a2d9864ce2335dfa3c46f62f1f2b7a1e17af037d9",
+          "title": "12/slaughter_city/acp: actual bilingual native toxin immunity, hunt, gun and full strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "b8c9681fbdbe23dfc96e97007435e6ca612cd2b5686b33a37f81a596752472b2",
+          "title": "12/slaughter_city/mixed: actual bilingual native toxin immunity, hunt, gun and full strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "19fe9fd49ed989d38716bb9c5a06282c09447dd0accead9e5b8eb34acc635a41",
+          "title": "12/slaughter_side/llm: actual bilingual native toxin immunity, hunt, gun and full strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e8c32761b7927b96de80bfd43f1a77a71d3c0262c218194fd482e3a3742d81f6",
+          "title": "12/slaughter_side/acp: actual bilingual native toxin immunity, hunt, gun and full strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "cc1bdad841edca526b0684c5a73144f933bdbed035e5b20484d4a35509ca5f76",
+          "title": "12/slaughter_side/mixed: actual bilingual native toxin immunity, hunt, gun and full strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "c873eba866f9ff6a4b523633405ac8b0ee5fa49c32bd34854ec4ec358e8152d3",
+          "title": "6/llm/missing: real bilingual transport failure keeps original CP and no hunt commit",
+          "occurrence": 1
+        },
+        {
+          "id": "f07a1fe8f2d7397d1099a308be13ad0be3e4f698d1a78d685b1a8fae79af4ac8",
+          "title": "6/llm/late: real bilingual transport failure keeps original CP and no hunt commit",
+          "occurrence": 1
+        },
+        {
+          "id": "c77467466fb7200707404a16c3ecaeb183f484c8be4c5ca24dbc1ae47cae485d",
+          "title": "6/acp/missing: real bilingual transport failure keeps original CP and no hunt commit",
+          "occurrence": 1
+        },
+        {
+          "id": "272c47bec5043f2afe56f2e7401e4654c30ba77d05bc93a8612088676447bc8a",
+          "title": "6/acp/late: real bilingual transport failure keeps original CP and no hunt commit",
+          "occurrence": 1
+        },
+        {
+          "id": "3a8018a70b830fae640961f83bb27d3e15915079d01b9c3284328e1bb9c643b6",
+          "title": "12/llm/missing: real bilingual transport failure keeps original CP and no hunt commit",
+          "occurrence": 1
+        },
+        {
+          "id": "9abb08fcbe90ea5b9f29a5920c34780101426b263a3904d9c2f53b8b19be1ba2",
+          "title": "12/llm/late: real bilingual transport failure keeps original CP and no hunt commit",
+          "occurrence": 1
+        },
+        {
+          "id": "6321922b0a3447124a071e38b2d26b25652eb7c22d70b3e3bd81393c694e722f",
+          "title": "12/acp/missing: real bilingual transport failure keeps original CP and no hunt commit",
+          "occurrence": 1
+        },
+        {
+          "id": "4dec5ae50c94f0e3857b04a27cdcb89fa267c9d7bd1412d67cda6da3469f9de6",
+          "title": "12/acp/late: real bilingual transport failure keeps original CP and no hunt commit",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/bilingual_game_execution.test.ts",
+      "to": "backend/tests/scenarios/reproduction/runtime/bilingual-runner-games.test.ts",
+      "sourceCommit": "850e1b4c5041faa71a1914542f128d727c935fbf",
+      "reason": "Whole real runner/SDK/local ACP scenario contract: six/twelve seats, three transport routes, language equivalence, parallel scope isolation and self-destruct windows all execute runFixture and exact reproduction.",
+      "originalSha256": "e9bbfb6cc460fec3498d956d136b9635da3f36b3ef07fd47e160f6cb23a1582d",
+      "candidateSha256": "c687bd21224c163d75291a0ad1b062ce8ba565eafc1499ca87a26b7660154e6d",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1604,
+          "end": 1645,
+          "value": "../../../../src/runtime/config/board_definition",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1524,
+          "end": 1563,
+          "value": "../../../support/self_destruct_transport_plan",
+          "kind": "module-specifier",
+          "original": "../support/self_destruct_transport_plan",
+          "originalResolved": "backend/tests/support/self_destruct_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/self_destruct_transport_plan.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1463,
+          "end": 1477,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1363,
+          "end": 1397,
+          "value": "../../../support/transport_prompt_oracle",
+          "kind": "module-specifier",
+          "original": "../support/transport_prompt_oracle",
+          "originalResolved": "backend/tests/support/transport_prompt_oracle.ts",
+          "expectedResolved": "backend/tests/support/transport_prompt_oracle.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1262,
+          "end": 1298,
+          "value": "../../../support/foundation_transport_plan",
+          "kind": "module-specifier",
+          "original": "../support/foundation_transport_plan",
+          "originalResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "expectedResolved": "backend/tests/support/foundation_transport_plan.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1153,
+          "end": 1188,
+          "value": "../../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 1061,
+          "end": 1109,
+          "value": "../../../../src/runtime/simulation/replay_reproduction",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/simulation/replay_reproduction",
+          "originalResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "expectedResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 970,
+          "end": 999,
+          "value": "../../../../src/runtime/game_runner",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/game_runner",
+          "originalResolved": "backend/src/runtime/game_runner.ts",
+          "expectedResolved": "backend/src/runtime/game_runner.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 896,
+          "end": 942,
+          "value": "../../../../src/runtime/config/load_board_definition",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/load_board_definition",
+          "originalResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 813,
+          "end": 856,
+          "value": "../../../../src/runtime/config/resolve_game_setup",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/resolve_game_setup",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 739,
+          "end": 776,
+          "value": "../../../../src/runtime/config/parse_config",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/parse_config",
+          "originalResolved": "backend/src/runtime/config/parse_config.ts",
+          "expectedResolved": "backend/src/runtime/config/parse_config.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 460,
+          "end": 488,
+          "value": "../../../support/fixtures/manifest",
+          "kind": "module-specifier",
+          "original": "../support/fixtures/manifest",
+          "originalResolved": "backend/tests/support/fixtures/manifest.ts",
+          "expectedResolved": "backend/tests/support/fixtures/manifest.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "f26826134fbd16a7d249e241962dffec5a183a4c106acefeedb4c4dbaa96de35",
+          "title": "6/standard/llm: full bilingual runner games and action replay preserve manual outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "37cb9a5f4f96e5a9dcebd703d6a2938a2c8baeceef0f8fdd0099f90bb20cdd7a",
+          "title": "6/standard/acp: full bilingual runner games and action replay preserve manual outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "4d5b6b58de23f9f49b8e3a257b1d1a2845a915ad22c8bbad347a765c884f89fc",
+          "title": "6/alternate/llm: full bilingual runner games and action replay preserve manual outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "7609880f2ef10d2f144d5ecd1df991057aeb6ae2a8594e94459b75f62e676bbb",
+          "title": "6/alternate/acp: full bilingual runner games and action replay preserve manual outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "bada7b195652aab2cb6b42acea829442a9c35c2d0dbb0013e9d313749f895c66",
+          "title": "12/standard/llm: full bilingual runner games and action replay preserve manual outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "b148c8c6143543391734d84cf58ab04e2caa9b73295bee882a9a8d2f6376085c",
+          "title": "12/standard/acp: full bilingual runner games and action replay preserve manual outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "2a18e84795647a075c58b0b2874c9dcf08a2a5e1c7cd54ad59193e438563f659",
+          "title": "12/alternate/llm: full bilingual runner games and action replay preserve manual outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "e0118bdf369ba8e37df4eda1a5164c0f7e81ff381b3280d7aebb0fca32781ee7",
+          "title": "12/alternate/acp: full bilingual runner games and action replay preserve manual outcomes",
+          "occurrence": 1
+        },
+        {
+          "id": "15a32c7371ab95db2b793aaf173e5253fc264d33c5fa1e15ab82f38cec178f63",
+          "title": "simultaneous SDK games keep language, records, events and complete replay scoped to each game",
+          "occurrence": 1
+        },
+        {
+          "id": "4714dbcd2dcb2305f8a6925e40bcd4fb86641ba92045b92b984c2fa3ceff19da",
+          "title": "6/standard/mixed/odd-sdk: real shared-provider bilingual games preserve outcomes and exact replay",
+          "occurrence": 1
+        },
+        {
+          "id": "43063b3c8ff5baad80ad132a4bc34cd2157b9508db6a471b13aa2146ed58dc0c",
+          "title": "6/standard/mixed/even-sdk: real shared-provider bilingual games preserve outcomes and exact replay",
+          "occurrence": 1
+        },
+        {
+          "id": "8c4ad2edc0bf535a50d68c5b93b97e85c2ccc099758b10c16bc004bba5662f9f",
+          "title": "6/alternate/mixed/odd-sdk: real shared-provider bilingual games preserve outcomes and exact replay",
+          "occurrence": 1
+        },
+        {
+          "id": "38a7add10c9068bf0901536dda8a73bd783d9d55935e33958ededb8857fa0e83",
+          "title": "6/alternate/mixed/even-sdk: real shared-provider bilingual games preserve outcomes and exact replay",
+          "occurrence": 1
+        },
+        {
+          "id": "40f14d7722a0ad05c6bc1efdee5f26cc202fea7f504a9f1bfd64d6546fc1f81d",
+          "title": "12/standard/mixed/odd-sdk: real shared-provider bilingual games preserve outcomes and exact replay",
+          "occurrence": 1
+        },
+        {
+          "id": "defcc843d73d8909e5427a4122a94a3c373b484ecc80a8c8b81c8986b60c2102",
+          "title": "12/standard/mixed/even-sdk: real shared-provider bilingual games preserve outcomes and exact replay",
+          "occurrence": 1
+        },
+        {
+          "id": "7b1702e3db40715004fe0d294073ea7e42b3a0d243720ee8597a951025a69c71",
+          "title": "12/alternate/mixed/odd-sdk: real shared-provider bilingual games preserve outcomes and exact replay",
+          "occurrence": 1
+        },
+        {
+          "id": "1fd96e51070cf462975af4a4dcebdf14e1b939f6769c2a308ca3a0c982259542",
+          "title": "12/alternate/mixed/even-sdk: real shared-provider bilingual games preserve outcomes and exact replay",
+          "occurrence": 1
+        },
+        {
+          "id": "5b770ea36833f46c21de41518c70bc97d5a10dcb97557ea7900b1ea7df4886da",
+          "title": "on_daybreak/llm: real bilingual full games preserve window timing and replay",
+          "occurrence": 1
+        },
+        {
+          "id": "ab34340ac1cebcba06000b3821c710bd837dcb113529160e12e136e7592a4233",
+          "title": "on_daybreak/acp: real bilingual full games preserve window timing and replay",
+          "occurrence": 1
+        },
+        {
+          "id": "14b3da829de8d10b08454715a248e20a5d0156afd0b40e3996b01c594da47ba6",
+          "title": "on_pre_election/llm: real bilingual full games preserve window timing and replay",
+          "occurrence": 1
+        },
+        {
+          "id": "e28c874bc6a48802759a3a68364634f93a02b8b245e4ef578ccc6a0109dede3c",
+          "title": "on_pre_election/acp: real bilingual full games preserve window timing and replay",
+          "occurrence": 1
+        },
+        {
+          "id": "9e762ffab56e8d59038baa2d3e2e1ac228026fded297114455062f9f01c580fd",
+          "title": "on_pre_vote/llm: real bilingual full games preserve window timing and replay",
+          "occurrence": 1
+        },
+        {
+          "id": "8c20401100d8324019eb4ccfd7cc9435367ba14b6f885655029f85c7de860f49",
+          "title": "on_pre_vote/acp: real bilingual full games preserve window timing and replay",
+          "occurrence": 1
+        },
+        {
+          "id": "46ae863a59d18670871dec83af1f3bed720420cd278aa85930a8059950c5575c",
+          "title": "on_per_speech_gap/llm: real bilingual full games preserve window timing and replay",
+          "occurrence": 1
+        },
+        {
+          "id": "b2441c1366427492847a8e7a08ec4133a9522875792dcdd3ce57e4fe1282e7c6",
+          "title": "on_per_speech_gap/acp: real bilingual full games preserve window timing and replay",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 448,
-    "targetFiles": 454,
-    "mappingEntries": 454,
-    "baselineCases": 5329,
+    "sourceFiles": 452,
+    "targetFiles": 458,
+    "mappingEntries": 458,
+    "baselineCases": 5416,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

@@ -1,8 +1,13 @@
+/**
+ * Reproduction scenarios verify Debater complete recorded games preserve strict challenge ballots, blocked voters and terminal timing.
+ * Input: Original six/twelve-player success/tie/abstain plans across transport and locale matrices.
+ * Output and oracle: Literal ballot/support/abstention, privacy and declared terminal-day assertions retain the real recorded sequence; diagnostic temporary output stays unchanged.
+ */
 import { promises as fs } from "node:fs";
 import { expect, test } from "bun:test";
-import { Camp, Role, Phase } from "../../src/core";
-import { debaterScenario } from "../support/debater_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { Camp, Role, Phase } from "../../../../src/core";
+import { debaterScenario } from "../../../support/debater_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 for (const size of [6, 12] as const)
   for (const outcome of ["success", "tie", "abstain"] as const)
     for (const transport of ["llm", "acp", "mixed"] as const)

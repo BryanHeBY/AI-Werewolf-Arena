@@ -1,32 +1,31 @@
 /**
- * Full runner/transport scenarios verify bilingual six/twelve-player SDK/ACP/mixed game equivalence.
- * Input: Synthetic local model/child transports, explicit public configs and concurrent runner recordings.
- * Output and independent oracle: Handwritten terminal/skill outcomes, isolated locale/records and exact per-game action replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Reproduction scenarios verify complete bilingual runner games across local SDK, ACP and mixed routes preserve outcomes and recording isolation.
+ * Input: Original six/twelve-player role plans, transport routing, language, concurrent-game and self-destruct-window matrices.
+ * Output and oracle: Handwritten terminal/skill assertions, private prompt checks and exact per-game reproduction retain original process cleanup; source configs and archive fixtures are unchanged.
  */
-import { acpAdapterEntry } from "../support/fixtures/manifest";
+import { acpAdapterEntry } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { assertReplayDocument, assertReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
-import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
-import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
-import { runGame } from "../../src/runtime/game_runner";
+import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
+import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
+import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
+import { runGame } from "../../../../src/runtime/game_runner";
 import {
   readReproduction,
   replayReproduction,
-} from "../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+} from "../../../../src/runtime/simulation/replay_reproduction";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import {
   foundationTransportPlan,
   type ActorTransportPlan,
-} from "../support/foundation_transport_plan";
-import { assertTransportPrompt, assertTransportEvents } from "../support/transport_prompt_oracle";
-import { ActionWindow, Camp, Phase, Role, WinCondition } from "../../src/core";
+} from "../../../support/foundation_transport_plan";
+import { assertTransportPrompt, assertTransportEvents } from "../../../support/transport_prompt_oracle";
+import { ActionWindow, Camp, Phase, Role, WinCondition } from "../../../../src/core";
 
-import { selfDestructTransportPlan } from "../support/self_destruct_transport_plan";
-import { parseBoardDefinition } from "../../src/runtime/config/board_definition";
+import { selfDestructTransportPlan } from "../../../support/self_destruct_transport_plan";
+import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
 
 const roles6 = [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager] as const;
 const roles12 = [

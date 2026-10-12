@@ -1,9 +1,14 @@
+/**
+ * Reproduction scenarios verify Knight complete recorded games preserve legal duel windows, hit/miss outcomes and death-chain timing.
+ * Input: Original enum-derived window matrix, additional miss/king/white/twelve-player plans, transports and locales.
+ * Output and oracle: Literal duel payload, survivor, last-word, checkpoint and winner assertions retain the actual replay; case generation and declared expected values stay unchanged.
+ */
 import type { VictoryPoint } from "@ai-werewolf-arena/game-catalog";
-import { Camp, DeathCause, KnightDuelWindow, Phase } from "../../src/core";
+import { Camp, DeathCause, KnightDuelWindow, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { knightScenario, type KnightScenario } from "../support/knight_scenarios";
-import { runTransportGame } from "../support/run_transport_game";
+import { knightScenario, type KnightScenario } from "../../../support/knight_scenarios";
+import { runTransportGame } from "../../../support/run_transport_game";
 const cases: Array<[KnightScenario, KnightDuelWindow]> = Object.values(KnightDuelWindow).map(
   (window) => ["hit", window],
 );
