@@ -1,6 +1,13 @@
+/**
+ * Scenario simulation tests: Runs actual Red Moon Worlds for both last-wolf policies,
+ * locales and the original twenty seeds. Original role references, public death sets and
+ * an explicit remaining-faction formula check terminal life/winner consistency. The
+ * original seed/action matrices and literal assertions remain the oracle; these trials do
+ * not replace archived goldens or claim newly independent rule coverage.
+ */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { redMoonTwelveConfig } from "../../../src/runtime/scenarios/red_moon_twelve";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { redMoonTwelveConfig } from "../../../../src/runtime/scenarios/red_moon_twelve";
 import {
   COMPONENT,
   Camp,
@@ -8,9 +15,9 @@ import {
   createRandom,
   randomDraws,
   type RoleComponent,
-} from "../../../src/core";
-import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
+} from "../../../../src/core";
+import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
 for (const policy of ["ends_game", "forbidden"] as const)
   for (const locale of ["zh-CN", "en"] as const)
     test(

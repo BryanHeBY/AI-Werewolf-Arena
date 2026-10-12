@@ -1,6 +1,14 @@
+/**
+ * Scenario simulation tests: Runs actual six/twelve-player Demon Hunter Worlds for both
+ * win goals, locales and the original 125 seeds. Initial role/camp/state object identity,
+ * public terminal deaths and handwritten faction-result formulas check native choices,
+ * immunity and final victory. The original seed/action matrices and literal assertions
+ * remain the oracle; these trials do not replace archived goldens or claim newly
+ * independent rule coverage.
+ */
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { bootstrapGame } from "../../src/app/bootstrap";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   COMPONENT,
   Camp,
@@ -9,10 +17,10 @@ import {
   createRandom,
   randomDraws,
   type RoleComponent,
-} from "../../src/core";
-import { ObservedBot } from "../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../src/ai/agents/providers/observed_players";
-import { demonHunterBoard } from "../support/demon_hunter_scenarios";
+} from "../../../../src/core";
+import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { demonHunterBoard } from "../../../support/demon_hunter_scenarios";
 for (const size of [6, 12] as const)
   for (const goal of [WinCondition.SlaughterCity, WinCondition.SlaughterSide])
     for (const locale of ["zh-CN", "en"] as const)

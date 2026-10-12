@@ -1,18 +1,18 @@
 /**
- * Integration/scenario tests for scholar mentor initial world configuration and setup contracts.
- * Input: the existing literal boards, original scenario actions and malformed
- * candidates. Output: the unchanged acceptance, roundtrip and state assertions.
- * Fixed policies, recorded literal expectations and rejection cases are the
- * oracle; these tests never generate replacement goldens from migrated rules.
+ * Scenario simulation tests: Runs actual Scholar Mentor Worlds with the original forty
+ * seeds and locales. Explicit preset checks, expected two-holder stocks, once-only modes
+ * and day-two history bounds check natural completion and real modifier choices. The
+ * original seed/action matrices and literal assertions remain the oracle; these trials do
+ * not replace archived goldens or claim newly independent rule coverage.
  */
 import { expect, test } from "bun:test";
-import { COMPONENT, createRandom, randomDraws, type RoleComponent } from "../../../src/core";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { scholarMentorTwelveConfig } from "../../../src/runtime/scenarios/scholar_mentor_twelve";
-import { scholarMentorStateForRole } from "../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
-import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
-import { isScholarMentorPreset } from "../../../src/rulesets";
+import { COMPONENT, createRandom, randomDraws, type RoleComponent } from "../../../../src/core";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { scholarMentorTwelveConfig } from "../../../../src/runtime/scenarios/scholar_mentor_twelve";
+import { scholarMentorStateForRole } from "../../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
+import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { isScholarMentorPreset } from "../../../../src/rulesets";
 for (const locale of ["zh-CN", "en"] as const)
   test(
     "Scholar Mentor actual World initial/" + locale,

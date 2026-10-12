@@ -103,3 +103,5 @@
 - C17 Knight消费写权：公开readonly同ref、window真实publicport、唯一赋值移具体featurecommand；原preflight/clock/事实/死亡顺序不变。3sourceproof/5heads0，新3prefix/0/15、原Knight+projection/newtest有限types0；无runtimefreeze/refund/CP修改，独立actualGit审查后提交。
 
 - C22注册政策：same-handler sharing+Ghost4显式声明，distinct sameID与dynamic第二ID占用的两原输入保留并明确拒绝策略加强；其余compiler/getStages/C21opaque原样。15focused/0/87+原Ghost1/0/3、final有限types0、四heads/newdeps0，独立原Map/getter/spread/receiver probe0；完整tool/schema/actor与RulePlan仍未完成。
+
+- C12独立seed模拟8：46旧IDs、53relative bindings与原完整seed/policy/i18n矩阵保持；Scholar实际40seed头修准确，Demon125seed来源保留。8heads/0、一次finite types0、独立actualGit/目标/body审查0；不重跑20/40/125 World批次。统一mapping383files/4585IDs，剩余100mixed/1847与110其它/1680继续。

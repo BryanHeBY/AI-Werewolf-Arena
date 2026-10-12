@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v1",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "f4bbd7b43ef5d51f09985b1b7b7a9e55b897ac13",
+  "observedSourceCommit": "da0222d37aae0ac3c9585bf51ab508ef33df8cf1",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -44816,11 +44816,899 @@
       "targetRunner": "backend-integration",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/magician_seed_world.test.ts",
+      "to": "backend/tests/scenarios/simulation/magician/seeded-world.test.ts",
+      "sourceCommit": "da0222d37aae0ac3c9585bf51ab508ef33df8cf1",
+      "reason": "C12 actual seeded runUntilGameOver World simulations; original callbacks, seed/policy/i18n arrays and expectations remain exact after registered module edits and precise responsibility heads. Counts describe real original 20, 40 or 125 seed loops, not new independent oracle coverage.",
+      "originalSha256": "66f258a5971f56733e5536944a85ab905227cb1258ce38d56a30e457f64b45f1",
+      "candidateSha256": "b428425bbd121104ca16b907d3771c400e4a9b1ebeb5f474fbe53dcbd6024177",
+      "moduleAndLocationEdits": [
+        {
+          "start": 375,
+          "end": 424,
+          "value": "../../../../src/ai/agents/providers/observed_players",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_players",
+          "originalResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 280,
+          "end": 325,
+          "value": "../../../../src/ai/agents/providers/observed_bot",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_bot",
+          "originalResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 231,
+          "end": 248,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 139,
+          "end": 185,
+          "value": "../../../../src/runtime/scenarios/magician_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/magician_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/magician_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/magician_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 72,
+          "end": 98,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "dfdf7025f785317416adf23d35ad53c5c95c341446aaaeb4554ef4df3837eb4b",
+          "title": "Magician actual World 20 seeds/awa_qualified_sources_v1/1/original/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "db6bb0cbff56aaf5de040200537f62a825254319bac9fb5770d99d4eb8ede5b8",
+          "title": "Magician actual World 20 seeds/awa_qualified_sources_v1/1/original/en",
+          "occurrence": 1
+        },
+        {
+          "id": "6e9ab25f3e5a1be90880699efc1c228c992e77aa97ff52688b5abf577e4554b2",
+          "title": "Magician actual World 20 seeds/awa_qualified_sources_v1/1/exchanged/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "a4b297098f687a3ebd42fe038027cb3e4c7f2c4c0fd160575e47bd75dc1c949a",
+          "title": "Magician actual World 20 seeds/awa_qualified_sources_v1/1/exchanged/en",
+          "occurrence": 1
+        },
+        {
+          "id": "8c3cf593bf18d5a31ecad57b03159c2bf693e6f7439a2c4f0f8322f3f8fb169d",
+          "title": "Magician actual World 20 seeds/awa_qualified_sources_v1/2/original/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "afaefadd547eb98f4a17a17d77a7529d89ba7af8218ba323b4306f54869bf4d9",
+          "title": "Magician actual World 20 seeds/awa_qualified_sources_v1/2/original/en",
+          "occurrence": 1
+        },
+        {
+          "id": "b17982286a82b7204d1e65343732a7e7ce1c073b2079556864960e5a6d671196",
+          "title": "Magician actual World 20 seeds/awa_qualified_sources_v1/2/exchanged/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "7755a65957877c31599a9e6d4324625a2502cc4d2218c2471ea8bfb125183b48",
+          "title": "Magician actual World 20 seeds/awa_qualified_sources_v1/2/exchanged/en",
+          "occurrence": 1
+        },
+        {
+          "id": "046fc05c6d79cd401bf095788841aa32ead9dbfd872e9ce209cc8e2f52bc6e38",
+          "title": "Magician actual World 20 seeds/awa_day_deaths_v1/1/original/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "7769d7b769c831785ca9120225708d0c72a446ccfef4def2a6322e8e78123542",
+          "title": "Magician actual World 20 seeds/awa_day_deaths_v1/1/original/en",
+          "occurrence": 1
+        },
+        {
+          "id": "f058fb23dc268b63788fc4cbab4bcb3b381b91dfbb94af18dbbdd8403b873595",
+          "title": "Magician actual World 20 seeds/awa_day_deaths_v1/1/exchanged/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "411898356a78f8abe70b69b859ff3cee8158e84737cf705775accade019fbee1",
+          "title": "Magician actual World 20 seeds/awa_day_deaths_v1/1/exchanged/en",
+          "occurrence": 1
+        },
+        {
+          "id": "71a0aa53ab88a3c5eb3e8a19538d843399eb3a3ec6fa49eb83b3bac37f133e32",
+          "title": "Magician actual World 20 seeds/awa_day_deaths_v1/2/original/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "5cb4d7ac75e339141542852ed6daaa23868e95b9083d398027bdc436e5611eca",
+          "title": "Magician actual World 20 seeds/awa_day_deaths_v1/2/original/en",
+          "occurrence": 1
+        },
+        {
+          "id": "fe907c4dba170930513cc5731c46e521b87d863729ca03d301bffc0041ca02ab",
+          "title": "Magician actual World 20 seeds/awa_day_deaths_v1/2/exchanged/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "1c18b02af31abffa2a4ff3e609215731147622d11e1da03010c0fa376019e5f8",
+          "title": "Magician actual World 20 seeds/awa_day_deaths_v1/2/exchanged/en",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/order_prince_seed_world.test.ts",
+      "to": "backend/tests/scenarios/simulation/order-prince/seeded-world.test.ts",
+      "sourceCommit": "da0222d37aae0ac3c9585bf51ab508ef33df8cf1",
+      "reason": "C12 actual seeded runUntilGameOver World simulations; original callbacks, seed/policy/i18n arrays and expectations remain exact after registered module edits and precise responsibility heads. Counts describe real original 20, 40 or 125 seed loops, not new independent oracle coverage.",
+      "originalSha256": "1de587d7f5231c647d239b3e34e70534f83db5ac3e43219e3a01a6360f7b9093",
+      "candidateSha256": "eec49b450b35bc7d7bbb39de02c8f006a40171f1d384d54a0b6df2fb11132606",
+      "moduleAndLocationEdits": [
+        {
+          "start": 625,
+          "end": 674,
+          "value": "../../../../src/ai/agents/providers/observed_players",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_players",
+          "originalResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 530,
+          "end": 575,
+          "value": "../../../../src/ai/agents/providers/observed_bot",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_bot",
+          "originalResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 481,
+          "end": 498,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 385,
+          "end": 435,
+          "value": "../../../../src/runtime/scenarios/order_prince_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/order_prince_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/order_prince_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/order_prince_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 315,
+          "end": 341,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 240,
+          "end": 281,
+          "value": "../../../../src/core/domain/components/names",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 116,
+          "end": 169,
+          "value": "../../../../src/game/mechanisms/roles/order_prince/state",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/order_prince/state",
+          "originalResolved": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 36,
+          "end": 76,
+          "value": "../../../../src/core/domain/components/role",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "9561668968115404ce2b43901b7624394e0df0e8c7aa15eee9565442f24225f5",
+          "title": "Order Prince actual World 20 seeds/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "1666fa931250d79388a36dd9b5fda7c1e8f54b2bf58340780077dec5ececa061",
+          "title": "Order Prince actual World 20 seeds/en",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/red_moon_world.test.ts",
+      "to": "backend/tests/scenarios/simulation/red-moon/seeded-world.test.ts",
+      "sourceCommit": "da0222d37aae0ac3c9585bf51ab508ef33df8cf1",
+      "reason": "C12 actual seeded runUntilGameOver World simulations; original callbacks, seed/policy/i18n arrays and expectations remain exact after registered module edits and precise responsibility heads. Counts describe real original 20, 40 or 125 seed loops, not new independent oracle coverage.",
+      "originalSha256": "3a516bccef2e7261d7108a23b6325159a80c96c1e2e2fd1d38df902d85396a22",
+      "candidateSha256": "a260b5f4dce397b9f9103bdd8c45e40f0575a7ddd1d00dac0581cd5bddddd272",
+      "moduleAndLocationEdits": [
+        {
+          "start": 430,
+          "end": 479,
+          "value": "../../../../src/ai/agents/providers/observed_players",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_players",
+          "originalResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 335,
+          "end": 380,
+          "value": "../../../../src/ai/agents/providers/observed_bot",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_bot",
+          "originalResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 286,
+          "end": 303,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 138,
+          "end": 184,
+          "value": "../../../../src/runtime/scenarios/red_moon_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/red_moon_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/red_moon_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/red_moon_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 72,
+          "end": 98,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "29c09cb460050d7253e8fd94337068d5d92a68c27d951dd211977e4b01812db7",
+          "title": "ends_game/zh-CN: 20 full finite Red Moon games terminate with matching public deaths and side victory",
+          "occurrence": 1
+        },
+        {
+          "id": "47c5850f4052060ab82069b41d62c0c6e6734e33f61e2d5a71256fe8c7931de9",
+          "title": "ends_game/en: 20 full finite Red Moon games terminate with matching public deaths and side victory",
+          "occurrence": 1
+        },
+        {
+          "id": "aaff1caef5b789269787c9cb75045c1b669c8fcc10dd1a69200725ec0266b199",
+          "title": "forbidden/zh-CN: 20 full finite Red Moon games terminate with matching public deaths and side victory",
+          "occurrence": 1
+        },
+        {
+          "id": "3fbf9c6a8721ed3d08ee17463729a5ab4c789122b8db62e5e55ca2a1e3026399",
+          "title": "forbidden/en: 20 full finite Red Moon games terminate with matching public deaths and side victory",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/scholar_mentor_initial_world.test.ts",
+      "to": "backend/tests/scenarios/simulation/scholar-mentor/seeded-world.test.ts",
+      "sourceCommit": "da0222d37aae0ac3c9585bf51ab508ef33df8cf1",
+      "reason": "C12 actual seeded runUntilGameOver World simulations; original callbacks, seed/policy/i18n arrays and expectations remain exact after registered module edits and precise responsibility heads. Counts describe real original 20, 40 or 125 seed loops, not new independent oracle coverage.",
+      "originalSha256": "088a42723919a03968da58d3bd37d892f9e7e9d5759afcd2b56630e537111fe0",
+      "candidateSha256": "1b14c895fcc05018a335378bae2eb93e9df214bf5f495bdbdd37f0748207a70b",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1037,
+          "end": 1058,
+          "value": "../../../../src/rulesets",
+          "kind": "module-specifier",
+          "original": "../../../src/rulesets",
+          "originalResolved": "backend/src/rulesets/index.ts",
+          "expectedResolved": "backend/src/rulesets/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 946,
+          "end": 995,
+          "value": "../../../../src/ai/agents/providers/observed_players",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_players",
+          "originalResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 851,
+          "end": 896,
+          "value": "../../../../src/ai/agents/providers/observed_bot",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_bot",
+          "originalResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 758,
+          "end": 819,
+          "value": "../../../../src/game/mechanisms/roles/scholar_mentor/night_frame",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/scholar_mentor/night_frame",
+          "originalResolved": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 660,
+          "end": 712,
+          "value": "../../../../src/runtime/scenarios/scholar_mentor_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/scholar_mentor_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/scholar_mentor_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/scholar_mentor_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 588,
+          "end": 614,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 537,
+          "end": 554,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "fc64a4db2282f197c55ed9842d0013127cdd2f3d8990dfa9d9bdc9ad7c3da059",
+          "title": "Scholar Mentor actual World initial/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "12c2dd576806591ee312a8ac0aeb9b93eccab7c81399fbaf4c3fc0e96f95407c",
+          "title": "Scholar Mentor actual World initial/en",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/time_wolf_consort_initial_world.test.ts",
+      "to": "backend/tests/scenarios/simulation/time-wolf-consort/seeded-world.test.ts",
+      "sourceCommit": "da0222d37aae0ac3c9585bf51ab508ef33df8cf1",
+      "reason": "C12 actual seeded runUntilGameOver World simulations; original callbacks, seed/policy/i18n arrays and expectations remain exact after registered module edits and precise responsibility heads. Counts describe real original 20, 40 or 125 seed loops, not new independent oracle coverage.",
+      "originalSha256": "2343d4ed6fa6c61ea3df6fee00378ea1e65ef584b2e63ea6b1968a0a34ddddbf",
+      "candidateSha256": "83ea5a934c7e1f5007d4bed5c77f122c36ff1c754b7b1ece3cb0ce88c6b3e72a",
+      "moduleAndLocationEdits": [
+        {
+          "start": 1025,
+          "end": 1046,
+          "value": "../../../../src/rulesets",
+          "kind": "module-specifier",
+          "original": "../../../src/rulesets",
+          "originalResolved": "backend/src/rulesets/index.ts",
+          "expectedResolved": "backend/src/rulesets/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 936,
+          "end": 985,
+          "value": "../../../../src/ai/agents/providers/observed_players",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_players",
+          "originalResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 841,
+          "end": 886,
+          "value": "../../../../src/ai/agents/providers/observed_bot",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_bot",
+          "originalResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 751,
+          "end": 809,
+          "value": "../../../../src/game/mechanisms/roles/time_wolf_consort/state",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/time_wolf_consort/state",
+          "originalResolved": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 661,
+          "end": 711,
+          "value": "../../../../src/runtime/scenarios/time_consort_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/time_consort_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/time_consort_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/time_consort_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 591,
+          "end": 617,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 540,
+          "end": 557,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "8205f739f0b5aa13644a7e7cfa11f0a233cdd3a6ce3905b1c0fc61ee53eb8207",
+          "title": "Consort actual World initial/zh-CN/whole_night",
+          "occurrence": 1
+        },
+        {
+          "id": "d42a50815cb42b804115f4eba4d27699866e13c77ca1635f0d881866a3ffd91b",
+          "title": "Consort actual World initial/zh-CN/first_effect",
+          "occurrence": 1
+        },
+        {
+          "id": "78e0a3b43c311535a24ab8ad5a47644804dc2c33832bc14247440606b1c4fa93",
+          "title": "Consort actual World initial/en/whole_night",
+          "occurrence": 1
+        },
+        {
+          "id": "9a1c1d436d3be822f7487ca46580e926b10c72b1fd6d082b94575b0c4dc01252",
+          "title": "Consort actual World initial/en/first_effect",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/trickster_initial_world.test.ts",
+      "to": "backend/tests/scenarios/simulation/trickster/seeded-world.test.ts",
+      "sourceCommit": "da0222d37aae0ac3c9585bf51ab508ef33df8cf1",
+      "reason": "C12 actual seeded runUntilGameOver World simulations; original callbacks, seed/policy/i18n arrays and expectations remain exact after registered module edits and precise responsibility heads. Counts describe real original 20, 40 or 125 seed loops, not new independent oracle coverage.",
+      "originalSha256": "79aba0332191f3631d8312506528c3c0c2ce9089993d151dfc0d9c7cf5fc8352",
+      "candidateSha256": "ec4dba05c41015ce45b395d27a9b1a065a6f52a8dbff52ae6972a0c0d7b27050",
+      "moduleAndLocationEdits": [
+        {
+          "start": 615,
+          "end": 664,
+          "value": "../../../../src/ai/agents/providers/observed_players",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_players",
+          "originalResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 520,
+          "end": 565,
+          "value": "../../../../src/ai/agents/providers/observed_bot",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_bot",
+          "originalResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 471,
+          "end": 488,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 378,
+          "end": 425,
+          "value": "../../../../src/runtime/scenarios/trickster_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/trickster_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/trickster_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/trickster_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 310,
+          "end": 336,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 235,
+          "end": 276,
+          "value": "../../../../src/core/domain/components/names",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 114,
+          "end": 164,
+          "value": "../../../../src/game/mechanisms/roles/trickster/state",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/trickster/state",
+          "originalResolved": "backend/src/game/mechanisms/roles/trickster/state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/trickster/state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 36,
+          "end": 76,
+          "value": "../../../../src/core/domain/components/role",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "c0360e5cad846bcaa7fddaa76ffd772495d5249e66559a3a0dcbd033ea0dd6b9",
+          "title": "Trickster actual World 20 seeds/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "b1e54875af36f620a8a7f44de02ee5cb76c8e18fa73679b974e102773da834ea",
+          "title": "Trickster actual World 20 seeds/en",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/wolf_sorcerer_initial_world.test.ts",
+      "to": "backend/tests/scenarios/simulation/wolf-sorcerer/seeded-world.test.ts",
+      "sourceCommit": "da0222d37aae0ac3c9585bf51ab508ef33df8cf1",
+      "reason": "C12 actual seeded runUntilGameOver World simulations; original callbacks, seed/policy/i18n arrays and expectations remain exact after registered module edits and precise responsibility heads. Counts describe real original 20, 40 or 125 seed loops, not new independent oracle coverage.",
+      "originalSha256": "a7e50db07e877692ff09f7c4296511b543ccbe0671b9a5e568464a76457aa5ff",
+      "candidateSha256": "73e63f6a34fbd3bf818b17f0cb53a628ace73a954a16208ea3945a10211ca2c7",
+      "moduleAndLocationEdits": [
+        {
+          "start": 629,
+          "end": 678,
+          "value": "../../../../src/ai/agents/providers/observed_players",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_players",
+          "originalResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 534,
+          "end": 579,
+          "value": "../../../../src/ai/agents/providers/observed_bot",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_bot",
+          "originalResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 485,
+          "end": 502,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 388,
+          "end": 439,
+          "value": "../../../../src/runtime/scenarios/wolf_sorcerer_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/wolf_sorcerer_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/wolf_sorcerer_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/wolf_sorcerer_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 317,
+          "end": 343,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 242,
+          "end": 283,
+          "value": "../../../../src/core/domain/components/names",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 117,
+          "end": 171,
+          "value": "../../../../src/game/mechanisms/roles/wolf_sorcerer/state",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/wolf_sorcerer/state",
+          "originalResolved": "backend/src/game/mechanisms/roles/wolf_sorcerer/state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/wolf_sorcerer/state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 36,
+          "end": 76,
+          "value": "../../../../src/core/domain/components/role",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "9a4b251258f6183b221435c55cebb8d7ac97e3fdfcecb713eb32e4247a8edc1c",
+          "title": "Wolf Sorcerer actual World 20 seeds/1/original/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "b98243b4dea06f4f40a59cd8bbaa9cacc7df34877ba0e9c554afb7bdf854b978",
+          "title": "Wolf Sorcerer actual World 20 seeds/1/original/en",
+          "occurrence": 1
+        },
+        {
+          "id": "4c893b429495aa4abac13d18ceb3bce72e8fe9a91e3fafe2cdd295532c66a21d",
+          "title": "Wolf Sorcerer actual World 20 seeds/1/exchanged/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "4bef5a20c74bf2e7ed68fabddaf695fde6da62e69168f06051e2b9cd3a566602",
+          "title": "Wolf Sorcerer actual World 20 seeds/1/exchanged/en",
+          "occurrence": 1
+        },
+        {
+          "id": "e5c5638412005e43ce95c086fe805b75075d4fbe0258702d7cfbff3ba137e6e5",
+          "title": "Wolf Sorcerer actual World 20 seeds/2/original/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "b0a7977771c3f7184676da07e8efc9e9cd1cfb5f0a33403c356a00b35017ab80",
+          "title": "Wolf Sorcerer actual World 20 seeds/2/original/en",
+          "occurrence": 1
+        },
+        {
+          "id": "64f4d0f14947a3693499598b8af6d3a1a00b2f77519eb37382a66639fec7430f",
+          "title": "Wolf Sorcerer actual World 20 seeds/2/exchanged/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "a740287315194a34e81da2f86d3d02d23bcf152489652c6d08d4a374dbdff2db",
+          "title": "Wolf Sorcerer actual World 20 seeds/2/exchanged/en",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/demon_hunter_world.test.ts",
+      "to": "backend/tests/scenarios/simulation/demon-hunter/seeded-world.test.ts",
+      "sourceCommit": "da0222d37aae0ac3c9585bf51ab508ef33df8cf1",
+      "reason": "C12 actual seeded runUntilGameOver World simulations; original callbacks, seed/policy/i18n arrays and expectations remain exact after registered module edits and precise responsibility heads. Counts describe real original 20, 40 or 125 seed loops, not new independent oracle coverage.",
+      "originalSha256": "dcce1c0a1f571427d0f7179b15151d8badea7d58bc320ccadb6c17daf54f2a10",
+      "candidateSha256": "7adbf01b195e505807d4c523e2b17b4dfa353d8a6fe85e6daf45086b865c50c6",
+      "moduleAndLocationEdits": [
+        {
+          "start": 480,
+          "end": 513,
+          "value": "../../../support/demon_hunter_scenarios",
+          "kind": "module-specifier",
+          "original": "../support/demon_hunter_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 397,
+          "end": 443,
+          "value": "../../../../src/ai/agents/providers/observed_players",
+          "kind": "module-specifier",
+          "original": "../../src/ai/agents/providers/observed_players",
+          "originalResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 305,
+          "end": 347,
+          "value": "../../../../src/ai/agents/providers/observed_bot",
+          "kind": "module-specifier",
+          "original": "../../src/ai/agents/providers/observed_bot",
+          "originalResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 259,
+          "end": 273,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 118,
+          "end": 141,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "733722627f28e1aa4ef92b440ceb2468785d450ab303c82a966867226c20bb16",
+          "title": "6/slaughter_city/zh-CN: 125 independent unrecorded Worlds, original identity, public terminal deaths and victory",
+          "occurrence": 1
+        },
+        {
+          "id": "aa44ac9ef1cd8fc7c8ab19e0172115d70ac2f58186424a89030799e327ef9b25",
+          "title": "6/slaughter_city/en: 125 independent unrecorded Worlds, original identity, public terminal deaths and victory",
+          "occurrence": 1
+        },
+        {
+          "id": "24db30155e28530ca8a55d64406d9ace8ed581a93db55c4b48e2ce7bba3ce4ff",
+          "title": "6/slaughter_side/zh-CN: 125 independent unrecorded Worlds, original identity, public terminal deaths and victory",
+          "occurrence": 1
+        },
+        {
+          "id": "0745bc6ce97ad6cf44a800b252da606984c68d401666c29814c88908a3323443",
+          "title": "6/slaughter_side/en: 125 independent unrecorded Worlds, original identity, public terminal deaths and victory",
+          "occurrence": 1
+        },
+        {
+          "id": "f081e475973baa2b08c87c8da7fc938e6e6fa3c954d0fd20d64a2b7a415d2775",
+          "title": "12/slaughter_city/zh-CN: 125 independent unrecorded Worlds, original identity, public terminal deaths and victory",
+          "occurrence": 1
+        },
+        {
+          "id": "8959f43f0ebab59eac3b54ddf5796657b3cb9afba11fa960a839f8d6eaafdb73",
+          "title": "12/slaughter_city/en: 125 independent unrecorded Worlds, original identity, public terminal deaths and victory",
+          "occurrence": 1
+        },
+        {
+          "id": "2a7f3d91c6d8704c720863d90b7e9c7aff00ea1abded222950f6aba0620e511b",
+          "title": "12/slaughter_side/zh-CN: 125 independent unrecorded Worlds, original identity, public terminal deaths and victory",
+          "occurrence": 1
+        },
+        {
+          "id": "87c785c783840d79cef4f13d6d4e99660267405f7d88efe75d343d7ecd121a21",
+          "title": "12/slaughter_side/en: 125 independent unrecorded Worlds, original identity, public terminal deaths and victory",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "files": 375,
-    "baselineCases": 4539,
+    "files": 383,
+    "baselineCases": 4585,
     "fixtureByteChanges": 0
   }
 }

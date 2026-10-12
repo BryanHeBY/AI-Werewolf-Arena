@@ -1,9 +1,17 @@
+/**
+ * Scenario simulation tests: Runs actual Magician Worlds to termination for the original
+ * twenty seeds across gun, first-night, shot-target and locale policies. Fixed seeded
+ * observed-player strategies supply actions; literal game-over and non-timeout assertions
+ * check completion without calling a model. The original seed/action matrices and literal
+ * assertions remain the oracle; these trials do not replace archived goldens or claim
+ * newly independent rule coverage.
+ */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { magicianTwelveConfig } from "../../../src/runtime/scenarios/magician_twelve";
-import { createRandom, randomDraws } from "../../../src/core";
-import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { magicianTwelveConfig } from "../../../../src/runtime/scenarios/magician_twelve";
+import { createRandom, randomDraws } from "../../../../src/core";
+import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
 for (const gunPolicy of ["awa_qualified_sources_v1", "awa_day_deaths_v1"] as const)
   for (const firstNight of [1, 2] as const)
     for (const shot of ["original", "exchanged"] as const)

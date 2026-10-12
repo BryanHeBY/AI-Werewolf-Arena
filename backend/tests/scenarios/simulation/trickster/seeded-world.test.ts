@@ -1,12 +1,19 @@
-import type { RoleComponent } from "../../../src/core/domain/components/role";
-import { getTricksterState } from "../../../src/game/mechanisms/roles/trickster/state";
+/**
+ * Scenario simulation tests: Runs actual Trickster Worlds for the original twenty seeds
+ * and locales. Seeded observed-player strategies supply actions; literal natural
+ * termination and positive pair-activation counts check the native path. The original
+ * seed/action matrices and literal assertions remain the oracle; these trials do not
+ * replace archived goldens or claim newly independent rule coverage.
+ */
+import type { RoleComponent } from "../../../../src/core/domain/components/role";
+import { getTricksterState } from "../../../../src/game/mechanisms/roles/trickster/state";
 import { expect, test } from "bun:test";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { tricksterTwelveConfig } from "../../../src/runtime/scenarios/trickster_twelve";
-import { createRandom, randomDraws } from "../../../src/core";
-import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
+import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { tricksterTwelveConfig } from "../../../../src/runtime/scenarios/trickster_twelve";
+import { createRandom, randomDraws } from "../../../../src/core";
+import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
 for (const locale of ["zh-CN", "en"] as const)
   test(
     "Trickster actual World 20 seeds/" + locale,

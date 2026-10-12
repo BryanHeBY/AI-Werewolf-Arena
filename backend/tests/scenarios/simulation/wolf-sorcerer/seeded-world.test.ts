@@ -1,12 +1,19 @@
-import type { RoleComponent } from "../../../src/core/domain/components/role";
-import { getWolfSorcererState } from "../../../src/game/mechanisms/roles/wolf_sorcerer/state";
+/**
+ * Scenario simulation tests: Runs actual Wolf Sorcerer Worlds across first-night,
+ * shot-target and locale policies for the original seeds. Explicit history lower bounds,
+ * positive choices and non-timeout termination check eligibility timing. The original
+ * seed/action matrices and literal assertions remain the oracle; these trials do not
+ * replace archived goldens or claim newly independent rule coverage.
+ */
+import type { RoleComponent } from "../../../../src/core/domain/components/role";
+import { getWolfSorcererState } from "../../../../src/game/mechanisms/roles/wolf_sorcerer/state";
 import { expect, test } from "bun:test";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { wolfSorcererTwelveConfig } from "../../../src/runtime/scenarios/wolf_sorcerer_twelve";
-import { createRandom, randomDraws } from "../../../src/core";
-import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
+import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { wolfSorcererTwelveConfig } from "../../../../src/runtime/scenarios/wolf_sorcerer_twelve";
+import { createRandom, randomDraws } from "../../../../src/core";
+import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
 for (const firstNight of [1, 2] as const)
   for (const shot of ["original", "exchanged"] as const)
     for (const locale of ["zh-CN", "en"] as const)
