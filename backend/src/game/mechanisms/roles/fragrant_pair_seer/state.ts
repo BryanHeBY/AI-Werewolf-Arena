@@ -1,7 +1,8 @@
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
 
-export const FRAGRANT_PAIR_POLICY = "awa_fragrant_pair_seer_v1" as const;
-export type Pair = readonly [number, number];
+import { FRAGRANT_PAIR_POLICY, type FragrantPair } from "@ai-werewolf-arena/game-text";
+export { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
+export type Pair = FragrantPair;
 export interface PairCheck {
   day: number;
   targetIds: Pair;

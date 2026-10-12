@@ -1230,3 +1230,5 @@ export function nobleSecretBodyEventLabel(
     target: ("targetId" in f ? f.targetId : null) ?? text(locale, "common.none"),
   });
 }
+
+export * from "./fragrant-pair-seer";

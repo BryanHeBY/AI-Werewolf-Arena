@@ -1,24 +1,10 @@
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
 import { normalizePair, type Pair } from "./state";
 /** This journal stores only owner-authorized knowledge, never actual trigger receipts. */
-export interface FragrantKnowledge {
-  knownWolfId: number | null;
-  lastOpenedNight: number;
-  lastChoice: { day: number; pairIds: Pair | null } | null;
-  activeBinding: { createdNight: number; expiresNight: number; pairIds: Pair } | null;
-  used: boolean;
-  knifeNotices: readonly { day: number; eligible: boolean }[];
-}
+export type { FragrantKnowledge } from "@ai-werewolf-arena/game-text";
+import { readFragrantKnownState, type FragrantKnowledge } from "@ai-werewolf-arena/game-text";
 const id = (v: unknown): v is number =>
   typeof v === "number" && Number.isSafeInteger(v) && v > 0 && v < Number.MAX_SAFE_INTEGER - 1;
-const exact = (v: unknown, keys: readonly string[]): v is Record<string, unknown> =>
-  !!v &&
-  typeof v === "object" &&
-  !Array.isArray(v) &&
-  Object.keys(v).length === keys.length &&
-  keys.every((k) => Object.hasOwn(v, k));
-const pair = (v: unknown): v is Pair =>
-  Array.isArray(v) && v.length === 2 && id(v[0]) && id(v[1]) && v[0] < v[1];
 export function freshFragrantKnowledge(): FragrantKnowledge {
   return {
     knownWolfId: null,
@@ -31,80 +17,7 @@ export function freshFragrantKnowledge(): FragrantKnowledge {
 }
 export function readFragrantKnowledge(value: unknown): FragrantKnowledge | null {
   try {
-    const v = snapshotPlainData(value);
-    if (
-      !exact(v, [
-        "knownWolfId",
-        "lastOpenedNight",
-        "lastChoice",
-        "activeBinding",
-        "used",
-        "knifeNotices",
-      ]) ||
-      (v.knownWolfId !== null && !id(v.knownWolfId)) ||
-      (!id(v.lastOpenedNight) && v.lastOpenedNight !== 0) ||
-      typeof v.used !== "boolean" ||
-      !Array.isArray(v.knifeNotices)
-    )
-      return null;
-    let previous = 0,
-      inherited = false;
-    for (const notice of v.knifeNotices) {
-      if (
-        !exact(notice, ["day", "eligible"]) ||
-        !id(notice.day) ||
-        notice.day <= previous ||
-        notice.day > Number(v.lastOpenedNight) ||
-        typeof notice.eligible !== "boolean" ||
-        (inherited && !notice.eligible) ||
-        v.knownWolfId === null
-      )
-        return null;
-      previous = notice.day;
-      inherited ||= notice.eligible;
-    }
-    if (
-      v.lastChoice !== null &&
-      (!exact(v.lastChoice, ["day", "pairIds"]) ||
-        !id(v.lastChoice.day) ||
-        Number(v.lastChoice.day) > Number(v.lastOpenedNight) ||
-        (v.lastChoice.pairIds !== null && !pair(v.lastChoice.pairIds)))
-    )
-      return null;
-    if (v.activeBinding !== null) {
-      const b = v.activeBinding;
-      if (
-        v.used ||
-        !exact(b, ["createdNight", "expiresNight", "pairIds"]) ||
-        !id(b.createdNight) ||
-        b.createdNight !== v.lastOpenedNight ||
-        b.expiresNight !== b.createdNight + 1 ||
-        !pair(b.pairIds) ||
-        !exact(v.lastChoice, ["day", "pairIds"]) ||
-        v.lastChoice.day !== b.createdNight ||
-        JSON.stringify(v.lastChoice.pairIds) !== JSON.stringify(b.pairIds)
-      )
-        return null;
-    }
-    if (v.lastChoice !== null && v.knownWolfId === null) return null;
-    if (v.knownWolfId !== null && !id(v.lastOpenedNight)) return null;
-    if (
-      v.used &&
-      (v.activeBinding !== null ||
-        v.knownWolfId === null ||
-        !exact(v.lastChoice, ["day", "pairIds"]) ||
-        !pair(v.lastChoice.pairIds))
-    )
-      return null;
-    if (
-      !v.used &&
-      exact(v.lastChoice, ["day", "pairIds"]) &&
-      v.lastChoice.day === v.lastOpenedNight &&
-      v.lastChoice.pairIds !== null &&
-      v.activeBinding === null
-    )
-      return null;
-    return v as unknown as FragrantKnowledge;
+    return readFragrantKnownState(snapshotPlainData(value, new Set(), 0, 65536));
   } catch {
     return null;
   }
@@ -120,6 +33,7 @@ export function knowFragrantKnife(
     day !== s.lastOpenedNight ||
     !id(day) ||
     typeof eligible !== "boolean" ||
+    (day === 1 && eligible) ||
     s.knownWolfId === null ||
     (s.knifeNotices.at(-1)?.day ?? 0) >= day ||
     (s.knifeNotices.some((n) => n.eligible) && !eligible)

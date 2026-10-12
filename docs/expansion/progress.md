@@ -682,3 +682,5 @@ Seer/Guard/Hunter真实同步提交计算并缓存合法下一库存，原roster
 ## P9d 寻香识命唯一 owner 接续
 
 组件 owner、真实开夜占有／抽样失败不重领、夜初刀权通知、单向租约撤权及跨昼夜已付关系、实际全波 receipt 与同周期公开知情凭据完成，49维护测试通过；三路原反例和后复验见[owner基础审查](reviews/p9-fragrant-pair-authority-foundation.md)。fixture 使用已有身份占位，不冒称原生角色、普通能力或真实 PM／传输／Tape 已接通。正式50/64不变，两角色仍planned；独立双查能力／请求、实际夜序与死亡链、全部交付继续，main本地功能提交、不推送。
+
+共享policy／Pair／knowledge schema及五类严格事实已建立，领域保留原始Node边界和状态推进，避免重复schema；首夜刀权历史漏洞三路复验关闭，55维护测试通过，范围与有意历史上限变化见[共享协议审查](reviews/p9-fragrant-pair-shared-contract.md)。尚未注册事件／角色／工具或渲染，正式50/64不变；实际原生双查能力／严格请求、完整机制与交付继续。
