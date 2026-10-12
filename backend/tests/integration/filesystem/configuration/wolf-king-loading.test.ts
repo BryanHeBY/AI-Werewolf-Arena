@@ -1,18 +1,23 @@
-import { Role } from "../../src/core";
+/**
+ * Configuration filesystem integration tests verify public six- and twelve-player Wolf King examples resolve the native profile.
+ * Input: Existing public board/game JSON files plus literal undeclared variants and unregistered roles.
+ * Output and oracle: Explicit profile/default values and strict rejection are asserted; parsed synthetic provider metadata never makes a model request.
+ */
+import { Role } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
-import { parseBoardDefinition } from "../../src/runtime/config/board_definition";
-import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
+import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
+import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
+import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
 
 for (const [id, size] of [
   ["six_player_wolf_king", 6],
   ["twelve_player_wolf_king", 12],
 ] as const)
   test(`${id}: public board and game examples resolve a real wolf-king profile and reject undeclared variants`, async () => {
-    const root = path.resolve(import.meta.dir, "../../../configs.example"),
+    const root = path.resolve(import.meta.dir, "../../../../../configs.example"),
       board = await loadBoardDefinition(root, id);
     const game = JSON.parse(await readFile(path.join(root, `games/${id}.json`), "utf8"));
     const runtime = parseRuntimeConfig({

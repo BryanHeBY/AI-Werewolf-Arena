@@ -1,13 +1,12 @@
 /**
- * Filesystem replay export integration verify offline bundle export validates nested source fields.
- * Input: Temporary recorded sessions, requested output paths and malformed replay documents.
- * Output and independent oracle: Literal exported bundle/file equality and explicit validation failure; no archived source is rewritten.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Filesystem integration tests verify recorded-session export produces a valid offline replay bundle and rejects malformed source fields.
+ * Input: Temporary session documents, output paths and literal malformed nested replay data.
+ * Output and oracle: Explicit bundle/file equality and validation failures are asserted; existing archived fixtures are only read.
  */
 import { promises as fs } from "fs";
 import path from "path";
-import { exportReplayBundle } from "../../src/replay/export_replay_bundle";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+import { exportReplayBundle } from "../../../src/replay/export_replay_bundle";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 test("exports one offline replay bundle from a recorded session", async () => {
   const root = await createTestTempDirectory("awa-replay-export-");

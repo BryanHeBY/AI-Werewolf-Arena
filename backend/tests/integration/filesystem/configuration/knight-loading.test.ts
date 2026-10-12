@@ -1,18 +1,23 @@
+/**
+ * Configuration filesystem integration tests verify public six- and twelve-player Knight examples resolve the discrete duel-window policy.
+ * Input: Existing public board/game JSON files and literal unsupported window, role and variant mutations.
+ * Output and oracle: Exact registered Knight defaults and validation failures are asserted; the test does not execute a duel or call a provider.
+ */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
-import { parseBoardDefinition } from "../../src/runtime/config/board_definition";
-import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
-import { KnightDuelWindow } from "../../src/core";
+import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
+import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
+import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
+import { KnightDuelWindow } from "../../../../src/core";
 
 for (const [id, size] of [
   ["six_player_knight", 6],
   ["twelve_player_knight", 12],
 ] as const)
   test(`${id}: public board/game examples resolve a real Knight and strictly validate discrete windows`, async () => {
-    const root = path.resolve(import.meta.dir, "../../../configs.example"),
+    const root = path.resolve(import.meta.dir, "../../../../../configs.example"),
       board = await loadBoardDefinition(root, id);
     const game = JSON.parse(await readFile(path.join(root, `games/${id}.json`), "utf8"));
     const runtime = parseRuntimeConfig({

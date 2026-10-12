@@ -47181,13 +47181,443 @@
       "targetRunner": "backend-integration",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/replay/replay_bundle_export.test.ts",
+      "to": "backend/tests/integration/filesystem/replay-bundle-export.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Actual native recorded-session/input/output files; literal exported equality and malformed shape rejection, no rule simulation.",
+      "originalSha256": "d6af19755fe4d547cfc40facbb8c7bd89dc42d53a49f27e58cb47aeac6468f82",
+      "candidateSha256": "77ccb514fbd945a0dda719df67791ceee8257b80ff6b66747bc0a20b08f1c70a",
+      "moduleAndLocationEdits": [
+        {
+          "start": 600,
+          "end": 635,
+          "value": "../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 519,
+          "end": 556,
+          "value": "../../../src/replay/export_replay_bundle",
+          "kind": "module-specifier",
+          "original": "../../src/replay/export_replay_bundle",
+          "originalResolved": "backend/src/replay/export_replay_bundle.ts",
+          "expectedResolved": "backend/src/replay/export_replay_bundle.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "6c215542410382786a8318ac0bbdf879c21eec5e37c49e0fc5f33fa75975b1b0",
+          "title": "exports one offline replay bundle from a recorded session",
+          "occurrence": 1
+        },
+        {
+          "id": "e7a4306b84e2411bdee50a1ddc77fd4b3e4af24f68c44eb8ec150c75f5abb3d1",
+          "title": "rejects malformed nested replay fields instead of exporting them",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/game_event_recorder.test.ts",
+      "to": "backend/tests/integration/filesystem/event-recording-cursors.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Actual SessionRecordManager persistence and cursor ownership despite presenter failure; exact public/player event stage and once-only counts.",
+      "originalSha256": "8d96899b6d969f15d2491be1e4ad65427335601b018c3060b0d562e2a8e6904b",
+      "candidateSha256": "f0c201988b673104dfc531ae78cd0ffe174f1bc2622bcd6cec74adeb017abce8",
+      "moduleAndLocationEdits": [
+        {
+          "start": 964,
+          "end": 999,
+          "value": "../../support/drivers/temp-directories",
+          "kind": "module-specifier",
+          "original": "../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 878,
+          "end": 920,
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 802,
+          "end": 839,
+          "value": "../../../src/runtime/game_event_recorder",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/game_event_recorder",
+          "originalResolved": "backend/src/runtime/game_event_recorder.ts",
+          "expectedResolved": "backend/src/runtime/game_event_recorder.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 729,
+          "end": 764,
+          "value": "../../../src/runtime/console_presenter",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/console_presenter",
+          "originalResolved": "backend/src/runtime/console_presenter.ts",
+          "expectedResolved": "backend/src/runtime/console_presenter.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 653,
+          "end": 689,
+          "value": "../../../src/recording/session_recorder",
+          "kind": "module-specifier",
+          "original": "../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 585,
+          "end": 612,
+          "value": "../../../src/core/domain/model",
+          "kind": "module-specifier",
+          "original": "../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 527,
+          "end": 550,
+          "value": "../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 438,
+          "end": 452,
+          "value": "../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "7c83a1d7804acc79c3f1f81c4109b937dd1b178aa5e016c86b06274f5a041245",
+          "title": "terminal presentation failure does not replay already recorded events",
+          "occurrence": 1
+        },
+        {
+          "id": "bc6e9d40642c40a093491c2a64d2ea2ae4c6a49225f208195fb4d85b7fac4dcc",
+          "title": "both gun origins persist the same neutral player event stage while God keeps the native origin",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/gravekeeper_config.test.ts",
+      "to": "backend/tests/integration/filesystem/configuration/gravekeeper-loading.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Direct loadBoardDefinition plus public game JSON resolve setup; passive profile registration/unknown parameter refusal verifies real file-to-config wiring.",
+      "originalSha256": "506eed81332447958325e52bca51ca9834982248529f302056600de3e84ecab2",
+      "candidateSha256": "56e5830bcdce73a5a281497fca778c4369d61499ca5b13729c82459ccb8bddd4",
+      "moduleAndLocationEdits": [
+        {
+          "start": 762,
+          "end": 786,
+          "value": "../../../../../configs.example",
+          "kind": "location-directory-prefix",
+          "original": "../../../configs.example",
+          "originalResolved": "configs.example"
+        },
+        {
+          "start": 433,
+          "end": 476,
+          "value": "../../../../src/runtime/config/resolve_game_setup",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/resolve_game_setup",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 359,
+          "end": 396,
+          "value": "../../../../src/runtime/config/parse_config",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/parse_config",
+          "originalResolved": "backend/src/runtime/config/parse_config.ts",
+          "expectedResolved": "backend/src/runtime/config/parse_config.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 279,
+          "end": 320,
+          "value": "../../../../src/runtime/config/board_definition",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 192,
+          "end": 238,
+          "value": "../../../../src/runtime/config/load_board_definition",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/load_board_definition",
+          "originalResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 22,
+          "end": 36,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [
+        {
+          "kind": "directory-anchor",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../../configs.example\")",
+          "anchor": "configs.example",
+          "currentHead": "../../../../../configs.example"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "37f3ad63dea96ad07992d9aa7639387034ef4c10448f0cf2eb075b783b626f63",
+          "title": "six_player_gravekeeper: public examples resolve the passive profile and reject invented variants or unregistered roles",
+          "occurrence": 1
+        },
+        {
+          "id": "7442d4b9c301140138a9972579b8986b05d44ce1abecfa0ce1d603f7d82c60ab",
+          "title": "twelve_player_gravekeeper: public examples resolve the passive profile and reject invented variants or unregistered roles",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/knight_config.test.ts",
+      "to": "backend/tests/integration/filesystem/configuration/knight-loading.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Direct public board/game file loading and runtime resolution; explicit duel windows/defaults and unsupported role/variant refusal, no duel game.",
+      "originalSha256": "436172455bf49be8ed275761e04eae61e8ae5c136a8f28a75c9b6fd8d7e8d0dd",
+      "candidateSha256": "08fed9b683914de99570e0876261735fc172d0b073644afdb6f48b360e8e4659",
+      "moduleAndLocationEdits": [
+        {
+          "start": 758,
+          "end": 782,
+          "value": "../../../../../configs.example",
+          "kind": "location-directory-prefix",
+          "original": "../../../configs.example",
+          "originalResolved": "configs.example"
+        },
+        {
+          "start": 474,
+          "end": 488,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 394,
+          "end": 437,
+          "value": "../../../../src/runtime/config/resolve_game_setup",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/resolve_game_setup",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 320,
+          "end": 357,
+          "value": "../../../../src/runtime/config/parse_config",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/parse_config",
+          "originalResolved": "backend/src/runtime/config/parse_config.ts",
+          "expectedResolved": "backend/src/runtime/config/parse_config.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 240,
+          "end": 281,
+          "value": "../../../../src/runtime/config/board_definition",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 153,
+          "end": 199,
+          "value": "../../../../src/runtime/config/load_board_definition",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/load_board_definition",
+          "originalResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [
+        {
+          "kind": "directory-anchor",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../../configs.example\")",
+          "anchor": "configs.example",
+          "currentHead": "../../../../../configs.example"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "e46296771443cbf339e0d16c6b28b85f2e6480d00dc863ff47771a366090a819",
+          "title": "six_player_knight: public board/game examples resolve a real Knight and strictly validate discrete windows",
+          "occurrence": 1
+        },
+        {
+          "id": "4d9723b0aadfab647615c3a8c74e376393bff9ed09003e7d9fb89635efda443f",
+          "title": "twelve_player_knight: public board/game examples resolve a real Knight and strictly validate discrete windows",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/wolf_king_config.test.ts",
+      "to": "backend/tests/integration/filesystem/configuration/wolf-king-loading.test.ts",
+      "sourceCommit": "792ad2b014b05426fd1699ca23c537e6030de82c",
+      "reason": "Direct public board/game file loading and runtime resolution; exact registered native profile and unsupported parameter/role refusal.",
+      "originalSha256": "600a75645094a501ee75e8f1cd72ba686a152000644ec44bbe345d99b593d93a",
+      "candidateSha256": "797091ad08342b65dd032ea111cdde63794f23eca5f591579b42ec5657b54822",
+      "moduleAndLocationEdits": [
+        {
+          "start": 759,
+          "end": 783,
+          "value": "../../../../../configs.example",
+          "kind": "location-directory-prefix",
+          "original": "../../../configs.example",
+          "originalResolved": "configs.example"
+        },
+        {
+          "start": 433,
+          "end": 476,
+          "value": "../../../../src/runtime/config/resolve_game_setup",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/resolve_game_setup",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 359,
+          "end": 396,
+          "value": "../../../../src/runtime/config/parse_config",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/parse_config",
+          "originalResolved": "backend/src/runtime/config/parse_config.ts",
+          "expectedResolved": "backend/src/runtime/config/parse_config.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 279,
+          "end": 320,
+          "value": "../../../../src/runtime/config/board_definition",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 192,
+          "end": 238,
+          "value": "../../../../src/runtime/config/load_board_definition",
+          "kind": "module-specifier",
+          "original": "../../src/runtime/config/load_board_definition",
+          "originalResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 22,
+          "end": 36,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [
+        {
+          "kind": "directory-anchor",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../../configs.example\")",
+          "anchor": "configs.example",
+          "currentHead": "../../../../../configs.example"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "9abb8f161ecfd8709ebe8243b2753bd231d3d4d5efd3b3193db5bed9839c6870",
+          "title": "six_player_wolf_king: public board and game examples resolve a real wolf-king profile and reject undeclared variants",
+          "occurrence": 1
+        },
+        {
+          "id": "6f10a137f78c5ae9a8dbd7ce70375e1163d7363fb3228fcc7b698ed6c3e2a681",
+          "title": "twelve_player_wolf_king: public board and game examples resolve a real wolf-king profile and reject undeclared variants",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 390,
-    "targetFiles": 395,
-    "mappingEntries": 395,
-    "baselineCases": 4630,
+    "sourceFiles": 395,
+    "targetFiles": 400,
+    "mappingEntries": 400,
+    "baselineCases": 4640,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

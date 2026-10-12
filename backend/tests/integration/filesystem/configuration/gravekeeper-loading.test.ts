@@ -1,17 +1,22 @@
-import { Role } from "../../src/core";
+/**
+ * Configuration filesystem integration tests verify public six- and twelve-player Gravekeeper examples resolve a registered passive profile.
+ * Input: The existing public board/game JSON files and literal invented variants or unregistered roles.
+ * Output and oracle: Explicit profile/default values and strict rejection are asserted; synthetic provider metadata is parsed without a model request.
+ */
+import { Role } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { loadBoardDefinition } from "../../src/runtime/config/load_board_definition";
-import { parseBoardDefinition } from "../../src/runtime/config/board_definition";
-import { parseRuntimeConfig } from "../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../src/runtime/config/resolve_game_setup";
+import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
+import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
+import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config";
+import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
 for (const [id, size] of [
   ["six_player_gravekeeper", 6],
   ["twelve_player_gravekeeper", 12],
 ] as const)
   test(`${id}: public examples resolve the passive profile and reject invented variants or unregistered roles`, async () => {
-    const root = path.resolve(import.meta.dir, "../../../configs.example"),
+    const root = path.resolve(import.meta.dir, "../../../../../configs.example"),
       board = await loadBoardDefinition(root, id),
       game = JSON.parse(await readFile(path.join(root, `games/${id}.json`), "utf8"));
     const runtime = parseRuntimeConfig({

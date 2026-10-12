@@ -1,18 +1,17 @@
 /**
- * Event recorder integration verify one-time persistence despite presenter failure and neutral gun stages.
- * Input: Original World/events, temporary recorder and a throwing terminal presenter.
- * Output and independent oracle: Literal cursor/record counts and same player shot stage while God retains native source identity.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Filesystem integration tests verify event-recorder cursors persist each event once despite presentation failure.
+ * Input: Original game events, a temporary SessionRecordManager and a throwing terminal presenter.
+ * Output and oracle: Literal record counts and neutral player gun-stage fields retain native God source identity; terminal output does not own persistence.
  */
-import { Phase } from "../../src/core";
+import { Phase } from "../../../src/core";
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../src/app/bootstrap";
-import type { GameEvent } from "../../src/core/domain/model";
-import { SessionRecordManager } from "../../src/recording/session_recorder";
-import { presentStreamEvents } from "../../src/runtime/console_presenter";
-import { GameEventRecorder } from "../../src/runtime/game_event_recorder";
-import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
-import { createTestTempDirectory } from "../support/drivers/temp-directories";
+import { bootstrapGame } from "../../../src/app/bootstrap";
+import type { GameEvent } from "../../../src/core/domain/model";
+import { SessionRecordManager } from "../../../src/recording/session_recorder";
+import { presentStreamEvents } from "../../../src/runtime/console_presenter";
+import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
+import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 test("terminal presentation failure does not replay already recorded events", async () => {
   const root = await createTestTempDirectory("awa-event-recorder-");

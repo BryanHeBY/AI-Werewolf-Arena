@@ -113,3 +113,5 @@
 - C24资格首slice：mutable ability store退出两feature/actorenum，7真实stage接窄query、12context接保原world/day getter；双全体filter/recipient/paid/Fragrant不变。独立28file/24原程序与store14/Witch3 body0、六readonly输入写拒/output可写与cold8同exports/catalog55；新7/0/35+旧5/0/34+Scholar1/0/14、source/finite23 types0。审查发现数组readonly不保护库存元素已type-only修复、原/新六擦除同；其余C24/RulePlan/tool consistency未完成。
 
 - C12/C10 native-config-cli：2原文件/16旧IDs实际职责迁移；同25组wholeprogram/104bindings/7anchors独立审，103modules+5location字符串实际变、2anchors原样。必要25finite types0与3短路径case/0/25共用证据，不按小组重复门禁；本组原inputs/正文/标题/矩阵保持。映射现390source/395target/4630IDs。
+
+- C12/C10 native-filesystem：5原文件/10旧IDs实际职责迁移；同25组wholeprogram/104bindings/7anchors独立审，103modules+5location字符串实际变、2anchors原样。必要25finite types0与3短路径case/0/25共用证据，不按小组重复门禁；本组原inputs/正文/标题/矩阵保持。映射现395source/400target/4640IDs。
