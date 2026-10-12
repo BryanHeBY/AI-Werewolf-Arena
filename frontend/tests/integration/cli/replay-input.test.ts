@@ -1,3 +1,10 @@
+/**
+ * Integration tests for the replay CLI's file/session input discovery.
+ * Inputs are literal files and record directories created under /tmp; expected
+ * resolved paths are the independent oracle. Tests exercise the actual filesystem
+ * and resolveReplayInput entry, then remove only their owned temporary fixtures.
+ * They do not load a model, start a server or consume private runtime settings.
+ */
 import { afterEach, expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";

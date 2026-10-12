@@ -1,3 +1,10 @@
+/**
+ * Integration tests for replay CLI rejection and public error presentation.
+ * Inputs are literal invalid arguments and hostile error objects; handwritten
+ * codes and bilingual messages are the independent oracle. Real child commands
+ * reject before opening a browser or server. Tests consume the public sample
+ * fixture without changing its bytes and never invoke a model or private config.
+ */
 import { ReplayLoadError } from "../../../src/replay/offline-replay";
 import { expect, test } from "bun:test";
 import path from "node:path";

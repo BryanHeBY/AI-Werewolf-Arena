@@ -27,3 +27,5 @@
 - C04/C05：同一public AST/debt验证边界协同提交；33维护测试、15提出者原反例、tooling类型0。基线规则补全重新推导1779债务；严格最终门禁不允许任何余项。根check/lint实际先执行架构gate。
 
 - C06：新game-contract与两具名桥、真实frontend stage consumer、sourceHash/lock/metadata同步；有限差分7组、16后端+3前端局部断言及必要类型通过。重门禁遵从用户要求合并大阶段后台执行。
+
+- C10（首runner/前端清楚integration组）：默认unit+integration发现入口，三原program只加职责头，8旧ID/fixture字节不变；局部8/0。其余P2分类仍proposal，未宣称C11–C14全完成。

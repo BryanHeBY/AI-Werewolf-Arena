@@ -1,0 +1,96 @@
+{
+  "schema": "awa-test-path-mappings-v1",
+  "generatedBy": "C10 authorized mechanical relocation; bytes compared with /tmp/awa-c10-front-move-inputs.json and baseline-test-cases.json",
+  "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+  "observedSourceCommit": "2d36e4d0d17283e49e922ada1bbad8635a0b7382",
+  "policy": "This mapping preserves old resolved test identities under an approved path change. It does not waive architecture debt or claim byte-identical whole files: only responsibility heads changed. Runner integration is required in the same commit.",
+  "mappings": [
+    {
+      "from": "frontend/tests/unit/replay/replay-cli.test.ts",
+      "to": "frontend/tests/integration/cli/replay-cli.test.ts",
+      "reason": "Approved C10 frontend CLI/render integration relocation; added precise test responsibility head. Relative imports, script paths, fixture URLs and all original test bytes after the head are unchanged.",
+      "originalSha256": "887a183e03d452071239dde207c8add4194119b1b72aec825db78314feb842b0",
+      "candidateSha256": "a4b9f2bae409aadf7089c21381b970eed3fe7d02ff2f60ddb098f089667c6fc9",
+      "originalBodySha256": "887a183e03d452071239dde207c8add4194119b1b72aec825db78314feb842b0",
+      "baselineCases": [
+        {
+          "id": "fb947d4537abe43e9133f32e4aa67e08cef63df6b6ee4b131d43a22e25854800",
+          "title": "frontend replay CLI errors share local text and reject opaque error contents",
+          "occurrence": 1
+        },
+        {
+          "id": "0b92851b4410f5dd74fee91667d0a4d8ae29d2fb5f47b6f5d249a67dff5078e8",
+          "title": "actual frontend commands render English failures without opening a browser or a dev server",
+          "occurrence": 1
+        },
+        {
+          "id": "577aab1d4c84ae071006e308ad30376b9018d4c67873c8aa7635f8093d34ae1e",
+          "title": "CLI loader explanations only use owned whitelisted keys and numeric HTTP status",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-integration",
+      "programBytesPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/replay-input.test.ts",
+      "to": "frontend/tests/integration/cli/replay-input.test.ts",
+      "reason": "Approved C10 frontend CLI/render integration relocation; added precise test responsibility head. Relative imports, script paths, fixture URLs and all original test bytes after the head are unchanged.",
+      "originalSha256": "b4ace9605fd5fca4ac6ac5e22167d7bce0e9375f820cb6bf34469dc65a45c437",
+      "candidateSha256": "b2f3ffa91b6d989586aed39140aa0dac01d45805d0a2c96e2b02d6a0a0e7b345",
+      "originalBodySha256": "b4ace9605fd5fca4ac6ac5e22167d7bce0e9375f820cb6bf34469dc65a45c437",
+      "baselineCases": [
+        {
+          "id": "55dad6e1c439b4d18c22011fd9170af8af54d2935c292f802c91f7742e790419",
+          "title": "resolves a backend record session directory to its replay document",
+          "occurrence": 1
+        },
+        {
+          "id": "693c440db0ccbd967f29502a83159bdd9527d7056459fecdb39371b0c9269dc4",
+          "title": "still accepts a direct replay file",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-integration",
+      "programBytesPreserved": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "frontend/tests/unit/replay/render-replay.test.ts",
+      "to": "frontend/tests/integration/rendering/render-replay.test.ts",
+      "reason": "Approved C10 frontend CLI/render integration relocation; added precise test responsibility head. Relative imports, script paths, fixture URLs and all original test bytes after the head are unchanged.",
+      "originalSha256": "344ca52330bd4e6e577cf75cfe222dda8875a15f9ee08adab27dd4cd957b28a0",
+      "candidateSha256": "20274bbac52bbac427a360a3aa6b115932ae29ce803f0e70728b1111107daca3",
+      "originalBodySha256": "344ca52330bd4e6e577cf75cfe222dda8875a15f9ee08adab27dd4cd957b28a0",
+      "baselineCases": [
+        {
+          "id": "b8f461c02cdbeeb788298f228eebafec664ca452319f55fa21e2567ee9851015",
+          "title": "render entry rejects invalid inputs and output aliases before starting browser or bundling",
+          "occurrence": 1
+        },
+        {
+          "id": "cdea46aa222619c70e5ad322323cedfb3940b375be7830a2eaf4d6a200c969da",
+          "title": "renderer awaits owned browser close after successful render and failures, preserving all errors",
+          "occurrence": 1
+        },
+        {
+          "id": "5688f96cb9187392bb16fd4335743e98f25a041b78eecc30c9625e876f8f7049",
+          "title": "late output competitors and a source symlink cannot be overwritten by publishing",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "frontend-unit",
+      "targetRunner": "frontend-integration",
+      "programBytesPreserved": true,
+      "fixturesChanged": false
+    }
+  ],
+  "counts": {
+    "files": 3,
+    "baselineCases": 8,
+    "fixtureByteChanges": 0
+  }
+}

@@ -1,3 +1,11 @@
+/**
+ * Integration tests for rendering input guards and owned output/browser cleanup.
+ * Inputs are the unchanged public replay fixture, real filesystem competitors
+ * and injected rendering callbacks. Literal errors, call order and output bytes
+ * independently verify rejection, publication and failure prefixes. Browser
+ * ownership is tested with a fake rendering adapter; no real browser or model
+ * is launched. Each test removes only its owned /tmp fixtures.
+ */
 import { expect, test } from "bun:test";
 import { mkdtemp, copyFile, readFile, writeFile, symlink, link, rm } from "node:fs/promises";
 import os from "node:os";
