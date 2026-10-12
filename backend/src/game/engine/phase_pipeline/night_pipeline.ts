@@ -30,12 +30,11 @@ import {
   animalAuthoritySnapshot,
 } from "../../mechanisms/roles/animal_dream/ports";
 import {
+  RadiantNightUnit,
   isRadiantEclipseBoard,
-  beginRadiantNight,
   assertRadiantRosterCurrent,
   sealRadiantNightEffects,
-  closeRadiantNight,
-} from "../../mechanisms/roles/radiant_eclipse/night_frame";
+} from "../../mechanisms/roles/radiant_eclipse/ports";
 import {
   isScholarMentorBoard,
   assertScholarMentorRosterCurrent,
@@ -326,7 +325,17 @@ export class NightPipeline {
       day,
     );
     const ownsRadiant = config.radiantEclipse !== undefined;
-    let radiantAcquired = false;
+    const radiantNight = new RadiantNightUnit(
+      {
+        get world() {
+          return pipeline.world;
+        },
+        get events() {
+          return pipeline.events;
+        },
+      },
+      day,
+    );
     const ownsMist = config.mistRaven !== undefined;
     let mistHandedOff = false;
     let weddingHandedOff = false,
@@ -336,10 +345,7 @@ export class NightPipeline {
       if (ownsAnimal) animalNight.open(isCurrent);
       if (ownsFragrant) fragrantNight.open(isCurrent);
       if (ownsNoble) nobleNight.open(isCurrent);
-      if (ownsRadiant) {
-        beginRadiantNight(this.world, day);
-        radiantAcquired = true;
-      }
+      if (ownsRadiant) radiantNight.open();
       if (ownsDemon) {
         beginDemonHunterNight(this.world, day, isCurrent);
         demonAcquired = true;
@@ -644,7 +650,7 @@ export class NightPipeline {
               return [id, { life, version: aliveLifeVersion(life) }] as const;
             }),
           );
-      if (ownsRadiant) closeRadiantNight(this.world, day, "committed", this.events);
+      if (ownsRadiant) radiantNight.closeNormally();
       if (ownsAnimal) animalNight.closeNormally();
       if (ownsFragrant) fragrantNight.closeNormally();
       if (ownsNoble) nobleNight.transferToManager();
@@ -674,7 +680,7 @@ export class NightPipeline {
       animalNight.abortIfOwned();
       fragrantNight.abortIfOwned();
       nobleNight.abortIfOwned();
-      if (radiantAcquired) closeRadiantNight(this.world, day, "aborted", this.events);
+      radiantNight.abortIfAcquired();
       if (ownsMist && !mistHandedOff) abortMistNight(this.world);
       if (config.trickster && !magicianHandedOff) abortTricksterNight(this.world);
       if (config.wolfSorcerer && !magicianHandedOff) abortWolfSorcererNight(this.world);

@@ -193,3 +193,5 @@
 - C12 noble-native native causal contracts：2原文件/22旧IDs实际完整录制/复现场景迁移；13whole程序/78callbacks精确path span外/84relative imports+2URL保真，Root独立actualGit全部语句/91top-level imports+4实际dynamic imports/同目标/278unique IDs复核0；13heads0与一次finite13 types0，不跑games/full。四Demon constant动态import和两Mist URL仅同target rebase，其他callback/matrix/setup保持；无raw全callback字节同声称，未发现或执行对局。mapping现505source/511target/6352IDs。
 
 - C17普通history写owner：RoleInspection/Dreamer/Beauty三payload写与Grave单push归各existing state叶，原captured refs/locals与history→callee→factspread→result两读保；use/连续判断/关系/资格/去重/events原位。12whole inverses/8heads0、独立Git/两Grave getter失败prefix/cold12同结果，原4cases/0/43与finite4files类型0；direct Beauty/Grave旧TDZ同位保留。mutable types/schema/codec/facade仍pending，初data-head契约红保存仅补具体字段职责。
+
+- C23 Radiant具体night unit：仅acquired收begin/committed close/finally abort；normal后原World→events getter仍执行，原frame.closed独自noop，关闭发布失败不重发。独立12actualGit/4heads0+cold8同exports/funcidentity，原6leaf bytes保持；new5/0/18+原借药1/0/5、finalfinite0。初testunion未收窄status TS2339红保留仅补type guard；seal/paid/库存/PhaseManager/归档不变，全Radiant矩阵仍partial。
