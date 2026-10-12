@@ -68992,13 +68992,678 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 577 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/fragrant_pair_seer_config_stock.test.ts",
+      "to": "backend/tests/unit/configuration/fragrant-default-hunter.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "837cb367b990f2a01148fe45dd28a76b8c89371d5057725135d124bae6f0d93b",
+      "candidateSha256": "1285fe7eec472bf11478e8a85e1aba44e69d315f7510a4d92217dae13d6f947f",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "public-directory-anchor",
+          "start": 462,
+          "end": 470,
+          "original": "../../..",
+          "value": "../../../..",
+          "originalResolved": "."
+        },
+        {
+          "kind": "module-specifier",
+          "start": 396,
+          "end": 414,
+          "original": "../../src/rulesets",
+          "value": "../../../src/rulesets",
+          "originalResolved": "backend/src/rulesets/index.ts",
+          "expectedResolved": "backend/src/rulesets/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 298,
+          "end": 351,
+          "original": "../../src/runtime/scenarios/fragrant_pair_seer_twelve",
+          "value": "../../../src/runtime/scenarios/fragrant_pair_seer_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/fragrant_pair_seer_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/fragrant_pair_seer_twelve.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 216,
+          "end": 239,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 141,
+          "end": 182,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": ".",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../..\")",
+          "currentExpression": "path.resolve(import.meta.dir, \"../../../..\")",
+          "currentHead": "../../../..",
+          "kind": "public-directory-anchor",
+          "originalHelperSpan": {
+            "start": 1651,
+            "end": 1692,
+            "line": 30
+          }
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "02dd14bfd638cd1580d5172fd4a0a7cff3588488e718aa523ad74564d906a2b5",
+          "title": "omitted hunter roundtrip receives only default policy",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../support/fragrant_pair_seer_recording",
+          "originalImport": "import { recordFragrantLiteral } from \"../support/fragrant_pair_seer_recording\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "recordFragrantLiteral",
+              "imported": "recordFragrantLiteral",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:fs",
+          "originalImport": "import { readFileSync } from \"node:fs\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readFileSync",
+              "imported": "readFileSync",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/load_board_definition",
+          "originalImport": "import { loadBoardDefinition } from \"../../src/runtime/config/load_board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "loadBoardDefinition",
+              "imported": "loadBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/parse_config",
+          "originalImport": "import { parseRuntimeConfig } from \"../../src/runtime/config/parse_config\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "parseRuntimeConfig",
+              "imported": "parseRuntimeConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/resolve_game_setup",
+          "originalImport": "import { resolveGameSetup } from \"../../src/runtime/config/resolve_game_setup\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "resolveGameSetup",
+              "imported": "resolveGameSetup",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core/domain/identity",
+          "originalImport": "import { Role, Camp } from \"../../src/core/domain/identity\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Camp",
+              "imported": "Camp",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core/domain/components/names",
+          "originalImport": "import { COMPONENT } from \"../../src/core/domain/components/names\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../support/fragrant_pair_seer_scenarios",
+          "originalImport": "import {\n  fragrantRuntimeGame as game,\n  fragrantRuntimeAction as act,\n} from \"../support/fragrant_pair_seer_scenarios\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "game",
+              "imported": "fragrantRuntimeGame",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "act",
+              "imported": "fragrantRuntimeAction",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/reproduction",
+          "originalImport": "import { ReproductionTrace, parseReproductionRecord } from \"../../src/recording/reproduction\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ReproductionTrace",
+              "imported": "ReproductionTrace",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "parseReproductionRecord",
+              "imported": "parseReproductionRecord",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/simulation/reproduction_context",
+          "originalImport": "import { captureCheckpoint } from \"../../src/runtime/simulation/reproduction_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "captureCheckpoint",
+              "imported": "captureCheckpoint",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 577 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/fragrant_pair_seer_config_stock.test.ts",
+      "to": "backend/tests/integration/filesystem/configuration/fragrant-policy-files.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "837cb367b990f2a01148fe45dd28a76b8c89371d5057725135d124bae6f0d93b",
+      "candidateSha256": "66677122b8fd90a515ecb0f9b81822240737f90a628371659e158f6f69b7d453",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "public-directory-anchor",
+          "start": 873,
+          "end": 881,
+          "original": "../../..",
+          "value": "../../../../..",
+          "originalResolved": "."
+        },
+        {
+          "kind": "module-specifier",
+          "start": 787,
+          "end": 825,
+          "original": "../../src/core/domain/components/names",
+          "value": "../../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 727,
+          "end": 757,
+          "original": "../../src/core/domain/identity",
+          "value": "../../../../src/core/domain/identity",
+          "originalResolved": "backend/src/core/domain/identity.ts",
+          "expectedResolved": "backend/src/core/domain/identity.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 678,
+          "end": 696,
+          "original": "../../src/rulesets",
+          "value": "../../../../src/rulesets",
+          "originalResolved": "backend/src/rulesets/index.ts",
+          "expectedResolved": "backend/src/rulesets/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 580,
+          "end": 633,
+          "original": "../../src/runtime/scenarios/fragrant_pair_seer_twelve",
+          "value": "../../../../src/runtime/scenarios/fragrant_pair_seer_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/fragrant_pair_seer_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/fragrant_pair_seer_twelve.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 498,
+          "end": 521,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 421,
+          "end": 464,
+          "original": "../../src/runtime/config/resolve_game_setup",
+          "value": "../../../../src/runtime/config/resolve_game_setup",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 347,
+          "end": 384,
+          "original": "../../src/runtime/config/parse_config",
+          "value": "../../../../src/runtime/config/parse_config",
+          "originalResolved": "backend/src/runtime/config/parse_config.ts",
+          "expectedResolved": "backend/src/runtime/config/parse_config.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 262,
+          "end": 308,
+          "original": "../../src/runtime/config/load_board_definition",
+          "value": "../../../../src/runtime/config/load_board_definition",
+          "originalResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/load_board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 181,
+          "end": 222,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": ".",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../..\")",
+          "currentExpression": "path.resolve(import.meta.dir, \"../../../../..\")",
+          "currentHead": "../../../../..",
+          "kind": "public-directory-anchor",
+          "originalHelperSpan": {
+            "start": 1651,
+            "end": 1692,
+            "line": 30
+          }
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "fc3c8cad3e8f094632fb04d0396f096790c91a94b6e4bddd480c764f21a3e345",
+          "title": "public example load, roundtrip, game resolve and bootstrap agree",
+          "occurrence": 1
+        },
+        {
+          "id": "55477a350c70b11d15729f9bd4a475c57b90d91a62e3b159835c000584929657",
+          "title": "alternate hunter policy rejected publicly and internally",
+          "occurrence": 1
+        },
+        {
+          "id": "d8dd453bd39c4fd0b4f5ebf6eb84a70f17292d043f41a7554eb5a13d3a44165b",
+          "title": "both role policy contributions reject conflicts in either object order",
+          "occurrence": 1
+        },
+        {
+          "id": "1ffcb204b657dabd951e3ecd017202fa2ad92a716a47445c2ec3928341e25f24",
+          "title": "wrong native counts fail publicly and at bootstrap",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../support/fragrant_pair_seer_recording",
+          "originalImport": "import { recordFragrantLiteral } from \"../support/fragrant_pair_seer_recording\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "recordFragrantLiteral",
+              "imported": "recordFragrantLiteral",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../support/fragrant_pair_seer_scenarios",
+          "originalImport": "import {\n  fragrantRuntimeGame as game,\n  fragrantRuntimeAction as act,\n} from \"../support/fragrant_pair_seer_scenarios\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "game",
+              "imported": "fragrantRuntimeGame",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "act",
+              "imported": "fragrantRuntimeAction",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/reproduction",
+          "originalImport": "import { ReproductionTrace, parseReproductionRecord } from \"../../src/recording/reproduction\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ReproductionTrace",
+              "imported": "ReproductionTrace",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "parseReproductionRecord",
+              "imported": "parseReproductionRecord",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/simulation/reproduction_context",
+          "originalImport": "import { captureCheckpoint } from \"../../src/runtime/simulation/reproduction_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "captureCheckpoint",
+              "imported": "captureCheckpoint",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 577 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/fragrant_pair_seer_config_stock.test.ts",
+      "to": "backend/tests/scenarios/configuration/fragrant-witch-stock-reset.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "837cb367b990f2a01148fe45dd28a76b8c89371d5057725135d124bae6f0d93b",
+      "candidateSha256": "6c38ad0ceb9db2983404df222451750a734836ebb491b4da995b399fc59126a7",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 374,
+          "end": 423,
+          "original": "../../src/runtime/simulation/reproduction_context",
+          "value": "../../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 304,
+          "end": 336,
+          "original": "../../src/recording/reproduction",
+          "value": "../../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 202,
+          "end": 241,
+          "original": "../support/fragrant_pair_seer_scenarios",
+          "value": "../../support/fragrant_pair_seer_scenarios",
+          "originalResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts",
+          "expectedResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 39,
+          "end": 78,
+          "original": "../support/fragrant_pair_seer_recording",
+          "value": "../../support/fragrant_pair_seer_recording",
+          "originalResolved": "backend/tests/support/fragrant_pair_seer_recording.ts",
+          "expectedResolved": "backend/tests/support/fragrant_pair_seer_recording.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "c2e1efa13e0709daea7784e46ba4502ce2ae4035d24f341d71107fb0ab36f55f",
+          "title": "alive witch N2 flags follow original living-only reset",
+          "occurrence": 1
+        },
+        {
+          "id": "361317b48e3116c2c240c1f9d1cbd50a73f6f1b15ba10f41eee8cb91d4cb28cb",
+          "title": "dead witch N2 flags follow original living-only reset",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:path",
+          "originalImport": "import path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:fs",
+          "originalImport": "import { readFileSync } from \"node:fs\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readFileSync",
+              "imported": "readFileSync",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/board_definition",
+          "originalImport": "import {\n  parseBoardDefinition,\n  boardDefinitionFromConfig,\n} from \"../../src/runtime/config/board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "parseBoardDefinition",
+              "imported": "parseBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "boardDefinitionFromConfig",
+              "imported": "boardDefinitionFromConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/load_board_definition",
+          "originalImport": "import { loadBoardDefinition } from \"../../src/runtime/config/load_board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "loadBoardDefinition",
+              "imported": "loadBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/parse_config",
+          "originalImport": "import { parseRuntimeConfig } from \"../../src/runtime/config/parse_config\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "parseRuntimeConfig",
+              "imported": "parseRuntimeConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/resolve_game_setup",
+          "originalImport": "import { resolveGameSetup } from \"../../src/runtime/config/resolve_game_setup\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "resolveGameSetup",
+              "imported": "resolveGameSetup",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/app/bootstrap",
+          "originalImport": "import { bootstrapGame } from \"../../src/app/bootstrap\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "bootstrapGame",
+              "imported": "bootstrapGame",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/scenarios/fragrant_pair_seer_twelve",
+          "originalImport": "import { fragrantPairSeerTwelveConfig as config } from \"../../src/runtime/scenarios/fragrant_pair_seer_twelve\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "config",
+              "imported": "fragrantPairSeerTwelveConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/rulesets",
+          "originalImport": "import { isFragrantPairSeerPreset } from \"../../src/rulesets\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "isFragrantPairSeerPreset",
+              "imported": "isFragrantPairSeerPreset",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core/domain/identity",
+          "originalImport": "import { Role, Camp } from \"../../src/core/domain/identity\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Camp",
+              "imported": "Camp",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core/domain/components/names",
+          "originalImport": "import { COMPONENT } from \"../../src/core/domain/components/names\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 577 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 520,
-    "targetFiles": 542,
-    "mappingEntries": 542,
-    "baselineCases": 6548,
+    "sourceFiles": 521,
+    "targetFiles": 545,
+    "mappingEntries": 545,
+    "baselineCases": 6555,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
