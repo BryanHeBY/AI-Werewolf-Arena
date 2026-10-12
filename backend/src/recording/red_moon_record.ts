@@ -1,8 +1,14 @@
+/**
+ * Responsibility: independently verify recorded red-moon next-night and expiry causality.
+ * Input: archive decisions, operations and facts at their recorded prefixes.
+ * Output: consistency checks and reconstructed next-night and expiry evidence.
+ * Boundary: never schedules live effects or uses domain resolution as its oracle.
+ */
+import { isRedMoonPreset } from "@ai-werewolf-arena/game-text";
 import {
-  isRedMoonPreset,
   readRedMoonNextNightFact,
   readRedMoonExpiryFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/red-moon";
 import { Camp, Role, Phase, DeathCause } from "../core/domain";
 import type { ReproductionRecord } from "./reproduction";
 const roleId = "red_moon_apostle";

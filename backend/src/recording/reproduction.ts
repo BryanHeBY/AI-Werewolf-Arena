@@ -14,13 +14,13 @@ import {
   readAnimalDreamFact,
   animalDreamFactAudience,
   type AnimalDreamEventType,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/animal-dream";
 import { validateFragrantPairRecord } from "./fragrant_pair_seer_record";
 import {
   FRAGRANT_PAIR_EVENT_TYPES,
   readFragrantPairFact,
   fragrantPairVisibility,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import { fragrantCheckpointSchema } from "./fragrant_pair_seer_checkpoint";
 import { validateNobleSecretBodyRecord } from "./noble_secret_body_record";
 import { nobleBodyCheckpointSchema } from "./noble_secret_body_checkpoint";
@@ -28,14 +28,17 @@ import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
   readNobleSecretBodyFact,
   nobleSecretBodyVisibility,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import { validateRadiantEclipseRecord } from "./radiant_eclipse_record";
 import {
   RADIANT_ECLIPSE_EVENT_TYPES,
   readRadiantEclipseFact,
   radiantEclipseAudience,
-} from "@ai-werewolf-arena/game-text";
-import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
+import {
+  MIST_RAVEN_EVENT_TYPES,
+  readMistRavenFact,
+} from "@ai-werewolf-arena/game-contract/facts/mist-raven";
 import { validateMistRavenRecord } from "./mist_raven_record";
 import { validateScholarMentorRecord } from "./scholar_mentor_record";
 import {
@@ -66,7 +69,7 @@ import {
   readOrderPrinceRevoteFact,
 } from "@ai-werewolf-arena/game-contract/facts/order-prince";
 import { validateOrderPrinceRecord } from "./order_prince_record";
-import { readNightmareFearFact } from "@ai-werewolf-arena/game-text";
+import { readNightmareFearFact } from "@ai-werewolf-arena/game-contract/facts/nightmare";
 import {
   readMagicianExchangeFact,
   readDeathShotMissFact,
@@ -74,7 +77,7 @@ import {
 import { validateDemonHunterRecord } from "./demon_hunter_record";
 import { validateMagicianRecord } from "./magician_record";
 import { readFaultPlan, type FaultPlan } from "../core/domain/fault_plan";
-import { DEMON_HUNTER_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
+import { DEMON_HUNTER_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import {
   GHOST_BRIDE_EVENT_TYPES,
   GHOST_BRIDE_POLICY,
@@ -87,8 +90,14 @@ import {
   LONELY_GIRL_POLICY,
 } from "@ai-werewolf-arena/game-text";
 import { readShapeshifterChoiceTool } from "@ai-werewolf-arena/game-text";
-import { SHAPESHIFTER_EVENT_TYPES, readShapeshifterEventFact } from "@ai-werewolf-arena/game-text";
-import { readWildChildEventFact, WILD_CHILD_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
+import {
+  SHAPESHIFTER_EVENT_TYPES,
+  readShapeshifterEventFact,
+} from "@ai-werewolf-arena/game-text";
+import {
+  readWildChildEventFact,
+  WILD_CHILD_EVENT_TYPES,
+} from "@ai-werewolf-arena/game-text";
 import { CUPID_POLICIES } from "../core/domain/board";
 import { boardConfigSchema } from "../core/domain/board_schema";
 import { dictionaries, text, type MessageKey } from "@ai-werewolf-arena/game-text";

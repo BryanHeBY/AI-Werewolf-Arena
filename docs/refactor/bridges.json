@@ -81,6 +81,14 @@
       "exports": "named unchanged fact readers/types",
       "currentConsumers": "game-text labels/public compatibility, existing application parser tests",
       "exit": "C44 after remaining facade consumers use public contract; preset support remains separate C09"
+    },
+    {
+      "id": "text-knowledge-fact-leaves",
+      "path": "packages/game-text/src/{nightmare,red-moon,demon-hunter,radiant-eclipse,mist-raven,noble-secret-body,fragrant-pair-seer,animal-dream}.ts",
+      "owner": "game-contract/facts",
+      "exports": "named unchanged fact, knowledge, audience and inert reader exports",
+      "currentConsumers": "game-text labels, remaining feature imports and existing application tests",
+      "exit": "C44 after all remaining consumers use public contract; runtime resources and Node hostile-object ingress remain outside DTOs"
     }
   ]
 }

@@ -10,23 +10,26 @@ import {
   ANIMAL_DREAM_EVENT_TYPES,
   readAnimalDreamFact,
   animalDreamFactAudience,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/animal-dream";
 import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
   readNobleSecretBodyFact,
   nobleSecretBodyVisibility,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import {
   FRAGRANT_PAIR_EVENT_TYPES,
   readFragrantPairFact,
   fragrantPairVisibility,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import {
   RADIANT_ECLIPSE_EVENT_TYPES,
   readRadiantEclipseFact,
   radiantEclipseAudience,
-} from "@ai-werewolf-arena/game-text";
-import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
+import {
+  MIST_RAVEN_EVENT_TYPES,
+  readMistRavenFact,
+} from "@ai-werewolf-arena/game-contract/facts/mist-raven";
 import { types } from "node:util";
 import {
   readWolfSorcererExchangeFact,
@@ -43,19 +46,41 @@ import {
   readMagicianExchangeFact,
   readDeathShotMissFact,
 } from "@ai-werewolf-arena/game-contract/facts/magician";
-import { readRedMoonNextNightFact, readRedMoonExpiryFact } from "@ai-werewolf-arena/game-text";
-import { readNightmareFearFact } from "@ai-werewolf-arena/game-text";
-import { DEMON_HUNTER_EVENT_TYPES, readDemonHunterEventFact } from "@ai-werewolf-arena/game-text";
-import { GHOST_BRIDE_EVENT_TYPES, readGhostBrideEventFact } from "@ai-werewolf-arena/game-text";
+import {
+  readRedMoonNextNightFact,
+  readRedMoonExpiryFact,
+} from "@ai-werewolf-arena/game-contract/facts/red-moon";
+import { readNightmareFearFact } from "@ai-werewolf-arena/game-contract/facts/nightmare";
+import {
+  DEMON_HUNTER_EVENT_TYPES,
+  readDemonHunterEventFact,
+} from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
+import {
+  GHOST_BRIDE_EVENT_TYPES,
+  readGhostBrideEventFact,
+} from "@ai-werewolf-arena/game-text";
 import { readLonelyGirlEventFact } from "@ai-werewolf-arena/game-text";
-import { WILD_CHILD_EVENT_TYPES, readWildChildEventFact } from "@ai-werewolf-arena/game-text";
-import { SHAPESHIFTER_EVENT_TYPES, readShapeshifterEventFact } from "@ai-werewolf-arena/game-text";
-import { THIEF_EVENT_TYPES, readThiefEventFact } from "@ai-werewolf-arena/game-text";
+import {
+  WILD_CHILD_EVENT_TYPES,
+  readWildChildEventFact,
+} from "@ai-werewolf-arena/game-text";
+import {
+  SHAPESHIFTER_EVENT_TYPES,
+  readShapeshifterEventFact,
+} from "@ai-werewolf-arena/game-text";
+import {
+  THIEF_EVENT_TYPES,
+  readThiefEventFact,
+} from "@ai-werewolf-arena/game-text";
 import {
   WALL_EVENT_TYPES,
   readWallEventFact,
+} from "@ai-werewolf-arena/game-text";
+import {
   readCupidEventFact,
   CUPID_EVENT_TYPES,
+} from "@ai-werewolf-arena/game-text";
+import {
   readDebateEventFact,
   DEBATE_EVENT_TYPES,
 } from "@ai-werewolf-arena/game-text";

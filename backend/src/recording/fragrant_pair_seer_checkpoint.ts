@@ -1,5 +1,14 @@
+/**
+ * Responsibility: validate the serialized fragrant-pair knowledge checkpoint shape.
+ * Input: unknown archived checkpoint data.
+ * Output: the strict shape schema and detached validated knowledge DTO.
+ * Boundary: inert data never carries a runtime component identity or action permission.
+ */
 import { z } from "zod";
-import { FRAGRANT_PAIR_POLICY, readFragrantKnownState } from "@ai-werewolf-arena/game-text";
+import {
+  FRAGRANT_PAIR_POLICY,
+  readFragrantKnownState,
+} from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 /** God checkpoint shape only. The archive ledger independently computes its values. */
 const id = z
     .number()

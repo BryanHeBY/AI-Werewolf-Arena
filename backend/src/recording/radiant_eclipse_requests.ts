@@ -1,3 +1,9 @@
+/**
+ * Responsibility: read and validate radiant-eclipse request evidence in an archive.
+ * Input: recorded envelopes and original seat data.
+ * Output: checked serialized request details.
+ * Boundary: never creates a runtime lease, selects live actions or owns their deadlines.
+ */
 import { radiantNightRequestPrefix } from "./radiant_eclipse_night_requests";
 import { Camp, Phase, Role } from "../core/domain/identity";
 import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from "./reproduction";
@@ -12,7 +18,7 @@ import {
   RADIANT_ECLIPSE_EVENT_TYPES,
   readRadiantEclipseFact,
   radiantEclipseAudience,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
 
 const stageTools: Record<string, string[]> = {
   eclipse_swallow: ["swallow_skill"],

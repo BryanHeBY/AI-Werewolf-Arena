@@ -1,10 +1,13 @@
+/**
+ * Responsibility: independently verify animal-dream actions, ballots and death evidence.
+ * Input: normalized board data and recorded causal prefixes.
+ * Output: consistency checks that throw on invalid archive evidence.
+ * Boundary: never invokes live effect, vote or death resolvers or owns their resources.
+ */
 import { animalFeedAt } from "./animal_dream_feed_record";
 import { isDeepStrictEqual as equal } from "node:util";
-import {
-  ANIMAL_DREAM_EVENT_TYPES,
-  ANIMAL_DREAM_POLICY as policy,
-  isAnimalDreamPreset,
-} from "@ai-werewolf-arena/game-text";
+import { ANIMAL_DREAM_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
+import { ANIMAL_DREAM_POLICY as policy, isAnimalDreamPreset } from "@ai-werewolf-arena/game-text";
 import type { ReproductionRecord } from "./reproduction";
 function check(value: unknown): asserts value {
   if (!value) throw Error("reproduction_animal_dream_invalid");

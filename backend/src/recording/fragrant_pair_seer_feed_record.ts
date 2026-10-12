@@ -1,4 +1,10 @@
-import { FRAGRANT_PAIR_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
+/**
+ * Responsibility: read fragrant-pair facts at a recorded publication position.
+ * Input: a reproduction archive and causal prefix.
+ * Output: detached historical feed data.
+ * Boundary: never grants live disclosure or writes relation state.
+ */
+import { FRAGRANT_PAIR_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import type { ReproductionRecord } from "./reproduction";
 /** Literal finite-board authorization/projection oracle, independent of the engine feed. */
 export function fragrantFeedAt(r: ReproductionRecord, cursor: number, actor: number): unknown[] {

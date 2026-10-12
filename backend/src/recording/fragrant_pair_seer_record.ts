@@ -1,12 +1,18 @@
+/**
+ * Responsibility: independently verify fragrant-pair archive arithmetic and disclosure.
+ * Input: recorded decisions, checkpoints and publication prefixes.
+ * Output: archive consistency checks and independently reconstructed knowledge.
+ * Boundary: live knowledge changes and runtime relation handles are not owned here.
+ */
 import { fragrantFeedAt } from "./fragrant_pair_seer_feed_record";
 import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
 import { sanitizeSpeechText } from "../utils/speech_text";
 import {
   FRAGRANT_PAIR_POLICY,
   FRAGRANT_PAIR_EVENT_TYPES,
-  isFragrantPairSeerPreset,
   readFragrantPairFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
+import { isFragrantPairSeerPreset } from "@ai-werewolf-arena/game-text";
 import { Camp, Role, Phase } from "../core/domain/identity";
 import type { ReproductionRecord, RecordedDecision, RecordedCheckpoint } from "./reproduction";
 import type { RecordedFragrantState } from "./fragrant_pair_seer_checkpoint";

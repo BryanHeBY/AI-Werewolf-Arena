@@ -1,3 +1,9 @@
+/**
+ * Responsibility: independently verify demon-hunter recorded choices and native outcomes.
+ * Input: archive facts, checkpoint stocks and causal operations.
+ * Output: consistency checks and a reconstructed audit view.
+ * Boundary: runtime hunt permissions, resource payment and live settlement are not granted here.
+ */
 import type { NobleRecordAudit } from "./noble_secret_body_record";
 import { validateRedMoonRecord } from "./red_moon_record";
 import { validateDemonNativeStocks } from "./demon_hunter_stocks";
@@ -9,8 +15,8 @@ import {
   readDemonHunterPlayerFact,
   readDemonHunterState,
   readDemonHuntTool,
-  isDemonHunterPreset,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
+import { isDemonHunterPreset } from "@ai-werewolf-arena/game-text";
 import { Role, Camp, Phase, DeathCause } from "../core/domain";
 import { readFaultPlan } from "../core/domain/fault_plan";
 import type { ReproductionRecord } from "./reproduction";

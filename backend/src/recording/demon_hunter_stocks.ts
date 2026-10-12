@@ -1,6 +1,12 @@
+/**
+ * Responsibility: independently reconstruct native demon-hunter stock evidence.
+ * Input: recorded choices and checkpoint DTOs.
+ * Output: independently reconstructed stock checks, rejecting inconsistent evidence.
+ * Boundary: never spends live stock or authorizes a hunt.
+ */
 import type { NobleRecordAudit } from "./noble_secret_body_record";
 import type { RedMoonRecordAudit } from "./red_moon_record";
-import { readDemonHunterState } from "@ai-werewolf-arena/game-text";
+import { readDemonHunterState } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { Role, Camp } from "../core/domain";
 import type { ReproductionRecord, RecordedCheckpoint } from "./reproduction";
 function stable(value: unknown): string {

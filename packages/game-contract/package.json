@@ -13,7 +13,15 @@
     "./facts/order-prince": "./src/facts/order-prince.ts",
     "./facts/magician": "./src/facts/magician.ts",
     "./boards": "./src/boards.ts",
-    "./board-schema": "./src/board-schema.ts"
+    "./board-schema": "./src/board-schema.ts",
+    "./facts/nightmare": "./src/facts/nightmare.ts",
+    "./facts/red-moon": "./src/facts/red-moon.ts",
+    "./facts/demon-hunter": "./src/facts/demon-hunter.ts",
+    "./facts/radiant-eclipse": "./src/facts/radiant-eclipse.ts",
+    "./facts/mist-raven": "./src/facts/mist-raven.ts",
+    "./facts/noble-secret-body": "./src/facts/noble-secret-body.ts",
+    "./facts/fragrant-pair-seer": "./src/facts/fragrant-pair-seer.ts",
+    "./facts/animal-dream": "./src/facts/animal-dream.ts"
   },
   "scripts": {
     "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
@@ -35,7 +43,15 @@
       "facts/order-prince": ["src/facts/order-prince.ts"],
       "facts/magician": ["src/facts/magician.ts"],
       "boards": ["src/boards.ts"],
-      "board-schema": ["src/board-schema.ts"]
+      "board-schema": ["src/board-schema.ts"],
+      "facts/nightmare": ["src/facts/nightmare.ts"],
+      "facts/red-moon": ["src/facts/red-moon.ts"],
+      "facts/demon-hunter": ["src/facts/demon-hunter.ts"],
+      "facts/radiant-eclipse": ["src/facts/radiant-eclipse.ts"],
+      "facts/mist-raven": ["src/facts/mist-raven.ts"],
+      "facts/noble-secret-body": ["src/facts/noble-secret-body.ts"],
+      "facts/fragrant-pair-seer": ["src/facts/fragrant-pair-seer.ts"],
+      "facts/animal-dream": ["src/facts/animal-dream.ts"]
     }
   }
 }

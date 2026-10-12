@@ -1,4 +1,10 @@
-import { ANIMAL_DREAM_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
+/**
+ * Responsibility: read animal-dream facts from recorded publication prefixes.
+ * Input: a reproduction record and evidence position.
+ * Output: detached historical feed data.
+ * Boundary: archive reads never authorize a live audience or mutate domain state.
+ */
+import { ANIMAL_DREAM_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
 import type { ReproductionRecord } from "./reproduction";
 /** Literal finite-board authorization/projection oracle, independent of the engine feed. */
 export function animalFeedAt(r: ReproductionRecord, cursor: number, actor: number): unknown[] {

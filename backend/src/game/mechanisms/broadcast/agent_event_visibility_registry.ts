@@ -10,23 +10,26 @@ import {
   ANIMAL_DREAM_EVENT_TYPES,
   readAnimalDreamFact,
   animalDreamFactAudience,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/animal-dream";
 import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
   readNobleSecretBodyFact,
   nobleSecretBodyVisibility,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import {
   FRAGRANT_PAIR_EVENT_TYPES,
   readFragrantPairFact,
   fragrantPairVisibility,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import {
   RADIANT_ECLIPSE_EVENT_TYPES,
   readRadiantEclipseFact,
   radiantEclipseAudience,
-} from "@ai-werewolf-arena/game-text";
-import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
+import {
+  MIST_RAVEN_EVENT_TYPES,
+  readMistRavenFact,
+} from "@ai-werewolf-arena/game-contract/facts/mist-raven";
 import {
   readModifierChoiceFact,
   readModifierSkipFact,
@@ -50,7 +53,7 @@ import {
   readMagicianExchangeFact,
   readDeathShotMissFact,
 } from "@ai-werewolf-arena/game-contract/facts/magician";
-import { readNightmareFearFact } from "@ai-werewolf-arena/game-text";
+import { readNightmareFearFact } from "@ai-werewolf-arena/game-contract/facts/nightmare";
 import { demonHunterActorId } from "../roles/demon_hunter/authority";
 import { GHOST_BRIDE_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
 /** 文件说明：领域事件到玩家 Agent 视角的显式可见性白名单。 */

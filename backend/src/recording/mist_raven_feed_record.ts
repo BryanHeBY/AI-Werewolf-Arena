@@ -1,4 +1,11 @@
-import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
+/**
+ * Responsibility: read mist-raven facts from recorded publication prefixes.
+ * Archive events and evidence positions produce historical feed information. This reader does not determine live permissions, resolve effects or alter runtime state.
+ */
+import {
+  MIST_RAVEN_EVENT_TYPES,
+  readMistRavenFact,
+} from "@ai-werewolf-arena/game-contract/facts/mist-raven";
 import { Camp, Phase, Role } from "../core/domain/identity";
 import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from "./reproduction";
 import {

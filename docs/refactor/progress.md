@@ -39,3 +39,5 @@
 - C08首六facts组：三agent实现并交换审查；10 actual consumers只换public进口与职责头，non-import statements全部原byte。每组局部/必要类型，public subpaths legacy TS精确解析修好；其他17facts仍待迁。
 
 - C09配置形状准备：Board、schema、Cupid DTO 与政策标识归纯契约；独立逐声明/正文核对无行为差异，包内7/0/45。有限板子支持算法与独立复现检查尚待各自迁移，未宣称 C09 完成。
+
+- C08后八facts组：互审确认声明与解析保真；17真实consumer非import语句逐字保持。作者14+28/0，原Node feed5/0及前端118/0，必要类型与新文件头通过。尚余关系/初始化/道具及内嵌解析。

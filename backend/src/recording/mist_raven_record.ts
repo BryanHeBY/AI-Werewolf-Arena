@@ -1,3 +1,9 @@
+/**
+ * Responsibility: independently verify mist-raven archive actions and deferred outcomes.
+ * Input: recorded actions, operations and checkpoints.
+ * Output: archive consistency checks rejecting invalid deferred outcomes.
+ * Boundary: never runs the live reducer, authorizes turns or mutates domain state.
+ */
 import {
   check,
   equal,
@@ -9,11 +15,11 @@ import {
 } from "./mist_raven_requests";
 import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
 import { validateMistRavenFeeds } from "./mist_raven_feed_record";
+import { isMistRavenPreset } from "@ai-werewolf-arena/game-text";
 import {
-  isMistRavenPreset,
   MIST_RAVEN_EVENT_TYPES,
   readMistRavenFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/mist-raven";
 import { Camp, Phase, Role } from "../core/domain/identity";
 import type { RecordedCheckpoint, ReproductionRecord } from "./reproduction";
 

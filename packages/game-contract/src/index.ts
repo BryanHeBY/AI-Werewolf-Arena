@@ -53,3 +53,19 @@ export * from "./boards";
 export type { LoversComponent } from "./cupid-relation";
 
 export { boardConfigSchema } from "./board-schema";
+
+export * from "./facts/nightmare";
+
+export * from "./facts/red-moon";
+
+export * from "./facts/demon-hunter";
+
+export * from "./facts/radiant-eclipse";
+
+export * from "./facts/mist-raven";
+
+export * from "./facts/noble-secret-body";
+
+export * from "./facts/fragrant-pair-seer";
+
+export * from "./facts/animal-dream";

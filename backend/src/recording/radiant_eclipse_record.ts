@@ -1,9 +1,13 @@
+/**
+ * Responsibility: independently validate recorded radiant-eclipse actions and publication prefixes.
+ * Replay evidence, original seats and checkpoints are the inputs; rejection or an audit result is the output. The archive verifier does not own runtime leases, pay resources or execute the domain settlement.
+ */
+import { isRadiantEclipsePreset } from "@ai-werewolf-arena/game-text";
 import {
-  isRadiantEclipsePreset,
   RADIANT_ECLIPSE_EVENT_TYPES,
   readRadiantEclipseFact,
   radiantEclipseAudience,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
 import { Camp, Phase, Role } from "../core/domain/identity";
 import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from "./reproduction";
 import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";

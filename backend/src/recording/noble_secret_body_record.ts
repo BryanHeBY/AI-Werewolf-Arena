@@ -1,9 +1,15 @@
+/**
+ * Responsibility: independently reconstruct noble contracts and secret-body archive evidence.
+ * Input: recorded decisions and publication checkpoints.
+ * Output: evidence checks and an independently reconstructed audit view.
+ * Boundary: runtime leases and actual protection state are not granted or written here.
+ */
 import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
+import { isNobleSecretBodyPreset } from "@ai-werewolf-arena/game-text";
 import {
-  isNobleSecretBodyPreset,
   NOBLE_SECRET_BODY_EVENT_TYPES,
   readNobleSecretBodyFact,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import { Role, Camp, Phase } from "../core/domain/identity";
 import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from "./reproduction";
 import type { RecordedNobleBodyState } from "./noble_secret_body_checkpoint";

@@ -54,9 +54,9 @@ function enumValues(name: "Phase" | "ActionWindow" | "KnightDuelWindow"): string
 }
 function eventTypes() {
   const parentContracts: Readonly<Record<string, string>> = {
-    AnimalDreamPayloadMap: "packages/game-text/src/animal-dream.ts",
-    NobleSecretBodyPayloadMap: "packages/game-text/src/noble-secret-body.ts",
-    FragrantPairPayloadMap: "packages/game-text/src/fragrant-pair-seer.ts",
+    AnimalDreamPayloadMap: "packages/game-contract/src/facts/animal-dream.ts",
+    NobleSecretBodyPayloadMap: "packages/game-contract/src/facts/noble-secret-body.ts",
+    FragrantPairPayloadMap: "packages/game-contract/src/facts/fragrant-pair-seer.ts",
   };
   const declaration = find(
     source("backend/src/core/domain/events.ts"),
