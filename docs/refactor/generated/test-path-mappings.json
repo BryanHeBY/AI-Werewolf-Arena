@@ -67704,13 +67704,291 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 64 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/mirror_configuration.test.ts",
+      "to": "backend/tests/unit/configuration/mirror-girl-composition.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "74a4d9bdf5e90b21792c1d0967486f2a1f8a8cec3ef9dd53988766424ec23ee9",
+      "candidateSha256": "d0190d96a3ac576de0d38830cbd2cf59941872f8ab1c91f8acb7b2ce482c7b2e",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 414,
+          "end": 450,
+          "original": "../../src/runtime/config/error_codes",
+          "value": "../../../src/runtime/config/error_codes",
+          "originalResolved": "backend/src/runtime/config/error_codes.ts",
+          "expectedResolved": "backend/src/runtime/config/error_codes.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 336,
+          "end": 377,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 221,
+          "end": 263,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 159,
+          "end": 182,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 111,
+          "end": 125,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "9fbc03fc90b46a9a2a10181e7d3acf1496b7da8dbc846f6326f5e75de0b6094d",
+          "title": "miracle_merchant: MirrorGirl board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "89c4872ed9304922ca2b18735cc54e970d299fa75bf716af8825b8297ee60afe",
+          "title": "mechanical_wolf: MirrorGirl board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "dcf9947f219d5452c450c2b233d9cad4b28d05a0a3d8a74f4ab6a24db6d143c9",
+          "title": "hybrid: MirrorGirl board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "c91f5e8c025e28ddd72d5f6d9c86054d3929d9fde7d76bf91de594c8fb8c543a",
+          "title": "bear: MirrorGirl board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "39c45ffd6d6c753173745fef430418089c16de20adf73e2a7ea5075b9fc9de0c",
+          "title": "wolf_beauty: MirrorGirl board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "7febfca7bc3831238747695e1edb3a5a90b845c05f9d70d9a6773e9744f90c00",
+          "title": "white_wolf_king: MirrorGirl board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "3c56db48b0d7e5db9b3902819ccf2536905a5074f281ece30f43fc9739c8ca16",
+          "title": "knight: MirrorGirl board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "ad6706e258acf3030743372513bff8a672eaca5eda90eb34328d89f8ccf889a5",
+          "title": "dreamer: MirrorGirl board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "63550ada5f5503dfdae9981c5c644e4d280dcd6b798a52d71573488b8788a7d4",
+          "title": "gravekeeper: MirrorGirl board scope is explicit and safely diagnosed",
+          "occurrence": 1
+        },
+        {
+          "id": "6fae316eb5d2c45d6806cf2659de974fd71a855b00e5e917f046c8a8c8fb175d",
+          "title": "native mirror_girl count is one in both entrypoints",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readFile } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readFile",
+              "imported": "readFile",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/load_board_definition",
+          "originalImport": "import { loadBoardDefinition } from \"../../src/runtime/config/load_board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "loadBoardDefinition",
+              "imported": "loadBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 64 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/mirror_configuration.test.ts",
+      "to": "backend/tests/integration/filesystem/configuration/mirror-girl-examples.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "74a4d9bdf5e90b21792c1d0967486f2a1f8a8cec3ef9dd53988766424ec23ee9",
+      "candidateSha256": "235cac8b02062c56a9a5ca7d446e332b2eec06c38d682710ef9945bdae4c2256",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "public-directory-anchor",
+          "start": 605,
+          "end": 629,
+          "original": "../../../configs.example",
+          "value": "../../../../../configs.example",
+          "originalResolved": "configs.example"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 292,
+          "end": 338,
+          "original": "../../src/runtime/config/load_board_definition",
+          "value": "../../../../src/runtime/config/load_board_definition",
+          "originalResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/load_board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 211,
+          "end": 252,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 147,
+          "end": 170,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "configs.example",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../../configs.example\")",
+          "currentExpression": "path.resolve(import.meta.dir, \"../../../../../configs.example\")",
+          "currentHead": "../../../../../configs.example",
+          "kind": "public-directory-anchor"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "df517bb1d0ed3a0b34bfdd44f44684fb44207e3e25d22c60701f79d9543d96d4",
+          "title": "six_player_mirror_girl: finite examples load without arbitrary policies and direct bootstrap applies the same count/combination rules",
+          "occurrence": 1
+        },
+        {
+          "id": "9bd3ff4580a18be081616285be63624b8413e6a154ea179b712c148ff738170f",
+          "title": "twelve_player_mirror_girl: finite examples load without arbitrary policies and direct bootstrap applies the same count/combination rules",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import { Role, type BoardConfig } from \"../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "BoardConfig",
+              "imported": "BoardConfig",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig } from \"../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "sixPlayerMvpConfig",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/board_definition",
+          "originalImport": "import {\n  parseBoardDefinition,\n  boardDefinitionFromConfig,\n} from \"../../src/runtime/config/board_definition\";",
+          "currentImportBeforeRebase": "import { parseBoardDefinition } from \"../../src/runtime/config/board_definition\";",
+          "droppedBindings": [
+            {
+              "name": "boardDefinitionFromConfig",
+              "imported": "boardDefinitionFromConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/error_codes",
+          "originalImport": "import { configDiagnostic } from \"../../src/runtime/config/error_codes\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "configDiagnostic",
+              "imported": "configDiagnostic",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 64 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 517,
-    "targetFiles": 536,
-    "mappingEntries": 536,
-    "baselineCases": 6507,
+    "sourceFiles": 518,
+    "targetFiles": 538,
+    "mappingEntries": 538,
+    "baselineCases": 6519,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
