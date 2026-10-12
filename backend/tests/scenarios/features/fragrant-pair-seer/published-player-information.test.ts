@@ -1,36 +1,31 @@
+/**
+ * Fragrant information scenarios verify actual published deaths and inherited knife hints agree with bounded player/gateway projections.
+ * Input: Original locale matrix, literal linked-death plans and same production PM requests.
+ * Output and oracle: Handwritten own-state/history/privacy/sequence assertions retain the original published-information boundary; no new expected data is generated.
+ */
 import { expect, test } from "bun:test";
-import { Phase } from "../../../src/core/domain/identity";
-import { Role } from "../../../src/core/domain/identity";
-import { ActionValidator } from "../../../src/game/gateway/action_validator";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import type { AliveComponent } from "../../../src/core/domain/components/alive";
-import type { ActionRequest } from "../../../src/core/domain/actions";
-import type { GameEvent } from "../../../src/core/domain/events";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import {
-  getDefaultConfigRenderRegistry,
-  getDefaultTargetHintRegistry,
-  getDefaultToolSpecRegistry,
-  getDefaultPhaseStageLocalizationRegistry,
-  getDefaultAgentEventVisibilityRegistry,
-  getDefaultScriptEventRenderRegistry,
-} from "../../../src/game/mechanisms";
-import {
-  buildAgentVisibleEvent,
-  buildAgentVisibleEventFeed,
-} from "../../../src/game/engine/agent_visible_event_feed";
-import { fragrantAuthoritySnapshot } from "../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
-import { fragrantPairSeerTwelveConfig } from "../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
+import { Phase } from "../../../../src/core/domain/identity";
+import { Role } from "../../../../src/core/domain/identity";
+import { ActionValidator } from "../../../../src/game/gateway/action_validator";
+import { COMPONENT } from "../../../../src/core/domain/components/names";
+import type { AliveComponent } from "../../../../src/core/domain/components/alive";
+import type { ActionRequest } from "../../../../src/core/domain/actions";
+import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultConfigRenderRegistry, getDefaultTargetHintRegistry, getDefaultToolSpecRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultScriptEventRenderRegistry } from "../../../../src/game/mechanisms";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+import { fragrantAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
+import { fragrantPairSeerTwelveConfig } from "../../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
 import {
   fragrantRuntimeGame,
   fragrantRuntimeAction,
-} from "../../support/fragrant_pair_seer_scenarios";
+} from "../../../support/fragrant_pair_seer_scenarios";
 import {
   fragrantPairEventLabel,
   FRAGRANT_PAIR_EVENT_TYPES,
   text,
 } from "@ai-werewolf-arena/game-text";
+
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: shared player view follows published deaths and contains no actual trigger or pack roster`, async () => {
     const g = fragrantRuntimeGame(locale),
@@ -140,41 +135,7 @@ for (const locale of ["zh-CN", "en"] as const)
     }
     expect(fragrantAuthoritySnapshot(g.world).known.used).toBe(true);
   });
-test("God trigger cannot become an actor event by a forged audience, and owner fields reject extras", () => {
-  const g = fragrantRuntimeGame();
-  const god: GameEvent = {
-    type: "fragrant_link_triggered",
-    timestamp: 1,
-    payload: {
-      policy: "awa_fragrant_pair_seer_v1",
-      actorId: 1,
-      day: 1,
-      bindingId: "fragrant:night:1",
-      pairIds: [5, 6],
-      rootId: 5,
-      addedTargetId: 6,
-      rootPhase: Phase.Night,
-      initialWave: true,
-    },
-    audience: [1],
-  };
-  expect(buildAgentVisibleEvent(g.world, god, 1, 1)).toBeNull();
-  expect(getDefaultAgentEventVisibilityRegistry().canView(g.world, god, 1)).toBe(false);
-  const own = {
-    type: "fragrant_pair_chosen",
-    timestamp: 1,
-    payload: {
-      policy: "awa_fragrant_pair_seer_v1",
-      actorId: 1,
-      day: 1,
-      pairIds: [5, 6],
-      rootId: 5,
-    },
-    audience: [1],
-  } as unknown as GameEvent;
-  expect(buildAgentVisibleEvent(g.world, own, 1, 1)).toBeNull();
-  expect(getDefaultAgentEventVisibilityRegistry().canView(g.world, own, 1)).toBe(false);
-});
+
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: inherited knife hint includes the same self target accepted by the real gateway`, async () => {
     const g = fragrantRuntimeGame(locale),

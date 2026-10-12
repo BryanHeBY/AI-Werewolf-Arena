@@ -72329,13 +72329,490 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/fragrant_pair_seer_information.test.ts",
+      "to": "backend/tests/unit/features/fragrant-pair-seer/fact-audience-rejection.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "bd901dd246e92bdc93c79f585cdf07504d2af405b43fe7f85f00a1dc4f1f4736",
+      "candidateSha256": "8cb9a575d8a0bb3298e5c832a7b81c9a70d65d9f22ec4ca563b93ff3139b7563",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 382,
+          "end": 424,
+          "original": "../../support/fragrant_pair_seer_scenarios",
+          "value": "../../../support/fragrant_pair_seer_scenarios",
+          "originalResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts",
+          "expectedResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 293,
+          "end": 342,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 222,
+          "end": 250,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 132,
+          "end": 163,
+          "original": "../../../src/core/domain/events",
+          "value": "../../../../src/core/domain/events",
+          "originalResolved": "backend/src/core/domain/events.ts",
+          "expectedResolved": "backend/src/core/domain/events.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 64,
+          "end": 97,
+          "original": "../../../src/core/domain/identity",
+          "value": "../../../../src/core/domain/identity",
+          "originalResolved": "backend/src/core/domain/identity.ts",
+          "expectedResolved": "backend/src/core/domain/identity.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "cafe52b916e76140ffd18ffa2960958ed75a2e9b169847ce38fbb1528bbb83cb",
+          "title": "God trigger cannot become an actor event by a forged audience, and owner fields reject extras",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core/domain/identity",
+          "originalImport": "import { Role } from \"../../../src/core/domain/identity\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/action_validator",
+          "originalImport": "import { ActionValidator } from \"../../../src/game/gateway/action_validator\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ActionValidator",
+              "imported": "ActionValidator",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/names",
+          "originalImport": "import { COMPONENT } from \"../../../src/core/domain/components/names\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import type { AliveComponent } from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AliveComponent",
+              "imported": "AliveComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/actions",
+          "originalImport": "import type { ActionRequest } from \"../../../src/core/domain/actions\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/player_prompt_policy",
+          "originalImport": "import { PlayerPromptPolicy } from \"../../../src/ai/agents/player/player_prompt_policy\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PlayerPromptPolicy",
+              "imported": "PlayerPromptPolicy",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/catalog",
+          "originalImport": "import { getDefaultRoleCatalog } from \"../../../src/game/mechanisms/roles/catalog\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import {\n  getDefaultConfigRenderRegistry,\n  getDefaultTargetHintRegistry,\n  getDefaultToolSpecRegistry,\n  getDefaultPhaseStageLocalizationRegistry,\n  getDefaultAgentEventVisibilityRegistry,\n  getDefaultScriptEventRenderRegistry,\n} from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": "import { getDefaultAgentEventVisibilityRegistry } from \"../../../src/game/mechanisms\";",
+          "droppedBindings": [
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultTargetHintRegistry",
+              "imported": "getDefaultTargetHintRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultToolSpecRegistry",
+              "imported": "getDefaultToolSpecRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultPhaseStageLocalizationRegistry",
+              "imported": "getDefaultPhaseStageLocalizationRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultScriptEventRenderRegistry",
+              "imported": "getDefaultScriptEventRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/agent_visible_event_feed",
+          "originalImport": "import {\n  buildAgentVisibleEvent,\n  buildAgentVisibleEventFeed,\n} from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "currentImportBeforeRebase": "import { buildAgentVisibleEvent } from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "droppedBindings": [
+            {
+              "name": "buildAgentVisibleEventFeed",
+              "imported": "buildAgentVisibleEventFeed",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/fragrant_pair_seer/authority",
+          "originalImport": "import { fragrantAuthoritySnapshot } from \"../../../src/game/mechanisms/roles/fragrant_pair_seer/authority\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "fragrantAuthoritySnapshot",
+              "imported": "fragrantAuthoritySnapshot",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/scenarios/fragrant_pair_seer_twelve",
+          "originalImport": "import { fragrantPairSeerTwelveConfig } from \"../../../src/runtime/scenarios/fragrant_pair_seer_twelve\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "fragrantPairSeerTwelveConfig",
+              "imported": "fragrantPairSeerTwelveConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/fragrant_pair_seer_scenarios",
+          "originalImport": "import {\n  fragrantRuntimeGame,\n  fragrantRuntimeAction,\n} from \"../../support/fragrant_pair_seer_scenarios\";",
+          "currentImportBeforeRebase": "import { fragrantRuntimeGame } from \"../../support/fragrant_pair_seer_scenarios\";",
+          "droppedBindings": [
+            {
+              "name": "fragrantRuntimeAction",
+              "imported": "fragrantRuntimeAction",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "originalImport": "import {\n  fragrantPairEventLabel,\n  FRAGRANT_PAIR_EVENT_TYPES,\n  text,\n} from \"@ai-werewolf-arena/game-text\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "fragrantPairEventLabel",
+              "imported": "fragrantPairEventLabel",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "FRAGRANT_PAIR_EVENT_TYPES",
+              "imported": "FRAGRANT_PAIR_EVENT_TYPES",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "text",
+              "imported": "text",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/fragrant_pair_seer_information.test.ts",
+      "to": "backend/tests/scenarios/features/fragrant-pair-seer/published-player-information.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "bd901dd246e92bdc93c79f585cdf07504d2af405b43fe7f85f00a1dc4f1f4736",
+      "candidateSha256": "e4e6e3079929c8f7da0fa7ccb0be26df4607361918c0057d98e3ad11a8fedbbd",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1223,
+          "end": 1265,
+          "original": "../../support/fragrant_pair_seer_scenarios",
+          "value": "../../../support/fragrant_pair_seer_scenarios",
+          "originalResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts",
+          "expectedResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1099,
+          "end": 1155,
+          "original": "../../../src/runtime/scenarios/fragrant_pair_seer_twelve",
+          "value": "../../../../src/runtime/scenarios/fragrant_pair_seer_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/fragrant_pair_seer_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/fragrant_pair_seer_twelve.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 987,
+          "end": 1050,
+          "original": "../../../src/game/mechanisms/roles/fragrant_pair_seer/authority",
+          "value": "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 892,
+          "end": 941,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 817,
+          "end": 845,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 587,
+          "end": 629,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 495,
+          "end": 545,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 424,
+          "end": 456,
+          "original": "../../../src/core/domain/actions",
+          "value": "../../../../src/core/domain/actions",
+          "originalResolved": "backend/src/core/domain/actions.ts",
+          "expectedResolved": "backend/src/core/domain/actions.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 344,
+          "end": 385,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 263,
+          "end": 304,
+          "original": "../../../src/core/domain/components/names",
+          "value": "../../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 191,
+          "end": 233,
+          "original": "../../../src/game/gateway/action_validator",
+          "value": "../../../../src/game/gateway/action_validator",
+          "originalResolved": "backend/src/game/gateway/action_validator.ts",
+          "expectedResolved": "backend/src/game/gateway/action_validator.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 122,
+          "end": 155,
+          "original": "../../../src/core/domain/identity",
+          "value": "../../../../src/core/domain/identity",
+          "originalResolved": "backend/src/core/domain/identity.ts",
+          "expectedResolved": "backend/src/core/domain/identity.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 64,
+          "end": 97,
+          "original": "../../../src/core/domain/identity",
+          "value": "../../../../src/core/domain/identity",
+          "originalResolved": "backend/src/core/domain/identity.ts",
+          "expectedResolved": "backend/src/core/domain/identity.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "5ce64216bc01174f8b20a0d09986e4a4ff53ff91c80ecfb0d16f54508f573127",
+          "title": "zh-CN: shared player view follows published deaths and contains no actual trigger or pack roster",
+          "occurrence": 1
+        },
+        {
+          "id": "96e1c0921fefc2870f9bea17353581ebefb38d1fd0e925ff1075ba2d18837a64",
+          "title": "en: shared player view follows published deaths and contains no actual trigger or pack roster",
+          "occurrence": 1
+        },
+        {
+          "id": "8b369061d461531ac8184fe8dbf86c41270a5d5861b64a452d437fc4d7f92a7a",
+          "title": "zh-CN: inherited knife hint includes the same self target accepted by the real gateway",
+          "occurrence": 1
+        },
+        {
+          "id": "173931eb706946f6a75bde0e5880e55f1da72183b765e941f4820a4559260587",
+          "title": "en: inherited knife hint includes the same self target accepted by the real gateway",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core/domain/events",
+          "originalImport": "import type { GameEvent } from \"../../../src/core/domain/events\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import {\n  getDefaultConfigRenderRegistry,\n  getDefaultTargetHintRegistry,\n  getDefaultToolSpecRegistry,\n  getDefaultPhaseStageLocalizationRegistry,\n  getDefaultAgentEventVisibilityRegistry,\n  getDefaultScriptEventRenderRegistry,\n} from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": "import { getDefaultConfigRenderRegistry, getDefaultTargetHintRegistry, getDefaultToolSpecRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultScriptEventRenderRegistry } from \"../../../src/game/mechanisms\";",
+          "droppedBindings": [
+            {
+              "name": "getDefaultAgentEventVisibilityRegistry",
+              "imported": "getDefaultAgentEventVisibilityRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/agent_visible_event_feed",
+          "originalImport": "import {\n  buildAgentVisibleEvent,\n  buildAgentVisibleEventFeed,\n} from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "currentImportBeforeRebase": "import { buildAgentVisibleEventFeed } from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "droppedBindings": [
+            {
+              "name": "buildAgentVisibleEvent",
+              "imported": "buildAgentVisibleEvent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 527,
-    "targetFiles": 560,
-    "mappingEntries": 560,
-    "baselineCases": 6601,
+    "sourceFiles": 528,
+    "targetFiles": 562,
+    "mappingEntries": 562,
+    "baselineCases": 6606,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
