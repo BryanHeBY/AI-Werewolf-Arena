@@ -76378,13 +76378,686 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/cursed_fox.test.ts",
+      "to": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "b75b74f2ebcdcfae4d35d3a691aa38163bdbe4093a28770ea76a7922709f13dc",
+      "candidateSha256": "493c70bf4ec1d8760123127bbdf159206368bd53c590008cd6c1b92443afb4c0",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1615,
+          "end": 1632,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1501,
+          "end": 1564,
+          "original": "../../../src/game/mechanisms/roles/miracle_merchant/lucky_stage",
+          "value": "../../../../src/game/mechanisms/roles/miracle_merchant/lucky_stage",
+          "originalResolved": "backend/src/game/mechanisms/roles/miracle_merchant/lucky_stage.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/miracle_merchant/lucky_stage.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1411,
+          "end": 1461,
+          "original": "../../../src/game/mechanisms/roles/ability_changes",
+          "value": "../../../../src/game/mechanisms/roles/ability_changes",
+          "originalResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/ability_changes.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1326,
+          "end": 1373,
+          "original": "../../../src/game/engine/action_request_factory",
+          "value": "../../../../src/game/engine/action_request_factory",
+          "originalResolved": "backend/src/game/engine/action_request_factory.ts",
+          "expectedResolved": "backend/src/game/engine/action_request_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1229,
+          "end": 1281,
+          "original": "../../../src/game/mechanisms/roles/seer/night_stages",
+          "value": "../../../../src/game/mechanisms/roles/seer/night_stages",
+          "originalResolved": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/seer/night_stages.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1169,
+          "end": 1191,
+          "original": "../night_stage_fixture",
+          "value": "../../../engine/night_stage_fixture",
+          "originalResolved": "backend/tests/engine/night_stage_fixture.ts",
+          "expectedResolved": "backend/tests/engine/night_stage_fixture.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1100,
+          "end": 1131,
+          "original": "../../../src/core/domain/deaths",
+          "value": "../../../../src/core/domain/deaths",
+          "originalResolved": "backend/src/core/domain/deaths.ts",
+          "expectedResolved": "backend/src/core/domain/deaths.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1021,
+          "end": 1063,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 921,
+          "end": 966,
+          "original": "../../../src/game/mechanisms/roles/inspection",
+          "value": "../../../../src/game/mechanisms/roles/inspection",
+          "originalResolved": "backend/src/game/mechanisms/roles/inspection.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/inspection.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 820,
+          "end": 883,
+          "original": "../../../src/game/mechanisms/roles/cursed_fox/inspection_effect",
+          "value": "../../../../src/game/mechanisms/roles/cursed_fox/inspection_effect",
+          "originalResolved": "backend/src/game/mechanisms/roles/cursed_fox/inspection_effect.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/cursed_fox/inspection_effect.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 700,
+          "end": 748,
+          "original": "../../../src/core/domain/components/status_marks",
+          "value": "../../../../src/core/domain/components/status_marks",
+          "originalResolved": "backend/src/core/domain/components/status_marks.ts",
+          "expectedResolved": "backend/src/core/domain/components/status_marks.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 602,
+          "end": 659,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 518,
+          "end": 559,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 439,
+          "end": 477,
+          "original": "../../../src/core/domain/night_effects",
+          "value": "../../../../src/core/domain/night_effects",
+          "originalResolved": "backend/src/core/domain/night_effects.ts",
+          "expectedResolved": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 358,
+          "end": 402,
+          "original": "../../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 251,
+          "end": 285,
+          "original": "../../support/cursed_fox_scenarios",
+          "value": "../../../support/cursed_fox_scenarios",
+          "originalResolved": "backend/tests/support/cursed_fox_scenarios.ts",
+          "expectedResolved": "backend/tests/support/cursed_fox_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 205,
+          "end": 222,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "e3cb1634d7228d855cd4f68e07ed54f30b3bac7b1011cf63d9bfa7d43a13ab6b",
+          "title": "Fox schema and internal entrypoints reject unsupported goals, counts and board combinations",
+          "occurrence": 1
+        },
+        {
+          "id": "d2ff0bb379ce11123301bc750252cc839bae2462daf46af83a3dbed1e4c859b0",
+          "title": "read-only camp/role projection never creates lethal effects or changes life",
+          "occurrence": 1
+        },
+        {
+          "id": "7d873ce32c7564efbe8968bc14fdca86594ed6584e1b08815295051b98db1333",
+          "title": "paid Fox claim does not hit stale life",
+          "occurrence": 1
+        },
+        {
+          "id": "22db9a5e394e35da359b1707f7794908d665e3af6851c082ebc44a7faf9c9fc7",
+          "title": "paid Fox claim does not hit stale role",
+          "occurrence": 1
+        },
+        {
+          "id": "298efeea511a34ac653a38caf0cbf448d78eac05617ae02d629ddb2847453245",
+          "title": "paid Fox claim does not hit stale camp",
+          "occurrence": 1
+        },
+        {
+          "id": "849fb731450e32af37770f19d0fe182bf278d0c54fb8616aa5d4c9a7281a413f",
+          "title": "paid Fox claim does not hit stale state",
+          "occurrence": 1
+        },
+        {
+          "id": "17eb62a0efade048f16863a11b84d3c5d92adb00ad8d9226c688b7a44d995bb0",
+          "title": "paid Fox claim does not hit stale owner",
+          "occurrence": 1
+        },
+        {
+          "id": "1f69e1a11bbecb967afe7f303ec1ca55f08e2993fb903e37ec8f156b7604f8fe",
+          "title": "inspection-only damage, poison composite, guard/heal, Dream protection and ordinary knife immunity",
+          "occurrence": 1
+        },
+        {
+          "id": "c6c90beb11ffd79cda5ebb2c18d35592ab2cb66381c45b016487b9e455d30b50",
+          "title": "actual Seer request rejects late role and cannot create a Fox claim",
+          "occurrence": 1
+        },
+        {
+          "id": "fb3e57fe6872299194afaf6da020dd6a542762ab24ab9bbe650f695e0901ca8e",
+          "title": "actual Seer request rejects late life and cannot create a Fox claim",
+          "occurrence": 1
+        },
+        {
+          "id": "571eca90c95dfaba117687c176627be6ee83cb156ef2ef44dc62430d5fa3d124",
+          "title": "actual Seer request rejects late owner and cannot create a Fox claim",
+          "occurrence": 1
+        },
+        {
+          "id": "bddbe46297dd29fec2911daab412c1f6e443884cde7ddc6b81a25dcd23a91a9a",
+          "title": "actual Seer request rejects late phase and cannot create a Fox claim",
+          "occurrence": 1
+        },
+        {
+          "id": "9cb0917acd91b3f19adbc146251a90c9766cb8927dd3943cbb7f878a066577ac",
+          "title": "actual Seer request rejects late invalid and cannot create a Fox claim",
+          "occurrence": 1
+        },
+        {
+          "id": "7e9e153d667bf7a7e634c4ed7767b6a7175af95fc9b9c0925bcbd48ba2532fe4",
+          "title": "native: callback identity replacement revokes report, lethal effect and consumption",
+          "occurrence": 1
+        },
+        {
+          "id": "61a794baebb7f6b54eac95fbd9b7f5b27eca3a76d90798a99a1297727385afbb",
+          "title": "lucky: callback identity replacement revokes report, lethal effect and consumption",
+          "occurrence": 1
+        },
+        {
+          "id": "e0713fa046e4ff60880ecf69ee3291f1b7f69048f25e0d74f8b5900b595567cc",
+          "title": "native: paid inspection survives its caster's first death and is revoked by resurrection",
+          "occurrence": 1
+        },
+        {
+          "id": "16b8fc0e55e0d7df610869572f765b558acfaa2aa7edf9f5cc69876c58deea16",
+          "title": "lucky: paid inspection survives its caster's first death and is revoked by resurrection",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Camp,\n  COMPONENT,\n  Role,\n  WinCondition,\n  DeathCause,\n  StatusMark,\n  Phase,\n  PotionType,\n  type RoleComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Camp, COMPONENT, Role, WinCondition, DeathCause, StatusMark, Phase, type RoleComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalImport": "import { NightPipeline } from \"../../../src/game/engine/phase_pipeline/night_pipeline\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightPipeline",
+              "imported": "NightPipeline",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalImport": "import { NightStageRegistry } from \"../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightStageRegistry",
+              "imported": "NightStageRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/providers/action_providers",
+          "originalImport": "import { BaselineBotActionProvider } from \"../../../src/ai/agents/providers/action_providers\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "BaselineBotActionProvider",
+              "imported": "BaselineBotActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/cursed_fox.test.ts",
+      "to": "backend/tests/scenarios/features/cursed-fox/reentry-and-final-victory.test.ts",
+      "sourceCommit": "33c8a3f9f2494b6cf9980c71da4ee5190155d06d",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "b75b74f2ebcdcfae4d35d3a691aa38163bdbe4093a28770ea76a7922709f13dc",
+      "candidateSha256": "13967453a8059acdde6e96e458f1f761e5ace5342c7224ca0f3854c47f646750",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 844,
+          "end": 893,
+          "original": "../../../src/ai/agents/providers/action_providers",
+          "value": "../../../../src/ai/agents/providers/action_providers",
+          "originalResolved": "backend/src/ai/agents/providers/action_providers.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/action_providers.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 760,
+          "end": 798,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 666,
+          "end": 728,
+          "original": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "value": "../../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 573,
+          "end": 627,
+          "original": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "value": "../../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 487,
+          "end": 539,
+          "original": "../../../src/game/mechanisms/roles/seer/night_stages",
+          "value": "../../../../src/game/mechanisms/roles/seer/night_stages",
+          "originalResolved": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/seer/night_stages.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 407,
+          "end": 449,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 295,
+          "end": 352,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 218,
+          "end": 252,
+          "original": "../../support/cursed_fox_scenarios",
+          "value": "../../../support/cursed_fox_scenarios",
+          "originalResolved": "backend/tests/support/cursed_fox_scenarios.ts",
+          "expectedResolved": "backend/tests/support/cursed_fox_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 172,
+          "end": 189,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "c3510f88a3dd65242fd46196a2efa165e4d713335eca07f2197c00436a72e8c8",
+          "title": "committed Fox inspection interrupted later cannot be silently lost by full same-night reentry",
+          "occurrence": 1
+        },
+        {
+          "id": "47271d984a0ee588ef2e0acceb91065b9ebaf5568d92145db1be9d14914f0ff8",
+          "title": "first-day sheriff identity replacement filters only old FoxInspection; independent poison=false",
+          "occurrence": 1
+        },
+        {
+          "id": "3c6efbec7d87ad86299a81e9628ac66264f646d31c093346c71f05373b998668",
+          "title": "first-day sheriff identity replacement filters only old FoxInspection; independent poison=true",
+          "occurrence": 1
+        },
+        {
+          "id": "6f7cf549560a3058f89eeca86e039fc7af2ae2e26059f3cb313463ca16782e9a",
+          "title": "last Good dies while Fox survives: only Fox wins at the complete night checkpoint",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Camp,\n  COMPONENT,\n  Role,\n  WinCondition,\n  DeathCause,\n  StatusMark,\n  Phase,\n  PotionType,\n  type RoleComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Camp, COMPONENT, Role, PotionType, type RoleComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "WinCondition",
+              "imported": "WinCondition",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "DeathCause",
+              "imported": "DeathCause",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "StatusMark",
+              "imported": "StatusMark",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/config/board_definition",
+          "originalImport": "import {\n  boardDefinitionFromConfig,\n  parseBoardDefinition,\n} from \"../../../src/runtime/config/board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "boardDefinitionFromConfig",
+              "imported": "boardDefinitionFromConfig",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "parseBoardDefinition",
+              "imported": "parseBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/night_effects",
+          "originalImport": "import { captureNightLife } from \"../../../src/core/domain/night_effects\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "captureNightLife",
+              "imported": "captureNightLife",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import { createAliveComponent } from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAliveComponent",
+              "imported": "createAliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/status_marks",
+          "originalImport": "import { StatusMarksComponent } from \"../../../src/core/domain/components/status_marks\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "StatusMarksComponent",
+              "imported": "StatusMarksComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/cursed_fox/inspection_effect",
+          "originalImport": "import {\n  captureInspectionIdentity,\n  commitFoxInspection,\n} from \"../../../src/game/mechanisms/roles/cursed_fox/inspection_effect\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "captureInspectionIdentity",
+              "imported": "captureInspectionIdentity",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "commitFoxInspection",
+              "imported": "commitFoxInspection",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/inspection",
+          "originalImport": "import { resolveInspection } from \"../../../src/game/mechanisms/roles/inspection\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "resolveInspection",
+              "imported": "resolveInspection",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/deaths",
+          "originalImport": "import { permitsDeathShot } from \"../../../src/core/domain/deaths\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "permitsDeathShot",
+              "imported": "permitsDeathShot",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../night_stage_fixture",
+          "originalImport": "import { nightStageContext } from \"../night_stage_fixture\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "nightStageContext",
+              "imported": "nightStageContext",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/action_request_factory",
+          "originalImport": "import { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameActionRequestFactory",
+              "imported": "GameActionRequestFactory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/ability_changes",
+          "originalImport": "import { grantNightAbility } from \"../../../src/game/mechanisms/roles/ability_changes\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "grantNightAbility",
+              "imported": "grantNightAbility",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/miracle_merchant/lucky_stage",
+          "originalImport": "import { LUCKY_ABILITY_STAGE } from \"../../../src/game/mechanisms/roles/miracle_merchant/lucky_stage\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "LUCKY_ABILITY_STAGE",
+              "imported": "LUCKY_ABILITY_STAGE",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import type { GameEvent, AliveComponent } from \"../../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "AliveComponent",
+              "imported": "AliveComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 11 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 536,
-    "targetFiles": 578,
-    "mappingEntries": 578,
-    "baselineCases": 6732,
+    "sourceFiles": 537,
+    "targetFiles": 580,
+    "mappingEntries": 580,
+    "baselineCases": 6753,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
