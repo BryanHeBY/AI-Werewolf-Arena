@@ -1,0 +1,109 @@
+{
+  "schema": "awa-integration-checkpoint-v1",
+  "revision": "02b3fe39b20b27f0f114db4d242ab56e02b8543d",
+  "isFinalAcceptance": false,
+  "publicInputsHashBeforeCorrection": "7ae9e6ffdbf3d9803260e4b92556201d519bd353c122cd90db35a03da2bc757c",
+  "publicInputsHashAfterCorrection": "1422af0ff303db9357c5af1d45352bd1a1cc426f5c616919a51f77fa3f5e991c",
+  "publicInputCountAfterCorrection": 3113,
+  "originalDependencyDigest": "4fce6bbc66e4b66bb11e1987f0984e3371341afcc367d53403acbe8ecb3dcc61",
+  "publicInputsAndInitialDependenciesVerifiedAfterRun": true,
+  "correction": {
+    "reason": "Snapshot preparation omitted fixed revision rule documents consumed by the role catalog test. The original failure remains in the backend run; adding public inputs during the run prevents claiming one complete same-input full pass.",
+    "addedFileCount": 340,
+    "productionChanged": false,
+    "supplementalTest": {
+      "file": "backend/tests/runtime/role_catalog.test.ts",
+      "passed": 4,
+      "failed": 0,
+      "assertions": 262
+    }
+  },
+  "runs": {
+    "backend": {
+      "exitCode": 1,
+      "passed": 6987,
+      "skipped": 1,
+      "failed": 1,
+      "assertions": 966565,
+      "files": 523,
+      "seconds": 7112.76,
+      "onlyFailure": "every catalog entry has bilingual labels and registered entries have rule cards; omitted docs produced ENOENT"
+    },
+    "frontend": {
+      "exitCode": 0,
+      "passed": 1159,
+      "failed": 0,
+      "groups": {
+        "unit": 1147,
+        "integration": 8,
+        "architecture": 4
+      }
+    },
+    "packages": {
+      "exitCode": 0,
+      "passed": 182,
+      "failed": 0
+    },
+    "chromium": {
+      "exitCode": 0,
+      "passed": 362,
+      "failed": 0,
+      "executable": "/usr/bin/chromium",
+      "workers": 2,
+      "retries": 0
+    }
+  },
+  "dependencyOutputs": {
+    "allowedPrefix": "frontend/node_modules/.vite/",
+    "files": 19,
+    "bytes": 6365507,
+    "policy": "Only the initially absent exact frontend-owner cache directory is excluded from the initial-dependency digest; each output is enumerated, regular and hashed. All initial dependency bytes and symlink targets remain unchanged."
+  },
+  "temporaryEvidence": [
+    {
+      "path": "/tmp/awa-integration-02b3fe3-backend.log",
+      "sha256": "e3b2c83e859d74fc3e92571ff4909509ef8b9c4a9067714c031e0a56f6e53a64",
+      "bytes": 710328
+    },
+    {
+      "path": "/tmp/awa-integration-02b3fe3-frontend.log",
+      "sha256": "b4b2bdd46c5aa7aff04884ee58bc5b23a1d71beca80f4bda2119dc553a96f9bc",
+      "bytes": 125369
+    },
+    {
+      "path": "/tmp/awa-integration-02b3fe3-packages.log",
+      "sha256": "a1ea6a7f4f36fb8ed0b8f035a0e24b9ad9caec30c8a23105523a5f776e72c439",
+      "bytes": 30472
+    },
+    {
+      "path": "/tmp/awa-integration-02b3fe3-chromium.log",
+      "sha256": "74ceb22c6666ce47b57183c03e549ad40fa678a6583f6e797067959243d9d07d",
+      "bytes": 54319
+    },
+    {
+      "path": "/tmp/awa-integration-02b3fe3-role-catalog-doc-correction.log",
+      "sha256": "403c4c5be21f8add8861d965ca4386e225090f36ee3c27482cfb42cf68822951",
+      "bytes": 486
+    },
+    {
+      "path": "/tmp/awa-integration-02b3fe3-after.json",
+      "sha256": "3d6390770b17f702fbdcad30c3e2e77f14bc28cbcf79053b579713a205b3566e",
+      "bytes": 4089
+    },
+    {
+      "path": "/tmp/awa-integration-02b3fe3-inputs.json",
+      "sha256": "2b5f419b5c157cddf652c5d81bc40432a36d5d2beebd1a480fdfd5a35fc5608f",
+      "bytes": 741111
+    },
+    {
+      "path": "/tmp/awa-integration-02b3fe3-doc-correction.json",
+      "sha256": "57bc4126976fc0c009d3e3ba70d5fda15a5ebebbdeb4c2c9fea2cf7de12230a7",
+      "bytes": 53786
+    }
+  ],
+  "remainingAcceptance": [
+    "Tooling and final strict gates are not declared passed by this checkpoint.",
+    "Later commits require their own integration coverage.",
+    "Final P9 acceptance must begin with complete fixed inputs, preserve fingerprints and pass all mandatory gates."
+  ]
+}

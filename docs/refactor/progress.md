@@ -143,3 +143,5 @@
 - C12 causal-failure：12原文件/12targets/152旧IDs实际职责归属；19→20总体126bindings/53callbacks/210IDs逐actualGit保真，18whole与1case split分别证明。独立审通过，finite20 types0、原4短case/0/62共用证据，无重复transport/full。 mapping现431source/436target/4881IDs。
 
 - C12 inspection-split：1原文件/2targets/13旧IDs实际职责归属；19→20总体126bindings/53callbacks/210IDs逐actualGit保真，18whole与1case split分别证明。独立审通过，finite20 types0、原4短case/0/62共用证据，无重复transport/full。inspection两组loadset539→538/539、十unused声明删且无必需setup丢失，保原literal/matrix，原render oracle debt仍pending。 mapping现432source/438target/4894IDs。
+
+- 固定Git02b3fe3后台整合检查点：后端6987pass/1skip/1fail，sole漏规则docs准备错；原4catalog补测0fail但原red保留，不记complete-input全套all-pass。FE1159/pkg182/真实Chromium362均0fail；after3113public SHA+原dependencybytes/links全保持，仅exact frontend.vite新增19ownedregular输出。结果见integration-checkpoints.md，tooling/后续提交/P9最终同源验收未宣完成。
