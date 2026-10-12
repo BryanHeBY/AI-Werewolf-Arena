@@ -65686,13 +65686,296 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 426 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/awakened_configuration.test.ts",
+      "to": "backend/tests/unit/configuration/awakened-composition.test.ts",
+      "sourceCommit": "588e755418b124b5e415c98d9cd78a6afb3b7e63",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "86fd64d06acfdbffdd1cb3f30c595b38bc0aec97b0d83565e4eab520358268d3",
+      "candidateSha256": "582fd417c3a87cf46679d4b8cd7336f8d3ed945dcdfd572b8e5c8aba4e990140",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 305,
+          "end": 347,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 225,
+          "end": 266,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 138,
+          "end": 152,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 95,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "60525904e99730524dc8e4c459706db695d9b373d2fa93066703ac36fdb660da",
+          "title": "seer: both board entrypoints reject undeclared Aw joint rules",
+          "occurrence": 1
+        },
+        {
+          "id": "e037e48afbfbffdd6097c86255d0ae4766f18624a8af40127298aff76eab374d",
+          "title": "hidden_wolf: both board entrypoints reject undeclared Aw joint rules",
+          "occurrence": 1
+        },
+        {
+          "id": "c8edfd8425f2464b11e4a6c5a63796b1ed26895523f8d61d7878f28b4eca0b47",
+          "title": "gargoyle: both board entrypoints reject undeclared Aw joint rules",
+          "occurrence": 1
+        },
+        {
+          "id": "efb5492c9053b221e23a9a73eedb96dd87aeb249e18fbbe2079656fb573390f6",
+          "title": "psychic: both board entrypoints reject undeclared Aw joint rules",
+          "occurrence": 1
+        },
+        {
+          "id": "50fa385a33ee0ed42bf8ca29b250b14127957527350b8f77a8cccea6877e9c25",
+          "title": "mechanical_wolf: both board entrypoints reject undeclared Aw joint rules",
+          "occurrence": 1
+        },
+        {
+          "id": "1da0f950d15413b8cc6df26d138bc2da7880799f482b589a2bbb256df217df57",
+          "title": "miracle_merchant: both board entrypoints reject undeclared Aw joint rules",
+          "occurrence": 1
+        },
+        {
+          "id": "e16e59eb2684d1b09f30a8331c74c90cea0ece020681e95eeb5a98216d8fa6e3",
+          "title": "hybrid: both board entrypoints reject undeclared Aw joint rules",
+          "occurrence": 1
+        },
+        {
+          "id": "426fc6951fe6dfd8ab82f6a6980ec33a7db0e60710d61696c1b57defcbbec7de",
+          "title": "dreamer: both board entrypoints reject undeclared Aw joint rules",
+          "occurrence": 1
+        },
+        {
+          "id": "c6e4694ea8019282488024990d99eadcf80c04384f6559763811431154f9faea",
+          "title": "wolf_beauty: both board entrypoints reject undeclared Aw joint rules",
+          "occurrence": 1
+        },
+        {
+          "id": "0b19355a384f2672677c2e8f3b6948bd6a61e404e100f76d811a3da50cc56c40",
+          "title": "wolf_king: both board entrypoints reject undeclared Aw joint rules",
+          "occurrence": 1
+        },
+        {
+          "id": "5c3f2079e8f2c96536c955777ad94479781caf37423beb4c0c795fe548e326d7",
+          "title": "white_wolf_king: both board entrypoints reject undeclared Aw joint rules",
+          "occurrence": 1
+        },
+        {
+          "id": "e954ca84939123455e10b9af0f1402da0a2c29a9c87bb61127aa601bfee7b3bf",
+          "title": "idiot: both board entrypoints reject undeclared Aw joint rules",
+          "occurrence": 1
+        },
+        {
+          "id": "83f6a22968d252deb212614c2546311233ccf8ae55f0421317707308482afabc",
+          "title": "Awakened native count is at most one through parse and direct bootstrap",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:path",
+          "originalImport": "import path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readFile } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readFile",
+              "imported": "readFile",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/load_board_definition",
+          "originalImport": "import { loadBoardDefinition } from \"../../src/runtime/config/load_board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "loadBoardDefinition",
+              "imported": "loadBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 426 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/awakened_configuration.test.ts",
+      "to": "backend/tests/integration/filesystem/configuration/awakened-examples.test.ts",
+      "sourceCommit": "588e755418b124b5e415c98d9cd78a6afb3b7e63",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "86fd64d06acfdbffdd1cb3f30c595b38bc0aec97b0d83565e4eab520358268d3",
+      "candidateSha256": "e4487b53def493f7ab4efe54c02e89aa442a48b6fc9ee2c2fe7063f5c86ea011",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "public-directory-anchor",
+          "start": 609,
+          "end": 633,
+          "original": "../../../configs.example",
+          "value": "../../../../../configs.example",
+          "originalResolved": "configs.example"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 297,
+          "end": 338,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 210,
+          "end": 256,
+          "original": "../../src/runtime/config/load_board_definition",
+          "value": "../../../../src/runtime/config/load_board_definition",
+          "originalResolved": "backend/src/runtime/config/load_board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/load_board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 147,
+          "end": 170,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "configs.example",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../../configs.example\")",
+          "currentExpression": "path.resolve(import.meta.dir, \"../../../../../configs.example\")",
+          "currentHead": "../../../../../configs.example",
+          "kind": "public-directory-anchor"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "7e850cdcdf80b4d55534de1f8cf4ab6a1ba41fb0c8a98ebc1a9e11a595f20401",
+          "title": "six: example Awakened configuration loads strict role parameters and the declared composition",
+          "occurrence": 1
+        },
+        {
+          "id": "aecfc4119ded24d34195ae1a86ae53f9ca38238b00c8c01386cd0c57fe45fe94",
+          "title": "twelve: example Awakened configuration loads strict role parameters and the declared composition",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import { Role, type BoardConfig } from \"../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "BoardConfig",
+              "imported": "BoardConfig",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/board_definition",
+          "originalImport": "import {\n  boardDefinitionFromConfig,\n  parseBoardDefinition,\n} from \"../../src/runtime/config/board_definition\";",
+          "currentImportBeforeRebase": "import { parseBoardDefinition } from \"../../src/runtime/config/board_definition\";",
+          "droppedBindings": [
+            {
+              "name": "boardDefinitionFromConfig",
+              "imported": "boardDefinitionFromConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig } from \"../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "sixPlayerMvpConfig",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 426 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 511,
-    "targetFiles": 524,
-    "mappingEntries": 524,
-    "baselineCases": 6394,
+    "sourceFiles": 512,
+    "targetFiles": 526,
+    "mappingEntries": 526,
+    "baselineCases": 6409,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
