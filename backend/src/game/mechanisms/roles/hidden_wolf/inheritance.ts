@@ -7,7 +7,7 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, type GameEvent } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
-import { getHiddenWolfState } from "../private_state";
+import { getHiddenWolfState, recordHiddenWolfKnifeInheritance } from "./state";
 
 /** Read-only current permission, separate from the persistent acquired fact. */
 export function canHiddenWolfKnife(role: RoleComponent, world?: World): boolean {
@@ -34,6 +34,6 @@ export function refreshHiddenWolfInheritance(world: World, events: GameEvent[], 
     role = world.getComponent(actorId, COMPONENT.Role)!;
   const state = role.role === Role.HiddenWolf ? getHiddenWolfState(role) : undefined;
   if (!state || state.hasInheritedKnife) return;
-  state.hasInheritedKnife = true;
+  recordHiddenWolfKnifeInheritance(state);
   events.push({ timestamp: Date.now(), type: "hidden_wolf_awakened", payload: { actorId, day } });
 }

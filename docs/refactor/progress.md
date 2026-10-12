@@ -123,3 +123,5 @@
 - C23 Animal具体night unit：原begin→acquisition→fact/normal→closed/条件abort归owner，World/events每读委托、Animal→Fragrant→Noble finally不变，原authority/facts同bytes。4AST/4heads0、独立cold6与exportidentity同；新3/0/21+原Cat N1knife/election/expiry1/0/7、finite types0。原误用DTO字段测试红保留且只修literal native预期；全C23仍继续。
 
 - C17白狼王消费写权：readonly同slot、window/prompt/commit真实publicport、原唯一false赋值归具体owner；无再查/退款/死亡修改。4原程序/6heads0、独立cold8/funcidentity同，新2prefix/0/10+原消费者finite types0；不混合枪/Demon sealed stock。
+
+- C17隐狼/石像鬼继承事实写权：各readonly字段/各具体true命令，原lastwolf/camp/inspection资格与pub顺序不变；不合并当前刀权或学习资源。4wholebody/5heads0，独立cold8同exports，new4/0/18与旧消费者finite types0；同slot/ref、无退款/死亡/CP变。

@@ -25,3 +25,9 @@ Knight 的公开状态字段 `canDuel` 为只读类型视图，仍是原 private
 公开原生状态 `canDetonate` 为只读字段，保留原 privateState 引用。窗口、提示和实际自爆提交通过白狼王公共 port 读取；提交完成原目标校验和 death proposal 构造后，调用具体 `consumeWhiteWolfDetonation` 执行原一次 false 写入，随后才发布原事件。失败不重查状态、不退款、不改变最终死亡或窗口撤权。
 
 原四份完整非 import 正文只允许该赋值和 readonly 类型标记的明确映射；六个职责头通过。两项发布/setter 失败测试、10 次断言与原消费者有限类型检查通过。独立八个 fresh 原/现 commit/window/prompt/catalog import 同成功及同出口，公共 port 与旧桥的函数引用一致。外部 checkpoint 与玩家 DTO 保持原字段，不混合普通枪或 Demon sealed stock。
+
+## Hidden Wolf / Gargoyle 继承事实写权
+
+两种资源各自的 `hasInheritedKnife` 是只读事实字段。原 inheritance 协调者完成原存活狼、阵营、角色及已继承检查后，调用各自具体 owner 命令写 true，再发布原事实。两个命令不重查、不变阵营、不返回当前刀权；Gargoyle 的当前刀权仍另检查已完成查验，Mechanical/Awakened 的学习资源不接这组命令。
+
+原四份完整非 import 正文只映射两个赋值及 readonly 标记；setter/getter 逐字保留，同槽和同引用不变。四项发布失败/多个存活狼的有限测试、18 次断言与原 Hidden/Gargoyle 消费者有限类型检查通过。独立八个 fresh 原/现 inheritance/catalog/bootstrap import 同成功、同出口，五个职责头通过。没有回滚已继承事实、提前死亡或修改存档。

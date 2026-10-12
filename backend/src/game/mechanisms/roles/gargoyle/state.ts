@@ -1,14 +1,15 @@
 /**
  * Owns Gargoyle state data and access to its existing private-state slot.
  * Inputs are the role component and native state; outputs retain the exact stored object, including assignment-before-return behavior.
- * Existing mutation commands, lifecycle validation, player projection and checkpoint
- * encoding keep their current responsibilities. This leaf creates no mirror state,
- * consumes no resource and does not decide whether a request is authorized.
+ * The inheritance coordinator owns the original qualification and publication order;
+ * this owner commits only the selected inheritance flag, without a second state read.
+ * The stored reference and checkpoint shape stay unchanged. It does not grant
+ * current knife permission, change camp or refund a fact after publication fails.
  */
 import type { RoleComponent } from "../../../../core/domain/components/role";
 
 export interface GargoyleState {
-  hasInheritedKnife: boolean;
+  readonly hasInheritedKnife: boolean;
 }
 
 export function setGargoyleState(role: RoleComponent, state: GargoyleState): GargoyleState {
@@ -18,4 +19,9 @@ export function setGargoyleState(role: RoleComponent, state: GargoyleState): Gar
 
 export function getGargoyleState(role: RoleComponent): GargoyleState | undefined {
   return role.privateState["gargoyle"] as GargoyleState | undefined;
+}
+
+/** Caller retains original last-wolf and already-inherited checks. */
+export function recordGargoyleKnifeInheritance(state: GargoyleState): void {
+  (state as { hasInheritedKnife: boolean }).hasInheritedKnife = true;
 }

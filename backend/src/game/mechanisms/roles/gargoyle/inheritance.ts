@@ -7,7 +7,7 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, type GameEvent } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
-import { getGargoyleState } from "../private_state";
+import { getGargoyleState, recordGargoyleKnifeInheritance } from "./state";
 import { completedGargoyleInspection } from "../role_inspection/night_scope";
 
 export function canGargoyleKnife(role: RoleComponent, world?: World): boolean {
@@ -33,6 +33,6 @@ export function refreshGargoyleInheritance(world: World, events: GameEvent[], da
     role = world.getComponent(actorId, COMPONENT.Role)!,
     state = role.role === Role.Gargoyle ? getGargoyleState(role) : undefined;
   if (!state || state.hasInheritedKnife) return;
-  state.hasInheritedKnife = true;
+  recordGargoyleKnifeInheritance(state);
   events.push({ timestamp: Date.now(), type: "gargoyle_awakened", payload: { actorId, day } });
 }
