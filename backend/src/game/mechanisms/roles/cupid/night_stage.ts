@@ -1,3 +1,8 @@
+/**
+ * Runs Cupid selection from the current relation candidates. Inputs are the night request and
+ * validated paired choice; outputs are the installed lovers relation and its original event. It
+ * does not replace the relation owner or independently choose a victory result.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import {
@@ -19,10 +24,10 @@ export const CUPID_STAGE: NightStageHandler = {
     if (day !== 1) return;
     if (hasCupidNightCommit(ctx.world, day)) throw new Error("cupid_night_reentry_after_commit");
     for (const actorId of ctx.getAliveByRole(Role.Cupid)) {
-      const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!,
+      const role = ctx.world.getComponent(actorId, COMPONENT.Role)!,
         state = getCupidState(role),
         life = captureNightLife(ctx.world, actorId),
-        victory = ctx.world.getComponent<VictoryComponent>(actorId, COMPONENT.Victory);
+        victory = ctx.world.getComponent(actorId, COMPONENT.Victory);
       if (!state || !life || !victory || role.camp !== Camp.Good) continue;
       const privateState = role.privateState,
         policy = state.policy,
@@ -50,8 +55,8 @@ export const CUPID_STAGE: NightStageHandler = {
         if (!current()) break;
         const targets = new Map(
           ctx.world.getAliveEntityIds().map((id) => {
-            const targetRole = ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role)!,
-              targetVictory = ctx.world.getComponent<VictoryComponent>(id, COMPONENT.Victory)!;
+            const targetRole = ctx.world.getComponent(id, COMPONENT.Role)!,
+              targetVictory = ctx.world.getComponent(id, COMPONENT.Victory)!;
             return [
               id,
               {

@@ -1,3 +1,9 @@
+/**
+ * Runs sheriff nomination, campaign, withdrawal and election voting rounds. Inputs are current
+ * eligible seats, provider actions and election policy; outputs are ordered election evidence
+ * and the elected sheriff. It does not apply exile ballot rules or wolf knife rules to this
+ * election.
+ */
 import { weddingBadgeSwallowed } from "../roles/ghost_bride/authority";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 import { COMPONENT } from "../../../core/domain/components/names";
@@ -440,7 +446,7 @@ function pickSheriffWinner(
     return null;
   }
   const withSeat = candidates.map((id) => {
-    const identity = world.getComponent<IdentityComponent>(id, COMPONENT.Identity);
+    const identity = world.getComponent(id, COMPONENT.Identity);
     return { id, seat: identity?.seat ?? id, score: tally.get(id) ?? 0 };
   });
   withSeat.sort((a, b) => {
@@ -464,8 +470,8 @@ function pickSheriffWinner(
 
 function sortBySeat(world: World, ids: EntityId[]): EntityId[] {
   return [...ids].sort((a, b) => {
-    const aSeat = world.getComponent<IdentityComponent>(a, COMPONENT.Identity)?.seat ?? a;
-    const bSeat = world.getComponent<IdentityComponent>(b, COMPONENT.Identity)?.seat ?? b;
+    const aSeat = world.getComponent(a, COMPONENT.Identity)?.seat ?? a;
+    const bSeat = world.getComponent(b, COMPONENT.Identity)?.seat ?? b;
     return aSeat - bSeat;
   });
 }

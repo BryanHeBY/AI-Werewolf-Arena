@@ -1,3 +1,8 @@
+/**
+ * Runs the Wolf Sorcerer exchange opportunity before remapped native actions. Inputs are the
+ * current frame and validated paired selection; outputs preserve exchange commitment and its
+ * fact. The stage does not own pack readiness or target receipt validity; the frame checks them.
+ */
 import type { AliveComponent } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -20,12 +25,12 @@ export const WOLF_SORCERER_EXCHANGE_STAGE: NightStageHandler = {
       actorId = beginWolfSorcererNight(ctx.world, day);
     if (actorId === null) {
       const id = wolfSorcererActorId(ctx.world),
-        own = ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+        own = ctx.world.getComponent(id, COMPONENT.Role);
       const state = getWolfSorcererState(own)!;
       const reason =
         day < state.firstNight
           ? "not_started"
-          : ctx.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive
+          : ctx.world.getComponent(id, COMPONENT.Alive)!.alive
             ? "exhausted"
             : "dead";
       ctx.events.push({
@@ -36,7 +41,7 @@ export const WOLF_SORCERER_EXCHANGE_STAGE: NightStageHandler = {
       });
       return;
     }
-    const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+    const role = ctx.world.getComponent(actorId, COMPONENT.Role);
     if (!getWolfSorcererState(role)) throw new Error("wolf_sorcerer_actor_invalid");
     const request = ctx.makeRequest(actorId, ["swap_night_seats"], {
       stage: "wolf_sorcerer_exchange",

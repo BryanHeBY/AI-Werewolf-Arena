@@ -1,3 +1,9 @@
+/**
+ * Runs wolf discussion rounds and knife ballot retries with captured actor/target scopes. Inputs
+ * are current pack permissions and validated wolf tools; outputs preserve chat, consensus and
+ * sourced knife claims. It never lets rejected or replaced voters create a fresh pack
+ * opportunity or bypass the retry limit.
+ */
 import { checkpointNobleBodyAuthority, isNobleBodyBoard } from "../noble_secret_body/authority";
 import { isFragrantPairBoard } from "../fragrant_pair_seer/authority";
 import { isRadiantEclipseBoard } from "../radiant_eclipse/night_frame";
@@ -43,12 +49,12 @@ function strictWolfFailurePrefix(ctx: NightStageContext): string | null {
 }
 
 function captureActorScope(ctx: NightStageContext, actorId: EntityId): () => boolean {
-  const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role),
+  const role = ctx.world.getComponent(actorId, COMPONENT.Role),
     kind = role?.role,
     camp = role?.camp,
     state = role?.privateState,
     refs = state ? Object.entries(state) : [];
-  const life = ctx.world.getComponent<AliveComponent>(actorId, COMPONENT.Alive),
+  const life = ctx.world.getComponent(actorId, COMPONENT.Alive),
     version = life && aliveLifeVersion(life);
   return () =>
     ctx.isCurrent() &&
@@ -220,7 +226,7 @@ const wolfKillVoteStage: NightStageHandler = {
               });
         const targetLives = new Map(
           ctx.world.getAliveEntityIds().map((id) => {
-            const life = ctx.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+            const life = ctx.world.getComponent(id, COMPONENT.Alive)!;
             return [id, { life, version: aliveLifeVersion(life) }] as const;
           }),
         );

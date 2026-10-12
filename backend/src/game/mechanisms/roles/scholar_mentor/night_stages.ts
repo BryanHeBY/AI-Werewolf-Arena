@@ -1,3 +1,9 @@
+/**
+ * Runs Scholar/Mentor choice and bonus stages from the resolved modifier night. Inputs are
+ * eligible bonus actors, target scopes and validated actions; outputs preserve each bonus effect
+ * and associated native history. It never recomputes another role's target receipt after a paid
+ * effect.
+ */
 import { COMPONENT, Camp, Phase, StatusMark, type RoleComponent } from "../../../../core";
 import { aliveLifeVersion } from "../../../../core/domain/components/alive";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
@@ -22,7 +28,7 @@ const choose: NightStageHandler = {
     const day = ctx.currentDay(),
       pending = beginScholarMentorNight(ctx.world, day);
     for (const actorId of ctx.world.entityIds()) {
-      const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role),
+      const role = ctx.world.getComponent(actorId, COMPONENT.Role),
         state = scholarMentorStateForRole(role);
       if (!state) continue;
       if (!pending.includes(actorId)) {

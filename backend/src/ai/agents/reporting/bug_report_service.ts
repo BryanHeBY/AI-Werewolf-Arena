@@ -1,3 +1,8 @@
+/**
+ * Normalizes and rate-limits agent bug reports against the current player context. Inputs are
+ * raw report fields and World identity; outputs are accepted report IDs or recorded rejection
+ * reasons. Reports never submit a game action or change role resources.
+ */
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
@@ -89,7 +94,7 @@ export class AgentBugReportService {
       return { ok: true, accepted: false, dropped: true, reason: droppedReason };
     }
 
-    const role = this.world.getComponent<RoleComponent>(report.actorId, COMPONENT.Role);
+    const role = this.world.getComponent(report.actorId, COMPONENT.Role);
     const reportId =
       getSessionRecorder()?.recordDebugReport({
         timestampMs: Date.now(),

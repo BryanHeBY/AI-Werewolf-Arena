@@ -1,3 +1,8 @@
+/**
+ * Checks Gargoyle knife succession against the actual surviving wolf camp. Inputs are current
+ * role state and World; outputs are eligibility or the existing inheritance state/fact. It does
+ * not rewrite the role or infer inheritance from an uncommitted death.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, type GameEvent } from "../../../../core/domain/model";
@@ -16,16 +21,16 @@ export function canGargoyleKnife(role: RoleComponent, world?: World): boolean {
     return false;
   const wolves = world
     .getAliveEntityIds()
-    .filter((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === Camp.Wolf);
+    .filter((id) => world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf);
   return wolves.length === 1 && world.getComponent(wolves[0]!, COMPONENT.Role) === role;
 }
 export function refreshGargoyleInheritance(world: World, events: GameEvent[], day: number): void {
   const wolves = world
     .getAliveEntityIds()
-    .filter((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === Camp.Wolf);
+    .filter((id) => world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf);
   if (wolves.length !== 1) return;
   const actorId = wolves[0]!,
-    role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!,
+    role = world.getComponent(actorId, COMPONENT.Role)!,
     state = role.role === Role.Gargoyle ? getGargoyleState(role) : undefined;
   if (!state || state.hasInheritedKnife) return;
   state.hasInheritedKnife = true;

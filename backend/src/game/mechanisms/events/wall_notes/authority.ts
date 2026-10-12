@@ -194,7 +194,7 @@ export function projectWallNote(
 ): (WallNoteComponent & { effectiveRemaining: 0 | 1 }) | undefined {
   const a = active.get(world),
     author = a?.authors.get(id);
-  const n = world.getComponent<WallNoteComponent>(id, COMPONENT.WallNote);
+  const n = world.getComponent(id, COMPONENT.WallNote);
   const owner = owned.get(world)?.get(id);
   if (!owner || owner.note !== n) return;
   const data = readWallNoteData(n),

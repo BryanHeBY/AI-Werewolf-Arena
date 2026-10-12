@@ -1,3 +1,9 @@
+/**
+ * Builds actionable target hints from the request, role and registered target rules. Inputs
+ * include current component state and candidate context; outputs are localized prompt hints. A
+ * hint is not a capability, and actual validation and commitment still belong to the gateway and
+ * mechanism.
+ */
 import { nobleBodyChoiceTargets } from "../roles/noble_secret_body/authority";
 import {
   shelterTargets,
@@ -155,10 +161,10 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
     const allowSelf =
       radiantSelf || targetTools.some((tool) => this.getRule(ctx.actorRole, tool)?.allowSelf);
     const inspection = getRoleInspectionState(
-      ctx.world.getComponent<RoleComponent>(ctx.actorId, COMPONENT.Role)!,
+      ctx.world.getComponent(ctx.actorId, COMPONENT.Role)!,
       ctx.abilityId,
     );
-    const ownRole = ctx.world.getComponent<RoleComponent>(ctx.actorId, COMPONENT.Role);
+    const ownRole = ctx.world.getComponent(ctx.actorId, COMPONENT.Role);
     const awakenedGuard = getAwakenedState(ownRole)?.learned?.skill;
     const luckyAllowed = (tool: ToolName, id: number) => {
       const kind =
@@ -206,7 +212,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
             (tool !== "kill_vote" || wolfKnifeTargetAllowed(ctx.world, id)) &&
             (tool !== "inspect_night_identity" ||
               ctx.actorRole !== Role.WolfWitch ||
-              ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp !== "wolf") &&
+              ctx.world.getComponent(id, COMPONENT.Role)?.camp !== "wolf") &&
             (tool !== "awakened_guard" ||
               awakenedGuard?.kind !== "guard" ||
               awakenedGuard.lastGuardDay !== (ctx.day ?? 1) - 1 ||

@@ -1,3 +1,9 @@
+/**
+ * Opens the Debater speaking opportunity and dispatches the selected debate through its
+ * authority. Inputs are the current day participants, provider and gateway; outputs preserve the
+ * debate event and window result. It never bypasses participant identity checks after the
+ * provider await.
+ */
 import {
   COMPONENT,
   Role,
@@ -45,10 +51,7 @@ export class DebaterWindow {
     const empty = { skipSpeech: false };
     if (!isCurrent()) return empty;
     const actorId = this.world.getEntityIdsByRole(Role.Debater).find((id) => {
-      const role = this.world.getComponent<import("../../../../core/domain").RoleComponent>(
-          id,
-          COMPONENT.Role,
-        ),
+      const role = this.world.getComponent(id, COMPONENT.Role),
         state = getDebaterState(role);
       return (
         id !== targetId &&
@@ -73,8 +76,8 @@ export class DebaterWindow {
       policy = state.policy;
     if (policy !== "awa_melbourne_2026_speech_gap_v1") return empty;
     const badgeSnapshot = (id: number) => {
-      const badge = this.world.getComponent<BadgeComponent>(id, COMPONENT.Badge),
-        vote = this.world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight);
+      const badge = this.world.getComponent(id, COMPONENT.Badge),
+        vote = this.world.getComponent(id, COMPONENT.VotingRight);
       return {
         id,
         badge,
@@ -255,7 +258,7 @@ export class DebaterWindow {
         abstentions = eligibleCount - supports - rejects,
         success = supports > eligibleCount / 2,
         blockedId = success ? targetId : actorId;
-      const targetBadge = this.world.getComponent<BadgeComponent>(targetId, COMPONENT.Badge),
+      const targetBadge = this.world.getComponent(targetId, COMPONENT.Badge),
         needsBadge = success && targetBadge?.isSheriff === true && !targetBadge.destroyed;
       if (needsBadge && !badgeSuccessorEligible(this.world, targetId, actorId)) return canceled();
       if (!current()) return canceled();

@@ -1,3 +1,9 @@
+/**
+ * Owns Wolf Sorcerer native exchange and night target-remapping receipts. Inputs are original
+ * participants and the paired choice; outputs are current remaps, pack readiness and close/abort
+ * decisions. Only the bound original players share an exchange, without silently replacing its
+ * source.
+ */
 import { resolveOrderedSeatTarget } from "./seat_mapping";
 import { types } from "node:util";
 import { COMPONENT, type RoleComponent, type World } from "../../../../core";
@@ -103,8 +109,8 @@ export function installWolfSorcererBoard(world: World): void {
   let actorId: number | null = null;
   let state: WolfSorcererState | undefined;
   for (const id of world.entityIds()) {
-    const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
-    const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive);
+    const role = world.getComponent(id, COMPONENT.Role);
+    const life = world.getComponent(id, COMPONENT.Alive);
     const version = life && aliveLifeVersion(life);
     if (!role || !life || types.isProxy(life) || version === undefined)
       throw new Error("wolf_sorcerer_original_roster_invalid");

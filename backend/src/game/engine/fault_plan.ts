@@ -1,3 +1,9 @@
+/**
+ * Applies the explicit night fault plan at its declared decision and source-freeze boundaries.
+ * Inputs are scheduled fault descriptors and current World references; outputs are the actual
+ * fault occurrences and consumed-plan checks. This controlled fault driver never invents normal
+ * role actions or alter the RNG draw order.
+ */
 import { types } from "node:util";
 import { z } from "zod";
 import { readFaultPlan, type FaultPlan, type FaultStep } from "../../core/domain/fault_plan";
@@ -108,10 +114,7 @@ export class NightFaultPlan {
       ![decision.actorId, decision.targetId].includes(step.mutation.playerId)
     )
       throw new Error("fault_plan_decision_boundary_invalid");
-    const original = this.world.getComponent<AliveComponent>(
-        step.mutation.playerId,
-        COMPONENT.Alive,
-      ),
+    const original = this.world.getComponent(step.mutation.playerId, COMPONENT.Alive),
       originalVersion = original && aliveLifeVersion(original);
     if (!original || types.isProxy(original) || originalVersion === undefined)
       throw new Error("fault_plan_original_life_invalid");

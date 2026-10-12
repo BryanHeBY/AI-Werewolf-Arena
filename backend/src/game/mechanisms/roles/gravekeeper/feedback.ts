@@ -1,3 +1,8 @@
+/**
+ * Records committed exile feedback in Gravekeeper history at its feedback stage. Inputs are the
+ * accepted exile result and current Gravekeeper state; outputs are the received report and
+ * event. It never reveals an uncommitted target identity or changes exile resolution.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { World } from "../../../../core/domain/world";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -27,7 +32,7 @@ export const GRAVEKEEPER_FEEDBACK_STAGE: NightStageHandler = {
     if (!ctx.isCurrent() || !fact || fact.exileDay !== receivedDay - 1) return;
     for (const actorId of ctx.getAliveByRole(Role.Gravekeeper)) {
       if (!ctx.isCurrent()) return;
-      const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+      const role = ctx.world.getComponent(actorId, COMPONENT.Role);
       const state = role?.role === Role.Gravekeeper ? getGravekeeperState(role) : undefined;
       if (!state || state.history.some((report) => report.receivedDay === receivedDay)) continue;
       state.history.push({ ...fact, receivedDay, result: { ...fact.result } });

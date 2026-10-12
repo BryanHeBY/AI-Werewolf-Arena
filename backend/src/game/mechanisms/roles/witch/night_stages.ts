@@ -1,3 +1,9 @@
+/**
+ * Resets per-night Witch flags and executes potion choices against captured stock and targets.
+ * Inputs are current native/granted potion instances and validated actions; outputs preserve
+ * paid heal/poison claims, passes and use history. Existing second-turn and role-specific
+ * policies remain distinct, with no stock refresh on replacement.
+ */
 import { isRadiantEclipseBoard } from "../radiant_eclipse/night_frame";
 import {
   isScholarMentorBoard,
@@ -41,7 +47,7 @@ const resetNightRoleStateStage: NightStageHandler = {
   async execute(ctx): Promise<void> {
     if (demonHunterActorId(ctx.world) !== null) return;
     for (const id of ctx.world.getAliveEntityIds()) {
-      const role = ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = ctx.world.getComponent(id, COMPONENT.Role);
       for (const ability of allNightAbilities(role)) {
         if (ability.kind !== "potion") continue;
         const witchState = ability.state;
@@ -103,7 +109,7 @@ const witchActionStage: NightStageHandler = {
       for (let turn = 0; turn < (both ? 2 : 1); turn++) {
         if (
           !activeNightAbility(
-            ctx.world.getComponent<RoleComponent>(witchId, COMPONENT.Role),
+            ctx.world.getComponent(witchId, COMPONENT.Role),
             "potion",
             ctx.currentDay(),
             ability.id,
@@ -258,7 +264,7 @@ async function executePotionTurn(
     return false;
   }
 
-  const witch = ctx.world.getComponent<RoleComponent>(witchId, COMPONENT.Role);
+  const witch = ctx.world.getComponent(witchId, COMPONENT.Role);
   if (!activeNightAbility(witch, "potion", ctx.currentDay(), ability.id)) return false;
   const witchState = witch ? getWitchState(witch, ability.id) : undefined;
   if (!witchState) {

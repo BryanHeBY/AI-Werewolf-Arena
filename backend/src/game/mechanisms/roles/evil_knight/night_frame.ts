@@ -1,3 +1,8 @@
+/**
+ * Owns Evil Knight board roster bindings and its native-frame setup stage. Inputs are original
+ * players and installed ability identities; outputs are current-roster checks and the registered
+ * frame stage. It never rebuilds the roster after native actor replacement; stale bindings fail.
+ */
 import type { World } from "../../../../core/domain/world";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -50,7 +55,7 @@ export function installEvilKnightBoard(world: World): void {
   installed.set(
     world,
     world.entityIds().map((id) => {
-      const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = world.getComponent(id, COMPONENT.Role);
       if (!role) throw new Error("evil_knight_roster_missing");
       return {
         id,
@@ -101,7 +106,7 @@ export function assertEvilKnightRosterCurrent(world: World): void {
 export function assertEvilKnightNativeActor(world: World, actorId: number, expected: Role): void {
   if (!isEvilKnightBoard(world)) return;
   assertEvilKnightRosterCurrent(world);
-  const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+  const role = world.getComponent(actorId, COMPONENT.Role);
   if (role?.role !== expected || role.camp !== Camp.Good)
     throw new Error("evil_knight_actor_identity_revoked");
 }

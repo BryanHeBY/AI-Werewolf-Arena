@@ -1,3 +1,9 @@
+/**
+ * Executes sealed Demon native Guard or Seer requests using the original native frame. Inputs
+ * are bound request scopes and validated target tools; outputs are audited state writes and
+ * domain settlement before later effect events. Failed commitment settles false without
+ * replacing the frame or its captured intrinsic operations.
+ */
 import {
   Camp,
   Phase,
@@ -89,10 +95,7 @@ export async function executeDemonNativeNight(
     const targetId = call.args.target_id;
     if (guard) {
       const target = targetId === null ? null : captureNightLife(world, targetId);
-      const marks =
-        targetId === null
-          ? null
-          : world.getComponent<StatusMarksComponent>(targetId, COMPONENT.StatusMarks);
+      const marks = targetId === null ? null : world.getComponent(targetId, COMPONENT.StatusMarks);
       if (targetId !== null && (!target || !marks))
         throw new Error("demon_hunter_native_guard_target_invalid");
       const contribution =

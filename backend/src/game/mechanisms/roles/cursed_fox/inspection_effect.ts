@@ -1,3 +1,9 @@
+/**
+ * Captures inspection target identity and commits sourced Fox inspection claims. Inputs are
+ * original target life/role references and owner-current checks; outputs preserve inspection
+ * bookkeeping and delayed lethal claims. Knowledge publication does not itself mark the Fox
+ * dead.
+ */
 import { COMPONENT, Role, Camp, type RoleComponent, type World } from "../../../../core/domain";
 import { livingNightLife, type NightLifeScope } from "../../../../core/domain/night_effects";
 import type { NightStageState } from "../../stages/night/contracts";
@@ -7,7 +13,7 @@ export function hasFoxInspectionNightCommit(world: World, day: number): boolean 
 }
 /** Snapshot before await; a new identity cannot acquire an old pending inspection. */
 export function captureInspectionIdentity(world: World, target: NightLifeScope) {
-  const role = world.getComponent<RoleComponent>(target.id, COMPONENT.Role);
+  const role = world.getComponent(target.id, COMPONENT.Role);
   const kind = role?.role,
     camp = role?.camp,
     state = role?.privateState;

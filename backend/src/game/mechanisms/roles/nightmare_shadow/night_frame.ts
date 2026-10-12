@@ -1,3 +1,9 @@
+/**
+ * Owns Nightmare roster and fear bindings for one actual night. Inputs are original native roles
+ * and the accepted fear choice; outputs are current fear/knife blocking predicates and recorded
+ * choice state. Only the bound roster participates; a replaced component cannot silently reopen
+ * the night.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import {
   aliveLifeVersion,
@@ -56,12 +62,12 @@ function authority(ability: NightAbility): string {
   ]);
 }
 function captureRole(world: World, id: EntityId) {
-  const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
+  const role = world.getComponent(id, COMPONENT.Role);
   if (!role) throw new Error("nightmare_roster_missing");
   const kind = role.role,
     camp = role.camp,
     privateState = role.privateState;
-  const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive);
+  const life = world.getComponent(id, COMPONENT.Alive);
   const descriptor = life && aliveLifeDescriptor(life);
   const version = life && aliveLifeVersion(life);
   if (!life || !descriptor || version === undefined)
@@ -146,8 +152,7 @@ export function assertNightmareRosterCurrent(world: World): void {
   if (
     world.entityIds().length !== board.roster.length ||
     board.roster.some((row) => !row.current()) ||
-    getNightmareShadowState(world.getComponent<RoleComponent>(board.actorId, COMPONENT.Role)) !==
-      board.state ||
+    getNightmareShadowState(world.getComponent(board.actorId, COMPONENT.Role)) !== board.state ||
     stateIdentity(board.state) !== board.expectedState
   )
     throw new Error("nightmare_roster_revoked");
@@ -203,8 +208,7 @@ export function commitNightmareFear(
   const target = targetId === null ? null : captureNightLife(world, targetId);
   if (targetId !== null && !target) throw new Error("nightmare_fear_target_invalid");
   const wolfBlocked =
-    targetId !== null &&
-    world.getComponent<RoleComponent>(targetId, COMPONENT.Role)?.camp === Camp.Wolf;
+    targetId !== null && world.getComponent(targetId, COMPONENT.Role)?.camp === Camp.Wolf;
   board.state.lastDay = day;
   board.state.lastTarget = targetId;
   board.state.packReady = true;

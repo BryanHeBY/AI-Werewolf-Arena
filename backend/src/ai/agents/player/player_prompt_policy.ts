@@ -1,3 +1,8 @@
+/**
+ * Builds the player observation, system/user prompts and actionable hints. Inputs are the World,
+ * request and prompt policy options; outputs preserve player knowledge, role text and board
+ * context. It never commits submitted actions or changes role state.
+ */
 import { isAnimalDreamBoard } from "../../../game/mechanisms/roles/animal_dream/authority";
 import {
   animalFoxKnowledge,
@@ -424,7 +429,7 @@ export class PlayerPromptPolicy {
       request: { ...request, context },
       identity: {
         ...(role ? { role: role.role, camp: role.camp } : {}),
-        name: this.world.getComponent<IdentityComponent>(request.actorId, COMPONENT.Identity)?.name,
+        name: this.world.getComponent(request.actorId, COMPONENT.Identity)?.name,
       },
       knownAliveIds: this.world.entityIds().filter((id) => !dead.has(id)),
       teammateIds: this.wolfTeammates(request.actorId),
@@ -459,8 +464,7 @@ export class PlayerPromptPolicy {
         boardInfoPrompt,
         configPrompt,
         personalityPrompt: this.options.personalityPromptResolver?.(request, role),
-        playerName: this.world.getComponent<IdentityComponent>(request.actorId, COMPONENT.Identity)
-          ?.name,
+        playerName: this.world.getComponent(request.actorId, COMPONENT.Identity)?.name,
         supportsDebugReporting: options.supportsDebugReporting,
         includeToolUseInstructions: options.includeToolUseInstructions,
       }),
@@ -592,7 +596,7 @@ export class PlayerPromptPolicy {
   }
 
   private role(actorId: EntityId): RoleComponent | undefined {
-    return this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+    return this.world.getComponent(actorId, COMPONENT.Role);
   }
 
   private wolfTeammates(actorId: EntityId): EntityId[] {

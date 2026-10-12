@@ -1,3 +1,9 @@
+/**
+ * Captures an ability owner with original role, life, state, source and policy identities.
+ * Inputs are the selected instance and phase-current callback; outputs are owner-current and
+ * active-eligibility checks. Replacing a captured slot or policy invalidates the scope without
+ * writing state or spending a use.
+ */
 import { captureRadiantTurn } from "./radiant_eclipse/night_frame";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
@@ -39,7 +45,7 @@ export function captureNightAbilityScope<K extends NightAbilityKind>(
   day: number,
   phaseCurrent: () => boolean,
 ) {
-  const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role),
+  const role = world.getComponent(actorId, COMPONENT.Role),
     life = captureNightLife(world, actorId);
   if (!role || !life) return null;
   const radiantCurrent = captureRadiantTurn(world, actorId, ability, day);

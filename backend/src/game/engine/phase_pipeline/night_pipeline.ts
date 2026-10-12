@@ -1,3 +1,9 @@
+/**
+ * Runs the ordered night stages, collects sourced effects and prepares dawn damage. Inputs are
+ * current World components, stage registrations and the action provider; outputs are night
+ * summaries, death proposals and pipeline events. It does not replace an ability owner or
+ * collapse paid effects into unsourced marks.
+ */
 import {
   checkpointNobleBodyAuthority,
   beginNobleBodyNight,
@@ -655,7 +661,7 @@ export class NightPipeline {
         ? originalDemonNightLives(this.world)
         : new Map(
             (mist?.delayEligible ? this.world.getAliveEntityIds() : damage.deaths).map((id) => {
-              const life = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+              const life = this.world.getComponent(id, COMPONENT.Alive)!;
               return [id, { life, version: aliveLifeVersion(life) }] as const;
             }),
           );
@@ -749,7 +755,7 @@ export class NightPipeline {
    */
   private getAliveByRole(role: Role): EntityId[] {
     return this.world.getAliveEntityIds().filter((id) => {
-      const roleComp = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const roleComp = this.world.getComponent(id, COMPONENT.Role);
       return roleComp?.role === role;
     });
   }
@@ -758,7 +764,7 @@ export class NightPipeline {
    * 获取或创建目标玩家的状态印记组件。
    */
   private ensureMarks(entityId: EntityId): StatusMarksComponent {
-    let marks = this.world.getComponent<StatusMarksComponent>(entityId, COMPONENT.StatusMarks);
+    let marks = this.world.getComponent(entityId, COMPONENT.StatusMarks);
     if (!marks) {
       // 标记组件按需创建，避免无状态玩家占用冗余存储。
       marks = new StatusMarksComponent();

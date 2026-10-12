@@ -119,9 +119,10 @@
       "path": "backend/src/core/domain/world.ts",
       "owner": "domain World/component-map",
       "exports": "deprecated explicit-T getComponent/addComponent overloads only; default calls follow ComponentMap",
-      "currentConsumers": "existing explicit generic source/test reads and named hostile negative injections",
+      "currentConsumers": "existing explicit generic test reads/writes and named hostile negative injections; production source has zero explicit component-read type arguments after 318-call migration",
       "exit": "C44 removes unchecked public overloads after all source reads/writes use mapped names; tests keep explicit privileged negative injection casts only in test support",
-      "runtime": "same stores, original object identity, life revision and method bodies; overloads erase"
+      "runtime": "same stores, original object identity, life revision and method bodies; overloads erase",
+      "consumerEvidence": "generated/component-consumer-mappings.json"
     },
     {
       "id": "seer-private-state-accessors",

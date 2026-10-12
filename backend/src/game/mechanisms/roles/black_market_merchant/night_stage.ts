@@ -1,3 +1,9 @@
+/**
+ * Runs Black Market trade before the late recipient ability stage. Inputs are current merchant
+ * stock and validated trade choices; outputs are copied abilities or death guns, backlash claims
+ * and skip/commit facts. Paid-effect lifetime remains tied to the original life, not a
+ * replacement merchant.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, Phase, WitchSelfHealRule } from "../../../../core/domain/model";
@@ -25,7 +31,7 @@ export const BLACK_MARKET_TRADE_STAGE: NightStageHandler = {
   async execute(ctx) {
     const day = ctx.currentDay();
     for (const actorId of ctx.getAliveByRole(Role.BlackMarketMerchant)) {
-      const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!,
+      const role = ctx.world.getComponent(actorId, COMPONENT.Role)!,
         state = getBlackMarketState(role),
         life = captureNightLife(ctx.world, actorId);
       if (!state || !life || role.camp !== Camp.Good) continue;
@@ -62,7 +68,7 @@ export const BLACK_MARKET_TRADE_STAGE: NightStageHandler = {
             .getAliveEntityIds()
             .filter((id) => id !== actorId)
             .map((id) => {
-              const targetRole = ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+              const targetRole = ctx.world.getComponent(id, COMPONENT.Role)!;
               return [
                 id,
                 {

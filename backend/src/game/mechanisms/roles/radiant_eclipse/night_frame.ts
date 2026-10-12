@@ -1,3 +1,9 @@
+/**
+ * Owns Radiant/Eclipse original roster, borrowing choices and paid shelter/swallow effects.
+ * Inputs are current ability identities and target leases; outputs are current turn checks and
+ * sealed night claims. Only the original matching source may pay, and night close never revives
+ * a revoked borrowed state.
+ */
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { Role, Camp } from "../../../../core/domain/identity";
@@ -117,8 +123,8 @@ const policyKeys = [
 ] as const;
 const identityKeys = ["id", "seat", "name", "sessionId"] as const;
 function original(world: World, id: number): Original {
-  const role = world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
-  const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+  const role = world.getComponent(id, COMPONENT.Role)!;
+  const life = world.getComponent(id, COMPONENT.Alive)!;
   const identity = world.getComponent(id, COMPONENT.Identity);
   if (!role || !life || !factoryLife(life) || !life.alive || aliveLifeVersion(life) === undefined)
     throw new Error("radiant_original_invalid");

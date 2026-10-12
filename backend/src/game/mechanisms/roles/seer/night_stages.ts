@@ -73,7 +73,7 @@ const seerCheckStage: NightStageHandler = {
       if (
         !ctx.world.getAliveEntityIds().includes(seerId) ||
         activeNightAbility(
-          ctx.world.getComponent<RoleComponent>(seerId, COMPONENT.Role),
+          ctx.world.getComponent(seerId, COMPONENT.Role),
           "seer_check",
           ctx.currentDay(),
           ability.id,
@@ -179,7 +179,7 @@ const seerCheckStage: NightStageHandler = {
         throw new Error("magician_inspection_target_stale");
       if (!inspection) continue;
       const isWerewolf = inspection.camp === Camp.Wolf;
-      const seerRole = ctx.world.getComponent<RoleComponent>(seerId, COMPONENT.Role);
+      const seerRole = ctx.world.getComponent(seerId, COMPONENT.Role);
       if (!activeNightAbility(seerRole, "seer_check", ctx.currentDay(), ability.id)) continue;
       const seerState = seerRole ? getSeerState(seerRole, ability.id) : undefined;
       if (receipt && (!receipt.isCurrent() || !effectiveIdentity?.isCurrent()))

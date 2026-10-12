@@ -1,3 +1,9 @@
+/**
+ * Owns Time Consort target locks and their reflected night-action receipts. Inputs are original
+ * players, the lock choice and native action kind; outputs are effective-target mappings and
+ * currentness checks. Close/abort ends the lock night without transferring its effect to revived
+ * targets.
+ */
 import { types } from "node:util";
 import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../core";
 import {
@@ -177,8 +183,8 @@ export function installTimeConsortBoard(world: World): void {
   let actorId: number | null = null;
   let state: TimeConsortState | undefined;
   for (const id of world.entityIds()) {
-    const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
-    const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive);
+    const role = world.getComponent(id, COMPONENT.Role);
+    const life = world.getComponent(id, COMPONENT.Alive);
     const version = life && aliveLifeVersion(life);
     if (!role || !life || types.isProxy(life) || version === undefined)
       throw new Error("time_consort_original_roster_invalid");

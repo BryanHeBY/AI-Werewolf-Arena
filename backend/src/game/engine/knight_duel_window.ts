@@ -1,3 +1,8 @@
+/**
+ * Executes the configured Knight duel opportunity with captured actor and target bodies. Inputs
+ * are the day context, provider and gateway; outputs are a validated duel selection and its
+ * existing commit effects. It does not let a replaced or dead actor reuse the captured window.
+ */
 import { COMPONENT } from "../../core/domain/components/names";
 import { AliveComponent, aliveLifeVersion } from "../../core/domain/components/alive";
 import type { RoleComponent } from "../../core/domain/components/role";
@@ -45,15 +50,15 @@ export class KnightDuelWindow {
       return empty;
     if (
       !this.world.getAliveEntityIds().some((id) => {
-        const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+        const role = this.world.getComponent(id, COMPONENT.Role);
         return role?.role === Role.Knight && getKnightState(role)?.canDuel === true;
       })
     )
       return empty;
     const snapshots = new Map<number, DuelParticipantSnapshot>(
       this.world.getAliveEntityIds().map((id) => {
-        const life = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!,
-          role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+        const life = this.world.getComponent(id, COMPONENT.Alive)!,
+          role = this.world.getComponent(id, COMPONENT.Role)!;
         return [
           id,
           { life, version: aliveLifeVersion(life), role, roleId: role?.role, camp: role?.camp },

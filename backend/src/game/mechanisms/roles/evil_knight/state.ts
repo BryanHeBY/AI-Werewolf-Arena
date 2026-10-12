@@ -1,3 +1,9 @@
+/**
+ * Owns Evil Knight private state data and captured inspection-reflection rights. Inputs are
+ * original role state and inspection context; outputs preserve immunity checks and committed
+ * reflection claims. These runtime state references are not player DTOs, and a replaced state
+ * cannot reuse the captured right.
+ */
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -41,7 +47,7 @@ export function getEvilKnightState(role: RoleComponent | undefined): EvilKnightS
 }
 /** Capture the original identity before awaiting another player's submission. */
 export function captureEvilKnight(world: World, target: NightLifeScope) {
-  const role = world.getComponent<RoleComponent>(target.id, COMPONENT.Role);
+  const role = world.getComponent(target.id, COMPONENT.Role);
   const state = getEvilKnightState(role);
   if (!role || !state || !livingNightLife(world, target)) return null;
   const privateState = role.privateState,
@@ -67,7 +73,7 @@ export function commitEvilKnightReflection(
   trigger: "seer_check" | "poison",
   casterCurrent: () => boolean,
 ): NightRetaliationAttack | null {
-  const casterRole = world.getComponent<RoleComponent>(caster.id, COMPONENT.Role);
+  const casterRole = world.getComponent(caster.id, COMPONENT.Role);
   const expected = trigger === "seer_check" ? Role.Seer : Role.Witch;
   if (
     !binding ||

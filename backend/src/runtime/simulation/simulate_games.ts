@@ -1,3 +1,9 @@
+/**
+ * Runs the configured simulation batch with explicit seeds and provider setup. Inputs are
+ * board/runtime options and independent game executions; outputs are existing reports, branch
+ * counts and saved reproduction evidence. It does not turn the baseline provider into a
+ * player-knowledge oracle or change per-game RNG order.
+ */
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
 import { bootstrapGame } from "../../app/bootstrap";
 import {
@@ -226,7 +232,7 @@ export async function simulateGames(
             throw new Error("simulation_unexpected_revival");
           priorAlive = alive;
           for (const id of context.world.entityIds()) {
-            const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+            const role = context.world.getComponent(id, COMPONENT.Role);
             if (!role) throw new Error("simulation_missing_role");
             const witch = getWitchState(role);
             if (witch) {
@@ -261,7 +267,7 @@ export async function simulateGames(
               ? "runtime_error"
               : (snapshot.result?.reason ?? "incomplete"),
             players: context.playerIds.map((id) => {
-              const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+              const role = context.world.getComponent(id, COMPONENT.Role)!;
               return {
                 player_id: id,
                 role: role.role,

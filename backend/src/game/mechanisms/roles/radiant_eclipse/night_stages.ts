@@ -1,3 +1,9 @@
+/**
+ * Runs Eclipse swallow and Radiant shelter requests in their declared order. Inputs are the
+ * installed night frame and validated target choices; outputs preserve borrowed-resource or
+ * shelter commits and events. These stages never infer paid-effect validity from provider
+ * return; the frame owns that check.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, Role } from "../../../../core/domain/identity";
@@ -21,10 +27,7 @@ export const ECLIPSE_SWALLOW_STAGE: NightStageHandler = {
     if (day < 2) return;
     const actorId = ctx.world
       .getAliveEntityIds()
-      .find(
-        (id) =>
-          ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.EclipseMaid,
-      );
+      .find((id) => ctx.world.getComponent(id, COMPONENT.Role)?.role === Role.EclipseMaid);
     if (actorId === undefined) return;
     openEclipseChoice(ctx.world, day);
     const request = ctx.makeRequest(actorId, ["swallow_skill"], {

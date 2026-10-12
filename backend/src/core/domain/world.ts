@@ -50,13 +50,13 @@ export class World {
     abilityId?: string,
   ): { readonly id: number; close(): void } {
     if (this.currentDeathAction(actorId)) throw new Error("death_action_already_open");
-    const alive = this.getComponent<AliveComponent>(actorId, COMPONENT.Alive);
+    const alive = this.getComponent(actorId, COMPONENT.Alive);
     const lifeVersion = alive && aliveLifeVersion(alive);
     if (
       !alive ||
       alive.alive !== false ||
       lifeVersion === undefined ||
-      !this.getComponent<RoleComponent>(actorId, COMPONENT.Role) ||
+      !this.getComponent(actorId, COMPONENT.Role) ||
       !Number.isSafeInteger(day) ||
       day < 1 ||
       !["shoot", "speak", "choose_badge_successor"].includes(tool) ||
@@ -122,7 +122,7 @@ export class World {
     const permit = this.deathActions.get(actorId);
     if (!permit) return undefined;
     if (
-      this.getComponent<AliveComponent>(actorId, COMPONENT.Alive) !== permit.alive ||
+      this.getComponent(actorId, COMPONENT.Alive) !== permit.alive ||
       permit.alive.alive !== false ||
       aliveLifeVersion(permit.alive) !== permit.lifeVersion ||
       !permit.isCurrent()
@@ -171,11 +171,7 @@ export class World {
     component: C,
   ): void;
   /** @deprecated C44: explicit legacy type arguments bypass the slot relation. */
-  addComponent<T = never>(
-    entityId: EntityId,
-    name: ComponentName,
-    component: NoInfer<T>,
-  ): void;
+  addComponent<T = never>(entityId: EntityId, name: ComponentName, component: NoInfer<T>): void;
   addComponent<T>(entityId: EntityId, name: ComponentName, component: T): void {
     if (!this.hasEntity(entityId)) {
       throw new Error(`Entity ${entityId} does not exist`);
@@ -186,10 +182,7 @@ export class World {
     store.set(entityId, component);
   }
 
-  getComponent<K extends ComponentName>(
-    entityId: EntityId,
-    name: K,
-  ): ComponentMap[K] | undefined;
+  getComponent<K extends ComponentName>(entityId: EntityId, name: K): ComponentMap[K] | undefined;
   /** @deprecated C44: explicit legacy type arguments bypass the slot relation. */
   getComponent<T = never>(entityId: EntityId, name: ComponentName): NoInfer<T> | undefined;
   getComponent<T>(entityId: EntityId, name: ComponentName): T | undefined {
@@ -223,7 +216,7 @@ export class World {
    */
   getAliveEntityIds(): EntityId[] {
     return this.entitiesWith(COMPONENT.Alive).filter((id) => {
-      const alive = this.getComponent<AliveComponent>(id, COMPONENT.Alive);
+      const alive = this.getComponent(id, COMPONENT.Alive);
       return alive?.alive === true;
     });
   }
@@ -233,7 +226,7 @@ export class World {
    */
   getEntityIdsByRole(role: Role): EntityId[] {
     return this.entitiesWith(COMPONENT.Role).filter((id) => {
-      const roleComp = this.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const roleComp = this.getComponent(id, COMPONENT.Role);
       return roleComp?.role === role;
     });
   }

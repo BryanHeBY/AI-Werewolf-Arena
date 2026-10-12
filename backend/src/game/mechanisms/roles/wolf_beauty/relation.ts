@@ -1,3 +1,9 @@
+/**
+ * Owns Wolf Beauty charm bindings and the linked death/exile claim boundaries. Inputs are
+ * captured source/target references and death or exile contexts; outputs are current relations,
+ * claims and configured linked-victory decisions. It does not apply unrelated damage or carry a
+ * claim across a replaced life.
+ */
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -32,10 +38,10 @@ export function bindCharm(world: World, actorId: EntityId, targetId: EntityId | 
   bindings.set(world, map);
   map.delete(actorId);
   if (targetId === null) return;
-  const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!,
+  const role = world.getComponent(actorId, COMPONENT.Role)!,
     state = getWolfBeautyState(role)!,
-    actorLife = world.getComponent<AliveComponent>(actorId, COMPONENT.Alive)!,
-    targetLife = world.getComponent<AliveComponent>(targetId, COMPONENT.Alive)!;
+    actorLife = world.getComponent(actorId, COMPONENT.Alive)!,
+    targetLife = world.getComponent(targetId, COMPONENT.Alive)!;
   map.set(actorId, {
     actorId,
     targetId,
@@ -105,7 +111,7 @@ export interface BeautyExileCandidate {
 }
 /** Called only by the manager after a real exile is decided, before the whole death wave. */
 export function captureBeautyExile(world: World, actorId: EntityId): BeautyExileCandidate | null {
-  const actor = world.getComponent<RoleComponent>(actorId, COMPONENT.Role),
+  const actor = world.getComponent(actorId, COMPONENT.Role),
     binding = activeCharm(world, actorId);
   if (
     actor?.role !== Role.WolfBeauty ||
@@ -117,14 +123,10 @@ export function captureBeautyExile(world: World, actorId: EntityId): BeautyExile
   if (
     world
       .getAliveEntityIds()
-      .some(
-        (id) =>
-          id !== actorId &&
-          world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === Camp.Wolf,
-      )
+      .some((id) => id !== actorId && world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf)
   )
     return null;
-  const target = world.getComponent<RoleComponent>(binding.targetId, COMPONENT.Role),
+  const target = world.getComponent(binding.targetId, COMPONENT.Role),
     side = target ? getDefaultRoleCatalog().get(target.role)?.goodSide : undefined;
   return target?.camp === Camp.Good && side
     ? { actorId, targetId: binding.targetId, side, binding }
@@ -142,7 +144,7 @@ export function resolveBeautyExileVictory(
   )
     return null;
   const sideAlive = world.getAliveEntityIds().some((id) => {
-    const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
+    const role = world.getComponent(id, COMPONENT.Role);
     return (
       role?.camp === Camp.Good &&
       getDefaultRoleCatalog().get(role.role)?.goodSide === candidate.side

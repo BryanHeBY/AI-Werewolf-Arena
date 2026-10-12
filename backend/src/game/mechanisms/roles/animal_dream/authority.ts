@@ -1,3 +1,9 @@
+/**
+ * Owns Animal Dream roster resources, Fox choices and Cat/Puffer death or exile units. Inputs
+ * are original player bodies, ballots and scoped choices; writes produce accepted effects and
+ * authority snapshots only while the matching unit remains current. Close and abort retire those
+ * windows without letting replacement bodies resume them.
+ */
 import { types } from "node:util";
 import type { World } from "../../../../core/domain/world";
 import { Camp } from "../../../../core/domain/identity";
@@ -729,7 +735,7 @@ function votingState(
   world: World,
   id: number,
 ): { value: object; canVote: boolean; weight: number } | null {
-  const value = world.getComponent<object>(id, COMPONENT.VotingRight),
+  const value = world.getComponent(id, COMPONENT.VotingRight),
     canVote = descriptor(value, "canVote")?.value,
     weight = descriptor(value, "weight")?.value;
   return value && typeof canVote === "boolean" && (weight === 1 || weight === 1.5)

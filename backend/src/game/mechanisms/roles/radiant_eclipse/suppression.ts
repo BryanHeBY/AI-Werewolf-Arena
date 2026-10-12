@@ -1,3 +1,9 @@
+/**
+ * Opens Eclipse suppression over the exact original ability slots. Inputs are captured
+ * source/target components and suppression kind; outputs are current suppression leases and
+ * owned state changes. It never reauthorizes a changed slot or policy by restoring an unrelated
+ * component.
+ */
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -57,8 +63,8 @@ export function openEclipseSuppression(
   ability: SuppressibleAbility,
   day: number,
 ) {
-  const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
-  const originalLife = world.getComponent<AliveComponent>(actorId, COMPONENT.Alive);
+  const role = world.getComponent(actorId, COMPONENT.Role);
+  const originalLife = world.getComponent(actorId, COMPONENT.Alive);
   if (!factoryLife(originalLife)) throw new Error("eclipse_native_suppression_invalid");
   const life = captureNightLife(world, actorId);
   const privateState = own(role, "privateState"),

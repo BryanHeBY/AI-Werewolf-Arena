@@ -1,3 +1,9 @@
+/**
+ * Provides Wolf Beauty linked-death proposals after the original source dies. Inputs are the
+ * dead body and death-hook context; outputs are permitted charm claims or extra death proposals.
+ * Only a current relation may write a link into the returned proposal list; revoked relations
+ * fail without committing charm stock, unrelated damage or the remaining death wave.
+ */
 import { getWolfBeautyState } from "../private_state";
 import { Role, DeathCause } from "../../../../core/domain/model";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -19,11 +25,10 @@ export const wolfBeautyDeathHook: DeathHook = async (
     if (animalBeautyLinkBlocked(world, context?.day ?? 0)) continue;
     if (context?.isCurrent && !context.isCurrent()) break;
     if (
-      world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.role !== Role.WolfBeauty ||
+      world.getComponent(actorId, COMPONENT.Role)?.role !== Role.WolfBeauty ||
       !permitsCharm(
         sources[actorId] ?? [],
-        getWolfBeautyState(world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!)
-          ?.deathLinkPolicy,
+        getWolfBeautyState(world.getComponent(actorId, COMPONENT.Role)!)?.deathLinkPolicy,
         context?.nativeHunterShotTargets?.has(actorId) ?? false,
       )
     )

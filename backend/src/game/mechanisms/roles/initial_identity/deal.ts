@@ -1,3 +1,9 @@
+/**
+ * Owns Thief/Shapeshifter dealt cards, original hands and first-night setup data. Inputs are the
+ * installed roster and explicit card selection; outputs are stock, setup status and copied
+ * player setup views. Closed setup keeps its original chosen-card identity; no later role
+ * replacement redeals the stock.
+ */
 import {
   captureNightLife,
   livingNightLife,
@@ -103,7 +109,7 @@ export function installInitialIdentityDeal(
     selection: null,
   };
   const players = playerIds.map((id) => {
-    const role = world.getComponent<RoleComponent>(id, COMPONENT.Role)!,
+    const role = world.getComponent(id, COMPONENT.Role)!,
       life = captureNightLife(world, id)!;
     return {
       id,

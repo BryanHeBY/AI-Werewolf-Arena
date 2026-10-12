@@ -1,3 +1,9 @@
+/**
+ * Owns Trickster exchange choices and exile substitution for the captured night. Inputs are
+ * original bodies and the paired choice; outputs are exchange/cancel facts and the resolved
+ * exile mapping. Finish or abort ends the exchange window without granting an old mapping to a
+ * new life.
+ */
 import { mapTricksterExileTarget } from "./exile_mapping";
 import { types } from "node:util";
 import { COMPONENT, type RoleComponent, type World } from "../../../../core";
@@ -105,8 +111,8 @@ export function installTricksterBoard(world: World): void {
   let actorId: number | null = null;
   let state: TricksterState | undefined;
   for (const id of world.entityIds()) {
-    const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
-    const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive);
+    const role = world.getComponent(id, COMPONENT.Role);
+    const life = world.getComponent(id, COMPONENT.Alive);
     const version = life && aliveLifeVersion(life);
     if (!role || !life || types.isProxy(life) || version === undefined)
       throw new Error("trickster_original_roster_invalid");

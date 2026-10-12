@@ -165,8 +165,8 @@ export function captureCheckpoint(
         const original = animal ? animalOriginalAuditPlayer(world, id) : null;
         const identity = original
           ? (JSON.parse(original.identityJson) as IdentityComponent)
-          : world.getComponent<IdentityComponent>(id, COMPONENT.Identity)!;
-        const role = original?.scope.role ?? world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+          : world.getComponent(id, COMPONENT.Identity)!;
+        const role = original?.scope.role ?? world.getComponent(id, COMPONENT.Role)!;
         const badge = original
           ? (auditData(original.audit.badge, [
               "isSheriff",
@@ -174,10 +174,10 @@ export function captureCheckpoint(
               "voteWeight",
               "handoffPolicy",
             ]) as BadgeComponent)
-          : world.getComponent<BadgeComponent>(id, COMPONENT.Badge)!;
+          : world.getComponent(id, COMPONENT.Badge)!;
         const vote = original
           ? (auditData(original.audit.vote, ["weight", "canVote"]) as VotingRightComponent)
-          : world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight)!;
+          : world.getComponent(id, COMPONENT.VotingRight)!;
         const weddingAudit = weddingAuditPlayer(world, id, !complete);
         const audit = weddingAudit ?? projectLonelyGirlAuditPlayer(world, id);
         const wall = projectWallNote(world, id);
@@ -197,7 +197,7 @@ export function captureCheckpoint(
           camp: original?.scope.campValue ?? audit?.camp ?? role.camp,
           alive: original
             ? aliveLifeDescriptor(original.scope.life)!.get!.call(original.scope.life)
-            : (audit?.alive ?? world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive),
+            : (audit?.alive ?? world.getComponent(id, COMPONENT.Alive)!.alive),
           privateState:
             (animal && original
               ? id === animal.foxId
@@ -216,28 +216,19 @@ export function captureCheckpoint(
           ...(wallNote ? { wallNote } : {}),
           ...(world.getComponent(id, COMPONENT.DebatePenalty)
             ? {
-                debatePenalty: structuredClone(
-                  world.getComponent<
-                    import("../../core/domain/components/debate_penalty").DebatePenaltyComponent
-                  >(id, COMPONENT.DebatePenalty)!,
-                ),
+                debatePenalty: structuredClone(world.getComponent(id, COMPONENT.DebatePenalty)!),
               }
             : {}),
           ...(world.getComponent(id, COMPONENT.Lovers)
             ? {
-                lovers: structuredClone(
-                  world.getComponent<import("../../core/domain/components/lovers").LoversComponent>(
-                    id,
-                    COMPONENT.Lovers,
-                  )!,
-                ),
+                lovers: structuredClone(world.getComponent(id, COMPONENT.Lovers)!),
               }
             : {}),
           victory:
             (original ? (JSON.parse(original.victoryJson) as VictoryComponent) : null) ??
             (weddingAudit ? { affiliations: weddingAudit.victory } : null) ??
             projectLonelyGirlVictory(world, id) ??
-            structuredClone(world.getComponent<VictoryComponent>(id, COMPONENT.Victory)!),
+            structuredClone(world.getComponent(id, COMPONENT.Victory)!),
           vote: { weight: vote.weight, canVote: vote.canVote },
           badge: {
             isSheriff: badge.isSheriff,
@@ -247,7 +238,7 @@ export function captureCheckpoint(
           },
           marks: (
             (original?.audit.marks as StatusMarksComponent | undefined) ??
-            world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!
+            world.getComponent(id, COMPONENT.StatusMarks)!
           ).values(),
         };
       }),

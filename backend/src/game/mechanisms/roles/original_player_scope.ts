@@ -1,3 +1,8 @@
+/**
+ * Captures original player role, private state and factory-owned life/version references. Inputs
+ * are World and player ID; outputs are same-life and still-current predicates. These runtime
+ * scopes never become protocol data or replace the captured components.
+ */
 import { types } from "node:util";
 import type { World } from "../../../core/domain/world";
 import type { RoleComponent } from "../../../core/domain/components/role";
@@ -33,9 +38,9 @@ function safeAlive(v: AliveComponent | undefined): v is AliveComponent {
   return !!original && !!actual && actual.get === original.get && actual.set === original.set;
 }
 export function captureOriginalPlayer(world: World, id: number): OriginalPlayerScope | null {
-  const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive),
-    role = world.getComponent<RoleComponent>(id, COMPONENT.Role),
-    camp = world.getComponent<CampComponent>(id, COMPONENT.Camp);
+  const life = world.getComponent(id, COMPONENT.Alive),
+    role = world.getComponent(id, COMPONENT.Role),
+    camp = world.getComponent(id, COMPONENT.Camp);
   if (!Number.isSafeInteger(id) || id < 1 || !safeAlive(life) || !life.alive || !role || !camp)
     return null;
   const roleId = own(role, "role"),

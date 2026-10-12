@@ -1,3 +1,9 @@
+/**
+ * Owns ability grant, installation, enable/expiry and explicit knowledge transfer changes.
+ * Inputs are source instances and copied grant data; outputs are stored instances and lifecycle
+ * events. Transfer requires its own state policy and never silently clones spent resources or
+ * changes the recipient role.
+ */
 import { isDeepStrictEqual } from "node:util";
 import { DREAM_PROTECTION_POLICIES } from "../../../core/domain/board";
 import { COMPONENT } from "../../../core/domain/components/names";
@@ -28,7 +34,7 @@ export interface AbilityGrant<K extends NightAbilityKind> {
   activation?: "lucky" | "black_market";
 }
 const roleOf = (world: World, actorId: EntityId): RoleComponent => {
-  const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+  const role = world.getComponent(actorId, COMPONENT.Role);
   if (!role) throw new Error("ability_actor_missing");
   return role;
 };
@@ -191,9 +197,7 @@ export function expireLuckyAbilitiesOnDeath(
   actorId: EntityId,
   events: GameEvent[],
 ): void {
-  for (const ability of allNightAbilities(
-    world.getComponent<RoleComponent>(actorId, COMPONENT.Role),
-  )) {
+  for (const ability of allNightAbilities(world.getComponent(actorId, COMPONENT.Role))) {
     if (
       (ability.activation !== "lucky" && ability.activation !== "black_market") ||
       ability.deathExpired

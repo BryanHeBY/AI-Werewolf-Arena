@@ -1,3 +1,8 @@
+/**
+ * Checks Hidden Wolf knife succession from current surviving wolf members. Inputs are original
+ * role state and the actual World; outputs are inherited-knife eligibility and refresh. It does
+ * not create a new camp or award inheritance from a speculative death proposal.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, type GameEvent } from "../../../../core/domain/model";
@@ -15,7 +20,7 @@ export function canHiddenWolfKnife(role: RoleComponent, world?: World): boolean 
     return false;
   const wolves = world
     .getAliveEntityIds()
-    .filter((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === Camp.Wolf);
+    .filter((id) => world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf);
   return wolves.length === 1 && world.getComponent(wolves[0]!, COMPONENT.Role) === role;
 }
 
@@ -23,10 +28,10 @@ export function canHiddenWolfKnife(role: RoleComponent, world?: World): boolean 
 export function refreshHiddenWolfInheritance(world: World, events: GameEvent[], day: number): void {
   const wolves = world
     .getAliveEntityIds()
-    .filter((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === Camp.Wolf);
+    .filter((id) => world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf);
   if (wolves.length !== 1) return;
   const actorId = wolves[0]!,
-    role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!;
+    role = world.getComponent(actorId, COMPONENT.Role)!;
   const state = role.role === Role.HiddenWolf ? getHiddenWolfState(role) : undefined;
   if (!state || state.hasInheritedKnife) return;
   state.hasInheritedKnife = true;

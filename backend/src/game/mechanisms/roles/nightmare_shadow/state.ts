@@ -1,3 +1,9 @@
+/**
+ * Owns Nightmare Shadow private-state data and its existing field checks. Inputs are the
+ * original role state and candidate context; outputs are fresh state, current fear targets and
+ * readable state references. This state helper does not execute a fear stage or serialize
+ * runtime authority.
+ */
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -88,7 +94,7 @@ export function getNightmareShadowState(
 }
 /** The same target policy must feed requests, validation, baselines and hints. */
 export function nightmareFearTargets(world: World, actorId: EntityId, day: number): EntityId[] {
-  const state = getNightmareShadowState(world.getComponent<RoleComponent>(actorId, COMPONENT.Role));
+  const state = getNightmareShadowState(world.getComponent(actorId, COMPONENT.Role));
   if (
     !state ||
     !validDay(day) ||
@@ -99,7 +105,7 @@ export function nightmareFearTargets(world: World, actorId: EntityId, day: numbe
     return [];
   return world.getAliveEntityIds().filter((id) => {
     if (id === actorId || (state.lastDay === day - 1 && state.lastTarget === id)) return false;
-    const target = world.getComponent<RoleComponent>(id, COMPONENT.Role);
+    const target = world.getComponent(id, COMPONENT.Role);
     return !!target && (!state.packReady || target.camp !== Camp.Wolf);
   });
 }

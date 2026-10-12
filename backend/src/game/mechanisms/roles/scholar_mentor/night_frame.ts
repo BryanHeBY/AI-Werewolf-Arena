@@ -1,3 +1,9 @@
+/**
+ * Owns Scholar/Mentor original abilities, target modifiers and resolved bonus grants. Inputs are
+ * the paired modifier choices and native-target evidence; outputs are settled modifiers, legal
+ * bonus actors and sourced conflict deaths. Close or abort removes that night's windows without
+ * granting a new bonus to a replacement body.
+ */
 import { types } from "node:util";
 import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../core";
 import {
@@ -199,8 +205,8 @@ export function installScholarMentorBoard(world: World): void {
     seats = new Set<number>();
   const casters = new Map<number, CasterAuthority>();
   for (const id of world.entityIds()) {
-    const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
-    const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive);
+    const role = world.getComponent(id, COMPONENT.Role);
+    const life = world.getComponent(id, COMPONENT.Alive);
     const version = life && aliveLifeVersion(life);
     if (
       !role ||

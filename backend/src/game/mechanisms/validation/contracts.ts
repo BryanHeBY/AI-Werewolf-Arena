@@ -1,3 +1,8 @@
+/**
+ * Owns role-tool validation contract declarations and the alive-target helper. Inputs are trusted
+ * World/context data and candidate IDs; outputs describe rule results and life eligibility.
+ * These contracts do not store runtime authority or apply the submitted tool.
+ */
 import type { RuleViolation } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：工具校验规则契约定义。 */
 import { COMPONENT } from "../../../core/domain/components/names";
@@ -43,7 +48,7 @@ export type ToolRule = (ctx: ValidationRuleContext) => RuleViolation | string | 
 
 /** 判断目标玩家是否存活。 */
 export function isAliveTarget(world: World, targetId: EntityId): boolean {
-  const alive = world.getComponent<{ alive: boolean }>(targetId, COMPONENT.Alive);
+  const alive = world.getComponent(targetId, COMPONENT.Alive);
   return alive?.alive === true;
 }
 

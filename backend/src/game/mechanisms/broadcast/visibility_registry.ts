@@ -1,3 +1,8 @@
+/**
+ * Checks broadcast audiences against current role and wolf-team permissions. Inputs are the
+ * World and audience identity; outputs are wolf/role visibility predicates. These predicates
+ * only project visibility and never make the player omniscient or grant an action permission.
+ */
 /** 文件说明：封装广播可见性判定逻辑。 */
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
@@ -16,7 +21,7 @@ export class VisibilityRegistry {
   private readonly roleCatalog = getDefaultRoleCatalog();
 
   isWolfPlayer(world: World, actorId: EntityId): boolean {
-    const roleComp = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+    const roleComp = world.getComponent(actorId, COMPONENT.Role);
     return roleComp?.camp === Camp.Wolf;
   }
 

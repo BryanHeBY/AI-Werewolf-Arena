@@ -129,7 +129,7 @@ export class LlmTurnOrchestrator {
     signal: AbortSignal,
     startedAt: number,
   ): Promise<ToolCall | null> {
-    const role = this.options.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
+    const role = this.options.world.getComponent(request.actorId, COMPONENT.Role);
     const client = this.options.clientResolver?.(request, role) ?? this.options.defaultClient;
     const prompt = this.options.promptSession.build(request);
     this.options.observer.trace(

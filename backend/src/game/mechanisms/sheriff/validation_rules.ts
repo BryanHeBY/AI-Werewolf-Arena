@@ -1,3 +1,8 @@
+/**
+ * Defines sheriff direction and successor validation against the current badge and eligible
+ * targets. Inputs are sanitized tools and trusted badge context; outputs are the original rule
+ * refusals or acceptance. Validation does not transfer, destroy or recreate the badge.
+ */
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 /** 文件说明：警长机制工具校验规则。 */
 import { Phase } from "../../../core/domain/model";
@@ -8,9 +13,7 @@ import { canBeSheriff, canVote } from "../common/participation";
 /** 警长机制工具校验规则集合。 */
 export const SHERIFF_VALIDATION_RULES: ToolRuleMap = {
   choose_badge_successor: ({ world, actorId, toolCall, badgeCandidates, roleCatalog }) => {
-    const badge = world.getComponent<
-      import("../../../core/domain/components/badge").BadgeComponent
-    >(actorId, COMPONENT.Badge);
+    const badge = world.getComponent(actorId, COMPONENT.Badge);
     if (!badge?.isSheriff || badge.destroyed || badge.handoffPolicy !== "awa_holder_choice_v1")
       return { code: RuleError.BadgeChoiceUnavailable };
     const target = toolCall.args as { target_id?: unknown };
@@ -19,8 +22,7 @@ export const SHERIFF_VALIDATION_RULES: ToolRuleMap = {
       !Number.isSafeInteger(target.target_id) ||
       !badgeCandidates?.includes(target.target_id as number) ||
       !canBeSheriff(world, target.target_id as number, roleCatalog) ||
-      world.getComponent<{ destroyed: boolean }>(target.target_id as number, COMPONENT.Badge)
-        ?.destroyed !== false
+      world.getComponent(target.target_id as number, COMPONENT.Badge)?.destroyed !== false
     )
       return { code: RuleError.BadgeChoiceTarget };
     return null;
@@ -64,10 +66,7 @@ export const SHERIFF_VALIDATION_RULES: ToolRuleMap = {
     return null;
   },
   choose_direction: ({ world, actorId, phase, roleCatalog }) => {
-    const badge = world.getComponent<{ isSheriff: boolean; destroyed: boolean }>(
-      actorId,
-      COMPONENT.Badge,
-    );
+    const badge = world.getComponent(actorId, COMPONENT.Badge);
     if (!badge?.isSheriff || badge.destroyed || !canBeSheriff(world, actorId, roleCatalog)) {
       return { code: RuleError.SheriffDirectionOnly };
     }

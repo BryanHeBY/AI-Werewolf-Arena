@@ -1,3 +1,9 @@
+/**
+ * Collects exile votes and resolves their configured rounds, tie choices and vote weights.
+ * Inputs are current voters, candidates and provider actions; outputs preserve seat-ordered vote
+ * evidence and the selected exile result. Sheriff election and wolf knife ballots remain
+ * separate mechanisms.
+ */
 import {
   checkpointNobleBodyAuthority,
   consumeSecretBodyExile,
@@ -663,10 +669,7 @@ export class VotingPipeline {
       }
       let weight = 0;
       if (!vote.abstain && vote.targetId !== null) {
-        const voting = this.world.getComponent<VotingRightComponent>(
-          voterId,
-          COMPONENT.VotingRight,
-        );
+        const voting = this.world.getComponent(voterId, COMPONENT.VotingRight);
         weight = voting?.weight ?? 1;
         tally[vote.targetId] = (tally[vote.targetId] ?? 0) + weight;
       }
@@ -719,10 +722,8 @@ export class VotingPipeline {
       if (strategy === "min_seat") {
         const aId = Number(a[0]);
         const bId = Number(b[0]);
-        const aSeat =
-          this.world.getComponent<IdentityComponent>(aId, COMPONENT.Identity)?.seat ?? aId;
-        const bSeat =
-          this.world.getComponent<IdentityComponent>(bId, COMPONENT.Identity)?.seat ?? bId;
+        const aSeat = this.world.getComponent(aId, COMPONENT.Identity)?.seat ?? aId;
+        const bSeat = this.world.getComponent(bId, COMPONENT.Identity)?.seat ?? bId;
         return aSeat - bSeat;
       }
       return Number(a[0]) - Number(b[0]);

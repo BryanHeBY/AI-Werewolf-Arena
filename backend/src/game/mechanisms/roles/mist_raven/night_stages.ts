@@ -1,3 +1,8 @@
+/**
+ * Runs Alchemist mist choice and Raven knife selection. Inputs are the current Mist/Raven frame
+ * and validated night actions; outputs preserve mist commits and sourced knife claims. These
+ * stages do not finalize handed-off damage or own the later Snake reaction window.
+ */
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { Phase } from "../../../../core/domain/identity";
@@ -21,7 +26,7 @@ export const ALCHEMIST_MIST_STAGE: NightStageHandler = {
       candidates = mistChoiceTargets(ctx.world, day);
     if (candidates.length < 3) {
       const state = readAlchemistState(
-        ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.privateState.alchemist,
+        ctx.world.getComponent(actorId, COMPONENT.Role)?.privateState.alchemist,
       );
       const reason = !ctx.world.getAliveEntityIds().includes(actorId)
         ? "dead"
@@ -57,7 +62,7 @@ export const ALCHEMIST_MIST_STAGE: NightStageHandler = {
       throw new Error("mist_choice_action_invalid");
     commitMistChoice(ctx.world, day, result.sanitizedCall.args.target_ids);
     const state = readAlchemistState(
-      ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!.privateState.alchemist,
+      ctx.world.getComponent(actorId, COMPONENT.Role)!.privateState.alchemist,
     )!;
     ctx.events.push({
       timestamp: Date.now(),
@@ -76,7 +81,7 @@ export const RAVEN_KNIFE_STAGE: NightStageHandler = {
       candidates = ravenKnifeTargets(ctx.world, day);
     if (!candidates.length) {
       const state = readRavenState(
-        ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.privateState.ravenClaw,
+        ctx.world.getComponent(actorId, COMPONENT.Role)?.privateState.ravenClaw,
       );
       const reason = !ctx.world.getAliveEntityIds().includes(actorId)
         ? "dead"

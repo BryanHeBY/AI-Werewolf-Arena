@@ -411,7 +411,7 @@ function selectPlayerProfiles(
 ): Map<number, ResolvedAgentRuntimeProfile> {
   const profiles = new Map<number, ResolvedAgentRuntimeProfile>();
   for (const id of world.entityIds()) {
-    const role = world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role;
+    const role = world.getComponent(id, COMPONENT.Role)?.role;
     profiles.set(id, resolvePlayerProfile(setup, id, role));
   }
   return profiles;
@@ -433,15 +433,15 @@ function replayPlayers(world: World) {
     });
   const initial = initialIdentityDeal(world);
   return world.entityIds().map((id, index) => {
-    const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
+    const role = world.getComponent(id, COMPONENT.Role);
     return {
       player_id: id,
       role: initialPlayerIdentity(world, id)?.role ?? initial?.[index] ?? role?.role ?? "unknown",
       camp:
         initialPlayerIdentity(world, id)?.camp ??
         (initial ? (initial[index] === "wolf" ? "wolf" : "good") : (role?.camp ?? "unknown")),
-      alive: world.getComponent<AliveComponent>(id, COMPONENT.Alive)?.alive === true,
-      name: world.getComponent<IdentityComponent>(id, COMPONENT.Identity)?.name,
+      alive: world.getComponent(id, COMPONENT.Alive)?.alive === true,
+      name: world.getComponent(id, COMPONENT.Identity)?.name,
     };
   });
 }

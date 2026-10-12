@@ -1,3 +1,8 @@
+/**
+ * Decides and records whether a death context grants last words. Inputs are the World, death
+ * timing and configured last-word policy; outputs are eligibility and the grant event. The
+ * mechanism does not deliver a speech or advance the death wave itself.
+ */
 /** 文件说明：遗言规则与事件写入机制。 */
 import type { LastWordsPolicy } from "../../../core/domain/board";
 import { AliveComponent } from "../../../core/domain/components/alive";
@@ -87,7 +92,7 @@ export class LastWordsMechanism {
       ) {
         continue;
       }
-      const alive = world.getComponent<AliveComponent>(deadId, COMPONENT.Alive);
+      const alive = world.getComponent(deadId, COMPONENT.Alive);
       if (!alive || alive.alive) {
         continue;
       }

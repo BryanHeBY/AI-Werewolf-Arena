@@ -1,3 +1,9 @@
+/**
+ * Owns Magician night exchange bindings and target-remapping receipts. Inputs are original
+ * player bodies and the paired choice; outputs preserve current mappings, cancellation and
+ * close/abort behavior. It never lets a stale source redirect a later native action using the
+ * old exchange.
+ */
 import { isWolfSorcererBoard, resolveWolfSorcererNightTarget } from "../wolf_sorcerer/night_frame";
 import { matchingExchangePairs } from "../trickster/exile_mapping";
 import { types } from "node:util";
@@ -99,8 +105,8 @@ export function installMagicianBoard(world: World): void {
   let actorId: number | null = null;
   let state: MagicianState | undefined;
   for (const id of world.entityIds()) {
-    const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
-    const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive);
+    const role = world.getComponent(id, COMPONENT.Role);
+    const life = world.getComponent(id, COMPONENT.Alive);
     const version = life && aliveLifeVersion(life);
     if (!role || !life || types.isProxy(life) || version === undefined)
       throw new Error("magician_original_roster_invalid");

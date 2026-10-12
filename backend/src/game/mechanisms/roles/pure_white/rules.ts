@@ -1,3 +1,8 @@
+/**
+ * Defines Pure White inspection targets and the corresponding tool validation rule. Inputs are
+ * current World roles and the requested target; outputs are policy-allowed IDs or structured
+ * rule rejection. Target enumeration does not commit an inspection or publish private results.
+ */
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { Camp, Phase, Role, type EntityId } from "../../../../core/domain/model";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -17,8 +22,7 @@ export function pureWhiteInspectionTargets(
     .filter(
       (id) =>
         id !== actorId &&
-        (policy === "pure_white" ||
-          world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp !== Camp.Wolf),
+        (policy === "pure_white" || world.getComponent(id, COMPONENT.Role)?.camp !== Camp.Wolf),
     );
 }
 export const PURE_WHITE_INSPECTION_TOOL: NonNullable<RoleProfile["toolSpecs"]>[number] = {

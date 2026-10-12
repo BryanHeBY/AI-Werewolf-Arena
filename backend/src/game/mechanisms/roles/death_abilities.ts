@@ -1,3 +1,9 @@
+/**
+ * Owns granted/copied death-gun instances, original-life arming and first-death consumption.
+ * Inputs are gun grants, transfer policy and trusted death permissions; outputs are owned
+ * inventory changes and player projections. Spent or replaced original-life guns never refresh
+ * themselves on a later death.
+ */
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import { Camp, type EntityId, type GameEvent } from "../../../core/domain/model";
@@ -73,8 +79,8 @@ export function projectDeathGun(gun: DeathGun): PlayerDeathGun {
   };
 }
 function bind(world: World, actorId: number, gun: DeathGun): void {
-  const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role),
-    life = world.getComponent<AliveComponent>(actorId, COMPONENT.Alive),
+  const role = world.getComponent(actorId, COMPONENT.Role),
+    life = world.getComponent(actorId, COMPONENT.Alive),
     version = life && aliveLifeVersion(life);
   if (!role || role.camp !== Camp.Good || !life?.alive || version === undefined)
     throw new Error("death_ability_owner_invalid");
@@ -158,16 +164,16 @@ export function grantDeathGun(
   night: number,
   events: GameEvent[],
 ): DeathGun {
-  const from = world.getComponent<RoleComponent>(fromId, COMPONENT.Role),
-    to = world.getComponent<RoleComponent>(toId, COMPONENT.Role);
+  const from = world.getComponent(fromId, COMPONENT.Role),
+    to = world.getComponent(toId, COMPONENT.Role);
   if (
     fromId === toId ||
     !from ||
     from.camp !== Camp.Good ||
-    !world.getComponent<AliveComponent>(fromId, COMPONENT.Alive)?.alive ||
+    !world.getComponent(fromId, COMPONENT.Alive)?.alive ||
     !to ||
     to.camp !== Camp.Good ||
-    !world.getComponent<AliveComponent>(toId, COMPONENT.Alive)?.alive ||
+    !world.getComponent(toId, COMPONENT.Alive)?.alive ||
     !Number.isSafeInteger(night) ||
     night < 1
   )
@@ -223,7 +229,7 @@ export function activeDeathGun(
   day: number,
   onDeath = false,
 ): DeathGun | undefined {
-  const gun = findDeathGun(world.getComponent<RoleComponent>(actorId, COMPONENT.Role), id);
+  const gun = findDeathGun(world.getComponent(actorId, COMPONENT.Role), id);
   return gun &&
     deathGunOwnerCurrent(world, actorId, gun, onDeath) &&
     gun.armedOnNight !== null &&
@@ -282,7 +288,7 @@ export function firstDeathGuns(
   grantedNight: number;
   armedOnNight: number | null;
 }> {
-  return allDeathGuns(world.getComponent<RoleComponent>(actorId, COMPONENT.Role))
+  return allDeathGuns(world.getComponent(actorId, COMPONENT.Role))
     .filter((gun) => !gun.deathExpired && deathGunOwnerCurrent(world, actorId, gun, true))
     .map((gun) => ({
       actorId,
@@ -317,7 +323,7 @@ export function setDeathGunEnabled(
   enabled: boolean,
   events: GameEvent[],
 ): void {
-  const gun = findDeathGun(world.getComponent<RoleComponent>(actorId, COMPONENT.Role), id);
+  const gun = findDeathGun(world.getComponent(actorId, COMPONENT.Role), id);
   if (!gun || !deathGunOwnerCurrent(world, actorId, gun))
     throw new Error("death_ability_instance_unavailable");
   if (enabled && gun.deathExpired) throw new Error("death_ability_expired");
@@ -332,8 +338,8 @@ export function transferDeathGun(
   id: string,
   events: GameEvent[],
 ): DeathGun {
-  const source = world.getComponent<RoleComponent>(fromId, COMPONENT.Role),
-    target = world.getComponent<RoleComponent>(toId, COMPONENT.Role),
+  const source = world.getComponent(fromId, COMPONENT.Role),
+    target = world.getComponent(toId, COMPONENT.Role),
     gun = findDeathGun(source, id);
   if (
     !gun ||
@@ -341,7 +347,7 @@ export function transferDeathGun(
     !deathGunOwnerCurrent(world, fromId, gun) ||
     !target ||
     target.camp !== Camp.Good ||
-    !world.getComponent<AliveComponent>(toId, COMPONENT.Alive)?.alive ||
+    !world.getComponent(toId, COMPONENT.Alive)?.alive ||
     allDeathGuns(target).length ||
     (target.privateState.retiredDeathAbilityIds as string[] | undefined)?.includes(id)
   )

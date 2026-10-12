@@ -1,3 +1,8 @@
+/**
+ * Runs the daytime speaking pipeline from the current alive seats and provider. Outputs preserve
+ * speech, duel/self-destruct interruptions and the returned day result. Inputs use the assembled
+ * gateway and role mechanisms; it does not own final phase changes or victory sealing.
+ */
 import { hasActiveDebate } from "../../mechanisms/roles/debater/authority";
 import { DebaterWindow } from "../../mechanisms/roles/debater/window";
 import { AliveComponent } from "../../../core/domain/components/alive";
@@ -302,7 +307,7 @@ export class DayPipeline {
    * 判断目标玩家是否存活。
    */
   private isAlive(entityId: EntityId): boolean {
-    const alive = this.world.getComponent<AliveComponent>(entityId, COMPONENT.Alive);
+    const alive = this.world.getComponent(entityId, COMPONENT.Alive);
     return alive?.alive === true;
   }
 }

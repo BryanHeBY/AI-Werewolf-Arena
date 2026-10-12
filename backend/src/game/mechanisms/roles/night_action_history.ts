@@ -1,3 +1,9 @@
+/**
+ * Records a player's own night actions and checks lucky recipient target exclusions. Inputs are
+ * World, actor, night, action kind and target; outputs are private action history and
+ * allowed-target booleans. The history is not a public event feed or independent domain
+ * authorization.
+ */
 import type { EntityId } from "../../../core/domain/model";
 import type { World } from "../../../core/domain/world";
 import type { RoleComponent } from "../../../core/domain/components/role";
@@ -52,7 +58,7 @@ export function luckyTargetAllowed(
   targetId: EntityId,
 ): boolean {
   const history = ownNightActions(world, actorId, day);
-  const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+  const role = world.getComponent(actorId, COMPONENT.Role);
   const abilityKind = kind === "check" ? "seer_check" : kind === "poison" ? "potion" : "guard";
   const hasPolicy =
     ability.activation === "lucky" ||

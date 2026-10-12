@@ -1,3 +1,9 @@
+/**
+ * Executes Hybrid exemplar selection and records its actual night commitment. Inputs are the
+ * current Hybrid body, candidates and validated tool; outputs are the chosen exemplar state and
+ * corresponding facts. Selection never replaces the original role component or silently repeats
+ * a completed choice.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import {
@@ -22,10 +28,10 @@ export const HYBRID_STAGE: NightStageHandler = {
     const day = ctx.currentDay();
     if (day !== 1) return;
     for (const actorId of ctx.getAliveByRole(Role.Hybrid)) {
-      const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!;
+      const role = ctx.world.getComponent(actorId, COMPONENT.Role)!;
       const state = getHybridState(role),
         life = captureNightLife(ctx.world, actorId);
-      const victory = ctx.world.getComponent<VictoryComponent>(actorId, COMPONENT.Victory);
+      const victory = ctx.world.getComponent(actorId, COMPONENT.Victory);
       if (!state || !life || !victory || role.camp !== Camp.Good) continue;
       const privateState = role.privateState,
         affiliations = victory.affiliations;
@@ -51,7 +57,7 @@ export const HYBRID_STAGE: NightStageHandler = {
             .getAliveEntityIds()
             .filter((id) => id !== actorId)
             .map((id) => {
-              const targetRole = ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+              const targetRole = ctx.world.getComponent(id, COMPONENT.Role)!;
               return [
                 id,
                 {

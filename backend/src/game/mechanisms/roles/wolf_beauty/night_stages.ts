@@ -1,3 +1,8 @@
+/**
+ * Runs Wolf Beauty charm selection against original actor and target bodies. Inputs are the
+ * current night request and validated charm target; outputs are charm binding, history and event
+ * effects. A rejected or stale choice never installs a new relation.
+ */
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { Role, Camp, Phase } from "../../../../core/domain/model";
@@ -16,9 +21,9 @@ export const WOLF_BEAUTY_CHARM_STAGE: NightStageHandler = {
     if (!animalBeautyCharmAllowed(ctx.world, day)) return;
     for (const actorId of ctx.getAliveByRole(Role.WolfBeauty)) {
       if (!ctx.isCurrent()) return;
-      const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!,
+      const role = ctx.world.getComponent(actorId, COMPONENT.Role)!,
         state = getWolfBeautyState(role),
-        actorLife = ctx.world.getComponent<AliveComponent>(actorId, COMPONENT.Alive)!,
+        actorLife = ctx.world.getComponent(actorId, COMPONENT.Alive)!,
         actorVersion = aliveLifeVersion(actorLife),
         policy = state?.deathLinkPolicy;
       if (role.camp !== Camp.Wolf || !state || state.lastActedDay === day) continue;
@@ -27,7 +32,7 @@ export const WOLF_BEAUTY_CHARM_STAGE: NightStageHandler = {
           .getAliveEntityIds()
           .filter((id) => id !== actorId)
           .map((id) => {
-            const life = ctx.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+            const life = ctx.world.getComponent(id, COMPONENT.Alive)!;
             return [id, { life, version: aliveLifeVersion(life) }] as const;
           }),
       );

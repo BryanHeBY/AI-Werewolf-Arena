@@ -1,3 +1,9 @@
+/**
+ * Owns a configured day self-destruct opportunity and its captured alive actors. Inputs are a
+ * window description, provider and gateway; outputs are the accepted blast choice or the
+ * unchanged window result. Only the selected current actor may commit, without reusing a
+ * replaced body.
+ */
 import { RED_MOON_ROLE } from "../mechanisms/roles/red_moon_apostle/state";
 import { demonRedMoonCanBlast } from "../mechanisms/roles/demon_hunter/authority";
 import { canRoleSelfDestruct } from "../mechanisms/roles/self_destruct_capability";
@@ -42,13 +48,13 @@ export class SelfDestructWindow {
     if (!isCurrent()) return null;
     const targets = new Map(
       this.world.getAliveEntityIds().map((id) => {
-        const alive = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+        const alive = this.world.getComponent(id, COMPONENT.Alive)!;
         return [id, { alive, version: aliveLifeVersion(alive) }] as const;
       }),
     );
     const picks = await Promise.all(
       this.world.getAliveEntityIds().map(async (actorId) => {
-        const role = this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+        const role = this.world.getComponent(actorId, COMPONENT.Role);
         if (!role) return null;
         if (
           weddingSetup(this.world) &&

@@ -1,3 +1,9 @@
+/**
+ * Owns Mist/Raven roster snapshots, mist choices and the pending-night handoff. Inputs are
+ * original players and accepted caster choices; outputs include sourced knife targets, Snake
+ * windows and close/abort operations. Only the matching night may hand off its captured damage;
+ * revived bodies cannot resume it.
+ */
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import {
@@ -210,11 +216,11 @@ export function installMistRavenBoard(world: World): void {
   if (boards.has(world)) throw new Error("mist_board_already_installed");
   const originals = new Map<number, OriginalPlayer>();
   for (const id of world.entityIds()) {
-    const role = world.getComponent<RoleComponent>(id, COMPONENT.Role),
+    const role = world.getComponent(id, COMPONENT.Role),
       privateState = data(role, "privateState"),
       identity = world.getComponent(id, COMPONENT.Identity),
       campComponent = world.getComponent(id, COMPONENT.Camp),
-      life = world.getComponent<AliveComponent>(id, COMPONENT.Alive);
+      life = world.getComponent(id, COMPONENT.Alive);
     const camp = data(role, "camp"),
       roleName = data(role, "role");
     if (

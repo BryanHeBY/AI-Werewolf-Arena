@@ -266,8 +266,7 @@ export class InitialIdentitySetupWindow {
         .getAliveEntityIds()
         .filter(
           (id) =>
-            this.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role ===
-            initialIdentityRole(this.kind),
+            this.world.getComponent(id, COMPONENT.Role)?.role === initialIdentityRole(this.kind),
         );
       if (actorIds.length === 0) {
         status = "complete";
@@ -277,8 +276,8 @@ export class InitialIdentitySetupWindow {
       const actorId = actorIds[0]!,
         actor = captureDebateParticipant(this.world, actorId),
         state = getInitialIdentityState(actor?.role, this.kind),
-        camp = this.world.getComponent<CampComponent>(actorId, COMPONENT.Camp),
-        victory = this.world.getComponent<VictoryComponent>(actorId, COMPONENT.Victory);
+        camp = this.world.getComponent(actorId, COMPONENT.Camp),
+        victory = this.world.getComponent(actorId, COMPONENT.Victory);
       const cards = deal.reserve.map((card) => {
         const data = readInitialIdentityCard(card);
         return data ? { card, ...data } : null;
@@ -449,10 +448,7 @@ export class InitialIdentitySetupWindow {
           this.world
             .entityIds()
             .map((id) =>
-              getInitialIdentityState(
-                this.world.getComponent<RoleComponent>(id, COMPONENT.Role),
-                this.kind,
-              ),
+              getInitialIdentityState(this.world.getComponent(id, COMPONENT.Role), this.kind),
             )
             .find(Boolean);
         if (

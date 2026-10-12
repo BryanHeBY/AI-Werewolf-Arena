@@ -198,10 +198,10 @@ function originalIdentity(p: Participant, world: World): boolean {
   );
 }
 function captureDemonCheckpointMetadata(world: World, id: number): Participant["checkpoint"] {
-  const identity = world.getComponent<IdentityComponent>(id, COMPONENT.Identity),
-    badge = world.getComponent<BadgeComponent>(id, COMPONENT.Badge),
-    vote = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight),
-    marks = world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks);
+  const identity = world.getComponent(id, COMPONENT.Identity),
+    badge = world.getComponent(id, COMPONENT.Badge),
+    vote = world.getComponent(id, COMPONENT.VotingRight),
+    marks = world.getComponent(id, COMPONENT.StatusMarks);
   const seat = ownDemonData(identity, "seat"),
     name = ownDemonData(identity, "name"),
     badgeJson = demonBadgeJson(badge),
@@ -256,10 +256,10 @@ function demonVoteJson(vote: unknown): string | null {
     : null;
 }
 function capture(world: World, id: number): Participant {
-  const role = world.getComponent<RoleComponent>(id, COMPONENT.Role),
-    campComponent = world.getComponent<CampComponent>(id, COMPONENT.Camp),
-    victory = world.getComponent<VictoryComponent>(id, COMPONENT.Victory),
-    life = world.getComponent<AliveComponent>(id, COMPONENT.Alive);
+  const role = world.getComponent(id, COMPONENT.Role),
+    campComponent = world.getComponent(id, COMPONENT.Camp),
+    victory = world.getComponent(id, COMPONENT.Victory),
+    life = world.getComponent(id, COMPONENT.Alive);
   const kind = ownDemonData(role, "role"),
     camp = ownDemonData(role, "camp"),
     privateState = ownDemonData(role, "privateState"),
@@ -1064,7 +1064,7 @@ export function assertDemonNightReadable(world: World): void {
   if (
     !validBinding(b) ||
     ![...b.players.values()].every((p) => {
-      const life = world.getComponent<AliveComponent>(p.id, COMPONENT.Alive);
+      const life = world.getComponent(p.id, COMPONENT.Alive);
       if (!life || types.isProxy(life)) return false;
       const factory = aliveLifeDescriptor(life),
         current = Object.getOwnPropertyDescriptor(life, "alive");

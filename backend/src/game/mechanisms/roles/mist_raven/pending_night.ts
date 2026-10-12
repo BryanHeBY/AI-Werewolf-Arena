@@ -1,3 +1,8 @@
+/**
+ * Owns handed-off Mist damage and the bounded Snake reaction window. Inputs are captured
+ * original lives and copied pending damage; outputs are claimed reactions and finalized damage.
+ * Finish or abort retires the pending night without replacing any target body.
+ */
 import {
   AliveComponent,
   aliveLifeDescriptor,
@@ -57,7 +62,7 @@ export class MistPendingNight {
       throw new Error("mist_pending_night_invalid");
     // Future linked targets are not necessarily in the direct death list.
     for (const id of world.entityIds()) {
-      const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive);
+      const life = world.getComponent(id, COMPONENT.Alive);
       if (!life) continue;
       if (!factoryLife(life)) throw new Error("mist_pending_life_invalid");
       const version = life && aliveLifeVersion(life);

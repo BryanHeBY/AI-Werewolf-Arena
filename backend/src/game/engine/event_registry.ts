@@ -1,3 +1,8 @@
+/**
+ * Dispatches catalog voted-out and death hooks for the affected original player. Inputs are the
+ * World, action provider and role-hook context; outputs are exile substitutions or additional
+ * death-hook results. It does not select a game phase or independently apply the death wave.
+ */
 import { AliveComponent } from "../../core/domain/components/alive";
 import { COMPONENT } from "../../core/domain/components/names";
 import { RoleComponent } from "../../core/domain/components/role";
@@ -37,8 +42,8 @@ export class EventRegistry {
       return handled;
     }
 
-    const roleComp = world.getComponent<RoleComponent>(targetId, COMPONENT.Role);
-    const aliveComp = world.getComponent<AliveComponent>(targetId, COMPONENT.Alive);
+    const roleComp = world.getComponent(targetId, COMPONENT.Role);
+    const aliveComp = world.getComponent(targetId, COMPONENT.Alive);
 
     if (!roleComp || !aliveComp || !aliveComp.alive) {
       return { prevented: false, removed: [], reason: "invalid_target" };

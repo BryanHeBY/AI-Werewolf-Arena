@@ -1,3 +1,9 @@
+/**
+ * Runs Pure White Girl and Wolf Witch inspection stages with their distinct native policies.
+ * Inputs are current actors, legal targets and validated checks; outputs are inspection history
+ * and the configured attack effects. It does not collapse camp inspection into role inspection
+ * or alter night-stage order.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Phase, Role } from "../../../../core/domain/model";
@@ -39,7 +45,7 @@ async function execute(ctx: NightStageContext, policy: "pure_white" | "wolf_witc
     const targets = new Map(
       pureWhiteInspectionTargets(ctx.world, actorId, policy).map((id) => {
         const life = captureNightLife(ctx.world, id);
-        const role = ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+        const role = ctx.world.getComponent(id, COMPONENT.Role);
         return [id, { life, role, identity: role?.role, camp: role?.camp }] as const;
       }),
     );

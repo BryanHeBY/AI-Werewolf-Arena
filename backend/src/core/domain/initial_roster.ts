@@ -1,3 +1,8 @@
+/**
+ * Owns the once-installed original role/camp roster for a World. Input is the dealt entity list;
+ * output is an immutable identity entry by player ID. Later role conversion does not rewrite
+ * this roster, and reads never fall back to a new identity.
+ */
 import { COMPONENT } from "./components/names";
 import type { RoleComponent } from "./components/role";
 import type { Role, Camp } from "./identity";
@@ -9,7 +14,7 @@ export function installInitialRoster(world: World): void {
     world,
     new Map(
       world.entityIds().map((id) => {
-        const role = world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+        const role = world.getComponent(id, COMPONENT.Role)!;
         return [id, Object.freeze({ role: role.role, camp: role.camp })];
       }),
     ),

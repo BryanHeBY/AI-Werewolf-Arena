@@ -71,9 +71,9 @@ function safeJson(value: unknown): string | null {
   }
 }
 function capture(world: World, id: number): Participant | null {
-  const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive),
-    role = world.getComponent<RoleComponent>(id, COMPONENT.Role),
-    camp = world.getComponent<CampComponent>(id, COMPONENT.Camp),
+  const life = world.getComponent(id, COMPONENT.Alive),
+    role = world.getComponent(id, COMPONENT.Role),
+    camp = world.getComponent(id, COMPONENT.Camp),
     version = life && aliveLifeVersion(life),
     alive = life && Object.getOwnPropertyDescriptor(life, "alive"),
     kind = lonelyData(role, "role"),
@@ -135,7 +135,7 @@ export function installLonelyGirl(world: World, config: BoardConfig): void {
   const participants = new Map(world.entityIds().map((id) => [id, capture(world, id)] as const)),
     actor = participants.get(actorId),
     state = getLonelyGirlState(actor?.role),
-    victory = world.getComponent<VictoryComponent>(actorId, COMPONENT.Victory),
+    victory = world.getComponent(actorId, COMPONENT.Victory),
     affiliations = lonelyData(victory, "affiliations"),
     configJson = safeJson(config);
   if (

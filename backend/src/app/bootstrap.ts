@@ -193,12 +193,8 @@ function createPlayers(
   if (config.nobleSecretBody)
     installNobleBodyAuthority(
       world,
-      ids.find(
-        (id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.NightNoble,
-      )!,
-      ids.find(
-        (id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.AwakenedIdiot,
-      )!,
+      ids.find((id) => world.getComponent(id, COMPONENT.Role)?.role === Role.NightNoble)!,
+      ids.find((id) => world.getComponent(id, COMPONENT.Role)?.role === Role.AwakenedIdiot)!,
     );
   if (roles.includes(Role.DemonHunter)) installDemonHunter(world, config);
   if (roles.includes(Role.GhostBride)) installGhostBride(world, config);

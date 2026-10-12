@@ -1,3 +1,9 @@
+/**
+ * Defines and validates death-shot tools and resolves their trusted death permissions. Inputs
+ * are the death context, current gun right and selected shot; outputs are validated shot actions
+ * and additional death proposals. It does not commit target death outside the ordered death
+ * resolver.
+ */
 import { openDemonHunterStockFrame } from "./demon_hunter/authority";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 import { AliveComponent, aliveLifeVersion } from "../../../core/domain/components/alive";
@@ -86,13 +92,13 @@ export async function resolveDeathShots(
   const result: DeathHookResult = { extraDeaths: [], extraDeathSources: {} };
   for (const actorId of deadIds) {
     if (context?.isCurrent && !context.isCurrent()) break;
-    const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+    const role = world.getComponent(actorId, COMPONENT.Role);
     const state = role ? rules.state(role) : undefined;
     if (
       !role ||
       role.role !== rules.role ||
       !state ||
-      world.getComponent<AliveComponent>(actorId, COMPONENT.Alive)?.alive !== false
+      world.getComponent(actorId, COMPONENT.Alive)?.alive !== false
     )
       continue;
     const stock = rules.role === "hunter" ? openDemonHunterStockFrame(world, actorId, state) : null;
@@ -118,7 +124,7 @@ export async function resolveDeathShots(
       consume();
       continue;
     }
-    const actorLife = world.getComponent<AliveComponent>(actorId, COMPONENT.Alive)!;
+    const actorLife = world.getComponent(actorId, COMPONENT.Alive)!;
     const actorVersion = aliveLifeVersion(actorLife);
     const camp = role.camp,
       privateState = role.privateState;
@@ -128,7 +134,7 @@ export async function resolveDeathShots(
     const selected = await choose(actorId);
     if (context?.isCurrent && !context.isCurrent()) break;
     if (stock && !stock.isCurrent()) throw new Error("demon_hunter_native_hunter_stock_revoked");
-    const currentRole = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+    const currentRole = world.getComponent(actorId, COMPONENT.Role);
     if (
       currentRole !== role ||
       currentRole.role !== rules.role ||

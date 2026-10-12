@@ -1,3 +1,9 @@
+/**
+ * Defines Hybrid role initialization, prompt rendering and its selection tool profile. Inputs
+ * are the role component and game configuration; outputs preserve exemplar state and registered
+ * policy/tool descriptions. Actual selection/payment remains with the Hybrid stage, not prompt
+ * rendering.
+ */
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
@@ -62,7 +68,7 @@ export const HYBRID_ROLE_PROFILE: RoleProfile = {
   validationRules: {
     choose_exemplar: ({ world, actorId, role, day, phase, toolCall }) => {
       const state = getHybridState(role),
-        victory = world.getComponent<VictoryComponent>(actorId, COMPONENT.Victory);
+        victory = world.getComponent(actorId, COMPONENT.Victory);
       if (
         role.role !== Role.Hybrid ||
         role.camp !== Camp.Good ||

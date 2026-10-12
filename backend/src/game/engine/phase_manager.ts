@@ -1,3 +1,10 @@
+/**
+ * Owns game phase progression, cycle execution, result sealing and phase snapshots. Inputs are
+ * the assembled World, pipelines and configured limits; outputs are ordered game events and the
+ * final result. It still prepares night death proposals before delegating wave commits to
+ * DeathResolution. Mechanism lifetimes retain their concrete owners; sealed games accept no
+ * further cycle work.
+ */
 import {
   abortNobleBodyNight,
   expireServantAtNightEnd,
@@ -236,8 +243,8 @@ export class PhaseManager {
       payload: {
         boardSize: this.config.boardSize,
         players: this.world.getAliveEntityIds().map((id) => {
-          const identity = this.world.getComponent<IdentityComponent>(id, COMPONENT.Identity);
-          const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+          const identity = this.world.getComponent(id, COMPONENT.Identity);
+          const role = this.world.getComponent(id, COMPONENT.Role);
           return {
             id,
             seat: identity?.seat ?? id,
@@ -730,9 +737,7 @@ export class PhaseManager {
         }
         const livingBeforeChain = new Map(
           this.world.getAliveEntityIds().map((id) => {
-            const life = this.world.getComponent<
-              import("../../core/domain/components/alive").AliveComponent
-            >(id, COMPONENT.Alive)!;
+            const life = this.world.getComponent(id, COMPONENT.Alive)!;
             return [id, { life, version: aliveLifeVersion(life) }] as const;
           }),
         );
@@ -778,12 +783,7 @@ export class PhaseManager {
           );
           this.assertDemonReadable();
           if (!nightIsCurrent()) return this.getSnapshot();
-          if (
-            this.world.getComponent<import("../../core/domain/components/alive").AliveComponent>(
-              expiryActor,
-              COMPONENT.Alive,
-            )?.alive !== false
-          )
+          if (this.world.getComponent(expiryActor, COMPONENT.Alive)?.alive !== false)
             throw new Error("red_moon_expiry_death_unsettled");
           if (!commitDemonRedMoonTransition(this.world, expiryActor, "expire", nightDay))
             throw new Error("red_moon_expiry_commit_revoked");
@@ -1198,7 +1198,7 @@ export class PhaseManager {
       this.previousExile =
         target !== null &&
         sources[target]?.includes(DeathCause.Exile) &&
-        this.world.getComponent<AliveComponent>(target, COMPONENT.Alive)?.alive === false
+        this.world.getComponent(target, COMPONENT.Alive)?.alive === false
           ? captureExileFeedback(this.world, target, cycleDay)
           : null;
     } else if (votingResult.removed.length > 0) {

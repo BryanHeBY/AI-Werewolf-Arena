@@ -1,3 +1,9 @@
+/**
+ * Validates a tool call against actor life, role, trusted action windows and registered role
+ * rules. Inputs are a sanitized call and validation context; outputs are structured rule results
+ * and the configured validation trace. It never treats schema preflight acceptance as inventory
+ * payment.
+ */
 import { RuleError, type RuleViolation } from "@ai-werewolf-arena/game-catalog";
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { AliveComponent } from "../../core/domain/components/alive";
@@ -99,8 +105,8 @@ export class ActionValidator {
       };
     };
 
-    const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
-    const alive = world.getComponent<AliveComponent>(actorId, COMPONENT.Alive);
+    const role = world.getComponent(actorId, COMPONENT.Role);
+    const alive = world.getComponent(actorId, COMPONENT.Alive);
 
     if (!role || !alive) {
       return reject({ code: RuleError.ActorMissing });

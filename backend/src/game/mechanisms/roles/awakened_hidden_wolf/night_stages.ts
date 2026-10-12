@@ -1,3 +1,9 @@
+/**
+ * Runs Awakened Hidden Wolf opening, mimic, skill, knife and activation stages in their
+ * registered order. Inputs are scoped native/copy abilities and validated tools; outputs are
+ * owned skill effects and night facts. It never turns a stale captured owner into a valid retry
+ * or changes another stage priority.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, StatusMark, type EntityId, type ToolName } from "../../../../core/domain/model";
@@ -67,7 +73,7 @@ const mimicStage: NightStageHandler = {
         const candidates = targets(ctx, owner.actorId, true);
         const roles = new Map(
           [...candidates.keys()].map((id) => {
-            const component = ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+            const component = ctx.world.getComponent(id, COMPONENT.Role)!;
             return [id, { component, role: component.role, camp: component.camp }] as const;
           }),
         );

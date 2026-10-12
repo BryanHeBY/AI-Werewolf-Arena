@@ -1,3 +1,9 @@
+/**
+ * Owns delivered Demon Witch source receipts and native potion-turn execution. Inputs are sealed
+ * source bodies, potion requests and validated choices; outputs are paid heal/poison effects and
+ * domain completion. Cancellation or stale sources never replenish stock or substitute a new
+ * body into a delivered effect.
+ */
 import {
   COMPONENT,
   Phase,
@@ -125,10 +131,7 @@ export async function executeDemonWitchTurn(input: {
     const call = readDemonPotionTool(raw);
     if (!call || !demonWitchRequestTargetCurrent(world, request, call.args.target_id))
       throw new Error("demon_hunter_native_witch_invalid");
-    const candidateMarks = world.getComponent<StatusMarksComponent>(
-      call.args.target_id,
-      COMPONENT.StatusMarks,
-    );
+    const candidateMarks = world.getComponent(call.args.target_id, COMPONENT.StatusMarks);
     if (
       candidateMarks &&
       (!statusMarkSnapshot(candidateMarks, StatusMark.PoisonMark) ||
@@ -163,7 +166,7 @@ export async function executeDemonWitchTurn(input: {
         : null;
     if (potion === PotionType.Poison && targetId === frame.demonId && !native)
       throw new Error("demon_hunter_native_poison_unavailable");
-    let marks = world.getComponent<StatusMarksComponent>(targetId, COMPONENT.StatusMarks);
+    let marks = world.getComponent(targetId, COMPONENT.StatusMarks);
     if (potion !== PotionType.None && !marks) {
       marks = new StatusMarksComponent();
       world.addComponent(targetId, COMPONENT.StatusMarks, marks);

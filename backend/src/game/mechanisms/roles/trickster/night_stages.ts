@@ -1,3 +1,9 @@
+/**
+ * Runs the Trickster paired-exchange request before subsequent night actions. Inputs are the
+ * bound frame, policy pass allowance and validated choice; outputs preserve its exchange or
+ * cancellation evidence. Exile substitution remains frame-owned and is not performed by the
+ * provider.
+ */
 import { COMPONENT, type RoleComponent, type AliveComponent } from "../../../../core";
 import { Phase } from "../../../../core/domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
@@ -26,15 +32,13 @@ export const TRICKSTER_EXCHANGE_STAGE: NightStageHandler = {
         payload: {
           actorId: id,
           day,
-          reason: ctx.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive
-            ? "exhausted"
-            : "dead",
+          reason: ctx.world.getComponent(id, COMPONENT.Alive)!.alive ? "exhausted" : "dead",
         },
         audience: Object.freeze([id]),
       });
       return;
     }
-    const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+    const role = ctx.world.getComponent(actorId, COMPONENT.Role);
     if (!getTricksterState(role)) throw new Error("trickster_actor_invalid");
     const request = ctx.makeRequest(actorId, ["swap_exile_targets"], {
       stage: "trickster_exchange",

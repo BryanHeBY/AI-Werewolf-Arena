@@ -1,3 +1,9 @@
+/**
+ * Owns Debater participant snapshots, one debate window and vote-block penalties. Inputs are
+ * original bodies and validated debate choices; writes record a committed debate and its penalty
+ * only for the same current window. Close retires the window without converting a rejected
+ * choice into a penalty.
+ */
 import {
   COMPONENT,
   type World,
@@ -43,7 +49,7 @@ const penalties = new WeakMap<
 >();
 export function captureDebateParticipant(world: World, id: number): DebateParticipant | null {
   const life = captureNightLife(world, id),
-    role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
+    role = world.getComponent(id, COMPONENT.Role);
   return life && role
     ? { life, role, roleId: role.role, camp: role.camp, state: role.privateState }
     : null;

@@ -1,3 +1,8 @@
+/**
+ * Runs the Nightmare fear request before affected native night abilities. Inputs are the
+ * captured Nightmare frame and validated fear target; outputs are the committed fear choice and
+ * event. Blocking predicates remain in the frame and never arise merely from a model refusal.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase } from "../../../../core/domain/identity";
@@ -17,7 +22,7 @@ export const NIGHTMARE_FEAR_STAGE: NightStageHandler = {
     const day = ctx.currentDay();
     const actorId = beginNightmareNight(ctx.world, day);
     if (actorId === null) return;
-    const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+    const role = ctx.world.getComponent(actorId, COMPONENT.Role);
     if (!getNightmareShadowState(role)) throw new Error("nightmare_fear_actor_invalid");
     const request = ctx.makeRequest(actorId, ["fear"], {
       stage: "nightmare_fear",

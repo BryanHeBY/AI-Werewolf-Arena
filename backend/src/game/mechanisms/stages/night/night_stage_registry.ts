@@ -1,3 +1,8 @@
+/**
+ * Collects, deduplicates and orders registered night stages for present and declared abilities.
+ * Inputs are catalog profiles, current roles and possible ability roles; output is the assembled
+ * stage list. It does not freeze which player will act or instantiate an ability resource.
+ */
 import { demonHunterActorId } from "../../roles/demon_hunter/authority";
 import { DEMON_HUNTER_NIGHT_STAGE } from "../../roles/demon_hunter/night_stages";
 import { WEDDING_CHAT_STAGE, WEDDING_KNIFE_STAGE } from "../../roles/ghost_bride/night_stages";
@@ -47,9 +52,7 @@ export class NightStageRegistry {
         if (kind === "role_check") hasRoleChecks = true;
       }
     for (const id of world?.entityIds() ?? [])
-      for (const ability of allNightAbilities(
-        world!.getComponent<RoleComponent>(id, COMPONENT.Role),
-      )) {
+      for (const ability of allNightAbilities(world!.getComponent(id, COMPONENT.Role))) {
         roleSet.add(abilityRole[ability.kind]);
         if (ability.kind === "role_check") hasRoleChecks = true;
       }
@@ -62,7 +65,7 @@ export class NightStageRegistry {
       world
         ?.getAliveEntityIds()
         .some((id) =>
-          allDeathGuns(world.getComponent<RoleComponent>(id, COMPONENT.Role)).some(
+          allDeathGuns(world.getComponent(id, COMPONENT.Role)).some(
             (gun) => gun.armedOnNight === null && !gun.disabled && !gun.deathExpired,
           ),
         )
@@ -78,7 +81,7 @@ export class NightStageRegistry {
       world
         ?.entityIds()
         .some((id) =>
-          allNightAbilities(world.getComponent<RoleComponent>(id, COMPONENT.Role)).some(
+          allNightAbilities(world.getComponent(id, COMPONENT.Role)).some(
             (ability) => ability.activation === "lucky",
           ),
         )
@@ -88,7 +91,7 @@ export class NightStageRegistry {
       world
         ?.entityIds()
         .some((id) =>
-          allNightAbilities(world.getComponent<RoleComponent>(id, COMPONENT.Role)).some(
+          allNightAbilities(world.getComponent(id, COMPONENT.Role)).some(
             (ability) => ability.activation === "black_market",
           ),
         )

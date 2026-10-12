@@ -1,3 +1,8 @@
+/**
+ * Executes Dreamer choices against the current ability and original target life. Inputs are
+ * night-stage requests and validated dream targets; outputs preserve history and sourced dream
+ * protection. It never applies a death wave or refreshes an expired captured target.
+ */
 import { isRadiantEclipseBoard, captureRadiantPaidEffect } from "../radiant_eclipse/night_frame";
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -30,7 +35,7 @@ export const DREAMER_NIGHT_STAGE: NightStageHandler = {
           .getAliveEntityIds()
           .filter((id) => id !== actorId)
           .map((id) => {
-            const life = ctx.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+            const life = ctx.world.getComponent(id, COMPONENT.Alive)!;
             return [id, { life, version: aliveLifeVersion(life) }] as const;
           }),
       );

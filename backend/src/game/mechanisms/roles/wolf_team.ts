@@ -1,3 +1,8 @@
+/**
+ * Derives wolf teammate knowledge, discussion participation and knife-holder permissions. Inputs
+ * are current World roles and explicit role policies; outputs preserve separate teammate, chat
+ * and knife sets plus team audiences. Wolf camp alone never grants every wolf-team permission.
+ */
 import { scholarMentorPackBlocked } from "./scholar_mentor/night_frame";
 import { animalPackKnifeBlocked } from "./animal_dream/authority";
 import { nightmareKnifeBlocked } from "./nightmare_shadow/night_frame";
@@ -48,21 +53,13 @@ export function knownWolfTeammates(
   actorId: EntityId,
   catalog: RoleCatalog,
 ): EntityId[] {
-  const viewer = wolfTeamPermissions(
-    world.getComponent<RoleComponent>(actorId, COMPONENT.Role),
-    catalog,
-    world,
-  );
+  const viewer = wolfTeamPermissions(world.getComponent(actorId, COMPONENT.Role), catalog, world);
   if (viewer === NO_ACCESS) return [];
-  const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+  const role = world.getComponent(actorId, COMPONENT.Role);
   const snapshot = role?.camp === Camp.Wolf && catalog.get(role.role)?.knownTeammates;
   if (snapshot)
     return [...new Set(snapshot(role!, world))]
-      .filter(
-        (id) =>
-          id !== actorId &&
-          world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === Camp.Wolf,
-      )
+      .filter((id) => id !== actorId && world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf)
       .sort((a, b) => a - b);
   if (viewer.recognizes === "none") return [];
   // Identity knowledge is independent of unannounced deaths.
@@ -70,7 +67,7 @@ export function knownWolfTeammates(
     .entityIds()
     .filter((id) => {
       if (id === actorId) return false;
-      const target = world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const target = world.getComponent(id, COMPONENT.Role);
       if (target?.camp !== Camp.Wolf) return false;
       if (viewer.recognizes === "all") return true;
       if (viewer.recognizes === "pack")
@@ -84,9 +81,7 @@ export function wolfChatParticipants(world: World, catalog: RoleCatalog): Entity
   return world
     .getAliveEntityIds()
     .filter(
-      (id) =>
-        wolfTeamPermissions(world.getComponent<RoleComponent>(id, COMPONENT.Role), catalog, world)
-          .canChat,
+      (id) => wolfTeamPermissions(world.getComponent(id, COMPONENT.Role), catalog, world).canChat,
     )
     .sort((a, b) => a - b);
 }
@@ -96,8 +91,7 @@ export function wolfKnifeHolders(world: World, catalog: RoleCatalog): EntityId[]
     .getAliveEntityIds()
     .filter(
       (id) =>
-        wolfTeamPermissions(world.getComponent<RoleComponent>(id, COMPONENT.Role), catalog, world)
-          .canVoteForKill,
+        wolfTeamPermissions(world.getComponent(id, COMPONENT.Role), catalog, world).canVoteForKill,
     )
     .sort((a, b) => a - b);
 }

@@ -305,7 +305,7 @@ export function nightAbilityActors<K extends NightAbilityKind>(
         !scholarMentorBlocks(world, day, actorId, kind === "guard" ? "guard" : "check"),
     )
     .flatMap((actorId) =>
-      allNightAbilities(world.getComponent<RoleComponent>(actorId, COMPONENT.Role))
+      allNightAbilities(world.getComponent(actorId, COMPONENT.Role))
         .filter(
           (ability): ability is NightAbility<K> =>
             ability.kind === kind && abilityStatus(ability, day) === "active",

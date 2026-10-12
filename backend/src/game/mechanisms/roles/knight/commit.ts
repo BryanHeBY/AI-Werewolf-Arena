@@ -1,3 +1,8 @@
+/**
+ * Commits a selected Knight duel against its captured target and original actor. Inputs are the
+ * validated selection and current window; outputs are the original duel effects and death
+ * proposals. It does not reuse a revoked window or independently advance the day phase.
+ */
 import {
   Role,
   Camp,
@@ -20,15 +25,15 @@ export function commitKnightDuel(
   events: GameEvent[],
 ): { deaths: number[]; sources: DeathSources; endsDay: boolean } | null {
   if (phase !== Phase.Day || choice.actorId === choice.targetId) return null;
-  const actor = world.getComponent<RoleComponent>(choice.actorId, COMPONENT.Role),
-    target = world.getComponent<RoleComponent>(choice.targetId, COMPONENT.Role);
+  const actor = world.getComponent(choice.actorId, COMPONENT.Role),
+    target = world.getComponent(choice.targetId, COMPONENT.Role);
   const state = actor ? getKnightState(actor) : undefined;
   if (
     actor?.role !== Role.Knight ||
     state?.canDuel !== true ||
     !target ||
-    !world.getComponent<{ alive: boolean }>(choice.actorId, COMPONENT.Alive)?.alive ||
-    !world.getComponent<{ alive: boolean }>(choice.targetId, COMPONENT.Alive)?.alive
+    !world.getComponent(choice.actorId, COMPONENT.Alive)?.alive ||
+    !world.getComponent(choice.targetId, COMPONENT.Alive)?.alive
   )
     return null;
   const hit = target.camp === Camp.Wolf;

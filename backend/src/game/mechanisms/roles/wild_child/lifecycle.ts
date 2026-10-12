@@ -69,12 +69,12 @@ export function installWildChild(world: World, config: BoardConfig): void {
   if (bindings.has(world)) throw new Error("wild_child_already_installed");
   const actorId = world
     .entityIds()
-    .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.WildChild);
+    .find((id) => world.getComponent(id, COMPONENT.Role)?.role === Role.WildChild);
   if (actorId === undefined) return;
   const actor = captureDebateParticipant(world, actorId)!;
   const state = getWildChildState(actor.role)!;
-  const camp = world.getComponent<CampComponent>(actorId, COMPONENT.Camp)!;
-  const victory = world.getComponent<VictoryComponent>(actorId, COMPONENT.Victory)!;
+  const camp = world.getComponent(actorId, COMPONENT.Camp)!;
+  const victory = world.getComponent(actorId, COMPONENT.Victory)!;
   bindings.set(world, {
     world,
     actorId,
@@ -102,7 +102,7 @@ function ownData(value: object, key: string): unknown {
 }
 function captureChoiceTarget(world: World, id: number): DebateParticipant | null {
   const life = captureNightLife(world, id),
-    role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
+    role = world.getComponent(id, COMPONENT.Role);
   if (!life || !role) return null;
   const roleId = ownData(role, "role"),
     camp = ownData(role, "camp"),

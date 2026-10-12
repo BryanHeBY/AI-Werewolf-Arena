@@ -1,3 +1,9 @@
+/**
+ * Runs Ghost Bride partner chat and wedding knife stages. Inputs are the bound wedding night and
+ * validated choices; outputs preserve chat settlement, sourced knife claims and stale-knife
+ * removal. Wedding authority owns payment and closure; these stages do not make an old pending
+ * turn valid again.
+ */
 import { StatusMark, COMPONENT } from "../../../../core/domain";
 import { aliveLifeVersion, type AliveComponent } from "../../../../core/domain/components/alive";
 import type { NightStageHandler, NightStageState } from "../../stages/night/contracts";
@@ -19,7 +25,7 @@ export const WEDDING_CHAT_STAGE: NightStageHandler = {
       day === 1 ||
       !pair ||
       ![pair.brideId, pair.groomId].every(
-        (id) => ctx.world.getComponent<AliveComponent>(id, COMPONENT.Alive)?.alive === true,
+        (id) => ctx.world.getComponent(id, COMPONENT.Alive)?.alive === true,
       )
     )
       return;
@@ -73,7 +79,7 @@ export const WEDDING_KNIFE_STAGE: NightStageHandler = {
     ctx.state.wolfTarget = targetId;
     if (targetId !== null && weddingKnifeCurrent(ctx.world, day, targetId)) {
       const marks = ctx.ensureMarks(targetId),
-        life = ctx.world.getComponent<AliveComponent>(targetId, COMPONENT.Alive)!;
+        life = ctx.world.getComponent(targetId, COMPONENT.Alive)!;
       marks.add(StatusMark.WolfKillMark);
       ctx.state.wolfTargetScope = { targetId, life, version: aliveLifeVersion(life)!, marks };
     }

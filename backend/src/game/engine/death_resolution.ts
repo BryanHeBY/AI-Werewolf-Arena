@@ -1,3 +1,9 @@
+/**
+ * Owns ordered death waves, role death hooks, death shots, last words and badge handoff. Inputs
+ * are proposed deaths with causes and original-life permissions; outputs are committed deaths
+ * and their ordered events. It does not advance phases or seal final victory; PhaseManager owns
+ * those decisions.
+ */
 import { getSessionRecorder } from "../../recording/recording_context";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
 import {
@@ -313,8 +319,7 @@ export class DeathResolution {
     const seen = new Set<EntityId>(
       deadIds.filter((id) => {
         return (
-          this.world.getComponent<AliveComponent>(id, COMPONENT.Alive) !== undefined &&
-          !this.isSettledLife(id)
+          this.world.getComponent(id, COMPONENT.Alive) !== undefined && !this.isSettledLife(id)
         );
       }),
     );
@@ -404,8 +409,7 @@ export class DeathResolution {
         if (ownsAnimal && firstBatch) {
           for (const id of pending)
             if (
-              this.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role ===
-                Role.Pufferfish &&
+              this.world.getComponent(id, COMPONENT.Role)?.role === Role.Pufferfish &&
               (allSources[id] ?? []).includes(DeathCause.WolfKill)
             )
               appendAnimalFact(this.world, this.events, "animal_puffer_revealed", {
@@ -628,7 +632,7 @@ export class DeathResolution {
                         !next.has(id) &&
                         !seen.has(id) &&
                         !this.isSettledLife(id) &&
-                        this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)?.alive,
+                        this.world.getComponent(id, COMPONENT.Alive)?.alive,
                     )
                   : [];
                 const fragrantGun = ownsFragrant
@@ -665,7 +669,7 @@ export class DeathResolution {
                         ];
                       continue;
                     }
-                    if (!this.world.getComponent<AliveComponent>(id, COMPONENT.Alive)) continue;
+                    if (!this.world.getComponent(id, COMPONENT.Alive)) continue;
                     if (
                       ownsAnimal &&
                       !prepareAnimal([id], proposedSources, sourcePhase).includes(id)
@@ -804,7 +808,7 @@ export class DeathResolution {
         ? undefined
         : activeDeathGun(this.world, actorId, abilityId, actions.day, true);
     if (abilityId !== undefined && !gun) return { kind: "invalid" };
-    const role = this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+    const role = this.world.getComponent(actorId, COMPONENT.Role);
     const nativeState =
       abilityId === undefined && role
         ? role.role === Role.Hunter
@@ -857,7 +861,7 @@ export class DeathResolution {
         allowedTools: ["shoot"],
         stage:
           abilityId === undefined &&
-          this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.role === Role.Hunter
+          this.world.getComponent(actorId, COMPONENT.Role)?.role === Role.Hunter
             ? "hunter_shot"
             : "death_shot",
         requiresAction: true,
@@ -866,8 +870,7 @@ export class DeathResolution {
           ...(this.config?.magician ||
           this.config?.evilKnight ||
           abilityId !== undefined ||
-          this.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)?.role ===
-            Role.AwakenedHiddenWolf
+          this.world.getComponent(actorId, COMPONENT.Role)?.role === Role.AwakenedHiddenWolf
             ? { action_failure_policy: "error" as const, allow_fallback: false }
             : {}),
           ...(abilityId === undefined ? {} : { ability_id: abilityId }),
@@ -950,7 +953,7 @@ export class DeathResolution {
   }
 
   private isSettledLife(id: EntityId): boolean {
-    const alive = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive),
+    const alive = this.world.getComponent(id, COMPONENT.Alive),
       settled = this.settledLives.get(id);
     return (
       alive !== undefined &&
@@ -1064,7 +1067,7 @@ export class DeathResolution {
     animalScope?: object | (() => boolean),
   ): void {
     for (const id of playerIds) {
-      const alive = this.world.getComponent<AliveComponent>(id, COMPONENT.Alive);
+      const alive = this.world.getComponent(id, COMPONENT.Alive);
       if (!alive) {
         continue;
       }
@@ -1074,7 +1077,7 @@ export class DeathResolution {
       if (firstSettlement && isAnimalDreamBoard(this.world)) {
         if (
           (sources[id] ?? []).includes(DeathCause.WolfKill) &&
-          this.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Pufferfish
+          this.world.getComponent(id, COMPONENT.Role)?.role === Role.Pufferfish
         ) {
           commitAnimalPufferKnifeDeath(
             this.world,
@@ -1131,7 +1134,7 @@ export class DeathResolution {
             this.state.phase,
           );
       }
-      const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role;
+      const role = this.world.getComponent(id, COMPONENT.Role)?.role;
       if (reveal && firstSettlement && isRoleId(role))
         this.events.push({
           timestamp: Date.now(),

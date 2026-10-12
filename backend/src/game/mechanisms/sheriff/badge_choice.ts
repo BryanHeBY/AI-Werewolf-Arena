@@ -1,3 +1,9 @@
+/**
+ * Resolves the trusted death badge-handoff request and its selected successor. Inputs are the
+ * dead sheriff, badge permission and provider/gateway; outputs are the original transfer or
+ * destruction result. The request does not change badge stock until its owner commits the
+ * choice.
+ */
 import { aliveLifeVersion, type AliveComponent } from "../../../core/domain/components/alive";
 import type { BadgeComponent } from "../../../core/domain/components/badge";
 import type { RoleComponent } from "../../../core/domain/components/role";
@@ -26,14 +32,14 @@ export async function resolveSheriffBadge(
   isCurrent: () => boolean,
 ): Promise<void> {
   if (!isCurrent()) return;
-  const badge = world.getComponent<BadgeComponent>(fromId, COMPONENT.Badge);
+  const badge = world.getComponent(fromId, COMPONENT.Badge);
   if (!badge?.isSheriff || badge.destroyed) return;
   if (badge.handoffPolicy !== "awa_holder_choice_v1") {
     transferOrDestroySheriffBadge(world, fromId, reason, events);
     return;
   }
-  const life = world.getComponent<AliveComponent>(fromId, COMPONENT.Alive);
-  const role = world.getComponent<RoleComponent>(fromId, COMPONENT.Role);
+  const life = world.getComponent(fromId, COMPONENT.Alive);
+  const role = world.getComponent(fromId, COMPONENT.Role);
   const version = life && aliveLifeVersion(life);
   const weight = badge.voteWeight;
   const current = () =>

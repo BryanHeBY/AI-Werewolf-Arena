@@ -1,3 +1,9 @@
+/**
+ * Owns Mist/Raven caster state bindings and audited mist, Snake and Raven knife writes. Inputs
+ * are original role/life/state data; outputs are checked stock updates and committed effects
+ * only while the captured caster matches. Stale or closed caster authority fails without
+ * installing a replacement state.
+ */
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import {
@@ -62,10 +68,10 @@ export class MistCasterAuthority {
       (caster !== "alchemist" && caster !== "raven_claw_wolf")
     )
       throw new Error("mist_caster_authority_invalid");
-    const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role),
+    const role = world.getComponent(actorId, COMPONENT.Role),
       campComponent = world.getComponent(actorId, COMPONENT.Camp),
       identity = world.getComponent(actorId, COMPONENT.Identity),
-      life = world.getComponent<AliveComponent>(actorId, COMPONENT.Alive);
+      life = world.getComponent(actorId, COMPONENT.Alive);
     this.camp = caster === "alchemist" ? Camp.Good : Camp.Wolf;
     this.key = caster === "alchemist" ? "alchemist" : "ravenClaw";
     if (

@@ -1,3 +1,8 @@
+/**
+ * Requests sheriff speaking direction and builds the resulting seat order. Inputs are current
+ * seat identities, alive IDs and the validated direction; outputs preserve the default direction
+ * and sheriff-last ordering. It does not assign the badge or change player life.
+ */
 import { COMPONENT } from "../../../core/domain/components/names";
 import { IdentityComponent } from "../../../core/domain/entities/player";
 import { ActionProvider, EntityId, GameEvent, Phase } from "../../../core/domain/model";
@@ -72,7 +77,7 @@ export function buildSpeakerOrder(
 
   const seatMap = new Map<EntityId, number>();
   for (const id of aliveIds) {
-    const identity = world.getComponent<IdentityComponent>(id, COMPONENT.Identity);
+    const identity = world.getComponent(id, COMPONENT.Identity);
     seatMap.set(id, identity?.seat ?? id);
   }
 

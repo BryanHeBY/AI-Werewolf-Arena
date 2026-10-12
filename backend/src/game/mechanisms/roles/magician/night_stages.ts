@@ -1,3 +1,9 @@
+/**
+ * Runs the Magician exchange request before remapped night abilities. Inputs are the installed
+ * night frame and validated pair selection; outputs are the original exchange event and
+ * authority commit. The stage never applies target mapping eagerly through a prompt; the frame
+ * supplies the later receipt.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase } from "../../../../core/domain/identity";
@@ -17,7 +23,7 @@ export const MAGICIAN_EXCHANGE_STAGE: NightStageHandler = {
     const day = ctx.currentDay(),
       actorId = beginMagicianNight(ctx.world, day);
     if (actorId === null) return;
-    const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+    const role = ctx.world.getComponent(actorId, COMPONENT.Role);
     if (!getMagicianState(role)) throw new Error("magician_actor_invalid");
     const request = ctx.makeRequest(actorId, ["swap_targets"], {
       stage: "magician_exchange",

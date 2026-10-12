@@ -1,3 +1,9 @@
+/**
+ * Executes Guard target selection with captured ability and original-life checks. Inputs are
+ * night context and validated protection tools; outputs are state history, use accounting and
+ * sourced Guard contributions. Only the original contribution owner retains effect validity,
+ * without assigning it to a replacement mark component.
+ */
 import {
   isScholarMentorBoard,
   recordScholarMentorNativeTarget,
@@ -49,7 +55,7 @@ const guardActionStage: NightStageHandler = {
       if (
         !ctx.world.getAliveEntityIds().includes(guardId) ||
         activeNightAbility(
-          ctx.world.getComponent<RoleComponent>(guardId, COMPONENT.Role),
+          ctx.world.getComponent(guardId, COMPONENT.Role),
           "guard",
           ctx.currentDay(),
           ability.id,
@@ -100,7 +106,7 @@ const guardActionStage: NightStageHandler = {
         });
         continue;
       }
-      const currentRole = ctx.world.getComponent<RoleComponent>(guardId, COMPONENT.Role);
+      const currentRole = ctx.world.getComponent(guardId, COMPONENT.Role);
       if (!activeNightAbility(currentRole, "guard", ctx.currentDay(), ability.id)) continue;
       const abstain = result.sanitizedCall.args.abstain === true;
       const targetId = abstain ? null : result.sanitizedCall.args.target_id;
@@ -142,7 +148,7 @@ const guardActionStage: NightStageHandler = {
         output: { abstain, target_id: targetId },
       });
 
-      const role = ctx.world.getComponent<RoleComponent>(guardId, COMPONENT.Role);
+      const role = ctx.world.getComponent(guardId, COMPONENT.Role);
       const guardState = role ? getGuardState(role, ability.id) : undefined;
       if (guardState) {
         guardState.lastTarget = targetId;

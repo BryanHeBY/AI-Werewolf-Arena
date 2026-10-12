@@ -1,3 +1,8 @@
+/**
+ * Checks Mechanical Wolf knife succession and records its inherited knife fact. Inputs are
+ * actual surviving wolves and original mechanical state; outputs retain the current inheritance
+ * predicate. It never changes the copied skill inventory or the player role/camp.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, type EntityId, type GameEvent } from "../../../../core/domain/model";
@@ -25,7 +30,7 @@ export function canMechanicalKnife(role: RoleComponent, world?: World): boolean 
     return false;
   const wolves = world
     .getAliveEntityIds()
-    .filter((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === Camp.Wolf);
+    .filter((id) => world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf);
   return wolves.length === 1 && world.getComponent(wolves[0]!, COMPONENT.Role) === role;
 }
 
@@ -37,10 +42,10 @@ export function refreshMechanicalInheritance(
 ): MechanicalInheritanceFact[] {
   const wolves = world
     .getAliveEntityIds()
-    .filter((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === Camp.Wolf);
+    .filter((id) => world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf);
   if (wolves.length !== 1) return [];
   const actorId = wolves[0]!,
-    role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!;
+    role = world.getComponent(actorId, COMPONENT.Role)!;
   if (role.role !== Role.MechanicalWolf) return [];
   const state = getMechanicalState(role);
   if (!state || !recordMechanicalInheritance(state, day)) return [];

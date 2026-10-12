@@ -1,3 +1,9 @@
+/**
+ * Defines runtime night-effect claim data and original-life identity checks. Inputs are World
+ * component references and sourced effect claims; outputs are captured life/version scopes and
+ * the mechanical damage fold. These handles never become serialized player knowledge, and this
+ * helper does not mark a player dead.
+ */
 import type { DeathCause } from "./deaths";
 import { COMPONENT } from "./components/names";
 import { aliveLifeVersion, type AliveComponent } from "./components/alive";
@@ -42,7 +48,7 @@ export interface NightRadiantBacklash {
   readonly isCurrent: () => boolean;
 }
 export function captureNightLife(world: World, id: EntityId): NightLifeScope | null {
-  const life = world.getComponent<AliveComponent>(id, COMPONENT.Alive),
+  const life = world.getComponent(id, COMPONENT.Alive),
     version = life && aliveLifeVersion(life);
   return life?.alive && version !== undefined ? { id, life, version } : null;
 }

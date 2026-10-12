@@ -1,3 +1,9 @@
+/**
+ * Records role-inspection night commitment and optional inspection completion. Inputs are World,
+ * real night and the completed Gargoyle/inspection choice; outputs are per-night bookkeeping and
+ * completed target knowledge. This ledger never manufactures an active ability or a second
+ * inspection resource.
+ */
 import { aliveLifeVersion, type AliveComponent } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -47,9 +53,9 @@ export function recordRoleInspectionCompletion(
 ): void {
   if (!isCurrent()) return;
   recordRoleInspectionNightCommit(world, day, isCurrent);
-  const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role),
+  const role = world.getComponent(actorId, COMPONENT.Role),
     state = role && getGargoyleState(role),
-    life = world.getComponent<AliveComponent>(actorId, COMPONENT.Alive),
+    life = world.getComponent(actorId, COMPONENT.Alive),
     version = life && aliveLifeVersion(life);
   if (
     roleInspectionPolicy(ability.state) !== "gargoyle" ||

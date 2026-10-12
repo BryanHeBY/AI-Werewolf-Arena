@@ -1,3 +1,9 @@
+/**
+ * Defines configured elimination predicates from actual alive faction statistics. Inputs are
+ * World state and win-condition configuration; outputs are rule decisions for city, side and
+ * wolf-half conditions. These predicates never seal the result or resolve special relation
+ * victories.
+ */
 import { ELIMINATION_PRIORITIES, type EliminationPriority } from "../../../core/domain/board";
 import { demonHunterIsGod } from "../roles/demon_hunter/authority";
 import { weddingFactionResult } from "../roles/ghost_bride/authority";
@@ -27,7 +33,7 @@ function statAlive(world: World): AliveStat {
   };
 
   for (const id of world.getAliveEntityIds()) {
-    const roleComp = world.getComponent<RoleComponent>(id, COMPONENT.Role);
+    const roleComp = world.getComponent(id, COMPONENT.Role);
     if (!roleComp) {
       continue;
     }

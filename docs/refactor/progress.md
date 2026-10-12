@@ -79,3 +79,5 @@
 - C14 source assets：3 executable ACP+2待迁helper、16actual consumers闭合；904 JSON原path/byte保持，Root固定Gitblob907摘要独立复核。v2原/现摘要与5源码/进口身份、actual JSON metadata/cohort验证接根check:fixtures；严格finite字段与support realm的原攻击输入修复，25heads/0、必要types/0、原4+新3focused/0，3真实initialize/EOF进程0模型。904 archives实体迁移另笔继续。
 
 - C14第三审小修：同一frontend ancestor symlink反例先证scan遍历后coverage拒绝，再修fixtureRoots逐段lstat；原payload现先symlink_rejected，维护1/0且0真实archivecopy，独立5source/16imports/3入口再核0。未重复907 CLI/大套件。
+
+- C16生产consumer收口：actual318固定slot/123src全部使用默认ComponentMap推导；108准确头+15旧头，Root修F01 production例外和PhaseManager proposal职责表述。作者与独立审246 emitted grammar相同（107raw/16仅wrap），123头/0与14跨层抽审、完整source类型0；无新casts、无测试/fixture或业务修改，public旧重载与测试特权留C44。

@@ -1,3 +1,8 @@
+/**
+ * Projects an accepted victory decision into the structured game result. Inputs are current
+ * affiliations and decided victory targets/reason; outputs preserve winning memberships and
+ * claim data. It does not choose a new elimination policy or alter a player component.
+ */
 import type { GameOutcome, VictoryClaim, VictoryTarget } from "@ai-werewolf-arena/game-catalog";
 import { COMPONENT, type WinDecision, type World } from "../../../core/domain";
 import type { VictoryComponent } from "../../../core/domain/components/victory";
@@ -15,7 +20,7 @@ export function victoryDecision(
       if (target.kind === "individual" && id !== target.playerId) return false;
       return (
         world
-          .getComponent<VictoryComponent>(id, COMPONENT.Victory)
+          .getComponent(id, COMPONENT.Victory)
           ?.affiliations.some(
             (member) =>
               (target.kind === "faction" &&

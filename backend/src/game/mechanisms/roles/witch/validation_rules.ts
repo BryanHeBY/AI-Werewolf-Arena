@@ -1,3 +1,8 @@
+/**
+ * Defines Witch potion validation for stock, target, self-heal and current knife context. Inputs
+ * are sanitized potion tools and trusted validation context; outputs are the original structured
+ * rule results. It never consumes a potion during preflight or invents a missing heal target.
+ */
 import { scholarMentorBlocks } from "../scholar_mentor/night_frame";
 import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { nativePotionsCanCombine } from "./policies";
@@ -60,10 +65,8 @@ export const WITCH_VALIDATION_RULES: ToolRuleMap = {
       const targetId = mapping?.effectiveId ?? requestedId;
       if (
         !isAliveTarget(world, targetId) ||
-        !world.getComponent<RoleComponent>(targetId, COMPONENT.Role) ||
-        !world
-          .getComponent<StatusMarksComponent>(targetId, COMPONENT.StatusMarks)
-          ?.has(StatusMark.WolfKillMark)
+        !world.getComponent(targetId, COMPONENT.Role) ||
+        !world.getComponent(targetId, COMPONENT.StatusMarks)?.has(StatusMark.WolfKillMark)
       ) {
         return { code: RuleError.HealTarget };
       }

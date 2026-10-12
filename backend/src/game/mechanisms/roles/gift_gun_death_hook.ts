@@ -1,3 +1,9 @@
+/**
+ * Provides granted death-gun actions after the native role death hook commits. Inputs are the
+ * original dead player and owned first-death gun rights; outputs are trusted shots, death
+ * proposals or deferred shot events. Only current gun permissions may write remaining stock;
+ * revoked captures fail without opening another shot or letting model preflight consume the gun.
+ */
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import { DeathCause, permitsHunterShot } from "../../../core/domain/model";
@@ -18,7 +24,7 @@ export const giftGunDeathHook: DeathHook = async (world, ids, sources, choose, e
   for (const actorId of ids) {
     const current = () => context?.isCurrent?.() ?? true;
     if (!current()) break;
-    const gun = allDeathGuns(world.getComponent<RoleComponent>(actorId, COMPONENT.Role))[0];
+    const gun = allDeathGuns(world.getComponent(actorId, COMPONENT.Role))[0];
     if (!gun || !permitsHunterShot(sources[actorId] ?? [])) continue;
     const resolutionDay = context?.day;
     if (

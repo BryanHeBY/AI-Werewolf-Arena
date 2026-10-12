@@ -1,3 +1,8 @@
+/**
+ * Checks the wolf knife target policy from current roles and pack membership. Inputs are World,
+ * actor and target IDs; output is the existing allowed-target predicate. It does not reveal
+ * hidden teammate knowledge or commit the knife vote.
+ */
 import { readNobleState } from "../noble_secret_body/state";
 import { getNightmareShadowState } from "../nightmare_shadow/state";
 import { isMistRavenBoard, mistKnifeTargets } from "../mist_raven/night_frame";
@@ -10,13 +15,13 @@ export function wolfKnifeTargetAllowed(world: World, id: EntityId): boolean {
   const circle = isMistRavenBoard(world) ? mistKnifeTargets(world) : null;
   return (
     (circle === null || circle.includes(id)) &&
-    (world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role !== Role.NightNoble ||
-      readNobleState(world.getComponent<RoleComponent>(id, COMPONENT.Role)?.privateState.noble)
+    (world.getComponent(id, COMPONENT.Role)?.role !== Role.NightNoble ||
+      readNobleState(world.getComponent(id, COMPONENT.Role)?.privateState.noble)
         ?.wolfActionPolicy === "standard") &&
     world.getAliveEntityIds().includes(id) &&
-    world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role !== Role.EvilKnight &&
-    (world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role !== Role.NightmareShadow ||
-      getNightmareShadowState(world.getComponent<RoleComponent>(id, COMPONENT.Role))
-        ?.wolfActionPolicy === "standard")
+    world.getComponent(id, COMPONENT.Role)?.role !== Role.EvilKnight &&
+    (world.getComponent(id, COMPONENT.Role)?.role !== Role.NightmareShadow ||
+      getNightmareShadowState(world.getComponent(id, COMPONENT.Role))?.wolfActionPolicy ===
+        "standard")
   );
 }

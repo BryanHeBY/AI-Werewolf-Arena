@@ -66,7 +66,7 @@ export function recipientAbilityStage(
     async execute(ctx) {
       const day = ctx.currentDay();
       for (const actorId of ctx.world.getAliveEntityIds()) {
-        const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+        const role = ctx.world.getComponent(actorId, COMPONENT.Role);
         for (const ability of allNightAbilities(role).filter((ability) =>
           isRecipient(ability, policy),
         )) {

@@ -1,3 +1,9 @@
+/**
+ * Defines the Debater profile, parameter schema and its configured runtime hooks. Inputs are
+ * profile parameters and current role state; outputs include tool/validation registration and
+ * role initialization. This profile does not own the debate window or commit vote-block
+ * penalties.
+ */
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
@@ -83,7 +89,7 @@ export const DEBATER_ROLE_PROFILE: RoleProfile = {
   validationRules: {
     challenge: ({ world, actorId, day, phase, toolCall, debateId }) => {
       const a = debateAuthority(world, debateId),
-        role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role),
+        role = world.getComponent(actorId, COMPONENT.Role),
         state = getDebaterState(role);
       if (toolCall.name !== "challenge") return { code: RuleError.ToolMismatch };
       if (

@@ -1,3 +1,9 @@
+/**
+ * Checks and records Awakened Hidden Wolf knife inheritance from the actual surviving wolf
+ * roster. Inputs are the World, night/day and original role state; outputs are eligibility or
+ * the existing inheritance fact. No provisional death proposal grants the knife, and role/camp
+ * identity is not rewritten.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, type GameEvent } from "../../../../core/domain/model";
@@ -19,17 +25,17 @@ export function canAwakenedKnife(role: RoleComponent, world?: World): boolean {
     return false;
   const wolves = world
     .getAliveEntityIds()
-    .filter((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === Camp.Wolf);
+    .filter((id) => world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf);
   return wolves.length === 1 && world.getComponent(wolves[0]!, COMPONENT.Role) === role;
 }
 /** Only assembly and completed actual death proposals create persistent inheritance. */
 export function refreshAwakenedInheritance(world: World, day: number, events: GameEvent[]): void {
   const wolves = world
     .getAliveEntityIds()
-    .filter((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === Camp.Wolf);
+    .filter((id) => world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf);
   if (wolves.length !== 1) return;
   const actorId = wolves[0]!,
-    role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!,
+    role = world.getComponent(actorId, COMPONENT.Role)!,
     state = getAwakenedState(role);
   if (role.role !== Role.AwakenedHiddenWolf || !state || !recordAwakenedInheritance(state, day))
     return;

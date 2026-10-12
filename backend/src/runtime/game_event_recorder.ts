@@ -60,7 +60,7 @@ export class GameEventRecorder {
         );
         if (!visibleEvent) continue;
         this.playerVisibleEventSeq.set(playerId, nextVisibleSeq);
-        const roleComp = this.options.world.getComponent<RoleComponent>(playerId, COMPONENT.Role);
+        const roleComp = this.options.world.getComponent(playerId, COMPONENT.Role);
         this.options.replayManager.recordPlayerEvent({
           playerId,
           role: roleComp?.role ?? "unknown",

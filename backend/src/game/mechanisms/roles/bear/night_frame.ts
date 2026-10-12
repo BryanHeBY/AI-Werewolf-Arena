@@ -1,3 +1,8 @@
+/**
+ * Owns the Bear night frame and deferred dawn publication. Inputs are original neighbor bodies
+ * and the sampled roar; outputs are history and dawn events only for the still-matching frame.
+ * It does not publish the same captured night twice or substitute revived neighbor bodies.
+ */
 import { types } from "node:util";
 import {
   AliveComponent,
@@ -58,8 +63,8 @@ function sampleRoar(world: World, actorId: EntityId, catalog: RoleCatalog): bool
       .getAliveEntityIds()
       .sort(
         (a, b) =>
-          (world.getComponent<IdentityComponent>(a, COMPONENT.Identity)?.seat ?? a) -
-            (world.getComponent<IdentityComponent>(b, COMPONENT.Identity)?.seat ?? b) || a - b,
+          (world.getComponent(a, COMPONENT.Identity)?.seat ?? a) -
+            (world.getComponent(b, COMPONENT.Identity)?.seat ?? b) || a - b,
       ),
     index = ring.indexOf(actorId),
     neighbors =
@@ -72,7 +77,7 @@ function sampleRoar(world: World, actorId: EntityId, catalog: RoleCatalog): bool
             ]),
           ];
   return neighbors.some((id) => {
-    const target = world.getComponent<RoleComponent>(id, COMPONENT.Role);
+    const target = world.getComponent(id, COMPONENT.Role);
     return (
       target?.camp === Camp.Wolf &&
       (catalog.get(target.role)?.detectableByBear?.(world, target) ?? true)
@@ -107,20 +112,20 @@ export class BearNightFrame {
     if (!BEAR_SIGNAL_POLICIES.includes(signalPolicy)) throw Error("bear_signal_policy_invalid");
     const bears = world
       .entityIds()
-      .filter((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Bear);
+      .filter((id) => world.getComponent(id, COMPONENT.Role)?.role === Role.Bear);
     if (bears.length > 1) throw new Error("bear_count_exceeds_limit");
     const actorId = bears[0];
     if (actorId === undefined) return null;
-    const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!,
+    const role = world.getComponent(actorId, COMPONENT.Role)!,
       state = getBearState(role),
-      life = world.getComponent<AliveComponent>(actorId, COMPONENT.Alive),
+      life = world.getComponent(actorId, COMPONENT.Alive),
       version = life && aliveLifeVersion(life);
     if (role.camp !== Camp.Good || !state || !life || version === undefined) return null;
     const originals =
         signalPolicy === "netease_dawn_live_v1"
           ? world.getAliveEntityIds().map((id) => captureOriginalPlayer(world, id))
           : [],
-      camp = world.getComponent<CampComponent>(actorId, COMPONENT.Camp);
+      camp = world.getComponent(actorId, COMPONENT.Camp);
     if (
       originals.some((p) => p === null) ||
       (signalPolicy === "netease_dawn_live_v1" && camp?.camp !== Camp.Good)
@@ -209,7 +214,7 @@ export class BearNightFrame {
       const before = this.originals.map((p) => ({
           p,
           version: aliveLifeVersion(p.life),
-          identity: world.getComponent<IdentityComponent>(p.id, COMPONENT.Identity),
+          identity: world.getComponent(p.id, COMPONENT.Identity),
           seat: ownData(world.getComponent(p.id, COMPONENT.Identity), "seat"),
         })),
         sampled =

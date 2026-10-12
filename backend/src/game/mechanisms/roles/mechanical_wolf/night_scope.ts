@@ -1,3 +1,8 @@
+/**
+ * Captures Mechanical Wolf owner, copied-skill and selected-mode scopes. Inputs are original
+ * life, state and source identities; outputs are current mode checks and real-night commitment
+ * records. It never lets replacement mode/state reuse the old mimic or knife permission.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, type EntityId } from "../../../../core/domain/model";
@@ -29,7 +34,7 @@ export function captureMechanicalOwner(
   actorId: EntityId,
   phaseCurrent: () => boolean,
 ): MechanicalOwnerScope | null {
-  const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+  const role = world.getComponent(actorId, COMPONENT.Role);
   const state = getMechanicalState(role);
   const life = captureNightLife(world, actorId);
   if (

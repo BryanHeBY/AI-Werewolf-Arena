@@ -1,3 +1,9 @@
+/**
+ * Captures Awakened Hidden Wolf owner, mimic skill and mirror scopes for one real night. Inputs
+ * are the original ability and role/life references; outputs are currentness checks and
+ * night-commit bookkeeping. It never lets a new state, source or body inherit the old captured
+ * permission.
+ */
 import { aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -29,7 +35,7 @@ export function captureAwakenedOwner(
   actorId: EntityId,
   phaseCurrent: () => boolean,
 ): AwakenedOwnerScope | null {
-  const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role),
+  const role = world.getComponent(actorId, COMPONENT.Role),
     state = getAwakenedState(role),
     life = captureNightLife(world, actorId);
   if (

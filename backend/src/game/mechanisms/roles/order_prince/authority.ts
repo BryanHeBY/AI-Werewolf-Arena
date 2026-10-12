@@ -1,3 +1,9 @@
+/**
+ * Owns Order Prince original identity binding and its pending reveal choice. Inputs are the
+ * World and selected target; outputs are currentness checks, reveal state and committed choice
+ * evidence. Only the matching pending choice writes; a closed choice prevents stale targets from
+ * completing it.
+ */
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -79,7 +85,7 @@ export function installOrderPrinceBoard(world: World): void {
     .filter((id) => own(world.getComponent(id, COMPONENT.Role), "role") === ORDER_PRINCE_ROLE);
   if (actors.length !== 1) throw new Error("order_prince_original_roster_invalid");
   const actorId = actors[0]!;
-  const role = world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!;
+  const role = world.getComponent(actorId, COMPONENT.Role)!;
   const state = getOrderPrinceState(role);
   const life = captureNightLife(world, actorId);
   const identity = world.getComponent(actorId, COMPONENT.Identity);

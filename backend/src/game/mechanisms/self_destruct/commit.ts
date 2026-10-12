@@ -1,3 +1,8 @@
+/**
+ * Commits the selected self-destruct choice through its configured role hook. Inputs are the
+ * captured actor, validated blast and current window; outputs are existing blast effects and
+ * death proposals. It does not reuse a revoked actor or perform final phase/victory sealing.
+ */
 import { RED_MOON_ROLE } from "../roles/red_moon_apostle/state";
 import { commitDemonRedMoonBlast } from "../roles/demon_hunter/authority";
 import { canRoleSelfDestruct } from "../roles/self_destruct_capability";
@@ -35,9 +40,8 @@ export function commitSelfDestructSelection(
     phase !== (window === ActionWindow.OnPreVote ? Phase.Voting : Phase.Day)
   )
     return null;
-  const role = world.getComponent<RoleComponent>(choice.actorId, COMPONENT.Role);
-  if (!role || !world.getComponent<{ alive: boolean }>(choice.actorId, COMPONENT.Alive)?.alive)
-    return null;
+  const role = world.getComponent(choice.actorId, COMPONENT.Role);
+  if (!role || !world.getComponent(choice.actorId, COMPONENT.Alive)?.alive) return null;
   const ownsWedding = weddingSetup(world) !== null;
   if (
     ownsWedding &&
@@ -78,7 +82,7 @@ export function commitSelfDestructSelection(
     if (choice.targetId !== null) {
       if (
         choice.targetId === choice.actorId ||
-        !world.getComponent<{ alive: boolean }>(choice.targetId, COMPONENT.Alive)?.alive
+        !world.getComponent(choice.targetId, COMPONENT.Alive)?.alive
       )
         return null;
       deaths.push(choice.targetId);

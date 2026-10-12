@@ -1,3 +1,8 @@
+/**
+ * Projects an agent round into its player replay timeline. Inputs are the original request,
+ * built prompt and selected tool outcome; outputs include the existing per-player round counter
+ * and recording fields. A recorded accepted tool is not a domain resource commit.
+ */
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, EntityId } from "../../../core/domain";
@@ -18,7 +23,7 @@ export class PlayerRoundRecorder {
   record(request: ActionRequest, prompt: BuiltPlayerPrompt, outcome: PlayerRoundOutcome): void {
     const recorder = getSessionRecorder();
     if (!recorder) return;
-    const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
+    const role = this.world.getComponent(request.actorId, COMPONENT.Role);
     const round = (this.roundCounters.get(request.actorId) ?? 0) + 1;
     this.roundCounters.set(request.actorId, round);
     const day = getActionRequestDay(request);

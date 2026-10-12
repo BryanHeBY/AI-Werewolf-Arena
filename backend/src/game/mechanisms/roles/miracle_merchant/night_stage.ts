@@ -1,3 +1,9 @@
+/**
+ * Runs Miracle Merchant gift selection from the actual merchant stock. Inputs are current bodies
+ * and the validated skill/recipient choice; outputs are owned grants, backlash claims and
+ * skip/commit evidence. Paid claims keep their original-life validity and never transfer to a
+ * replacement giver.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, Phase, WitchSelfHealRule } from "../../../../core/domain/model";
@@ -23,7 +29,7 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
   async execute(ctx) {
     const day = ctx.currentDay();
     for (const actorId of ctx.getAliveByRole(Role.MiracleMerchant)) {
-      const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!,
+      const role = ctx.world.getComponent(actorId, COMPONENT.Role)!,
         state = getMerchantState(role),
         life = captureNightLife(ctx.world, actorId);
       if (!state || !life || role.camp !== Camp.Good) continue;
@@ -46,7 +52,7 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
             .getAliveEntityIds()
             .filter((id) => id !== actorId)
             .map((id) => {
-              const targetRole = ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+              const targetRole = ctx.world.getComponent(id, COMPONENT.Role)!;
               return [
                 id,
                 {

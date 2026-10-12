@@ -1,3 +1,10 @@
+/**
+ * Provides noop, scripted and baseline action providers. Inputs are engine requests and the
+ * optional World; outputs are queued or heuristic tool calls. The baseline deliberately consults
+ * true camp for some choices and is still used by production fallbacks: the documented F01
+ * exception remains until C33a. Scripted drivers retain explicit test privilege; these providers
+ * make no model calls and are not independent expected-value oracles.
+ */
 import { scholarMentorBonusTargets } from "../../../game/mechanisms/roles/scholar_mentor/night_frame";
 import { prohibitsLoversVote } from "../../../game/mechanisms/roles/cupid/relation";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -89,7 +96,7 @@ export class BaselineBotActionProvider implements ActionProvider {
       return { name: "write_note", args: { text: "..." } };
     if (request.allowedTools.includes("debate_vote"))
       return { name: "debate_vote", args: { support: true } };
-    const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
+    const role = this.world.getComponent(request.actorId, COMPONENT.Role);
     if (!role) {
       return null;
     }
@@ -253,7 +260,7 @@ export class BaselineBotActionProvider implements ActionProvider {
    */
   private pickAliveByCamp(actorId: EntityId, camp: Camp): EntityId | null {
     const target = this.world.getAliveEntityIds().find((id) => {
-      const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = this.world.getComponent(id, COMPONENT.Role);
       return id !== actorId && role?.camp === camp;
     });
     // 若指定阵营无可选目标，兜底选任意存活非自己玩家。

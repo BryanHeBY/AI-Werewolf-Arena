@@ -1,3 +1,8 @@
+/**
+ * Executes the Time Consort lock request before affected native actions. Inputs are the bound
+ * night frame and validated target choice; outputs are the committed lock fact. It does not move
+ * reflection or paid-effect commitment ahead of the later native action owners.
+ */
 import type { AliveComponent } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -21,9 +26,7 @@ export const TIME_CONSORT_LOCK_STAGE: NightStageHandler = {
     if (actorId === null) {
       const id = timeConsortActorId(ctx.world);
       if (id === null) throw new Error("time_consort_actor_missing");
-      const reason = ctx.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive
-        ? "exhausted"
-        : "dead";
+      const reason = ctx.world.getComponent(id, COMPONENT.Alive)!.alive ? "exhausted" : "dead";
       ctx.events.push({
         timestamp: Date.now(),
         type: "time_consort_lock_skipped",
@@ -32,7 +35,7 @@ export const TIME_CONSORT_LOCK_STAGE: NightStageHandler = {
       });
       return;
     }
-    const role = ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role);
+    const role = ctx.world.getComponent(actorId, COMPONENT.Role);
     if (!getTimeConsortState(role)) throw new Error("time_consort_actor_invalid");
     const request = ctx.makeRequest(actorId, ["lock_time"], {
       stage: "time_consort_lock",

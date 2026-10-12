@@ -1,3 +1,9 @@
+/**
+ * Runs Mechanical Wolf mode, mimic, copied skill and attack stages. Inputs are captured
+ * owner/mode scopes and validated tools; outputs preserve shields, attacks and copied-skill
+ * facts in existing stage order. The stages do not merge distinct skill resource or failure
+ * semantics.
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, StatusMark, type EntityId, type ToolName } from "../../../../core/domain/model";
@@ -103,7 +109,7 @@ const mimicStage: NightStageHandler = {
         const candidates = targets(ctx, owner.actorId, true);
         const targetRoles = new Map(
           [...candidates.keys()].map((id) => {
-            const role = ctx.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+            const role = ctx.world.getComponent(id, COMPONENT.Role)!;
             return [id, { component: role, role: role.role }] as const;
           }),
         );

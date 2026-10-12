@@ -1,3 +1,9 @@
+/**
+ * Implements dawn damage resolution from current night marks and sourced protection, inspection
+ * and retaliation claims. Outputs are pending death IDs, causes and private reflection evidence,
+ * while consumed night marks are cleared. It does not write Alive state or run death hooks;
+ * those belong to death resolution.
+ */
 import { COMPONENT } from "../components/names";
 import { StatusMarksComponent } from "../components/status_marks";
 import { EntityId, StatusMark, DeathCause, type DeathSources } from "../model";
@@ -133,7 +139,7 @@ export class DamageResolutionSystem {
         .map((claim) => claim.target.id),
     );
     for (const entityId of world.getAliveEntityIds()) {
-      const marks = world.getComponent<StatusMarksComponent>(entityId, COMPONENT.StatusMarks);
+      const marks = world.getComponent(entityId, COMPONENT.StatusMarks);
       if (passiveImmuneTargets.has(entityId)) {
         marks?.clear();
         continue;

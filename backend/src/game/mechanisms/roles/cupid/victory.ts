@@ -1,3 +1,8 @@
+/**
+ * Derives Cupid city victory from the current relation and surviving affiliations. Inputs are
+ * the original lovers record and living World roster; output is the Cupid victory decision when its
+ * predicate holds. It never changes the lovers relation or eliminates a player.
+ */
 import {
   COMPONENT,
   Camp,
@@ -26,7 +31,7 @@ export function cupidCityDecision(world: World): { decision: WinDecision | null 
   let wolves = 0,
     good = 0;
   for (const id of alive) {
-    const role = world.getComponent<RoleComponent>(id, COMPONENT.Role);
+    const role = world.getComponent(id, COMPONENT.Role);
     if (role?.camp === Camp.Wolf) wolves++;
     if (
       role?.camp === Camp.Good &&

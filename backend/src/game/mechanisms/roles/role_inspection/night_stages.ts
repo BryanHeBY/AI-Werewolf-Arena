@@ -1,3 +1,9 @@
+/**
+ * Executes Gargoyle, Psychic and Mirror inspection stages through their existing role-specific
+ * policies. Inputs are active instances and validated target checks; outputs preserve inspection
+ * records, use counts and optional-completion behavior. It does not unify their distinct failure
+ * or target semantics.
+ */
 import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -102,7 +108,7 @@ async function executeInspections(
       if (!current()) break;
       const targets = new Map(
         roleInspectionTargets(ctx.world, actorId, state).map((id) => {
-          const target = ctx.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+          const target = ctx.world.getComponent(id, COMPONENT.Alive)!;
           return [id, { target, version: aliveLifeVersion(target) }] as const;
         }),
       );

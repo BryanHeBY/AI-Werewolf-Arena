@@ -1,3 +1,9 @@
+/**
+ * Owns Noble/Secret Body original roster, servant stock and protection leases. Inputs are
+ * current night/exile/death contexts and captured choices; writes produce accepted contracts,
+ * protection receipts and snapshots only for matching original players. Expiry, close or abort
+ * retires the affected authority without restoring paid stock.
+ */
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -99,8 +105,8 @@ function victoryJson(value: unknown): string | null {
   return JSON.stringify(entries);
 }
 function capture(world: World, id: number): OriginalPlayer {
-  const role = world.getComponent<RoleComponent>(id, COMPONENT.Role),
-    life = world.getComponent<AliveComponent>(id, COMPONENT.Alive),
+  const role = world.getComponent(id, COMPONENT.Role),
+    life = world.getComponent(id, COMPONENT.Alive),
     identity = world.getComponent(id, COMPONENT.Identity),
     victory = world.getComponent(id, COMPONENT.Victory);
   const privateState = own(role, "privateState"),

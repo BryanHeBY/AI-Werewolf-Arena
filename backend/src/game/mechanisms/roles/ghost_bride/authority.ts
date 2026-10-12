@@ -185,10 +185,10 @@ const bindings = new WeakMap<World, Binding>(),
     }
   >();
 function capture(world: World, id: number): Participant {
-  const role = world.getComponent<RoleComponent>(id, COMPONENT.Role),
-    campComponent = world.getComponent<CampComponent>(id, COMPONENT.Camp),
-    life = world.getComponent<AliveComponent>(id, COMPONENT.Alive),
-    victory = world.getComponent<VictoryComponent>(id, COMPONENT.Victory);
+  const role = world.getComponent(id, COMPONENT.Role),
+    campComponent = world.getComponent(id, COMPONENT.Camp),
+    life = world.getComponent(id, COMPONENT.Alive),
+    victory = world.getComponent(id, COMPONENT.Victory);
   const kind = data(role, "role"),
     camp = data(role, "camp"),
     state = data(role, "privateState"),
@@ -1165,12 +1165,8 @@ export function swallowWeddingBadges(
   if (!b || !ghostBrideReady(world)) throw new Error("ghost_bride_badge_authority_invalid");
   swallowedBadges.add(world);
   for (const id of world.entityIds()) {
-    const badge = world.getComponent<
-      import("../../../../core/domain/components/badge").BadgeComponent
-    >(id, COMPONENT.Badge);
-    const vote = world.getComponent<
-      import("../../../../core/domain/components/voting_right").VotingRightComponent
-    >(id, COMPONENT.VotingRight);
+    const badge = world.getComponent(id, COMPONENT.Badge);
+    const vote = world.getComponent(id, COMPONENT.VotingRight);
     if (badge) {
       if (badge.isSheriff && !badge.destroyed)
         events.push({

@@ -1,3 +1,8 @@
+/**
+ * Activates late death abilities for the actual recipient instances. Inputs are the current
+ * night context and owned gun/ability records; outputs preserve activation commit bookkeeping.
+ * It never installs a new role or allows a retired source to reclaim a death action.
+ */
 import type { World } from "../../../core/domain/world";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import { COMPONENT } from "../../../core/domain/components/names";
@@ -13,9 +18,7 @@ export const DEATH_ABILITY_ACTIVATION_STAGE: NightStageHandler = {
   async execute(ctx) {
     const day = ctx.currentDay();
     for (const actorId of ctx.world.getAliveEntityIds())
-      for (const gun of allDeathGuns(
-        ctx.world.getComponent<RoleComponent>(actorId, COMPONENT.Role),
-      )) {
+      for (const gun of allDeathGuns(ctx.world.getComponent(actorId, COMPONENT.Role))) {
         if (!ctx.isCurrent() || ctx.currentDay() !== day) return;
         if (gun.armedOnNight !== null) continue;
         armDeathGun(ctx.world, actorId, gun, day, ctx.events);
