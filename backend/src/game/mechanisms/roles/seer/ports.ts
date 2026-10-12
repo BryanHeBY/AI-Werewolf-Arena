@@ -5,11 +5,15 @@
  * permission capture or default installation occurs at this query boundary.
  * Before each existing hint/preflight/recheck, original field failures propagate;
  * failed or terminal windows remain their separate permission owners.
+ * The public state accessor exposes only the same deeply readonly live slot;
+ * installation and inspection writes remain in the feature state owner.
  */
-import type { NightAbilityReadView } from "../abilities";
+import type { SeerReadState } from "./state-contracts";
+export { getSeerState } from "./state";
+export type { SeerReadState } from "./state-contracts";
 
 export function seerTargetAllowed(
-  state: NightAbilityReadView<"seer_check">["state"] | undefined,
+  state: SeerReadState | undefined,
   actorId: number,
   targetId: number,
 ): boolean {

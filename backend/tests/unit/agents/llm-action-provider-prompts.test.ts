@@ -32,7 +32,9 @@ describe("LlmActionProvider prompts", () => {
       return role?.role === "seer";
     })!;
     const seerRole = context.world.getComponent<RoleComponent>(seerId, COMPONENT.Role)!;
-    const seerState = getSeerState(seerRole)!;
+    const seerState = getSeerState(
+      seerRole,
+    )! as import("../../../src/game/mechanisms/roles/seer/state-contracts").SeerState;
     seerState.lastTarget = 1;
     seerState.lastIsWerewolf = true;
     seerState.history.push({ targetId: 1, isWerewolf: true });

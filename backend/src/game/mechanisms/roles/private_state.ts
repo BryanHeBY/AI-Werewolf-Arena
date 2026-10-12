@@ -5,7 +5,7 @@
  * Existing commands, lease checks, inventory, projection and checkpoint encoding remain
  * their current owners until those separate migrations; this facade exits in C44.
  */
-export type { SeerState } from "./seer/state-contracts";
+export type { SeerState, SeerReadState } from "./seer/state-contracts";
 export { getSeerState, setSeerState } from "./seer/state";
 export type { WitchState } from "./witch/state";
 export { getWitchState, setWitchState } from "./witch/state";

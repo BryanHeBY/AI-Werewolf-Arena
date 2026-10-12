@@ -15,7 +15,7 @@ import type { GuardState } from "./guard/state";
 import type { WitchState } from "./witch/state";
 import type { DreamerState } from "./dreamer/state";
 import type { RoleInspectionState } from "./role_inspection/state";
-import type { SeerState } from "./seer/state-contracts";
+import type { SeerState, SeerReadState } from "./seer/state-contracts";
 import { COMPONENT } from "../../../core/domain/components/names";
 import {
   projectDreamerState,
@@ -127,12 +127,7 @@ interface NightAbilityReadStates {
     })[];
   };
   shelter: Readonly<NightAbilityStates["shelter"]>;
-  seer_check: Readonly<Omit<SeerState, "lastResult" | "history">> & {
-    readonly lastResult?: Readonly<NonNullable<SeerState["lastResult"]>> | null;
-    readonly history: readonly (Readonly<Omit<SeerState["history"][number], "result">> & {
-      readonly result?: Readonly<NonNullable<SeerState["history"][number]["result"]>>;
-    })[];
-  };
+  seer_check: SeerReadState;
   role_check: Readonly<Omit<RoleInspectionState, "history">> & {
     readonly history: readonly (Readonly<Omit<RoleInspectionState["history"][number], "result">> & {
       readonly result: Readonly<RoleInspectionState["history"][number]["result"]>;

@@ -23,7 +23,7 @@ import {
   getSeerState as legacyGetSeerState,
   setSeerState as legacySetSeerState,
 } from "../../../../src/game/mechanisms/roles/private_state";
-import type { SeerState } from "../../../../src/game/mechanisms/roles/seer/state-contracts";
+import type { SeerState, SeerReadState } from "../../../../src/game/mechanisms/roles/seer/state-contracts";
 
 const emptyState = (): SeerState => ({ lastTarget: null, lastIsWerewolf: null, history: [] });
 
@@ -44,16 +44,16 @@ test("the original ability slot owns installation copies and repeated reads; rep
   expect(owned.history).not.toBe(template.history);
   expect(getSeerState(role)).toBe(owned);
   expect(getSeerState(role, ability.id)).toBe(owned);
-  expect(ability.state).toBe(owned);
+  expect(ability.state as SeerReadState).toBe(owned);
   expect(Object.hasOwn(role.privateState, "seer")).toBe(false);
   expect(Object.keys(owned)).toEqual(["lastTarget", "lastIsWerewolf", "history"]);
-  owned.history.push({ targetId: 9, isWerewolf: true });
+  (owned as SeerState).history.push({ targetId: 9, isWerewolf: true });
   expect(template.history).toEqual([]);
   expect(scope.isEligible()).toBe(true);
 
   const replacement = setSeerState(role, template);
   expect(findNightAbility(role, "seer_check")).toBe(ability);
-  expect(ability.state).toBe(replacement);
+  expect(ability.state as SeerReadState).toBe(replacement);
   expect(replacement).not.toBe(owned);
   expect(replacement.history).toEqual([]);
   expect(scope.isOwnerCurrent()).toBe(false);

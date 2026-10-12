@@ -136,9 +136,9 @@ import {
   getDreamerState,
   getWolfBeautyState,
   getIdiotState,
-  getSeerState,
   getWitchState,
 } from "../../../game/mechanisms/roles/private_state";
+import { getSeerState } from "../../../game/mechanisms/roles/seer/ports";
 import { freezeObservation, type PlayerObservation } from "./observation";
 import { buildBoardInfoPrompt, buildSystemPrompt, buildUserPrompt } from "./prompt_templates";
 import { renderTurnConstraintUserHint, resolveTurnConstraints } from "./turn_constraints";

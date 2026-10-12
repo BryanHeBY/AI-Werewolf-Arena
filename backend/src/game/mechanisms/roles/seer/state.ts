@@ -5,46 +5,52 @@
  * The ability owner retains installation copying, instance identity, retirement
  * and use counts. This module never rechecks a lease, changes phase or rolls back
  * partial writes; Demon Hunter's sealed native commit remains a separate writer.
+ * Read/install outputs grant deeply readonly live views. These trusted commit
+ * commands alone restore mutable access locally, preserving each original getter
+ * and partial-write prefix; the view itself never grants action authorization.
  */
 import type { EntityId, InspectionResult } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "../../../../core/domain/components/role";
-import { findNightAbility, installNativeAbility, type NightAbility } from "../abilities";
-import type { SeerState } from "./state-contracts";
+import { findNightAbility, installNativeAbility, type NightAbilityReadView } from "../abilities";
+import type { SeerState, SeerReadState } from "./state-contracts";
 
 /** Installation retains the ability owner's input copy and returned owned reference. */
-export function setSeerState(roleComp: RoleComponent, state: SeerState): SeerState {
+export function setSeerState(roleComp: RoleComponent, state: SeerState): SeerReadState {
   return installNativeAbility(roleComp, "seer_check", state);
 }
 
 /** Reads retain native-first selection and do not filter inactive or spent instances. */
-export function getSeerState(roleComp: RoleComponent, abilityId?: string): SeerState | undefined {
+export function getSeerState(
+  roleComp: RoleComponent,
+  abilityId?: string,
+): SeerReadState | undefined {
   return findNightAbility(roleComp, "seer_check", abilityId)?.state;
 }
 
 /** The caller owns target/scope checks and all effects before and after this write prefix. */
 export function recordSeerInspection(
-  state: SeerState,
+  state: SeerReadState,
   targetId: EntityId,
   isWerewolf: boolean,
   inspection: InspectionResult,
 ): void {
-  state.lastTarget = targetId;
-  state.lastIsWerewolf = isWerewolf;
-  state.lastResult = { ...inspection };
-  state.history.push({ targetId, isWerewolf, result: { ...inspection } });
+  (state as SeerState).lastTarget = targetId;
+  (state as SeerState).lastIsWerewolf = isWerewolf;
+  (state as SeerState).lastResult = { ...inspection };
+  (state as SeerState).history.push({ targetId, isWerewolf, result: { ...inspection } });
 }
 
 /** Recipient reads retain their original per-write ability state and target ID accesses. */
 export function recordRecipientSeerInspection(
-  ability: NightAbility<"seer_check">,
+  ability: NightAbilityReadView<"seer_check">,
   target: { readonly id: EntityId },
   isWerewolf: boolean,
   result: InspectionResult,
 ): void {
-  ability.state.lastTarget = target.id;
-  ability.state.lastIsWerewolf = isWerewolf;
-  ability.state.lastResult = { ...result };
-  ability.state.history.push({
+  (ability.state as SeerState).lastTarget = target.id;
+  (ability.state as SeerState).lastIsWerewolf = isWerewolf;
+  (ability.state as SeerState).lastResult = { ...result };
+  (ability.state as SeerState).history.push({
     targetId: target.id,
     isWerewolf,
     result: { ...result },
