@@ -1,12 +1,19 @@
+/**
+ * Unit tests verify initial identity authority installs once and the legacy Thief facade cannot expose or close another mechanism.
+ * Input: Original fixed literal roles, bounded original World setup and explicit duplicate/invented deal operations.
+ * Output and oracle: Exact stock object identity, readiness errors and pre-setup wolf permissions remain unchanged; no complete phase or model runs.
+ */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Role, COMPONENT, type RoleComponent } from "../../../src/core";
-import { foxBoard } from "../../support/cursed_fox_scenarios";
-import * as shared from "../../../src/game/mechanisms/roles/initial_identity/deal";
-import * as thief from "../../../src/game/mechanisms/roles/thief/deal";
-import { wolfTeamPermissions } from "../../../src/game/mechanisms/roles/wolf_team";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { Role, COMPONENT, type RoleComponent } from "../../../../src/core";
+import { foxBoard } from "../../../support/cursed_fox_scenarios";
+import * as shared from "../../../../src/game/mechanisms/roles/initial_identity/deal";
+import * as thief from "../../../../src/game/mechanisms/roles/thief/deal";
+import { wolfTeamPermissions } from "../../../../src/game/mechanisms/roles/wolf_team";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms";
+
 const roles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Villager];
+
 function foundation() {
   const g = bootstrapGame(foxBoard(roles), { fixedRoles: roles });
   shared.installInitialIdentityDeal(
@@ -17,6 +24,7 @@ function foundation() {
   );
   return g;
 }
+
 test("shared ownership is finite; a second install or an invented kind cannot replace an existing authority", () => {
   const g = foundation(),
     before = shared.initialIdentityStock(g.world);
@@ -40,6 +48,7 @@ test("shared ownership is finite; a second install or an invented kind cannot re
   ).toThrow("initial_identity_kind_invalid");
   expect(shared.initialIdentityKind(h.world)).toBeUndefined();
 });
+
 test("legacy Thief boundary never exposes or closes a different initial mechanism; shared gate blocks pre-setup wolf knowledge", () => {
   const g = foundation();
   expect(thief.thiefDeal(g.world)).toBeUndefined();
@@ -62,30 +71,4 @@ test("legacy Thief boundary never exposes or closes a different initial mechanis
   thief.openThiefNight(g.world, 1)();
   expect(shared.initialIdentitySetupStatus(g.world)).toBe("pending");
   expect(shared.hasInitialIdentityNightCommit(g.world, 1)).toBe(false);
-});
-test("shared night and PM gates reject actual recursive cycles before changing phase or events", async () => {
-  const g = foundation();
-  // The registered handler completes an absent actor without a choice.
-  const h = foundation();
-  await h.phaseManager.runSingleCycle({ getAction: async () => null });
-  expect(shared.initialIdentitySetupStatus(h.world)).toBe("complete");
-  shared.openInitialIdentitySetup(g.world);
-  const before = g.phaseManager.getSnapshot(),
-    n = g.phaseManager.getEvents().length;
-  await expect(g.phaseManager.runSingleCycle({ getAction: async () => null })).rejects.toThrow(
-    "shapeshifter_setup_reentry",
-  );
-  expect(g.phaseManager.getSnapshot()).toEqual(before);
-  expect(g.phaseManager.getEvents()).toHaveLength(n);
-  shared.closeInitialIdentitySetup(g.world, "complete");
-  const close = shared.openInitialIdentityNight(g.world, 1);
-  await expect(g.phaseManager.runSingleCycle({ getAction: async () => null })).rejects.toThrow(
-    "shapeshifter_setup_reentry",
-  );
-  expect(g.phaseManager.getSnapshot()).toEqual(before);
-  expect(g.phaseManager.getEvents()).toHaveLength(n);
-  close();
-  expect(() => shared.openInitialIdentityNight(g.world, 1)).toThrow(
-    "shapeshifter_night_reentry_or_unready",
-  );
 });

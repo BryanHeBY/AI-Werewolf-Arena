@@ -71455,13 +71455,229 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/initial_identity_deal.test.ts",
+      "to": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "ffca70be7d0cb22608105d23f20735baa2cc1da4bc78daf91b5aff0f9fb05c63",
+      "candidateSha256": "1607953a33c6191a4250afe7246d08aee11377b74236eb714962b3b3f9fb8fc3",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 516,
+          "end": 544,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 430,
+          "end": 474,
+          "original": "../../../src/game/mechanisms/roles/wolf_team",
+          "value": "../../../../src/game/mechanisms/roles/wolf_team",
+          "originalResolved": "backend/src/game/mechanisms/roles/wolf_team.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/wolf_team.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 345,
+          "end": 390,
+          "original": "../../../src/game/mechanisms/roles/thief/deal",
+          "value": "../../../../src/game/mechanisms/roles/thief/deal",
+          "originalResolved": "backend/src/game/mechanisms/roles/thief/deal.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/thief/deal.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 262,
+          "end": 318,
+          "original": "../../../src/game/mechanisms/roles/initial_identity/deal",
+          "value": "../../../../src/game/mechanisms/roles/initial_identity/deal",
+          "originalResolved": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/initial_identity/deal.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 200,
+          "end": 234,
+          "original": "../../support/cursed_fox_scenarios",
+          "value": "../../../support/cursed_fox_scenarios",
+          "originalResolved": "backend/tests/support/cursed_fox_scenarios.ts",
+          "expectedResolved": "backend/tests/support/cursed_fox_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 154,
+          "end": 171,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "e62d55d51b8821a9a0b4068fe984684ef77ee26a793e7a5fffca8fa24df8da2b",
+          "title": "shared ownership is finite; a second install or an invented kind cannot replace an existing authority",
+          "occurrence": 1
+        },
+        {
+          "id": "db54c3ce2c93a672ba2b786ea66264eecb4709c949230decf4548e08078c25ef",
+          "title": "legacy Thief boundary never exposes or closes a different initial mechanism; shared gate blocks pre-setup wolf knowledge",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/initial_identity_deal.test.ts",
+      "to": "backend/tests/scenarios/features/initial-identity/cycle-reentry.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "ffca70be7d0cb22608105d23f20735baa2cc1da4bc78daf91b5aff0f9fb05c63",
+      "candidateSha256": "3b4c02501ad1452a98c981888f93375e1f75519f927476d3c36a4564225e89f6",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 231,
+          "end": 287,
+          "original": "../../../src/game/mechanisms/roles/initial_identity/deal",
+          "value": "../../../../src/game/mechanisms/roles/initial_identity/deal",
+          "originalResolved": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/initial_identity/deal.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 169,
+          "end": 203,
+          "original": "../../support/cursed_fox_scenarios",
+          "value": "../../../support/cursed_fox_scenarios",
+          "originalResolved": "backend/tests/support/cursed_fox_scenarios.ts",
+          "expectedResolved": "backend/tests/support/cursed_fox_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 123,
+          "end": 140,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "34732dfa572f50632b9974ea481f996e6b58e7f4620b1750974d55d35f170a98",
+          "title": "shared night and PM gates reject actual recursive cycles before changing phase or events",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { Role, COMPONENT, type RoleComponent } from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Role } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/thief/deal",
+          "originalImport": "import * as thief from \"../../../src/game/mechanisms/roles/thief/deal\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "thief",
+              "kind": "namespace",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/wolf_team",
+          "originalImport": "import { wolfTeamPermissions } from \"../../../src/game/mechanisms/roles/wolf_team\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "wolfTeamPermissions",
+              "imported": "wolfTeamPermissions",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import { getDefaultRoleCatalog } from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 524,
-    "targetFiles": 554,
-    "mappingEntries": 554,
-    "baselineCases": 6584,
+    "sourceFiles": 525,
+    "targetFiles": 556,
+    "mappingEntries": 556,
+    "baselineCases": 6587,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
