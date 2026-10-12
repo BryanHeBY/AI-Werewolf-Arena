@@ -15,7 +15,7 @@ import {
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { World } from "../../../../core/domain/world";
-import { getKnightState } from "../private_state";
+import { getKnightState, consumeKnightDuel } from "./state";
 
 /** One Knight resource/public fact/death proposal; never writes Alive or advances the phase. */
 export function commitKnightDuel(
@@ -37,7 +37,7 @@ export function commitKnightDuel(
   )
     return null;
   const hit = target.camp === Camp.Wolf;
-  state.canDuel = false;
+  consumeKnightDuel(state);
   events.push({
     timestamp: Date.now(),
     type: "knight_duel",

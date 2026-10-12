@@ -18,7 +18,7 @@ import {
 import type { World } from "../../core/domain/world";
 import { ToolGateway } from "../gateway/tool_gateway";
 import { GameActionRequestFactory } from "./action_request_factory";
-import { getKnightState } from "../mechanisms/roles/private_state";
+import { getKnightState } from "../mechanisms/roles/knight/ports";
 
 interface DuelParticipantSnapshot {
   life: AliveComponent;
