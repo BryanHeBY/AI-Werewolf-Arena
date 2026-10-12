@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "ff8ebd7f309936a1b68eca77a8200c5b1181d264",
+  "observedSourceCommit": "588e755418b124b5e415c98d9cd78a6afb3b7e63",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -65012,13 +65012,254 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. Bilingual schema shared request remains a single integration allocation. Guard fixture cast changes raw type syntax only; whole callback emitted bytes remain exact.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 82 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/acp_action_provider.test.ts",
+      "to": "backend/tests/unit/agents/acp/session-tool-contract.test.ts",
+      "sourceCommit": "588e755418b124b5e415c98d9cd78a6afb3b7e63",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "79e26bf884f68765d519147ef08c2ad534a49801809ddbb16fa6e644ff5ac386",
+      "candidateSha256": "7769dd98134eb9e6b981516e8e603df47641ca3648cc4c8c9d809433d228503d",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 399,
+          "end": 441,
+          "original": "../../support/builders/agents/acp-requests",
+          "value": "../../../support/builders/agents/acp-requests",
+          "originalResolved": "backend/tests/support/builders/agents/acp-requests.ts",
+          "expectedResolved": "backend/tests/support/builders/agents/acp-requests.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 321,
+          "end": 366,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 242,
+          "end": 282,
+          "original": "../../../src/ai/integrations/acp/session",
+          "value": "../../../../src/ai/integrations/acp/session",
+          "originalResolved": "backend/src/ai/integrations/acp/session.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/session.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 146,
+          "end": 192,
+          "original": "../../../src/ai/agents/acp/acp_action_provider",
+          "value": "../../../../src/ai/agents/acp/acp_action_provider",
+          "originalResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/acp/acp_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 82,
+          "end": 108,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "4383f477694b714ca1ee105b662ff52e026adeb5d3873a76b87b7e95a2526cd2",
+          "title": "AcpActionProvider > accepts an action only through the MCP bridge bound to its session",
+          "occurrence": 1
+        },
+        {
+          "id": "bbeec81432f20c6b41bd8cbe78d9c5abb0b71f0acf8a4493e476156d537d9615",
+          "title": "AcpActionProvider > falls back as soon as a required ACP turn ends without submit_action",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:fs",
+          "originalImport": "import { promises as fs } from \"node:fs\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "fs",
+              "imported": "promises",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:path",
+          "originalImport": "import * as path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "namespace",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/recording_context",
+          "originalImport": "import { runWithSessionRecorder } from \"../../../src/recording/recording_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "runWithSessionRecorder",
+              "imported": "runWithSessionRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/session_recorder",
+          "originalImport": "import { SessionRecordManager } from \"../../../src/recording/session_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SessionRecordManager",
+              "imported": "SessionRecordManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 426 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/acp_action_provider.test.ts",
+      "to": "backend/tests/integration/filesystem/agents/acp-turn-report-recording.test.ts",
+      "sourceCommit": "588e755418b124b5e415c98d9cd78a6afb3b7e63",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "79e26bf884f68765d519147ef08c2ad534a49801809ddbb16fa6e644ff5ac386",
+      "candidateSha256": "74db5d840510a5493978f05317464da0e45e2183d4dd400e0db0a7096ef4379d",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 721,
+          "end": 763,
+          "original": "../../support/builders/agents/acp-requests",
+          "value": "../../../support/builders/agents/acp-requests",
+          "originalResolved": "backend/tests/support/builders/agents/acp-requests.ts",
+          "expectedResolved": "backend/tests/support/builders/agents/acp-requests.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 643,
+          "end": 688,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 565,
+          "end": 604,
+          "original": "../../../src/recording/session_recorder",
+          "value": "../../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 484,
+          "end": 524,
+          "original": "../../../src/recording/recording_context",
+          "value": "../../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 401,
+          "end": 441,
+          "original": "../../../src/ai/integrations/acp/session",
+          "value": "../../../../src/ai/integrations/acp/session",
+          "originalResolved": "backend/src/ai/integrations/acp/session.ts",
+          "expectedResolved": "backend/src/ai/integrations/acp/session.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 305,
+          "end": 351,
+          "original": "../../../src/ai/agents/acp/acp_action_provider",
+          "value": "../../../../src/ai/agents/acp/acp_action_provider",
+          "originalResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/acp/acp_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 241,
+          "end": 267,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 169,
+          "end": 207,
+          "original": "../../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "9e0b41b6fd3943646c99d44e90c99f90700ad42c99d8b569d2682d502f74ccfa",
+          "title": "AcpActionProvider > records ACP turns and report_bug with the same replay audit schema",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 426 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 509,
-    "targetFiles": 520,
-    "mappingEntries": 520,
-    "baselineCases": 6383,
+    "sourceFiles": 510,
+    "targetFiles": 522,
+    "mappingEntries": 522,
+    "baselineCases": 6386,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
