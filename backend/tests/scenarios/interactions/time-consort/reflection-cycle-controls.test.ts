@@ -1,6 +1,11 @@
+/**
+ * Interaction scenarios verify actual Time Consort reflection scopes preserve heal, knife, pass and repeat control semantics.
+ * Input: Original whole-night/first-effect scope matrix, six controlled variants and seeded native cycles.
+ * Output and oracle: Literal receipt, stock, reflected effects and invalid-repeat failures retain real phase order; source policy/RNG data and expectations are unchanged.
+ */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { timeConsortTwelveConfig } from "../../../src/runtime/scenarios/time_consort_twelve";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { timeConsortTwelveConfig } from "../../../../src/runtime/scenarios/time_consort_twelve";
 import {
   COMPONENT,
   Role,
@@ -10,10 +15,10 @@ import {
   type RoleComponent,
   type ActionRequest,
   type ToolCall,
-} from "../../../src/core";
-import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
-import { getTimeConsortState } from "../../../src/game/mechanisms/roles/time_wolf_consort/state";
+} from "../../../../src/core";
+import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { getTimeConsortState } from "../../../../src/game/mechanisms/roles/time_wolf_consort/state";
 for (const scope of ["whole_night", "first_effect"] as const)
   for (const variant of ["heal", "knife", "pass", "self", "repeat", "repeat-lock"] as const)
     test("Consort actual effect controls/" + scope + "/" + variant, async () => {

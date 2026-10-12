@@ -1,16 +1,21 @@
-import { getDreamerState } from "../../../src/game/mechanisms/roles/private_state";
+/**
+ * Interaction scenarios verify Nightmare fear suppresses original native requests without extending stock or changing later death timing.
+ * Input: Original locale/target/policy matrices and controlled multi-night fear, pass, knife, dream and Hunter replies.
+ * Output and oracle: Literal request absence, consecutive-target rules, resource/history and night-versus-day shot assertions retain actual cycles; no World execution manufactures the expected state.
+ */
+import { getDreamerState } from "../../../../src/game/mechanisms/roles/private_state";
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { nightmareTwelveConfig } from "../../../src/runtime/scenarios/nightmare_twelve";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { nightmareTwelveConfig } from "../../../../src/runtime/scenarios/nightmare_twelve";
 import {
   Role,
   PotionType,
   type ActionRequest,
   type ToolCall,
-} from "../../../src/core/domain/model";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import type { RoleComponent } from "../../../src/core/domain/components/role";
-import type { AliveComponent } from "../../../src/core/domain/components/alive";
+} from "../../../../src/core/domain/model";
+import { COMPONENT } from "../../../../src/core/domain/components/names";
+import type { RoleComponent } from "../../../../src/core/domain/components/role";
+import type { AliveComponent } from "../../../../src/core/domain/components/alive";
 function fixture(locale: "zh-CN" | "en") {
   const game = bootstrapGame(structuredClone(nightmareTwelveConfig), { locale });
   const id = (role: Role) =>

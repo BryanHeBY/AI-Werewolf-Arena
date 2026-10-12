@@ -1,6 +1,11 @@
+/**
+ * Interaction scenarios verify actual Scholar Mentor modifier cycles preserve native versus bonus eligibility, payment and knowledge.
+ * Input: Original seeded control variants, both modifiers and deterministic first/second-cycle role responses.
+ * Output and oracle: Explicit choice/history, bonus/request and result assertions remain tied to executed phases; original control tables and RNG inputs stay unchanged.
+ */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { scholarMentorTwelveConfig } from "../../../src/runtime/scenarios/scholar_mentor_twelve";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { scholarMentorTwelveConfig } from "../../../../src/runtime/scenarios/scholar_mentor_twelve";
 import {
   COMPONENT,
   Role,
@@ -10,10 +15,10 @@ import {
   type RoleComponent,
   type ActionRequest,
   type ToolCall,
-} from "../../../src/core";
-import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
-import { scholarMentorStateForRole } from "../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
+} from "../../../../src/core";
+import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { scholarMentorStateForRole } from "../../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
 const variants = [
   "same-good",
   "different-wolves",

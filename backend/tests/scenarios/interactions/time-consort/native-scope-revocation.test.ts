@@ -1,6 +1,11 @@
+/**
+ * Interaction scenarios verify Time Consort native effect scopes reject in-flight state or actor revocation before committing stale receipts.
+ * Input: Original role/stage/event and mutation matrices on seeded actual phase cycles.
+ * Output and oracle: Explicit source error, absent publication and preserved paid-prefix assertions stay causal with native execution; no pure mock-only contract is inferred from the scope filename.
+ */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { timeConsortTwelveConfig } from "../../../src/runtime/scenarios/time_consort_twelve";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { timeConsortTwelveConfig } from "../../../../src/runtime/scenarios/time_consort_twelve";
 import {
   COMPONENT,
   Role,
@@ -10,10 +15,10 @@ import {
   type RoleComponent,
   type ActionRequest,
   type ToolCall,
-} from "../../../src/core";
-import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
-import { getTimeConsortState } from "../../../src/game/mechanisms/roles/time_wolf_consort/state";
+} from "../../../../src/core";
+import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
+import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { getTimeConsortState } from "../../../../src/game/mechanisms/roles/time_wolf_consort/state";
 for (const [role, stage, event] of [
   [Role.Guard, "guard", "guard_applied"],
   [Role.Seer, "seer", "seer_checked"],

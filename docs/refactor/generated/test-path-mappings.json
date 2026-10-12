@@ -62181,13 +62181,861 @@
       "targetRunner": "backend-scenarios",
       "programBytesPreservedAfterRegisteredEdits": true,
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/nightmare_shadow_runtime.test.ts",
+      "to": "backend/tests/scenarios/interactions/nightmare/native-fear-suppression.test.ts",
+      "sourceCommit": "f4757a1f3e732d73ff235eba2aab8c62fa4524f7",
+      "reason": "All callbacks execute real seeded native cycles before suppressed actors, bonus/reflection receipt and currentness mutations or error-prefix assertions. Input world/state arrangement is not an isolated public-module assertion; original controls/scope matrices remain actual scenarios.",
+      "originalSha256": "1779455df995cf4d41a0e6ab013eb343b687e3832f5fee0c9fac125de2f983db",
+      "candidateSha256": "af76b4b1611c6245414e9c17fb3964cf099a4e87f360329bc2e54536d4acb1e1",
+      "moduleAndLocationEdits": [
+        {
+          "start": 572,
+          "end": 613,
+          "value": "../../../../src/core/domain/components/alive",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 492,
+          "end": 532,
+          "value": "../../../../src/core/domain/components/role",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 412,
+          "end": 453,
+          "value": "../../../../src/core/domain/components/names",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 352,
+          "end": 382,
+          "value": "../../../../src/core/domain/model",
+          "kind": "module-specifier",
+          "original": "../../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 224,
+          "end": 271,
+          "value": "../../../../src/runtime/scenarios/nightmare_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/nightmare_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/nightmare_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/nightmare_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 156,
+          "end": 182,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 33,
+          "end": 81,
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "d437d7e37eac094801cca41fe6af53248b565db1db48c98468417319441cf702",
+          "title": "nightmare suppresses native seer action/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "f8c7a2c247584d9de50e8c79d9e13f3be9726371e3109cfb381e6edfc379c693",
+          "title": "nightmare suppresses native witch action/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "025cdcf968a5429f1c75a212a3e691cbfa3a2066dbf81592b9774e7b93472d47",
+          "title": "nightmare suppresses native dreamer action/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "d51a61470e21a185b00528a0064279922d97a5e6571a51b694c73442f76cf757",
+          "title": "first night wolf fear blocks every knife request/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "b6492126bbac4a07726e6521abde9c6912c2c4b552d2658613183a5cdfc6eda0",
+          "title": "feared Hunter cannot shoot on night death/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "5d1bfa11992cfac971620b821c25a27c26f5266d62063c786d6a6d7368438b43",
+          "title": "feared Hunter can shoot after daytime exile/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "b50a3d34b49ad85815a257615bfe5e197101ca42c7b0adf85ea81efd98eaf5fd",
+          "title": "missing fear response cannot silently become pass/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "675ce647211870a9170619622fd5b0c85b34ddeee4e513601528271a883a48b1",
+          "title": "nightmare suppresses native seer action/en",
+          "occurrence": 1
+        },
+        {
+          "id": "d141c06089bbbd5a143c423ef276854af824cf22826219b1e58f813aa89a6e92",
+          "title": "nightmare suppresses native witch action/en",
+          "occurrence": 1
+        },
+        {
+          "id": "0c27fe33949e044e324ee6fa26591f0f86dbc7a5e165b8c781f4cf3c1841af2f",
+          "title": "nightmare suppresses native dreamer action/en",
+          "occurrence": 1
+        },
+        {
+          "id": "cf618656e75f68a6db04143c5c080b9e93f2daff2a55a89bfe77ade3d72df57b",
+          "title": "first night wolf fear blocks every knife request/en",
+          "occurrence": 1
+        },
+        {
+          "id": "98c47202d1aa4ab2fb123bd234a1a9fd5ebbd930cb4ad1888bb37bbb7a677fd3",
+          "title": "feared Hunter cannot shoot on night death/en",
+          "occurrence": 1
+        },
+        {
+          "id": "d0c416c618868955594d54152c2dc1d8370a38fac06b3a4dde25dbb4ae56da3c",
+          "title": "feared Hunter can shoot after daytime exile/en",
+          "occurrence": 1
+        },
+        {
+          "id": "c5069323864b84a5a057eb86f7cc2eec94ad0ac3357ab8a6df80513eda80ddc5",
+          "title": "missing fear response cannot silently become pass/en",
+          "occurrence": 1
+        },
+        {
+          "id": "68d2d7240a31d38b9215d8055dd122dd85998317a71890ee2fff7e1e78c6d4d1",
+          "title": "nightmare rejects consecutive fear across actual nights/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "372389a13fd541b4822e4cc421b5657da56fb90bfe9de4fe1e3f86a351e2a749",
+          "title": "explicit pass breaks consecutive fear restriction across three nights/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "dc4371c75658fde823f2970bac463121b1bd74d0fb4c2a74a4cd693796e6606a",
+          "title": "nightmare rejects consecutive fear across actual nights/en",
+          "occurrence": 1
+        },
+        {
+          "id": "f183d722d7ae5632a700e5450c3fa87f220be16e9da78067b52c593eaf7ccab1",
+          "title": "explicit pass breaks consecutive fear restriction across three nights/en",
+          "occurrence": 1
+        },
+        {
+          "id": "dcb7452b050cba89a00b3ea447d0112245eb7aa20222a4ab815700da06ddbd42",
+          "title": "nightmare actual blast requests respect standard",
+          "occurrence": 1
+        },
+        {
+          "id": "e96ef0260ff1f8fa8cfb96daf4f9a45a264cb5dd0f50bc44d5112f537c99eb1c",
+          "title": "nightmare actual blast requests respect no_blast_no_self_knife",
+          "occurrence": 1
+        },
+        {
+          "id": "415871876365e82fafe6085b3512cc2755cdf611e5371720ec250e74e531ea42",
+          "title": "fear skips Dreamer without extending protection or consuming history/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "dfbff4393344cb38a9f2877f4f33c4cd065a7203b4015af50961715c2ce2cce0",
+          "title": "fear gap prevents same-target Dreamer consecutive death/zh-CN",
+          "occurrence": 1
+        },
+        {
+          "id": "7508d4adfd2ea389de480013255afb63f70623e239b9d6c66122e26d063c4bf1",
+          "title": "fear skips Dreamer without extending protection or consuming history/en",
+          "occurrence": 1
+        },
+        {
+          "id": "8f3e879791e0a754ecbdaf0e6788f5d5828e601d0bea88dbe7378373f5edab51",
+          "title": "fear gap prevents same-target Dreamer consecutive death/en",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/scholar_mentor_controls.test.ts",
+      "to": "backend/tests/scenarios/interactions/scholar-mentor/modifier-cycle-controls.test.ts",
+      "sourceCommit": "f4757a1f3e732d73ff235eba2aab8c62fa4524f7",
+      "reason": "All callbacks execute real seeded native cycles before suppressed actors, bonus/reflection receipt and currentness mutations or error-prefix assertions. Input world/state arrangement is not an isolated public-module assertion; original controls/scope matrices remain actual scenarios.",
+      "originalSha256": "11d8e8488a8ecca5c71434ef3ffa8d5f85fca97809477167410169e70e8a9400",
+      "candidateSha256": "b268b4d6660daf9eeebca6e4fb13f7abf976d7d36937c6d58c43928bab809188",
+      "moduleAndLocationEdits": [
+        {
+          "start": 582,
+          "end": 643,
+          "value": "../../../../src/game/mechanisms/roles/scholar_mentor/night_frame",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/scholar_mentor/night_frame",
+          "originalResolved": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 487,
+          "end": 536,
+          "value": "../../../../src/ai/agents/providers/observed_players",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_players",
+          "originalResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 392,
+          "end": 437,
+          "value": "../../../../src/ai/agents/providers/observed_bot",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_bot",
+          "originalResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 343,
+          "end": 360,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 144,
+          "end": 196,
+          "value": "../../../../src/runtime/scenarios/scholar_mentor_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/scholar_mentor_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/scholar_mentor_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/scholar_mentor_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 72,
+          "end": 98,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "e5b4cb6a9632ee5d88066eefc002446a6341bfe055144df2635e97b8b34e9bf2",
+          "title": "Scholar Mentor actual controls/zh-CN/same-good",
+          "occurrence": 1
+        },
+        {
+          "id": "a21db7a3fcfe9adf56bfe3365413aaa964531af0ba278db30c91e826b09d41ce",
+          "title": "Scholar Mentor actual controls/zh-CN/different-wolves",
+          "occurrence": 1
+        },
+        {
+          "id": "5b5ceb1f5bdaae3bbc463c084d87239d27cd31289a1c8e4ec995a2b176025101",
+          "title": "Scholar Mentor actual controls/zh-CN/weaken-wolf",
+          "occurrence": 1
+        },
+        {
+          "id": "329059016129f6f3fa4b49978b2b5cd7688ddf86e3a7b5c69f45941aaf7ced0d",
+          "title": "Scholar Mentor actual controls/zh-CN/weaken-witch-heal",
+          "occurrence": 1
+        },
+        {
+          "id": "8a141fcc7ad62028602ef3ceda8aa4aa5c917f154bc6dfae979893ada0cae242",
+          "title": "Scholar Mentor actual controls/zh-CN/enhance-guard",
+          "occurrence": 1
+        },
+        {
+          "id": "1cc7efc569fc2a98c4bfbc858f8e4819e10e4fedb200ce096d9302b156ce6772",
+          "title": "Scholar Mentor actual controls/zh-CN/enhance-seer",
+          "occurrence": 1
+        },
+        {
+          "id": "9771fe37c13b444185a3d3da3b7f0a26fcfa8e699abf50fde9e202d20c8a8d90",
+          "title": "Scholar Mentor actual controls/zh-CN/enhance-spent-poison",
+          "occurrence": 1
+        },
+        {
+          "id": "96a2cc7a0c5ce2b86dc91033ad508696367bd6ab7598442c92f4f5b1aab22ba9",
+          "title": "Scholar Mentor actual controls/zh-CN/enhance-knife",
+          "occurrence": 1
+        },
+        {
+          "id": "8569ab8d6762a1a7a5288f1682a39e9d3a9e4081c7d38f45156e533f6a489baa",
+          "title": "Scholar Mentor actual controls/en/same-good",
+          "occurrence": 1
+        },
+        {
+          "id": "e89f5d3031999e8f75a013b3120ffdbe526e6c5c8be6bed52f36c73a1f59f3f8",
+          "title": "Scholar Mentor actual controls/en/different-wolves",
+          "occurrence": 1
+        },
+        {
+          "id": "dbe02c28a5dd29be3b331486b980c59270109f2975280c6b596610a058a20ae6",
+          "title": "Scholar Mentor actual controls/en/weaken-wolf",
+          "occurrence": 1
+        },
+        {
+          "id": "eaae228b21dd84877ab89d214a1949cf0718e4822e75058a171cca3e0e604c74",
+          "title": "Scholar Mentor actual controls/en/weaken-witch-heal",
+          "occurrence": 1
+        },
+        {
+          "id": "03386aef6d4a9713c052cccfe7ba0cb5305f4f458f5640e43459c64ed071304a",
+          "title": "Scholar Mentor actual controls/en/enhance-guard",
+          "occurrence": 1
+        },
+        {
+          "id": "c517012cc05897e9cbcbe3a55563873e40b80f5af54e2f9d8232e48fcf87ceaf",
+          "title": "Scholar Mentor actual controls/en/enhance-seer",
+          "occurrence": 1
+        },
+        {
+          "id": "229d69d7a687047696a1d146c0e9145ad61a3f43f1502a717426393a5c9c3491",
+          "title": "Scholar Mentor actual controls/en/enhance-spent-poison",
+          "occurrence": 1
+        },
+        {
+          "id": "97b907f98e5b84a52979f5f5c9972fd7c277dc7cedcb6656f06ad4843f2839fc",
+          "title": "Scholar Mentor actual controls/en/enhance-knife",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/time_wolf_consort_controls.test.ts",
+      "to": "backend/tests/scenarios/interactions/time-consort/reflection-cycle-controls.test.ts",
+      "sourceCommit": "f4757a1f3e732d73ff235eba2aab8c62fa4524f7",
+      "reason": "All callbacks execute real seeded native cycles before suppressed actors, bonus/reflection receipt and currentness mutations or error-prefix assertions. Input world/state arrangement is not an isolated public-module assertion; original controls/scope matrices remain actual scenarios.",
+      "originalSha256": "22d8d621bf567b209e16dc781b119d8181d86714f4d68441028479acea0bacc5",
+      "candidateSha256": "703f71f37d97d453bd03b6707ddc4a97d85f6d5c453af6ebf89b9d930381fa60",
+      "moduleAndLocationEdits": [
+        {
+          "start": 572,
+          "end": 630,
+          "value": "../../../../src/game/mechanisms/roles/time_wolf_consort/state",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/time_wolf_consort/state",
+          "originalResolved": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 483,
+          "end": 532,
+          "value": "../../../../src/ai/agents/providers/observed_players",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_players",
+          "originalResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 388,
+          "end": 433,
+          "value": "../../../../src/ai/agents/providers/observed_bot",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_bot",
+          "originalResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 339,
+          "end": 356,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 142,
+          "end": 192,
+          "value": "../../../../src/runtime/scenarios/time_consort_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/time_consort_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/time_consort_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/time_consort_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 72,
+          "end": 98,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "3ed1db390ff90f88b836bf5b0d859af462de584505bf18f8c5296e1c9efdc0ff",
+          "title": "Consort actual effect controls/whole_night/heal",
+          "occurrence": 1
+        },
+        {
+          "id": "b5f106dcaaaf9d3eb958d44c546cdd9e4f60b8e432483e370defa03922f47e84",
+          "title": "Consort actual effect controls/whole_night/knife",
+          "occurrence": 1
+        },
+        {
+          "id": "828534be16c387e2e34a3ed194d78a7f733361b5f831cca77d053c831f9b5dec",
+          "title": "Consort actual effect controls/whole_night/pass",
+          "occurrence": 1
+        },
+        {
+          "id": "777c9eae34a99134e3a32ad109dacd9bf30666886fcba2d62bb1472f17fc041a",
+          "title": "Consort actual effect controls/whole_night/self",
+          "occurrence": 1
+        },
+        {
+          "id": "217c10499398573874c796a0fa0368326e7156b0a1d566b5adee371867751498",
+          "title": "Consort actual effect controls/whole_night/repeat",
+          "occurrence": 1
+        },
+        {
+          "id": "151f16f4f47711ad328bee7b1971165164ba667d4ea553e37a64857ce88fd044",
+          "title": "Consort actual effect controls/whole_night/repeat-lock",
+          "occurrence": 1
+        },
+        {
+          "id": "76a43b6044b1cd45d25ed63d2b0d3b0a9b820cb49b4f797b13b4d7592c49a54d",
+          "title": "Consort actual effect controls/first_effect/heal",
+          "occurrence": 1
+        },
+        {
+          "id": "a55b99a24749f1889d49a37c481df114fd0d9d4fc300fa9f9158db2d294e92e4",
+          "title": "Consort actual effect controls/first_effect/knife",
+          "occurrence": 1
+        },
+        {
+          "id": "df532632e54b7da08026cc242c94930dca447358128894a281c2993d4f1cd327",
+          "title": "Consort actual effect controls/first_effect/pass",
+          "occurrence": 1
+        },
+        {
+          "id": "28d074aa44912c586dd2e0850372858c8fb01628342970484e3af208d12bbb5d",
+          "title": "Consort actual effect controls/first_effect/self",
+          "occurrence": 1
+        },
+        {
+          "id": "5b3b22db95dc8afdce898aef55499bb7eb4985645de5c26bd8fe8fd891988134",
+          "title": "Consort actual effect controls/first_effect/repeat",
+          "occurrence": 1
+        },
+        {
+          "id": "f64c38e27a5f3ab82ae84e5f7f00d0469db2e2fb393d7f4fbcec1480c4e173cb",
+          "title": "Consort actual effect controls/first_effect/repeat-lock",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/time_wolf_consort_scope.test.ts",
+      "to": "backend/tests/scenarios/interactions/time-consort/native-scope-revocation.test.ts",
+      "sourceCommit": "f4757a1f3e732d73ff235eba2aab8c62fa4524f7",
+      "reason": "All callbacks execute real seeded native cycles before suppressed actors, bonus/reflection receipt and currentness mutations or error-prefix assertions. Input world/state arrangement is not an isolated public-module assertion; original controls/scope matrices remain actual scenarios.",
+      "originalSha256": "a004fc6db350a44648aed4a4e8a3f00c9882e47475692c4bcd8cf19dba55bfec",
+      "candidateSha256": "b7e1236389988b7228e34edb0c1ca4c73431c6e650aef47207b23b051817ad7f",
+      "moduleAndLocationEdits": [
+        {
+          "start": 572,
+          "end": 630,
+          "value": "../../../../src/game/mechanisms/roles/time_wolf_consort/state",
+          "kind": "module-specifier",
+          "original": "../../../src/game/mechanisms/roles/time_wolf_consort/state",
+          "originalResolved": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 483,
+          "end": 532,
+          "value": "../../../../src/ai/agents/providers/observed_players",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_players",
+          "originalResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 388,
+          "end": 433,
+          "value": "../../../../src/ai/agents/providers/observed_bot",
+          "kind": "module-specifier",
+          "original": "../../../src/ai/agents/providers/observed_bot",
+          "originalResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 339,
+          "end": 356,
+          "value": "../../../../src/core",
+          "kind": "module-specifier",
+          "original": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 142,
+          "end": 192,
+          "value": "../../../../src/runtime/scenarios/time_consort_twelve",
+          "kind": "module-specifier",
+          "original": "../../../src/runtime/scenarios/time_consort_twelve",
+          "originalResolved": "backend/src/runtime/scenarios/time_consort_twelve.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/time_consort_twelve.ts",
+          "indexFormPreserved": true
+        },
+        {
+          "start": 72,
+          "end": 98,
+          "value": "../../../../src/app/bootstrap",
+          "kind": "module-specifier",
+          "original": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts",
+          "indexFormPreserved": true
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "37d9ef06717be055a7e379b0d989ca727ce14c5764afa13bc754c226e26518f7",
+          "title": "Consort rejects asynchronous ability replace/guard/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "958e872261e824cff5d2a2e6895fc40144886cd4b623e603325d580b6806c097",
+          "title": "Consort rejects asynchronous ability replace/guard/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "0cd0be833b25b01f1d3a219c7483cf1de9d4584876e03cf8e161c914ff79b77a",
+          "title": "Consort rejects asynchronous ability delete/guard/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "8c3e25c8bb8aa3922eb36b5cd15871138cdd97dbc49b4d75de74ae2439cd0d30",
+          "title": "Consort rejects asynchronous ability delete/guard/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "1abc6fd3c9c1850f0b0f52d7d5b56f858c8098de1da7e88fcde2206a3a80b471",
+          "title": "Consort rejects asynchronous ability replace-state/guard/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "acf12357c50eeface40bd177f679891d04d7dd7027c987d7cfc522fd3fc15399",
+          "title": "Consort rejects asynchronous ability replace-state/guard/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "de22db69c4b082034d1372e842dc44c3d69ef98696f3a8d7a677ec6ab294a3c2",
+          "title": "Consort rejects asynchronous ability disable/guard/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "858fbda709618051afaa8326e749bf69a264b776fb93d8cd688c7bf4f0f6fce6",
+          "title": "Consort rejects asynchronous ability disable/guard/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "194203337415f05cbc6f97e93b19d56dc0260cffae6bda84f7137e845ee7faff",
+          "title": "Consort rejects asynchronous ability expire/guard/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "9794e67a833c8d72beb691f75ee80f2382c7d98b4372d44349649b6d37092be5",
+          "title": "Consort rejects asynchronous ability expire/guard/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "3d345af49df09d82c4f9972179ea85a9206bb70a7f8c19ed260ed0f20da87b1f",
+          "title": "Consort rejects asynchronous ability expiry-accessor/guard/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "0afdc36aaf71b4f3ac594ce93f477ec2f1477a0543688a5fb21ee15365b66299",
+          "title": "Consort rejects asynchronous ability expiry-accessor/guard/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "4fc53396e5246e0e11da0dfaac2bdf1d06f90e23fe558747c6b8ce7f31ae4c07",
+          "title": "Consort rejects asynchronous ability activation-accessor/guard/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "bb9d69ac40a88e82d1c2f5d57018c158557ea9fe36fb92a2e7d74c0d1119ae46",
+          "title": "Consort rejects asynchronous ability activation-accessor/guard/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "9eb9ff4cfbf233dbcb9af6d2c7095f91b8f663c9ee80a1be6740d1fecaa11c75",
+          "title": "Consort rejects asynchronous ability death-accessor/guard/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "6bcb3ab21d5e353dc452e7b6fa010f0d0f99f2dcf6a1a13b08ac7f880426d20b",
+          "title": "Consort rejects asynchronous ability death-accessor/guard/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "27f8b08c8d4c5963f7fdb4b4fcfdd665515e1ad02d33520f07723f1a3806cd42",
+          "title": "Consort rejects asynchronous ability replace/seer/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "1f59cdfb61212e815866e8e6d40a2d43fa2a319f8de24a5e51750a1f3df5f359",
+          "title": "Consort rejects asynchronous ability replace/seer/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "9d0bb66a0fec3c99c2d9956cfd414d969ec0929afe0e5c8b17f20f86fc50fa54",
+          "title": "Consort rejects asynchronous ability delete/seer/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "bf0eccdc22ddcfd5dbbe0fe43319a268336c3570db645add1d5f1f0c7fb8a7a6",
+          "title": "Consort rejects asynchronous ability delete/seer/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "6a504e43dfb4979af76b66dcfe4d29ee5a041e89e6b3fd97923e660d759b82e7",
+          "title": "Consort rejects asynchronous ability replace-state/seer/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "f005d9c585f20e02f7c49ac49f8d3e16964f2d882b547755358ec9f96fb74f7b",
+          "title": "Consort rejects asynchronous ability replace-state/seer/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "6c84de88a521fba938f8cdf02206dc4c9fb691fec275cad63805f8b851480e71",
+          "title": "Consort rejects asynchronous ability disable/seer/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "dd9b6be2cf4303b2b06708a4a94e85badb24ae1f2d821d3c95e03a7c384b2d0d",
+          "title": "Consort rejects asynchronous ability disable/seer/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "41d546250de5df562aaf346436897d55f1ee2bc6b8574a8ffbe4709d874f5a18",
+          "title": "Consort rejects asynchronous ability expire/seer/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "e556898c32c7dc95cb61367aec96841ef62b7d159a5a2e44594ed22b90aa77be",
+          "title": "Consort rejects asynchronous ability expire/seer/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "e15d3f6676102fc6d48651db64fbe784a5d5ea13bcb6c797acbd9184082a403b",
+          "title": "Consort rejects asynchronous ability expiry-accessor/seer/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "a053002cd90616dd27611aaf2df17bec057b49000e1b378ef4f892b32bce68ab",
+          "title": "Consort rejects asynchronous ability expiry-accessor/seer/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "c7c034de5bb36177193d80febe12eebc79cfc76f4b926c98a3a29e396f5fc6b8",
+          "title": "Consort rejects asynchronous ability activation-accessor/seer/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "83d529806b3080929403ebc11f77b547ecd2319b232f3c1a8fcbffd534efe2a2",
+          "title": "Consort rejects asynchronous ability activation-accessor/seer/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "72a2287f022bd134b369e82d148255726fd75a7325139ff864d4afc46bf1f75a",
+          "title": "Consort rejects asynchronous ability death-accessor/seer/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "39f70aa705f61746cf1dd6c5e5660266c7225ebab141eeaaf34671b9b8fa795b",
+          "title": "Consort rejects asynchronous ability death-accessor/seer/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "1c89aa497b460030b8b4f00a3ffed7eb42df1f96a35dcc92b35423f176eb4e05",
+          "title": "Consort rejects asynchronous ability replace/witch/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "43f0ca3e657bf8764ff3e8d6e2c47647ccb6aa4011c69302a52be057fae1572a",
+          "title": "Consort rejects asynchronous ability replace/witch/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "705619b2320044952322bf9991ba9473e58a3ed9ed28681b3f7ac29a8e32cab3",
+          "title": "Consort rejects asynchronous ability delete/witch/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "08421542d3b91a70a0f363b2faca4c4f84d67044df914f1f446b28086c6288b6",
+          "title": "Consort rejects asynchronous ability delete/witch/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "e79632f3ef086f1c33493113c3412ad6e8487c9894d24b13a8d89d9263fee8f6",
+          "title": "Consort rejects asynchronous ability replace-state/witch/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "0db8911aadc2bad616418cc4c8383372ffe12b2a4d967ec7fb63022c005b6c16",
+          "title": "Consort rejects asynchronous ability replace-state/witch/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "069af0f0d638ce4b26b251d1352b6a0ace43dfc2771a29d2a52b5bbb682a5628",
+          "title": "Consort rejects asynchronous ability disable/witch/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "333b19af2b006ad77d310174d18cf2ffdfdb81d9471419280a7e4b4ac2fad01e",
+          "title": "Consort rejects asynchronous ability disable/witch/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "dbea4a6254db941c26508c45863acb9a981be9cd9cc19e7d12178d66a3b4a7a7",
+          "title": "Consort rejects asynchronous ability expire/witch/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "6e05069a78bd54cfaa8996f82b8213a136f4e32f2351fd13c535a35e58977c69",
+          "title": "Consort rejects asynchronous ability expire/witch/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "3b7b2a0094a8c9ee60889bc0d70bb4a41a426e4a1ea70ad86871d9e694b71e1f",
+          "title": "Consort rejects asynchronous ability expiry-accessor/witch/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "6fbedd6a0ae5472ee23c2ea8bd04e75270f154bbf42043b95c3175ce21fdfc66",
+          "title": "Consort rejects asynchronous ability expiry-accessor/witch/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "85fff21c429c538b536ae87182461d14b7b3bce4de34660b95b098cbbb825bc0",
+          "title": "Consort rejects asynchronous ability activation-accessor/witch/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "38f1e3d6ffbe451fbc04850a3037fa6a86c0d3605f443b42ba98fc7c7dc10101",
+          "title": "Consort rejects asynchronous ability activation-accessor/witch/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "03b81089ae768f2594b21172babd3a8c5080e4922f7cf55fd2c03a429a32a651",
+          "title": "Consort rejects asynchronous ability death-accessor/witch/during-action",
+          "occurrence": 1
+        },
+        {
+          "id": "04c6cd083bfc410e328c8be2b94cf786a7d6f948633c5efe3ce3e0c1aad927c1",
+          "title": "Consort rejects asynchronous ability death-accessor/witch/before-stage",
+          "occurrence": 1
+        },
+        {
+          "id": "59999eac7cf9e548ed1970593588a0b35e41ebabfc361543ecc8165aafcb128c",
+          "title": "Consort rejects absent ability-container injection/villager/getter",
+          "occurrence": 1
+        },
+        {
+          "id": "08aba98c046bbb6131405dac3c33aabf1b7c213fe91d26cabe8a8bffaf402ec6",
+          "title": "Consort rejects absent ability-container injection/villager/inherited-getter",
+          "occurrence": 1
+        },
+        {
+          "id": "3f88cff8f2a7eee336c05987e1e95cf4cbe414845efc416923bd6908a43bcf62",
+          "title": "Consort rejects absent ability-container injection/villager/undefined-field",
+          "occurrence": 1
+        },
+        {
+          "id": "9158603f03f957225641e0ca34df948f84bf8663566674ac8f53973931429de0",
+          "title": "Consort rejects absent ability-container injection/time_wolf_consort/getter",
+          "occurrence": 1
+        },
+        {
+          "id": "d9324a0c1f687799ce3fc77918051eaf0f5d9c48472997f71d367d9d209ee15a",
+          "title": "Consort rejects absent ability-container injection/time_wolf_consort/inherited-getter",
+          "occurrence": 1
+        },
+        {
+          "id": "7c5f677ae89a5ab9a001e397e0f184aecdde0b891d2c8e4463964c07e59923d6",
+          "title": "Consort rejects absent ability-container injection/time_wolf_consort/undefined-field",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "programBytesPreservedAfterRegisteredEdits": true,
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 499,
-    "targetFiles": 505,
-    "mappingEntries": 505,
-    "baselineCases": 6224,
+    "sourceFiles": 503,
+    "targetFiles": 509,
+    "mappingEntries": 509,
+    "baselineCases": 6330,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
