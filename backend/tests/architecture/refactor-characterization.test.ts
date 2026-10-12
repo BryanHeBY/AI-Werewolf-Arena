@@ -1,14 +1,15 @@
 /**
  * P0 architecture characterization: lock the existing F01 decision privilege and
- * F02 request restoration behavior before structural migration. These are small
+ * F02 request restoration inputs across the separately approved correction. These are small
  * in-process boundary tests, not role acceptance or complete-game scenarios.
  * Oracles are literal target IDs, identity comparisons, rejection codes and
  * unchanged authority snapshots. Noble uses the existing explicit subsystem
  * fixture; Animal provides a second, independently implemented envelope contrast.
- * Unsafe baseline expectations are intentionally named and must change only in
- * the separately documented F01/C33a or F02/C18a behavior correction.
+ * F01 remains the named baseline exception. C18a gives the original seven Noble
+ * restoration inputs explicit terminal expectations; old expectations remain in
+ * fixed Git e8de6dc and the revocation policy document.
  */
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test, setSystemTime } from "bun:test";
 import { bootstrapGame } from "../../src/app/bootstrap";
 import {
   Camp,
@@ -19,7 +20,10 @@ import {
   type ActionRequest,
   type RoleComponent,
 } from "../../src/core";
-import { assertRequestDelivery } from "../../src/core/domain/request_delivery";
+import {
+  assertRequestDelivery,
+  deriveBoundedRequest,
+} from "../../src/core/domain/request_delivery";
 import { BaselineBotActionProvider } from "../../src/ai/agents/providers/action_providers";
 import { ObservedPlayersActionProvider } from "../../src/ai/agents/providers/observed_players";
 import { ObservedBot } from "../../src/ai/agents/providers/observed_bot";
@@ -181,9 +185,68 @@ function nobleRequestFixture() {
 }
 const bodyAction = { name: "protect_secret_body", args: { target_id: 3 } } as const;
 
-describe("F02 existing Noble restoration semantics, not target revocation policy", () => {
+describe("F02 corrected Noble terminal revocation and foreign-input isolation", () => {
+  test("the earliest accepted alias deadline permanently expires the shared turn without spending stock", () => {
+    const openedAt = Date.now(),
+      f = nobleRequestFixture(),
+      before = snapshotNobleBodyAuthority(f.world);
+    try {
+      const first = deriveBoundedRequest(f.request, openedAt + 60000),
+        second = deriveBoundedRequest(first, openedAt + 30000);
+      expect(nobleBodyRequestScope(f.world, second)).toBe(f.scope);
+      setSystemTime(new Date(openedAt + 30001));
+      expect(nobleBodyRequestScope(f.world, f.request)).toBeUndefined();
+      setSystemTime(new Date(openedAt));
+      for (const request of [f.request, first, second]) {
+        expect(nobleBodyRequestScope(f.world, request)).toBeUndefined();
+        expect(() => assertRequestDelivery(request)).toThrow(
+          "action_request_delivery_authority_revoked",
+        );
+      }
+      expect(snapshotNobleBodyAuthority(f.world)).toEqual(before);
+    } finally {
+      setSystemTime();
+      closeNobleBodyRequest(f.scope);
+    }
+  });
+
+  test("rejected proposed aliases do not shorten or revoke the valid original turn", () => {
+    const f = nobleRequestFixture(),
+      before = snapshotNobleBodyAuthority(f.world),
+      deadline = Date.now() + 60000,
+      accepted = deriveBoundedRequest(f.request, deadline);
+    try {
+      const foreignContext = {
+          ...f.request,
+          context: { ...f.request.context },
+          deadlineAtMs: deadline - 10,
+        },
+        changedBody: ActionRequest = {
+          ...f.request,
+          allowedTools: ["speak"],
+          deadlineAtMs: deadline - 20,
+        },
+        extendedDeadline = { ...f.request, deadlineAtMs: deadline + 1 };
+      for (const rejected of [foreignContext, changedBody, extendedDeadline]) {
+        inheritNobleBodyDeadlineRequest(f.request, rejected);
+        expect(nobleBodyRequestScope(f.world, rejected)).toBeUndefined();
+        expect(nobleBodyRequestScope(f.world, f.request)).toBe(f.scope);
+      }
+      expect(nobleBodyRequestScope(f.world, accepted)).toBe(f.scope);
+      expect(snapshotNobleBodyAuthority(f.world)).toEqual(before);
+      expect(canSubmitNobleBodyChoice(f.world, 2, Phase.Night, 1, f.scope, bodyAction)).toBe(true);
+      expect(commitNobleBodyChoice(f.world, f.scope, bodyAction)).toEqual({
+        actorId: 2,
+        day: 1,
+        targetId: 3,
+      });
+    } finally {
+      closeNobleBodyRequest(f.scope);
+    }
+  });
+
   for (const mutation of ["context-field", "context-reference", "body", "deadline"] as const)
-    test(`unsafe baseline: original ${mutation} rejects current read then restoration revives the same lease`, () => {
+    test(`terminal policy: original ${mutation} mismatch permanently revokes the shared turn`, () => {
       const f = nobleRequestFixture();
       const before = snapshotNobleBodyAuthority(f.world);
       const context = f.request.context;
@@ -205,17 +268,20 @@ describe("F02 existing Noble restoration semantics, not target revocation policy
       f.request.context = context;
       f.request.allowedTools = tools;
       delete f.request.deadlineAtMs;
-      expect(nobleBodyRequestScope(f.world, f.request)).toBe(f.scope);
-      expect(() => assertRequestDelivery(f.request)).not.toThrow();
-      expect(canSubmitNobleBodyChoice(f.world, 2, Phase.Night, 1, f.scope, bodyAction)).toBe(true);
-      expect(() => commitNobleBodyChoice(f.world, f.scope, bodyAction)).not.toThrow();
-      expect(snapshotNobleBodyAuthority(f.world).body.lastChoice).toEqual({ day: 1, targetId: 3 });
       expect(nobleBodyRequestScope(f.world, f.request)).toBeUndefined();
-      expect(() => commitNobleBodyChoice(f.world, f.scope, bodyAction)).toThrow();
+      expect(() => assertRequestDelivery(f.request)).toThrow(
+        "action_request_delivery_authority_revoked",
+      );
+      expect(canSubmitNobleBodyChoice(f.world, 2, Phase.Night, 1, f.scope, bodyAction)).toBe(false);
+      expect(() => commitNobleBodyChoice(f.world, f.scope, bodyAction)).toThrow(
+        "noble_body_request_unavailable",
+      );
+      expect(snapshotNobleBodyAuthority(f.world)).toEqual(before);
+      closeNobleBodyRequest(f.scope);
     });
 
   for (const mutation of ["context-reference", "body", "deadline"] as const)
-    test(`unsafe baseline: registered alias ${mutation} failure neither revokes original nor latches alias rejection`, () => {
+    test(`terminal policy: registered alias ${mutation} mismatch permanently revokes its shared turn`, () => {
       const f = nobleRequestFixture();
       const deadline = Date.now() + 60_000;
       const alias: ActionRequest = { ...f.request, deadlineAtMs: deadline };
@@ -228,14 +294,18 @@ describe("F02 existing Noble restoration semantics, not target revocation policy
       expect(() => assertRequestDelivery(alias)).toThrow(
         "action_request_delivery_authority_revoked",
       );
-      expect(nobleBodyRequestScope(f.world, f.request)).toBe(f.scope);
-      expect(() => assertRequestDelivery(f.request)).not.toThrow();
+      expect(nobleBodyRequestScope(f.world, f.request)).toBeUndefined();
+      expect(() => assertRequestDelivery(f.request)).toThrow(
+        "action_request_delivery_authority_revoked",
+      );
       expect(snapshotNobleBodyAuthority(f.world).body.lastChoice).toBeNull();
       alias.context = f.request.context;
       alias.allowedTools = f.request.allowedTools;
       alias.deadlineAtMs = deadline;
-      expect(nobleBodyRequestScope(f.world, alias)).toBe(f.scope);
-      expect(() => assertRequestDelivery(alias)).not.toThrow();
+      expect(nobleBodyRequestScope(f.world, alias)).toBeUndefined();
+      expect(() => assertRequestDelivery(alias)).toThrow(
+        "action_request_delivery_authority_revoked",
+      );
       closeNobleBodyRequest(f.scope);
       expect(nobleBodyRequestScope(f.world, f.request)).toBeUndefined();
       expect(nobleBodyRequestScope(f.world, alias)).toBeUndefined();

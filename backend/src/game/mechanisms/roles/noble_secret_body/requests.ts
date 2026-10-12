@@ -1,9 +1,9 @@
 /**
  * Owns Noble/Secret Body choice and reveal request bindings plus delivery completion.
  * Receives original contexts, turn scopes and deadline aliases; writes only accepted current
- * local bindings and committed tools. Closed or invalid requests fail current checks; this
- * mechanical routing change preserves the existing restoration behavior until the separate
- * revocation correction.
+ * local bindings and committed tools. Failed current checks of the original or a bound
+ * alias permanently close their shared turn. Foreign unbound inputs never acquire a turn
+ * or revoke its valid authority; closing and domain commit retain settlement ownership.
  */
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { types } from "node:util";
@@ -61,7 +61,7 @@ function body(value: object): string | null {
 }
 function current(request: object, r: NonNullable<ReturnType<typeof requests.get>>): boolean {
   const t = r.turn;
-  return (
+  const eligible =
     !t.closed &&
     t.lease.isCurrent() &&
     body(t.original) === t.json &&
@@ -70,8 +70,9 @@ function current(request: object, r: NonNullable<ReturnType<typeof requests.get>
     own(request, "context") === r.context &&
     own(request, "deadlineAtMs") === r.deadline &&
     body(request) === t.json &&
-    (t.deadline === null || t.deadline > Date.now())
-  );
+    (t.deadline === null || t.deadline > Date.now());
+  if (!eligible) t.closed = true;
+  return eligible;
 }
 export function openNobleBodyRequest(
   world: World,
