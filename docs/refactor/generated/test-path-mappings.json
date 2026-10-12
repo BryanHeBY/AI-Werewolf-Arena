@@ -71671,13 +71671,358 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/fragrant_pair_seer_lifecycle.test.ts",
+      "to": "backend/tests/unit/features/fragrant-pair-seer/death-reservation-cancellation.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "754117f216a2b3ff3fc61d77266c1fcf0c2db29eaffdcfa11aa1d241b313e93d",
+      "candidateSha256": "7a583ebbe83b5f531626918abf430899cdac54dd712a3f552903e53cb2bc28c2",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 835,
+          "end": 865,
+          "original": "../../../src/core/domain/model",
+          "value": "../../../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 753,
+          "end": 794,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 672,
+          "end": 713,
+          "original": "../../../src/core/domain/components/names",
+          "value": "../../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 611,
+          "end": 642,
+          "original": "../../../src/core/domain/deaths",
+          "value": "../../../../src/core/domain/deaths",
+          "originalResolved": "backend/src/core/domain/deaths.ts",
+          "expectedResolved": "backend/src/core/domain/deaths.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 547,
+          "end": 580,
+          "original": "../../../src/core/domain/identity",
+          "value": "../../../../src/core/domain/identity",
+          "originalResolved": "backend/src/core/domain/identity.ts",
+          "expectedResolved": "backend/src/core/domain/identity.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 483,
+          "end": 521,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 412,
+          "end": 451,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 337,
+          "end": 378,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 238,
+          "end": 301,
+          "original": "../../../src/game/mechanisms/roles/fragrant_pair_seer/authority",
+          "value": "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 83,
+          "end": 112,
+          "original": "../fragrant_pair_seer_fixture",
+          "value": "../../../engine/fragrant_pair_seer_fixture",
+          "originalResolved": "backend/tests/engine/fragrant_pair_seer_fixture.ts",
+          "expectedResolved": "backend/tests/engine/fragrant_pair_seer_fixture.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "72549d1b7c6ca7d3541d0149be33de8986e11726a13b2a6a8bd925d36d162516",
+          "title": "uncommitted initial death reservation releases on false cancellation without spending",
+          "occurrence": 1
+        },
+        {
+          "id": "cb309c42b455474f3b5429788655a66ab5e6812e3bc9b9208391b307a0a7c1c8",
+          "title": "uncommitted initial death reservation releases on throw cancellation without spending",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../support/fragrant_pair_seer_scenarios",
+          "originalImport": "import {\n  fragrantRuntimeGame as game,\n  fragrantRuntimeAction as act,\n} from \"../../support/fragrant_pair_seer_scenarios\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "game",
+              "imported": "fragrantRuntimeGame",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "act",
+              "imported": "fragrantRuntimeAction",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import {\n  createAliveComponent,\n  type AliveComponent,\n} from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": "import { type AliveComponent } from \"../../../src/core/domain/components/alive\";",
+          "droppedBindings": [
+            {
+              "name": "createAliveComponent",
+              "imported": "createAliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/fragrant_pair_seer_lifecycle.test.ts",
+      "to": "backend/tests/scenarios/features/fragrant-pair-seer/reentry-and-failure.test.ts",
+      "sourceCommit": "cb2957ac023ffd80b7cb4f37e9c7e80922d151b2",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "754117f216a2b3ff3fc61d77266c1fcf0c2db29eaffdcfa11aa1d241b313e93d",
+      "candidateSha256": "6aa86e3d713e04659fe78b69743c340a20ddf97636f8ff092f5e3d8dcddffe60",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 410,
+          "end": 451,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 302,
+          "end": 343,
+          "original": "../../../src/core/domain/components/names",
+          "value": "../../../../src/core/domain/components/names",
+          "originalResolved": "backend/src/core/domain/components/names.ts",
+          "expectedResolved": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 209,
+          "end": 272,
+          "original": "../../../src/game/mechanisms/roles/fragrant_pair_seer/authority",
+          "value": "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 121,
+          "end": 163,
+          "original": "../../support/fragrant_pair_seer_scenarios",
+          "value": "../../../support/fragrant_pair_seer_scenarios",
+          "originalResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts",
+          "expectedResolved": "backend/tests/support/fragrant_pair_seer_scenarios.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "8bd0655fd1edda7c1d890ea13d0cc35c00df6b5373eade366c2d4961ee8e9343",
+          "title": "day cycle reentry rejects before mutating the outer phase or feed",
+          "occurrence": 1
+        },
+        {
+          "id": "c50c3159efd43802922b7bbb28bb49ee783eb74ec60f3ea596c040b72d090c79",
+          "title": "aborted night retains original provider failure even after actor replacement=false",
+          "occurrence": 1
+        },
+        {
+          "id": "cfe155bd702ef309cd9a7a0bbfdbcd2e78d31a166d765b21d4b4e399ddde07d6",
+          "title": "aborted night retains original provider failure even after actor replacement=true",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../fragrant_pair_seer_fixture",
+          "originalImport": "import { fragrantPairOwnerFixture } from \"../fragrant_pair_seer_fixture\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "fragrantPairOwnerFixture",
+              "imported": "fragrantPairOwnerFixture",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/fragrant_pair_seer/authority",
+          "originalImport": "import {\n  closeFragrantNight,\n  prepareFragrantDeathWave,\n  cancelFragrantDeathWave,\n  fragrantAuthoritySnapshot,\n} from \"../../../src/game/mechanisms/roles/fragrant_pair_seer/authority\";",
+          "currentImportBeforeRebase": "import { fragrantAuthoritySnapshot } from \"../../../src/game/mechanisms/roles/fragrant_pair_seer/authority\";",
+          "droppedBindings": [
+            {
+              "name": "closeFragrantNight",
+              "imported": "closeFragrantNight",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "prepareFragrantDeathWave",
+              "imported": "prepareFragrantDeathWave",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "cancelFragrantDeathWave",
+              "imported": "cancelFragrantDeathWave",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/death_resolution",
+          "originalImport": "import { DeathResolution } from \"../../../src/game/engine/death_resolution\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DeathResolution",
+              "imported": "DeathResolution",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/event_registry",
+          "originalImport": "import { EventRegistry } from \"../../../src/game/engine/event_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "EventRegistry",
+              "imported": "EventRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/identity",
+          "originalImport": "import { Phase } from \"../../../src/core/domain/identity\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/deaths",
+          "originalImport": "import { DeathCause } from \"../../../src/core/domain/deaths\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DeathCause",
+              "imported": "DeathCause",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/model",
+          "originalImport": "import type { RuntimeSnapshot } from \"../../../src/core/domain/model\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "RuntimeSnapshot",
+              "imported": "RuntimeSnapshot",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 590 original-snapshot unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 525,
-    "targetFiles": 556,
-    "mappingEntries": 556,
-    "baselineCases": 6587,
+    "sourceFiles": 526,
+    "targetFiles": 558,
+    "mappingEntries": 558,
+    "baselineCases": 6592,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
