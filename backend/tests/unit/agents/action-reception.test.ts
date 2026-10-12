@@ -4,6 +4,8 @@
  * reject-before-seal and detached accepted actions. Inputs and expected outcomes remain
  * the original literal or immutable-fixture oracle; these module assertions invoke no
  * model or complete-game driver.
+ * An explicit test-owned mutable view seeds Guard history on the same stored
+ * state; production readers retain their readonly view and original checks.
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -282,7 +284,11 @@ test("dead actions require trusted engine authorization; role, target, candidate
   const guarded = bootstrapGame(sixPlayerMvpConfig, {
     fixedRoles: [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager],
   });
-  getGuardState(guarded.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget = 2;
+  (
+    getGuardState(guarded.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)! as {
+      lastTarget: number | null;
+    }
+  ).lastTarget = 2;
   expect(
     new ActionReception(guarded.world).validate(request(5, ["guard"], "guard"), "guard", {
       target_id: 2,
