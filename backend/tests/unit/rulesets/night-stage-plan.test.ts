@@ -5,7 +5,9 @@
  * getter/trap counts are independent oracles. A tiny live context checks actor
  * lookup after compilation. Native membership strengthening is recorded separately
  * from opaque-source prefix preservation; no model or compiler oracle runs.
+ * The controlled context binds its query at the original World read position.
  */
+import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/core/domain/world";
@@ -23,6 +25,9 @@ const config = { ...sixPlayerMvpConfig, roleSetups: [] };
 function context(world = new World("en")): NightStageContext {
   return {
     world,
+    get nightActors() {
+      return bindNightAbilityActorQuery(this.world);
+    },
     roleCatalog: new RoleCatalog([]),
     toolGateway: new ToolGateway(),
     events: [],

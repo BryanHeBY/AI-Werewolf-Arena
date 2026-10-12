@@ -5,7 +5,10 @@
  * collapse paid effects into unsourced marks.
  * Safe native stage arrays use frozen plan membership; opaque custom sources keep
  * their original lazy iteration. Handlers retain their receiver and query actors live.
+ * The context query getter captures its current World before the stage's day argument;
+ * actor qualification remains read-only and never moves into pipeline lifecycle commits.
  */
+import { bindNightAbilityActorQuery } from "../../mechanisms/roles/night-ability-actors";
 import {
   FragrantNightUnit,
   isFragrantPairBoard,
@@ -452,6 +455,9 @@ export class NightPipeline {
         isCurrent,
         previousExile: options.previousExile ? structuredClone(options.previousExile) : null,
         world: this.world,
+        get nightActors() {
+          return bindNightAbilityActorQuery(this.world);
+        },
         roleCatalog: this.stageRegistry.roleCatalog,
         toolGateway: this.toolGateway,
         events: this.events,

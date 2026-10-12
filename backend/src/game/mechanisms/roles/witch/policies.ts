@@ -1,13 +1,19 @@
+/**
+ * Owns pure native Witch combination, knife visibility and second-turn predicates.
+ * Inputs are read-only potion-instance state and night day; outputs are the
+ * original policy booleans in their existing field order. These queries never
+ * consume stock, close a turn, write source metadata or grant a commit capability.
+ */
 import { Role } from "../../../../core/domain/model";
-import type { NightAbility } from "../abilities";
+import type { NightAbilityReadView } from "../abilities";
 /** Only a native resource may use this product policy; copied/gifted bottles keep their own contract. */
-export function nativePotionsCanCombine(ability: NightAbility<"potion">): boolean {
+export function nativePotionsCanCombine(ability: NightAbilityReadView<"potion">): boolean {
   return (
     ability.source.kind === "native" &&
     ability.state.potionPolicy === "awa_both_native_experimental_v1"
   );
 }
-export function witchKnifeVisible(ability: NightAbility<"potion">): boolean {
+export function witchKnifeVisible(ability: NightAbilityReadView<"potion">): boolean {
   const policy =
     ability.source.kind === "native" && ability.source.role === Role.Witch
       ? ability.state.knifeVisibility
@@ -19,7 +25,10 @@ export function witchKnifeVisible(ability: NightAbility<"potion">): boolean {
     (nativePotionsCanCombine(ability) || !ability.state.poisonUsedThisNight)
   );
 }
-export function nativePotionSecondTurn(ability: NightAbility<"potion">, day: number): boolean {
+export function nativePotionSecondTurn(
+  ability: NightAbilityReadView<"potion">,
+  day: number,
+): boolean {
   return (
     nativePotionsCanCombine(ability) &&
     ability.state.potionTurnClosedDay !== day &&

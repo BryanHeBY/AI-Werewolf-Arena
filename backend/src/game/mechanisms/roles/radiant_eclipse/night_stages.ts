@@ -2,13 +2,14 @@
  * Runs Eclipse swallow and Radiant shelter requests in their declared order. Inputs are the
  * installed night frame and validated target choices; outputs preserve borrowed-resource or
  * shelter commits and events. These stages never infer paid-effect validity from provider
- * return; the frame owns that check.
+ * return; the frame owns that check. Shelter actors consume the bound night query,
+ * while Eclipse choices and borrowed-resource ownership remain in this feature.
  */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, Role } from "../../../../core/domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { nightAbilityActors, recordNightAbilityUse } from "../abilities";
+import { recordNightAbilityUse } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";
 import { readShelterState, selectShelter } from "./state";
 import {
@@ -56,7 +57,7 @@ export const RADIANT_SHELTER_STAGE: NightStageHandler = {
   async execute(ctx) {
     const day = ctx.currentDay();
     if (day < 2) return;
-    for (const { actorId, ability } of nightAbilityActors(ctx.world, "shelter", day)) {
+    for (const { actorId, ability } of ctx.nightActors.actors("shelter", day)) {
       const scope = captureNightAbilityScope(
         ctx.world,
         actorId,

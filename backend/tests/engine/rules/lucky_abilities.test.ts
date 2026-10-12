@@ -1,3 +1,11 @@
+/**
+ * Mechanism integration tests for Lucky and ordinary ability resources, late timing and actor-local target history.
+ * Inputs are literal rosters, actions and targeted owner/life edits; outputs are
+ * checked against the original explicit resource, event and rejection assertions.
+ * Controlled contexts bind read-only actor queries at the original World read
+ * position. No billed agent, fixture rewrite or production-generated oracle runs.
+ */
+import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
 import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -82,6 +90,9 @@ function context(
   const factory = new GameActionRequestFactory(game.world, events, day);
   return {
     world: game.world,
+    get nightActors() {
+      return bindNightAbilityActorQuery(this.world);
+    },
     events,
     roleCatalog: getDefaultRoleCatalog(),
     toolGateway: new ToolGateway(),

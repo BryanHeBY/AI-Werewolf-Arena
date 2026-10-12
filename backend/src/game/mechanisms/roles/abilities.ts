@@ -5,10 +5,8 @@
  * payload writes belong to its feature owner; this store never infers player
  * knowledge from true camp or executes a Seer inspection command.
  */
-import { scholarMentorBlocks } from "./scholar_mentor/night_frame";
 import { readPairSeerState, type PairSeerState } from "./fragrant_pair_seer/state";
 import { readShelterState } from "./radiant_eclipse/state";
-import { nightmareFearBlocks } from "./nightmare_shadow/night_frame";
 import { INSPECTION_POLICIES } from "../../../core/domain/board";
 import { nativePotionSecondTurn } from "./witch/policies";
 import { Role, type EntityId, type EventPayloadMap } from "../../../core/domain/model";
@@ -120,6 +118,45 @@ export type NightAbility<K extends NightAbilityKind = NightAbilityKind> = Extrac
   NightAbilityUnion,
   { kind: K }
 >;
+
+/** Finite read views for the seven existing state shapes, never copied runtime state. */
+interface NightAbilityReadStates {
+  pair_check: Readonly<Omit<PairSeerState, "history">> & {
+    readonly history: readonly (Readonly<Omit<PairSeerState["history"][number], "targetIds">> & {
+      readonly targetIds: Readonly<PairSeerState["history"][number]["targetIds"]>;
+    })[];
+  };
+  shelter: Readonly<NightAbilityStates["shelter"]>;
+  seer_check: Readonly<Omit<SeerState, "lastResult" | "history">> & {
+    readonly lastResult?: Readonly<NonNullable<SeerState["lastResult"]>> | null;
+    readonly history: readonly (Readonly<Omit<SeerState["history"][number], "result">> & {
+      readonly result?: Readonly<NonNullable<SeerState["history"][number]["result"]>>;
+    })[];
+  };
+  role_check: Readonly<Omit<RoleInspectionState, "history">> & {
+    readonly history: readonly (Readonly<Omit<RoleInspectionState["history"][number], "result">> & {
+      readonly result: Readonly<RoleInspectionState["history"][number]["result"]>;
+    })[];
+  };
+  guard: Readonly<GuardState>;
+  potion: Readonly<WitchState>;
+  dream: Readonly<Omit<DreamerState, "history">> & {
+    readonly history: readonly Readonly<DreamerState["history"][number]>[];
+  };
+}
+type NightAbilityReadUnion = {
+  [K in NightAbilityKind]: Readonly<
+    Omit<NightAbility<K>, "state" | "source" | "nightSuppression">
+  > & {
+    readonly state: NightAbilityReadStates[K];
+    readonly source: Readonly<AbilitySource>;
+    readonly nightSuppression?: Readonly<import("./radiant_eclipse/state").EclipseSuppression>;
+  };
+}[NightAbilityKind];
+export type NightAbilityReadView<K extends NightAbilityKind = NightAbilityKind> = Extract<
+  NightAbilityReadUnion,
+  { kind: K }
+>;
 export type AbilityStatus =
   "pending" | "expired" | "disabled" | "spent" | "used_this_night" | "active";
 
@@ -193,12 +230,12 @@ export function allNightAbilities(role: RoleComponent | undefined): NightAbility
 }
 
 /** Malformed or accessor blockers stay disabled without executing foreign getters. */
-function nightAbilityDisabled(ability: NightAbility): boolean {
+function nightAbilityDisabled(ability: NightAbilityReadView): boolean {
   const blocker = Object.getOwnPropertyDescriptor(ability, "nightSuppression");
   return ability.disabled || (!!blocker && (!("value" in blocker) || blocker.value !== undefined));
 }
 
-export function abilityStatus(ability: NightAbility, day: number): AbilityStatus {
+export function abilityStatus(ability: NightAbilityReadView, day: number): AbilityStatus {
   if (nightAbilityDisabled(ability) || ability.deathExpired) return "disabled";
   if (day < ability.startsOnDay) return "pending";
   if (ability.expiresAfterDay !== undefined && day > ability.expiresAfterDay) return "expired";
@@ -292,29 +329,6 @@ export function recordNightAbilityUse(ability: NightAbility, day: number, consum
   if (abilityStatus(ability, day) !== "active") throw new Error("ability_not_active");
   ability.lastUsedDay = day;
   if (consumed) ability.uses++;
-}
-
-export function nightAbilityActors<K extends NightAbilityKind>(
-  world: World,
-  kind: K,
-  day: number,
-): Array<{ actorId: EntityId; ability: NightAbility<K> }> {
-  return world
-    .getAliveEntityIds()
-    .filter((actorId) => !nightmareFearBlocks(world, actorId, day))
-    .filter(
-      (actorId) =>
-        (kind !== "guard" && kind !== "seer_check") ||
-        !scholarMentorBlocks(world, day, actorId, kind === "guard" ? "guard" : "check"),
-    )
-    .flatMap((actorId) =>
-      allNightAbilities(world.getComponent(actorId, COMPONENT.Role))
-        .filter(
-          (ability): ability is NightAbility<K> =>
-            ability.kind === kind && abilityStatus(ability, day) === "active",
-        )
-        .map((ability) => ({ actorId, ability })),
-    );
 }
 
 export type PlayerNightAbility = {

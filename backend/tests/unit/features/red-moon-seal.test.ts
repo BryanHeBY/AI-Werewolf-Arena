@@ -4,7 +4,9 @@
  * sealed/unsealed transitions. Inputs and expected outcomes remain the original literal or
  * immutable-fixture oracle; these module assertions invoke no model or complete-game
  * driver.
+ * The controlled context binds its query at the original World read position.
  */
+import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
 import { expect, test } from "bun:test";
 import { COMPONENT, type AliveComponent, type RoleComponent } from "../../../src/core";
 import { redMoonCandidateWorld } from "../../support/features/red-moon/builders/candidate-world";
@@ -48,6 +50,9 @@ test("Red Moon sealed night runs all good native stages without requests or inve
   };
   const ctx: NightStageContext = {
     world,
+    get nightActors() {
+      return bindNightAbilityActorQuery(this.world);
+    },
     roleCatalog: catalog,
     toolGateway: new ToolGateway(),
     events: [],

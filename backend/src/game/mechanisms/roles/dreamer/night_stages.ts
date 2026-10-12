@@ -1,14 +1,15 @@
 /**
  * Executes Dreamer choices against the current ability and original target life. Inputs are
  * night-stage requests and validated dream targets; outputs preserve history and sourced dream
- * protection. It never applies a death wave or refreshes an expired captured target.
+ * protection. Actor eligibility is read through the bound night query; it never
+ * applies a death wave or refreshes an expired captured target.
  */
 import { isRadiantEclipseBoard, captureRadiantPaidEffect } from "../radiant_eclipse/night_frame";
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { Phase } from "../../../../core/domain/model";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { nightAbilityActors, recordNightAbilityUse } from "../abilities";
+import { recordNightAbilityUse } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";
 import { markDreamNightCommitted } from "./night_frame";
 
@@ -17,7 +18,7 @@ export const DREAMER_NIGHT_STAGE: NightStageHandler = {
   priority: 150,
   async execute(ctx) {
     const day = ctx.currentDay();
-    for (const { actorId, ability } of nightAbilityActors(ctx.world, "dream", day)) {
+    for (const { actorId, ability } of ctx.nightActors.actors("dream", day)) {
       if (!ctx.isCurrent()) return;
       const scope = captureNightAbilityScope(
         ctx.world,

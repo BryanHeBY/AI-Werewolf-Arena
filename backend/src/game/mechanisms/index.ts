@@ -1,4 +1,9 @@
-/** 文件说明：机制层统一导出入口。 */
+/**
+ * Publishes mechanism contracts, registries and concrete feature assembly exports.
+ * Inputs are named definitions from their owners; outputs are the existing public
+ * mechanism API plus the night actor query owner. This facade never enumerates
+ * actors, spends ability resources or owns a second eligibility algorithm.
+ */
 export * from "./contracts";
 export * from "./broadcast/agent_event_visibility_registry";
 export * from "./broadcast/visibility_registry";
@@ -20,6 +25,14 @@ export * from "./roles/catalog";
 export * from "./roles/wolf_team";
 export * from "./roles/inspection";
 export * from "./roles/abilities";
+export {
+  bindNightAbilityActorQuery,
+  createNightActorEligibilityQuery,
+  createNightAbilityActorQuery,
+  type NightActorEligibilityQuery,
+  type NightAbilityActorQuery,
+  type NightAbilityRosterPort,
+} from "./roles/night-ability-actors";
 export * from "./roles/ability_changes";
 export * from "./sheriff/config_normalizer";
 export * from "./sheriff/election";

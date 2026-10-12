@@ -2,7 +2,8 @@
  * Resets per-night Witch flags and executes potion choices against captured stock and targets.
  * Inputs are current native/granted potion instances and validated actions; outputs preserve
  * paid heal/poison claims, passes and use history. Existing second-turn and role-specific
- * policies remain distinct, with no stock refresh on replacement.
+ * policies remain distinct, with no stock refresh on replacement. Potion actor
+ * queries do not move poison-only restrictions into whole-turn eligibility.
  */
 import { isRadiantEclipseBoard } from "../radiant_eclipse/night_frame";
 import {
@@ -32,12 +33,7 @@ import { type NightAbility } from "../abilities";
 import { nativePotionsCanCombine, witchKnifeVisible } from "./policies";
 import { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import { getWitchState } from "../private_state";
-import {
-  activeNightAbility,
-  allNightAbilities,
-  nightAbilityActors,
-  recordNightAbilityUse,
-} from "../abilities";
+import { activeNightAbility, allNightAbilities, recordNightAbilityUse } from "../abilities";
 import { recordOwnNightAction, luckyTargetAllowed } from "../night_action_history";
 import { captureNightAbilityScope } from "../ability_scope";
 
@@ -79,8 +75,7 @@ const witchActionStage: NightStageHandler = {
       if (result.poison) (ctx.state.poisonClaims ??= []).push(result.poison.claim);
       return;
     }
-    for (const { actorId: witchId, ability } of nightAbilityActors(
-      ctx.world,
+    for (const { actorId: witchId, ability } of ctx.nightActors.actors(
       "potion",
       ctx.currentDay(),
     )) {

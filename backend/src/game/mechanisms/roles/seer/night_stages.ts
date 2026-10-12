@@ -3,7 +3,8 @@
  * Inputs are the night-stage context and validated check actions; outputs retain
  * original inspection, resource and event effects. State writes use the captured
  * Seer slot after Time Consort and before Fox effects, without rollback or a new
- * eligibility check; Demon Hunter's sealed native controller remains separate.
+ * eligibility check; actor enumeration consumes the bound night query, while
+ * Demon Hunter's sealed native controller remains separate.
  */
 import { isRadiantEclipseBoard } from "../radiant_eclipse/night_frame";
 import {
@@ -25,7 +26,7 @@ import { Camp, Phase, Role } from "../../../../core/domain/model";
 import { NightStageHandler } from "../../stages/night/contracts";
 import { getSeerState, recordSeerInspection } from "./state";
 import { resolveInspection } from "../inspection";
-import { activeNightAbility, nightAbilityActors, recordNightAbilityUse } from "../abilities";
+import { activeNightAbility, recordNightAbilityUse } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import { recordOwnNightAction, luckyTargetAllowed } from "../night_action_history";
@@ -41,8 +42,7 @@ const seerCheckStage: NightStageHandler = {
       await executeDemonNativeNight(ctx, "seer_check");
       return;
     }
-    for (const { actorId: seerId, ability } of nightAbilityActors(
-      ctx.world,
+    for (const { actorId: seerId, ability } of ctx.nightActors.actors(
       "seer_check",
       ctx.currentDay(),
     )) {

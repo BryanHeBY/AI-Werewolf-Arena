@@ -4,7 +4,9 @@
  * stage application. Inputs and expected outcomes remain the original literal or
  * immutable-fixture oracle; these module assertions invoke no model or complete-game
  * driver.
+ * The controlled context binds its query at the original World read position.
  */
+import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
 import { ActionWindow } from "../../../src/core/domain/identity";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -36,6 +38,9 @@ function fixture(locale: "zh-CN" | "en") {
   const choices = { poison: false, inspectKnight: true };
   const ctx: NightStageContext = {
     world,
+    get nightActors() {
+      return bindNightAbilityActorQuery(this.world);
+    },
     roleCatalog: getDefaultRoleCatalog(),
     toolGateway: new ToolGateway(),
     events: [],

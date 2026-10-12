@@ -2,7 +2,8 @@
  * Executes Gargoyle, Psychic and Mirror inspection stages through their existing role-specific
  * policies. Inputs are active instances and validated target checks; outputs preserve inspection
  * records, use counts and optional-completion behavior. It does not unify their distinct failure
- * or target semantics.
+ * or target semantics. Its role-check actor list consumes the bound eligibility
+ * query without adding new activation or native learning rules.
  */
 import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
@@ -10,7 +11,6 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import { Phase, Role } from "../../../../core/domain/model";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import {
-  nightAbilityActors,
   recordNightAbilityUse,
   roleInspectionPolicy,
   type RoleInspectionPolicy,
@@ -54,7 +54,7 @@ async function executeInspections(
 ): Promise<void> {
   const day = ctx.currentDay();
   if (policy === "gargoyle") beginRoleInspectionNight(ctx.world, day);
-  for (const { actorId, ability } of nightAbilityActors(ctx.world, "role_check", day)) {
+  for (const { actorId, ability } of ctx.nightActors.actors("role_check", day)) {
     if (!ctx.isCurrent()) return;
     if (roleInspectionPolicy(ability.state) !== policy) continue;
     const scope = captureNightAbilityScope(

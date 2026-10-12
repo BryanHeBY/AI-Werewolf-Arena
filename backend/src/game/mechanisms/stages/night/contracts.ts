@@ -1,4 +1,9 @@
-/** 文件说明：夜间阶段处理器契约。 */
+/**
+ * Owns the contract data for night state and execution ports shared by the pipeline and handlers.
+ * Inputs are captured phase operations, effects and bound actor queries; outputs
+ * are typed handler contributions and night state references. Actor qualification
+ * has a narrow query port; this contract never queries World or commits a resource.
+ */
 import { StatusMarksComponent } from "../../../../core/domain/components/status_marks";
 import {
   ActionProvider,
@@ -15,6 +20,7 @@ import { World } from "../../../../core/domain/world";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import type { RoleCatalog } from "../../roles/catalog";
 import type { DreamNightLink } from "../../roles/dreamer/night_frame";
+import type { NightAbilityActorQuery } from "../../roles/night-ability-actors";
 import type { AliveComponent } from "../../../../core/domain/components/alive";
 
 import type {
@@ -79,6 +85,7 @@ export interface NightStageContext {
   readonly previousExile: Readonly<ExileFeedback> | null;
   world: World;
   roleCatalog: RoleCatalog;
+  readonly nightActors: NightAbilityActorQuery;
   toolGateway: ToolGateway;
   events: GameEvent[];
   actionProvider: ActionProvider;

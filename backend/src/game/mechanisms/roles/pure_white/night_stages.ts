@@ -2,7 +2,8 @@
  * Runs Pure White Girl and Wolf Witch inspection stages with their distinct native policies.
  * Inputs are current actors, legal targets and validated checks; outputs are inspection history
  * and the configured attack effects. It does not collapse camp inspection into role inspection
- * or alter night-stage order.
+ * or alter night-stage order. Shared role-check actor enumeration uses the bound
+ * query before this feature checks its native Pure White/Wolf Witch policy.
  */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -10,7 +11,7 @@ import { Camp, Phase, Role } from "../../../../core/domain/model";
 import { DeathCause } from "../../../../core/domain/deaths";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
-import { nightAbilityActors, recordNightAbilityUse, roleInspectionPolicy } from "../abilities";
+import { recordNightAbilityUse, roleInspectionPolicy } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";
 import { resolveInspection } from "../inspection";
 import { recordRoleInspectionNightCommit } from "../role_inspection/night_scope";
@@ -19,7 +20,7 @@ import { pureWhiteInspectionTargets } from "./rules";
 async function execute(ctx: NightStageContext, policy: "pure_white" | "wolf_witch"): Promise<void> {
   const day = ctx.currentDay();
   const expectedRole = policy === "pure_white" ? Role.PureWhiteGirl : Role.WolfWitch;
-  for (const { actorId, ability } of nightAbilityActors(ctx.world, "role_check", day)) {
+  for (const { actorId, ability } of ctx.nightActors.actors("role_check", day)) {
     if (!ctx.isCurrent()) return;
     if (roleInspectionPolicy(ability.state) !== policy) continue;
     if (ability.source.kind !== "native" || ability.source.role !== expectedRole) continue;

@@ -1,3 +1,10 @@
+/**
+ * Builds in-memory controlled night-stage contexts and extracts completed summaries.
+ * Inputs are explicit World/provider overrides; outputs retain typed stage ports
+ * with the original current World getter timing. Unexpected dependencies throw.
+ * This builder owns no expected rule result, fixture rewrite or complete-game run.
+ */
+import { bindNightAbilityActorQuery } from "../../src/game/mechanisms/roles/night-ability-actors";
 import { COMPONENT, type World } from "../../src/core";
 import { StatusMarksComponent } from "../../src/core/domain/components/status_marks";
 import { getDefaultRoleCatalog } from "../../src/game/mechanisms/roles/catalog";
@@ -14,6 +21,9 @@ export function nightStageContext(
   input: Partial<NightStageContext> & { world: World },
 ): NightStageContext {
   return {
+    get nightActors() {
+      return bindNightAbilityActorQuery(this.world);
+    },
     previousExile: null,
     events: [],
     roleCatalog: getDefaultRoleCatalog(),

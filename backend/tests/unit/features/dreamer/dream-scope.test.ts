@@ -4,7 +4,9 @@
  * request, consume or commit again. Inputs and expected outcomes remain the original
  * literal or immutable-fixture oracle; these module assertions invoke no model or
  * complete-game driver.
+ * The controlled context binds its query at the original World read position.
  */
+import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -53,6 +55,9 @@ function context(
   };
   return {
     world: game.world,
+    get nightActors() {
+      return bindNightAbilityActorQuery(this.world);
+    },
     events,
     roleCatalog: getDefaultRoleCatalog(),
     toolGateway: new ToolGateway(),

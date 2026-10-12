@@ -2,7 +2,8 @@
  * Executes Guard target selection with captured ability and original-life checks. Inputs are
  * night context and validated protection tools; outputs are state history, use accounting and
  * sourced Guard contributions. Only the original contribution owner retains effect validity,
- * without assigning it to a replacement mark component.
+ * without assigning it to a replacement mark component. Guard actor enumeration
+ * consumes the bound qualification port before any captured protection request.
  */
 import {
   isScholarMentorBoard,
@@ -19,7 +20,7 @@ import { Phase, Role, StatusMark } from "../../../../core/domain/model";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import { NightStageHandler } from "../../stages/night/contracts";
 import { getGuardState } from "../private_state";
-import { activeNightAbility, nightAbilityActors, recordNightAbilityUse } from "../abilities";
+import { activeNightAbility, recordNightAbilityUse } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import { recordOwnNightAction, luckyTargetAllowed } from "../night_action_history";
@@ -33,11 +34,7 @@ const guardActionStage: NightStageHandler = {
       await executeDemonNativeNight(ctx, "guard");
       return;
     }
-    for (const { actorId: guardId, ability } of nightAbilityActors(
-      ctx.world,
-      "guard",
-      ctx.currentDay(),
-    )) {
+    for (const { actorId: guardId, ability } of ctx.nightActors.actors("guard", ctx.currentDay())) {
       if (ability.activation === "lucky" || ability.activation === "black_market") continue;
       assertEvilKnightNativeActor(ctx.world, guardId, Role.Guard);
       const day = ctx.currentDay(),
