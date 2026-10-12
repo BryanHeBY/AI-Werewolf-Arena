@@ -1,4 +1,11 @@
-import { auditSummaryFixture } from "../support/audit_summary_fixture";
+/**
+ * Unit tests for audit evidence deduplication, ordering and Markdown validation.
+ * Inputs are literal findings, sequence sets and handwritten bilingual summary
+ * fixtures; output is original accepted/dropped findings and citation checks.
+ * Explicit finding order and missing-reference counterexamples are the oracle;
+ * no recording, game execution or external audit service supplies expectations.
+ */
+import { auditSummaryFixture } from "../support/builders/audit-summary";
 import { describe, expect, test } from "bun:test";
 import { AuditEvidencePolicy } from "../../src/audit/evidence_policy";
 

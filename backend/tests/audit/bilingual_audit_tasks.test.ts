@@ -4,7 +4,8 @@
  * Output and independent oracle: Handwritten audit headings, original speech, context exclusions and locale-specific final summary.
  * The test never calls a billed model or rewrites expected fixture/Tape bytes.
  */
-import { auditSummaryFixture } from "../support/audit_summary_fixture";
+import { acpAdapterEntry } from "../support/fixtures/manifest";
+import { auditSummaryFixture } from "../support/builders/audit-summary";
 import { buildDebugSummaryMarkdown } from "../../src/audit/debug_summary_generator";
 import { expect, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
@@ -231,7 +232,7 @@ for (const locale of ["zh-CN", "en"] as const)
   for (const mode of ["inspect", "summarize"] as const)
     test(`actual ACP and injected MCP audit ${locale}/${mode} preserve prompt language, payload and process cleanup`, async () => {
       const workspace = await createTestTempDirectory("awa-audit-locale-");
-      const entry = path.resolve(process.cwd(), "tests/fixtures/acp_audit_agent.ts");
+      const entry = acpAdapterEntry("audit");
       const executor = new AcpAuditAgentExecutor({
         workspaceRoot: workspace,
         profile: {
@@ -305,7 +306,7 @@ test("complete synthetic generator and pipeline preserve separate inspection and
           env: {},
           sessionConfigOptions: {},
           command: process.execPath,
-          args: [path.resolve(process.cwd(), "tests/fixtures/acp_audit_agent.ts")],
+          args: [acpAdapterEntry("audit")],
         },
       };
       const markdown = await buildDebugSummaryMarkdown(

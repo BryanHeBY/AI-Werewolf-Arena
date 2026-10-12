@@ -44,6 +44,8 @@ export interface FixtureArtifact {
   currentPath: string;
   sha256: string;
   bytes: number;
+  currentSha256: string;
+  currentBytes: number;
   owner: FixtureOwner;
   kind: FixtureKind;
   suiteId: string;
@@ -72,11 +74,35 @@ export interface FixtureSuite {
   }[];
   acceptance: FixtureAcceptance;
 }
+export interface FixtureSourceAsset {
+  originPath: string;
+  currentPath: string;
+  originCommit: string;
+  originalSha256: string;
+  originalBytes: number;
+  currentSha256: string;
+  currentBytes: number;
+  programSha256: string;
+  moduleBindingsSha256: string;
+  kind: "adapter-script" | "test-support";
+}
+export interface FixtureDerivedManifest {
+  path: string;
+  suiteIds: string[];
+}
 export interface FixtureManifest {
-  schema: "awa-fixture-manifests-v1";
+  schema: "awa-fixture-manifests-v2";
   generatedBy: "tooling/refactor/fixture-manifest.ts";
   baseline: { commit: string; inventoryPath: string; inventorySha256: string };
-  coverage: { expectedFiles: number; hashMatchedFiles: number; bytes: number };
+  coverage: {
+    expectedFiles: number;
+    exactBytesFiles: number;
+    mechanicalSourceFiles: number;
+    originalBytes: number;
+    currentBytes: number;
+  };
+  sourceAssets: FixtureSourceAsset[];
+  derivedManifests: FixtureDerivedManifest[];
   policy: string;
   files: FixtureArtifact[];
   suites: FixtureSuite[];
@@ -111,6 +137,17 @@ const privateSegment = (part: string) =>
   ].includes(part) ||
   part.startsWith(".env") ||
   /^(?:credentials|authentication)(?:\.|$)/i.test(part);
+function publicSupportSourcePath(value: unknown): value is string {
+  return (
+    typeof value === "string" &&
+    /^backend\/tests\/support\/.+\.ts$/.test(value) &&
+    !value.includes("\\") &&
+    !value.split("/").some((part) => !part || part === "." || part === ".." || privateSegment(part))
+  );
+}
+function sourceAssetPath(value: unknown): value is string {
+  return publicSupportSourcePath(value) || (publicFixturePath(value) && /\.ts$/.test(value));
+}
 function publicFixturePath(value: unknown): value is string {
   return (
     typeof value === "string" &&
@@ -197,7 +234,8 @@ function checkMetadata(value: unknown): asserts value is FixtureMetadata {
       if (!record(observed)) fail("metadata:source");
       strictKeys(observed, ["commit", "path", "sha256"], "source");
       if (
-        !/^[a-f0-9]{40}$/.test(String(observed.commit)) ||
+        typeof observed.commit !== "string" ||
+        !/^[a-f0-9]{40}$/.test(observed.commit) ||
         !publicFixturePath(observed.path) ||
         !hash(observed.sha256)
       )
@@ -212,11 +250,21 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
   if (!record(value)) fail("document");
   strictKeys(
     value,
-    ["schema", "generatedBy", "baseline", "coverage", "policy", "files", "suites"],
+    [
+      "schema",
+      "generatedBy",
+      "baseline",
+      "coverage",
+      "sourceAssets",
+      "derivedManifests",
+      "policy",
+      "files",
+      "suites",
+    ],
     "document",
   );
   if (
-    value.schema !== "awa-fixture-manifests-v1" ||
+    value.schema !== "awa-fixture-manifests-v2" ||
     value.generatedBy !== "tooling/refactor/fixture-manifest.ts" ||
     !nonempty(value.policy)
   )
@@ -230,20 +278,38 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
   )
     fail("baseline_identity");
   if (!record(value.coverage)) fail("coverage");
-  strictKeys(value.coverage, ["expectedFiles", "hashMatchedFiles", "bytes"], "coverage");
+  strictKeys(
+    value.coverage,
+    ["expectedFiles", "exactBytesFiles", "mechanicalSourceFiles", "originalBytes", "currentBytes"],
+    "coverage",
+  );
   if (!Array.isArray(value.files) || !Array.isArray(value.suites)) fail("collections");
   const artifacts = new Map<string, FixtureArtifact>();
   for (const item of value.files) {
     if (!record(item)) fail("file");
     strictKeys(
       item,
-      ["originPath", "currentPath", "sha256", "bytes", "owner", "kind", "suiteId", "metadata"],
+      [
+        "originPath",
+        "currentPath",
+        "sha256",
+        "bytes",
+        "currentSha256",
+        "currentBytes",
+        "owner",
+        "kind",
+        "suiteId",
+        "metadata",
+      ],
       "file",
     );
     if (
       !publicFixturePath(item.originPath) ||
       !publicFixturePath(item.currentPath) ||
       !hash(item.sha256) ||
+      !hash(item.currentSha256) ||
+      !Number.isSafeInteger(item.currentBytes) ||
+      Number(item.currentBytes) < 0 ||
       !Number.isSafeInteger(item.bytes) ||
       Number(item.bytes) < 0 ||
       !nonempty(item.suiteId)
@@ -253,6 +319,7 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
     if (ownerFor(item.originPath) !== item.owner || ownerFor(item.currentPath) !== item.owner)
       fail("file_owner");
     if (
+      typeof item.kind !== "string" ||
       ![
         "god-replay",
         "checkpoint",
@@ -260,7 +327,7 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
         "player-view-bundle",
         "adapter-script",
         "unknown-json",
-      ].includes(String(item.kind))
+      ].includes(item.kind)
     )
       fail("file_kind");
     checkMetadata(item.metadata);
@@ -274,6 +341,83 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
       fail("file_source_identity");
     artifacts.set(file.originPath, file);
   }
+  if (!Array.isArray(value.sourceAssets) || !Array.isArray(value.derivedManifests))
+    fail("source_asset_collections");
+  const sourceOrigins = new Set<string>(),
+    sourceTargets = new Set<string>();
+  for (const entry of value.sourceAssets) {
+    if (!record(entry)) fail("source_asset");
+    strictKeys(
+      entry,
+      [
+        "originPath",
+        "currentPath",
+        "originCommit",
+        "originalSha256",
+        "originalBytes",
+        "currentSha256",
+        "currentBytes",
+        "programSha256",
+        "moduleBindingsSha256",
+        "kind",
+      ],
+      "source_asset",
+    );
+    if (
+      typeof entry.originPath !== "string" ||
+      typeof entry.currentPath !== "string" ||
+      !sourceAssetPath(entry.originPath) ||
+      !sourceAssetPath(entry.currentPath) ||
+      typeof entry.originCommit !== "string" ||
+      !/^[a-f0-9]{40}$/.test(entry.originCommit) ||
+      !hash(entry.originalSha256) ||
+      !hash(entry.currentSha256) ||
+      !hash(entry.programSha256) ||
+      !hash(entry.moduleBindingsSha256) ||
+      !Number.isSafeInteger(entry.originalBytes) ||
+      Number(entry.originalBytes) < 0 ||
+      !Number.isSafeInteger(entry.currentBytes) ||
+      Number(entry.currentBytes) < 0 ||
+      sourceOrigins.has(entry.originPath) ||
+      sourceTargets.has(entry.currentPath) ||
+      typeof entry.kind !== "string" ||
+      !["adapter-script", "test-support"].includes(entry.kind)
+    )
+      fail("source_asset_identity");
+    sourceOrigins.add(entry.originPath);
+    sourceTargets.add(entry.currentPath);
+    const artifact = artifacts.get(entry.originPath);
+    if (
+      entry.kind === "adapter-script" &&
+      (!artifact ||
+        artifact.kind !== "adapter-script" ||
+        entry.originCommit !== baselineCommit ||
+        artifact.currentPath !== entry.currentPath ||
+        artifact.sha256 !== entry.originalSha256 ||
+        artifact.bytes !== entry.originalBytes ||
+        artifact.currentSha256 !== entry.currentSha256 ||
+        artifact.currentBytes !== entry.currentBytes)
+    )
+      fail("source_asset_artifact_consistency");
+    if (
+      entry.kind === "test-support" &&
+      (!publicSupportSourcePath(entry.originPath) || !publicSupportSourcePath(entry.currentPath))
+    )
+      fail("source_asset_support_identity");
+  }
+  for (const file of artifacts.values())
+    if (
+      file.kind !== "adapter-script" &&
+      (file.sha256 !== file.currentSha256 || file.bytes !== file.currentBytes)
+    )
+      fail("json_archive_byte_drift");
+  for (const file of artifacts.values())
+    if (
+      file.kind === "adapter-script" &&
+      (file.sha256 !== file.currentSha256 || file.bytes !== file.currentBytes) &&
+      !sourceOrigins.has(file.originPath)
+    )
+      fail("source_asset_proof_missing");
   const suiteIds = new Set<string>(),
     assigned = new Set<string>(),
     currentPaths = new Set<string>();
@@ -299,25 +443,29 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
     );
     if (
       !publicFixturePath(item.anchorOriginPath) ||
+      typeof item.suiteId !== "string" ||
       item.suiteId !== suiteIdFor(item.anchorOriginPath) ||
-      suiteIds.has(String(item.suiteId))
+      suiteIds.has(item.suiteId)
     )
       fail("suite_identity");
-    suiteIds.add(String(item.suiteId));
+    suiteIds.add(item.suiteId);
     if (
-      !["recorded-archive", "adapter-script", "unassociated-json"].includes(String(item.kind)) ||
+      typeof item.kind !== "string" ||
+      !["recorded-archive", "adapter-script", "unassociated-json"].includes(item.kind) ||
       !Array.isArray(item.files) ||
       item.files.length === 0 ||
       !item.files.includes(item.anchorOriginPath)
     )
       fail("suite_files");
     checkMetadata(item.metadata);
+    const memberArtifacts: FixtureArtifact[] = [];
     for (const filePath of item.files) {
       if (typeof filePath !== "string" || assigned.has(filePath)) fail("duplicate_membership");
       const file = artifacts.get(filePath);
       if (!file || file.suiteId !== item.suiteId || file.owner !== item.owner)
         fail("membership_owner");
       assigned.add(filePath);
+      memberArtifacts.push(file);
     }
     if (!Array.isArray(item.membership) || item.membership.length !== item.files.length)
       fail("membership_evidence");
@@ -329,7 +477,8 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
         typeof member.originPath !== "string" ||
         membershipPaths.has(member.originPath) ||
         !item.files.includes(member.originPath) ||
-        !["literal-associated", "standalone"].includes(String(member.state)) ||
+        typeof member.state !== "string" ||
+        !["literal-associated", "standalone"].includes(member.state) ||
         !evidence(member.evidence)
       )
         fail("member_evidence");
@@ -339,7 +488,8 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
     if (!record(acceptance)) fail("acceptance");
     strictKeys(acceptance, ["status", "evidence", "unresolved"], "acceptance");
     if (
-      !["pending-review", "accepted", "rejected"].includes(String(acceptance.status)) ||
+      typeof acceptance.status !== "string" ||
+      !["pending-review", "accepted", "rejected"].includes(acceptance.status) ||
       !Array.isArray(acceptance.evidence) ||
       !acceptance.evidence.length ||
       !Array.isArray(acceptance.unresolved) ||
@@ -350,8 +500,9 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
       if (!record(entry)) fail("acceptance_evidence");
       strictKeys(entry, ["kind", "reference", "detail"], "acceptance_evidence");
       if (
+        typeof entry.kind !== "string" ||
         !["baseline-byte-match", "metadata-association", "independent-review"].includes(
-          String(entry.kind),
+          entry.kind,
         ) ||
         !nonempty(entry.reference) ||
         !nonempty(entry.detail)
@@ -381,10 +532,7 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
       fail("suite_source_identity");
     const aggregate = mergeMetadata(
       { file: anchor, value: undefined },
-      item.files.map((originPath) => ({
-        file: artifacts.get(String(originPath))!,
-        value: undefined,
-      })),
+      memberArtifacts.map((file) => ({ file, value: undefined })),
     );
     for (const name of Object.keys(aggregate) as (keyof FixtureMetadata)[]) {
       const expected = aggregate[name],
@@ -398,14 +546,59 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
         fail("suite_metadata_inconsistent:" + name);
     }
   }
-  const bytes = [...artifacts.values()].reduce((total, file) => total + file.bytes, 0);
+  const originalBytes = [...artifacts.values()].reduce((total, file) => total + file.bytes, 0);
+  const currentBytes = [...artifacts.values()].reduce(
+    (total, file) => total + file.currentBytes,
+    0,
+  );
+  const exactBytesFiles = [...artifacts.values()].filter(
+    (file) => file.sha256 === file.currentSha256 && file.bytes === file.currentBytes,
+  ).length;
+  const mechanicalSourceFiles = artifacts.size - exactBytesFiles;
   if (
     assigned.size !== artifacts.size ||
     value.coverage.expectedFiles !== artifacts.size ||
-    value.coverage.hashMatchedFiles !== artifacts.size ||
-    value.coverage.bytes !== bytes
+    value.coverage.exactBytesFiles !== exactBytesFiles ||
+    value.coverage.mechanicalSourceFiles !== mechanicalSourceFiles ||
+    value.coverage.originalBytes !== originalBytes ||
+    value.coverage.currentBytes !== currentBytes
   )
     fail("coverage_mismatch");
+  const derivedPaths = new Set<string>();
+  const validatedSuites = value.suites;
+  for (const entry of value.derivedManifests) {
+    if (!record(entry)) fail("derived_manifest");
+    strictKeys(entry, ["path", "suiteIds"], "derived_manifest");
+    if (
+      !publicFixturePath(entry.path) ||
+      !entry.path.endsWith("/manifest.json") ||
+      derivedPaths.has(entry.path) ||
+      currentPaths.has(entry.path) ||
+      !Array.isArray(entry.suiteIds) ||
+      !entry.suiteIds.length ||
+      new Set(entry.suiteIds).size !== entry.suiteIds.length ||
+      entry.suiteIds.some((id) => typeof id !== "string" || !suiteIds.has(id))
+    )
+      fail("derived_manifest_identity");
+    const parent = entry.path.slice(0, entry.path.lastIndexOf("/") + 1);
+    if (
+      entry.suiteIds.some((id) =>
+        validatedSuites.some(
+          (suite) =>
+            record(suite) &&
+            suite.suiteId === id &&
+            Array.isArray(suite.files) &&
+            suite.files.some(
+              (origin) =>
+                typeof origin !== "string" ||
+                !artifacts.get(origin)!.currentPath.startsWith(parent),
+            ),
+        ),
+      )
+    )
+      fail("derived_manifest_membership");
+    derivedPaths.add(entry.path);
+  }
   const freeze = (entry: unknown): void => {
     if (entry && typeof entry === "object") {
       Object.values(entry).forEach(freeze);
@@ -548,12 +741,13 @@ function literalMetadata(file: FixtureArtifact, value: unknown): FixtureMetadata
   const version = record(value) ? value.schemaVersion : undefined;
   return {
     board: scalar("board"),
-    policy: policies.length
-      ? observed(
-          policies.map((entry) => String(entry.value)).sort(),
-          policies.map((entry) => entry.evidence),
-        )
-      : unknown("No literal policy identity is serialized; a board name is not policy evidence."),
+    policy:
+      policies.length && policies.every((entry) => nonempty(entry.value))
+        ? observed(
+            policies.map((entry) => entry.value as string).sort(),
+            policies.map((entry) => entry.evidence),
+          )
+        : unknown("No literal policy identity is serialized; a board name is not policy evidence."),
     seed:
       seeds.length === 1
         ? observed(seeds[0]!.value, [seeds[0]!.evidence])
@@ -650,6 +844,8 @@ export function describeFixtureCohorts(
       currentPath: input.originPath,
       sha256: input.sha256,
       bytes: input.bytes,
+      currentSha256: input.sha256,
+      currentBytes: input.bytes,
       owner: ownerFor(input.originPath),
       kind: classify(input.value, input.script),
       suiteId: suiteIdFor(input.originPath),
@@ -844,6 +1040,141 @@ export function describeFixtureCohorts(
   };
 }
 
+/** Derives an exact registered subset; this does not read disk or assign acceptance. */
+export function deriveLocalFixtureManifest(
+  document: FixtureManifest,
+  manifestPath: string,
+): FixtureManifest {
+  const descriptor = document.derivedManifests.find((entry) => entry.path === manifestPath);
+  if (!descriptor) fail("derived_manifest_unregistered");
+  const suites = document.suites.filter((suite) => descriptor.suiteIds.includes(suite.suiteId));
+  const origins = new Set(suites.flatMap((suite) => suite.files));
+  const files = document.files.filter((file) => origins.has(file.originPath));
+  const exactBytesFiles = files.filter(
+    (file) => file.sha256 === file.currentSha256 && file.bytes === file.currentBytes,
+  ).length;
+  return parseFixtureManifest(
+    JSON.stringify({
+      ...document,
+      files,
+      suites,
+      derivedManifests: [],
+      sourceAssets: document.sourceAssets.filter(
+        (asset) => asset.kind === "test-support" || origins.has(asset.originPath),
+      ),
+      coverage: {
+        expectedFiles: files.length,
+        exactBytesFiles,
+        mechanicalSourceFiles: files.length - exactBytesFiles,
+        originalBytes: files.reduce((sum, file) => sum + file.bytes, 0),
+        currentBytes: files.reduce((sum, file) => sum + file.currentBytes, 0),
+      },
+    }),
+  );
+}
+
+/** Compares detached source programs, including RPC/action literals and imported bindings. Only approved source path rebasing and leading trivia are normalized; input scripts are never executed. */
+export function sourceProgramContract(
+  ts: typeof import("typescript"),
+  text: string,
+  filename: string,
+  current: boolean,
+  mappings: readonly { originPath: string; currentPath: string }[],
+): { statements: string[]; moduleBindings: string[] } {
+  const inverse = new Map(mappings.map((asset) => [asset.currentPath, asset.originPath]));
+  const ast = ts.createSourceFile(filename, text, ts.ScriptTarget.Latest, true);
+  const changes: { start: number; end: number; replacement: string }[] = [];
+  const imports: string[] = [];
+  const visit = (node: import("typescript").Node) => {
+    let literal: import("typescript").StringLiteralLike | undefined;
+    if (
+      (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) &&
+      node.moduleSpecifier &&
+      ts.isStringLiteralLike(node.moduleSpecifier)
+    )
+      literal = node.moduleSpecifier;
+    else if (
+      ts.isImportTypeNode(node) &&
+      ts.isLiteralTypeNode(node.argument) &&
+      ts.isStringLiteralLike(node.argument.literal)
+    )
+      literal = node.argument.literal;
+    else if (
+      ts.isCallExpression(node) &&
+      node.expression.kind === ts.SyntaxKind.ImportKeyword &&
+      node.arguments[0] &&
+      ts.isStringLiteralLike(node.arguments[0])
+    )
+      literal = node.arguments[0];
+    if (literal) {
+      let identity = literal.text;
+      if (identity.startsWith(".")) {
+        identity = normalizeSourceModule(filename, identity);
+        if (!identity.endsWith(".ts")) identity += ".ts";
+        if (current) identity = inverse.get(identity) ?? identity;
+      }
+      changes.push({
+        start: literal.getStart(ast),
+        end: literal.getEnd(),
+        replacement: JSON.stringify(identity),
+      });
+      imports.push(node.getText(ast).replace(literal.getText(ast), JSON.stringify(identity)));
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(ast);
+  let normalized = text;
+  for (const change of changes.sort((a, b) => b.start - a.start))
+    normalized =
+      normalized.slice(0, change.start) + change.replacement + normalized.slice(change.end);
+  const normalizedAst = ts.createSourceFile(filename, normalized, ts.ScriptTarget.Latest, true);
+  return {
+    statements: normalizedAst.statements.map((node) => node.getText(normalizedAst)),
+    moduleBindings: imports,
+  };
+}
+
+function normalizeSourceModule(filename: string, specifier: string): string {
+  const parts = (filename.slice(0, filename.lastIndexOf("/") + 1) + specifier).split("/");
+  const normalized: string[] = [];
+  for (const part of parts) {
+    if (part === "." || !part) continue;
+    if (part === "..") normalized.pop();
+    else normalized.push(part);
+  }
+  return normalized.join("/");
+}
+
+/** Checks recorded metadata against detached archive inputs; neither side computes game-rule expectations. */
+export function assertLiteralFixtureMetadata(
+  layout: FixtureManifest,
+  actualInputs: Parameters<typeof describeFixtureCohorts>[0],
+): void {
+  const described = describeFixtureCohorts(actualInputs);
+  const fileMetadata = (files: FixtureArtifact[]) =>
+    files.map(({ originPath, kind, suiteId, metadata }) => ({
+      originPath,
+      kind,
+      suiteId,
+      metadata,
+    }));
+  const suiteMetadata = (suites: FixtureSuite[]) =>
+    suites.map(({ suiteId, anchorOriginPath, owner, kind, files, metadata, membership }) => ({
+      suiteId,
+      anchorOriginPath,
+      owner,
+      kind,
+      files,
+      metadata,
+      membership,
+    }));
+  if (
+    canonical(fileMetadata(described.files)) !== canonical(fileMetadata(layout.files)) ||
+    canonical(suiteMetadata(described.suites)) !== canonical(suiteMetadata(layout.suites))
+  )
+    fail("literal_archive_metadata_or_association_drift");
+}
+
 /** Reads only allowlisted public fixture roots and verifies immutable Git bytes before describing them. */
 export async function generateFixtureManifest(repository: string): Promise<FixtureManifest> {
   const fs = await import("node:fs/promises"),
@@ -868,7 +1199,13 @@ export async function generateFixtureManifest(repository: string): Promise<Fixtu
   const digest = (bytes: Uint8Array | string) =>
     crypto.createHash("sha256").update(bytes).digest("hex");
   async function safeFile(relative: string) {
-    if (relative !== inventoryPath && !publicFixturePath(relative)) fail("private_path_rejected");
+    if (
+      relative !== inventoryPath &&
+      relative !== fixtureManifestPath &&
+      !publicFixturePath(relative) &&
+      !publicSupportSourcePath(relative)
+    )
+      fail("private_path_rejected");
     const parts = relative.split("/");
     for (let index = 1; index <= parts.length; index++) {
       const candidate = path.join(root, ...parts.slice(0, index)),
@@ -922,6 +1259,7 @@ export async function generateFixtureManifest(repository: string): Promise<Fixtu
     input: origin.map((entry) => entry.blob).join("\n") + "\n",
     maxBuffer: 128 * 1024 * 1024,
   });
+  const originalContents = new Map<string, Uint8Array>();
   let offset = 0;
   for (const entry of origin) {
     const end = blobs.indexOf(10, offset),
@@ -938,7 +1276,56 @@ export async function generateFixtureManifest(repository: string): Promise<Fixtu
       digest(content) !== row.sha256
     )
       fail("frozen_inventory_blob_mismatch");
+    originalContents.set(entry.path, content);
     offset = end + size + 2;
+  }
+  const layout = parseFixtureManifest((await safeFile(fixtureManifestPath)).toString("utf8"));
+  if (
+    layout.files.length !== rows.length ||
+    rows.some(
+      (row) =>
+        !layout.files.some(
+          (file) =>
+            file.originPath === row.originPath &&
+            file.sha256 === row.sha256 &&
+            file.bytes === row.bytes,
+        ),
+    )
+  )
+    fail("layout_original_coverage");
+  const { compiler } = await import("./architecture/contracts");
+  const ts = compiler(root);
+  function program(text: string, filename: string, current: boolean) {
+    const contract = sourceProgramContract(ts, text, filename, current, layout.sourceAssets);
+    return {
+      programSha256: digest(JSON.stringify(contract.statements)),
+      moduleBindingsSha256: digest(JSON.stringify(contract.moduleBindings)),
+    };
+  }
+  for (const asset of layout.sourceAssets) {
+    const original =
+      originalContents.get(asset.originPath) ??
+      childProcess.execFileSync("git", ["show", `${asset.originCommit}:${asset.originPath}`], {
+        cwd: root,
+        maxBuffer: 4 * 1024 * 1024,
+      });
+    const current = await safeFile(asset.currentPath);
+    if (
+      digest(original) !== asset.originalSha256 ||
+      original.length !== asset.originalBytes ||
+      digest(current) !== asset.currentSha256 ||
+      current.length !== asset.currentBytes
+    )
+      fail("source_asset_byte_identity");
+    const before = program(Buffer.from(original).toString("utf8"), asset.originPath, false),
+      after = program(current.toString("utf8"), asset.currentPath, true);
+    if (
+      before.programSha256 !== after.programSha256 ||
+      before.moduleBindingsSha256 !== after.moduleBindingsSha256 ||
+      before.programSha256 !== asset.programSha256 ||
+      before.moduleBindingsSha256 !== asset.moduleBindingsSha256
+    )
+      fail("source_asset_program_or_import_drift");
   }
   const currentPaths: string[] = [];
   async function scan(relative: string) {
@@ -951,51 +1338,68 @@ export async function generateFixtureManifest(repository: string): Promise<Fixtu
     else fail("unexpected_fixture_kind");
   }
   for (const directory of fixtureRoots) await scan(directory);
+  const expectedPaths = new Set([
+    ...layout.files.map((file) => file.currentPath),
+    ...layout.derivedManifests.map((entry) => entry.path),
+  ]);
   if (
-    currentPaths.length !== rows.length ||
-    currentPaths.some((file) => !rows.some((row) => row.originPath === file))
+    currentPaths.length !== expectedPaths.size ||
+    currentPaths.some((file) => !expectedPaths.has(file))
   )
     fail("current_fixture_coverage");
-  const inputs = [];
-  for (const row of rows) {
-    const bytes = await safeFile(row.originPath);
-    if (bytes.length !== row.bytes || digest(bytes) !== row.sha256)
+  const actualInputs = [];
+  for (const file of layout.files) {
+    const bytes = await safeFile(file.currentPath);
+    if (digest(bytes) !== file.currentSha256 || bytes.length !== file.currentBytes)
       fail("current_fixture_byte_drift");
-    const script = /\.[cm]?[jt]sx?$/.test(row.originPath);
-    inputs.push({
-      ...row,
-      value: script ? undefined : (JSON.parse(bytes.toString("utf8")) as unknown),
-      script,
+    if (
+      file.kind !== "adapter-script" &&
+      (digest(bytes) !== file.sha256 || bytes.length !== file.bytes)
+    )
+      fail("json_archive_byte_drift");
+    actualInputs.push({
+      originPath: file.originPath,
+      sha256: file.sha256,
+      bytes: file.bytes,
+      script: file.kind === "adapter-script",
+      value:
+        file.kind === "adapter-script"
+          ? undefined
+          : (JSON.parse(bytes.toString("utf8")) as unknown),
     });
   }
-  const grouped = describeFixtureCohorts(inputs);
-  for (const suite of grouped.suites)
-    suite.acceptance.evidence.unshift({
-      kind: "baseline-byte-match",
-      reference: inventoryPath,
-      detail:
-        "Every member matched both the immutable Git blob and current public file byte digest/size; no golden was regenerated.",
-    });
-  const manifest: FixtureManifest = {
-    schema: "awa-fixture-manifests-v1",
-    generatedBy: "tooling/refactor/fixture-manifest.ts",
-    baseline: { commit: baselineCommit, inventoryPath, inventorySha256: digest(inventoryBytes) },
-    coverage: {
-      expectedFiles: rows.length,
-      hashMatchedFiles: rows.length,
-      bytes: rows.reduce((sum, row) => sum + row.bytes, 0),
-    },
-    policy:
-      "Only public fixtures are read; original/current paths remain one-to-one. Suites describe literal archive associations, not inferred rules. Unknown seed/build/producer invocation stays explicit. Adapter scripts remain executable helpers, not data archives. Generation never executes models, adapters, game rules or tests, and every acceptance status starts pending-review.",
-    ...grouped,
-  };
-  return parseFixtureManifest(JSON.stringify(manifest));
+  assertLiteralFixtureMetadata(layout, actualInputs);
+  for (const derived of layout.derivedManifests) {
+    const subset = deriveLocalFixtureManifest(layout, derived.path);
+    const actual = parseFixtureManifest((await safeFile(derived.path)).toString("utf8"));
+    if (canonical(subset) !== canonical(actual)) fail("derived_manifest_content_drift");
+  }
+  return layout;
 }
 
 if (import.meta.main) {
   const args = process.argv.slice(2);
-  if (args.length > 1)
-    throw new Error("usage: bun tooling/refactor/fixture-manifest.ts [repository]");
-  const document = await generateFixtureManifest(args[0] ?? process.cwd());
-  process.stdout.write(JSON.stringify(document, null, 2) + "\n");
+  const check = args[0] === "--check";
+  if (args.length > (check ? 2 : 1) || (!check && args[0]?.startsWith("--")))
+    throw new Error("usage: bun tooling/refactor/fixture-manifest.ts [--check] [repository]");
+  const document = await generateFixtureManifest(args[check ? 1 : 0] ?? process.cwd());
+  process.stdout.write(
+    JSON.stringify(
+      check
+        ? {
+            schema: "awa-fixture-check-v1",
+            success: true,
+            artifacts: document.files.length,
+            exactJsonArchives: document.files.filter((file) => file.kind !== "adapter-script")
+              .length,
+            mechanicalSourceFixtures: document.coverage.mechanicalSourceFiles,
+            sourceProgramProofs: document.sourceAssets.length,
+            suites: document.suites.length,
+            derivedManifests: document.derivedManifests.length,
+          }
+        : document,
+      null,
+      check ? undefined : 2,
+    ) + "\n",
+  );
 }

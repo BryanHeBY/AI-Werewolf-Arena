@@ -4,6 +4,7 @@
  * Output and independent oracle: Native PID liveness, unreachable former endpoints and empty pool/registry state after owned cleanup.
  * The test never calls a billed model or rewrites expected fixture/Tape bytes.
  */
+import { acpAdapterEntry } from "../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile } from "node:fs/promises";
@@ -20,7 +21,7 @@ import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_regis
 import { Phase, type ActionRequest } from "../../../src/core";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
-const fixture = path.resolve(import.meta.dir, "../../fixtures/acp_ownership_agent.ts");
+const fixture = acpAdapterEntry("ownership");
 function request(actorId: number): ActionRequest {
   return {
     actorId,

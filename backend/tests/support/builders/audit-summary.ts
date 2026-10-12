@@ -1,3 +1,6 @@
+/**
+ * Provides the builder test boundary: Handwritten bilingual audit-summary protocol input, independently specified headings and optional fixture content. Inputs and literal expectations remain owned by the original tests; output preserves their original DTO/assertion contract. No production settlement supplies a new expected result.
+ */
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
 
 /** Handwritten expected protocol headings; never derive an oracle from production formatting. */

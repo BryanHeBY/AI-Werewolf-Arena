@@ -16,9 +16,13 @@ import {
   fixtureSuiteById,
   fixtureSuitesForOwner,
   generateFixtureManifest,
+  sourceProgramContract,
+  assertLiteralFixtureMetadata,
   fixtureManifestPath,
   type FixtureManifest,
 } from "./fixture-manifest";
+import { compiler } from "./architecture/contracts";
+import publicSourceManifest from "./fixtures/manifest.json";
 import {
   acpAdapterFixture,
   backendAdapterFixture,
@@ -67,6 +71,120 @@ const checkpoint = {
     { id: 1, role: "witch", camp: "good", privateState: { witch: { policy: "literal_policy" } } },
   ],
 };
+
+test("source relocation normalizes paths and heads while preserving literal roles, ports, RPC actions and bindings", () => {
+  const ts = compiler(path.resolve(import.meta.dir, "../.."));
+  const body =
+    'const role = "wolf", endpoint = "http://127.0.0.1:4000";\nsubmit({ method: "submit_action", arguments: { action: "vote", target_id: 2 } });';
+  const before = 'import { submit } from "../support/fixture";\n' + body;
+  const after =
+    '/** Isolated protocol source; no execution in this contract test. */\nimport { submit } from "../../support/fixture";\n' +
+    body;
+  const original = sourceProgramContract(ts, before, "backend/tests/fixtures/agent.ts", false, []);
+  const current = sourceProgramContract(ts, after, "backend/tests/fixtures/acp/agent.ts", true, []);
+  expect(current).toEqual(original);
+  for (const [from, to] of [
+    ["wolf", "seer"],
+    ["4000", "4001"],
+    ["submit_action", "other_method"],
+    ["vote", "kill"],
+    ["target_id: 2", "target_id: 3"],
+  ] as const)
+    expect(
+      sourceProgramContract(
+        ts,
+        after.replace(from, to),
+        "backend/tests/fixtures/acp/agent.ts",
+        true,
+        [],
+      ).statements,
+    ).not.toEqual(original.statements);
+  expect(
+    sourceProgramContract(
+      ts,
+      after.replace("{ submit }", "{ submit, hidden }"),
+      "backend/tests/fixtures/acp/agent.ts",
+      true,
+      [],
+    ).moduleBindings,
+  ).not.toEqual(original.moduleBindings);
+  expect(
+    sourceProgramContract(
+      ts,
+      after.replace("import { submit }", "import type { submit }"),
+      "backend/tests/fixtures/acp/agent.ts",
+      true,
+      [],
+    ).moduleBindings,
+  ).not.toEqual(original.moduleBindings);
+});
+
+test("source manifest rejects non-string commits and support sources relabeled as executable fixtures", () => {
+  const nonStringCommit = structuredClone(publicSourceManifest);
+  Object.assign(nonStringCommit.sourceAssets[0]!, { originCommit: { toString: null } });
+  expect(() => parseFixtureManifest(JSON.stringify(nonStringCommit))).toThrow(
+    "fixture_manifest_invalid: source_asset_identity",
+  );
+  const wrongSupportRealm = structuredClone(publicSourceManifest);
+  const support = wrongSupportRealm.sourceAssets.find((asset) => asset.kind === "test-support")!;
+  support.currentPath = "backend/tests/fixtures/other-executable.ts";
+  expect(() => parseFixtureManifest(JSON.stringify(wrongSupportRealm))).toThrow(
+    "fixture_manifest_invalid: source_asset_support_identity",
+  );
+});
+
+test("manifest enum fields reject JSON arrays rather than coercing them into valid scalar identities", () => {
+  const mutations: ((value: typeof publicSourceManifest) => void)[] = [
+    (value) => {
+      const source = value.sourceAssets.find((asset) => asset.kind === "test-support")!;
+      Object.assign(source, {
+        kind: ["test-support"],
+        currentPath: "backend/tests/fixtures/acp/unregistered-support.ts",
+      });
+    },
+    (value) => {
+      Object.assign(
+        value.files.find((file) => file.kind === "god-replay")!,
+        { kind: ["god-replay"] },
+      );
+    },
+    (value) => {
+      Object.assign(
+        value.suites.find((suite) => suite.kind === "recorded-archive")!,
+        { kind: ["recorded-archive"] },
+      );
+    },
+    (value) => {
+      Object.assign(value.suites[0]!.membership[0]!, { state: ["standalone"] });
+    },
+    (value) => {
+      Object.assign(value.suites[0]!.acceptance, { status: ["pending-review"] });
+    },
+    (value) => {
+      Object.assign(value.suites[0]!.acceptance.evidence[0]!, { kind: ["baseline-byte-match"] });
+    },
+  ];
+  for (const mutate of mutations) {
+    const value = structuredClone(publicSourceManifest);
+    mutate(value);
+    expect(() => parseFixtureManifest(JSON.stringify(value))).toThrow("fixture_manifest_invalid");
+  }
+});
+
+test("file and suite metadata cannot jointly invent a board absent from their actual archive inputs", () => {
+  const inputs = [input(godPath, god), input(playerPath, player)];
+  const manifest = document(describeFixtureCohorts(inputs));
+  const altered = structuredClone(manifest);
+  const evidence = [
+    { path: godPath, pointer: "/meta/board", detail: "Altered metadata counterexample." },
+  ];
+  altered.files[0]!.metadata.board = { state: "observed", value: "different_board", evidence };
+  altered.suites[0]!.metadata.board = { state: "observed", value: "different_board", evidence };
+  expect(() => parseFixtureManifest(JSON.stringify(altered))).not.toThrow();
+  expect(() => assertLiteralFixtureMetadata(altered, inputs)).toThrow(
+    "literal_archive_metadata_or_association_drift",
+  );
+});
 const input = (originPath: string, value: unknown, script = false) => ({
   originPath,
   value,
@@ -76,7 +194,7 @@ const input = (originPath: string, value: unknown, script = false) => ({
 });
 function document(grouped: ReturnType<typeof describeFixtureCohorts>): FixtureManifest {
   return {
-    schema: "awa-fixture-manifests-v1",
+    schema: "awa-fixture-manifests-v2",
     generatedBy: "tooling/refactor/fixture-manifest.ts",
     baseline: {
       commit: originCommit,
@@ -85,9 +203,13 @@ function document(grouped: ReturnType<typeof describeFixtureCohorts>): FixtureMa
     },
     coverage: {
       expectedFiles: grouped.files.length,
-      hashMatchedFiles: grouped.files.length,
-      bytes: grouped.files.length * 7,
+      exactBytesFiles: grouped.files.length,
+      mechanicalSourceFiles: 0,
+      originalBytes: grouped.files.length * 7,
+      currentBytes: grouped.files.length * 7,
     },
+    sourceAssets: [],
+    derivedManifests: [],
     policy: "Literal test input; no real-file byte proof is claimed by this unit helper.",
     ...grouped,
   };
@@ -318,19 +440,25 @@ test("application selectors own adapter and actor selection and reject foreign a
   );
 });
 
-test("generator preserves all 907 public frozen Git bytes and leaves all 258 suite acceptances pending", async () => {
+test("generator verifies 904 exact JSON archives and 3 equivalent source fixtures with 258 pending suites", async () => {
   const repository = path.resolve(import.meta.dir, "../..");
   const manifest = await generateFixtureManifest(repository);
   expect(manifest.coverage).toEqual({
     expectedFiles: 907,
-    hashMatchedFiles: 907,
-    bytes: 48_294_509,
+    exactBytesFiles: 904,
+    mechanicalSourceFiles: 3,
+    originalBytes: 48_294_509,
+    currentBytes: manifest.files.reduce((sum, file) => sum + file.currentBytes, 0),
   });
   expect(fixtureSuitesForOwner(manifest, "frontend")).toHaveLength(253);
   expect(fixtureSuitesForOwner(manifest, "backend")).toHaveLength(3);
   expect(fixtureSuitesForOwner(manifest, "replay-contract")).toHaveLength(2);
   expect(manifest.suites.every((suite) => suite.acceptance.status === "pending-review")).toBe(true);
-  expect(manifest.files.every((file) => file.originPath === file.currentPath)).toBe(true);
+  expect(
+    manifest.files
+      .filter((file) => file.kind !== "adapter-script")
+      .every((file) => file.sha256 === file.currentSha256 && file.bytes === file.currentBytes),
+  ).toBe(true);
   expect(
     manifest.suites.every(
       (suite) =>

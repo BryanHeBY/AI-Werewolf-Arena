@@ -4,6 +4,7 @@
  * Output and independent oracle: Literal per-source inventory, prompt boundaries, accepted action records and native child/MCP cleanup evidence.
  * The test never calls a billed model or rewrites expected fixture/Tape bytes.
  */
+import { acpAdapterEntry } from "../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
@@ -178,7 +179,7 @@ for (const locale of ["zh-CN", "en"] as const)
                       type: "acp",
                       transport: "stdio",
                       command: process.execPath,
-                      args: [path.resolve(process.cwd(), "tests/fixtures/acp_game_agent.ts")],
+                      args: [acpAdapterEntry("game")],
                     },
             },
           },

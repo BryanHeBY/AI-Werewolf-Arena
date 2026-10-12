@@ -1,3 +1,10 @@
+/**
+ * Test scenario builder for Mist/Raven transport variants. Inputs are the loaded
+ * board, fixed seed and linked/saved/protected/draw variant; outputs are mapped
+ * actor identities, planned turns and supplied wire expectations. Seeded dealing
+ * establishes identities; literal action choices and the handwritten draw-index
+ * anchor provide the oracle. This builder runs no game or model transport.
+ */
 import {
   ActionWindow,
   Camp,
@@ -9,7 +16,7 @@ import {
 } from "../../src/core";
 import type { PlannedTurn } from "./foundation_transport_plan";
 import type { TransportGameScenario } from "./run_transport_game";
-import type { MistExpectedWireChoice } from "./mist_raven_transport_oracle";
+import type { MistExpectedWireChoice } from "./features/mist-raven/oracles/transport";
 import { mistBoard } from "./mist_raven_recording";
 export async function mistTransportScenario(
   variant: "linked" | "saved-dreamer" | "protected-heal" | "draw" = "linked",

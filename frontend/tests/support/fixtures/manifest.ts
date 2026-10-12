@@ -76,3 +76,16 @@ export function playerFixtureFiles(
   if (!files.length) throw new Error("frontend_fixture_actor_missing");
   return files;
 }
+
+/** Resolves only a registered frontend archive identity; callers keep real reads and errors. */
+export function frontendFixtureURL(originPath: string): URL {
+  const file = artifacts.get(originPath);
+  if (!file || file.owner !== "frontend" || file.kind === "adapter-script")
+    throw new Error("frontend_fixture_origin_missing");
+  return new URL("../../../../" + file.currentPath, import.meta.url);
+}
+export function frontendFixtureArtifacts(
+  kind: "god-replay" | "player-view" | "player-view-bundle" | "checkpoint",
+): readonly FixtureArtifact[] {
+  return manifest.files.filter((file) => file.owner === "frontend" && file.kind === kind);
+}

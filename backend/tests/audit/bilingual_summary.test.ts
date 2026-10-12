@@ -1,3 +1,10 @@
+/**
+ * Unit audit-summary tests for bilingual rendering, evidence filtering and
+ * deterministic fallback. Inputs are literal manifest/event/report DTOs and
+ * injected summary callbacks; output is original Markdown and rejection
+ * assertions. Handwritten headings, evidence sets and injection strings are
+ * the oracle; no real audit agent or model transport executes here.
+ */
 import { expect, test } from "bun:test";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
 import { buildDebugSummaryMarkdown } from "../../src/audit/debug_summary_generator";
@@ -16,7 +23,7 @@ import type {
   ReplayPlayerView,
   ReplayPublicEvent,
 } from "../../src/recording/contracts";
-import { auditSummaryFixture } from "../support/audit_summary_fixture";
+import { auditSummaryFixture } from "../support/builders/audit-summary";
 
 const han = /[\u4e00-\u9fff]/;
 const manifest: ReplayManifest = {

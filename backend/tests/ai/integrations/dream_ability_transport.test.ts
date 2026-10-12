@@ -4,6 +4,7 @@
  * Output and independent oracle: Literal prompt rule markers, read-only tool receipts, original identity and stopped child/server resources.
  * The test never calls a billed model or rewrites expected fixture/Tape bytes.
  */
+import { acpAdapterEntry } from "../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile, writeFile } from "node:fs/promises";
@@ -126,7 +127,7 @@ for (const locale of ["zh-CN", "en"] as const)
                 transport: "stdio",
                 command: process.execPath,
                 env: {},
-                args: [path.resolve(process.cwd(), "tests/fixtures/acp_game_agent.ts"), script],
+                args: [acpAdapterEntry("game"), script],
                 sessionConfigOptions: {},
               },
             };

@@ -1,3 +1,12 @@
+/**
+ * Test contract checks for actual transport identity, prompts and event prefixes.
+ * Inputs are per-actor plans, current turns and received strings/event tuples;
+ * outputs are marker, authorization and visibility rejection assertions. Literal
+ * bilingual marker tables and supplied wire expectations provide the oracle;
+ * public fact/audience readers also validate their declared DTO constraints.
+ * This support owns assertions and local wire state, without advancing gameplay
+ * or controlling an SDK/ACP session.
+ */
 import { ANIMAL_DREAM_EVENT_TYPES, readAnimalDreamFact } from "@ai-werewolf-arena/game-text";
 import { FRAGRANT_PAIR_EVENT_TYPES, readFragrantPairFact } from "@ai-werewolf-arena/game-text";
 import { isDeepStrictEqual } from "node:util";
@@ -26,7 +35,7 @@ import {
   assertMistTransportEvents,
   type MistWireExpectations,
   type MistWireState,
-} from "./mist_raven_transport_oracle";
+} from "./features/mist-raven/oracles/transport";
 
 export function assertTransportIdentity(plan: ActorTransportPlan, content: string): void {
   for (const marker of plan.requiredSystemMarkers ?? []) {

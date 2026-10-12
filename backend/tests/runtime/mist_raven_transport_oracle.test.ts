@@ -1,8 +1,15 @@
+/**
+ * Unit tests for Mist/Raven transport message-contract assertions. Inputs are
+ * literal event tuples, bilingual stage prompts and per-actor wire state; output
+ * is the original acceptance/rejection and stock/sequence assertions. Handwritten
+ * unseal, target and ordinal anchors are the oracle, with one seeded scenario
+ * builder supplying plan identities. No SDK/ACP process or game is executed.
+ */
 import { mistTransportScenario } from "../support/mist_raven_transport_scenarios";
 import { expect, test } from "bun:test";
 import { Role } from "../../src/core";
 import { assertTransportEvents, assertTransportPrompt } from "../support/transport_prompt_oracle";
-import type { MistWireState } from "../support/mist_raven_transport_oracle";
+import type { MistWireState } from "../support/features/mist-raven/oracles/transport";
 const unseal = { actorId: 9, day: 2, awakened: true, knownTeammateIds: [10] },
   expected = { unseal: { day: 2, knownTeammateIds: [10] } };
 for (const [type, payload] of [

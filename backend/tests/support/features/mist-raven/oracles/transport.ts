@@ -1,3 +1,6 @@
+/**
+ * Provides the oracle test boundary: Mist/Raven actual wire visibility, sequence and authorization assertions with supplied literal expectations and independent state. Inputs and literal expectations remain owned by the original tests; output preserves their original DTO/assertion contract. No production settlement supplies a new expected result.
+ */
 import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
 export interface MistExpectedWireChoice {
   type: string;

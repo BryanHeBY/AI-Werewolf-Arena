@@ -1,11 +1,14 @@
-import { fixtureObject } from "../support/fixture_values";
-import { auditSummaryFixture } from "../support/audit_summary_fixture";
+/**
+ * Runs the isolated synthetic ACP audit protocol fixture. Inputs are stdio RPC and injected local test controls; outputs are original protocol replies and private-workspace diagnostic files. It owns its test client/transport and existing terminal cleanup; it does not call a billed model or calculate an archive golden.
+ */
+import { fixtureObject } from "../../support/fixture_values";
+import { auditSummaryFixture } from "../../support/builders/audit-summary";
 /** Synthetic ACP agent: reads only the injected audit MCP and records test prompts. */
 import { createInterface } from "node:readline";
 import { writeFile } from "node:fs/promises";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
-import type { AcpMcpServerConfig } from "../../src/ai/integrations/acp/acp_mcp_bridge";
+import type { AcpMcpServerConfig } from "../../../src/ai/integrations/acp/acp_mcp_bridge";
 
 const trace: Record<string, unknown> = { agentPid: process.pid, prompts: [] };
 let client: Client | undefined;

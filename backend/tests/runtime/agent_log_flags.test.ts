@@ -4,6 +4,7 @@
  * Output and independent oracle: Literal output prefixes, identical accepted records and no late actions/private round writes after close.
  * The test never calls a billed model or rewrites expected fixture/Tape bytes.
  */
+import { acpAdapterEntry } from "../support/fixtures/manifest";
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
 import { readFile } from "node:fs/promises";
@@ -102,7 +103,7 @@ for (const locale of ["zh-CN", "en"] as const)
                       type: "acp",
                       transport: "stdio",
                       command: process.execPath,
-                      args: [path.resolve(process.cwd(), "tests/fixtures/acp_ownership_agent.ts")],
+                      args: [acpAdapterEntry("ownership")],
                       env: {
                         AWA_TEST_ACTOR: "1",
                         AWA_TEST_LOGGING: "1",

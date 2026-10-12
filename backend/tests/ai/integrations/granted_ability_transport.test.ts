@@ -4,6 +4,7 @@
  * Output and independent oracle: Literal source-bound actions, unknown exhausted-antidote knife prompt and unchanged identity; test-owned transports are closed.
  * The test never calls a billed model or rewrites expected fixture/Tape bytes.
  */
+import { acpAdapterEntry } from "../../support/fixtures/manifest";
 import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import path from "node:path";
@@ -125,7 +126,7 @@ for (const locale of ["zh-CN", "en"] as const)
                 transport: "stdio",
                 command: process.execPath,
                 env: {},
-                args: [path.resolve(process.cwd(), "tests/fixtures/acp_game_agent.ts"), planFile],
+                args: [acpAdapterEntry("game"), planFile],
               },
             };
       const workspace = path.join(root, "workspace");
@@ -326,7 +327,7 @@ for (const locale of ["zh-CN", "en"] as const)
                 transport: "stdio",
                 command: process.execPath,
                 env: {},
-                args: [path.resolve(process.cwd(), "tests/fixtures/acp_game_agent.ts"), planFile],
+                args: [acpAdapterEntry("game"), planFile],
               },
             };
       const workspace = path.join(root, "workspace"),

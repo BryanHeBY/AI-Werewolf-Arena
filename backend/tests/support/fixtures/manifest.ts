@@ -6,6 +6,7 @@
  * mixed suites and foreign owners. It never launches a process, changes a golden
  * or grants acceptance; callers retain real filesystem and transport boundaries.
  */
+import { fileURLToPath } from "node:url";
 import snapshot from "../../../../tooling/refactor/fixtures/manifest.json";
 import {
   fixtureSuiteById,
@@ -36,4 +37,11 @@ export function acpAdapterFixture(purpose: AcpFixturePurpose): FixtureArtifact {
   const origin = adapterOrigins[purpose];
   if (!origin) throw new Error("backend_fixture_adapter_purpose_invalid");
   return backendAdapterFixture("fixture:" + origin);
+}
+
+/** Owns purpose-to-physical-entry resolution; actual spawn/stdio remains with callers. */
+export function acpAdapterEntry(purpose: AcpFixturePurpose): string {
+  return fileURLToPath(
+    new URL("../../../../" + acpAdapterFixture(purpose).currentPath, import.meta.url),
+  );
 }

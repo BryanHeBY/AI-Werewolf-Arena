@@ -75,3 +75,5 @@
 - C18a条件修正：P0已证Noble七种恢复反例，单独改current失败闭原shared turn；七旧mutation保留输入而新终态expect单列，另2真实最早过期/3非法提案隔离。21局部/0/166、840文件focused类型0；未改stock/settlement/archives，未重新生成golden。旧预期固定e8de6dc可追溯，其他角色政策不合并。
 
 - C19行动窗口/完成端口：ActionTurn与receipt迁唯一owner、SDK/ACP真实直连；Reproduction原唯一assert/defer改具名入口，原provider返回与domaincommit分离。15原class/program/identity/typeerase证据及Root两原class全文核对，9selected/0/60、source类型0；无第二订阅/等待/round时间戳修改。
+
+- C14 source assets：3 executable ACP+2待迁helper、16actual consumers闭合；904 JSON原path/byte保持，Root固定Gitblob907摘要独立复核。v2原/现摘要与5源码/进口身份、actual JSON metadata/cohort验证接根check:fixtures；严格finite字段与support realm的原攻击输入修复，25heads/0、必要types/0、原4+新3focused/0，3真实initialize/EOF进程0模型。904 archives实体迁移另笔继续。

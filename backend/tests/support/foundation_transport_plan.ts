@@ -1,6 +1,13 @@
+/**
+ * Test builder contracts and literal turn plans for six/twelve-player transport
+ * scenarios. Inputs are board size, alternate scenario choice and explicit
+ * actor expectations; outputs are the original per-actor stages and actions.
+ * Handwritten S01/S04/S02/S03 action tuples are the oracle. This support owns
+ * planned input construction, without querying engine truth or running agents.
+ */
 import { ActionWindow, PotionType } from "../../src/core";
 import type { ActionStage, Role, ToolCall } from "../../src/core";
-import type { MistWireExpectations } from "./mist_raven_transport_oracle";
+import type { MistWireExpectations } from "./features/mist-raven/oracles/transport";
 export interface PlannedTurn {
   radiantBorrow?: { id: string; state: Record<string, unknown> };
   responseDelayMs?: number;

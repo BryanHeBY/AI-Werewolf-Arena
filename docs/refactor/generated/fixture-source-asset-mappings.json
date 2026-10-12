@@ -1,0 +1,557 @@
+{
+  "schema": "awa-c14-source-stage-final-proof-v1",
+  "sourceInputCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+  "coverage": {
+    "expectedFiles": 907,
+    "exactBytesFiles": 904,
+    "mechanicalSourceFiles": 3,
+    "originalBytes": 48294509,
+    "currentBytes": 48295534
+  },
+  "archivePathsAndBytesUnchanged": 904,
+  "sourceAssets": [
+    {
+      "originPath": "backend/tests/fixtures/acp_audit_agent.ts",
+      "currentPath": "backend/tests/fixtures/acp/audit-agent.ts",
+      "originCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+      "originalSha256": "44892c9e47855499c1fb0079de9262e2a13c13e3ca0defcf400bba099e6f5066",
+      "originalBytes": 3649,
+      "currentSha256": "f9ffe60a851950dcb2815885fd4cdb594301f056e8b82f7d36a8eb0ed62ec317",
+      "currentBytes": 3988,
+      "programSha256": "ef7e3837948bf180ceeb1269b03b635e08c2c523ce11be085bd03e4b85a565b0",
+      "moduleBindingsSha256": "5d7a02f2c3bfbf27cc3c4b4897f1ac914bd0522662e7c1658933efd47408a0f1",
+      "kind": "adapter-script",
+      "fullStatementAndImportedBindingIdentity": true,
+      "rpcRolePortActionLiteralsPreserved": true
+    },
+    {
+      "originPath": "backend/tests/fixtures/acp_game_agent.ts",
+      "currentPath": "backend/tests/fixtures/acp/game-agent.ts",
+      "originCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+      "originalSha256": "5aa52aedeb66c67e4222a9fc2b36c572a837b067caacde4fa0fb2e90011be250",
+      "originalBytes": 8705,
+      "currentSha256": "fb2c37b0478c90aab0424ca0b8e750280aab9afb24e3b514d474331085179419",
+      "currentBytes": 9058,
+      "programSha256": "1bdee4de853e33700098b5a2740968c1419ac060e23bca1bd44496dc2480cc6e",
+      "moduleBindingsSha256": "a2d4fa1bb4643055dd799772193df22ac386237b59dd3cb777fda85c9901eb10",
+      "kind": "adapter-script",
+      "fullStatementAndImportedBindingIdentity": true,
+      "rpcRolePortActionLiteralsPreserved": true
+    },
+    {
+      "originPath": "backend/tests/fixtures/acp_ownership_agent.ts",
+      "currentPath": "backend/tests/fixtures/acp/ownership-agent.ts",
+      "originCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+      "originalSha256": "95ffe47078921197e108e1e35059bc7acd0a2fb9baf3fd205dee028e2590491b",
+      "originalBytes": 3858,
+      "currentSha256": "c9dec682ffd8e29357cd2892dea89c5ac9c3348ad35745b5cb7cd7ea6053781b",
+      "currentBytes": 4191,
+      "programSha256": "dba2ede7997f6a344fdd80ada4b15099df4e6ad76bc53767f675ace5d84938e6",
+      "moduleBindingsSha256": "54ec0789e964acb2a6cf2fabf8dc3568f7f6c430a0bd0931a51bd5d1ba0f58ff",
+      "kind": "adapter-script",
+      "fullStatementAndImportedBindingIdentity": true,
+      "rpcRolePortActionLiteralsPreserved": true
+    },
+    {
+      "originPath": "backend/tests/support/audit_summary_fixture.ts",
+      "currentPath": "backend/tests/support/builders/audit-summary.ts",
+      "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+      "originalSha256": "94b0a770d66434ff7ed0e2b662e4cbe615542c0ee12769ca2efc5ed3dc9a0928",
+      "originalBytes": 811,
+      "currentSha256": "0dcf1764ed975f4dba71f037bb96632b74e3f90b16f0a0c981b0daf916c63ab1",
+      "currentBytes": 1154,
+      "programSha256": "507a479dd2a872a501474a2bfd51e4d171363c3a3c174e8873f76bd0089bfa70",
+      "moduleBindingsSha256": "32b415306130f31a5b5fb54705bddd6184eee7cf63cd9da9edcd2ae974423343",
+      "kind": "test-support",
+      "fullStatementAndImportedBindingIdentity": true,
+      "rpcRolePortActionLiteralsPreserved": true
+    },
+    {
+      "originPath": "backend/tests/support/mist_raven_transport_oracle.ts",
+      "currentPath": "backend/tests/support/features/mist-raven/oracles/transport.ts",
+      "originCommit": "442703cded8a5eb8c749bfcd3ce29b1d6a04e1cc",
+      "originalSha256": "7d0b2f1c81660679baf2d66d203f6a4cdfca762de927b9aba789a579beace085",
+      "originalBytes": 7318,
+      "currentSha256": "c42ff8470c11486792ba21ad70140b8a109a23d35e311b66cf934a9181fcbe02",
+      "currentBytes": 7676,
+      "programSha256": "8584a8fe074819232521336ff6cb089cb1c96c7e4d800ebd581392324513ba9d",
+      "moduleBindingsSha256": "0ac37de3b9f45e877a4cbd0c5bbbf8425fb3fc0dec4a6ddb06db234edc870dd7",
+      "kind": "test-support",
+      "fullStatementAndImportedBindingIdentity": true,
+      "rpcRolePortActionLiteralsPreserved": true
+    }
+  ],
+  "consumers": [
+    {
+      "path": "backend/tests/audit/bilingual_audit_tasks.test.ts",
+      "beforeSha256": "eb3269b8b9c4512727f3cd0f5f285a5b4adffa63411b482b0f2298644f15929d",
+      "currentSha256": "52045d8aaf800465375643d23d3efbff09a1d5a6b0af657e63bb629d1a743ca9",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "6c22adcefcecfa9bf7394d371d920bd9b583cfef29aff1a48c0e163d57bfed2d",
+      "exceptions": [
+        {
+          "start": 443,
+          "end": 475,
+          "value": "../support/builders/audit-summary",
+          "originalSpecifier": "../support/audit_summary_fixture",
+          "originalTarget": "backend/tests/support/audit_summary_fixture.ts",
+          "candidateTarget": "backend/tests/support/builders/audit-summary.ts",
+          "kind": "support-import-rebase"
+        },
+        {
+          "start": 11734,
+          "end": 11798,
+          "value": "acpAdapterEntry(\"audit\")",
+          "originalExpression": "path.resolve(process.cwd(), \"tests/fixtures/acp_audit_agent.ts\")",
+          "kind": "ACP-purpose-physical-entry",
+          "purpose": "audit"
+        },
+        {
+          "start": 8675,
+          "end": 8739,
+          "value": "acpAdapterEntry(\"audit\")",
+          "originalExpression": "path.resolve(process.cwd(), \"tests/fixtures/acp_audit_agent.ts\")",
+          "kind": "ACP-purpose-physical-entry",
+          "purpose": "audit"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/audit/bilingual_summary.test.ts",
+      "beforeSha256": "5e768d8bf9c50aa54730bc7a5b14e1f7fccdb215697107718afc56691958f086",
+      "currentSha256": "df27bdbf621c4a13bf05d0f64595b770c909109a91ff6ac1ef10c91ae280b29b",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "afe41961e3c9d9047227da8e7cbf5b67d6c856bb5a2ac5e0f47586e0d245cfef",
+      "exceptions": [
+        {
+          "start": 751,
+          "end": 783,
+          "value": "../support/builders/audit-summary",
+          "originalSpecifier": "../support/audit_summary_fixture",
+          "originalTarget": "backend/tests/support/audit_summary_fixture.ts",
+          "candidateTarget": "backend/tests/support/builders/audit-summary.ts",
+          "kind": "support-import-rebase"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/audit/evidence_policy.test.ts",
+      "beforeSha256": "5227473820bc599752bfa9ae440152b9a4be67f95a6d792ef59da9ed4ac94be7",
+      "currentSha256": "8e5594c65a2d40602cf7e21f6a4a989a4dd46a09a23cb698fd8bcdc39de758c4",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "f442f01d3b1276cebc1cef9c74449ec2944ee6a9a5f787f79fb612691d53083c",
+      "exceptions": [
+        {
+          "start": 37,
+          "end": 69,
+          "value": "../support/builders/audit-summary",
+          "originalSpecifier": "../support/audit_summary_fixture",
+          "originalTarget": "backend/tests/support/audit_summary_fixture.ts",
+          "candidateTarget": "backend/tests/support/builders/audit-summary.ts",
+          "kind": "support-import-rebase"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/runtime/mist_raven_transport_oracle.test.ts",
+      "beforeSha256": "3cb07eecaab386c234467d44da2326c56d326f1cb9c9a9d409b8b864c791da35",
+      "currentSha256": "9ae6f42d754c3088f823dfa8e3859afd3a0b41bcbef761463027f524070211b1",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "3f273b1b06e06b26393ce83123511756cba8f485f0c105248389b15f5994dc48",
+      "exceptions": [
+        {
+          "start": 298,
+          "end": 336,
+          "value": "../support/features/mist-raven/oracles/transport",
+          "originalSpecifier": "../support/mist_raven_transport_oracle",
+          "originalTarget": "backend/tests/support/mist_raven_transport_oracle.ts",
+          "candidateTarget": "backend/tests/support/features/mist-raven/oracles/transport.ts",
+          "kind": "support-import-rebase"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/support/foundation_transport_plan.ts",
+      "beforeSha256": "668d3ac92d18807edc81a2d384f0c6c9f5d21600321e1857aa0181f73594694b",
+      "currentSha256": "79745d6080e3407184ff28d5fcf86594d00d621703c1f374b0fb2f1de4f84991",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "27c2b6cce4c24606104193e351149f7708c23d03e4585c62a88153549ec19f87",
+      "exceptions": [
+        {
+          "start": 169,
+          "end": 198,
+          "value": "./features/mist-raven/oracles/transport",
+          "originalSpecifier": "./mist_raven_transport_oracle",
+          "originalTarget": "backend/tests/support/mist_raven_transport_oracle.ts",
+          "candidateTarget": "backend/tests/support/features/mist-raven/oracles/transport.ts",
+          "kind": "support-import-rebase"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/support/mist_raven_transport_scenarios.ts",
+      "beforeSha256": "982bae35b0b8f29678f5f9993cecb44eace6b86658ecdbc8f0d1918a9bd4c688",
+      "currentSha256": "0c672762741dec377f8d7edf6e8b9c0a01ea3d0350d6b4b65b85d5bad42540d4",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "74d9346a6959adb7c8b63cb0b890bef526f9951dfaaebd87134317a022ea8dd5",
+      "exceptions": [
+        {
+          "start": 307,
+          "end": 336,
+          "value": "./features/mist-raven/oracles/transport",
+          "originalSpecifier": "./mist_raven_transport_oracle",
+          "originalTarget": "backend/tests/support/mist_raven_transport_oracle.ts",
+          "candidateTarget": "backend/tests/support/features/mist-raven/oracles/transport.ts",
+          "kind": "support-import-rebase"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/support/run_transport_game.ts",
+      "beforeSha256": "8e59dd5aa363658e168a4d5edcc8171386d43910cb2080725dbb5fa01005747c",
+      "currentSha256": "ee4175b007366bcf92d6af1d7e7edcaefb6465ad46afbd0f7aca3dde71ddc7d1",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "81e113501fececd1561b23051f483a73ef2459f13ae33a415a980e750a8afe2a",
+      "exceptions": [
+        {
+          "start": 1793,
+          "end": 1822,
+          "value": "./features/mist-raven/oracles/transport",
+          "originalSpecifier": "./mist_raven_transport_oracle",
+          "originalTarget": "backend/tests/support/mist_raven_transport_oracle.ts",
+          "candidateTarget": "backend/tests/support/features/mist-raven/oracles/transport.ts",
+          "kind": "support-import-rebase"
+        },
+        {
+          "start": 13544,
+          "end": 13606,
+          "value": "acpAdapterEntry(\"game\")",
+          "originalExpression": "path.resolve(import.meta.dir, \"../fixtures/acp_game_agent.ts\")",
+          "kind": "ACP-purpose-physical-entry",
+          "purpose": "game"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/support/transport_prompt_oracle.ts",
+      "beforeSha256": "f92ae7489d670502c6ff9efbf843589f2eab219919c8bbf6a1db71948dbd741b",
+      "currentSha256": "9a377123ccb4bcfd565aea5cfdc3a8003ffc164823a9b116189cc8388fff21b2",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "8a2ecc5dfbd84b6870a7df5194a97ce26e359aab906a1b5d30f9d3506410b1b4",
+      "exceptions": [
+        {
+          "start": 1009,
+          "end": 1038,
+          "value": "./features/mist-raven/oracles/transport",
+          "originalSpecifier": "./mist_raven_transport_oracle",
+          "originalTarget": "backend/tests/support/mist_raven_transport_oracle.ts",
+          "candidateTarget": "backend/tests/support/features/mist-raven/oracles/transport.ts",
+          "kind": "support-import-rebase"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/ai/integrations/acp_resource_ownership.test.ts",
+      "beforeSha256": "116e9df95f190f692ead65d2469e836ce267ff6893dd2292f7455928378820cb",
+      "currentSha256": "13218eb4aa44d5a07e3b2e06f4a05160085ec3d592b5d7cb4098790e2b09b11f",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "8a1cff028b599795e2db010349e7f79a3ec20ab5b2a9f5c8823724b1ae2d01a1",
+      "exceptions": [
+        {
+          "start": 1326,
+          "end": 1396,
+          "value": "acpAdapterEntry(\"ownership\")",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../fixtures/acp_ownership_agent.ts\")",
+          "kind": "ACP-purpose-physical-entry",
+          "purpose": "ownership"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/ai/integrations/dream_ability_transport.test.ts",
+      "beforeSha256": "0aaa1ec385487bc2aab16612858fb4805e27962ea5be00f092dcd3f46eca6a5f",
+      "currentSha256": "d22cd432fa69a7b8b9132a437c31e503ccc7a10ca5d0223fb1eaff510d7417f1",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "18fd98d471c9cfdb8c26a9c651eb4adeb6ac621ae693c6b473730ee58c65fb70",
+      "exceptions": [
+        {
+          "start": 5426,
+          "end": 5489,
+          "value": "acpAdapterEntry(\"game\")",
+          "originalExpression": "path.resolve(process.cwd(), \"tests/fixtures/acp_game_agent.ts\")",
+          "kind": "ACP-purpose-physical-entry",
+          "purpose": "game"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/ai/integrations/gargoyle_ability_transport.test.ts",
+      "beforeSha256": "c5d84206383e6a680ac4b295c097e2cd72881cb6771c288c887e1bc50ffa6e34",
+      "currentSha256": "8ccacbcf2438c3bca296896a63f2b8b1d4679d6c5b00897589dfccb952a09d07",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "10484b4c7586c2ec0763f1499be29df8df0d9b8d2c5dce21a45e65df8d8c54db",
+      "exceptions": [
+        {
+          "start": 5809,
+          "end": 5872,
+          "value": "acpAdapterEntry(\"game\")",
+          "originalExpression": "path.resolve(process.cwd(), \"tests/fixtures/acp_game_agent.ts\")",
+          "kind": "ACP-purpose-physical-entry",
+          "purpose": "game"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/ai/integrations/gift_gun_runtime.test.ts",
+      "beforeSha256": "e1740f2ffaee0d2f4b39a5c625c3fe360157ff74e094364ba8d33a2ba3da6b9e",
+      "currentSha256": "82ff3f07a736fa8a624fd922c8ebc63d105d4ff8472f0a55337973636e6c6e70",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "ea3e17b5d2461db2884f70dd9e414855c4951b7aeff89ea3cda65de4ce3cfb07",
+      "exceptions": [
+        {
+          "start": 8511,
+          "end": 8574,
+          "value": "acpAdapterEntry(\"game\")",
+          "originalExpression": "path.resolve(process.cwd(), \"tests/fixtures/acp_game_agent.ts\")",
+          "kind": "ACP-purpose-physical-entry",
+          "purpose": "game"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/ai/integrations/granted_ability_transport.test.ts",
+      "beforeSha256": "dd7dae2c9a2cc4e87078f9dcd45c52411b0333e91fa885fed7a5fd3f02b80bc8",
+      "currentSha256": "691fa2b2e7d409271cb04cc92512f10572bc5c5e298cff4af094ab58a3ced22e",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "f5c096ceb985f2d7ff919152e47601a5e17cc50d1800fa8e1f51d321f19636bf",
+      "exceptions": [
+        {
+          "start": 12510,
+          "end": 12573,
+          "value": "acpAdapterEntry(\"game\")",
+          "originalExpression": "path.resolve(process.cwd(), \"tests/fixtures/acp_game_agent.ts\")",
+          "kind": "ACP-purpose-physical-entry",
+          "purpose": "game"
+        },
+        {
+          "start": 5382,
+          "end": 5445,
+          "value": "acpAdapterEntry(\"game\")",
+          "originalExpression": "path.resolve(process.cwd(), \"tests/fixtures/acp_game_agent.ts\")",
+          "kind": "ACP-purpose-physical-entry",
+          "purpose": "game"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/ai/integrations/psychic_ability_transport.test.ts",
+      "beforeSha256": "5504b10a7fb423d3a0bc5d89031ae57392dfaa93c1f67c076f49a3ebf0046a33",
+      "currentSha256": "58b183ae1cf3e1d4a20f70ab35d4f6702310f208dd873b6e7e66d0b0237070d2",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "9451550aa386ed6f61daf6ce603f2feaf45b1dbe60a3ec54554f9984e018bfa7",
+      "exceptions": [
+        {
+          "start": 6961,
+          "end": 7024,
+          "value": "acpAdapterEntry(\"game\")",
+          "originalExpression": "path.resolve(process.cwd(), \"tests/fixtures/acp_game_agent.ts\")",
+          "kind": "ACP-purpose-physical-entry",
+          "purpose": "game"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/runtime/agent_log_flags.test.ts",
+      "beforeSha256": "c3037d13c9f505ecf86b567c18ed2994200a3cc3fcf3b1c846afa926263719f1",
+      "currentSha256": "ec1d5f3db0af3b28808d3064971b4e6e46d24557c6b62191599c0ad97146beab",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "99b16af11ca1cf1116c3db89f9c594591abcaaa6ecc3a0fb5289dba681965898",
+      "exceptions": [
+        {
+          "start": 4440,
+          "end": 4508,
+          "value": "acpAdapterEntry(\"ownership\")",
+          "originalExpression": "path.resolve(process.cwd(), \"tests/fixtures/acp_ownership_agent.ts\")",
+          "kind": "ACP-purpose-physical-entry",
+          "purpose": "ownership"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/runtime/bilingual_game_execution.test.ts",
+      "beforeSha256": "1d899f54d8b8749142abd9c86d6011480578806cc8c38435b5729fc393c6692d",
+      "currentSha256": "e9bbfb6cc460fec3498d956d136b9635da3f36b3ef07fd47e160f6cb23a1582d",
+      "nonImportProgramIdentityWithExplicitPhysicalEntryException": true,
+      "programHash": "828e740cdcc87a0d65578e199b1dbc435261092bea30af8e5c898543ab1f9015",
+      "exceptions": [
+        {
+          "start": 9016,
+          "end": 9079,
+          "value": "acpAdapterEntry(\"game\")",
+          "originalExpression": "path.resolve(process.cwd(), \"tests/fixtures/acp_game_agent.ts\")",
+          "kind": "ACP-purpose-physical-entry",
+          "purpose": "game"
+        },
+        {
+          "start": 8059,
+          "end": 8122,
+          "value": "acpAdapterEntry(\"game\")",
+          "originalExpression": "path.resolve(process.cwd(), \"tests/fixtures/acp_game_agent.ts\")",
+          "kind": "ACP-purpose-physical-entry",
+          "purpose": "game"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "jsonArchivesByteIdentical": 904,
+    "movedExecutableSources": 3,
+    "movedSupportHelpers": 2,
+    "consumerProgramProofs": 16,
+    "programDrift": 0
+  },
+  "testEvidence": {
+    "focusedCases": 4,
+    "pass": 4,
+    "fail": 0,
+    "assertions": 34,
+    "actualTypecheckedFiles": 25,
+    "typeDiagnostics": 0
+  },
+  "scope": "Source-assets stage only; no904 archive moves or local manifests published. Original synthetic manifest negative payloads retained, except necessary v2 digest/coverage schema fields. No game, ACP process, model or full suite executed.",
+  "ownedFiles": [
+    {
+      "path": "backend/tests/fixtures/acp/audit-agent.ts",
+      "sha256": "f9ffe60a851950dcb2815885fd4cdb594301f056e8b82f7d36a8eb0ed62ec317"
+    },
+    {
+      "path": "backend/tests/fixtures/acp/game-agent.ts",
+      "sha256": "fb2c37b0478c90aab0424ca0b8e750280aab9afb24e3b514d474331085179419"
+    },
+    {
+      "path": "backend/tests/fixtures/acp/ownership-agent.ts",
+      "sha256": "c9dec682ffd8e29357cd2892dea89c5ac9c3348ad35745b5cb7cd7ea6053781b"
+    },
+    {
+      "path": "backend/tests/support/builders/audit-summary.ts",
+      "sha256": "0dcf1764ed975f4dba71f037bb96632b74e3f90b16f0a0c981b0daf916c63ab1"
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/oracles/transport.ts",
+      "sha256": "c42ff8470c11486792ba21ad70140b8a109a23d35e311b66cf934a9181fcbe02"
+    },
+    {
+      "path": "backend/tests/audit/bilingual_audit_tasks.test.ts",
+      "sha256": "52045d8aaf800465375643d23d3efbff09a1d5a6b0af657e63bb629d1a743ca9"
+    },
+    {
+      "path": "backend/tests/audit/bilingual_summary.test.ts",
+      "sha256": "df27bdbf621c4a13bf05d0f64595b770c909109a91ff6ac1ef10c91ae280b29b"
+    },
+    {
+      "path": "backend/tests/audit/evidence_policy.test.ts",
+      "sha256": "8e5594c65a2d40602cf7e21f6a4a989a4dd46a09a23cb698fd8bcdc39de758c4"
+    },
+    {
+      "path": "backend/tests/runtime/mist_raven_transport_oracle.test.ts",
+      "sha256": "9ae6f42d754c3088f823dfa8e3859afd3a0b41bcbef761463027f524070211b1"
+    },
+    {
+      "path": "backend/tests/support/foundation_transport_plan.ts",
+      "sha256": "79745d6080e3407184ff28d5fcf86594d00d621703c1f374b0fb2f1de4f84991"
+    },
+    {
+      "path": "backend/tests/support/mist_raven_transport_scenarios.ts",
+      "sha256": "0c672762741dec377f8d7edf6e8b9c0a01ea3d0350d6b4b65b85d5bad42540d4"
+    },
+    {
+      "path": "backend/tests/support/run_transport_game.ts",
+      "sha256": "ee4175b007366bcf92d6af1d7e7edcaefb6465ad46afbd0f7aca3dde71ddc7d1"
+    },
+    {
+      "path": "backend/tests/support/transport_prompt_oracle.ts",
+      "sha256": "9a377123ccb4bcfd565aea5cfdc3a8003ffc164823a9b116189cc8388fff21b2"
+    },
+    {
+      "path": "backend/tests/ai/integrations/acp_resource_ownership.test.ts",
+      "sha256": "13218eb4aa44d5a07e3b2e06f4a05160085ec3d592b5d7cb4098790e2b09b11f"
+    },
+    {
+      "path": "backend/tests/ai/integrations/dream_ability_transport.test.ts",
+      "sha256": "d22cd432fa69a7b8b9132a437c31e503ccc7a10ca5d0223fb1eaff510d7417f1"
+    },
+    {
+      "path": "backend/tests/ai/integrations/gargoyle_ability_transport.test.ts",
+      "sha256": "8ccacbcf2438c3bca296896a63f2b8b1d4679d6c5b00897589dfccb952a09d07"
+    },
+    {
+      "path": "backend/tests/ai/integrations/gift_gun_runtime.test.ts",
+      "sha256": "82ff3f07a736fa8a624fd922c8ebc63d105d4ff8472f0a55337973636e6c6e70"
+    },
+    {
+      "path": "backend/tests/ai/integrations/granted_ability_transport.test.ts",
+      "sha256": "691fa2b2e7d409271cb04cc92512f10572bc5c5e298cff4af094ab58a3ced22e"
+    },
+    {
+      "path": "backend/tests/ai/integrations/psychic_ability_transport.test.ts",
+      "sha256": "58b183ae1cf3e1d4a20f70ab35d4f6702310f208dd873b6e7e66d0b0237070d2"
+    },
+    {
+      "path": "backend/tests/runtime/agent_log_flags.test.ts",
+      "sha256": "ec1d5f3db0af3b28808d3064971b4e6e46d24557c6b62191599c0ad97146beab"
+    },
+    {
+      "path": "backend/tests/runtime/bilingual_game_execution.test.ts",
+      "sha256": "e9bbfb6cc460fec3498d956d136b9635da3f36b3ef07fd47e160f6cb23a1582d"
+    },
+    {
+      "path": "tooling/refactor/fixture-manifest.ts",
+      "sha256": "f373c7bf6a84291ef24dac1e89cce52560d24524b1b0e038e9ce9d981b858594"
+    },
+    {
+      "path": "tooling/refactor/fixture-manifest.test.ts",
+      "sha256": "e5ce5b5b548a06b6725e32cb6d4bfefef72dd3946173dc503189a4134c16fb42"
+    },
+    {
+      "path": "backend/tests/support/fixtures/manifest.ts",
+      "sha256": "237e08d85b05990ded53d8e895ee2d5a705ee721b94a72f1ae48ac1f2931b451"
+    },
+    {
+      "path": "frontend/tests/support/fixtures/manifest.ts",
+      "sha256": "3ffcd2aa409a47faa9e8374e618bda7a2d5a53cdda008032576e041b598978b2"
+    },
+    {
+      "path": "tooling/refactor/fixtures/manifest.json",
+      "sha256": "88ec115202f84638cc4819c3373ed9159c3b2c5995e206ba4a24fd73bcac36ef"
+    }
+  ],
+  "postReview": {
+    "finiteScalars": "Strict typeof string; array-valued enum identities are rejected without String coercion.",
+    "sourceCommit": "Strict string primitive before hash regexp.",
+    "supportSourceRealm": "Both original/current paths must remain within public test-support source roots.",
+    "literalMetadata": "Actual byte-checked JSON is redescribed; changing both file/suite metadata cannot invent a board.",
+    "commentCoverage": {
+      "typedFiles": 25,
+      "failures": 0,
+      "additionalPreciseHeads": 6
+    },
+    "focusedCountercases": {
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 10
+    },
+    "focusedTypecheck": {
+      "files": 4,
+      "errors": 0
+    }
+  },
+  "localEntrySmoke": {
+    "pass": 3,
+    "fail": 0,
+    "mcpSessions": 0,
+    "models": 0,
+    "evidence": "/tmp/awa-c14-acp-entry-smoke.json",
+    "limitation": "Only initialize and EOF, no game/session/port activity. Initial stdin pipe write was EPERM; file-backed stdin succeeded."
+  }
+}

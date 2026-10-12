@@ -4,6 +4,7 @@
  * Output and independent oracle: Outputs actual SDK/MCP traces, player/public archives and strict replay; handwritten prompt/terminal oracles stay separate from execution and fixture bytes are never rewritten.
  * The driver owns its allocated recorder/transport lifetime; callers own expected rules and all production state writers remain unchanged.
  */
+import { acpAdapterEntry } from "./fixtures/manifest";
 const transportDiagnostic = (...values: unknown[]) => {
   process.stderr.write(
     values.map((v) => (typeof v === "string" ? v : JSON.stringify(v))).join(" ") + "\n",
@@ -25,7 +26,7 @@ import {
 } from "../../src/runtime/simulation/replay_reproduction";
 import { createTestTempDirectory } from "./drivers/temp-directories";
 import type { ActorTransportPlan, PlannedTurn } from "./foundation_transport_plan";
-import { assertSubmitActionWireSchema, type MistWireState } from "./mist_raven_transport_oracle";
+import { assertSubmitActionWireSchema, type MistWireState } from "./features/mist-raven/oracles/transport";
 import {
   assertTransportPrompt,
   assertTransportEvents,
@@ -319,7 +320,7 @@ export async function runTransportGame(
       type: "acp",
       transport: "stdio",
       command: process.execPath,
-      args: [path.resolve(import.meta.dir, "../fixtures/acp_game_agent.ts")],
+      args: [acpAdapterEntry("game")],
       maxConcurrentRequests: 2,
     };
     for (const [actor, plan] of plans) {

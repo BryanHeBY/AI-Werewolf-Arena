@@ -1,3 +1,6 @@
+/**
+ * Runs the isolated synthetic ACP ownership protocol fixture. Inputs are stdio RPC and injected local test controls; outputs are original protocol replies and private-workspace diagnostic files. It owns its test client/transport and existing terminal cleanup; it does not call a billed model or calculate an archive golden.
+ */
 /** Local protocol fixture: colliding wire IDs, real MCP, and owned descendants. */
 import { createInterface } from "node:readline";
 import { spawn } from "node:child_process";
