@@ -80880,13 +80880,566 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/miracle_merchant.test.ts",
+      "to": "backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "52ec1d2a5d7953dcd4316aef9442acf0d5605c4c066ff55f59ced3d5420cd1a6",
+      "candidateSha256": "28f2fcdcbade0f2e80bf6eb6fbbf446e0b7a526822c3c9c6e70567603a498936",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1518,
+          "end": 1559,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1420,
+          "end": 1477,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1329,
+          "end": 1377,
+          "original": "../../../src/core/domain/components/status_marks",
+          "value": "../../../../src/core/domain/components/status_marks",
+          "originalResolved": "backend/src/core/domain/components/status_marks.ts",
+          "expectedResolved": "backend/src/core/domain/components/status_marks.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1237,
+          "end": 1288,
+          "original": "../../../src/game/mechanisms/stages/night/contracts",
+          "value": "../../../../src/game/mechanisms/stages/night/contracts",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/contracts.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/contracts.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1145,
+          "end": 1194,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1056,
+          "end": 1098,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 967,
+          "end": 1014,
+          "original": "../../../src/game/engine/action_request_factory",
+          "value": "../../../../src/game/engine/action_request_factory",
+          "originalResolved": "backend/src/game/engine/action_request_factory.ts",
+          "expectedResolved": "backend/src/game/engine/action_request_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 884,
+          "end": 922,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 790,
+          "end": 852,
+          "original": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "value": "../../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 707,
+          "end": 751,
+          "original": "../../../src/game/mechanisms/roles/abilities",
+          "value": "../../../../src/game/mechanisms/roles/abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 606,
+          "end": 669,
+          "original": "../../../src/game/mechanisms/roles/miracle_merchant/night_stage",
+          "value": "../../../../src/game/mechanisms/roles/miracle_merchant/night_stage",
+          "originalResolved": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 506,
+          "end": 563,
+          "original": "../../../src/game/mechanisms/roles/miracle_merchant/state",
+          "value": "../../../../src/game/mechanisms/roles/miracle_merchant/state",
+          "originalResolved": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 397,
+          "end": 442,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 341,
+          "end": 358,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 174,
+          "end": 200,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 44,
+          "end": 99,
+          "original": "../../../src/game/mechanisms/roles/night-ability-actors",
+          "value": "../../../../src/game/mechanisms/roles/night-ability-actors",
+          "originalResolved": "backend/src/game/mechanisms/roles/night-ability-actors.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/night-ability-actors.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "d904078ac67cc3f87d590f22b1f82898fce3d7cd35fd4d17f9d987c57a0f430c",
+          "title": "zh-CN/check: before-role trade creates one opaque independently owned lucky instance and no immediate outcome leak",
+          "occurrence": 1
+        },
+        {
+          "id": "e815874827ca8705b1d44c6fe088cc3b448214e2a19e30c57b0c0b587c070d57",
+          "title": "zh-CN/poison: before-role trade creates one opaque independently owned lucky instance and no immediate outcome leak",
+          "occurrence": 1
+        },
+        {
+          "id": "6174610537b87c8ef72585b4af531ccc4c9788f74459d542432a9b91979a9f9a",
+          "title": "zh-CN/guard: before-role trade creates one opaque independently owned lucky instance and no immediate outcome leak",
+          "occurrence": 1
+        },
+        {
+          "id": "8c9f35ae5bbf89d11ef0b26436db5d3e001eb005663e3e3ad15b9118e42b9982",
+          "title": "en/check: before-role trade creates one opaque independently owned lucky instance and no immediate outcome leak",
+          "occurrence": 1
+        },
+        {
+          "id": "462e80035d551313dc5315352d9490d13253c39495b4c63658edcec9e1274c00",
+          "title": "en/poison: before-role trade creates one opaque independently owned lucky instance and no immediate outcome leak",
+          "occurrence": 1
+        },
+        {
+          "id": "af39edba3c8430251389a0fa066f5da814a83db053466e7b6de807b4ee99a699",
+          "title": "en/guard: before-role trade creates one opaque independently owned lucky instance and no immediate outcome leak",
+          "occurrence": 1
+        },
+        {
+          "id": "23c187485a77325ba39c4b9628a65452400e7d399ab0e49c1c8c3225c90e2331",
+          "title": "merchant may hold on night one, but a committed trade is once per game and before Dream even by actual stage ordering",
+          "occurrence": 1
+        },
+        {
+          "id": "54ab215fb53bed826edb75a84d2141aaa0ed01a5bc6ddfba569a3deebcc93461",
+          "title": "false: true Wolf gift creates only a scoped backlash; ordinary protection cannot block it but Dream does",
+          "occurrence": 1
+        },
+        {
+          "id": "ec7d37ddb06e96fddf23b73953e9ec266ce508b9916482ead3dfb4650898b910",
+          "title": "true: true Wolf gift creates only a scoped backlash; ordinary protection cannot block it but Dream does",
+          "occurrence": 1
+        },
+        {
+          "id": "05ad575bc765067fe0fbe3d931eddbedcd03e3f4e5dc7729532556635b62a55e",
+          "title": "a disguised Hidden Wolf is a true Wolf for trade, while all alive target preflights remain camp-neutral",
+          "occurrence": 1
+        },
+        {
+          "id": "fef227e9c3ad59e05b834bf9f6bfdee7e20f90cc892efe888800690b40357cd5",
+          "title": "clock: merchant await/gateway cannot transfer or spend on a changed owner/target",
+          "occurrence": 1
+        },
+        {
+          "id": "36c7f9b4125c02b8ede2cb5091172095d50349a30fd58d37d043a72d600ca966",
+          "title": "actor_life: merchant await/gateway cannot transfer or spend on a changed owner/target",
+          "occurrence": 1
+        },
+        {
+          "id": "fa1fe0de20604475667e3f5da570f233b86937ae09ad35b1a24db5249de1ff18",
+          "title": "actor_state: merchant await/gateway cannot transfer or spend on a changed owner/target",
+          "occurrence": 1
+        },
+        {
+          "id": "bfebbd014f98d7919cf5c7977cbd8a825889543ef8e15963aa3795a38799a963",
+          "title": "target_life: merchant await/gateway cannot transfer or spend on a changed owner/target",
+          "occurrence": 1
+        },
+        {
+          "id": "cbb2d7db4bdd3a9b75c615f86078fd50b3f706cee4d881f8b341c4619474b2ee",
+          "title": "target_role: merchant await/gateway cannot transfer or spend on a changed owner/target",
+          "occurrence": 1
+        },
+        {
+          "id": "1b144ab93d21a2dafde355fcfdd63d03fe2623da06a8a2dfe042761b2e1ce5ce",
+          "title": "gateway_target: merchant await/gateway cannot transfer or spend on a changed owner/target",
+          "occurrence": 1
+        },
+        {
+          "id": "10e61351d24a8eda6e5f3a81ef65ee57815e9d8003ba33e152afcd7166cc5a42",
+          "title": "resource: merchant await/gateway cannot transfer or spend on a changed owner/target",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { PotionType } from \"../../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Role,\n  Camp,\n  Phase,\n  WinCondition,\n  DeathCause,\n  COMPONENT,\n  StatusMark,\n  type BoardConfig,\n  type RoleComponent,\n  type GameEvent,\n  type ActionRequest,\n  type ToolCall,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Role, Camp, Phase, WinCondition, DeathCause, COMPONENT, StatusMark, type BoardConfig, type RoleComponent, type GameEvent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/miracle_merchant.test.ts",
+      "to": "backend/tests/scenarios/features/miracle-merchant/first-night-backlash-chain.test.ts",
+      "sourceCommit": "5f38ba53bc7b176313e9afe0e6928709c931b31e",
+      "reason": "Actual selected scenario boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "52ec1d2a5d7953dcd4316aef9442acf0d5605c4c066ff55f59ced3d5420cd1a6",
+      "candidateSha256": "0808ed78254cd7521c831521dd43a5618e1b6b9501be8764d1a4a7019e99c55e",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 338,
+          "end": 383,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 282,
+          "end": 299,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 120,
+          "end": 146,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 28,
+          "end": 45,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "1d3d2f1f08a76ec975c683dfd4a1a8ee9b6ec5020fd6ec92e161e45d60a04ddc",
+          "title": "full actual first-night Wolf backlash grants last words and settles initial deaths before later voting",
+          "occurrence": 1
+        },
+        {
+          "id": "267960032de87966d8f1d8d26a0c2e79f67cc9561bc5f55a8b42f034858446b5",
+          "title": "a terminal first-night backlash and last-Wolf death still finish both last words and sheriff badge before Good judgment",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/game/mechanisms/roles/night-ability-actors",
+          "originalImport": "import { bindNightAbilityActorQuery } from \"../../../src/game/mechanisms/roles/night-ability-actors\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "bindNightAbilityActorQuery",
+              "imported": "bindNightAbilityActorQuery",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Role,\n  Camp,\n  Phase,\n  WinCondition,\n  DeathCause,\n  COMPONENT,\n  StatusMark,\n  type BoardConfig,\n  type RoleComponent,\n  type GameEvent,\n  type ActionRequest,\n  type ToolCall,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Role, Camp, Phase, WinCondition, COMPONENT, type BoardConfig, type RoleComponent, type ActionRequest, type ToolCall } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "DeathCause",
+              "imported": "DeathCause",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "StatusMark",
+              "imported": "StatusMark",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/miracle_merchant/state",
+          "originalImport": "import {\n  getMerchantState,\n  projectMerchantState,\n} from \"../../../src/game/mechanisms/roles/miracle_merchant/state\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getMerchantState",
+              "imported": "getMerchantState",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "projectMerchantState",
+              "imported": "projectMerchantState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/miracle_merchant/night_stage",
+          "originalImport": "import { MIRACLE_MERCHANT_STAGE } from \"../../../src/game/mechanisms/roles/miracle_merchant/night_stage\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "MIRACLE_MERCHANT_STAGE",
+              "imported": "MIRACLE_MERCHANT_STAGE",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/abilities",
+          "originalImport": "import { allNightAbilities } from \"../../../src/game/mechanisms/roles/abilities\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "allNightAbilities",
+              "imported": "allNightAbilities",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalImport": "import { NightStageRegistry } from \"../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightStageRegistry",
+              "imported": "NightStageRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/action_request_factory",
+          "originalImport": "import { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameActionRequestFactory",
+              "imported": "GameActionRequestFactory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/catalog",
+          "originalImport": "import { getDefaultRoleCatalog } from \"../../../src/game/mechanisms/roles/catalog\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/agent_visible_event_feed",
+          "originalImport": "import { buildAgentVisibleEventFeed } from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "buildAgentVisibleEventFeed",
+              "imported": "buildAgentVisibleEventFeed",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/stages/night/contracts",
+          "originalImport": "import type { NightStageContext } from \"../../../src/game/mechanisms/stages/night/contracts\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightStageContext",
+              "imported": "NightStageContext",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/status_marks",
+          "originalImport": "import { StatusMarksComponent } from \"../../../src/core/domain/components/status_marks\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "StatusMarksComponent",
+              "imported": "StatusMarksComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalImport": "import { DamageResolutionSystem } from \"../../../src/core/domain/systems/damage_resolution_system\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DamageResolutionSystem",
+              "imported": "DamageResolutionSystem",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import { createAliveComponent } from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAliveComponent",
+              "imported": "createAliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 59 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 545,
-    "targetFiles": 594,
-    "mappingEntries": 594,
-    "baselineCases": 6917,
+    "sourceFiles": 546,
+    "targetFiles": 596,
+    "mappingEntries": 596,
+    "baselineCases": 6936,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
