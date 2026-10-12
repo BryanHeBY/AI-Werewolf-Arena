@@ -203,3 +203,5 @@
 - C12 mixed bilingual-tool-protocol：1原file→2targets/8旧IDs按实际unit/FS/HTTP/MCP/CLI分配；mixed4整体21callbacks=20raw+1授权Guard cast emitted全同、9helper(2URL例外)/69relative/31uniqueIDs保，独立原Git/完整setup/loadset82删unused模块0必需初始化丢失；finite9 types0，无测试/discovery。caseSplit与selected程序保真单列不称wholefile；mapping现508source/518target/6378IDs。
 
 - C12 mixed noble-secret-body-cli-review：1原file→2targets/5旧IDs按实际unit/FS/HTTP/MCP/CLI分配；mixed4整体21callbacks=20raw+1授权Guard cast emitted全同、9helper(2URL例外)/69relative/31uniqueIDs保，独立原Git/完整setup/loadset82删unused模块0必需初始化丢失；finite9 types0，无测试/discovery。caseSplit与selected程序保真单列不称wholefile；mapping现509source/520target/6383IDs。
+
+- 当前台账补五已commit子项：四普通history owner与Radiant acquired lifecycle，独立actual ancestor/source/docs/remaining delta0，90rows900cells=44partial856pending/0complete/N/A，冻结基线60f1eb79原bytes保持；历史42/43统计不改为当前。其他写权/schema/codec/租借边界仍待完成，不把本笔作为P3/P4闭合。

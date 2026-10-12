@@ -1,6 +1,6 @@
 {
   "schema": "awa-current-mechanism-migration-v1",
-  "observedCommit": "4e3954870d87eee919f478f224338b4971b80b4c",
+  "observedCommit": "588e755418b124b5e415c98d9cd78a6afb3b7e63",
   "baseline": {
     "path": "docs/refactor/generated/mechanism-matrix.json",
     "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
@@ -706,6 +706,16 @@
               "evidence": [
                 "docs/refactor/role-state-owners.md"
               ]
+            },
+            {
+              "part": "Ordinary captured-state target/day/history writes moved to Dreamer; consecutive calculation and paid effects remain in original flow",
+              "commit": "1cbddde4",
+              "owners": [
+                "backend/src/game/mechanisms/roles/dreamer/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -1188,6 +1198,16 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
+              "owners": [
+                "backend/src/game/mechanisms/roles/gravekeeper/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
+            },
+            {
+              "part": "Original received-exile history insertion owned by Gravekeeper, preserving history/callee/fact-spread/result getter prefix",
+              "commit": "1cbddde4",
               "owners": [
                 "backend/src/game/mechanisms/roles/gravekeeper/state.ts"
               ],
@@ -2923,10 +2943,21 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Actual per-execution acquired Radiant night unit preserves normal and acquired-finally terminal reads; native frame owns repeated close no-ops",
+              "commit": "588e7554",
+              "owners": [
+                "backend/src/game/mechanisms/roles/radiant_eclipse/night-lifecycle.ts"
+              ],
+              "evidence": [
+                "docs/refactor/radiant-night-lifecycle.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Close remaining borrow, suppression, paid effects, original-owner invalidation and all mechanism-specific lifecycle boundaries; acquired unit alone does not close this cell."
           ]
         },
         "effect": {
@@ -3063,6 +3094,16 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
+              "owners": [
+                "backend/src/game/mechanisms/roles/role_inspection/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
+            },
+            {
+              "part": "Ordinary captured-state target/day/role-label history writes moved to the actual RoleInspection state owner",
+              "commit": "1cbddde4",
               "owners": [
                 "backend/src/game/mechanisms/roles/role_inspection/state.ts"
               ],
@@ -4140,6 +4181,16 @@
             {
               "part": "Native state types and exact installation/read access assigned to feature owner",
               "commit": "da0222d",
+              "owners": [
+                "backend/src/game/mechanisms/roles/wolf_beauty/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-state-owners.md"
+              ]
+            },
+            {
+              "part": "Ordinary nullable charm target/day/history writes moved to Wolf Beauty; relation binding remains its existing owner",
+              "commit": "1cbddde4",
               "owners": [
                 "backend/src/game/mechanisms/roles/wolf_beauty/state.ts"
               ],
@@ -7626,8 +7677,8 @@
     "currentOnlyRows": 1,
     "rows": 90,
     "cells": 900,
-    "pending": 857,
-    "partial": 43,
+    "pending": 856,
+    "partial": 44,
     "complete": 0,
     "not-applicable": 0
   },

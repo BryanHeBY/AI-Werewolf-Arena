@@ -12,4 +12,6 @@
 
 记录中的 candidate SHA、旧路径和测试结果是对应历史切片的输入身份。后续迁移可以改变当前源码，但必须新增真实证据，而不能悄悄将旧摘要改为当前摘要或将原失败日志改成成功。未提交候选不登记交付。
 
-Git `4e39548` 检查点新增 Witch 普通 payload 写权、Seer/Guard 既有目标政策入口、Noble 实际 night handoff 四个已提交子项。当前 43 格 partial、857 格 pending，仍零 complete/N/A；首次台账的统计是历史输入，不改为当前数字。Noble 的 expiry/damage/death/exile、完整原体失效等其他边界仍待闭合。
+Git `4e39548` 检查点新增 Witch 普通 payload 写权、Seer/Guard 既有目标政策入口、Noble 实际 night handoff 四个已提交子项。该检查点为 43 格 partial、857 格 pending，仍零 complete/N/A；首次台账的统计是历史输入，不改为当前数字。Noble 的 expiry/damage/death/exile、完整原体失效等其他边界仍待闭合。
+
+Git `588e7554` 检查点补入四类普通选择/反馈历史写入与 Radiant acquired night unit，共新增五个部分。当前 44 格 partial、856 格 pending，仍零 complete/N/A。状态的 schema、编码、剩余写权和 Radiant 的租借/抑制/已付效果等其他边界继续待验收。
