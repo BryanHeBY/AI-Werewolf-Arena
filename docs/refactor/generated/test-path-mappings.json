@@ -69657,13 +69657,627 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 577 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/runtime_display.test.ts",
+      "to": "backend/tests/unit/runtime/bilingual-display.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected unit boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "0ede2cbbfb93a576e4aa90f574754f6eab10da565254589f968d854c4b07b585",
+      "candidateSha256": "361c71f5daea99d225c68cbca64f98e1a4b77c3315667e0bf5313d527933ed75",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 614,
+          "end": 628,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 520,
+          "end": 562,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 458,
+          "end": 481,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 378,
+          "end": 424,
+          "original": "../../src/ai/agents/providers/action_providers",
+          "value": "../../../src/ai/agents/providers/action_providers",
+          "originalResolved": "backend/src/ai/agents/providers/action_providers.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/action_providers.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 297,
+          "end": 332,
+          "original": "../../src/runtime/console_presenter",
+          "value": "../../../src/runtime/console_presenter",
+          "originalResolved": "backend/src/runtime/console_presenter.ts",
+          "expectedResolved": "backend/src/runtime/console_presenter.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 212,
+          "end": 254,
+          "original": "../../src/ai/agents/player/player_observer",
+          "value": "../../../src/ai/agents/player/player_observer",
+          "originalResolved": "backend/src/ai/agents/player/player_observer.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_observer.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 151,
+          "end": 180,
+          "original": "../../src/runtime/cli/display",
+          "value": "../../../src/runtime/cli/display",
+          "originalResolved": "backend/src/runtime/cli/display.ts",
+          "expectedResolved": "backend/src/runtime/cli/display.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "a3fbd21868e51100a17ae33eedaf2d6c759c9138a6182b2db0851d0ba8ff5cb0",
+          "title": "each CLI invocation owns display selection and safe failure explanation",
+          "occurrence": 1
+        },
+        {
+          "id": "630c04c28ead44dc0e0fae8e1481b09d8dca5d1433bbbd31080ce59757e5aa8f",
+          "title": "zh-CN: observation labels preserve message roles, tools and original content",
+          "occurrence": 1
+        },
+        {
+          "id": "6ddf3c3b962047a26c4e3c7c6f150c0fefc18f5f15c3cb6ac5de650df39f8509",
+          "title": "en: observation labels preserve message roles, tools and original content",
+          "occurrence": 1
+        },
+        {
+          "id": "a71edde1b08ebf9807398966b2eee08bf1fbfde796fa0083f30263bd76a76463",
+          "title": "baseline builtin speech follows game locale while targets and skill decisions stay equivalent",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:fs",
+          "originalImport": "import { promises as fs } from \"node:fs\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "fs",
+              "imported": "promises",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:path",
+          "originalImport": "import path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "originalImport": "import { text, type Locale } from \"@ai-werewolf-arena/game-text\";",
+          "currentImportBeforeRebase": "import { type Locale } from \"@ai-werewolf-arena/game-text\";",
+          "droppedBindings": [
+            {
+              "name": "text",
+              "imported": "text",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/cli/migrate_configs",
+          "originalImport": "import { migrateBoardSource, migrateBoards } from \"../../src/runtime/cli/migrate_configs\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "migrateBoardSource",
+              "imported": "migrateBoardSource",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "migrateBoards",
+              "imported": "migrateBoards",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/migrate_board",
+          "originalImport": "import { MIGRATION_WARNING_CODES } from \"../../src/runtime/config/migrate_board\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "MIGRATION_WARNING_CODES",
+              "imported": "MIGRATION_WARNING_CODES",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 577 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/runtime_display.test.ts",
+      "to": "backend/tests/integration/cli/bilingual-commands.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "0ede2cbbfb93a576e4aa90f574754f6eab10da565254589f968d854c4b07b585",
+      "candidateSha256": "3677800d0147918511b8ce7fe7d314eef056107ed56472f337341e30fce816f4",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "public-template-base",
+          "start": 425,
+          "end": 447,
+          "original": "../../src/runtime/cli/",
+          "value": "../../../src/runtime/cli/",
+          "originalResolved": "backend/src/runtime/cli/"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 214,
+          "end": 249,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/runtime/cli/",
+          "originalExpression": "path.resolve(import.meta.dir, `../../src/runtime/cli/${file}`)",
+          "currentExpression": "path.resolve(import.meta.dir, `../../../src/runtime/cli/${file}`)",
+          "currentHead": "../../../src/runtime/cli/",
+          "kind": "public-template-base",
+          "argumentExpression": "file",
+          "originalHelperSpan": {
+            "start": 1820,
+            "end": 1882,
+            "line": 38
+          }
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "8319b0da5d99335b710dd24917ed7f0682c7160eefd13add4873e5080996792b",
+          "title": "zh-CN: actual config CLI displays structured prompt fallback and keeps private values out",
+          "occurrence": 1
+        },
+        {
+          "id": "d1c83b39a116b39fd77a68b4d539248a2141fcfca76989fd2e76fa5f0472156b",
+          "title": "en: actual config CLI displays structured prompt fallback and keeps private values out",
+          "occurrence": 1
+        },
+        {
+          "id": "5e03f533915ad3ddb6e721311363dd9ecb007a15be2664c29769f657d2ecc9d8",
+          "title": "actual command parse/load failures are bilingual safe JSON without uncaught stacks",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "originalImport": "import { text, type Locale } from \"@ai-werewolf-arena/game-text\";",
+          "currentImportBeforeRebase": "import { type Locale } from \"@ai-werewolf-arena/game-text\";",
+          "droppedBindings": [
+            {
+              "name": "text",
+              "imported": "text",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/cli/display",
+          "originalImport": "import { cliFailure, takeDisplayArguments } from \"../../src/runtime/cli/display\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "cliFailure",
+              "imported": "cliFailure",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "takeDisplayArguments",
+              "imported": "takeDisplayArguments",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/agents/player/player_observer",
+          "originalImport": "import { LlmObserver } from \"../../src/ai/agents/player/player_observer\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "LlmObserver",
+              "imported": "LlmObserver",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/console_presenter",
+          "originalImport": "import { createAcpConsoleLogger } from \"../../src/runtime/console_presenter\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAcpConsoleLogger",
+              "imported": "createAcpConsoleLogger",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/agents/providers/action_providers",
+          "originalImport": "import { BaselineBotActionProvider } from \"../../src/ai/agents/providers/action_providers\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "BaselineBotActionProvider",
+              "imported": "BaselineBotActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/app/bootstrap",
+          "originalImport": "import { bootstrapGame } from \"../../src/app/bootstrap\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "bootstrapGame",
+              "imported": "bootstrapGame",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig } from \"../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "sixPlayerMvpConfig",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import { Phase, Role, type ActionRequest } from \"../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/cli/migrate_configs",
+          "originalImport": "import { migrateBoardSource, migrateBoards } from \"../../src/runtime/cli/migrate_configs\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "migrateBoardSource",
+              "imported": "migrateBoardSource",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "migrateBoards",
+              "imported": "migrateBoards",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/config/migrate_board",
+          "originalImport": "import { MIGRATION_WARNING_CODES } from \"../../src/runtime/config/migrate_board\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "MIGRATION_WARNING_CODES",
+              "imported": "MIGRATION_WARNING_CODES",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 577 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/runtime_display.test.ts",
+      "to": "backend/tests/integration/filesystem/configuration/bilingual-config-migration.test.ts",
+      "sourceCommit": "c2e4123e95287b00854c413b865ea35597a01590",
+      "reason": "Actual selected integration boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "0ede2cbbfb93a576e4aa90f574754f6eab10da565254589f968d854c4b07b585",
+      "candidateSha256": "baf23fa710e6903cb29352181574e42c2bc63392c4fb71d7fda271ce338d4692",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 3322,
+          "end": 3365,
+          "original": "../../src/runtime/config/resolve_game_setup",
+          "value": "../../../../src/runtime/config/resolve_game_setup",
+          "originalResolved": "backend/src/runtime/config/resolve_game_setup.ts",
+          "expectedResolved": "backend/src/runtime/config/resolve_game_setup.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 3236,
+          "end": 3273,
+          "original": "../../src/runtime/config/parse_config",
+          "value": "../../../../src/runtime/config/parse_config",
+          "originalResolved": "backend/src/runtime/config/parse_config.ts",
+          "expectedResolved": "backend/src/runtime/config/parse_config.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 390,
+          "end": 428,
+          "original": "../../src/runtime/config/migrate_board",
+          "value": "../../../../src/runtime/config/migrate_board",
+          "originalResolved": "backend/src/runtime/config/migrate_board.ts",
+          "expectedResolved": "backend/src/runtime/config/migrate_board.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 309,
+          "end": 346,
+          "original": "../../src/runtime/cli/migrate_configs",
+          "value": "../../../../src/runtime/cli/migrate_configs",
+          "originalResolved": "backend/src/runtime/cli/migrate_configs.ts",
+          "expectedResolved": "backend/src/runtime/cli/migrate_configs.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 220,
+          "end": 255,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/runtime/config/parse_config.ts",
+          "originalExpression": "import(\"../../src/runtime/config/parse_config\")",
+          "currentExpression": "import(\"../../../../src/runtime/config/parse_config\")",
+          "currentHead": "../../../../src/runtime/config/parse_config",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/runtime/config/resolve_game_setup.ts",
+          "originalExpression": "import(\"../../src/runtime/config/resolve_game_setup\")",
+          "currentExpression": "import(\"../../../../src/runtime/config/resolve_game_setup\")",
+          "currentHead": "../../../../src/runtime/config/resolve_game_setup",
+          "kind": "dynamic-module-path"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "d29c02199d7d7808bbc8a93816eff9f489c8be6beb7b1252f6b66f46e62f612f",
+          "title": "all migration warning keys are bilingual and valid preview/apply reports are built before publication",
+          "occurrence": 1
+        },
+        {
+          "id": "587fb030f365712de8b5bf401e33e2158e219c6c98c6ec00816c375d656d5b82",
+          "title": "bilingual party example resolves every named seat without missing-language fallback",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../src/runtime/cli/display",
+          "originalImport": "import { cliFailure, takeDisplayArguments } from \"../../src/runtime/cli/display\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "cliFailure",
+              "imported": "cliFailure",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "takeDisplayArguments",
+              "imported": "takeDisplayArguments",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/agents/player/player_observer",
+          "originalImport": "import { LlmObserver } from \"../../src/ai/agents/player/player_observer\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "LlmObserver",
+              "imported": "LlmObserver",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/console_presenter",
+          "originalImport": "import { createAcpConsoleLogger } from \"../../src/runtime/console_presenter\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAcpConsoleLogger",
+              "imported": "createAcpConsoleLogger",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/agents/providers/action_providers",
+          "originalImport": "import { BaselineBotActionProvider } from \"../../src/ai/agents/providers/action_providers\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "BaselineBotActionProvider",
+              "imported": "BaselineBotActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/app/bootstrap",
+          "originalImport": "import { bootstrapGame } from \"../../src/app/bootstrap\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "bootstrapGame",
+              "imported": "bootstrapGame",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig } from \"../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "sixPlayerMvpConfig",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import { Phase, Role, type ActionRequest } from \"../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 577 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 521,
-    "targetFiles": 545,
-    "mappingEntries": 545,
-    "baselineCases": 6555,
+    "sourceFiles": 522,
+    "targetFiles": 548,
+    "mappingEntries": 548,
+    "baselineCases": 6564,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
