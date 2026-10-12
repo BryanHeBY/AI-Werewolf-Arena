@@ -131,6 +131,15 @@
       "currentConsumers": "remaining role profiles, agent prompts, projection/runtime and tests through named legacy facade",
       "exit": "C44 after remaining consumers target the Seer owner; no duplicate state or compatibility algorithm",
       "runtime": "same functions and stored ability-state reference; existing installation input copy unchanged"
+    },
+    {
+      "id": "action-reception-turn-owner",
+      "path": "backend/src/ai/agents/player/action_reception.ts",
+      "owner": "ai/agents/player/action-turn.ts",
+      "exports": ["ActionTurn", "ActionReceipt"],
+      "currentConsumers": "remaining old public imports and existing action reception tests; both SDK and ACP production transports use the real owner",
+      "exit": "C44 after remaining old consumers target the action selection owner",
+      "runtime": "same original class object, submission is preflight applied:false; no extra settlement subscriber"
     }
   ]
 }

@@ -1,3 +1,10 @@
+/**
+ * Adapts ACP session submissions to the shared agent-facing ActionTurn owner.
+ * Inputs are session-bound engine requests, turn IDs and protocol submissions;
+ * outputs retain pending action promises, preflight receipts and bug reports.
+ * Session deadlines are read by the turn owner; registry close cancels only its
+ * selection windows. No ACP receipt commits inventory or settles domain completion.
+ */
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { ActionRequest, ToolCall } from "../../../core/domain";
 import { World } from "../../../core/domain/world";
@@ -6,11 +13,8 @@ import {
   getDefaultRoleCatalog,
   ToolValidationRuleRegistry,
 } from "../../../game/mechanisms";
-import {
-  ActionReception,
-  ActionTurn,
-  type ActionReceipt,
-} from "../../agents/player/action_reception";
+import { ActionReception } from "../../agents/player/action_reception";
+import { ActionTurn, type ActionReceipt } from "../../agents/player/action-turn";
 import {
   GameReportBugInput as McpReportBugParams,
   GameSubmitActionInput as McpSubmitActionParams,

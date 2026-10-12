@@ -73,3 +73,5 @@
 - C18请求传播：existing request WeakMap 接21成功owner绑定、3实际consumer去十项清单；13程序排除明确routing edits后的AST一致，两个独立agent源审与15职责头检查0。新5+原characterization14/0/155，backend源码/tests类型0；精确求值/部分写入及未绑定descriptor边界见request-alias-propagation.md。F02仍旧预期，复杂状态与commit ports继续。
 
 - C18a条件修正：P0已证Noble七种恢复反例，单独改current失败闭原shared turn；七旧mutation保留输入而新终态expect单列，另2真实最早过期/3非法提案隔离。21局部/0/166、840文件focused类型0；未改stock/settlement/archives，未重新生成golden。旧预期固定e8de6dc可追溯，其他角色政策不合并。
+
+- C19行动窗口/完成端口：ActionTurn与receipt迁唯一owner、SDK/ACP真实直连；Reproduction原唯一assert/defer改具名入口，原provider返回与domaincommit分离。15原class/program/identity/typeerase证据及Root两原class全文核对，9selected/0/60、source类型0；无第二订阅/等待/round时间戳修改。

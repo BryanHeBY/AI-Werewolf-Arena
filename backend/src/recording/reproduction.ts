@@ -3,6 +3,8 @@
  * Input: normalized requests, committed facts/operations and checkpoints;
  * output: strict Tape data with existing version, causal and parameter constraints.
  * The trace owns request opening/settlement evidence, not domain resource commit.
+ * Its existing request-delivery subscription returns actions before synchronous
+ * domain completion; preflight selection receipts never settle this trace.
  * Feature verifiers reconstruct recorded rules; runtime authorization and original
  * component references are never serialized. Exact source/lock admission belongs
  * to replay execution; raw user messages remain untouched by locale formatting.
@@ -113,9 +115,8 @@ import type {
   VictoryAffiliation,
 } from "@ai-werewolf-arena/game-catalog";
 import { types } from "node:util";
+import { assertRequestDelivery, deferRequestDelivery } from "../core/domain/request_delivery";
 import {
-  assertRequestDelivery,
-  deferRequestDelivery,
   ACTION_STAGES,
   SHERIFF_BADGE_POLICIES,
   TOOL_NAMES,

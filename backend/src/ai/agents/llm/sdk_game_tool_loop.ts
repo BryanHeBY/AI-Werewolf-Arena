@@ -1,3 +1,10 @@
+/**
+ * Adapts SDK tool callbacks to the shared agent-facing ActionTurn selection owner.
+ * Inputs are model messages, an engine request and SDK invocations; outputs retain
+ * preflight receipts, the selected action and existing model/refusal evidence.
+ * Deadline timers, abort and finally-close remain local to this loop; accepted
+ * means selected with applied:false, never a domain commit or settlement subscription.
+ */
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { ActionRequest, ToolCall } from "../../../core/domain";
 import {
@@ -8,7 +15,8 @@ import { World } from "../../../core/domain/world";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { AgentBugReportService } from "../reporting/bug_report_service";
 import { gameToolProtocol } from "../game_tool_protocol";
-import { ActionReception, ActionTurn } from "../player/action_reception";
+import { ActionReception } from "../player/action_reception";
+import { ActionTurn } from "../player/action-turn";
 import {
   ToolCallRepairRegistry,
   type ToolSpecRegistry,
