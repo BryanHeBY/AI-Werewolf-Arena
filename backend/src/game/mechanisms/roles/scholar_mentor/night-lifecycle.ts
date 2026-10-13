@@ -25,6 +25,10 @@ export const scholarMentorNightTerminal = Object.freeze({
 });
 
 export class ScholarMentorNightUnit {
+  /** Manager receives this same ownership instance; terminal functions keep fresh arguments. */
+  readonly closeNormally = scholarMentorNightTerminal.closeNormally;
+  readonly abort = scholarMentorNightTerminal.abort;
+
   private transferred = false;
   constructor(private readonly runtime: ScholarMentorNightRuntime) {}
 

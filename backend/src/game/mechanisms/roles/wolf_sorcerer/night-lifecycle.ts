@@ -25,6 +25,10 @@ export const wolfSorcererNightTerminal = Object.freeze({
 });
 
 export class WolfSorcererNightUnit {
+  /** Manager receives this same ownership instance; terminal functions keep fresh arguments. */
+  readonly closeNormally = wolfSorcererNightTerminal.closeNormally;
+  readonly abort = wolfSorcererNightTerminal.abort;
+
   constructor(
     private readonly runtime: WolfSorcererNightRuntime,
     private readonly ownership: MagicianNightCleanupOwnership,

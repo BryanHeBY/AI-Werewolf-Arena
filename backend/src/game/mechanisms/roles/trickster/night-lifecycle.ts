@@ -25,6 +25,10 @@ export const tricksterNightTerminal = Object.freeze({
 });
 
 export class TricksterNightUnit {
+  /** Manager receives this same ownership instance; terminal functions keep fresh arguments. */
+  readonly finishNormally = tricksterNightTerminal.finishNormally;
+  readonly abort = tricksterNightTerminal.abort;
+
   constructor(
     private readonly runtime: TricksterNightRuntime,
     private readonly ownership: MagicianNightCleanupOwnership,

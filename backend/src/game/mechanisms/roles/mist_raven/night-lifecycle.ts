@@ -27,6 +27,10 @@ export const mistNightTerminal = Object.freeze({
 });
 
 export class MistNightUnit {
+  /** Manager receives this same ownership instance; terminal functions keep fresh arguments. */
+  readonly closeNormally = mistNightTerminal.closeNormally;
+  readonly abort = mistNightTerminal.abort;
+
   private transferred = false;
   constructor(
     private readonly runtime: MistNightRuntime,

@@ -22,6 +22,9 @@ export const weddingNightTerminal = Object.freeze({
 });
 
 export class WeddingNightUnit {
+  /** Manager receives this same ownership instance; terminal functions keep fresh arguments. */
+  readonly close = weddingNightTerminal.close;
+
   private transferred = false;
 
   constructor(

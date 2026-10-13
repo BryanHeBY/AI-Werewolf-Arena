@@ -6,5 +6,6 @@
  * refunds a paid Fox choice after failure.
  */
 export { AnimalNightUnit } from "./night-lifecycle";
+export { abortAnimalGame, beginAnimalExileUnit, prepareAnimalCatExpiry, closeAnimalExileUnit, animalPufferReaction } from "./authority";
 export type { AnimalNightRuntime } from "./night-lifecycle";
 export { animalAuthoritySnapshot } from "./authority";

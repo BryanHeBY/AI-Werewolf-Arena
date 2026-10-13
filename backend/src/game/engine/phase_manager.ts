@@ -12,28 +12,26 @@
  * terminal reads; frame authority alone decides whether a closed night may restart.
  * Exchange-family terminal ports retain separate normal/finally sites. Trickster
  * finish keeps the Day exile mapping open and has no new outer-cycle abort.
+ * Each cycle owns its lifecycle receivers. The pipeline publishes its original
+ * units before result construction; configured terminal ordering belongs to the
+ * ruleset lifecycle composition and reads this manager's World at every call.
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { demonNightTerminal } from "../mechanisms/roles/demon_hunter/ports";
-import { weddingNightTerminal } from "../mechanisms/roles/ghost_bride/ports";
+import { NightManagerLifecycle } from "../../rulesets/night-lifecycle-plan";
+
+
 import { bindBoardParameters } from "../../rulesets/board-parameters";
-import {
-  nobleNightReceiver,
-  expireServantAtNightEnd,
-  resolveSecretBodyDamage,
-  checkpointNobleBodyAuthority,
-  appendNobleContractClosure,
-} from "../mechanisms/roles/noble_secret_body/ports";
+import { expireServantAtNightEnd, resolveSecretBodyDamage, checkpointNobleBodyAuthority, appendNobleContractClosure } from "../mechanisms/roles/noble_secret_body/ports";
 import type { SecretBodySources } from "../mechanisms/roles/noble_secret_body/damage";
 import { hasRadiantNight } from "../mechanisms/roles/radiant_eclipse/night_frame";
-import { scholarMentorNightTerminal } from "../mechanisms/roles/scholar_mentor/ports";
-import { assertMistRosterCurrent, mistNightTerminal } from "../mechanisms/roles/mist_raven/ports";
+
+import { assertMistRosterCurrent } from "../mechanisms/roles/mist_raven/ports";
 import { MistPendingNight } from "../mechanisms/roles/mist_raven/pending_night";
 import { decideSnake } from "../mechanisms/roles/mist_raven/snake_window";
-import { timeConsortNightTerminal } from "../mechanisms/roles/time_wolf_consort/ports";
-import { wolfSorcererNightTerminal } from "../mechanisms/roles/wolf_sorcerer/ports";
-import { tricksterNightTerminal } from "../mechanisms/roles/trickster/ports";
-import { magicianNightTerminal } from "../mechanisms/roles/magician/ports";
+
+
+
+
 import {
   demonRedMoonExpiry,
   commitDemonRedMoonTransition,
@@ -132,14 +130,7 @@ import {
 } from "../mechanisms/roles/wolf_beauty/relation";
 import { BearNightFrame } from "../mechanisms/roles/bear/night_frame";
 import type { AliveComponent } from "../../core/domain/components/alive";
-import {
-  beginAnimalExileUnit,
-  prepareAnimalCatExpiry,
-  closeAnimalExileUnit,
-  animalPufferReaction,
-  animalAuthoritySnapshot,
-  abortAnimalGame,
-} from "../mechanisms/roles/animal_dream/authority";
+import { beginAnimalExileUnit, prepareAnimalCatExpiry, closeAnimalExileUnit, animalPufferReaction, animalAuthoritySnapshot } from "../mechanisms/roles/animal_dream/ports";
 import {
   appendAnimalFact,
   appendAnimalBeautyNotice,
@@ -382,30 +373,29 @@ export class PhaseManager {
       this.pureWhiteStartedDays.add(this.state.day);
     }
     const startedDay = this.state.day;
+    const manager = this;
+    const lifecycle = new NightManagerLifecycle({
+      get world() { return manager.world; },
+      get config() { return manager.config; },
+      abortMistPending() { manager.mistPending?.abort(); },
+    });
     let completed = false;
     try {
-      const result = await this.runSingleCycleInternal(actionProvider, maxDays);
+      const result = await this.runSingleCycleInternal(actionProvider, maxDays, lifecycle);
       completed = this.state.gameOver || this.state.day > startedDay;
       return result;
     } catch (error) {
-      if (this.config.animalDream) abortAnimalGame(this.world);
+      lifecycle.abortOnError();
       throw error;
     } finally {
-      if (this.config.animalDream && !completed) abortAnimalGame(this.world);
-      if (this.config.mistRaven) {
-        this.mistPending?.abort();
-        mistNightTerminal.abort(this.world);
-      }
-      if (this.config.timeConsort) timeConsortNightTerminal.abort(this.world);
-      if (this.config.scholarMentor) scholarMentorNightTerminal.abort(this.world);
-      if (this.config.wolfSorcerer) wolfSorcererNightTerminal.abort(this.world);
-      if (this.config.magician) magicianNightTerminal.abort(this.world);
+      lifecycle.abortCycle(completed);
     }
   }
 
   private async runSingleCycleInternal(
     actionProvider: ActionProvider,
     maxDays: number = 20,
+    lifecycle: NightManagerLifecycle,
   ): Promise<RuntimeSnapshot> {
     if (!this.state.gameOver && hasRadiantNight(this.world, this.state.day))
       throw new Error("radiant_night_reentry");
@@ -513,11 +503,10 @@ export class PhaseManager {
     const night = await this.nightPipeline.execute(this.config, actionProvider, this.state.day, {
       previousExile: this.previousExile,
       isCurrent: nightIsCurrent,
+      lifecycleHandoff: lifecycle,
     });
     if (night.interrupted || !nightIsCurrent()) {
-      if (this.config.nobleSecretBody) nobleNightReceiver(night).abort(this.world, nightDay);
-      demonNightTerminal.close(this.world);
-      weddingNightTerminal.close(this.world);
+      lifecycle.abortSpecialNight(night, nightDay);
       return this.getSnapshot();
     }
     const ownsWedding = weddingSetup(this.world) !== null;
@@ -601,7 +590,7 @@ export class PhaseManager {
             appendNobleContractClosure(this.world, nightDay, expiry, this.events, Phase.Night);
             (proposedSources[expiry.targetId] ??= []).push(DeathCause.ServantExpiry);
           }
-          nobleNightReceiver(night).closeNormally(this.world, nightDay);
+          lifecycle.closeNobleNormally(night, nightDay);
         }
         const deaths = Object.keys(proposedSources)
           .map(Number)
@@ -820,9 +809,7 @@ export class PhaseManager {
         }
         if (this.checkAndSealResult("night_settled")) return this.getSnapshot();
       } finally {
-        if (this.config.nobleSecretBody) nobleNightReceiver(night).abort(this.world, nightDay);
-        demonNightTerminal.close(this.world);
-        weddingNightTerminal.close(this.world);
+        lifecycle.abortSpecialNight(night, nightDay);
       }
     }
     const firstDaySheriffBeforeNightInfo =
@@ -895,7 +882,7 @@ export class PhaseManager {
       );
       assertMistRosterCurrent(this.world);
       pending.finish(current);
-      mistNightTerminal.closeNormally(this.world, cycleDay);
+      lifecycle.closeMistNormally(cycleDay);
       nightSettled = true;
       return this.checkAndSealResult(interrupted ? "day_interrupted" : "night_settled");
     };
@@ -976,25 +963,9 @@ export class PhaseManager {
               : {}),
           },
         );
-        if (this.config.trickster && dayIsCurrent())
-          tricksterNightTerminal.finishNormally(this.world, cycleDay);
-        if (this.config.wolfSorcerer && dayIsCurrent())
-          wolfSorcererNightTerminal.closeNormally(this.world, cycleDay);
-        if (this.config.magician && dayIsCurrent())
-          magicianNightTerminal.closeNormally(this.world, cycleDay);
-        if (this.config.timeConsort && dayIsCurrent())
-          timeConsortNightTerminal.closeNormally(this.world, cycleDay);
-        if (this.config.scholarMentor && dayIsCurrent())
-          scholarMentorNightTerminal.closeNormally(this.world, cycleDay);
-        if (this.config.mistRaven && dayIsCurrent())
-          mistNightTerminal.closeNormally(this.world, cycleDay);
+        lifecycle.finishDay(cycleDay, dayIsCurrent);
       } finally {
-        if (this.config.mistRaven) mistNightTerminal.abort(this.world);
-        if (this.config.trickster) tricksterNightTerminal.abort(this.world);
-        if (this.config.wolfSorcerer) wolfSorcererNightTerminal.abort(this.world);
-        if (this.config.magician) magicianNightTerminal.abort(this.world);
-        if (this.config.timeConsort) timeConsortNightTerminal.abort(this.world);
-        if (this.config.scholarMentor) scholarMentorNightTerminal.abort(this.world);
+        lifecycle.abortInner();
       }
       if (!dayIsCurrent()) return this.state.gameOver;
       if (animalSkip) {

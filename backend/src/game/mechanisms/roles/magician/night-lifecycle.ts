@@ -28,6 +28,10 @@ export const magicianNightTerminal = Object.freeze({
 });
 
 export class MagicianNightUnit {
+  /** Manager receives this same ownership instance; terminal functions keep fresh arguments. */
+  readonly closeNormally = magicianNightTerminal.closeNormally;
+  readonly abort = magicianNightTerminal.abort;
+
   private transferred = false;
   readonly cleanupOwnership: MagicianNightCleanupOwnership = Object.freeze({
     isTransferred: () => this.transferred,

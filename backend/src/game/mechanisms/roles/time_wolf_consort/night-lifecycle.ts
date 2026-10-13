@@ -25,6 +25,10 @@ export const timeConsortNightTerminal = Object.freeze({
 });
 
 export class TimeConsortNightUnit {
+  /** Manager receives this same ownership instance; terminal functions keep fresh arguments. */
+  readonly closeNormally = timeConsortNightTerminal.closeNormally;
+  readonly abort = timeConsortNightTerminal.abort;
+
   private transferred = false;
   constructor(private readonly runtime: TimeConsortNightRuntime) {}
 

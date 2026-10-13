@@ -19,69 +19,30 @@
  * original configured cleanup branches read its shared ownership before World.
  * Demon acquisition and the two native cleanup transfers now belong to their
  * concrete units; the original handoff point and finally ordering stay here.
+ * Ruleset lifecycle composition now owns pre-try openings, unit construction,
+ * ordered opening/cleanup and incremental transfer to the caller's cycle sink.
+ * Result and damage preparation remain here, after the original committed prefix.
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { DemonNightUnit } from "../../mechanisms/roles/demon_hunter/ports";
-import { WeddingNightUnit } from "../../mechanisms/roles/ghost_bride/ports";
+import { prepareNightPipelineLifecycle, type NightLifecycleHandoff } from "../../../rulesets/night-lifecycle-plan";
+
+
 import { bindBoardParameters } from "../../../rulesets/board-parameters";
 import { bindNightAbilityActorQuery } from "../../mechanisms/roles/night-ability-actors";
 import { bindNativeNightFailurePolicy } from "../../../rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../rulesets/native-night-effects";
-import {
-  FragrantNightUnit,
-  isFragrantPairBoard,
-  fragrantAuthoritySnapshot,
-  FRAGRANT_PAIR_POLICY,
-} from "../../mechanisms/roles/fragrant_pair_seer/ports";
-import {
-  NobleNightUnit,
-  createNobleNightAbortReceiver,
-  attachNobleNightReceiver,
-  checkpointNobleBodyAuthority,
-  assertNobleBodyRosterCurrent,
-  isNobleBodyBoard,
-} from "../../mechanisms/roles/noble_secret_body/ports";
-import {
-  AnimalNightUnit,
-  animalAuthoritySnapshot,
-} from "../../mechanisms/roles/animal_dream/ports";
-import {
-  RadiantNightUnit,
-  isRadiantEclipseBoard,
-  assertRadiantRosterCurrent,
-  sealRadiantNightEffects,
-} from "../../mechanisms/roles/radiant_eclipse/ports";
-import {
-  isScholarMentorBoard,
-  assertScholarMentorRosterCurrent,
-  ScholarMentorNightUnit,
-} from "../../mechanisms/roles/scholar_mentor/ports";
-import {
-  mistKnifeTargets,
-  isMistRavenBoard,
-  assertMistRosterCurrent,
-  MistNightUnit,
-} from "../../mechanisms/roles/mist_raven/ports";
+import { isFragrantPairBoard, fragrantAuthoritySnapshot } from "../../mechanisms/roles/fragrant_pair_seer/ports";
+import { createNobleNightAbortReceiver, attachNobleNightReceiver, checkpointNobleBodyAuthority, assertNobleBodyRosterCurrent, isNobleBodyBoard } from "../../mechanisms/roles/noble_secret_body/ports";
+import { animalAuthoritySnapshot } from "../../mechanisms/roles/animal_dream/ports";
+import { isRadiantEclipseBoard, assertRadiantRosterCurrent, sealRadiantNightEffects } from "../../mechanisms/roles/radiant_eclipse/ports";
+import { isScholarMentorBoard, assertScholarMentorRosterCurrent } from "../../mechanisms/roles/scholar_mentor/ports";
+import { mistKnifeTargets, isMistRavenBoard, assertMistRosterCurrent } from "../../mechanisms/roles/mist_raven/ports";
 import { assertScholarMentorBonusEffects } from "../../mechanisms/roles/scholar_mentor/night_stages";
-import {
-  isTimeConsortBoard,
-  TimeConsortNightUnit,
-  assertTimeConsortRosterCurrent,
-} from "../../mechanisms/roles/time_wolf_consort/ports";
-import {
-  assertWolfSorcererRosterCurrent,
-  WolfSorcererNightUnit,
-} from "../../mechanisms/roles/wolf_sorcerer/ports";
-import {
-  assertTricksterRosterCurrent,
-  TricksterNightUnit,
-} from "../../mechanisms/roles/trickster/ports";
-import {
-  assertMagicianRosterCurrent,
-  isMagicianBoard,
-  MagicianNightUnit,
-} from "../../mechanisms/roles/magician/ports";
+import { isTimeConsortBoard, assertTimeConsortRosterCurrent } from "../../mechanisms/roles/time_wolf_consort/ports";
+import { assertWolfSorcererRosterCurrent } from "../../mechanisms/roles/wolf_sorcerer/ports";
+import { assertTricksterRosterCurrent } from "../../mechanisms/roles/trickster/ports";
+import { assertMagicianRosterCurrent, isMagicianBoard } from "../../mechanisms/roles/magician/ports";
 import { isRedMoonBoard } from "../../mechanisms/roles/demon_hunter/ports";
 import {
   assertNightmareRosterCurrent,
@@ -110,22 +71,9 @@ import {
   hasActiveGhostBride,
 } from "../../mechanisms/roles/ghost_bride/ports";
 import { discardStaleWeddingKnife } from "../../mechanisms/roles/ghost_bride/night_stages";
-import {
-  lonelyGirlReady,
-  hasActiveLonelyGirl,
-  openLonelyGirlNight,
-} from "../../mechanisms/roles/lonely_girl/lifecycle";
-import {
-  wildChildReady,
-  hasActiveWildChild,
-  openWildChildNight,
-} from "../../mechanisms/roles/wild_child/lifecycle";
-import {
-  hasActiveInitialIdentitySetup,
-  initialIdentityKind,
-  initialIdentitySetupReady,
-  openInitialIdentityNight,
-} from "../../mechanisms/roles/initial_identity/deal";
+import { lonelyGirlReady, hasActiveLonelyGirl } from "../../mechanisms/roles/lonely_girl/ports";
+import { wildChildReady, hasActiveWildChild } from "../../mechanisms/roles/wild_child/ports";
+import { hasActiveInitialIdentitySetup, initialIdentityKind, initialIdentitySetupReady } from "../../mechanisms/roles/initial_identity/ports";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import {
@@ -163,12 +111,7 @@ import {
 import { getSessionRecorder } from "../../../recording/recording_context";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { GameActionRequestFactory } from "../action_request_factory";
-import {
-  createRandom,
-  shuffled,
-  randomDraws,
-  type RandomSource,
-} from "../../../core/domain/random";
+import { createRandom, shuffled, type RandomSource } from "../../../core/domain/random";
 import { DreamNightFrame, hasDreamNightCommit } from "../../mechanisms/roles/dreamer/night_frame";
 import { discardStaleWolfKnife } from "../../mechanisms/roles/wolf/knife_scope";
 import { hasRoleInspectionNightCommit } from "../../mechanisms/roles/role_inspection/night_scope";
@@ -197,6 +140,7 @@ export interface NightPipelineDependencies {
 }
 
 export interface NightPipelineOptions {
+  readonly lifecycleHandoff?: NightLifecycleHandoff;
   previousExile?: Readonly<ExileFeedback> | null;
   isCurrent?: () => boolean;
 }
@@ -267,158 +211,25 @@ export class NightPipeline {
     const isCurrent = options.isCurrent ?? (() => true);
     if (!isCurrent())
       return attachNobleNightReceiver({ interrupted: true }, createNobleNightAbortReceiver());
-    let parameterWorld: World;
-    const closeLonelyGirlNight = openLonelyGirlNight(
-      ((parameterWorld = this.world),
-      (config = bindBoardParameters(parameterWorld, config).board),
-      parameterWorld),
-      day,
-    );
-    const closeWildChildNight = openWildChildNight(this.world, day, this.events);
-    const closeThiefNight = openInitialIdentityNight(this.world, day);
-    const ownsWedding = weddingSetup(this.world) !== null;
-    const ownsDemon = demonHunterActorId(this.world) !== null;
-    const magicianNight = new MagicianNightUnit({
-      get world() {
-        return pipeline.world;
-      },
-    });
-    const wolfSorcererNight = new WolfSorcererNightUnit(
-      {
-        get world() {
-          return pipeline.world;
-        },
-      },
-      magicianNight.cleanupOwnership,
-    );
-    const tricksterNight = new TricksterNightUnit(
-      {
-        get world() {
-          return pipeline.world;
-        },
-      },
-      magicianNight.cleanupOwnership,
-    );
-    const timeConsortNight = new TimeConsortNightUnit({
-      get world() {
-        return pipeline.world;
-      },
-    });
-    const scholarMentorNight = new ScholarMentorNightUnit({
-      get world() {
-        return pipeline.world;
-      },
-    });
-    const ownsNoble = config.nobleSecretBody !== undefined;
-    const ownsFragrant = config.fragrantPairSeer !== undefined;
-    const ownsAnimal = config.animalDream !== undefined;
     const pipeline = this;
-    const animalNight = new AnimalNightUnit(
+    const lifecycle = prepareNightPipelineLifecycle(
       {
-        get world() {
-          return pipeline.world;
-        },
-        get events() {
-          return pipeline.events;
-        },
+        get world() { return pipeline.world; },
+        get events() { return pipeline.events; },
+        get random() { return pipeline.random; },
       },
+      config,
       day,
+      () => options.lifecycleHandoff,
     );
-    const fragrantNight = new FragrantNightUnit(
-      {
-        get world() {
-          return pipeline.world;
-        },
-        get events() {
-          return pipeline.events;
-        },
-        drawKnowledge() {
-          return randomDraws(pipeline.random.fork("fragrant-known-wolf"));
-        },
-        recordOpening(day, notice) {
-          getSessionRecorder()?.recordRequiredLogicOp({
-            scope: "phase_pipeline",
-            op: "fragrant_night_opened",
-            phase: Phase.Night,
-            status: "ok",
-            output: {
-              policy: FRAGRANT_PAIR_POLICY,
-              day,
-              notice,
-              knowledgeDrawCount: day === 1 ? 1 : 0,
-            },
-          });
-        },
-      },
-      day,
-    );
-    const nobleNight = new NobleNightUnit(
-      {
-        get world() {
-          return pipeline.world;
-        },
-        get events() {
-          return pipeline.events;
-        },
-        recordOpening(payload) {
-          getSessionRecorder()?.recordRequiredLogicOp({
-            scope: "phase_pipeline",
-            op: "noble_body_night_opened",
-            phase: Phase.Night,
-            status: "ok",
-            output: payload,
-          });
-        },
-      },
-      day,
-    );
-    const ownsRadiant = config.radiantEclipse !== undefined;
-    const radiantNight = new RadiantNightUnit(
-      {
-        get world() {
-          return pipeline.world;
-        },
-        get events() {
-          return pipeline.events;
-        },
-      },
-      day,
-    );
-    const ownsMist = config.mistRaven !== undefined;
-    const mistNight = new MistNightUnit(
-      {
-        get world() {
-          return pipeline.world;
-        },
-        get events() {
-          return pipeline.events;
-        },
-      },
-      day,
-    );
-    const demonNight = new DemonNightUnit({
-      get world() {
-        return pipeline.world;
-      },
-    });
-    const weddingNight = new WeddingNightUnit(
-      {
-        get world() {
-          return pipeline.world;
-        },
-        get events() {
-          return pipeline.events;
-        },
-      },
-      ownsWedding,
-    );
+    config = lifecycle.config;
+    const {
+      ownsWedding, ownsDemon, ownsNoble, ownsFragrant, ownsAnimal, ownsRadiant, ownsMist,
+      animalNight, fragrantNight, nobleNight, radiantNight, mistNight,
+      weddingNight,
+    } = lifecycle;
     try {
-      if (ownsAnimal) animalNight.open(isCurrent);
-      if (ownsFragrant) fragrantNight.open(isCurrent);
-      if (ownsNoble) nobleNight.open(isCurrent);
-      if (ownsRadiant) radiantNight.open();
-      if (ownsDemon) demonNight.open(day, isCurrent);
-      if (ownsMist) mistNight.open();
+      lifecycle.open(isCurrent);
       const assertReadable = () => {
         if (ownsAnimal && !animalAuthoritySnapshot(this.world))
           throw new Error("animal_authority_revoked");
@@ -712,16 +523,7 @@ export class NightPipeline {
               return [id, { life, version: aliveLifeVersion(life) }] as const;
             }),
           );
-      if (ownsRadiant) radiantNight.closeNormally();
-      if (ownsAnimal) animalNight.closeNormally();
-      if (ownsFragrant) fragrantNight.closeNormally();
-      if (ownsNoble) nobleNight.transferToManager();
-      weddingNight.transferToManager(ownsWedding);
-      demonNight.transferToManager(ownsDemon);
-      magicianNight.transferToManager(config.magician !== undefined);
-      timeConsortNight.transferToManager(config.timeConsort !== undefined);
-      scholarMentorNight.transferToManager(config.scholarMentor !== undefined);
-      mistNight.transferToManager(ownsMist);
+      lifecycle.finishPipeline();
       return attachNobleNightReceiver(
         {
           interrupted: false,
@@ -739,21 +541,7 @@ export class NightPipeline {
         nobleNight.receiver,
       );
     } finally {
-      animalNight.abortIfOwned();
-      fragrantNight.abortIfOwned();
-      nobleNight.abortIfOwned();
-      radiantNight.abortIfAcquired();
-      if (ownsMist) mistNight.abortIfOwned();
-      if (config.trickster) tricksterNight.abortIfOwned();
-      if (config.wolfSorcerer) wolfSorcererNight.abortIfOwned();
-      if (config.magician) magicianNight.abortIfOwned();
-      if (config.timeConsort) timeConsortNight.abortIfOwned();
-      if (config.scholarMentor) scholarMentorNight.abortIfOwned();
-      demonNight.abortIfOwned();
-      weddingNight.abortIfOwned();
-      closeThiefNight();
-      closeWildChildNight();
-      closeLonelyGirlNight();
+      lifecycle.abortPipeline();
     }
   }
 

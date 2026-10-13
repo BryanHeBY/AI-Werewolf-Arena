@@ -1,0 +1,532 @@
+{
+  "schema": "awa-cycle-night-lifecycle-evidence-v1",
+  "base": "61ac4f4e (A frozen pipeline ee39);manager original2cca unchanged",
+  "scope": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "4d1f3377a98e6fd8eff1f4238b2b78f4ec60e55e0c36af175df7602b771398d9"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "08749915799dd74dbc0398db9f8a1f9b20d024194790269431f718a47cb5c506"
+    },
+    {
+      "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+      "sha256": "91b75a9fd954a3a9d93cf52d2c8fa3caedcf43a1382806efb2a45934268277e1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+      "sha256": "61c6d60560ea996db102b5bd3b43e9d6c3706037a263c51c604c076e76520ffa"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-manager-receiver-ownership.test.ts",
+      "sha256": "c331e1e85df2b044ea4f3c39dd7bdf5d24f5d3527018c73f12510ff090568bb5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/night-lifecycle.ts",
+      "sha256": "a2be6f734ce86c24940ce9afe0ba7143755161d809ed333f0ca034f7e88f0c65"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/night-lifecycle.ts",
+      "sha256": "15485acc8c426b81ed9b279d5b5d9198e9811c1ebeaaf5e5c435741c8e4b8a59"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night-lifecycle.ts",
+      "sha256": "30e73ab92a4644ce7a9adb832e45f75f8abbde5bfa82b8d9af42f00928162acc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night-lifecycle.ts",
+      "sha256": "6cbfebad52535ce4a2859be33ecceb693f8056e917923485b474288c25e48b3c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/night-lifecycle.ts",
+      "sha256": "3a3aa30aa3993bae45051bf141f6936d7569eea0244e1dc23595458b2669ba65"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night-lifecycle.ts",
+      "sha256": "e1ab39f6897ff52925e99d744f5e86549d9b2ddb2f4a841de99d7505d9d84f7e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night-lifecycle.ts",
+      "sha256": "6f1f3f2155d2e8187e6d87c40ded13e16f38cc454a480400dd57edc61b753940"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night-lifecycle.ts",
+      "sha256": "9e800454793a72a875cc1bf86987293b8d35843a0947cd1660d5eb282583b30f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "sha256": "b4b5f4888b88dab3c62beff726d0b7eb19a5832612426fb528c9421065ea2050"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+      "sha256": "fa3672e0bc717a79b7cc1c5af3e7be6496c4e68dbb60a414d7c19f7bd1e221c7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "sha256": "2b05f8bfd29a0671e3bbe9abdad2b7296671f54c55cea1f1217ee7d3096c6d4d"
+    }
+  ],
+  "proof": {
+    "rows": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "originalSha256": "ee39b38ccc0c1e3c4f5661356c1f296589b6627fc55eddeaa416b57bba93d675",
+        "sha256": "08749915799dd74dbc0398db9f8a1f9b20d024194790269431f718a47cb5c506",
+        "registeredEdits": 6,
+        "completeForwardProgramSame": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "originalSha256": "88420088c9b3e4e5359d8403c249a600e7d3573ad5f47ce6f66fdc7368c5bb79",
+        "sha256": "4d1f3377a98e6fd8eff1f4238b2b78f4ec60e55e0c36af175df7602b771398d9",
+        "registeredEdits": 13,
+        "completeForwardProgramSame": true
+      }
+    ],
+    "findings": [],
+    "policy": "Actual complete engine source equals exact named original fragments,delayed getters,declared public import routes and responsibility comments. Migrated helper bodies and reference identity independently reviewed; no removed phase/death operation is ignored."
+  },
+  "reviews": {
+    "root": "Actual constructor/pretry and all manager sites read; registered complete two-engine forward proof. Original repeatedcurrentness omission in unused draft fixed from actual six original gates before integration; four-case regression captures it.",
+    "stateAndTiming": {
+      "originManagerActualGit": true,
+      "constructorOriginActualGit": true,
+      "constructorWholeProgramTokensSame": true,
+      "registeredManagerSites": [
+        {
+          "newText": "import type { ReadonlyBoardConfig } from \"@ai-werewolf-arena/game-contract\";\nimport { NightManagerLifecycle } from \"../../rulesets/night-lifecycle-plan\";",
+          "oldText": "import type { ReadonlyBoardConfig } from \"@ai-werewolf-arena/game-contract\";",
+          "expected": 1,
+          "observed": 1
+        },
+        {
+          "newText": "    const startedDay = this.state.day;\n    const manager = this;\n    const lifecycle = new NightManagerLifecycle({\n      get world() { return manager.world; },\n      get config() { return manager.config; },\n      abortMistPending() { manager.mistPending?.abort(); },\n    });",
+          "oldText": "    const startedDay = this.state.day;",
+          "expected": 1,
+          "observed": 1
+        },
+        {
+          "newText": "this.runSingleCycleInternal(actionProvider, maxDays, lifecycle)",
+          "oldText": "this.runSingleCycleInternal(actionProvider, maxDays)",
+          "expected": 1,
+          "observed": 1
+        },
+        {
+          "newText": "      lifecycle.abortOnError();",
+          "oldText": "      if (this.config.animalDream) abortAnimalGame(this.world);",
+          "expected": 1,
+          "observed": 1
+        },
+        {
+          "newText": "      lifecycle.abortCycle(completed);",
+          "oldText": "      if (this.config.animalDream && !completed) abortAnimalGame(this.world);\n      if (this.config.mistRaven) {\n        this.mistPending?.abort();\n        mistNightTerminal.abort(this.world);\n      }\n      if (this.config.timeConsort) timeConsortNightTerminal.abort(this.world);\n      if (this.config.scholarMentor) scholarMentorNightTerminal.abort(this.world);\n      if (this.config.wolfSorcerer) wolfSorcererNightTerminal.abort(this.world);\n      if (this.config.magician) magicianNightTerminal.abort(this.world);",
+          "expected": 1,
+          "observed": 1
+        },
+        {
+          "newText": "  private async runSingleCycleInternal(\n    actionProvider: ActionProvider,\n    maxDays: number = 20,\n    lifecycle: NightManagerLifecycle,\n",
+          "oldText": "  private async runSingleCycleInternal(\n    actionProvider: ActionProvider,\n    maxDays: number = 20,\n",
+          "expected": 1,
+          "observed": 1
+        },
+        {
+          "newText": "      previousExile: this.previousExile,\n      isCurrent: nightIsCurrent,\n      lifecycleHandoff: lifecycle,\n    });",
+          "oldText": "      previousExile: this.previousExile,\n      isCurrent: nightIsCurrent,\n    });",
+          "expected": 1,
+          "observed": 1
+        },
+        {
+          "newText": "      lifecycle.abortSpecialNight(night, nightDay);",
+          "oldText": "      if (this.config.nobleSecretBody) nobleNightReceiver(night).abort(this.world, nightDay);\n      demonNightTerminal.close(this.world);\n      weddingNightTerminal.close(this.world);",
+          "expected": 2,
+          "observed": 2
+        },
+        {
+          "newText": "lifecycle.closeNobleNormally(night, nightDay);",
+          "oldText": "nobleNightReceiver(night).closeNormally(this.world, nightDay);",
+          "expected": 1,
+          "observed": 1
+        },
+        {
+          "newText": "      pending.finish(current);\n      lifecycle.closeMistNormally(cycleDay);",
+          "oldText": "      pending.finish(current);\n      mistNightTerminal.closeNormally(this.world, cycleDay);",
+          "expected": 1,
+          "observed": 1
+        },
+        {
+          "newText": "        lifecycle.finishDay(cycleDay, dayIsCurrent);",
+          "oldText": "        if (this.config.trickster && dayIsCurrent())\n          tricksterNightTerminal.finishNormally(this.world, cycleDay);\n        if (this.config.wolfSorcerer && dayIsCurrent())\n          wolfSorcererNightTerminal.closeNormally(this.world, cycleDay);\n        if (this.config.magician && dayIsCurrent())\n          magicianNightTerminal.closeNormally(this.world, cycleDay);\n        if (this.config.timeConsort && dayIsCurrent())\n          timeConsortNightTerminal.closeNormally(this.world, cycleDay);\n        if (this.config.scholarMentor && dayIsCurrent())\n          scholarMentorNightTerminal.closeNormally(this.world, cycleDay);\n        if (this.config.mistRaven && dayIsCurrent())\n          mistNightTerminal.closeNormally(this.world, cycleDay);",
+          "expected": 1,
+          "observed": 1
+        },
+        {
+          "newText": "        lifecycle.abortInner();",
+          "oldText": "        if (this.config.mistRaven) mistNightTerminal.abort(this.world);\n        if (this.config.trickster) tricksterNightTerminal.abort(this.world);\n        if (this.config.wolfSorcerer) wolfSorcererNightTerminal.abort(this.world);\n        if (this.config.magician) magicianNightTerminal.abort(this.world);\n        if (this.config.timeConsort) timeConsortNightTerminal.abort(this.world);\n        if (this.config.scholarMentor) scholarMentorNightTerminal.abort(this.world);",
+          "expected": 1,
+          "observed": 1
+        }
+      ],
+      "terminalIdentity": [
+        {
+          "feature": "demon_hunter",
+          "property": "close",
+          "assignedSameTerminalBinding": true
+        },
+        {
+          "feature": "ghost_bride",
+          "property": "close",
+          "assignedSameTerminalBinding": true
+        },
+        {
+          "feature": "mist_raven",
+          "property": "closeNormally",
+          "assignedSameTerminalBinding": true
+        },
+        {
+          "feature": "mist_raven",
+          "property": "abort",
+          "assignedSameTerminalBinding": true
+        },
+        {
+          "feature": "time_wolf_consort",
+          "property": "closeNormally",
+          "assignedSameTerminalBinding": true
+        },
+        {
+          "feature": "time_wolf_consort",
+          "property": "abort",
+          "assignedSameTerminalBinding": true
+        },
+        {
+          "feature": "scholar_mentor",
+          "property": "closeNormally",
+          "assignedSameTerminalBinding": true
+        },
+        {
+          "feature": "scholar_mentor",
+          "property": "abort",
+          "assignedSameTerminalBinding": true
+        },
+        {
+          "feature": "magician",
+          "property": "closeNormally",
+          "assignedSameTerminalBinding": true
+        },
+        {
+          "feature": "magician",
+          "property": "abort",
+          "assignedSameTerminalBinding": true
+        },
+        {
+          "feature": "wolf_sorcerer",
+          "property": "closeNormally",
+          "assignedSameTerminalBinding": true
+        },
+        {
+          "feature": "wolf_sorcerer",
+          "property": "abort",
+          "assignedSameTerminalBinding": true
+        },
+        {
+          "feature": "trickster",
+          "property": "finishNormally",
+          "assignedSameTerminalBinding": true
+        },
+        {
+          "feature": "trickster",
+          "property": "abort",
+          "assignedSameTerminalBinding": true
+        }
+      ],
+      "managerMethods": [
+        {
+          "name": "closeNobleNormally",
+          "body": "{\n    nobleNightReceiver(result).closeNormally(this.runtime.world, day);\n  }"
+        },
+        {
+          "name": "abortSpecialNight",
+          "body": "{\n    if (this.runtime.config.nobleSecretBody)\n      nobleNightReceiver(result).abort(this.runtime.world, day);\n    this.demon.close(this.runtime.world);\n    this.wedding.close(this.runtime.world);\n  }"
+        },
+        {
+          "name": "finishDay",
+          "body": "{\n    if (this.runtime.config.trickster && isCurrent()) this.trickster.finishNormally(this.runtime.world, day);\n    if (this.runtime.config.wolfSorcerer && isCurrent()) this.sorcerer.closeNormally(this.runtime.world, day);\n    if (this.runtime.config.magician && isCurrent()) this.magician.closeNormally(this.runtime.world, day);\n    if (this.runtime.config.timeConsort && isCurrent()) this.time.closeNormally(this.runtime.world, day);\n    if (this.runtime.config.scholarMentor && isCurrent()) this.scholar.closeNormally(this.runtime.world, day);\n    if (this.runtime.config.mistRaven && isCurrent()) this.mist.closeNormally(this.runtime.world, day);\n  }"
+        },
+        {
+          "name": "closeMistNormally",
+          "body": "{\n    this.mist.closeNormally(this.runtime.world, day);\n  }"
+        },
+        {
+          "name": "abortInner",
+          "body": "{\n    if (this.runtime.config.mistRaven) this.mist.abort(this.runtime.world);\n    if (this.runtime.config.trickster) this.trickster.abort(this.runtime.world);\n    if (this.runtime.config.wolfSorcerer) this.sorcerer.abort(this.runtime.world);\n    if (this.runtime.config.magician) this.magician.abort(this.runtime.world);\n    if (this.runtime.config.timeConsort) this.time.abort(this.runtime.world);\n    if (this.runtime.config.scholarMentor) this.scholar.abort(this.runtime.world);\n  }"
+        },
+        {
+          "name": "abortOnError",
+          "body": "{\n    if (this.runtime.config.animalDream) abortAnimalGame(this.runtime.world);\n  }"
+        },
+        {
+          "name": "abortCycle",
+          "body": "{\n    if (this.runtime.config.animalDream && !completed) abortAnimalGame(this.runtime.world);\n    if (this.runtime.config.mistRaven) {\n      this.runtime.abortMistPending();\n      this.mist.abort(this.runtime.world);\n    }\n    if (this.runtime.config.timeConsort) this.time.abort(this.runtime.world);\n    if (this.runtime.config.scholarMentor) this.scholar.abort(this.runtime.world);\n    if (this.runtime.config.wolfSorcerer) this.sorcerer.abort(this.runtime.world);\n    if (this.runtime.config.magician) this.magician.abort(this.runtime.world);\n  }"
+        }
+      ],
+      "policy": "Only read-only public code, token/AST inspections. No type/case/game/transport execution. Constructor comparison includes complete actual old 145line body; only runtime world/events/alias and concrete class binding parameterization inverted. Current pipeline also carries separately owned P4-A mutations; no false full-pipeline equality claim.",
+      "scopeSha": [
+        {
+          "path": "backend/src/game/engine/phase_manager.ts",
+          "sha256": "7ae84709bca3e28c4bd787506691d74b6df02fb5db4cb4f472d8f50038dee6fd"
+        },
+        {
+          "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "sha256": "41680a16f6701f234c216858b23d20f754247d617b1f1c7a2d2cbe5f4c6c837d"
+        },
+        {
+          "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+          "sha256": "8f6a91d987cf0691ed4a7f705fd689d5bc75d411abcf77818393ad689dd9427f"
+        }
+      ]
+    },
+    "architecture": {
+      "result": "green-no-blocker",
+      "counts": {
+        "paths": 16,
+        "source": 15,
+        "newUnit": 1
+      },
+      "scope": [
+        {
+          "path": "backend/src/game/engine/phase_manager.ts",
+          "sha256": "4d1f3377a98e6fd8eff1f4238b2b78f4ec60e55e0c36af175df7602b771398d9",
+          "matchesFinalIndependentSnapshot": true
+        },
+        {
+          "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "sha256": "08749915799dd74dbc0398db9f8a1f9b20d024194790269431f718a47cb5c506",
+          "matchesFinalIndependentSnapshot": true
+        },
+        {
+          "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+          "sha256": "91b75a9fd954a3a9d93cf52d2c8fa3caedcf43a1382806efb2a45934268277e1",
+          "matchesFinalIndependentSnapshot": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+          "sha256": "61c6d60560ea996db102b5bd3b43e9d6c3706037a263c51c604c076e76520ffa",
+          "matchesFinalIndependentSnapshot": true
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/night-manager-receiver-ownership.test.ts",
+          "sha256": "c331e1e85df2b044ea4f3c39dd7bdf5d24f5d3527018c73f12510ff090568bb5",
+          "matchesFinalIndependentSnapshot": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/night-lifecycle.ts",
+          "sha256": "a2be6f734ce86c24940ce9afe0ba7143755161d809ed333f0ca034f7e88f0c65",
+          "matchesFinalIndependentSnapshot": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/night-lifecycle.ts",
+          "sha256": "15485acc8c426b81ed9b279d5b5d9198e9811c1ebeaaf5e5c435741c8e4b8a59",
+          "matchesFinalIndependentSnapshot": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/magician/night-lifecycle.ts",
+          "sha256": "30e73ab92a4644ce7a9adb832e45f75f8abbde5bfa82b8d9af42f00928162acc",
+          "matchesFinalIndependentSnapshot": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night-lifecycle.ts",
+          "sha256": "6cbfebad52535ce4a2859be33ecceb693f8056e917923485b474288c25e48b3c",
+          "matchesFinalIndependentSnapshot": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/trickster/night-lifecycle.ts",
+          "sha256": "3a3aa30aa3993bae45051bf141f6936d7569eea0244e1dc23595458b2669ba65",
+          "matchesFinalIndependentSnapshot": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mist_raven/night-lifecycle.ts",
+          "sha256": "e1ab39f6897ff52925e99d744f5e86549d9b2ddb2f4a841de99d7505d9d84f7e",
+          "matchesFinalIndependentSnapshot": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/scholar_mentor/night-lifecycle.ts",
+          "sha256": "6f1f3f2155d2e8187e6d87c40ded13e16f38cc454a480400dd57edc61b753940",
+          "matchesFinalIndependentSnapshot": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night-lifecycle.ts",
+          "sha256": "9e800454793a72a875cc1bf86987293b8d35843a0947cd1660d5eb282583b30f",
+          "matchesFinalIndependentSnapshot": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+          "sha256": "b4b5f4888b88dab3c62beff726d0b7eb19a5832612426fb528c9421065ea2050",
+          "matchesFinalIndependentSnapshot": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+          "sha256": "fa3672e0bc717a79b7cc1c5af3e7be6496c4e68dbb60a414d7c19f7bd1e221c7",
+          "matchesFinalIndependentSnapshot": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+          "sha256": "2b05f8bfd29a0671e3bbe9abdad2b7296671f54c55cea1f1217ee7d3096c6d4d",
+          "matchesFinalIndependentSnapshot": true
+        }
+      ],
+      "allScopeSHAStable": true,
+      "publicBindings": [
+        {
+          "path": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+          "target": "lifecycle",
+          "names": [
+            "hasActiveLonelyGirl",
+            "lonelyGirlReady",
+            "openLonelyGirlNight"
+          ],
+          "directNamedExport": true,
+          "runtimeStatements": "named exports only; no wrapper/factory/store"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+          "target": "lifecycle",
+          "names": [
+            "hasActiveWildChild",
+            "wildChildReady",
+            "openWildChildNight"
+          ],
+          "directNamedExport": true,
+          "runtimeStatements": "named exports only; no wrapper/factory/store"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+          "target": "deal",
+          "names": [
+            "hasActiveInitialIdentitySetup",
+            "initialIdentityKind",
+            "initialIdentitySetupReady",
+            "openInitialIdentityNight"
+          ],
+          "directNamedExport": true,
+          "runtimeStatements": "named exports only; no wrapper/factory/store"
+        }
+      ],
+      "sourceReview": {
+        "originalPretryAcquisitionOrder": [
+          "Lonely",
+          "Wild",
+          "Initial"
+        ],
+        "orderedOpen": [
+          "Animal",
+          "Fragrant",
+          "Noble",
+          "Radiant",
+          "Demon",
+          "Mist"
+        ],
+        "normalPipelineClose": [
+          "Radiant",
+          "Animal",
+          "Fragrant"
+        ],
+        "lateTransferOrder": [
+          "Noble",
+          "Wedding then receiveWedding",
+          "Demon then receiveDemon",
+          "Magician then receiveExchange same3units",
+          "Time then receiveTime",
+          "Scholar then receiveScholar",
+          "Mist then receiveMist"
+        ],
+        "sixIndependentDayCurrentChecks": true,
+        "innerOrder": [
+          "Mist",
+          "Trickster",
+          "Sorcerer",
+          "Magician",
+          "Time",
+          "Scholar"
+        ],
+        "outerOrder": [
+          "Animal conditional",
+          "Mist pending then Mist",
+          "Time",
+          "Scholar",
+          "Sorcerer",
+          "Magician"
+        ],
+        "noOuterTrickster": true,
+        "managerUsesOriginalConcreteUnitObject": true,
+        "unitTerminalMethodsAreSameOriginalFunctionReferences": true,
+        "uncachedManagerWorldArguments": true,
+        "noNewCloseDeduplication": true,
+        "handoffOptionOnlyReadLateViaThunk": true,
+        "partialPublishedReceiversSurviveLaterResultGetterThrow": true,
+        "noSecondGlobalStoreOrArchiveHandle": true
+      },
+      "limitations": [
+        "Read-only actual16files/constructor/engine branches/method bindings/newcasepurpose review. Existing owner forward proof and peer constructor/method AST evidence read, not rerun.",
+        "Existing source9989 and four bounded cases are Root owner receipts; this reviewer did not repeat types/runtime/gate.",
+        "New optional external lifecycleHandoff is an explicit internal extension; compatibility with arbitrary malicious getters on a previously absent option is not falsely claimed.",
+        "Root unit operations keep current same feature authority; paid resource/death/RulePlan policy not migrated in this slice."
+      ],
+      "findings": [],
+      "scopeOrigin": "Fresh final actual16 snapshot; four known owner header/required-literal late edits incorporated. Earlier owner stale hashes retained in original scope artifact, no source edits."
+    }
+  },
+  "receipts": [
+    {
+      "kind": "complete-backend-source",
+      "session": 9989,
+      "actualClosedExit": 0
+    },
+    {
+      "kind": "current-multi-batch-backend-source-tests-scripts",
+      "session": 35862,
+      "actualClosedExit": 0,
+      "policy": "Live combined workspace type check with original strictflags and existing physicaltypescript alias; not final fixed-source full acceptance."
+    },
+    {
+      "kind": "new-unit-four-cases",
+      "passed": 4,
+      "failed": 0,
+      "assertions": 22,
+      "actualExit": 0
+    },
+    {
+      "kind": "16-path-head-dependency-gate",
+      "session": 13931,
+      "actualClosedExit": 0,
+      "heads": 0,
+      "newDependencies": 0,
+      "historicalDependencies": 43
+    }
+  ],
+  "initialReds": [
+    "Three new public heads lacked timing/terminal text; added true before/open/finally/currentness contracts",
+    "Four reduced legacy engine import signatures became new dependency identities; resolved with actual public function bindings, no refreshed debt",
+    "New literal board fixture lacked required fields then supplied wrong hooks collection; corrected to actual existing HookConfig fourboolean fields before combined check",
+    "Private integration script first exact mist terminal anchor matched two indentation substrings; narrowed to original pending.finish context, no source written before failed harness"
+  ],
+  "ownership": {
+    "pipelineConcreteUnits": 12,
+    "independentOriginalCleanupScopes": 10,
+    "managerPerCycleStore": 1,
+    "managerOriginalUnitReceivers": 8,
+    "nobleOriginalNonenumerableReceiver": true,
+    "serializedReceivers": 0
+  },
+  "notRun": [
+    "Full runtime suites",
+    "Games",
+    "Models",
+    "Discovery",
+    "Full repository gate"
+  ],
+  "remaining": [
+    "Complete supported RulePlan",
+    "Effect/death/observation mechanisms",
+    "Final zero-debt same-input gates"
+  ]
+}

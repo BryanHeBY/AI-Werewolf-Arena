@@ -20,6 +20,9 @@ export const demonNightTerminal = Object.freeze({
 });
 
 export class DemonNightUnit {
+  /** Manager receives this same ownership instance; terminal functions keep fresh arguments. */
+  readonly close = demonNightTerminal.close;
+
   private acquired = false;
   private transferred = false;
 
