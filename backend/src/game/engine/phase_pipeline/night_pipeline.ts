@@ -8,6 +8,7 @@
  * 已捕获 day 原值交给伤害折叠，机械／觉醒／原毒 intent 单独保留来源及原体；
  * intent 元数据不进入夜间摘要、事件或 schema2，旧注入 claim 保持兼容。
  * 晚交接保留真实单位的 owned 状态和原失败前缀，result 与最终伤害仍在原已付效果之后准备。
+ * 已提交重入准入交有限规则组合，在原婚约开夜之后检查；拒绝不撤销原已付效果，原 finally 仍收尾。
  */
 import { attachNightUnit } from "../../../core/domain/night-unit";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
@@ -96,23 +97,11 @@ import { getSessionRecorder } from "../../../recording/recording_context";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { GameActionRequestFactory } from "../action_request_factory";
 import { createRandom, shuffled, type RandomSource } from "../../../core/domain/random";
-import { DreamNightFrame, hasDreamNightCommit } from "../../mechanisms/roles/dreamer/night_frame";
+import { DreamNightFrame } from "../../mechanisms/roles/dreamer/night_frame";
 import { discardStaleWolfKnife } from "../../mechanisms/roles/wolf/knife_scope";
-import { hasRoleInspectionNightCommit } from "../../mechanisms/roles/role_inspection/night_scope";
 import { livingNightLife } from "../../../core/domain/night_effects";
 import { AliveComponent, aliveLifeVersion } from "../../../core/domain/components/alive";
-import { hasMechanicalNightCommit } from "../../mechanisms/roles/mechanical_wolf/night_scope";
-import { hasBlackMarketNightCommit } from "../../mechanisms/roles/black_market_merchant/night_stage";
-import { hasRecipientNightCommit } from "../../mechanisms/roles/recipient_ability_stage";
-import { hasLuckyNightCommit } from "../../mechanisms/roles/miracle_merchant/lucky_stage";
-import { hasMerchantNightCommit } from "../../mechanisms/roles/miracle_merchant/night_stage";
-
-import { hasCupidNightCommit } from "../../mechanisms/roles/cupid/relation";
-import { hasHybridNightCommit } from "../../mechanisms/roles/hybrid/night_stage";
-import { hasAwakenedNightCommit } from "../../mechanisms/roles/awakened_hidden_wolf/night_scope";
-import { hasDeathAbilityActivationCommit } from "../../mechanisms/roles/death_ability_activation";
-
-import { hasFoxInspectionNightCommit } from "../../mechanisms/roles/cursed_fox/inspection_effect";
+import { assertNightCommitAdmission } from "../../../rulesets/night-commit-admission";
 
 export interface NightPipelineDependencies {
   readonly rulePlan?: RulePlan;
@@ -260,28 +249,8 @@ export class NightPipeline {
             }
           : actionProvider;
       if (ownsWedding) weddingNight.open(day, isCurrent);
-      if (hasFoxInspectionNightCommit(this.world, day))
-        throw new Error("fox_inspection_night_reentry_after_commit");
-      if (hasDreamNightCommit(this.world, day)) throw new Error("dream_night_reentry_after_commit");
-      if (hasRoleInspectionNightCommit(this.world, day))
-        throw new Error("role_inspection_night_reentry_after_commit");
-      if (hasMechanicalNightCommit(this.world, day))
-        throw new Error("mechanical_night_reentry_after_commit");
-      if (
-        hasBlackMarketNightCommit(this.world, day) ||
-        hasRecipientNightCommit(this.world, day, "black_market")
-      )
-        throw new Error("black_market_night_reentry_after_commit");
-      if (hasLuckyNightCommit(this.world, day)) throw new Error("lucky_night_reentry_after_commit");
-      if (hasMerchantNightCommit(this.world, day))
-        throw new Error("merchant_night_reentry_after_commit");
-      if (hasCupidNightCommit(this.world, day)) throw new Error("cupid_night_reentry_after_commit");
-      if (hasHybridNightCommit(this.world, day))
-        throw new Error("hybrid_night_reentry_after_commit");
-      if (hasAwakenedNightCommit(this.world, day))
-        throw new Error("awakened_night_reentry_after_commit");
-      if (hasDeathAbilityActivationCommit(this.world, day))
-        throw new Error("death_ability_night_reentry_after_commit");
+      // 保原同步检查点：若有婚约，已完成原开夜；起始记录和阶段状态尚未建立，拒绝仍走原 finally。
+      assertNightCommitAdmission({ world: () => this.world, day: () => day });
       safeRecordLogicOp({
         scope: "phase_pipeline",
         op: "night_pipeline_start",

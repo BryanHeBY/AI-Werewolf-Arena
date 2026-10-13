@@ -1,0 +1,3015 @@
+{
+  "scope": "夜间有限机制已提交重入的完整有序准入归rulesets",
+  "source": {
+    "files": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "sha256": "94bc0a843c8188429498231516c498310606b0a860429acc7db1d8733cc41a92"
+      },
+      {
+        "path": "backend/src/rulesets/night-commit-admission.ts",
+        "sha256": "07ce1a722b6073671f5fb1bd163c35338e968a0dcde659535471eafe4542ec28"
+      },
+      {
+        "path": "backend/tests/unit/rulesets/night-commit-admission.test.ts",
+        "sha256": "abd41a78bdbd9e2051c1f9233387dd986f4471f16a256f1219a548fc79709931"
+      }
+    ]
+  },
+  "wholeProgramProofBeforeFinalComment": {
+    "baseline": "adfab9189b3a883a04dd95c2510bb4670a580a4b",
+    "scope": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "sha256": "9e17ba4901db6073c78333d57d0e6326d03477146de1f20c0413eef4616de469"
+      },
+      {
+        "path": "backend/src/rulesets/night-commit-admission.ts",
+        "sha256": "07ce1a722b6073671f5fb1bd163c35338e968a0dcde659535471eafe4542ec28"
+      },
+      {
+        "path": "backend/tests/unit/rulesets/night-commit-admission.test.ts",
+        "sha256": "abd41a78bdbd9e2051c1f9233387dd986f4471f16a256f1219a548fc79709931"
+      }
+    ],
+    "originalIfCount": 11,
+    "originalDirectPredicateCount": 12,
+    "predicatesInOriginalOrder": [
+      {
+        "name": "hasFoxInspectionNightCommit",
+        "args": [
+          "this.world",
+          "day"
+        ]
+      },
+      {
+        "name": "hasDreamNightCommit",
+        "args": [
+          "this.world",
+          "day"
+        ]
+      },
+      {
+        "name": "hasRoleInspectionNightCommit",
+        "args": [
+          "this.world",
+          "day"
+        ]
+      },
+      {
+        "name": "hasMechanicalNightCommit",
+        "args": [
+          "this.world",
+          "day"
+        ]
+      },
+      {
+        "name": "hasBlackMarketNightCommit",
+        "args": [
+          "this.world",
+          "day"
+        ]
+      },
+      {
+        "name": "hasRecipientNightCommit",
+        "args": [
+          "this.world",
+          "day",
+          "\"black_market\""
+        ]
+      },
+      {
+        "name": "hasLuckyNightCommit",
+        "args": [
+          "this.world",
+          "day"
+        ]
+      },
+      {
+        "name": "hasMerchantNightCommit",
+        "args": [
+          "this.world",
+          "day"
+        ]
+      },
+      {
+        "name": "hasCupidNightCommit",
+        "args": [
+          "this.world",
+          "day"
+        ]
+      },
+      {
+        "name": "hasHybridNightCommit",
+        "args": [
+          "this.world",
+          "day"
+        ]
+      },
+      {
+        "name": "hasAwakenedNightCommit",
+        "args": [
+          "this.world",
+          "day"
+        ]
+      },
+      {
+        "name": "hasDeathAbilityActivationCommit",
+        "args": [
+          "this.world",
+          "day"
+        ]
+      }
+    ],
+    "exactActualThunks": {
+      "world": "() => this.world",
+      "day": "() => day"
+    },
+    "completeOwnerJudgmentsOnlyExplicitQueryMapSame": true,
+    "completePipelineTypedSameAfterOnlyActualOwnerAndPreciselyReviewedImportInverse": true,
+    "completeBeforeNodes": 3296,
+    "completeInverseNodes": 3296,
+    "allNoncommentRawLeafKindsSame": true,
+    "wholePipelineOutputs": [
+      {
+        "mode": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA": "634d4c9e26b1171e303210a8a5225413ea627d023534a7da18ca8472bd6b3ffd",
+        "inverseSHA": "634d4c9e26b1171e303210a8a5225413ea627d023534a7da18ca8472bd6b3ffd"
+      },
+      {
+        "mode": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA": "4450bcaa6544762bba7e91af6bc7eee796992a787a2a3a9b07a0291f28de0732",
+        "inverseSHA": "4450bcaa6544762bba7e91af6bc7eee796992a787a2a3a9b07a0291f28de0732"
+      }
+    ],
+    "remainingBindingsExactlySame": true,
+    "canonicalPredicateBindings": [
+      {
+        "name": "hasFoxInspectionNightCommit",
+        "old": {
+          "kind": "named",
+          "name": "hasFoxInspectionNightCommit",
+          "imported": "hasFoxInspectionNightCommit",
+          "typeOnly": false,
+          "specifier": "../../mechanisms/roles/cursed_fox/inspection_effect"
+        },
+        "new": {
+          "kind": "named",
+          "name": "hasFoxInspectionNightCommit",
+          "imported": "hasFoxInspectionNightCommit",
+          "typeOnly": false,
+          "specifier": "../game/mechanisms/roles/cursed_fox/inspection_effect"
+        },
+        "sameActualEndpoint": true,
+        "sameNamedBinding": true
+      },
+      {
+        "name": "hasDreamNightCommit",
+        "old": {
+          "kind": "named",
+          "name": "hasDreamNightCommit",
+          "imported": "hasDreamNightCommit",
+          "typeOnly": false,
+          "specifier": "../../mechanisms/roles/dreamer/night_frame"
+        },
+        "new": {
+          "kind": "named",
+          "name": "hasDreamNightCommit",
+          "imported": "hasDreamNightCommit",
+          "typeOnly": false,
+          "specifier": "../game/mechanisms/roles/dreamer/night_frame"
+        },
+        "sameActualEndpoint": true,
+        "sameNamedBinding": true
+      },
+      {
+        "name": "hasRoleInspectionNightCommit",
+        "old": {
+          "kind": "named",
+          "name": "hasRoleInspectionNightCommit",
+          "imported": "hasRoleInspectionNightCommit",
+          "typeOnly": false,
+          "specifier": "../../mechanisms/roles/role_inspection/night_scope"
+        },
+        "new": {
+          "kind": "named",
+          "name": "hasRoleInspectionNightCommit",
+          "imported": "hasRoleInspectionNightCommit",
+          "typeOnly": false,
+          "specifier": "../game/mechanisms/roles/role_inspection/night_scope"
+        },
+        "sameActualEndpoint": true,
+        "sameNamedBinding": true
+      },
+      {
+        "name": "hasMechanicalNightCommit",
+        "old": {
+          "kind": "named",
+          "name": "hasMechanicalNightCommit",
+          "imported": "hasMechanicalNightCommit",
+          "typeOnly": false,
+          "specifier": "../../mechanisms/roles/mechanical_wolf/night_scope"
+        },
+        "new": {
+          "kind": "named",
+          "name": "hasMechanicalNightCommit",
+          "imported": "hasMechanicalNightCommit",
+          "typeOnly": false,
+          "specifier": "../game/mechanisms/roles/mechanical_wolf/night_scope"
+        },
+        "sameActualEndpoint": true,
+        "sameNamedBinding": true
+      },
+      {
+        "name": "hasBlackMarketNightCommit",
+        "old": {
+          "kind": "named",
+          "name": "hasBlackMarketNightCommit",
+          "imported": "hasBlackMarketNightCommit",
+          "typeOnly": false,
+          "specifier": "../../mechanisms/roles/black_market_merchant/night_stage"
+        },
+        "new": {
+          "kind": "named",
+          "name": "hasBlackMarketNightCommit",
+          "imported": "hasBlackMarketNightCommit",
+          "typeOnly": false,
+          "specifier": "../game/mechanisms/roles/black_market_merchant/night_stage"
+        },
+        "sameActualEndpoint": true,
+        "sameNamedBinding": true
+      },
+      {
+        "name": "hasRecipientNightCommit",
+        "old": {
+          "kind": "named",
+          "name": "hasRecipientNightCommit",
+          "imported": "hasRecipientNightCommit",
+          "typeOnly": false,
+          "specifier": "../../mechanisms/roles/recipient_ability_stage"
+        },
+        "new": {
+          "kind": "named",
+          "name": "hasRecipientNightCommit",
+          "imported": "hasRecipientNightCommit",
+          "typeOnly": false,
+          "specifier": "../game/mechanisms/roles/recipient_ability_stage"
+        },
+        "sameActualEndpoint": true,
+        "sameNamedBinding": true
+      },
+      {
+        "name": "hasLuckyNightCommit",
+        "old": {
+          "kind": "named",
+          "name": "hasLuckyNightCommit",
+          "imported": "hasLuckyNightCommit",
+          "typeOnly": false,
+          "specifier": "../../mechanisms/roles/miracle_merchant/lucky_stage"
+        },
+        "new": {
+          "kind": "named",
+          "name": "hasLuckyNightCommit",
+          "imported": "hasLuckyNightCommit",
+          "typeOnly": false,
+          "specifier": "../game/mechanisms/roles/miracle_merchant/lucky_stage"
+        },
+        "sameActualEndpoint": true,
+        "sameNamedBinding": true
+      },
+      {
+        "name": "hasMerchantNightCommit",
+        "old": {
+          "kind": "named",
+          "name": "hasMerchantNightCommit",
+          "imported": "hasMerchantNightCommit",
+          "typeOnly": false,
+          "specifier": "../../mechanisms/roles/miracle_merchant/night_stage"
+        },
+        "new": {
+          "kind": "named",
+          "name": "hasMerchantNightCommit",
+          "imported": "hasMerchantNightCommit",
+          "typeOnly": false,
+          "specifier": "../game/mechanisms/roles/miracle_merchant/night_stage"
+        },
+        "sameActualEndpoint": true,
+        "sameNamedBinding": true
+      },
+      {
+        "name": "hasCupidNightCommit",
+        "old": {
+          "kind": "named",
+          "name": "hasCupidNightCommit",
+          "imported": "hasCupidNightCommit",
+          "typeOnly": false,
+          "specifier": "../../mechanisms/roles/cupid/relation"
+        },
+        "new": {
+          "kind": "named",
+          "name": "hasCupidNightCommit",
+          "imported": "hasCupidNightCommit",
+          "typeOnly": false,
+          "specifier": "../game/mechanisms/roles/cupid/relation"
+        },
+        "sameActualEndpoint": true,
+        "sameNamedBinding": true
+      },
+      {
+        "name": "hasHybridNightCommit",
+        "old": {
+          "kind": "named",
+          "name": "hasHybridNightCommit",
+          "imported": "hasHybridNightCommit",
+          "typeOnly": false,
+          "specifier": "../../mechanisms/roles/hybrid/night_stage"
+        },
+        "new": {
+          "kind": "named",
+          "name": "hasHybridNightCommit",
+          "imported": "hasHybridNightCommit",
+          "typeOnly": false,
+          "specifier": "../game/mechanisms/roles/hybrid/night_stage"
+        },
+        "sameActualEndpoint": true,
+        "sameNamedBinding": true
+      },
+      {
+        "name": "hasAwakenedNightCommit",
+        "old": {
+          "kind": "named",
+          "name": "hasAwakenedNightCommit",
+          "imported": "hasAwakenedNightCommit",
+          "typeOnly": false,
+          "specifier": "../../mechanisms/roles/awakened_hidden_wolf/night_scope"
+        },
+        "new": {
+          "kind": "named",
+          "name": "hasAwakenedNightCommit",
+          "imported": "hasAwakenedNightCommit",
+          "typeOnly": false,
+          "specifier": "../game/mechanisms/roles/awakened_hidden_wolf/night_scope"
+        },
+        "sameActualEndpoint": true,
+        "sameNamedBinding": true
+      },
+      {
+        "name": "hasDeathAbilityActivationCommit",
+        "old": {
+          "kind": "named",
+          "name": "hasDeathAbilityActivationCommit",
+          "imported": "hasDeathAbilityActivationCommit",
+          "typeOnly": false,
+          "specifier": "../../mechanisms/roles/death_ability_activation"
+        },
+        "new": {
+          "kind": "named",
+          "name": "hasDeathAbilityActivationCommit",
+          "imported": "hasDeathAbilityActivationCommit",
+          "typeOnly": false,
+          "specifier": "../game/mechanisms/roles/death_ability_activation"
+        },
+        "sameActualEndpoint": true,
+        "sameNamedBinding": true
+      }
+    ],
+    "exactCheckpoint": {
+      "same": true,
+      "originalBefore": "if (ownsWedding) weddingNight.open(day, isCurrent);",
+      "originalAfter": "safeRecordLogicOp({\n        scope: \"phase_pipeline\",\n        op: \"night_pipeline_start\",\n        phase: Phase.Night,\n        status: \"ok\",\n        input: {\n          board_size: config.boardSize,\n        },\n      });",
+      "finallyOriginalAndCurrentWholeSame": true
+    },
+    "remainingMembers": [
+      {
+        "name": "world",
+        "wholeTypedMemberSame": true
+      },
+      {
+        "name": "toolGateway",
+        "wholeTypedMemberSame": true
+      },
+      {
+        "name": "damageResolutionSystem",
+        "wholeTypedMemberSame": true
+      },
+      {
+        "name": "events",
+        "wholeTypedMemberSame": true
+      },
+      {
+        "name": "stageRegistry",
+        "wholeTypedMemberSame": true
+      },
+      {
+        "name": "random",
+        "wholeTypedMemberSame": true
+      },
+      {
+        "name": "#rulePlan",
+        "wholeTypedMemberSame": true
+      },
+      {
+        "name": "constructor",
+        "wholeTypedMemberSame": true
+      },
+      {
+        "name": "makeRequest",
+        "wholeTypedMemberSame": true
+      },
+      {
+        "name": "getAliveByRole",
+        "wholeTypedMemberSame": true
+      },
+      {
+        "name": "ensureMarks",
+        "wholeTypedMemberSame": true
+      },
+      {
+        "name": "pickMajorityTarget",
+        "wholeTypedMemberSame": true
+      }
+    ],
+    "originalMechanismControls": [
+      {
+        "path": "backend/src/game/mechanisms/roles/cursed_fox/inspection_effect.ts",
+        "originalSHA": "1c74f35ab997825f6e07adf908192bd69180e6f4bd27bd6ebde848dff352fe25",
+        "currentSHA": "1c74f35ab997825f6e07adf908192bd69180e6f4bd27bd6ebde848dff352fe25",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts",
+        "originalSHA": "01d3710325fbef5ce92d2c4407306e44ef3adc255a025ddaa245db5e08f31631",
+        "currentSHA": "01d3710325fbef5ce92d2c4407306e44ef3adc255a025ddaa245db5e08f31631",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+        "originalSHA": "88f926e8d11088968e2aa4b3ac17f4d90e5a3bea159462e9a735d7a06e7c118a",
+        "currentSHA": "88f926e8d11088968e2aa4b3ac17f4d90e5a3bea159462e9a735d7a06e7c118a",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts",
+        "originalSHA": "2ae8ac77b6a1e139e8b5043166ba9c95560848bee9937edc83686e2fa27c65e9",
+        "currentSHA": "2ae8ac77b6a1e139e8b5043166ba9c95560848bee9937edc83686e2fa27c65e9",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+        "originalSHA": "738db0d1202f47cefae69ffce47e7a6b451e1781c889853206b8c0f85428165a",
+        "currentSHA": "738db0d1202f47cefae69ffce47e7a6b451e1781c889853206b8c0f85428165a",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+        "originalSHA": "6d3634683f6bb890e501a40e277c916c4d6c292be947cd810b3939c6c3dc7276",
+        "currentSHA": "6d3634683f6bb890e501a40e277c916c4d6c292be947cd810b3939c6c3dc7276",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/miracle_merchant/lucky_stage.ts",
+        "originalSHA": "1a8941cc306e0f4f3ba28d22dcfe84776fa035c4e2f8d31fd3e25795f0a5069c",
+        "currentSHA": "1a8941cc306e0f4f3ba28d22dcfe84776fa035c4e2f8d31fd3e25795f0a5069c",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+        "originalSHA": "d666d7a7715b258c29ff8c8679aaf49b6c111a851af54e7de39b33f268a04a4d",
+        "currentSHA": "d666d7a7715b258c29ff8c8679aaf49b6c111a851af54e7de39b33f268a04a4d",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/cupid/relation.ts",
+        "originalSHA": "086091823da90845deb322b6172d9bc32257c7e911203370f372cc4c70a00370",
+        "currentSHA": "086091823da90845deb322b6172d9bc32257c7e911203370f372cc4c70a00370",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+        "originalSHA": "10ed9279d4560bc88faebb2a23a62069e23b7a487ae61aeef0e7a838584bb61a",
+        "currentSHA": "10ed9279d4560bc88faebb2a23a62069e23b7a487ae61aeef0e7a838584bb61a",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts",
+        "originalSHA": "21b9c80ed75728f5a8495bcf189645f7b48eb1bd7cf51959e2ba8ea69a7e4393",
+        "currentSHA": "21b9c80ed75728f5a8495bcf189645f7b48eb1bd7cf51959e2ba8ea69a7e4393",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/death_ability_activation.ts",
+        "originalSHA": "9ccb7844205fe7559c313722bc60ec6895f7df08f7c08bf6adf9c70bafba716c",
+        "currentSHA": "9ccb7844205fe7559c313722bc60ec6895f7df08f7c08bf6adf9c70bafba716c",
+        "wholeBytesSame": true
+      }
+    ],
+    "commentPrecisionEmits": [
+      {
+        "mode": "ESNext",
+        "wholeRawSame": true
+      },
+      {
+        "mode": "CommonJS",
+        "wholeRawSame": true
+      }
+    ],
+    "limitations": "Whole pipeline import text restored only after separate allremaining binding exact check and all12 moved import endpoint/name/kind/type identities checked. No callback/body/arrays/recording/assert/cleanup omitted. New owner module/export and locally-created World/day closures alter module route/stack, not claimed all module initialization/binary identical.12 mechanism control bytes themselves unchanged; transitive typed DTO ownership is Root separate parallel work and not claimed graph/source universe constant.",
+    "findings": []
+  },
+  "receiptsBeforeFinalComment": {
+    "newTests": {
+      "actualToolChunk": "6674a5",
+      "exitCode": 0,
+      "cases": 3,
+      "failures": 0,
+      "assertions": 13,
+      "log": "tests-new.log",
+      "onlyNewFile": true
+    },
+    "finiteTypes": {
+      "actualSession": 78215,
+      "exitCode": 0,
+      "roots": 3,
+      "log": "types.log",
+      "logBytes": 0,
+      "runs": 1
+    },
+    "heads": {
+      "checked": 3,
+      "actualDocumentationPaths": 415,
+      "failures": [],
+      "chineseFailures": []
+    },
+    "commentPrecisionEmits": [
+      {
+        "mode": "ESNext",
+        "wholeRawSame": true
+      },
+      {
+        "mode": "CommonJS",
+        "wholeRawSame": true
+      }
+    ],
+    "graphHarnessFirstFailure": {
+      "actualToolChunk": "fb9f3d",
+      "exitCode": 1,
+      "scope": "Tool string apostrophe only, notsource/runtime/type failure",
+      "finalActualToolChunk": "43b67c",
+      "finalExitCode": 0
+    },
+    "finalScope": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "sha256": "9e17ba4901db6073c78333d57d0e6326d03477146de1f20c0413eef4616de469",
+        "sameScope": true,
+        "sameProof": true
+      },
+      {
+        "path": "backend/src/rulesets/night-commit-admission.ts",
+        "sha256": "07ce1a722b6073671f5fb1bd163c35338e968a0dcde659535471eafe4542ec28",
+        "sameScope": true,
+        "sameProof": true
+      },
+      {
+        "path": "backend/tests/unit/rulesets/night-commit-admission.test.ts",
+        "sha256": "abd41a78bdbd9e2051c1f9233387dd986f4471f16a256f1219a548fc79709931",
+        "sameScope": true,
+        "sameProof": true
+      }
+    ],
+    "processesClosed": true
+  },
+  "actualHeadsBeforeFinalComment": {
+    "checked": 3,
+    "actualDocumentationPaths": 415,
+    "failures": [],
+    "chineseFailures": []
+  },
+  "moduleGraph": {
+    "root": "backend/src/rulesets/night-commit-admission.ts",
+    "actualRuntimeModules": 198,
+    "graph": {
+      "backend/src/rulesets/night-commit-admission.ts": [
+        {
+          "specifier": "../game/mechanisms/roles/cursed_fox/inspection_effect",
+          "endpoint": "backend/src/game/mechanisms/roles/cursed_fox/inspection_effect.ts"
+        },
+        {
+          "specifier": "../game/mechanisms/roles/dreamer/night_frame",
+          "endpoint": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts"
+        },
+        {
+          "specifier": "../game/mechanisms/roles/role_inspection/night_scope",
+          "endpoint": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts"
+        },
+        {
+          "specifier": "../game/mechanisms/roles/mechanical_wolf/night_scope",
+          "endpoint": "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts"
+        },
+        {
+          "specifier": "../game/mechanisms/roles/black_market_merchant/night_stage",
+          "endpoint": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts"
+        },
+        {
+          "specifier": "../game/mechanisms/roles/recipient_ability_stage",
+          "endpoint": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts"
+        },
+        {
+          "specifier": "../game/mechanisms/roles/miracle_merchant/lucky_stage",
+          "endpoint": "backend/src/game/mechanisms/roles/miracle_merchant/lucky_stage.ts"
+        },
+        {
+          "specifier": "../game/mechanisms/roles/miracle_merchant/night_stage",
+          "endpoint": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts"
+        },
+        {
+          "specifier": "../game/mechanisms/roles/cupid/relation",
+          "endpoint": "backend/src/game/mechanisms/roles/cupid/relation.ts"
+        },
+        {
+          "specifier": "../game/mechanisms/roles/hybrid/night_stage",
+          "endpoint": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts"
+        },
+        {
+          "specifier": "../game/mechanisms/roles/awakened_hidden_wolf/night_scope",
+          "endpoint": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts"
+        },
+        {
+          "specifier": "../game/mechanisms/roles/death_ability_activation",
+          "endpoint": "backend/src/game/mechanisms/roles/death_ability_activation.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/cursed_fox/inspection_effect.ts": [
+        {
+          "specifier": "../../../../core/domain",
+          "endpoint": "backend/src/core/domain/index.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/night_effects",
+          "endpoint": "backend/src/core/domain/night_effects.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/dreamer/night_frame.ts": [
+        {
+          "specifier": "../../../../core/domain/components/alive",
+          "endpoint": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts": [
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/components/alive",
+          "endpoint": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "../abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "specifier": "../gargoyle/ports",
+          "endpoint": "backend/src/game/mechanisms/roles/gargoyle/ports.ts"
+        },
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts": [
+        {
+          "specifier": "../../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/night_effects",
+          "endpoint": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "specifier": "./state",
+          "endpoint": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts": [
+        {
+          "specifier": "./state",
+          "endpoint": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/components/alive",
+          "endpoint": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/night_effects",
+          "endpoint": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "specifier": "../ability_changes",
+          "endpoint": "backend/src/game/mechanisms/roles/ability_changes.ts"
+        },
+        {
+          "specifier": "../death_abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/death_abilities.ts"
+        },
+        {
+          "specifier": "../recipient_ability_stage",
+          "endpoint": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts"
+        },
+        {
+          "specifier": "./state",
+          "endpoint": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/recipient_ability_stage.ts": [
+        {
+          "specifier": "../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "../../../core/domain/night_effects",
+          "endpoint": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "specifier": "./abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "specifier": "./ability_changes",
+          "endpoint": "backend/src/game/mechanisms/roles/ability_changes.ts"
+        },
+        {
+          "specifier": "./ability_scope",
+          "endpoint": "backend/src/game/mechanisms/roles/ability_scope.ts"
+        },
+        {
+          "specifier": "./night_action_history",
+          "endpoint": "backend/src/game/mechanisms/roles/night_action_history.ts"
+        },
+        {
+          "specifier": "./inspection",
+          "endpoint": "backend/src/game/mechanisms/roles/inspection.ts"
+        },
+        {
+          "specifier": "./seer/ports",
+          "endpoint": "backend/src/game/mechanisms/roles/seer/ports.ts"
+        },
+        {
+          "specifier": "./guard/ports",
+          "endpoint": "backend/src/game/mechanisms/roles/guard/ports.ts"
+        },
+        {
+          "specifier": "./witch/ports",
+          "endpoint": "backend/src/game/mechanisms/roles/witch/ports.ts"
+        },
+        {
+          "specifier": "./cursed_fox/inspection_effect",
+          "endpoint": "backend/src/game/mechanisms/roles/cursed_fox/inspection_effect.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/miracle_merchant/lucky_stage.ts": [
+        {
+          "specifier": "../recipient_ability_stage",
+          "endpoint": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts": [
+        {
+          "specifier": "./state",
+          "endpoint": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/night_effects",
+          "endpoint": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "specifier": "../ability_changes",
+          "endpoint": "backend/src/game/mechanisms/roles/ability_changes.ts"
+        },
+        {
+          "specifier": "./state",
+          "endpoint": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/cupid/relation.ts": [
+        {
+          "specifier": "../../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/components/alive",
+          "endpoint": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/hybrid/night_stage.ts": [
+        {
+          "specifier": "../../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/components/victory",
+          "endpoint": "backend/src/core/domain/components/victory.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/night_effects",
+          "endpoint": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "specifier": "./state",
+          "endpoint": "backend/src/game/mechanisms/roles/hybrid/state.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts": [
+        {
+          "specifier": "../../../../core/domain/components/alive",
+          "endpoint": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/night_effects",
+          "endpoint": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "specifier": "./state",
+          "endpoint": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts"
+        },
+        {
+          "specifier": "../abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/death_ability_activation.ts": [
+        {
+          "specifier": "../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "./death_abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/death_abilities.ts"
+        }
+      ],
+      "backend/src/core/domain/index.ts": [
+        {
+          "specifier": "./model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "./action_request_context",
+          "endpoint": "backend/src/core/domain/action_request_context.ts"
+        },
+        {
+          "specifier": "./random",
+          "endpoint": "backend/src/core/domain/random.ts"
+        },
+        {
+          "specifier": "./world",
+          "endpoint": "backend/src/core/domain/world.ts"
+        },
+        {
+          "specifier": "./components/alive",
+          "endpoint": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "specifier": "./components/badge",
+          "endpoint": "backend/src/core/domain/components/badge.ts"
+        },
+        {
+          "specifier": "./components/camp",
+          "endpoint": "backend/src/core/domain/components/camp.ts"
+        },
+        {
+          "specifier": "./components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "./components/role",
+          "endpoint": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "specifier": "./components/status_marks",
+          "endpoint": "backend/src/core/domain/components/status_marks.ts"
+        },
+        {
+          "specifier": "./components/voting_right",
+          "endpoint": "backend/src/core/domain/components/voting_right.ts"
+        },
+        {
+          "specifier": "./entities/player",
+          "endpoint": "backend/src/core/domain/entities/player.ts"
+        },
+        {
+          "specifier": "./registries/condition_registry",
+          "endpoint": "backend/src/core/domain/registries/condition_registry.ts"
+        },
+        {
+          "specifier": "./registries/phase_registry",
+          "endpoint": "backend/src/core/domain/registries/phase_registry.ts"
+        },
+        {
+          "specifier": "./registries/role_registry",
+          "endpoint": "backend/src/core/domain/registries/role_registry.ts"
+        },
+        {
+          "specifier": "./systems/damage_resolution_system",
+          "endpoint": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "specifier": "./systems/win_condition_system",
+          "endpoint": "backend/src/core/domain/systems/win_condition_system.ts"
+        },
+        {
+          "specifier": "./components/victory",
+          "endpoint": "backend/src/core/domain/components/victory.ts"
+        },
+        {
+          "specifier": "./components/lovers",
+          "endpoint": "backend/src/core/domain/components/lovers.ts"
+        },
+        {
+          "specifier": "./components/debate_penalty",
+          "endpoint": "backend/src/core/domain/components/debate_penalty.ts"
+        },
+        {
+          "specifier": "./components/wall_note",
+          "endpoint": "backend/src/core/domain/components/wall_note.ts"
+        },
+        {
+          "specifier": "./request_delivery",
+          "endpoint": "backend/src/core/domain/request_delivery.ts"
+        }
+      ],
+      "backend/src/core/domain/night_effects.ts": [
+        {
+          "specifier": "./components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "./components/alive",
+          "endpoint": "backend/src/core/domain/components/alive.ts"
+        }
+      ],
+      "backend/src/core/domain/components/alive.ts": [],
+      "backend/src/core/domain/components/names.ts": [],
+      "backend/src/core/domain/model.ts": [
+        {
+          "specifier": "./identity",
+          "endpoint": "backend/src/core/domain/identity.ts"
+        },
+        {
+          "specifier": "./board",
+          "endpoint": "backend/src/core/domain/board.ts"
+        },
+        {
+          "specifier": "./actions",
+          "endpoint": "backend/src/core/domain/actions.ts"
+        },
+        {
+          "specifier": "./events",
+          "endpoint": "backend/src/core/domain/events.ts"
+        },
+        {
+          "specifier": "./results",
+          "endpoint": "backend/src/core/domain/results.ts"
+        },
+        {
+          "specifier": "./deaths",
+          "endpoint": "backend/src/core/domain/deaths.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts": [
+        {
+          "specifier": "../abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/board",
+          "endpoint": "backend/src/core/domain/board.ts"
+        },
+        {
+          "specifier": "../prepared-native-install",
+          "endpoint": "backend/src/game/mechanisms/roles/prepared-native-install.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/abilities.ts": [
+        {
+          "specifier": "./fragrant_pair_seer/state",
+          "endpoint": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts"
+        },
+        {
+          "specifier": "./radiant_eclipse/shelter-state",
+          "endpoint": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts"
+        },
+        {
+          "specifier": "../../../core/domain/board",
+          "endpoint": "backend/src/core/domain/board.ts"
+        },
+        {
+          "specifier": "./witch/policies",
+          "endpoint": "backend/src/game/mechanisms/roles/witch/policies.ts"
+        },
+        {
+          "specifier": "../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "./player_state",
+          "endpoint": "backend/src/game/mechanisms/roles/player_state.ts"
+        },
+        {
+          "specifier": "./player_state",
+          "endpoint": "backend/src/game/mechanisms/roles/player_state.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/gargoyle/ports.ts": [
+        {
+          "specifier": "./state",
+          "endpoint": "backend/src/game/mechanisms/roles/gargoyle/state.ts"
+        },
+        {
+          "specifier": "./inheritance",
+          "endpoint": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts"
+        },
+        {
+          "specifier": "./inheritance",
+          "endpoint": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts": [
+        {
+          "specifier": "../abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/black_market_merchant/state.ts": [
+        {
+          "specifier": "../abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/ability_changes.ts": [
+        {
+          "specifier": "./role_inspection/ports",
+          "endpoint": "backend/src/game/mechanisms/roles/role_inspection/ports.ts"
+        },
+        {
+          "specifier": "../../../core/domain/board",
+          "endpoint": "backend/src/core/domain/board.ts"
+        },
+        {
+          "specifier": "../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "./abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "specifier": "../../../core/domain/night_effects",
+          "endpoint": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "specifier": "./prepared-native-install",
+          "endpoint": "backend/src/game/mechanisms/roles/prepared-native-install.ts"
+        },
+        {
+          "specifier": "./dreamer/ports",
+          "endpoint": "backend/src/game/mechanisms/roles/dreamer/ports.ts"
+        },
+        {
+          "specifier": "./radiant_eclipse/shelter-state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts"
+        },
+        {
+          "specifier": "./seer/ports",
+          "endpoint": "backend/src/game/mechanisms/roles/seer/ports.ts"
+        },
+        {
+          "specifier": "./guard/ports",
+          "endpoint": "backend/src/game/mechanisms/roles/guard/ports.ts"
+        },
+        {
+          "specifier": "./witch/ports",
+          "endpoint": "backend/src/game/mechanisms/roles/witch/ports.ts"
+        },
+        {
+          "specifier": "./role_inspection/ports",
+          "endpoint": "backend/src/game/mechanisms/roles/role_inspection/ports.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/death_abilities.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-catalog",
+          "endpoint": "packages/game-catalog/src/index.ts"
+        },
+        {
+          "specifier": "./death_shot",
+          "endpoint": "backend/src/game/mechanisms/roles/death_shot.ts"
+        },
+        {
+          "specifier": "./death-gun-lifecycle",
+          "endpoint": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts"
+        },
+        {
+          "specifier": "./death-gun-lifecycle",
+          "endpoint": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts"
+        },
+        {
+          "specifier": "./player_state",
+          "endpoint": "backend/src/game/mechanisms/roles/player_state.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/ability_scope.ts": [
+        {
+          "specifier": "./radiant_eclipse/night_frame",
+          "endpoint": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts"
+        },
+        {
+          "specifier": "../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../core/domain/night_effects",
+          "endpoint": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "specifier": "./abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "specifier": "../../../core/domain/components/alive",
+          "endpoint": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "specifier": "./dreamer/ports",
+          "endpoint": "backend/src/game/mechanisms/roles/dreamer/ports.ts"
+        },
+        {
+          "specifier": "./radiant_eclipse/shelter-state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts"
+        },
+        {
+          "specifier": "./seer/ports",
+          "endpoint": "backend/src/game/mechanisms/roles/seer/ports.ts"
+        },
+        {
+          "specifier": "./guard/ports",
+          "endpoint": "backend/src/game/mechanisms/roles/guard/ports.ts"
+        },
+        {
+          "specifier": "./witch/ports",
+          "endpoint": "backend/src/game/mechanisms/roles/witch/ports.ts"
+        },
+        {
+          "specifier": "./role_inspection/ports",
+          "endpoint": "backend/src/game/mechanisms/roles/role_inspection/ports.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/night_action_history.ts": [
+        {
+          "specifier": "../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "./abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/inspection.ts": [
+        {
+          "specifier": "../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/seer/ports.ts": [
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/seer/state-slot.ts"
+        },
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/seer/state-slot.ts"
+        },
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/seer/state-slot.ts"
+        },
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/seer/state-slot.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/guard/ports.ts": [
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/guard/state-slot.ts"
+        },
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/guard/state-slot.ts"
+        },
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/guard/state-slot.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/witch/ports.ts": [
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/witch/state-slot.ts"
+        },
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/witch/state-slot.ts"
+        },
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/witch/state-slot.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/miracle_merchant/state.ts": [
+        {
+          "specifier": "../abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        }
+      ],
+      "backend/src/core/domain/components/victory.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "endpoint": "packages/replay-contract/src/index.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/hybrid/state.ts": [],
+      "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts": [
+        {
+          "specifier": "../abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        }
+      ],
+      "backend/src/core/domain/action_request_context.ts": [
+        {
+          "specifier": "./model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        }
+      ],
+      "backend/src/core/domain/random.ts": [],
+      "backend/src/core/domain/world.ts": [
+        {
+          "specifier": "./model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "./components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "./components/alive",
+          "endpoint": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "specifier": "./components/role",
+          "endpoint": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-catalog",
+          "endpoint": "packages/game-catalog/src/index.ts"
+        }
+      ],
+      "backend/src/core/domain/components/badge.ts": [],
+      "backend/src/core/domain/components/camp.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/core/domain/components/role.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/core/domain/components/status_marks.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/core/domain/components/voting_right.ts": [],
+      "backend/src/core/domain/entities/player.ts": [
+        {
+          "specifier": "../model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        }
+      ],
+      "backend/src/core/domain/registries/condition_registry.ts": [
+        {
+          "specifier": "../model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "../world",
+          "endpoint": "backend/src/core/domain/world.ts"
+        }
+      ],
+      "backend/src/core/domain/registries/phase_registry.ts": [
+        {
+          "specifier": "../model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        }
+      ],
+      "backend/src/core/domain/registries/role_registry.ts": [
+        {
+          "specifier": "../model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        }
+      ],
+      "backend/src/core/domain/systems/damage_resolution_system.ts": [
+        {
+          "specifier": "../components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "../world",
+          "endpoint": "backend/src/core/domain/world.ts"
+        },
+        {
+          "specifier": "../damage-evidence",
+          "endpoint": "backend/src/core/domain/damage-evidence.ts"
+        },
+        {
+          "specifier": "../night-damage-target",
+          "endpoint": "backend/src/core/domain/night-damage-target.ts"
+        },
+        {
+          "specifier": "../night-damage-plan",
+          "endpoint": "backend/src/core/domain/night-damage-plan.ts"
+        }
+      ],
+      "backend/src/core/domain/systems/win_condition_system.ts": [
+        {
+          "specifier": "../model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "../world",
+          "endpoint": "backend/src/core/domain/world.ts"
+        },
+        {
+          "specifier": "../registries/condition_registry",
+          "endpoint": "backend/src/core/domain/registries/condition_registry.ts"
+        }
+      ],
+      "backend/src/core/domain/components/lovers.ts": [],
+      "backend/src/core/domain/components/debate_penalty.ts": [],
+      "backend/src/core/domain/components/wall_note.ts": [],
+      "backend/src/core/domain/request_delivery.ts": [],
+      "backend/src/core/domain/identity.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/core/domain/board.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/core/domain/actions.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/core/domain/events.ts": [],
+      "backend/src/core/domain/results.ts": [],
+      "backend/src/core/domain/deaths.ts": [
+        {
+          "specifier": "./identity",
+          "endpoint": "backend/src/core/domain/identity.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/prepared-native-install.ts": [],
+      "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts": [
+        {
+          "specifier": "../../../../core/domain/plain_data",
+          "endpoint": "backend/src/core/domain/plain_data.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts": [
+        {
+          "specifier": "./state-data",
+          "endpoint": "backend/src/game/mechanisms/roles/radiant_eclipse/state-data.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/witch/policies.ts": [
+        {
+          "specifier": "../../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/player_state.ts": [
+        {
+          "specifier": "../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "endpoint": "packages/replay-contract/src/index.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/gargoyle/state.ts": [],
+      "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts": [
+        {
+          "specifier": "../../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "./state",
+          "endpoint": "backend/src/game/mechanisms/roles/gargoyle/state.ts"
+        },
+        {
+          "specifier": "../role_inspection/night_scope",
+          "endpoint": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/role_inspection/ports.ts": [
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts"
+        },
+        {
+          "specifier": "./policies",
+          "endpoint": "backend/src/game/mechanisms/roles/role_inspection/policies.ts"
+        },
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/dreamer/ports.ts": [
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/dreamer/state-slot.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts": [
+        {
+          "specifier": "../abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "specifier": "../prepared-native-install",
+          "endpoint": "backend/src/game/mechanisms/roles/prepared-native-install.ts"
+        },
+        {
+          "specifier": "./shelter-state",
+          "endpoint": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts"
+        }
+      ],
+      "packages/game-catalog/src/index.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "./outcomes",
+          "endpoint": "packages/game-catalog/src/outcomes.ts"
+        },
+        {
+          "specifier": "./errors",
+          "endpoint": "packages/game-catalog/src/errors.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/death_shot.ts": [
+        {
+          "specifier": "./demon_hunter/authority",
+          "endpoint": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts"
+        },
+        {
+          "specifier": "../../../core/domain/night_effects",
+          "endpoint": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "specifier": "../../../core/domain/components/alive",
+          "endpoint": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "specifier": "../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../core/domain/components/role",
+          "endpoint": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "specifier": "../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-catalog",
+          "endpoint": "packages/game-catalog/src/index.ts"
+        },
+        {
+          "specifier": "../llm/helpers",
+          "endpoint": "backend/src/game/mechanisms/llm/helpers.ts"
+        },
+        {
+          "specifier": "../validation/contracts",
+          "endpoint": "backend/src/game/mechanisms/validation/contracts.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts": [
+        {
+          "specifier": "../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "../../../core/domain/components/alive",
+          "endpoint": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "specifier": "./player_state",
+          "endpoint": "backend/src/game/mechanisms/roles/player_state.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts": [
+        {
+          "specifier": "../../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/identity",
+          "endpoint": "backend/src/core/domain/identity.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/components/alive",
+          "endpoint": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/night_effects",
+          "endpoint": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "specifier": "../abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "specifier": "../ability_changes",
+          "endpoint": "backend/src/game/mechanisms/roles/ability_changes.ts"
+        },
+        {
+          "specifier": "./suppression",
+          "endpoint": "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts"
+        },
+        {
+          "specifier": "./borrowed_state",
+          "endpoint": "backend/src/game/mechanisms/roles/radiant_eclipse/borrowed_state.ts"
+        },
+        {
+          "specifier": "./state",
+          "endpoint": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts"
+        },
+        {
+          "specifier": "./shelter-state",
+          "endpoint": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/seer/state-slot.ts": [
+        {
+          "specifier": "../abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "specifier": "../prepared-native-install",
+          "endpoint": "backend/src/game/mechanisms/roles/prepared-native-install.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/guard/state-slot.ts": [
+        {
+          "specifier": "../abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "specifier": "../prepared-native-install",
+          "endpoint": "backend/src/game/mechanisms/roles/prepared-native-install.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/witch/state-slot.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "../abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "specifier": "../prepared-native-install",
+          "endpoint": "backend/src/game/mechanisms/roles/prepared-native-install.ts"
+        }
+      ],
+      "packages/replay-contract/src/index.ts": [
+        {
+          "specifier": "./validation",
+          "endpoint": "packages/replay-contract/src/validation.ts"
+        },
+        {
+          "specifier": "./validation",
+          "endpoint": "packages/replay-contract/src/validation.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-catalog",
+          "endpoint": "packages/game-catalog/src/index.ts"
+        },
+        {
+          "specifier": "./archive-envelope",
+          "endpoint": "packages/replay-contract/src/archive-envelope.ts"
+        },
+        {
+          "specifier": "./outcomes",
+          "endpoint": "packages/replay-contract/src/outcomes.ts"
+        },
+        {
+          "specifier": "./legacy_aliases",
+          "endpoint": "packages/replay-contract/src/legacy_aliases.ts"
+        },
+        {
+          "specifier": "./legacy_aliases",
+          "endpoint": "packages/replay-contract/src/legacy_aliases.ts"
+        },
+        {
+          "specifier": "./inspection",
+          "endpoint": "packages/replay-contract/src/inspection.ts"
+        },
+        {
+          "specifier": "./gravekeeper",
+          "endpoint": "packages/replay-contract/src/gravekeeper.ts"
+        },
+        {
+          "specifier": "./outcomes",
+          "endpoint": "packages/replay-contract/src/outcomes.ts"
+        },
+        {
+          "specifier": "./player_record",
+          "endpoint": "packages/replay-contract/src/player_record.ts"
+        },
+        {
+          "specifier": "./error_diagnostic",
+          "endpoint": "packages/replay-contract/src/error_diagnostic.ts"
+        },
+        {
+          "specifier": "./archive-envelope",
+          "endpoint": "packages/replay-contract/src/archive-envelope.ts"
+        },
+        {
+          "specifier": "./manifest",
+          "endpoint": "packages/replay-contract/src/manifest.ts"
+        }
+      ],
+      "packages/game-contract/src/index.ts": [
+        {
+          "specifier": "./identity",
+          "endpoint": "packages/game-contract/src/identity.ts"
+        },
+        {
+          "specifier": "./role-ids",
+          "endpoint": "packages/game-contract/src/role-ids.ts"
+        },
+        {
+          "specifier": "./locale",
+          "endpoint": "packages/game-contract/src/locale.ts"
+        },
+        {
+          "specifier": "./event-ids",
+          "endpoint": "packages/game-contract/src/event-ids.ts"
+        },
+        {
+          "specifier": "./inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        },
+        {
+          "specifier": "./outcomes",
+          "endpoint": "packages/game-contract/src/outcomes.ts"
+        },
+        {
+          "specifier": "./inspection",
+          "endpoint": "packages/game-contract/src/inspection.ts"
+        },
+        {
+          "specifier": "./errors",
+          "endpoint": "packages/game-contract/src/errors.ts"
+        },
+        {
+          "specifier": "./death-facts",
+          "endpoint": "packages/game-contract/src/death-facts.ts"
+        },
+        {
+          "specifier": "./results",
+          "endpoint": "packages/game-contract/src/results.ts"
+        },
+        {
+          "specifier": "./message-ids",
+          "endpoint": "packages/game-contract/src/message-ids.ts"
+        },
+        {
+          "specifier": "./facts/scholar-mentor",
+          "endpoint": "packages/game-contract/src/facts/scholar-mentor.ts"
+        },
+        {
+          "specifier": "./facts/time-consort",
+          "endpoint": "packages/game-contract/src/facts/time-consort.ts"
+        },
+        {
+          "specifier": "./facts/wolf-sorcerer",
+          "endpoint": "packages/game-contract/src/facts/wolf-sorcerer.ts"
+        },
+        {
+          "specifier": "./facts/trickster",
+          "endpoint": "packages/game-contract/src/facts/trickster.ts"
+        },
+        {
+          "specifier": "./facts/order-prince",
+          "endpoint": "packages/game-contract/src/facts/order-prince.ts"
+        },
+        {
+          "specifier": "./facts/magician",
+          "endpoint": "packages/game-contract/src/facts/magician.ts"
+        },
+        {
+          "specifier": "./board-policy-identifiers",
+          "endpoint": "packages/game-contract/src/board-policy-identifiers.ts"
+        },
+        {
+          "specifier": "./boards",
+          "endpoint": "packages/game-contract/src/boards.ts"
+        },
+        {
+          "specifier": "./board-schema",
+          "endpoint": "packages/game-contract/src/board-schema.ts"
+        },
+        {
+          "specifier": "./actions",
+          "endpoint": "packages/game-contract/src/actions.ts"
+        },
+        {
+          "specifier": "./facts/nightmare",
+          "endpoint": "packages/game-contract/src/facts/nightmare.ts"
+        },
+        {
+          "specifier": "./facts/red-moon",
+          "endpoint": "packages/game-contract/src/facts/red-moon.ts"
+        },
+        {
+          "specifier": "./facts/demon-hunter",
+          "endpoint": "packages/game-contract/src/facts/demon-hunter.ts"
+        },
+        {
+          "specifier": "./facts/radiant-eclipse",
+          "endpoint": "packages/game-contract/src/facts/radiant-eclipse.ts"
+        },
+        {
+          "specifier": "./facts/mist-raven",
+          "endpoint": "packages/game-contract/src/facts/mist-raven.ts"
+        },
+        {
+          "specifier": "./facts/noble-secret-body",
+          "endpoint": "packages/game-contract/src/facts/noble-secret-body.ts"
+        },
+        {
+          "specifier": "./facts/fragrant-pair-seer",
+          "endpoint": "packages/game-contract/src/facts/fragrant-pair-seer.ts"
+        },
+        {
+          "specifier": "./facts/animal-dream",
+          "endpoint": "packages/game-contract/src/facts/animal-dream.ts"
+        },
+        {
+          "specifier": "./facts/cupid",
+          "endpoint": "packages/game-contract/src/facts/cupid.ts"
+        },
+        {
+          "specifier": "./facts/debate",
+          "endpoint": "packages/game-contract/src/facts/debate.ts"
+        },
+        {
+          "specifier": "./facts/ghost-bride",
+          "endpoint": "packages/game-contract/src/facts/ghost-bride.ts"
+        },
+        {
+          "specifier": "./facts/thief",
+          "endpoint": "packages/game-contract/src/facts/thief.ts"
+        },
+        {
+          "specifier": "./facts/shapeshifter",
+          "endpoint": "packages/game-contract/src/facts/shapeshifter.ts"
+        },
+        {
+          "specifier": "./facts/wild-child",
+          "endpoint": "packages/game-contract/src/facts/wild-child.ts"
+        },
+        {
+          "specifier": "./facts/lonely-girl",
+          "endpoint": "packages/game-contract/src/facts/lonely-girl.ts"
+        },
+        {
+          "specifier": "./facts/wall-notes",
+          "endpoint": "packages/game-contract/src/facts/wall-notes.ts"
+        },
+        {
+          "specifier": "./events",
+          "endpoint": "packages/game-contract/src/events.ts"
+        },
+        {
+          "specifier": "./requests",
+          "endpoint": "packages/game-contract/src/requests.ts"
+        },
+        {
+          "specifier": "./facts/hybrid",
+          "endpoint": "packages/game-contract/src/facts/hybrid.ts"
+        },
+        {
+          "specifier": "./facts/awakened",
+          "endpoint": "packages/game-contract/src/facts/awakened.ts"
+        },
+        {
+          "specifier": "./facts/mechanical",
+          "endpoint": "packages/game-contract/src/facts/mechanical.ts"
+        },
+        {
+          "specifier": "./facts/merchant",
+          "endpoint": "packages/game-contract/src/facts/merchant.ts"
+        },
+        {
+          "specifier": "./facts/death-ability",
+          "endpoint": "packages/game-contract/src/facts/death-ability.ts"
+        },
+        {
+          "specifier": "./facts/black-market",
+          "endpoint": "packages/game-contract/src/facts/black-market.ts"
+        },
+        {
+          "specifier": "./request-version",
+          "endpoint": "packages/game-contract/src/request-version.ts"
+        },
+        {
+          "specifier": "./presentation-version",
+          "endpoint": "packages/game-contract/src/presentation-version.ts"
+        }
+      ],
+      "backend/src/core/domain/damage-evidence.ts": [],
+      "backend/src/core/domain/night-damage-target.ts": [
+        {
+          "specifier": "./deaths",
+          "endpoint": "backend/src/core/domain/deaths.ts"
+        },
+        {
+          "specifier": "./identity",
+          "endpoint": "backend/src/core/domain/identity.ts"
+        },
+        {
+          "specifier": "./night_effects",
+          "endpoint": "backend/src/core/domain/night_effects.ts"
+        }
+      ],
+      "backend/src/core/domain/night-damage-plan.ts": [
+        {
+          "specifier": "./components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "./deaths",
+          "endpoint": "backend/src/core/domain/deaths.ts"
+        },
+        {
+          "specifier": "./night_effects",
+          "endpoint": "backend/src/core/domain/night_effects.ts"
+        }
+      ],
+      "backend/src/core/domain/plain_data.ts": [],
+      "backend/src/game/mechanisms/roles/radiant_eclipse/state-data.ts": [],
+      "backend/src/game/mechanisms/roles/role_inspection/policies.ts": [
+        {
+          "specifier": "./state-slot",
+          "endpoint": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/board",
+          "endpoint": "backend/src/core/domain/board.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "endpoint": "packages/game-text/src/index.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/dreamer/state-slot.ts": [
+        {
+          "specifier": "../abilities",
+          "endpoint": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "specifier": "../prepared-native-install",
+          "endpoint": "backend/src/game/mechanisms/roles/prepared-native-install.ts"
+        }
+      ],
+      "packages/game-catalog/src/outcomes.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "packages/game-catalog/src/errors.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/demon_hunter/authority.ts": [
+        {
+          "specifier": "../../../../core/domain/request_delivery",
+          "endpoint": "backend/src/core/domain/request_delivery.ts"
+        },
+        {
+          "specifier": "../noble_secret_body/facts",
+          "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts"
+        },
+        {
+          "specifier": "../noble_secret_body/authority",
+          "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts"
+        },
+        {
+          "specifier": "../red_moon_apostle/state",
+          "endpoint": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts"
+        },
+        {
+          "specifier": "../../../../core",
+          "endpoint": "backend/src/core/index.ts"
+        },
+        {
+          "specifier": "./state",
+          "endpoint": "backend/src/game/mechanisms/roles/demon_hunter/state.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/components/status_marks",
+          "endpoint": "backend/src/core/domain/components/status_marks.ts"
+        },
+        {
+          "specifier": "./preset",
+          "endpoint": "backend/src/game/mechanisms/roles/demon_hunter/preset.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/llm/helpers.ts": [],
+      "backend/src/game/mechanisms/validation/contracts.ts": [
+        {
+          "specifier": "../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../core/domain/components/role",
+          "endpoint": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "specifier": "../../../core/domain/model",
+          "endpoint": "backend/src/core/domain/model.ts"
+        },
+        {
+          "specifier": "../../../core/domain/world",
+          "endpoint": "backend/src/core/domain/world.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts": [
+        {
+          "specifier": "../../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/components/alive",
+          "endpoint": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/night_effects",
+          "endpoint": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "specifier": "./state",
+          "endpoint": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/radiant_eclipse/borrowed_state.ts": [
+        {
+          "specifier": "../../../../core/domain/identity",
+          "endpoint": "backend/src/core/domain/identity.ts"
+        },
+        {
+          "specifier": "./shelter-state",
+          "endpoint": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts": [
+        {
+          "specifier": "./state-data",
+          "endpoint": "backend/src/game/mechanisms/roles/radiant_eclipse/state-data.ts"
+        },
+        {
+          "specifier": "./state-data",
+          "endpoint": "backend/src/game/mechanisms/roles/radiant_eclipse/state-data.ts"
+        }
+      ],
+      "packages/replay-contract/src/validation.ts": [],
+      "packages/replay-contract/src/archive-envelope.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "./validation",
+          "endpoint": "packages/replay-contract/src/validation.ts"
+        }
+      ],
+      "packages/replay-contract/src/outcomes.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-catalog",
+          "endpoint": "packages/game-catalog/src/index.ts"
+        },
+        {
+          "specifier": "./validation",
+          "endpoint": "packages/replay-contract/src/validation.ts"
+        }
+      ],
+      "packages/replay-contract/src/legacy_aliases.ts": [
+        {
+          "specifier": "./legacy_role_aliases",
+          "endpoint": "packages/replay-contract/src/legacy_role_aliases.ts"
+        }
+      ],
+      "packages/replay-contract/src/inspection.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-catalog",
+          "endpoint": "packages/game-catalog/src/index.ts"
+        },
+        {
+          "specifier": "./validation",
+          "endpoint": "packages/replay-contract/src/validation.ts"
+        }
+      ],
+      "packages/replay-contract/src/gravekeeper.ts": [
+        {
+          "specifier": "./inspection",
+          "endpoint": "packages/replay-contract/src/inspection.ts"
+        },
+        {
+          "specifier": "./validation",
+          "endpoint": "packages/replay-contract/src/validation.ts"
+        }
+      ],
+      "packages/replay-contract/src/player_record.ts": [
+        {
+          "specifier": "./archive-envelope",
+          "endpoint": "packages/replay-contract/src/archive-envelope.ts"
+        },
+        {
+          "specifier": "./error_diagnostic",
+          "endpoint": "packages/replay-contract/src/error_diagnostic.ts"
+        },
+        {
+          "specifier": "./validation",
+          "endpoint": "packages/replay-contract/src/validation.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-catalog",
+          "endpoint": "packages/game-catalog/src/index.ts"
+        },
+        {
+          "specifier": "./legacy_aliases",
+          "endpoint": "packages/replay-contract/src/legacy_aliases.ts"
+        }
+      ],
+      "packages/replay-contract/src/error_diagnostic.ts": [
+        {
+          "specifier": "./validation",
+          "endpoint": "packages/replay-contract/src/validation.ts"
+        }
+      ],
+      "packages/replay-contract/src/manifest.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-catalog",
+          "endpoint": "packages/game-catalog/src/index.ts"
+        },
+        {
+          "specifier": "./validation",
+          "endpoint": "packages/replay-contract/src/validation.ts"
+        },
+        {
+          "specifier": "./archive-envelope",
+          "endpoint": "packages/replay-contract/src/archive-envelope.ts"
+        },
+        {
+          "specifier": "./outcomes",
+          "endpoint": "packages/replay-contract/src/outcomes.ts"
+        }
+      ],
+      "packages/game-contract/src/identity.ts": [],
+      "packages/game-contract/src/role-ids.ts": [
+        {
+          "specifier": "./identity",
+          "endpoint": "packages/game-contract/src/identity.ts"
+        }
+      ],
+      "packages/game-contract/src/locale.ts": [],
+      "packages/game-contract/src/event-ids.ts": [],
+      "packages/game-contract/src/inert-event-data.ts": [],
+      "packages/game-contract/src/outcomes.ts": [],
+      "packages/game-contract/src/inspection.ts": [],
+      "packages/game-contract/src/errors.ts": [],
+      "packages/game-contract/src/death-facts.ts": [],
+      "packages/game-contract/src/results.ts": [],
+      "packages/game-contract/src/message-ids.ts": [],
+      "packages/game-contract/src/facts/scholar-mentor.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/time-consort.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/wolf-sorcerer.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/trickster.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/order-prince.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/magician.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/board-policy-identifiers.ts": [],
+      "packages/game-contract/src/boards.ts": [
+        {
+          "specifier": "./event-ids",
+          "endpoint": "packages/game-contract/src/event-ids.ts"
+        },
+        {
+          "specifier": "./event-ids",
+          "endpoint": "packages/game-contract/src/event-ids.ts"
+        }
+      ],
+      "packages/game-contract/src/board-schema.ts": [
+        {
+          "specifier": "./board-policy-identifiers",
+          "endpoint": "packages/game-contract/src/board-policy-identifiers.ts"
+        },
+        {
+          "specifier": "./boards",
+          "endpoint": "packages/game-contract/src/boards.ts"
+        },
+        {
+          "specifier": "./identity",
+          "endpoint": "packages/game-contract/src/identity.ts"
+        }
+      ],
+      "packages/game-contract/src/actions.ts": [
+        {
+          "specifier": "./identity",
+          "endpoint": "packages/game-contract/src/identity.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/nightmare.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/red-moon.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/demon-hunter.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/radiant-eclipse.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/mist-raven.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/noble-secret-body.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/fragrant-pair-seer.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/animal-dream.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        },
+        {
+          "specifier": "../board-policy-identifiers",
+          "endpoint": "packages/game-contract/src/board-policy-identifiers.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/cupid.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/debate.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/ghost-bride.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/thief.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/shapeshifter.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/wild-child.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/lonely-girl.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/wall-notes.ts": [
+        {
+          "specifier": "../inert-event-data",
+          "endpoint": "packages/game-contract/src/inert-event-data.ts"
+        }
+      ],
+      "packages/game-contract/src/events.ts": [],
+      "packages/game-contract/src/requests.ts": [],
+      "packages/game-contract/src/facts/hybrid.ts": [],
+      "packages/game-contract/src/facts/awakened.ts": [
+        {
+          "specifier": "../role-ids",
+          "endpoint": "packages/game-contract/src/role-ids.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/mechanical.ts": [
+        {
+          "specifier": "../role-ids",
+          "endpoint": "packages/game-contract/src/role-ids.ts"
+        }
+      ],
+      "packages/game-contract/src/facts/merchant.ts": [],
+      "packages/game-contract/src/facts/death-ability.ts": [],
+      "packages/game-contract/src/facts/black-market.ts": [],
+      "packages/game-contract/src/request-version.ts": [],
+      "packages/game-contract/src/presentation-version.ts": [],
+      "packages/game-text/src/index.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-catalog",
+          "endpoint": "packages/game-catalog/src/index.ts"
+        },
+        {
+          "specifier": "./zh-CN",
+          "endpoint": "packages/game-text/src/zh-CN.ts"
+        },
+        {
+          "specifier": "./en",
+          "endpoint": "packages/game-text/src/en.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts": [
+        {
+          "specifier": "../../../../core/domain/identity",
+          "endpoint": "backend/src/core/domain/identity.ts"
+        },
+        {
+          "specifier": "../../../../recording/recording_context",
+          "endpoint": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "specifier": "./authority",
+          "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts"
+        },
+        {
+          "specifier": "./state",
+          "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts": [
+        {
+          "specifier": "../../../../core/domain/night-unit",
+          "endpoint": "backend/src/core/domain/night-unit.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/components/names",
+          "endpoint": "backend/src/core/domain/components/names.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/identity",
+          "endpoint": "backend/src/core/domain/identity.ts"
+        },
+        {
+          "specifier": "../../../../core/domain/components/alive",
+          "endpoint": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "specifier": "./state",
+          "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts"
+        },
+        {
+          "specifier": "./damage",
+          "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/damage.ts"
+        },
+        {
+          "specifier": "./player_projection",
+          "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts": [
+        {
+          "specifier": "../../../../core/domain/identity",
+          "endpoint": "backend/src/core/domain/identity.ts"
+        }
+      ],
+      "backend/src/core/index.ts": [
+        {
+          "specifier": "./domain",
+          "endpoint": "backend/src/core/domain/index.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/demon_hunter/state.ts": [
+        {
+          "specifier": "../../../../core/domain/plain_data",
+          "endpoint": "backend/src/core/domain/plain_data.ts"
+        }
+      ],
+      "backend/src/game/mechanisms/roles/demon_hunter/preset.ts": [
+        {
+          "specifier": "../../../../rulesets",
+          "endpoint": "backend/src/rulesets/index.ts"
+        },
+        {
+          "specifier": "../../../../rulesets",
+          "endpoint": "backend/src/rulesets/index.ts"
+        },
+        {
+          "specifier": "./state",
+          "endpoint": "backend/src/game/mechanisms/roles/demon_hunter/state.ts"
+        }
+      ],
+      "packages/replay-contract/src/legacy_role_aliases.ts": [],
+      "packages/game-text/src/zh-CN.ts": [
+        {
+          "specifier": "./messages/catalog",
+          "endpoint": "packages/game-text/src/messages/catalog.ts"
+        }
+      ],
+      "packages/game-text/src/en.ts": [
+        {
+          "specifier": "./messages/catalog",
+          "endpoint": "packages/game-text/src/messages/catalog.ts"
+        }
+      ],
+      "backend/src/recording/recording_context.ts": [],
+      "backend/src/game/mechanisms/roles/noble_secret_body/state.ts": [],
+      "backend/src/core/domain/night-unit.ts": [],
+      "backend/src/game/mechanisms/roles/noble_secret_body/damage.ts": [],
+      "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts": [
+        {
+          "specifier": "../../../../core/domain/identity",
+          "endpoint": "backend/src/core/domain/identity.ts"
+        }
+      ],
+      "backend/src/rulesets/index.ts": [
+        {
+          "specifier": "./support",
+          "endpoint": "backend/src/rulesets/support/index.ts"
+        },
+        {
+          "specifier": "./board-support",
+          "endpoint": "backend/src/rulesets/board-support.ts"
+        },
+        {
+          "specifier": "./node-board-support",
+          "endpoint": "backend/src/rulesets/node-board-support.ts"
+        }
+      ],
+      "packages/game-text/src/messages/catalog.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "./common",
+          "endpoint": "packages/game-text/src/messages/common.ts"
+        },
+        {
+          "specifier": "./runtime",
+          "endpoint": "packages/game-text/src/messages/runtime.ts"
+        },
+        {
+          "specifier": "./agents",
+          "endpoint": "packages/game-text/src/messages/agents.ts"
+        },
+        {
+          "specifier": "./replay",
+          "endpoint": "packages/game-text/src/messages/replay.ts"
+        },
+        {
+          "specifier": "./audit",
+          "endpoint": "packages/game-text/src/messages/audit.ts"
+        },
+        {
+          "specifier": "./features/classic",
+          "endpoint": "packages/game-text/src/messages/features/classic.ts"
+        },
+        {
+          "specifier": "./features/identity",
+          "endpoint": "packages/game-text/src/messages/features/identity.ts"
+        },
+        {
+          "specifier": "./features/gifts-relations",
+          "endpoint": "packages/game-text/src/messages/features/gifts-relations.ts"
+        },
+        {
+          "specifier": "./features/night-modifiers",
+          "endpoint": "packages/game-text/src/messages/features/night-modifiers.ts"
+        },
+        {
+          "specifier": "./features/mist-radiant",
+          "endpoint": "packages/game-text/src/messages/features/mist-radiant.ts"
+        },
+        {
+          "specifier": "./features/noble-fragrant",
+          "endpoint": "packages/game-text/src/messages/features/noble-fragrant.ts"
+        },
+        {
+          "specifier": "./features/animal-dream",
+          "endpoint": "packages/game-text/src/messages/features/animal-dream.ts"
+        }
+      ],
+      "backend/src/rulesets/support/index.ts": [
+        {
+          "specifier": "./animal-dream",
+          "endpoint": "backend/src/rulesets/support/animal-dream.ts"
+        },
+        {
+          "specifier": "./demon-hunter",
+          "endpoint": "backend/src/rulesets/support/demon-hunter.ts"
+        },
+        {
+          "specifier": "./evil-knight",
+          "endpoint": "backend/src/rulesets/support/evil-knight.ts"
+        },
+        {
+          "specifier": "./fragrant-pair-seer",
+          "endpoint": "backend/src/rulesets/support/fragrant-pair-seer.ts"
+        },
+        {
+          "specifier": "./ghost-bride",
+          "endpoint": "backend/src/rulesets/support/ghost-bride.ts"
+        },
+        {
+          "specifier": "./magician",
+          "endpoint": "backend/src/rulesets/support/magician.ts"
+        },
+        {
+          "specifier": "./mist-raven",
+          "endpoint": "backend/src/rulesets/support/mist-raven.ts"
+        },
+        {
+          "specifier": "./nightmare",
+          "endpoint": "backend/src/rulesets/support/nightmare.ts"
+        },
+        {
+          "specifier": "./noble-secret-body",
+          "endpoint": "backend/src/rulesets/support/noble-secret-body.ts"
+        },
+        {
+          "specifier": "./order-prince",
+          "endpoint": "backend/src/rulesets/support/order-prince.ts"
+        },
+        {
+          "specifier": "./pure-white",
+          "endpoint": "backend/src/rulesets/support/pure-white.ts"
+        },
+        {
+          "specifier": "./radiant-eclipse",
+          "endpoint": "backend/src/rulesets/support/radiant-eclipse.ts"
+        },
+        {
+          "specifier": "./red-moon",
+          "endpoint": "backend/src/rulesets/support/red-moon.ts"
+        },
+        {
+          "specifier": "./scholar-mentor",
+          "endpoint": "backend/src/rulesets/support/scholar-mentor.ts"
+        },
+        {
+          "specifier": "./time-consort",
+          "endpoint": "backend/src/rulesets/support/time-consort.ts"
+        },
+        {
+          "specifier": "./trickster",
+          "endpoint": "backend/src/rulesets/support/trickster.ts"
+        },
+        {
+          "specifier": "./wolf-sorcerer",
+          "endpoint": "backend/src/rulesets/support/wolf-sorcerer.ts"
+        }
+      ],
+      "backend/src/rulesets/board-support.ts": [
+        {
+          "specifier": "./support",
+          "endpoint": "backend/src/rulesets/support/index.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "./node-board-support",
+          "endpoint": "backend/src/rulesets/node-board-support.ts"
+        }
+      ],
+      "backend/src/rulesets/node-board-support.ts": [
+        {
+          "specifier": "../core/domain/plain_data",
+          "endpoint": "backend/src/core/domain/plain_data.ts"
+        },
+        {
+          "specifier": "./support",
+          "endpoint": "backend/src/rulesets/support/index.ts"
+        }
+      ],
+      "packages/game-text/src/messages/common.ts": [],
+      "packages/game-text/src/messages/runtime.ts": [],
+      "packages/game-text/src/messages/agents.ts": [],
+      "packages/game-text/src/messages/replay.ts": [],
+      "packages/game-text/src/messages/audit.ts": [],
+      "packages/game-text/src/messages/features/classic.ts": [],
+      "packages/game-text/src/messages/features/identity.ts": [],
+      "packages/game-text/src/messages/features/gifts-relations.ts": [],
+      "packages/game-text/src/messages/features/night-modifiers.ts": [],
+      "packages/game-text/src/messages/features/mist-radiant.ts": [],
+      "packages/game-text/src/messages/features/noble-fragrant.ts": [],
+      "packages/game-text/src/messages/features/animal-dream.ts": [],
+      "backend/src/rulesets/support/animal-dream.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/rulesets/support/demon-hunter.ts": [
+        {
+          "specifier": "./noble-secret-body",
+          "endpoint": "backend/src/rulesets/support/noble-secret-body.ts"
+        },
+        {
+          "specifier": "./red-moon",
+          "endpoint": "backend/src/rulesets/support/red-moon.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/rulesets/support/evil-knight.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/rulesets/support/fragrant-pair-seer.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/rulesets/support/ghost-bride.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/rulesets/support/magician.ts": [
+        {
+          "specifier": "./wolf-sorcerer",
+          "endpoint": "backend/src/rulesets/support/wolf-sorcerer.ts"
+        },
+        {
+          "specifier": "./trickster",
+          "endpoint": "backend/src/rulesets/support/trickster.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/rulesets/support/mist-raven.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/rulesets/support/nightmare.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/rulesets/support/noble-secret-body.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/rulesets/support/order-prince.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "./trickster",
+          "endpoint": "backend/src/rulesets/support/trickster.ts"
+        },
+        {
+          "specifier": "./time-consort",
+          "endpoint": "backend/src/rulesets/support/time-consort.ts"
+        }
+      ],
+      "backend/src/rulesets/support/pure-white.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/rulesets/support/radiant-eclipse.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/rulesets/support/red-moon.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/rulesets/support/scholar-mentor.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/rulesets/support/time-consort.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/rulesets/support/trickster.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ],
+      "backend/src/rulesets/support/wolf-sorcerer.ts": [
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "endpoint": "packages/game-contract/src/index.ts"
+        }
+      ]
+    },
+    "external": [
+      "@ai-werewolf-arena/game-contract/events",
+      "@ai-werewolf-arena/game-contract/facts/demon-hunter",
+      "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer",
+      "node:async_hooks",
+      "node:util",
+      "zod"
+    ],
+    "noReachableAI": true,
+    "reachableAI": [],
+    "backEdgesToNewOwner": [],
+    "ownerTopLevelRuntimeKinds": [
+      "ImportDeclaration",
+      "ImportDeclaration",
+      "ImportDeclaration",
+      "ImportDeclaration",
+      "ImportDeclaration",
+      "ImportDeclaration",
+      "ImportDeclaration",
+      "ImportDeclaration",
+      "ImportDeclaration",
+      "ImportDeclaration",
+      "ImportDeclaration",
+      "ImportDeclaration",
+      "FunctionDeclaration"
+    ],
+    "limits": "Actual current static value-import/export and literal dynamic/require graph only; type-only edges excluded. New owner has12 original predicate imports plus function declaration,noeagerstate/store/RNG; source body APIs unchanged. Separate Root parallel pureDTO type-route changes are independent and not a wholedependency bytecontrol claim. Existing module global load ordering/binary equivalence and arbitrary computed imports not claimed."
+  },
+  "independentReview": {
+    "status": "approved",
+    "reviewer": "/root/preflight_final_review",
+    "scope": "Independent complete before/current NightPipeline, new rule owner and three literal tests; actual13Git provenance, fresh3source SHA; read complete existing proof, bindings, graph and finite receipts. Only final one-comment whole-token/two-emission delta performed, no repeated full proof/type/test/gate/source edits.",
+    "base": "adfab9189b3a883a04dd95c2510bb4670a580a4b",
+    "original13ActualGitSame": true,
+    "twelveCurrentMechanismByteControlsSame": true,
+    "files": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "sha256": "94bc0a843c8188429498231516c498310606b0a860429acc7db1d8733cc41a92"
+      },
+      {
+        "path": "backend/src/rulesets/night-commit-admission.ts",
+        "sha256": "07ce1a722b6073671f5fb1bd163c35338e968a0dcde659535471eafe4542ec28"
+      },
+      {
+        "path": "backend/tests/unit/rulesets/night-commit-admission.test.ts",
+        "sha256": "abd41a78bdbd9e2051c1f9233387dd986f4471f16a256f1219a548fc79709931"
+      }
+    ],
+    "freshFinalScopeSHA0": true,
+    "sourceReview": {
+      "owner": "Real finite rule owner contains all original11if statements and12direct predicate sites, including the shared Black Market trade/recipient OR and original11 literal errors. No loop/registry replacement, new marker/table, write, new eligibility, actor cache, refund or generic cleanup.",
+      "checkpoint": "Existing setup guards and initial currentness return stay before lifecycle preparation/open. Within original try, original optional weddingNight.open remains immediately before new synchronous admission, with original night_pipeline_start recording and stageState construction immediately after. Rejecting remains before stage/provider advancement and still executes original lifecycle.abortPipeline in finally.",
+      "readsAndReceivers": "Actual world:()=>this.world and day:()=>day defer each original argument at its predicate call. Original imported callee binding stays live, World read precedes day, OR short-circuit excludes Recipient on left success and later Lucky on right success. No collected witness snapshot or predicate reordering.",
+      "normalAndFailure": "Original nativeProvider before/after readable checks, lazy stage progression, before/after await currentness, damage folding, source sealing, normal lifecycle.finishPipeline, result/reference assembly, abort and finally all preserved by full-source reading and complete supplied proof. Existing committed effects/markers stay mechanism-owned; rejection closes original transient lifecycle scope without claiming rollback of paid effects.",
+      "interfaceAndInitialization": "New exported assertion/runtime query type plus local thunk allocation and call-stack/module route are intentional structural differences. Interface exposes actual World and local day; it is not serialized data, a runtime brand or new permission. Owner has only existing predicate value imports and a function, no top-level stage/model/IO/RNG call or state.",
+      "tests": "Read full handwritten12-site trace, true Fox claim+Dream/Mechanical commit priority, and actual Black Market skip stage/Recipient+Lucky commits. They assert real first failure and committed state/skip event prefixes, not mocked predicate registry or production-generated expected values. Exactly3distinct cases/13assertions; no complete game claim."
+    },
+    "suppliedProofReview": {
+      "walker": "Read entire prove.cjs: void forEachChild and array traversal, whole current owner body inverse only runtime.world/day, exact actual caller thunks, complete full3296-node Pipeline, all raw leaves/twowhole emissions, all remaining imports and canonical12 predicate physical/name/kind/type binding checks before old import text restore. No callbacks, parameters, records, cleanup, arrays or assertions discarded.",
+      "fullPipelineNodes": 3296,
+      "inverseNodes": 3296,
+      "completeJudgmentsAndPipelineTrue": true,
+      "twoWholeEmitsSame": true,
+      "allTwelvePhysicalPredicateBindingsSame": true,
+      "allRemainingBindingsSame": true,
+      "checkpointAndWholeFinallySame": true,
+      "otherCompleteMembers": 12,
+      "otherCompleteMembersAllSame": true,
+      "originalControls": 12,
+      "staticGraphModules": 198,
+      "graphLimits": "Reviewed graph script/data only, current static declared value-import/export/literal import or require closure; no computed import/complete cold initialization or whole transitive byte equality claim. Parallel Player DTO type-route changes explicitly excluded.",
+      "proofRerun": false
+    },
+    "finalCommentFinding": {
+      "finding": "Old call-site sentence said wedding already open unconditionally, but preceding source only opens when ownsWedding.",
+      "resolution": "Only one comment now qualifies optional wedding; no guard/cleanup/business change.",
+      "delta": {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "finalSHA": "94bc0a843c8188429498231516c498310606b0a860429acc7db1d8733cc41a92",
+        "previousCommentSourceReconstructedSHA": "9e17ba4901db6073c78333d57d0e6326d03477146de1f20c0413eef4616de469",
+        "matchesPreviouslyReadScopeSHA": true,
+        "method": "Only exact one comment replacement reversed to previous already-read/frozen scope SHA; reconstructed source explicitly, not a manufactured historical snapshot.",
+        "wholeNonCommentLeafSame": true,
+        "wholeOutputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true
+          }
+        ],
+        "semantics": "The immediately preceding weddingNight.open is conditional on ownsWedding; new sentence qualifies that condition. Admission remains before start recording and stage-state construction within the original try/finally. No executing tokens/type/API or header contract fields changed."
+      },
+      "originalScopeProofAndReceiptsPipelineSHA": "9e17ba4901db6073c78333d57d0e6326d03477146de1f20c0413eef4616de469",
+      "receiptLastScopePipelineSHA": "9e17ba4901db6073c78333d57d0e6326d03477146de1f20c0413eef4616de469",
+      "interpretation": "These supplied proof/receipts describe pre-last-comment9e17 freeze; independent exact comment inverse/tokens/twooutputs bridge to current94bc. Final bytes are actual scope-final/freshSHA, not a rerun of old receipts."
+    },
+    "receiptsRead": {
+      "runtime": {
+        "actualToolChunk": "6674a5",
+        "exitCode": 0,
+        "cases": 3,
+        "failures": 0,
+        "assertions": 13,
+        "log": "tests-new.log",
+        "onlyNewFile": true
+      },
+      "finiteTypes": {
+        "actualSession": 78215,
+        "exitCode": 0,
+        "roots": 3,
+        "log": "types.log",
+        "logBytes": 0,
+        "runs": 1
+      },
+      "actualTypeLogBytes": 0,
+      "commentHeadsAtOriginalScope": {
+        "files": 3,
+        "docPaths": 415,
+        "allDocsExist": true,
+        "failures": [],
+        "chineseFailures": []
+      },
+      "finalInlineCommentHeadsSemantics": "Responsibility header and contract fields unchanged; new call-site condition exactly follows real optional open. Did not rerun comment gate.",
+      "toolGraphFirstSyntaxFailure": "Only apostrophe in review harness string, actual source/runtime/type unaffected; final graph receipt true, no hidden source correction."
+    },
+    "findings": []
+  },
+  "finalCommentDelta": {
+    "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+    "finalSHA": "94bc0a843c8188429498231516c498310606b0a860429acc7db1d8733cc41a92",
+    "previousCommentSourceReconstructedSHA": "9e17ba4901db6073c78333d57d0e6326d03477146de1f20c0413eef4616de469",
+    "matchesPreviouslyReadScopeSHA": true,
+    "method": "Only exact one comment replacement reversed to previous already-read/frozen scope SHA; reconstructed source explicitly, not a manufactured historical snapshot.",
+    "wholeNonCommentLeafSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true
+      }
+    ],
+    "semantics": "The immediately preceding weddingNight.open is conditional on ownsWedding; new sentence qualifies that condition. Admission remains before start recording and stage-state construction within the original try/finally. No executing tokens/type/API or header contract fields changed."
+  },
+  "limits": [
+    "原11if/12predicate站点，不计Lucky等谓词内部委托总调用数。",
+    "婚约为可选：原若ownsWedding开夜之后，同步准入仍先于起始记录和阶段状态。",
+    "原proof/receipts中的9e17是末中文注释修正前；94bc最终源码由独立完整comment差量连接，不冒重跑旧证明/类型/测试。",
+    "12原predicate源字节保持，不称并行DTO型路由导致的整个传递图字节不变。",
+    "新模块装配路线与栈有意变化，不承诺全部模块初始化或外部未知API兼容。",
+    "没有新注册表、状态表、缓存或取消／退款政策；具体提交证据仍机制唯一拥有。",
+    "完整C21/C23及P9继续，没有重复旧tests/model/fullgate。"
+  ]
+}
