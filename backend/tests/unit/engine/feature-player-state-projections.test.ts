@@ -12,6 +12,7 @@ import { projectRedMoonState } from "../../../src/game/mechanisms/roles/red_moon
 import { projectNightmareShadowState } from "../../../src/game/mechanisms/roles/nightmare_shadow/state";
 import { projectEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/state";
 import { capturePlayerObservation } from "../../../src/game/observation/player-observation-projector";
+import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 
 test("red moon and evil knight return selected detached data and retain invalid-slot rejection", () => {
   const red = createRoleComponent(Role.RedMoonApostle, Camp.Wolf);
@@ -127,6 +128,7 @@ test("the observation consumer freezes the mechanism projection without changing
     world: () => world,
     role: () => role,
     wolfTeammates: () => [],
+    catalog: () => getDefaultRoleCatalog(),
   });
   expect(view.ownState.evilKnight).toEqual({
     policy: "awa_evil_knight_v1",

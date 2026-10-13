@@ -556,3 +556,5 @@
 - C24白天中断完整组合：4source，规则组合拥有自爆→决斗→辩论三原实例构造与执行首项重入准入，窄运行契约不导具体辩论；Pipeline保全部警长/发言/3自爆3决斗1辩论位置、2存活复查、config短路、death/phase/victory仍PM。真实546before/4原controls全byte同、完整Pipeline2456强nodes和两whole运行输出经明确delta逆同，callee/late字段读/receiver/失败前缀保；私有3field退休及cold import差异明列。new4/0/22+oldDeb4/0/14+oldhook1/0/4＝9unique40assert分3次；finite17281实际closed0、首typeRoots工具红保，4CN heads职责0。Root实读3生产源及独立4SHA/source/doc终审批准，MD窄数据误词已修运行契约，不重全gate，见 daytime-interruption-composition.md。
 
 - 历史复盘reader中文说明随迁移补齐：4既有叶，仅注释；精确alias/hasOwn、两语历史标签保、diagnostic白名单/建议≠retry、浅isRecord与descriptor遍历/seen≠JSON可编码及Proxy反射限界就地。真实ace6Git四完整typed程序与8whole运行输出同，职责4/0与CN4/0；Root实际4body及独立4SHA/body/前缀/措辞审批准，不重type/runtime/gate，不称全仓中文完成；见 replay-reader-chinese-comments.md。
+
+- 观察投影旧夹具补catalog：原手写Queries漏必填查询；只追加default catalog import与延迟supplier，原expected/其它body保持。Root从真实2117Git仅两增量构造stage，working保C17具体state-slot route/角色名称，精确分层不把并行迁移夹入fixture commit。对应consumer1/0/4、2filtered，独立Queries/defaultfacets/全oldbyte逆与候选SHA批准，未重其余tests/全gate，不声称只是type或全JS同；见 generated/observation-catalog-fixture-evidence.json。
