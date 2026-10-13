@@ -60,10 +60,10 @@ const fixture = (roles = deck, policy: CupidPolicy = "netease_2017_cupid_follows
 };
 
 const role = (game: ReturnType<typeof fixture>, id: number) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  game.world.getComponent(id, COMPONENT.Role)!;
 
 const life = (game: ReturnType<typeof fixture>, id: number) =>
-  game.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+  game.world.getComponent(id, COMPONENT.Alive)!;
 
 const choose = (a: number, b: number): ToolCall => ({
   name: "choose_lovers",
@@ -233,7 +233,7 @@ for (const mutation of [
         events,
         async () => {
           if (calls++) return null;
-          const victory = game.world.getComponent<VictoryComponent>(2, COMPONENT.Victory)!;
+          const victory = game.world.getComponent(2, COMPONENT.Victory)!;
           if (mutation === "target_role") role(game, 2).role = Role.Villager;
           if (mutation === "target_camp") role(game, 2).camp = Camp.Wolf;
           if (mutation === "target_state")
@@ -418,6 +418,7 @@ test("restricted-observation final gun with no living targets deliberately passe
     identity: { role: Role.Hunter, camp: Camp.Good },
     knownAliveIds: [],
     teammateIds: [],
+    currentWolfActions: { canChat: false, canVoteForKill: false },
     abilities: [],
     deathAbilities: [],
     ownNightActions: [],

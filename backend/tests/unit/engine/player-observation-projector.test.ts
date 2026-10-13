@@ -58,6 +58,7 @@ test("unannounced deaths remain knowledge candidates and only the three original
   const f = fixture();
   const queries = {
     world: () => f.world,
+    catalog: () => getDefaultRoleCatalog(),
     role: (actorId: () => number) => f.world.getComponent(actorId(), COMPONENT.Role),
     wolfTeammates: (actorId: () => number) => {
       expect(actorId()).toBe(1);
@@ -156,6 +157,7 @@ test("canonical observation freezing retains nullable knowledge and detaches eve
     identity: { role: Role.Villager, camp: Camp.Good },
     knownAliveIds: [1, 2],
     teammateIds: [],
+    currentWolfActions: { canChat: false, canVoteForKill: false },
     abilities: [],
     deathAbilities: [],
     ownNightActions: [],

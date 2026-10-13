@@ -38,6 +38,8 @@ export interface PlayerObservation {
   identity: { role?: Role; camp?: Camp; name?: string };
   knownAliveIds: number[];
   teammateIds: number[];
+  /** 自己在捕获时点的狼队行动资格；不附权限原因、对手状态或请求 lease，提交时仍重验。 */
+  currentWolfActions: { canChat: boolean; canVoteForKill: boolean };
   abilities: PlayerNightAbility[];
   deathAbilities: PlayerDeathGun[];
   ownNightActions: OwnNightAction[];

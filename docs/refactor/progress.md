@@ -10,7 +10,7 @@
 | P3 状态与请求授权      | 进行中 | C16读取/C18/F02/C19与opaque／旧状态门面退出已落；完整能力schema／codec继续             |
 | P4 规则计划与生命周期  | 进行中 | RulePlan实际同引用消费、late计划与周期单位已落；C22–C24完整机制矩阵继续                |
 | P5 效果、死亡与判胜    | 进行中 | C25/26真实毒来源、C27实际Wave/Receipt与提交、C28馥郁／动物边界已落；全效果/关系继续              |
-| P6 能力、观察与展示    | 进行中 | C35第五包、F01默认生产观察回退已落；C30–C34完整投影、C36与其余展示贡献继续                      |
+| P6 能力、观察与展示    | 进行中 | C35第五包、C36三贡献/领域展示退出已落；F01补当前资格，C30–C34完整矩阵继续                      |
 | P7 记录与独立复现      | 进行中 | C37完整checkpoint与16verifier装配、C38生命周期唯一owner已落；记录/版本完整验收继续                                                                                |
 | P8 目录、命名与文档    | 待执行 | C41–C44                                                                                |
 | P9 全仓收敛与验收      | 待执行 | C45–C48；同源固定输入、门禁零债务                                                      |
@@ -478,3 +478,5 @@
 - C17 Animal完整三族状态贡献：4source/test，完整capture/currentness/原槽唯一replace与factory/schema/5纯转换/JSONcodec真实归state-slot，authority安装、付款、11读取/5提交编码接线；原引用/JSONparse callee→getter/写前缀保。作者12完整program和独立实际Git9check/4SHA绿，Root三方面owner/规则/API审通过；首7中6绿+仅decoder修fixture后1/0，最终合并244roots27644 actual0，未重原6/games/full。其他52族继续，见animal-state-slot.md。
 
 - C36真实三贡献及剩余5领域展示退出：244 source union(117组件+56facet+84consumer含交集)，55metadata/runtime/presentation真实登记、47完整producer逆0、47冷profile全55/capturecache空、类明确组合根装配；域renderPrompt/Status.locale退休、customflat原ref/双getter/this/lateWorld保，静态字段分组求值差异明列。90组件consumer directsame+13同期facet逆，Root84完整program/import和另一方向权限/receiver审0；最终244backend roots=240本批+Animal4，27644 actual0，head248=本批244+Animal4全0；newgetter/Bunmatcher初红与纯type修保。有限facet22/3971、组件各delta/旧localization2/32、Root70中66绿4红，真Git a6同4fallback红已characterize不删assert，下一F01独立修复。17生产query/25fixture/5factory及wholeScope/SHA、Root三方面和文档终SHA审通过；其余阶段/全量矩阵继续，见role-contributions-and-components.md。
+
+- F01当前自身狼队资格独立行为修复：8paths，mandatory DTO两bool由游戏capture在原字段后晚读当前自身政策，回调后同Role/ref/roleId/camp/Alive核对；无权限原因/对手realAlive/World/lease句柄，历史knownAlive保。SDK/ACP原4红断言现4/0/8，新6unique最终31assert（首5/27+改RNG/新callback差量2/11），无RNG/fork抽取；complete4原程序精确增量逆/3oldfixture literal与C44typearg归属、4archive/events控制bytes同、8CNheads及Root/独立8SHA/source/doc终审绿，finite9roots35267 actual0，首44344 stage新fixture红及同时C44采样红保。禁strict fallback/其它handler/提交lease仍原owner，不称机械等价；完整C33/P9继续，见fallback-current-wolf-actions.md。

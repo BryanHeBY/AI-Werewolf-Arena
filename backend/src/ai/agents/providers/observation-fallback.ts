@@ -2,6 +2,7 @@
  * 负责生产回退的受限观察决策。输入是共同 PlayerObservation 和显式语言；
  * 输出为既有工具 handler 的竞争型行动，选择首个可见候选，不读取 World 或真实阵营。
  * 固定 next() 不推进游戏 RNG；原发言模板、狼聊形式和方向奇偶政策保持。
+ * 自身当前资格与已知队友分开；请求旧工具名单不能恢复已被撤销的狼聊或刀资格。
  * 投影适配器仅传脱离且冻结的 DTO，资格、库存、目标和已付款动作仍由引擎重检。
  * 这是 F01 独立策略变化；无适合的观察行动时返回 null，不伪造严格必选动作。
  */
@@ -24,6 +25,14 @@ export class ObservationFallbackStrategy implements ObservedPlayerStrategy {
     const context = createObservedBotContext(observation, firstCandidate, "competitive");
     for (const handler of observedToolHandlers) {
       if (!observation.request.allowedTools.includes(handler.tool)) continue;
+      // F01：旧 allowedTools 只是请求名单；失效的自身狼聊／刀资格不能被回退恢复。
+      // 两项资格分别判定，拒绝一个工具后仍按原顺序寻找其它已允许的候选。
+      if (
+        handler.tool === "speak_to_wolves" && observation.currentWolfActions.canChat !== true
+      ) continue;
+      if (
+        handler.tool === "kill_vote" && observation.currentWolfActions.canVoteForKill !== true
+      ) continue;
       if (handler.tool === "speak") {
         return {
           name: "speak",

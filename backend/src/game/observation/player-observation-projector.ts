@@ -87,7 +87,7 @@ import { getHybridState, projectHybridState } from "../mechanisms/roles/hybrid/s
 import { getMerchantState, projectMerchantState } from "../mechanisms/roles/miracle_merchant/state";
 import { projectEclipseState } from "../mechanisms/roles/radiant_eclipse/ports";
 import { COMPONENT } from "../../core/domain/components/names";
-import { Role, type ActionRequest } from "@ai-werewolf-arena/game-contract";
+import { Camp, Role, type ActionRequest } from "@ai-werewolf-arena/game-contract";
 import { allNightAbilities, projectNightAbility } from "../mechanisms";
 import { getGuardState } from "../mechanisms/roles/guard/ports";
 import { getHunterState } from "../mechanisms/roles/hunter/ports";
@@ -103,12 +103,39 @@ import { freezeObservation, type PlayerObservation } from "./player-observation"
 import type { RoleComponent } from "../../core/domain/components/role";
 import type { World } from "../../core/domain/world";
 import type { EntityId } from "@ai-werewolf-arena/game-contract";
+import type { RoleCatalog } from "../mechanisms/roles/catalog";
+import { wolfTeamPermissions } from "../mechanisms/roles/wolf_team";
 
 /** 只供捕获 owner 使用的原位读取端口；回调不进入观察 DTO 或玩家策略。 */
 export interface PlayerObservationQueries {
   world(): World;
   role(actorId: () => EntityId): RoleComponent | undefined;
   wolfTeammates(actorId: () => EntityId): EntityId[];
+  catalog(): RoleCatalog;
+}
+
+/**
+ * F01：只捕获当前 actor 自己的狼队资格，不从历史队友或请求的旧工具名单推断。
+ * 原政策可运行自定义 callback，因此先读结果，再核对自己的角色编号、阵营和存活量；
+ * 这只是观察快照，不是原生命／请求租约；实际提交仍由原机制验证，不返回拒绝原因。
+ */
+function captureCurrentWolfActions(
+  request: ActionRequest,
+  queries: PlayerObservationQueries,
+): PlayerObservation["currentWolfActions"] {
+  const world = queries.world(),
+    actorId = request.actorId,
+    role = world.getComponent(actorId, COMPONENT.Role),
+    roleId = role?.role,
+    permissions = wolfTeamPermissions(role, queries.catalog(), world),
+    canChat = permissions.canChat === true,
+    canVoteForKill = permissions.canVoteForKill === true;
+  const current =
+    world.getComponent(actorId, COMPONENT.Role) === role &&
+    role?.role === roleId &&
+    role?.camp === Camp.Wolf &&
+    world.getComponent(actorId, COMPONENT.Alive)?.alive === true;
+  return current ? { canChat, canVoteForKill } : { canChat: false, canVoteForKill: false };
 }
 
 export function capturePlayerObservation(
@@ -341,5 +368,7 @@ export function capturePlayerObservation(
       projectNightAbility(ability, request.context.day),
     ),
     deathAbilities: allDeathGuns(role).map(projectDeathGun),
+    // 原知识、能力和发布存活字段已在原位置读完；新的自身资格单独捕获，不改写它们。
+    currentWolfActions: captureCurrentWolfActions(request, queries),
   });
 }

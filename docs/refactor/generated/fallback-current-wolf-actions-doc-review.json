@@ -1,0 +1,23 @@
+{
+  "status": "approved",
+  "scope": "Final F01 documentation and receipts only, no source/type/runtime repeat.",
+  "checks": [
+    "Required own two-bool snapshot explicit behavioral/API extension, not lease or legacy missing DTO equivalence.",
+    "Six unique new cases31 assertions; prior5/27 and changed2/11 receipts not added as distinct coverage.",
+    "Original four SDK/ACP assertions4/8 green; real oldfourred retained.",
+    "Nine-root type process35267 terminal0 distinct from initial44344 failure.",
+    "Four public event/archive source controls byte-identical; no archive acceptance/gate completion claim.",
+    "Independent8SHA review and source/fixture inverse attribution preserved."
+  ],
+  "files": [
+    {
+      "path": "docs/refactor/fallback-current-wolf-actions.md",
+      "sha256": "5afb4e04d599ff41da6b7dd637b5823e5b8786708c46d9e1049f96ab09625c35"
+    },
+    {
+      "path": "docs/refactor/generated/fallback-current-wolf-actions-evidence.json",
+      "sha256": "a95808109227e6153347f4376f4caedc8f8fe62b9873f3eecd5bb4919b8be1ac"
+    }
+  ],
+  "findings": []
+}

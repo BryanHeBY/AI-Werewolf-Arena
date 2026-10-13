@@ -190,6 +190,7 @@ export class PlayerPromptPolicy {
       world: () => this.world,
       role: (actorId) => this.role(actorId()),
       wolfTeammates: (actorId) => this.wolfTeammates(actorId()),
+      catalog: () => this.options.roleCatalog,
     });
   }
 
