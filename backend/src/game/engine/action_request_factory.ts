@@ -1,15 +1,10 @@
 /**
- * Responsibility: assemble engine action requests from the original World and explicit stage.
- * Input: actor/window, projected visible facts, allowed tools and neutral summaries;
- * output: native requests with existing role-owned scope and delivery bindings.
- * Domain mechanisms own authorization and resource commit. This factory neither
- * renders localized text nor serializes runtime scopes; copied DTOs are not leases.
+ * 负责从原 World 与明确阶段构造引擎行动请求。输入为演员、窗口、允许工具和中立摘要；
+ * 输出固定日次、阶段、约束及玩家可见事实，完整构造之后交规则集按原顺序接线机制绑定。
+ * 具体机制仍唯一持有权限、期限别名与资源提交；请求数据副本不是行动许可。
+ * 本工厂不渲染本地化文案、不序列化运行范围，也不据阶段字符串新增角色权限。
  */
-import { bindGhostBrideRequest } from "../mechanisms/roles/ghost_bride/authority";
-import { bindLonelyGirlRequest } from "../mechanisms/roles/lonely_girl/lifecycle";
-import { bindWildChildRequest } from "../mechanisms/roles/wild_child/lifecycle";
-import { bindInitialIdentityRequest } from "../mechanisms/roles/initial_identity/setup";
-import { bindWallRequest } from "../mechanisms/events/wall_notes/authority";
+import { bindRulesetActionRequest } from "../../rulesets/action-request-bindings";
 import type { MessageRef } from "@ai-werewolf-arena/game-contract";
 import type { ActionRequest, ActionRequestExtras } from "@ai-werewolf-arena/game-contract/requests";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
@@ -27,8 +22,8 @@ import { buildTurnConstraintContext } from "./turn_constraints_context";
 /**
  * 统一创建游戏对 Agent 的行动请求。
  *
- * 该工厂是引擎写入 ActionRequest.context 的唯一入口：它固定日次、细粒度 stage、
- * 玩家可见事件与结构化行动约束，避免各机制手写并逐渐产生不同语义。
+ * 该工厂统一填入原生请求的日次、细粒度 stage、玩家可见事件与结构化行动约束；
+ * 调用方提供机制附加数据，运行时权限仍由具体机制保存，不混入这些公共字段。
  */
 export class GameActionRequestFactory {
   constructor(
@@ -65,21 +60,11 @@ export class GameActionRequestFactory {
         visible_events: buildAgentVisibleEventFeed(this.world, [...this.events], input.actorId),
       },
     };
-    if (input.stage === "lonely_girl") bindLonelyGirlRequest(this.world, request);
-    if (input.stage === "wild_child") bindWildChildRequest(this.world, request);
-    if (input.stage === "thief" || input.stage === "shapeshifter")
-      bindInitialIdentityRequest(this.world, request);
-    if (input.stage === "wall_notes") bindWallRequest(this.world, request);
-    if (
-      [
-        "ghost_bride_groom",
-        "ghost_bride_chat",
-        "ghost_bride_witness",
-        "ghost_bride_knife",
-        "wolf_vote",
-      ].includes(input.stage)
-    )
-      bindGhostBrideRequest(this.world, request);
+    // 原输入的阶段仍逐分支读取，不用已构造的 context.stage 替代后续 getter；World 也只在命中时读。
+    bindRulesetActionRequest(request, {
+      stage: () => input.stage,
+      world: () => this.world,
+    });
     return request;
   }
 }
