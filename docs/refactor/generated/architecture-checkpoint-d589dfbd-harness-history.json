@@ -1,0 +1,24 @@
+{
+  "fixedCommit": "d589dfbdb79797d2afcfd9c18d7efe60b5675328",
+  "actualExecution": {
+    "launchChunk": "be3570",
+    "session": 45923,
+    "terminalChunk": "38f7a4",
+    "exitCode": 0,
+    "source": "Root提供真实工具已关闭回执；审查者只核持久capture与可读stdout，未重跑gate。"
+  },
+  "script": {
+    "originalPath": "/tmp/awa-inspection-policy-contract/checkpoint-d589.ts",
+    "source": "import fs from 'node:fs';\nimport {execFileSync} from 'node:child_process';\nimport {createHash} from 'node:crypto';\nimport {readPublicGitBlobs} from '/home/hby/dev/AI-Werewolf-Arena/tooling/refactor/inventory';\nimport {checkArchitecture} from '/home/hby/dev/AI-Werewolf-Arena/tooling/refactor/architecture/run';\nconst repository='/home/hby/dev/AI-Werewolf-Arena',commit='d589dfbdb79797d2afcfd9c18d7efe60b5675328';\nconst hash=(s:Uint8Array|string)=>createHash('sha256').update(s).digest('hex');\nconst blobs=readPublicGitBlobs(repository,commit);\nconst files=blobs.files.map(({path,bytes})=>({path,text:bytes.toString('utf8'),sha256:hash(bytes)}));\nconst documentationPaths=execFileSync('git',['ls-tree','-r','--name-only',commit],{cwd:repository,encoding:'utf8'}).trim().split('\\n').filter(p=>/^docs\\/.*\\.md$/.test(p)||p==='README.md').sort();\nconst debtBytes=execFileSync('git',['show',commit+':docs/refactor/generated/architecture-debt.json'],{cwd:repository,maxBuffer:32*1024*1024});\nconst debt=JSON.parse(debtBytes.toString('utf8'));\nconst report=checkArchitecture(repository,{files,documentationPaths},debt);\nconst capture={commit,files:files.map(({path,sha256})=>({path,sha256})),documentationPaths,debtSha256:hash(debtBytes),gateModules:['tooling/refactor/architecture/run.ts','tooling/refactor/architecture/contracts.ts','tooling/refactor/architecture/dependency-check.ts','tooling/refactor/architecture/comment-check.ts','tooling/refactor/architecture/naming-check.ts'].map(path=>{const git=execFileSync('git',['show',commit+':'+path],{cwd:repository});const current=fs.readFileSync(repository+'/'+path);if(!git.equals(current))throw Error('checkpoint_gate_source_changed');return{path,sha256:hash(git)};}),report};\nfs.writeFileSync(repository+'/docs/refactor/generated/architecture-checkpoint-d589dfbd.json',JSON.stringify(capture,null,2)+'\\n');\nconsole.log(JSON.stringify({commit,files:files.length,documentationPaths:documentationPaths.length,debtSha256:capture.debtSha256,counts:report.counts,failures:report.failures}));if(report.failures.length)process.exitCode=1;\n",
+    "sha256": "aa42aced2cc44f2b14c55f9b65ea2d305df54b78b9216792c656cc57c68b6363",
+    "bytes": 2078
+  },
+  "log": {
+    "originalPath": "/tmp/awa-inspection-policy-contract/checkpoint-d589.log",
+    "text": "{\"commit\":\"d589dfbdb79797d2afcfd9c18d7efe60b5675328\",\"files\":3122,\"documentationPaths\":446,\"debtSha256\":\"297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d\",\"counts\":{\"files\":3122,\"violations\":407,\"failures\":0,\"remainingDebt\":407,\"clearedDebt\":1372},\"failures\":[]}\n",
+    "sha256": "a4b568cc7167912dc0cef763b9559d9c990fd0165e1893f847d26ca312d692cc",
+    "bytes": 279
+  },
+  "recordedFailures": [],
+  "limits": "仅保存本次实际可读取脚本/stdout与Root真实terminal归属；不重跑、不编造缺席旧日志。407余债不是产品全部绿。"
+}

@@ -1,0 +1,98 @@
+{
+  "status": "approved",
+  "reviewer": "/root/native_final_architecture_review",
+  "fixedCommit": "d589dfbdb79797d2afcfd9c18d7efe60b5675328",
+  "capture": {
+    "path": "docs/refactor/generated/architecture-checkpoint-d589dfbd.json",
+    "sha256": "06030972dced1461dfc5ccc9ead31e27d4ab084996e055345f6a9716a03a0f0e"
+  },
+  "inputAudit": {
+    "publicInventoryGitSetAndOrderSame": true,
+    "allowedRegularBlobs": 3122,
+    "allActualRawGitSHAsMatch": true,
+    "sourceDigest": "1aa569ff5ef430e939e5dac0deb19a4f47ac48267d8d1b38577cce053f103aa2",
+    "sameReportInputHash": true,
+    "documentationPaths": 446,
+    "allFixedGitDocumentationNamesSame": true,
+    "privateAndWIP": "只使用固定Git公共白名单，未读取当前Cycle9/Order7/Mist/C48或私有配置认证作为gate输入。"
+  },
+  "fiveToolSources": [
+    {
+      "path": "tooling/refactor/architecture/run.ts",
+      "sha256": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394",
+      "currentSameFixedGit": true
+    },
+    {
+      "path": "tooling/refactor/architecture/contracts.ts",
+      "sha256": "4fb704dfc26fd1e326c520856c8d751e86b9ae62d73bf1d2350d4ac1e5a0863d",
+      "currentSameFixedGit": true
+    },
+    {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "sha256": "acfd1dae8ad2142178ed1a67ebb573a618cfc2f3808913401b75ee5071e9c069",
+      "currentSameFixedGit": true
+    },
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "sha256": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db",
+      "currentSameFixedGit": true
+    },
+    {
+      "path": "tooling/refactor/architecture/naming-check.ts",
+      "sha256": "2747a2f36e3b5ffe21dae807a70a6a894cd10b1df96439ab799ef292ecb9ccb3",
+      "currentSameFixedGit": true
+    }
+  ],
+  "inventoryReader": {
+    "path": "tooling/refactor/inventory.ts",
+    "sha256": "3905f88d6124cb9a1cb2b468b812561292a60b021f65b03427f0e717859db9ce",
+    "currentSameFixedGit": true
+  },
+  "frozenDebt": {
+    "sha256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+    "count": 1779,
+    "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+    "wholeCurrentBytesSameFixedGit": true,
+    "originalMetadataDigestSame": true
+  },
+  "classificationAudit": {
+    "actualCounts": {
+      "files": 3122,
+      "violations": 407,
+      "failures": 0,
+      "remainingDebt": 407,
+      "clearedDebt": 1372
+    },
+    "remainingExactLegacyIdentities": 407,
+    "clearedOriginalIdentities": 1372,
+    "completeDisjoint1779Partition": true,
+    "problems": [],
+    "limit": "仅复核记录结果与冻结债务原精确政策和changed-head条件；不重新发现violations，不执行checkArchitecture/allViolations。"
+  },
+  "terminalAttribution": {
+    "launchChunk": "be3570",
+    "session": 45923,
+    "terminalChunk": "38f7a4",
+    "exitCode": 0,
+    "source": "Root提供真实工具已关闭回执；审查者只核持久capture与可读stdout，未重跑gate。"
+  },
+  "harness": {
+    "pathAtRun": "/tmp/awa-inspection-policy-contract/checkpoint-d589.ts",
+    "sha256": "aa42aced2cc44f2b14c55f9b65ea2d305df54b78b9216792c656cc57c68b6363",
+    "bytes": 2078,
+    "readComplete": true,
+    "fixedGitAndFiveCurrentToolGuards": true,
+    "logPathAtRun": "/tmp/awa-inspection-policy-contract/checkpoint-d589.log",
+    "logSHA256": "a4b568cc7167912dc0cef763b9559d9c990fd0165e1893f847d26ca312d692cc",
+    "logBytes": 279,
+    "stdoutSummarySameReport": true
+  },
+  "semanticLimits": [
+    "固定d589已经包含TimeDTO、Wedding、应用观察M1/M2和O3及NightData注释；不含后续未提交周期准入、Order/Wedding DTO、Mist槽和Root C48工作区。",
+    "0新增是此固定提交的依赖、命名和职责形状结果；407余债仍需完整实现，不是全目标零债、全部类型／行为／P9同源验收。",
+    "旧1779字节不改、没有mapping或新增基线豁免；407原匹配与1372clear完整不重复分区。",
+    "来源摘要只path+rawSHA metadata，不是回放Tape复现授权；并行候选不得借固定绿冒当前全树绿。"
+  ],
+  "findings": [],
+  "executed": "实际Git public路径、完整raw blob SHA、metadata sourceDigest、固定工具及冻结债字节／精确partition；未跑gate/types/tests/network/models，未改任何源码。"
+}

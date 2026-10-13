@@ -588,3 +588,5 @@
 - O2定序王子／鬼魂新娘纯知识类型：7source，Order两声明与WeddingActorView原两可写分支归既有GCfacts，旧2叶3type出口退休，唯一Order named type＋Observer两inline直canonical；原enum/null/optional/政策与全部运行authority留原位。六真实d589 before／21996完整nodes＋134完整原body／12whole运行输出＋三decl156nodes同，7roots首newdirective错位仅fixture3诊断，移注释后失败根48127→58ee61 actual0不重6prod，7CN头0。Root实际三decl/body/权限审与独立7finalSHA/doc批准，公开知识不赋canKnife/revote提交许可，更多Eclipse/Wall/全观察继续；见 order-wedding-player-types.md。
 
 - 玩家知识与婚约死亡波台账补六part：仅登记064589/528d/c419/d589四实际功能来源，91rows910cells和所有原parts／remaining前缀保持、frozen60f1原byte不改；199partial711pending→203partial707pending，0complete/N/A。Root真实owner/commit/doc与独立904完整不变格＋6追加格/四ancestor/全部SHA批准，App／纯注释／检查格外不硬塞机制；不重tests/types/gate，不据登记关闭阶段。见 observation-wedding-delivery-ledger.md。
+
+- 固定d589dfbd结构检查收口：真实3122公开Git blob／446同Git文档，Root后台session45923实际终止chunk38f7a4 exit0；0新增、407余债、1372已清，原1779债务SHA297b逐字保持。独立全部原始SHA／公共路径顺序／sourceDigest1aa569ff／五门禁工具及inventory reader固定Git-current字节／407+1372精确不重复原债分区核准，不重复门禁。固定提交已含Time DTO、婚约死亡波、应用观察和O3；提交后的Cycle／Order-Wedding DTO／Mist／C48 WIP排除，不借固定绿称当前全树或P9完成。脚本与stdout真实保存，类型、行为和最终同源验收继续；见 architecture-checkpoint-d589dfbd.md。
