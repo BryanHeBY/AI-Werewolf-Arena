@@ -1,0 +1,35 @@
+{
+  "commit": "9265335a5d9e005eef8f59ca7cfea5c41495f084",
+  "inputFiles": 3095,
+  "realGitBlobFailures": [],
+  "inputHash": "131236f825996b2969b201a44eeac981e46cf546fa047b22852f92b1c1dad421",
+  "reportHashSame": true,
+  "counts": {
+    "files": 3095,
+    "violations": 537,
+    "failures": 0,
+    "remainingDebt": 537,
+    "clearedDebt": 1242
+  },
+  "failuresAreEmpty": true,
+  "countsMatch": true,
+  "baseline1779UnchangedPartition": true,
+  "scope": "Read-only Git object matching, source SHA and exact stable input digest/report partition; no rerun of architecture gate, type/test/game or baseline modification.",
+  "realGitBlobFilesMatched": 3095,
+  "firstToolingAttempt": "Read-only ls-tree format mistyped percent09; rejected with empty output, corrected percentx09 then actual3095 object matching. No gate/report/source/debt edits.",
+  "docReview": {
+    "findings": [],
+    "files": [
+      {
+        "path": "docs/refactor/architecture-checkpoint-9265335a.md",
+        "sha256": "2ef5671f2bab363c401309a4a2f2465a76e60ddd173f46de1a189a2ab07e4078"
+      },
+      {
+        "path": "docs/refactor/generated/architecture-checkpoint-9265335a.json",
+        "sha256": "0c531e8306e9f65b4cdef34133dcf76a504bf3669015d9bf9feb9c733ac3bfd6"
+      }
+    ],
+    "reportExact": true,
+    "meaning": "Fixed3095 Git inputs; 0new failures does not clear537 historical debt or declare P0-P9/runtime acceptance."
+  }
+}
