@@ -558,3 +558,5 @@
 - 历史复盘reader中文说明随迁移补齐：4既有叶，仅注释；精确alias/hasOwn、两语历史标签保、diagnostic白名单/建议≠retry、浅isRecord与descriptor遍历/seen≠JSON可编码及Proxy反射限界就地。真实ace6Git四完整typed程序与8whole运行输出同，职责4/0与CN4/0；Root实际4body及独立4SHA/body/前缀/措辞审批准，不重type/runtime/gate，不称全仓中文完成；见 replay-reader-chinese-comments.md。
 
 - 观察投影旧夹具补catalog：原手写Queries漏必填查询；只追加default catalog import与延迟supplier，原expected/其它body保持。Root从真实2117Git仅两增量构造stage，working保C17具体state-slot route/角色名称，精确分层不把并行迁移夹入fixture commit。对应consumer1/0/4、2filtered，独立Queries/defaultfacets/全oldbyte逆与候选SHA批准，未重其余tests/全gate，不声称只是type或全JS同；见 generated/observation-catalog-fixture-evidence.json。
+
+- C30/C33夜能力公共元数据与知识DTO：6source，GC唯一12共同字段＋原3能力DTO和2自身行动类型，backend kind/state/readonly映射共用metadata，玩家不带内部披露/抑制；原abilityStatus/投影/11能力函数与3ledger函数完整保。真实2117四before、12完整fieldprobe、3全4815node程序及6whole运行byte同、14旧出口+9字段negative有用、7kind精确／双向赋值编译绿；BE13643与GC2d2389首实际closed0，无runtime重跑。5CN头职责0（首fixture缺owner仅comment后1788node保）。Root实读公共metadata/body及独立6源／导出链／policy许可／doc终SHA批准；Observer冻结两type进口精准stage，working另4家族inline为后继O2不夹本笔。更多私有DTO与全C30/33仍续，见 night-ability-views.md。

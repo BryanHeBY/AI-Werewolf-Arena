@@ -1,8 +1,9 @@
 /**
- * 负责普通夜能力的实例类型、只读查询、状态判定、数据复制与玩家投影。
+ * 负责普通夜能力的实例映射、只读查询、状态判定、数据复制与玩家投影。
  * 输入为原实例引用、明确日期和数据字段；输出保留深只读 live 引用或独立玩家 DTO。
  * 原生安装、起效日与次数提交已归 ability_changes；本模块不写实际实例槽、库存或阶段。
  * Pair 纯数据规范化由同一实际函数供安装及投影使用，不从真实阵营推断玩家知识。
+ * 共同元数据与玩家 DTO 类型归公共契约；status 标签不代替原许可或提交前复验。
  */
 
 import type {
@@ -29,12 +30,11 @@ import {
   projectWitchState,
 } from "./player_state";
 import type {
-  PlayerDreamerState,
-  PlayerGuardState,
-  PlayerRoleInspectionState,
-  PlayerSeerState,
-  PlayerWitchState,
-} from "@ai-werewolf-arena/game-contract/player-state-views";
+  NightAbilityMetadata,
+  AbilityStatus,
+  PlayerNightAbilityStates,
+  PlayerNightAbility,
+} from "@ai-werewolf-arena/game-contract/night-ability-views";
 export { projectRoleInspectionState, projectSeerState, projectWitchState } from "./player_state";
 
 
@@ -67,24 +67,9 @@ export function projectAbilitySource(
         : { kind: origin.kind, actorId: origin.actorId, abilityId: origin.abilityId };
 }
 type NightAbilityUnion = {
-  [P in NightAbilityKind]: {
-    id: string;
+  [P in NightAbilityKind]: NightAbilityMetadata & {
     kind: P;
     state: NightAbilityStates[P];
-    source: AbilitySource;
-    sourceDisclosed: boolean;
-    startsOnDay: number;
-    expiresAfterDay?: number;
-    maxUses: number | null;
-    uses: number;
-    lastUsedDay: number | null;
-    disabled: boolean;
-    /** 本夜有限租约独立持有此阻塞，不能与持久 disabled 旗标合并。 */
-    nightSuppression?: import("@ai-werewolf-arena/game-contract").EclipseSuppression;
-    /** 受赠能力在其专有晚阶段执行；普通实例不带此 activation 政策。 */
-    activation?: "lucky" | "black_market";
-    /** 实际死亡永久到期受赠实例；转移或复活不恢复该资源。 */
-    deathExpired?: boolean;
   };
 }[NightAbilityKind];
 export type NightAbility<K extends NightAbilityKind = NightAbilityKind> = Extract<
@@ -106,18 +91,6 @@ export type NightAbilityReadView<K extends NightAbilityKind = NightAbilityKind> 
   NightAbilityReadUnion,
   { kind: K }
 >;
-export type AbilityStatus =
-  "pending" | "expired" | "disabled" | "spent" | "used_this_night" | "active";
-
-export interface PlayerNightAbilityStates {
-  pair_check: PairSeerState;
-  shelter: import("@ai-werewolf-arena/game-contract").ShelterState;
-  seer_check: PlayerSeerState;
-  role_check: PlayerRoleInspectionState;
-  guard: PlayerGuardState;
-  potion: PlayerWitchState;
-  dream: PlayerDreamerState;
-}
 /** 玩家 DTO 对应显式投影，包含已知梦历史，不继承内部状态的其他字段。 */
 export function projectNightState(
   ability: NightAbilityReadView,
@@ -232,16 +205,6 @@ export function activeNightAbility<K extends NightAbilityKind>(
   return ability && abilityStatus(ability, day) === "active" ? ability : undefined;
 }
 
-export type PlayerNightAbility = {
-  [K in NightAbilityKind]: Omit<
-    NightAbility<K>,
-    "source" | "sourceDisclosed" | "state" | "nightSuppression"
-  > & {
-    state: PlayerNightAbilityStates[K];
-    source: AbilitySource | { kind: AbilitySource["kind"] };
-    status: AbilityStatus;
-  };
-}[NightAbilityKind];
 export function projectNightAbility(
   ability: NightAbilityReadView,
   day: number,

@@ -1,0 +1,373 @@
+{
+  "base": "2117e4979a0256f95c990d25f209e347fdef9a83",
+  "before": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "468a5e3ccc49295d1e5bb4fc85e72548a5d7ceb91521328856f8f02d8712b7ea",
+      "gitEqualsWorking": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "sha256": "505f3e117d47ad7cb51891d8b20f2dd62201ddb2741d67ee8f6d07c8ce757463",
+      "gitEqualsWorking": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night_action_history.ts",
+      "sha256": "62c02c8f9addfdad1d7a6f22ee3577b9222c2bb3e78a173cc6867eb68f4c9ff7",
+      "gitEqualsWorking": true
+    },
+    {
+      "path": "packages/game-contract/package.json",
+      "sha256": "a2e2fd58e7dd0b3281940ef2ce4b82d535e5e10ec63c3bb76ab696cfbc5bf59f",
+      "gitEqualsWorking": true
+    }
+  ],
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "4612df932e3da12d29edd836ceb450f323ce1b331a1e1615d727ea4d053fa1b7"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "sha256": "1fe3a44717c282593c176499cf4829ef3ebbececdcc18922e00179c31851f1e9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night_action_history.ts",
+      "sha256": "0ae76ed484d42175c6662d1cd47136c24f8344163c1131bc773201f0aecc3f67"
+    },
+    {
+      "path": "backend/tests/unit/engine/night-ability-views.types.ts",
+      "sha256": "e3f011f4eaaac245adbb43dc2d88b9a03820ad1375f9d59d9a71db80fa04fb51"
+    },
+    {
+      "path": "packages/game-contract/src/night-ability-views.ts",
+      "sha256": "8cd54c6767edd05ab5ed9cef90fff48769fdfea42d845d9250767dd711c3018d"
+    },
+    {
+      "path": "packages/game-contract/package.json",
+      "sha256": "b2112b4b8493b3e2ed18a4b4a22c6876213bb87eb35b51b26471d789e29f6857"
+    }
+  ],
+  "programs": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "oldNodes": 2788,
+      "inverseNodes": 2788,
+      "identical": true,
+      "oldSha256": "b2c48ce5b7ef596abf12a4d998c6eb9e0e81dbb02e506af5e4041cb5b6046b01",
+      "inverseSha256": "b2c48ce5b7ef596abf12a4d998c6eb9e0e81dbb02e506af5e4041cb5b6046b01"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night_action_history.ts",
+      "oldNodes": 846,
+      "inverseNodes": 846,
+      "identical": true,
+      "oldSha256": "0b763ee813b2006d400d8bdb1d1b60d2b3c0709a10ded5df0464ecbbabb9acf3",
+      "inverseSha256": "0b763ee813b2006d400d8bdb1d1b60d2b3c0709a10ded5df0464ecbbabb9acf3"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "oldNodes": 1181,
+      "inverseNodes": 1181,
+      "identical": true,
+      "oldSha256": "55312366e742f49e2f74a25ed952a5c58866612bd00ee3f169992f656679144a",
+      "inverseSha256": "55312366e742f49e2f74a25ed952a5c58866612bd00ee3f169992f656679144a"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "module": "ESNext",
+      "wholeRawSame": true,
+      "beforeSha256": "b3dc629cc0e3e07544054dba3760d60614cea2ec827143f5c393dddd3a8f6bf7",
+      "currentSha256": "b3dc629cc0e3e07544054dba3760d60614cea2ec827143f5c393dddd3a8f6bf7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "module": "CommonJS",
+      "wholeRawSame": true,
+      "beforeSha256": "0a2b8c1db02e9404ac29fb5dd8c9c928b29904d43689da94a2768237e0c2245c",
+      "currentSha256": "0a2b8c1db02e9404ac29fb5dd8c9c928b29904d43689da94a2768237e0c2245c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night_action_history.ts",
+      "module": "ESNext",
+      "wholeRawSame": true,
+      "beforeSha256": "9667c72ac708cee6178d22bb31eca54700d4930b20de10b5ac0252f885b6ce50",
+      "currentSha256": "9667c72ac708cee6178d22bb31eca54700d4930b20de10b5ac0252f885b6ce50"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night_action_history.ts",
+      "module": "CommonJS",
+      "wholeRawSame": true,
+      "beforeSha256": "0c4d1085c5abf898e62c923b6da38b8d022bbbf2ac65006a2a0c043cd2158f72",
+      "currentSha256": "0c4d1085c5abf898e62c923b6da38b8d022bbbf2ac65006a2a0c043cd2158f72"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "module": "ESNext",
+      "wholeRawSame": true,
+      "beforeSha256": "9de9e80c923b494a277154dcb5b10da4a02843d41c2d7d06e38cd07d7e99090b",
+      "currentSha256": "9de9e80c923b494a277154dcb5b10da4a02843d41c2d7d06e38cd07d7e99090b"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "module": "CommonJS",
+      "wholeRawSame": true,
+      "beforeSha256": "41f59e3842e065b442844b3599e8e9103c7847a55210d09f67941c5f7f179f26",
+      "currentSha256": "41f59e3842e065b442844b3599e8e9103c7847a55210d09f67941c5f7f179f26"
+    }
+  ],
+  "metadataChecks": [
+    {
+      "field": "id",
+      "optional": false,
+      "newField": "id",
+      "entireFieldSameAfterCanonicalAlias": true,
+      "oldText": "id: string;",
+      "currentText": "id: string;",
+      "probeContext": "完整interface成员",
+      "parseDiagnostics": 0
+    },
+    {
+      "field": "source",
+      "optional": false,
+      "newField": "source",
+      "entireFieldSameAfterCanonicalAlias": true,
+      "oldText": "source: AbilitySource;",
+      "currentText": "source: AbilitySource;",
+      "probeContext": "完整interface成员",
+      "parseDiagnostics": 0
+    },
+    {
+      "field": "sourceDisclosed",
+      "optional": false,
+      "newField": "sourceDisclosed",
+      "entireFieldSameAfterCanonicalAlias": true,
+      "oldText": "sourceDisclosed: boolean;",
+      "currentText": "sourceDisclosed: boolean;",
+      "probeContext": "完整interface成员",
+      "parseDiagnostics": 0
+    },
+    {
+      "field": "startsOnDay",
+      "optional": false,
+      "newField": "startsOnDay",
+      "entireFieldSameAfterCanonicalAlias": true,
+      "oldText": "startsOnDay: number;",
+      "currentText": "startsOnDay: number;",
+      "probeContext": "完整interface成员",
+      "parseDiagnostics": 0
+    },
+    {
+      "field": "expiresAfterDay",
+      "optional": true,
+      "newField": "expiresAfterDay",
+      "entireFieldSameAfterCanonicalAlias": true,
+      "oldText": "expiresAfterDay?: number;",
+      "currentText": "expiresAfterDay?: number;",
+      "probeContext": "完整interface成员",
+      "parseDiagnostics": 0
+    },
+    {
+      "field": "maxUses",
+      "optional": false,
+      "newField": "maxUses",
+      "entireFieldSameAfterCanonicalAlias": true,
+      "oldText": "maxUses: number | null;",
+      "currentText": "maxUses: number | null;",
+      "probeContext": "完整interface成员",
+      "parseDiagnostics": 0
+    },
+    {
+      "field": "uses",
+      "optional": false,
+      "newField": "uses",
+      "entireFieldSameAfterCanonicalAlias": true,
+      "oldText": "uses: number;",
+      "currentText": "uses: number;",
+      "probeContext": "完整interface成员",
+      "parseDiagnostics": 0
+    },
+    {
+      "field": "lastUsedDay",
+      "optional": false,
+      "newField": "lastUsedDay",
+      "entireFieldSameAfterCanonicalAlias": true,
+      "oldText": "lastUsedDay: number | null;",
+      "currentText": "lastUsedDay: number | null;",
+      "probeContext": "完整interface成员",
+      "parseDiagnostics": 0
+    },
+    {
+      "field": "disabled",
+      "optional": false,
+      "newField": "disabled",
+      "entireFieldSameAfterCanonicalAlias": true,
+      "oldText": "disabled: boolean;",
+      "currentText": "disabled: boolean;",
+      "probeContext": "完整interface成员",
+      "parseDiagnostics": 0
+    },
+    {
+      "field": "nightSuppression",
+      "optional": true,
+      "newField": "nightSuppression",
+      "entireFieldSameAfterCanonicalAlias": true,
+      "oldText": "nightSuppression?: import(\"@ai-werewolf-arena/game-contract\").EclipseSuppression;",
+      "currentText": "nightSuppression?: EclipseSuppression;",
+      "probeContext": "完整interface成员",
+      "parseDiagnostics": 0
+    },
+    {
+      "field": "activation",
+      "optional": true,
+      "newField": "activation",
+      "entireFieldSameAfterCanonicalAlias": true,
+      "oldText": "activation?: \"lucky\" | \"black_market\";",
+      "currentText": "activation?: \"lucky\" | \"black_market\";",
+      "probeContext": "完整interface成员",
+      "parseDiagnostics": 0
+    },
+    {
+      "field": "deathExpired",
+      "optional": true,
+      "newField": "deathExpired",
+      "entireFieldSameAfterCanonicalAlias": true,
+      "oldText": "deathExpired?: boolean;",
+      "currentText": "deathExpired?: boolean;",
+      "probeContext": "完整interface成员",
+      "parseDiagnostics": 0
+    }
+  ],
+  "kindState": [
+    {
+      "field": "kind",
+      "entireFieldSame": true
+    },
+    {
+      "field": "state",
+      "entireFieldSame": true
+    }
+  ],
+  "pureDecls": [
+    {
+      "name": "AbilityStatus",
+      "entireDeclarationSameAfterCanonicalAlias": true
+    },
+    {
+      "name": "PlayerNightAbilityStates",
+      "entireDeclarationSameAfterCanonicalAlias": true
+    },
+    {
+      "name": "NightActionKind",
+      "entireDeclarationSameAfterCanonicalAlias": true
+    },
+    {
+      "name": "OwnNightAction",
+      "entireDeclarationSameAfterCanonicalAlias": true
+    }
+  ],
+  "unchangedNativeTypes": [
+    {
+      "name": "NightAbility",
+      "entireDeclarationSame": true
+    },
+    {
+      "name": "NightAbilityReadUnion",
+      "entireDeclarationSame": true
+    },
+    {
+      "name": "NightAbilityReadView",
+      "entireDeclarationSame": true
+    }
+  ],
+  "allOldFunctions": [
+    {
+      "name": "projectPairState",
+      "entireDeclarationSame": true
+    },
+    {
+      "name": "projectAbilitySource",
+      "entireDeclarationSame": true
+    },
+    {
+      "name": "projectNightState",
+      "entireDeclarationSame": true
+    },
+    {
+      "name": "copyAbilityData",
+      "entireDeclarationSame": true
+    },
+    {
+      "name": "allNightAbilities",
+      "entireDeclarationSame": true
+    },
+    {
+      "name": "nightAbilityDisabled",
+      "entireDeclarationSame": true
+    },
+    {
+      "name": "abilityStatus",
+      "entireDeclarationSame": true
+    },
+    {
+      "name": "findNightAbility",
+      "entireDeclarationSame": true
+    },
+    {
+      "name": "activeNightAbility",
+      "entireDeclarationSame": true
+    },
+    {
+      "name": "projectNightAbility",
+      "entireDeclarationSame": true
+    },
+    {
+      "name": "retiredNightAbilityIds",
+      "entireDeclarationSame": true
+    }
+  ],
+  "historyFunctions": [
+    {
+      "name": "recordOwnNightAction",
+      "entireDeclarationSame": true
+    },
+    {
+      "name": "ownNightActions",
+      "entireDeclarationSame": true
+    },
+    {
+      "name": "luckyTargetAllowed",
+      "entireDeclarationSame": true
+    }
+  ],
+  "canary": {
+    "description": "OwnNightActions非首声明的day-1条件改day-2；不动首import",
+    "detected": true
+  },
+  "packageOnlyNewSubpath": true,
+  "noPureRuntimeImports": true,
+  "allowedTypeApiDifference": "旧5public数据类型退出backend叶及原间接star出口，改GC唯一具名subpath；type-only变更无新runtime冷加载边。",
+  "limitations": [
+    "PlayerNightAbility结构推导有意改从backend类型到GC元数据；全七kind Flatten精确比较、原型双向赋值与负例由独立编译期fixture核验，不以简单字符串mask该算法。",
+    "原Runtime状态、WeakMap、过滤、source裁剪、付款、授权和阶段不迁移。"
+  ],
+  "approved": true,
+  "postTypesCommentDelta": {
+    "path": "backend/tests/unit/engine/night-ability-views.types.ts",
+    "beforeSha256": "aec5daaef34b067e98374efdb6343a6a6d52dbbb9045553eaaeff36a3bdb2afe",
+    "afterSha256": "e3f011f4eaaac245adbb43dc2d88b9a03820ad1375f9d59d9a71db80fa04fb51",
+    "change": "仅职责头说明编译期单元拥有独立旧类型预期；无tokens/body改动，不重types。",
+    "reconstructedPriorSha256": "aec5daaef34b067e98374efdb6343a6a6d52dbbb9045553eaaeff36a3bdb2afe",
+    "priorExactMatch": true,
+    "nonCommentNodes": 1788,
+    "allNodesIdentical": true
+  },
+  "fieldProbeHarnessRefinement": {
+    "priorContext": "单独field文本仍逐叶比较，但不是完整可解析type程序",
+    "finalContext": "将field放真实interface成员位置，全部12探针parseDiagnostics=0且强节点相同",
+    "sourceChanged": false,
+    "otherProgramAndOutputReceiptsUnchanged": true
+  }
+}

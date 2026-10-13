@@ -28,9 +28,8 @@ import type {
   PlayerWitchState,
   PlayerRoleInspectionState,
 } from "@ai-werewolf-arena/game-contract/player-state-views";
-import type { PlayerNightAbility } from "../mechanisms/roles/abilities";
+import type { PlayerNightAbility, OwnNightAction } from "@ai-werewolf-arena/game-contract/night-ability-views";
 import type { PlayerDeathGun } from "@ai-werewolf-arena/game-contract/player-state-views";
-import type { OwnNightAction } from "../mechanisms/roles/night_action_history";
 
 /** 玩家决策端口只携带已投影事实和自己的知识，不提供 World。 */
 export interface PlayerObservation {

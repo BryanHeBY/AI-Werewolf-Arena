@@ -1,0 +1,58 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "4612df932e3da12d29edd836ceb450f323ce1b331a1e1615d727ea4d053fa1b7"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "sha256": "1fe3a44717c282593c176499cf4829ef3ebbececdcc18922e00179c31851f1e9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night_action_history.ts",
+      "sha256": "0ae76ed484d42175c6662d1cd47136c24f8344163c1131bc773201f0aecc3f67"
+    },
+    {
+      "path": "backend/tests/unit/engine/night-ability-views.types.ts",
+      "sha256": "aec5daaef34b067e98374efdb6343a6a6d52dbbb9045553eaaeff36a3bdb2afe"
+    },
+    {
+      "path": "packages/game-contract/src/night-ability-views.ts",
+      "sha256": "8cd54c6767edd05ab5ed9cef90fff48769fdfea42d845d9250767dd711c3018d"
+    }
+  ],
+  "documentationPaths": 430,
+  "diagnostics": [
+    {
+      "id": "22c4e967029c49ba463816aae805fe9ad43863b0053541efc506952586459398",
+      "rule": "comment.owner",
+      "path": "backend/tests/unit/engine/night-ability-views.types.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "data head lacks its owner contract."
+    }
+  ],
+  "chinesePresence": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "present": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "present": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night_action_history.ts",
+      "present": true
+    },
+    {
+      "path": "backend/tests/unit/engine/night-ability-views.types.ts",
+      "present": true
+    },
+    {
+      "path": "packages/game-contract/src/night-ability-views.ts",
+      "present": true
+    }
+  ],
+  "approved": false
+}

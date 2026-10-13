@@ -1,0 +1,154 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_final_architecture_review",
+  "mode": "独立只读源码、真实Git/diff、完整fixture与持久证明审查；不重跑作者AST/emit/type/checkComments/runtime/gates",
+  "base": "2117e4979a0256f95c990d25f209e347fdef9a83",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "4612df932e3da12d29edd836ceb450f323ce1b331a1e1615d727ea4d053fa1b7",
+      "origin": "实际当前工作字节",
+      "matchesFrozenScope": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "sha256": "1fe3a44717c282593c176499cf4829ef3ebbececdcc18922e00179c31851f1e9",
+      "origin": "独立审开始后、O2四条类型来源修改前实际捕获的冻结字节；与夜6scope一致",
+      "matchesFrozenScope": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night_action_history.ts",
+      "sha256": "0ae76ed484d42175c6662d1cd47136c24f8344163c1131bc773201f0aecc3f67",
+      "origin": "实际当前工作字节",
+      "matchesFrozenScope": true
+    },
+    {
+      "path": "backend/tests/unit/engine/night-ability-views.types.ts",
+      "sha256": "e3f011f4eaaac245adbb43dc2d88b9a03820ad1375f9d59d9a71db80fa04fb51",
+      "origin": "实际当前工作字节",
+      "matchesFrozenScope": true
+    },
+    {
+      "path": "packages/game-contract/src/night-ability-views.ts",
+      "sha256": "8cd54c6767edd05ab5ed9cef90fff48769fdfea42d845d9250767dd711c3018d",
+      "origin": "实际当前工作字节",
+      "matchesFrozenScope": true
+    },
+    {
+      "path": "packages/game-contract/package.json",
+      "sha256": "b2112b4b8493b3e2ed18a4b4a22c6876213bb87eb35b51b26471d789e29f6857",
+      "origin": "实际当前工作字节",
+      "matchesFrozenScope": true
+    }
+  ],
+  "actualGitBefore": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "468a5e3ccc49295d1e5bb4fc85e72548a5d7ceb91521328856f8f02d8712b7ea",
+      "actualGitVerified": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "sha256": "505f3e117d47ad7cb51891d8b20f2dd62201ddb2741d67ee8f6d07c8ce757463",
+      "actualGitVerified": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night_action_history.ts",
+      "sha256": "62c02c8f9addfdad1d7a6f22ee3577b9222c2bb3e78a173cc6867eb68f4c9ff7",
+      "actualGitVerified": true
+    },
+    {
+      "path": "packages/game-contract/package.json",
+      "sha256": "a2e2fd58e7dd0b3281940ef2ce4b82d535e5e10ec63c3bb76ab696cfbc5bf59f",
+      "actualGitVerified": true
+    }
+  ],
+  "findings": [],
+  "scope": {
+    "paths": 6,
+    "oldRuntimePrograms": 3,
+    "oldPackageManifest": 1,
+    "newPublicTypeLeaf": 1,
+    "newCompileTimeUnit": 1,
+    "movedPublicDeclarations": 5,
+    "newCommonMetadataFields": 12,
+    "observationExternalTypeImports": 2,
+    "formerIndirectWildcardRoutes": 3
+  },
+  "sourceReview": [
+    "完整读取旧/新 abilities 和账本差异、新共享叶、冻结Observation及新编译期单元：十一能力函数、三个账本函数、Role/World/actor账本写读、getter/callee顺序、复制及状态分支均未改。类型映射和声明移位不新增运行求值。",
+    "NightAbility<K> 与原 deeply readonly state/source/nightSuppression read aliases 的原关联仍保留。十二metadata字段顺序、必填/可选、nullable和mutable修饰原样；无整体readonly强化或默认值/校验。",
+    "七kind明确映射到原玩家state。玩家DTO删除内部sourceDisclosed/nightSuppression，来源仍由原projectAbilitySource决定；保留activation/deathExpired等旧可投影字段。数据存在、known/active、已接受历史均不等于资源付款或请求许可。",
+    "OwnNightAction五个成员（其中recipientPolicy可选）的readonly原样保留；WeakMap唯一写权仍账本，day-1写入下界和day-1..day过滤/逐行浅复制、受赠目标限制原样。",
+    "新leaf仅type imports到GC identity/night-ability-data/player-state-views；未引入后端、World、authority、renderer或运行值。package只exports和typesVersions增加一个既有约定subpath；依赖/锁/根出口不变。",
+    "十四旧出口反例均用于RetiredTypes tuple，九字段/写权反例在有类型参数的真实函数体内；@ts-expect-error不是无用符号遮罩。七kind、十二字段、四迁出声明的独立旧预期、双向赋值保原形状，旧预期不由新Metadata派生。",
+    "中文职责及关键时序准确：状态标签非授权，内部抑制/披露不进玩家DTO，账本非付款证明，Readonly不是冻结；原现实freezeObservation structuredClone→Object.values递归freeze保持。"
+  ],
+  "proofReview": {
+    "authorProgramNodes": 4815,
+    "wholePrograms": 3,
+    "wholeRawOutputs": 6,
+    "status": "完整审读真实持久harness及结果，当前source绑定/真实Gitbefore已独立核准，不重复执行证明",
+    "traversal": "getChildren完整递归保全部非注释leaf/类型/数组/函数；forEachChild辅助回调void，非首读取条件canary确实不同；12metadata成员探针最终放有效interface上下文并parse0。",
+    "inverseScope": "只精确还原声明位置、NightAbilityUnion原成员与两Observation type imports；PlayerNightAbility结构重组另由编译期全七kind/双向预期证明，不把它字符串mask后声称全部结构相同。",
+    "receiptAttribution": "作者完整证明execution d55b36实际0；field上下文改进eba525只12探针；后续可复用refined完整脚本明确executed=false，不套旧运行回执。"
+  },
+  "authorValidationReceipts": {
+    "backend": {
+      "command": "./backend/node_modules/.bin/tsc -p /tmp/awa-night-ability-views/tsconfig-backend.json --noEmit",
+      "affectedRoots": 4,
+      "launchChunkId": "058437",
+      "sessionId": 13643,
+      "completionChunkId": "9f467e",
+      "exitCode": 0,
+      "logPath": "docs/refactor/generated/night-ability-views-backend-types.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "gameContract": {
+      "command": "./backend/node_modules/.bin/tsc -p packages/game-contract/tsconfig.json --noEmit",
+      "scope": "共享包自身生产配置；不称有限新叶等于全应用。",
+      "toolChunkId": "2d2389",
+      "exitCode": 0,
+      "logPath": "docs/refactor/generated/night-ability-views-package-types.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "boundary": {
+      "oldApiNegativeImports": 14,
+      "fieldAndWriteNegatives": 9,
+      "total": 23,
+      "notRuntimeExecuted": true
+    },
+    "heads": {
+      "firstDiagnostics": 1,
+      "firstRule": "comment.owner",
+      "finalTsFiles": 5,
+      "actualDocumentationPaths": 430,
+      "finalDiagnostics": 0,
+      "chinesePresence": 5,
+      "postTypesCommentOnlyNodes": 1788
+    },
+    "scopeLimit": "接受作者实际终态tool回执；空日志本身不作为成功推断。fixture最后仅职责注释增强，不改非注释程序且未重复类型。"
+  },
+  "concurrentObservationBoundary": {
+    "frozenSourceSHA256": "1fe3a44717c282593c176499cf4829ef3ebbececdcc18922e00179c31851f1e9",
+    "currentO2WorkingSHA256": "22aafd21a7dfebbc884adbaef2d5f9b046a569c3409021b743f1f9e9c62d4095",
+    "actualCapturePath": "docs/refactor/generated/family-player-dto-observation-delta.json",
+    "changesAfterFreeze": "O2仅四inline ImportType来源；不属于夜6冻结提交，metadata两个type import字节保持。Root需stage actual beforeText冻结blob，O2再基于实际夜6commit；不声称整个当前working等于夜6scope。"
+  },
+  "limitations": [
+    "批准这六路径的数据所有权迁移和已声明旧type API退休，不意味着C30–C34全部观察机制迁移完成。",
+    "没有重跑类型、运行单元、全量门禁或模型；GC/BE验证沿用明确作者scope和actualterminal回执。",
+    "运行字节相同不意味公共类型API/源路径/注释/package manifest或sourceHash相同；不改历史指纹，不承诺旧严格Tape跨构建兼容。",
+    "并行O2 facts和其他slot生产源码不属于该六路径，未把整个传递依赖图都声明原字节不变。"
+  ],
+  "documents": {
+    "markdown": {
+      "path": "docs/refactor/night-ability-views.md",
+      "sha256": "abc0d77871a5d44e59db2ce6241250270170ac4388dff0d29d092e72d57e0aff"
+    },
+    "evidence": {
+      "path": "docs/refactor/generated/night-ability-views-evidence.json",
+      "sha256": "be1cc29832caa174075f0936f8cb2965174a3ffcd12ebd05a2f8ff334a6ba5d6"
+    }
+  }
+}

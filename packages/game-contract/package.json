@@ -40,7 +40,8 @@
     "./facts/death-ability": "./src/facts/death-ability.ts",
     "./facts/black-market": "./src/facts/black-market.ts",
     "./player-state-views": "./src/player-state-views.ts",
-    "./role-inspection-policy": "./src/role-inspection-policy.ts"
+    "./role-inspection-policy": "./src/role-inspection-policy.ts",
+    "./night-ability-views": "./src/night-ability-views.ts"
   },
   "scripts": {
     "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
@@ -159,6 +160,9 @@
       ],
       "role-inspection-policy": [
         "src/role-inspection-policy.ts"
+      ],
+      "night-ability-views": [
+        "src/night-ability-views.ts"
       ]
     }
   }
