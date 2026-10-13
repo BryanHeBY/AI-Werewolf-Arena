@@ -52,7 +52,7 @@ for (const [role, stage, event] of [
               new ObservedBot(randomDraws(random.fork("players").fork("id:" + i)), "active"),
             ]),
           );
-          const native = new ObservedPlayersActionProvider(game.world, strategies, config);
+          const native = new ObservedPlayersActionProvider(game.world, strategies);
           let mutated = false;
           const provider = {
             async getAction(r: ActionRequest): Promise<ToolCall | null> {

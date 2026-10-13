@@ -45,7 +45,6 @@ for (const fear of ["optional", "required_when_legal"] as const)
             },
           ]),
         ),
-        config,
       );
       const privateState = getNightmareShadowState(
         f.world.getComponent(actor, COMPONENT.Role)!,

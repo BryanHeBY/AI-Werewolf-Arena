@@ -1,8 +1,8 @@
 /**
- * Trickster recording/verifier scenarios verify exile target mapping, cancellation and source receipts.
- * Input: Recorded native fixed actions, both locales and independent mapping/checkpoint deletions.
- * Output and independent oracle: Manual effective exile/terminal outcomes and strict rejection of missing or wrong mapping receipts.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 场景测试验证捣蛋鬼录制与独立核验中的放逐目标映射、取消和来源回执。
+ * 输入为固定原生动作的真实对局、两种语言及独立删除的映射／checkpoint 证据。
+ * 输出以手写实际放逐／终局结果及缺失或错误映射回执的严格拒绝作为独立预期。
+ * 不调用计费模型，不改写 fixture 或 Tape 的预期字节。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
@@ -45,7 +45,7 @@ function recording(locale: "en" | "zh-CN", cancel: boolean, seed = 0): Promise<R
         new ObservedBot(randomDraws(random.fork("players").fork("id:" + id)), "active"),
       ]),
     );
-    const native = new ObservedPlayersActionProvider(context.world, strategies, config);
+    const native = new ObservedPlayersActionProvider(context.world, strategies);
     const chosen = new Map<number, [number, number]>();
     const root = await createTestTempDirectory("awa-trickster-tape-");
     try {

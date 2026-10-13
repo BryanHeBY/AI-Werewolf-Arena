@@ -1,8 +1,8 @@
 /**
- * Wolf Sorcerer recording/verifier scenarios verify seat exchange, first-night policies and erased Psychic facts.
- * Input: Actual fixed-action games, cancellation variants and coherent independently rolled-back record mutants.
- * Output and independent oracle: Manual causal/resource/terminal outcomes and strict rejection of erased or remapped inspection evidence.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 场景测试验证狼术师录制与独立核验中的换座、首夜政策及被删掉的通灵师事实。
+ * 输入为固定动作的真实对局、取消变体及一致回退的独立记录变异。
+ * 输出以手写因果／资源／终局结果及缺失或重映射查验证据的严格拒绝作为独立预期。
+ * 不调用计费模型，不改写 fixture 或 Tape 的预期字节。
  */
 import { validateWolfSorcererRecord } from "../../../../src/recording/wolf_sorcerer_record";
 import { expect, test } from "bun:test";
@@ -52,7 +52,7 @@ function recording(
         new ObservedBot(randomDraws(random.fork("players").fork("id:" + id)), "active"),
       ]),
     );
-    const native = new ObservedPlayersActionProvider(context.world, strategies, config);
+    const native = new ObservedPlayersActionProvider(context.world, strategies);
     const chosen = new Map<number, [number, number]>();
     const root = await createTestTempDirectory("awa-wolf_sorcerer-tape-");
     try {

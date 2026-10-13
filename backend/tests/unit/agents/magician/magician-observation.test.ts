@@ -47,7 +47,6 @@ for (const locale of ["zh-CN", "en"] as const)
             },
           ]),
         ),
-        config,
       );
       const factory = new GameActionRequestFactory(f.world, f.phaseManager.getEvents(), 1);
       const request = (id: number) =>

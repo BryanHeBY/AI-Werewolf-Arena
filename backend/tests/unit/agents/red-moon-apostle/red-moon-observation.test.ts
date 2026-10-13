@@ -39,7 +39,6 @@ for (const policy of ["ends_game", "forbidden"] as const)
               },
             ]),
           ),
-          config,
         );
         const factory = new GameActionRequestFactory(f.world, f.phaseManager.getEvents(), 1);
         const request = (actorId: number) =>

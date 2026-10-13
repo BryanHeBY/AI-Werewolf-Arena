@@ -35,7 +35,7 @@ for (const firstNight of [1, 2] as const)
               ]),
             );
             const result = await game.phaseManager.runUntilGameOver(
-              new ObservedPlayersActionProvider(game.world, strategies, config),
+              new ObservedPlayersActionProvider(game.world, strategies),
               30,
             );
             expect(result.gameOver).toBe(true);

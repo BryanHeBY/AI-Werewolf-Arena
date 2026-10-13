@@ -54,7 +54,6 @@ test("hidden opponent identities and private state cannot change a villager obse
           },
         ],
       ]),
-      sixPlayerMvpConfig,
     );
     const requests = new GameActionRequestFactory(
       context.world,
@@ -105,7 +104,7 @@ test("own skill resources are detached and immutable, while teammate knowledge i
       },
     ]),
   );
-  const provider = new ObservedPlayersActionProvider(context.world, strategies, sixPlayerMvpConfig);
+  const provider = new ObservedPlayersActionProvider(context.world, strategies);
   const factory = new GameActionRequestFactory(context.world, context.phaseManager.getEvents(), 1);
   await provider.getAction(
     factory.create({
@@ -166,7 +165,6 @@ test("a wolf cannot infer a teammate's unannounced death from identity knowledge
           },
         ],
       ]),
-      sixPlayerMvpConfig,
     );
     const requests = new GameActionRequestFactory(
       context.world,
@@ -228,7 +226,6 @@ test("a neutral public shot updates observer knowledge and excludes the victim f
         },
       ],
     ]),
-    sixPlayerMvpConfig,
   );
   const factory = new GameActionRequestFactory(context.world, events, 1);
   const action = await provider.getAction(

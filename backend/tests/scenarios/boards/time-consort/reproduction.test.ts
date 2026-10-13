@@ -55,7 +55,7 @@ function recording(
         new ObservedBot(randomDraws(random.fork("players").fork("id:" + id)), "active"),
       ]),
     );
-    const native = new ObservedPlayersActionProvider(context.world, strategies, config);
+    const native = new ObservedPlayersActionProvider(context.world, strategies);
     const locked = context.playerIds.find(
       (id) => context.world.getComponent(id, COMPONENT.Role)?.role === Role.Wolf,
     )!;

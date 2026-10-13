@@ -52,7 +52,7 @@ for (const scope of ["whole_night", "first_effect"] as const)
           new ObservedBot(randomDraws(random.fork("players").fork("id:" + i)), "active"),
         ]),
       );
-      const native = new ObservedPlayersActionProvider(game.world, strategies, config);
+      const native = new ObservedPlayersActionProvider(game.world, strategies);
       const provider = {
         async getAction(r: ActionRequest): Promise<ToolCall | null> {
           const stage = r.context.stage;

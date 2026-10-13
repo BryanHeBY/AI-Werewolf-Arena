@@ -44,7 +44,7 @@ for (const policy of ["ends_game", "forbidden"] as const)
             ]),
           );
           const result = await game.phaseManager.runUntilGameOver(
-            new ObservedPlayersActionProvider(game.world, strategies, config),
+            new ObservedPlayersActionProvider(game.world, strategies),
             30,
           );
           expect(result.gameOver).toBe(true);

@@ -1,10 +1,7 @@
 /**
- * Scenario simulation tests: Runs actual Magician Worlds to termination for the original
- * twenty seeds across gun, first-night, shot-target and locale policies. Fixed seeded
- * observed-player strategies supply actions; literal game-over and non-timeout assertions
- * check completion without calling a model. The original seed/action matrices and literal
- * assertions remain the oracle; these trials do not replace archived goldens or claim
- * newly independent rule coverage.
+ * 场景模拟测试验证原有二十个 seed 下真实魔术师 World 的自然终局，覆盖枪、首夜、枪目标与语言政策。
+ * 输入为固定 seed 的观察策略与原政策矩阵；输出以终局和未超时的字面断言检查自然结束。
+ * 原 seed／行动矩阵及断言是预期来源；不调用模型，不替代归档 golden 或宣称新增独立规则覆盖。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -46,7 +43,7 @@ for (const gunPolicy of ["awa_qualified_sources_v1", "awa_day_deaths_v1"] as con
                 ]),
               );
               const result = await game.phaseManager.runUntilGameOver(
-                new ObservedPlayersActionProvider(game.world, strategies, config),
+                new ObservedPlayersActionProvider(game.world, strategies),
                 30,
               );
               expect(result.gameOver).toBe(true);

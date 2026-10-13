@@ -140,7 +140,6 @@ export async function simulateGames(
     const observed = new ObservedPlayersActionProvider(
       context.world,
       strategies,
-      context.boardConfig,
     );
     const provider: ActionProvider = {
       async getAction(request) {

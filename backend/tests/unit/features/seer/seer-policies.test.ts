@@ -173,7 +173,6 @@ test("fresh target policy rechecks history after await and exhausts without an i
   const provider = new ObservedPlayersActionProvider(
     game.world,
     new Map([[2, new ObservedBot({ next: () => 0 }, "active")]]),
-    game.config,
   );
   await expect(provider.getAction(req)).resolves.toBeNull();
 });

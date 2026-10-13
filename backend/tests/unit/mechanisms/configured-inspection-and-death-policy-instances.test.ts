@@ -225,7 +225,6 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
         const observed = new ObservedPlayersActionProvider(
           game.world,
           new Map([[1, new ObservedBot({ next: () => 0 }, "conservative")]]),
-          game.config,
         );
         const bot = await observed.getAction(request);
         expect(bot === null).toBe(policy !== "awa_unique_required_v1");

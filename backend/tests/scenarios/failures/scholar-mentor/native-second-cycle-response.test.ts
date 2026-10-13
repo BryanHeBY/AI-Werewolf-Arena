@@ -53,7 +53,6 @@ for (const variant of [
             new ObservedBot(randomDraws(random.fork("players").fork("id:" + id)), "active"),
           ]),
         ),
-        config,
       );
       let cycle = 1;
       const provider = {

@@ -54,7 +54,6 @@ for (const locale of ["zh-CN", "en"] as const)
               new ObservedBot(randomDraws(random.fork("players").fork("id:" + id)), "active"),
             ]),
           ),
-          config,
         );
         let cycle = 1;
         const requests: ActionRequest[] = [];

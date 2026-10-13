@@ -576,3 +576,5 @@
 - O3夜能力投影完整归游戏观察：20source，原三完整函数及17真正具名import消费者迁canonical观察叶，旧三出口自然退休；Pair安装规范化及唯一disabled/status政策仍共同owner，黑市四投影规范化位置保。真实53Git十八before/三785＋owner1574＋消费者65770完整nodes与34+2+2各完整输出同，两O4shared用真实O3-only候选独立stage。new7/15＋old5/26＝12不同41断言四次；20finite首只newunit matcher红，type-only修后仅失败根9167实际0不重19，20CN头440doc职责0。Root实际3函数／blackmarket读序与独立20finalSHA/源/doc批准，无额外World缓存/规则／schema变化；C33/34及全P9继续，见 night-ability-projection.md。
 
 - O4 M1特权玩家观察适配器归应用：26source paths（24消费＋新app叶＋删AI旧叶），完整类／三参构造／提示初始化不变，四内部route及24具名consumer只物理迁移；实际53Git25before，两个O3 shared已先独立528d提交再精确M1 frozenstage。Root实际类及独立完整单import全byte逆／26候选SHA批准，无旧leaf桥、新rootexport或行为修改。最终汇合7tests/26types不冒中间M1单独绿；M2另笔退出提示及第三参，见 observed-provider-application-owner.md。
+
+- O4 M2观察与提示构造分离：应用适配器直接同capture owner／原晚Role和Wolf查询，退出PromptPolicy/四无用registry／配比初始化、24consumer27旧board第三参，API及初始化读／失败差异明确非整类等价。24完整程序只恢复第三参同、26CN职责0，new2＋原5一次7/0/31，最终26roots80924→c25f3a actual0；首临时typeRoot与自身ActionProvider入口真红保，修准确type后不重行为绿。Root实际捕获／策略先行／DTO权限审与独立26finalSHA批准，应用持有范围头finding只comment修闭；M1已01a69物理独立，不World进入策略、不新缓存或玩法改。见 observed-provider-prompt-separation.md。

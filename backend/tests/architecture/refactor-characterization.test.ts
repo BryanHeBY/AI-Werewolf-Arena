@@ -97,7 +97,6 @@ describe("F01 current production fallback privilege", () => {
           },
         ],
       ]),
-      config,
     );
     const baseline = new BaselineBotActionProvider(game.world);
     const fallback = new FallbackActionPolicy(

@@ -55,7 +55,7 @@ for (const size of [6, 12] as const)
             ]),
           );
           const result = await game.phaseManager.runUntilGameOver(
-              new ObservedPlayersActionProvider(game.world, strategies, config),
+              new ObservedPlayersActionProvider(game.world, strategies),
               30,
             ),
             events = game.phaseManager.getEvents();
