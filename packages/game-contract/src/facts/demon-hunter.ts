@@ -1,12 +1,9 @@
 /**
- * Owns pure Demon Hunter event, player-history and tool contracts for wire consumers.
- * Inputs are event names and proven inert payloads; outputs are detached facts
- * or null under the original keys, nullable fields and numeric/history limits.
- * State/history and tool shapes describe serialized data, not owned stock or
- * an executable action; the domain continues to own resources and permissions.
- * For inert inputs these readers never pay resources, alter phases, authorize
- * actions or render text. Reflection may trigger Proxy traps; Node ingress must
- * reject hostile objects separately before calling this browser-safe module.
+ * 负责猎魔人的纯事件、自身历史和工具数据契约，保留原政策、可空字段及历史限额。
+ * 输入为机器事件名称与已确认 inert 载荷；输出为原脱离事实、状态／工具数据或 null。
+ * 公共声明唯一拥有数据形状，原可写性不加强；选择知识不含原体、租约或库存写句柄，
+ * 数据合法不授予请求、生命或资源权限。实际状态、提交与封存仍归后端机制。
+ * 本浏览器兼容 reader 不保证恶意 Proxy 零 trap；Node 入口须先拒绝，再调用原纯读取。
  */
 import { copyEventData } from "../inert-event-data";
 export const DEMON_HUNTER_POLICY = "awa_netease_demon_hunter_v1" as const;
@@ -86,7 +83,7 @@ export function readDemonHunterEventFact(
       : null;
   return null;
 }
-/** Own choice only: no source, immune result, cancellation, actor identity or target camp. */
+/** 仅玩家自身选择；不含来源、免疫结果、撤销原因、行动者身份或目标阵营。 */
 export function readDemonHunterPlayerFact(
   type: string,
   payload: unknown,
@@ -103,9 +100,14 @@ export function readDemonHunterPlayerFact(
     : null;
 }
 
+/** 保留原可写选择行；它只描述已记录知识，不授予目标资格、原生命或请求许可。 */
+export interface DemonHunterChoice {
+  day: number;
+  targetId: number | null;
+}
 export interface DemonHunterState {
   policy: typeof DEMON_HUNTER_POLICY;
-  history: Array<{ day: number; targetId: number | null }>;
+  history: DemonHunterChoice[];
 }
 export interface DemonHuntTool {
   name: "demon_hunt";

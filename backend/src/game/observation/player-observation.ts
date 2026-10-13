@@ -62,7 +62,7 @@ export interface PlayerObservation {
     redMoon?: import("@ai-werewolf-arena/game-contract").RedMoonState;
     nightmare?: import("@ai-werewolf-arena/game-contract").NightmareShadowState;
     evilKnight?: import("@ai-werewolf-arena/game-contract").EvilKnightState;
-    demonHunter?: import("../mechanisms/roles/demon_hunter/state").DemonHunterState;
+    demonHunter?: import("@ai-werewolf-arena/game-contract/facts/demon-hunter").DemonHunterState;
     ghostBride?: import("@ai-werewolf-arena/game-contract/facts/ghost-bride").GhostBrideState;
     wedding?: import("../mechanisms/roles/ghost_bride/authority").WeddingActorView;
     lonelyGirl?: import("@ai-werewolf-arena/game-contract").LonelyGirlState;

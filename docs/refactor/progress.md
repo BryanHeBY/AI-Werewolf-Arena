@@ -570,3 +570,5 @@
 - 固定2f5d94e5结构检查收口：真实3115公开Git原始blob／435同Git文档，后台session99272实际终止chunk809272 exit0；0新增、409余债、1370已清，原1779债务SHA297b逐字不变。独立全路径与SHA／sourceDigest4f8a81ff／五工具固定Git及当前字节／409+1370完整不重复原债分区核准，不重新运行门禁；该固定提交已含赤月使徒状态槽、家族玩家DTO和轮次记录器，仅排除提交后的未提交工作树。仅固定依赖、命名与职责说明证据，完整类型、行为及P9同源验收仍待；现行历史观察审查保留。见 architecture-checkpoint-2f5d94e5.md。
 
 - 受限观察原生工具直接消费机器枚举：3source，PotionType从core聚合出口直连GC，实际同identity唯一声明，全部策略分支／随机／字段保持；handlers与identity职责头及绑定药／双药／多刀／空行动／两目标抽取／已知耗身逻辑中文化。真实2f三个完整token和六whole输出仅逆单条导入同，三职责头0，有限3roots12872→0b6d2d actual0；Root实读与独立3SHA／完整出口链／中文语义审批准，不重行为或全gate。冷加载依赖及严格构建身份变化明列，全AI观察／注释仍继续，见 observed-native-contract.md。
+
+- O2猎魔人纯数据唯一契约：5source，原Choice迁GC既有facts，后端重复State／Tool接口退出；两authority type和Observer inline直连公共owner，原可写/null/政策/工具三形状保。真实2f四Git源及三metadata controls、完整23176程序节点/8raw输出同，5roots57078→9678b2 actual0、3旧API及3私态negative/6双向/ObserverExact有效。Root真实源权限/API审与独立5finalSHA批准，中文角色名按现行目录“猎魔人”修三头及MD，精确comment delta保原type/runtime收据不重绿。其余观察私态和完整机制继续，见 demon-hunter-data-contract.md。

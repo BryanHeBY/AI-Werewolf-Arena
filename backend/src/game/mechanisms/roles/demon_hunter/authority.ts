@@ -55,9 +55,8 @@ import {
   getDemonHunterState,
   readDemonHunterState,
   readDemonHuntTool,
-  type DemonHunterChoice,
-  type DemonHunterState,
 } from "./state";
+import type { DemonHunterChoice, DemonHunterState } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { statusMarkSnapshot } from "../../../../core/domain/components/status_marks";
 import { assertDemonHunterPreset } from "./preset";
 import type { FaultDecisionBoundary } from "../../../engine/fault_plan";

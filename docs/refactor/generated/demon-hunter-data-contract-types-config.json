@@ -1,0 +1,18 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "include": [
+    "/home/hby/dev/AI-Werewolf-Arena/packages/game-contract/src/facts/demon-hunter.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/observation/player-observation.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/contracts/demon-hunter-data.types.ts"
+  ],
+  "exclude": []
+}
