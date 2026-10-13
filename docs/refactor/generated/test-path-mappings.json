@@ -94532,13 +94532,418 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/demon_hunter_stock.test.ts",
+      "to": "backend/tests/unit/recording/demon-hunter-badge-checkpoint-ownership.test.ts",
+      "sourceCommit": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "reason": "Actual selected unit module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "2a766bf35311dccf5d1587b81246d66240275b6239eaf69532ac3250870466fc",
+      "candidateSha256": "925c10d3ff9eaa6217beb9ef0d832281f23916344700a7e11c2a74e06bf6826f",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "import-type-module-specifier",
+          "start": 1360,
+          "end": 1377,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "typeOnly": true
+        },
+        {
+          "kind": "import-type-module-specifier",
+          "start": 545,
+          "end": 562,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "typeOnly": true
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 443,
+          "end": 485,
+          "original": "../../../src/game/mechanisms/sheriff/badge",
+          "value": "../../../src/game/mechanisms/sheriff/badge",
+          "originalResolved": "backend/src/game/mechanisms/sheriff/badge.ts",
+          "expectedResolved": "backend/src/game/mechanisms/sheriff/badge.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 198,
+          "end": 250,
+          "original": "../../../src/runtime/simulation/reproduction_context",
+          "value": "../../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 124,
+          "end": 160,
+          "original": "../../support/demon_hunter_scenarios",
+          "value": "../../support/demon_hunter_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 68,
+          "end": 85,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/game/mechanisms/sheriff/badge.ts",
+          "originalExpression": "import(\"../../../src/game/mechanisms/sheriff/badge\")",
+          "currentExpression": "import(\"../../../src/game/mechanisms/sheriff/badge\")",
+          "currentHead": "../../../src/game/mechanisms/sheriff/badge",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/core/index.ts",
+          "originalExpression": "import(\"../../../src/core\").GameEvent",
+          "currentExpression": "import(\"../../../src/core\").GameEvent",
+          "currentHead": "../../../src/core",
+          "kind": "type-module-path",
+          "typeOnly": true
+        },
+        {
+          "anchor": "backend/src/core/index.ts",
+          "originalExpression": "import(\"../../../src/core\").BadgeComponent",
+          "currentExpression": "import(\"../../../src/core\").BadgeComponent",
+          "currentHead": "../../../src/core",
+          "kind": "type-module-path",
+          "typeOnly": true
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "4e9cb97057ef109acfe02b4262382a022a29c875a038ab8f583317b218997a4b",
+          "title": "actual badge transfer and destruction survive subsequent failure; mutable fake badge stays out",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "bun:test",
+          "originalImport": "import { expect, test, spyOn } from \"bun:test\";",
+          "currentImportBeforeRebase": "import { expect, test } from \"bun:test\";",
+          "droppedBindings": [
+            {
+              "name": "spyOn",
+              "imported": "spyOn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  PotionType,\n  createAliveComponent,\n  type ActionRequest,\n  type RoleComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "createAliveComponent",
+              "imported": "createAliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/demon_hunter_scenarios",
+          "originalImport": "import { demonHunterFixture, demonNightChoice } from \"../../support/demon_hunter_scenarios\";",
+          "currentImportBeforeRebase": "import { demonHunterFixture } from \"../../support/demon_hunter_scenarios\";",
+          "droppedBindings": [
+            {
+              "name": "demonNightChoice",
+              "imported": "demonNightChoice",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "originalImport": "import { demonHunterAuditPlayer } from \"../../../src/game/mechanisms/roles/demon_hunter/authority\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "demonHunterAuditPlayer",
+              "imported": "demonHunterAuditPlayer",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import { getHunterState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getHunterState",
+              "imported": "getHunterState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/demon_hunter_stock.test.ts",
+      "to": "backend/tests/scenarios/reproduction/demon-hunter/native-stock-and-failed-checkpoints.test.ts",
+      "sourceCommit": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "2a766bf35311dccf5d1587b81246d66240275b6239eaf69532ac3250870466fc",
+      "candidateSha256": "febb2fd486081125439fc7cad7c92f442922a9051adb3baedecc180540cf7fd8",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "import-type-module-specifier",
+          "start": 13032,
+          "end": 13049,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "typeOnly": true
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 12741,
+          "end": 12783,
+          "original": "../../../src/game/mechanisms/sheriff/badge",
+          "value": "../../../../src/game/mechanisms/sheriff/badge",
+          "originalResolved": "backend/src/game/mechanisms/sheriff/badge.ts",
+          "expectedResolved": "backend/src/game/mechanisms/sheriff/badge.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 495,
+          "end": 543,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 408,
+          "end": 460,
+          "original": "../../../src/runtime/simulation/reproduction_context",
+          "value": "../../../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 313,
+          "end": 370,
+          "original": "../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "value": "../../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 234,
+          "end": 270,
+          "original": "../../support/demon_hunter_scenarios",
+          "value": "../../../support/demon_hunter_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 160,
+          "end": 177,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/game/mechanisms/sheriff/badge.ts",
+          "originalExpression": "import(\"../../../src/game/mechanisms/sheriff/badge\")",
+          "currentExpression": "import(\"../../../../src/game/mechanisms/sheriff/badge\")",
+          "currentHead": "../../../../src/game/mechanisms/sheriff/badge",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/core/index.ts",
+          "originalExpression": "import(\"../../../src/core\").BadgeComponent",
+          "currentExpression": "import(\"../../../../src/core\").BadgeComponent",
+          "currentHead": "../../../../src/core",
+          "kind": "type-module-path",
+          "typeOnly": true
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "042be175dce768f3727a215d37cbd90fe90da1636e0cf04c8614f8ce93c5faa3",
+          "title": "actual 6 native night stock commits enter CP, including Guard pass",
+          "occurrence": 1
+        },
+        {
+          "id": "fd6047f9764864960685d687e01713534e9765514f6fb36ce137ee38cf84707f",
+          "title": "actual 12 native night stock commits enter CP, including Guard pass",
+          "occurrence": 1
+        },
+        {
+          "id": "34789f379b7bfc24cf7a267a4524b54d44f79183622dde209542a3b682efe94b",
+          "title": "actual Guard target/pass/target keeps finite consecutive-night stock and Seer self inspect",
+          "occurrence": 1
+        },
+        {
+          "id": "bd4803385fc3cc7fc0d47bef76d7a22b87684a71ecdef08fcc7ca90b4b9ef2d1",
+          "title": "actual missing hunt retains lawful Seer/Guard/Witch prefixes in failed CP",
+          "occurrence": 1
+        },
+        {
+          "id": "bd6db83c652970bfb773ab5a71eda0ec77b8c66be7de38605a29859b791c048c",
+          "title": "native seer_check refund cannot become a committed stock",
+          "occurrence": 1
+        },
+        {
+          "id": "b4d42559687cb8c5cb5c0f6734e7ddc4e0c0d49e4589b185b9060fa8041490d9",
+          "title": "native seer_check getter cannot become a committed stock",
+          "occurrence": 1
+        },
+        {
+          "id": "2b2e2be407cb6e34f8b1c385bd5868d6b8ee4d3ce6881f8e6e2fe4c5b4781b1f",
+          "title": "native seer_check readonly cannot become a committed stock",
+          "occurrence": 1
+        },
+        {
+          "id": "d15d429fdda90517702ee7f5939d3c33f981a410693b1c10631543f61cd4ca9d",
+          "title": "native seer_check extra cannot become a committed stock",
+          "occurrence": 1
+        },
+        {
+          "id": "173c937cf39e5c55ebb8fb56350441d84fca3688ac6922dc4ca45bf5c087d4c4",
+          "title": "native guard refund cannot become a committed stock",
+          "occurrence": 1
+        },
+        {
+          "id": "0a9572b2ac91f29816f60070a10483cef8b1ab1236412a4606036d2d34bf888b",
+          "title": "native guard getter cannot become a committed stock",
+          "occurrence": 1
+        },
+        {
+          "id": "1831edae96ef98360b82d42b0f941f3969714be689cd338537cf8beba6248985",
+          "title": "native guard readonly cannot become a committed stock",
+          "occurrence": 1
+        },
+        {
+          "id": "54fe244b7f52c7f8be3c4eba10ce963604a8f7eef2e8a263c4f29590c87bc0b7",
+          "title": "native guard extra cannot become a committed stock",
+          "occurrence": 1
+        },
+        {
+          "id": "156b2e46a6594dadcc1ae44f83f664995151ea0bc8c9651294f3f78030f5a259",
+          "title": "actual Hunter pass consumes lawful gun in CP",
+          "occurrence": 1
+        },
+        {
+          "id": "b352fecd0f0823d79b7464da71135d57c2be2299be98c7e400477bced60bf214",
+          "title": "actual Hunter shot consumes lawful gun in CP",
+          "occurrence": 1
+        },
+        {
+          "id": "cf61dff21e51d8fa2aa378e62cc773129013ecfa47d2b9add98f04b70a5d8257",
+          "title": "actual poisoned Hunter consumes gun without prompting, failed CP cannot adopt refunded gun",
+          "occurrence": 1
+        },
+        {
+          "id": "c8b66a03b73211f46053f867bfb17cc20d775e16bb528276746c49d5f80b367d",
+          "title": "failed CP uses original roster/life/inventory despite added entity, component replacement and getters",
+          "occurrence": 1
+        },
+        {
+          "id": "ca9c121f91dadf45a68363399a1b237a700525162fe84352469e061371e14ec5",
+          "title": "failed CP takes original dead body instead of replacement revived Alive",
+          "occurrence": 1
+        },
+        {
+          "id": "b6b19b93236fdd9336fafd0fd5ada1bbf5c71d8a0d039ab3bdddc4f89d0d46b1",
+          "title": "actual seer late Gateway getter is rejected before legacy policy reads",
+          "occurrence": 1
+        },
+        {
+          "id": "2dabb9c006e8034d85c0cfe5d8cf48c2cefe8e9105b3fc79f792d3ca6a599f75",
+          "title": "actual guard late Gateway getter is rejected before legacy policy reads",
+          "occurrence": 1
+        },
+        {
+          "id": "7052d90ca60a87e16ee5f52651cb52f5010c791572cccd34974147b1ad39e537",
+          "title": "actual hunter late Gateway getter is rejected before legacy policy reads",
+          "occurrence": 1
+        },
+        {
+          "id": "5adbfb4152de32ea58e5385678d5ea40a9ad06dee32c55eb7137aec0dcbbe044",
+          "title": "actual sheriff election survives later day speech failure in CP",
+          "occurrence": 1
+        },
+        {
+          "id": "997ee84b57eb5ec866965373f80ee934e501aff905adc598017d4b6ed773f065",
+          "title": "optional badge accessor differs from absence: CP and next actual Night reject with zero reads",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 571,
-    "targetFiles": 648,
-    "mappingEntries": 648,
-    "baselineCases": 7467,
+    "sourceFiles": 572,
+    "targetFiles": 650,
+    "mappingEntries": 650,
+    "baselineCases": 7490,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

@@ -1,10 +1,5 @@
 /**
- * Scenario/unit ownership tests for demon hunter stock.
- * Input: original fixed game actions and deliberate malformed or foreign
- * component replacements; output: unchanged state, rejection and life/lease
- * assertions. Literal expected prefixes and guard failures are independent
- * oracles. Explicit unknown writes are privileged negative-test injection;
- * production's typed default slot relation is never relaxed for these inputs.
+ * Scenario tests drive real Demon native phases and inspect complete/failed checkpoints. Inputs are original stock, foreign getters, replacement bodies and controlled late failures; literal resource prefixes, original roster and metadata revocation are the oracle. Checkpoint evidence is retained without treating production projection as a new independent outcome algorithm.
  */
 import { expect, test, spyOn } from "bun:test";
 import {
@@ -13,11 +8,12 @@ import {
   createAliveComponent,
   type ActionRequest,
   type RoleComponent,
-} from "../../../src/core";
-import { demonHunterFixture, demonNightChoice } from "../../support/demon_hunter_scenarios";
-import { demonHunterAuditPlayer } from "../../../src/game/mechanisms/roles/demon_hunter/authority";
-import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
-import { getHunterState } from "../../../src/game/mechanisms/roles/private_state";
+} from "../../../../src/core";
+import { demonHunterFixture, demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { demonHunterAuditPlayer } from "../../../../src/game/mechanisms/roles/demon_hunter/authority";
+import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
+import { getHunterState } from "../../../../src/game/mechanisms/roles/private_state";
+
 function stock(f: ReturnType<typeof demonHunterFixture>, id: number, key: string) {
   return (
     demonHunterAuditPlayer(f.world, id)!.abilities as Record<
@@ -26,8 +22,10 @@ function stock(f: ReturnType<typeof demonHunterFixture>, id: number, key: string
     >
   )[`native:${key}`]!;
 }
+
 const role = (f: ReturnType<typeof demonHunterFixture>, id: number) =>
   f.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+
 for (const size of [6, 12] as const)
   test(`actual ${size} native night stock commits enter CP, including Guard pass`, async () => {
     const f = demonHunterFixture(size),
@@ -60,6 +58,7 @@ for (const size of [6, 12] as const)
     cp.players[seer - 1]!.privateState = {};
     expect(demonHunterAuditPlayer(f.world, seer)).not.toEqual({});
   });
+
 test("actual Guard target/pass/target keeps finite consecutive-night stock and Seer self inspect", async () => {
   const f = demonHunterFixture(12);
   for (const guard of [12, null, 12])
@@ -83,6 +82,7 @@ test("actual Guard target/pass/target keeps finite consecutive-night stock and S
     lastResult: { kind: "camp", camp: "good" },
   });
 });
+
 test("actual missing hunt retains lawful Seer/Guard/Witch prefixes in failed CP", async () => {
   const f = demonHunterFixture(12);
   await f.phaseManager.runSingleCycle({ getAction: async (r) => demonNightChoice(r, 9) }, 10);
@@ -119,6 +119,7 @@ test("actual missing hunt retains lawful Seer/Guard/Witch prefixes in failed CP"
   for (const player of cp.players)
     expect(player.privateState).toEqual(demonHunterAuditPlayer(f.world, player.id)!);
 });
+
 for (const kind of ["seer_check", "guard"] as const)
   for (const mutation of ["refund", "getter", "readonly", "extra"] as const)
     test(`native ${kind} ${mutation} cannot become a committed stock`, async () => {
@@ -157,6 +158,7 @@ for (const kind of ["seer_check", "guard"] as const)
       );
       expect(cp.players[id - 1]!.privateState).toEqual(before!);
     });
+
 for (const shot of [null, 1] as const)
   test(`actual Hunter ${shot === null ? "pass" : "shot"} consumes lawful gun in CP`, async () => {
     const f = demonHunterFixture(12);
@@ -179,6 +181,7 @@ for (const shot of [null, 1] as const)
       privateState: { hunter: { canShoot: false } },
     });
   });
+
 test("actual poisoned Hunter consumes gun without prompting, failed CP cannot adopt refunded gun", async () => {
   const f = demonHunterFixture(12);
   let prompts = 0;
@@ -202,6 +205,7 @@ test("actual poisoned Hunter consumes gun without prompting, failed CP cannot ad
     captureCheckpoint(f.world, f.phaseManager.getSnapshot(), 1, false, 0).players[9]!.privateState,
   ).toEqual(before!);
 });
+
 test("failed CP uses original roster/life/inventory despite added entity, component replacement and getters", async () => {
   const f = demonHunterFixture(6);
   await f.phaseManager.runSingleCycle({ getAction: async (r) => demonNightChoice(r, 5) }, 10);
@@ -249,6 +253,7 @@ test("failed CP uses original roster/life/inventory despite added entity, compon
   expect(() => captureCheckpoint(f.world, f.phaseManager.getSnapshot(), 2, true, 0)).toThrow();
   expect(reads).toBe(0);
 });
+
 test("failed CP takes original dead body instead of replacement revived Alive", async () => {
   const f = demonHunterFixture(12);
   await f.phaseManager.runSingleCycle(
@@ -359,50 +364,14 @@ test("actual sheriff election survives later day speech failure in CP", async ()
     vote: { weight: 1.5, canVote: true },
   });
 });
-test("actual badge transfer and destruction survive subsequent failure; mutable fake badge stays out", async () => {
-  const { assignSheriff, commitSheriffBadgeChoice } =
-    await import("../../../src/game/mechanisms/sheriff/badge");
-  const f = demonHunterFixture(12),
-    events: import("../../../src/core").GameEvent[] = [];
-  expect(assignSheriff(f.world, 4, f.config)).toBe(true);
-  commitSheriffBadgeChoice(f.world, 4, "actual", events, 5);
-  let cp = captureCheckpoint(f.world, f.phaseManager.getSnapshot(), 0, false, events.length);
-  expect(cp.players[3]).toMatchObject({
-    badge: { isSheriff: false, destroyed: true },
-    vote: { weight: 1 },
-  });
-  expect(cp.players[4]).toMatchObject({
-    badge: { isSheriff: true, destroyed: false },
-    vote: { weight: 1.5 },
-  });
-  commitSheriffBadgeChoice(f.world, 5, "actual", events, null);
-  cp = captureCheckpoint(f.world, f.phaseManager.getSnapshot(), 0, false, events.length);
-  expect(cp.players[4]).toMatchObject({
-    badge: { isSheriff: false, destroyed: true },
-    vote: { weight: 1 },
-  });
-  const badge = f.world.getComponent<import("../../../src/core").BadgeComponent>(
-    5,
-    COMPONENT.Badge,
-  )!;
-  badge.isSheriff = true;
-  expect(() =>
-    captureCheckpoint(f.world, f.phaseManager.getSnapshot(), 0, true, events.length),
-  ).toThrow("metadata_revoked");
-  expect(() => assignSheriff(f.world, 6, f.config)).toThrow("badge_stock_revoked");
-  expect(
-    captureCheckpoint(f.world, f.phaseManager.getSnapshot(), 0, false, events.length).players[4]!
-      .badge,
-  ).toEqual(cp.players[4]!.badge);
-});
 
 test("optional badge accessor differs from absence: CP and next actual Night reject with zero reads", async () => {
-  const { assignSheriff } = await import("../../../src/game/mechanisms/sheriff/badge");
+  const { assignSheriff } = await import("../../../../src/game/mechanisms/sheriff/badge");
   const f = demonHunterFixture(12);
   let reads = 0;
   expect(assignSheriff(f.world, 4, f.config)).toBe(true);
   const baseline = captureCheckpoint(f.world, f.phaseManager.getSnapshot(), 0, true, 0);
-  const badge = f.world.getComponent<import("../../../src/core").BadgeComponent>(
+  const badge = f.world.getComponent<import("../../../../src/core").BadgeComponent>(
     4,
     COMPONENT.Badge,
   )!;
