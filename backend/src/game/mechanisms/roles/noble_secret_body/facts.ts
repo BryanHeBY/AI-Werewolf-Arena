@@ -1,10 +1,16 @@
+/**
+ * 负责把夜之贵族／觉醒愚者秘密之身的原知识通知与契约结算回执发布为事实和必需录制。
+ * 输入为原权威的通知／回执、事件数组与阶段；输出保留原载荷、受众冻结和记录失败前缀。
+ * 知识与通知纯结构归公共契约，实际库存和付款仍归 authority；本模块不选择目标、
+ * 重新判胜或授予租约，先检查权威回执再记录／发布的原顺序保持。
+ */
 import type { GameEvent } from "../../../../core/domain/events";
 import { Phase } from "../../../../core/domain/identity";
 import type { World } from "../../../../core/domain/world";
 import { getSessionRecorder } from "../../../../recording/recording_context";
 import { checkpointNobleBodyAuthority } from "./authority";
 import { NOBLE_SECRET_BODY_POLICY } from "./state";
-import type { NobleBodyNightNotice } from "./player_projection";
+import type { NobleBodyNightNotice } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 export function appendNobleBodyNotices(
   events: GameEvent[],
   notices: readonly NobleBodyNightNotice[],

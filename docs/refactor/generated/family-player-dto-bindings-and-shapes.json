@@ -1,0 +1,1955 @@
+{
+  "base": "2117e4979a0256f95c990d25f209e347fdef9a83",
+  "scannedFiles": 1752,
+  "moves": 5,
+  "knowledgeForwardExits": 2,
+  "shapes": [
+    {
+      "name": "NoblePlayerState",
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "to": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "oldDeclaration": "export type NoblePlayerState = Readonly<NobleKnowledge & { awaitingNightReport: boolean }>;",
+      "currentDeclaration": "export type NoblePlayerState = Readonly<NobleKnowledge & { awaitingNightReport: boolean }>;",
+      "typePolicyInverseEdits": 0,
+      "allNodeCount": 27,
+      "wholeTypedDeclarationSame": true,
+      "parseDiagnostics": 0
+    },
+    {
+      "name": "SecretBodyPlayerState",
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "to": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "oldDeclaration": "export type SecretBodyPlayerState = Readonly<\n  SecretBodyKnowledge & { awaitingNightReport: boolean }\n>;",
+      "currentDeclaration": "export type SecretBodyPlayerState = Readonly<\n  SecretBodyKnowledge & { awaitingNightReport: boolean }\n>;",
+      "typePolicyInverseEdits": 0,
+      "allNodeCount": 27,
+      "wholeTypedDeclarationSame": true,
+      "parseDiagnostics": 0
+    },
+    {
+      "name": "NobleBodyNightNotice",
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "to": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "oldDeclaration": "export type NobleBodyNightNotice =\n  | Readonly<{ kind: \"secret_body\"; actorId: number; day: number; known: SecretBodyKnowledge }>\n  | Readonly<{ kind: \"night_noble\"; actorId: number; day: number; known: NobleKnowledge }>;",
+      "currentDeclaration": "export type NobleBodyNightNotice =\n  | Readonly<{ kind: \"secret_body\"; actorId: number; day: number; known: SecretBodyKnowledge }>\n  | Readonly<{ kind: \"night_noble\"; actorId: number; day: number; known: NobleKnowledge }>;",
+      "typePolicyInverseEdits": 0,
+      "allNodeCount": 73,
+      "wholeTypedDeclarationSame": true,
+      "parseDiagnostics": 0
+    },
+    {
+      "name": "PlayerAlchemistState",
+      "from": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "to": "packages/game-contract/src/facts/mist-raven.ts",
+      "oldDeclaration": "export interface PlayerAlchemistState {\n  policy: typeof MIST_RAVEN_POLICY;\n  mistRemaining: number;\n  healRemaining: number;\n  mistHistory: Array<{ day: number; targetIds: number[] | null }>;\n  healHistory: Array<{ day: number; targetId: number | null }>;\n}",
+      "currentDeclaration": "export interface PlayerAlchemistState {\n  policy: NonNullable<BoardConfig[\"mistRaven\"]>[\"policy\"];\n  mistRemaining: number;\n  healRemaining: number;\n  mistHistory: Array<{ day: number; targetIds: number[] | null }>;\n  healHistory: Array<{ day: number; targetId: number | null }>;\n}",
+      "typePolicyInverseEdits": 1,
+      "allNodeCount": 84,
+      "wholeTypedDeclarationSame": true,
+      "parseDiagnostics": 0
+    },
+    {
+      "name": "PlayerRavenState",
+      "from": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "to": "packages/game-contract/src/facts/mist-raven.ts",
+      "oldDeclaration": "export interface PlayerRavenState {\n  policy: typeof MIST_RAVEN_POLICY;\n  awakened: boolean;\n  extraRemaining: number;\n  knownTeammateIds: number[];\n  extraHistory: Array<{ day: number; targetId: number | null }>;\n}",
+      "currentDeclaration": "export interface PlayerRavenState {\n  policy: NonNullable<BoardConfig[\"mistRaven\"]>[\"policy\"];\n  awakened: boolean;\n  extraRemaining: number;\n  knownTeammateIds: number[];\n  extraHistory: Array<{ day: number; targetId: number | null }>;\n}",
+      "typePolicyInverseEdits": 1,
+      "allNodeCount": 62,
+      "wholeTypedDeclarationSame": true,
+      "parseDiagnostics": 0
+    }
+  ],
+  "valueBindings": [
+    {
+      "path": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "old": [
+        {
+          "specifier": "../inert-event-data",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "copyEventData",
+              "local": "copyEventData"
+            }
+          ]
+        }
+      ],
+      "current": [
+        {
+          "specifier": "../inert-event-data",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "copyEventData",
+              "local": "copyEventData"
+            }
+          ]
+        }
+      ],
+      "wholeRuntimeBindingsSame": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/mist-raven.ts",
+      "old": [
+        {
+          "specifier": "../inert-event-data",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "copyEventData",
+              "local": "copyEventData"
+            }
+          ]
+        }
+      ],
+      "current": [
+        {
+          "specifier": "../inert-event-data",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "copyEventData",
+              "local": "copyEventData"
+            }
+          ]
+        }
+      ],
+      "wholeRuntimeBindingsSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "old": [
+        {
+          "specifier": "../../../../core/domain/identity",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "Phase",
+              "local": "Phase"
+            }
+          ]
+        }
+      ],
+      "current": [
+        {
+          "specifier": "../../../../core/domain/identity",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "Phase",
+              "local": "Phase"
+            }
+          ]
+        }
+      ],
+      "wholeRuntimeBindingsSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "old": [
+        {
+          "specifier": "../../../../core/domain/identity",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "Role",
+              "local": "Role"
+            }
+          ]
+        },
+        {
+          "specifier": "node:util",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "types",
+              "local": "types"
+            }
+          ]
+        },
+        {
+          "specifier": "../player_state",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "playerDataField",
+              "local": "playerDataField"
+            }
+          ]
+        },
+        {
+          "specifier": "./state",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "MIST_RAVEN_POLICY",
+              "local": "MIST_RAVEN_POLICY"
+            },
+            {
+              "name": "readAlchemistState",
+              "local": "readAlchemistState"
+            },
+            {
+              "name": "readRavenState",
+              "local": "readRavenState"
+            }
+          ]
+        }
+      ],
+      "current": [
+        {
+          "specifier": "../../../../core/domain/identity",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "Role",
+              "local": "Role"
+            }
+          ]
+        },
+        {
+          "specifier": "node:util",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "types",
+              "local": "types"
+            }
+          ]
+        },
+        {
+          "specifier": "../player_state",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "playerDataField",
+              "local": "playerDataField"
+            }
+          ]
+        },
+        {
+          "specifier": "./state",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "MIST_RAVEN_POLICY",
+              "local": "MIST_RAVEN_POLICY"
+            },
+            {
+              "name": "readAlchemistState",
+              "local": "readAlchemistState"
+            },
+            {
+              "name": "readRavenState",
+              "local": "readRavenState"
+            }
+          ]
+        }
+      ],
+      "wholeRuntimeBindingsSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "old": [
+        {
+          "specifier": "../../../../core/domain/night-unit",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "attachNightUnit",
+              "local": "attachNightUnit"
+            },
+            {
+              "name": "isNightUnit",
+              "local": "isNightUnit"
+            },
+            {
+              "name": "nightUnitOf",
+              "local": "nightUnitOf"
+            }
+          ]
+        },
+        {
+          "specifier": "node:util",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "types",
+              "local": "types"
+            }
+          ]
+        },
+        {
+          "specifier": "../../../../core/domain/components/names",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "COMPONENT",
+              "local": "COMPONENT"
+            }
+          ]
+        },
+        {
+          "specifier": "../../../../core/domain/identity",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "Camp",
+              "local": "Camp"
+            },
+            {
+              "name": "Role",
+              "local": "Role"
+            },
+            {
+              "name": "Phase",
+              "local": "Phase"
+            }
+          ]
+        },
+        {
+          "specifier": "../../../../core/domain/components/alive",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "aliveLifeDescriptor",
+              "local": "aliveLifeDescriptor"
+            },
+            {
+              "name": "aliveLifeVersion",
+              "local": "aliveLifeVersion"
+            }
+          ]
+        },
+        {
+          "specifier": "./state",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "readNobleState",
+              "local": "readNobleState"
+            },
+            {
+              "name": "readSecretBodyState",
+              "local": "readSecretBodyState"
+            },
+            {
+              "name": "chooseServant",
+              "local": "chooseServant"
+            },
+            {
+              "name": "chooseBodyTarget",
+              "local": "chooseBodyTarget"
+            },
+            {
+              "name": "endServant",
+              "local": "endServant"
+            },
+            {
+              "name": "spendBodyForNight",
+              "local": "spendBodyForNight"
+            },
+            {
+              "name": "revealBodyByExile",
+              "local": "revealBodyByExile"
+            }
+          ]
+        },
+        {
+          "specifier": "./damage",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "planSecretBodyBlock",
+              "local": "planSecretBodyBlock"
+            },
+            {
+              "name": "copySecretBodySources",
+              "local": "copySecretBodySources"
+            }
+          ]
+        },
+        {
+          "specifier": "./player_projection",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "copyNobleKnowledge",
+              "local": "copyNobleKnowledge"
+            },
+            {
+              "name": "copySecretBodyKnowledge",
+              "local": "copySecretBodyKnowledge"
+            },
+            {
+              "name": "projectNobleKnowledge",
+              "local": "projectNobleKnowledge"
+            },
+            {
+              "name": "projectSecretBodyKnowledge",
+              "local": "projectSecretBodyKnowledge"
+            }
+          ]
+        }
+      ],
+      "current": [
+        {
+          "specifier": "../../../../core/domain/night-unit",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "attachNightUnit",
+              "local": "attachNightUnit"
+            },
+            {
+              "name": "isNightUnit",
+              "local": "isNightUnit"
+            },
+            {
+              "name": "nightUnitOf",
+              "local": "nightUnitOf"
+            }
+          ]
+        },
+        {
+          "specifier": "node:util",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "types",
+              "local": "types"
+            }
+          ]
+        },
+        {
+          "specifier": "../../../../core/domain/components/names",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "COMPONENT",
+              "local": "COMPONENT"
+            }
+          ]
+        },
+        {
+          "specifier": "../../../../core/domain/identity",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "Camp",
+              "local": "Camp"
+            },
+            {
+              "name": "Role",
+              "local": "Role"
+            },
+            {
+              "name": "Phase",
+              "local": "Phase"
+            }
+          ]
+        },
+        {
+          "specifier": "../../../../core/domain/components/alive",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "aliveLifeDescriptor",
+              "local": "aliveLifeDescriptor"
+            },
+            {
+              "name": "aliveLifeVersion",
+              "local": "aliveLifeVersion"
+            }
+          ]
+        },
+        {
+          "specifier": "./state",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "readNobleState",
+              "local": "readNobleState"
+            },
+            {
+              "name": "readSecretBodyState",
+              "local": "readSecretBodyState"
+            },
+            {
+              "name": "chooseServant",
+              "local": "chooseServant"
+            },
+            {
+              "name": "chooseBodyTarget",
+              "local": "chooseBodyTarget"
+            },
+            {
+              "name": "endServant",
+              "local": "endServant"
+            },
+            {
+              "name": "spendBodyForNight",
+              "local": "spendBodyForNight"
+            },
+            {
+              "name": "revealBodyByExile",
+              "local": "revealBodyByExile"
+            }
+          ]
+        },
+        {
+          "specifier": "./damage",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "planSecretBodyBlock",
+              "local": "planSecretBodyBlock"
+            },
+            {
+              "name": "copySecretBodySources",
+              "local": "copySecretBodySources"
+            }
+          ]
+        },
+        {
+          "specifier": "./player_projection",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "copyNobleKnowledge",
+              "local": "copyNobleKnowledge"
+            },
+            {
+              "name": "copySecretBodyKnowledge",
+              "local": "copySecretBodyKnowledge"
+            },
+            {
+              "name": "projectNobleKnowledge",
+              "local": "projectNobleKnowledge"
+            },
+            {
+              "name": "projectSecretBodyKnowledge",
+              "local": "projectSecretBodyKnowledge"
+            }
+          ]
+        }
+      ],
+      "wholeRuntimeBindingsSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+      "old": [
+        {
+          "specifier": "../../../../core/domain/identity",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "Phase",
+              "local": "Phase"
+            }
+          ]
+        },
+        {
+          "specifier": "../../../../recording/recording_context",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "getSessionRecorder",
+              "local": "getSessionRecorder"
+            }
+          ]
+        },
+        {
+          "specifier": "./authority",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "checkpointNobleBodyAuthority",
+              "local": "checkpointNobleBodyAuthority"
+            }
+          ]
+        },
+        {
+          "specifier": "./state",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "NOBLE_SECRET_BODY_POLICY",
+              "local": "NOBLE_SECRET_BODY_POLICY"
+            }
+          ]
+        }
+      ],
+      "current": [
+        {
+          "specifier": "../../../../core/domain/identity",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "Phase",
+              "local": "Phase"
+            }
+          ]
+        },
+        {
+          "specifier": "../../../../recording/recording_context",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "getSessionRecorder",
+              "local": "getSessionRecorder"
+            }
+          ]
+        },
+        {
+          "specifier": "./authority",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "checkpointNobleBodyAuthority",
+              "local": "checkpointNobleBodyAuthority"
+            }
+          ]
+        },
+        {
+          "specifier": "./state",
+          "default": null,
+          "namespace": null,
+          "bindings": [
+            {
+              "name": "NOBLE_SECRET_BODY_POLICY",
+              "local": "NOBLE_SECRET_BODY_POLICY"
+            }
+          ]
+        }
+      ],
+      "wholeRuntimeBindingsSame": true
+    }
+  ],
+  "allForms": [
+    {
+      "path": "backend/src/game/observation/agent-event-projection.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NOBLE_SECRET_BODY_EVENT_TYPES",
+          "local": "NOBLE_SECRET_BODY_EVENT_TYPES",
+          "typeOnly": false
+        },
+        {
+          "imported": "nobleSecretBodyVisibility",
+          "local": "nobleSecretBodyVisibility",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/agent-event-projection.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "MIST_RAVEN_EVENT_TYPES",
+          "local": "MIST_RAVEN_EVENT_TYPES",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "form": "inline-type",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "symbol": "NoblePlayerState"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "form": "inline-type",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "symbol": "SecretBodyPlayerState"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "form": "inline-type",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "symbol": "PlayerAlchemistState"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "form": "inline-type",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "symbol": "PlayerRavenState"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "form": "import",
+      "specifier": "../mechanisms/roles/mist_raven/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "projectAlchemist",
+          "local": "projectAlchemist",
+          "typeOnly": false
+        },
+        {
+          "imported": "projectRaven",
+          "local": "projectRaven",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/agent-event-facts.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NOBLE_SECRET_BODY_EVENT_TYPES",
+          "local": "NOBLE_SECRET_BODY_EVENT_TYPES",
+          "typeOnly": false
+        },
+        {
+          "imported": "readNobleSecretBodyFact",
+          "local": "readNobleSecretBodyFact",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/agent-event-facts.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "MIST_RAVEN_EVENT_TYPES",
+          "local": "MIST_RAVEN_EVENT_TYPES",
+          "typeOnly": false
+        },
+        {
+          "imported": "readMistRavenFact",
+          "local": "readMistRavenFact",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "form": "import",
+      "specifier": "../mechanisms/roles/mist_raven/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "projectAlchemist",
+          "local": "projectAlchemist",
+          "typeOnly": false
+        },
+        {
+          "imported": "projectRaven",
+          "local": "projectRaven",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": true,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "SecretBodyKnowledge",
+          "local": "SecretBodyKnowledge",
+          "typeOnly": true
+        },
+        {
+          "imported": "NobleKnowledge",
+          "local": "NobleKnowledge",
+          "typeOnly": true
+        },
+        {
+          "imported": "SecretBodyPlayerState",
+          "local": "SecretBodyPlayerState",
+          "typeOnly": true
+        },
+        {
+          "imported": "NoblePlayerState",
+          "local": "NoblePlayerState",
+          "typeOnly": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "form": "import",
+      "specifier": "./player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "copyNobleKnowledge",
+          "local": "copyNobleKnowledge",
+          "typeOnly": false
+        },
+        {
+          "imported": "copySecretBodyKnowledge",
+          "local": "copySecretBodyKnowledge",
+          "typeOnly": false
+        },
+        {
+          "imported": "projectNobleKnowledge",
+          "local": "projectNobleKnowledge",
+          "typeOnly": false
+        },
+        {
+          "imported": "projectSecretBodyKnowledge",
+          "local": "projectSecretBodyKnowledge",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": true,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NobleKnowledge",
+          "local": "NobleKnowledge",
+          "typeOnly": true
+        },
+        {
+          "imported": "SecretBodyKnowledge",
+          "local": "SecretBodyKnowledge",
+          "typeOnly": true
+        },
+        {
+          "imported": "NobleBodyNightNotice",
+          "local": "NobleBodyNightNotice",
+          "typeOnly": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": true,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NobleBodyNightNotice",
+          "local": "NobleBodyNightNotice",
+          "typeOnly": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "typeOnly": true,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "PlayerAlchemistState",
+          "local": "PlayerAlchemistState",
+          "typeOnly": true
+        },
+        {
+          "imported": "PlayerRavenState",
+          "local": "PlayerRavenState",
+          "typeOnly": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": true,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NobleContractClosedFact",
+          "local": "NobleContractClosedFact",
+          "typeOnly": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/script/event_render_registry.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "nobleSecretBodyVisibility",
+          "local": "nobleSecretBodyVisibility",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/recording/mist_raven_record.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "MIST_RAVEN_EVENT_TYPES",
+          "local": "MIST_RAVEN_EVENT_TYPES",
+          "typeOnly": false
+        },
+        {
+          "imported": "readMistRavenFact",
+          "local": "readMistRavenFact",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NOBLE_SECRET_BODY_EVENT_TYPES",
+          "local": "NOBLE_SECRET_BODY_EVENT_TYPES",
+          "typeOnly": false
+        },
+        {
+          "imported": "readNobleSecretBodyFact",
+          "local": "readNobleSecretBodyFact",
+          "typeOnly": false
+        },
+        {
+          "imported": "nobleSecretBodyVisibility",
+          "local": "nobleSecretBodyVisibility",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "MIST_RAVEN_EVENT_TYPES",
+          "local": "MIST_RAVEN_EVENT_TYPES",
+          "typeOnly": false
+        },
+        {
+          "imported": "readMistRavenFact",
+          "local": "readMistRavenFact",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/recording/noble_secret_body_record.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NOBLE_SECRET_BODY_EVENT_TYPES",
+          "local": "NOBLE_SECRET_BODY_EVENT_TYPES",
+          "typeOnly": false
+        },
+        {
+          "imported": "readNobleSecretBodyFact",
+          "local": "readNobleSecretBodyFact",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/recording/mist_raven_feed_record.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "MIST_RAVEN_EVENT_TYPES",
+          "local": "MIST_RAVEN_EVENT_TYPES",
+          "typeOnly": false
+        },
+        {
+          "imported": "readMistRavenFact",
+          "local": "readMistRavenFact",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/oracles/transport.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "MIST_RAVEN_EVENT_TYPES",
+          "local": "MIST_RAVEN_EVENT_TYPES",
+          "typeOnly": false
+        },
+        {
+          "imported": "readMistRavenFact",
+          "local": "readMistRavenFact",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/noble-secret-body/legal-day-prompt-history.test.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NOBLE_SECRET_BODY_EVENT_TYPES",
+          "local": "NOBLE_SECRET_BODY_EVENT_TYPES",
+          "typeOnly": false
+        },
+        {
+          "imported": "readNobleSecretBodyFact",
+          "local": "readNobleSecretBodyFact",
+          "typeOnly": false
+        },
+        {
+          "imported": "NOBLE_SECRET_BODY_POLICY",
+          "local": "NOBLE_SECRET_BODY_POLICY",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/engine/noble-secret-body-notice-contract-review.test.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "readNobleSecretBodyFact",
+          "local": "readNobleSecretBodyFact",
+          "typeOnly": false
+        },
+        {
+          "imported": "NOBLE_SECRET_BODY_POLICY",
+          "local": "NOBLE_SECRET_BODY_POLICY",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": true,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NobleKnowledge",
+          "local": "NobleKnowledge",
+          "typeOnly": true
+        },
+        {
+          "imported": "SecretBodyKnowledge",
+          "local": "SecretBodyKnowledge",
+          "typeOnly": true
+        },
+        {
+          "imported": "NoblePlayerState",
+          "local": "NoblePlayerState",
+          "typeOnly": true
+        },
+        {
+          "imported": "SecretBodyPlayerState",
+          "local": "SecretBodyPlayerState",
+          "typeOnly": true
+        },
+        {
+          "imported": "NobleBodyNightNotice",
+          "local": "NobleBodyNightNotice",
+          "typeOnly": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "typeOnly": true,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "PlayerAlchemistState",
+          "local": "PlayerAlchemistState",
+          "typeOnly": true
+        },
+        {
+          "imported": "PlayerRavenState",
+          "local": "PlayerRavenState",
+          "typeOnly": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "typeOnly": true,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NoblePlayerState",
+          "local": "RetiredNoble",
+          "typeOnly": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "typeOnly": true,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "SecretBodyPlayerState",
+          "local": "RetiredBody",
+          "typeOnly": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "typeOnly": true,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NobleBodyNightNotice",
+          "local": "RetiredNotice",
+          "typeOnly": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "typeOnly": true,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NobleKnowledge",
+          "local": "RetiredNobleKnowledge",
+          "typeOnly": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "typeOnly": true,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "SecretBodyKnowledge",
+          "local": "RetiredBodyKnowledge",
+          "typeOnly": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/mist_raven/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "typeOnly": true,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "PlayerAlchemistState",
+          "local": "RetiredAlchemist",
+          "typeOnly": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/mist_raven/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "typeOnly": true,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "PlayerRavenState",
+          "local": "RetiredRaven",
+          "typeOnly": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/presentation/noble-secret-body-replay-review.test.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NOBLE_SECRET_BODY_POLICY",
+          "local": "policy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/presentation/mist-raven-projection.test.ts",
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/mist_raven/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "projectAlchemist",
+          "local": "projectAlchemist",
+          "typeOnly": false
+        },
+        {
+          "imported": "projectRaven",
+          "local": "projectRaven",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/private-contract-projection.test.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "readNobleSecretBodyFact",
+          "local": "readNobleSecretBodyFact",
+          "typeOnly": false
+        },
+        {
+          "imported": "NOBLE_SECRET_BODY_POLICY",
+          "local": "NOBLE_SECRET_BODY_POLICY",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "frontend/src/replay/replay-event-reader.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NOBLE_SECRET_BODY_EVENT_TYPES",
+          "local": "NOBLE_SECRET_BODY_EVENT_TYPES",
+          "typeOnly": false
+        },
+        {
+          "imported": "readNobleSecretBodyFact",
+          "local": "readNobleSecretBodyFact",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "frontend/src/replay/replay-event-reader.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "MIST_RAVEN_EVENT_TYPES",
+          "local": "MIST_RAVEN_EVENT_TYPES",
+          "typeOnly": false
+        },
+        {
+          "imported": "readMistRavenFact",
+          "local": "readMistRavenFact",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/noble-player-audience.test.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NOBLE_SECRET_BODY_POLICY",
+          "local": "policy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "frontend/tests/unit/replay/events/mist-raven-events.test.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "readMistRavenFact",
+          "local": "readMistRavenFact",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/tests/facts/mist-raven.test.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "MIST_RAVEN_EVENT_TYPES",
+          "local": "MIST_RAVEN_EVENT_TYPES",
+          "typeOnly": false
+        },
+        {
+          "imported": "readMistRavenFact",
+          "local": "readMistRavenFact",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/tests/facts/noble-secret-body.test.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "NOBLE_SECRET_BODY_EVENT_TYPES",
+          "local": "NOBLE_SECRET_BODY_EVENT_TYPES",
+          "typeOnly": false
+        },
+        {
+          "imported": "NOBLE_SECRET_BODY_POLICY",
+          "local": "NOBLE_SECRET_BODY_POLICY",
+          "typeOnly": false
+        },
+        {
+          "imported": "nobleSecretBodyVisibility",
+          "local": "nobleSecretBodyVisibility",
+          "typeOnly": false
+        },
+        {
+          "imported": "readNobleSecretBodyFact",
+          "local": "readNobleSecretBodyFact",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "packages/game-presentation/src/events/night-mechanisms.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "readNobleSecretBodyFact",
+          "local": "readNobleSecretBodyFact",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "packages/game-presentation/src/events/night-mechanisms.ts",
+      "form": "import",
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "typeOnly": false,
+      "namespace": false,
+      "star": false,
+      "default": false,
+      "bindings": [
+        {
+          "imported": "readMistRavenFact",
+          "local": "readMistRavenFact",
+          "typeOnly": false
+        }
+      ]
+    }
+  ],
+  "namedUses": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "imported": "SecretBodyKnowledge",
+      "local": "SecretBodyKnowledge",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "imported": "NobleKnowledge",
+      "local": "NobleKnowledge",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "imported": "SecretBodyPlayerState",
+      "local": "SecretBodyPlayerState",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "imported": "NoblePlayerState",
+      "local": "NoblePlayerState",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "imported": "NobleKnowledge",
+      "local": "NobleKnowledge",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "imported": "SecretBodyKnowledge",
+      "local": "SecretBodyKnowledge",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "imported": "NobleBodyNightNotice",
+      "local": "NobleBodyNightNotice",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+      "imported": "NobleBodyNightNotice",
+      "local": "NobleBodyNightNotice",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "imported": "PlayerAlchemistState",
+      "local": "PlayerAlchemistState",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "imported": "PlayerRavenState",
+      "local": "PlayerRavenState",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "NobleKnowledge",
+      "local": "NobleKnowledge",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "SecretBodyKnowledge",
+      "local": "SecretBodyKnowledge",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "NoblePlayerState",
+      "local": "NoblePlayerState",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "SecretBodyPlayerState",
+      "local": "SecretBodyPlayerState",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "NobleBodyNightNotice",
+      "local": "NobleBodyNightNotice",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/noble-secret-body"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "PlayerAlchemistState",
+      "local": "PlayerAlchemistState",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "PlayerRavenState",
+      "local": "PlayerRavenState",
+      "typeOnly": true,
+      "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+      "endpoint": "@ai-werewolf-arena/game-contract/facts/mist-raven"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "NoblePlayerState",
+      "local": "RetiredNoble",
+      "typeOnly": true,
+      "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "SecretBodyPlayerState",
+      "local": "RetiredBody",
+      "typeOnly": true,
+      "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "NobleBodyNightNotice",
+      "local": "RetiredNotice",
+      "typeOnly": true,
+      "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "NobleKnowledge",
+      "local": "RetiredNobleKnowledge",
+      "typeOnly": true,
+      "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "SecretBodyKnowledge",
+      "local": "RetiredBodyKnowledge",
+      "typeOnly": true,
+      "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "PlayerAlchemistState",
+      "local": "RetiredAlchemist",
+      "typeOnly": true,
+      "specifier": "../../../src/game/mechanisms/roles/mist_raven/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "PlayerRavenState",
+      "local": "RetiredRaven",
+      "typeOnly": true,
+      "specifier": "../../../src/game/mechanisms/roles/mist_raven/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts"
+    }
+  ],
+  "retiredNegativeFixtureImports": [
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "NoblePlayerState",
+      "local": "RetiredNoble",
+      "typeOnly": true,
+      "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "SecretBodyPlayerState",
+      "local": "RetiredBody",
+      "typeOnly": true,
+      "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "NobleBodyNightNotice",
+      "local": "RetiredNotice",
+      "typeOnly": true,
+      "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "NobleKnowledge",
+      "local": "RetiredNobleKnowledge",
+      "typeOnly": true,
+      "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "SecretBodyKnowledge",
+      "local": "RetiredBodyKnowledge",
+      "typeOnly": true,
+      "specifier": "../../../src/game/mechanisms/roles/noble_secret_body/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "PlayerAlchemistState",
+      "local": "RetiredAlchemist",
+      "typeOnly": true,
+      "specifier": "../../../src/game/mechanisms/roles/mist_raven/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "imported": "PlayerRavenState",
+      "local": "RetiredRaven",
+      "typeOnly": true,
+      "specifier": "../../../src/game/mechanisms/roles/mist_raven/player_projection",
+      "endpoint": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts"
+    }
+  ],
+  "canonicalDeclarations": [
+    {
+      "path": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "name": "NobleKnowledge",
+      "kind": "InterfaceDeclaration",
+      "exported": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "name": "SecretBodyKnowledge",
+      "kind": "InterfaceDeclaration",
+      "exported": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "name": "SecretBodyPlayerState",
+      "kind": "TypeAliasDeclaration",
+      "exported": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "name": "NoblePlayerState",
+      "kind": "TypeAliasDeclaration",
+      "exported": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "name": "NobleBodyNightNotice",
+      "kind": "TypeAliasDeclaration",
+      "exported": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/mist-raven.ts",
+      "name": "PlayerAlchemistState",
+      "kind": "InterfaceDeclaration",
+      "exported": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/mist-raven.ts",
+      "name": "PlayerRavenState",
+      "kind": "InterfaceDeclaration",
+      "exported": true
+    }
+  ],
+  "allIdentifierFiles": [
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "names": [
+        "NoblePlayerState",
+        "SecretBodyPlayerState",
+        "PlayerAlchemistState",
+        "PlayerRavenState"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "names": [
+        "SecretBodyKnowledge",
+        "NobleKnowledge",
+        "SecretBodyPlayerState",
+        "NoblePlayerState"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "names": [
+        "NobleKnowledge",
+        "SecretBodyKnowledge",
+        "NobleBodyNightNotice"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+      "names": [
+        "NobleBodyNightNotice"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "names": [
+        "PlayerAlchemistState",
+        "PlayerRavenState"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "names": [
+        "NobleKnowledge",
+        "SecretBodyKnowledge",
+        "NoblePlayerState",
+        "SecretBodyPlayerState",
+        "NobleBodyNightNotice",
+        "PlayerAlchemistState",
+        "PlayerRavenState"
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "names": [
+        "NobleKnowledge",
+        "SecretBodyKnowledge",
+        "SecretBodyPlayerState",
+        "NoblePlayerState",
+        "NobleBodyNightNotice"
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/facts/mist-raven.ts",
+      "names": [
+        "PlayerAlchemistState",
+        "PlayerRavenState"
+      ]
+    }
+  ],
+  "findings": [],
+  "approved": true,
+  "policyEndpoint": {
+    "kind": "type-only",
+    "publicOwner": "packages/game-contract/src/boards.ts:BoardConfig.mistRaven.policy",
+    "type": "NonNullable<BoardConfig[\"mistRaven\"]>[\"policy\"]",
+    "runtimeValueUnchangedOwner": "backend/src/game/mechanisms/roles/mist_raven/state.ts:MIST_RAVEN_POLICY",
+    "exactLiteralVerifiedByBoundedCompiler": "Actual eight-root compiler session87474 terminal906d1a exit0; Exact comparison and bidirectional DTO constraints are included."
+  },
+  "traversal": "forEachChild callbacks void; full declaration nodes getChildren all noncomment tokens without callback/function/literal masking"
+}

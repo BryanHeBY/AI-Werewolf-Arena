@@ -1,0 +1,55 @@
+{
+  "base": "2117e4979a0256f95c990d25f209e347fdef9a83",
+  "scope": "Six full programs excluding their precisely moved five type declarations and import/export statements; bindings checked separately.",
+  "programs": [
+    {
+      "path": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "completeRetainedStatements": 19,
+      "beforeTypedNodes": 3340,
+      "currentTypedNodes": 3340,
+      "allTypedChildrenAndRawLeavesSame": true,
+      "wholeRetainedNoCommentPrintedSame": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/mist-raven.ts",
+      "completeRetainedStatements": 7,
+      "beforeTypedNodes": 1072,
+      "currentTypedNodes": 1072,
+      "allTypedChildrenAndRawLeavesSame": true,
+      "wholeRetainedNoCommentPrintedSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "completeRetainedStatements": 5,
+      "beforeTypedNodes": 435,
+      "currentTypedNodes": 435,
+      "allTypedChildrenAndRawLeavesSame": true,
+      "wholeRetainedNoCommentPrintedSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "completeRetainedStatements": 2,
+      "beforeTypedNodes": 470,
+      "currentTypedNodes": 470,
+      "allTypedChildrenAndRawLeavesSame": true,
+      "wholeRetainedNoCommentPrintedSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "completeRetainedStatements": 41,
+      "beforeTypedNodes": 8768,
+      "currentTypedNodes": 8768,
+      "allTypedChildrenAndRawLeavesSame": true,
+      "wholeRetainedNoCommentPrintedSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+      "completeRetainedStatements": 3,
+      "beforeTypedNodes": 671,
+      "currentTypedNodes": 671,
+      "allTypedChildrenAndRawLeavesSame": true,
+      "wholeRetainedNoCommentPrintedSame": true
+    }
+  ],
+  "findings": []
+}

@@ -33,10 +33,12 @@ import {
   copySecretBodyKnowledge,
   projectNobleKnowledge,
   projectSecretBodyKnowledge,
-  type NobleKnowledge,
-  type SecretBodyKnowledge,
-  type NobleBodyNightNotice,
 } from "./player_projection";
+import type {
+  NobleKnowledge,
+  SecretBodyKnowledge,
+  NobleBodyNightNotice,
+} from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 const invalid = Symbol("invalid_noble_body_owner");
 function own(value: unknown, key: PropertyKey): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return invalid;

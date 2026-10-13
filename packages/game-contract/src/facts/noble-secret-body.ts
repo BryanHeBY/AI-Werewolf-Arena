@@ -1,10 +1,8 @@
 /**
- * Owns pure noble-secret-body facts, knowledge shapes and their inert-data readers.
- * Inputs are original event identifiers and JSON.parse/no-reviver or proven
- * inert payloads; outputs preserve exact copied shapes, null rejection, limits
- * and visibility classifications. These facts never authorize actions or write
- * domain resources/state. Node ingress must reject hostile Proxy objects before
- * shared reflection; this browser-compatible module supplies no runtime handles.
+ * 负责夜之贵族／觉醒愚者秘密之身的纯事实、已知知识与玩家视图结构，以及原纯数据事实读取。
+ * 输入为原事件标识及无 reviver 的 JSON 或已确认 inert 载荷；输出保留复制形状、拒绝、
+ * 限额及可见性分类。玩家知识不含原体、库存写权或租约，通知与付款仍归机制所有者。
+ * Node 入口须先拒绝恶意 Proxy 再反射；本浏览器兼容契约不创建运行句柄或执行阶段。
  */
 import { copyEventData } from "../inert-event-data";
 export const NOBLE_SECRET_BODY_POLICY = "awa_noble_secret_body_v1" as const;
@@ -32,6 +30,16 @@ export interface SecretBodyKnowledge {
   readonly resource: "intact" | "spent" | "exile_revealed";
   readonly publicRevealDay: number | null;
 }
+/** 外层只读沿用原结构；待夜报标记由公开阶段及已知公开放逐状态解释，不比较真实库存。 */
+export type SecretBodyPlayerState = Readonly<
+  SecretBodyKnowledge & { awaitingNightReport: boolean }
+>;
+export type NoblePlayerState = Readonly<NobleKnowledge & { awaitingNightReport: boolean }>;
+
+/** 已知夜报的两个原分支；受众捕获、通知与复制冻结仍由机制执行，不由类型授予资格。 */
+export type NobleBodyNightNotice =
+  | Readonly<{ kind: "secret_body"; actorId: number; day: number; known: SecretBodyKnowledge }>
+  | Readonly<{ kind: "night_noble"; actorId: number; day: number; known: NobleKnowledge }>;
 type Base = { policy: typeof NOBLE_SECRET_BODY_POLICY; actorId: number; day: number };
 export type NobleContractClosedFact = Base & {
   contractId: string;

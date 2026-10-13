@@ -44,11 +44,11 @@ export interface PlayerObservation {
   ownNightActions: OwnNightAction[];
   ownState: {
     fragrantPhantom?: import("@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer").FragrantPlayerState;
-    nightNoble?: import("../mechanisms/roles/noble_secret_body/player_projection").NoblePlayerState;
-    secretBody?: import("../mechanisms/roles/noble_secret_body/player_projection").SecretBodyPlayerState;
+    nightNoble?: import("@ai-werewolf-arena/game-contract/facts/noble-secret-body").NoblePlayerState;
+    secretBody?: import("@ai-werewolf-arena/game-contract/facts/noble-secret-body").SecretBodyPlayerState;
     eclipse?: import("../mechanisms/roles/radiant_eclipse/state").EclipseState;
-    alchemist?: import("../mechanisms/roles/mist_raven/player_projection").PlayerAlchemistState;
-    ravenClaw?: import("../mechanisms/roles/mist_raven/player_projection").PlayerRavenState;
+    alchemist?: import("@ai-werewolf-arena/game-contract/facts/mist-raven").PlayerAlchemistState;
+    ravenClaw?: import("@ai-werewolf-arena/game-contract/facts/mist-raven").PlayerRavenState;
     scholarMentor?: import("@ai-werewolf-arena/game-contract").ModifierState;
     timeConsort?: NonNullable<
       ReturnType<

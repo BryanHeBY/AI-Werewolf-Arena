@@ -1,12 +1,27 @@
 /**
- * Owns pure mist-raven facts, knowledge shapes and their inert-data readers.
- * Inputs are original event identifiers and JSON.parse/no-reviver or proven
- * inert payloads; outputs preserve exact copied shapes, null rejection, limits
- * and visibility classifications. These facts never authorize actions or write
- * domain resources/state. Node ingress must reject hostile Proxy objects before
- * shared reflection; this browser-compatible module supplies no runtime handles.
+ * 负责炼金魔女／狼鸦之爪的纯事实与独立玩家知识结构，以及原纯数据事实读取。
+ * 输入为原事件标识及无 reviver 的 JSON 或已确认 inert 载荷；输出保留复制形状、拒绝
+ * 和限额。资源数与已知队友只是投影数据，不包含夜间 Frame、原生命、付款或行动租约。
+ * Node 入口须先拒绝恶意 Proxy 再反射；本浏览器兼容契约不读取 World 或提交效果。
  */
 import { copyEventData } from "../inert-event-data";
+import type { BoardConfig } from "../boards";
+
+/** 政策类型取既有板子字面值；不加载或复制后端运行政策常量，成员可写性保持原 DTO。 */
+export interface PlayerAlchemistState {
+  policy: NonNullable<BoardConfig["mistRaven"]>["policy"];
+  mistRemaining: number;
+  healRemaining: number;
+  mistHistory: Array<{ day: number; targetIds: number[] | null }>;
+  healHistory: Array<{ day: number; targetId: number | null }>;
+}
+export interface PlayerRavenState {
+  policy: NonNullable<BoardConfig["mistRaven"]>["policy"];
+  awakened: boolean;
+  extraRemaining: number;
+  knownTeammateIds: number[];
+  extraHistory: Array<{ day: number; targetId: number | null }>;
+}
 
 export const MIST_RAVEN_EVENT_TYPES = Object.freeze([
   "alchemist_mist_chosen",
@@ -33,7 +48,7 @@ function ids(v: unknown): v is number[] {
 function exact(p: Record<string, unknown>, keys: string[]): boolean {
   return Object.keys(p).length === keys.length && keys.every((k) => Object.hasOwn(p, k));
 }
-/** A detached JSON fact reader shared by player projection, recording and replay. */
+/** 读取脱离的纯数据事实，供玩家投影、录制和复盘共用；不推导真实身份或运行许可。 */
 export function readMistRavenFact(type: string, value: unknown): MistRavenFact | null {
   if (!(MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(type)) return null;
   try {

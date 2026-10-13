@@ -1,0 +1,44 @@
+{
+  "source": [
+    {
+      "path": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "sha256": "067e1140eaf7ff3c7aad13d144e5d8c9b9586262f0c7d40868755b80034dde4d"
+    },
+    {
+      "path": "packages/game-contract/src/facts/mist-raven.ts",
+      "sha256": "3ba35152b2b078fcaf3204998c9508e039677b9230317d5faa3cdda6b1461aae"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "sha256": "dd3b451db74afad44d935042ea1e51bac3c72de68ca107184d7c7d70088696cc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "sha256": "56206fba37c3a0f2dc7a18400ad046df283af49e41bbf9ea02233884b8e1e88a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "sha256": "30ec5828d2f7c4783145ef40cea1476cdbbec35cdcf1d3f8f6a632492f269795"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+      "sha256": "ae1c6dff649c49e8f8c057624e86860c4d51e12e0465dab16effaad58b8f6de7"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "sha256": "22aafd21a7dfebbc884adbaef2d5f9b046a569c3409021b743f1f9e9c62d4095"
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "sha256": "38fc3cb4c753acc0ed0caedc19dccd69d1ae09a7d1484d331a5225db08682119"
+    }
+  ],
+  "sources": 8,
+  "production": 7,
+  "compileOnlyUnit": 1,
+  "sourceBaselines": {
+    "sixOwners": "2117e4979a0256f95c990d25f209e347fdef9a83",
+    "sharedObservation": "b1534c26bd2b30450f58f3c9e37a64f9cb72dcc6"
+  },
+  "frozen": true
+}

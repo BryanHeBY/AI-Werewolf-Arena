@@ -1,0 +1,480 @@
+{
+  "schema": "awa-family-player-dto-independent-review-v1",
+  "reviewHarnessHistory": "First Node execFileSync git capture raised EPERM despite returning a successful Git payload; no report produced. Actual Git blobs were then captured with Python subprocess and read by the independent source-only checker. No product source/type/runtime check was changed or rerun.",
+  "reviewer": "/root/preflight_final_review",
+  "approved": true,
+  "findings": [],
+  "source": [
+    {
+      "path": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "sha256": "067e1140eaf7ff3c7aad13d144e5d8c9b9586262f0c7d40868755b80034dde4d",
+      "actualSHA256": "067e1140eaf7ff3c7aad13d144e5d8c9b9586262f0c7d40868755b80034dde4d",
+      "same": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/mist-raven.ts",
+      "sha256": "3ba35152b2b078fcaf3204998c9508e039677b9230317d5faa3cdda6b1461aae",
+      "actualSHA256": "3ba35152b2b078fcaf3204998c9508e039677b9230317d5faa3cdda6b1461aae",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "sha256": "dd3b451db74afad44d935042ea1e51bac3c72de68ca107184d7c7d70088696cc",
+      "actualSHA256": "dd3b451db74afad44d935042ea1e51bac3c72de68ca107184d7c7d70088696cc",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "sha256": "56206fba37c3a0f2dc7a18400ad046df283af49e41bbf9ea02233884b8e1e88a",
+      "actualSHA256": "56206fba37c3a0f2dc7a18400ad046df283af49e41bbf9ea02233884b8e1e88a",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "sha256": "30ec5828d2f7c4783145ef40cea1476cdbbec35cdcf1d3f8f6a632492f269795",
+      "actualSHA256": "30ec5828d2f7c4783145ef40cea1476cdbbec35cdcf1d3f8f6a632492f269795",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+      "sha256": "ae1c6dff649c49e8f8c057624e86860c4d51e12e0465dab16effaad58b8f6de7",
+      "actualSHA256": "ae1c6dff649c49e8f8c057624e86860c4d51e12e0465dab16effaad58b8f6de7",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "sha256": "22aafd21a7dfebbc884adbaef2d5f9b046a569c3409021b743f1f9e9c62d4095",
+      "actualSHA256": "22aafd21a7dfebbc884adbaef2d5f9b046a569c3409021b743f1f9e9c62d4095",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/contracts/family-player-dto.types.ts",
+      "sha256": "38fc3cb4c753acc0ed0caedc19dccd69d1ae09a7d1484d331a5225db08682119",
+      "actualSHA256": "38fc3cb4c753acc0ed0caedc19dccd69d1ae09a7d1484d331a5225db08682119",
+      "same": true
+    }
+  ],
+  "actualGitSources": [
+    {
+      "path": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "base": "2117e4979a0256f95c990d25f209e347fdef9a83",
+      "sha256": "9baef2182475e859207a84581f484e055c0701c767f7ea66147ccd74497b0aea",
+      "actualGitBeforeSame": true,
+      "control": false
+    },
+    {
+      "path": "packages/game-contract/src/facts/mist-raven.ts",
+      "base": "2117e4979a0256f95c990d25f209e347fdef9a83",
+      "sha256": "67bb73d42e138fc706d0ea0253aedddf0535111dc873806ea346968cd08b4297",
+      "actualGitBeforeSame": true,
+      "control": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "base": "2117e4979a0256f95c990d25f209e347fdef9a83",
+      "sha256": "7551a7fd8caae0ae4c0bd99fbfd420b0fbf5e9cb14fddd5aedcc1144e561a2d3",
+      "actualGitBeforeSame": true,
+      "control": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "base": "2117e4979a0256f95c990d25f209e347fdef9a83",
+      "sha256": "761593228dd6512b7b8d7e813cf48f04809db1f648796576cb983fa30d787669",
+      "actualGitBeforeSame": true,
+      "control": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "base": "2117e4979a0256f95c990d25f209e347fdef9a83",
+      "sha256": "0ad7cf34501906fa3259ea04b1a497a2adfbae150d8b5e2a975dcc91145c8e60",
+      "actualGitBeforeSame": true,
+      "control": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+      "base": "2117e4979a0256f95c990d25f209e347fdef9a83",
+      "sha256": "7dfdefcc8629f7b62706cf8b4b87e74dcc373cf469bfbd6018de2327fb091439",
+      "actualGitBeforeSame": true,
+      "control": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+      "base": "2117e4979a0256f95c990d25f209e347fdef9a83",
+      "sha256": "b13a5cc8f7538971d6c712a4d266c78522daf4ce12b0cc7b7f6c880d214fa3be",
+      "actualGitBeforeSame": true,
+      "control": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+      "base": "2117e4979a0256f95c990d25f209e347fdef9a83",
+      "sha256": "63376b41dfee162aec50fddaba7acf638d9507f6fbcc25facaae23563243ca84",
+      "actualGitBeforeSame": true,
+      "control": true
+    },
+    {
+      "path": "packages/game-contract/src/boards.ts",
+      "base": "2117e4979a0256f95c990d25f209e347fdef9a83",
+      "sha256": "0536faf1937ca7865c4dc324adcd4b1510b680cb1d6f9aa6457a64cd98d5af77",
+      "actualGitBeforeSame": true,
+      "control": true
+    }
+  ],
+  "observation": {
+    "base": "b1534c26bd2b30450f58f3c9e37a64f9cb72dcc6",
+    "beforeSHA256": "1fe3a44717c282593c176499cf4829ef3ebbececdcc18922e00179c31851f1e9",
+    "fourPreciseRoutesInverseEntireOriginalByteSame": true,
+    "metadataImportsUnmodified": true
+  },
+  "fullMovedDeclarations": [
+    {
+      "name": "NoblePlayerState",
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "to": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "allDeclarationNodesSameAfterOnlyExactMistPolicyTypeInverse": true
+    },
+    {
+      "name": "SecretBodyPlayerState",
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "to": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "allDeclarationNodesSameAfterOnlyExactMistPolicyTypeInverse": true
+    },
+    {
+      "name": "NobleBodyNightNotice",
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "to": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "allDeclarationNodesSameAfterOnlyExactMistPolicyTypeInverse": true
+    },
+    {
+      "name": "PlayerAlchemistState",
+      "from": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "to": "packages/game-contract/src/facts/mist-raven.ts",
+      "allDeclarationNodesSameAfterOnlyExactMistPolicyTypeInverse": true
+    },
+    {
+      "name": "PlayerRavenState",
+      "from": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "to": "packages/game-contract/src/facts/mist-raven.ts",
+      "allDeclarationNodesSameAfterOnlyExactMistPolicyTypeInverse": true
+    }
+  ],
+  "sixRetainedWholeSourceStatements": [
+    {
+      "path": "packages/game-contract/src/facts/noble-secret-body.ts",
+      "completeRemainingStatementsSame": true,
+      "allNonCommentNodes": 3340
+    },
+    {
+      "path": "packages/game-contract/src/facts/mist-raven.ts",
+      "completeRemainingStatementsSame": true,
+      "allNonCommentNodes": 1072
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+      "completeRemainingStatementsSame": true,
+      "allNonCommentNodes": 435
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+      "completeRemainingStatementsSame": true,
+      "allNonCommentNodes": 470
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "completeRemainingStatementsSame": true,
+      "allNonCommentNodes": 8768
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+      "completeRemainingStatementsSame": true,
+      "allNonCommentNodes": 671
+    }
+  ],
+  "totalRetainedNonCommentNodes": 14756,
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/state.ts",
+      "sha256": "b13a5cc8f7538971d6c712a4d266c78522daf4ce12b0cc7b7f6c880d214fa3be",
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+      "sha256": "63376b41dfee162aec50fddaba7acf638d9507f6fbcc25facaae23563243ca84",
+      "actualGitSame": true
+    },
+    {
+      "path": "packages/game-contract/src/boards.ts",
+      "sha256": "0536faf1937ca7865c4dc324adcd4b1510b680cb1d6f9aa6457a64cd98d5af77",
+      "actualGitSame": true
+    }
+  ],
+  "compositionMetadata": [
+    {
+      "path": "packages/game-contract/package.json",
+      "base": "b1534c26bd2b30450f58f3c9e37a64f9cb72dcc6",
+      "sha256": "b2112b4b8493b3e2ed18a4b4a22c6876213bb87eb35b51b26471d789e29f6857",
+      "actualGitSame": true
+    },
+    {
+      "path": "packages/game-contract/src/index.ts",
+      "base": "b1534c26bd2b30450f58f3c9e37a64f9cb72dcc6",
+      "sha256": "64afffcd8c1ffe2415fc7d58114572f6864381525ff7e6e12ba13619707941ce",
+      "actualGitSame": true
+    },
+    {
+      "path": "bun.lock",
+      "base": "b1534c26bd2b30450f58f3c9e37a64f9cb72dcc6",
+      "sha256": "0cec67d816fe691fd3a428baa40fdfc75d129410ac85fd2faf79f4b5a1d62288",
+      "actualGitSame": true
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/family-player-dto-before.json",
+      "sha256": "a4551c5c306bc9c2f3c6babadc62a923a3618f1bd7bbf91bc39e2a9ed53b43a2",
+      "actualSHA256": "a4551c5c306bc9c2f3c6babadc62a923a3618f1bd7bbf91bc39e2a9ed53b43a2",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/family-player-dto-observation-delta.json",
+      "sha256": "4eba57cd1dd42874ef7ba1f5991fda6fa6fb2bf2edabae6dd59a081cd9c33d85",
+      "actualSHA256": "4eba57cd1dd42874ef7ba1f5991fda6fa6fb2bf2edabae6dd59a081cd9c33d85",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/family-player-dto-controls.json",
+      "sha256": "6c181cae0d20cd797bca1d5343f78617cbcdc78b795b4bcfcb7c3e917f59742b",
+      "actualSHA256": "6c181cae0d20cd797bca1d5343f78617cbcdc78b795b4bcfcb7c3e917f59742b",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/family-player-dto-retained-programs.json",
+      "sha256": "f24a9177e6eeb29ecd5f0e462538e886ff33e16ab6f62e0e7c0aae020c5e1b9f",
+      "actualSHA256": "f24a9177e6eeb29ecd5f0e462538e886ff33e16ab6f62e0e7c0aae020c5e1b9f",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/family-player-dto-runtime-programs.json",
+      "sha256": "db3146e1675dac5578d09a48987b9582b7a03a1b00bf3b6cefbb5570b483b139",
+      "actualSHA256": "db3146e1675dac5578d09a48987b9582b7a03a1b00bf3b6cefbb5570b483b139",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/family-player-dto-observation-proof.json",
+      "sha256": "264ad68414b47a39e216c054b51f95eb4ab748744c640f4e707cdd7dac8000bf",
+      "actualSHA256": "264ad68414b47a39e216c054b51f95eb4ab748744c640f4e707cdd7dac8000bf",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/family-player-dto-bindings-and-shapes.json",
+      "sha256": "eebc50bfa939a4fa1179c0913045df618542128913a3913ec0b4430aa2b80eb9",
+      "actualSHA256": "eebc50bfa939a4fa1179c0913045df618542128913a3913ec0b4430aa2b80eb9",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/family-player-dto-comment-delta.json",
+      "sha256": "1afe6e4391df848380863ae1cc928919fb52045bed582af89bc944187b7af888",
+      "actualSHA256": "1afe6e4391df848380863ae1cc928919fb52045bed582af89bc944187b7af888",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/family-player-dto-heads.json",
+      "sha256": "f98646c5752fd3688a5e2a6903c91045c4844c194f2572d160f562e1337bc995",
+      "actualSHA256": "f98646c5752fd3688a5e2a6903c91045c4844c194f2572d160f562e1337bc995",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/family-player-dto-types-config.json",
+      "sha256": "f0ff02b7b39a28b289b398a7f77ab3669726098fcfb9a45fe814a6971a71e77b",
+      "actualSHA256": "f0ff02b7b39a28b289b398a7f77ab3669726098fcfb9a45fe814a6971a71e77b",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/family-player-dto-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actualSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/family-player-dto-scope-final.json",
+      "sha256": "c5c3706ab8c85f1d256776091eb22de6c65ca81687fb64702bd464c8375fef62",
+      "actualSHA256": "c5c3706ab8c85f1d256776091eb22de6c65ca81687fb64702bd464c8375fef62",
+      "same": true
+    }
+  ],
+  "harness": [
+    {
+      "name": "inventory-and-shapes.cjs",
+      "sha256": "de691839f6cb3b1242772d048fe7c6ce3baa804a4942e7e277462f69ded9d34d",
+      "same": true,
+      "reviewed": true,
+      "executionAttribution": "author receipt; not rerun by independent reviewer"
+    },
+    {
+      "name": "heads.ts",
+      "sha256": "45958e36dfa37312c5ab8e283c5ec1eba828b3b9ddde2cabb35a8f9c4b018df6",
+      "same": true,
+      "reviewed": true,
+      "executionAttribution": "author receipt; not rerun by independent reviewer"
+    },
+    {
+      "name": "observation-proof.cjs",
+      "sha256": "d9d28700f028563f9987556e08a9c09e88d38f5da1784b452d905979cabf4607",
+      "same": true,
+      "reviewed": true,
+      "executionAttribution": "author receipt; not rerun by independent reviewer"
+    },
+    {
+      "name": "comment-delta.cjs",
+      "sha256": "432012198027694052c1c1c4cedf589ede4f42078c001c1de887b23c19433035",
+      "same": true,
+      "reviewed": true,
+      "executionAttribution": "author receipt; not rerun by independent reviewer"
+    }
+  ],
+  "actualAllFormsReview": {
+    "scannedTypedAndJavaScriptFiles": 1752,
+    "authorPriorInventoryFiles": 1752,
+    "remainingRuntimeLeafImports": [
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+        "form": "import",
+        "specifier": "./player_projection",
+        "endpoint": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+        "typeOnly": false,
+        "bindings": [
+          {
+            "imported": "copyNobleKnowledge",
+            "local": "copyNobleKnowledge",
+            "typeOnly": false
+          },
+          {
+            "imported": "copySecretBodyKnowledge",
+            "local": "copySecretBodyKnowledge",
+            "typeOnly": false
+          },
+          {
+            "imported": "projectNobleKnowledge",
+            "local": "projectNobleKnowledge",
+            "typeOnly": false
+          },
+          {
+            "imported": "projectSecretBodyKnowledge",
+            "local": "projectSecretBodyKnowledge",
+            "typeOnly": false
+          }
+        ],
+        "namespace": false,
+        "star": false,
+        "default": false
+      },
+      {
+        "path": "backend/src/game/observation/player-observation-projector.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/mist_raven/player_projection",
+        "endpoint": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+        "typeOnly": false,
+        "bindings": [
+          {
+            "imported": "projectAlchemist",
+            "local": "projectAlchemist",
+            "typeOnly": false
+          },
+          {
+            "imported": "projectRaven",
+            "local": "projectRaven",
+            "typeOnly": false
+          }
+        ],
+        "namespace": false,
+        "star": false,
+        "default": false
+      },
+      {
+        "path": "backend/src/game/observation/player-prompt-directives.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/mist_raven/player_projection",
+        "endpoint": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+        "typeOnly": false,
+        "bindings": [
+          {
+            "imported": "projectAlchemist",
+            "local": "projectAlchemist",
+            "typeOnly": false
+          },
+          {
+            "imported": "projectRaven",
+            "local": "projectRaven",
+            "typeOnly": false
+          }
+        ],
+        "namespace": false,
+        "star": false,
+        "default": false
+      },
+      {
+        "path": "backend/tests/unit/presentation/mist-raven-projection.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/mist_raven/player_projection",
+        "endpoint": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+        "typeOnly": false,
+        "bindings": [
+          {
+            "imported": "projectAlchemist",
+            "local": "projectAlchemist",
+            "typeOnly": false
+          },
+          {
+            "imported": "projectRaven",
+            "local": "projectRaven",
+            "typeOnly": false
+          }
+        ],
+        "namespace": false,
+        "star": false,
+        "default": false
+      }
+    ],
+    "negativeCompileOnlyImports": 7,
+    "importEqualsNamespaceStarDefaultDynamicOrRetiredProductionTypeRoutes": [],
+    "scanIsSourceInventoryNotGate": true
+  },
+  "semanticReview": [
+    "Five moved declarations retain original Readonly outer shapes, nested mutable contract/status objects, mutable Mist arrays and nullable history targets. Two known Knowledge exports were already contract-owned; they are retired forwarding exports, not two new DTOs.",
+    "Mist policy references only existing BoardConfig literal type; original backend MIST_RAVEN_POLICY runtime declaration and state readers remain unchanged.",
+    "Actual runtime value import ordering and aliases are unchanged: Noble Phase/copy/projection and Mist Role/util/playerDataField/state functions retain their original endpoints; only erased type import modes/routes change.",
+    "awaitingNightReport still uses public phase plus known exile resource for SecretBody and public phase for Noble. Known data never substitutes for live resource, lease, payment or permission.",
+    "Projection cloning, Proxy checks, descriptors, original getter/callee and map/spread evaluation, frozen notification recipients, requireOwner/currentness, all original payment/commit/failure prefixes remain full retained source.",
+    "Boundary compiler unit uses seven retired names in a tuple, three meaningful readonly errors, sixteen shape/policy/bidirectional positives and explicit nested/Mist mutation positives; it is not executed as a runtime unit.",
+    "Chinese headers explain knowledge versus authority and partial failures accurately. Browser fact contracts do not import Node mechanism/runtime values; existing pure fact reader ordering remains untouched."
+  ],
+  "authorVerificationAttribution": {
+    "wholeRuntimeOutputs": 14,
+    "sixOriginalProgramsOutputs": 12,
+    "sharedObservationOutputs": 2,
+    "types": {
+      "roots": 8,
+      "session": 87474,
+      "terminalChunk": "906d1a",
+      "actualExitCode": 0
+    },
+    "comments": {
+      "files": 8,
+      "documentationPaths": 430,
+      "diagnostics": 0
+    },
+    "notRerun": true
+  },
+  "docReview": {
+    "path": "docs/refactor/family-player-dto-contract.md",
+    "sha256": "9b8befe3eb84cc7a26b8f8693985f1628e19902f88eddf9f0032039d612fb47d",
+    "evidencePath": "docs/refactor/generated/family-player-dto-evidence.json",
+    "evidenceSHA256": "948978f020d64304d1935b9dbf9319d097b58f018d980a92f3ad33dc47f40105",
+    "claimsMatchReviewedBoundaries": true
+  },
+  "limits": [
+    "No type checker, runtime/test suite, compiler emit, or architecture gate was executed in this independent review.",
+    "Author fourteen-output/type/comment receipts were checked for provenance and source correspondence; terminal receipt is attributed to author, not reconstructed from empty log.",
+    "Source/type API and fingerprint change are explicit; no historical Tape exemption or full initialization/transitive graph equality is claimed.",
+    "Parallel metadata/package changes use actual b1534 baseline; concurrent RedMoon and recorder source are excluded. Runtime projection ownership remains original mechanism, so O2 is partial."
+  ]
+}

@@ -1,24 +1,18 @@
+/**
+ * 负责从炼金魔女／狼鸦之爪的原角色数据读取既有政策校验后的独立玩家视图。
+ * 输入为原角色组件；输出复制历史、目标数组与已知队友，纯 DTO 类型由公共事实契约拥有。
+ * 私有库存与知识更新仍归机制，投影不携带 Frame、原生命或租约，不付款、安装资源或授权。
+ * Proxy 拒绝和字段描述符读取在原位置执行；本模块不扩大原状态 reader 的接受集合。
+ */
 import { Role } from "../../../../core/domain/identity";
 import { types } from "node:util";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { playerDataField } from "../player_state";
 import { MIST_RAVEN_POLICY, readAlchemistState, readRavenState } from "./state";
-
-/** Independent owner DTOs never contain the night frame, original bodies, sources or authorization. */
-export interface PlayerAlchemistState {
-  policy: typeof MIST_RAVEN_POLICY;
-  mistRemaining: number;
-  healRemaining: number;
-  mistHistory: Array<{ day: number; targetIds: number[] | null }>;
-  healHistory: Array<{ day: number; targetId: number | null }>;
-}
-export interface PlayerRavenState {
-  policy: typeof MIST_RAVEN_POLICY;
-  awakened: boolean;
-  extraRemaining: number;
-  knownTeammateIds: number[];
-  extraHistory: Array<{ day: number; targetId: number | null }>;
-}
+import type {
+  PlayerAlchemistState,
+  PlayerRavenState,
+} from "@ai-werewolf-arena/game-contract/facts/mist-raven";
 export function projectAlchemist(
   role: RoleComponent | undefined,
 ): PlayerAlchemistState | undefined {
