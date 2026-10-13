@@ -1,0 +1,216 @@
+{
+  "baseline": "d5a71042195a6570d975cd04f948ee944477e055",
+  "scope": [
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "sha256": "26fbfa93fea97553237604c554de881df0544ca670bd885c7c3de33d384e84ea"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+      "sha256": "50e8fb4d97ec7af33a4a8824af6ad3661c8ab8781c031b1e98c1b9491da50214"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+      "sha256": "5b13a05f68242c60d535b41eed05807ca02006fe053f427712f27f2de73b9d7f"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/pair-slot-contract.test.ts",
+      "sha256": "a0446f9b592386304c70c822c8e7b5beed85ee9f931a54a4b9ddc2afc39bdaa7"
+    }
+  ],
+  "ownership": "Pair strict state contract and its actual authority/install/write/checkpoint consumers; no second store",
+  "receipts": {
+    "runtime": {
+      "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/features/fragrant-pair-seer/pair-slot-contract.test.ts tests/unit/features/fragrant-pair-seer/pair-state-slot.test.ts",
+      "actualExitCode": 0,
+      "passes": 9,
+      "fails": 0,
+      "assertions": 63,
+      "newCases": 5,
+      "oldCases": 4,
+      "log": "/tmp/awa-c17-pair-slot-contract-local-tests-first.log"
+    },
+    "types": {
+      "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc -p /tmp/awa-c17-pair-slot-contract-focused.tsconfig.json",
+      "execSession": 2966,
+      "actualTerminalExitCode": 0,
+      "log": "/tmp/awa-c17-pair-slot-contract-types-first.log",
+      "scope": "3 source entries + new contract test + original concrete slot tests, transitive imports checked by original strict backend config"
+    },
+    "staticProof": {
+      "actualExitCode": 0,
+      "log": "/tmp/awa-c17-pair-slot-contract-proof-final.log",
+      "artifact": "/tmp/awa-c17-pair-slot-contract-source-proof.json",
+      "actualGitSources": 3,
+      "runtimeInversePrograms": {
+        "ESNext": 3,
+        "CommonJS": 3
+      },
+      "moduleEdgesUnchanged": 3,
+      "headerFailures": 0
+    },
+    "gitDiffCheck": {
+      "actualExitCode": 0,
+      "scope": "owned 4 only"
+    }
+  },
+  "behavior": "No new schema or accepted-input policy: original Pair strict reader/factory, original trusted snapshot JSON codec and descriptor/currentness/payment prefix. Alias group and data check delegated at original separate positions.",
+  "limits": [
+    "This delivers only Pair family state contract. Remaining ordinary payload/custom profile state schemas still require later complete work.",
+    "Schema2 fields and recording/verifier code unchanged. Trusted internal checkpoint codec is not an untrusted archive permission decoder.",
+    "No full game, broad gate, model, network, or independent verifier use."
+  ],
+  "status": "independently_reviewed_ready_to_commit",
+  "finalScope": {
+    "baseline": "d5a71042195a6570d975cd04f948ee944477e055",
+    "counts": {
+      "source": 3,
+      "newTests": 1
+    },
+    "files": [
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+        "sha256": "26fbfa93fea97553237604c554de881df0544ca670bd885c7c3de33d384e84ea"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+        "sha256": "50e8fb4d97ec7af33a4a8824af6ad3661c8ab8781c031b1e98c1b9491da50214"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+        "sha256": "5b13a05f68242c60d535b41eed05807ca02006fe053f427712f27f2de73b9d7f"
+      },
+      {
+        "path": "backend/tests/unit/features/fragrant-pair-seer/pair-slot-contract.test.ts",
+        "sha256": "a0446f9b592386304c70c822c8e7b5beed85ee9f931a54a4b9ddc2afc39bdaa7"
+      }
+    ]
+  },
+  "independentReview": {
+    "passed": true,
+    "findings": [],
+    "rows": [
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+        "sha256": "26fbfa93fea97553237604c554de881df0544ca670bd885c7c3de33d384e84ea",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+        "sha256": "50e8fb4d97ec7af33a4a8824af6ad3661c8ab8781c031b1e98c1b9491da50214",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+        "sha256": "5b13a05f68242c60d535b41eed05807ca02006fe053f427712f27f2de73b9d7f",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/tests/unit/features/fragrant-pair-seer/pair-slot-contract.test.ts",
+        "sha256": "a0446f9b592386304c70c822c8e7b5beed85ee9f931a54a4b9ddc2afc39bdaa7",
+        "shaMatch": true
+      }
+    ],
+    "originRows": [
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+        "actualGitSame": true,
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+        "actualGitSame": true,
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+        "actualGitSame": true,
+        "shaMatch": true
+      }
+    ],
+    "checks": {
+      "sameOriginalFactorySchemaRefs": true,
+      "oneActualAllowedWriter": true,
+      "sixAliasesSameOrder": true,
+      "fragrantThenPairCommittedData": true,
+      "dataCurrentExactOldRule": true,
+      "originalWriteFailurePrefix": true,
+      "authorityLeaseAfterOriginalAppend": true,
+      "lhsBeforeInstall": true,
+      "decoderActualCalleeBeforeLazyJson": true,
+      "noDecoderNewSchemaRead": true,
+      "twoActualSnapshotReaders": true,
+      "failedSnapshotAcceptancePreserved": true,
+      "noSecondSlotStore": true,
+      "nodeSchemaBodyUnchanged": true
+    },
+    "unchangedDataFunctions": [
+      {
+        "name": "exact",
+        "bodyRawSame": true
+      },
+      {
+        "name": "pair",
+        "bodyRawSame": true
+      },
+      {
+        "name": "normalizePair",
+        "bodyRawSame": true
+      },
+      {
+        "name": "freshPairSeerState",
+        "bodyRawSame": true
+      },
+      {
+        "name": "readPairSeerState",
+        "bodyRawSame": true
+      },
+      {
+        "name": "appendPairCheck",
+        "bodyRawSame": true
+      },
+      {
+        "name": "freshFragrantState",
+        "bodyRawSame": true
+      },
+      {
+        "name": "readFragrantState",
+        "bodyRawSame": true
+      },
+      {
+        "name": "valid",
+        "bodyRawSame": true
+      },
+      {
+        "name": "commitKnownWolf",
+        "bodyRawSame": true
+      },
+      {
+        "name": "expireFragrantAtNightOpen",
+        "bodyRawSame": true
+      },
+      {
+        "name": "chooseFragrantPair",
+        "bodyRawSame": true
+      },
+      {
+        "name": "triggerFragrantPair",
+        "bodyRawSame": true
+      }
+    ],
+    "inputReadReview": [
+      "Original schema refs tested against history accessor and extra own key, getter remains zero-read Node rejection",
+      "Actual fixed12 roster source has2wolf/6witch and5AwakenedSeer; literal pair2,6 containsWerewolf true; same native state ref and detached CP verified",
+      "Alias/history mutation full check rejects while failed mode keeps original committed JSON, no permission gained",
+      "JSON.parse descriptor probe restores exact old descriptor in finally; expectparse→field; encode old accessor accepted without new schema",
+      "Original slot JSON setter throwing after state.write keeps new history and unchanged uses/abilityJson; no operation rollback"
+    ],
+    "schemaCodecBoundary": "Concrete Pair family factory/schema/allowedWriter/committed-data+alias/JSON checkpoint contract only. Ordinary private extensions, general55role types and independent verifiers unchanged; decoder handles originally trusted committed JSON and performs no new schema admission.",
+    "limits": "Actual SHA/Git/finite source AST read only; no TS compiler/transpilation/fullinverse/tests/runtime/cold imports/discovery repeated. Author9/63 and terminal2966 receipts reused only."
+  },
+  "rootReview": {
+    "findings": [],
+    "actualSource": "contract/data/create/same-reference alias/uniqueappend writer/two real snapshots and authority six-alias/schema order实际source已读；new5cases手写oracle/readers合法，原JSON编码与借口不改",
+    "provenance": "2966是实施者actualclosed0，非Root重运行"
+  }
+}

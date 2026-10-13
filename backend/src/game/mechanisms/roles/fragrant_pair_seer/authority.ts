@@ -1,10 +1,9 @@
 /**
- * Owns Fragrant's original roster, controller leases, paid relation and publications.
- * Inputs are original World bodies and scoped night/death choices; outputs are
- * current permissions, committed receipts and compatible authority snapshots.
- * Pair payload/audit writes use the captured typed slot owner after the original
- * checks; lease commitment and later request settlement retain their old order.
- * Closed or aborted nights never redraw knowledge or refund a paid relation.
+ * 负责 Fragrant 原阵容、控制器租约、已付款关系及事件发布的唯一所有者权限。
+ * 输入为 World 原体和受限夜间／死亡选择；输出为当前许可、提交收据及兼容检查点。
+ * Pair 契约仅在原校验、写入及 JSON 读取位置消费；资源付款、租约提交及请求结算保留原序。
+ * 原生命／别名／已提交数据失效检查仍在此控制；完整检查点与失败检查点各保原拒绝范围。
+ * 已关闭或中止的夜间不重抽知识、不退还已付关系，也不将运行句柄编码进归档。
  */
 import type { PairSeerState, Pair } from "@ai-werewolf-arena/game-contract";
 
@@ -18,7 +17,7 @@ import { Camp, Role, Phase } from "../../../../core/domain/identity";
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
 import { abilityStatus, type NightAbilityReadView } from "../abilities";
 import { plainJson, write } from "./owned-state-data";
-import { commitPairStateSlot, type PairStateSlot } from "./pair-state-slot";
+import { PAIR_STATE_SLOT_CONTRACT, type PairStateSlot } from "./pair-state-slot";
 import {
   capturePairTarget,
   pairTargetCurrent,
@@ -28,7 +27,6 @@ import {
 } from "./target_scope";
 import {
   readFragrantState,
-  readPairSeerState,
   expireFragrantAtNightOpen,
   commitKnownWolf,
   chooseFragrantPair,
@@ -201,14 +199,9 @@ function requireOwner(world: World): Owner {
     world.entityIds().length !== o.players.size ||
     [...o.players.values()].some((p) => !original(world, p)) ||
     own(o.phantom.privateState, "fragrant") !== o.fragrant ||
-    own(o.seer.privateState, "pairSeer") !== o.pairState ||
-    own(o.seer.privateState, "abilities") !== o.abilities ||
-    plainJson(o.pairAbility) !== o.pairAbilityJson ||
-    o.pairAbility.source !== o.pairSource ||
-    own(o.abilities, o.pairAbility.id) !== o.pairAbility ||
-    o.pairAbility.state !== o.pairState ||
+    !PAIR_STATE_SLOT_CONTRACT.invalidations.aliasesCurrent(o, own) ||
     JSON.stringify(readFragrantState(o.fragrant)) !== o.fragrantJson ||
-    JSON.stringify(readPairSeerState(o.pairState)) !== o.pairJson
+    !PAIR_STATE_SLOT_CONTRACT.invalidations.dataCurrent(o)
   )
     throw Error("fragrant_owner_revoked");
   return o;
@@ -264,7 +257,7 @@ export function installFragrantPairAuthority(
     fragrant = phantom && own(phantom.privateState, "fragrant"),
     pairState = seer && own(seer.privateState, "pairSeer"),
     f = readFragrantState(fragrant),
-    s = readPairSeerState(pairState),
+    s = PAIR_STATE_SLOT_CONTRACT.schema(pairState),
     rawPairAbility = seer && own(own(seer.privateState, "abilities"), "native:pair_check"),
     pairAbilityJson = plainJson(rawPairAbility),
     pairAbility = rawPairAbility as NightAbilityReadView<"pair_check"> | undefined,
@@ -343,7 +336,7 @@ export function installFragrantPairAuthority(
     abilities: own(seer.privateState, "abilities"),
     pairAbilityJson,
     fragrantJson: JSON.stringify(f),
-    pairJson: JSON.stringify(s),
+    pairJson: PAIR_STATE_SLOT_CONTRACT.checkpoint.encode(s),
     knowledge: freshFragrantKnowledge(),
     active: null,
     nights: new Map(),
@@ -548,7 +541,7 @@ export function openPairCheckChoice(world: World, day: number, requestCurrent?: 
       if (!c.isCurrent()) throw Error("fragrant_pair_check_revoked");
       if (abilityStatus(c.o.pairAbility, day) !== "active")
         throw Error("fragrant_pair_check_revoked");
-      commitPairStateSlot(c.o, next, day);
+      PAIR_STATE_SLOT_CONTRACT.allowedWrites.appendCheck(c.o, next, day);
       c.lease.committed = true;
       return Object.freeze({
         actorId: c.o.seer.target.id,
@@ -833,14 +826,14 @@ export function publishFragrantDeathWave(
   o.knowledge = knowFragrantPublishedDeaths(o.knowledge, receipt.day, ids);
 }
 export function fragrantAuthoritySnapshot(world: World, complete = true) {
-  // Failed checkpoints retain the original owner, even after a replacement revoked it.
+  // 失败检查点保留原 owner，即使槽替换已使完整检查点权限失效。
   const o = complete ? requireOwner(world) : owners.get(world);
   if (!o) throw Error("fragrant_owner_missing");
   return {
     phantomId: o.phantom.target.id,
     seerId: o.seer.target.id,
     fragrant: JSON.parse(o.fragrantJson) as FragrantState,
-    pairSeer: JSON.parse(o.pairJson) as PairSeerState,
+    pairSeer: PAIR_STATE_SLOT_CONTRACT.checkpoint.decode(() => o.pairJson),
     known: readFragrantKnowledge(o.knowledge)!,
     nights: [...o.nights.values()].map((n) => ({
       day: n.day,
@@ -852,7 +845,7 @@ export function fragrantAuthoritySnapshot(world: World, complete = true) {
   };
 }
 
-/** The two owner-managed private stores are reconstructed from committed receipts. */
+/** 两个 owner 管理的私有槽仅从已提交收据还原，保留原归档字段及 JSON 拒绝位置。 */
 export function fragrantCheckpointPrivateState(world: World, id: number, complete: boolean) {
   const o = owners.get(world);
   if (!o || (id !== o.phantom.target.id && id !== o.seer.target.id)) return undefined;
@@ -861,6 +854,6 @@ export function fragrantCheckpointPrivateState(world: World, id: number, complet
     ? { fragrant: JSON.parse(o.fragrantJson) as FragrantState }
     : {
         abilities: { "native:pair_check": JSON.parse(o.pairAbilityJson) },
-        pairSeer: JSON.parse(o.pairJson) as PairSeerState,
+        pairSeer: PAIR_STATE_SLOT_CONTRACT.checkpoint.decode(() => o.pairJson),
       };
 }

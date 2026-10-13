@@ -1,9 +1,9 @@
 /**
- * Owns Fragrant pair/state strict reads and pure accepted-choice transformations.
- * Inputs are unknown data or declared pair/history data; outputs are copied
- * checked state and newly selected rows with the original rejection/limit policy.
- * Pair payload declarations come from the neutral contract; roster authority,
- * live alias installation and resource/receipt writes remain separate owners.
+ * 负责双生／成对查验的原严格数据 schema、初始状态及接受选择后的纯数据变换。
+ * 输入为未知数据或声明的 pair/history；输出为脱离副本与下一状态，拒绝政策、字段、深度和限制不变。
+ * 成对 payload 形状来自中立 contract，实际 slot 契约引用这些唯一 factory/schema；
+ * 本数据 owner 不写 live 状态、消费资源、控制 roster／租约或解释 checkpoint 为行动资格。
+ * 未经验证的普通角色私有扩展键不经过此 Pair 专用 schema，也不因本族收口改变接受语义。
  */
 
 import type { Pair, PairSeerState } from "@ai-werewolf-arena/game-contract";
@@ -49,6 +49,7 @@ export function normalizePair(v: unknown): Pair {
 export function freshPairSeerState(): PairSeerState {
   return { policy: FRAGRANT_PAIR_POLICY, history: [] };
 }
+/** Pair schema 保持原 Node 安全副本与精确形状，不执行输入字段访问器或 Proxy trap。 */
 export function readPairSeerState(value: unknown): PairSeerState | null {
   try {
     const v = snapshotPlainData(value, new Set(), 0, 65536);
