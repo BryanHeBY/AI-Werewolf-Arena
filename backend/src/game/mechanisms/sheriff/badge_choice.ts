@@ -1,8 +1,8 @@
 /**
- * Resolves the trusted death badge-handoff request and its selected successor. Inputs are the
- * dead sheriff, badge permission and provider/gateway; outputs are the original transfer or
- * destruction result. The request does not change badge stock until its owner commits the
- * choice.
+ * 负责死亡警长的警徽选择请求与回复复核。输入为原警徽、死者生命、阶段／日期、当前性回调及玩家／工具入口；
+ * 输出为原转移或销毁结果，警徽写入仍由警徽所有者提交。请求选择和预检不提前改变警徽。
+ * 死亡许可只覆盖本次选择；持有者与许可仍当前时，已选目标生命失效按原规则改为销毁。
+ * 玩家异常不被伪装成一次有效选择。
  */
 import { aliveLifeVersion, type AliveComponent } from "../../../core/domain/components/alive";
 import type { BadgeComponent } from "../../../core/domain/components/badge";
@@ -19,7 +19,7 @@ import {
   transferOrDestroySheriffBadge,
 } from "./badge";
 
-/** A dead badge holder acts only inside an engine-owned, version-bound transient permit. */
+/** 持徽死者只在引擎打开、绑定原生命版本的临时许可内选择；这不是复活后的新生命权限。 */
 export async function resolveSheriffBadge(
   world: World,
   fromId: EntityId,
@@ -42,6 +42,7 @@ export async function resolveSheriffBadge(
   const role = world.getComponent(fromId, COMPONENT.Role);
   const version = life && aliveLifeVersion(life);
   const weight = badge.voteWeight;
+  // 警徽原体、政策／权重、角色与死亡生命必须仍相同；业务阶段当前性由传入回调核对。
   const current = () =>
     isCurrent() &&
     world.getComponent(fromId, COMPONENT.Badge) === badge &&
@@ -61,6 +62,7 @@ export async function resolveSheriffBadge(
     commitSheriffBadgeChoice(world, fromId, reason, events, null);
     return;
   }
+  // 固定本次候选的原生命，不能让等待期间复活的同编号替代原接收人。
   const scopes = new Map(candidates.map((id) => [id, captureNightLife(world, id)]));
   const permit = world.openDeathAction(fromId, "choose_badge_successor", phase, day, current);
   const authorized = () =>
@@ -95,6 +97,7 @@ export async function resolveSheriffBadge(
       if (!authorized()) return;
       if (checked.ok && checked.sanitizedCall) target = checked.sanitizedCall.args.target_id;
     }
+    // 缺失／无效选择或已失效目标保留原 null 销毁政策；玩家入口抛错则直接进入 finally，不补提交。
     if (target !== null) {
       const scope = scopes.get(target);
       if (

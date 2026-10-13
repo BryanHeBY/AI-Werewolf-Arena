@@ -17,6 +17,7 @@ import {
 import type { GameEvent } from "@ai-werewolf-arena/game-contract/events";
 import type { NightPoisonRoute } from "../../core/domain/night_effects";
 
+/** 调用方先前捕获的原生命与版本，供提交证据关联；它本身不授予死亡行动。 */
 export interface DeathOriginalLife {
   readonly life: Readonly<AliveComponent>;
   readonly version: number | undefined;
@@ -137,7 +138,10 @@ export interface DeathPublication {
   readonly ids: readonly EntityId[];
 }
 
-/** 只在整次命令正常返回时存在；逐枪命令各有凭证，后续失败不撤销之前的死亡。 */
+/**
+ * 保存调用方传入的提交条目及其发布关联；生产死亡命令正常返回才交出本次凭证，空初始波可用空条目。
+ * 凭证不验证枪付款、授予行动或保证整条链成功；后续异常不能据此撤销先前已提交的死亡。
+ */
 export class DeathCommitReceipt {
   private readonly publications: DeathPublication[] = [];
   constructor(
@@ -155,7 +159,10 @@ export class DeathCommitReceipt {
     return this.committed(id)?.poisonRoutes ?? [];
   }
 
-  /** 关联原事件而不读其 payload／Symbol／descriptor，兼容冻结事件和旧 Proxy。 */
+  /**
+   * 关联原事件而不读其载荷、Symbol 或属性描述符，兼容冻结事件和旧 Proxy。
+   * 同一事件对象只保留首次传入的编号关联，重复调用不合并名单或再次发布事件。
+   */
   recordPublication(event: GameEvent, ids: readonly EntityId[]): void {
     if (this.publications.some((publication) => publication.event === event)) return;
     this.publications.push(Object.freeze({ event, ids: Object.freeze([...ids]) }));
@@ -166,6 +173,7 @@ export class DeathCommitReceipt {
   }
 }
 
+/** 单位／历史凭证数组复制并冻结；名单、原因和生命映射仍引用原输入，不冻结调用方的可变集合。 */
 export function planDeathWave(
   ids: readonly EntityId[],
   sources: Readonly<Record<EntityId, readonly DeathCause[]>>,

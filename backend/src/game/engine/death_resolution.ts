@@ -160,6 +160,11 @@ export class DeathResolution {
     private readonly config?: ReadonlyBoardConfig,
   ) {}
 
+  /**
+   * 初始波完成标死和必要发布后，再收遗言、交警徽、逐角色处理死亡动作；追加目标先同步标死，
+   * 下一波再处理其死后动作。来源昼夜与动作执行阶段分别保存，不能用当前阶段覆盖夜间来源。
+   * 当前性撤销可提前返回，异常保留已提交前缀；是否继续阶段或封盘仍由 PhaseManager 决定。
+   */
   async resolve(
     deadIds: EntityId[],
     sources: DeathSources,
@@ -286,6 +291,7 @@ export class DeathResolution {
     const gunsToExpire: ReturnType<typeof firstDeathGuns> = [];
 
     try {
+      // 空初始波仍执行原发布回调；空条目凭证只关联这次发布，不证明枪付款或整个死亡链完成。
       if (pending.length === 0 && nightEffects?.onInitialWaveCommitted && isCurrent()) {
         const receipt = new DeathCommitReceipt(
           planDeathWave(
@@ -305,6 +311,7 @@ export class DeathResolution {
       while (pending.length > 0) {
         if (!isCurrent()) return;
         const deathPhase = firstBatch ? phase : this.state.phase;
+        // 初始波整批标死；追加目标已在前一角色回调标死，再访仍执行原收尾，但不重复首次生命事实。
         const receipt = this.deathCommitter.markPlayersDead(
           pending,
           true,
@@ -336,6 +343,7 @@ export class DeathResolution {
             originPhases,
             firstBatch,
           );
+        // 此处生命及账本已提交；发布回调抛错不撤销死亡，凭证只把原事件与提交条目关联。
         if (firstBatch && nightEffects?.onInitialWaveCommitted) {
           const event = nightEffects.onInitialWaveCommitted(pending, allSources, receipt);
           receipt.recordPublication(event, pending);
@@ -357,6 +365,7 @@ export class DeathResolution {
           receipt.recordPublication(event, [fragrantInitial.addedTargetId]);
           this.fragrantDeathWave.publishVisibleWave(fragrantInitial, event);
         }
+        // 整波角色扩展先看到已提交死亡，随后记录梦链，再按政策授予并收集遗言。
         this.eventRegistry.onCommittedDeathWave(
           this.world,
           pending,
@@ -366,6 +375,7 @@ export class DeathResolution {
           this.events,
         );
         nightEffects?.dreams?.recordDeaths(pending, this.events);
+        // 基础政策只考察初始波；网易具名政策还考察追加波，逐人昼夜与死因资格仍由遗言机制核对。
         if (
           (firstBatch || lastWordsPolicy === "netease_2017_day_and_first_night_v1") &&
           lastWordsCurrent()
@@ -458,6 +468,7 @@ export class DeathResolution {
                   nightOrigin.has(actorId) && !(firstBatch && initialPhases[actorId] === Phase.Day),
                 ),
               this.events,
+              // 每个成功钩子提案同步进入这里；后面的钩子可见已标死目标，失败不丢弃先前提交。
               (result) => {
                 if (!isCurrent()) return;
                 const proposed = [...result.extraDeaths],
@@ -469,6 +480,7 @@ export class DeathResolution {
                 const shots = new Map(
                   (result.pendingShots ?? []).map((shot) => [shot.targetScope.id, shot]),
                 );
+                // 旧目标或已撤权的枪只移除自己的 Shot 原因；其它独立原因仍可进入实际死亡提交。
                 for (const [id, shot] of shots) {
                   if (livingNightLife(this.world, shot.targetScope) && (shot.isCurrent?.() ?? true))
                     continue;
@@ -639,6 +651,7 @@ export class DeathResolution {
                       animalDeathWave.recordAdditionalDeath(id, allSources, sourcePhase);
                     newlyMarked = true;
                     marked.push(id);
+                    // 枪资源由角色钩子消费；这里在目标实际标死后发布命中，事件关联不再次付款。
                     if (shot) {
                       if (shot.event.type === "hunter_shot") nativeHunterShotTargets.add(id);
                       this.events.push(shot.event);
@@ -723,6 +736,7 @@ export class DeathResolution {
           }
         }
 
+        // Set 保留追加目标首次加入顺序；再访沿用真实提案单位及成功凭证，不重新制造波次来源。
         pending = [...next];
         pendingUnits = nextUnits;
         previousCommits = nextCommits;
@@ -735,6 +749,7 @@ export class DeathResolution {
     }
   }
 
+  /** 收集枪的选择而非消费弹药或杀死目标；窗口绑定原生命，回复和校验后仍须复核当前性。 */
   private async collectDeathShot(
     actorId: EntityId,
     deathPhase: Phase,
@@ -800,6 +815,7 @@ export class DeathResolution {
     actions.permits.push(permit);
     const requests = new GameActionRequestFactory(this.world, this.events, actions.day);
     for (let attempt = 1; attempt <= 3; attempt++) {
+      // 每次重试重新捕获候选生命；同一编号复活或替换组件后，上一轮回复不能命中新生命。
       const targets = new Map(
         this.world.getAliveEntityIds().map((id) => [id, captureNightLife(this.world, id)]),
       );
@@ -877,6 +893,7 @@ export class DeathResolution {
         continue;
       }
       const targetId = validated.sanitizedCall.args.target_id;
+      // 空枪也只是已授权选择，真正消耗留给随后处理该选择的角色钩子。
       if (targetId === null) return { kind: "pass", deathActionId: permit.id };
       const targetScope = targets.get(targetId);
       if (!targetScope || !livingNightLife(this.world, targetScope)) {
@@ -901,6 +918,7 @@ export class DeathResolution {
     return { kind: "invalid" };
   }
 
+  /** 授予事实不替代发言窗口；每位死者等待回复后复核阶段、日期、终局与原生命许可，再写发言。 */
   private async collectLastWords(
     deadIds: EntityId[],
     phase: Phase,

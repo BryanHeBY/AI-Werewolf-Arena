@@ -24,6 +24,7 @@ export interface LastWordsGrantContext {
 
 /** 遗言机制：判定是否可遗言并写入遗言授权事件。 */
 export class LastWordsMechanism {
+  /** 这里只判来源阶段、日期与死因；基础政策是否初始波由调用方筛选，不凭资格布尔值直接开放发言。 */
   shouldGrantLastWords(
     deathPhase: Phase,
     day: number,
@@ -31,6 +32,7 @@ export class LastWordsMechanism {
     policy: LastWordsPolicy = "awa_initial_wave_v1",
     context?: LastWordsGrantContext,
   ): boolean {
+    // 具名政策要求全部原因已知，再允许白天／投票及首夜夜死；不借当前执行阶段猜测死亡来源。
     if (policy === "netease_2017_day_and_first_night_v1") {
       if (!sources.length || sources.some((source) => !Object.values(DeathCause).includes(source)))
         return false;
@@ -69,6 +71,7 @@ export class LastWordsMechanism {
     );
   }
 
+  /** 逐人再次核死因政策与实际死亡，只写授予事实；等待玩家、打开生命许可和记录发言归结算器。 */
   recordLastWordsGranted(
     world: World,
     deadIds: EntityId[],

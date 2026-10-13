@@ -42,6 +42,7 @@ import { refreshGargoyleInheritance } from "../mechanisms/roles/gargoyle/ports";
 import { refreshMechanicalInheritance } from "../mechanisms/roles/mechanical_wolf/ports";
 import { refreshAwakenedInheritance } from "../mechanisms/roles/awakened_hidden_wolf/ports";
 
+/** 访问器由结算器传入；每次读取原 World／事件／状态，不把 readonly 声明当作运行时写权限隔离。 */
 interface DeathCommitContext {
   readonly world: World;
   readonly events: GameEvent[];
@@ -90,7 +91,7 @@ export class DeathCommitter {
       if (!alive) {
         continue;
       }
-      // 先记 Wild Child 的活跃生命死亡，再改 Alive；不能把首次判断移到修改之后。
+      // 先记野孩子的活跃生命死亡，再改 Alive；不能把首次判断移到修改之后。
       const firstSettlement = !this.isSettledLife(id);
       if (firstSettlement) recordWildChildDeathCommit(this.context.world, id);
       alive.alive = false;
@@ -168,6 +169,7 @@ export class DeathCommitter {
       gunsToExpire.push(...firstDeathGuns(this.context.world, id));
       expireLuckyAbilitiesOnDeath(this.context.world, id, this.context.events);
       // 事实、记录、枪列表和能力过期均成功之后才发布账本；任何早期异常不伪造完成。
+      // 此前已改 Alive 或写出部分事实也不回滚；账本缺项不表示该目标尚未产生任何副作用。
       let settled: { component: AliveComponent; version: number | undefined };
       this.settledLives.set(id, (settled = { component: alive, version: aliveLifeVersion(alive) }));
       // 凭证复用已写账本的原条目；此后失败仍不返回成功凭证，也不撤销此前死亡。
@@ -181,6 +183,7 @@ export class DeathCommitter {
       refreshMechanicalInheritance(this.context.world, this.context.state.day, this.context.events);
       refreshAwakenedInheritance(this.context.world, this.context.state.day, this.context.events);
     }
+    // 命令正常返回才交出本次条目；它不证明后续遗言／死亡钩子／枪付款或最终判胜已完成。
     return new DeathCommitReceipt(committedWave, Object.freeze(entries));
   }
 }

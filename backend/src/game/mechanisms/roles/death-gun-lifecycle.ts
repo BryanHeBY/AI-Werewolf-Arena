@@ -132,6 +132,7 @@ function emit(
   });
 }
 
+/** 安装原体证明后写入目标库存，再推进计数并发表授予事实；发布失败保留此前写入，不回滚安装。 */
 export function grantDeathGun(
   world: World,
   fromId: EntityId,
@@ -226,6 +227,7 @@ export function activeDeathGun(
     : undefined;
 }
 
+/** 捕获的是原枪／来源字段并延迟核资格，不创建行动许可；剩弹、武装与当前性仍在实际查询时复核。 */
 export function captureDeathGun(
   world: World,
   actorId: number,
@@ -286,7 +288,7 @@ export function firstDeathGuns(
     }));
 }
 
-// 回调结束后依原顺序 remaining→disabled→deathExpired；事实只用先前捕获字段，失败不回滚。
+// 外层收尾逐枪依次清剩弹、禁用、标永久到期；事实只用先前捕获字段，失败不回滚已写前缀。
 export function finishDeathGuns(
   rows: ReturnType<typeof firstDeathGuns>,
   events: GameEvent[],
@@ -372,7 +374,7 @@ export function transferDeathGun(
   return received;
 }
 
-// 枪目标和当前性由原调用者拥有；这里只提交原单字段消耗，不增加复检或事实。
+// 枪目标、生命与行动许可由调用者复核；这里只将原枪剩弹写为 0，不新增授权、复检或事实。
 export function consumeDeathGunShot(gun: DeathGunReadView): void {
   (gun as { remaining: 0 | 1 }).remaining = 0;
 }
