@@ -22,7 +22,7 @@ import {
   ReportThenSpeakToolLoopClient,
   DuplicateReportThenSpeakToolLoopClient,
   FallbackProvider,
-} from "../../../support/llm_provider_clients";
+} from "../../../support/drivers/agents/llm-clients";
 
 describe("LlmActionProvider audit", () => {
   test("should accept report_bug as optional tool and continue to final action", async () => {

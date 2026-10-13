@@ -22,7 +22,7 @@ import {
   ToolLoopClient,
   InvalidPotionThenNoneToolLoopClient,
   FallbackProvider,
-} from "../../support/llm_provider_clients";
+} from "../../support/drivers/agents/llm-clients";
 
 describe("LlmActionProvider prompts", () => {
   test("prompt no longer contains private-intel snapshot line", async () => {

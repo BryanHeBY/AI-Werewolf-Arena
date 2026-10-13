@@ -1,5 +1,12 @@
+/**
+ * Inert LLM test drivers deliver supplied action scripts through the existing client callbacks.
+ * Inputs are literal outputs, tool arguments and caller-owned message assertions;
+ * outputs retain original callback traces, captured messages and retry/error state.
+ * Fixed protocol assertions remain literal in these clients; callers own gameplay
+ * expectations and recording. No SDK request, network, model or game runs at import.
+ */
 import { expect } from "bun:test";
-import { PotionType, type ActionProvider, type ActionRequest, type ToolCall } from "../../src/core";
+import { PotionType, type ActionProvider, type ActionRequest, type ToolCall } from "../../../../src/core";
 
 export const REQUIRED_ACTION_CONSTRAINTS = {
   min_valid_actions: 1,

@@ -22,7 +22,7 @@ import {
   CaptureToolsClient,
   FailOnceThenSpeakToolLoopClient,
   FallbackProvider,
-} from "../../support/llm_provider_clients";
+} from "../../support/drivers/agents/llm-clients";
 
 describe("LlmActionProvider fallback", () => {
   test("falls back when llm returns disallowed tool", async () => {

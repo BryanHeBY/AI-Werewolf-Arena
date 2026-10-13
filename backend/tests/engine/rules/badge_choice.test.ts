@@ -1,6 +1,13 @@
+/**
+ * Badge-choice tests cover bounded permit/configuration checks and actual death-resolution handoff.
+ * Inputs are literal six-seat boards, holder/target changes and scripted or inert
+ * LLM/ACP responses; fixed successor, vote-weight, closure and error expectations
+ * are the oracle. Death-chain cases drive the original resolution owner; request
+ * cases do not turn preflight metadata into authority. No real model is contacted.
+ */
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
 import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
-import { NoActionToolLoopClient, ToolLoopClient } from "../../support/llm_provider_clients";
+import { NoActionToolLoopClient, ToolLoopClient } from "../../support/drivers/agents/llm-clients";
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {

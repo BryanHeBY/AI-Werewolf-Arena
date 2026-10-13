@@ -323,3 +323,5 @@
 - C16/C17角色容器读取边界：23生产、63既有测试支持、1新unit；readonly privateState保同对象，init专用写契约保自定义键和原容器替换；20实际owner仅原具体槽擦除cast。原86运行程序保真，两路独立实际Git/87SHA审查闭合、37控制字节同、133测试造数cast反移后完整typed/runtime同；3新/0/22，完整src/tests compiler14063实际0、有限87头0/新dep0/原债3。原诊断与25可选尾逗号proof红保留并说明语法等价范围，newunit locale annotation单文件补核。没有重复对局/发现/full；普通可写能力句柄、全角色schema/codec及核心容器最终opaque仍待。详见role-private-container.md及generated/role-private-container-evidence.json。
 
 - 角色容器台账登记：实际03cf07e8的原存储read/initowner新增current-only跟踪行；旧90row全部保持、freeze89 SHA未变，独立有限delta/source/committed-doc审查通过。现91rows910cells52partial858pending/0complete/N/A，只有新state为partial；全机制及各格验收不据此关闭。
+
+- C13 inertLLM测试驱动：原helper归support/drivers/agents/llm-clients，七实consumer同步、旧入口删除；8完整typed程序只8模块literal和2责任头反移同，73旧IDs/所有矩阵正文保持，独立actualGit/唯一模块/每instance跨retry状态审green。有限8entry在实际8bd788da source/support/packages候选snapshot编译81662实际exit0，与并行source隔离，没重复tests/discovery/game。原badge缺head红保留并准确补mixed职责；其余support/fixture/oracle与badge分层未据此关闭。

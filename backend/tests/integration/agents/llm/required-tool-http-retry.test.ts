@@ -12,7 +12,7 @@ import { Phase } from "../../../../src/core/domain/model";
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
 import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
 import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
-import { REQUIRED_ACTION_CONSTRAINTS, FallbackProvider } from "../../../support/llm_provider_clients";
+import { REQUIRED_ACTION_CONSTRAINTS, FallbackProvider } from "../../../support/drivers/agents/llm-clients";
 
 describe("LlmActionProvider protocol", () => {
 

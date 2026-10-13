@@ -16,7 +16,7 @@ import { SessionRecordManager } from "../../../../src/recording/session_recorder
 import path from "path";
 import { promises as fs } from "fs";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import { REQUIRED_ACTION_CONSTRAINTS, FallbackProvider } from "../../../support/llm_provider_clients";
+import { REQUIRED_ACTION_CONSTRAINTS, FallbackProvider } from "../../../support/drivers/agents/llm-clients";
 
 describe("LlmActionProvider protocol", () => {
 

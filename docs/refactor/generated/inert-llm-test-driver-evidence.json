@@ -1,0 +1,205 @@
+{
+  "sourceCommit": "8bd788dae967082d0d4b48e287fe0b8aa5866050",
+  "rows": [
+    {
+      "from": "backend/tests/support/llm_provider_clients.ts",
+      "to": "backend/tests/support/drivers/agents/llm-clients.ts",
+      "originalSha256": "de3ade7069e87767b8ba245b144616acf987446f6257437bbcbdad6e73dab100",
+      "candidateSha256": "c674d35a17ec786c6a0bd280ebc979b035e85d98edfbe905231feafc7cb33f3a",
+      "wholeProgramExactOutsideImportsAndHead": true,
+      "imports": 2
+    },
+    {
+      "from": "backend/tests/engine/rules/badge_choice.test.ts",
+      "to": "backend/tests/engine/rules/badge_choice.test.ts",
+      "originalSha256": "28f3d88b686eeab5f989b2b96d83ad81d1c262112a1700e7ec5bfd4eb8ff2aae",
+      "candidateSha256": "34e585b248966abe3493b8a826c000b011861fb770078f3cfddf51226c57f4be",
+      "wholeProgramExactOutsideImportsAndHead": true,
+      "imports": 17
+    },
+    {
+      "from": "backend/tests/unit/agents/llm/tool-reception.test.ts",
+      "to": "backend/tests/unit/agents/llm/tool-reception.test.ts",
+      "originalSha256": "f7be22704ebd7655f42e210235ad38d4a611fbf8b27958da4f19d7bb66926ebf",
+      "candidateSha256": "935b2494bb5708239d66005982ab26b134c04a2b3f03c64b4dd76facc55f3057",
+      "wholeProgramExactOutsideImportsAndHead": true,
+      "imports": 8
+    },
+    {
+      "from": "backend/tests/unit/agents/llm-action-provider-prompts.test.ts",
+      "to": "backend/tests/unit/agents/llm-action-provider-prompts.test.ts",
+      "originalSha256": "a14584352ab5dd7cb294e20d57628d8c8907f05df2c916a88e7dd32114a04122",
+      "candidateSha256": "c714659e934a16e9e287d2262ed5c7c03b22f4ef40eca1f6192395d852226a01",
+      "wholeProgramExactOutsideImportsAndHead": true,
+      "imports": 11
+    },
+    {
+      "from": "backend/tests/integration/filesystem/agents/turn-refusal-recording.test.ts",
+      "to": "backend/tests/integration/filesystem/agents/turn-refusal-recording.test.ts",
+      "originalSha256": "9536f9fe884f85210a0efb15308c69ad48671e4f911ec7d9454fd50fcf91b86f",
+      "candidateSha256": "410284b7e1d07a1bf1a4425bd776a178cf7845a996ae0a53d354f5456dc3d68c",
+      "wholeProgramExactOutsideImportsAndHead": true,
+      "imports": 14
+    },
+    {
+      "from": "backend/tests/unit/agents/llm-action-provider-fallback.test.ts",
+      "to": "backend/tests/unit/agents/llm-action-provider-fallback.test.ts",
+      "originalSha256": "a3ed96f3c224839cfbcd62110c293c91379ee394c34d4fe5264cc1aa7660d661",
+      "candidateSha256": "f94513f32735865082da8428a90280ac540e1ae7a05bfdaad9ed9df2ef3b5591",
+      "wholeProgramExactOutsideImportsAndHead": true,
+      "imports": 10
+    },
+    {
+      "from": "backend/tests/integration/agents/llm/required-tool-http-retry.test.ts",
+      "to": "backend/tests/integration/agents/llm/required-tool-http-retry.test.ts",
+      "originalSha256": "b6cd92414430d6a6d478b871cd424429db71270f92f6dadc88696df3a390fa0b",
+      "candidateSha256": "0099b31e92e209535cb07cfb0e5a2822df5d2bf5a9d339124ac59c109e020c9c",
+      "wholeProgramExactOutsideImportsAndHead": true,
+      "imports": 10
+    },
+    {
+      "from": "backend/tests/integration/agents/llm/bug-report-recording.test.ts",
+      "to": "backend/tests/integration/agents/llm/bug-report-recording.test.ts",
+      "originalSha256": "7492b41479a335a954952139816315126e5d123eb185120f32c59d51271fc451",
+      "candidateSha256": "462125750c964c0ef884bb4a9ab7620cd094d3209fe2049d8da1c7547322bc06",
+      "wholeProgramExactOutsideImportsAndHead": true,
+      "imports": 13
+    }
+  ],
+  "failures": [],
+  "headFailures": [],
+  "scope": "Independent actual Git originals, ordered import syntax/targets and exact full typed program inversion; no tests/discovery/fixture generation.",
+  "schema": "awa-inert-llm-driver-evidence-v1",
+  "baselineCaseIDs": {
+    "count": 73,
+    "rows": [
+      {
+        "path": "backend/tests/support/drivers/agents/llm-clients.ts",
+        "baselineIDs": []
+      },
+      {
+        "path": "backend/tests/engine/rules/badge_choice.test.ts",
+        "baselineIDs": [
+          "08b85bf4ecaea444fb9424df1d5f63773821bf203e203255da3087735939fa8f",
+          "08bb09d898f67d85032d77470777c96058527cff97c4b9eea004d0e6275bf0b7",
+          "09485bef5a8373a63838eab69dae4ac53378636c39c17d0956b792a7546b83b4",
+          "0c37eb85cf86bd316252ef82363d5c4b16f2ef26e16042b9afe17829df29d50d",
+          "15966f26af1f156ef10b9e1b7275937fb093f3a844cfafe912d61bbc137132d8",
+          "21fab90ee156d89fc062824fe2289d9cd5d4b1496d72c2c862f7f6f47f568faf",
+          "21ffb71647dbbb869142cebb4f71c930b11685266ed4bce03fdc83b3c22556f4",
+          "25988530fe9dec5434becfc4e1be90fda45eb15ca5520b111551e4193c29808d",
+          "2727641721223d5a351657016bee9fcc5201bd92f22bc2c3fc85a5e9edd3c0c4",
+          "27e14c0dea06d8792bbca0b06dfed54e4bfb8e925ee26bec2392fe9e27616f82",
+          "36ddac629fdb508c677db7d8f237d1f1b0bc355801f74c132b1aaba9649ff98a",
+          "427ca2636234ddf715501940edc135e215010fae848300590509f8984ab09a1e",
+          "44a777d4e3f40c484644893aff48109981edf909966bf4a1afbfbfcf6bf063a5",
+          "4adbcb0d274a76988f230614a7637ecf2c5a06f36ba8f3bafb7ff108c265df3a",
+          "5df4cfcd0faa20e447d70a5c301d404a259c76982913b41435dbeaa692b2b60e",
+          "6034e02baa93c065c455ec22fb7508949d5be0622e0de32ce815838afaa6d8d6",
+          "61832f13168245a3e952844b8e438fa5fff7ed87124f9d87cab1ffad39c4d057",
+          "6205d7adc0bd252afcfb0f5b39a62e5174db521d621250bb42480f405193dd58",
+          "63b94449c1e52402d3e3d95c33c7b035aba15e5681e9c4e2f9e0456105222ca5",
+          "6a184be705e3bd91fd4979b93a6bbb0e2d8e93cbc183e245b5fd095d2148c465",
+          "6a32907d0238a93d94abb4c4b1c787d43aad50aaf8f3c2f26b5544f42e156499",
+          "6d02eb2e394170552013574c991a8679dc4bbfe25b66ea16475fa734621678bb",
+          "77ac6196da06e99d3b895954a601011456aaa0735ecfca46fc34fe2c0484b8df",
+          "791fc24d7e5aeffc9ba7983f767117bdc16f957a100d8e0c3108b3da732bfd85",
+          "7dd27e32271fc80ffae642837253596fc89f95348413943eeb13f4ea83ea3ae5",
+          "8554be7d970da8c2c3623ba8ad9bd1a6cf7a8e58222f0c6bf306510729ea34cf",
+          "8b78951768c95117bfae583615a977788d310b47adc8f9f8d52ce60b1adafb3d",
+          "9a7912a566429bafccc209a6dc329a0f97ac8e0a585ea9a17a4f980dfc626566",
+          "a7b1cdb6606bc4d4dd433ecfe5c4629e07dcf2c04e1a4d92f958b64f2f153908",
+          "aff99093355486fdbac31db04a07b0dcf50b142117023f2f2c4fd5a79e9a2128",
+          "b43dc1200d2ded38f74f10ddb40170a47cb3b2141ea35a6256b71e100d412cce",
+          "b7e5562767e14b749081471bd9711000f1600a0dc34aa60e77df068a6c4f276f",
+          "c92aa3f60b4dd0f0338a8f895bdd79e393961abdaf0f14e16d6632f83ff99960",
+          "d0c6cdd7b04c379f87456ffed5404e6d8e7fcd5f6630aad880c2557be40e4795",
+          "d32da76efbcf6ff1687dbd0812478cc81b28be34ac65a0e8126f1cc0d50e96fb",
+          "d8ea14b677ab8bf6587ea070cce0f3b61ec933fe64dcaf2caee21632a62a2aa2",
+          "fa0645fc6fa5dbd2d8bdfdc3c123b6ecc8443e7f8127b89f3091fafcfd93508c",
+          "ff716b1fdc727e7047fb897a7787706a73b815e08168dbfca7d047d9a9482446"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/agents/llm/tool-reception.test.ts",
+        "baselineIDs": [
+          "23b5b7a4373946f3ca042a820cfdc7248a80b676ad5297aa9c6342f7260b2d06",
+          "28d982723a210579dacf0477be22b9bba7424cc0c4d0c05bbf24ec4fe50fe0df",
+          "4ccfe38d957078adf159c8cfc9aebd1e39aa65d0fb50ca796e26725108d54210",
+          "508f79b105d0065835f8f8ac1b1431d7a85f831bc23dae4fc8c218a95f723f2c",
+          "660dd4b28754cbc54b45392cc920102925001a48cee41f325d6b0d284d71be69",
+          "82bb0d23e6fecd03002cac7d094dfccca19be7b4d3da31db4a9a15a32d945d3d",
+          "853ebbb6504ae19c512b12222032252ab12b878ba3ef99f9ce9334a876ef2aab",
+          "c73e6183d3e3253337b8bef21f83d654351f5c9c036d0a86ebc05f92546f1f46"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/agents/llm-action-provider-prompts.test.ts",
+        "baselineIDs": [
+          "0da07f34a6fd16f86658da8faacc2d24ead6b09621f11a247f7f45977d3805f2",
+          "2eed8482aaeea6abc6a6d0842b9ca72a6f4c749f26c3e6baa37b28ef961abb9f",
+          "340ae28bf582c4b67729821cfe8dafa944012320cf4e53f5deebfc3fd42328e3",
+          "5a26f938a091a0086c7ccdfff7f9f6f5d6527d94499889fbc5817e288259cc8c",
+          "632395626968749d29835e2e7196f10314ef7adfa075e60c59a91f2fa6e266b0",
+          "773d3879948765f9f82711562b1c8f2bab1dc9c833da7c3c51917ca03afc1006",
+          "86265c3540a61eae7b170a33d04e47054eb34dad69ce770d72e7175550fe3003",
+          "8825b095eee199b2fb98d86a21a7cf6d732a9f24699324afa3f03a524df49118",
+          "a06b0b7be72af205daeb9d99e9d13aa012af78b7d88a365170da8f2e1492eba8",
+          "aa8fa7511e62b726ffe5e6a187514b344ec7003a1a7ef4cb90dd21005b1250d6",
+          "d0ff78d3688f8d23464db4eb2b5ab454692571fdabbe4b85996feda7d109f977",
+          "d8f3e2cf98ca34dcd11c6ea43a3d6d23f92bdf22f17829132796387134e6fa84",
+          "df3b853a436906386d3b043134a29495b74390ecd5bf704c9d3e2596a2c9dce1",
+          "e0aa116eeb50dd0c9d5a6ebfac7d00aa7a0f9451ba1d17d567136af68d572bdc"
+        ]
+      },
+      {
+        "path": "backend/tests/integration/filesystem/agents/turn-refusal-recording.test.ts",
+        "baselineIDs": [
+          "866bd4e05c9362497aa0b8e59f988ada6933068c07247d57070f8493799c8ef9"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/agents/llm-action-provider-fallback.test.ts",
+        "baselineIDs": [
+          "2a749a84a29a3e98dc20c04ec941145d1031cf8de2354d4fdef560b4b9d8b6de",
+          "3907f167616a5f20b062b47840f5966b38c5a008c2804c5c81db53ae5d3ddc2d",
+          "7d022b185f8bf67eb07719292e502c3fcccc4e884474e796b091c64f538b40aa",
+          "a4d10f91029296a299a3425e7d27cc168f41846d38d8d9987cfd374b00bebc0d",
+          "af58fd9ec8abb23b7a17a9d43a54eeb3ae215d7168441954afc6576269e689ad",
+          "c3ed7073b9e03a315b0fe5edde9d5c734a70188ab7e74d713b421976dda27365",
+          "d4042f726cddd36cb9da073944b2270f9f658834670616f7bcdfc42660fcee02",
+          "f97944d6046fc3333f5c65eb9c26a7fa5760cb067cce76558a350e65851e698a",
+          "ff661bfa1e7e1d45fb14a6df63a76a2fc1505d2dea11f117e3157f08cd1ff2ad"
+        ]
+      },
+      {
+        "path": "backend/tests/integration/agents/llm/required-tool-http-retry.test.ts",
+        "baselineIDs": [
+          "26c6469fe9a87b2580cfefa5d9b2708e0bd1090d7be1d511337d1db91e3f267a"
+        ]
+      },
+      {
+        "path": "backend/tests/integration/agents/llm/bug-report-recording.test.ts",
+        "baselineIDs": [
+          "264507f7bf86216c22fb12de16a0889afcbedf8cb795a689e41cb458ec172d6a",
+          "e5d43e8ca24ab303a8641b63be07fd6adf071d75b0a1e81d8c72b490ff42ef17"
+        ]
+      }
+    ],
+    "policy": "Frozen P0 or already committed path-mapping IDs. Full callbacks/title/matrices unchanged by whole-program import/head inversion. No execution or expanded discovery."
+  },
+  "independentReview": "Actual Git original and current eight-file SHA; driver responsibility, concrete per-instance state and literal protocol assertions preserved.",
+  "typeReceipt": {
+    "session": 81662,
+    "exit": 0,
+    "scope": "Eight exact candidate entries over committed 8bd788da backend source/support/packages snapshot; dependency inputs inherited without installation; no runtime tests."
+  },
+  "notRun": [
+    "Tests",
+    "Discovery",
+    "Games",
+    "Models",
+    "Network",
+    "Fixture generation"
+  ]
+}

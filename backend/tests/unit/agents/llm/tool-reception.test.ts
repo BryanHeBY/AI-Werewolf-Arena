@@ -16,7 +16,7 @@ import {
   GenericSubmitActionClient,
   CaptureToolsClient,
   FallbackProvider,
-} from "../../../support/llm_provider_clients";
+} from "../../../support/drivers/agents/llm-clients";
 
 describe("LlmActionProvider protocol", () => {
   test("accepts a native tool callback", async () => {
