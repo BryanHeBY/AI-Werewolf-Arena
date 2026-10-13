@@ -6,6 +6,7 @@
  * 注入或不透明来源保留原 collector 和惰性拉取；不缓存 execute 函数、角色资格、
  * 玩家、目标、库存或 World，不新增 World 全局表或归档字段。
  */
+import { refreshWolfKnifeInheritanceAtCheckpoint } from "./wolf-knife-inheritance-plan";
 import type { BoardParameters } from "./board-parameters";
 import type { NightStageRegistry } from "./night-stage-plan";
 import type { NightStagePlan, SupportedNightDefinition } from "./night-stage-plan-contracts";
@@ -52,6 +53,8 @@ export class RulePlan {
   readonly nativeNightTargets = bindNativeNightTargetPolicy;
   readonly nativeNightEffects = bindNativeNightEffects;
   readonly checkpoints = checkpoints;
+  /** 同步继承贡献不持执行态，经理只在原初始检查点调用。 */
+  readonly wolfKnifeInheritance = refreshWolfKnifeInheritanceAtCheckpoint;
   // 只在首次默认晚收集后固定有限贡献；actor、实例和资源始终由现场查询决定。
   #definition: SupportedNightDefinition | null = null;
   // 潜在阶段描述可保留未激活预约，实际 entries 仍使用原 collector 当夜选择。

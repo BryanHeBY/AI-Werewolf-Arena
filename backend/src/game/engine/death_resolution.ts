@@ -5,6 +5,7 @@
  * 野孩子贡献自行核对榜样原生命。参数仍使用同一深只读规则视图，不建立第二份角色状态。
  * 本模块不切换阶段或确定最终胜负；关系扩展、遗言、警徽和枪的最终过期保留原执行顺序。
  */
+import { refreshWolfKnifeInheritanceAtCheckpoint } from "../../rulesets/wolf-knife-inheritance-plan";
 import { AnimalDeathWavePreparation } from "../mechanisms/roles/animal_dream/ports";
 import {
   planDeathWave,
@@ -71,10 +72,6 @@ import {
   type CharmBinding,
   type CharmClaimReceipt,
 } from "../mechanisms/roles/wolf_beauty/ports";
-import { refreshHiddenWolfInheritance } from "../mechanisms/roles/hidden_wolf/ports";
-import { refreshGargoyleInheritance } from "../mechanisms/roles/gargoyle/ports";
-import { refreshMechanicalInheritance } from "../mechanisms/roles/mechanical_wolf/ports";
-import { refreshAwakenedInheritance } from "../mechanisms/roles/awakened_hidden_wolf/ports";
 import {
   activeDeathGun,
   captureDeathGun,
@@ -669,10 +666,12 @@ export class DeathResolution {
                         originPhases,
                         false,
                       );
-                    refreshHiddenWolfInheritance(this.world, this.events, this.state.day);
-                    refreshGargoyleInheritance(this.world, this.events, this.state.day);
-                    refreshMechanicalInheritance(this.world, this.state.day, this.events);
-                    refreshAwakenedInheritance(this.world, this.state.day, this.events);
+                    // 已提交死亡和必需关系贡献之后，沿原次序逐角色检查继承；失败保留该前缀。
+                    refreshWolfKnifeInheritanceAtCheckpoint({
+                      world: () => this.world,
+                      events: () => this.events,
+                      day: () => this.state.day,
+                    });
                   }
                   if (publicLinked.length) {
                     const event: GameEvent = {
