@@ -1,16 +1,15 @@
 /**
- * Owns Dreamer native state access and its ordered target/day/history writes.
- * Inputs are the original role/ability or captured state and accepted selection;
- * outputs preserve installation copying, selected slot identity and partial writes.
- * Neutral payload/read structures come from the contract package; this leaf retains the live slot and ordered selection writes.
- * Consecutive-target calculation, leases, use counts, dream effects and publication
- * remain at their original caller positions; this owner creates no mirror or refund.
+ * 负责梦摄原生状态槽访问及 target/day/history 的具体写入。
+ * 输入为原角色、能力或已捕获状态和接受目标；输出保留安装复制、原槽引用与部分写入顺序。
+ * 数据／只读形状来自 contract；连续目标、租约、use 计数、梦效果和事实仍在原 caller 位置。
+ * 本 owner 不制造状态镜像、回滚已付资源或新增资格重检。
  */
 import type { DreamerState, DreamerReadState } from "@ai-werewolf-arena/game-contract";
 
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { EntityId } from "@ai-werewolf-arena/game-contract";
-import { findNightAbility, installNativeAbility } from "../abilities";
+import { findNightAbility } from "../abilities";
+import { installNativeAbility } from "../ability_changes";
 
 export function setDreamerState(roleComp: RoleComponent, state: DreamerState): DreamerReadState {
   return installNativeAbility(roleComp, "dream", state);

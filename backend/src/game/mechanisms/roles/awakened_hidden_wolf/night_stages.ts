@@ -7,15 +7,15 @@
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, StatusMark, type EntityId, type ToolName } from "../../../../core/domain/model";
-import { captureNightLife, livingNightLife, awakenedNightIntent, originalPoisonIntent } from "../../../../core/domain/night_effects";
-import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import {
-  allNightAbilities,
-  findNightAbility,
-  setNightAbilityStartDay,
-  installNativeAbility,
-  retiredNightAbilityIds,
-} from "../abilities";
+  captureNightLife,
+  livingNightLife,
+  awakenedNightIntent,
+  originalPoisonIntent,
+} from "../../../../core/domain/night_effects";
+import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
+import { allNightAbilities, findNightAbility, retiredNightAbilityIds } from "../abilities";
+import { setNightAbilityStartDay, installNativeAbility } from "../ability_changes";
 import { canAwakenedKnife } from "./inheritance";
 import {
   beginAwakenedNight,
@@ -204,12 +204,23 @@ const skillStage: NightStageHandler = {
         if (targetId !== null && (!target || !livingNightLife(ctx.world, target))) continue;
         if (call.name === "awakened_poison" && skill.kind === "poison" && target) {
           if (!useAwakenedPoison(owner.state, day)) break;
-          (ctx.state.poisonClaims ??= []).push(originalPoisonIntent({
-            source: owner.life,
-            target,
-            isCurrent: () => bound.isCurrent(true),
-          }, { family: "awakened", day, stage: "awakened_skill", actorLife: owner.life,
-            requestedTargetId: targetId, abilityId: "learned:awakened" }));
+          (ctx.state.poisonClaims ??= []).push(
+            originalPoisonIntent(
+              {
+                source: owner.life,
+                target,
+                isCurrent: () => bound.isCurrent(true),
+              },
+              {
+                family: "awakened",
+                day,
+                stage: "awakened_skill",
+                actorLife: owner.life,
+                requestedTargetId: targetId,
+                abilityId: "learned:awakened",
+              },
+            ),
+          );
           ctx.ensureMarks(target.id).add(StatusMark.PoisonMark);
           ctx.events.push({
             timestamp: Date.now(),
@@ -219,12 +230,24 @@ const skillStage: NightStageHandler = {
         } else if (call.name === "awakened_guard" && skill.kind === "guard") {
           if (!chooseAwakenedGuard(owner.state, targetId, day)) continue;
           if (target)
-            effects(ctx).shields.push(awakenedNightIntent("awakened-shield", {
-              actorId: owner.actorId,
-              target,
-              isCurrent: () => bound.isCurrent(true),
-            }, { family: "awakened", day, stage: "awakened_skill", actorLife: owner.life,
-              requestedTargetId: targetId, abilityId: "learned:awakened" }));
+            effects(ctx).shields.push(
+              awakenedNightIntent(
+                "awakened-shield",
+                {
+                  actorId: owner.actorId,
+                  target,
+                  isCurrent: () => bound.isCurrent(true),
+                },
+                {
+                  family: "awakened",
+                  day,
+                  stage: "awakened_skill",
+                  actorLife: owner.life,
+                  requestedTargetId: targetId,
+                  abilityId: "learned:awakened",
+                },
+              ),
+            );
           ctx.events.push({
             timestamp: Date.now(),
             type: "awakened_guard_chosen",
@@ -279,10 +302,20 @@ const attackStage: NightStageHandler = {
         if (targetId !== null && (!target || !livingNightLife(ctx.world, target))) continue;
         if (!chooseAwakenedAttack(owner.state, targetId, day)) break;
         if (target)
-          effects(ctx).attacks.push(awakenedNightIntent("awakened-attack", { actorId: owner.actorId, target, isCurrent: effectCurrent }, {
-            family: "awakened", day, stage: "awakened_attack", actorLife: owner.life,
-            requestedTargetId: targetId, abilityId: "learned:awakened",
-          }));
+          effects(ctx).attacks.push(
+            awakenedNightIntent(
+              "awakened-attack",
+              { actorId: owner.actorId, target, isCurrent: effectCurrent },
+              {
+                family: "awakened",
+                day,
+                stage: "awakened_attack",
+                actorLife: owner.life,
+                requestedTargetId: targetId,
+                abilityId: "learned:awakened",
+              },
+            ),
+          );
         recordAwakenedNightCommit(ctx.world, day);
         ctx.events.push({
           timestamp: Date.now(),

@@ -7,15 +7,16 @@
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import { Camp, Phase, PotionType, StatusMark, type ToolName } from "../../../core/domain/model";
-import { captureNightLife, livingNightLife, originalPoisonIntent, type NightLifeScope } from "../../../core/domain/night_effects";
+import {
+  captureNightLife,
+  livingNightLife,
+  originalPoisonIntent,
+  type NightLifeScope,
+} from "../../../core/domain/night_effects";
 import type { World } from "../../../core/domain/world";
 import type { NightStageHandler } from "../stages/night/contracts";
-import {
-  allNightAbilities,
-  abilityStatus,
-  recordNightAbilityUse,
-  type NightAbilityReadView,
-} from "./abilities";
+import { allNightAbilities, abilityStatus, type NightAbilityReadView } from "./abilities";
+import { recordNightAbilityUse } from "./ability_changes";
 import { captureNightAbilityScope } from "./ability_scope";
 import { luckyTargetAllowed, recordOwnNightAction } from "./night_action_history";
 import { resolveInspection } from "./inspection";
@@ -158,7 +159,9 @@ export function recipientAbilityStage(
             )
               continue;
             const target =
-              call.args.target_id === null ? undefined : targets.get((effectRequestedTargetId = call.args.target_id));
+              call.args.target_id === null
+                ? undefined
+                : targets.get((effectRequestedTargetId = call.args.target_id));
             if (!target || !livingNightLife(ctx.world, target)) continue;
             if (!luckyTargetAllowed(ctx.world, actorId, ability, day, kind, target.id)) continue;
             if (call.name === "check_identity" && ability.kind === "seer_check") {
@@ -211,23 +214,30 @@ export function recipientAbilityStage(
               ability.state.poison > 0
             ) {
               let effectSource: NightLifeScope;
-              (ctx.state.poisonClaims ??= []).push(originalPoisonIntent({
-                source: (effectSource = scope.life),
-                target,
-                ...(policy === "black_market"
-                  ? {
-                      isCurrent: () =>
-                        ctx.isCurrent() && ctx.currentDay() === day && scope.isOwnerCurrent(true),
-                    }
-                  : {}),
-              }, {
-                family: policy === "lucky" ? "lucky" : "black-market",
-                day,
-                stage: policy === "lucky" ? "lucky" : "black_market_recipient",
-                actorLife: effectSource,
-                requestedTargetId: effectRequestedTargetId,
-                abilityId: effectAbilityId,
-              }));
+              (ctx.state.poisonClaims ??= []).push(
+                originalPoisonIntent(
+                  {
+                    source: (effectSource = scope.life),
+                    target,
+                    ...(policy === "black_market"
+                      ? {
+                          isCurrent: () =>
+                            ctx.isCurrent() &&
+                            ctx.currentDay() === day &&
+                            scope.isOwnerCurrent(true),
+                        }
+                      : {}),
+                  },
+                  {
+                    family: policy === "lucky" ? "lucky" : "black-market",
+                    day,
+                    stage: policy === "lucky" ? "lucky" : "black_market_recipient",
+                    actorLife: effectSource,
+                    requestedTargetId: effectRequestedTargetId,
+                    abilityId: effectAbilityId,
+                  },
+                ),
+              );
               ctx.ensureMarks(target.id).add(StatusMark.PoisonMark);
               consumeRecipientPoison(ability);
               ctx.events.push({

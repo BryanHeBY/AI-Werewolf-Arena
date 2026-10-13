@@ -1,10 +1,8 @@
 /**
- * Unit tests for radiant-eclipse; Isolated radiant-eclipse suppression contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试：验证明辉／黯月有限本职抑制边界。
+ * 输入为原内存 fixture、callback 和显式非法变更；引用、状态、错误与字面预期是独立 oracle。
+ * 实际原生 owner/frame/readers 仍按原顺序执行，use/install 入口只随实际实例 owner 迁移。
+ * 不运行完整对局、模型或物理传输，不重建 fixture、矩阵或生产生成的预期。
  */
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
@@ -15,12 +13,12 @@ import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { createRoleComponent } from "../../../../src/core/domain/components/role";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import {
-  installNativeAbility,
   findNightAbility,
   abilityStatus,
   projectNightAbility,
   activeNightAbility,
 } from "../../../../src/game/mechanisms/roles/abilities";
+import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
 import {
   openEclipseSuppression,
   type SuppressibleAbility,

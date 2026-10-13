@@ -1,10 +1,8 @@
 /**
- * Executes Dreamer choices against the current ability and original target life. Inputs are
- * night-stage requests and validated dream targets; outputs preserve history and sourced dream
- * protection. Actor eligibility is read through the bound night query; it never
- * applies a death wave or refreshes an expired captured target.
- * Ordinary payload history writes delegate to the local state owner at the original
- * commit position; all checks, use accounting and publication remain in this flow.
+ * 负责梦摄对当前能力及原目标生命的行动。
+ * 输入为查询给出的 actor、夜请求和合法梦目标；输出保留历史与有来源梦保护。
+ * 具体状态写入和共享 use 命令仍在原 commit 位置，资格／事实顺序不变。
+ * 本阶段不执行死亡波或刷新已失效目标，也不回滚已付历史。
  */
 import { recordDreamSelection } from "./state";
 import { isRadiantEclipseBoard, captureRadiantPaidEffect } from "../radiant_eclipse/night_frame";
@@ -12,7 +10,7 @@ import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/compon
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { Phase } from "../../../../core/domain/model";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { recordNightAbilityUse } from "../abilities";
+import { recordNightAbilityUse } from "../ability_changes";
 import { captureNightAbilityScope } from "../ability_scope";
 import { markDreamNightCommitted } from "./night_frame";
 

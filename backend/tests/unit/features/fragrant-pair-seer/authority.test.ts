@@ -1,10 +1,8 @@
 /**
- * Unit tests for fragrant-pair-seer; Isolated fragrant-pair-seer authority contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试：验证馥郁双生原 authority 资格与部分提交边界。
+ * 输入为原内存 roster、callback 和非法状态；字面量、引用与错误／库存断言保持原独立预期。
+ * 原 owner、frame 和 readers 真实执行，native/install/use 只迁向同一实际实例 owner。
+ * 不运行完整对局、模型或传输，不替换支持 fixture、规则与原历史矩阵。
  */
 import { expect, test } from "bun:test";
 import { Role, Camp, Phase } from "../../../../src/core/domain/identity";
@@ -19,10 +17,8 @@ import { createIdentityComponent } from "../../../../src/core/domain/entities/pl
 import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
 import type { GameEvent } from "../../../../src/core/domain/events";
 import { freshPairSeerState } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
-import {
-  installNativeAbility,
-  findNightAbility,
-} from "../../../../src/game/mechanisms/roles/abilities";
+import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
 import {
   beginFragrantNight,
   openFragrantBindChoice,

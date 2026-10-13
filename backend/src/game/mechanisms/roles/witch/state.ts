@@ -1,17 +1,16 @@
 /**
- * Owns Witch native slot access and ordinary bottle/flag writes.
- * Inputs are the role component and native state; outputs retain the ability owner's installation copy and selected read-only stored reference.
- * Its neutral data structure contains bottle counts, night flags and optional policies.
- * This feature owns ordinary reset, terminal-pass and bottle payload writes.
- * Callers retain lease, marks, claims, use counts and publication order; independent
- * verifier ledgers and Demon sealed stock remain their separate owners. No state
- * mirror, extra eligibility check, refund or checkpoint shape change is introduced.
+ * 负责女巫原生槽读取及普通瓶数／夜旗标的具体写入。
+ * 输入为角色和原生数据；输出保留实例安装复制与同一深只读引用。
+ * 普通复位、结束 pass 和药瓶 payload 归此 feature，形状及可选政策归 contract。
+ * caller 保留租约、印记、claim、use 与事实顺序；独立 verifier 和 Demon 封存库存不迁，
+ * 本模块不产生状态镜像、资格重检、退款或检查点形状变化。
  */
 import type { WitchState, WitchReadState } from "@ai-werewolf-arena/game-contract";
 
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { WitchSelfHealRule } from "@ai-werewolf-arena/game-contract";
-import { findNightAbility, installNativeAbility } from "../abilities";
+import { findNightAbility } from "../abilities";
+import { installNativeAbility } from "../ability_changes";
 
 export function setWitchState(roleComp: RoleComponent, state: WitchState): WitchReadState {
   return installNativeAbility(roleComp, "potion", state);

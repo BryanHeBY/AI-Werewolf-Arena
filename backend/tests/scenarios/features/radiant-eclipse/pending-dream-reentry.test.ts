@@ -1,19 +1,22 @@
 /**
- * Scenario tests for radiant pending reentry. Inputs are one original pending borrowed Dream decision and a
- * denied nested pipeline entry. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Outer complete NightPipeline remains running while a nested entry is
- * rejected; borrowed Dream resource and exact cleanup order are causal scope behavior. Engine sequencing
- * remains real and models remain controlled providers; production output is not a newly generated golden.
+ * 场景测试：验证明辉借用梦的 pending 决策与被拒的嵌套流水线。
+ * 输入为原受控 provider、借用资源与实际 NightPipeline；输出以字面回执、引用和清理顺序验收。
+ * 外层完整夜仍真实运行，嵌套进入应拒绝；实例入口迁移不改变已付资格和生命周期。
+ * 不调用模型／网络，也不以新生产输出重写 fixture 或 golden。
  */
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { Role, Camp, WitchSelfHealRule } from "../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createRoleComponent, type RoleComponent } from "../../../../src/core/domain/components/role";
+import {
+  createRoleComponent,
+  type RoleComponent,
+} from "../../../../src/core/domain/components/role";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import { createCampComponent } from "../../../../src/core/domain/components/camp";
 import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
-import { installNativeAbility, findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
 import {
   createEclipseState,
   createShelterState,

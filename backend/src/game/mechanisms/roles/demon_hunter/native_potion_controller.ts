@@ -19,11 +19,16 @@ import {
   StatusMarksComponent,
   statusMarkSnapshot,
 } from "../../../../core/domain/components/status_marks";
-import { captureNightLife, originalPoisonIntent, type NightPoisonClaim } from "../../../../core/domain/night_effects";
+import {
+  captureNightLife,
+  originalPoisonIntent,
+  type NightPoisonClaim,
+} from "../../../../core/domain/night_effects";
 import { GameActionRequestFactory } from "../../../engine/action_request_factory";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
-import { recordNightAbilityUse, type NightAbility } from "../abilities";
+import { type NightAbility } from "../abilities";
+import { recordNightAbilityUse } from "../ability_changes";
 import {
   openDemonWitchTurnFrame,
   demonHunterFreezeDay,
@@ -216,12 +221,23 @@ export async function executeDemonWitchTurn(input: {
       if (!proof) throw new Error("demon_hunter_native_poison_commit_failed");
       poison = Object.freeze({
         proof,
-        claim: Object.freeze(originalPoisonIntent({
-          source,
-          target,
-          isCurrent: () => frame.sourceCurrent() && frame.targetCurrent(targetId),
-        }, { family: "demon-witch", day, stage: "witch", actorLife: source,
-          requestedTargetId: targetId, abilityId: "native:potion" })),
+        claim: Object.freeze(
+          originalPoisonIntent(
+            {
+              source,
+              target,
+              isCurrent: () => frame.sourceCurrent() && frame.targetCurrent(targetId),
+            },
+            {
+              family: "demon-witch",
+              day,
+              stage: "witch",
+              actorLife: source,
+              requestedTargetId: targetId,
+              abilityId: "native:potion",
+            },
+          ),
+        ),
         lateUnknown: () => lateUnknownPoisonContribution(contribution),
         sealContribution: () => sealNativePoisonContribution(contribution),
       });
@@ -229,12 +245,23 @@ export async function executeDemonWitchTurn(input: {
       // The ordinary native toxin has no Demon-immunity proof.
       poison = Object.freeze({
         proof: null,
-        claim: Object.freeze(originalPoisonIntent({
-          source,
-          target,
-          isCurrent: () => frame.sourceCurrent() && frame.targetCurrent(targetId),
-        }, { family: "demon-witch", day, stage: "witch", actorLife: source,
-          requestedTargetId: targetId, abilityId: "native:potion" })),
+        claim: Object.freeze(
+          originalPoisonIntent(
+            {
+              source,
+              target,
+              isCurrent: () => frame.sourceCurrent() && frame.targetCurrent(targetId),
+            },
+            {
+              family: "demon-witch",
+              day,
+              stage: "witch",
+              actorLife: source,
+              requestedTargetId: targetId,
+              abilityId: "native:potion",
+            },
+          ),
+        ),
         lateUnknown: () => lateUnknownPoisonContribution(contribution!),
         sealContribution: () => sealNativePoisonContribution(contribution!),
       });

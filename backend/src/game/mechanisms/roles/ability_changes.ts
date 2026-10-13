@@ -1,25 +1,28 @@
 /**
- * Owns ability grant, installation, enable/expiry and explicit knowledge transfer changes.
- * Inputs are source instances and copied grant data; outputs are read-only stored instance references and lifecycle
- * events. Transfer requires its own state policy and never silently clones spent resources or
- * changes the recipient role.
- * Grant/transfer inputs and detached state-policy copies retain writable installation data.
- * Installation/retirement restore only abilities and retiredAbilityIds in this owner; original reference and delete/push order remain.
+ * 负责普通夜能力原生安装、授予、起效日、启停、次数、首次死亡到期和明确转移。
+ * 输入为原角色／实例、安装数据、业务日期及具体转移 statePolicy；输出为原只读存储引用和事实。
+ * 仅拥有 abilities、retiredAbilityIds 与公共 metadata 写权，角色 payload 库存仍归具体机制。
+ * 保留原 clone、回调、World／getter 重检、安装／delete／push／发布顺序；不更换私有容器、
+ * 恢复已付资源或用新 Store／通用事务遮蔽部分失败。
  */
 import type {
   AbilitySource,
   NightAbilityKind,
   NightAbilityStates,
+  NightAbilityReadState,
+  RoleInspectionState,
 } from "@ai-werewolf-arena/game-contract";
 
 import { isDeepStrictEqual } from "node:util";
 import { DREAM_PROTECTION_POLICIES } from "../../../core/domain/board";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
-import type { EntityId, GameEvent } from "../../../core/domain/model";
+import { Role, type EntityId, type GameEvent } from "../../../core/domain/model";
 import type { World } from "../../../core/domain/world";
 import {
   allNightAbilities,
+  abilityStatus,
+  projectPairState,
   copyAbilityData,
   roleInspectionPolicy,
   projectNightState,
@@ -68,7 +71,7 @@ const emit = (
     },
   });
 
-/** Rule code supplies the state/resource policy explicitly; no target history is copied implicitly. */
+/** 规则调用者明确提供状态／资源政策，不隐式复制目标历史或重置已付库存。 */
 export function grantNightAbility<K extends NightAbilityKind>(
   world: World,
   actorId: EntityId,
@@ -201,7 +204,7 @@ export function setNightAbilityEnabled(
   emit(events, actorId, ability, enabled ? "enabled" : "disabled");
 }
 
-/** Death expiry follows an instance through revival/transfer; applied night effects remain committed. */
+/** 实际死亡到期跟随同一实例经过转移／复活；已经付款的夜效果仍按原政策保留。 */
 export function expireLuckyAbilitiesOnDeath(
   world: World,
   actorId: EntityId,
@@ -219,7 +222,7 @@ export function expireLuckyAbilitiesOnDeath(
   }
 }
 
-/** Validate destination before removing the old owner; preserve counters and the current night. */
+/** 先验证／安装目标，再移除原 owner；保留计数、原夜时点与中途发布失败前缀。 */
 export function transferNightAbility<K extends NightAbilityKind>(
   world: World,
   fromId: EntityId,
@@ -324,8 +327,7 @@ export function transferNightAbility<K extends NightAbilityKind>(
     !isDeepStrictEqual(targetState, black ? projectNightState(ability) : ability.state)
   )
     throw new Error("ability_transfer_lucky_state_changed");
-  // Transfer preserves resources. A seer_check policy may reset knowledge;
-  // role_check retains its full history, and other policies cannot refill resources.
+  // 转移保持资源；seer_check 明确政策可重置知识，role_check 保留完整历史，其他政策不能补库存。
   if (
     ability.kind === "guard" &&
     (targetState as NightAbilityStates["guard"]).lastTarget !== ability.state.lastTarget
@@ -375,4 +377,66 @@ export function transferNightAbility<K extends NightAbilityKind>(
     ((source.privateState as { retiredAbilityIds?: string[] }).retiredAbilityIds ??= []) as string[]
   ).push(id);
   emit(events, fromId, ability, "transferred_out");
+}
+
+/** 原生安装先完成原 copy／policy，再写实际 abilities 槽；不提前读取退休 ID 或更换私有容器。 */
+export function installNativeAbility<K extends NightAbilityKind>(
+  role: RoleComponent,
+  kind: K,
+  state: NightAbilityStates[K],
+): NightAbilityReadState<K> {
+  if (kind === "pair_check" && role.role !== Role.AwakenedSeer)
+    throw Error("ability_pair_native_role_invalid");
+  const ownedState = (
+    kind === "pair_check" ? copyAbilityData(projectPairState(state)) : copyAbilityData(state)
+  ) as NightAbilityStates[K];
+  if (kind === "role_check") roleInspectionPolicy(ownedState as RoleInspectionState);
+  const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=
+    {}) as Record<string, NightAbility>;
+  const retired = ((role.privateState as { readonly retiredAbilityIds?: unknown })
+    .retiredAbilityIds ?? []) as string[];
+  const baseId = `native:${kind}`;
+  let id = baseId,
+    revision = 1;
+  while (retired.includes(id)) id = `${baseId}:${++revision}`;
+  const existing = stored[id];
+  if (existing) {
+    if (
+      existing.kind !== kind ||
+      existing.source.kind !== "native" ||
+      existing.source.role !== role.role
+    )
+      throw new Error("ability_native_binding_conflict");
+    existing.state = ownedState;
+  } else {
+    stored[id] = {
+      id,
+      kind,
+      state: ownedState,
+      source: { kind: "native", role: role.role },
+      sourceDisclosed: true,
+      startsOnDay: 1,
+      maxUses: null,
+      uses: 0,
+      lastUsedDay: null,
+      disabled: false,
+    } as NightAbility;
+  }
+  return ownedState as NightAbilityReadState<K>;
+}
+
+/** 初始化／学习流程仍在原调用点决定起效日；这里只写原 startsOnDay，不推进业务时钟。 */
+export function setNightAbilityStartDay(ability: NightAbilityReadView, day: number): void {
+  (ability as { startsOnDay: number }).startsOnDay = day;
+}
+
+/** 原 status 重检后先记 lastUsedDay，再可选增加 uses；payload 库存与已付效果继续归具体机制。 */
+export function recordNightAbilityUse(
+  ability: NightAbilityReadView,
+  day: number,
+  consumed: boolean,
+): void {
+  if (abilityStatus(ability, day) !== "active") throw new Error("ability_not_active");
+  (ability as { lastUsedDay: number | null }).lastUsedDay = day;
+  if (consumed) (ability as { uses: number }).uses++;
 }

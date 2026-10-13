@@ -1,9 +1,8 @@
 /**
- * Unit tests: Radiant Eclipse returned effects use mutated shelter/backlash objects;
- * literal original paid targets and sources check that a consumer cannot redirect the
- * committed claim. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证明辉／黯月已付庇护／反噬对象不可重定向边界。
+ * 输入为原内存 fixture、callback 和显式非法变更；引用、状态、错误与字面预期是独立 oracle。
+ * 实际原生 owner/frame/readers 仍按原顺序执行，use/install 入口只随实际实例 owner 迁移。
+ * 不运行完整对局、模型或物理传输，不重建 fixture、矩阵或生产生成的预期。
  */
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
@@ -17,11 +16,11 @@ import { createAliveComponent } from "../../../../src/core/domain/components/ali
 import { createCampComponent } from "../../../../src/core/domain/components/camp";
 import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
 import {
-  installNativeAbility,
   findNightAbility,
   abilityStatus,
   type NightAbility,
 } from "../../../../src/game/mechanisms/roles/abilities";
+import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
 import {
   createEclipseState,
   createShelterState,

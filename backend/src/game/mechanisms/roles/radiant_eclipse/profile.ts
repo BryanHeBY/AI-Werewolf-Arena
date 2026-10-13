@@ -1,16 +1,16 @@
 /**
- * Defines Radiant/Eclipse role profiles, configuration and native initialization.
- * Inputs are original initialization components, configuration and locale; outputs
- * are installed ability state, prompts and the existing stage/tool contributions.
- * Start-day metadata uses its ability owner; borrowed effects and night leases
- * remain in the feature frame, never in this profile or a second state store.
+ * 负责明辉／黯月 RoleProfile 贡献、配置和原生初始化。
+ * 输入为原初始化组件、配置和 locale；输出为安装状态、提示和既有工具／阶段贡献。
+ * 起效日和原生实例安装委托共享 owner，具体借用效果与夜租约仍归 frame。
+ * 不在 profile 或第二状态仓库中持有借用资格，不提前查询 World 或推进业务时钟。
  */
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Phase, Role, WinCondition } from "../../../../core/domain/identity";
 import type { RoleProfile } from "../contracts";
-import { activeNightAbility, setNightAbilityStartDay, installNativeAbility } from "../abilities";
+import { activeNightAbility } from "../abilities";
+import { setNightAbilityStartDay, installNativeAbility } from "../ability_changes";
 import { WOLF_ROLE_PROFILE } from "../wolf/profile";
 import { RADIANT_SHELTER_STAGE, ECLIPSE_SWALLOW_STAGE } from "./night_stages";
 import { createShelterState, createEclipseState, RADIANT_ECLIPSE_POLICY } from "./state";

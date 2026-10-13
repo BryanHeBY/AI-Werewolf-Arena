@@ -1,21 +1,14 @@
 /**
- * Owns native pair-state initialization and the audited pair inspection write prefix.
- * Inputs are the original role or an authority-captured pair slot plus validated
- * next history; outputs preserve the same state behind pairSeer and native ability
- * aliases, then update state JSON, use metadata and ability JSON in that order.
- * Authority owns roster/phase/currentness checks and commits its lease afterward.
- * This owner never clones on read, replaces stored state, catches a partial write,
- * refunds a resource or subscribes to request completion.
- * Its pairSeer slot write alone restores container access; the LHS still precedes ability installation and shares its returned state.
+ * 负责原生 Pair 状态安装与已审查的查验写入前缀。
+ * 输入为原角色或 authority 捕获的槽和已验证下一历史；输出保留 pairSeer/native 同状态引用。
+ * 按原顺序写状态 JSON、提交共享 use metadata、再写 ability JSON；authority 随后才提交租约。
+ * 安装槽的 LHS 仍先于原能力复制调用；不读时 clone、替换存储状态、退款或吞掉部分写入错误。
  */
 import type { PairSeerState } from "@ai-werewolf-arena/game-contract";
 
 import type { RoleComponent } from "../../../../core/domain/components/role";
-import {
-  installNativeAbility,
-  recordNightAbilityUse,
-  type NightAbilityReadView,
-} from "../abilities";
+import { type NightAbilityReadView } from "../abilities";
+import { installNativeAbility, recordNightAbilityUse } from "../ability_changes";
 import { freshPairSeerState } from "./state";
 import { assertWritable, plainJson, write } from "./owned-state-data";
 

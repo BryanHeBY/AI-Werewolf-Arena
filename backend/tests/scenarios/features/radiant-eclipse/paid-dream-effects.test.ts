@@ -1,19 +1,22 @@
 /**
- * Scenario tests for radiant paid dream. Inputs are original swallowed Dream sources, paid stock and
- * controlled death/failure stages. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Actual NightPipeline plus original captured DreamFrame verify
- * caster-life and later-stage failure effects; stages are not an isolated reader. Engine sequencing remains
- * real and models remain controlled providers; production output is not a newly generated golden.
+ * 场景测试：验证明辉吞噬梦的已付效果与后续死亡／失败阶段。
+ * 输入为原捕获 DreamFrame、实际 NightPipeline 和受控 provider；输出用字面状态与错误 trace 验收。
+ * 施法者生命、库存付款和晚阶段失败保持因果顺序，场景不是独立纯 reader。
+ * 不调用模型／网络，不生成或重写原预期数据。
  */
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { Role, Camp, WitchSelfHealRule } from "../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createRoleComponent, type RoleComponent } from "../../../../src/core/domain/components/role";
+import {
+  createRoleComponent,
+  type RoleComponent,
+} from "../../../../src/core/domain/components/role";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import { createCampComponent } from "../../../../src/core/domain/components/camp";
 import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
-import { installNativeAbility, findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
 import {
   createEclipseState,
   createShelterState,

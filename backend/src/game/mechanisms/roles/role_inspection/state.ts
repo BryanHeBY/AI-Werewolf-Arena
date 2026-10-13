@@ -1,10 +1,8 @@
 /**
- * Owns RoleInspection native state access and its ordered inspection history writes.
- * Inputs are an original role/ability or captured state, target, day and role label;
- * outputs preserve installation copying, selected slot identity and partial writes.
- * Neutral payload/read structures come from the contract package; this leaf retains the live slot and ordered role-label history writes.
- * Callers retain target/scope validation, use accounting and fact publication;
- * this owner adds no currentness recheck, resource refund, lifecycle or archive rule.
+ * 负责角色查验原生状态访问和有序的角色报告历史写入。
+ * 输入为原角色／能力或捕获状态、目标、日期与角色标签；输出保留复制后的安装状态和同槽只读引用。
+ * 数据形状归 contract，具体历史写入归本 leaf；caller 仍拥有目标验证、次数与事实发布。
+ * 不增加租约检查、退款、生命周期推进或归档政策。
  */
 import type {
   RoleInspectionState,
@@ -14,7 +12,8 @@ import type {
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { EntityId } from "@ai-werewolf-arena/game-contract";
 import type { InspectionResult } from "@ai-werewolf-arena/game-contract";
-import { findNightAbility, installNativeAbility } from "../abilities";
+import { findNightAbility } from "../abilities";
+import { installNativeAbility } from "../ability_changes";
 
 export function setRoleInspectionState(
   role: RoleComponent,

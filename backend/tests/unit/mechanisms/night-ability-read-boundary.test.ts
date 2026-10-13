@@ -1,9 +1,8 @@
 /**
- * Unit tests for the seven live ability read contracts and concrete write owners.
- * Inputs are literal installation data, stored references and instrumented state
- * getters; identity, getter traces and partial writes are independent oracles.
- * Compile-only valid-shape assignments must fail through query/native outputs.
- * No game, transport, model or production-generated expected result runs here.
+ * 单元测试：验证七种 live 能力只读契约及具体写入 owner。
+ * 输入为字面安装数据、存储引用和带记录的 getter；身份、getter trace 与部分写入是独立预期。
+ * 编译期合法形状写操作必须被查询／native 读输出拒绝；实际安装／use 归同一实例 owner。
+ * 不执行对局、模型或传输，不从生产输出生成期望结果。
  */
 import type { NightAbilityStates } from "@ai-werewolf-arena/game-contract";
 
@@ -15,11 +14,13 @@ import {
   activeNightAbility,
   allNightAbilities,
   findNightAbility,
+  type NightAbilityReadView,
+} from "../../../src/game/mechanisms/roles/abilities";
+import {
   installNativeAbility,
   recordNightAbilityUse,
   setNightAbilityStartDay,
-  type NightAbilityReadView,
-} from "../../../src/game/mechanisms/roles/abilities";
+} from "../../../src/game/mechanisms/roles/ability_changes";
 import {
   createNightAbilityActorQuery,
   type NightAbilityActorQuery,

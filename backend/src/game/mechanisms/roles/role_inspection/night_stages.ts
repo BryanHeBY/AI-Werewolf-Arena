@@ -1,11 +1,8 @@
 /**
- * Executes Gargoyle, Psychic and Mirror inspection stages through their existing role-specific
- * policies. Inputs are active instances and validated target checks; outputs preserve inspection
- * records, use counts and optional-completion behavior. It does not unify their distinct failure
- * or target semantics. Its role-check actor list consumes the bound eligibility
- * query without adding new activation or native learning rules.
- * Ordinary payload history writes delegate to the local state owner at the original
- * commit position; all checks, use accounting and publication remain in this flow.
+ * 负责石像鬼、通灵师与镜女的原角色查验阶段。
+ * 输入为查询端口给出的活动实例与已验证目标；输出保留角色报告、次数和可选结束行为。
+ * 共享资格查询先行，历史委托具体状态 owner，use metadata 委托实例 owner。
+ * 各族失败、目标、学习、作用资格和事实发布顺序保持，不合并其不同规则。
  */
 import type { RoleInspectionPolicy } from "@ai-werewolf-arena/game-contract";
 
@@ -14,11 +11,8 @@ import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/compon
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { Phase, Role } from "../../../../core/domain/model";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
-import {
-  recordNightAbilityUse,
-  roleInspectionPolicy,
-  type NightAbilityReadView,
-} from "../abilities";
+import { roleInspectionPolicy, type NightAbilityReadView } from "../abilities";
+import { recordNightAbilityUse } from "../ability_changes";
 import { getGargoyleState } from "../gargoyle/ports";
 import { resolveInspection } from "../inspection";
 import {

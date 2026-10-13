@@ -49,11 +49,11 @@ import {
   DEMON_HUNTER_ROLE,
   freshDemonHunterState,
 } from "../../../../src/game/mechanisms/roles/demon_hunter/state";
+import { type NightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import {
   installNativeAbility,
   recordNightAbilityUse,
-  type NightAbility,
-} from "../../../../src/game/mechanisms/roles/abilities";
+} from "../../../../src/game/mechanisms/roles/ability_changes";
 import {
   captureDemonNativePoison,
   commitDemonNativePoison,

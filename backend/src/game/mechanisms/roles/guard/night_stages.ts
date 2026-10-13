@@ -1,9 +1,8 @@
 /**
- * Executes Guard target selection with captured ability and original-life checks. Inputs are
- * night context and validated protection tools; outputs are state history, use accounting and
- * sourced Guard contributions. Only the original contribution owner retains effect validity,
- * without assigning it to a replacement mark component. Guard actor enumeration
- * consumes the bound qualification port before any captured protection request.
+ * 负责守卫基于捕获能力及原生命的目标选择。
+ * 输入为夜上下文、资格查询和已验证守护工具；输出保留 lastTarget、use metadata 及原守护贡献。
+ * 原贡献 owner 保留已付效果有效性，不能把它转移给替换的印记组件。
+ * 查询、请求、资格、状态命令与事实发布仍按原位置执行，不增加重复目标重检或退款。
  */
 /** 文件说明：守卫夜间阶段处理。 */
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -12,7 +11,8 @@ import { Phase, Role, StatusMark } from "../../../../core/domain/model";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import { NightStageHandler } from "../../stages/night/contracts";
 import { getGuardState, recordGuardTarget } from "./state";
-import { activeNightAbility, recordNightAbilityUse } from "../abilities";
+import { activeNightAbility } from "../abilities";
+import { recordNightAbilityUse } from "../ability_changes";
 import { captureNightAbilityScope } from "../ability_scope";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import { recordOwnNightAction, luckyTargetAllowed } from "../night_action_history";

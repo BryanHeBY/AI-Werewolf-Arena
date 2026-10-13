@@ -1,15 +1,14 @@
 /**
- * Runs Eclipse swallow and Radiant shelter requests in their declared order. Inputs are the
- * installed night frame and validated target choices; outputs preserve borrowed-resource or
- * shelter commits and events. These stages never infer paid-effect validity from provider
- * return; the frame owns that check. Shelter actors consume the bound night query,
- * while Eclipse choices and borrowed-resource ownership remain in this feature.
+ * 负责黯月吞噬与明辉庇护的既定夜间请求顺序。
+ * 输入为安装后的 frame、活动能力查询和验证目标；输出保留借用／庇护提交及原事实。
+ * frame 保有已付效果有效性与借用实例所有权，共享 use 提交只处理原 metadata。
+ * 不因 provider 返回而推断资格，也不移动租约、库存、记录或清理位置。
  */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, Role } from "../../../../core/domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { recordNightAbilityUse } from "../abilities";
+import { recordNightAbilityUse } from "../ability_changes";
 import { captureNightAbilityScope } from "../ability_scope";
 import { readShelterState, selectShelter } from "./state";
 import {

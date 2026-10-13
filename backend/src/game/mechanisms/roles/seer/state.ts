@@ -1,19 +1,15 @@
 /**
- * Owns Seer access to the existing ability-state slot and ordinary inspection writes.
- * Inputs are a role's selected ability or an already captured state reference;
- * outputs are the original stored state data and its ordered last-result/history writes.
- * The ability owner retains installation copying, instance identity, retirement
- * and use counts. This module never rechecks a lease, changes phase or rolls back
- * partial writes; Demon Hunter's sealed native commit remains a separate writer.
- * Read/install outputs grant deeply readonly live views. These trusted commit
- * commands alone restore mutable access locally, preserving each original getter
- * and partial-write prefix; the view itself never grants action authorization.
+ * 负责预言家实际能力槽的只读访问与普通查验具体写入。
+ * 输入为选定能力或已捕获状态引用；输出为同一深只读存储状态及有序 last-result/history 写入。
+ * 安装复制、实例 metadata 与退休归共享 owner；trusted 命令只局部恢复实际字段写权。
+ * 不授予行动资格、切换阶段或回滚部分写入，Demon 封存提交仍是独立 writer。
  */
 import type { SeerState, SeerReadState } from "@ai-werewolf-arena/game-contract";
 
 import type { EntityId, InspectionResult } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "../../../../core/domain/components/role";
-import { findNightAbility, installNativeAbility, type NightAbilityReadView } from "../abilities";
+import { findNightAbility, type NightAbilityReadView } from "../abilities";
+import { installNativeAbility } from "../ability_changes";
 
 /** Installation retains the ability owner's input copy and returned owned reference. */
 export function setSeerState(roleComp: RoleComponent, state: SeerState): SeerReadState {

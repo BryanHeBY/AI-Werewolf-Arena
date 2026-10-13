@@ -1,9 +1,8 @@
 /**
- * Owns Fragrant authority test support with a fixed component roster and native pair resource.
- * Inputs are original installation/night callbacks; outputs are the same World,
- * events, open/choice helpers and controlled life mutations. Literal role/state
- * data is fixture setup, not a production rule oracle. Test-only container writes
- * preserve pair aliases and LHS timing; no profile, pipeline or transport runs here.
+ * 负责馥郁 authority 测试的固定组件 roster 和原生 Pair 资源构造。
+ * 输入为原安装／夜 callback；输出是同一 World、事件、选择 helper 和受控生命变更。
+ * 字面角色／状态是 fixture 设置而非生产规则 oracle；Pair 别名、容器写入 LHS 时点保持。
+ * 实例安装入口迁共享 owner，但不运行 profile、流水线、传输或模型。
  */
 import { World } from "../../src/core/domain/world";
 import { Role, Camp } from "../../src/core/domain/identity";
@@ -18,7 +17,7 @@ import {
   freshFragrantState,
   freshPairSeerState,
 } from "../../src/game/mechanisms/roles/fragrant_pair_seer/state";
-import { installNativeAbility } from "../../src/game/mechanisms/roles/abilities";
+import { installNativeAbility } from "../../src/game/mechanisms/roles/ability_changes";
 import {
   installFragrantPairAuthority,
   beginFragrantNight,

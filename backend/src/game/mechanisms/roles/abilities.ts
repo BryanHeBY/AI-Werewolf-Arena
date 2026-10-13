@@ -1,23 +1,18 @@
 /**
- * Owns live ability instances, their copied state slots and lifecycle metadata. Pure payload data types come from the neutral contract owner.
- * Inputs are role-owned instances, installation data and day eligibility queries;
- * outputs are live read-only stored references, status and detached player projections. Seer
- * payload writes belong to its feature owner; this store never infers player
- * knowledge from true camp or executes a Seer inspection command.
- * Installation DTOs retain their existing write contracts; query and installation outputs expose finite deeply read-only payloads.
- * Native installation restores only the abilities slot at its original expression; no general private-container setter is exposed.
+ * 负责普通夜能力的实例类型、只读查询、状态判定、数据复制与玩家投影。
+ * 输入为原实例引用、明确日期和数据字段；输出保留深只读 live 引用或独立玩家 DTO。
+ * 原生安装、起效日与次数提交已归 ability_changes；本模块不写实际实例槽、库存或阶段。
+ * Pair 纯数据规范化由同一实际函数供安装及投影使用，不从真实阵营推断玩家知识。
  */
 
 import type {
   PairSeerState,
-  RoleInspectionState,
   RoleInspectionReadState,
   NightAbilityStates,
   RoleInspectionPolicy,
   NightAbilityKind,
   AbilitySource,
   NightAbilityReadStates,
-  NightAbilityReadState,
 } from "@ai-werewolf-arena/game-contract";
 import { readPairSeerState } from "./fragrant_pair_seer/state";
 import { readShelterState } from "./radiant_eclipse/state";
@@ -66,12 +61,13 @@ function projectShelterState(value: unknown) {
   if (!state) throw new Error("radiant_shelter_state_invalid");
   return state;
 }
-function projectPairState(value: unknown): PairSeerState {
+/** Pair 初始化和玩家投影共享此原纯数据校验；不读实例、World 或授予能力权限。 */
+export function projectPairState(value: unknown): PairSeerState {
   const state = readPairSeerState(value);
   if (!state) throw Error("fragrant_pair_state_invalid");
   return state;
 }
-/** Reveal only the fields authorized by this source's declared kind. */
+/** 仅投影当前来源 kind 明确授权的字段，不公开未披露源的真实身份。 */
 export function projectAbilitySource(
   origin: EventPayloadMap["ability_changed"]["source"],
   disclosed: boolean,
@@ -97,11 +93,11 @@ type NightAbilityUnion = {
     uses: number;
     lastUsedDay: number | null;
     disabled: boolean;
-    /** A finite night lease owns this blocker independently of persistent disablement. */
+    /** 本夜有限租约独立持有此阻塞，不能与持久 disabled 旗标合并。 */
     nightSuppression?: import("@ai-werewolf-arena/game-contract").EclipseSuppression;
-    /** Miracle gifts act in their own late slot; ordinary instances omit this policy. */
+    /** 受赠能力在其专有晚阶段执行；普通实例不带此 activation 政策。 */
     activation?: "lucky" | "black_market";
-    /** An actual death permanently expires a lucky gift, including after transfer/revival. */
+    /** 实际死亡永久到期受赠实例；转移或复活不恢复该资源。 */
     deathExpired?: boolean;
   };
 }[NightAbilityKind];
@@ -136,7 +132,7 @@ export interface PlayerNightAbilityStates {
   potion: PlayerWitchState;
   dream: PlayerDreamerState;
 }
-/** The DTO contract matches its explicit projection, including already-known dream history. */
+/** 玩家 DTO 对应显式投影，包含已知梦历史，不继承内部状态的其他字段。 */
 export function projectNightState(
   ability: NightAbilityReadView,
 ): PlayerNightAbilityStates[NightAbilityKind] {
@@ -158,7 +154,7 @@ export function projectNightState(
   }
 }
 
-/** Preserve valid JSON facts; optional undefined fields are absent on disk. */
+/** 复制有效 JSON 数据；可选 undefined 字段在落盘形状中保持缺失，不改 live 实例。 */
 export function copyAbilityData<T>(value: T): T {
   const result = structuredClone(value),
     ancestors = new WeakSet<object>();
@@ -197,7 +193,7 @@ export function allNightAbilities(role: RoleComponent | undefined): NightAbility
     : [];
 }
 
-/** Malformed or accessor blockers stay disabled without executing foreign getters. */
+/** 检查原 nightSuppression 描述符，畸形或访问器保持 blocked，不调用该字段 getter。 */
 function nightAbilityDisabled(ability: NightAbilityReadView): boolean {
   const blocker = Object.getOwnPropertyDescriptor(ability, "nightSuppression");
   return ability.disabled || (!!blocker && (!("value" in blocker) || blocker.value !== undefined));
@@ -248,66 +244,6 @@ export function activeNightAbility<K extends NightAbilityKind>(
 ): NightAbilityReadView<K> | undefined {
   const ability = findNightAbility(role, kind, id);
   return ability && abilityStatus(ability, day) === "active" ? ability : undefined;
-}
-
-export function installNativeAbility<K extends NightAbilityKind>(
-  role: RoleComponent,
-  kind: K,
-  state: NightAbilityStates[K],
-): NightAbilityReadState<K> {
-  if (kind === "pair_check" && role.role !== Role.AwakenedSeer)
-    throw Error("ability_pair_native_role_invalid");
-  const ownedState = (
-    kind === "pair_check" ? copyAbilityData(projectPairState(state)) : copyAbilityData(state)
-  ) as NightAbilityStates[K];
-  if (kind === "role_check") roleInspectionPolicy(ownedState as RoleInspectionState);
-  const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=
-    {}) as Record<string, NightAbility>;
-  const retired = ((role.privateState as { readonly retiredAbilityIds?: unknown })
-    .retiredAbilityIds ?? []) as string[];
-  const baseId = `native:${kind}`;
-  let id = baseId,
-    revision = 1;
-  while (retired.includes(id)) id = `${baseId}:${++revision}`;
-  const existing = stored[id];
-  if (existing) {
-    if (
-      existing.kind !== kind ||
-      existing.source.kind !== "native" ||
-      existing.source.role !== role.role
-    )
-      throw new Error("ability_native_binding_conflict");
-    existing.state = ownedState;
-  } else {
-    stored[id] = {
-      id,
-      kind,
-      state: ownedState,
-      source: { kind: "native", role: role.role },
-      sourceDisclosed: true,
-      startsOnDay: 1,
-      maxUses: null,
-      uses: 0,
-      lastUsedDay: null,
-      disabled: false,
-    } as NightAbility;
-  }
-  return ownedState as NightAbilityReadState<K>;
-}
-
-/** Existing initialization/learned-role callers own their original start-day decision. */
-export function setNightAbilityStartDay(ability: NightAbilityReadView, day: number): void {
-  (ability as { startsOnDay: number }).startsOnDay = day;
-}
-
-export function recordNightAbilityUse(
-  ability: NightAbilityReadView,
-  day: number,
-  consumed: boolean,
-): void {
-  if (abilityStatus(ability, day) !== "active") throw new Error("ability_not_active");
-  (ability as { lastUsedDay: number | null }).lastUsedDay = day;
-  if (consumed) (ability as { uses: number }).uses++;
 }
 
 export type PlayerNightAbility = {

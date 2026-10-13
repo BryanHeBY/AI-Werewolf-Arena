@@ -1,9 +1,8 @@
 /**
- * Unit tests for night ability shared contracts. Inputs are original grant/copy/transfer/expiry instances
- * and configured native state. Original literal receipts, reference/getter/error traces, facts and expected
- * state remain the oracle. Literal grant/install/transfer/copy and player prompt/provenance contracts use
- * bounded public mechanism owners without a full pipeline. No complete game phase or paid model runs;
- * existing local windows and denied entry probes remain bounded.
+ * 单元测试：验证普通夜能力 grant/copy/transfer/expiry 及原生配置契约。
+ * 输入为原实例、字面安装数据和明确 statePolicy；引用、getter、错误、事实及状态是独立预期。
+ * 通过有界公共 owner 检查安装／次数／玩家投影与来源，原窗口和被拒入口仍保留。
+ * 不执行完整阶段、模型或新 golden，也不回滚已付前缀。
  */
 import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
@@ -23,8 +22,8 @@ import {
   allNightAbilities,
   activeNightAbility,
   abilityStatus,
-  recordNightAbilityUse,
 } from "../../../src/game/mechanisms/roles/abilities";
+import { recordNightAbilityUse } from "../../../src/game/mechanisms/roles/ability_changes";
 import {
   grantNightAbility,
   setNightAbilityEnabled,

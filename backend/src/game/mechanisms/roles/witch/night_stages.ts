@@ -3,10 +3,14 @@
  * 输入为当前 native/granted potion 与已验证行动；输出保留已付救/毒、跳过和历史。
  * 原毒 intent 从原 source/target/day 及原请求读取点捕获的 abilityId 生成，不增加时钟/World/RNG读取。
  * 付款、目标映射、第二次行动、角色专有失败和 poison-only 限制保持原位置。
- * 来源句柄只供运行时消费，不进入玩家信息或 schema2；具体库存命令仍由能力 owner 提交。
+ * 来源句柄只供运行时消费，不进入玩家信息或 schema2；瓶数／旗标归 Witch 状态 owner，公共次数归实例 owner。
  */
 /** 文件说明：女巫夜间用药阶段处理。 */
-import { captureNightLife, livingNightLife, originalPoisonIntent } from "../../../../core/domain/night_effects";
+import {
+  captureNightLife,
+  livingNightLife,
+  originalPoisonIntent,
+} from "../../../../core/domain/night_effects";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { RoleComponent } from "../../../../core/domain/components/role";
 import {
@@ -27,7 +31,8 @@ import {
   consumeWitchHeal,
   consumeWitchPoison,
 } from "./state";
-import { activeNightAbility, allNightAbilities, recordNightAbilityUse } from "../abilities";
+import { activeNightAbility, allNightAbilities } from "../abilities";
+import { recordNightAbilityUse } from "../ability_changes";
 import { recordOwnNightAction, luckyTargetAllowed } from "../night_action_history";
 import { captureNightAbilityScope } from "../ability_scope";
 
@@ -260,10 +265,19 @@ async function executePotionTurn(
     if (!source || !target) return false;
     ctx.nativeNightEffects.commitReflectedTarget(receipt, day, witchId, "poison");
     recordNightAbilityUse(ability, day, true);
-    (ctx.state.poisonClaims ??= []).push(originalPoisonIntent({ source, target }, {
-      family: "witch", day, stage: "witch", actorLife: source,
-      requestedTargetId: targetId, abilityId: effectAbilityId,
-    }));
+    (ctx.state.poisonClaims ??= []).push(
+      originalPoisonIntent(
+        { source, target },
+        {
+          family: "witch",
+          day,
+          stage: "witch",
+          actorLife: source,
+          requestedTargetId: targetId,
+          abilityId: effectAbilityId,
+        },
+      ),
+    );
     ctx.ensureMarks(effectiveId).add(StatusMark.PoisonMark);
     consumeWitchPoison(witchState);
     ctx.nativeNightEffects.commitNativeReflection(

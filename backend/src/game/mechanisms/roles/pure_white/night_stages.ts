@@ -1,11 +1,8 @@
 /**
- * Runs Pure White Girl and Wolf Witch inspection stages with their distinct native policies.
- * Inputs are current actors, legal targets and validated checks; outputs are inspection history
- * and the configured attack effects. It does not collapse camp inspection into role inspection
- * or alter night-stage order. Shared role-check actor enumeration uses the bound
- * query before this feature checks its native Pure White/Wolf Witch policy.
- * Its three role-result state reads and history append delegate to the concrete
- * RoleInspection writer; use accounting and effects remain at their original sites.
+ * 负责纯白少女与狼巫各自原生角色查验政策。
+ * 输入为共享只读查询后的当前 actor、合法目标和验证行动；输出保留历史及既定攻击效果。
+ * 三个状态读取与历史追加委托 RoleInspection 具体 writer，use 委托实例 owner，仍在原位置。
+ * 不合并阵营／角色查验、失败语义或阶段顺序，不引入最终目标复检。
  */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -13,7 +10,8 @@ import { Camp, Phase, Role } from "../../../../core/domain/model";
 import { DeathCause } from "../../../../core/domain/deaths";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
-import { recordNightAbilityUse, roleInspectionPolicy } from "../abilities";
+import { roleInspectionPolicy } from "../abilities";
+import { recordNightAbilityUse } from "../ability_changes";
 import { captureNightAbilityScope } from "../ability_scope";
 import { resolveInspection } from "../inspection";
 import { recordAbilityRoleInspection } from "../role_inspection/ports";
