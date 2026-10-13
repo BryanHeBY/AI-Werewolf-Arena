@@ -92416,13 +92416,175 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Copied runRecorded/fixture helpers are latent function declarations; original case-local Worlds, scripts, recorders and cleanup stay one allocation per original call. No extra eager cached catalog read was introduced.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 473 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_transport_oracle.test.ts",
+      "to": "backend/tests/unit/features/radiant-eclipse/transport-mapping-and-binding-oracles.test.ts",
+      "sourceCommit": "346b1f0020a03d220b7af3971853d0ae202614a8",
+      "reason": "Actual selected unit module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "fc0b246206599127a09606fc3827fa913471c55bfa84bab642d8456b31f4c5a1",
+      "candidateSha256": "14456a79beb50c4e0823bc982ac0d176ba654ac341c0c6e24dcecb93cd05137a",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 171,
+          "end": 205,
+          "original": "../support/transport_prompt_oracle",
+          "value": "../../../support/transport_prompt_oracle",
+          "originalResolved": "backend/tests/support/transport_prompt_oracle.ts",
+          "expectedResolved": "backend/tests/support/transport_prompt_oracle.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 83,
+          "end": 129,
+          "original": "../support/radiant_eclipse_transport_scenarios",
+          "value": "../../../support/radiant_eclipse_transport_scenarios",
+          "originalResolved": "backend/tests/support/radiant_eclipse_transport_scenarios.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse_transport_scenarios.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "24d91f9e73db39665d35b7b1b1bb39186a576b52054fe915c2ca1c9359a7843b",
+          "title": "transport mapping matches independent FNV/Mulberry/Fisher literal golden",
+          "occurrence": 1
+        },
+        {
+          "id": "1cc4879d274e3d163b4193ac05e67b5a7b12cc916c26ef8f0b2167e9d4efab10",
+          "title": "borrow binding and current inventory cannot be replaced by historical substrings",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../support/features/radiant-eclipse/oracles/wire",
+          "originalImport": "import {\n  assertRadiantWireEvents,\n  assertRadiantTransportWire,\n} from \"../support/features/radiant-eclipse/oracles/wire\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "assertRadiantWireEvents",
+              "imported": "assertRadiantWireEvents",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "assertRadiantTransportWire",
+              "imported": "assertRadiantTransportWire",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../support/radiant_eclipse_recording",
+          "originalImport": "import { radiantRecording } from \"../support/radiant_eclipse_recording\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "radiantRecording",
+              "imported": "radiantRecording",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Copied runRecorded/fixture helpers are latent function declarations; original case-local Worlds, scripts, recorders and cleanup stay one allocation per original call. No extra eager cached catalog read was introduced.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 473 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/radiant_eclipse_transport_oracle.test.ts",
+      "to": "backend/tests/scenarios/reproduction/radiant-eclipse/wire-prefix-and-private-text-oracles.test.ts",
+      "sourceCommit": "346b1f0020a03d220b7af3971853d0ae202614a8",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "fc0b246206599127a09606fc3827fa913471c55bfa84bab642d8456b31f4c5a1",
+      "candidateSha256": "f4fa24123dcf11e6a378e6d22e39f094f05481f6ce38f1605eabf032ed28bf48",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 200,
+          "end": 236,
+          "original": "../support/radiant_eclipse_recording",
+          "value": "../../../support/radiant_eclipse_recording",
+          "originalResolved": "backend/tests/support/radiant_eclipse_recording.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse_recording.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 115,
+          "end": 163,
+          "original": "../support/features/radiant-eclipse/oracles/wire",
+          "value": "../../../support/features/radiant-eclipse/oracles/wire",
+          "originalResolved": "backend/tests/support/features/radiant-eclipse/oracles/wire.ts",
+          "expectedResolved": "backend/tests/support/features/radiant-eclipse/oracles/wire.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "36d4be0a1eacfc0cf5b9b56bd7db0565e64c03b98b0d9f732138768e1ed51152",
+          "title": "actual serialized wire must be a current independently validated request prefix",
+          "occurrence": 1
+        },
+        {
+          "id": "44a2c97d90b8dbc760266c1147447752b9d42f2bd8d31ae397cd8f500b1a0d03",
+          "title": "complete SDK history and ACP prompts reject donor private text outside event tuples",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../support/radiant_eclipse_transport_scenarios",
+          "originalImport": "import { radiantTransportScenario } from \"../support/radiant_eclipse_transport_scenarios\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "radiantTransportScenario",
+              "imported": "radiantTransportScenario",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../support/transport_prompt_oracle",
+          "originalImport": "import { assertTransportPrompt } from \"../support/transport_prompt_oracle\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "assertTransportPrompt",
+              "imported": "assertTransportPrompt",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Copied runRecorded/fixture helpers are latent function declarations; original case-local Worlds, scripts, recorders and cleanup stay one allocation per original call. No extra eager cached catalog read was introduced.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 473 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 567,
-    "targetFiles": 640,
-    "mappingEntries": 640,
-    "baselineCases": 7339,
+    "sourceFiles": 568,
+    "targetFiles": 642,
+    "mappingEntries": 642,
+    "baselineCases": 7343,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
