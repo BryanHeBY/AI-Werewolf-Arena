@@ -2,7 +2,8 @@
  * 负责 SDK／ACP 共用系统／回合模板、人设、工具协议提示与公开开局配比缓存的组织。
  * 输入为原 World、请求与提示选项；输出为模板组合文本，机制状态／阶段说明交游戏观察 owner。
  * 查询 thunk 保留每次 World／语言／Catalog／板子 getter 时点，不提前调用人设或角色 renderer。
- * 构造时公开 Map／size 的原部分写入仍在此；初始身份配比是本批明确保留的唯一构造机制查询。
+ * 开局人数先按原顺序写入，公开配比缓存仍唯一归此；来源选择与聚合交游戏观察 owner 直接填入。
+ * 查询或聚合失败保留原 size／Map 已写前缀，不回滚，也不把身份候选当作当前权限。
  * 候选仅作提示，不授予行动许可；本模块不提交资源、变更阶段或复制新的私有库存。
  */
 
@@ -14,8 +15,7 @@ import {
   appendPlayerPromptInitialIdentity,
 } from "../../../game/observation/player-prompt-directives";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-
-import { initialIdentityCandidateCounts } from "../../../game/mechanisms/roles/initial_identity/deal";
+import { collectPlayerInitialPublicCounts } from "../../../game/observation/player-initial-public-counts";
 
 import { renderMessage, text, type Locale } from "@ai-werewolf-arena/game-text";
 
@@ -59,22 +59,14 @@ export class PlayerPromptPolicy {
     private readonly world: World,
     private readonly options: PlayerPromptPolicyOptions,
   ) {
+    // size 在初发牌查询和计数之前提交；观察 owner 只填入本实例原 Map，不另建镜像。
     this.publicBoardSize = options.boardConfig?.boardSize ?? world.entityIds().length;
-    const thiefCounts = initialIdentityCandidateCounts(world);
-    if (thiefCounts) {
-      for (const [role, count] of thiefCounts) this.publicRoleCounts.set(role, count);
-    } else if (options.boardConfig) {
-      for (const { role, count } of options.boardConfig.roleSetups) {
-        this.publicRoleCounts.set(role, (this.publicRoleCounts.get(role) ?? 0) + count);
-      }
-    } else {
-      // 无板子输入的旧调用方只在开局构造时统计角色，保留原兼容行为。
-      for (const id of world.entityIds()) {
-        const role = this.role(id);
-        if (role)
-          this.publicRoleCounts.set(role.role, (this.publicRoleCounts.get(role.role) ?? 0) + 1);
-      }
-    }
+    collectPlayerInitialPublicCounts({
+      world: () => world,
+      boardConfig: () => options.boardConfig,
+      role: (actorId) => this.role(actorId),
+      counts: () => this.publicRoleCounts,
+    });
   }
 
   get locale(): Locale {
