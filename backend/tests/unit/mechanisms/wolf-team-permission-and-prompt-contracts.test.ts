@@ -42,8 +42,7 @@ const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, 
 
 const role = (world: World, id: number) => world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
 
-const alive = (world: World, id: number) =>
-  world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+const alive = (world: World, id: number) => world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
 
 const request = (
   actorId: number,
@@ -63,59 +62,58 @@ const request = (
 
 function fixture(locale: "zh-CN" | "en") {
   const game = bootstrapGame(sixPlayerMvpConfig, { locale, fixedRoles });
-  const catalog = createRoleCatalog({
-    contributions: getDefaultRoleContributions().map((profile) => {
-      if (profile.metadata.role === Role.Seer)
-        return {
-          ...profile,
-          runtime: {
-            ...profile.runtime,
-            nightStages: [],
-            wolfTeam: (state: RoleComponent) => ({
-              recognizedByPack: false,
-              recognizes: "all" as const,
-              canChat: false,
-              canVoteForKill: (state.privateState as { readonly knife?: unknown }).knife === true,
-            }),
+  const contributions = getDefaultRoleContributions().map((profile) => {
+    if (profile.metadata.role === Role.Seer)
+      return {
+        ...profile,
+        runtime: {
+          ...profile.runtime,
+          nightStages: [],
+          wolfTeam: (state: RoleComponent) => ({
+            recognizedByPack: false,
+            recognizes: "all" as const,
+            canChat: false,
+            canVoteForKill: (state.privateState as { readonly knife?: unknown }).knife === true,
+          }),
+        },
+      };
+    if (profile.metadata.role === Role.Guard)
+      return {
+        ...profile,
+        runtime: {
+          ...profile.runtime,
+          nightStages: [],
+          wolfTeam: {
+            recognizedByPack: true,
+            recognizes: "none" as const,
+            canChat: true,
+            canVoteForKill: false,
           },
-        };
-      if (profile.metadata.role === Role.Guard)
-        return {
-          ...profile,
-          runtime: {
-            ...profile.runtime,
-            nightStages: [],
-            wolfTeam: {
-              recognizedByPack: true,
-              recognizes: "none" as const,
-              canChat: true,
-              canVoteForKill: false,
-            },
+        },
+      };
+    if (profile.metadata.role === Role.Villager)
+      return {
+        ...profile,
+        runtime: {
+          ...profile.runtime,
+          wolfTeam: {
+            recognizedByPack: false,
+            recognizes: [Role.Seer],
+            canChat: false,
+            canVoteForKill: false,
           },
-        };
-      if (profile.metadata.role === Role.Villager)
-        return {
-          ...profile,
-          runtime: {
-            ...profile.runtime,
-            wolfTeam: {
-              recognizedByPack: false,
-              recognizes: [Role.Seer],
-              canChat: false,
-              canVoteForKill: false,
-            },
-          },
-        };
-      return profile;
-    }),
+        },
+      };
+    return profile;
   });
+  const catalog = createRoleCatalog({ contributions });
   for (const id of [3, 4, 5]) role(game.world, id).camp = Camp.Wolf;
-  return { ...game, catalog };
+  return { ...game, catalog, contributions };
 }
 
 for (const locale of ["zh-CN", "en"] as const) {
   test(`${locale}: explicit directional/partial knowledge, chat and knife are independent of faction and survival`, () => {
-    const { world, catalog } = fixture(locale);
+    const { world, catalog, contributions } = fixture(locale);
     expect(knownWolfTeammates(world, 1, catalog)).toEqual([2, 4]);
     expect(knownWolfTeammates(world, 3, catalog)).toEqual([1, 2, 4, 5]);
     expect(knownWolfTeammates(world, 4, catalog)).toEqual([]);
@@ -143,7 +141,7 @@ for (const locale of ["zh-CN", "en"] as const) {
       policy.buildSystem(request(1, "kill_vote"), { supportsDebugReporting: false }).systemPrompt,
     ).toContain("2, 4");
     const noPermission = createRoleCatalog({
-      contributions: getDefaultRoleContributions().map((profile) => ({
+      contributions: contributions.map((profile) => ({
         ...profile,
         runtime: { ...profile.runtime, wolfTeam: undefined },
       })),
