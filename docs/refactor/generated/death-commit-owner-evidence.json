@@ -1,0 +1,571 @@
+{
+  "schema": "awa-death-commit-owner-evidence-v1",
+  "scope": {
+    "baseline": "fa0a1e232f5c81c17cba0805ee135988cd60ffb2",
+    "paths": 10,
+    "rows": [
+      {
+        "path": "backend/src/game/engine/death_resolution.ts",
+        "sha256": "edadd1f3f674901a0888c1f89249fb96a5ce4ac52c6dc37bae944bcf7fdd203d"
+      },
+      {
+        "path": "backend/src/game/engine/death-committer.ts",
+        "sha256": "bb9c4939e456712a61233d39d3288ff01ba997f9df5b1514c2254905da179205"
+      },
+      {
+        "path": "backend/tests/unit/engine/death/death-committer.test.ts",
+        "sha256": "36ffea8764515cbacda61b114ae7b1ffb26460548dba14f670ae2468f06b047b"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+        "sha256": "06595f81f5ab83231292fc496f63fbc30873a7f30a8df34e30862ee5c31f57fe"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+        "sha256": "371dd9af9b0824844a2e3a582cb3f7bd44c986dd8be57eba337cde9835c0306e"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "sha256": "a2a34ef739140040255e343fafbf48f44067e25699a2609cda16bbb63ca2856e"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/hidden_wolf/ports.ts",
+        "sha256": "81f0b27704d55be4c62972f3e630243ed3c8f0b420e60bda89226975d7ff88b8"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/gargoyle/ports.ts",
+        "sha256": "742c29a94bcc07e4f490f9f64bd660282df74014ce5eb056710c6a4df8b79881"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mechanical_wolf/ports.ts",
+        "sha256": "59d7e2610d7e270902db44a53ef996242949d8adc4a002023e54518919e43d7b"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/ports.ts",
+        "sha256": "4474b443d455f659b706baea01a581202ccd3d537f9d7075ad515dc210da8c5f"
+      }
+    ],
+    "receipts": {
+      "firstType": {
+        "session": 13055,
+        "exit": 0
+      },
+      "finalType": {
+        "session": 12755,
+        "exit": 0
+      },
+      "newCases": {
+        "pass": 3,
+        "fail": 0,
+        "expect": 21
+      },
+      "oldSelected": {
+        "pass": 1,
+        "fail": 0,
+        "expect": 4
+      },
+      "scopedCheck": {
+        "session": 16822,
+        "exit": 0,
+        "commentFailures": 0,
+        "newOwnerDependencyFailures": 0,
+        "remainingResolverRawDebt": 14
+      }
+    },
+    "pendingHandles": []
+  },
+  "programProof": {
+    "baseline": "fa0a1e232f5c81c17cba0805ee135988cd60ffb2",
+    "originActualGit": true,
+    "rows": [
+      {
+        "name": "recordFragrantWave",
+        "equal": true
+      },
+      {
+        "name": "publishFragrantWave",
+        "equal": true
+      },
+      {
+        "name": "expandWeddingWave",
+        "equal": true
+      },
+      {
+        "name": "lastWordsMechanism",
+        "equal": true
+      },
+      {
+        "name": "settledLives",
+        "equal": true
+      },
+      {
+        "name": "constructor",
+        "equal": true
+      },
+      {
+        "name": "resolve",
+        "equal": true
+      },
+      {
+        "name": "collectDeathShot",
+        "equal": true
+      },
+      {
+        "name": "isSettledLife",
+        "equal": true
+      },
+      {
+        "name": "collectLastWords",
+        "equal": true
+      },
+      {
+        "name": "markPlayersDead",
+        "equal": true
+      }
+    ],
+    "moved": [
+      {
+        "name": "isSettledLife",
+        "defaultAndBodyExact": true,
+        "reads": [
+          {
+            "field": "world",
+            "original": 1,
+            "current": 1
+          },
+          {
+            "field": "events",
+            "original": 0,
+            "current": 0
+          },
+          {
+            "field": "state",
+            "original": 0,
+            "current": 0
+          }
+        ]
+      },
+      {
+        "name": "markPlayersDead",
+        "defaultAndBodyExact": true,
+        "reads": [
+          {
+            "field": "world",
+            "original": 15,
+            "current": 15
+          },
+          {
+            "field": "events",
+            "original": 10,
+            "current": 10
+          },
+          {
+            "field": "state",
+            "original": 11,
+            "current": 11
+          }
+        ]
+      }
+    ],
+    "ledgerFieldExact": true,
+    "consumerHasNoLedger": true,
+    "ownerMaps": 1,
+    "sourceTransforms": [
+      {
+        "kind": "ESNext",
+        "completeInverseProgramExact": true
+      },
+      {
+        "kind": "CommonJS",
+        "completeInverseProgramExact": true
+      }
+    ],
+    "sha": {
+      "backend/src/game/engine/death_resolution.ts": "edadd1f3f674901a0888c1f89249fb96a5ce4ac52c6dc37bae944bcf7fdd203d",
+      "backend/src/game/engine/death-committer.ts": "bb9c4939e456712a61233d39d3288ff01ba997f9df5b1514c2254905da179205",
+      "backend/tests/unit/engine/death/death-committer.test.ts": "36ffea8764515cbacda61b114ae7b1ffb26460548dba14f670ae2468f06b047b"
+    }
+  },
+  "validation": {
+    "receipts": {
+      "firstType": {
+        "session": 13055,
+        "exit": 0
+      },
+      "finalType": {
+        "session": 12755,
+        "exit": 0
+      },
+      "newCases": {
+        "pass": 3,
+        "fail": 0,
+        "expect": 21
+      },
+      "oldSelected": {
+        "pass": 1,
+        "fail": 0,
+        "expect": 4
+      },
+      "scopedCheck": {
+        "session": 16822,
+        "exit": 0,
+        "commentFailures": 0,
+        "newOwnerDependencyFailures": 0,
+        "remainingResolverRawDebt": 14
+      }
+    },
+    "heads": [],
+    "oldResolverDependencyDebt": 14,
+    "noRepeatedFullGateOrGame": true
+  },
+  "review": {
+    "root": "实际 owner 与完整 resolver 源码阅读通过：账本单一、原位置创建、默认参数保留、五处真实委托。原 15 World /10 events /11 state 顺序保持；Wild Child、事实记录、枪过期与继承的已提交前缀不挪。七机制具名端口与中文契约准确。",
+    "independentInventory": {
+      "baseline": "fa0a1e232f5c81c17cba0805ee135988cd60ffb2",
+      "files": [
+        {
+          "path": "backend/src/game/engine/death_resolution.ts",
+          "sha256": "edadd1f3f674901a0888c1f89249fb96a5ce4ac52c6dc37bae944bcf7fdd203d",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/engine/death-committer.ts",
+          "sha256": "bb9c4939e456712a61233d39d3288ff01ba997f9df5b1514c2254905da179205",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/engine/death/death-committer.test.ts",
+          "sha256": "36ffea8764515cbacda61b114ae7b1ffb26460548dba14f670ae2468f06b047b",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+          "sha256": "06595f81f5ab83231292fc496f63fbc30873a7f30a8df34e30862ee5c31f57fe",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+          "sha256": "371dd9af9b0824844a2e3a582cb3f7bd44c986dd8be57eba337cde9835c0306e",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+          "sha256": "a2a34ef739140040255e343fafbf48f44067e25699a2609cda16bbb63ca2856e",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/hidden_wolf/ports.ts",
+          "sha256": "81f0b27704d55be4c62972f3e630243ed3c8f0b420e60bda89226975d7ff88b8",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/gargoyle/ports.ts",
+          "sha256": "742c29a94bcc07e4f490f9f64bd660282df74014ce5eb056710c6a4df8b79881",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mechanical_wolf/ports.ts",
+          "sha256": "59d7e2610d7e270902db44a53ef996242949d8adc4a002023e54518919e43d7b",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/ports.ts",
+          "sha256": "4474b443d455f659b706baea01a581202ccd3d537f9d7075ad515dc210da8c5f",
+          "same": true
+        }
+      ],
+      "checks": {
+        "movedMethodDefaultsAndBodies": true,
+        "singleMapOwner": true,
+        "ledgerDeclarationExact": true,
+        "allocationAtOriginalFieldPosition": true,
+        "deferredContextGetterInitializer": true,
+        "originalPropertyReadSequence": true
+      },
+      "moved": [
+        {
+          "name": "isSettledLife",
+          "defaultsAndParameterOrderSame": true,
+          "bodyExact": true
+        },
+        {
+          "name": "markPlayersDead",
+          "defaultsAndParameterOrderSame": true,
+          "bodyExact": true
+        }
+      ],
+      "readSites": [
+        {
+          "name": "isSettledLife",
+          "old": ["world"],
+          "current": ["world"],
+          "same": true
+        },
+        {
+          "name": "markPlayersDead",
+          "old": [
+            "world",
+            "world",
+            "world",
+            "world",
+            "world",
+            "state",
+            "state",
+            "events",
+            "events",
+            "world",
+            "world",
+            "state",
+            "state",
+            "events",
+            "state",
+            "world",
+            "state",
+            "events",
+            "state",
+            "world",
+            "events",
+            "world",
+            "world",
+            "events",
+            "world",
+            "events",
+            "state",
+            "world",
+            "events",
+            "state",
+            "world",
+            "state",
+            "events",
+            "world",
+            "state",
+            "events"
+          ],
+          "current": [
+            "world",
+            "world",
+            "world",
+            "world",
+            "world",
+            "state",
+            "state",
+            "events",
+            "events",
+            "world",
+            "world",
+            "state",
+            "state",
+            "events",
+            "state",
+            "world",
+            "state",
+            "events",
+            "state",
+            "world",
+            "events",
+            "world",
+            "world",
+            "events",
+            "world",
+            "events",
+            "state",
+            "world",
+            "events",
+            "state",
+            "world",
+            "state",
+            "events",
+            "world",
+            "state",
+            "events"
+          ],
+          "same": true
+        }
+      ],
+      "headers": [],
+      "findings": [],
+      "prefixReview": [
+        "WildChild first-settlement observation precedes Alive=false",
+        "Animal/Noble actual facts/required record/closure/reveal keep old ordering before gun-list append and Lucky expiry",
+        "Ledger writes only after append/expiry success; an earlier exception retains Alive/facts without forged settled completion",
+        "All four inheritance refreshes occur after whole batch ledger commits; failure does not undo settled lives",
+        "Source phase/last words/badge/wave relation collection and final gun expiry remain original resolver-owned"
+      ],
+      "newTestsReview": "Three literal cases use real World/Alive/Role factory state. New owner bind reads zero; revive/replacement versions force fresh settlement; push failure before ledger and roster-refresh failure after ledger exercise actual prefixes. Existing receipts are not repeated.",
+      "limits": [
+        "Only actual ten-path scope/static semantics examined, no compiler/runtime/cold/discovery/game rerun",
+        "New owner receives explicit commit rights through context; full Wave/CommitReceipt/relations are not claimed migrated",
+        "Default empty array/object evaluation remains per call; ledger map is one per resolver lifetime, not a singleton"
+      ],
+      "publicNamedBindings": {
+        "ports7": 7,
+        "exact10OriginalEndpoints": [
+          {
+            "port": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+            "name": "isAnimalDreamBoard",
+            "actual": "backend/src/game/mechanisms/roles/animal_dream/authority.ts#isAnimalDreamBoard",
+            "original": "backend/src/game/mechanisms/roles/animal_dream/authority.ts#isAnimalDreamBoard",
+            "same": true
+          },
+          {
+            "port": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+            "name": "commitAnimalPufferKnifeDeath",
+            "actual": "backend/src/game/mechanisms/roles/animal_dream/authority.ts#commitAnimalPufferKnifeDeath",
+            "original": "backend/src/game/mechanisms/roles/animal_dream/authority.ts#commitAnimalPufferKnifeDeath",
+            "same": true
+          },
+          {
+            "port": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+            "name": "isNobleBodyBoard",
+            "actual": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts#isNobleBodyBoard",
+            "original": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts#isNobleBodyBoard",
+            "same": true
+          },
+          {
+            "port": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+            "name": "closeServantForDeath",
+            "actual": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts#closeServantForDeath",
+            "original": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts#closeServantForDeath",
+            "same": true
+          },
+          {
+            "port": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+            "name": "appendNobleContractClosure",
+            "actual": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts#appendNobleContractClosure",
+            "original": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts#appendNobleContractClosure",
+            "same": true
+          },
+          {
+            "port": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+            "name": "recordWildChildDeathCommit",
+            "actual": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts#recordWildChildDeathCommit",
+            "original": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts#recordWildChildDeathCommit",
+            "same": true
+          },
+          {
+            "port": "backend/src/game/mechanisms/roles/hidden_wolf/ports.ts",
+            "name": "refreshHiddenWolfInheritance",
+            "actual": "backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts#refreshHiddenWolfInheritance",
+            "original": "backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts#refreshHiddenWolfInheritance",
+            "same": true
+          },
+          {
+            "port": "backend/src/game/mechanisms/roles/gargoyle/ports.ts",
+            "name": "refreshGargoyleInheritance",
+            "actual": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts#refreshGargoyleInheritance",
+            "original": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts#refreshGargoyleInheritance",
+            "same": true
+          },
+          {
+            "port": "backend/src/game/mechanisms/roles/mechanical_wolf/ports.ts",
+            "name": "refreshMechanicalInheritance",
+            "actual": "backend/src/game/mechanisms/roles/mechanical_wolf/inheritance.ts#refreshMechanicalInheritance",
+            "original": "backend/src/game/mechanisms/roles/mechanical_wolf/inheritance.ts#refreshMechanicalInheritance",
+            "same": true
+          },
+          {
+            "port": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/ports.ts",
+            "name": "refreshAwakenedInheritance",
+            "actual": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/inheritance.ts#refreshAwakenedInheritance",
+            "original": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/inheritance.ts#refreshAwakenedInheritance",
+            "same": true
+          }
+        ],
+        "artifact": "/tmp/awa-p5-death-committer-third-public-proof.json",
+        "findings": []
+      },
+      "redEvidence": {
+        "first": "/tmp/awa-p5-death-committer-third-first-red.json",
+        "mapFalse": "Reviewer counted unrelated per-wave Maps as ledger. Restriction to same settledLives property and declaration exactly matches required one-owner invariant; no source change.",
+        "formatFalse": "Only voted_out object literal with exact3 timestamp/type/payload members gained a trailing object comma and line wrapping. Only that object optionalcomma is compared semantically; no arrays/holes/conditions/callback token omitted."
+      },
+      "conclusion": "No blocking finding in final ten-path DeathCommitter ownership extraction."
+    },
+    "publicBindings": {
+      "rows": [
+        {
+          "port": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+          "name": "isAnimalDreamBoard",
+          "actual": "backend/src/game/mechanisms/roles/animal_dream/authority.ts#isAnimalDreamBoard",
+          "original": "backend/src/game/mechanisms/roles/animal_dream/authority.ts#isAnimalDreamBoard",
+          "same": true
+        },
+        {
+          "port": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+          "name": "commitAnimalPufferKnifeDeath",
+          "actual": "backend/src/game/mechanisms/roles/animal_dream/authority.ts#commitAnimalPufferKnifeDeath",
+          "original": "backend/src/game/mechanisms/roles/animal_dream/authority.ts#commitAnimalPufferKnifeDeath",
+          "same": true
+        },
+        {
+          "port": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+          "name": "isNobleBodyBoard",
+          "actual": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts#isNobleBodyBoard",
+          "original": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts#isNobleBodyBoard",
+          "same": true
+        },
+        {
+          "port": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+          "name": "closeServantForDeath",
+          "actual": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts#closeServantForDeath",
+          "original": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts#closeServantForDeath",
+          "same": true
+        },
+        {
+          "port": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+          "name": "appendNobleContractClosure",
+          "actual": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts#appendNobleContractClosure",
+          "original": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts#appendNobleContractClosure",
+          "same": true
+        },
+        {
+          "port": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+          "name": "recordWildChildDeathCommit",
+          "actual": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts#recordWildChildDeathCommit",
+          "original": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts#recordWildChildDeathCommit",
+          "same": true
+        },
+        {
+          "port": "backend/src/game/mechanisms/roles/hidden_wolf/ports.ts",
+          "name": "refreshHiddenWolfInheritance",
+          "actual": "backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts#refreshHiddenWolfInheritance",
+          "original": "backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts#refreshHiddenWolfInheritance",
+          "same": true
+        },
+        {
+          "port": "backend/src/game/mechanisms/roles/gargoyle/ports.ts",
+          "name": "refreshGargoyleInheritance",
+          "actual": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts#refreshGargoyleInheritance",
+          "original": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts#refreshGargoyleInheritance",
+          "same": true
+        },
+        {
+          "port": "backend/src/game/mechanisms/roles/mechanical_wolf/ports.ts",
+          "name": "refreshMechanicalInheritance",
+          "actual": "backend/src/game/mechanisms/roles/mechanical_wolf/inheritance.ts#refreshMechanicalInheritance",
+          "original": "backend/src/game/mechanisms/roles/mechanical_wolf/inheritance.ts#refreshMechanicalInheritance",
+          "same": true
+        },
+        {
+          "port": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/ports.ts",
+          "name": "refreshAwakenedInheritance",
+          "actual": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/inheritance.ts#refreshAwakenedInheritance",
+          "original": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/inheritance.ts#refreshAwakenedInheritance",
+          "same": true
+        }
+      ],
+      "findings": []
+    }
+  },
+  "firstFailures": [
+    "新 owner 的八项 feature internal imports 触发真实新依赖问题，改经七个实际 public ports 的原函数引用；不刷新旧债",
+    "AST 打印器受换行／尾逗号影响；完整语法结构比较替代打印文本，并保留原红结果",
+    "第三方向起初误把结算器必要的波次 Map 算作账本；仅核 settledLives 唯一字段。原 voted_out 三字段对象打印尾逗号明确逆映射，其他 token/可选链不忽略。"
+  ],
+  "remaining": [
+    "Typed DeathWavePlan 与 CommitReceipt 全链",
+    "关系闭包及具体死亡动作扩展",
+    "判胜检查点完整生命周期",
+    "Resolver 十四项既有 private feature 依赖迁移"
+  ]
+}

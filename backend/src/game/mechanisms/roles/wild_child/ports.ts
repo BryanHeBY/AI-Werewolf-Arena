@@ -1,10 +1,9 @@
 /**
- * Exposes original wild child readiness and actual-night lifecycle bindings.
- * Inputs retain original World/day and outputs retain the same readiness or
- * closing capability. This boundary adds no state, copy, validation or rule;
- * setup, resource changes and knowledge remain in their concrete lifecycle owner.
- * At actual night entry, readiness is checked before opening. The returned close
- * follows the original finally order; terminal/currentness checks stay in the
- * lifecycle and this port never reopens a closed setup or action window.
+ * 提供野孩子准备状态、夜间单元和原生命死亡标记的公开入口。输入保留原 World、日期和玩家序号；
+ * 输出是原准备结果、关闭能力或绑定上的死亡标记。死亡标记在实际 Alive 修改之前写入，
+ * 权限与失败、关闭状态由具体生命周期所有者校验。本入口不复制状态、不修改阵营，
+ * 也不替代后续有序死亡波中的榜样转换。
  */
 export { hasActiveWildChild, wildChildReady, openWildChildNight } from "./lifecycle";
+
+export { recordWildChildDeathCommit } from "./lifecycle";

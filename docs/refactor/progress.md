@@ -399,3 +399,5 @@
 - 用户补充维护要求：重构不中断，新增与修改注释使用中文；触及文件顺带翻译职责头，在重要逻辑、数据结构、授权、排序和失败边界补准确说明，审查检查真实性。规范进入plan.md第16节，注释增量以程序保持／职责门禁验证，不重复行为测试。
 
 - C26 单目标伤害政策：原23条目标语句归night-damage-target，resolver保持前置filter/结果append/finalclear；只读plan+四lateID/只读modifierlife+marks.has，唯一取消命令两remove同receiver/原branch。完整原token/cancelinverse/alloc/return与独立5SHA审绿；原75/0/181，新增两prefix后boundary5/0/20，88420/82764及5权限负例42845 actualclosed0。五相关文件头与重要逻辑改中文，原生命/单反射/晚查询/部分取消说明有效，runtimeerase保持、heads0，不重fullgate。完整来源贡献/死亡wave/receipt仍继续。见night-target-damage.md。
+
+- C27 原生命提交owner：DeathCommitter唯一settledLives在原字段位置创建，原query1World/command15World+10events+11state均经准确deferredgetter，5实际site委托；原11member/ESNext+CJS inverse、default和付费失败prefix保持。10paths含7真实publicports、10原funcbindings；new3/0/21+原retry1/0/4，finite13055/12755与10head/newdeps16822 actual0；Root真实源审+独立10SHA/token/readorder/单账本/公开端点审0。中文重要结构/先付款/晚账本注释准确，初新8privateedge与两printer/mapmatcher红保，不重fullgate。TypedWave/Receipt及14旧resolver依赖继续。见death-commit-owner.md。

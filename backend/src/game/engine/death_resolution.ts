@@ -1,10 +1,10 @@
 /**
- * Owns ordered death waves, role death hooks, death shots, last words and badge handoff. Inputs
- * are proposed deaths with causes and original-life permissions; outputs are committed deaths
- * and their ordered events. It does not advance phases or seal final victory; PhaseManager owns
- * those decisions.
- * Its board-policy input is the same deeply readonly execution view as the manager.
+ * 负责有序死亡波、角色死亡钩子、枪击选择、遗言与警徽交接。输入是待处理的死亡名单、
+ * 原死因与原生命行动权限；输出是按原顺序提交的死亡和事件。实际生命修改和唯一已结算
+ * 账本委托 DeathCommitter，参数仍使用阶段管理器同一深只读规则视图。
+ * 本模块不切换阶段或确定最终胜负；关系扩展、遗言、警徽和枪的最终过期保留原执行顺序。
  */
+import { DeathCommitter } from "./death-committer";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { getSessionRecorder } from "../../recording/recording_context";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
@@ -13,7 +13,6 @@ import {
   filterAnimalLethalWave,
   prepareAnimalCatExpiry,
   animalAuthoritySnapshot,
-  commitAnimalPufferKnifeDeath,
 } from "../mechanisms/roles/animal_dream/authority";
 import { appendAnimalFact } from "../mechanisms/roles/animal_dream/facts";
 import {
@@ -25,11 +24,7 @@ import {
   fragrantAuthoritySnapshot,
   type FragrantWaveReceipt,
 } from "../mechanisms/roles/fragrant_pair_seer/authority";
-import {
-  isNobleBodyBoard,
-  closeServantForDeath,
-} from "../mechanisms/roles/noble_secret_body/authority";
-import { appendNobleContractClosure } from "../mechanisms/roles/noble_secret_body/facts";
+import { isNobleBodyBoard } from "../mechanisms/roles/noble_secret_body/authority";
 import { assertMagicianRosterCurrent } from "../mechanisms/roles/magician/night_frame";
 import {
   isMagicianBoard,
@@ -39,16 +34,11 @@ import { nightmareFearBlocks } from "../mechanisms/roles/nightmare_shadow/night_
 import { demonHunterNativeGunCurrent } from "../mechanisms/roles/demon_hunter/authority";
 import { expandWeddingDeaths, weddingGroup } from "../mechanisms/roles/ghost_bride/authority";
 import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-text";
-import {
-  recordWildChildDeathCommit,
-  resolveWildChildDeathWave,
-} from "../mechanisms/roles/wild_child/lifecycle";
+import { resolveWildChildDeathWave } from "../mechanisms/roles/wild_child/lifecycle";
 import { expandLoversWave } from "../mechanisms/roles/cupid/relation";
 import { permitsCharm } from "../mechanisms/roles/wolf_beauty/relation";
-import { isRoleId } from "@ai-werewolf-arena/game-catalog";
 import type { BoardConfig, LastWordsPolicy } from "../../core/domain/board";
 import { captureNightLife, livingNightLife } from "../../core/domain/night_effects";
-import { AliveComponent, aliveLifeVersion } from "../../core/domain/components/alive";
 import { COMPONENT } from "../../core/domain/components/names";
 import {
   ActionProvider,
@@ -76,18 +66,16 @@ import {
   commitCharmDeath,
   type CharmBinding,
 } from "../mechanisms/roles/wolf_beauty/relation";
-import { refreshHiddenWolfInheritance } from "../mechanisms/roles/hidden_wolf/inheritance";
-import { refreshGargoyleInheritance } from "../mechanisms/roles/gargoyle/inheritance";
-import { refreshMechanicalInheritance } from "../mechanisms/roles/mechanical_wolf/inheritance";
-import { refreshAwakenedInheritance } from "../mechanisms/roles/awakened_hidden_wolf/inheritance";
-import { expireLuckyAbilitiesOnDeath } from "../mechanisms/roles/ability_changes";
+import { refreshHiddenWolfInheritance } from "../mechanisms/roles/hidden_wolf/ports";
+import { refreshGargoyleInheritance } from "../mechanisms/roles/gargoyle/ports";
+import { refreshMechanicalInheritance } from "../mechanisms/roles/mechanical_wolf/ports";
+import { refreshAwakenedInheritance } from "../mechanisms/roles/awakened_hidden_wolf/ports";
 import {
   activeDeathGun,
   captureDeathGun,
   firstDeathGuns,
   finishDeathGuns,
 } from "../mechanisms/roles/death_abilities";
-
 import { getHunterState } from "../mechanisms/roles/hunter/ports";
 import { getWolfKingState } from "../mechanisms/roles/wolf_king/ports";
 
@@ -210,10 +198,21 @@ export class DeathResolution {
     return ids.filter((id) => !before.has(id));
   }
   private readonly lastWordsMechanism = getDefaultLastWordsMechanism();
-  private readonly settledLives = new Map<
-    EntityId,
-    { component: AliveComponent; version: number | undefined }
-  >();
+  // 只捕获结算器本身；每次 World、事件和运行状态读取仍发生在原命令表达式处。
+  private readonly deathCommitter = (() => {
+    const resolution = this;
+    return new DeathCommitter({
+      get world() {
+        return resolution.world;
+      },
+      get events() {
+        return resolution.events;
+      },
+      get state() {
+        return resolution.state;
+      },
+    });
+  })();
 
   constructor(
     private readonly world: World,
@@ -322,7 +321,8 @@ export class DeathResolution {
     const seen = new Set<EntityId>(
       deadIds.filter((id) => {
         return (
-          this.world.getComponent(id, COMPONENT.Alive) !== undefined && !this.isSettledLife(id)
+          this.world.getComponent(id, COMPONENT.Alive) !== undefined &&
+          !this.deathCommitter.isSettledLife(id)
         );
       }),
     );
@@ -384,7 +384,7 @@ export class DeathResolution {
       while (pending.length > 0) {
         if (!isCurrent()) return;
         const deathPhase = firstBatch ? phase : this.state.phase;
-        this.markPlayersDead(
+        this.deathCommitter.markPlayersDead(
           pending,
           true,
           gunsToExpire,
@@ -634,7 +634,7 @@ export class DeathResolution {
                       (id) =>
                         !next.has(id) &&
                         !seen.has(id) &&
-                        !this.isSettledLife(id) &&
+                        !this.deathCommitter.isSettledLife(id) &&
                         this.world.getComponent(id, COMPONENT.Alive)?.alive,
                     )
                   : [];
@@ -657,7 +657,7 @@ export class DeathResolution {
                       ];
                       continue;
                     }
-                    if (seen.has(id) || this.isSettledLife(id)) {
+                    if (seen.has(id) || this.deathCommitter.isSettledLife(id)) {
                       if ((proposedSources[id] ?? []).includes(DeathCause.Lovers))
                         allSources[id] = [
                           ...new Set([...(allSources[id] ?? []), DeathCause.Lovers]),
@@ -694,7 +694,7 @@ export class DeathResolution {
                     seen.add(id);
                     allSources[id] = [...new Set(proposedSources[id] ?? [])];
                     originPhases.set(id, ownsFragrant ? this.state.phase : sourcePhase);
-                    this.markPlayersDead(
+                    this.deathCommitter.markPlayersDead(
                       [id],
                       false,
                       gunsToExpire,
@@ -955,16 +955,6 @@ export class DeathResolution {
     return { kind: "invalid" };
   }
 
-  private isSettledLife(id: EntityId): boolean {
-    const alive = this.world.getComponent(id, COMPONENT.Alive),
-      settled = this.settledLives.get(id);
-    return (
-      alive !== undefined &&
-      settled?.component === alive &&
-      settled.version === aliveLifeVersion(alive)
-    );
-  }
-
   private async collectLastWords(
     deadIds: EntityId[],
     phase: Phase,
@@ -1055,104 +1045,6 @@ export class DeathResolution {
       } finally {
         permit.close();
       }
-    }
-  }
-
-  /**
-   * 将待结算死亡名单真正写入存活状态。
-   */
-  private markPlayersDead(
-    playerIds: EntityId[],
-    refreshInheritance = true,
-    gunsToExpire: ReturnType<typeof firstDeathGuns> = [],
-    reveal = false,
-    sources: DeathSources = {},
-    animalScope?: object | (() => boolean),
-  ): void {
-    for (const id of playerIds) {
-      const alive = this.world.getComponent(id, COMPONENT.Alive);
-      if (!alive) {
-        continue;
-      }
-      const firstSettlement = !this.isSettledLife(id);
-      if (firstSettlement) recordWildChildDeathCommit(this.world, id);
-      alive.alive = false;
-      if (firstSettlement && isAnimalDreamBoard(this.world)) {
-        if (
-          (sources[id] ?? []).includes(DeathCause.WolfKill) &&
-          this.world.getComponent(id, COMPONENT.Role)?.role === Role.Pufferfish
-        ) {
-          commitAnimalPufferKnifeDeath(
-            this.world,
-            this.state.day,
-            sources[id] ?? [],
-            animalScope ?? (() => !this.state.gameOver),
-          );
-        }
-        if ((sources[id] ?? []).includes(DeathCause.Exile))
-          this.events.push({ timestamp: Date.now(), type: "voted_out", payload: { target: id } });
-        else if (
-          (sources[id] ?? []).some(
-            (c) => c === DeathCause.PufferRetaliation || c === DeathCause.WhiteCatExpiry,
-          )
-        )
-          this.events.push({
-            timestamp: Date.now(),
-            type: "additional_deaths",
-            payload: { deaths: [id] },
-          });
-      }
-      if (firstSettlement && isNobleBodyBoard(this.world)) {
-        const closed = closeServantForDeath(this.world, this.state.day, id);
-        const payload = {
-          policy: "awa_noble_secret_body_v1" as const,
-          actorId: id,
-          day: this.state.day,
-          causes: [...(sources[id] ?? [])],
-        };
-        this.events.push({
-          timestamp: Date.now(),
-          type: "noble_body_death_committed",
-          payload,
-          audience: Object.freeze([]),
-        });
-        getSessionRecorder()?.recordRequiredLogicOp({
-          scope: "resolution",
-          op: "noble_body_death_committed",
-          phase: this.state.phase,
-          status: "ok",
-          output: {
-            policy: payload.policy,
-            playerId: id,
-            day: payload.day,
-            causes: payload.causes,
-          },
-        });
-        if (closed)
-          appendNobleContractClosure(
-            this.world,
-            this.state.day,
-            closed,
-            this.events,
-            this.state.phase,
-          );
-      }
-      const role = this.world.getComponent(id, COMPONENT.Role)?.role;
-      if (reveal && firstSettlement && isRoleId(role))
-        this.events.push({
-          timestamp: Date.now(),
-          type: "player_role_revealed",
-          payload: { playerId: id, role },
-        });
-      gunsToExpire.push(...firstDeathGuns(this.world, id));
-      expireLuckyAbilitiesOnDeath(this.world, id, this.events);
-      this.settledLives.set(id, { component: alive, version: aliveLifeVersion(alive) });
-    }
-    if (refreshInheritance) {
-      refreshHiddenWolfInheritance(this.world, this.events, this.state.day);
-      refreshGargoyleInheritance(this.world, this.events, this.state.day);
-      refreshMechanicalInheritance(this.world, this.state.day, this.events);
-      refreshAwakenedInheritance(this.world, this.state.day, this.events);
     }
   }
 }

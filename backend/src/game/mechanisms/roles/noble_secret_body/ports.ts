@@ -1,9 +1,8 @@
 /**
- * Owns Noble's public ordinary knife query and exposes its concrete night handoff ports.
- * Input is a target ID bound to the original World; output retains the original
- * role/policy allowance. When queried, the conditional second Role lookup and
- * field failures keep their order. Binding never reads state or grants World,
- * life, resource-write or body-contract commit access to the consumer.
+ * 负责贵族公开的普通狼刀查询，并提供具体夜间交接和死亡契约关闭入口。
+ * 输入是绑定原 World 的目标序号或实际边界的原运行参数；输出保留原允许结果、状态和事实。
+ * 查询时的条件第二次 Role 读取与字段失败维持原顺序；死亡写权限和失败、关闭窗口仍属于具体权威所有者。
+ * 本入口不复制组件、不授予新生命或库存权限，也不提前提交贵族与侍从契约。
  */
 import { Role, type EntityId } from "../../../../core/domain/identity";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -47,3 +46,5 @@ export {
   resolveSecretBodyDamage,
 } from "./authority";
 export { appendNobleContractClosure } from "./facts";
+
+export { closeServantForDeath } from "./authority";
