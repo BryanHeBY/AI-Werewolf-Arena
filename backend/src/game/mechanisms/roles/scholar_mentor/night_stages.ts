@@ -1,11 +1,12 @@
 /**
- * Runs Scholar/Mentor choice and bonus stages from the resolved modifier night. Inputs are
- * eligible bonus actors, target scopes and validated actions; outputs preserve each bonus effect
- * and associated native history. It never recomputes another role's target receipt after a paid
- * effect.
+ * 负责学者／导师本夜选择及独立加成阶段。
+ * 输入为有资格的加成行动者、原目标 receipt 和已校验行动；输出保留已付效果及本职历史。
+ * 加成毒在原 receipt.commit 与印记付款之后附带来源，独立于女巫或受赠瓶数。
+ * 本模块不重新计算别族的已付目标，也不将原体句柄或因果 Symbol 写入事件。
  */
 import { COMPONENT, Camp, Phase, StatusMark, type RoleComponent } from "../../../../core";
 import { aliveLifeVersion } from "../../../../core/domain/components/alive";
+import { originalPoisonIntent, type NightLifeScope } from "../../../../core/domain/night_effects";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import { resolveInspection } from "../inspection";
 import {
@@ -168,11 +169,20 @@ function bonus(kind: ModifierBonusKind, priority: number): NightStageHandler {
               });
             } else if (kind === "poison") {
               marks.add(StatusMark.PoisonMark);
-              (ctx.state.poisonClaims ??= []).push({
-                source: receipt.source,
+              // source 在原对象字段求值位置读取一次；receipt 的付款和当前性仍归 frame。
+              let effectSource: NightLifeScope;
+              (ctx.state.poisonClaims ??= []).push(originalPoisonIntent({
+                source: (effectSource = receipt.source),
                 target: receipt.target,
                 isCurrent: receipt.effectCurrent,
-              });
+              }, {
+                family: "scholar-mentor",
+                day,
+                stage: "scholar_mentor_bonus",
+                actorLife: effectSource,
+                requestedTargetId: targetId,
+                abilityId: "bonus:poison",
+              }));
             } else {
               marks.add(StatusMark.WolfKillMark);
               (ctx.state.modifierKnifeTargets ??= []).push(targetId);

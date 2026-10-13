@@ -1,14 +1,13 @@
 /**
- * Executes the late lucky or black-market recipient ability stage.
- * Inputs are captured recipient instances and validated night actions; outputs
- * preserve original effect, use-count and recipient-commit ordering. Seer writes
- * use its concrete owner before Fox effects; this stage never replaces the state
- * slot or adds a new retry, lease check or rollback boundary around that command.
+ * 负责幸运儿或黑市受赠者的晚执行能力阶段。
+ * 输入为捕获的受赠实例和已校验行动；输出保留效果、库存、次数与受赠提交的原顺序。
+ * 原毒来源复用既有 abilityId／目标参数读取，不新增 getter、资格重检或资源回滚。
+ * 查验先调用状态 owner 再提交子狐效果；本模块不替换状态槽，也不记录运行时原体句柄。
  */
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import { Camp, Phase, PotionType, StatusMark, type ToolName } from "../../../core/domain/model";
-import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
+import { captureNightLife, livingNightLife, originalPoisonIntent, type NightLifeScope } from "../../../core/domain/night_effects";
 import type { World } from "../../../core/domain/world";
 import type { NightStageHandler } from "../stages/night/contracts";
 import {
@@ -103,6 +102,9 @@ export function recipientAbilityStage(
           let completed = false;
           for (let attempt = 0; attempt < 3; attempt++) {
             if (!current()) break;
+            // 在原校验参数和目标查找位置捕获，避免来源信息再次读取行动 getter。
+            let effectAbilityId: string;
+            let effectRequestedTargetId: number | null = null;
             const targets = new Map(
               ctx.world
                 .getAliveEntityIds()
@@ -138,7 +140,7 @@ export function recipientAbilityStage(
             const result = ctx.toolGateway.validateAndSanitize(ctx.world, actorId, action, {
               phase: Phase.Night,
               day,
-              abilityId: ability.id,
+              abilityId: (effectAbilityId = ability.id),
             });
             if (!current() || !result.ok || !result.sanitizedCall) continue;
             const call = result.sanitizedCall;
@@ -156,7 +158,7 @@ export function recipientAbilityStage(
             )
               continue;
             const target =
-              call.args.target_id === null ? undefined : targets.get(call.args.target_id);
+              call.args.target_id === null ? undefined : targets.get((effectRequestedTargetId = call.args.target_id));
             if (!target || !livingNightLife(ctx.world, target)) continue;
             if (!luckyTargetAllowed(ctx.world, actorId, ability, day, kind, target.id)) continue;
             if (call.name === "check_identity" && ability.kind === "seer_check") {
@@ -208,8 +210,9 @@ export function recipientAbilityStage(
               ability.kind === "potion" &&
               ability.state.poison > 0
             ) {
-              (ctx.state.poisonClaims ??= []).push({
-                source: scope.life,
+              let effectSource: NightLifeScope;
+              (ctx.state.poisonClaims ??= []).push(originalPoisonIntent({
+                source: (effectSource = scope.life),
                 target,
                 ...(policy === "black_market"
                   ? {
@@ -217,7 +220,14 @@ export function recipientAbilityStage(
                         ctx.isCurrent() && ctx.currentDay() === day && scope.isOwnerCurrent(true),
                     }
                   : {}),
-              });
+              }, {
+                family: policy === "lucky" ? "lucky" : "black-market",
+                day,
+                stage: policy === "lucky" ? "lucky" : "black_market_recipient",
+                actorLife: effectSource,
+                requestedTargetId: effectRequestedTargetId,
+                abilityId: effectAbilityId,
+              }));
               ctx.ensureMarks(target.id).add(StatusMark.PoisonMark);
               consumeRecipientPoison(ability);
               ctx.events.push({

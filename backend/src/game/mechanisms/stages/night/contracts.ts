@@ -3,7 +3,8 @@
  * 输入为捕获的阶段操作、已付效果和 actor 查询；输出为有类型的贡献及原状态引用。
  * 机械、觉醒和原毒的内建生产者提交 sourced intent，源原体/因果信息只供运行时消费。
  * 旧注入 effect/claim 保留接受宽度；其额外 kind/origin/getter 不被当作新协议读取。
- * 此契约不查询 World 或提交库存，未迁的 Recipient/Scholar 毒保留明确 legacy 路径。
+ * 所有内建原毒（含受赠及学者加成）均有来源；此契约不查询 World 或提交库存。
+ * 外部自定义注入仍保留明确 legacy 接受政策，不把同名字段视为 owned 来源。
  */
 import { StatusMarksComponent } from "../../../../core/domain/components/status_marks";
 import {

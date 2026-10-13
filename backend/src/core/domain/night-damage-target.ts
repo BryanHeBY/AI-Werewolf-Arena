@@ -3,12 +3,13 @@
  * 输入为只读折叠计划、原效果查询与当前印记读者；输出保留该目标的原死因顺序。
  * 仅专用取消命令可在原同守同救分支移除 Guard／Heal，不能添加或清空印记、修改生命、
  * 发布事实或消费库存。梦境、免疫与修饰效果保持晚读取及原失败前缀。
- * 普通狼刀、机械额外刀和觉醒额外刀保留各自的保护规则。
+ * 原毒／反射毒使用折叠后的 owned 因果去向；外部 legacy 保留原集合后备政策。
+ * 普通狼刀、机械额外刀和觉醒额外刀保留各自的保护规则，不归并不同死因。
  */
 import { DeathCause } from "./deaths";
 import { StatusMark, type EntityId } from "./identity";
 import type { StatusMarksComponent } from "./components/status_marks";
-import { livingNightLife, type NightEffectQuery, type NightLifeReadScope } from "./night_effects";
+import { livingNightLife, nightPoisonRouteTargets, type NightEffectQuery, type NightLifeReadScope } from "./night_effects";
 import type { NightDamageEffects, NightDamagePlan } from "./night-damage-plan";
 
 /**
@@ -56,8 +57,8 @@ export function resolveNightDamageTarget(
     marks?.has(StatusMark.WolfKillMark) === true && !effects.wolfImmuneTargets?.includes(entityId);
   const hasDirectPoison =
     marks?.has(StatusMark.PoisonMark) === true &&
-    (!claimedPoisonTargets.has(entityId) || mechanical.directPoisonTargets.has(entityId));
-  const hasPoison = hasDirectPoison || mechanical.reflectedPoisonTargets.has(entityId);
+    (!claimedPoisonTargets.has(entityId) || nightPoisonRouteTargets(mechanical, entityId, "direct"));
+  const hasPoison = hasDirectPoison || nightPoisonRouteTargets(mechanical, entityId, "reflected");
   // 毒独立于普通守护／解药冲突；不能被同守同救抵消。
   const dreamProtected = effects.protectedTargets?.includes(entityId) === true;
   const mechanicalShield = mechanical.shields.has(entityId);

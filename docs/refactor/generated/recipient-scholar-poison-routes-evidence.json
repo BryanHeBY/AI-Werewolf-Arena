@@ -1,0 +1,267 @@
+{
+  "baseline": "7d63a4e938c80c74e93e3b14a15b296743e9822a",
+  "scope": {
+    "baseline": "7d63a4e938c80c74e93e3b14a15b296743e9822a",
+    "counts": {
+      "files": 6,
+      "source": 5,
+      "newTests": 1
+    },
+    "files": [
+      {
+        "path": "backend/src/core/domain/night_effects.ts",
+        "sha256": "5379446916a732b9137f10ffd2678f1286f637e0bdb67619668654baefc82dc2"
+      },
+      {
+        "path": "backend/src/core/domain/night-damage-target.ts",
+        "sha256": "b3790a22204b3228e8677add900f596fdece301865d20eb8e91ab5a1764760fd"
+      },
+      {
+        "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+        "sha256": "86a0a04b8ce67bdd7a309a5a09e4df8c4d5ff6c2f806cddec07c3cb2d8e0d914"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+        "sha256": "d93cfeb00c77cee6d58ab98a3fc652820722863830f68153ed6abecdd74d27b1"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+        "sha256": "e4d25ea5854df50df6f12764929817bcea58a3ba0605306e519fbd6d891e9eac"
+      },
+      {
+        "path": "backend/tests/unit/domain/recipient-scholar-poison-routes.test.ts",
+        "sha256": "f795b3dabb715d55611d772731b35ad17410a563c4e970c85f21f21b7303fbba"
+      }
+    ]
+  },
+  "status": "reviewed_ready_to_commit",
+  "artifacts": {
+    "originals": "/tmp/awa-c25-recipient-scholar-originals.json",
+    "programProof": "/tmp/awa-c25-recipient-scholar-program-proof.json",
+    "headers": "/tmp/awa-c25-recipient-scholar-headers.json"
+  },
+  "producers": {
+    "recipient": "Both lucky/black-market share the real producer. Reuse original gateway ability.id read, second target_id Map lookup read and source literal-field read. Original optional black-market current callback / lucky no-callback policy, poison count, uses, commits, event ordering unchanged.",
+    "scholar": "Reuse original receipt.source field read, original targetId/day and an independent bonus:poison label. receipt.commit -> ensureMarks -> PoisonMark -> original source/target/effectCurrent fields -> claim -> modifierBonusEffects/event unchanged. No native or recipient inventory is spent."
+  },
+  "causalConsumption": {
+    "construction": "At original accepted direct/reflected poison Set.add points, retain same origin/cause Symbol and resolved target original-body reference in immutable causal routes. No callbacks, World, clock or RNG extra reads.",
+    "storage": "Derived single damage-fold result has a non-enumerable immutable Symbol property; no global World map, second effect collection or archival shape/version change.",
+    "actualConsumer": "resolveNightDamageTarget direct/reflected acceptance branches read owned routes; original target sets remain OR fallback, including their existing owned entries. Routes supplement actual causal acceptance, do not completely replace the legacy collection authority.",
+    "downstream": "nightPoisonRoutes exports the actual accepted per-cause route for next Wave consumer. Full Effect->DeathWave/life-validation consumption is not claimed delivered by this batch.",
+    "legacyPlanCompatibility": "identity-only ownedDamagePlans WeakSet prevents a new Symbol trap on external legacy plan/proxy; route data remains on the original returned fold object, no second World/effect data store"
+  },
+  "receipts": [
+    {
+      "name": "new owner route tests",
+      "path": "/tmp/awa-c25-recipient-scholar-route-tests.log",
+      "exit": 0,
+      "pass": 5,
+      "fail": 0,
+      "assertions": 28
+    },
+    {
+      "name": "original Lucky native/gift resource case",
+      "path": "/tmp/awa-c25-recipient-scholar-existing-lucky.log",
+      "exit": 0,
+      "pass": 1,
+      "assertions": 8
+    },
+    {
+      "name": "original Black good poison gift and recipient case",
+      "path": "/tmp/awa-c25-recipient-scholar-existing-black-market.log",
+      "exit": 0,
+      "pass": 1,
+      "assertions": 8
+    },
+    {
+      "name": "original Scholar enhance-spent-poison actual two-cycle case/en",
+      "path": "/tmp/awa-c25-recipient-scholar-existing-scholar.log",
+      "exit": 0,
+      "pass": 1,
+      "assertions": 13
+    },
+    {
+      "name": "strict focused compiler: own route tests + above 3 original test modules/transitive sources",
+      "path": "/tmp/awa-c25-recipient-scholar-types-first.log",
+      "sessionId": 75396,
+      "observedTerminalExit": 0
+    },
+    {
+      "name": "6 Chinese responsibility heads",
+      "path": "/tmp/awa-c25-recipient-scholar-headers.json",
+      "failures": 0
+    },
+    {
+      "name": "actual external legacy plan Proxy symbol trap",
+      "path": "/tmp/awa-c25-recipient-scholar-plan-proxy-test.log",
+      "exit": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 2
+    },
+    {
+      "name": "final strict finite after plan identity brand and Proxy negative",
+      "path": "/tmp/awa-c25-recipient-scholar-types-plan-proxy-final.log",
+      "sessionId": 42403,
+      "observedTerminalExit": 0
+    }
+  ],
+  "programEvidence": {
+    "actualGitOriginals": 6,
+    "registeredMechanicalFoldInverse": true,
+    "wholeRetainedOtherModules": 5,
+    "unchangedControl": "night-damage-plan.ts captured original but unchanged and not staged scope",
+    "notes": "New route metadata/policy bodies independently reviewed; no false whole core new-policy equivalence claim."
+  },
+  "internalExit": "All six internal original-poison push sites now submit a factory intent, including both Demon original-poison claims returned to Witch controller. Lucky/black-market/Scholar were final legacy producers. External injected unbranded claims deliberately retain old acceptance/read behavior.",
+  "limits": [
+    "Other damage families and actual DeathWave consumption remain subsequent C25/P5 scope.",
+    "No schema2/event/record/player text/golden file/board/RNG changes.",
+    "No full suites, discovery, network or SDK model requests were run."
+  ],
+  "initialEvidence": {
+    "preBrandHandoff": "/tmp/awa-c25-recipient-scholar-owner-handoff-pre-plan-proxy.json",
+    "initialFiveOwnerCases": "5pass0/28 assertions remain unchanged; only extra plan Proxy case 1pass0/2 ran after identity brand",
+    "limitation": "No runtime run was recorded against pre-brand external-plan Proxy; the extra Symbol trap gap was found by source reading, not mislabeled as a failed test receipt."
+  },
+  "independentReview": {
+    "baseline": "7d63a4e938c80c74e93e3b14a15b296743e9822a",
+    "files": [
+      {
+        "path": "backend/src/core/domain/night_effects.ts",
+        "sha256": "47a860dea0dca82609103e6d839ab602abc1b305ebd8d396080d9ec1797360d9",
+        "sameFinal": true,
+        "sameSourceProof": true
+      },
+      {
+        "path": "backend/src/core/domain/night-damage-target.ts",
+        "sha256": "b3790a22204b3228e8677add900f596fdece301865d20eb8e91ab5a1764760fd",
+        "sameFinal": true,
+        "sameSourceProof": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+        "sha256": "86a0a04b8ce67bdd7a309a5a09e4df8c4d5ff6c2f806cddec07c3cb2d8e0d914",
+        "sameFinal": true,
+        "sameSourceProof": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+        "sha256": "d93cfeb00c77cee6d58ab98a3fc652820722863830f68153ed6abecdd74d27b1",
+        "sameFinal": true,
+        "sameSourceProof": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+        "sha256": "e4d25ea5854df50df6f12764929817bcea58a3ba0605306e519fbd6d891e9eac",
+        "sameFinal": true,
+        "sameSourceProof": true
+      },
+      {
+        "path": "backend/tests/unit/domain/recipient-scholar-poison-routes.test.ts",
+        "sha256": "9dc13942bbe44db150d2fb30cfb2fe1c23497be3c7604e75aa2155a42b6acf83",
+        "sameFinal": true,
+        "sameSourceProof": null
+      }
+    ],
+    "staticReviewArtifact": "/tmp/awa-c25-recipient-scholar-third-static-review.json",
+    "findings": [],
+    "newLiteralTests": {
+      "cases": 5,
+      "inputs": "Real captureNightLife from three Alive components and own intent metadata; handwritten Poison mark and direct death cause. Actual target consume verified after clearing only direct compatibility Set; reflected identity, serialization keys/shape and legacy hostile metadata are independent literal expectations.",
+      "noPrivilegeClaim": "Factories only annotate input effects. Tests do not pretend that mark creation or factory annotation grants inventory/action/resource authority.",
+      "limits": "Reflected route to actual acceptance is statically covered by the exact second helper substitution; the specific new reflection case tests folded route/reference/serialization, not an additional reflected target clear-Set run."
+    },
+    "semantics": [
+      "Recipient validation ability.id and second target_id lookup are captured at their original reads. Original scope.life is captured once at the source object field. Claim precedes PoisonMark, then consumeRecipientPoison, event, use history and recipient commit, as before.",
+      "Scholar paid receipt.commit still precedes mark creation/add, original source/target/effectCurrent reads, claim append, modifierBonusEffects and event. Its bonus poison uses independent bonus:poison metadata, never recipient or native Witch bottle consumption.",
+      "Original poison currentness/target life/absorption/shield selection and source life gate remain unchanged. Routes are added only after the same Set.add acceptance point; every reflected cause retains original poison origin/causeId and points to original source scope without a second reflection pass.",
+      "A frozen array under nonenumerable private Symbol belongs to one returned plan. No World keyed second ledger or new allocator authority; target still holds the original scope/body references.",
+      "Target accepts owned direct/reflected route rows, with existing sets as explicit OR fallback. This does not claim complete replacement of sets or authority strengthening; legacy retains exact field read helpers and old accepted inputs.",
+      "No new raw effect metadata/routes are added to current events, player observation or schema2/Tape; actual events remain old original declarations. Full typed Wave/Receipt/Commit integration and causal archive DTO remain subsequent work."
+    ],
+    "checks": {
+      "producerChecks": [
+        {
+          "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+          "wholeNonImportProgramAfterOnlyFactoryCapturesSame": true,
+          "factories": 1,
+          "captures": 3,
+          "declarations": 3
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+          "wholeNonImportProgramAfterOnlyFactoryCapturesSame": true,
+          "factories": 1,
+          "captures": 1,
+          "declarations": 1
+        }
+      ],
+      "targetAcceptanceExactlyTwoCalls": true,
+      "targetCompleteProgramAfterTwoSpecificRouteQueriesSame": true,
+      "foldEntireFunctionAfterTwoRoutesAndLocalCapturesSame": true,
+      "foldedRoutes": 2,
+      "localCaptures": 2,
+      "returnRewrite": 1,
+      "contractsAllNonCommentTokensSame": true,
+      "nightDamagePlanRawSame": true
+    },
+    "limits": [
+      "Finite static program inverse/read review; no compiler/runtime/tests/game/discovery repeated.",
+      "Only precise factory/capture macros, two route acceptance calls, two acceptance localcaptures and new plan symbol attachment are inverted. Array values, callbacks, conditional/argument/getter order are not broadly normalized."
+    ],
+    "finalNewTestHeads": []
+  },
+  "independentFinalDeltaReview": {
+    "priorReview": "/tmp/awa-c25-recipient-scholar-third-final-review.json",
+    "baseline": "7d63a4e938c80c74e93e3b14a15b296743e9822a",
+    "files": [
+      {
+        "path": "backend/src/core/domain/night_effects.ts",
+        "sha256": "5379446916a732b9137f10ffd2678f1286f637e0bdb67619668654baefc82dc2",
+        "matchesFinal": true,
+        "changedSincePrior": true
+      },
+      {
+        "path": "backend/src/core/domain/night-damage-target.ts",
+        "sha256": "b3790a22204b3228e8677add900f596fdece301865d20eb8e91ab5a1764760fd",
+        "matchesFinal": true,
+        "changedSincePrior": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+        "sha256": "86a0a04b8ce67bdd7a309a5a09e4df8c4d5ff6c2f806cddec07c3cb2d8e0d914",
+        "matchesFinal": true,
+        "changedSincePrior": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+        "sha256": "d93cfeb00c77cee6d58ab98a3fc652820722863830f68153ed6abecdd74d27b1",
+        "matchesFinal": true,
+        "changedSincePrior": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+        "sha256": "e4d25ea5854df50df6f12764929817bcea58a3ba0605306e519fbd6d891e9eac",
+        "matchesFinal": true,
+        "changedSincePrior": false
+      },
+      {
+        "path": "backend/tests/unit/domain/recipient-scholar-poison-routes.test.ts",
+        "sha256": "f795b3dabb715d55611d772731b35ad17410a563c4e970c85f21f21b7303fbba",
+        "matchesFinal": true,
+        "changedSincePrior": true
+      }
+    ],
+    "checks": {
+      "exactThreeSourceDeltaRestoresPriorSHA": true,
+      "previousFiveLiteralCasesBytePreserved": true,
+      "exactChangedPathsTwo": true
+    },
+    "findings": [],
+    "newCaseValidity": "External spread legacy plan has no symbol/brand, Proxy throws on every symbol query; actual resolveNightDamageTarget is called with original Set path and expects literal Poison and symbolReads=0. No fake authorisation or changed authority resource.",
+    "policy": "WeakSet holds only returned plan identities, same single hidden frozen route payload; external plan never touches new symbol; accepted original collection/target reads preserved. Brand add is after symbol definition and before original return, not World/input/state mutation.",
+    "limits": "Only two-SHA/delta review, no old function/test/type/runtime reruns. Original earlier green six-file review and receipts retained separately; one new probe receipt belongs to author."
+  }
+}

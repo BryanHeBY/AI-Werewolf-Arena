@@ -9,7 +9,7 @@
 | P2 测试、fixture、词典 | 进行中 | C14成套archive/C15及mixed/support职责已落；593来源、693目标、8112旧IDs；阶段验收待汇合 |
 | P3 状态与请求授权      | 进行中 | C16读取/C18/F02/C19与opaque／旧状态门面退出已落；完整能力schema／codec继续             |
 | P4 规则计划与生命周期  | 进行中 | RulePlan实际同引用消费、late计划与周期单位已落；C22–C24完整机制矩阵继续                |
-| P5 效果、死亡与判胜    | 进行中 | C25/26折叠与目标政策、C27提交owner、C28馥郁发布已落；完整来源／死亡链继续              |
+| P5 效果、死亡与判胜    | 进行中 | C25/26来源毒路由与目标政策、C27提交owner、C28馥郁／动物边界已落；完整死亡链继续              |
 | P6 能力、观察与展示    | 进行中 | C35第五包、F01默认生产观察回退已落；C30–C34完整投影、C36与其余展示贡献继续                      |
 | P7 记录与独立复现      | 待执行 | C37–C40                                                                                |
 | P8 目录、命名与文档    | 待执行 | C41–C44                                                                                |
@@ -422,3 +422,5 @@
 - C25 首来源intent：9paths，机械/Aw/原生Witch+DemonWitch10实际factory站和target/source/reflectionactor三实际消费，元数据复用原scope/day/ability，无新World/clock/RNG。原8Git/7完整module+机械fold精确逆及9SHA/中文head/source-paid-firstdeath独立0；属性锁+frozenorigin/double拒/每effect Symbol关闭两实际漏洞，legacy不读额外getter。finite50366 actual0，新6/0/24+integrity3/0/9+Symbol毒链1/0/8，原机械2/5/Aw1/7/Witch1/9/Demoncycle1/6通过。新协议约束强化明列非全等价，Meta不archive/schema/golden；Recipient/Scholar生产退出与全C25因果链继续。见sourced-night-intents.md。
 
 - C33a/F01 默认生产观察回退：43源/test，SDK/ACP及factory退出Baseline，可信投影后仅detached/frozen DTO，64行动handler+report_bug明确null；fixednext0不推进RNG，六席隐camp控制新2/2旧3/2为独立策略变化。35旧test仅接口名逆+中文说明，34非ctor与strict/deadline/close控制保；新7/0/19+原19/0/59、有限66544/3API负例44967实际closed0，43heads/两独立43SHA审0。初fixture/stage新test红保无golden改，完整C33/34/C36/C44/P9仍待。见production-observation-fallback.md。
+
+- C25 受赠/学者原毒与实际因果路由：6paths/5source+1test，最后两内建legacy producer退出、六内建push均factory；direct/reflected接受时保Symbolcause/原body/独立目标，target真实消费，同一plan hiddenroutes、legacy集合OR兼容保。新5/0/28+Proxy新增1/0/2；原Lucky/Black/Scholar3/0/29；finite75396与最终42403实际closed0，6中文heads/实际Git精确逆/独立6SHA和2SHA增量审0。legacyProxy额外Symbol读取由自审发现修为identity品牌，旧绿保留未重；无schema/board/RNG变更，全Wave/Receipt继续。见recipient-scholar-poison-routes.md。

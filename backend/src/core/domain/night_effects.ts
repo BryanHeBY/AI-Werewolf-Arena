@@ -38,9 +38,9 @@ export interface NightPoisonClaim {
  * 因果 ID 由原捕获局部值生成，不读 World、时钟或 RNG，也不授予行动资格。
  */
 export interface NightIntentOrigin {
-  readonly family: "mechanical" | "awakened" | "witch" | "demon-witch";
+  readonly family: "mechanical" | "awakened" | "witch" | "demon-witch" | "lucky" | "black-market" | "scholar-mentor";
   readonly day: number;
-  readonly stage: "mechanical_skill" | "mechanical_attack" | "awakened_skill" | "awakened_attack" | "witch";
+  readonly stage: "mechanical_skill" | "mechanical_attack" | "awakened_skill" | "awakened_attack" | "witch" | "lucky" | "black_market_recipient" | "scholar_mentor_bonus";
   readonly actorId: EntityId;
   readonly actorLife: NightLifeReadScope;
   readonly requestedTargetId: EntityId | null;
@@ -218,6 +218,19 @@ export interface NightPoisonReflection {
   readonly protectedTargetId: EntityId;
   readonly casterId: EntityId;
 }
+/** 原毒经折叠后的实际去向；反射改变目标，但保留原独立因果身份及原体链。 */
+export interface NightPoisonRoute {
+  readonly route: "direct" | "reflected";
+  readonly origin: NightIntentOrigin;
+  readonly targetId: EntityId;
+  readonly target: NightLifeReadScope;
+}
+// 因果链属于本次伤害计划，而非另一份世界状态。非枚举 Symbol 保持原输出／归档形状。
+const POISON_ROUTES = Symbol("night_poison_routes");
+const NO_POISON_ROUTES: readonly NightPoisonRoute[] = Object.freeze([]);
+// 只登记本 owner 的返回对象身份；外部 legacy plan／Proxy 不读取新增 Symbol。
+// 路由数据仍仅存于同一计划，这个品牌不保存目标、库存或另一份世界状态。
+const ownedDamagePlans = new WeakSet<object>();
 export interface MechanicalDamagePlan {
   readonly shields: ReadonlySet<EntityId>;
   readonly directPoisonTargets: ReadonlySet<EntityId>;
@@ -225,6 +238,25 @@ export interface MechanicalDamagePlan {
   readonly attacks: ReadonlySet<EntityId>;
   readonly failures: ReadonlySet<EntityId>;
   readonly reflections: readonly NightPoisonReflection[];
+  readonly [POISON_ROUTES]?: readonly NightPoisonRoute[];
+}
+/** Wave／单目标结算的运行时输入；这里只读既有折叠结果，不重查资格或库存。 */
+export function nightPoisonRoutes(plan: MechanicalDamagePlan): readonly NightPoisonRoute[] {
+  return ownedDamagePlans.has(plan) ? plan[POISON_ROUTES] ?? NO_POISON_ROUTES : NO_POISON_ROUTES;
+}
+/** owned 路由实际决定毒的接受分支；旧集合仍为外部 legacy 原毒提供兼容路径。 */
+export function nightPoisonRouteTargets(
+  plan: MechanicalDamagePlan, targetId: EntityId, route: NightPoisonRoute["route"],
+): boolean {
+  return nightPoisonRoutes(plan).some((cause) => cause.route === route && cause.targetId === targetId) ||
+    (route === "direct" ? plan.directPoisonTargets : plan.reflectedPoisonTargets).has(targetId);
+}
+function recordOwnedPoisonRoute(
+  routes: NightPoisonRoute[], poison: NightPoisonClaim, route: NightPoisonRoute["route"],
+  target: NightLifeScope, targetId: EntityId,
+): void {
+  if (ownedIntents.has(poison))
+    routes.push(Object.freeze({ route, origin: (poison as NightOriginalPoisonIntent).origin, targetId, target }));
 }
 /** 每份原毒只折叠一次；反射毒不再送回盾内，避免递归反射。 */
 export function planMechanicalDamage(
@@ -243,6 +275,7 @@ export function planMechanicalDamage(
   const directPoisonTargets = new Set<EntityId>();
   const reflectedPoisonTargets = new Set<EntityId>();
   const reflections: NightPoisonReflection[] = [];
+  const poisonRoutes: NightPoisonRoute[] = [];
   for (const poison of poisons) {
     if (
       poison.isCurrent?.() === false ||
@@ -252,11 +285,15 @@ export function planMechanicalDamage(
       continue;
     const shield = shields.get(nightIntentTarget(poison, "original-poison", intentNight).id);
     if (!shield) {
-      directPoisonTargets.add(nightIntentTarget(poison, "original-poison", intentNight).id);
+      const target = nightIntentTarget(poison, "original-poison", intentNight), targetId = target.id;
+      directPoisonTargets.add(targetId);
+      recordOwnedPoisonRoute(poisonRoutes, poison, "direct", target, targetId);
       continue;
     }
     if (livingNightLife(world, nightIntentPoisonSource(poison))) {
-      reflectedPoisonTargets.add(nightIntentPoisonSource(poison).id);
+      const target = nightIntentPoisonSource(poison), targetId = target.id;
+      reflectedPoisonTargets.add(targetId);
+      recordOwnedPoisonRoute(poisonRoutes, poison, "reflected", target, targetId);
       reflections.push({
         actorId: nightIntentMechanicalActor(shield),
         protectedTargetId: nightIntentTarget(poison, "original-poison", intentNight).id,
@@ -274,7 +311,7 @@ export function planMechanicalDamage(
     if (failure.isCurrent() && livingNightLife(world, nightIntentTarget(failure, "mechanical-failure", intentNight)))
       failures.add(nightIntentTarget(failure, "mechanical-failure", intentNight).id);
   }
-  return {
+  const plan: MechanicalDamagePlan = {
     shields: new Set(shields.keys()),
     directPoisonTargets,
     reflectedPoisonTargets,
@@ -282,6 +319,9 @@ export function planMechanicalDamage(
     failures,
     reflections,
   };
+  Object.defineProperty(plan, POISON_ROUTES, { value: Object.freeze(poisonRoutes) });
+  ownedDamagePlans.add(plan);
+  return plan;
 }
 
 /** 有限纯白查验规则的原所有者与目标绑定。 */
