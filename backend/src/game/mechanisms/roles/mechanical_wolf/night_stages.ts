@@ -1,8 +1,8 @@
 /**
- * Runs Mechanical Wolf mode, mimic, copied skill and attack stages. Inputs are captured
- * owner/mode scopes and validated tools; outputs preserve shields, attacks and copied-skill
- * facts in existing stage order. The stages do not merge distinct skill resource or failure
- * semantics.
+ * 负责机械狼模式、学习、复制技能和额外刀阶段。
+ * 输入为原 owner/mode/技能 scope 与已验证工具；输出为原已付事实及有来源的盾、刀、失败、原毒 intent。
+ * intent 只复用原捕获 life/day/目标，不增加 World、时钟或 RNG 读取；原付款和记录次序保持。
+ * 有效性仍由原 callback 决定，不合并不同技能资源或失败规则；运行时来源不写入归档。
  */
 import {
   recordMechanicalInspection,
@@ -13,7 +13,7 @@ import {
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, StatusMark, type EntityId, type ToolName } from "../../../../core/domain/model";
-import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
+import { captureNightLife, livingNightLife, mechanicalNightIntent, originalPoisonIntent } from "../../../../core/domain/night_effects";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import { resolveInspection } from "../inspection";
 import { canMechanicalKnife } from "./inheritance";
@@ -253,7 +253,10 @@ const skillStage: NightStageHandler = {
             payload: { actorId: owner.actorId, day, targetId: target.id, result: { ...result } },
           });
         } else if (call.name === "mechanical_poison" && skill.kind === "poison" && target) {
-          (ctx.state.poisonClaims ??= []).push({ source: owner.life, target });
+          (ctx.state.poisonClaims ??= []).push(originalPoisonIntent({ source: owner.life, target }, {
+            family: "mechanical", day, stage: "mechanical_skill", actorLife: owner.life,
+            requestedTargetId: targetId, abilityId: "learned:mechanical",
+          }));
           ctx.ensureMarks(target.id).add(StatusMark.PoisonMark);
           consumeMechanicalPoison(skill);
           ctx.events.push({
@@ -264,17 +267,19 @@ const skillStage: NightStageHandler = {
         } else if (call.name === "mechanical_guard" && skill.kind === "guard") {
           const { failed } = chooseMechanicalGuard(skill, targetId, day);
           if (failed)
-            effects(ctx).failures.push({
+            effects(ctx).failures.push(mechanicalNightIntent("mechanical-failure", {
               actorId: owner.actorId,
               target: owner.life,
               isCurrent: bound.isCurrent,
-            });
+            }, { family: "mechanical", day, stage: "mechanical_skill", actorLife: owner.life,
+              requestedTargetId: targetId, abilityId: "learned:mechanical" }));
           else if (target)
-            effects(ctx).shields.push({
+            effects(ctx).shields.push(mechanicalNightIntent("mechanical-shield", {
               actorId: owner.actorId,
               target,
               isCurrent: bound.isCurrent,
-            });
+            }, { family: "mechanical", day, stage: "mechanical_skill", actorLife: owner.life,
+              requestedTargetId: targetId, abilityId: "learned:mechanical" }));
           ctx.events.push({
             timestamp: Date.now(),
             type: "mechanical_guard_chosen",
@@ -338,7 +343,10 @@ const attackStage: NightStageHandler = {
         const target = targetId === null ? null : candidates.get(targetId);
         if (targetId !== null && (!target || !livingNightLife(ctx.world, target))) continue;
         if (target)
-          effects(ctx).attacks.push({ actorId: owner.actorId, target, isCurrent: effectCurrent });
+          effects(ctx).attacks.push(mechanicalNightIntent("mechanical-attack", { actorId: owner.actorId, target, isCurrent: effectCurrent }, {
+            family: "mechanical", day, stage: "mechanical_attack", actorLife: owner.life,
+            requestedTargetId: targetId, abilityId: "learned:mechanical",
+          }));
         closeMechanicalExtraKnife(skill, target);
         recordMechanicalNightCommit(ctx.world, day);
         ctx.events.push({

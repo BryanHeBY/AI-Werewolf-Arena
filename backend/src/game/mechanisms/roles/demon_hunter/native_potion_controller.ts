@@ -1,8 +1,9 @@
 /**
- * Owns delivered Demon Witch source receipts and native potion-turn execution. Inputs are sealed
- * source bodies, potion requests and validated choices; outputs are paid heal/poison effects and
- * domain completion. Cancellation or stale sources never replenish stock or substitute a new
- * body into a delivered effect.
+ * 负责已交付的恶魔猎手板原女巫回执和封存用药执行。
+ * 输入为原封存 body、请求及已验证选择；输出为原已付救/毒及不可复用的 native proof。
+ * 两条原毒分支在原 claim 创建位置附加 sourced intent，复用已捕获 source/target/day。
+ * 原瓶数付款、commit、交付缓存、必需记录失败前缀和 callback 完整保留。
+ * 新来源 metadata 与 life 句柄仅运行时使用，不加入事件、player DTO 或归档字段。
  */
 import {
   COMPONENT,
@@ -18,7 +19,7 @@ import {
   StatusMarksComponent,
   statusMarkSnapshot,
 } from "../../../../core/domain/components/status_marks";
-import { captureNightLife, type NightPoisonClaim } from "../../../../core/domain/night_effects";
+import { captureNightLife, originalPoisonIntent, type NightPoisonClaim } from "../../../../core/domain/night_effects";
 import { GameActionRequestFactory } from "../../../engine/action_request_factory";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
@@ -215,11 +216,12 @@ export async function executeDemonWitchTurn(input: {
       if (!proof) throw new Error("demon_hunter_native_poison_commit_failed");
       poison = Object.freeze({
         proof,
-        claim: Object.freeze({
+        claim: Object.freeze(originalPoisonIntent({
           source,
           target,
           isCurrent: () => frame.sourceCurrent() && frame.targetCurrent(targetId),
-        }),
+        }, { family: "demon-witch", day, stage: "witch", actorLife: source,
+          requestedTargetId: targetId, abilityId: "native:potion" })),
         lateUnknown: () => lateUnknownPoisonContribution(contribution),
         sealContribution: () => sealNativePoisonContribution(contribution),
       });
@@ -227,11 +229,12 @@ export async function executeDemonWitchTurn(input: {
       // The ordinary native toxin has no Demon-immunity proof.
       poison = Object.freeze({
         proof: null,
-        claim: Object.freeze({
+        claim: Object.freeze(originalPoisonIntent({
           source,
           target,
           isCurrent: () => frame.sourceCurrent() && frame.targetCurrent(targetId),
-        }),
+        }, { family: "demon-witch", day, stage: "witch", actorLife: source,
+          requestedTargetId: targetId, abilityId: "native:potion" })),
         lateUnknown: () => lateUnknownPoisonContribution(contribution!),
         sealContribution: () => sealNativePoisonContribution(contribution!),
       });

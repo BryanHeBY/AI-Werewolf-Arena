@@ -5,6 +5,8 @@
  * 默认阶段固定成员及顺序，注入惰性来源在前一阶段提交后才拉取下一项。
  * 取消检查后，参数仍在首次 acquired 的原 World 参数位置绑定；改变参数不隐式重编译。
  * 来源元数据不授予资格；原 handler receiver 与 execute getter 保持晚读取。
+ * 已捕获 day 原值交给伤害折叠，机械／觉醒／原毒 intent 单独保留来源及原体；
+ * intent 元数据不进入夜间摘要、事件或 schema2，旧注入 claim 保持兼容。
  * 晚交接保留真实单位的 owned 状态和原失败前缀，result 与最终伤害仍在原已付效果之后准备。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
@@ -428,6 +430,7 @@ export class NightPipeline {
       const dreamFrame = new DreamNightFrame(stageState.dreamLinks, radiantEffects?.shelters);
       if (config.scholarMentor) assertScholarMentorBonusEffects(stageCtx);
       const damage = this.damageResolutionSystem.resolve(this.world, {
+        intentNight: day,
         radiantShelters: radiantEffects?.shelters,
         radiantBacklashes: radiantEffects?.backlashes,
         modifierDeaths: stageState.modifierDeaths,

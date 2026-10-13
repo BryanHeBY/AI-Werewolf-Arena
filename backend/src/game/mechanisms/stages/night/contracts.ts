@@ -1,8 +1,9 @@
 /**
- * Owns the contract data for night state and execution ports shared by the pipeline and handlers.
- * Inputs are captured phase operations, effects and bound actor queries; outputs
- * are typed handler contributions and night state references. Actor qualification
- * has a narrow query port; this contract never queries World or commits a resource.
+ * 负责流水线与 handler 共享的夜间状态及执行端口契约。
+ * 输入为捕获的阶段操作、已付效果和 actor 查询；输出为有类型的贡献及原状态引用。
+ * 机械、觉醒和原毒的内建生产者提交 sourced intent，源原体/因果信息只供运行时消费。
+ * 旧注入 effect/claim 保留接受宽度；其额外 kind/origin/getter 不被当作新协议读取。
+ * 此契约不查询 World 或提交库存，未迁的 Recipient/Scholar 毒保留明确 legacy 路径。
  */
 import { StatusMarksComponent } from "../../../../core/domain/components/status_marks";
 import {
@@ -35,6 +36,9 @@ import type {
   NightMerchantBacklash,
   NightBlackMarketBacklash,
   NightAwakenedEffect,
+  NightMechanicalIntent,
+  NightAwakenedIntent,
+  NightOriginalPoisonIntent,
 } from "../../../../core/domain/night_effects";
 
 export interface WolfKnifeTargetScope {
@@ -62,7 +66,7 @@ export interface NightStageState {
   wolfTargetVoters?: EntityId[];
   seerChecks: NightSummary["seerChecks"];
   dreamLinks: DreamNightLink[];
-  poisonClaims?: NightPoisonClaim[];
+  poisonClaims?: Array<NightOriginalPoisonIntent | NightPoisonClaim>;
   inspectionAttacks?: NightInspectionAttack[];
   retaliationAttacks?: import("../../../../core/domain/night_effects").NightRetaliationAttack[];
   nightImmunities?: import("../../../../core/domain/night_effects").NightImmunityClaim[];
@@ -75,11 +79,14 @@ export interface NightStageState {
   merchantBacklashes?: NightMerchantBacklash[];
   blackMarketBacklashes?: NightBlackMarketBacklash[];
   mechanicalEffects?: {
-    shields: NightMechanicalEffect[];
-    attacks: NightMechanicalEffect[];
-    failures: NightMechanicalEffect[];
+    shields: Array<NightMechanicalIntent<"mechanical-shield"> | NightMechanicalEffect>;
+    attacks: Array<NightMechanicalIntent<"mechanical-attack"> | NightMechanicalEffect>;
+    failures: Array<NightMechanicalIntent<"mechanical-failure"> | NightMechanicalEffect>;
   };
-  awakenedEffects?: { shields: NightAwakenedEffect[]; attacks: NightAwakenedEffect[] };
+  awakenedEffects?: {
+    shields: Array<NightAwakenedIntent<"awakened-shield"> | NightAwakenedEffect>;
+    attacks: Array<NightAwakenedIntent<"awakened-attack"> | NightAwakenedEffect>;
+  };
 }
 
 /** 夜间阶段执行上下文。 */

@@ -1,13 +1,13 @@
 /**
- * Runs Awakened Hidden Wolf opening, mimic, skill, knife and activation stages in their
- * registered order. Inputs are scoped native/copy abilities and validated tools; outputs are
- * owned skill effects and night facts. It never turns a stale captured owner into a valid retry
- * or changes another stage priority.
+ * 负责觉醒隐狼开夜、学习、技能、额外刀和激活阶段。
+ * 输入为原 native/copy scope 与已验证工具；输出为原已付事实及有来源的盾、刀和原毒 intent。
+ * 复用原捕获 life/day/目标，保留付款位置以及允许首次死亡的 paid callback。
+ * 不以新来源数据替代资格、库存或重试规则，不恢复撤销的原 owner，不改变阶段优先级或归档。
  */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, StatusMark, type EntityId, type ToolName } from "../../../../core/domain/model";
-import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
+import { captureNightLife, livingNightLife, awakenedNightIntent, originalPoisonIntent } from "../../../../core/domain/night_effects";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import {
   allNightAbilities,
@@ -204,11 +204,12 @@ const skillStage: NightStageHandler = {
         if (targetId !== null && (!target || !livingNightLife(ctx.world, target))) continue;
         if (call.name === "awakened_poison" && skill.kind === "poison" && target) {
           if (!useAwakenedPoison(owner.state, day)) break;
-          (ctx.state.poisonClaims ??= []).push({
+          (ctx.state.poisonClaims ??= []).push(originalPoisonIntent({
             source: owner.life,
             target,
             isCurrent: () => bound.isCurrent(true),
-          });
+          }, { family: "awakened", day, stage: "awakened_skill", actorLife: owner.life,
+            requestedTargetId: targetId, abilityId: "learned:awakened" }));
           ctx.ensureMarks(target.id).add(StatusMark.PoisonMark);
           ctx.events.push({
             timestamp: Date.now(),
@@ -218,11 +219,12 @@ const skillStage: NightStageHandler = {
         } else if (call.name === "awakened_guard" && skill.kind === "guard") {
           if (!chooseAwakenedGuard(owner.state, targetId, day)) continue;
           if (target)
-            effects(ctx).shields.push({
+            effects(ctx).shields.push(awakenedNightIntent("awakened-shield", {
               actorId: owner.actorId,
               target,
               isCurrent: () => bound.isCurrent(true),
-            });
+            }, { family: "awakened", day, stage: "awakened_skill", actorLife: owner.life,
+              requestedTargetId: targetId, abilityId: "learned:awakened" }));
           ctx.events.push({
             timestamp: Date.now(),
             type: "awakened_guard_chosen",
@@ -277,7 +279,10 @@ const attackStage: NightStageHandler = {
         if (targetId !== null && (!target || !livingNightLife(ctx.world, target))) continue;
         if (!chooseAwakenedAttack(owner.state, targetId, day)) break;
         if (target)
-          effects(ctx).attacks.push({ actorId: owner.actorId, target, isCurrent: effectCurrent });
+          effects(ctx).attacks.push(awakenedNightIntent("awakened-attack", { actorId: owner.actorId, target, isCurrent: effectCurrent }, {
+            family: "awakened", day, stage: "awakened_attack", actorLife: owner.life,
+            requestedTargetId: targetId, abilityId: "learned:awakened",
+          }));
         recordAwakenedNightCommit(ctx.world, day);
         ctx.events.push({
           timestamp: Date.now(),

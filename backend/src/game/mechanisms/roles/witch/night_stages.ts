@@ -1,14 +1,12 @@
 /**
- * Resets per-night Witch flags and executes potion choices against captured stock and targets.
- * Inputs are current native/granted potion instances and validated actions; outputs preserve
- * paid heal/poison claims, passes and use history. Existing second-turn and role-specific
- * policies remain distinct, with no stock refresh on replacement. Potion actor
- * queries do not move poison-only restrictions into whole-turn eligibility.
- * Potion coordination keeps live read-only instances; its concrete payload and
- * inventory commands retain their original commit and bottle-payment positions.
+ * 负责女巫每夜标记复位和原捕获瓶数/目标的用药选择。
+ * 输入为当前 native/granted potion 与已验证行动；输出保留已付救/毒、跳过和历史。
+ * 原毒 intent 从原 source/target/day 及原请求读取点捕获的 abilityId 生成，不增加时钟/World/RNG读取。
+ * 付款、目标映射、第二次行动、角色专有失败和 poison-only 限制保持原位置。
+ * 来源句柄只供运行时消费，不进入玩家信息或 schema2；具体库存命令仍由能力 owner 提交。
  */
 /** 文件说明：女巫夜间用药阶段处理。 */
-import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
+import { captureNightLife, livingNightLife, originalPoisonIntent } from "../../../../core/domain/night_effects";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { RoleComponent } from "../../../../core/domain/components/role";
 import {
@@ -133,10 +131,11 @@ async function executePotionTurn(
     ctx.world.getAliveEntityIds().map((id) => [id, captureNightLife(ctx.world, id)]),
   );
   const attribution = ability.source.kind === "native" ? {} : { abilityId: ability.id };
+  let effectAbilityId: string;
   const req = ctx.makeRequest(witchId, ["use_potion"], {
     stage: "witch",
     ...ctx.nativeNightTargets.potionModifierHints(witchId),
-    ability_id: ability.id,
+    ability_id: (effectAbilityId = ability.id),
     ...(witchKnifeVisible(ability)
       ? {
           wolf_target: ctx.state.wolfTarget,
@@ -261,7 +260,10 @@ async function executePotionTurn(
     if (!source || !target) return false;
     ctx.nativeNightEffects.commitReflectedTarget(receipt, day, witchId, "poison");
     recordNightAbilityUse(ability, day, true);
-    (ctx.state.poisonClaims ??= []).push({ source, target });
+    (ctx.state.poisonClaims ??= []).push(originalPoisonIntent({ source, target }, {
+      family: "witch", day, stage: "witch", actorLife: source,
+      requestedTargetId: targetId, abilityId: effectAbilityId,
+    }));
     ctx.ensureMarks(effectiveId).add(StatusMark.PoisonMark);
     consumeWitchPoison(witchState);
     ctx.nativeNightEffects.commitNativeReflection(

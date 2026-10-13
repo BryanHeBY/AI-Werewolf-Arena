@@ -2,6 +2,8 @@
  * 负责将原夜间效果声明折叠为伤害结算使用的只读计划。
  * 输入保留原生命句柄与已付款 owner 的有效性回调；输出集合和死因顺序仅属于本次结算。
  * 通过窄查询端口读取生命与印记身份，不修改库存、印记或存活状态。
+ * 在原 target/source 读取点消费新 owned intent；kind/day/原体拒绝是新协议约束，
+ * 旧注入输入不读额外 metadata/getter，拒绝不回滚前面合法付款或事实。
  * 保留原 getter、回调、毒吸收与单次反射的执行顺序；每玩家的晚读取和印记清理由结算器负责。
  * 运行时句柄与集合不会进入序列化归档，也不是玩家可见事实。
  */
@@ -13,6 +15,7 @@ import {
   type NightEffectQuery,
   type MechanicalDamagePlan,
   livingNightLife,
+  nightIntentTarget,
   type NightPoisonClaim,
   type NightInspectionAttack,
   type NightRetaliationAttack,
@@ -27,6 +30,8 @@ import {
 } from "./night_effects";
 
 export interface NightDamageEffects {
+  /** 原 Pipeline 的已捕获 day；仅新 owned intent 读取，旧注入输入不访问额外字段。 */
+  intentNight?: number;
   radiantShelters?: readonly NightImmunityClaim[];
   radiantBacklashes?: readonly NightRadiantBacklash[];
   modifierDeaths?: readonly import("./night_effects").NightLifeScope[];
@@ -70,13 +75,13 @@ export function planNightDamage(
 ): NightDamagePlan {
   const awakenedShields = new Set(
     effects.awakenedEffects?.shields
-      .filter((effect) => effect.isCurrent() && livingNightLife(world, effect.target))
-      .map((effect) => effect.target.id),
+      .filter((effect) => effect.isCurrent() && livingNightLife(world, nightIntentTarget(effect, "awakened-shield", () => effects.intentNight)))
+      .map((effect) => nightIntentTarget(effect, "awakened-shield", () => effects.intentNight).id),
   );
   const awakenedAttacks = new Set(
     effects.awakenedEffects?.attacks
-      .filter((effect) => effect.isCurrent() && livingNightLife(world, effect.target))
-      .map((effect) => effect.target.id),
+      .filter((effect) => effect.isCurrent() && livingNightLife(world, nightIntentTarget(effect, "awakened-attack", () => effects.intentNight)))
+      .map((effect) => nightIntentTarget(effect, "awakened-attack", () => effects.intentNight).id),
   );
   // 先吸收原毒，避免其进入机械反射；返回毒随后仍按目标保护独立判定。
   const mechanical = planMechanicalDamage(
@@ -84,8 +89,9 @@ export function planNightDamage(
     effects.mechanicalEffects,
     effects.poisonClaims,
     awakenedShields,
+    () => effects.intentNight,
   );
-  const claimedPoisonTargets = new Set(effects.poisonClaims?.map((claim) => claim.target.id));
+  const claimedPoisonTargets = new Set(effects.poisonClaims?.map((claim) => nightIntentTarget(claim, "original-poison", () => effects.intentNight).id));
   const claimedGuardTargets = new Set(effects.guardClaims?.map((claim) => claim.target.id));
   // 守护仍只检查原生命与印记对象身份；不能额外调用 isCurrent 改变既有规则。
   const guarded = new Set(
