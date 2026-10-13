@@ -1,9 +1,5 @@
 /**
- * Unit tests: Strict optional turns use inert LLM and ACP callbacks across locales and
- * result modes; literal waiting/failure reasons check that an intentional pass differs
- * from a failed required action. Inputs and expected outcomes remain the original literal
- * or immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试验证 strict-optional-turn 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -49,7 +45,7 @@ for (const transport of ["sdk", "acp"] as const)
           factory = new GameActionRequestFactory(game.world, events, 1);
         let fallbackCalls = 0,
           closes = 0;
-        const fallbackProvider = {
+        const privilegedFallbackProvider = {
           async getAction() {
             fallbackCalls++;
             return null;
@@ -92,13 +88,13 @@ for (const transport of ["sdk", "acp"] as const)
           transport === "sdk"
             ? new LlmActionProvider(game.world, client, {
                 boardConfig: config,
-                fallbackProvider,
+                privilegedFallbackProvider,
                 maxConcurrentRequests: 1,
                 llmTimeoutMs: 1500,
               })
             : new AcpActionProvider(game.world, {
                 boardConfig: config,
-                fallbackProvider,
+                privilegedFallbackProvider,
                 maxConcurrentRequests: 1,
                 turnTimeoutMs: 1500,
                 sessionFactory: {

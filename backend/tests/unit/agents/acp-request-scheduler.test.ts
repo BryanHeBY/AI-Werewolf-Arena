@@ -1,9 +1,5 @@
 /**
- * Unit tests: ACP request scheduling uses controlled initialization, prompt and retirement
- * promises; literal lease counts and queue order check expired waiters, release timing and
- * close behavior. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试验证 acp-request-scheduler 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -61,7 +57,7 @@ test("ACP provider queue limits initialization and prompts together, and expired
         };
       },
     },
-    fallbackProvider: {
+    privilegedFallbackProvider: {
       async getAction() {
         return null;
       },
@@ -124,7 +120,7 @@ test("ACP lease stays occupied until forced retirement actually settles", async 
         };
       },
     },
-    fallbackProvider: {
+    privilegedFallbackProvider: {
       async getAction() {
         return null;
       },
@@ -168,7 +164,7 @@ test("ACP close removes provider waiters without starting them or choosing fallb
         };
       },
     },
-    fallbackProvider: {
+    privilegedFallbackProvider: {
       async getAction() {
         fallbacks++;
         return null;
@@ -207,7 +203,7 @@ test("unproven initialization reclamation blocks this provider's waiting factori
         return created;
       },
     },
-    fallbackProvider: {
+    privilegedFallbackProvider: {
       async getAction() {
         return null;
       },

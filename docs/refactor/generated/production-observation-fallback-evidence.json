@@ -1,0 +1,762 @@
+{
+  "baseline": "ee7ace8a",
+  "paths": 43,
+  "rows": [
+    {
+      "path": "backend/src/ai/agents/acp/acp_action_provider.ts",
+      "sha256": "4c2c3a13497ddc221395176dbffcf03dc90cceab133e500625576a073da1c9c9"
+    },
+    {
+      "path": "backend/src/ai/agents/index.ts",
+      "sha256": "a4984e93076fdb3adf9ce55af58a6133bc62994eccf9bfc7d46208fdb16a0083"
+    },
+    {
+      "path": "backend/src/ai/agents/llm/llm_action_provider.ts",
+      "sha256": "a60e019e0e613dea2a83d8b56a5c5b7e7730661107228fb4be433840d2bb2b53"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/action_providers.ts",
+      "sha256": "9b2233299ca39f4b8af95a8041483c0024e2d6ec0c184b8268facb2688283b28"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observation-fallback.ts",
+      "sha256": "e5a4343c28650c4a41915e6e8ebd02ea4f0e5b0841f765f7b691911853cc9133"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/profile.ts",
+      "sha256": "c247b7c6177acfaaa8487ca5b4fde9214fc8cd9b3650076fd5484c18f593138c"
+    },
+    {
+      "path": "backend/src/runtime/player_agent_factory.ts",
+      "sha256": "d091bfdf69f06e34f8dcf6b9c165ca6128ac351acfce81402d70ad7fa289ee9a"
+    },
+    {
+      "path": "backend/tests/integration/agents/acp/optional-turn-recording.test.ts",
+      "sha256": "07fa33dcec0021ef8dc29cb5a4b675658a9642a23d18e489adbe6420c923490d"
+    },
+    {
+      "path": "backend/tests/integration/agents/acp/process-session-ownership.test.ts",
+      "sha256": "245da35b9a1732a483a120a4abf106fb4007b17b116bd436038560dd4deb583d"
+    },
+    {
+      "path": "backend/tests/integration/agents/acp/strict-wire-schema.test.ts",
+      "sha256": "65124931c8eca40c08d2c96279966f786d7d58f431328fca374faea93cb33e83"
+    },
+    {
+      "path": "backend/tests/integration/agents/llm/bug-report-recording.test.ts",
+      "sha256": "1abe827b91a8e4a9a53d72cdb73afa504b754931ef6a31b172f1b4f2bde3e614"
+    },
+    {
+      "path": "backend/tests/integration/agents/llm/private-http-failure.test.ts",
+      "sha256": "d08684b95a24f9dc97782d49c3a2ad7c7a81028248c5c175079fb6994abbfa98"
+    },
+    {
+      "path": "backend/tests/integration/agents/llm/provider-http-cancellation.test.ts",
+      "sha256": "76b214f243f582b35f33e6a24c20d6f8a0eec92aa829c7600304ae7d8efa7fbb"
+    },
+    {
+      "path": "backend/tests/integration/agents/llm/required-tool-http-retry.test.ts",
+      "sha256": "42ade5fc57e1d2f481570cea1ab2f0cb7f4bc8c1f734923a6732964bff2c7ced"
+    },
+    {
+      "path": "backend/tests/integration/agents/protocol/rejection-wire.test.ts",
+      "sha256": "ca37800e1643e2e0f7336736e3d513cfbf10bcb2952b2aa4624349ff5acd40cd"
+    },
+    {
+      "path": "backend/tests/integration/agents/sdk/strict-protocol-errors.test.ts",
+      "sha256": "715bc211efa89c4b15c2ed0fca118064fd54a91824c70653be9997c4a8493793"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/agents/turn-refusal-recording.test.ts",
+      "sha256": "42b1e5ae550884533ade1308e100b89cf26d60f9c7ed1781ca3d380e5eae1617"
+    },
+    {
+      "path": "backend/tests/integration/filesystem/recording/safe-transport-fallback.test.ts",
+      "sha256": "e961714a89a4920923ead2da72cdd0f44103ea7ec32a971b67ead4d20fbd65c6"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/black-market/failure-replay.test.ts",
+      "sha256": "6b74ca16574047735023d9e61216f93b2a4edeb16d282cc71df912f908e863e1"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wild-child/failure-tape.test.ts",
+      "sha256": "dfa14c61d396ae7113a97817650a43e78e19fe35eda790959ac79444e2a88a12"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/ghost-bride/required-setup.test.ts",
+      "sha256": "da19b851311b21d3a357ac5aacc30add6df940acfa161b6281a1547d297ee552"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts",
+      "sha256": "f1ce1ed892d353081a6e2487796a25b1645e3e45961b568a6e24c42f81e7888f"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/lonely-girl/required-setup.test.ts",
+      "sha256": "bc137b86636a603476ed8a0732cb58948efbebcb6c27a5187d0981035fb5e3e4"
+    },
+    {
+      "path": "backend/tests/scenarios/features/sheriff/badge-death-handoff-and-revocation.test.ts",
+      "sha256": "1adb1a8eec8a7998a573a8f9943dbb6e0c54f32d813b6bcbdecd05498f1b403b"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/demon-hunter/native-night-receipts.test.ts",
+      "sha256": "c65523e5f9e6ef5fec74f24ff59a70b30c810248489d55d8fd2b469e1fa63db9"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/shapeshifter/setup-reentry-and-failure-replay.test.ts",
+      "sha256": "fefb582a0e6466bd4106e3e769eb5976737e9bd1f35f8df9dcda4751e4e3a85f"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/thief/setup-reentry-and-failure-replay.test.ts",
+      "sha256": "7bb125914e1cf7fdf74af489196f678aa4f31f49b97e72a42b48d55c67e20309"
+    },
+    {
+      "path": "backend/tests/scenarios/runtime/strict-failure-replay.test.ts",
+      "sha256": "5499d9913d0ec8b8db1511d2416704fd943c121a17b8bbd75d36e702c6e77daa"
+    },
+    {
+      "path": "backend/tests/unit/agents/acp-action-provider-lifecycle.test.ts",
+      "sha256": "e7c8c104551736cb372c7fb7befd9cdde1df0640e0d03e96724fc9d4ffec9da3"
+    },
+    {
+      "path": "backend/tests/unit/agents/acp-request-scheduler.test.ts",
+      "sha256": "a7b3d3d4e2492fef5bbc20486cf6996bd027f9a67905626a89b9e443c3fd0185"
+    },
+    {
+      "path": "backend/tests/unit/agents/acp-session-ownership.test.ts",
+      "sha256": "fef0c847f53de6db0cd76c8650d2f560dad8fb1dd18b458377c9c4158b7f2b31"
+    },
+    {
+      "path": "backend/tests/unit/agents/acp/session-tool-contract.test.ts",
+      "sha256": "ce482f75d6d13294faa9510d8e35b5f8c8fc2550039f40eb6cf458f3819124cb"
+    },
+    {
+      "path": "backend/tests/unit/agents/acp/trace-and-close-logging.test.ts",
+      "sha256": "acc169aa385e2bbfbe2e0d5167f473932fba8c84a504af0345a98ba7c4e867c6"
+    },
+    {
+      "path": "backend/tests/unit/agents/bilingual-player-prompt.test.ts",
+      "sha256": "2841c598c2a73b7dd105f4b07d6a98b6c4aa93515881126843597911b1f4237a"
+    },
+    {
+      "path": "backend/tests/unit/agents/llm-action-provider-fallback.test.ts",
+      "sha256": "d280a178176fed8d48e66a6f050c5583098d508a92018b130e1dc11eda0b005b"
+    },
+    {
+      "path": "backend/tests/unit/agents/llm-action-provider-prompts.test.ts",
+      "sha256": "3de5bed8fa292b1bc2a49726dacc14501f020c5388a5f2191860bdb64a067356"
+    },
+    {
+      "path": "backend/tests/unit/agents/llm-request-scheduler.test.ts",
+      "sha256": "2ca3e9474468f93d3a81cfc09f1262d0e4eef37062857cec19cb6f0d1c250fac"
+    },
+    {
+      "path": "backend/tests/unit/agents/llm/tool-reception.test.ts",
+      "sha256": "ca789e01cf3b0a00fa395a6367879cd245f591ccf221dff7b07dec85950b4e7e"
+    },
+    {
+      "path": "backend/tests/unit/agents/llm/turn-budget.test.ts",
+      "sha256": "1d0bc59b3fc26be871b3df89f0baf1a2c657d16fe5bf3d05bd8112126bc06b99"
+    },
+    {
+      "path": "backend/tests/unit/agents/observation-fallback.test.ts",
+      "sha256": "3b7cee6809c730a706af68361c4df7139b974d384162b7a2a1b344f74bd63c92"
+    },
+    {
+      "path": "backend/tests/unit/agents/strict-cancellation-and-deadlines.test.ts",
+      "sha256": "9f597a84889a1e8e44730f0cd4b24a45c07fdc97c40c1c07098f122b28783309"
+    },
+    {
+      "path": "backend/tests/unit/agents/strict-optional-turn.test.ts",
+      "sha256": "09524a4f8c7bc9dc9c501d5d81aff479eef1672757ad7ddf4a5ed913da28f1f7"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+      "sha256": "211ef4cddfe5e2fd3dfbcd93955ad689616e2f1b05656abae340955dd7f94249"
+    }
+  ],
+  "policyCommit": "ee7ace8a",
+  "semanticChange": "Default SDK/ACP and production factory only choose from frozen projected player DTO; old override explicitly privileged and test classified",
+  "receipts": {
+    "focusedTypes": {
+      "actualSession": 66544,
+      "exitCode": 0,
+      "scope": "43 source/test roots with original backend strict options, live transitive inputs"
+    },
+    "newRealDefaultTests": {
+      "pass": 7,
+      "fail": 0,
+      "expect": 19
+    },
+    "existingFallbackAndDeadlineTests": {
+      "pass": 19,
+      "fail": 0,
+      "expect": 59
+    },
+    "oldFixturePrograms": {
+      "files": 35,
+      "findings": 0,
+      "policy": "whole typed program except explicit test override name and comments"
+    },
+    "heads": {
+      "files": 43,
+      "findings": 0
+    }
+  },
+  "remaining": [
+    "C33/C34 full observation/facts conversion",
+    "C36/C44 remaining privileged role callback/public entry naming and old API exit",
+    "Final fixed same-source full suites/strict replay/physical transports"
+  ],
+  "reviews": {
+    "second": {
+      "paths": 43,
+      "drift": 0,
+      "rows": [
+        {
+          "path": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "sha256": "4c2c3a13497ddc221395176dbffcf03dc90cceab133e500625576a073da1c9c9",
+          "matches": true
+        },
+        {
+          "path": "backend/src/ai/agents/index.ts",
+          "sha256": "a4984e93076fdb3adf9ce55af58a6133bc62994eccf9bfc7d46208fdb16a0083",
+          "matches": true
+        },
+        {
+          "path": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "sha256": "a60e019e0e613dea2a83d8b56a5c5b7e7730661107228fb4be433840d2bb2b53",
+          "matches": true
+        },
+        {
+          "path": "backend/src/ai/agents/providers/action_providers.ts",
+          "sha256": "9b2233299ca39f4b8af95a8041483c0024e2d6ec0c184b8268facb2688283b28",
+          "matches": true
+        },
+        {
+          "path": "backend/src/ai/agents/providers/observation-fallback.ts",
+          "sha256": "e5a4343c28650c4a41915e6e8ebd02ea4f0e5b0841f765f7b691911853cc9133",
+          "matches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/seer/profile.ts",
+          "sha256": "c247b7c6177acfaaa8487ca5b4fde9214fc8cd9b3650076fd5484c18f593138c",
+          "matches": true
+        },
+        {
+          "path": "backend/src/runtime/player_agent_factory.ts",
+          "sha256": "d091bfdf69f06e34f8dcf6b9c165ca6128ac351acfce81402d70ad7fa289ee9a",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/integration/agents/acp/optional-turn-recording.test.ts",
+          "sha256": "07fa33dcec0021ef8dc29cb5a4b675658a9642a23d18e489adbe6420c923490d",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/integration/agents/acp/process-session-ownership.test.ts",
+          "sha256": "245da35b9a1732a483a120a4abf106fb4007b17b116bd436038560dd4deb583d",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/integration/agents/acp/strict-wire-schema.test.ts",
+          "sha256": "65124931c8eca40c08d2c96279966f786d7d58f431328fca374faea93cb33e83",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/integration/agents/llm/bug-report-recording.test.ts",
+          "sha256": "1abe827b91a8e4a9a53d72cdb73afa504b754931ef6a31b172f1b4f2bde3e614",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/integration/agents/llm/private-http-failure.test.ts",
+          "sha256": "d08684b95a24f9dc97782d49c3a2ad7c7a81028248c5c175079fb6994abbfa98",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/integration/agents/llm/provider-http-cancellation.test.ts",
+          "sha256": "76b214f243f582b35f33e6a24c20d6f8a0eec92aa829c7600304ae7d8efa7fbb",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/integration/agents/llm/required-tool-http-retry.test.ts",
+          "sha256": "42ade5fc57e1d2f481570cea1ab2f0cb7f4bc8c1f734923a6732964bff2c7ced",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/integration/agents/protocol/rejection-wire.test.ts",
+          "sha256": "ca37800e1643e2e0f7336736e3d513cfbf10bcb2952b2aa4624349ff5acd40cd",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/integration/agents/sdk/strict-protocol-errors.test.ts",
+          "sha256": "715bc211efa89c4b15c2ed0fca118064fd54a91824c70653be9997c4a8493793",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/integration/filesystem/agents/turn-refusal-recording.test.ts",
+          "sha256": "42b1e5ae550884533ade1308e100b89cf26d60f9c7ed1781ca3d380e5eae1617",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/integration/filesystem/recording/safe-transport-fallback.test.ts",
+          "sha256": "e961714a89a4920923ead2da72cdd0f44103ea7ec32a971b67ead4d20fbd65c6",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/scenarios/boards/black-market/failure-replay.test.ts",
+          "sha256": "6b74ca16574047735023d9e61216f93b2a4edeb16d282cc71df912f908e863e1",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/scenarios/boards/wild-child/failure-tape.test.ts",
+          "sha256": "dfa14c61d396ae7113a97817650a43e78e19fe35eda790959ac79444e2a88a12",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/scenarios/failures/ghost-bride/required-setup.test.ts",
+          "sha256": "da19b851311b21d3a357ac5aacc30add6df940acfa161b6281a1547d297ee552",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts",
+          "sha256": "f1ce1ed892d353081a6e2487796a25b1645e3e45961b568a6e24c42f81e7888f",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/scenarios/failures/lonely-girl/required-setup.test.ts",
+          "sha256": "bc137b86636a603476ed8a0732cb58948efbebcb6c27a5187d0981035fb5e3e4",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/scenarios/features/sheriff/badge-death-handoff-and-revocation.test.ts",
+          "sha256": "1adb1a8eec8a7998a573a8f9943dbb6e0c54f32d813b6bcbdecd05498f1b403b",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/scenarios/interactions/demon-hunter/native-night-receipts.test.ts",
+          "sha256": "c65523e5f9e6ef5fec74f24ff59a70b30c810248489d55d8fd2b469e1fa63db9",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/scenarios/reproduction/shapeshifter/setup-reentry-and-failure-replay.test.ts",
+          "sha256": "fefb582a0e6466bd4106e3e769eb5976737e9bd1f35f8df9dcda4751e4e3a85f",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/scenarios/reproduction/thief/setup-reentry-and-failure-replay.test.ts",
+          "sha256": "7bb125914e1cf7fdf74af489196f678aa4f31f49b97e72a42b48d55c67e20309",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/scenarios/runtime/strict-failure-replay.test.ts",
+          "sha256": "5499d9913d0ec8b8db1511d2416704fd943c121a17b8bbd75d36e702c6e77daa",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/unit/agents/acp-action-provider-lifecycle.test.ts",
+          "sha256": "e7c8c104551736cb372c7fb7befd9cdde1df0640e0d03e96724fc9d4ffec9da3",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/unit/agents/acp-request-scheduler.test.ts",
+          "sha256": "a7b3d3d4e2492fef5bbc20486cf6996bd027f9a67905626a89b9e443c3fd0185",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/unit/agents/acp-session-ownership.test.ts",
+          "sha256": "fef0c847f53de6db0cd76c8650d2f560dad8fb1dd18b458377c9c4158b7f2b31",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/unit/agents/acp/session-tool-contract.test.ts",
+          "sha256": "ce482f75d6d13294faa9510d8e35b5f8c8fc2550039f40eb6cf458f3819124cb",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/unit/agents/acp/trace-and-close-logging.test.ts",
+          "sha256": "acc169aa385e2bbfbe2e0d5167f473932fba8c84a504af0345a98ba7c4e867c6",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/unit/agents/bilingual-player-prompt.test.ts",
+          "sha256": "2841c598c2a73b7dd105f4b07d6a98b6c4aa93515881126843597911b1f4237a",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/unit/agents/llm-action-provider-fallback.test.ts",
+          "sha256": "d280a178176fed8d48e66a6f050c5583098d508a92018b130e1dc11eda0b005b",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/unit/agents/llm-action-provider-prompts.test.ts",
+          "sha256": "3de5bed8fa292b1bc2a49726dacc14501f020c5388a5f2191860bdb64a067356",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/unit/agents/llm-request-scheduler.test.ts",
+          "sha256": "2ca3e9474468f93d3a81cfc09f1262d0e4eef37062857cec19cb6f0d1c250fac",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/unit/agents/llm/tool-reception.test.ts",
+          "sha256": "ca789e01cf3b0a00fa395a6367879cd245f591ccf221dff7b07dec85950b4e7e",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/unit/agents/llm/turn-budget.test.ts",
+          "sha256": "1d0bc59b3fc26be871b3df89f0baf1a2c657d16fe5bf3d05bd8112126bc06b99",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/unit/agents/observation-fallback.test.ts",
+          "sha256": "3b7cee6809c730a706af68361c4df7139b974d384162b7a2a1b344f74bd63c92",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/unit/agents/strict-cancellation-and-deadlines.test.ts",
+          "sha256": "9f597a84889a1e8e44730f0cd4b24a45c07fdc97c40c1c07098f122b28783309",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/unit/agents/strict-optional-turn.test.ts",
+          "sha256": "09524a4f8c7bc9dc9c501d5d81aff479eef1672757ad7ddf4a5ed913da28f1f7",
+          "matches": true
+        },
+        {
+          "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+          "sha256": "211ef4cddfe5e2fd3dfbcd93955ad689616e2f1b05656abae340955dd7f94249",
+          "matches": true
+        }
+      ]
+    },
+    "third": {
+      "baseline": "ee7ace8afbec0f333ea1e499855c9bba138ef734",
+      "files": [
+        {
+          "path": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "currentSHA": "4c2c3a13497ddc221395176dbffcf03dc90cceab133e500625576a073da1c9c9",
+          "frozenSHA": "4c2c3a13497ddc221395176dbffcf03dc90cceab133e500625576a073da1c9c9",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/src/ai/agents/index.ts",
+          "currentSHA": "a4984e93076fdb3adf9ce55af58a6133bc62994eccf9bfc7d46208fdb16a0083",
+          "frozenSHA": "a4984e93076fdb3adf9ce55af58a6133bc62994eccf9bfc7d46208fdb16a0083",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "currentSHA": "a60e019e0e613dea2a83d8b56a5c5b7e7730661107228fb4be433840d2bb2b53",
+          "frozenSHA": "a60e019e0e613dea2a83d8b56a5c5b7e7730661107228fb4be433840d2bb2b53",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/src/ai/agents/providers/action_providers.ts",
+          "currentSHA": "9b2233299ca39f4b8af95a8041483c0024e2d6ec0c184b8268facb2688283b28",
+          "frozenSHA": "9b2233299ca39f4b8af95a8041483c0024e2d6ec0c184b8268facb2688283b28",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/src/ai/agents/providers/observation-fallback.ts",
+          "currentSHA": "e5a4343c28650c4a41915e6e8ebd02ea4f0e5b0841f765f7b691911853cc9133",
+          "frozenSHA": "e5a4343c28650c4a41915e6e8ebd02ea4f0e5b0841f765f7b691911853cc9133",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/seer/profile.ts",
+          "currentSHA": "c247b7c6177acfaaa8487ca5b4fde9214fc8cd9b3650076fd5484c18f593138c",
+          "frozenSHA": "c247b7c6177acfaaa8487ca5b4fde9214fc8cd9b3650076fd5484c18f593138c",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/src/runtime/player_agent_factory.ts",
+          "currentSHA": "d091bfdf69f06e34f8dcf6b9c165ca6128ac351acfce81402d70ad7fa289ee9a",
+          "frozenSHA": "d091bfdf69f06e34f8dcf6b9c165ca6128ac351acfce81402d70ad7fa289ee9a",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/integration/agents/acp/optional-turn-recording.test.ts",
+          "currentSHA": "07fa33dcec0021ef8dc29cb5a4b675658a9642a23d18e489adbe6420c923490d",
+          "frozenSHA": "07fa33dcec0021ef8dc29cb5a4b675658a9642a23d18e489adbe6420c923490d",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/integration/agents/acp/process-session-ownership.test.ts",
+          "currentSHA": "245da35b9a1732a483a120a4abf106fb4007b17b116bd436038560dd4deb583d",
+          "frozenSHA": "245da35b9a1732a483a120a4abf106fb4007b17b116bd436038560dd4deb583d",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/integration/agents/acp/strict-wire-schema.test.ts",
+          "currentSHA": "65124931c8eca40c08d2c96279966f786d7d58f431328fca374faea93cb33e83",
+          "frozenSHA": "65124931c8eca40c08d2c96279966f786d7d58f431328fca374faea93cb33e83",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/integration/agents/llm/bug-report-recording.test.ts",
+          "currentSHA": "1abe827b91a8e4a9a53d72cdb73afa504b754931ef6a31b172f1b4f2bde3e614",
+          "frozenSHA": "1abe827b91a8e4a9a53d72cdb73afa504b754931ef6a31b172f1b4f2bde3e614",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/integration/agents/llm/private-http-failure.test.ts",
+          "currentSHA": "d08684b95a24f9dc97782d49c3a2ad7c7a81028248c5c175079fb6994abbfa98",
+          "frozenSHA": "d08684b95a24f9dc97782d49c3a2ad7c7a81028248c5c175079fb6994abbfa98",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/integration/agents/llm/provider-http-cancellation.test.ts",
+          "currentSHA": "76b214f243f582b35f33e6a24c20d6f8a0eec92aa829c7600304ae7d8efa7fbb",
+          "frozenSHA": "76b214f243f582b35f33e6a24c20d6f8a0eec92aa829c7600304ae7d8efa7fbb",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/integration/agents/llm/required-tool-http-retry.test.ts",
+          "currentSHA": "42ade5fc57e1d2f481570cea1ab2f0cb7f4bc8c1f734923a6732964bff2c7ced",
+          "frozenSHA": "42ade5fc57e1d2f481570cea1ab2f0cb7f4bc8c1f734923a6732964bff2c7ced",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/integration/agents/protocol/rejection-wire.test.ts",
+          "currentSHA": "ca37800e1643e2e0f7336736e3d513cfbf10bcb2952b2aa4624349ff5acd40cd",
+          "frozenSHA": "ca37800e1643e2e0f7336736e3d513cfbf10bcb2952b2aa4624349ff5acd40cd",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/integration/agents/sdk/strict-protocol-errors.test.ts",
+          "currentSHA": "715bc211efa89c4b15c2ed0fca118064fd54a91824c70653be9997c4a8493793",
+          "frozenSHA": "715bc211efa89c4b15c2ed0fca118064fd54a91824c70653be9997c4a8493793",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/integration/filesystem/agents/turn-refusal-recording.test.ts",
+          "currentSHA": "42b1e5ae550884533ade1308e100b89cf26d60f9c7ed1781ca3d380e5eae1617",
+          "frozenSHA": "42b1e5ae550884533ade1308e100b89cf26d60f9c7ed1781ca3d380e5eae1617",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/integration/filesystem/recording/safe-transport-fallback.test.ts",
+          "currentSHA": "e961714a89a4920923ead2da72cdd0f44103ea7ec32a971b67ead4d20fbd65c6",
+          "frozenSHA": "e961714a89a4920923ead2da72cdd0f44103ea7ec32a971b67ead4d20fbd65c6",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/scenarios/boards/black-market/failure-replay.test.ts",
+          "currentSHA": "6b74ca16574047735023d9e61216f93b2a4edeb16d282cc71df912f908e863e1",
+          "frozenSHA": "6b74ca16574047735023d9e61216f93b2a4edeb16d282cc71df912f908e863e1",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/scenarios/boards/wild-child/failure-tape.test.ts",
+          "currentSHA": "dfa14c61d396ae7113a97817650a43e78e19fe35eda790959ac79444e2a88a12",
+          "frozenSHA": "dfa14c61d396ae7113a97817650a43e78e19fe35eda790959ac79444e2a88a12",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/scenarios/failures/ghost-bride/required-setup.test.ts",
+          "currentSHA": "da19b851311b21d3a357ac5aacc30add6df940acfa161b6281a1547d297ee552",
+          "frozenSHA": "da19b851311b21d3a357ac5aacc30add6df940acfa161b6281a1547d297ee552",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts",
+          "currentSHA": "f1ce1ed892d353081a6e2487796a25b1645e3e45961b568a6e24c42f81e7888f",
+          "frozenSHA": "f1ce1ed892d353081a6e2487796a25b1645e3e45961b568a6e24c42f81e7888f",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/scenarios/failures/lonely-girl/required-setup.test.ts",
+          "currentSHA": "bc137b86636a603476ed8a0732cb58948efbebcb6c27a5187d0981035fb5e3e4",
+          "frozenSHA": "bc137b86636a603476ed8a0732cb58948efbebcb6c27a5187d0981035fb5e3e4",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/scenarios/features/sheriff/badge-death-handoff-and-revocation.test.ts",
+          "currentSHA": "1adb1a8eec8a7998a573a8f9943dbb6e0c54f32d813b6bcbdecd05498f1b403b",
+          "frozenSHA": "1adb1a8eec8a7998a573a8f9943dbb6e0c54f32d813b6bcbdecd05498f1b403b",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/scenarios/interactions/demon-hunter/native-night-receipts.test.ts",
+          "currentSHA": "c65523e5f9e6ef5fec74f24ff59a70b30c810248489d55d8fd2b469e1fa63db9",
+          "frozenSHA": "c65523e5f9e6ef5fec74f24ff59a70b30c810248489d55d8fd2b469e1fa63db9",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/scenarios/reproduction/shapeshifter/setup-reentry-and-failure-replay.test.ts",
+          "currentSHA": "fefb582a0e6466bd4106e3e769eb5976737e9bd1f35f8df9dcda4751e4e3a85f",
+          "frozenSHA": "fefb582a0e6466bd4106e3e769eb5976737e9bd1f35f8df9dcda4751e4e3a85f",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/scenarios/reproduction/thief/setup-reentry-and-failure-replay.test.ts",
+          "currentSHA": "7bb125914e1cf7fdf74af489196f678aa4f31f49b97e72a42b48d55c67e20309",
+          "frozenSHA": "7bb125914e1cf7fdf74af489196f678aa4f31f49b97e72a42b48d55c67e20309",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/scenarios/runtime/strict-failure-replay.test.ts",
+          "currentSHA": "5499d9913d0ec8b8db1511d2416704fd943c121a17b8bbd75d36e702c6e77daa",
+          "frozenSHA": "5499d9913d0ec8b8db1511d2416704fd943c121a17b8bbd75d36e702c6e77daa",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/unit/agents/acp-action-provider-lifecycle.test.ts",
+          "currentSHA": "e7c8c104551736cb372c7fb7befd9cdde1df0640e0d03e96724fc9d4ffec9da3",
+          "frozenSHA": "e7c8c104551736cb372c7fb7befd9cdde1df0640e0d03e96724fc9d4ffec9da3",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/unit/agents/acp-request-scheduler.test.ts",
+          "currentSHA": "a7b3d3d4e2492fef5bbc20486cf6996bd027f9a67905626a89b9e443c3fd0185",
+          "frozenSHA": "a7b3d3d4e2492fef5bbc20486cf6996bd027f9a67905626a89b9e443c3fd0185",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/unit/agents/acp-session-ownership.test.ts",
+          "currentSHA": "fef0c847f53de6db0cd76c8650d2f560dad8fb1dd18b458377c9c4158b7f2b31",
+          "frozenSHA": "fef0c847f53de6db0cd76c8650d2f560dad8fb1dd18b458377c9c4158b7f2b31",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/unit/agents/acp/session-tool-contract.test.ts",
+          "currentSHA": "ce482f75d6d13294faa9510d8e35b5f8c8fc2550039f40eb6cf458f3819124cb",
+          "frozenSHA": "ce482f75d6d13294faa9510d8e35b5f8c8fc2550039f40eb6cf458f3819124cb",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/unit/agents/acp/trace-and-close-logging.test.ts",
+          "currentSHA": "acc169aa385e2bbfbe2e0d5167f473932fba8c84a504af0345a98ba7c4e867c6",
+          "frozenSHA": "acc169aa385e2bbfbe2e0d5167f473932fba8c84a504af0345a98ba7c4e867c6",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/unit/agents/bilingual-player-prompt.test.ts",
+          "currentSHA": "2841c598c2a73b7dd105f4b07d6a98b6c4aa93515881126843597911b1f4237a",
+          "frozenSHA": "2841c598c2a73b7dd105f4b07d6a98b6c4aa93515881126843597911b1f4237a",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/unit/agents/llm-action-provider-fallback.test.ts",
+          "currentSHA": "d280a178176fed8d48e66a6f050c5583098d508a92018b130e1dc11eda0b005b",
+          "frozenSHA": "d280a178176fed8d48e66a6f050c5583098d508a92018b130e1dc11eda0b005b",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/unit/agents/llm-action-provider-prompts.test.ts",
+          "currentSHA": "3de5bed8fa292b1bc2a49726dacc14501f020c5388a5f2191860bdb64a067356",
+          "frozenSHA": "3de5bed8fa292b1bc2a49726dacc14501f020c5388a5f2191860bdb64a067356",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/unit/agents/llm-request-scheduler.test.ts",
+          "currentSHA": "2ca3e9474468f93d3a81cfc09f1262d0e4eef37062857cec19cb6f0d1c250fac",
+          "frozenSHA": "2ca3e9474468f93d3a81cfc09f1262d0e4eef37062857cec19cb6f0d1c250fac",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/unit/agents/llm/tool-reception.test.ts",
+          "currentSHA": "ca789e01cf3b0a00fa395a6367879cd245f591ccf221dff7b07dec85950b4e7e",
+          "frozenSHA": "ca789e01cf3b0a00fa395a6367879cd245f591ccf221dff7b07dec85950b4e7e",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/unit/agents/llm/turn-budget.test.ts",
+          "currentSHA": "1d0bc59b3fc26be871b3df89f0baf1a2c657d16fe5bf3d05bd8112126bc06b99",
+          "frozenSHA": "1d0bc59b3fc26be871b3df89f0baf1a2c657d16fe5bf3d05bd8112126bc06b99",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/unit/agents/observation-fallback.test.ts",
+          "currentSHA": "3b7cee6809c730a706af68361c4df7139b974d384162b7a2a1b344f74bd63c92",
+          "frozenSHA": "3b7cee6809c730a706af68361c4df7139b974d384162b7a2a1b344f74bd63c92",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/unit/agents/strict-cancellation-and-deadlines.test.ts",
+          "currentSHA": "9f597a84889a1e8e44730f0cd4b24a45c07fdc97c40c1c07098f122b28783309",
+          "frozenSHA": "9f597a84889a1e8e44730f0cd4b24a45c07fdc97c40c1c07098f122b28783309",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/unit/agents/strict-optional-turn.test.ts",
+          "currentSHA": "09524a4f8c7bc9dc9c501d5d81aff479eef1672757ad7ddf4a5ed913da28f1f7",
+          "frozenSHA": "09524a4f8c7bc9dc9c501d5d81aff479eef1672757ad7ddf4a5ed913da28f1f7",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        },
+        {
+          "path": "backend/tests/unit/features/demon-hunter/authority.test.ts",
+          "currentSHA": "211ef4cddfe5e2fd3dfbcd93955ad689616e2f1b05656abae340955dd7f94249",
+          "frozenSHA": "211ef4cddfe5e2fd3dfbcd93955ad689616e2f1b05656abae340955dd7f94249",
+          "sameFrozenSHA": true,
+          "sameThirdSHA": true
+        }
+      ],
+      "findings": [],
+      "thirdReviewArtifact": "/tmp/awa-f01-third-static-review.json",
+      "reviewSemantics": [
+        "Default SDK and ACP construct their own trusted prompt projection but pass only the same cloned and recursively frozen PlayerObservation to decide; no World/RoleComponent argument is passed to custom/default strategy.",
+        "All original scheduler, deadline, strict allow gate, record/close/cancel and request alias controls are raw identical to actual ee7 baseline. ACP/SDK nonconstructor class members are complete token-tree identical, not merely selected fallback clauses.",
+        "The explicit privilegedFallbackProvider remains a public opt-in test capability; actual player_agent_factory constructs provider option objects without that key or any fallback provider/options spread. run_mock explicitly retains privileged Baseline, not a hidden production fallback.",
+        "Observed handler stock/candidates/history are projected DTO fields. inspectionRepeats transitively invokes only local roleInspectionPolicy fields, not World; observed context pick uses fixed next=0 and never engine RNG.",
+        "null is terminal no-action, undefined alone searches another allowed handler; report_bug alone has no handler and returns null. Engine still validates eligibility/resources/target/permission; strategy output is not payment.",
+        "New handwritten fixture tests assert SDK/ACP same hidden-camp intervention result, forbidden fallback zero strategy calls, detached/frozen custom DTO and explicit test override request context identity. They do not weaken engine authority or change old golden."
+      ],
+      "limits": [
+        "Finite source/AST/actualGit review only. No typecheck, tests, game, discovery, cold import or model execution was repeated.",
+        "Existing trusted player projection remains unchanged; this is not full C33/C34 observation/type migration or independent proof of every projection field.",
+        "Public privileged test override intentionally remains reachable when explicitly provided; the check is actual default/production assembly, not a claim that arbitrary caller closures cannot retain World.",
+        "Raw input stock/unknown/missing-state behavior stays that of existing ObservedBot handlers, including declared missing-required-observation errors; no new domain target repair or rollback is introduced."
+      ]
+    }
+  },
+  "policyTypeContract": {
+    "negativeAssertions": 3,
+    "actualSession": 44967,
+    "exitCode": 0
+  },
+  "scopeLimit": "局部证据；不替代 P9 同源全量门禁，C33/C34/C36/C44 完整退出继续"
+}

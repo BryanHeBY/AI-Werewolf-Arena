@@ -1,9 +1,5 @@
 /**
- * Unit tests: Player prompts use every base role, locale and explicit user text; literal
- * bilingual identity/rule expectations check observation neutrality, default names and
- * preservation of custom directives. Inputs and expected outcomes remain the original
- * literal or immutable-fixture oracle; these module assertions invoke no model or
- * complete-game driver.
+ * 单元测试验证 bilingual-player-prompt 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import {
   WOLF_STAGE_DIRECTIVES,
@@ -295,7 +291,7 @@ test("ACP session identity and actual turn prompts use isolated game locales and
       const provider = new AcpActionProvider(game.world, {
         boardConfig: board,
         personalityPromptResolver: () => "绿茶人设",
-        fallbackProvider: {
+        privilegedFallbackProvider: {
           async getAction() {
             throw new Error("unexpected_fallback");
           },

@@ -1,7 +1,5 @@
 /**
- * Transport integration tests verify bilingual SDK and MCP control refusals expose structured feedback without internal exceptions.
- * Input: Original localhost SDK response sequences, authenticated control listeners and fresh locale-specific request worlds.
- * Output and oracle: Exact stale-turn/potion feedback, unauthorized/malformed status and resource nonmutation retain actual wire boundaries; server/registry cleanup stays in each case.
+ * 集成测试验证 rejection-wire 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -94,7 +92,7 @@ for (const locale of ["zh-CN", "en"] as const)
       {
         boardConfig: twelvePlayerStandardConfig,
         llmTimeoutMs: 2000,
-        fallbackProvider: {
+        privilegedFallbackProvider: {
           async getAction() {
             throw new Error("unexpected_fallback");
           },

@@ -1,7 +1,5 @@
 /**
- * Filesystem recording integration tests verify inert SDK/ACP failures persist safe fallback evidence and transient display language.
- * Input: Original locale/transport matrix, temporary session files, local failing clients and callback-scoped output capture.
- * Output and oracle: Literal action/diagnostic/manifest fields and original prompt/text remain exact; no live model transport or generated replacement expectation is used.
+ * 集成测试验证 safe-transport-fallback 的原权限和记录边界。输入为原 fixture、请求及显式故障／特权回调；原字面量、引用身份与错误／状态断言为预期。测试注入保留原请求，领域合法性与付款仍由原被测 owner 执行。
  */
 import { expect, test } from "bun:test";
 import { RetryError } from "ai";
@@ -77,7 +75,7 @@ for (const locale of ["zh-CN", "en"] as const)
       console.log = (...values) => {
         lines.push(values.join(" "));
       };
-      const fallbackProvider = {
+      const privilegedFallbackProvider = {
         async getAction() {
           fallbacks++;
           return fallback;
@@ -96,11 +94,11 @@ for (const locale of ["zh-CN", "en"] as const)
                   throw failure();
                 },
               } as ChatModelClient,
-              { trace: true, displayLocale, fallbackProvider, llmTimeoutMs: 1000 },
+              { trace: true, displayLocale, privilegedFallbackProvider, llmTimeoutMs: 1000 },
             )
           : new AcpActionProvider(world, {
               turnTimeoutMs: 1000,
-              fallbackProvider,
+              privilegedFallbackProvider,
               sessionFactory: {
                 async createSession() {
                   return {

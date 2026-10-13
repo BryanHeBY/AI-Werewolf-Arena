@@ -1,8 +1,5 @@
 /**
- * Runner failure/replay scenarios verify strict action failure preserves request policy and refusal evidence.
- * Input: Injected SDK/ACP provider failures, real runner and partial recorder files.
- * Output and independent oracle: Original stock/state, no fallback-derived success and exact accepted-prefix Tape.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 场景测试验证 strict-failure-replay 的原请求、已付行动与失败记录链。输入保留原固定角色、动作脚本、故障与归档矩阵；原字面结果及检查点作为预期。显式特权回退仅服务该控制驱动，不将生产对局输出称作独立玩法 oracle。
  */
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
@@ -55,7 +52,7 @@ for (const transport of ["sdk", "acp"] as const)
       const create = spyOn(factory, "createPlayerAgentRuntime").mockImplementation(
         async (options) => {
           const baseline = new BaselineBotActionProvider(options.world),
-            fallbackProvider = {
+            privilegedFallbackProvider = {
               async getAction() {
                 fallbackCalls++;
                 return null;
@@ -78,11 +75,11 @@ for (const transport of ["sdk", "acp"] as const)
             transport === "sdk"
               ? new LlmActionProvider(options.world, client, {
                   boardConfig: options.boardConfig,
-                  fallbackProvider,
+                  privilegedFallbackProvider,
                 })
               : new AcpActionProvider(options.world, {
                   boardConfig: options.boardConfig,
-                  fallbackProvider,
+                  privilegedFallbackProvider,
                   sessionFactory: {
                     async createSession(input) {
                       return {

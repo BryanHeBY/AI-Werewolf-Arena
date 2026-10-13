@@ -1,7 +1,5 @@
 /**
- * Unit tests verify ACP trace diagnostics and callback-triggered close suppress late actions and recorded rounds.
- * Input: Original seven literal trace/close cases, inert session factories, unbound literal request data and callback-scoped console/recorder spies.
- * Output and oracle: Exact safe log prefixes, zero late record calls and original pool/fallback counts remain unchanged; no native server, process or record file runs.
+ * 单元测试验证 trace-and-close-logging 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { expect, spyOn, test } from "bun:test";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -40,7 +38,7 @@ test("ACP trace is independent of payload flags and retains safe display diagnos
         throw error;
       },
     },
-    fallbackProvider: {
+    privilegedFallbackProvider: {
       async getAction() {
         return null;
       },
@@ -102,7 +100,7 @@ for (const trigger of [
             };
           },
         },
-        fallbackProvider: {
+        privilegedFallbackProvider: {
           async getAction() {
             fallbacks++;
             return { name: "speak", args: { text: "fallback" } };

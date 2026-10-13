@@ -1,10 +1,5 @@
 /**
- * Unit tests for demon-hunter; Isolated demon-hunter authority contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试验证 authority 的原权限和记录边界。输入为原 fixture、请求及显式故障／特权回调；原字面量、引用身份与错误／状态断言为预期。测试注入保留原请求，领域合法性与付款仍由原被测 owner 执行。
  */
 import { expect, test, spyOn } from "bun:test";
 import {
@@ -1772,7 +1767,7 @@ for (const transport of ["sdk", "acp"] as const)
           { AcpActionProvider } = await import("../../../../src/ai/agents/acp/acp_action_provider");
         let fallbackCalls = 0,
           submits = 0;
-        const fallbackProvider = {
+        const privilegedFallbackProvider = {
           async getAction() {
             fallbackCalls++;
             return null;
@@ -1813,7 +1808,7 @@ for (const transport of ["sdk", "acp"] as const)
           transport === "sdk"
             ? new LlmActionProvider(f.world, client, {
                 boardConfig: f.config,
-                fallbackProvider,
+                privilegedFallbackProvider,
                 maxConcurrentRequests: 1,
                 printLlmIo: false,
                 printThinking: false,
@@ -1822,7 +1817,7 @@ for (const transport of ["sdk", "acp"] as const)
               })
             : new AcpActionProvider(f.world, {
                 boardConfig: f.config,
-                fallbackProvider,
+                privilegedFallbackProvider,
                 maxConcurrentRequests: 1,
                 turnTimeoutMs: 1000,
                 printLlmIo: false,

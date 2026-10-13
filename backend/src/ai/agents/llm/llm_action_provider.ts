@@ -1,9 +1,5 @@
 /**
- * Adapts engine requests to the existing SDK turn orchestrator and prompt session.
- * Inputs are original World, readonly board parameters and model options; outputs
- * are recorded tool decisions or existing fallback failures. Provider lifecycle owns
- * deadlines and cancellation, while domain owners alone commit actor resources.
- * This adapter never changes board parameters or treats preflight as a domain commit.
+ * 负责将引擎请求适配为 SDK 回合编排、提示会话与记录动作。输入为原 World、只读板子和模型选项；输出为工具决定或原失败结果。默认与自定义生产回退只接收脱离的 PlayerObservation，特权注入仅供显式测试。期限、取消和关闭仍归 provider，资源提交仍归领域；不把预检或策略返回当作付款。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
@@ -25,7 +21,11 @@ import {
   ToolSpecRegistry,
   ToolValidationRuleRegistry,
 } from "../../../game/mechanisms";
-import { BaselineBotActionProvider } from "../providers/action_providers";
+import {
+  ObservationFallbackActionProvider,
+  ObservationFallbackStrategy,
+} from "../providers/observation-fallback";
+import type { ObservedPlayerStrategy } from "../player/observation";
 import { ChatModelClient } from "../../integrations/llm/transport";
 import { FallbackActionPolicy } from "./fallback_action_policy";
 import { LlmObserver } from "../player/player_observer";
@@ -40,7 +40,10 @@ export interface LlmActionProviderOptions {
   maxPromptEvents?: number;
   displayLocale?: Locale;
   trace?: boolean;
-  fallbackProvider?: ActionProvider;
+  /** 生产自定义选择只接收脱离的玩家观察，不获得原请求或 World。 */
+  fallbackStrategy?: ObservedPlayerStrategy;
+  /** 显式特权测试驱动；生产运行装配不注入，保留原请求身份和取消测试。 */
+  privilegedFallbackProvider?: ActionProvider;
   llmTimeoutMs?: number;
   colorizeLogs?: boolean;
   printLlmIo?: boolean;
@@ -66,8 +69,7 @@ export interface LlmActionProviderOptions {
 }
 
 /**
- * Facade and composition root for SDK-backed game agents.
- * Turn flow, prompt state, protocol handling and observability are separate collaborators.
+ * SDK 玩家装配入口；回合、提示状态、协议和记录由具体协作者持有。
  */
 export class LlmActionProvider implements ActionProvider {
   private readonly orchestrator: LlmTurnOrchestrator;
@@ -113,7 +115,11 @@ export class LlmActionProvider implements ActionProvider {
       promptPolicy,
     });
     const fallback = new FallbackActionPolicy(
-      options.fallbackProvider ?? new BaselineBotActionProvider(world, roleCatalog),
+      options.privilegedFallbackProvider ??
+        new ObservationFallbackActionProvider(
+          (request) => promptPolicy.buildObservation(request),
+          options.fallbackStrategy ?? new ObservationFallbackStrategy(world.locale),
+        ),
       observer,
     );
     const recorder = new PlayerRoundRecorder(world);

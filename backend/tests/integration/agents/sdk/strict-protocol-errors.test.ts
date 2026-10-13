@@ -1,5 +1,5 @@
 /**
- * SDK integration tests check production client/tool-loop parsing with injected serialized response bodies. Inputs are malformed action/helper envelopes returned by an inert fetch; literal request counts, optional-wait and unchanged guard stock are the oracle. No real HTTP server, network service or billed model is used.
+ * 集成测试验证 strict-protocol-errors 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -88,7 +88,7 @@ for (const locale of ["zh-CN", "en"] as const)
         }),
         {
           llmTimeoutMs: 1500,
-          fallbackProvider: {
+          privilegedFallbackProvider: {
             async getAction() {
               fallbacks++;
               return null;

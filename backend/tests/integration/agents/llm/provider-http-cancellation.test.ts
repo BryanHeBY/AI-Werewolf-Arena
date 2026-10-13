@@ -1,8 +1,5 @@
 /**
- * Integration test owns cancellation of a real installed-SDK localhost response by its LLM
- * provider. A test-owned streaming HTTP server and the original bounded request supply
- * input; literal cancellation/result/active-lease assertions are the oracle. The HTTP
- * resource and close order stay in this case, with no external model request.
+ * 集成测试验证 provider-http-cancellation 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -63,7 +60,7 @@ test("real SDK HTTP response is cancelled when the owning provider closes", asyn
     }),
     {
       llmTimeoutMs: 5000,
-      fallbackProvider: {
+      privilegedFallbackProvider: {
         async getAction() {
           throw new Error("unexpected_fallback");
         },

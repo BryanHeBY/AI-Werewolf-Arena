@@ -10,7 +10,7 @@
 | P3 状态与请求授权      | 进行中 | C16读取/C18/F02/C19与opaque／旧状态门面退出已落；完整能力schema／codec继续             |
 | P4 规则计划与生命周期  | 进行中 | RulePlan实际同引用消费、late计划与周期单位已落；C22–C24完整机制矩阵继续                |
 | P5 效果、死亡与判胜    | 进行中 | C25/26折叠与目标政策、C27提交owner、C28馥郁发布已落；完整来源／死亡链继续              |
-| P6 能力、观察与展示    | 进行中 | C35第五包及两端实际消费已落；C30–C34、C33a、C36与其余展示贡献继续                      |
+| P6 能力、观察与展示    | 进行中 | C35第五包、F01默认生产观察回退已落；C30–C34完整投影、C36与其余展示贡献继续                      |
 | P7 记录与独立复现      | 待执行 | C37–C40                                                                                |
 | P8 目录、命名与文档    | 待执行 | C41–C44                                                                                |
 | P9 全仓收敛与验收      | 待执行 | C45–C48；同源固定输入、门禁零债务                                                      |
@@ -420,3 +420,5 @@
 - C28 动物死亡波准备：4paths，完整prepareAnimal→feature窄owner/2realcaller，原World→unit与World→events→payload、cat过滤/事实/删源/到期/cause顺序保。wholetyped/ESNext+CJS inverse0、4SHA/source/权威/中文heads独立0；finite19277/scope52301 actual0，新4/0/21+原BeautyCat追加1/0/5(two boundedcycles)。首nullable/thunk/mock types红保，原位!无cache/default/契约放宽，不world写/rollback/全suite重复。TypedWave/Receipt/其他C28及13rawdeps继续。见animal-wave-preparation.md。
 
 - C25 首来源intent：9paths，机械/Aw/原生Witch+DemonWitch10实际factory站和target/source/reflectionactor三实际消费，元数据复用原scope/day/ability，无新World/clock/RNG。原8Git/7完整module+机械fold精确逆及9SHA/中文head/source-paid-firstdeath独立0；属性锁+frozenorigin/double拒/每effect Symbol关闭两实际漏洞，legacy不读额外getter。finite50366 actual0，新6/0/24+integrity3/0/9+Symbol毒链1/0/8，原机械2/5/Aw1/7/Witch1/9/Demoncycle1/6通过。新协议约束强化明列非全等价，Meta不archive/schema/golden；Recipient/Scholar生产退出与全C25因果链继续。见sourced-night-intents.md。
+
+- C33a/F01 默认生产观察回退：43源/test，SDK/ACP及factory退出Baseline，可信投影后仅detached/frozen DTO，64行动handler+report_bug明确null；fixednext0不推进RNG，六席隐camp控制新2/2旧3/2为独立策略变化。35旧test仅接口名逆+中文说明，34非ctor与strict/deadline/close控制保；新7/0/19+原19/0/59、有限66544/3API负例44967实际closed0，43heads/两独立43SHA审0。初fixture/stage新test红保无golden改，完整C33/34/C36/C44/P9仍待。见production-observation-fallback.md。

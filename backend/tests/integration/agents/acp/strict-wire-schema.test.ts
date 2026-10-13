@@ -1,9 +1,5 @@
 /**
- * Integration tests: Exercises actual production stdio MCP schema and turn error
- * attribution. Literal bilingual fields and accepted/rejected receipts check canonical
- * submission shape and current-turn failure ownership. Existing literal expectations and
- * independently supplied fixture plans remain the oracle; transport/recording setup is
- * local and no billed model session is started.
+ * 集成测试验证 strict-wire-schema 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";
@@ -62,7 +58,7 @@ for (const locale of ["zh-CN", "en"] as const)
       let before: any, after: any;
       const provider = new AcpActionProvider(world, {
         turnTimeoutMs: 4000,
-        fallbackProvider: {
+        privilegedFallbackProvider: {
           async getAction() {
             fallbacks++;
             return null;

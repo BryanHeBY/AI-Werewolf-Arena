@@ -1,10 +1,5 @@
 /**
- * Unit tests for llm-action-provider-fallback; In-memory llm-action-provider-fallback decision/turn/client control with supplied mocks or DTOs; no physical transport.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试验证 llm-action-provider-fallback 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { describe, expect, test } from "bun:test";
 import { PotionType } from "../../../src/core";
@@ -35,7 +30,7 @@ describe("LlmActionProvider fallback", () => {
       context.world,
       new ToolLoopClient("vote", { target_id: 2 }),
       {
-        fallbackProvider: fallback,
+        privilegedFallbackProvider: fallback,
       },
     );
 
@@ -65,7 +60,7 @@ describe("LlmActionProvider fallback", () => {
     })!;
 
     const provider = new LlmActionProvider(context.world, new NoActionToolLoopClient(), {
-      fallbackProvider: new FallbackProvider(null),
+      privilegedFallbackProvider: new FallbackProvider(null),
     });
 
     const action = await provider.getAction({
@@ -81,7 +76,7 @@ describe("LlmActionProvider fallback", () => {
   test("falls back when model returns none but action is required", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(context.world, new NoActionToolLoopClient(), {
-      fallbackProvider: new FallbackProvider({
+      privilegedFallbackProvider: new FallbackProvider({
         name: "speak",
         args: { text: "fallback_required_action" },
       }),
@@ -108,7 +103,7 @@ describe("LlmActionProvider fallback", () => {
   test("sdk loop falls back when it completes without a required action", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(context.world, new NoActionToolLoopClient() as any, {
-      fallbackProvider: new FallbackProvider({
+      privilegedFallbackProvider: new FallbackProvider({
         name: "speak",
         args: { text: "fallback_required_action" },
       }),
@@ -136,7 +131,7 @@ describe("LlmActionProvider fallback", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const client = new CaptureToolsClient();
     const provider = new LlmActionProvider(context.world, client as any, {
-      fallbackProvider: new FallbackProvider(null),
+      privilegedFallbackProvider: new FallbackProvider(null),
     });
 
     await provider.getAction({
@@ -159,7 +154,7 @@ describe("LlmActionProvider fallback", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const client = new CaptureToolsClient();
     const provider = new LlmActionProvider(context.world, client as any, {
-      fallbackProvider: new FallbackProvider(null),
+      privilegedFallbackProvider: new FallbackProvider(null),
     });
 
     await provider.getAction({
@@ -178,7 +173,7 @@ describe("LlmActionProvider fallback", () => {
     const provider = new LlmActionProvider(
       context.world,
       new NoActionToolLoopClient() as any,
-      // 不传 fallbackProvider，走 BaselineBotActionProvider 默认兜底。
+      // 不传特权测试 provider，走生产默认的玩家观察回退。
     );
 
     const witchId = context.world.entityIds().find((id) => {
@@ -210,7 +205,7 @@ describe("LlmActionProvider fallback", () => {
       context.world,
       new FailOnceThenSpeakToolLoopClient() as any,
       {
-        fallbackProvider: new FallbackProvider({
+        privilegedFallbackProvider: new FallbackProvider({
           name: "speak",
           args: { text: "fallback_should_not_be_used" },
         }),
@@ -244,7 +239,7 @@ describe("LlmActionProvider fallback", () => {
       )!;
     const client = new NoActionToolLoopClient();
     const provider = new LlmActionProvider(context.world, client as any, {
-      fallbackProvider: new FallbackProvider(null),
+      privilegedFallbackProvider: new FallbackProvider(null),
     });
 
     const action = await provider.getAction({

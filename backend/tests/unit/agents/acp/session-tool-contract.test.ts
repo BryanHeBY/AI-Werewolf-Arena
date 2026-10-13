@@ -1,7 +1,5 @@
 /**
- * Unit tests verify ACP session-bound tool submission, prompt deltas and immediate required-turn fallback through inert sessions.
- * Input: Original callback factories, fresh worlds and literal speak requests under the same AcpActionProvider describe prefix.
- * Output and oracle: Exact submission receipts, session reuse/cancel counts, persona text and fallback timing remain the original assertions; no listener, child process or file recorder runs.
+ * 单元测试验证 session-tool-contract 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { describe, expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -84,7 +82,7 @@ describe("AcpActionProvider", () => {
     const provider = new AcpActionProvider(context.world, {
       sessionFactory: factory,
       turnTimeoutMs: 60_000,
-      fallbackProvider: {
+      privilegedFallbackProvider: {
         async getAction() {
           return { name: "speak", args: { text: "立即回退。" } };
         },

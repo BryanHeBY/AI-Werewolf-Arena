@@ -1,10 +1,5 @@
 /**
- * Scenario tests for thief setup. Inputs are original N+2 deals, reserve card/lease mutations and strict
- * provider failure tapes. Original literal receipts, reference/getter/error traces, facts and expected
- * state remain the oracle. Real initial and recursive PM cycles, plus runner failure recordings and strict
- * actual replay. Filesystem/Tape remains part of these original complete causal callbacks. Engine
- * sequencing remains real and models remain controlled providers; production output is not a newly
- * generated golden.
+ * 场景测试验证 setup-reentry-and-failure-replay 的原请求、已付行动与失败记录链。输入保留原固定角色、动作脚本、故障与归档矩阵；原字面结果及检查点作为预期。显式特权回退仅服务该控制驱动，不将生产对局输出称作独立玩法 oracle。
  */
 import path from "node:path";
 import { promises as fs } from "node:fs";
@@ -170,7 +165,7 @@ for (const transport of ["sdk", "acp"] as const)
           nativeCalls = 0;
         const create = spyOn(runtimeFactory, "createPlayerAgentRuntime").mockImplementation(
           async (options) => {
-            const fallbackProvider = {
+            const privilegedFallbackProvider = {
                 async getAction() {
                   fallbackCalls++;
                   return null;
@@ -198,11 +193,11 @@ for (const transport of ["sdk", "acp"] as const)
               transport === "sdk"
                 ? new LlmActionProvider(options.world, client, {
                     boardConfig: options.boardConfig,
-                    fallbackProvider,
+                    privilegedFallbackProvider,
                   })
                 : new AcpActionProvider(options.world, {
                     boardConfig: options.boardConfig,
-                    fallbackProvider,
+                    privilegedFallbackProvider,
                     sessionFactory: {
                       async createSession(input) {
                         return {

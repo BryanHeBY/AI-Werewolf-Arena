@@ -1,9 +1,5 @@
 /**
- * Integration tests: Exercises actual ACP fixture processes and injected MCP listeners.
- * Original identities, timeout/process-group termination and listener-reachability
- * assertions check duplicate remote IDs and non-cooperative cleanup. Existing literal
- * expectations and independently supplied fixture plans remain the oracle;
- * transport/recording setup is local and no billed model session is started.
+ * 集成测试验证 process-session-ownership 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { acpAdapterEntry } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
@@ -80,7 +76,7 @@ for (const locale of ["zh-CN", "en"] as const)
       controls: AcpMcpServerConfig[] = [];
     const provider = new AcpActionProvider(game.world, {
       turnTimeoutMs: 2000,
-      fallbackProvider: {
+      privilegedFallbackProvider: {
         async getAction() {
           throw new Error("unexpected_fallback");
         },

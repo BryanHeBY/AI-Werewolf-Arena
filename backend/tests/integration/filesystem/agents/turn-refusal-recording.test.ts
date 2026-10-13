@@ -1,7 +1,5 @@
 /**
- * Filesystem integration test verifies rejected turn IDs and corrected Witch actions persist their original refusal feedback.
- * Input: The original in-memory callback client, real SessionRecordManager scope and temporary logic-operation file.
- * Output and oracle: Literal expected/received turn IDs, selected action and persisted rejection fields retain the native callback sequence; this case does not send an SDK HTTP request.
+ * 集成测试验证 turn-refusal-recording 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { describe, expect, test } from "bun:test";
 import { PotionType } from "../../../../src/core";
@@ -64,7 +62,7 @@ describe("LlmActionProvider protocol", () => {
       },
     };
     const provider = new LlmActionProvider(context.world, client, {
-      fallbackProvider: new FallbackProvider(null),
+      privilegedFallbackProvider: new FallbackProvider(null),
     });
     await expect(
       runWithSessionRecorder(recorder, () =>

@@ -1,8 +1,5 @@
 /**
- * Unit tests: ACP initialization timeout uses a never-settling session factory; literal
- * fallback counts and the original turn result check that creation cannot hold the caller
- * forever. Inputs and expected outcomes remain the original literal or immutable-fixture
- * oracle; these module assertions invoke no model or complete-game driver.
+ * 单元测试验证 acp-action-provider-lifecycle 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { describe, expect, test } from "bun:test";
 import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
@@ -35,7 +32,7 @@ describe("AcpActionProvider session lifecycle", () => {
     };
     const provider = new AcpActionProvider(context.world, {
       sessionFactory: factory,
-      fallbackProvider: {
+      privilegedFallbackProvider: {
         async getAction() {
           return { name: "speak", args: { text: "超时回退" } };
         },

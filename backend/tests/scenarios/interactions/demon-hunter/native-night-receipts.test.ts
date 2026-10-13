@@ -1,7 +1,5 @@
 /**
- * Interaction scenarios verify Demon Hunter native night receipts and stocks remain bound across strict delivery and source revocation.
- * Input: Original native Guard/Seer matrices, controlled SDK/ACP providers, target/mark replacements and actual phase cycles.
- * Output and oracle: Explicit stock, mark, receipt and zero-fallback assertions retain the executed night prefix; same-target dynamic import rebasing changes only module paths.
+ * 场景测试验证 native-night-receipts 的原请求、已付行动与失败记录链。输入保留原固定角色、动作脚本、故障与归档矩阵；原字面结果及检查点作为预期。显式特权回退仅服务该控制驱动，不将生产对局输出称作独立玩法 oracle。
  */
 import { expect, test, spyOn } from "bun:test";
 import {
@@ -187,7 +185,7 @@ for (const transport of ["sdk", "acp"] as const)
             { AcpActionProvider } = await import("../../../../src/ai/agents/acp/acp_action_provider");
           let fallbackCalls = 0,
             submits = 0;
-          const fallbackProvider = {
+          const privilegedFallbackProvider = {
             getAction: async () => {
               fallbackCalls++;
               return null;
@@ -225,7 +223,7 @@ for (const transport of ["sdk", "acp"] as const)
             transport === "sdk"
               ? new LlmActionProvider(f.world, client, {
                   boardConfig: f.config,
-                  fallbackProvider,
+                  privilegedFallbackProvider,
                   maxConcurrentRequests: 1,
                   printLlmIo: false,
                   printThinking: false,
@@ -234,7 +232,7 @@ for (const transport of ["sdk", "acp"] as const)
                 })
               : new AcpActionProvider(f.world, {
                   boardConfig: f.config,
-                  fallbackProvider,
+                  privilegedFallbackProvider,
                   maxConcurrentRequests: 1,
                   turnTimeoutMs: 1000,
                   printLlmIo: false,

@@ -1,7 +1,5 @@
 /**
- * Unit tests verify LLM native callback reception and the generic submit_action tool contract using supplied inert clients.
- * Input: Original fresh worlds, literal action requests and callback/capture/fallback clients under the same describe prefix.
- * Output and oracle: Exact native arguments, selected actions and tool schema/name assertions preserve protocol semantics; no HTTP listener or record writer runs.
+ * 单元测试验证 tool-reception 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { describe, expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -25,7 +23,7 @@ describe("LlmActionProvider protocol", () => {
       context.world,
       new ToolLoopClient("speak", { text: "我是1号" }),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
       },
     );
 
@@ -53,7 +51,7 @@ describe("LlmActionProvider protocol", () => {
       context.world,
       new ToolLoopClient("vote", { target_id: 2, abstain: false }),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
       },
     );
 
@@ -81,7 +79,7 @@ describe("LlmActionProvider protocol", () => {
       context.world,
       new ToolLoopClient("check_identity", { target_id: 2 }),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
       },
     );
 
@@ -104,7 +102,7 @@ describe("LlmActionProvider protocol", () => {
       context.world,
       new ToolLoopClient("speak", { text: "我应该谨慎发言，先保留态度，观察局势。" }),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
       },
     );
 
@@ -125,7 +123,7 @@ describe("LlmActionProvider protocol", () => {
       context.world,
       new ToolLoopClient("speak", { text: "我应该谨慎发言。" }),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
       },
     );
 
@@ -144,7 +142,7 @@ describe("LlmActionProvider protocol", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const toolClient = new ToolLoopClient("speak", { text: "sdk_action" });
     const provider = new LlmActionProvider(context.world, toolClient as any, {
-      fallbackProvider: new FallbackProvider(null),
+      privilegedFallbackProvider: new FallbackProvider(null),
     });
 
     const action = await provider.getAction({
@@ -168,7 +166,7 @@ describe("LlmActionProvider protocol", () => {
   test("accepts game actions through the shared submit_action contract", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(context.world, new GenericSubmitActionClient() as any, {
-      fallbackProvider: new FallbackProvider(null),
+      privilegedFallbackProvider: new FallbackProvider(null),
     });
 
     await expect(
@@ -193,7 +191,7 @@ describe("LlmActionProvider protocol", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const client = new CaptureToolsClient();
     const provider = new LlmActionProvider(context.world, client as any, {
-      fallbackProvider: new FallbackProvider(null),
+      privilegedFallbackProvider: new FallbackProvider(null),
     });
 
     await provider.getAction({

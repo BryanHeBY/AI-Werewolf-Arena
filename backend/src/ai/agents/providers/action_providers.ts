@@ -1,9 +1,8 @@
 /**
- * Provides noop, scripted and baseline action providers. Inputs are engine requests and the
- * optional World; outputs are queued or heuristic tool calls. The baseline deliberately consults
- * true camp for some choices and is still used by production fallbacks: the documented F01
- * exception remains until C33a. Scripted drivers retain explicit test privilege; these providers
- * make no model calls and are not independent expected-value oracles.
+ * 提供明确特权的 mock／脚本／Baseline 驱动。输入为引擎请求和可选 World；
+ * 输出为原排队或启发式工具，部分 Baseline 查询真实阵营和能力，只用于显式测试／smoke。
+ * 默认 SDK、ACP 与生产装配使用 observation-fallback，不进入这里的特权选择。
+ * 本模块不调用模型，不是独立预期 oracle；合法性与付款仍由引擎重检。
  */
 import { scholarMentorBonusTargets } from "../../../game/mechanisms/roles/scholar_mentor/night_frame";
 import { prohibitsLoversVote } from "../../../game/mechanisms/roles/cupid/relation";
@@ -76,7 +75,7 @@ export class ScriptedActionProvider implements ActionProvider {
 }
 
 /**
- * 基线机器人：在 LLM 不可用时提供可推进对局的兜底动作。
+ * 明确特权的基线机器人：仅供 mock、smoke 和规则测试驱动，不作为生产模型回退。
  */
 export class BaselineBotActionProvider implements ActionProvider {
   private readonly roleCatalog: RoleCatalog;

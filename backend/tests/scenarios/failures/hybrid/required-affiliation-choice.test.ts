@@ -1,7 +1,5 @@
 /**
- * Failure scenarios verify real required Hybrid affiliation choices reject SDK or ACP failure without fallback or identity consumption.
- * Input: Original synthetic provider response matrices, actual phase/recording scope and exact partial reproduction.
- * Output and oracle: Literal original state, no-consumption/fallback and failed-prefix assertions retain native authority; no live provider credential or repaired choice is used.
+ * 场景测试验证 required-affiliation-choice 的原请求、已付行动与失败记录链。输入保留原固定角色、动作脚本、故障与归档矩阵；原字面结果及检查点作为预期。显式特权回退仅服务该控制驱动，不将生产对局输出称作独立玩法 oracle。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -47,7 +45,7 @@ for (const locale of ["zh-CN", "en"] as const)
           nativeCalls = 0,
           decisions = 0,
           closedSessions = 0;
-        const fallbackProvider = {
+        const privilegedFallbackProvider = {
           async getAction() {
             fallbacks++;
             return { name: "choose_exemplar" as const, args: { target_id: 2 } };
@@ -94,11 +92,11 @@ for (const locale of ["zh-CN", "en"] as const)
                   baseURL: `${server!.url.origin}/v1`,
                   model: "synthetic",
                 }),
-                { boardConfig: config, fallbackProvider, llmTimeoutMs: 2000 },
+                { boardConfig: config, privilegedFallbackProvider, llmTimeoutMs: 2000 },
               )
             : new AcpActionProvider(game.world, {
                 boardConfig: config,
-                fallbackProvider,
+                privilegedFallbackProvider,
                 turnTimeoutMs: 2000,
                 sessionFactory: {
                   async createSession() {

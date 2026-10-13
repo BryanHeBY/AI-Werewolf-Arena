@@ -1,9 +1,5 @@
 /**
- * Integration tests: Exercises real LLM turn/bug-report recording with an injected
- * callback client. Literal saved reports and dedupe/limit fields check optional report_bug
- * continuation and the common replay audit schema. Existing literal expectations and
- * independently supplied fixture plans remain the oracle; transport/recording setup is
- * local and no billed model session is started.
+ * 集成测试验证 bug-report-recording 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { describe, expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -37,7 +33,7 @@ describe("LlmActionProvider audit", () => {
     );
     const context = bootstrapGame(sixPlayerMvpConfig);
     const provider = new LlmActionProvider(context.world, new ReportThenSpeakToolLoopClient(), {
-      fallbackProvider: new FallbackProvider(null),
+      privilegedFallbackProvider: new FallbackProvider(null),
     });
 
     const action = await runWithSessionRecorder(recorder, async () =>
@@ -94,7 +90,7 @@ describe("LlmActionProvider audit", () => {
       context.world,
       new DuplicateReportThenSpeakToolLoopClient(),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
       },
     );
 

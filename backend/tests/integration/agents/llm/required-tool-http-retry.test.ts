@@ -1,7 +1,5 @@
 /**
- * SDK integration test verifies a real localhost text-only required-tool reply is retried and completes the Witch turn.
- * Input: The original installed SDK client, test-owned HTTP response sequence and fresh Witch request.
- * Output and oracle: Explicit tool_choice, retry prompt, request count and final action preserve response-to-tool semantics; the server is local and no external model is called.
+ * 集成测试验证 required-tool-http-retry 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { describe, expect, test } from "bun:test";
 import { PotionType } from "../../../../src/core";
@@ -75,7 +73,7 @@ describe("LlmActionProvider protocol", () => {
           baseURL: `${server.url.origin}/v1`,
           model: "test-model",
         }),
-        { llmTimeoutMs: 5000, fallbackProvider: new FallbackProvider(null) },
+        { llmTimeoutMs: 5000, privilegedFallbackProvider: new FallbackProvider(null) },
       );
       await expect(
         provider.getAction({

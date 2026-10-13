@@ -1,5 +1,5 @@
 /**
- * Actual death-resolution scenarios check badge handoff, destruction, revocation and refusal without fallback. Inputs are original successor actions, life/phase/badge mutations and inert LLM/ACP clients; fixed transfer/weight, original failure and closed permit expectations are the oracle. Original complete resolution and provider cleanup remain; no billed model runs.
+ * 场景测试验证 badge-death-handoff-and-revocation 的原请求、已付行动与失败记录链。输入保留原固定角色、动作脚本、故障与归档矩阵；原字面结果及检查点作为预期。显式特权回退仅服务该控制驱动，不将生产对局输出称作独立玩法 oracle。
  */
 import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
 import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
@@ -295,10 +295,10 @@ for (const locale of ["zh-CN", "en"] as const)
                   action: "choose_badge_successor",
                   arguments: { target_id: 99 },
                 }),
-            { fallbackProvider: fallback, llmTimeoutMs: 500, maxConcurrentRequests: 1 },
+            { privilegedFallbackProvider: fallback, llmTimeoutMs: 500, maxConcurrentRequests: 1 },
           )
         : new AcpActionProvider(f.world, {
-            fallbackProvider: fallback,
+            privilegedFallbackProvider: fallback,
             turnTimeoutMs: 500,
             sessionFactory: {
               async createSession(input) {

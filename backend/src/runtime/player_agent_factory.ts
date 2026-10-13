@@ -1,8 +1,5 @@
 /**
- * Assembles seat-specific LLM or ACP providers from resolved profiles and readonly rules.
- * Inputs are the original World, bound board view and explicit transport options;
- * outputs are player providers and their owned close operations. This factory retains
- * process/session ownership without writing rules, actor resources or game phases.
+ * 负责按席位解析的 profile 与只读规则装配 LLM／ACP 玩家运行时。输入为原 World、板子视图及传输选项；输出为 provider、资源状态和原关闭操作。生产装配使用共同观察回退，不注入特权 Baseline；会话与进程由各 owner 关闭，本工厂不写规则、库存或游戏阶段。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
@@ -11,12 +8,7 @@ import * as path from "node:path";
 import { isDeepStrictEqual } from "node:util";
 import { World } from "../core/domain/world";
 import { ActionProvider } from "../core/domain/model";
-import {
-  AcpActionProvider,
-  AcpProcessClient,
-  BaselineBotActionProvider,
-  LlmActionProvider,
-} from "../ai";
+import { AcpActionProvider, AcpProcessClient, LlmActionProvider } from "../ai";
 import { AiSdkClient } from "../ai/integrations/llm/ai_sdk_client";
 import type { ResolvedAgentRuntimeProfile } from "./config/contracts";
 
@@ -162,7 +154,6 @@ async function createAcpRuntime(options: PlayerAgentFactoryOptions): Promise<Pla
       colorizeLogs: options.colorizeLogs,
       printLlmIo: options.printLlmIo,
       printThinking: options.printThinking,
-      fallbackProvider: new BaselineBotActionProvider(options.world),
     });
     providers.set(name, provider);
   }
@@ -249,7 +240,6 @@ function createLlmRuntime(options: PlayerAgentFactoryOptions): PlayerAgentRuntim
     personalityPromptResolver: (request) => profileFor(request.actorId).personalityPrompt,
     trace: options.trace,
     displayLocale: options.displayLocale,
-    fallbackProvider: new BaselineBotActionProvider(options.world),
     maxPromptEvents: 20,
     llmTimeoutMs: options.llmTimeoutMs,
     colorizeLogs: options.colorizeLogs,

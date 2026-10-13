@@ -1,10 +1,5 @@
 /**
- * Unit tests for llm-action-provider-prompts; In-memory llm-action-provider-prompts decision/turn/client control with supplied mocks or DTOs; no physical transport.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试验证 llm-action-provider-prompts 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { describe, expect, test } from "bun:test";
 import { PotionType } from "../../../src/core";
@@ -50,7 +45,7 @@ describe("LlmActionProvider prompts", () => {
         expect(joined).not.toContain("私有查验情报=");
       }),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
       },
     );
 
@@ -83,7 +78,7 @@ describe("LlmActionProvider prompts", () => {
         expect(joined).not.toContain("阶段上下文=");
       }),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
       },
     );
 
@@ -142,7 +137,7 @@ describe("LlmActionProvider prompts", () => {
         expect(latest).not.toContain("当前板子信息");
       }),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
       },
     );
 
@@ -184,7 +179,7 @@ describe("LlmActionProvider prompts", () => {
         },
       ),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
       },
     );
 
@@ -210,7 +205,7 @@ describe("LlmActionProvider prompts", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const toolClient = new ToolLoopClient("speak", { text: "收到广播" });
     const provider = new LlmActionProvider(context.world, toolClient as any, {
-      fallbackProvider: new FallbackProvider(null),
+      privilegedFallbackProvider: new FallbackProvider(null),
     });
 
     await provider.getAction({
@@ -261,7 +256,7 @@ describe("LlmActionProvider prompts", () => {
         },
       ),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
       },
     );
 
@@ -289,7 +284,7 @@ describe("LlmActionProvider prompts", () => {
       context.world,
       new ToolLoopClient("kill_vote", { target_id: null, abstain: true }),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
       },
     );
 
@@ -327,7 +322,7 @@ describe("LlmActionProvider prompts", () => {
         },
       ),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
       },
     );
 
@@ -362,7 +357,7 @@ describe("LlmActionProvider prompts", () => {
     const targetId = context.world.entityIds().find((id) => id !== witchId)!;
     const client = new InvalidPotionThenNoneToolLoopClient(targetId);
     const provider = new LlmActionProvider(context.world, client as any, {
-      fallbackProvider: new FallbackProvider(null),
+      privilegedFallbackProvider: new FallbackProvider(null),
     });
 
     const action = await provider.getAction({
@@ -407,7 +402,7 @@ describe("LlmActionProvider prompts", () => {
         },
       ),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
       },
     );
 
@@ -437,7 +432,7 @@ describe("LlmActionProvider prompts", () => {
         expect(system).toContain("首日特殊时序");
       }),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
         boardConfig: twelvePlayerStandardConfig,
       },
     );
@@ -483,7 +478,7 @@ describe("LlmActionProvider prompts", () => {
         );
       }),
       {
-        fallbackProvider: new FallbackProvider(null),
+        privilegedFallbackProvider: new FallbackProvider(null),
         boardConfig: twelvePlayerStandardConfig,
       },
     );

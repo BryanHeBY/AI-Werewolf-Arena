@@ -1,8 +1,5 @@
 /**
- * Unit tests own LLM turn deadlines, queue/retry/fallback cancellation and original
- * cleanup error identity with held inert callbacks. Inputs are the original bounded
- * request and synthetic tool submissions; literal lease, result and log assertions remain
- * the oracle. This suite starts no HTTP server or model.
+ * 单元测试验证 turn-budget 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { expect, spyOn, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -63,7 +60,7 @@ test("queue time belongs to the turn deadline: expired waiter is removed and nev
   const provider = new LlmActionProvider(game.world, client, {
     llmTimeoutMs: 1000,
     maxConcurrentRequests: 1,
-    fallbackProvider: {
+    privilegedFallbackProvider: {
       async getAction(req) {
         fallback.push(req.actorId);
         return null;
@@ -104,7 +101,7 @@ test("required-action retries share one budget instead of resetting timeout for 
   };
   const provider = new LlmActionProvider(game.world, client, {
     llmTimeoutMs: 70,
-    fallbackProvider: {
+    privilegedFallbackProvider: {
       async getAction() {
         fallbacks++;
         return null;
@@ -140,7 +137,7 @@ test("provider close aborts active and queued turns without fallback, waits for 
   const provider = new LlmActionProvider(game.world, client, {
     llmTimeoutMs: 5000,
     maxConcurrentRequests: 1,
-    fallbackProvider: {
+    privilegedFallbackProvider: {
       async getAction() {
         fallbacks++;
         return null;
@@ -197,7 +194,7 @@ for (const outcome of ["resolve", "reject"] as const)
     };
     const provider = new LlmActionProvider(game.world, client, {
       llmTimeoutMs: 5000,
-      fallbackProvider: {
+      privilegedFallbackProvider: {
         getAction() {
           calls++;
           ready();
@@ -240,7 +237,7 @@ test("hanging asynchronous fallback uses the remaining turn deadline and a real 
   let calls = 0;
   const provider = new LlmActionProvider(game.world, client, {
     llmTimeoutMs: 30,
-    fallbackProvider: {
+    privilegedFallbackProvider: {
       getAction() {
         calls++;
         return new Promise<never>(() => {});
@@ -255,7 +252,7 @@ test("hanging asynchronous fallback uses the remaining turn deadline and a real 
   let failedCalls = 0;
   const failure = new LlmActionProvider(game.world, client, {
     llmTimeoutMs: 1000,
-    fallbackProvider: {
+    privilegedFallbackProvider: {
       async getAction() {
         failedCalls++;
         throw original;
@@ -281,7 +278,7 @@ for (const kind of ["TimeoutError", "AbortError"] as const)
     };
     const provider = new LlmActionProvider(game.world, client, {
       llmTimeoutMs: 1000,
-      fallbackProvider: {
+      privilegedFallbackProvider: {
         async getAction() {
           calls++;
           throw original;
@@ -343,7 +340,7 @@ test("closing during successful action finalization cannot return the selected a
     trace: true,
     colorizeLogs: false,
     llmTimeoutMs: 1000,
-    fallbackProvider: {
+    privilegedFallbackProvider: {
       async getAction() {
         fallback++;
         return null;

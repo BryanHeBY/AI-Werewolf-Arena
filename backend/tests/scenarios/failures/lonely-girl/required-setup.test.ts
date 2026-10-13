@@ -1,7 +1,5 @@
 /**
- * Failure scenarios verify real strict Lonely Girl providers close required admiration setup without fallback, native action or card swap.
- * Input: Original invalid/missing SDK or ACP responses, the real runner and temporary partial archives followed by offline replay.
- * Output and oracle: Explicit failed admiration/stock/affiliation values and exact prefix replay preserve the original identity; no live provider credential is used.
+ * 场景测试验证 required-setup 的原请求、已付行动与失败记录链。输入保留原固定角色、动作脚本、故障与归档矩阵；原字面结果及检查点作为预期。显式特权回退仅服务该控制驱动，不将生产对局输出称作独立玩法 oracle。
  */
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
@@ -53,7 +51,7 @@ for (const transport of ["sdk", "acp"] as const)
           nativeCalls = 0;
         const create = spyOn(runtimeFactory, "createPlayerAgentRuntime").mockImplementation(
           async (options) => {
-            const fallbackProvider = {
+            const privilegedFallbackProvider = {
                 async getAction() {
                   fallbackCalls++;
                   return null;
@@ -81,11 +79,11 @@ for (const transport of ["sdk", "acp"] as const)
               transport === "sdk"
                 ? new LlmActionProvider(options.world, client, {
                     boardConfig: options.boardConfig,
-                    fallbackProvider,
+                    privilegedFallbackProvider,
                   })
                 : new AcpActionProvider(options.world, {
                     boardConfig: options.boardConfig,
-                    fallbackProvider,
+                    privilegedFallbackProvider,
                     sessionFactory: {
                       async createSession(input) {
                         return {

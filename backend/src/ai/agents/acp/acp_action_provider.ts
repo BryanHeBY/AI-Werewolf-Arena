@@ -1,8 +1,5 @@
 /**
- * Adapts engine requests to owned ACP sessions and session-bound MCP actions. Inputs are
- * World, resolved provider options and requests; outputs are accepted tools and round
- * records. Deadline timers, cancellation and session close stay provider-owned; bound request
- * owners retain local authority and text updates never commit game actions.
+ * 负责将引擎请求适配为 ACP 会话和会话绑定的 MCP 行动。输入为 World、解析后的选项与请求；输出为已接受工具及回合记录。默认生产回退只把脱离玩家观察交给策略，显式特权驱动单列测试接口。原回合 owner 持有期限、取消和关闭；ACP 文本与 update 不提交游戏行动。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { inheritRequestAlias } from "../../../core/domain/request_delivery";
@@ -39,7 +36,11 @@ import {
   AcpTurnRegistry,
   McpBridgeResult,
 } from "../../integrations/acp/acp_turn_registry";
-import { BaselineBotActionProvider } from "../providers/action_providers";
+import {
+  ObservationFallbackActionProvider,
+  ObservationFallbackStrategy,
+} from "../providers/observation-fallback";
+import type { ObservedPlayerStrategy } from "../player/observation";
 import { AgentBugReportService } from "../reporting/bug_report_service";
 import { encodePlayerVisibleEventBatch, parsePlayerVisibleEvents } from "../visible_event_protocol";
 import { BuiltPlayerPrompt, PlayerRoundOutcome } from "../player/contracts";
@@ -49,7 +50,10 @@ import { ScopedRequestScheduler } from "../../runtime/request_scheduler";
 import { LlmObserver } from "../player/player_observer";
 
 export interface AcpActionProviderOptions {
-  fallbackProvider?: ActionProvider;
+  /** 生产自定义选择只接收脱离的玩家观察，不获得原请求或 World。 */
+  fallbackStrategy?: ObservedPlayerStrategy;
+  /** 显式特权测试驱动；生产运行装配不注入，保留原请求身份和取消测试。 */
+  privilegedFallbackProvider?: ActionProvider;
   sessionFactory?: AcpSessionFactory;
   sessionFactoryResolver?: (actorId: number) => AcpSessionFactory;
   boardConfig?: ReadonlyBoardConfig;
@@ -124,8 +128,6 @@ export class AcpActionProvider implements ActionProvider {
         ),
     });
     const roleCatalog = options.roleCatalog ?? getDefaultRoleCatalog();
-    this.fallbackProvider =
-      options.fallbackProvider ?? new BaselineBotActionProvider(world, roleCatalog);
     this.bugReportService = new AgentBugReportService(world);
     this.registry = new AcpTurnRegistry(
       world,
@@ -142,6 +144,12 @@ export class AcpActionProvider implements ActionProvider {
       configRenderRegistry: getDefaultConfigRenderRegistry(),
       boardConfig: options.boardConfig,
     });
+    this.fallbackProvider =
+      options.privilegedFallbackProvider ??
+      new ObservationFallbackActionProvider(
+        (request) => this.promptPolicy.buildObservation(request),
+        options.fallbackStrategy ?? new ObservationFallbackStrategy(world.locale),
+      );
     this.roundRecorder = new PlayerRoundRecorder(world);
   }
 

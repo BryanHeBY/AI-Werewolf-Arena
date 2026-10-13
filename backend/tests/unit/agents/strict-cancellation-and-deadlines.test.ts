@@ -1,5 +1,5 @@
 /**
- * Unit tests check strict/default provider cancellation, absolute deadline delivery and cleanup propagation using controlled SDK/ACP callbacks and recorder spies. Inputs are literal guard requests and held completions; literal error IDs, unchanged stock and recording outcomes are the oracle. No network server, file persistence or complete game is run.
+ * 单元测试验证 strict-cancellation-and-deadlines 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -110,7 +110,7 @@ for (const transport of ["sdk", "acp"] as const)
         );
       },
     };
-    const fallbackProvider = {
+    const privilegedFallbackProvider = {
       async getAction() {
         fallbacks++;
         return null;
@@ -118,10 +118,10 @@ for (const transport of ["sdk", "acp"] as const)
     };
     const provider =
       transport === "sdk"
-        ? new LlmActionProvider(world, client, { llmTimeoutMs: 30, fallbackProvider })
+        ? new LlmActionProvider(world, client, { llmTimeoutMs: 30, privilegedFallbackProvider })
         : new AcpActionProvider(world, {
             turnTimeoutMs: 30,
-            fallbackProvider,
+            privilegedFallbackProvider,
             sessionFactory: {
               async createSession() {
                 return {

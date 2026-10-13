@@ -1,7 +1,5 @@
 /**
- * SDK HTTP integration test verifies actual installed-client authentication failure produces safe terminal and private replay diagnostics.
- * Input: Original local synthetic HTTP response, fake authentication canary and actual temporary player record scope.
- * Output and oracle: Exact one-request policy, original fallback and literal safe status/code assertions remain unchanged; no remote model or real credential is involved.
+ * 集成测试验证 private-http-failure 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
@@ -62,7 +60,7 @@ test("actual installed SDK HTTP error metadata is safe in private replay and ter
     model: "synthetic",
   });
   const provider = LlmActionProvider.fromModelClient(world, client, {
-    fallbackProvider: {
+    privilegedFallbackProvider: {
       async getAction() {
         return fallback;
       },
