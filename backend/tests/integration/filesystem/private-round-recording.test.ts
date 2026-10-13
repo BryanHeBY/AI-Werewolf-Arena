@@ -10,7 +10,7 @@ import path from "node:path";
 import { assertReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { PlayerRoundRecorder } from "../../../src/ai/agents/player/player_round_recorder";
+import { PlayerRoundRecorder } from "../../../src/app/player-round-recorder";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";
 import { Phase, Role } from "../../../src/core";

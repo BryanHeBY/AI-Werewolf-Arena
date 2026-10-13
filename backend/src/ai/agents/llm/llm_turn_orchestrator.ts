@@ -20,7 +20,7 @@ import { LlmObserver } from "../player/player_observer";
 import { BuiltPlayerPrompt, PlayerRoundOutcome, PlayerRetryTraceEntry } from "../player/contracts";
 import { ChatMessage, ChatModelClient } from "../../integrations/llm/transport";
 import { PlayerPromptSession } from "./player_prompt_session";
-import { PlayerRoundRecorder } from "../player/player_round_recorder";
+import { PlayerRoundRecorder } from "../../../app/player-round-recorder";
 import { buildConstraintRetryPrompt } from "../player/prompt_templates";
 import { ScopedRequestScheduler } from "../../runtime/request_scheduler";
 import { SdkGameToolLoop } from "./sdk_game_tool_loop";

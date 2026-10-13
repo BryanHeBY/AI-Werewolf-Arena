@@ -45,7 +45,7 @@ import { AgentBugReportService } from "../reporting/bug_report_service";
 import { encodePlayerVisibleEventBatch, parsePlayerVisibleEvents } from "../visible_event_protocol";
 import { BuiltPlayerPrompt, PlayerRoundOutcome } from "../player/contracts";
 import { PlayerPromptPolicy } from "../player/player_prompt_policy";
-import { PlayerRoundRecorder } from "../player/player_round_recorder";
+import { PlayerRoundRecorder } from "../../../app/player-round-recorder";
 import { ScopedRequestScheduler } from "../../runtime/request_scheduler";
 import { LlmObserver } from "../player/player_observer";
 

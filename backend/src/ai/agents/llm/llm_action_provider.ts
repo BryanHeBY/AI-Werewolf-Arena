@@ -31,7 +31,7 @@ import { FallbackActionPolicy } from "./fallback_action_policy";
 import { LlmObserver } from "../player/player_observer";
 import { PlayerPromptSession } from "./player_prompt_session";
 import { PlayerPromptPolicy } from "../player/player_prompt_policy";
-import { PlayerRoundRecorder } from "../player/player_round_recorder";
+import { PlayerRoundRecorder } from "../../../app/player-round-recorder";
 import { ScopedRequestScheduler } from "../../runtime/request_scheduler";
 import { SdkGameToolLoop } from "./sdk_game_tool_loop";
 import { LlmTurnOrchestrator } from "./llm_turn_orchestrator";
