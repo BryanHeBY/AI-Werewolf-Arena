@@ -6,7 +6,7 @@
 | ---------------------- | ------ | ------------------------------------------------------------------------------------ |
 | P0 基线与契约          | 已完成 | C01 `144f48b` 已提交；C02 `aba9347`；C03 `b56d282`；七样例、89行静态台账与三方向审查 |
 | P1 依赖与共享契约      | 已完成 | C04–C09 数据/支持职责与 public consumer 闭合；零基础包循环，兼容桥按 C44 退出        |
-| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；当前映射564来源、632目标、7275旧IDs；余mixed tests/support继续 |
+| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；当前映射565来源、635目标、7285旧IDs；余mixed tests/support继续 |
 | P3 状态与请求授权      | 进行中 | C16生产读取/C18传播/F02/C19完成；容器读取边界及实际写者闭合，能力查询/schema继续      |
 | P4 规则计划与生命周期  | 进行中 | C21阶段成员快照与opaque lazy完成；完整RulePlan/C22–C24继续                           |
 | P5 效果、死亡与判胜    | 待执行 | C25–C29                                                                              |
@@ -347,3 +347,5 @@
 - 82fc0231台账：八个既有state格仅登记已交付read/write子项，三公共owner pending→partial、五payload原partial追加；独立有限delta/实际committed owner/doc/counts/旧91row逆还原和freeze89 SHA审green。现91rows910cells55partial855pending/0complete/N/A，完整矩阵及最终门禁仍待。
 
 - C17夜间能力pureData唯一owner：21原声明归game-contract/night-ability-data，actual54path接线（30backend含删Seer纯typeleaf、21旧test、2contractsource、1compilecheck）；45actualnamed/inline类型consumer全publiccanonical，旧无consumer typeexports退出。21member AST/42双向赋型、29backend+21test+root51运行程序、删除/新增typeleaf惰性证明同；两独立真实Git/54SHA/23codec-sealed-player-verifier-controls审green。完整backend14063 actual0、browser source0、pkgtests20978actual0、最后runtime1557actual0、54scope33430actual0/新债0旧5；首declaration ExportSyntaxList与两head红保留仅harness/说明修。PrivateWitch terminal不进入playerDTO，自定义keys/Roleenum/optional-null/readonly接受保持，无Runtime World/lease/command迁包、无parser/新schema/模型或fullgame。其他55角色完整schema/codec、opaque容器、共同生命周期和旧value出口仍继续。
+
+- C12 mixed4j scripted-standard-games：1原file→3targets/10旧IDs实际分层；overall4→10/68IDs15unit2integration51scene，31注册全保。RootactualGit/full selectedprogram/原ID singleowner0，31callback及15helper全部raw、原数组/父loop保，100bindings85relative/10heads0；独立真实分类/setup/473unique omitted0add/55prune=46whole9partial闭合。原runRecorded是latent函数，不增加eager factoryread；初工具text分类误报cache留存，修AST仅查真实顶层initializer。Badge直接hook不因constructor升scenario，Radiantunit明确原publicboard读取支持input，完整录制另scene；actual346b source/support/pkg/scripts/tooling+10finite34932实际exit0。没有mutation输入/cast/断言改动或tests/discovery/game重复，不称wholefile/import initorder等价。mapping现565source/635target/7285IDs。

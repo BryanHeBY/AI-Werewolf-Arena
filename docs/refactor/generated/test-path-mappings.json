@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+  "observedSourceCommit": "346b1f0020a03d220b7af3971853d0ae202614a8",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -90310,13 +90310,864 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/scenarios/foundation_games.test.ts",
+      "to": "backend/tests/scenarios/boards/standard/scripted-six-and-twelve-seat-games.test.ts",
+      "sourceCommit": "346b1f0020a03d220b7af3971853d0ae202614a8",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "acb85aee87b49d119ffb6b18ea2bd49658c1eb627f00ce959978f38befdefd8f",
+      "candidateSha256": "efd020cd4d6c08d9442baf18af798347e74cdf5a8c98a97e0b6dddf0f8a085be",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1807,
+          "end": 1845,
+          "original": "../../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1725,
+          "end": 1763,
+          "original": "../../support/drivers/scripted-players",
+          "value": "../../../support/drivers/scripted-players",
+          "originalResolved": "backend/tests/support/drivers/scripted-players.ts",
+          "expectedResolved": "backend/tests/support/drivers/scripted-players.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1634,
+          "end": 1666,
+          "original": "../../../src/recording/contracts",
+          "value": "../../../../src/recording/contracts",
+          "originalResolved": "backend/src/recording/contracts.ts",
+          "expectedResolved": "backend/src/recording/contracts.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1552,
+          "end": 1592,
+          "original": "../../../src/recording/recording_context",
+          "value": "../../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1470,
+          "end": 1509,
+          "original": "../../../src/recording/session_recorder",
+          "value": "../../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1389,
+          "end": 1429,
+          "original": "../../../src/runtime/game_event_recorder",
+          "value": "../../../../src/runtime/game_event_recorder",
+          "originalResolved": "backend/src/runtime/game_event_recorder.ts",
+          "expectedResolved": "backend/src/runtime/game_event_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1298,
+          "end": 1351,
+          "original": "../../../src/runtime/scenarios/twelve_player_standard",
+          "value": "../../../../src/runtime/scenarios/twelve_player_standard",
+          "originalResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/twelve_player_standard.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1206,
+          "end": 1251,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1119,
+          "end": 1167,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1000,
+          "end": 1031,
+          "original": "../../../src/core/domain/random",
+          "value": "../../../../src/core/domain/random",
+          "originalResolved": "backend/src/core/domain/random.ts",
+          "expectedResolved": "backend/src/core/domain/random.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 950,
+          "end": 967,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 722,
+          "end": 748,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 469,
+          "end": 497,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 236,
+          "end": 284,
+          "original": "../../../src/ai/agents/llm/player_prompt_session",
+          "value": "../../../../src/ai/agents/llm/player_prompt_session",
+          "originalResolved": "backend/src/ai/agents/llm/player_prompt_session.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/player_prompt_session.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 146,
+          "end": 196,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 30,
+          "end": 47,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "75713c77e63f2b458ed94c855bed265ca72462f3fc646d039a5a6ffeeb2298e9",
+          "title": "zh-CN six-player strict game covers guard skip, private checks and last words",
+          "occurrence": 1
+        },
+        {
+          "id": "f5c084953b817cf220fc1e3f6f55fcee5b88734a2c318162d6485b52c470443f",
+          "title": "zh-CN six-player strict game covers successful guard, private checks and last words",
+          "occurrence": 1
+        },
+        {
+          "id": "ede85c351e23d6ee452d46806e1779bae8b20a6a10ebfd305cae46c89027bf19",
+          "title": "en six-player strict game covers guard skip, private checks and last words",
+          "occurrence": 1
+        },
+        {
+          "id": "38a6d65e7d7d6fa7eff9e7423d3016dfba5e0e37a7f58b52e207eb6ee4559cae",
+          "title": "en six-player strict game covers successful guard, private checks and last words",
+          "occurrence": 1
+        },
+        {
+          "id": "4f790f07097ba8d177dfd70161d96bb6eba202cc3fdf54a963334bcc9cfe60c1",
+          "title": "zh-CN twelve-player strict game: heal, poison, gun, sheriff election and final explosion",
+          "occurrence": 1
+        },
+        {
+          "id": "3134ae1775b200384bda4e4d85774ed55a85e068f431758f58d21df0ecfe86f4",
+          "title": "zh-CN twelve-player strict game: heal, poison, gun, sheriff idiot reveal and final explosion",
+          "occurrence": 1
+        },
+        {
+          "id": "6e3c378709975e72df0bbd16b411537643d5986463ef4bce60e50f779b3138bb",
+          "title": "en twelve-player strict game: heal, poison, gun, sheriff election and final explosion",
+          "occurrence": 1
+        },
+        {
+          "id": "792c78e3db30879c570a9fc4520bb7219d4aca7184d0b849c80029d891444de7",
+          "title": "en twelve-player strict game: heal, poison, gun, sheriff idiot reveal and final explosion",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "bun:test",
+          "originalImport": "import { expect, spyOn, test } from \"bun:test\";",
+          "currentImportBeforeRebase": "import { expect, test } from \"bun:test\";",
+          "droppedBindings": [
+            {
+              "name": "spyOn",
+              "imported": "spyOn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Copied runRecorded/fixture helpers are latent function declarations; original case-local Worlds, scripts, recorders and cleanup stay one allocation per original call. No extra eager cached catalog read was introduced.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 473 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/scenarios/foundation_games.test.ts",
+      "to": "backend/tests/unit/agents/strict-scripted-turns.test.ts",
+      "sourceCommit": "346b1f0020a03d220b7af3971853d0ae202614a8",
+      "reason": "Actual selected unit module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "acb85aee87b49d119ffb6b18ea2bd49658c1eb627f00ce959978f38befdefd8f",
+      "candidateSha256": "fe9b021ab0710958b126aa6526020dce375086fa3ff1bd4eb8a7064e3b5f1192",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 160,
+          "end": 198,
+          "original": "../../support/drivers/scripted-players",
+          "value": "../../support/drivers/scripted-players",
+          "originalResolved": "backend/tests/support/drivers/scripted-players.ts",
+          "expectedResolved": "backend/tests/support/drivers/scripted-players.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 84,
+          "end": 101,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "860d7102924d60e461b2de7eefd8b999e94d2b0cda7dd7a17d85213be2d0dca9",
+          "title": "strict scripts reject unexpected, duplicate and missing player turns",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { ActionWindow } from \"../../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ActionWindow",
+              "imported": "ActionWindow",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "originalImport": "import type { Locale } from \"@ai-werewolf-arena/game-text\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Locale",
+              "imported": "Locale",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/player_prompt_policy",
+          "originalImport": "import { PlayerPromptPolicy } from \"../../../src/ai/agents/player/player_prompt_policy\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PlayerPromptPolicy",
+              "imported": "PlayerPromptPolicy",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/llm/player_prompt_session",
+          "originalImport": "import { PlayerPromptSession } from \"../../../src/ai/agents/llm/player_prompt_session\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PlayerPromptSession",
+              "imported": "PlayerPromptSession",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import {\n  getDefaultRoleCatalog,\n  getDefaultToolSpecRegistry,\n  getDefaultTargetHintRegistry,\n  getDefaultPhaseStageLocalizationRegistry,\n  getDefaultConfigRenderRegistry,\n} from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultToolSpecRegistry",
+              "imported": "getDefaultToolSpecRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultTargetHintRegistry",
+              "imported": "getDefaultTargetHintRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultPhaseStageLocalizationRegistry",
+              "imported": "getDefaultPhaseStageLocalizationRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "bun:test",
+          "originalImport": "import { expect, spyOn, test } from \"bun:test\";",
+          "currentImportBeforeRebase": "import { expect, test } from \"bun:test\";",
+          "droppedBindings": [
+            {
+              "name": "spyOn",
+              "imported": "spyOn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "originalImport": "import { assertReplayDocument } from \"@ai-werewolf-arena/replay-contract\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "assertReplayDocument",
+              "imported": "assertReplayDocument",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:path",
+          "originalImport": "import path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readFile } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readFile",
+              "imported": "readFile",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/app/bootstrap",
+          "originalImport": "import { bootstrapGame } from \"../../../src/app/bootstrap\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "bootstrapGame",
+              "imported": "bootstrapGame",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Camp,\n  COMPONENT,\n  Phase,\n  PotionType,\n  Role,\n  type ActionRequest,\n  type ActionStage,\n  type BoardConfig,\n  type RoleComponent,\n  type ToolCall,\n  type VotingRightComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Phase, type ActionRequest } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "Camp",
+              "imported": "Camp",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionStage",
+              "imported": "ActionStage",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "BoardConfig",
+              "imported": "BoardConfig",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "VotingRightComponent",
+              "imported": "VotingRightComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/random",
+          "originalImport": "import { createRandom } from \"../../../src/core/domain/random\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createRandom",
+              "imported": "createRandom",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import {\n  getGuardState,\n  getHunterState,\n  getSeerState,\n  getWitchState,\n} from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getGuardState",
+              "imported": "getGuardState",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getHunterState",
+              "imported": "getHunterState",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getSeerState",
+              "imported": "getSeerState",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getWitchState",
+              "imported": "getWitchState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalImport": "import { sixPlayerMvpConfig } from \"../../../src/runtime/scenarios/six_player_mvp\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "sixPlayerMvpConfig",
+              "imported": "sixPlayerMvpConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalImport": "import { twelvePlayerStandardConfig } from \"../../../src/runtime/scenarios/twelve_player_standard\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "twelvePlayerStandardConfig",
+              "imported": "twelvePlayerStandardConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/game_event_recorder",
+          "originalImport": "import { GameEventRecorder } from \"../../../src/runtime/game_event_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameEventRecorder",
+              "imported": "GameEventRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/session_recorder",
+          "originalImport": "import { SessionRecordManager } from \"../../../src/recording/session_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SessionRecordManager",
+              "imported": "SessionRecordManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/recording_context",
+          "originalImport": "import { runWithSessionRecorder } from \"../../../src/recording/recording_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "runWithSessionRecorder",
+              "imported": "runWithSessionRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/contracts",
+          "originalImport": "import type { ReplayPlayerView } from \"../../../src/recording/contracts\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ReplayPlayerView",
+              "imported": "ReplayPlayerView",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Copied runRecorded/fixture helpers are latent function declarations; original case-local Worlds, scripts, recorders and cleanup stay one allocation per original call. No extra eager cached catalog read was introduced.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 473 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/scenarios/foundation_games.test.ts",
+      "to": "backend/tests/scenarios/failures/recording/scripted-game-finalization.test.ts",
+      "sourceCommit": "346b1f0020a03d220b7af3971853d0ae202614a8",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "acb85aee87b49d119ffb6b18ea2bd49658c1eb627f00ce959978f38befdefd8f",
+      "candidateSha256": "1c21fe3ad78b9e959d59e18c9fad28700c85191e4167b79938b6216b7fe0fef7",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1433,
+          "end": 1471,
+          "original": "../../support/drivers/temp-directories",
+          "value": "../../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1351,
+          "end": 1389,
+          "original": "../../support/drivers/scripted-players",
+          "value": "../../../support/drivers/scripted-players",
+          "originalResolved": "backend/tests/support/drivers/scripted-players.ts",
+          "expectedResolved": "backend/tests/support/drivers/scripted-players.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1260,
+          "end": 1292,
+          "original": "../../../src/recording/contracts",
+          "value": "../../../../src/recording/contracts",
+          "originalResolved": "backend/src/recording/contracts.ts",
+          "expectedResolved": "backend/src/recording/contracts.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1178,
+          "end": 1218,
+          "original": "../../../src/recording/recording_context",
+          "value": "../../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1096,
+          "end": 1135,
+          "original": "../../../src/recording/session_recorder",
+          "value": "../../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1015,
+          "end": 1055,
+          "original": "../../../src/runtime/game_event_recorder",
+          "value": "../../../../src/runtime/game_event_recorder",
+          "originalResolved": "backend/src/runtime/game_event_recorder.ts",
+          "expectedResolved": "backend/src/runtime/game_event_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 932,
+          "end": 977,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 862,
+          "end": 893,
+          "original": "../../../src/core/domain/random",
+          "value": "../../../../src/core/domain/random",
+          "originalResolved": "backend/src/core/domain/random.ts",
+          "expectedResolved": "backend/src/core/domain/random.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 812,
+          "end": 829,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 679,
+          "end": 705,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 419,
+          "end": 447,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 186,
+          "end": 234,
+          "original": "../../../src/ai/agents/llm/player_prompt_session",
+          "value": "../../../../src/ai/agents/llm/player_prompt_session",
+          "originalResolved": "backend/src/ai/agents/llm/player_prompt_session.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/player_prompt_session.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 96,
+          "end": 146,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "5b3a6c75adc48fe22ec4684d7763aa79d4ec8de36d46aa62e2a75cce3e865b1a",
+          "title": "a final event flush failure still finalizes and preserves the script and persistence errors",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { ActionWindow } from \"../../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ActionWindow",
+              "imported": "ActionWindow",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Camp,\n  COMPONENT,\n  Phase,\n  PotionType,\n  Role,\n  type ActionRequest,\n  type ActionStage,\n  type BoardConfig,\n  type RoleComponent,\n  type ToolCall,\n  type VotingRightComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Camp, COMPONENT, Phase, Role, type ActionRequest, type BoardConfig, type RoleComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionStage",
+              "imported": "ActionStage",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "VotingRightComponent",
+              "imported": "VotingRightComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import {\n  getGuardState,\n  getHunterState,\n  getSeerState,\n  getWitchState,\n} from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getGuardState",
+              "imported": "getGuardState",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getHunterState",
+              "imported": "getHunterState",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getSeerState",
+              "imported": "getSeerState",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getWitchState",
+              "imported": "getWitchState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/scenarios/twelve_player_standard",
+          "originalImport": "import { twelvePlayerStandardConfig } from \"../../../src/runtime/scenarios/twelve_player_standard\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "twelvePlayerStandardConfig",
+              "imported": "twelvePlayerStandardConfig",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Copied runRecorded/fixture helpers are latent function declarations; original case-local Worlds, scripts, recorders and cleanup stay one allocation per original call. No extra eager cached catalog read was introduced.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 473 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 564,
-    "targetFiles": 632,
-    "mappingEntries": 632,
-    "baselineCases": 7275,
+    "sourceFiles": 565,
+    "targetFiles": 635,
+    "mappingEntries": 635,
+    "baselineCases": 7285,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

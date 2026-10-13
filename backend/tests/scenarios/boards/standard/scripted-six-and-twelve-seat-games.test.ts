@@ -1,25 +1,22 @@
 /**
- * Complete scripted-game scenarios verify foundation six/twelve-player rules and strict request consumption.
- * Input: Literal action scripts, fixed RNG, locale variants and scoped filesystem recording.
- * Output and independent oracle: Handwritten deaths/winners/skill order, no missing or duplicate scripted turns and validated player/public files.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Complete scripted scenarios check six/twelve-seat standard games, resource use and recorded views. Inputs are original literal player scripts, fixed random stream and locale variants; handwritten deaths, winners, skill/event order and consumed turn counts are the oracle. The original recorder owns real files and cleanup; no model or fixture regeneration runs.
  */
-import { ActionWindow } from "../../../src/core";
+import { ActionWindow } from "../../../../src/core";
 import type { Locale } from "@ai-werewolf-arena/game-text";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-import { PlayerPromptSession } from "../../../src/ai/agents/llm/player_prompt_session";
+import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import { PlayerPromptSession } from "../../../../src/ai/agents/llm/player_prompt_session";
 import {
   getDefaultRoleCatalog,
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../src/game/mechanisms";
-import { expect, spyOn, test } from "bun:test";
+} from "../../../../src/game/mechanisms";
+import { expect, test } from "bun:test";
 import { assertReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import path from "node:path";
 import { readFile } from "node:fs/promises";
-import { bootstrapGame } from "../../../src/app/bootstrap";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   Camp,
   COMPONENT,
@@ -32,22 +29,22 @@ import {
   type RoleComponent,
   type ToolCall,
   type VotingRightComponent,
-} from "../../../src/core";
-import { createRandom } from "../../../src/core/domain/random";
+} from "../../../../src/core";
+import { createRandom } from "../../../../src/core/domain/random";
 import {
   getGuardState,
   getHunterState,
   getSeerState,
   getWitchState,
-} from "../../../src/game/mechanisms/roles/private_state";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
-import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import type { ReplayPlayerView } from "../../../src/recording/contracts";
-import { StrictScriptedPlayers, type ScriptStep } from "../../support/drivers/scripted-players";
-import { createTestTempDirectory } from "../../support/drivers/temp-directories";
+} from "../../../../src/game/mechanisms/roles/private_state";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
+import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
+import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
+import { SessionRecordManager } from "../../../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import type { ReplayPlayerView } from "../../../../src/recording/contracts";
+import { StrictScriptedPlayers, type ScriptStep } from "../../../support/drivers/scripted-players";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 function plan() {
   const steps: ScriptStep[] = [];
@@ -246,6 +243,21 @@ async function runRecorded(
   return { ...context, provider, replay, manifest, playerViews };
 }
 
+const twelveRoles = [
+  Role.Wolf,
+  Role.Wolf,
+  Role.Wolf,
+  Role.Wolf,
+  Role.Seer,
+  Role.Witch,
+  Role.Hunter,
+  Role.Idiot,
+  Role.Villager,
+  Role.Villager,
+  Role.Villager,
+  Role.Villager,
+];
+
 for (const locale of ["zh-CN", "en"] as const)
   for (const blocked of [false, true])
     test(`${locale} six-player strict game covers ${blocked ? "successful guard" : "guard skip"}, private checks and last words`, async () => {
@@ -331,21 +343,6 @@ for (const locale of ["zh-CN", "en"] as const)
           ),
       ).toBe(true);
     });
-
-const twelveRoles = [
-  Role.Wolf,
-  Role.Wolf,
-  Role.Wolf,
-  Role.Wolf,
-  Role.Seer,
-  Role.Witch,
-  Role.Hunter,
-  Role.Idiot,
-  Role.Villager,
-  Role.Villager,
-  Role.Villager,
-  Role.Villager,
-];
 
 for (const locale of ["zh-CN", "en"] as const)
   for (const flipIdiot of [false, true]) {
@@ -504,55 +501,3 @@ for (const locale of ["zh-CN", "en"] as const)
       }
     });
   }
-
-test("strict scripts reject unexpected, duplicate and missing player turns", async () => {
-  const step: ScriptStep = { actorId: 1, day: 1, stage: "day_speech", turn: 1, action: null };
-  expect(() => new StrictScriptedPlayers([step, step])).toThrow("script_duplicate_step");
-  const provider = new StrictScriptedPlayers([step]);
-  expect(() => provider.assertConsumed()).toThrow("script_missing_requests");
-  const request: ActionRequest = {
-    actorId: 1,
-    phase: Phase.Day,
-    allowedTools: ["speak"],
-    context: { day: 1, stage: "day_speech", visible_events: [], turn_constraints: {} },
-  };
-  await provider.getAction(request);
-  provider.assertConsumed();
-  await expect(provider.getAction(request)).rejects.toThrow("script_unexpected_request");
-});
-
-test("a final event flush failure still finalizes and preserves the script and persistence errors", async () => {
-  const flushError = new Error("final_flush_failed");
-  const persistError = new Error("final_record_failed");
-  const flush = spyOn(GameEventRecorder.prototype, "flush").mockImplementation(() => {
-    throw flushError;
-  });
-  const realFinalize = SessionRecordManager.prototype.finalize;
-  let finalized = 0;
-  const finalize = spyOn(SessionRecordManager.prototype, "finalize").mockImplementation(
-    async function (this: SessionRecordManager, meta) {
-      finalized++;
-      await realFinalize.call(this, meta);
-      throw persistError;
-    },
-  );
-  try {
-    let failure: unknown;
-    try {
-      await runRecorded(
-        sixPlayerMvpConfig,
-        [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager],
-        [],
-      );
-    } catch (error) {
-      failure = error;
-    }
-    expect(finalized).toBe(1);
-    expect(failure).toBeInstanceOf(AggregateError);
-    expect((failure as AggregateError).errors[0].message).toContain("script_unexpected_request");
-    expect((failure as AggregateError).errors.slice(1)).toEqual([flushError, persistError]);
-  } finally {
-    flush.mockRestore();
-    finalize.mockRestore();
-  }
-});
