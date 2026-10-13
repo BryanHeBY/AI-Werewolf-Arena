@@ -1,0 +1,970 @@
+{
+  "schema": "awa-observed-native-independent-review-v1",
+  "状态": "批准",
+  "审查者": "/root/preflight_final_review",
+  "基线完整提交": "2f5d94e5404067d7b3b8a9ce93cc8bebd31a643f",
+  "source": [
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/native.ts",
+      "beforeActualGitSHA256": "1bf4368a5cb26ba4196090aed6c25624140d2772d4641e9ae382d0b8945d04f7",
+      "finalSHA256": "1af60c0694fc7ff6ad3c2f6befe8e06087be844108641fb92e79382fd237475a",
+      "finalMatchesFrozen": true,
+      "completeNonCommentNodes": 4726,
+      "fullProgramSameAfterOnlyExplicitNativeImportInverse": true
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/handlers.ts",
+      "beforeActualGitSHA256": "1b5fa046abb831fab826ddf4f980808a5dfeee7f570103ad55e2bd11367283e1",
+      "finalSHA256": "b3771c954364e7cabaa206edc957e4293fb9c41286e70086bea5b4869e6d8cc3",
+      "finalMatchesFrozen": true,
+      "completeNonCommentNodes": 1422,
+      "fullProgramSameAfterOnlyExplicitNativeImportInverse": true
+    },
+    {
+      "path": "packages/game-contract/src/identity.ts",
+      "beforeActualGitSHA256": "9f87b13c5a5a1d11f750e9e48df6327acb7b75735faabf7b6cc538c6baccecee",
+      "finalSHA256": "1fc4d5582276330ef2fef8c71c1ac7e1c6ab7c4cb28f8700363db8fd4e23b916",
+      "finalMatchesFrozen": true,
+      "completeNonCommentNodes": 517,
+      "fullProgramSameAfterOnlyExplicitNativeImportInverse": true
+    }
+  ],
+  "静态声明归属": {
+    "旧完整链": [
+      {
+        "path": "backend/src/core/index.ts",
+        "sha256": "9371814a6c7c65e479c12fbd2f89bc6185fb2db5fe94569127fa358f290428a4",
+        "actualExportBindings": [
+          {
+            "specifier": "./domain",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          }
+        ]
+      },
+      {
+        "path": "backend/src/core/domain/index.ts",
+        "sha256": "5981317259c1136b627ca8aec0fa808bc639eefa13849204962187aa071c0df5",
+        "actualExportBindings": [
+          {
+            "specifier": "./model",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./action_request_context",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./random",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./world",
+            "typeOnly": false,
+            "names": [
+              "World"
+            ]
+          },
+          {
+            "specifier": "./component-map",
+            "typeOnly": true,
+            "names": [
+              "ComponentMap",
+              "ComponentWrite"
+            ]
+          },
+          {
+            "specifier": "./components/alive",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./components/badge",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./components/camp",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./components/names",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./components/role",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./components/status_marks",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./components/voting_right",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./entities/player",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./registries/condition_registry",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./registries/phase_registry",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./registries/role_registry",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./systems/damage_resolution_system",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./systems/win_condition_system",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./components/victory",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./components/lovers",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./components/debate_penalty",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./components/wall_note",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./request_delivery",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          }
+        ]
+      },
+      {
+        "path": "backend/src/core/domain/model.ts",
+        "sha256": "2296ef3bb84963b5a7130db5c7f0ace0245abb42fb0d30a58e038d53881951f1",
+        "actualExportBindings": [
+          {
+            "specifier": "./identity",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./board",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./actions",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./events",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./results",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./deaths",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          }
+        ]
+      },
+      {
+        "path": "backend/src/core/domain/identity.ts",
+        "sha256": "506e74c358227a28e66ce82c2e17602d972ac101a22ba13a3f7e41abfc720735",
+        "actualExportBindings": [
+          {
+            "specifier": "@ai-werewolf-arena/game-contract",
+            "typeOnly": false,
+            "names": [
+              "Camp",
+              "Role",
+              "Phase",
+              "ActionWindow",
+              "KnightDuelWindow",
+              "StatusMark",
+              "WinCondition",
+              "PotionType",
+              "WitchSelfHealRule"
+            ]
+          },
+          {
+            "specifier": "@ai-werewolf-arena/game-contract",
+            "typeOnly": true,
+            "names": [
+              "EntityId",
+              "TieBreakerStrategy"
+            ]
+          }
+        ]
+      },
+      {
+        "path": "packages/game-contract/src/index.ts",
+        "sha256": "64afffcd8c1ffe2415fc7d58114572f6864381525ff7e6e12ba13619707941ce",
+        "actualExportBindings": [
+          {
+            "specifier": "./identity",
+            "typeOnly": false,
+            "names": [
+              "Camp",
+              "Role",
+              "Phase",
+              "ActionWindow",
+              "KnightDuelWindow",
+              "StatusMark",
+              "WinCondition",
+              "PotionType",
+              "WitchSelfHealRule"
+            ]
+          },
+          {
+            "specifier": "./identity",
+            "typeOnly": true,
+            "names": [
+              "EntityId",
+              "TieBreakerStrategy"
+            ]
+          },
+          {
+            "specifier": "./role-ids",
+            "typeOnly": false,
+            "names": [
+              "ROLE_IDS",
+              "PLANNED_ROLE_IDS",
+              "isRoleId"
+            ]
+          },
+          {
+            "specifier": "./role-ids",
+            "typeOnly": true,
+            "names": [
+              "RoleId"
+            ]
+          },
+          {
+            "specifier": "./locale",
+            "typeOnly": false,
+            "names": [
+              "LOCALES",
+              "isLocale"
+            ]
+          },
+          {
+            "specifier": "./locale",
+            "typeOnly": true,
+            "names": [
+              "Locale"
+            ]
+          },
+          {
+            "specifier": "./event-ids",
+            "typeOnly": false,
+            "names": [
+              "EVENT_PACK_IDS",
+              "EVENT_IDS",
+              "ITEM_IDS"
+            ]
+          },
+          {
+            "specifier": "./inert-event-data",
+            "typeOnly": false,
+            "names": [
+              "copyEventData"
+            ]
+          },
+          {
+            "specifier": "./outcomes",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./inspection",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./errors",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./death-facts",
+            "typeOnly": false,
+            "names": [
+              "DeathCause"
+            ]
+          },
+          {
+            "specifier": "./death-facts",
+            "typeOnly": true,
+            "names": [
+              "DeathSources"
+            ]
+          },
+          {
+            "specifier": "./results",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./message-ids",
+            "typeOnly": false,
+            "names": [
+              "MESSAGE_IDS",
+              "isMessageKey"
+            ]
+          },
+          {
+            "specifier": "./message-ids",
+            "typeOnly": true,
+            "names": [
+              "MessageKey"
+            ]
+          },
+          {
+            "specifier": "./message-refs",
+            "typeOnly": true,
+            "names": [
+              "MessageRef"
+            ]
+          },
+          {
+            "specifier": "./facts/scholar-mentor",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/time-consort",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/wolf-sorcerer",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/trickster",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/order-prince",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/magician",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./board-policy-identifiers",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./boards",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./board-parameters",
+            "typeOnly": true,
+            "names": [
+              "ReadonlyBoardConfig"
+            ]
+          },
+          {
+            "specifier": "./cupid-relation",
+            "typeOnly": true,
+            "names": [
+              "LoversComponent"
+            ]
+          },
+          {
+            "specifier": "./board-schema",
+            "typeOnly": false,
+            "names": [
+              "boardConfigSchema"
+            ]
+          },
+          {
+            "specifier": "./actions",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/nightmare",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/red-moon",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/demon-hunter",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/radiant-eclipse",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/mist-raven",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/noble-secret-body",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/fragrant-pair-seer",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/animal-dream",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/cupid",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/debate",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/ghost-bride",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/thief",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/shapeshifter",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/wild-child",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/lonely-girl",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/wall-notes",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./events",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./requests",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/hybrid",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/awakened",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/mechanical",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/merchant",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/death-ability",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./facts/black-market",
+            "typeOnly": false,
+            "names": [
+              "*"
+            ]
+          },
+          {
+            "specifier": "./night-ability-data",
+            "typeOnly": true,
+            "names": [
+              "SeerState",
+              "SeerReadState",
+              "RoleInspectionState",
+              "RoleInspectionReadState",
+              "GuardState",
+              "GuardReadState",
+              "WitchState",
+              "WitchReadState",
+              "DreamerState",
+              "DreamerReadState",
+              "Pair",
+              "PairCheck",
+              "PairSeerState",
+              "EclipseSuppression",
+              "ShelterState",
+              "NightAbilityStates",
+              "RoleInspectionPolicy",
+              "NightAbilityKind",
+              "AbilitySource",
+              "NightAbilityReadStates",
+              "NightAbilityReadState"
+            ]
+          },
+          {
+            "specifier": "./role-state-data",
+            "typeOnly": true,
+            "names": [
+              "HunterState",
+              "WolfKingState",
+              "WhiteWolfKingState",
+              "KnightState",
+              "GravekeeperReport",
+              "GravekeeperState",
+              "WolfBeautyState",
+              "BearState",
+              "HiddenWolfState",
+              "GargoyleState",
+              "IdiotState",
+              "MechanicalMode",
+              "MechanicalSkill",
+              "MechanicalLearning",
+              "MechanicalState",
+              "AwakenedSkill",
+              "AwakenedActiveSkill",
+              "AwakenedTemplateRole",
+              "AwakenedLearning",
+              "AwakenedState",
+              "MiracleSkill",
+              "MerchantState",
+              "BlackMarketSkill",
+              "BlackMarketState",
+              "HunterReadState",
+              "WolfKingReadState",
+              "WhiteWolfKingReadState",
+              "KnightReadState",
+              "IdiotReadState",
+              "HiddenWolfReadState",
+              "GargoyleReadState",
+              "BearReadState",
+              "WolfBeautyReadState",
+              "GravekeeperReadReport",
+              "GravekeeperReadState",
+              "MechanicalReadSkill",
+              "MechanicalReadLearning",
+              "MechanicalReadState",
+              "AwakenedReadSkill",
+              "AwakenedReadActiveSkill",
+              "AwakenedReadLearning",
+              "AwakenedReadState",
+              "MerchantReadState",
+              "BlackMarketReadState"
+            ]
+          },
+          {
+            "specifier": "./death-ability-data",
+            "typeOnly": true,
+            "names": [
+              "DeathGun",
+              "DeathGunReadView"
+            ]
+          },
+          {
+            "specifier": "./role-state-data",
+            "typeOnly": true,
+            "names": [
+              "CupidState",
+              "HybridState",
+              "WildChildState",
+              "ThiefState",
+              "ShapeshifterState",
+              "DebaterState",
+              "EvilKnightShotPolicy",
+              "EvilKnightState",
+              "FearActionPolicy",
+              "NightmareWolfActionPolicy",
+              "NightmareShadowState",
+              "MagicianChoice",
+              "MagicianState",
+              "TricksterChoice",
+              "TricksterState",
+              "WolfSorcererChoice",
+              "WolfSorcererState",
+              "ReflectionScope",
+              "TimeConsortChoice",
+              "TimeConsortState",
+              "ReflectableSkill",
+              "ModifierCaster",
+              "ModifierMode",
+              "ModifierChoice",
+              "ModifierState",
+              "ModifierPlayer",
+              "CommittedModifier",
+              "ModifierResolution",
+              "LonelyGirlState",
+              "LastWolfBlastPolicy",
+              "RedMoonState",
+              "CupidReadState",
+              "HybridReadState",
+              "WildChildReadState",
+              "ThiefReadState",
+              "ShapeshifterReadState",
+              "DebaterReadState",
+              "EvilKnightReadState",
+              "NightmareShadowReadState",
+              "MagicianReadChoice",
+              "MagicianReadState",
+              "TricksterReadChoice",
+              "TricksterReadState",
+              "WolfSorcererReadChoice",
+              "WolfSorcererReadState",
+              "TimeConsortReadState",
+              "ModifierReadState",
+              "LonelyGirlReadState",
+              "RedMoonReadState"
+            ]
+          },
+          {
+            "specifier": "./role-presentation-data",
+            "typeOnly": true,
+            "names": [
+              "NativeRolePresentationId",
+              "NativeRoleMessageParameters",
+              "NativeRoleMessageKey",
+              "NativeRoleMessagePart",
+              "NativeRolePresentationPart"
+            ]
+          },
+          {
+            "specifier": "./component-presentation-data",
+            "typeOnly": true,
+            "names": [
+              "ComponentPresentationPart"
+            ]
+          },
+          {
+            "specifier": "./request-version",
+            "typeOnly": false,
+            "names": [
+              "ACTION_REQUEST_CONTRACT"
+            ]
+          },
+          {
+            "specifier": "./presentation-version",
+            "typeOnly": false,
+            "names": [
+              "GAME_PRESENTATION_CONTRACT"
+            ]
+          }
+        ]
+      },
+      {
+        "path": "packages/game-contract/src/identity.ts",
+        "sha256": "1fc4d5582276330ef2fef8c71c1ac7e1c6ab7c4cb28f8700363db8fd4e23b916",
+        "actualExportBindings": []
+      }
+    ],
+    "新根公开出口": {
+      "path": "packages/game-contract/package.json",
+      "sha256": "b2112b4b8493b3e2ed18a4b4a22c6876213bb87eb35b51b26471d789e29f6857",
+      "root": "./src/index.ts"
+    },
+    "唯一声明": {
+      "path": "packages/game-contract/src/identity.ts",
+      "name": "PotionType",
+      "members": [
+        {
+          "name": "Heal",
+          "value": "\"heal\""
+        },
+        {
+          "name": "Poison",
+          "value": "\"poison\""
+        },
+        {
+          "name": "None",
+          "value": "\"none\""
+        }
+      ],
+      "Role成员数": 55
+    },
+    "限制": "静态实际绑定确认同一声明；未执行模块、不冒充冷加载测试或全初始化次序相同。"
+  },
+  "中文重要说明审查": [
+    "请求绑定药实例优先，否则查观察中的native药；双药政策同时要求actual source.kind=native，受赠药不继承。",
+    "刀口先从告知的wolf_targets按原自身政策find，再以wolf_target回退；救药分支先于毒药分支，原夜用药与库存读取/短路未动。",
+    "不用药返回具名PotionType.None工具；真实ObservedBot loop action!==undefined即return，因此null确实停止，undefined继续。",
+    "seer本次政策取seer_check绑定实例，否则用自身已知seer；原生checked历史只用于fresh偏好，未合并库存或查询World。",
+    "目标抽取仍先pick第一人，原过滤后pick第二人；未修改随机流消费和空选择条件。",
+    "时狼妃读取已知exhausted和上一夜history及告知候选，不读未知触发日期；不把已知DTO当提交许可。",
+    "identity中文头保留原55已交付角色及不授权执行的声明；所有枚举名、机器值、成员顺序和其余程序保持。"
+  ],
+  "作者验证收据归属": {
+    "全程序输出": [
+      {
+        "path": "backend/src/ai/agents/providers/observed_bot/native.ts",
+        "ESNext及CommonJS原路由逆后完整输出": [
+          {
+            "module": "ESNext",
+            "equal": true
+          },
+          {
+            "module": "CommonJS",
+            "equal": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/ai/agents/providers/observed_bot/handlers.ts",
+        "ESNext及CommonJS原路由逆后完整输出": [
+          {
+            "module": "ESNext",
+            "equal": true
+          },
+          {
+            "module": "CommonJS",
+            "equal": true
+          }
+        ]
+      },
+      {
+        "path": "packages/game-contract/src/identity.ts",
+        "ESNext及CommonJS原路由逆后完整输出": [
+          {
+            "module": "ESNext",
+            "equal": true
+          },
+          {
+            "module": "CommonJS",
+            "equal": true
+          }
+        ]
+      }
+    ],
+    "去注释输出总数": 6,
+    "职责头": {
+      "根数": 3,
+      "诊断": 0
+    },
+    "有限类型": {
+      "roots": 3,
+      "sessionId": 12872,
+      "terminalChunk": "0b6d2d",
+      "exitCode": 0,
+      "来源": "Root实际工具终止回执；独立审查未重跑或从空日志推定"
+    },
+    "限制": "只验证三个源的完整非注释 token 与两种完整擦除输出；仅 native.ts 逆一条具名导入。职责检查仅形状，注释真实性另审。"
+  },
+  "documents": [
+    {
+      "path": "docs/refactor/observed-native-contract.md",
+      "sha256": "757e4a27c5e679fc7565deb4b58df1591a43f18496ebb5d30adb4fc48332c676"
+    },
+    {
+      "path": "docs/refactor/generated/observed-native-contract-evidence.json",
+      "sha256": "69526f2cec42667633e91caf6d93b9b5bae1cc4911f7c59482d79e0a08c5fc5f"
+    }
+  ],
+  "发现": [],
+  "风险及限制": [
+    "实际唯一代码修改是PotionType具名import从backend core聚合到GC根；加载路径及sourceFingerprint改变，不能声称cold-load初始化/失败轨迹相同。",
+    "三source只保持算法、机器值和非注释程序；未证明整仓AI能力、中文注释或完整观察统一已经完成。",
+    "没有执行测试、类型检查、编译器emit、结构门禁或模块。新增独立检查仅真实Git字节、完整source AST与静态export路由。",
+    "原source证明六个完整输出和有限类型/职责结果归Root已有回执，不由本独立审重复制造。"
+  ]
+}

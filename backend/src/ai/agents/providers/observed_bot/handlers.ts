@@ -1,3 +1,9 @@
+/**
+ * 负责装配受限观察机器人的有序工具策略。输入为脱离权威状态的玩家观察与该玩家随机流；
+ * 输出为供 ObservedBot 依次匹配的工具与决策函数，不读取 World 或执行领域提交。
+ * 顺序是选择优先级和随机消费契约；null 表示结束本次选择，undefined 才继续后续工具。
+ * 工具动作不是付款或生效凭据，合法性仍由引擎在提交入口复验。
+ */
 import { bindFragrantPair, inspectPair } from "./fragrant_pair_seer";
 import { castShelter, swallowSkill } from "./radiant_eclipse";
 import { chooseServant, protectSecretBody } from "./noble_secret_body";
@@ -63,7 +69,7 @@ import {
   duel,
 } from "./native";
 
-/** Preserve protocol-independent priority and RNG order for strict Tape reproducibility. */
+/** 保持原工具优先级和随机抽取次序，避免相同 seed 的严格 Tape 因装配顺序变化而漂移。 */
 export const observedToolHandlers: readonly ObservedToolEntry[] = [
   {
     tool: "fox_distract",

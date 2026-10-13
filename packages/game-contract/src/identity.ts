@@ -1,9 +1,8 @@
 /**
- * Owns the stable machine identity enums consumed by engine and protocol code.
- * Inputs are declared identity values; outputs preserve the existing runtime
- * enum names, insertion order and enum-member types. Role lists only the 55
- * delivered roles. Metadata for planned roles does not authorize execution.
- * This pure contract has no World, policy algorithm, text, Node or React access.
+ * 负责引擎与协议共同消费的稳定机器身份枚举。输入为声明的身份值；输出保留
+ * 既有运行枚举名、成员顺序和枚举成员类型，中文注释不改变机器标识或序列化值。
+ * Role 仅列出当前交付的 55 个角色；规划角色的元数据不能授予执行资格。
+ * 本纯契约不访问 World、规则算法、文案、Node 或 React，不维护第二套角色身份。
  */
 export type EntityId = number;
 

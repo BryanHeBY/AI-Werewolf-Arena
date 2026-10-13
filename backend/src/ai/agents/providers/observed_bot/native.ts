@@ -30,7 +30,7 @@ export const choose_thief_card: ObservedToolHandler = ({ ownState, style }) => {
   return { name: "choose_thief_card", args: { slot: state.cards[0]!.slot } };
 };
 import type { ObservedToolHandler } from "./context";
-import { PotionType } from "../../../../core";
+import { PotionType } from "@ai-werewolf-arena/game-contract";
 
 export const write_note: ObservedToolHandler = ({ ownState, style }) =>
   ownState.wallNote?.effectiveRemaining === 1 && style !== "conservative"
@@ -86,6 +86,7 @@ export const check_identity: ObservedToolHandler = (context) => {
     style === "conservative"
   )
     return null;
+  // 绑定实例决定本次政策；原生历史仍用于偏好排序，不补读真实身份或合并两份库存。
   const checked = ownState.seer?.history.map((entry) => entry.targetId) ?? [];
   const seer = bound?.kind === "seer_check" ? bound.state : ownState.seer;
   const permitted = others.filter(
@@ -148,6 +149,7 @@ export const use_potion: ObservedToolHandler = (context) => {
     allowed,
     bound,
   } = context;
+  // 优先使用请求绑定的药实例，再查已知原生实例；受赠药不能继承原生双药政策。
   const ability =
     bound?.kind === "potion"
       ? bound
@@ -155,9 +157,11 @@ export const use_potion: ObservedToolHandler = (context) => {
   const witch = ability?.kind === "potion" ? ability.state : ownState.witch;
   const both =
     ability?.source.kind === "native" && witch?.potionPolicy === "awa_both_native_experimental_v1";
+  // 多刀候选优先，单刀字段保留原回退；这里只读本次已告知刀口，不查询夜间真实结果。
   const knife =
     request.context.wolf_targets?.find((id) => id !== actor || witch?.canSelfHeal) ??
     request.context.wolf_target;
+  // 保留先救后毒的选择顺序；同夜药记录和自救政策只筛选偏好，提交入口仍复验资源。
   if (
     style !== "conservative" &&
     witch &&
@@ -186,6 +190,7 @@ export const use_potion: ObservedToolHandler = (context) => {
         args: { target_id: target, potion_type: PotionType.Poison },
       };
   }
+  // 不用药也返回具名动作，区别于 null 停止和 undefined 继续寻找工具。
   return { name: "use_potion", args: { target_id: actor, potion_type: PotionType.None } };
 };
 
@@ -243,6 +248,7 @@ export const swapTargets: ObservedToolHandler = ({ ownState, request, knownAlive
   );
   if (request.context.day < state.firstNight || targets.length < 2)
     return { name: "swap_targets", args: { first_id: null, second_id: null, abstain: true } };
+  // 依次抽第一人、排除第一人再抽第二人；保持随机流消费顺序和原空选择语义。
   const first = pick(targets),
     second = pick(targets.filter((id) => id !== first));
   if (first == null || second == null)
@@ -297,6 +303,7 @@ export const swapNightSeats: ObservedToolHandler = ({ ownState, request, knownAl
 export const lockTime: ObservedToolHandler = ({ ownState, request, knownAliveIds, pick }) => {
   const state = ownState.timeConsort;
   if (!state || state.exhausted) throw new Error("time_consort_observed_state_invalid");
+  // 只根据已知耗身和上一夜历史筛选，不读取尚未告知的触发日期。
   const previous = state.history.at(-1),
     candidates = request.context.consort_candidates;
   const targets = knownAliveIds.filter(
