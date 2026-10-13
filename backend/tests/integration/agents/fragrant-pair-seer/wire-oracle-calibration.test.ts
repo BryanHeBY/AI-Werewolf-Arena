@@ -8,8 +8,8 @@ import {
   assertFragrantTransportWire,
   type FragrantWireRun,
 } from "../../../support/features/fragrant-pair-seer/oracles/wire";
-import { fragrantTransportScenario } from "../../../support/fragrant_pair_seer_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { fragrantTransportScenario } from "../../../support/features/fragrant-pair-seer/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 let sdk: FragrantWireRun, acp: FragrantWireRun;
 beforeAll(async () => {
   sdk = await runTransportGame(fragrantTransportScenario("expiry"), "llm", "zh-CN");

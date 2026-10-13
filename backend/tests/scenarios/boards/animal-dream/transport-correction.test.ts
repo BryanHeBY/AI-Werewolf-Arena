@@ -4,8 +4,8 @@
  * The transport driver owns child/recording resources. Tests neither grant replacement-body authority nor call a billed model.
  */
 import { expect, test } from "bun:test";
-import { animalTransportScenario } from "../../../support/animal_dream_transport";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { animalTransportScenario } from "../../../support/features/animal-dream/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import type { ToolCall } from "../../../../src/core";
 for (const skill of ["fox", "puffer"] as const)
   for (const kind of ["llm", "acp"] as const)

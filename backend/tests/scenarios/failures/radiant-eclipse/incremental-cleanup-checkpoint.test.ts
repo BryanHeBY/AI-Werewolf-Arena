@@ -4,7 +4,7 @@
  * Output and oracle: Explicit parser acceptance or rejection distinguishes completed cleanup from a forged active lease; the generated record is input, not an independent expected-state oracle.
  */
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 async function checkpointedFailure(): Promise<any> {
   const r = await radiantRecording({ failureStage: "seer" });

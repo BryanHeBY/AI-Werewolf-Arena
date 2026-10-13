@@ -6,8 +6,8 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { expect, test } from "bun:test";
-import { scholarMentorScenario } from "../../../support/scholar_mentor_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { scholarMentorScenario } from "../../../support/features/scholar-mentor/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const variant of ["enhance", "same-good", "both-wolves"] as const)
   for (const transport of ["llm", "acp", "mixed"] as const)
     test(

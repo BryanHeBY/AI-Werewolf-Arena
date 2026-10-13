@@ -6,12 +6,8 @@
 import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import {
-  MECHANICAL_CASES,
-  mechanicalScenario,
-  type MechanicalScenario,
-} from "../../../support/mechanical_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { MECHANICAL_CASES, mechanicalScenario, type MechanicalScenario } from "../../../support/features/mechanical-wolf/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 
 const facts: Record<
   MechanicalScenario,

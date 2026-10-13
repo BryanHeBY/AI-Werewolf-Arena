@@ -28,8 +28,8 @@ import {
   authorizedWeddingTurn,
   weddingNightCapture,
 } from "../../../src/game/mechanisms/roles/ghost_bride/authority";
-import { demonHunterFixture } from "../../support/demon_hunter_scenarios";
-import { ghostBrideBoard, ghostBrideDeck } from "../../support/ghost_bride_scenarios";
+import { demonHunterFixture } from "../../support/features/demon-hunter/builders/candidate-world";
+import { ghostBrideBoard, ghostBrideDeck } from "../../support/features/ghost-bride/builders/scenario";
 
 function boundWeddingTurn(world: World, kind: "bridegroom" | "chat" | "witness" | "knife", actorId: number) {
   const scope = openWeddingTurn(world, kind, actorId, 1, () => true);

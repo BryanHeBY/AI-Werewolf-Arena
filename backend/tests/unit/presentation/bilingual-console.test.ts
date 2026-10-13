@@ -5,7 +5,7 @@
  * immutable-fixture oracle; these module assertions invoke no model or complete-game
  * driver.
  */
-import { fixtureResult } from "../../support/fixture_values";
+import { fixtureResult } from "../../support/builders/recording/result";
 import { TextLocalizationRegistry } from "../../../src/game/mechanisms/shared/text_localization_registry";
 import { expect, test } from "bun:test";
 import { Camp, Phase, PotionType, ActionWindow, type GameEvent } from "../../../src/core";

@@ -6,7 +6,7 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import { COMPONENT, Camp, Phase, PotionType, type ActionRequest, type ToolCall, type GameEvent, type RoleComponent, type AliveComponent } from "../../../../src/core";
-import { ghostBrideBoard, ghostBrideDeck } from "../../../support/ghost_bride_scenarios";
+import { ghostBrideBoard, ghostBrideDeck } from "../../../support/features/ghost-bride/builders/scenario";
 import { GhostBrideSetupWindow } from "../../../../src/game/mechanisms/roles/ghost_bride/setup";
 import {
   ghostBrideReady,

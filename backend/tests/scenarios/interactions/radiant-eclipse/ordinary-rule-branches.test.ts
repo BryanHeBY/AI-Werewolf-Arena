@@ -4,7 +4,7 @@
  * Output and oracle: Literal request/event counts, death sequences and next-night/terminal checkpoints retain actual causal execution; no unrelated unit or generic vote engine replaces these branches.
  */
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
 for (const rounds of [2, 3])
   test(`ordinary wolves continue ${rounds} real chat rounds and retain Tape`, async () => {
     const r = await radiantRecording({

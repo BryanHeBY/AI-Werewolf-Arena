@@ -8,8 +8,8 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { expect, test } from "bun:test";
-import { tricksterScenario } from "../../../support/trickster_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { tricksterScenario } from "../../../support/features/trickster/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const variant of ["mapped", "cancel", "pk"] as const)
   for (const transport of ["llm", "acp", "mixed"] as const)
     test(

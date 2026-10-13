@@ -2,7 +2,8 @@
  * Failure scenario tests check missing/wrong-tool actions and interruption in actual Radiant/Eclipse nights. Inputs are original stage/mode choices and currentness changes from the public board fixture; literal committed prefix, closed lease, disabled borrow and cleanup facts are the oracle. Failures retain original stock and do not generate an alternate expected replay.
  */
 import { expect, test } from "bun:test";
-import { radiantFixture, radiantProvider } from "../../../support/radiant_eclipse";
+import { radiantFixture } from "../../../support/features/radiant-eclipse/builders/runtime-game";
+import { radiantProvider } from "../../../support/features/radiant-eclipse/drivers/actions";
 import { findNightAbility, abilityStatus } from "../../../../src/game/mechanisms/roles/abilities";
 
 for (const stage of [

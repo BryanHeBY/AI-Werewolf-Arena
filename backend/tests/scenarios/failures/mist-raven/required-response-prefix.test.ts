@@ -5,10 +5,10 @@
  */
 import { expect, test } from "bun:test";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
-import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import { type PlannedTurn } from "../../../support/transport/contracts";
 import type { ActionStage } from "../../../../src/core";
-import { mistTransportScenario } from "../../../support/mist_raven_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { mistTransportScenario } from "../../../support/features/mist-raven/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 
 const boundaries = [
   { day: 1, stage: "alchemist_mist", actor: "alchemist", rank: 50 },

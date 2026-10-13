@@ -8,9 +8,9 @@ import { assertRadiantTransportWire } from "../../../support/features/radiant-ec
 import { expect, test } from "bun:test";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { Role, PotionType, type ActionStage, type ToolCall } from "../../../../src/core";
-import { radiantTransportScenario } from "../../../support/radiant_eclipse_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
-import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import { radiantTransportScenario } from "../../../support/features/radiant-eclipse/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
+import { type PlannedTurn } from "../../../support/transport/contracts";
 const rank: Partial<Record<ActionStage, number>> = {
   eclipse_swallow: 110,
   radiant_shelter: 120,

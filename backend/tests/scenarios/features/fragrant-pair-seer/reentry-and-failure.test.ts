@@ -4,10 +4,8 @@
  * Output and oracle: Exact error identity, aborted night/knowledge state and unchanged outer phase/feed retain causal assertions; no expected result is regenerated.
  */
 import { expect, test } from "bun:test";
-import {
-  fragrantRuntimeGame as game,
-  fragrantRuntimeAction as act,
-} from "../../../support/fragrant_pair_seer_scenarios";
+import { fragrantRuntimeGame as game } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
+import { fragrantRuntimeAction as act } from "../../../support/features/fragrant-pair-seer/drivers/actions";
 import { fragrantAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import {

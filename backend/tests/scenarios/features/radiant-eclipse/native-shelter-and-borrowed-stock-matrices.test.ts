@@ -3,11 +3,8 @@
  */
 import { expect, test } from "bun:test";
 import { DeathCause, COMPONENT, type AliveComponent } from "../../../../src/core";
-import {
-  radiantFixture,
-  radiantProvider,
-  type RadiantChoices,
-} from "../../../support/radiant_eclipse";
+import { radiantFixture } from "../../../support/features/radiant-eclipse/builders/runtime-game";
+import { radiantProvider, type RadiantChoices } from "../../../support/features/radiant-eclipse/drivers/actions";
 import { knownWolfTeammates, wolfChatParticipants } from "../../../../src/game/mechanisms/roles/wolf_team";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import { getDefaultNightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";

@@ -5,11 +5,8 @@
  */
 import { expect, test } from "bun:test";
 import { ActionWindow, Camp, Phase } from "../../../../src/core";
-import {
-  mistRecording,
-  type MistRecordVariant,
-  type MistRequestObservation,
-} from "../../../support/mist_raven_recording";
+import { mistRecording, type MistRequestObservation } from "../../../support/features/mist-raven/drivers/recording";
+import { type MistRecordVariant } from "../../../support/features/mist-raven/builders/board";
 const cases: Array<{ variant: MistRecordVariant; window: ActionWindow; day: number }> = [
   { variant: "blast-pre-election", window: ActionWindow.OnPreElection, day: 1 },
   { variant: "blast-daybreak", window: ActionWindow.OnDaybreak, day: 1 },

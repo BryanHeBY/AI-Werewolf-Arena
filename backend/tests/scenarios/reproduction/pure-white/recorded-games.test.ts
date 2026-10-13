@@ -6,8 +6,8 @@
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { Camp, Phase } from "../../../../src/core";
-import { pureWhiteScenario } from "../../../support/pure_white_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { pureWhiteScenario } from "../../../support/features/pure-white-girl/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const kind of ["wolf", "good"] as const)
   for (const transport of ["llm", "acp", "mixed"] as const)
     test(`pure-white ${kind}/${transport}: bilingual real SDK and ACP preserve private inspection and strict Tape`, async () => {

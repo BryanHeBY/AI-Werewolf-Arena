@@ -5,9 +5,9 @@
  */
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { expect, test } from "bun:test";
-import { wolfSorcererScenario } from "../../../support/wolf_sorcerer_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
-import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import { wolfSorcererScenario } from "../../../support/features/wolf-sorcerer/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
+import { type PlannedTurn } from "../../../support/transport/contracts";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 import { Role } from "../../../../src/core";
 for (const night of [2, 3])

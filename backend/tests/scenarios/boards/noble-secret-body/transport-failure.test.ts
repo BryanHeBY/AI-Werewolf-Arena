@@ -8,9 +8,9 @@ import { expect, test } from "bun:test";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import type { ActionStage } from "../../../../src/core";
-import type { PlannedTurn } from "../../../support/foundation_transport_plan";
-import { nobleTransportScenario } from "../../../support/noble_secret_body_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { type PlannedTurn } from "../../../support/transport/contracts";
+import { nobleTransportScenario } from "../../../support/features/noble-secret-body/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { assertNobleTransportWire } from "../../../support/features/noble-secret-body/oracles/wire";
 import { assertNobleBadgeRules } from "../../../support/features/noble-secret-body/oracles/badge-prompt";
 const rank: Partial<Record<ActionStage, number>> = {

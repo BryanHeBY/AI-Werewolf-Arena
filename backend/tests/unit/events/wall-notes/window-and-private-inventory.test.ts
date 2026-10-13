@@ -12,7 +12,7 @@ import { ActionReception } from "../../../../src/ai/agents/player/action_recepti
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Role, Camp, Phase, createRandom, type GameEvent, type ActionRequest, type ToolCall, type WallNoteComponent, type RoleComponent } from "../../../../src/core";
-import { foxBoard } from "../../../support/cursed_fox_scenarios";
+import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { WallNotesWindow } from "../../../../src/game/mechanisms/events/wall_notes/window";
 import {
   hasWallCommit,

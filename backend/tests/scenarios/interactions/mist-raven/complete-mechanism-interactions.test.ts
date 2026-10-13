@@ -5,7 +5,8 @@
  */
 import { expect, test } from "bun:test";
 import { Camp } from "../../../../src/core";
-import { mistRecording, type MistRecordVariant } from "../../../support/mist_raven_recording";
+import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
+import { type MistRecordVariant } from "../../../support/features/mist-raven/builders/board";
 const cases: Array<{
   variant: MistRecordVariant;
   deaths: number[][];

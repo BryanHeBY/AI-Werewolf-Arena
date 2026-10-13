@@ -6,8 +6,8 @@
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { Camp, Role } from "../../../../src/core";
-import { THIEF_CASES, thiefScenario } from "../../../support/thief_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { THIEF_CASES, thiefScenario } from "../../../support/features/thief/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 for (const size of [6, 12] as const)
   for (const kind of THIEF_CASES.filter(

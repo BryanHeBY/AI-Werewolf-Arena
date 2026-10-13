@@ -6,8 +6,8 @@
  * driver.
  */
 import { expect, test } from "bun:test";
-import { nobleTransportScenario } from "../../support/noble_secret_body_transport_scenarios";
-import { assertTransportEvents, assertTransportPrompt } from "../../support/transport_prompt_oracle";
+import { nobleTransportScenario } from "../../support/features/noble-secret-body/builders/transport-plan";
+import { assertTransportEvents, assertTransportPrompt } from "../../support/oracles/transport/observations";
 import { Role } from "../../../src/core/index";
 const s = nobleTransportScenario("expiry"),
   noble = s.mapping.get(1)!,

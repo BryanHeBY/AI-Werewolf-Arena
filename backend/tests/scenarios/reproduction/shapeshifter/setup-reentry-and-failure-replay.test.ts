@@ -20,10 +20,10 @@ import {
 } from "../../../../src/runtime/simulation/replay_reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import { expect, spyOn, test } from "bun:test";
-import { shapeshifterScenario } from "../../../support/shapeshifter_scenarios";
+import { shapeshifterScenario } from "../../../support/features/shapeshifter/builders/scenario";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role, Phase, COMPONENT, PotionType, type BoardConfig, type RoleComponent, type ActionRequest, type ToolCall, type GameEvent } from "../../../../src/core";
-import { foxBoard } from "../../../support/cursed_fox_scenarios";
+import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 
 const deal = [
   Role.Shapeshifter,

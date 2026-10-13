@@ -5,9 +5,9 @@
  */
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { expect, test } from "bun:test";
-import { tricksterScenario } from "../../../support/trickster_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
-import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import { tricksterScenario } from "../../../support/features/trickster/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
+import { type PlannedTurn } from "../../../support/transport/contracts";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 import { Role } from "../../../../src/core";
 for (const night of [1, 2])

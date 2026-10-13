@@ -17,12 +17,10 @@ import {
 } from "../../../../src/core";
 import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
 import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
-import {
-  fragrantRuntimeGame,
-  fragrantRuntimeAction,
-} from "../../../support/fragrant_pair_seer_scenarios";
+import { fragrantRuntimeGame } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
+import { fragrantRuntimeAction } from "../../../support/features/fragrant-pair-seer/drivers/actions";
 import { inheritFragrantPairDeadlineRequest } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/requests";
-import { fixtureObject } from "../../../support/fixture_values";
+import { fixtureObject } from "../../../support/oracles/fixture-values";
 
 // The retained client/control belong to this adversarial test, not a provider session.
 // Real runner tests separately prove provider-owned transport/process reclamation.

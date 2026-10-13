@@ -6,11 +6,8 @@
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { WinCondition } from "../../../../src/core";
-import {
-  demonHunterTransportScenario,
-  demonHunterFailureScenario,
-} from "../../../support/demon_hunter_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { demonHunterTransportScenario, demonHunterFailureScenario } from "../../../support/features/demon-hunter/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const size of [6, 12] as const)
   for (const goal of [WinCondition.SlaughterCity, WinCondition.SlaughterSide])
     for (const transport of ["llm", "acp", "mixed"] as const)

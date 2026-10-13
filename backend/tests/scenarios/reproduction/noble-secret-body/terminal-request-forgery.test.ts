@@ -4,7 +4,7 @@
  * Output and oracle: Explicit natural completion and parser rejection preserve the actual terminal prefix; copied archives are inputs rather than independent expected-rule goldens.
  */
 import { beforeAll, expect, test } from "bun:test";
-import { recordNobleLiteral } from "../../../support/noble_secret_body_recording";
+import { recordNobleLiteral } from "../../../support/features/noble-secret-body/drivers/recording";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 
 let base: ReproductionRecord;

@@ -23,7 +23,7 @@ import {
   type ToolCall,
   type RuntimeSnapshot,
 } from "../../../../src/core";
-import { foxBoard } from "../../../support/cursed_fox_scenarios";
+import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { CUPID_STAGE } from "../../../../src/game/mechanisms/roles/cupid/night_stage";
 import {
   getCupidState,

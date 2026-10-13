@@ -7,8 +7,8 @@ import type { VictoryPoint } from "@ai-werewolf-arena/game-catalog";
 import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { wolfKingScenario, type WolfKingScenario } from "../../../support/wolf_king_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { wolfKingScenario, type WolfKingScenario } from "../../../support/features/wolf-king/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 
 for (const scenario of [
   "exile_chain",

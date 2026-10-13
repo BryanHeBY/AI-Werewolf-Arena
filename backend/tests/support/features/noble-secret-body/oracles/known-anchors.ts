@@ -8,7 +8,7 @@
  */
 import { expect } from "bun:test";
 import { noblePromptStatus, type NobleWireRun } from "./wire";
-import type { nobleTransportScenario } from "../../../noble_secret_body_transport_scenarios";
+import { type nobleTransportScenario } from "../builders/transport-plan";
 /** Handwritten cross-night checkpoints in actual current prompts, separate from feed folds. */
 export function assertNobleKnownAnchors(
   run: NobleWireRun,

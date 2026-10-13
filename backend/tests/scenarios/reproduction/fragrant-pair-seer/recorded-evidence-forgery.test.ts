@@ -5,7 +5,7 @@
  */
 import { beforeAll, expect, test } from "bun:test";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
-import { recordFragrantLiteral } from "../../../support/fragrant_pair_seer_recording";
+import { recordFragrantLiteral } from "../../../support/features/fragrant-pair-seer/drivers/recording";
 const records: Record<string, ReproductionRecord> = {};
 beforeAll(async () => {
   for (const [alias, name] of [

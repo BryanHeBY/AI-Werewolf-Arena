@@ -4,9 +4,9 @@
  * Output and oracle: Literal incomplete checkpoint, failed actor/stage and absent fear/night settlement assertions retain the actual prefix; the recorded input is not regenerated as a golden.
  */
 import { expect, test } from "bun:test";
-import { nightmareScenario } from "../../../support/nightmare_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
-import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import { nightmareScenario } from "../../../support/features/nightmare-shadow/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
+import { type PlannedTurn } from "../../../support/transport/contracts";
 for (const failure of ["missing", "late"] as const)
   for (const transport of ["llm", "acp"] as const)
     test(`nightmare required fear ${failure}/${transport} preserves partial Tape`, async () => {

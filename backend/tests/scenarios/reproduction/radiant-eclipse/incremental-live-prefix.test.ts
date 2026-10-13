@@ -4,7 +4,7 @@
  * Output and oracle: Explicit full/prefix parser acceptance preserves source cut positions and setup evaluation timing; no frozen archive or expected action is regenerated.
  */
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 const full: ReproductionRecord = await radiantRecording();
 function prefix(day: number, stage: string, pending: boolean) {

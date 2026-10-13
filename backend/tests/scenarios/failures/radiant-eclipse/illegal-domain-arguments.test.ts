@@ -4,7 +4,8 @@
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
-import { radiantFixture, radiantProvider } from "../../../support/radiant_eclipse";
+import { radiantFixture } from "../../../support/features/radiant-eclipse/builders/runtime-game";
+import { radiantProvider } from "../../../support/features/radiant-eclipse/drivers/actions";
 import type { ToolCall } from "../../../../src/core";
 
 const rows: [string, number | null, ToolCall, string][] = [

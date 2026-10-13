@@ -17,14 +17,12 @@ import {
   replayReproduction,
 } from "../../../../src/runtime/simulation/replay_reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import {
-  foundationTransportPlan,
-  type ActorTransportPlan,
-} from "../../../support/foundation_transport_plan";
-import { assertTransportPrompt, assertTransportEvents } from "../../../support/transport_prompt_oracle";
+import { foundationTransportPlan } from "../../../support/builders/transport/foundation-plan";
+import { type ActorTransportPlan } from "../../../support/transport/contracts";
+import { assertTransportPrompt, assertTransportEvents } from "../../../support/oracles/transport/observations";
 import { ActionWindow, Camp, Phase, Role, WinCondition } from "../../../../src/core";
 
-import { selfDestructTransportPlan } from "../../../support/self_destruct_transport_plan";
+import { selfDestructTransportPlan } from "../../../support/builders/transport/self-destruct-plan";
 import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
 
 const roles6 = [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager] as const;

@@ -14,7 +14,8 @@ import {
   type RoleComponent,
   type StatusMarksComponent,
 } from "../../../../src/core";
-import { demonHunterFixture, demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
+import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { demonHunterAuditPlayer } from "../../../../src/game/mechanisms/roles/demon_hunter/authority";
 import { inheritDemonWitchDeadlineRequest } from "../../../../src/game/mechanisms/roles/demon_hunter/native_potion_requests";
 const audit = (f: ReturnType<typeof demonHunterFixture>, id: number) =>

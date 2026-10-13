@@ -15,7 +15,7 @@ import {
   type ToolCall,
 } from "../../../../src/core";
 import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
-import { demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import {

@@ -4,8 +4,8 @@
  * Output and oracle: Literal winner/alive/night assertions inspect the actual Record and replay; existing action matrices and archival fixture bytes are unchanged.
  */
 import { expect, test } from "bun:test";
-import { recordAnimalLiteral } from "../../../support/animal_dream_recording";
-import { animalGolden } from "../../../support/animal_dream_scenarios";
+import { recordAnimalLiteral } from "../../../support/features/animal-dream/drivers/recording";
+import { animalGolden } from "../../../support/features/animal-dream/oracles/golden";
 for (const name of [
   "fox_beauty",
   "cat_badge",

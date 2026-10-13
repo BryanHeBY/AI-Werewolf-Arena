@@ -6,9 +6,9 @@
 import { expect, test } from "bun:test";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
-import type { PlannedTurn } from "../../../support/foundation_transport_plan";
-import { timeConsortScenario } from "../../../support/time_consort_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { type PlannedTurn } from "../../../support/transport/contracts";
+import { timeConsortScenario } from "../../../support/features/time-wolf-consort/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const stage of [
   "time_consort_lock",
   "wolf_discussion",

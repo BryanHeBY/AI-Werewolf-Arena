@@ -8,7 +8,7 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, DeathCause, Phase, Role, createAliveComponent, type RoleComponent, type AliveComponent, type GameEvent, type ActionRequest, type ToolCall, type RuntimeSnapshot } from "../../../../src/core";
-import { foxBoard } from "../../../support/cursed_fox_scenarios";
+import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { CUPID_STAGE } from "../../../../src/game/mechanisms/roles/cupid/night_stage";
 import { loversRecord, projectLover, livingOriginalLovers } from "../../../../src/game/mechanisms/roles/cupid/relation";
 import { cupidCityDecision } from "../../../../src/game/mechanisms/roles/cupid/victory";

@@ -4,7 +4,7 @@
  * Output and independent oracle: Original identity/pack exclusions, real report/pass coverage and exact strict Tape.
  * The test never calls a billed model or rewrites expected fixture/Tape bytes.
  */
-import { fixtureNumber } from "../../../support/fixture_values";
+import { fixtureNumber } from "../../../support/oracles/fixture-values";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";

@@ -8,8 +8,8 @@
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
 import { Camp, Phase } from "../../../../src/core";
-import { evilKnightScenario } from "../../../support/evil_knight_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { evilKnightScenario } from "../../../support/features/evil-knight/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const kind of ["night_immune_wolf", "shot_bypass_good", "day_shot_good"] as const)
   for (const transport of ["llm", "acp", "mixed"] as const)
     test(`evil knight ${kind}/${transport}: bilingual real transport, terminal state and strict Tape`, async () => {

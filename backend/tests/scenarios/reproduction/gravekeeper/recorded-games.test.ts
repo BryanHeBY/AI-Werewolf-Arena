@@ -3,17 +3,12 @@
  * Input: Original scenario/transport/locale matrices with declared feedback, survivor, last-word and winner tables.
  * Output and oracle: Explicit private prompts, feedback timing and chain-final result assertions retain the actual action replay; stored source fixtures are only read.
  */
-import { fixtureNumber } from "../../../support/fixture_values";
+import { fixtureNumber } from "../../../support/oracles/fixture-values";
 import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import {
-  GRAVEKEEPER_CASES,
-  gravekeeperScenario,
-  graveFeedback,
-  type GravekeeperScenario,
-} from "../../../support/gravekeeper_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { GRAVEKEEPER_CASES, gravekeeperScenario, graveFeedback, type GravekeeperScenario } from "../../../support/features/gravekeeper/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 const expected: {
   [K in GravekeeperScenario]: {
     reports: ReturnType<typeof graveFeedback>[];

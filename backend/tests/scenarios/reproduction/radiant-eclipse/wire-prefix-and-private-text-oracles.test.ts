@@ -6,7 +6,7 @@ import {
   assertRadiantWireEvents,
   assertRadiantTransportWire,
 } from "../../../support/features/radiant-eclipse/oracles/wire";
-import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
 
 test("actual serialized wire must be a current independently validated request prefix", async () => {
   const record = await radiantRecording({ planName: "independent-stock-card16-card17" });

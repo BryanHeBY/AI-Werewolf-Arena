@@ -8,7 +8,7 @@ import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { Camp, Role } from "../../../../src/core";
-import { cupidBoard, CUPID_CASES, cupidScenario } from "../../../support/cupid_scenarios";
+import { cupidBoard, CUPID_CASES, cupidScenario } from "../../../support/features/cupid/builders/scenario";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,

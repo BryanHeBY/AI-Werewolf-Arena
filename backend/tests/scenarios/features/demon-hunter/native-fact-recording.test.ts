@@ -13,7 +13,8 @@ import {
   type RoleComponent,
   type GameEvent,
 } from "../../../../src/core";
-import { demonHunterFixture, demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
+import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { getDefaultScriptEventRenderRegistry } from "../../../../src/game/mechanisms";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";

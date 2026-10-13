@@ -3,12 +3,10 @@
  * Input: Original literal death/knife/exile plans, controlled role actions and owned recorded metadata from the existing driver.
  * Output and oracle: Handwritten life/stock/reset booleans and forged checkpoint refusal retain original assertions; no expected data is regenerated and source/fixture ownership stays external.
  */
-import { recordFragrantLiteral } from "../../support/fragrant_pair_seer_recording";
+import { recordFragrantLiteral } from "../../support/features/fragrant-pair-seer/drivers/recording";
 import { test, expect } from "bun:test";
-import {
-  fragrantRuntimeGame as game,
-  fragrantRuntimeAction as act,
-} from "../../support/fragrant_pair_seer_scenarios";
+import { fragrantRuntimeGame as game } from "../../support/features/fragrant-pair-seer/builders/runtime-game";
+import { fragrantRuntimeAction as act } from "../../support/features/fragrant-pair-seer/drivers/actions";
 import { ReproductionTrace, parseReproductionRecord } from "../../../src/recording/reproduction";
 import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
 

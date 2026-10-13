@@ -8,7 +8,7 @@ import { Phase } from "../../../../src/core/domain/identity";
 import type { GameEvent } from "../../../../src/core/domain/events";
 import { getDefaultAgentEventVisibilityRegistry } from "../../../../src/game/mechanisms";
 import { buildAgentVisibleEvent } from "../../../../src/game/engine/agent_visible_event_feed";
-import { fragrantRuntimeGame } from "../../../support/fragrant_pair_seer_scenarios";
+import { fragrantRuntimeGame } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
 
 test("God trigger cannot become an actor event by a forged audience, and owner fields reject extras", () => {
   const g = fragrantRuntimeGame();

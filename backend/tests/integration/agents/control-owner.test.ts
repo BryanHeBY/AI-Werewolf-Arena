@@ -9,7 +9,7 @@ import { expect, test } from "bun:test";
 import { createServer, type Server } from "node:http";
 import type { AddressInfo } from "node:net";
 import { LoopbackMcpControlServer } from "../../../src/ai/integrations/acp/loopback_mcp_control_server";
-import { assertControlOwnerClosed } from "../../support/oracles/control-owner";
+import { assertControlOwnerClosed } from "../../support/drivers/transport/control-owner";
 
 function control() {
   return new LoopbackMcpControlServer({

@@ -5,9 +5,9 @@
  * The test never calls a billed model or rewrites expected fixture/Tape bytes.
  */
 import { expect, test } from "bun:test";
-import { fragrantTransportScenario } from "../../../support/fragrant_pair_seer_transport_scenarios";
+import { fragrantTransportScenario } from "../../../support/features/fragrant-pair-seer/builders/transport-plan";
 import { assertFragrantTransportWire } from "../../../support/features/fragrant-pair-seer/oracles/wire";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import type { ToolCall } from "../../../../src/core";
 for (const invalid of ["schema", "domain"] as const)
   for (const kind of ["llm", "acp"] as const)

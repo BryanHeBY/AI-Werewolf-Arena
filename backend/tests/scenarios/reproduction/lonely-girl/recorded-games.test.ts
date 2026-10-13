@@ -6,8 +6,8 @@
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { Role, Camp, type GameEvent } from "../../../../src/core";
-import { LONELY_GIRL_CASES, lonelyGirlScenario } from "../../../support/lonely_girl_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { LONELY_GIRL_CASES, lonelyGirlScenario } from "../../../support/features/lonely-girl/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { ReproductionTrace, parseReproductionRecord } from "../../../../src/recording/reproduction";
 for (const size of [6, 12] as const)
   for (const kind of LONELY_GIRL_CASES.filter(

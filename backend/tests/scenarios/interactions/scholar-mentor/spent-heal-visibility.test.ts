@@ -4,8 +4,8 @@
  * Output and oracle: Explicit day-two/day-three privacy fields, original planned result and forgery rejection retain the causal history; expected alive is declared by the plan rather than produced by a second World.
  */
 import { expect, test } from "bun:test";
-import { scholarMentorScenario } from "../../../support/scholar_mentor_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { scholarMentorScenario } from "../../../support/features/scholar-mentor/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 
 for (const transport of ["llm", "acp"] as const)

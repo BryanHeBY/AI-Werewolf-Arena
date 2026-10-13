@@ -15,7 +15,7 @@ import {
   type ToolCall,
 } from "../../../../src/core/index";
 import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
-import { demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { snapshotNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
 const game = () => {
   const c = nobleSecretBodyTwelveConfig();

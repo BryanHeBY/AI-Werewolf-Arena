@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { Camp } from "../../../../src/core";
-import { mistRecording } from "../../../support/mist_raven_recording";
+import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 import { validateMistRavenRecord } from "../../../../src/recording/mist_raven_record";
 for (const variant of ["linked", "saved-dreamer", "protected-heal", "draw"] as const)

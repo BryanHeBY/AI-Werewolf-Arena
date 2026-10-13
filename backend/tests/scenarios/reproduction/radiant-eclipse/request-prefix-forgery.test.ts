@@ -4,7 +4,7 @@
  * Output and oracle: Explicit baseline acceptance and exact rejection code retain the shared game setup and original request sequence; generated records remain inputs, not new expected-rule goldens.
  */
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 const full: ReproductionRecord = await radiantRecording();
 function clone() {

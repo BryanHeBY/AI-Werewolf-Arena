@@ -4,9 +4,9 @@
  * Output and oracle: Literal incomplete checkpoint, activation/history values and absent final exile are followed by explicit rejection; no generic vote expectation replaces the original policy.
  */
 import { expect, test } from "bun:test";
-import { orderPrinceScenario } from "../../../support/order_prince_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
-import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import { orderPrinceScenario } from "../../../support/features/order-prince/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
+import { type PlannedTurn } from "../../../support/transport/contracts";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 for (const boundary of [
   "order_prince_choice",

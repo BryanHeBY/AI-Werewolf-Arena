@@ -8,7 +8,7 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role, Camp, Phase, COMPONENT, DeathCause, createAliveComponent, type BoardConfig, type RoleComponent, type AliveComponent, type GameEvent, type ToolCall, type ActionRequest, type VictoryComponent } from "../../../../src/core";
-import { foxBoard } from "../../../support/cursed_fox_scenarios";
+import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";
 import { getWildChildState } from "../../../../src/game/mechanisms/roles/wild_child/state";
 import { openWildChildNight, projectWildChild } from "../../../../src/game/mechanisms/roles/wild_child/lifecycle";

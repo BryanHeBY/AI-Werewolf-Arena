@@ -4,7 +4,7 @@
  * Output and oracle: Explicit parser acceptance and rejection preserve pending/finalized distinctions; the original record is not rewritten as a new golden.
  */
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 async function failed(): Promise<any> {
   return await radiantRecording({ failureStage: "seer" });

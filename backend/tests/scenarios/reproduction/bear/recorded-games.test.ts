@@ -6,8 +6,8 @@
 import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { BEAR_CASES, bearScenario, type BearScenario } from "../../../support/bear_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { BEAR_CASES, bearScenario, type BearScenario } from "../../../support/features/bear/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 const facts: Record<
   BearScenario,
   {

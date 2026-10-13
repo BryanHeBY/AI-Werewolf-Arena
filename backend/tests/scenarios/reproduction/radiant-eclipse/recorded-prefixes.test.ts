@@ -5,8 +5,8 @@
  */
 import { Camp } from "../../../../src/core";
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../../../support/radiant_eclipse_recording";
-import { radiantFullPlans } from "../../../support/radiant_eclipse_full_plans";
+import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
+import { radiantFullPlans } from "../../../support/features/radiant-eclipse/oracles/literal-plans";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 const stored = new Map<string, Promise<ReproductionRecord>>();
 function recording(name: string, locale: "zh-CN" | "en") {

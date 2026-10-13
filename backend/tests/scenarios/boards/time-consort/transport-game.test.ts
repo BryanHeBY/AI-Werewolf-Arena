@@ -6,8 +6,8 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { expect, test } from "bun:test";
-import { timeConsortScenario } from "../../../support/time_consort_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { timeConsortScenario } from "../../../support/features/time-wolf-consort/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const variant of ["whole_night", "first_effect"] as const)
   for (const transport of ["llm", "acp", "mixed"] as const)
     test(

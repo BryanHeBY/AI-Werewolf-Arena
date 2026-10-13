@@ -4,10 +4,8 @@
  * Output and oracle: Literal canonical stock, getter-call counts and original error identity are asserted after the real failed cycle; no expected archive is regenerated.
  */
 import { test, expect } from "bun:test";
-import {
-  fragrantRuntimeGame as game,
-  fragrantRuntimeAction as act,
-} from "../../../support/fragrant_pair_seer_scenarios";
+import { fragrantRuntimeGame as game } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
+import { fragrantRuntimeAction as act } from "../../../support/features/fragrant-pair-seer/drivers/actions";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 for (const alteration of ["pair_forgery", "pair_getter", "phantom_forgery"] as const)

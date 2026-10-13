@@ -4,7 +4,7 @@
  * Output and oracle: Literal action-reached, finalization and replay assertions retain the original failed outcome; invalid action arguments are not repaired by the test.
  */
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
 for (const stage of ["eclipse_swallow", "radiant_shelter"] as const)
   test(`a real ${stage} same-tool missing-target failure can finalize and replay its raw failed prefix`, async () => {
     let actionReached = false;

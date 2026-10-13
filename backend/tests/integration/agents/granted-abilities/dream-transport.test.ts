@@ -16,7 +16,7 @@ import { grantNightAbility } from "../../../../src/game/mechanisms/roles/ability
 import { createPlayerAgentRuntime } from "../../../../src/runtime/player_agent_factory";
 import type { ResolvedAgentRuntimeProfile } from "../../../../src/runtime/config/contracts";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import type { ActorTransportPlan } from "../../../support/foundation_transport_plan";
+import { type ActorTransportPlan } from "../../../support/transport/contracts";
 for (const locale of ["zh-CN", "en"] as const)
   for (const kind of ["llm", "acp"] as const)
     test(`${locale}/${kind}: actual factory transport gives a gifted Villager full dream rules while retaining identity and read-only receipt`, async () => {

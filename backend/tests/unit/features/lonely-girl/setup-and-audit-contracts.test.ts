@@ -26,7 +26,7 @@ import {
   type AliveComponent,
   type VictoryComponent,
 } from "../../../../src/core";
-import { foxBoard } from "../../../support/cursed_fox_scenarios";
+import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { LonelyGirlSetupWindow } from "../../../../src/game/mechanisms/roles/lonely_girl/setup";
 import {
   getLonelyGirlState,

@@ -16,7 +16,7 @@ import { Role } from "../../../../src/core/domain/identity";
 import type { BoardConfig } from "../../../../src/core/domain/board";
 import type { World } from "../../../../src/core/domain/world";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
-import { demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { NightStageRegistry } from "../../../../src/rulesets/night-stage-plan";
 import { checkpointNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";

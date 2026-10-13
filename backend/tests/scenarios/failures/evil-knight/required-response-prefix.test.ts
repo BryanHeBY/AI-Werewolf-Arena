@@ -5,9 +5,9 @@
  */
 import { expect, test } from "bun:test";
 import { Role } from "../../../../src/core";
-import { evilKnightScenario } from "../../../support/evil_knight_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
-import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import { evilKnightScenario } from "../../../support/features/evil-knight/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
+import { type PlannedTurn } from "../../../support/transport/contracts";
 
 const order = ["wolf_discussion", "guard", "wolf_vote", "witch", "seer", "hunter_shot"] as const;
 for (const stage of order)

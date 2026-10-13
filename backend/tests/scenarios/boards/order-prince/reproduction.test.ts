@@ -24,7 +24,7 @@ import {
 import { validateOrderPrinceRecord } from "../../../../src/recording/order_prince_record";
 import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import { orderPrinceScenario } from "../../../support/order_prince_transport_scenarios";
+import { orderPrinceScenario } from "../../../support/features/order-prince/builders/transport-plan";
 const records = new Map<string, Promise<ReproductionRecord>>();
 let version: ReturnType<typeof currentEngineVersion> | undefined;
 function recording(policy: "day1" | "day2" | "pk"): Promise<ReproductionRecord> {

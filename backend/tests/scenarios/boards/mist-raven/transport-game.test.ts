@@ -6,8 +6,8 @@
 import { expect, test } from "bun:test";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { mistTransportScenario } from "../../../support/mist_raven_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { mistTransportScenario } from "../../../support/features/mist-raven/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const variant of ["linked", "saved-dreamer", "protected-heal", "draw"] as const)
   for (const kind of ["llm", "acp", "mixed"] as const)
     test(`Mist Raven actual bilingual SDK/ACP/MCP complete ${variant}/${kind}`, async () => {

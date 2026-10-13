@@ -4,7 +4,7 @@
  * Output and oracle: Literal baseline acceptance and forgery rejection preserve the shared causal setup; its generated record is test input rather than independently computed expected state.
  */
 import { beforeAll, expect, test } from "bun:test";
-import { recordAnimalLiteral } from "../../../support/animal_dream_recording";
+import { recordAnimalLiteral } from "../../../support/features/animal-dream/drivers/recording";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 let baseline: any;
 beforeAll(async () => {

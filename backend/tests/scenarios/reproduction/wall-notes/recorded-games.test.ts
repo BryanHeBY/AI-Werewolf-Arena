@@ -6,8 +6,8 @@
 import { promises as fs } from "node:fs";
 import { expect, test } from "bun:test";
 import { Camp } from "../../../../src/core";
-import { wallScenario } from "../../../support/wall_notes_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { wallScenario } from "../../../support/features/wall-notes/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const size of [6, 12] as const)
   for (const mode of ["write", "skip"] as const)
     for (const transport of ["llm", "acp", "mixed"] as const)

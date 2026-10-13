@@ -6,9 +6,9 @@
 import { expect, test } from "bun:test";
 import { Camp, ActionWindow } from "../../../../src/core";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
-import { mistRecording } from "../../../support/mist_raven_recording";
+import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
 import type { ReproductionRecord } from "../../../../src/recording/reproduction";
-import { mistPrefix } from "../../../support/mist_raven_prefix";
+import { mistPrefix } from "../../../support/features/mist-raven/drivers/prefix";
 for (const variant of [
   "blast-parallel",
   "blast-parallel-raw-loser",

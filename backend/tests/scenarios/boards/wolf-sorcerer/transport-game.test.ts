@@ -8,8 +8,8 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { expect, test } from "bun:test";
-import { wolfSorcererScenario } from "../../../support/wolf_sorcerer_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { wolfSorcererScenario } from "../../../support/features/wolf-sorcerer/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const variant of ["overlap", "cancel", "disjoint"] as const)
   for (const transport of ["llm", "acp", "mixed"] as const)
     test(

@@ -25,7 +25,7 @@ import {
 import { validateMagicianRecord } from "../../../../src/recording/magician_record";
 import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import { magicianScenario } from "../../../support/magician_transport_scenarios";
+import { magicianScenario } from "../../../support/features/magician/builders/transport-plan";
 const records = new Map<string, Promise<ReproductionRecord>>();
 let version: ReturnType<typeof currentEngineVersion> | undefined;
 function recording(policy: "original" | "exchanged"): Promise<ReproductionRecord> {

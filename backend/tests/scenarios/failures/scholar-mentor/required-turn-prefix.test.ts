@@ -6,9 +6,9 @@
 import { expect, test } from "bun:test";
 import { Role } from "../../../../src/core";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
-import type { PlannedTurn } from "../../../support/foundation_transport_plan";
-import { scholarMentorScenario } from "../../../support/scholar_mentor_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { type PlannedTurn } from "../../../support/transport/contracts";
+import { scholarMentorScenario } from "../../../support/features/scholar-mentor/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const target of [
   "choice",
   "wolf_discussion",

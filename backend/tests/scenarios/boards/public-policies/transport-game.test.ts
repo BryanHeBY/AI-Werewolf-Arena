@@ -4,11 +4,11 @@
  * The transport driver owns local process and recording resources. The prompt checks do not add player knowledge, execute a live model or generate expected rule outcomes.
  */
 import { expect, test } from "bun:test";
-import { magicianScenario } from "../../../support/magician_transport_scenarios";
-import { evilKnightScenario } from "../../../support/evil_knight_transport_scenarios";
-import { timeConsortScenario } from "../../../support/time_consort_transport_scenarios";
-import { nightmareScenario } from "../../../support/nightmare_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { magicianScenario } from "../../../support/features/magician/builders/transport-plan";
+import { evilKnightScenario } from "../../../support/features/evil-knight/builders/transport-plan";
+import { timeConsortScenario } from "../../../support/features/time-wolf-consort/builders/transport-plan";
+import { nightmareScenario } from "../../../support/features/nightmare-shadow/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 const entries = [
   {
     name: "magician",

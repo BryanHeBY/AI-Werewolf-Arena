@@ -6,7 +6,7 @@
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Camp, COMPONENT, Role, PotionType, type RoleComponent } from "../../../../src/core";
-import { foxBoard } from "../../../support/cursed_fox_scenarios";
+import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 import { getDefaultRoleCatalog, RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import { SEER_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/seer/night_stages";

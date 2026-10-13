@@ -4,7 +4,7 @@
  * Output and oracle: Literal finalized/game-over checks cover published recordings only when enabled; the original conditional skip and source fixture bytes remain unchanged in this migration.
  */
 import { expect, test } from "bun:test";
-import { mistRecording } from "../../../support/mist_raven_recording";
+import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
 const directory = process.env.AWA_MIST_RAVEN_FIXTURES;
 test.skipIf(!directory)(
   "Mist actual finalized manual front fixtures with exact Tape",

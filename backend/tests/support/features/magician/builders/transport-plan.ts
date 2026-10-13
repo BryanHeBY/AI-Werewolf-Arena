@@ -1,0 +1,176 @@
+/**
+ * Builds original magician test input plans, fixed boards and explicit player/marker data. Inputs are
+ * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
+ * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
+ * supplied data. It runs no game or model and changes no oracle algorithm.
+ */
+import { ActionWindow } from "../../../../../src/core";
+import { Camp } from "../../../../../src/core";
+import { Role } from "../../../../../src/core";
+import { PotionType } from "../../../../../src/core";
+import { createRandom } from "../../../../../src/core";
+import { shuffled } from "../../../../../src/core";
+import type { ActionStage } from "../../../../../src/core";
+import type { ToolCall } from "../../../../../src/core";
+import { magicianTwelveConfig } from "../../../../../src/runtime/scenarios/magician_twelve";
+import { boardDefinitionFromConfig } from "../../../../../src/runtime/config/board_definition";
+import { parseBoardDefinition } from "../../../../../src/runtime/config/board_definition";
+import type { PlannedTurn } from "../../../transport/contracts";
+import type { TransportGameScenario } from "../../../transport/contracts";
+
+export function magicianScenario(
+  shot: "original" | "exchanged" = "exchanged",
+  options: { dayOnly?: boolean; kingDeath?: "night" | "exile"; pass?: boolean } = {},
+): TransportGameScenario & {
+  magician: number;
+  hunter: number;
+  king: number;
+  pair: [number, number];
+  alive: number[];
+  winner: Camp;
+} {
+  const config = structuredClone(magicianTwelveConfig),
+    seed = "magician-transport-night-shot";
+  config.magician!.deathShotTargetPolicy = shot;
+  if (options.dayOnly) config.wolfKing = { deathActionPolicy: "awa_day_deaths_v1" };
+  const dayExile = options.kingDeath === "exile";
+  const kingPass = dayExile && options.pass === true;
+  const roles = shuffled(
+    config.roleSetups.flatMap((r) => Array.from({ length: r.count }, () => r.role)),
+    createRandom(seed).fork("deal"),
+  );
+  const ids = roles.map((_, i) => i + 1),
+    id = (r: Role) => roles.indexOf(r) + 1;
+  const magician = id(Role.Magician),
+    hunter = id(Role.Hunter),
+    king = id(Role.WolfKing),
+    seer = id(Role.Seer),
+    witch = id(Role.Witch);
+  const ordinary = ids.filter((i) => roles[i - 1] === Role.Wolf),
+    villagers = ids.filter((i) => roles[i - 1] === Role.Villager);
+  const wolves = [...ordinary, king].sort((a, b) => a - b),
+    pair = [king, hunter].sort((a, b) => a - b) as [number, number];
+  const turns = new Map<number, PlannedTurn[]>(ids.map((i) => [i, []]));
+  const add = (
+    day: number,
+    actors: number[],
+    stage: ActionStage,
+    action: ToolCall | null | ((actor: number) => ToolCall | null),
+  ) => {
+    for (const actor of actors)
+      turns
+        .get(actor)!
+        .push({ day, stage, action: typeof action === "function" ? action(actor) : action });
+  };
+  const words = (day: number, actors: number[]) =>
+    add(day, actors, "last_words", { name: "speak", args: { text: "Words" } });
+  const pack = (day: number, actors: number[], target: number) => {
+    add(day, actors, "wolf_discussion", {
+      name: "speak_to_wolves",
+      args: { text: "End", end_chat: true },
+    });
+    add(day, actors, "wolf_vote", {
+      name: "kill_vote",
+      args: { target_id: target, abstain: false },
+    });
+  };
+  const speech = (day: number, alive: number[], exile: number) => {
+    add(day, alive, "day_speech", { name: "speak", args: { text: "Speech" } });
+    add(
+      day,
+      wolves.filter((i) => alive.includes(i)),
+      ActionWindow.OnPreVote,
+      null,
+    );
+    add(day, alive, "voting", (actor) => ({
+      name: "vote",
+      args: { target_id: actor === exile ? null : exile, abstain: actor === exile },
+    }));
+    words(day, [exile]);
+  };
+  add(1, [magician], "magician_exchange", {
+    name: "swap_targets",
+    args: { first_id: pair[0], second_id: pair[1], abstain: false },
+  });
+  pack(1, wolves, dayExile ? villagers[0]! : hunter);
+  add(1, [witch], "witch", {
+    name: "use_potion",
+    args: { target_id: ordinary[0]!, potion_type: PotionType.Poison },
+  });
+  add(1, [seer], "seer", { name: "check_identity", args: { target_id: hunter } });
+  add(1, wolves, ActionWindow.OnPreElection, null);
+  add(1, ids, "sheriff_nomination", { name: "run_for_sheriff", args: { run: false } });
+  words(1, [dayExile ? villagers[0]! : king, ordinary[0]!]);
+  let alive2: number[];
+  if (dayExile) {
+    const alive1 = ids.filter((i) => i !== villagers[0] && i !== ordinary[0]);
+    speech(1, alive1, king);
+    add(1, [king], "death_shot", { name: "shoot", args: { target_id: kingPass ? null : hunter } });
+    if (!kingPass)
+      add(1, [hunter], "hunter_shot", { name: "shoot", args: { target_id: ordinary[1]! } });
+    alive2 = alive1.filter((i) => i !== king && (kingPass || (i !== hunter && i !== ordinary[1])));
+  } else {
+    if (!options.dayOnly)
+      add(1, [king], "death_shot", {
+        name: "shoot",
+        args: { target_id: shot === "exchanged" ? hunter : villagers[0]! },
+      });
+    const alive1 = ids.filter(
+      (i) =>
+        i !== king &&
+        i !== ordinary[0] &&
+        (options.dayOnly || shot === "exchanged" || i !== villagers[0]),
+    );
+    speech(1, alive1, ordinary[1]!);
+    alive2 = alive1.filter((i) => i !== ordinary[1]);
+  }
+  add(2, [magician], "magician_exchange", {
+    name: "swap_targets",
+    args: { first_id: null, second_id: null, abstain: true },
+  });
+  pack(2, kingPass ? [ordinary[1]!, ordinary[2]!] : [ordinary[2]!], witch);
+  add(2, [witch], "witch", {
+    name: "use_potion",
+    args: { target_id: witch, potion_type: PotionType.None },
+  });
+  add(2, [seer], "seer", { name: "check_identity", args: { target_id: ordinary[2]! } });
+  const day2 = alive2.filter((i) => i !== witch);
+  speech(2, day2, kingPass ? ordinary[1]! : ordinary[2]!);
+  let finalAlive = day2.filter((i) => i !== ordinary[2]);
+  if (kingPass) {
+    add(3, [magician], "magician_exchange", {
+      name: "swap_targets",
+      args: { first_id: null, second_id: null, abstain: true },
+    });
+    pack(3, [ordinary[2]!], seer);
+    add(3, [seer], "seer", { name: "check_identity", args: { target_id: ordinary[2]! } });
+    const day3 = day2.filter((i) => i !== ordinary[1] && i !== seer);
+    speech(3, day3, ordinary[2]!);
+    finalAlive = day3.filter((i) => i !== ordinary[2]);
+  }
+  return {
+    board: parseBoardDefinition(boardDefinitionFromConfig("magician_transport_" + shot, config)),
+    seed,
+    ...(options.dayOnly
+      ? {
+          promptAssertions: (_actor: number, locale: "zh-CN" | "en") => ({
+            requiredSystemMarkers:
+              locale === "zh-CN"
+                ? ["夜死即使白天公布", "最后一狼仍先完成死亡连锁再判胜"]
+                : [
+                    "Night deaths announced by day",
+                    "last wolf completes death chains before victory",
+                  ],
+          }),
+        }
+      : {}),
+    roles,
+    turns,
+    magician,
+    hunter,
+    king,
+    pair,
+    alive: finalAlive,
+    winner: Camp.Good,
+  };
+}

@@ -9,7 +9,8 @@ import {
   type ActionRequest,
   type RoleComponent,
 } from "../../../../src/core";
-import { demonHunterFixture, demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
+import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { demonHunterAuditPlayer } from "../../../../src/game/mechanisms/roles/demon_hunter/authority";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
 import { getHunterState } from "../../../../src/game/mechanisms/roles/private_state";

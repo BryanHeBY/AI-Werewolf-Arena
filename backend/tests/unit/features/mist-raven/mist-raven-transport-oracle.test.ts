@@ -5,10 +5,10 @@
  * original literal or immutable-fixture oracle; these module assertions invoke no model or
  * complete-game driver.
  */
-import { mistTransportScenario } from "../../../support/mist_raven_transport_scenarios";
+import { mistTransportScenario } from "../../../support/features/mist-raven/builders/transport-plan";
 import { expect, test } from "bun:test";
 import { Role } from "../../../../src/core";
-import { assertTransportEvents, assertTransportPrompt } from "../../../support/transport_prompt_oracle";
+import { assertTransportEvents, assertTransportPrompt } from "../../../support/oracles/transport/observations";
 import type { MistWireState } from "../../../support/features/mist-raven/oracles/transport";
 const unseal = { actorId: 9, day: 2, awakened: true, knownTeammateIds: [10] },
   expected = { unseal: { day: 2, knownTeammateIds: [10] } };

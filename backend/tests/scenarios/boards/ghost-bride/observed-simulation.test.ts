@@ -7,7 +7,7 @@
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { ghostBrideBoard } from "../../../support/ghost_bride_scenarios";
+import { ghostBrideBoard } from "../../../support/features/ghost-bride/builders/scenario";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,

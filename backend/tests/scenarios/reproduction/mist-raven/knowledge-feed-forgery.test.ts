@@ -5,8 +5,8 @@
  */
 import { expect, test } from "bun:test";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
-import { mistRecording } from "../../../support/mist_raven_recording";
-import { mistPrefix } from "../../../support/mist_raven_prefix";
+import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
+import { mistPrefix } from "../../../support/features/mist-raven/drivers/prefix";
 const append = (
   r: ReproductionRecord,
   stage: string,

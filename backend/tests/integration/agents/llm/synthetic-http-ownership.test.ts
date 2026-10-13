@@ -7,7 +7,7 @@
  */
 import { expect, test } from "bun:test";
 import { LoopbackMcpControlServer } from "../../../../src/ai/integrations/acp/loopback_mcp_control_server";
-import { assertControlOwnerClosed } from "../../../support/oracles/control-owner";
+import { assertControlOwnerClosed } from "../../../support/drivers/transport/control-owner";
 import {
   authenticatedSyntheticModelFetch,
   syntheticModelToken,

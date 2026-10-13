@@ -4,7 +4,7 @@
  * Output and oracle: Explicit original acceptance and malformed-prefix rejection remain tied to actual recording; the source baseline is not promoted to independent expected-rule output.
  */
 import { beforeAll, expect, test } from "bun:test";
-import { recordAnimalLiteral } from "../../../support/animal_dream_recording";
+import { recordAnimalLiteral } from "../../../support/features/animal-dream/drivers/recording";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 let baseline: any;
 beforeAll(async () => {

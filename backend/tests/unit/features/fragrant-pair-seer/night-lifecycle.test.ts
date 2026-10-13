@@ -7,7 +7,7 @@
  */
 import { expect, test } from "bun:test";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
-import { fragrantRuntimeGame } from "../../../support/fragrant_pair_seer_scenarios";
+import { fragrantRuntimeGame } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
 import { FragrantNightUnit } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/ports";
 import {
   fragrantAuthoritySnapshot,

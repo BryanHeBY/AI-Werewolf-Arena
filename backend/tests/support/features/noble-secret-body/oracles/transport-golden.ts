@@ -8,7 +8,7 @@
  */
 import { expect } from "bun:test";
 import type { ReproductionRecord } from "../../../../../src/recording/reproduction";
-import type { nobleTransportScenario } from "../../../noble_secret_body_transport_scenarios";
+import { type nobleTransportScenario } from "../builders/transport-plan";
 type Scenario = ReturnType<typeof nobleTransportScenario>;
 type BodySpend = [
   number,

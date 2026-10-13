@@ -1,0 +1,2493 @@
+{
+  "schema": "awa-support-responsibility-evidence-v1",
+  "supportBaseline": "2cca067c70129717ddf6bea39126f73ac4704f9f",
+  "consumerBaseline": "049a0a33a764a3ba285c2da9d30947acf58048e1",
+  "counts": {
+    "originalFiles": 58,
+    "newOwners": 79,
+    "declarationOwners": 159,
+    "rawDeclarations": 157,
+    "oracleBlocks": 10,
+    "consumerFiles": 201,
+    "consumerImportBindings": 410,
+    "actualHeaders": 280
+  },
+  "layout": {
+    "originalFlatLeaves": 57,
+    "oldMixedHttpOracle": 1,
+    "existingOrganizedRetained": 18,
+    "currentSupportTS": 97,
+    "stagingPaths": 338
+  },
+  "declarationProof": {
+    "originalDeclarations159SingleOwner": true,
+    "rawDeclarations157OutsideExplicitExportsAndFourPublicLocations": true,
+    "twoDriverDeclarationsInvertTenExactOriginalBlocks": true,
+    "newOracleBlocks10ExactlyOriginal": true,
+    "consumerWholeFileInverse410Bindings": false,
+    "all201OriginalConsumerInputsActualGit049a": true,
+    "consumerNamedBindingRoutes410Unchanged": true,
+    "consumerWholeImportInverse200": true,
+    "oneExactLeadingCommentException": "backend/tests/scenarios/boards/red-moon/transport-game.test.ts"
+  },
+  "finiteCompiler": {
+    "gitCommit": "049a0a33a764a3ba285c2da9d30947acf58048e1",
+    "snapshotRoot": "/tmp/awa-c13-fixed-candidate",
+    "inputManifestSha256": "fe4464f76b3d7877183d1fc063a750766d20e306b94efcfbc2928224d0b8d0fa",
+    "configurationSha256": "258e23089b96a9ad9f7dc91df39cc90aa2549af86840b26ff6fb3f14233a1e41",
+    "dependencyLockSha256": "0d3d997cd8f82793dbc8d7a1c20396257176edbae91dfa9908e65e6d7c7dd27f",
+    "publicCompiledInputsSha256": "01f7386c4a941cd773dce98667844432b1cb5295b22a5eac591e1e1449a107fe",
+    "typescriptVersion": "5.9.3",
+    "candidateCount": 280,
+    "dependencyLinkCount": 29,
+    "counts": {
+      "immutableKeptInputs": 1274,
+      "ownedRemovedInputs": 58,
+      "candidateOverlayInputs": 201
+    },
+    "terminalReceipt": {
+      "sessionId": 43571,
+      "actualClosed": true,
+      "exitCode": 0,
+      "log": "/tmp/awa-c13-types-fixed.log",
+      "logBytes": 0,
+      "evidence": "write_stdin completion returned exit_code 0 and no session_id; an empty log alone is not the receipt"
+    },
+    "strictOptions": "Exact committed Git049a backend tests settings; only existing installed typeRoots and TypeScript library resolution supplied; workspace package source physically inside fixed049a snapshot, no live backend/source fallback",
+    "limits": [
+      "One finite 280-root compiler; no test discovery, runtime games, suite or full gate",
+      "Terminal receipt covers these frozen C13 bytes, not subsequent opaque34 type-only adapters or new P4 source"
+    ],
+    "failures": [],
+    "finalStageDifference": {
+      "sameRawFiles": 273,
+      "registeredFinalDeltas": [
+        {
+          "originalCompiledPath": "backend/tests/support/features/radiant-eclipse/builders/transport-plan.ts",
+          "currentStagePath": "backend/tests/support/features/radiant-eclipse/builders/transport-plan.ts",
+          "compiledSha256": "a620d85ca63c73d544d0361b3bdecb4a54b228c48d75ab6f95a8b2472f4adcdc",
+          "currentStageSha256": "c88666bd525f2739d9ac0249241caa5f4aed9b0307cf7f221a853b6a3b9bf3d7",
+          "differences": "leading comment and/or exact Red Moon module specifier"
+        },
+        {
+          "originalCompiledPath": "backend/tests/support/features/red-moon-apostle/builders/transport-plan.ts",
+          "currentStagePath": "backend/tests/support/features/red-moon-apostle/drivers/transport-plan.ts",
+          "compiledSha256": "2d59e7855375e796c292a0cc5bf364d855f027f5f4837decddfd6c1ea6f9d1cb",
+          "currentStageSha256": "2db94b1abe12bd252c5f21a6198446424c1ffb2fe880d52893e9cfa77e3479d9",
+          "differences": "registered owner location and leading comment"
+        },
+        {
+          "originalCompiledPath": "backend/tests/support/features/mist-raven/builders/board.ts",
+          "currentStagePath": "backend/tests/support/features/mist-raven/builders/board.ts",
+          "compiledSha256": "115c3f47df9828adc6d30070028fbd592ae08a3aaec43de8f99d301819f62146",
+          "currentStageSha256": "94c3e3ceeb0392062b8cb1bbc74b75bcf587dddfb93a63c5d1c69b21902eec40",
+          "differences": "leading comment and/or exact Red Moon module specifier"
+        },
+        {
+          "originalCompiledPath": "backend/tests/support/features/radiant-eclipse/builders/runtime-game.ts",
+          "currentStagePath": "backend/tests/support/features/radiant-eclipse/builders/runtime-game.ts",
+          "compiledSha256": "1ec95d3128e9233bc9f0fc86ac2afaab94d24ea9248e336702f58dfbf107d0b9",
+          "currentStageSha256": "a9c2657cb97ea7fdfe5a7d213da21c004673920fbf5c3dd5fde794242ac44ad0",
+          "differences": "leading comment and/or exact Red Moon module specifier"
+        },
+        {
+          "originalCompiledPath": "backend/tests/support/drivers/transport/control-owner.ts",
+          "currentStagePath": "backend/tests/support/drivers/transport/control-owner.ts",
+          "compiledSha256": "a814d50f2c9cafe019d8fe652f07e2c045d790069964109774763c7986e174e6",
+          "currentStageSha256": "f86f33f7b8ba6705409f0e48b95d6f721fd054d068aeccb4aa7d0539808bc2c1",
+          "differences": "leading comment and/or exact Red Moon module specifier"
+        },
+        {
+          "originalCompiledPath": "backend/tests/scenarios/failures/red-moon/deferred-night-response.test.ts",
+          "currentStagePath": "backend/tests/scenarios/failures/red-moon/deferred-night-response.test.ts",
+          "compiledSha256": "5bb5f54955746b27a979719c368fa6bb4bda30b086bfffb691c3b988eb8c0b15",
+          "currentStageSha256": "ce2f70c99c8883cb4b38cf164e5e0af610f180dcf3f17a6e5b625c7040b6675b",
+          "differences": "leading comment and/or exact Red Moon module specifier"
+        },
+        {
+          "originalCompiledPath": "backend/tests/scenarios/boards/red-moon/transport-game.test.ts",
+          "currentStagePath": "backend/tests/scenarios/boards/red-moon/transport-game.test.ts",
+          "compiledSha256": "f13d491cb7bd20a5f17ab72e46d3fb75603c8fd1f0e99a80b1281deb8843d753",
+          "currentStageSha256": "a6001628c20dbfd24d079f7243c6132cbce9556aaf4bef04120d093f08e2cf11",
+          "differences": "leading comment and/or exact Red Moon module specifier"
+        }
+      ],
+      "historicalCompilerInputsUnchanged": true,
+      "noNewTypeReceiptClaimed": true,
+      "noRuntimeDataBodyOrMatrixChange": true
+    }
+  },
+  "graph": {
+    "counts": {
+      "supportTS": 97,
+      "sourceImportEdges": 176
+    },
+    "duplicateOwnedNames": [],
+    "cycles": [],
+    "oracleProductionSettlementOrIoCalls": []
+  },
+  "sourceAssets": {
+    "actualChangedAssets2": [
+      "backend/tests/fixtures/acp/audit-agent.ts",
+      "backend/tests/fixtures/acp/game-agent.ts"
+    ],
+    "actualModuleRoutes4": 4,
+    "namedImportBindingObservations6": 6,
+    "pureDeclarationExportGuardRedPreserved": "/tmp/awa-c13-relocation-review-probe-first.json",
+    "sameTwoInputsFixed": "/tmp/awa-c13-relocation-review-probe-fixed.json",
+    "thirdReview": "/tmp/awa-c13-relocation-third-final-review.json",
+    "rootOwnsGateAndGlobalManifest": true,
+    "original27aProgramAndImportDigestsNotRewritten": true,
+    "jsonArchives904Untouched": true
+  },
+  "reviews": {
+    "root": "Read actual transport driver execution/IO/closure and ten extracted oracle boundaries, new control HTTP/classification split and raw actual fixture import clauses/declared identities. Final280 snapshot digests and58 removals verify. New exactfixture relocation gate keeps originalprogram/import hashes.",
+    "architecture": {
+      "result": "green; reported classification blocker and header issues closed",
+      "scope": "Readonly C13 finite semantic ownership audit of actual 79 new support owners and named public asset routes; no compile, discovery, runtime, test or full gate",
+      "actualOwnerSHA": [
+        {
+          "path": "backend/tests/support/features/animal-dream/builders/transport-plan.ts",
+          "sha256": "30f400b3940a7ba3ff6dccca053a2561e9d2423fbd8eb75874f87f74a7039513"
+        },
+        {
+          "path": "backend/tests/support/features/awakened-hidden-wolf/builders/scenario.ts",
+          "sha256": "743786df14a4886ada9034c4542fd6fe0cc32b8dd62463f27a5f0e2f48e70c13"
+        },
+        {
+          "path": "backend/tests/support/features/bear/builders/scenario.ts",
+          "sha256": "47ecbf7933670cad0378a5bfee5c8b1e74caf2ee1dbb3abe710a30a21537d840"
+        },
+        {
+          "path": "backend/tests/support/features/black-market-merchant/builders/scenario.ts",
+          "sha256": "a75dc86f380a29bd0d1c9d0d59f73a346aac0e2bbace136464d864f6a2b81d86"
+        },
+        {
+          "path": "backend/tests/support/features/cupid/builders/scenario.ts",
+          "sha256": "19adfb3b354e04cd6c2f0e29e8e47fc4b7343912afa1a269d93b59a89e3af757"
+        },
+        {
+          "path": "backend/tests/support/features/cursed-fox/builders/scenario.ts",
+          "sha256": "eb1406c7b349aceb20106970c678d4fb9b5d12521702c0bac7165ece471a2635"
+        },
+        {
+          "path": "backend/tests/support/features/debater/builders/scenario.ts",
+          "sha256": "74f24b4ddc8afb9604025c94aa32b38a19abfbfa602117388f1fa04021f1ec7e"
+        },
+        {
+          "path": "backend/tests/support/features/demon-hunter/builders/transport-plan.ts",
+          "sha256": "bf44c9bcd1a467a53c6cac7e334e0747ffab80c428c2f24a2b032c792638a27b"
+        },
+        {
+          "path": "backend/tests/support/features/dreamer/builders/scenario.ts",
+          "sha256": "99c03f5771c38117b0b8557e18071fac1c5e62ee541ca37872a9c7f62b2cf690"
+        },
+        {
+          "path": "backend/tests/support/features/evil-knight/builders/transport-plan.ts",
+          "sha256": "2da585e2dbf23272d013917aba79724fef336a098964fcb6be002fb837c88b60"
+        },
+        {
+          "path": "backend/tests/support/features/fragrant-pair-seer/builders/transport-plan.ts",
+          "sha256": "ec6e5bdc0c9bef06545f724f7d000aa90690090a1cf8d23de6a4a33ccee2fa3f"
+        },
+        {
+          "path": "backend/tests/support/features/gargoyle/builders/scenario.ts",
+          "sha256": "02c12fb066423af6f8e2320dbcfceed8281da69effd4c14ba001b859734984a1"
+        },
+        {
+          "path": "backend/tests/support/features/ghost-bride/builders/scenario.ts",
+          "sha256": "9fc14861530a5261d13d382a15d4b19ac2fba0e8b612d06e8520a30d66a74c1d"
+        },
+        {
+          "path": "backend/tests/support/features/gravekeeper/builders/scenario.ts",
+          "sha256": "25d182fcc943565aaf179fd7ee2f10636cfae30a690b596c66b00c1844ac4f84"
+        },
+        {
+          "path": "backend/tests/support/features/hidden-wolf/builders/scenario.ts",
+          "sha256": "8724b8aedcb358e9fd9b8896fa8e78ae349d7c5b6ddb95120a4a3baf7225e0c9"
+        },
+        {
+          "path": "backend/tests/support/features/hybrid/builders/scenario.ts",
+          "sha256": "0ec2524ce0e693b7bf489106f1297d6ba7dde14fc61ff4603a67a88fb60b5762"
+        },
+        {
+          "path": "backend/tests/support/features/lonely-girl/builders/scenario.ts",
+          "sha256": "6063e63ec7c553a81f903e45d71c54cc43b30a4325426e8cc2fb847115a140b9"
+        },
+        {
+          "path": "backend/tests/support/features/magician/builders/transport-plan.ts",
+          "sha256": "0111f32fb3074c3676c0931cc5c7bda7fb62ce2ef4363d714c083698033ee175"
+        },
+        {
+          "path": "backend/tests/support/features/mechanical-wolf/builders/scenario.ts",
+          "sha256": "3585f45b2f218ce9f76a5766ed65bb73aa999b06ed7808e2967eb714afc2aaf7"
+        },
+        {
+          "path": "backend/tests/support/features/miracle-merchant/builders/scenario.ts",
+          "sha256": "9cd6497e0d8ea33e053ed1e00ebc39841f5be4f9fab4f2c2d5037b144a2c36ed"
+        },
+        {
+          "path": "backend/tests/support/features/mirror-girl/builders/scenario.ts",
+          "sha256": "190d00a0cf2148a9bfe646526fb441bff6aa5a05fac58a31f75588a238e87621"
+        },
+        {
+          "path": "backend/tests/support/features/mist-raven/builders/transport-plan.ts",
+          "sha256": "70e9ee39fcb09eee72ccffaa4b404eec81cc80aa710c65754dfbd93f026ec9bd"
+        },
+        {
+          "path": "backend/tests/support/features/nightmare-shadow/builders/transport-plan.ts",
+          "sha256": "fe5b4d905e88468d2553fa257e4594151dce09f7ca5da2dae405af53db981b0c"
+        },
+        {
+          "path": "backend/tests/support/features/noble-secret-body/builders/transport-plan.ts",
+          "sha256": "caf70929028fd19df91a191918d14c53f0aa69762411780c7f9e44ab881ae19c"
+        },
+        {
+          "path": "backend/tests/support/features/order-prince/builders/transport-plan.ts",
+          "sha256": "d4631ba927b9065918d576cb75f9dcbdfa5025339e5835efd1f7cec13cdc4800"
+        },
+        {
+          "path": "backend/tests/support/features/psychic/builders/scenario.ts",
+          "sha256": "d7e370580f94d5b32f68e49d273345ed8c77579e16069738fc2e367948b4b022"
+        },
+        {
+          "path": "backend/tests/support/features/pure-white-girl/builders/transport-plan.ts",
+          "sha256": "a0cbbf531d98762e46bb37b9d6d1f764c0bbf7f404d55505915f4f067ff6971e"
+        },
+        {
+          "path": "backend/tests/support/features/radiant-eclipse/builders/transport-plan.ts",
+          "sha256": "c88666bd525f2739d9ac0249241caa5f4aed9b0307cf7f221a853b6a3b9bf3d7"
+        },
+        {
+          "path": "backend/tests/support/features/red-moon-apostle/drivers/transport-plan.ts",
+          "sha256": "2db94b1abe12bd252c5f21a6198446424c1ffb2fe880d52893e9cfa77e3479d9"
+        },
+        {
+          "path": "backend/tests/support/features/scholar-mentor/builders/transport-plan.ts",
+          "sha256": "d5cb117b2884486b5134bf160e9fec2ee50fa39f1b4beb61403d66c40433c0d5"
+        },
+        {
+          "path": "backend/tests/support/features/shapeshifter/builders/scenario.ts",
+          "sha256": "b6594fe0eb03fb14bffc55fdadccb5f94ddd06e3916df4158dd8cce7e29c0796"
+        },
+        {
+          "path": "backend/tests/support/features/thief/builders/scenario.ts",
+          "sha256": "507434b6bf8d1d641c674e4838f01a2b19c6bd820163b22151cf089a83b31909"
+        },
+        {
+          "path": "backend/tests/support/features/time-wolf-consort/builders/transport-plan.ts",
+          "sha256": "87f12f7ffc08b0845668050bd8a7fe5efb38b497c13fc682462cf00547066390"
+        },
+        {
+          "path": "backend/tests/support/features/trickster/builders/transport-plan.ts",
+          "sha256": "d2e3a1e344bd28479a12fb185f9b563b09667204ee152b8781d0c8ffce9c0dc8"
+        },
+        {
+          "path": "backend/tests/support/features/wall-notes/builders/scenario.ts",
+          "sha256": "e7113c5e3305b85792e8a8ec84975cac4b054079bd1611c5cce9b329fb565642"
+        },
+        {
+          "path": "backend/tests/support/features/wild-child/builders/scenario.ts",
+          "sha256": "0bcec9cb233d4b57cd8f3d570c952256e7eaee35852e645973646aa1a0414f2a"
+        },
+        {
+          "path": "backend/tests/support/features/wolf-beauty/builders/scenario.ts",
+          "sha256": "d4687a8583dc1c18f562f7f8c7b5b67dc287a3cf8ba3c4608b1beb3502eacdd7"
+        },
+        {
+          "path": "backend/tests/support/features/wolf-sorcerer/builders/transport-plan.ts",
+          "sha256": "27c6b792123ccaee5306ad10838bd7a7b2a1c7479724127ba8ad49cc73cc2816"
+        },
+        {
+          "path": "backend/tests/support/transport/contracts.ts",
+          "sha256": "432d0f051448a775857eb92ddb403d1311dbce54a16bcbf6d5862542c0285294"
+        },
+        {
+          "path": "backend/tests/support/builders/transport/foundation-plan.ts",
+          "sha256": "aeffa9d5e2a74701a58ed54d608c8d86aa935c1c639d076cac6b882baca98844"
+        },
+        {
+          "path": "backend/tests/support/drivers/transport/run-game.ts",
+          "sha256": "c61bc21aec8bc8b044930ea7b587b81955bc36294a0fce88616e142c6de0f2f9"
+        },
+        {
+          "path": "backend/tests/support/oracles/fixture-values.ts",
+          "sha256": "79a3fbd32e953337cb82a68acfa56a87ac683ffe17fb4b814b59a6b682b20358"
+        },
+        {
+          "path": "backend/tests/support/builders/recording/result.ts",
+          "sha256": "4da5d1fc186efa63b5f01e3a351f8362dfba54bd68bedd4ac08e3f98c91bf13e"
+        },
+        {
+          "path": "backend/tests/support/builders/transport/self-destruct-plan.ts",
+          "sha256": "b151c8dc33c7a7aff53038e3b920c397ad687ea11b58e5db787b5bc42c604984"
+        },
+        {
+          "path": "backend/tests/support/oracles/transport/observations.ts",
+          "sha256": "883d6b036de5b9514eb0044c98f1e0ed946a143532e5a07387610d2ec791581b"
+        },
+        {
+          "path": "backend/tests/support/features/animal-dream/builders/runtime-game.ts",
+          "sha256": "090b3aaa883bfc47fdf62d804d1e2f625878268cdad53f1d3741631aedcf5bb8"
+        },
+        {
+          "path": "backend/tests/support/features/animal-dream/contracts.ts",
+          "sha256": "54f0128f776b6d690be6e39e3f6e7a7a14b6306e75db590fea1f4d10f138f2a5"
+        },
+        {
+          "path": "backend/tests/support/features/animal-dream/drivers/actions.ts",
+          "sha256": "f0da060ebaa1a569c09ba8ed7c8d1dd8d630b25a62558993fab70bc39c49a947"
+        },
+        {
+          "path": "backend/tests/support/features/animal-dream/oracles/golden.ts",
+          "sha256": "113ae6ab3e376b2e02c1fce0c447be6102cd18f57ed65ffe4d7c3ca83b89d821"
+        },
+        {
+          "path": "backend/tests/support/features/fragrant-pair-seer/builders/runtime-game.ts",
+          "sha256": "a20eb01060e91a2a1b521998d7f85618dc5034f069d6feb07c65b360e1d29323"
+        },
+        {
+          "path": "backend/tests/support/features/fragrant-pair-seer/contracts.ts",
+          "sha256": "bcd5f7e58de472159756540ba1b89830d904e06d5bf4a6c40e7d8ef22746ba53"
+        },
+        {
+          "path": "backend/tests/support/features/fragrant-pair-seer/drivers/actions.ts",
+          "sha256": "48e76679c582ddb52520821b49cb5b5a490cc8b36af25d42261d411f248ddc14"
+        },
+        {
+          "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+          "sha256": "8f35daa7231bb1a98bf82479dafa436e9e2c6dfbc161e04bb12eb75bd1bb62f6"
+        },
+        {
+          "path": "backend/tests/support/features/demon-hunter/contracts.ts",
+          "sha256": "9535713e44d326a5e5a08a28b4ded4542bc807ae4279865b6a4ab8eea512bfcf"
+        },
+        {
+          "path": "backend/tests/support/features/demon-hunter/drivers/actions.ts",
+          "sha256": "2106c2297bf74d59533582d9c9132ba0e6e5d93231affb1faa9295524f46cdbd"
+        },
+        {
+          "path": "backend/tests/support/features/knight/builders/scenario.ts",
+          "sha256": "b9d14a8476c04b346b87a825fab3fb9f17b2c8fbebbceea4a43ab339b1812d96"
+        },
+        {
+          "path": "backend/tests/support/features/knight/oracles/prompt-plan.ts",
+          "sha256": "e2075bf418e83fb5b08e5ce63525f0f7c58e14181233d0013dfa41703a5a42de"
+        },
+        {
+          "path": "backend/tests/support/features/white-wolf-king/builders/scenario.ts",
+          "sha256": "ed027c68c11c74e38a3557090a55d3f81d50515c6a8969cd7f3891732b684a78"
+        },
+        {
+          "path": "backend/tests/support/features/white-wolf-king/oracles/prompt-plan.ts",
+          "sha256": "2633463a21e9b67b86168cc47ff8d1593b9e33c137cbee962a5822da1831efe8"
+        },
+        {
+          "path": "backend/tests/support/features/wolf-king/builders/scenario.ts",
+          "sha256": "1f1a6641fe7020e7227193ad85ed521f8f18ac0d81cd7f21a30e9247239a575f"
+        },
+        {
+          "path": "backend/tests/support/features/wolf-king/oracles/prompt-plan.ts",
+          "sha256": "ac976a071dc335f0e4f8b3c6fb2d30057d80cc09fbf33c1cd8ddf85b7558755d"
+        },
+        {
+          "path": "backend/tests/support/features/animal-dream/drivers/recording.ts",
+          "sha256": "bd5b76dc4266a286035b39413c4223b4e978128f645925294fe2403a3dfeb97b"
+        },
+        {
+          "path": "backend/tests/support/features/fragrant-pair-seer/builders/literal-plans.ts",
+          "sha256": "5dc0b919e84e3731890875a84427417a2758afd029fe179e615a8b27cf87c5f7"
+        },
+        {
+          "path": "backend/tests/support/features/fragrant-pair-seer/drivers/recording.ts",
+          "sha256": "415b4ceba02b3d96bc580a4ab893429934a4fff0752a031723812692a65c9df4"
+        },
+        {
+          "path": "backend/tests/support/features/mist-raven/drivers/prefix.ts",
+          "sha256": "187e9e8c4f81a8f8c844b429d123abb118f755f78810773231c08747e4771764"
+        },
+        {
+          "path": "backend/tests/support/features/mist-raven/builders/board.ts",
+          "sha256": "94c3e3ceeb0392062b8cb1bbc74b75bcf587dddfb93a63c5d1c69b21902eec40"
+        },
+        {
+          "path": "backend/tests/support/features/mist-raven/builders/literal-plans.ts",
+          "sha256": "85d7dc15f0299b18d39bd5f740b9242a8afd298612258923ecfaf49eb955ec09"
+        },
+        {
+          "path": "backend/tests/support/features/mist-raven/drivers/actions.ts",
+          "sha256": "179c234d82d1aadd33c9046c5522c5de368195a408e87c7515bd2923a2645c83"
+        },
+        {
+          "path": "backend/tests/support/features/mist-raven/drivers/recording.ts",
+          "sha256": "02f1cb27f7d33e80564a8941dc019aa450675d634e2173c259cc4e6102c642dc"
+        },
+        {
+          "path": "backend/tests/support/features/noble-secret-body/builders/literal-plans.ts",
+          "sha256": "d34bea11c7e687f72b5d63c4929846ca22cc6269c42dd489ef5a34249ddf82e8"
+        },
+        {
+          "path": "backend/tests/support/features/noble-secret-body/drivers/recording.ts",
+          "sha256": "664fb7f562d585c837c6ac7223f8a9ebdc94b9354ac773705f28044864670194"
+        },
+        {
+          "path": "backend/tests/support/features/radiant-eclipse/builders/runtime-game.ts",
+          "sha256": "a9c2657cb97ea7fdfe5a7d213da21c004673920fbf5c3dd5fde794242ac44ad0"
+        },
+        {
+          "path": "backend/tests/support/features/radiant-eclipse/drivers/actions.ts",
+          "sha256": "d31d908e189597a2b5f2bd9ff338c1711e740fe1063fd4b48b8ca90219c1a621"
+        },
+        {
+          "path": "backend/tests/support/features/radiant-eclipse/oracles/literal-plans.ts",
+          "sha256": "74a1161255c79a6035625bc7d73954bc8cd2ed44eeb63857308a5cde1375a93a"
+        },
+        {
+          "path": "backend/tests/support/features/radiant-eclipse/drivers/manual-actions.ts",
+          "sha256": "15ecdd5e8fb4a2bd8b1a0a64b02cd39b45fd854cad166fcb7ce5a5ab9f7def5a"
+        },
+        {
+          "path": "backend/tests/support/features/radiant-eclipse/drivers/recording.ts",
+          "sha256": "62dedcac71c4b55df46eaa1451ebe61af68fe40043b481f2ee37541ca72546c0"
+        },
+        {
+          "path": "backend/tests/support/drivers/transport/control-owner.ts",
+          "sha256": "f86f33f7b8ba6705409f0e48b95d6f721fd054d068aeccb4aa7d0539808bc2c1"
+        },
+        {
+          "path": "backend/tests/support/oracles/transport/outcomes.ts",
+          "sha256": "bffd595b8c2c5f9a75df6fe15422ff5251dd143af0758d6abefeea088f09f482"
+        },
+        {
+          "path": "backend/tests/support/oracles/transport/control-owner.ts",
+          "sha256": "f8dbea8ec777a8aefa2a9a439a3f5951a7d68282b7fce5fe3446b72a00752f11"
+        }
+      ],
+      "counts": {
+        "owners": 79,
+        "originalDeclarationRows": 159,
+        "uniqueOrigins": 159,
+        "originalVariableInitializers": 40,
+        "supportModules": 97,
+        "edges": 176
+      },
+      "verified": {
+        "all79FrozenSHA": true,
+        "159OriginalDeclarationOriginsUnique": true,
+        "40OriginalInitializerBodiesSame": true,
+        "actual97SupportGraph176EdgesNoCycle": true,
+        "sixActualAssetNamedBindings": true
+      },
+      "findings": [],
+      "smallHeaderCorrections": [
+        {
+          "path": "backend/tests/support/drivers/transport/control-owner.ts",
+          "actual": "Endpoint/token/timeout inputs; bounded HTTP size/status/error classification; timer/destroy/await-close driver lifetime rather than action plans."
+        },
+        {
+          "path": "backend/tests/support/features/mist-raven/builders/board.ts",
+          "actual": "Explicit public configs.example readFile/JSON/board parser, no cycle execution."
+        },
+        {
+          "path": "backend/tests/support/features/radiant-eclipse/builders/runtime-game.ts",
+          "actual": "Explicit public configs.example IO and bootstrap/pipeline input construction, no cycle execution."
+        },
+        {
+          "path": "backend/tests/support/features/radiant-eclipse/builders/transport-plan.ts",
+          "actual": "Public board file and literal plan input; fresh head observed already accurate during review."
+        }
+      ],
+      "responsibilities": [
+        {
+          "owners": [
+            "drivers/transport/run-game.ts",
+            "drivers/transport/control-owner.ts"
+          ],
+          "actual": "Run-game owns localhost SDK server, ACP spawning inputs, trace/read/replay paths and cancellation finalizer. Control owns request/timer/body parsing and finally destroy+await close; pure classifications only move to oracle."
+        },
+        {
+          "owners": [
+            "oracles/transport/outcomes.ts",
+            "oracles/transport/control-owner.ts",
+            "oracles/transport/observations.ts"
+          ],
+          "actual": "Ten old assertion/classification blocks retain observed/literal input reads. No World/game settlement execution; existing fact readers and audience helpers remain field visibility checks, not independent rule verifiers."
+        },
+        {
+          "owners": [
+            "features/mist-raven/drivers/prefix.ts",
+            "features/mist-raven/drivers/recording.ts"
+          ],
+          "actual": "Two distinct original cache Maps each exactly one canonical source owner; Promises remain allocated inside original calls; cached calls share same module binding across rebased consumers."
+        },
+        {
+          "owners": [
+            "features/demon-hunter/builders/candidate-world.ts",
+            "features/demon-hunter/drivers/actions.ts",
+            "features/demon-hunter/contracts.ts"
+          ],
+          "actual": "Original bare bootstrap initialization dependency remains explicitly imported. Candidate-world constructs native test World/catalog/guards and PhaseManager but does not advance cycle; action selector remains literal request driver."
+        },
+        {
+          "owners": [
+            "features/animal-dream/builders/runtime-game.ts",
+            "features/fragrant-pair-seer/builders/runtime-game.ts",
+            "features/radiant-eclipse/builders/runtime-game.ts"
+          ],
+          "actual": "Bootstrap and fixture construction are input setup, not cycle execution. Family recording drivers own real progression and recording; handwritten plans remain canonical single module allocations."
+        }
+      ],
+      "lineageNote": {
+        "actualFrozenSnapshot": "/tmp/awa-c13-final-stage-files.json",
+        "currentOwnership": "Four opaque type adapters plus active facade-only routes are separately owned; Root latest actual counts11 drifts=4opaque+7facade, not old4. No claim that live consumer SHA equals frozen rawbody."
+      },
+      "limits": [
+        "Compiler receipt is author actual terminal evidence, not independently rerun here. Root live combined compiler receipt separately covers live integration.",
+        "Internal 97/176 acyclic graph and original side-effect dependency retention do not claim arbitrary external initialization order equivalence.",
+        "Extracted oracle functions add normal stack frames; no new runtime authority, cache or production expected winner computation introduced."
+      ],
+      "deltaChecks": {
+        "79owners": true,
+        "all79SHA": true,
+        "oldBuilderAbsent": true,
+        "redMoonWholeOriginalDeclarationSame": true,
+        "driverHeadRealExecution": true,
+        "consumerHeadersTruthful": true,
+        "backend/tests/scenarios/boards/red-moon/transport-game.test.ts actualDriverImport": true,
+        "backend/tests/scenarios/failures/red-moon/deferred-night-response.test.ts actualDriverImport": true
+      },
+      "remainingBlockers": [],
+      "sourceAuthorities": "Original driver/World/recording behavior remains unchanged; no new gameplay oracle was introduced.",
+      "receiptAttribution": "Author historical43571 fixed compiler receipt remains historical; final delta audit is readonly static evidence, not new compiler/runtime pass."
+    },
+    "fixtureSourceBinding": {
+      "bindings": [
+        {
+          "asset": "backend/tests/fixtures/acp/audit-agent.ts",
+          "originPath": "backend/tests/support/fixture_values.ts",
+          "currentPath": "backend/tests/support/oracles/fixture-values.ts",
+          "originCommit": "049a0a33a764a3ba285c2da9d30947acf58048e1",
+          "name": "fixtureObject",
+          "declarationSha256": "ce9e4cbbfa11981b3c920b5897331d7e387c4f66f36ed20b2106365eaeb785d1",
+          "completeNamedExportSyntaxSame": true,
+          "matchesManifest": true
+        },
+        {
+          "asset": "backend/tests/fixtures/acp/game-agent.ts",
+          "originPath": "backend/tests/support/transport_prompt_oracle.ts",
+          "currentPath": "backend/tests/support/oracles/transport/observations.ts",
+          "originCommit": "049a0a33a764a3ba285c2da9d30947acf58048e1",
+          "name": "assertTransportPrompt",
+          "declarationSha256": "9326ffc172a8b9a28b254852d2154eca9314307a4b7c97220c546bf88b117c64",
+          "completeNamedExportSyntaxSame": true,
+          "matchesManifest": true
+        },
+        {
+          "asset": "backend/tests/fixtures/acp/game-agent.ts",
+          "originPath": "backend/tests/support/transport_prompt_oracle.ts",
+          "currentPath": "backend/tests/support/oracles/transport/observations.ts",
+          "originCommit": "049a0a33a764a3ba285c2da9d30947acf58048e1",
+          "name": "assertTransportEvents",
+          "declarationSha256": "e4fbc0b3f09212a5bea9dac13b2b5effbd6367b6d6b68db37b3a67d24e6eff14",
+          "completeNamedExportSyntaxSame": true,
+          "matchesManifest": true
+        },
+        {
+          "asset": "backend/tests/fixtures/acp/game-agent.ts",
+          "originPath": "backend/tests/support/transport_prompt_oracle.ts",
+          "currentPath": "backend/tests/support/oracles/transport/observations.ts",
+          "originCommit": "049a0a33a764a3ba285c2da9d30947acf58048e1",
+          "name": "assertTransportIdentity",
+          "declarationSha256": "37d37450943deda4f87137fb966e037b72d7b0155cf6faf4f7ff4a2f56dae3a2",
+          "completeNamedExportSyntaxSame": true,
+          "matchesManifest": true
+        },
+        {
+          "asset": "backend/tests/fixtures/acp/game-agent.ts",
+          "originPath": "backend/tests/support/foundation_transport_plan.ts",
+          "currentPath": "backend/tests/support/transport/contracts.ts",
+          "originCommit": "049a0a33a764a3ba285c2da9d30947acf58048e1",
+          "name": "ActorTransportPlan",
+          "declarationSha256": "bb3d3bb946b416574d9583587c92156014d138a057edc59e55eca123678499fc",
+          "completeNamedExportSyntaxSame": true,
+          "matchesManifest": true
+        },
+        {
+          "asset": "backend/tests/fixtures/acp/game-agent.ts",
+          "originPath": "backend/tests/support/fixture_values.ts",
+          "currentPath": "backend/tests/support/oracles/fixture-values.ts",
+          "originCommit": "049a0a33a764a3ba285c2da9d30947acf58048e1",
+          "name": "fixtureObject",
+          "declarationSha256": "ce9e4cbbfa11981b3c920b5897331d7e387c4f66f36ed20b2106365eaeb785d1",
+          "completeNamedExportSyntaxSame": true,
+          "matchesManifest": true
+        }
+      ],
+      "assets": [
+        {
+          "path": "backend/tests/fixtures/acp/audit-agent.ts",
+          "sha256": "d7205d1801e9bc6114bcdb29e4c445910e17ab2ee0228c49d90ccb68b5f2f491",
+          "bytes": 3996,
+          "matchesManifest": true,
+          "programSha256": "ef7e3837948bf180ceeb1269b03b635e08c2c523ce11be085bd03e4b85a565b0",
+          "moduleBindingsSha256": "5d7a02f2c3bfbf27cc3c4b4897f1ac914bd0522662e7c1658933efd47408a0f1"
+        },
+        {
+          "path": "backend/tests/fixtures/acp/game-agent.ts",
+          "sha256": "d1f513adbc6e404b0621b865aa6a2652c471077d8d1da8c4a9f6f91a6f9e8ed8",
+          "bytes": 9067,
+          "matchesManifest": true,
+          "programSha256": "1bdee4de853e33700098b5a2740968c1419ac060e23bca1bd44496dc2480cc6e",
+          "moduleBindingsSha256": "a2d4fa1bb4643055dd799772193df22ac386237b59dd3cb777fda85c9901eb10"
+        }
+      ],
+      "originalRed": "/tmp/awa-c13-relocation-review-probe-first.json",
+      "sameInputFixed": "/tmp/awa-c13-relocation-review-probe-fixed.json",
+      "sourceChecks": [
+        "Strict nested keys; no scalar coercion in relocation fields",
+        "Both module paths require backend/tests/support realm and exclude private segments/traversal",
+        "Named binding set must exactly match per-asset recorded import; local alias/type kind stay in original source program hash",
+        "Complete original/current declaration syntax and named Export without Default required",
+        "Original 27a source whole-program/import digests remain unchanged; only two current code-asset SHA/bytes and narrow moduleRelocations added"
+      ],
+      "failures": [],
+      "limits": "Only actual four module routes/six binding observations across two executable assets; no archive JSON IO or generation. Declaration syntax equivalence alone does not establish all transitive helper startup behavior. C13 separate ownership/import proofs cover the full support candidate."
+    }
+  },
+  "finalDeltas": [
+    {
+      "originalCompiledPath": "backend/tests/support/features/radiant-eclipse/builders/transport-plan.ts",
+      "currentStagePath": "backend/tests/support/features/radiant-eclipse/builders/transport-plan.ts",
+      "compiledSha256": "a620d85ca63c73d544d0361b3bdecb4a54b228c48d75ab6f95a8b2472f4adcdc",
+      "currentStageSha256": "c88666bd525f2739d9ac0249241caa5f4aed9b0307cf7f221a853b6a3b9bf3d7",
+      "differences": "leading comment and/or exact Red Moon module specifier"
+    },
+    {
+      "originalCompiledPath": "backend/tests/support/features/red-moon-apostle/builders/transport-plan.ts",
+      "currentStagePath": "backend/tests/support/features/red-moon-apostle/drivers/transport-plan.ts",
+      "compiledSha256": "2d59e7855375e796c292a0cc5bf364d855f027f5f4837decddfd6c1ea6f9d1cb",
+      "currentStageSha256": "2db94b1abe12bd252c5f21a6198446424c1ffb2fe880d52893e9cfa77e3479d9",
+      "differences": "registered owner location and leading comment"
+    },
+    {
+      "originalCompiledPath": "backend/tests/support/features/mist-raven/builders/board.ts",
+      "currentStagePath": "backend/tests/support/features/mist-raven/builders/board.ts",
+      "compiledSha256": "115c3f47df9828adc6d30070028fbd592ae08a3aaec43de8f99d301819f62146",
+      "currentStageSha256": "94c3e3ceeb0392062b8cb1bbc74b75bcf587dddfb93a63c5d1c69b21902eec40",
+      "differences": "leading comment and/or exact Red Moon module specifier"
+    },
+    {
+      "originalCompiledPath": "backend/tests/support/features/radiant-eclipse/builders/runtime-game.ts",
+      "currentStagePath": "backend/tests/support/features/radiant-eclipse/builders/runtime-game.ts",
+      "compiledSha256": "1ec95d3128e9233bc9f0fc86ac2afaab94d24ea9248e336702f58dfbf107d0b9",
+      "currentStageSha256": "a9c2657cb97ea7fdfe5a7d213da21c004673920fbf5c3dd5fde794242ac44ad0",
+      "differences": "leading comment and/or exact Red Moon module specifier"
+    },
+    {
+      "originalCompiledPath": "backend/tests/support/drivers/transport/control-owner.ts",
+      "currentStagePath": "backend/tests/support/drivers/transport/control-owner.ts",
+      "compiledSha256": "a814d50f2c9cafe019d8fe652f07e2c045d790069964109774763c7986e174e6",
+      "currentStageSha256": "f86f33f7b8ba6705409f0e48b95d6f721fd054d068aeccb4aa7d0539808bc2c1",
+      "differences": "leading comment and/or exact Red Moon module specifier"
+    },
+    {
+      "originalCompiledPath": "backend/tests/scenarios/failures/red-moon/deferred-night-response.test.ts",
+      "currentStagePath": "backend/tests/scenarios/failures/red-moon/deferred-night-response.test.ts",
+      "compiledSha256": "5bb5f54955746b27a979719c368fa6bb4bda30b086bfffb691c3b988eb8c0b15",
+      "currentStageSha256": "ce2f70c99c8883cb4b38cf164e5e0af610f180dcf3f17a6e5b625c7040b6675b",
+      "differences": "leading comment and/or exact Red Moon module specifier"
+    },
+    {
+      "originalCompiledPath": "backend/tests/scenarios/boards/red-moon/transport-game.test.ts",
+      "currentStagePath": "backend/tests/scenarios/boards/red-moon/transport-game.test.ts",
+      "compiledSha256": "f13d491cb7bd20a5f17ab72e46d3fb75603c8fd1f0e99a80b1281deb8843d753",
+      "currentStageSha256": "a6001628c20dbfd24d079f7243c6132cbce9556aaf4bef04120d093f08e2cf11",
+      "differences": "leading comment and/or exact Red Moon module specifier"
+    }
+  ],
+  "workingLineage": "/tmp/awa-c13-final-working-lineage.json",
+  "snapshotFiles": [
+    {
+      "path": "backend/tests/support/features/animal-dream/builders/transport-plan.ts",
+      "sha256": "30f400b3940a7ba3ff6dccca053a2561e9d2423fbd8eb75874f87f74a7039513",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/animal-dream/builders/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/awakened-hidden-wolf/builders/scenario.ts",
+      "sha256": "743786df14a4886ada9034c4542fd6fe0cc32b8dd62463f27a5f0e2f48e70c13",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/awakened-hidden-wolf/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/bear/builders/scenario.ts",
+      "sha256": "47ecbf7933670cad0378a5bfee5c8b1e74caf2ee1dbb3abe710a30a21537d840",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/bear/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/black-market-merchant/builders/scenario.ts",
+      "sha256": "a75dc86f380a29bd0d1c9d0d59f73a346aac0e2bbace136464d864f6a2b81d86",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/black-market-merchant/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/cupid/builders/scenario.ts",
+      "sha256": "19adfb3b354e04cd6c2f0e29e8e47fc4b7343912afa1a269d93b59a89e3af757",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/cupid/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/cursed-fox/builders/scenario.ts",
+      "sha256": "eb1406c7b349aceb20106970c678d4fb9b5d12521702c0bac7165ece471a2635",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/cursed-fox/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/debater/builders/scenario.ts",
+      "sha256": "74f24b4ddc8afb9604025c94aa32b38a19abfbfa602117388f1fa04021f1ec7e",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/debater/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/demon-hunter/builders/transport-plan.ts",
+      "sha256": "bf44c9bcd1a467a53c6cac7e334e0747ffab80c428c2f24a2b032c792638a27b",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/demon-hunter/builders/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/dreamer/builders/scenario.ts",
+      "sha256": "99c03f5771c38117b0b8557e18071fac1c5e62ee541ca37872a9c7f62b2cf690",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/dreamer/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/evil-knight/builders/transport-plan.ts",
+      "sha256": "2da585e2dbf23272d013917aba79724fef336a098964fcb6be002fb837c88b60",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/evil-knight/builders/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/builders/transport-plan.ts",
+      "sha256": "ec6e5bdc0c9bef06545f724f7d000aa90690090a1cf8d23de6a4a33ccee2fa3f",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/fragrant-pair-seer/builders/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/gargoyle/builders/scenario.ts",
+      "sha256": "02c12fb066423af6f8e2320dbcfceed8281da69effd4c14ba001b859734984a1",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/gargoyle/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/ghost-bride/builders/scenario.ts",
+      "sha256": "9fc14861530a5261d13d382a15d4b19ac2fba0e8b612d06e8520a30d66a74c1d",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/ghost-bride/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/gravekeeper/builders/scenario.ts",
+      "sha256": "25d182fcc943565aaf179fd7ee2f10636cfae30a690b596c66b00c1844ac4f84",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/gravekeeper/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/hidden-wolf/builders/scenario.ts",
+      "sha256": "8724b8aedcb358e9fd9b8896fa8e78ae349d7c5b6ddb95120a4a3baf7225e0c9",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/hidden-wolf/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/hybrid/builders/scenario.ts",
+      "sha256": "0ec2524ce0e693b7bf489106f1297d6ba7dde14fc61ff4603a67a88fb60b5762",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/hybrid/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/lonely-girl/builders/scenario.ts",
+      "sha256": "6063e63ec7c553a81f903e45d71c54cc43b30a4325426e8cc2fb847115a140b9",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/lonely-girl/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/magician/builders/transport-plan.ts",
+      "sha256": "0111f32fb3074c3676c0931cc5c7bda7fb62ce2ef4363d714c083698033ee175",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/magician/builders/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/mechanical-wolf/builders/scenario.ts",
+      "sha256": "3585f45b2f218ce9f76a5766ed65bb73aa999b06ed7808e2967eb714afc2aaf7",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/mechanical-wolf/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/miracle-merchant/builders/scenario.ts",
+      "sha256": "9cd6497e0d8ea33e053ed1e00ebc39841f5be4f9fab4f2c2d5037b144a2c36ed",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/miracle-merchant/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/mirror-girl/builders/scenario.ts",
+      "sha256": "190d00a0cf2148a9bfe646526fb441bff6aa5a05fac58a31f75588a238e87621",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/mirror-girl/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/builders/transport-plan.ts",
+      "sha256": "70e9ee39fcb09eee72ccffaa4b404eec81cc80aa710c65754dfbd93f026ec9bd",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/mist-raven/builders/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/nightmare-shadow/builders/transport-plan.ts",
+      "sha256": "fe5b4d905e88468d2553fa257e4594151dce09f7ca5da2dae405af53db981b0c",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/nightmare-shadow/builders/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/builders/transport-plan.ts",
+      "sha256": "caf70929028fd19df91a191918d14c53f0aa69762411780c7f9e44ab881ae19c",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/noble-secret-body/builders/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/order-prince/builders/transport-plan.ts",
+      "sha256": "d4631ba927b9065918d576cb75f9dcbdfa5025339e5835efd1f7cec13cdc4800",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/order-prince/builders/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/psychic/builders/scenario.ts",
+      "sha256": "d7e370580f94d5b32f68e49d273345ed8c77579e16069738fc2e367948b4b022",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/psychic/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/pure-white-girl/builders/transport-plan.ts",
+      "sha256": "a0cbbf531d98762e46bb37b9d6d1f764c0bbf7f404d55505915f4f067ff6971e",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/pure-white-girl/builders/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/builders/transport-plan.ts",
+      "sha256": "c88666bd525f2739d9ac0249241caa5f4aed9b0307cf7f221a853b6a3b9bf3d7",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/radiant-eclipse/builders/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/red-moon-apostle/drivers/transport-plan.ts",
+      "sha256": "2db94b1abe12bd252c5f21a6198446424c1ffb2fe880d52893e9cfa77e3479d9",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/red-moon-apostle/drivers/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/scholar-mentor/builders/transport-plan.ts",
+      "sha256": "d5cb117b2884486b5134bf160e9fec2ee50fa39f1b4beb61403d66c40433c0d5",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/scholar-mentor/builders/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/shapeshifter/builders/scenario.ts",
+      "sha256": "b6594fe0eb03fb14bffc55fdadccb5f94ddd06e3916df4158dd8cce7e29c0796",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/shapeshifter/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/thief/builders/scenario.ts",
+      "sha256": "507434b6bf8d1d641c674e4838f01a2b19c6bd820163b22151cf089a83b31909",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/thief/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/time-wolf-consort/builders/transport-plan.ts",
+      "sha256": "87f12f7ffc08b0845668050bd8a7fe5efb38b497c13fc682462cf00547066390",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/time-wolf-consort/builders/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/trickster/builders/transport-plan.ts",
+      "sha256": "d2e3a1e344bd28479a12fb185f9b563b09667204ee152b8781d0c8ffce9c0dc8",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/trickster/builders/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/wall-notes/builders/scenario.ts",
+      "sha256": "e7113c5e3305b85792e8a8ec84975cac4b054079bd1611c5cce9b329fb565642",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/wall-notes/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/wild-child/builders/scenario.ts",
+      "sha256": "0bcec9cb233d4b57cd8f3d570c952256e7eaee35852e645973646aa1a0414f2a",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/wild-child/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/wolf-beauty/builders/scenario.ts",
+      "sha256": "d4687a8583dc1c18f562f7f8c7b5b67dc287a3cf8ba3c4608b1beb3502eacdd7",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/wolf-beauty/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/wolf-sorcerer/builders/transport-plan.ts",
+      "sha256": "27c6b792123ccaee5306ad10838bd7a7b2a1c7479724127ba8ad49cc73cc2816",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/wolf-sorcerer/builders/transport-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/transport/contracts.ts",
+      "sha256": "432d0f051448a775857eb92ddb403d1311dbce54a16bcbf6d5862542c0285294",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/transport/contracts.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/builders/transport/foundation-plan.ts",
+      "sha256": "aeffa9d5e2a74701a58ed54d608c8d86aa935c1c639d076cac6b882baca98844",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/builders/transport/foundation-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/drivers/transport/run-game.ts",
+      "sha256": "c61bc21aec8bc8b044930ea7b587b81955bc36294a0fce88616e142c6de0f2f9",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/drivers/transport/run-game.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/oracles/fixture-values.ts",
+      "sha256": "79a3fbd32e953337cb82a68acfa56a87ac683ffe17fb4b814b59a6b682b20358",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/oracles/fixture-values.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/builders/recording/result.ts",
+      "sha256": "4da5d1fc186efa63b5f01e3a351f8362dfba54bd68bedd4ac08e3f98c91bf13e",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/builders/recording/result.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/builders/transport/self-destruct-plan.ts",
+      "sha256": "b151c8dc33c7a7aff53038e3b920c397ad687ea11b58e5db787b5bc42c604984",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/builders/transport/self-destruct-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/oracles/transport/observations.ts",
+      "sha256": "883d6b036de5b9514eb0044c98f1e0ed946a143532e5a07387610d2ec791581b",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/oracles/transport/observations.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/builders/runtime-game.ts",
+      "sha256": "090b3aaa883bfc47fdf62d804d1e2f625878268cdad53f1d3741631aedcf5bb8",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/animal-dream/builders/runtime-game.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/contracts.ts",
+      "sha256": "54f0128f776b6d690be6e39e3f6e7a7a14b6306e75db590fea1f4d10f138f2a5",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/animal-dream/contracts.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/drivers/actions.ts",
+      "sha256": "f0da060ebaa1a569c09ba8ed7c8d1dd8d630b25a62558993fab70bc39c49a947",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/animal-dream/drivers/actions.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/oracles/golden.ts",
+      "sha256": "113ae6ab3e376b2e02c1fce0c447be6102cd18f57ed65ffe4d7c3ca83b89d821",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/animal-dream/oracles/golden.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/builders/runtime-game.ts",
+      "sha256": "a20eb01060e91a2a1b521998d7f85618dc5034f069d6feb07c65b360e1d29323",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/fragrant-pair-seer/builders/runtime-game.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/contracts.ts",
+      "sha256": "bcd5f7e58de472159756540ba1b89830d904e06d5bf4a6c40e7d8ef22746ba53",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/fragrant-pair-seer/contracts.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/drivers/actions.ts",
+      "sha256": "48e76679c582ddb52520821b49cb5b5a490cc8b36af25d42261d411f248ddc14",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/fragrant-pair-seer/drivers/actions.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+      "sha256": "8f35daa7231bb1a98bf82479dafa436e9e2c6dfbc161e04bb12eb75bd1bb62f6",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/demon-hunter/builders/candidate-world.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/demon-hunter/contracts.ts",
+      "sha256": "9535713e44d326a5e5a08a28b4ded4542bc807ae4279865b6a4ab8eea512bfcf",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/demon-hunter/contracts.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/demon-hunter/drivers/actions.ts",
+      "sha256": "2106c2297bf74d59533582d9c9132ba0e6e5d93231affb1faa9295524f46cdbd",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/demon-hunter/drivers/actions.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/knight/builders/scenario.ts",
+      "sha256": "b9d14a8476c04b346b87a825fab3fb9f17b2c8fbebbceea4a43ab339b1812d96",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/knight/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/knight/oracles/prompt-plan.ts",
+      "sha256": "e2075bf418e83fb5b08e5ce63525f0f7c58e14181233d0013dfa41703a5a42de",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/knight/oracles/prompt-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/white-wolf-king/builders/scenario.ts",
+      "sha256": "ed027c68c11c74e38a3557090a55d3f81d50515c6a8969cd7f3891732b684a78",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/white-wolf-king/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/white-wolf-king/oracles/prompt-plan.ts",
+      "sha256": "2633463a21e9b67b86168cc47ff8d1593b9e33c137cbee962a5822da1831efe8",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/white-wolf-king/oracles/prompt-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/wolf-king/builders/scenario.ts",
+      "sha256": "1f1a6641fe7020e7227193ad85ed521f8f18ac0d81cd7f21a30e9247239a575f",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/wolf-king/builders/scenario.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/wolf-king/oracles/prompt-plan.ts",
+      "sha256": "ac976a071dc335f0e4f8b3c6fb2d30057d80cc09fbf33c1cd8ddf85b7558755d",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/wolf-king/oracles/prompt-plan.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/drivers/recording.ts",
+      "sha256": "bd5b76dc4266a286035b39413c4223b4e978128f645925294fe2403a3dfeb97b",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/animal-dream/drivers/recording.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/builders/literal-plans.ts",
+      "sha256": "5dc0b919e84e3731890875a84427417a2758afd029fe179e615a8b27cf87c5f7",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/fragrant-pair-seer/builders/literal-plans.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/drivers/recording.ts",
+      "sha256": "415b4ceba02b3d96bc580a4ab893429934a4fff0752a031723812692a65c9df4",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/fragrant-pair-seer/drivers/recording.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/drivers/prefix.ts",
+      "sha256": "187e9e8c4f81a8f8c844b429d123abb118f755f78810773231c08747e4771764",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/mist-raven/drivers/prefix.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/builders/board.ts",
+      "sha256": "94c3e3ceeb0392062b8cb1bbc74b75bcf587dddfb93a63c5d1c69b21902eec40",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/mist-raven/builders/board.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/builders/literal-plans.ts",
+      "sha256": "85d7dc15f0299b18d39bd5f740b9242a8afd298612258923ecfaf49eb955ec09",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/mist-raven/builders/literal-plans.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/drivers/actions.ts",
+      "sha256": "179c234d82d1aadd33c9046c5522c5de368195a408e87c7515bd2923a2645c83",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/mist-raven/drivers/actions.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/drivers/recording.ts",
+      "sha256": "02f1cb27f7d33e80564a8941dc019aa450675d634e2173c259cc4e6102c642dc",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/mist-raven/drivers/recording.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/builders/literal-plans.ts",
+      "sha256": "d34bea11c7e687f72b5d63c4929846ca22cc6269c42dd489ef5a34249ddf82e8",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/noble-secret-body/builders/literal-plans.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/drivers/recording.ts",
+      "sha256": "664fb7f562d585c837c6ac7223f8a9ebdc94b9354ac773705f28044864670194",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/noble-secret-body/drivers/recording.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/builders/runtime-game.ts",
+      "sha256": "a9c2657cb97ea7fdfe5a7d213da21c004673920fbf5c3dd5fde794242ac44ad0",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/radiant-eclipse/builders/runtime-game.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/drivers/actions.ts",
+      "sha256": "d31d908e189597a2b5f2bd9ff338c1711e740fe1063fd4b48b8ca90219c1a621",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/radiant-eclipse/drivers/actions.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/oracles/literal-plans.ts",
+      "sha256": "74a1161255c79a6035625bc7d73954bc8cd2ed44eeb63857308a5cde1375a93a",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/radiant-eclipse/oracles/literal-plans.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/drivers/manual-actions.ts",
+      "sha256": "15ecdd5e8fb4a2bd8b1a0a64b02cd39b45fd854cad166fcb7ce5a5ab9f7def5a",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/radiant-eclipse/drivers/manual-actions.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/drivers/recording.ts",
+      "sha256": "62dedcac71c4b55df46eaa1451ebe61af68fe40043b481f2ee37541ca72546c0",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/features/radiant-eclipse/drivers/recording.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/drivers/transport/control-owner.ts",
+      "sha256": "f86f33f7b8ba6705409f0e48b95d6f721fd054d068aeccb4aa7d0539808bc2c1",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/drivers/transport/control-owner.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/oracles/transport/outcomes.ts",
+      "sha256": "bffd595b8c2c5f9a75df6fe15422ff5251dd143af0758d6abefeea088f09f482",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/oracles/transport/outcomes.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/oracles/transport/control-owner.ts",
+      "sha256": "f8dbea8ec777a8aefa2a9a439a3f5951a7d68282b7fce5fe3446b72a00752f11",
+      "snapshot": "/tmp/awa-c13-candidates/backend/tests/support/oracles/transport/control-owner.ts",
+      "kind": "new-support-owner"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/oracles/known-anchors.ts",
+      "sha256": "f00923d46c51517e1abd72edf0ad535cb8d5cce3a020e94a68fc222febcfcec4",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/support/features/noble-secret-body/oracles/known-anchors.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/oracles/transport-golden.ts",
+      "sha256": "31786265ee5376686ae1ad491348a4c25c4c2e2a2e46f4e05b7d4a1defe0b4d4",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/support/features/noble-secret-body/oracles/transport-golden.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/integration/agents/control-owner.test.ts",
+      "sha256": "7bb5a08a22f95e756267d6343aea995b393e35dd3cb7c92359e5a090a9c1671a",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/integration/agents/control-owner.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/integration/agents/animal-dream/late-submission-mcp.test.ts",
+      "sha256": "84c6fd636d0d6583e07b9271f6ed3a3ba49b8cc1b8bc7c07afa33a1fefacd191",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/integration/agents/animal-dream/late-submission-mcp.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/integration/agents/mist-raven/late-submission-mcp.test.ts",
+      "sha256": "43926b080bfe319af7e913a4830372369d39406ca8bbf3c216b575f056f761cb",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/integration/agents/mist-raven/late-submission-mcp.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/integration/agents/fragrant-pair-seer/wire-oracle-calibration.test.ts",
+      "sha256": "f17e1ef80ba51d78ef18c835efb2b65970eaea97193cf8214b91d56c06c039db",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/integration/agents/fragrant-pair-seer/wire-oracle-calibration.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/integration/agents/fragrant-pair-seer/late-submission-mcp.test.ts",
+      "sha256": "f1fb5fbf9b36c08e1f6545500af37badcc5abbecac8fd367f8f5bdbb977088d7",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/integration/agents/fragrant-pair-seer/late-submission-mcp.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/integration/agents/llm/synthetic-http-ownership.test.ts",
+      "sha256": "f5276a41a5c7c9a53beb55d08bbce7f4981e0783c6a06390f1cdd94a820760e5",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/integration/agents/llm/synthetic-http-ownership.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/gun-runtime.test.ts",
+      "sha256": "0ddf4ac6b8dea7ad776d6e3a9ff6a4b704941c25beb2c64a639fd1354483b380",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/integration/agents/granted-abilities/gun-runtime.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+      "sha256": "4cfec754e21e2470bd98af73bee19203b1a7adb6259939473a632da7c0236e29",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/integration/agents/granted-abilities/psychic-transport.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+      "sha256": "90d8dd45f84ed89799de76d7b9b3934043a68402370c51ff1eb28f1b4c16f9af",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/integration/agents/granted-abilities/role-inspection-transport.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+      "sha256": "cb49716a594773a8a13cd4608181038884e66cbd6e5e990a9c48a9a6d05eed61",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/integration/agents/granted-abilities/dream-transport.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/integration/agents/radiant-eclipse/late-submission-mcp.test.ts",
+      "sha256": "146b7693b9ecc4e661ad1313c88e3d76225d907de33d807b4ea98674f1cb57db",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/integration/agents/radiant-eclipse/late-submission-mcp.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/configuration/fragrant-witch-stock-reset.test.ts",
+      "sha256": "3578e7a9aa0f74f5f3c0528934f2249e981f7ca3ae506c965377a9f86c4a9e23",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/configuration/fragrant-witch-stock-reset.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/lonely-girl/required-setup.test.ts",
+      "sha256": "d2c26b41cda9c8b4bfd663bdf5189397a26eddfdb58afbdb48423d2504234b4d",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/lonely-girl/required-setup.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/demon-hunter/committed-fault-boundaries.test.ts",
+      "sha256": "e47b03867484157158904959757d455ba873b92b43e25ea41fc7a042cc07e24d",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/demon-hunter/committed-fault-boundaries.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/ghost-bride/required-setup.test.ts",
+      "sha256": "3090df518cb46466a3b8ac6b2a91a4f689f64ca4a9a6af8df3bde7345dfe9daf",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/ghost-bride/required-setup.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/scholar-mentor/required-turn-prefix.test.ts",
+      "sha256": "5fad4a09ff575ba5186c00d71f734d7ec26aae4fe238e3d81093c5ad9b4d29c4",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/scholar-mentor/required-turn-prefix.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/animal-dream/paid-effect-record-failure.test.ts",
+      "sha256": "34a668bc3080c96f678112dcbc999a9d9d1b9d5a90003bfe1454d716d8f27b92",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/animal-dream/paid-effect-record-failure.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/animal-dream/cat-death-record-failure.test.ts",
+      "sha256": "fd10f5f95a83965423744e9b249c61b36ea6cc4a81a2d6fc2892a5c523b2fb78",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/animal-dream/cat-death-record-failure.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/mist-raven/required-response-prefix.test.ts",
+      "sha256": "9c64f3899e87f46f849f698b00be1c20ed644bb9796d447851e9801dcc609fd9",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/mist-raven/required-response-prefix.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/noble-secret-body/death-contract-publication.test.ts",
+      "sha256": "b9d3a3dcf17c0a5b72a634a5e089872e628f37b8382037ade6885ae2cb70770b",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/noble-secret-body/death-contract-publication.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/noble-secret-body/hunt-clear-publication.test.ts",
+      "sha256": "08bb05ac11cd8d4de1a294d8e1e941608fb123ae4e35e58ae601aaff9b310dd7",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/noble-secret-body/hunt-clear-publication.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/order-prince/late-committed-prefix.test.ts",
+      "sha256": "9e6caa4cc4daae844497c57833bb8a78e67c57b83a6c28f77dc1cc4da612338a",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/order-prince/late-committed-prefix.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/magician/required-swap-response.test.ts",
+      "sha256": "f575652fbf72b8da51f43cac4924c3e3ef4cd0812ab2469cc56506445976b821",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/magician/required-swap-response.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/magician/late-committed-prefix.test.ts",
+      "sha256": "bbadb1a5915bdb3e6434b213cb680179ca359f20b5c38badfd238bd3383057f3",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/magician/late-committed-prefix.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/wolf-sorcerer/required-and-late-prefix.test.ts",
+      "sha256": "bc121427ff58c65ddf929cb0f5950a2275c07eb0ceba75e7afa392e52d844f56",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/wolf-sorcerer/required-and-late-prefix.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/fragrant-pair-seer/death-wave-publication.test.ts",
+      "sha256": "b0148b06fbdc932948c3860146bee7e0ea0c1861eefc566d0fdcc4fff1a89306",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/fragrant-pair-seer/death-wave-publication.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/fragrant-pair-seer/checkpoint-state.test.ts",
+      "sha256": "9426a98b4f71d86aed48c78af0110fee87d01e2f34ff85eaea67afd3aadb6f7a",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/fragrant-pair-seer/checkpoint-state.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/nightmare/required-fear-response.test.ts",
+      "sha256": "ab8dc2b7eea10b58ccfd909cb583f134fc782a8755d83f1f231c4f8716598b6a",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/nightmare/required-fear-response.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/time-consort/required-response-prefix.test.ts",
+      "sha256": "d05a49ac50be12994f2749b2b01d83638120a281f3fc051f39616a9154cd2a56",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/time-consort/required-response-prefix.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/trickster/required-and-late-prefix.test.ts",
+      "sha256": "b3d354fa023102e2c7e938445047369bfa7aa8ae18e44b8d92f40c1528fbc02c",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/trickster/required-and-late-prefix.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/red-moon/deferred-night-response.test.ts",
+      "sha256": "ce2f70c99c8883cb4b38cf164e5e0af610f180dcf3f17a6e5b625c7040b6675b",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/red-moon/deferred-night-response.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/pure-white/required-inspection-response.test.ts",
+      "sha256": "9491158c5b2e2153e0a36bcda7127a1951310c0dbabb3df569b4094bdb252fdb",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/pure-white/required-inspection-response.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/evil-knight/required-response-prefix.test.ts",
+      "sha256": "145d67c4c3f364ae067b1d38df0a4b81acd661cbe73acca3f7b10e8e030f8ce3",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/evil-knight/required-response-prefix.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/incremental-cleanup-checkpoint.test.ts",
+      "sha256": "16f7c84fbf22b87ebac83bb5fce7cc54203e41868a4223a3f58e2287bc66b2e8",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/radiant-eclipse/incremental-cleanup-checkpoint.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/paid-potion-archive.test.ts",
+      "sha256": "112a00bc30cf40505cbae9a797fd177b3021d91b9ade5c026d141895f9760f84",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/radiant-eclipse/paid-potion-archive.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/strict-action-prefix-and-interruption.test.ts",
+      "sha256": "0b04249f3b660e6eb871914700ae13da20a7e08cf48df34692967e96d729b4a2",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/radiant-eclipse/strict-action-prefix-and-interruption.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/lease-finalization.test.ts",
+      "sha256": "82fc23e0f42d092a109e3c8bcc8731269c0672a884cde08fd6724f67ee70d9a1",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/radiant-eclipse/lease-finalization.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/illegal-domain-arguments.test.ts",
+      "sha256": "8f14d7f408414d3db8ee7bfd0c70c895ee33632d8bc683a0d0e829b57e19af9a",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/radiant-eclipse/illegal-domain-arguments.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts",
+      "sha256": "e47f3018bf74ba09438bd7b911c5c5633c701debb07c664f916fbc580f19f273",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/demon-hunter/native-night-receipts.test.ts",
+      "sha256": "bdb3a735ac0e36e8a367c6b772957e54a3592fd3aa83eb8393cd10f3c3049828",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/interactions/demon-hunter/native-night-receipts.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/scholar-mentor/spent-heal-visibility.test.ts",
+      "sha256": "22b3017e967da98c06cc39d031658e54cb24ab4515b46e1850deb8137943260b",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/interactions/scholar-mentor/spent-heal-visibility.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/mist-raven/parallel-response-recording.test.ts",
+      "sha256": "8b8fef9543ee2523ace1e8d71e8b5efe76adfccce683d1a570573e466136e5ec",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/interactions/mist-raven/parallel-response-recording.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/mist-raven/complete-mechanism-interactions.test.ts",
+      "sha256": "704218bce2a9dc93f4950cd8ee6396096093339f14ad499897f2d62a0ee6e152",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/interactions/mist-raven/complete-mechanism-interactions.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/mist-raven/chain-final-victory.test.ts",
+      "sha256": "56b748394edd0f6214cf03e7d7066501241bbe11027e1a01efbf7f2eb1e858a0",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/interactions/mist-raven/chain-final-victory.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/mist-raven/self-destruct-chain-recording.test.ts",
+      "sha256": "6cd03bc2b9174e97e46e6c01ca69fdd60da00a8eda30678006ea744407b449d6",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/interactions/mist-raven/self-destruct-chain-recording.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/noble-secret-body/contract-and-reveal-cycles.test.ts",
+      "sha256": "9e72d98d237dfb9cd8297da6c13caacb0b1c69470a57531abc9de2d5578f69e6",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/interactions/noble-secret-body/contract-and-reveal-cycles.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/noble-secret-body/night-handoff-prefix.test.ts",
+      "sha256": "cce62bb7eceee2011021395668fc6c7e0a14f08abb1cd50676ad22861a64ba4f",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/interactions/noble-secret-body/night-handoff-prefix.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/noble-secret-body/cross-mechanism-rule-cycles.test.ts",
+      "sha256": "771e36125a648cc5f8c98b1d775b9030d4df0745a992d945a7402e0867d21e1d",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/interactions/noble-secret-body/cross-mechanism-rule-cycles.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/red-moon/deferred-terminal-night.test.ts",
+      "sha256": "449e384500baa86266715fd7f1dcf17ce025007a915be2d26f927b5aad36b8db",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/interactions/red-moon/deferred-terminal-night.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/radiant-eclipse/pending-recording-flush.test.ts",
+      "sha256": "d71e8c4ea1cfb3b5e33441e84ddbc4313fcfff1ebe77090ef1255f46429ee077",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/interactions/radiant-eclipse/pending-recording-flush.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/radiant-eclipse/sheriff-pk-summary.test.ts",
+      "sha256": "ded0d1039bc0e974a068c29b4bd75964b8d2639c202cc4abdb05c87efa30819d",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/interactions/radiant-eclipse/sheriff-pk-summary.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/radiant-eclipse/ordinary-rule-branches.test.ts",
+      "sha256": "663cde9b754c6e70db7e8ff9e07ac861a6c8303a25a0634fee5dd4f69d27947d",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/interactions/radiant-eclipse/ordinary-rule-branches.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/radiant-eclipse/phase-manager-reentry.test.ts",
+      "sha256": "4ef287041e73f15be9beb32d9e35cb208d2d411cc41c25b8016bf92147605c87",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/interactions/radiant-eclipse/phase-manager-reentry.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/demon-hunter/seeded-world.test.ts",
+      "sha256": "907b7b734ffaf6b1732036a6424d88fdcb68330aa4bf5bd3e4a0a81d2bbac72f",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/simulation/demon-hunter/seeded-world.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/events/wall-notes/first-voting-and-terminal-cycles.test.ts",
+      "sha256": "bee9cdf4eb715d3cd62c9e1a17bb0da7ab8a44d478a71f00106438257de68757",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/events/wall-notes/first-voting-and-terminal-cycles.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/runtime/strict-failure-replay.test.ts",
+      "sha256": "19c60e321975c2e12fc6f6e7ecdd13c568c4cca763d88090787057d8cb22a3d1",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/runtime/strict-failure-replay.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/lonely-girl/recorded-games.test.ts",
+      "sha256": "2005e8f6303211665cfcb1e32d5c4eb6c4c0d2027b81918cad42b47614b6754c",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/lonely-girl/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/wolf-beauty/recorded-games.test.ts",
+      "sha256": "ba1680b6957573257fc3fd49cc080166170453bd47b5850f08d1d6acef825e7a",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/wolf-beauty/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/dreamer/recorded-games.test.ts",
+      "sha256": "74316d1770cf31af11992622065ff1673bb3dbc6e8c18f2374ab00313305e4a8",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/dreamer/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/demon-hunter/recorded-games.test.ts",
+      "sha256": "be4693c15fb2d043720ec7b7399b9721373e3d3c2b7743addc979a11aa66cc36",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/demon-hunter/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/demon-hunter/native-stock-and-failed-checkpoints.test.ts",
+      "sha256": "3f77014cb873a883ed488c825a5fdca25cbb47cf9b19bbe8215eb40bc5c570b4",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/demon-hunter/native-stock-and-failed-checkpoints.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/ghost-bride/recorded-games.test.ts",
+      "sha256": "d0476f2e032f298c053e3157e4ce3e1c9e0a04bd03e60effc68afa54c3bff492",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/ghost-bride/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/debater/recorded-games.test.ts",
+      "sha256": "52f3778506e5265648eec251372b93120c92ab03cd0ce3ac935b0f6a0a800fb0",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/debater/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/gravekeeper/recorded-games.test.ts",
+      "sha256": "d12098ebae075c1b52c49a01ca02de30b2be9d61acd9c947c9bd6abfe0b2508f",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/gravekeeper/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/hybrid/recorded-games.test.ts",
+      "sha256": "795fc9e61bc5f15bcbd0256cfd4196edab75bb64ceb6386487fe8ab9d0f772a8",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/hybrid/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/white-wolf-king/recorded-games.test.ts",
+      "sha256": "17d4d8922b0778cd3dfb972aa10c07dec2d1df0d53f9ccbbef06aaab967d0a05",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/white-wolf-king/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/animal-dream/ballot-knowledge-forgery.test.ts",
+      "sha256": "127721d834ade3a00c7a36c3e636df9eb4544b7096aa7d78d57aee018d98f41b",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/animal-dream/ballot-knowledge-forgery.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/animal-dream/checkpoint-feed-forgery.test.ts",
+      "sha256": "19747b5ea15d0aea46798b7803997f02316af2f99b551e980401290b6d49767a",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/animal-dream/checkpoint-feed-forgery.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/animal-dream/recorded-outcomes.test.ts",
+      "sha256": "4efb829b3629c4caf89f6d25330975fec2ab3c86a3f8d347b18c6d09001d4e6d",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/animal-dream/recorded-outcomes.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/animal-dream/raw-source-forgery.test.ts",
+      "sha256": "173f5fe1b6d300da8139506542c97794500be39e938fbdec10f38b93ce826b2e",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/animal-dream/raw-source-forgery.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mist-raven/frontend-fixture-publication.test.ts",
+      "sha256": "c5641793c8964f4a1e0075be4a9d5ccd5de15061a32c63ae596f5f4d7e21f6c1",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/mist-raven/frontend-fixture-publication.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mist-raven/incremental-settlement-forgery.test.ts",
+      "sha256": "ea66cae2f51f3b5a3ebdd2a7b3ce4b006cf0eb325e52efb682cfd2aeb9592367",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/mist-raven/incremental-settlement-forgery.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mist-raven/knowledge-feed-forgery.test.ts",
+      "sha256": "2a522e0e4b3fa158234dade9398006ef4dffa58c09f550deb324313258fc9587",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/mist-raven/knowledge-feed-forgery.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mist-raven/unpublished-feed-compatibility.test.ts",
+      "sha256": "04356c25382af854d9950efc03d2c312af1eb1acd9b2e0a033acfe78d7f2eaa7",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/mist-raven/unpublished-feed-compatibility.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/cursed-fox/recorded-games.test.ts",
+      "sha256": "1a27fdecdc8548f974f611e6ef56169de00bb2023216a1d59fca8d2124185cb1",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/cursed-fox/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/black-market-merchant/recorded-games.test.ts",
+      "sha256": "ad072251414ffa432cebee1a38c806dd60916d1d6f2bdaac8eebb736bd0e7617",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/black-market-merchant/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/noble-secret-body/pending-autosave.test.ts",
+      "sha256": "3bd26497610a6d6ff8f27786c07ff7b0b03d1657ad944ef23d9084f8f5e9ab43",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/noble-secret-body/pending-autosave.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/noble-secret-body/restart-cursor-forgery.test.ts",
+      "sha256": "db7ecf0c5f9efe4ad53f15c536aa1fa84ce0af3deb744f8522a3806679f4133c",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/noble-secret-body/restart-cursor-forgery.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/noble-secret-body/self-destruct-checkpoint.test.ts",
+      "sha256": "5aea4c03d40ee53b83339b9bd3cf820390f76a1a304796ab553c789c61d92979",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/noble-secret-body/self-destruct-checkpoint.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/noble-secret-body/recorded-evidence-forgery.test.ts",
+      "sha256": "858f9bac2bedb2383ee26910bc424d980208c938f2f700a655b0d03d17f17872",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/noble-secret-body/recorded-evidence-forgery.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/noble-secret-body/terminal-request-forgery.test.ts",
+      "sha256": "30fc3561721a2a128a43e73b815fe9df0f0f12f4db1f103d760934e1e376871b",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/noble-secret-body/terminal-request-forgery.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/wolf-king/recorded-games.test.ts",
+      "sha256": "2da8e56692a58b469daac134fc66a9fc1f208f5c27b7548c4cbdaa353044937e",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/wolf-king/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/wild-child/recorded-games.test.ts",
+      "sha256": "219ad5303a5f77fb7a4e965d2c9f298cf1230c503c6f1296c278a6b04ae16e3c",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/wild-child/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/gargoyle/recorded-games.test.ts",
+      "sha256": "81f39da42a73191ed7fd1442e95bc63b14ec08e8a1d7706c3d3a9e20114e5ad2",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/gargoyle/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/hidden-wolf/recorded-games.test.ts",
+      "sha256": "1c01dea8c9799ddf8037010a87f633ec292011baf9f75aa487163979354b0306",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/hidden-wolf/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mechanical-wolf/recorded-games.test.ts",
+      "sha256": "4800284a062e7a9e6828ac9af70bb623b232839b8667aa6efcd6bf48ca7bfe9d",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/mechanical-wolf/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mirror-girl/recorded-games.test.ts",
+      "sha256": "b36a2f800aeb964ec8b042eb79b15980e959918634921fe0868999f6b5953cf0",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/mirror-girl/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/thief/recorded-games.test.ts",
+      "sha256": "cf993e122b4668b4fd5b70a3feff61d94e948191435bbd0c028e0bea0d3016eb",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/thief/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/thief/setup-reentry-and-failure-replay.test.ts",
+      "sha256": "1c14a8d391bc92c51168004b357256850b2c3e142287f3bf93f1faec30ac847c",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/thief/setup-reentry-and-failure-replay.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/fragrant-pair-seer/recorded-evidence-forgery.test.ts",
+      "sha256": "6008662dcc79a34a1b6169b7306b2cf9420aabe40486d426096350dd04c8c32d",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/fragrant-pair-seer/recorded-evidence-forgery.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/runtime/bilingual-runner-games.test.ts",
+      "sha256": "ac29bcd61e17c54d00b5fd82eab71db402dfa34bceafb5c5bdc3ff714eaf2c8a",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/runtime/bilingual-runner-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/knight/recorded-games.test.ts",
+      "sha256": "791089782da5aaa79f80740789444433759d05452e83cece88503d6756c20b07",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/knight/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/awakened-hidden-wolf/recorded-games.test.ts",
+      "sha256": "af7a024a7ccbbb1eb46228595185a4978a24c364791d430eadbe1f501e1f3153",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/awakened-hidden-wolf/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/shapeshifter/recorded-games.test.ts",
+      "sha256": "f3584ebab8cb728741db7c37269f3aba2eab76e24107235de5ce624ef0702263",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/shapeshifter/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/shapeshifter/setup-reentry-and-failure-replay.test.ts",
+      "sha256": "5c87fe342abdaf6d3cb1c648301e27c07b112b857ad932285e7c753ce7dd2916",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/shapeshifter/setup-reentry-and-failure-replay.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/miracle-merchant/recorded-games.test.ts",
+      "sha256": "c4fb5589538bd8ad6edb1cfd8e7909512304a6d5c6ab09bcd605ae758aa37814",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/miracle-merchant/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/bear/recorded-games.test.ts",
+      "sha256": "8415358891ba994398f53ce2fd7e2fb83e0319baeb47654680bcc72c60cb88ff",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/bear/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/psychic/recorded-games.test.ts",
+      "sha256": "4c5732bd07ef268a440c96d608f601256862fb7e4337ef84778c25562731c815",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/psychic/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/pure-white/recorded-games.test.ts",
+      "sha256": "6509db87c70e79fc675dbab5b8c4b5f9f62e6bdddfdfdba5f78aa0443352ecbc",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/pure-white/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/wall-notes/recorded-games.test.ts",
+      "sha256": "03f42424eb05d52c279ea700874652598152293b00978362a782da3071745deb",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/wall-notes/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/cupid/recorded-games.test.ts",
+      "sha256": "0083f61510c67c34b15424f3211b5b7a2f1275a66f3eb1c03b19ad377a6132eb",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/cupid/recorded-games.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/radiant-eclipse/incremental-live-prefix.test.ts",
+      "sha256": "969bd99cc42570f2d28fe34b65c140836a24d7867e2ba8076f5e4c8d81b9b04f",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/radiant-eclipse/incremental-live-prefix.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/radiant-eclipse/wire-prefix-and-private-text-oracles.test.ts",
+      "sha256": "38fda78a6ce1dbfd3af83372bca2f762d645c616b68cb4bf476d37d86d704891",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/radiant-eclipse/wire-prefix-and-private-text-oracles.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/radiant-eclipse/recorded-prefixes.test.ts",
+      "sha256": "02efd61a083b8c2c0ae8457b84e69f0e2f57345af61d8ac343aec64080b41241",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/radiant-eclipse/recorded-prefixes.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/radiant-eclipse/raw-domain-failure.test.ts",
+      "sha256": "8263628f0201a335784474948ef47c983c58a3707716abd429e3f65c046305c4",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/radiant-eclipse/raw-domain-failure.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/radiant-eclipse/request-prefix-forgery.test.ts",
+      "sha256": "de4279c5c58f75fefe12c76d6bf89173eff3fd446a621bc8c99b13b37b610353",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/reproduction/radiant-eclipse/request-prefix-forgery.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/features/lonely-girl/setup-reentry-and-night-lifecycle.test.ts",
+      "sha256": "5c55dddc689d0547237da9307a11c117215acb4aa0ca4ee0ddf247221f8c74a7",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/features/lonely-girl/setup-reentry-and-night-lifecycle.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/features/demon-hunter/native-fact-recording.test.ts",
+      "sha256": "89029183ac3cd1feb3e5f7c19ff3e7c56e4feedb71b100e6fa721f18662f5d3f",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/features/demon-hunter/native-fact-recording.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/features/demon-hunter/native-pipeline-and-failure-handoffs.test.ts",
+      "sha256": "f0bceeec12f76deaad6717efad581e58e43e57a6093fb9af59c5e870718f067d",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/features/demon-hunter/native-pipeline-and-failure-handoffs.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts",
+      "sha256": "fb7533ed4c0ceb3e289cb8e3cf1ac9b6c6c7bc8fbe87a47ad347e28933004c41",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/features/cursed-fox/reentry-and-final-victory.test.ts",
+      "sha256": "30c8f0b98ec98c5938a44dba92a5f0730724f60b7446f3887662bc57d52c39b5",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/features/cursed-fox/reentry-and-final-victory.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/features/noble-secret-body/legal-day-prompt-history.test.ts",
+      "sha256": "0a7b987ce915e4d289e00043a7ad1c08358e25aabb29de7672e62259312bac1a",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/features/noble-secret-body/legal-day-prompt-history.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+      "sha256": "45b364e29079c3ec17abaa2b44a8b377c4dd97277eb0804e828ed18d4ffd2c9e",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/features/fragrant-pair-seer/native-runtime.test.ts",
+      "sha256": "84b679a4059f1ca87e25407b617ee08ba765debf471557ab9dec510a5acdb1d0",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/features/fragrant-pair-seer/native-runtime.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/features/fragrant-pair-seer/published-player-information.test.ts",
+      "sha256": "322fe1bbd2dfbe75006b478aa14adf9970cc68981a21105409e8df109be15b4a",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/features/fragrant-pair-seer/published-player-information.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/features/fragrant-pair-seer/reentry-and-failure.test.ts",
+      "sha256": "96176a9907681f47d22d117d38c51ede7578573101b08fcaf9806099ea76698a",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/features/fragrant-pair-seer/reentry-and-failure.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/features/initial-identity/cycle-reentry.test.ts",
+      "sha256": "f4214007dd971a47a92be23fae71636639b226bd2057ac745ebdbf9ce90e71d9",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/features/initial-identity/cycle-reentry.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/features/cupid/ordered-lovers-death-waves.test.ts",
+      "sha256": "a8b22de64b26c7627c397828ca891a87ca5857998c704fb1508629c8fcaa8377",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/features/cupid/ordered-lovers-death-waves.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/native-shelter-and-borrowed-stock-matrices.test.ts",
+      "sha256": "83b891dbc589427801be20926f32bc93e6dea65cbef79cf0132f3696f8a167c2",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/features/radiant-eclipse/native-shelter-and-borrowed-stock-matrices.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/borrowed-stock-across-native-nights.test.ts",
+      "sha256": "892f49630399c1622d4b6e7f38ca4ab39e54e5fe0ec53404864c444722f5a899",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/features/radiant-eclipse/borrowed-stock-across-native-nights.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/lonely-girl/observed-simulation.test.ts",
+      "sha256": "f350a011a267a561a2ab380fdb34567e68182b24a1ac001a045eb129c3b4ff83",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/lonely-girl/observed-simulation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/demon-hunter/observed-simulation.test.ts",
+      "sha256": "58c0fe4172e3f856a0af3e0cc4529a00e07f7a38fa83299fdde79092beb01ea2",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/demon-hunter/observed-simulation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/demon-hunter/reproduction.test.ts",
+      "sha256": "87ac75ab9cbabb7b66d7aace76451f8a464976a495d4e0238a82c677c2d756e1",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/demon-hunter/reproduction.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/ghost-bride/observed-simulation.test.ts",
+      "sha256": "8461874e2d987985f06bc17635e1055c40ac6daedeec0bad019bf483a8ac9179",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/ghost-bride/observed-simulation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/ghost-bride/reproduction.test.ts",
+      "sha256": "e8cfb252df721ddc1f1b0e2040c74276d0e43b5c16f4939bf9166609a33b1346",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/ghost-bride/reproduction.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/scholar-mentor/transport-game.test.ts",
+      "sha256": "603908209b3f7cee8ba6c0fe182fba34fbb048ac1409befccf0ccfd0bca92e89",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/scholar-mentor/transport-game.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+      "sha256": "c0ceed08676e2ed04e36c112515117e4370c946368b1d9331078c7644cb3e934",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/debater/observed-simulation.test.ts",
+      "sha256": "6aa6e59ea88de5de8a885981f69ab23b1bfdfe31b551e5598c8af193e8b16b57",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/debater/observed-simulation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/animal-dream/transport-game.test.ts",
+      "sha256": "6ea00738dc0527568dbdb5a515b9c666bb9ee03967853b9a20bf9aade1d5cbd7",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/animal-dream/transport-game.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/animal-dream/transport-correction.test.ts",
+      "sha256": "0f7486d53d1e03076e28e84a9465111db0eabe50be9722ecb98b2d1123df39b7",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/animal-dream/transport-correction.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/animal-dream/transport-failure.test.ts",
+      "sha256": "9811657f17af5e692b384b8e7106a4305628a928f21eec9353eb0240306c9c53",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/animal-dream/transport-failure.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/mist-raven/transport-game.test.ts",
+      "sha256": "6d6dc98c83e730aad66fbde53f8a60a6e8ea0885087acd832fe05bdab0f72730",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/mist-raven/transport-game.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/mist-raven/observed-simulation.test.ts",
+      "sha256": "3e26ea02c67f0c866eebbcb7930a178c3c39c12621e3d57cc222c88702744cbd",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/mist-raven/observed-simulation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/mist-raven/reproduction.test.ts",
+      "sha256": "fafc5207faa8f12300eefaf5562747c723b321e958b6833cd48eeacc1944d142",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/mist-raven/reproduction.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/cursed-fox/simulation.test.ts",
+      "sha256": "bf4861a224850809cf9a3cd95ca75d4079e62a2fd6e80c42c9c1266c43eaf0b0",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/cursed-fox/simulation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/noble-secret-body/transport-game.test.ts",
+      "sha256": "1367c184d5c7ddce7a60706e99b19d9db7fd7d0d1bb6edb3ed7d9be3241a1f1d",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/noble-secret-body/transport-game.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/noble-secret-body/window-transport.test.ts",
+      "sha256": "e0ddd8bd096f1d7c51d31f69e1d162008fb8124fb16a63384ec91861810ac5a4",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/noble-secret-body/window-transport.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/noble-secret-body/policy-transport.test.ts",
+      "sha256": "5de68dc482478a2964795327fdd0c3c270e879e440ab6715ca01499da00d92fe",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/noble-secret-body/policy-transport.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/noble-secret-body/revocation-transport.test.ts",
+      "sha256": "7bd1393e19cbf42d4cf79192e8649ef6c9b45487de280e7fdcd600f4bf109a8f",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/noble-secret-body/revocation-transport.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/noble-secret-body/pass-repeat-transport.test.ts",
+      "sha256": "5e2fdb1664f29bea2af8b4c3bd4a96cd9259f169a0d2e3d9508d1c9ec5178b70",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/noble-secret-body/pass-repeat-transport.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/noble-secret-body/badge-transport.test.ts",
+      "sha256": "7f80784ae1f6c170be5ed4a2b35dd35da79e7fcc674a5a468934d4b472526a90",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/noble-secret-body/badge-transport.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/noble-secret-body/policy-rejection-transport.test.ts",
+      "sha256": "fbe3214e62fb8add27ee462479a8f148afa1ed1cd341545432177bed09238885",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/noble-secret-body/policy-rejection-transport.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/noble-secret-body/transport-failure.test.ts",
+      "sha256": "600454c1048515284f266f6b8ad0373f40775807b7e3c7fc6c6c5cebec7dc8ba",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/noble-secret-body/transport-failure.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "sha256": "81a83db0fe1e861ec4015ed807993cb2b4bba6908b945a8d58749716af029586",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/order-prince/transport-game.test.ts",
+      "sha256": "5bd93155261282f66334b32da0444f16cd71d2db73df6698f6f3d63312e5f8b8",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/order-prince/transport-game.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/order-prince/transport-pk.test.ts",
+      "sha256": "d9ccc9b03efe98c7c4ce4326927a6faf0b274f798b87c63646cd10573925e07c",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/order-prince/transport-pk.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+      "sha256": "1c047c0ac0057c2a468a4bf8d63f4f86609f179fe6b2a2e7ad8c7f02751eddf2",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wild-child/observed-simulation.test.ts",
+      "sha256": "dc94e251160ddeb8912090d1cc18484cd59654a64fe9200810a6a80f0cbdad44",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/wild-child/observed-simulation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wild-child/failure-tape.test.ts",
+      "sha256": "94838f07ba1f7e8fd8639cb0e1842cf2d2d959bd5d33a183449bc3f59943f13c",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/wild-child/failure-tape.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/magician/transport-game.test.ts",
+      "sha256": "449e6b9683b4ca21466adf02bc7fa92cdb21299f2f412952976ec7e35436045d",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/magician/transport-game.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "sha256": "db3a3a0eb8598f11121b437fe148732117a56f79682c75fbdaafe6684ad1fed5",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/mirror-girl/simulation.test.ts",
+      "sha256": "1a2fe5b634ea04d2e83187870c27a45392b28171c4267a1051435ffd9d0754ad",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/mirror-girl/simulation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/thief/observed-simulation.test.ts",
+      "sha256": "2a334a9134114537a064b66eeb435ace09fc3f4c5becc9991ceecb538c43142d",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/thief/observed-simulation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-sorcerer/transport-game.test.ts",
+      "sha256": "f0193fe2d6d92892762f205057eccafda216e28956dc4c852468789b3c18dcf9",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/wolf-sorcerer/transport-game.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/fragrant-pair-seer/transport-game.test.ts",
+      "sha256": "e75f8915d133a70609621e0cb617bc8bb89f1dd09a3586bec9835bd90bb675e5",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/fragrant-pair-seer/transport-game.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/fragrant-pair-seer/transport-correction.test.ts",
+      "sha256": "b6c35a91f047f8105d1485b513081af013f6bc6430b30b566f10036fb3db41cc",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/fragrant-pair-seer/transport-correction.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/fragrant-pair-seer/transport-failure.test.ts",
+      "sha256": "65db7d2692e91e7b96bc5519f6c69a808f919b56c90cbf45126670695afb5207",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/fragrant-pair-seer/transport-failure.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/nightmare/transport-game.test.ts",
+      "sha256": "54d089da24c392cd7a1817d6747b45f85d76ca1dad3466b5fd33b6d6762b93ad",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/nightmare/transport-game.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/time-consort/transport-game.test.ts",
+      "sha256": "65219e35b62642213cd7b1539b99d149de8f2fddfbf4cf2669e9ab46d9315ef0",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/time-consort/transport-game.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/awakened-hidden-wolf/simulation.test.ts",
+      "sha256": "2c94c8b07dc3dd457692d7d0720febdd77382f79774a6fc2d091b9744c527cde",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/awakened-hidden-wolf/simulation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/shapeshifter/observed-simulation.test.ts",
+      "sha256": "7c00445324308ebe463830d2efa0101557b5a549161df031c70061ad1844c1bf",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/shapeshifter/observed-simulation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/black-market/failure-replay.test.ts",
+      "sha256": "a22a0bac4e84c5802c6da5f3f44fba4ada78463ac581fbd62a612736287ca969",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/black-market/failure-replay.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/trickster/transport-game.test.ts",
+      "sha256": "c57f4a40778b42c3f4365ab35b0db71c57a28ac60868f82c21c867b1964c4211",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/trickster/transport-game.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/red-moon/transport-game.test.ts",
+      "sha256": "a6001628c20dbfd24d079f7243c6132cbce9556aaf4bef04120d093f08e2cf11",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/red-moon/transport-game.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/red-moon/reproduction.test.ts",
+      "sha256": "1ff365620ab87fc8251c17b8a341dd748f41ef934b0ec896890e18dfeb0d46c1",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/red-moon/reproduction.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/red-moon/edge-reproduction.test.ts",
+      "sha256": "087218945b943bd842b23531ffc2a85709ba5287495afda1342fa042c03e579b",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/red-moon/edge-reproduction.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/psychic/simulation.test.ts",
+      "sha256": "68fe4e6f7efa776f99779c07a9c91116d71c1faf683170ad4f6232beebe935e9",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/psychic/simulation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/public-policies/transport-game.test.ts",
+      "sha256": "fac2386b3161b6533f0426b7067e48e43c2c0587bd4430e6c7e9904c22730d2d",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/public-policies/transport-game.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wall-notes/observed-simulation.test.ts",
+      "sha256": "6bb7a9c0dd1d91449bd64a3264e0fc866e8032f011bd9fe0fc7e3371897ab674",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/wall-notes/observed-simulation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/evil-knight/transport-game.test.ts",
+      "sha256": "8945a2b974512e91d544ec097a745f9a850f7840530a69e15abfdc07426976ba",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/evil-knight/transport-game.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/cupid/observed-simulation.test.ts",
+      "sha256": "a64ab2dd2737294da954f594ece2ac8c98dba9dcd0e778a1e78162c5e476956c",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/cupid/observed-simulation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/cupid/simulation.test.ts",
+      "sha256": "0f72ee8270665a62c76fb292d0cb218dbbdad7544ac0bf991252a6c4c05a5cf2",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/cupid/simulation.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/radiant-eclipse/transport-game.test.ts",
+      "sha256": "f6be660085d37885c83d8883f1950566e041dae2deecf9b8c7345283a371874d",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/radiant-eclipse/transport-game.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/radiant-eclipse/transport-failure.test.ts",
+      "sha256": "a20e5e58da3181085da2282b7c2d1aefcaad1f1c5bcce7c3286687b70d3f39a6",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/scenarios/boards/radiant-eclipse/transport-failure.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/fixtures/acp/game-agent.ts",
+      "sha256": "d1f513adbc6e404b0621b865aa6a2652c471077d8d1da8c4a9f6f91a6f9e8ed8",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/fixtures/acp/game-agent.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/fixtures/acp/audit-agent.ts",
+      "sha256": "d7205d1801e9bc6114bcdb29e4c445910e17ab2ee0228c49d90ccb68b5f2f491",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/fixtures/acp/audit-agent.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/configuration/demon-hunter-config.test.ts",
+      "sha256": "c945218b9315be7bbbda0d1eebe8b71bcbc4fd0beab5e1750c1ae6f9d20e2779",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/configuration/demon-hunter-config.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/ghost-bride-local-stage-priority.test.ts",
+      "sha256": "92b2a885f9b5881121dd8ab75127e0ba74704d25997ef75a377f0803bbef8fd4",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/rulesets/ghost-bride-local-stage-priority.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts",
+      "sha256": "c6170217a991961904c33dc5315b9bc73f962650483dd06cf7a69a190353c3d3",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/native-night-cleanup-ownership.test.ts",
+      "sha256": "cac1f089b3253b48c276f111625d7682a4fd0553d07194a71d5afecc5aaa5940",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/mechanisms/native-night-cleanup-ownership.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/presentation/broadcast-localization.test.ts",
+      "sha256": "d76e0b68ff7dfc6ca77a898df8264fe87ae462c35a5fe5bb59bdf1e9e84d9ef0",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/presentation/broadcast-localization.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/presentation/bilingual-console.test.ts",
+      "sha256": "36df654d987d1da1e44a036c33151f183f97d220648c84f19a897c5331311276",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/presentation/bilingual-console.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/recording/live-event-snapshot.test.ts",
+      "sha256": "5db5ec3a3ed7cb9d289822c252e131b4afae3662ced65b69ac7d305b0463ee1b",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/recording/live-event-snapshot.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/recording/demon-hunter-badge-checkpoint-ownership.test.ts",
+      "sha256": "e8fc583377bd822337b4e929bc48b4d4ca6d6a20745e82f6bbe3bc92eab2ac81",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/recording/demon-hunter-badge-checkpoint-ownership.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "sha256": "9b878937c6e3f57368d0c4f23fb0c596a9bbcdd4b38ec363fe8aa3528dbd126e",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/exact-fact-projections.test.ts",
+      "sha256": "d5b743d8b04c1f1f964c5b4160e4745099fe9bb337e1b195ed870b63682c1e48",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/features/demon-hunter/exact-fact-projections.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/features/debater/debater.test.ts",
+      "sha256": "022df3bd61277def7d4d38bcef63a295317b882800b48d2c97e23bae287b5000",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/features/debater/debater.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/features/animal-dream/night-lifecycle.test.ts",
+      "sha256": "5ef22c2c6bd52c1bdfabed9088bb840270fc9d2bbf2559a6afc8ed4a3afd6a9f",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/features/animal-dream/night-lifecycle.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven/mist-raven-transport-oracle.test.ts",
+      "sha256": "9fb49252279e436bb43cb034c05b637b4dc3fdd36ff95da48d0b5e83aa28c2bb",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/features/mist-raven/mist-raven-transport-oracle.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "sha256": "a8cdfe66d1a15751298d9a8b138c5175dd5c79247f938d6de7c009684f3790b5",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/features/cursed-fox/inspection-authority.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "sha256": "2e61d8912fd1b543dde339c4828e60692c551bca104f5994299286ae2c94c7ed",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "sha256": "522f74bd96b2c0fc5d4f8bb01cf94e215a0962c7d8402e147e480c6d57f52a90",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/fact-audience-rejection.test.ts",
+      "sha256": "7678a53b3c5bc4f0fbfa4593f9c486aaa911fdda4139dd1890eb898052c6f3eb",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/features/fragrant-pair-seer/fact-audience-rejection.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/night-lifecycle.test.ts",
+      "sha256": "a7eb779277debe9e75c36e2d2ceab8e896b162924f20af205899ec26076dc292",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/features/fragrant-pair-seer/night-lifecycle.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "sha256": "f0b7bc745ab4735f27901a4f3a789653665ee3dcd5235c363300a806dc9e7ac0",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "sha256": "d93f949ea3fbdb88bf07eae72999c3531c08ffbfeb879251dc85c811d375f7e5",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/features/initial-identity/legacy-deal-boundaries.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body-shared-wire-review.test.ts",
+      "sha256": "6829de16bec2b3cbd072ea56431cfcf54829bf7e64e0021f58b1ad0ae43cff12",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/features/noble-secret-body-shared-wire-review.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/features/cupid/choice-and-membership-contracts.test.ts",
+      "sha256": "ef854c6e3944a68bdc918b44a5f7f8fa25d4a6e792c6866e254f98a32ee0030a",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/features/cupid/choice-and-membership-contracts.test.ts",
+      "kind": "registered-module-route-consumer"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/transport-mapping-and-binding-oracles.test.ts",
+      "sha256": "a7211a8f0b1bb351692e06806c7d38ee9cbe78e26b2c1de530e2563e4e6a4b40",
+      "snapshot": "/tmp/awa-c13-consumers/backend/tests/unit/features/radiant-eclipse/transport-mapping-and-binding-oracles.test.ts",
+      "kind": "registered-module-route-consumer"
+    }
+  ],
+  "removedPaths": [
+    "backend/tests/support/animal_dream_transport.ts",
+    "backend/tests/support/awakened_scenarios.ts",
+    "backend/tests/support/bear_scenarios.ts",
+    "backend/tests/support/black_market_scenarios.ts",
+    "backend/tests/support/cupid_scenarios.ts",
+    "backend/tests/support/cursed_fox_scenarios.ts",
+    "backend/tests/support/debater_scenarios.ts",
+    "backend/tests/support/demon_hunter_transport_scenarios.ts",
+    "backend/tests/support/dreamer_scenarios.ts",
+    "backend/tests/support/evil_knight_transport_scenarios.ts",
+    "backend/tests/support/fragrant_pair_seer_transport_scenarios.ts",
+    "backend/tests/support/gargoyle_scenarios.ts",
+    "backend/tests/support/ghost_bride_scenarios.ts",
+    "backend/tests/support/gravekeeper_scenarios.ts",
+    "backend/tests/support/hidden_wolf_scenarios.ts",
+    "backend/tests/support/hybrid_scenarios.ts",
+    "backend/tests/support/lonely_girl_scenarios.ts",
+    "backend/tests/support/magician_transport_scenarios.ts",
+    "backend/tests/support/mechanical_scenarios.ts",
+    "backend/tests/support/merchant_scenarios.ts",
+    "backend/tests/support/mirror_scenarios.ts",
+    "backend/tests/support/mist_raven_transport_scenarios.ts",
+    "backend/tests/support/nightmare_transport_scenarios.ts",
+    "backend/tests/support/noble_secret_body_transport_scenarios.ts",
+    "backend/tests/support/order_prince_transport_scenarios.ts",
+    "backend/tests/support/psychic_scenarios.ts",
+    "backend/tests/support/pure_white_transport_scenarios.ts",
+    "backend/tests/support/radiant_eclipse_transport_scenarios.ts",
+    "backend/tests/support/red_moon_transport_scenarios.ts",
+    "backend/tests/support/scholar_mentor_transport_scenarios.ts",
+    "backend/tests/support/shapeshifter_scenarios.ts",
+    "backend/tests/support/thief_scenarios.ts",
+    "backend/tests/support/time_consort_transport_scenarios.ts",
+    "backend/tests/support/trickster_transport_scenarios.ts",
+    "backend/tests/support/wall_notes_scenarios.ts",
+    "backend/tests/support/wild_child_scenarios.ts",
+    "backend/tests/support/wolf_beauty_scenarios.ts",
+    "backend/tests/support/wolf_sorcerer_transport_scenarios.ts",
+    "backend/tests/support/foundation_transport_plan.ts",
+    "backend/tests/support/run_transport_game.ts",
+    "backend/tests/support/fixture_values.ts",
+    "backend/tests/support/self_destruct_transport_plan.ts",
+    "backend/tests/support/transport_prompt_oracle.ts",
+    "backend/tests/support/animal_dream_scenarios.ts",
+    "backend/tests/support/fragrant_pair_seer_scenarios.ts",
+    "backend/tests/support/demon_hunter_scenarios.ts",
+    "backend/tests/support/knight_scenarios.ts",
+    "backend/tests/support/white_wolf_king_scenarios.ts",
+    "backend/tests/support/wolf_king_scenarios.ts",
+    "backend/tests/support/animal_dream_recording.ts",
+    "backend/tests/support/fragrant_pair_seer_recording.ts",
+    "backend/tests/support/mist_raven_prefix.ts",
+    "backend/tests/support/mist_raven_recording.ts",
+    "backend/tests/support/noble_secret_body_recording.ts",
+    "backend/tests/support/radiant_eclipse.ts",
+    "backend/tests/support/radiant_eclipse_full_plans.ts",
+    "backend/tests/support/radiant_eclipse_recording.ts",
+    "backend/tests/support/oracles/control-owner.ts"
+  ],
+  "sharedRootReceipts": [
+    {
+      "kind": "live-current-combined-backend-source-tests-scripts",
+      "session": 35862,
+      "actualClosedExit": 0,
+      "policy": "Live multiplecohort closure, not final fixed-input acceptance."
+    },
+    {
+      "kind": "narrow-source-fixture-tests",
+      "actualExit": 0,
+      "passed": 5,
+      "failed": 0,
+      "assertions": 24
+    },
+    {
+      "kind": "named-export-source-fixture-regression",
+      "actualExit": 0,
+      "passed": 1,
+      "failed": 0
+    }
+  ],
+  "limits": [
+    "No test/discovery/game/billed model/full gate or archive generation executed",
+    "Finite compiler covers Git049a frozen source plus 280 frozen C13 roots; it does not cover current opaque/P4 source integration",
+    "Exactly preserved assertions are still original coverage; production-result comparisons are not promoted to independent gameplay oracles",
+    "Declaration/cache/Promise allocation statements each have one source owner. Extracted oracle wrappers add ordinary function calls; no new caches or generic cleanup framework",
+    "Static dependency/ownership evidence does not claim identical import initialization order or external module startup side effects",
+    "After fixed compiler receipt, one Red Moon candidate owner moved at identical depth, two import consumers rerouted, and six accurate leading comments changed. Historical receipt byte hashes remain frozen; no same-source/fullcompiler claim is made for final staging bytes.",
+    "Early planner target count77 preceded two oracle additions;current actual plan/final rows consistently79."
+  ],
+  "notRun": [
+    "Games",
+    "Models",
+    "Full runtime suite",
+    "Discovery",
+    "904 archive rescan"
+  ],
+  "remaining": [
+    "P2 final discovery/input acceptance",
+    "Facade consumerexit",
+    "All project remaining phases and same-source fullgates"
+  ]
+}

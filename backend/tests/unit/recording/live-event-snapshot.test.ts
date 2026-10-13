@@ -10,7 +10,7 @@ import {
   captureCheckpoint,
   currentEngineVersion,
 } from "../../../src/runtime/simulation/reproduction_context";
-import { radiantFixture } from "../../support/radiant_eclipse";
+import { radiantFixture } from "../../support/features/radiant-eclipse/builders/runtime-game";
 async function fixture() {
   const f = await radiantFixture();
   const events = f.phaseManager.getEvents();

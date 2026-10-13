@@ -18,9 +18,10 @@ import {
 } from "../../../../src/core";
 import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
 import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
-import { radiantFixture, radiantProvider } from "../../../support/radiant_eclipse";
-import { radiantManualAction } from "../../../support/radiant_eclipse_recording";
-import { fixtureObject } from "../../../support/fixture_values";
+import { radiantFixture } from "../../../support/features/radiant-eclipse/builders/runtime-game";
+import { radiantProvider } from "../../../support/features/radiant-eclipse/drivers/actions";
+import { radiantManualAction } from "../../../support/features/radiant-eclipse/drivers/manual-actions";
+import { fixtureObject } from "../../../support/oracles/fixture-values";
 
 // The retained client/control belong to this adversarial test, not a provider session.
 // Real runner tests separately prove provider-owned transport/process reclamation.

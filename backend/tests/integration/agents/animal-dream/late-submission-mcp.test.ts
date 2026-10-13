@@ -17,9 +17,10 @@ import {
 } from "../../../../src/core";
 import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
 import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
-import { animalGame, animalAction } from "../../../support/animal_dream_scenarios";
+import { animalGame } from "../../../support/features/animal-dream/builders/runtime-game";
+import { animalAction } from "../../../support/features/animal-dream/drivers/actions";
 import { inheritAnimalDeadlineRequest } from "../../../../src/game/mechanisms/roles/animal_dream/requests";
-import { fixtureObject } from "../../../support/fixture_values";
+import { fixtureObject } from "../../../support/oracles/fixture-values";
 
 // The retained client/control belong to this adversarial test, not a provider session.
 // Real runner tests separately prove provider-owned transport/process reclamation.

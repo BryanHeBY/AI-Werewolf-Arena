@@ -5,7 +5,8 @@ import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { Phase } from "../../../../src/core";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
-import { radiantFixture, radiantProvider } from "../../../support/radiant_eclipse";
+import { radiantFixture } from "../../../support/features/radiant-eclipse/builders/runtime-game";
+import { radiantProvider } from "../../../support/features/radiant-eclipse/drivers/actions";
 
 const stockCases = [
   {

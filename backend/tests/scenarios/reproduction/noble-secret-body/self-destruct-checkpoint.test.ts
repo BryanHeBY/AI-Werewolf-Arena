@@ -4,7 +4,7 @@
  * Output and oracle: Literal next-night snapshot, absent vote, preserved contract and terminal replay assertions stay causal with the source game; archive fixtures are unchanged.
  */
 import { expect, test } from "bun:test";
-import { recordNobleLiteral } from "../../../support/noble_secret_body_recording";
+import { recordNobleLiteral } from "../../../support/features/noble-secret-body/drivers/recording";
 import { Phase, Camp } from "../../../../src/core";
 test("actual Noble pre-vote blast checkpoint uses completed night and preserves pending contract", async () => {
   const { record, replay } = await recordNobleLiteral("blast_skips_vote", "en", { blastDay: 2 }),

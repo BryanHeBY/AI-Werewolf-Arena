@@ -4,7 +4,7 @@
  * Output and oracle: Literal acceptance/rejection assertions retain lifecycle invariants; the production-generated archive supplies test input rather than independently computed expected state.
  */
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 async function failed(): Promise<any> {
   return await radiantRecording({ failureStage: "seer" });

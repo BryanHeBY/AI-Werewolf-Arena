@@ -4,7 +4,8 @@
  * Output and oracle: Explicit mark, stock, audience, receipt/checkpoint and exact-replay assertions remain causal; original shared plan mutations and callback order are preserved rather than duplicated.
  */
 import { beforeAll, expect, test } from "bun:test";
-import { nobleLiteralPlans, recordNobleLiteral } from "../../../support/noble_secret_body_recording";
+import { nobleLiteralPlans } from "../../../support/features/noble-secret-body/builders/literal-plans";
+import { recordNobleLiteral } from "../../../support/features/noble-secret-body/drivers/recording";
 import { Camp, PotionType } from "../../../../src/core";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 

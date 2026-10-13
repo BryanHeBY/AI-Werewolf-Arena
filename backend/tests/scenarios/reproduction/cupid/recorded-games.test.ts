@@ -5,8 +5,8 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Phase } from "../../../../src/core";
-import { CUPID_CASES, cupidScenario } from "../../../support/cupid_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { CUPID_CASES, cupidScenario } from "../../../support/features/cupid/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { promises as fs } from "node:fs";
 const manual = {
   mixed_netease: {

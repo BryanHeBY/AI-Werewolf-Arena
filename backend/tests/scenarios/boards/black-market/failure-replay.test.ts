@@ -18,7 +18,7 @@ import * as factory from "../../../../src/runtime/player_agent_factory";
 import { BaselineBotActionProvider } from "../../../../src/ai/agents/providers/action_providers";
 import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
 import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
-import { blackMarketScenario } from "../../../support/black_market_scenarios";
+import { blackMarketScenario } from "../../../support/features/black-market-merchant/builders/scenario";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 for (const transport of ["sdk", "acp"] as const)

@@ -10,11 +10,9 @@ import { COMPONENT } from "../../../../src/core/domain/components/names";
 import type { AliveComponent } from "../../../../src/core/domain/components/alive";
 import type { ActionRequest } from "../../../../src/core/domain/actions";
 import { fragrantAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
-import {
-  fragrantRuntimeGame as game,
-  fragrantRuntimeAction as act,
-  type FragrantRuntimePlan as Plan,
-} from "../../../support/fragrant_pair_seer_scenarios";
+import { fragrantRuntimeGame as game } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
+import { fragrantRuntimeAction as act } from "../../../support/features/fragrant-pair-seer/drivers/actions";
+import { type FragrantRuntimePlan as Plan } from "../../../support/features/fragrant-pair-seer/contracts";
 
 async function cycle(g: ReturnType<typeof game>, plan: Plan, seen: ActionRequest[] = []) {
   return await g.phaseManager.runSingleCycle(

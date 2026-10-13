@@ -1,14 +1,14 @@
 /**
  * Runs the isolated synthetic ACP game protocol fixture. Inputs are stdio RPC and injected local test controls; outputs are original protocol replies and private-workspace diagnostic files. It owns its test client/transport and existing terminal cleanup; it does not call a billed model or calculate an archive golden.
  */
-import { fixtureObject } from "../../support/fixture_values";
+import { fixtureObject } from "../../support/oracles/fixture-values";
 /** Real ACP process with a private per-actor script, using only its injected game MCP. */
 import { createInterface } from "node:readline";
 import { readFile, writeFile } from "node:fs/promises";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import type { AcpMcpServerConfig } from "../../../src/ai/integrations/acp/acp_mcp_bridge";
-import type { ActorTransportPlan } from "../../support/foundation_transport_plan";
+import type { ActorTransportPlan } from "../../support/transport/contracts";
 import {
   assertSubmitActionWireSchema,
   type MistWireState,
@@ -17,7 +17,7 @@ import {
   assertTransportPrompt,
   assertTransportEvents,
   assertTransportIdentity,
-} from "../../support/transport_prompt_oracle";
+} from "../../support/oracles/transport/observations";
 
 const plan: ActorTransportPlan = JSON.parse(
   await readFile(process.argv[2] ?? process.env.AWA_TEST_PLAN_FILE!, "utf8"),

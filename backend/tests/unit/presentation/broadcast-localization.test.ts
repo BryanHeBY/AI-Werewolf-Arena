@@ -5,7 +5,7 @@
  * these module assertions invoke no model or complete-game driver.
  */
 import { Camp, Phase, PotionType } from "../../../src/core/domain/identity";
-import { fixtureResult } from "../../support/fixture_values";
+import { fixtureResult } from "../../support/builders/recording/result";
 import { getDefaultScriptEventRenderRegistry } from "../../../src/game/mechanisms";
 import { GameEvent } from "../../../src/core/domain/model";
 

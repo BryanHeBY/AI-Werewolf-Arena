@@ -6,7 +6,8 @@
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import { animalGame, animalBoard, animalAction } from "../../../support/animal_dream_scenarios";
+import { animalGame, animalBoard } from "../../../support/features/animal-dream/builders/runtime-game";
+import { animalAction } from "../../../support/features/animal-dream/drivers/actions";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import {

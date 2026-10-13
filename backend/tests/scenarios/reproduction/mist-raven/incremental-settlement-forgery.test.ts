@@ -13,9 +13,11 @@ import {
 } from "../../../../src/recording/reproduction";
 import { validateMistRavenRecord } from "../../../../src/recording/mist_raven_record";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
-import { mistRecording, mistBoard, mistAction, MIST_ROLES } from "../../../support/mist_raven_recording";
+import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
+import { mistBoard, MIST_ROLES } from "../../../support/features/mist-raven/builders/board";
+import { mistAction } from "../../../support/features/mist-raven/drivers/actions";
 
-import { mistPrefix as prefix } from "../../../support/mist_raven_prefix";
+import { mistPrefix as prefix } from "../../../support/features/mist-raven/drivers/prefix";
 
 function erase(r: ReproductionRecord, stage: string, day = 1) {
   const removed = r.decisions.find((d) => d.day === day && d.stage === stage)!;

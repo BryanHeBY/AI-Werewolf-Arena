@@ -10,8 +10,8 @@ import { Phase, DeathCause, createRandom, type ActionRequest } from "../../../..
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
 import { ReproductionTrace } from "../../../../src/recording/reproduction";
-import { magicianScenario } from "../../../support/magician_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { magicianScenario } from "../../../support/features/magician/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { validateMagicianRecord } from "../../../../src/recording/magician_record";
 import type { RecordedDecision, ReproductionRecord } from "../../../../src/recording/reproduction";
 

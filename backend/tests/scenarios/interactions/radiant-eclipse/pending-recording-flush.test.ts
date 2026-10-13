@@ -4,7 +4,7 @@
  * Output and oracle: Literal delay-reached, finalization and empty-error assertions cover the running cycle; no archived expected output is regenerated.
  */
 import { expect, test } from "bun:test";
-import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
 for (const stage of ["sheriff_nomination", "day_speech", "voting"] as const)
   test(`real automatic recording flush during pending ${stage}`, async () => {
     let delayed = false;

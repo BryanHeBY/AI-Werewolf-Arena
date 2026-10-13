@@ -17,11 +17,9 @@ import {
   type StatusMarksComponent,
 } from "../../../../src/core";
 import type { DeathResolution } from "../../../../src/game/engine/death_resolution";
-import {
-  demonHunterFixture,
-  demonNightChoice,
-  type DemonNightChoices,
-} from "../../../support/demon_hunter_scenarios";
+import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
+import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
+import { type DemonNightChoices } from "../../../support/features/demon-hunter/contracts";
 import { getWitchState } from "../../../../src/game/mechanisms/roles/private_state";
 import { projectDemonHunter } from "../../../../src/game/mechanisms/roles/demon_hunter/authority";
 

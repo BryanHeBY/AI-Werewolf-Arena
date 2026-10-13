@@ -4,7 +4,8 @@
  * Output and oracle: Explicit phase, lifetime and rejection checks retain the first cycle's ownership; the second invocation never becomes a new owner.
  */
 import { expect, test } from "bun:test";
-import { radiantFixture, radiantProvider } from "../../../support/radiant_eclipse";
+import { radiantFixture } from "../../../support/features/radiant-eclipse/builders/runtime-game";
+import { radiantProvider } from "../../../support/features/radiant-eclipse/drivers/actions";
 import { Phase } from "../../../../src/core";
 for (const moment of ["swallow", "day_speech"] as const)
   test(`same PM rejected reentry preserves original ${moment} owner and phase`, async () => {

@@ -8,8 +8,8 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { expect, test } from "bun:test";
-import { orderPrinceScenario } from "../../../support/order_prince_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { orderPrinceScenario } from "../../../support/features/order-prince/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const variant of ["pk"] as const)
   for (const transport of ["llm", "acp"] as const)
     test(

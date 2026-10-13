@@ -1,7 +1,7 @@
 /**
  * Runs the isolated synthetic ACP audit protocol fixture. Inputs are stdio RPC and injected local test controls; outputs are original protocol replies and private-workspace diagnostic files. It owns its test client/transport and existing terminal cleanup; it does not call a billed model or calculate an archive golden.
  */
-import { fixtureObject } from "../../support/fixture_values";
+import { fixtureObject } from "../../support/oracles/fixture-values";
 import { auditSummaryFixture } from "../../support/builders/audit-summary";
 /** Synthetic ACP agent: reads only the injected audit MCP and records test prompts. */
 import { createInterface } from "node:readline";

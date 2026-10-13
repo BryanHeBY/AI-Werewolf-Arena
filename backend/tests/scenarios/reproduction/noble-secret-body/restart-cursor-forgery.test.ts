@@ -4,7 +4,7 @@
  * Output and oracle: Explicit valid restart/checkpoint and malformed-cursor rejection preserve the shared setup and exact replay; generated baseline data remains scenario input.
  */
 import { beforeAll, expect, test } from "bun:test";
-import { recordNobleLiteral } from "../../../support/noble_secret_body_recording";
+import { recordNobleLiteral } from "../../../support/features/noble-secret-body/drivers/recording";
 import { Phase } from "../../../../src/core";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 let base: ReproductionRecord;

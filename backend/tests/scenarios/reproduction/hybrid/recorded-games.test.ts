@@ -6,8 +6,8 @@
 import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { HYBRID_CASES, hybridScenario, type HybridScenario } from "../../../support/hybrid_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { HYBRID_CASES, hybridScenario, type HybridScenario } from "../../../support/features/hybrid/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 
 /** Independent literal end states; never derived from observed engine winners or chosen camp. */
 const facts: Record<

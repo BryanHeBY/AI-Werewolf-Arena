@@ -14,7 +14,7 @@ import {
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Role, WinCondition } from "../../../src/core";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import { demonHunterDeck } from "../../support/demon_hunter_scenarios";
+import { demonHunterDeck } from "../../support/features/demon-hunter/builders/candidate-world";
 const read = async (size: number, goal: string) =>
   JSON.parse(
     await readFile(

@@ -5,9 +5,9 @@
  */
 import { expect, test } from "bun:test";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
-import { pureWhiteScenario } from "../../../support/pure_white_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
-import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import { pureWhiteScenario } from "../../../support/features/pure-white-girl/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
+import { type PlannedTurn } from "../../../support/transport/contracts";
 for (const stage of ["pure_white_girl", "wolf_witch"] as const)
   for (const failure of ["missing", "invalid", "late"] as const)
     for (const transport of ["llm", "acp"] as const)

@@ -14,7 +14,7 @@ import {
   type VictoryComponent,
 } from "../../../../src/core";
 import { BaselineBotActionProvider } from "../../../../src/ai/agents/providers/action_providers";
-import { CUPID_CASES, cupidScenario, cupidBoard } from "../../../support/cupid_scenarios";
+import { CUPID_CASES, cupidScenario, cupidBoard } from "../../../support/features/cupid/builders/scenario";
 import { loversRecord } from "../../../../src/game/mechanisms/roles/cupid/relation";
 const boards = [
   ...CUPID_CASES.map((name) => ({ name, board: cupidScenario(name).board.config })),

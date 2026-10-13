@@ -3,7 +3,7 @@
  * Input: Original cached actual phase prefixes, recording metadata and copied private-canary/feed alterations.
  * Output and oracle: Literal request/event/state expectations and parser rejection preserve original cache and setup evaluation; no pure decoder fixture replaces the played prefix.
  */
-import { mistPrefix } from "../../../support/mist_raven_prefix";
+import { mistPrefix } from "../../../support/features/mist-raven/drivers/prefix";
 import { test, expect } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Phase, createRandom, type ActionRequest, type ToolCall } from "../../../../src/core";
@@ -13,7 +13,9 @@ import {
   type ReproductionRecord,
 } from "../../../../src/recording/reproduction";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
-import { mistRecording, mistBoard, mistAction, MIST_ROLES } from "../../../support/mist_raven_recording";
+import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
+import { mistBoard, MIST_ROLES } from "../../../support/features/mist-raven/builders/board";
+import { mistAction } from "../../../support/features/mist-raven/drivers/actions";
 const cache = new Map<string, Promise<ReproductionRecord>>();
 function prefix(
   stage: string,

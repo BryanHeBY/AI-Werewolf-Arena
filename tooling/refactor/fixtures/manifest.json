@@ -11,7 +11,7 @@
     "exactBytesFiles": 904,
     "mechanicalSourceFiles": 3,
     "originalBytes": 48294509,
-    "currentBytes": 48295534
+    "currentBytes": 48295551
   },
   "policy": "The public table covers904 byte-identical JSON archives and3 mechanically equivalent source fixtures. Immutable original identities/digests are separate from current paths/digests. Source programs include import binding identity and preserve RPC/action matrices; helpers are independently recorded source assets. No archive, game rule, prompt or action content is regenerated; acceptance stays pending-review.",
   "files": [
@@ -68,8 +68,8 @@
           "reason": "No schemaVersion is serialized; legacy status does not identify a build."
         }
       },
-      "currentSha256": "f9ffe60a851950dcb2815885fd4cdb594301f056e8b82f7d36a8eb0ed62ec317",
-      "currentBytes": 3988
+      "currentSha256": "d7205d1801e9bc6114bcdb29e4c445910e17ab2ee0228c49d90ccb68b5f2f491",
+      "currentBytes": 3996
     },
     {
       "originPath": "backend/tests/fixtures/acp_game_agent.ts",
@@ -124,8 +124,8 @@
           "reason": "No schemaVersion is serialized; legacy status does not identify a build."
         }
       },
-      "currentSha256": "fb2c37b0478c90aab0424ca0b8e750280aab9afb24e3b514d474331085179419",
-      "currentBytes": 9058
+      "currentSha256": "d1f513adbc6e404b0621b865aa6a2652c471077d8d1da8c4a9f6f91a6f9e8ed8",
+      "currentBytes": 9067
     },
     {
       "originPath": "backend/tests/fixtures/acp_ownership_agent.ts",
@@ -161927,11 +161927,24 @@
       "originCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
       "originalSha256": "44892c9e47855499c1fb0079de9262e2a13c13e3ca0defcf400bba099e6f5066",
       "originalBytes": 3649,
-      "currentSha256": "f9ffe60a851950dcb2815885fd4cdb594301f056e8b82f7d36a8eb0ed62ec317",
-      "currentBytes": 3988,
+      "currentSha256": "d7205d1801e9bc6114bcdb29e4c445910e17ab2ee0228c49d90ccb68b5f2f491",
+      "currentBytes": 3996,
       "programSha256": "ef7e3837948bf180ceeb1269b03b635e08c2c523ce11be085bd03e4b85a565b0",
       "moduleBindingsSha256": "5d7a02f2c3bfbf27cc3c4b4897f1ac914bd0522662e7c1658933efd47408a0f1",
-      "kind": "adapter-script"
+      "kind": "adapter-script",
+      "moduleRelocations": [
+        {
+          "originPath": "backend/tests/support/fixture_values.ts",
+          "currentPath": "backend/tests/support/oracles/fixture-values.ts",
+          "originCommit": "049a0a33a764a3ba285c2da9d30947acf58048e1",
+          "bindings": [
+            {
+              "name": "fixtureObject",
+              "declarationSha256": "ce9e4cbbfa11981b3c920b5897331d7e387c4f66f36ed20b2106365eaeb785d1"
+            }
+          ]
+        }
+      ]
     },
     {
       "originPath": "backend/tests/fixtures/acp_game_agent.ts",
@@ -161939,11 +161952,54 @@
       "originCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
       "originalSha256": "5aa52aedeb66c67e4222a9fc2b36c572a837b067caacde4fa0fb2e90011be250",
       "originalBytes": 8705,
-      "currentSha256": "fb2c37b0478c90aab0424ca0b8e750280aab9afb24e3b514d474331085179419",
-      "currentBytes": 9058,
+      "currentSha256": "d1f513adbc6e404b0621b865aa6a2652c471077d8d1da8c4a9f6f91a6f9e8ed8",
+      "currentBytes": 9067,
       "programSha256": "1bdee4de853e33700098b5a2740968c1419ac060e23bca1bd44496dc2480cc6e",
       "moduleBindingsSha256": "a2d4fa1bb4643055dd799772193df22ac386237b59dd3cb777fda85c9901eb10",
-      "kind": "adapter-script"
+      "kind": "adapter-script",
+      "moduleRelocations": [
+        {
+          "originPath": "backend/tests/support/transport_prompt_oracle.ts",
+          "currentPath": "backend/tests/support/oracles/transport/observations.ts",
+          "originCommit": "049a0a33a764a3ba285c2da9d30947acf58048e1",
+          "bindings": [
+            {
+              "name": "assertTransportPrompt",
+              "declarationSha256": "9326ffc172a8b9a28b254852d2154eca9314307a4b7c97220c546bf88b117c64"
+            },
+            {
+              "name": "assertTransportEvents",
+              "declarationSha256": "e4fbc0b3f09212a5bea9dac13b2b5effbd6367b6d6b68db37b3a67d24e6eff14"
+            },
+            {
+              "name": "assertTransportIdentity",
+              "declarationSha256": "37d37450943deda4f87137fb966e037b72d7b0155cf6faf4f7ff4a2f56dae3a2"
+            }
+          ]
+        },
+        {
+          "originPath": "backend/tests/support/foundation_transport_plan.ts",
+          "currentPath": "backend/tests/support/transport/contracts.ts",
+          "originCommit": "049a0a33a764a3ba285c2da9d30947acf58048e1",
+          "bindings": [
+            {
+              "name": "ActorTransportPlan",
+              "declarationSha256": "bb3d3bb946b416574d9583587c92156014d138a057edc59e55eca123678499fc"
+            }
+          ]
+        },
+        {
+          "originPath": "backend/tests/support/fixture_values.ts",
+          "currentPath": "backend/tests/support/oracles/fixture-values.ts",
+          "originCommit": "049a0a33a764a3ba285c2da9d30947acf58048e1",
+          "bindings": [
+            {
+              "name": "fixtureObject",
+              "declarationSha256": "ce9e4cbbfa11981b3c920b5897331d7e387c4f66f36ed20b2106365eaeb785d1"
+            }
+          ]
+        }
+      ]
     },
     {
       "originPath": "backend/tests/fixtures/acp_ownership_agent.ts",

@@ -7,8 +7,8 @@
 import { expect, test } from "bun:test";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { nobleTransportScenario } from "../../../support/noble_secret_body_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { nobleTransportScenario } from "../../../support/features/noble-secret-body/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { assertNobleTransportWire } from "../../../support/features/noble-secret-body/oracles/wire";
 import { assertNobleBadgeRules } from "../../../support/features/noble-secret-body/oracles/badge-prompt";
 import { assertNobleTransportGolden } from "../../../support/features/noble-secret-body/oracles/transport-golden";

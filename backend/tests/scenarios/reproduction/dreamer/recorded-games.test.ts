@@ -6,8 +6,8 @@
 import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { DREAMER_CASES, dreamerScenario, type DreamerScenario } from "../../../support/dreamer_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { DREAMER_CASES, dreamerScenario, type DreamerScenario } from "../../../support/features/dreamer/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 const facts: {
   [K in DreamerScenario]: {
     alive: number[];

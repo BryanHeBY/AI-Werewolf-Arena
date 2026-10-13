@@ -14,9 +14,9 @@ import {
 } from "../../../../src/core";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import { PhaseManager } from "../../../../src/game/engine/phase_manager";
-import type { PlannedTurn } from "../../../support/foundation_transport_plan";
-import { nobleTransportScenario } from "../../../support/noble_secret_body_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { type PlannedTurn } from "../../../support/transport/contracts";
+import { nobleTransportScenario } from "../../../support/features/noble-secret-body/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { assertNobleTransportWire } from "../../../support/features/noble-secret-body/oracles/wire";
 
 const rank: Partial<Record<ActionStage, number>> = {

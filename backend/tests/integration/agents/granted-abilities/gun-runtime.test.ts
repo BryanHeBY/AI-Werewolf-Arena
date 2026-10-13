@@ -22,8 +22,8 @@ import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import type { ActorTransportPlan, PlannedTurn } from "../../../support/foundation_transport_plan";
-import { assertTransportPrompt } from "../../../support/transport_prompt_oracle";
+import { type ActorTransportPlan, type PlannedTurn } from "../../../support/transport/contracts";
+import { assertTransportPrompt } from "../../../support/oracles/transport/observations";
 
 for (const locale of ["zh-CN", "en"] as const)
   for (const transport of ["llm", "acp"] as const)

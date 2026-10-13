@@ -12,7 +12,8 @@ import {
   type RoleComponent,
 } from "../../../../src/core";
 import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-text";
-import { demonHunterFixture, demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
+import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { getWitchState } from "../../../../src/game/mechanisms/roles/private_state";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";

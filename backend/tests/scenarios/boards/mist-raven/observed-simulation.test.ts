@@ -13,7 +13,7 @@ import {
   readReproduction,
   replayReproduction,
 } from "../../../../src/runtime/simulation/replay_reproduction";
-import { mistBoard } from "../../../support/mist_raven_recording";
+import { mistBoard } from "../../../support/features/mist-raven/builders/board";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 const languages = new Map<string, SimulationReport>();

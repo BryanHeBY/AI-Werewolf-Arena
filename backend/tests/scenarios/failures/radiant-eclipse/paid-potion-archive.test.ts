@@ -6,7 +6,7 @@
 import { expect, test } from "bun:test";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { radiantRecording } from "../../../support/radiant_eclipse_recording";
+import { radiantRecording } from "../../../support/features/radiant-eclipse/drivers/recording";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 for (const locale of ["en", "zh-CN"] as const)
   test(`actual paid borrowed potion survives aborted archive without false night disclosure/${locale}`, async () => {

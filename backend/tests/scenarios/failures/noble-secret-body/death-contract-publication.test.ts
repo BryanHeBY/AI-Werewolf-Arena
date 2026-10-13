@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role, COMPONENT, type ActionRequest, type ToolCall } from "../../../../src/core";
 import { nobleSecretBodyTwelveConfig } from "../../../../src/runtime/scenarios/noble_secret_body_twelve";
-import { demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { checkpointNobleBodyAuthority } from "../../../../src/game/mechanisms/roles/noble_secret_body/authority";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
 

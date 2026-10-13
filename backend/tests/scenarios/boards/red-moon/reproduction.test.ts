@@ -31,7 +31,7 @@ import {
   type RecordedCheckpoint,
 } from "../../../../src/recording/reproduction";
 import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
-import { demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 let version: ReturnType<typeof currentEngineVersion> | undefined;
 for (const mode of ["expire", "knife", "blast"] as const)

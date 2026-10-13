@@ -6,8 +6,8 @@
 import { promises as fs } from "node:fs";
 import { expect, test } from "bun:test";
 import { Camp, Role, Phase } from "../../../../src/core";
-import { debaterScenario } from "../../../support/debater_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { debaterScenario } from "../../../support/features/debater/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const size of [6, 12] as const)
   for (const outcome of ["success", "tie", "abstain"] as const)
     for (const transport of ["llm", "acp", "mixed"] as const)

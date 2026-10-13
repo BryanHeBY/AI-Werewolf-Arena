@@ -6,8 +6,8 @@
 import { expect, test } from "bun:test";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { runTransportGame } from "../../../support/run_transport_game";
-import { animalTransportScenario } from "../../../support/animal_dream_transport";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
+import { animalTransportScenario } from "../../../support/features/animal-dream/builders/transport-plan";
 for (const name of [
   "fox_beauty",
   "cat_badge",

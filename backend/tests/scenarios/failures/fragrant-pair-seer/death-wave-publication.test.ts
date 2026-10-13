@@ -4,11 +4,9 @@
  * Output and oracle: Literal death, binding-trigger and once-only checks preserve the original error and unpublished prefix; recording failure is not treated as an unpaid wave.
  */
 import { expect, test } from "bun:test";
-import {
-  fragrantRuntimeGame as game,
-  fragrantRuntimeAction as act,
-  type FragrantRuntimePlan,
-} from "../../../support/fragrant_pair_seer_scenarios";
+import { fragrantRuntimeGame as game } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
+import { fragrantRuntimeAction as act } from "../../../support/features/fragrant-pair-seer/drivers/actions";
+import { type FragrantRuntimePlan } from "../../../support/features/fragrant-pair-seer/contracts";
 import {
   fragrantAuthoritySnapshot,
   prepareFragrantDeathWave,

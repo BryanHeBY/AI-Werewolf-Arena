@@ -6,8 +6,8 @@
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { Camp, Role } from "../../../../src/core";
-import { SHAPESHIFTER_CASES, shapeshifterScenario } from "../../../support/shapeshifter_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { SHAPESHIFTER_CASES, shapeshifterScenario } from "../../../support/features/shapeshifter/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 for (const size of [6, 12] as const)
   for (const kind of SHAPESHIFTER_CASES.filter(

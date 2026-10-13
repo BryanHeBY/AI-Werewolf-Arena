@@ -6,8 +6,8 @@
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { Camp, Role } from "../../../../src/core";
-import { WILD_CHILD_CASES, wildChildScenario } from "../../../support/wild_child_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { WILD_CHILD_CASES, wildChildScenario } from "../../../support/features/wild-child/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 for (const size of [6, 12] as const)
   for (const kind of WILD_CHILD_CASES.filter(

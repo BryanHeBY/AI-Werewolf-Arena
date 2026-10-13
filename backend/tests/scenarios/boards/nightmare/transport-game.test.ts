@@ -7,8 +7,8 @@
  */
 import { writeFile } from "node:fs/promises";
 import { expect, test } from "bun:test";
-import { nightmareScenario } from "../../../support/nightmare_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { nightmareScenario } from "../../../support/features/nightmare-shadow/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const transport of ["llm", "acp", "mixed"] as const)
   test(`nightmare bilingual real transport and private fear exports/${transport}`, async () => {
     const scenario = nightmareScenario(),

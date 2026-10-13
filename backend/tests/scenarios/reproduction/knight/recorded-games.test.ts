@@ -7,8 +7,8 @@ import type { VictoryPoint } from "@ai-werewolf-arena/game-catalog";
 import { Camp, DeathCause, KnightDuelWindow, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import { knightScenario, type KnightScenario } from "../../../support/knight_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { knightScenario, type KnightScenario } from "../../../support/features/knight/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 const cases: Array<[KnightScenario, KnightDuelWindow]> = Object.values(KnightDuelWindow).map(
   (window) => ["hit", window],
 );

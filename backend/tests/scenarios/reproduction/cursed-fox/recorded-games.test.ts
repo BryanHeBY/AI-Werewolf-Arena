@@ -5,8 +5,8 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, DeathCause, Phase } from "../../../../src/core";
-import { FOX_CASES, foxScenario } from "../../../support/cursed_fox_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { FOX_CASES, foxScenario } from "../../../support/features/cursed-fox/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { promises as fs } from "node:fs";
 const expectations = {
   knife: { night: [], alive: [1, 2, 4, 5, 6], foxWins: true },

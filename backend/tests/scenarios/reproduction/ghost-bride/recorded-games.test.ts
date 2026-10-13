@@ -5,8 +5,8 @@
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
-import { ghostBrideScenario } from "../../../support/ghost_bride_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { ghostBrideScenario } from "../../../support/features/ghost-bride/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const kind of ["good", "wolf", "pair", "witness"] as const)
   for (const transport of ["llm", "acp", "mixed"] as const)
     test(`${kind}/${transport}: actual bilingual marriage, independent goals, single knife and strict Tape`, async () => {

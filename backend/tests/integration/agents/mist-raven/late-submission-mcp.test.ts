@@ -18,8 +18,8 @@ import {
 } from "../../../../src/core";
 import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
 import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
-import { MIST_ROLES, mistBoard } from "../../../support/mist_raven_recording";
-import { fixtureObject } from "../../../support/fixture_values";
+import { MIST_ROLES, mistBoard } from "../../../support/features/mist-raven/builders/board";
+import { fixtureObject } from "../../../support/oracles/fixture-values";
 
 // The retained client/control belong to this adversarial test, not a provider session.
 // Real runner tests separately prove provider-owned transport/process reclamation.

@@ -31,7 +31,7 @@ import {
   type ActionRequest,
   type ToolCall,
 } from "../../../../src/core";
-import { foxBoard } from "../../../support/cursed_fox_scenarios";
+import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { DebaterWindow } from "../../../../src/game/mechanisms/roles/debater/window";
 import {
   getDebaterState,

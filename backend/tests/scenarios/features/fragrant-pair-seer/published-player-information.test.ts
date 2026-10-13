@@ -16,10 +16,8 @@ import { getDefaultConfigRenderRegistry, getDefaultTargetHintRegistry, getDefaul
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { fragrantAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
 import { fragrantPairSeerTwelveConfig } from "../../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
-import {
-  fragrantRuntimeGame,
-  fragrantRuntimeAction,
-} from "../../../support/fragrant_pair_seer_scenarios";
+import { fragrantRuntimeGame } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
+import { fragrantRuntimeAction } from "../../../support/features/fragrant-pair-seer/drivers/actions";
 import {
   fragrantPairEventLabel,
   FRAGRANT_PAIR_EVENT_TYPES,

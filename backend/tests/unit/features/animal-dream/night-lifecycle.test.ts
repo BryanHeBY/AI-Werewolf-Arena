@@ -7,7 +7,7 @@
  */
 import { expect, test } from "bun:test";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
-import { animalGame } from "../../../support/animal_dream_scenarios";
+import { animalGame } from "../../../support/features/animal-dream/builders/runtime-game";
 import {
   AnimalNightUnit,
   animalAuthoritySnapshot,

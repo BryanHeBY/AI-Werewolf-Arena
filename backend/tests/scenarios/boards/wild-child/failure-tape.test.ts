@@ -18,7 +18,7 @@ import {
   replayReproduction,
 } from "../../../../src/runtime/simulation/replay_reproduction";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import { wildChildScenario } from "../../../support/wild_child_scenarios";
+import { wildChildScenario } from "../../../support/features/wild-child/builders/scenario";
 import { Role, Camp } from "../../../../src/core";
 for (const transport of ["sdk", "acp"] as const)
   for (const locale of ["zh-CN", "en"] as const)

@@ -5,9 +5,9 @@
  */
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 import { expect, test } from "bun:test";
-import { magicianScenario } from "../../../support/magician_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
-import type { PlannedTurn } from "../../../support/foundation_transport_plan";
+import { magicianScenario } from "../../../support/features/magician/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
+import { type PlannedTurn } from "../../../support/transport/contracts";
 import { Role } from "../../../../src/core";
 for (const boundary of ["witch", "death_shot", "wolf_discussion"] as const)
   for (const transport of ["llm", "acp"] as const)

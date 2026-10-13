@@ -5,11 +5,11 @@
  * The test never calls a billed model or rewrites expected fixture/Tape bytes.
  */
 import { expect, test } from "bun:test";
-import { nobleTransportScenario } from "../../../support/noble_secret_body_transport_scenarios";
+import { nobleTransportScenario } from "../../../support/features/noble-secret-body/builders/transport-plan";
 import { assertNobleTransportWire } from "../../../support/features/noble-secret-body/oracles/wire";
 import { assertNobleTransportGolden } from "../../../support/features/noble-secret-body/oracles/transport-golden";
 import { assertNobleBadgeRules } from "../../../support/features/noble-secret-body/oracles/badge-prompt";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const kind of ["llm", "acp", "mixed"] as const)
   test(`actual Noble holder badge prompt agrees with real action ${kind}`, async () => {
     const scenario = nobleTransportScenario("badge_reveal");

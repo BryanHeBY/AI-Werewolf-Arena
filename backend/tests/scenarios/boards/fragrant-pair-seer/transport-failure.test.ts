@@ -6,8 +6,8 @@
  */
 import { assertFragrantTransportWire } from "../../../support/features/fragrant-pair-seer/oracles/wire";
 import { expect, test } from "bun:test";
-import { fragrantTransportScenario } from "../../../support/fragrant_pair_seer_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { fragrantTransportScenario } from "../../../support/features/fragrant-pair-seer/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 const rank: Record<string, number> = {
   fragrant_bind: 150,
   wolf_discussion: 200,

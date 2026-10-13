@@ -6,12 +6,8 @@
 import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
-import {
-  HIDDEN_CASES,
-  hiddenWolfScenario,
-  type HiddenScenario,
-} from "../../../support/hidden_wolf_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { HIDDEN_CASES, hiddenWolfScenario, type HiddenScenario } from "../../../support/features/hidden-wolf/builders/scenario";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 const facts: Record<
   HiddenScenario,
   {

@@ -8,8 +8,8 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { expect, test } from "bun:test";
-import { magicianScenario } from "../../../support/magician_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { magicianScenario } from "../../../support/features/magician/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const shot of ["original", "exchanged"] as const)
   for (const transport of ["llm", "acp", "mixed"] as const)
     test(`Magician bilingual real transport, private exchange and night gun/${shot}/${transport}`, async () => {

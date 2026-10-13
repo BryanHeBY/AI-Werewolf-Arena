@@ -14,7 +14,7 @@ import {
   type ToolCall,
   type RoleComponent,
 } from "../../../../src/core";
-import { demonNightChoice } from "../../../support/demon_hunter_scenarios";
+import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { getRedMoonState } from "../../../../src/game/mechanisms/roles/red_moon_apostle/state";
 function game(policy: "ends_game" | "forbidden" = "ends_game") {
   const config = structuredClone(redMoonTwelveConfig);

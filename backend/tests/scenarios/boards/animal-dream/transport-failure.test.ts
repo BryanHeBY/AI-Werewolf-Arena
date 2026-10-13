@@ -4,8 +4,8 @@
  * The transport driver owns local process and record cleanup. These failure-prefix scenarios never synthesize a successful action, refund a paid effect or call a billed model.
  */
 import { expect, test } from "bun:test";
-import { animalTransportScenario } from "../../../support/animal_dream_transport";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { animalTransportScenario } from "../../../support/features/animal-dream/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import type { ToolCall } from "../../../../src/core";
 for (const skill of ["fox", "puffer"] as const)
   for (const fault of ["missing", "invalid", "late"] as const)

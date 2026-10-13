@@ -22,7 +22,7 @@ import {
   type ToolCall,
   type ActionRequest,
 } from "../../../../src/core";
-import { foxBoard } from "../../../support/cursed_fox_scenarios";
+import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";
 import {
   getWildChildState,

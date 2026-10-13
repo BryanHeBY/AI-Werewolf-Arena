@@ -5,9 +5,9 @@
  * The test never calls a billed model or rewrites expected fixture/Tape bytes.
  */
 import { expect, test } from "bun:test";
-import { nobleTransportScenario } from "../../../support/noble_secret_body_transport_scenarios";
+import { nobleTransportScenario } from "../../../support/features/noble-secret-body/builders/transport-plan";
 import { assertNobleTransportWire } from "../../../support/features/noble-secret-body/oracles/wire";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const wolf of ["standard", "no_blast_no_self_knife"] as const)
   for (const repeat of ["awa_nonconsecutive_nights_v1", "awa_repeat_v1"] as const)
     for (const kind of ["llm", "acp", "mixed"] as const)

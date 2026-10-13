@@ -2,8 +2,8 @@
  * Oracle unit tests check Radiant transport mapping and current borrowed inventory binding. Inputs include the original public board file read by the plan builder, an independent literal mapping golden and mutated prompt strings; exact maps and rejection messages are the oracle. Original input URL/bytes remain unchanged; no recorded game or model executes.
  */
 import { expect, test } from "bun:test";
-import { radiantTransportScenario } from "../../../support/radiant_eclipse_transport_scenarios";
-import { assertTransportPrompt } from "../../../support/transport_prompt_oracle";
+import { radiantTransportScenario } from "../../../support/features/radiant-eclipse/builders/transport-plan";
+import { assertTransportPrompt } from "../../../support/oracles/transport/observations";
 
 test("transport mapping matches independent FNV/Mulberry/Fisher literal golden", async () => {
   const s = await radiantTransportScenario();

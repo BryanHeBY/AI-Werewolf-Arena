@@ -22,7 +22,7 @@ import {
   type VictoryComponent,
   type AliveComponent,
 } from "../../../../src/core";
-import { foxBoard } from "../../../support/cursed_fox_scenarios";
+import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import {
   ThiefSetupWindow,
   projectThiefChoices,

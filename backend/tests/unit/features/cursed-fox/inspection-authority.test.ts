@@ -15,7 +15,7 @@ import {
   Phase,
   type RoleComponent,
 } from "../../../../src/core";
-import { foxBoard } from "../../../support/cursed_fox_scenarios";
+import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,

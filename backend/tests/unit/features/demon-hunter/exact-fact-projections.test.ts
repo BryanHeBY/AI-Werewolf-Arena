@@ -6,7 +6,7 @@
 import { expect, test } from "bun:test";
 import { DEMON_HUNTER_POLICY, readDemonHunterEventFact, readDemonHunterPlayerFact, demonHunterEventLabel } from "@ai-werewolf-arena/game-text";
 import { type GameEvent } from "../../../../src/core";
-import { demonHunterFixture } from "../../../support/demon_hunter_scenarios";
+import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 
 const chosen = { policy: DEMON_HUNTER_POLICY, actorId: 6, day: 2, targetId: 1 },

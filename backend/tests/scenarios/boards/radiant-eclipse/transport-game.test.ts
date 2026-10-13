@@ -9,8 +9,8 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { assertRadiantTransportWire } from "../../../support/features/radiant-eclipse/oracles/wire";
 import { expect, test } from "bun:test";
-import { radiantTransportScenario } from "../../../support/radiant_eclipse_transport_scenarios";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { radiantTransportScenario } from "../../../support/features/radiant-eclipse/builders/transport-plan";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const name of [
   "last-wolf-borrow-backlash",
   "last-villager-saved-then-double-cause",

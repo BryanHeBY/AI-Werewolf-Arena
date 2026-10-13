@@ -85,6 +85,14 @@ export interface FixtureSourceAsset {
   programSha256: string;
   moduleBindingsSha256: string;
   kind: "adapter-script" | "test-support";
+  moduleRelocations?: FixtureSourceModuleRelocation[];
+}
+/** Exact imported declarations moved by a reviewed support ownership slice. */
+export interface FixtureSourceModuleRelocation {
+  originPath: string;
+  currentPath: string;
+  originCommit: string;
+  bindings: { name: string; declarationSha256: string }[];
 }
 export interface FixtureDerivedManifest {
   path: string;
@@ -360,6 +368,7 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
         "programSha256",
         "moduleBindingsSha256",
         "kind",
+        ...(Object.hasOwn(entry, "moduleRelocations") ? ["moduleRelocations"] : []),
       ],
       "source_asset",
     );
@@ -384,6 +393,33 @@ export function parseFixtureManifest(serialized: string): FixtureManifest {
       !["adapter-script", "test-support"].includes(entry.kind)
     )
       fail("source_asset_identity");
+    if (Object.hasOwn(entry, "moduleRelocations")) {
+      if (!Array.isArray(entry.moduleRelocations)) fail("source_module_relocations");
+      const relocationTargets = new Set<string>();
+      for (const relocation of entry.moduleRelocations) {
+        if (!record(relocation)) fail("source_module_relocation");
+        strictKeys(relocation, ["originPath", "currentPath", "originCommit", "bindings"], "source_module_relocation");
+        if (
+          !publicSupportSourcePath(relocation.originPath) ||
+          !publicSupportSourcePath(relocation.currentPath) ||
+          typeof relocation.originCommit !== "string" ||
+          !/^[a-f0-9]{40}$/.test(relocation.originCommit) ||
+          relocationTargets.has(relocation.currentPath) ||
+          !Array.isArray(relocation.bindings) || relocation.bindings.length === 0
+        ) fail("source_module_relocation_identity");
+        relocationTargets.add(relocation.currentPath);
+        const names = new Set<string>();
+        for (const binding of relocation.bindings) {
+          if (!record(binding)) fail("source_module_binding");
+          strictKeys(binding, ["name", "declarationSha256"], "source_module_binding");
+          if (
+            typeof binding.name !== "string" || !/^[A-Za-z_$][\w$]*$/.test(binding.name) ||
+            names.has(binding.name) || !hash(binding.declarationSha256)
+          ) fail("source_module_binding_identity");
+          names.add(binding.name);
+        }
+      }
+    }
     sourceOrigins.add(entry.originPath);
     sourceTargets.add(entry.currentPath);
     const artifact = artifacts.get(entry.originPath);
@@ -1080,8 +1116,11 @@ export function sourceProgramContract(
   filename: string,
   current: boolean,
   mappings: readonly { originPath: string; currentPath: string }[],
+  relocations: readonly FixtureSourceModuleRelocation[] = [],
 ): { statements: string[]; moduleBindings: string[] } {
   const inverse = new Map(mappings.map((asset) => [asset.currentPath, asset.originPath]));
+  const relocated = new Map(relocations.map((entry) => [entry.currentPath, entry]));
+  const observedRelocations = new Set<string>();
   const ast = ts.createSourceFile(filename, text, ts.ScriptTarget.Latest, true);
   const changes: { start: number; end: number; replacement: string }[] = [];
   const imports: string[] = [];
@@ -1111,7 +1150,23 @@ export function sourceProgramContract(
       if (identity.startsWith(".")) {
         identity = normalizeSourceModule(filename, identity);
         if (!identity.endsWith(".ts")) identity += ".ts";
-        if (current) identity = inverse.get(identity) ?? identity;
+        if (current) {
+          const relocation = relocated.get(identity);
+          if (relocation) {
+            if (!ts.isImportDeclaration(node) || !node.importClause || node.importClause.name ||
+              !node.importClause.namedBindings || !ts.isNamedImports(node.importClause.namedBindings))
+              fail("source_module_relocation_requires_named_import");
+            const names = node.importClause.namedBindings.elements.map((entry) =>
+              (entry.propertyName ?? entry.name).text).sort();
+            const expected = relocation.bindings.map((entry) => entry.name).sort();
+            if (JSON.stringify(names) !== JSON.stringify(expected))
+              fail("source_module_relocation_binding_drift");
+            if (observedRelocations.has(identity)) fail("source_module_relocation_duplicate_import");
+            observedRelocations.add(identity);
+            identity = relocation.originPath;
+          }
+          identity = inverse.get(identity) ?? identity;
+        }
       }
       changes.push({
         start: literal.getStart(ast),
@@ -1123,6 +1178,8 @@ export function sourceProgramContract(
     ts.forEachChild(node, visit);
   };
   visit(ast);
+  if (current && observedRelocations.size !== relocations.length)
+    fail("source_module_relocation_unused");
   let normalized = text;
   for (const change of changes.sort((a, b) => b.start - a.start))
     normalized =
@@ -1132,6 +1189,27 @@ export function sourceProgramContract(
     statements: normalizedAst.statements.map((node) => node.getText(normalizedAst)),
     moduleBindings: imports,
   };
+}
+
+/** Complete named declaration syntax, without formatting/comments or executing source. */
+export function sourceDeclarationContract(
+  ts: typeof import("typescript"), text: string, filename: string, name: string,
+): string {
+  const ast = ts.createSourceFile(filename, text, ts.ScriptTarget.Latest, true);
+  const nodes = ast.statements.filter((node) => {
+    if (ts.isFunctionDeclaration(node) || ts.isInterfaceDeclaration(node) ||
+      ts.isTypeAliasDeclaration(node) || ts.isClassDeclaration(node) || ts.isEnumDeclaration(node))
+      return node.name?.text === name;
+    return false;
+  });
+  if (nodes.length !== 1) fail("source_module_declaration_identity");
+  const declaration = nodes[0]!;
+  const modifiers = ts.canHaveModifiers(declaration) ? ts.getModifiers(declaration) : undefined;
+  if (!modifiers?.some((modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword) ||
+    modifiers.some((modifier) => modifier.kind === ts.SyntaxKind.DefaultKeyword))
+    fail("source_module_declaration_requires_named_export");
+  return ts.createPrinter({ removeComments: true, newLine: ts.NewLineKind.LineFeed })
+    .printNode(ts.EmitHint.Unspecified, declaration, ast);
 }
 
 function normalizeSourceModule(filename: string, specifier: string): string {
@@ -1295,8 +1373,8 @@ export async function generateFixtureManifest(repository: string): Promise<Fixtu
     fail("layout_original_coverage");
   const { compiler } = await import("./architecture/contracts");
   const ts = compiler(root);
-  function program(text: string, filename: string, current: boolean) {
-    const contract = sourceProgramContract(ts, text, filename, current, layout.sourceAssets);
+  function program(text: string, filename: string, current: boolean, relocations: FixtureSourceModuleRelocation[] = []) {
+    const contract = sourceProgramContract(ts, text, filename, current, layout.sourceAssets, relocations);
     return {
       programSha256: digest(JSON.stringify(contract.statements)),
       moduleBindingsSha256: digest(JSON.stringify(contract.moduleBindings)),
@@ -1317,8 +1395,20 @@ export async function generateFixtureManifest(repository: string): Promise<Fixtu
       current.length !== asset.currentBytes
     )
       fail("source_asset_byte_identity");
+    for (const relocation of asset.moduleRelocations ?? []) {
+      const previous = childProcess.execFileSync("git", ["show", `${relocation.originCommit}:${relocation.originPath}`], {
+        cwd: root, maxBuffer: 4 * 1024 * 1024,
+      }).toString("utf8");
+      const moved = (await safeFile(relocation.currentPath)).toString("utf8");
+      for (const binding of relocation.bindings) {
+        const before = digest(sourceDeclarationContract(ts, previous, relocation.originPath, binding.name));
+        const after = digest(sourceDeclarationContract(ts, moved, relocation.currentPath, binding.name));
+        if (before !== binding.declarationSha256 || after !== before)
+          fail("source_module_relocation_declaration_drift");
+      }
+    }
     const before = program(Buffer.from(original).toString("utf8"), asset.originPath, false),
-      after = program(current.toString("utf8"), asset.currentPath, true);
+      after = program(current.toString("utf8"), asset.currentPath, true, asset.moduleRelocations);
     if (
       before.programSha256 !== after.programSha256 ||
       before.moduleBindingsSha256 !== after.moduleBindingsSha256 ||

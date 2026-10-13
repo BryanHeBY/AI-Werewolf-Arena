@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { COMPONENT } from "../../../src/core";
-import { demonHunterFixture } from "../../support/demon_hunter_scenarios";
+import { demonHunterFixture } from "../../support/features/demon-hunter/builders/candidate-world";
 import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
 
 test("actual badge transfer and destruction survive subsequent failure; mutable fake badge stays out", async () => {

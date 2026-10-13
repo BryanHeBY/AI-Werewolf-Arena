@@ -6,10 +6,10 @@
  */
 import { expect, test } from "bun:test";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
-import { nobleTransportScenario } from "../../../support/noble_secret_body_transport_scenarios";
+import { nobleTransportScenario } from "../../../support/features/noble-secret-body/builders/transport-plan";
 import { assertNobleTransportWire } from "../../../support/features/noble-secret-body/oracles/wire";
 import { assertNobleTransportGolden } from "../../../support/features/noble-secret-body/oracles/transport-golden";
-import { runTransportGame } from "../../../support/run_transport_game";
+import { runTransportGame } from "../../../support/drivers/transport/run-game";
 for (const boundary of ["nonconsecutive", "restricted_knife"] as const)
   for (const kind of ["llm", "acp", "mixed"] as const)
     test(`actual Noble policy rejects then corrects ${boundary}/${kind}`, async () => {
