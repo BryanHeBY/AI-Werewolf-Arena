@@ -88444,13 +88444,345 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/reproduction_persistence.test.ts",
+      "to": "backend/tests/integration/recording/mandatory-prefix-persistence.test.ts",
+      "sourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "reason": "Actual selected integration module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "85de10eac150b0abccfcc162cf5999dd52c22abb522eca065a99577892caa973",
+      "candidateSha256": "bc8f947ad787852e5a1e0fe4a6143c333e171adad34db091721d5500c3475e40",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 733,
+          "end": 768,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 652,
+          "end": 689,
+          "original": "../../src/runtime/game_event_recorder",
+          "value": "../../../src/runtime/game_event_recorder",
+          "originalResolved": "backend/src/runtime/game_event_recorder.ts",
+          "expectedResolved": "backend/src/runtime/game_event_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 565,
+          "end": 614,
+          "original": "../../src/runtime/simulation/reproduction_context",
+          "value": "../../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 445,
+          "end": 475,
+          "original": "../../src/recording/file_store",
+          "value": "../../../src/recording/file_store",
+          "originalResolved": "backend/src/recording/file_store.ts",
+          "expectedResolved": "backend/src/recording/file_store.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 373,
+          "end": 409,
+          "original": "../../src/recording/session_recorder",
+          "value": "../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 290,
+          "end": 332,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 237,
+          "end": 251,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 154,
+          "end": 177,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "1e9e2d9b6cccc93bfd46e754aee59e348ee1345ad71985ed1e049704c627659e",
+          "title": "mandatory manifest, public replay and reproduction failures are all awaited and preserved",
+          "occurrence": 1
+        },
+        {
+          "id": "da51d0cd1c52cb5615afd5c660828a868f580da486d94ae7e4a6c23c09f634b4",
+          "title": "pending decisions cannot produce a finalized recording while the public partial replay is still saved",
+          "occurrence": 1
+        },
+        {
+          "id": "a230ea0d737a7b62fb6c0550f87ce49749f194428075cb95b017f39206aa9bf8",
+          "title": "settling a decision during a slow prefix write cannot schedule a later overwrite of the final record",
+          "occurrence": 1
+        },
+        {
+          "id": "a2f999c5ca6ac216d88ebbfe337f1dcbcc01e56aa83fc1fbec3a8da17084f61d",
+          "title": "a failed strict prefix write remains visible even when the final publication succeeds",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import { createRandom, Phase, Role, type ActionRequest } from \"../../src/core\";",
+          "currentImportBeforeRebase": "import { createRandom, Phase, type ActionRequest } from \"../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/ai/agents/providers/action_providers",
+          "originalImport": "import { BaselineBotActionProvider } from \"../../src/ai/agents/providers/action_providers\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "BaselineBotActionProvider",
+              "imported": "BaselineBotActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/recording_context",
+          "originalImport": "import { runWithSessionRecorder } from \"../../src/recording/recording_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "runWithSessionRecorder",
+              "imported": "runWithSessionRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/simulation/replay_reproduction",
+          "originalImport": "import {\n  readReproduction,\n  replayReproduction,\n} from \"../../src/runtime/simulation/replay_reproduction\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readReproduction",
+              "imported": "readReproduction",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "replayReproduction",
+              "imported": "replayReproduction",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/reproduction_persistence.test.ts",
+      "to": "backend/tests/scenarios/reproduction/fixed-deal-named-root-stream.test.ts",
+      "sourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "85de10eac150b0abccfcc162cf5999dd52c22abb522eca065a99577892caa973",
+      "candidateSha256": "dc4905c879f72eaede79d3a3cabb01f516cb1f00654d3e8fb85e677aa402e1a0",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 890,
+          "end": 938,
+          "original": "../../src/runtime/simulation/replay_reproduction",
+          "value": "../../../src/runtime/simulation/replay_reproduction",
+          "originalResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "expectedResolved": "backend/src/runtime/simulation/replay_reproduction.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 791,
+          "end": 828,
+          "original": "../../src/recording/recording_context",
+          "value": "../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 702,
+          "end": 748,
+          "original": "../../src/ai/agents/providers/action_providers",
+          "value": "../../../src/ai/agents/providers/action_providers",
+          "originalResolved": "backend/src/ai/agents/providers/action_providers.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/action_providers.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 621,
+          "end": 656,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 540,
+          "end": 577,
+          "original": "../../src/runtime/game_event_recorder",
+          "value": "../../../src/runtime/game_event_recorder",
+          "originalResolved": "backend/src/runtime/game_event_recorder.ts",
+          "expectedResolved": "backend/src/runtime/game_event_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 453,
+          "end": 502,
+          "original": "../../src/runtime/simulation/reproduction_context",
+          "value": "../../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 327,
+          "end": 363,
+          "original": "../../src/recording/session_recorder",
+          "value": "../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 244,
+          "end": 286,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 191,
+          "end": 205,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 102,
+          "end": 125,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "8d1ee6e048b1b6a3304c44accc0448ba1c7ab42d83e4f031ac00a377c46f47ca",
+          "title": "a fixed deal with an injected named root stream reproduces in its declared mode",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "bun:test",
+          "originalImport": "import { expect, spyOn, test } from \"bun:test\";",
+          "currentImportBeforeRebase": "import { expect, test } from \"bun:test\";",
+          "droppedBindings": [
+            {
+              "name": "spyOn",
+              "imported": "spyOn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readFile } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readFile",
+              "imported": "readFile",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/file_store",
+          "originalImport": "import { ReplayFileStore } from \"../../src/recording/file_store\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ReplayFileStore",
+              "imported": "ReplayFileStore",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 559,
-    "targetFiles": 622,
-    "mappingEntries": 622,
-    "baselineCases": 7222,
+    "sourceFiles": 560,
+    "targetFiles": 624,
+    "mappingEntries": 624,
+    "baselineCases": 7227,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
