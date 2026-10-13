@@ -1,14 +1,15 @@
+/**
+ * Owns Lonely Girl state construction and validated live slot reads. Inputs are the
+ * original role record; outputs preserve the stored reference after the existing copied
+ * validation. This boundary never resolves a relationship, reveals truth or commits stock.
+ */
+import type { LonelyGirlState, LonelyGirlReadState } from "@ai-werewolf-arena/game-contract";
 import { copyEventData, LONELY_GIRL_POLICY } from "@ai-werewolf-arena/game-text";
 import type { RoleComponent } from "../../../../core/domain";
 export {
   LONELY_GIRL_POLICY,
   readLonelyGirlChoiceTool as readLonelyGirlTool,
 } from "@ai-werewolf-arena/game-text";
-export interface LonelyGirlState {
-  policy: typeof LONELY_GIRL_POLICY;
-  remaining: 0 | 1;
-  choice: { day: 1; targetId: number } | null;
-}
 export function freshLonelyGirlState(): LonelyGirlState {
   return { policy: LONELY_GIRL_POLICY, remaining: 1, choice: null };
 }
@@ -17,10 +18,12 @@ export function lonelyData(value: unknown, key: string): unknown {
   const d = Object.getOwnPropertyDescriptor(value, key);
   return d && Object.hasOwn(d, "value") ? d.value : undefined;
 }
-export function getLonelyGirlState(role: RoleComponent | undefined): LonelyGirlState | undefined {
+export function getLonelyGirlState(
+  role: RoleComponent | undefined,
+): LonelyGirlReadState | undefined {
   const value = lonelyData(lonelyData(role, "privateState"), "lonelyGirl");
   try {
-    const p = copyEventData(value) as LonelyGirlState;
+    const p = copyEventData(value) as LonelyGirlReadState;
     if (
       !p ||
       Array.isArray(p) ||
@@ -37,7 +40,7 @@ export function getLonelyGirlState(role: RoleComponent | undefined): LonelyGirlS
           p.remaining !== 0))
     )
       return undefined;
-    return value as LonelyGirlState;
+    return value as LonelyGirlReadState;
   } catch {
     return undefined;
   }

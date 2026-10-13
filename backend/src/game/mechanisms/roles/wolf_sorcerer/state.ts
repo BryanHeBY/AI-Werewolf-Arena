@@ -1,16 +1,17 @@
+/**
+ * Owns Wolf Sorcerer state construction, exact live reads and copied player projection.
+ * Inputs are original role/history data; outputs retain existing descriptor, day and pair
+ * validation. This boundary never exchanges seats, commits history or closes a frame.
+ */
+import type {
+  WolfSorcererChoice,
+  WolfSorcererState,
+  WolfSorcererReadState,
+} from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import { Camp, type RoleComponent } from "../../../../core";
 export const WOLF_SORCERER_ROLE = "wolf_sorcerer" as const;
 export const WOLF_SORCERER_POLICY = "awa_wolf_sorcerer_seats_v1" as const;
-export interface WolfSorcererChoice {
-  day: number;
-  pair: [number, number] | null;
-}
-export interface WolfSorcererState {
-  policy: typeof WOLF_SORCERER_POLICY;
-  firstNight: 1 | 2;
-  history: WolfSorcererChoice[];
-}
 function field(value: unknown, key: PropertyKey): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
   const d = Object.getOwnPropertyDescriptor(value, key);
@@ -50,7 +51,7 @@ function arrayItems(value: unknown): unknown[] | null {
 /** Validate without invoking user-owned accessors, iterators or array methods. */
 export function getWolfSorcererState(
   role: RoleComponent | undefined,
-): WolfSorcererState | undefined {
+): WolfSorcererReadState | undefined {
   if (field(role, "role") !== WOLF_SORCERER_ROLE || field(role, "camp") !== Camp.Wolf)
     return undefined;
   const state = field(field(role, "privateState"), "wolfSorcerer");
@@ -83,7 +84,7 @@ export function getWolfSorcererState(
     used.add(pair[0]);
     used.add(pair[1]);
   }
-  return state as WolfSorcererState;
+  return state as WolfSorcererReadState;
 }
 export function createWolfSorcererState(firstNight: 1 | 2): WolfSorcererState {
   return { policy: WOLF_SORCERER_POLICY, firstNight, history: [] };

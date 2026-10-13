@@ -4,6 +4,12 @@
  * readable state references. This state helper does not execute a fear stage or serialize
  * runtime authority.
  */
+import type {
+  FearActionPolicy,
+  NightmareWolfActionPolicy,
+  NightmareShadowState,
+  NightmareShadowReadState,
+} from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -12,17 +18,6 @@ import type { World } from "../../../../core/domain/world";
 
 export const NIGHTMARE_SHADOW_ROLE = "nightmare" as const;
 export const NIGHTMARE_SHADOW_POLICY = "awa_nightmare_dreamer_v1" as const;
-export type FearActionPolicy = "optional" | "required_when_legal";
-export type NightmareWolfActionPolicy = "standard" | "no_blast_no_self_knife";
-export interface NightmareShadowState {
-  policy: typeof NIGHTMARE_SHADOW_POLICY;
-  fearActionPolicy: FearActionPolicy;
-  wolfActionPolicy: NightmareWolfActionPolicy;
-  packReady: boolean;
-  lastDay: number | null;
-  lastTarget: EntityId | null;
-  history: { day: number; targetId: EntityId | null }[];
-}
 function data(value: unknown, key: string): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
   const descriptor = Object.getOwnPropertyDescriptor(value, key);
@@ -50,7 +45,7 @@ function validDay(value: unknown): value is number {
 }
 export function getNightmareShadowState(
   role: RoleComponent | undefined,
-): NightmareShadowState | undefined {
+): NightmareShadowReadState | undefined {
   if (data(role, "role") !== NIGHTMARE_SHADOW_ROLE || data(role, "camp") !== Camp.Wolf)
     return undefined;
   const state = data(data(role, "privateState"), "nightmareShadow");
@@ -74,7 +69,9 @@ export function getNightmareShadowState(
   const length = data(history, "length");
   if (typeof length !== "number") return undefined;
   if (day === null)
-    return !ready && target === null && length === 0 ? (state as NightmareShadowState) : undefined;
+    return !ready && target === null && length === 0
+      ? (state as NightmareShadowReadState)
+      : undefined;
   if (!ready || length === 0) return undefined;
   let previous = 0;
   for (let i = 0; i < length; i++) {
@@ -90,7 +87,7 @@ export function getNightmareShadowState(
     previous = entryDay;
     if (i === length - 1 && (entryDay !== day || entryTarget !== target)) return undefined;
   }
-  return state as NightmareShadowState;
+  return state as NightmareShadowReadState;
 }
 /** The same target policy must feed requests, validation, baselines and hints. */
 export function nightmareFearTargets(world: World, actorId: EntityId, day: number): EntityId[] {

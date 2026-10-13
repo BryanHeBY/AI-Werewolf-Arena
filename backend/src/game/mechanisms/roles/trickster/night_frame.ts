@@ -4,6 +4,7 @@
  * exile mapping. Finish or abort ends the exchange window without granting an old mapping to a
  * new life.
  */
+import type { TricksterReadState } from "@ai-werewolf-arena/game-contract";
 import { mapTricksterExileTarget } from "./exile_mapping";
 import { types } from "node:util";
 import { COMPONENT, type RoleComponent, type World } from "../../../../core";
@@ -16,7 +17,6 @@ import {
   getTricksterState,
   projectTricksterState,
   TRICKSTER_ROLE,
-  type TricksterState,
   nextTricksterChoice,
 } from "./state";
 
@@ -44,7 +44,7 @@ interface ExchangeNight {
 }
 interface Board {
   actorId: number;
-  state: TricksterState;
+  state: TricksterReadState;
   expectedState: string;
   players: ReadonlyMap<number, OriginalPlayer>;
   night: ExchangeNight | null;
@@ -109,7 +109,7 @@ export function installTricksterBoard(world: World): void {
   const players = new Map<number, OriginalPlayer>();
   const seats = new Set<number>();
   let actorId: number | null = null;
-  let state: TricksterState | undefined;
+  let state: TricksterReadState | undefined;
   for (const id of world.entityIds()) {
     const role = world.getComponent(id, COMPONENT.Role);
     const life = world.getComponent(id, COMPONENT.Alive);

@@ -6,13 +6,11 @@
  * Test-owned mocks/components exercise this boundary without a model or physical
  * transport. Support files, fixture bytes, policy and state behavior are retained.
  */
+import type { ModifierState } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
 import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../src/core";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
-import {
-  createModifierState,
-  type ModifierState,
-} from "../../../../src/game/mechanisms/roles/scholar_mentor/state";
+import { createModifierState } from "../../../../src/game/mechanisms/roles/scholar_mentor/state";
 import {
   installScholarMentorBoard,
   beginScholarMentorNight,

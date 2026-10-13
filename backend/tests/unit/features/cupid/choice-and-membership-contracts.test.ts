@@ -7,11 +7,33 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Camp, COMPONENT, Phase, Role, WinCondition, createAliveComponent, createVictoryComponent, type RoleComponent, type VictoryComponent, type AliveComponent, type GameEvent, type ActionRequest, type ToolCall, type RuntimeSnapshot } from "../../../../src/core";
+import {
+  Camp,
+  COMPONENT,
+  Phase,
+  Role,
+  WinCondition,
+  createAliveComponent,
+  createVictoryComponent,
+  type RoleComponent,
+  type VictoryComponent,
+  type AliveComponent,
+  type GameEvent,
+  type ActionRequest,
+  type ToolCall,
+  type RuntimeSnapshot,
+} from "../../../../src/core";
 import { foxBoard } from "../../../support/cursed_fox_scenarios";
 import { CUPID_STAGE } from "../../../../src/game/mechanisms/roles/cupid/night_stage";
-import { getCupidState, projectCupidState } from "../../../../src/game/mechanisms/roles/cupid/state";
-import { loversRecord, projectLover, hasCupidNightCommit } from "../../../../src/game/mechanisms/roles/cupid/relation";
+import {
+  getCupidState,
+  projectCupidState,
+} from "../../../../src/game/mechanisms/roles/cupid/state";
+import {
+  loversRecord,
+  projectLover,
+  hasCupidNightCommit,
+} from "../../../../src/game/mechanisms/roles/cupid/relation";
 import { cupidCityDecision } from "../../../../src/game/mechanisms/roles/cupid/victory";
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
@@ -22,7 +44,10 @@ import {
   parseBoardDefinition,
 } from "../../../../src/runtime/config/board_definition";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
-import { knownWolfTeammates, wolfKnifeHolders } from "../../../../src/game/mechanisms/roles/wolf_team";
+import {
+  knownWolfTeammates,
+  wolfKnifeHolders,
+} from "../../../../src/game/mechanisms/roles/wolf_team";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
 import { cupidEventLabel, readCupidEventFact, text } from "@ai-werewolf-arena/game-text";
@@ -236,7 +261,10 @@ for (const mutation of [
               {};
           if (mutation === "owner_life")
             game.world.addComponent(1, COMPONENT.Alive, createAliveComponent());
-          if (mutation === "owner_policy") oldState.policy = "lui_meme_lovers_only_v1";
+          if (mutation === "owner_policy")
+            (
+              oldState as Pick<import("@ai-werewolf-arena/game-contract").CupidState, "policy">
+            ).policy = "lui_meme_lovers_only_v1";
           if (mutation === "owner_victory")
             game.world.addComponent(1, COMPONENT.Victory, createVictoryComponent([]));
           if (mutation === "phase") current = false;

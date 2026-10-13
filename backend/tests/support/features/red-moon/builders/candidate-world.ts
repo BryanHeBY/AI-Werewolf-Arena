@@ -5,6 +5,7 @@
  * unchanged handwritten literals and identity snapshots as the independent oracle.
  * This builder never runs a whole game, transport or production rule verifier.
  */
+import type { LastWolfBlastPolicy } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../../../src/core/domain/world";
 import { Role } from "../../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../../src/core/domain/components/names";
@@ -17,11 +18,14 @@ import { createVotingRightComponent } from "../../../../../src/core/domain/compo
 import { createVictoryComponent } from "../../../../../src/core/domain/components/victory";
 import { createIdentityComponent } from "../../../../../src/core/domain/entities/player";
 import { installInitialRoster } from "../../../../../src/core/domain/initial_roster";
-import { getDefaultRoleCatalog, RoleCatalog } from "../../../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  RoleCatalog,
+} from "../../../../../src/game/mechanisms/roles/catalog";
 import { RED_MOON_ROLE_PROFILE } from "../../../../../src/game/mechanisms/roles/red_moon_apostle/profile";
 import { installDemonHunter } from "../../../../../src/game/mechanisms/roles/demon_hunter/authority";
 import { redMoonTwelveConfig } from "../../../../../src/runtime/scenarios/red_moon_twelve";
-import type { LastWolfBlastPolicy } from "../../../../../src/game/mechanisms/roles/red_moon_apostle/state";
+
 export function redMoonCandidateWorld(policy: LastWolfBlastPolicy = "ends_game") {
   const world = new World();
   const config = structuredClone(redMoonTwelveConfig);

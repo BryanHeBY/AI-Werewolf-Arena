@@ -1,17 +1,19 @@
+/**
+ * Owns Red Moon state construction and exact live slot reads. Inputs are original role
+ * and settlement data; outputs preserve descriptor checks, policy and stored identity.
+ * This boundary never consumes blast stock, closes expiry or authorizes a death effect.
+ */
+import type {
+  LastWolfBlastPolicy,
+  RedMoonState,
+  RedMoonReadState,
+} from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp } from "../../../../core/domain/identity";
 
 export const RED_MOON_ROLE = "red_moon_apostle" as const;
 export const RED_MOON_POLICY = "awa_red_moon_demon_v1" as const;
-export type LastWolfBlastPolicy = "ends_game" | "forbidden";
-export interface RedMoonState {
-  policy: typeof RED_MOON_POLICY;
-  lastWolfBlastPolicy: LastWolfBlastPolicy;
-  blastDay: number | null;
-  exileDay: number | null;
-  expirySettled: boolean;
-}
 function own(value: unknown, key: string): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
   const field = Object.getOwnPropertyDescriptor(value, key);
@@ -36,7 +38,7 @@ export function freshRedMoonState(
     expirySettled: false,
   };
 }
-export function getRedMoonState(role: RoleComponent | undefined): RedMoonState | undefined {
+export function getRedMoonState(role: RoleComponent | undefined): RedMoonReadState | undefined {
   if (own(role, "role") !== RED_MOON_ROLE || own(role, "camp") !== Camp.Wolf) return undefined;
   const state = own(own(role, "privateState"), "redMoon");
   if (!state || typeof state !== "object" || types.isProxy(state)) return undefined;
@@ -61,5 +63,5 @@ export function getRedMoonState(role: RoleComponent | undefined): RedMoonState |
     (settled && exile === null)
   )
     return undefined;
-  return state as RedMoonState;
+  return state as RedMoonReadState;
 }

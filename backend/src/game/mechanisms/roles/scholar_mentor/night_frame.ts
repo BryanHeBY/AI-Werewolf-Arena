@@ -4,6 +4,13 @@
  * bonus actors and sourced conflict deaths. Close or abort removes that night's windows without
  * granting a new bonus to a replacement body.
  */
+import type {
+  ModifierState,
+  ModifierMode,
+  CommittedModifier,
+  ModifierResolution,
+  ModifierReadState,
+} from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../core";
 import {
@@ -12,15 +19,7 @@ import {
   type AliveComponent,
 } from "../../../../core/domain/components/alive";
 import type { NightLifeScope } from "../../../../core/domain/night_effects";
-import {
-  readModifierState,
-  selectModifier,
-  resolveModifiers,
-  type ModifierState,
-  type ModifierMode,
-  type CommittedModifier,
-  type ModifierResolution,
-} from "./state";
+import { readModifierState, selectModifier, resolveModifiers } from "./state";
 interface OriginalPlayer {
   abilityAuthority: () => boolean;
   id: number;
@@ -36,9 +35,9 @@ interface OriginalPlayer {
   version: number;
 }
 interface CasterAuthority {
-  state: ModifierState;
-  remaining: ModifierState["remaining"];
-  history: ModifierState["history"];
+  state: ModifierReadState;
+  remaining: ModifierReadState["remaining"];
+  history: ModifierReadState["history"];
   expected: string;
 }
 export type ModifierBonusKind = "check" | "guard" | "poison" | "kill";
@@ -269,7 +268,7 @@ export function installScholarMentorBoard(world: World): void {
       const state = readModifierState(raw);
       if (!state || state.caster !== String(role.role) || state.history.length !== 0)
         throw new Error("scholar_mentor_original_roster_invalid");
-      const original = raw as ModifierState;
+      const original = raw as ModifierReadState;
       casters.set(id, {
         state: original,
         remaining: original.remaining,
@@ -371,8 +370,8 @@ export function commitScholarMentorChoice(
     targetId,
     scholarMentorChoiceTargets(world, day, actorId),
   );
-  c.remaining.enhance = next.remaining.enhance;
-  c.remaining.weaken = next.remaining.weaken;
+  (c.remaining as Pick<ModifierState["remaining"], "enhance">).enhance = next.remaining.enhance;
+  (c.remaining as Pick<ModifierState["remaining"], "weaken">).weaken = next.remaining.weaken;
   Object.defineProperty(c.history, String(c.history.length), {
     value: next.history.at(-1)!,
     writable: true,
@@ -604,7 +603,7 @@ export function scholarMentorPackBlocked(world: World): boolean {
 }
 export function scholarMentorStateForRole(
   role: RoleComponent | undefined,
-): ModifierState | undefined {
+): ModifierReadState | undefined {
   const name = ownData(role, "role"),
     camp = ownData(role, "camp");
   if (
@@ -614,5 +613,5 @@ export function scholarMentorStateForRole(
     return undefined;
   const raw = ownData(ownData(role, "privateState"), "scholarMentor"),
     value = readModifierState(raw);
-  return value?.caster === name ? (raw as ModifierState) : undefined;
+  return value?.caster === name ? (raw as ModifierReadState) : undefined;
 }

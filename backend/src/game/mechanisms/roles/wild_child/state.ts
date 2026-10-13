@@ -1,14 +1,12 @@
+/**
+ * Owns Wild Child state construction, descriptor-based live reads and tool-data parsing.
+ * Inputs are the original role record or candidate tool data; outputs preserve the stored
+ * reference and existing finite choice checks. This boundary never changes camp or life.
+ */
+import type { WildChildState, WildChildReadState } from "@ai-werewolf-arena/game-contract";
 import { copyEventData } from "@ai-werewolf-arena/game-text";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 export const WILD_CHILD_POLICY = "awa_lui_meme_wild_child_v1" as const;
-export interface WildChildState {
-  policy: typeof WILD_CHILD_POLICY;
-  remaining: 0 | 1;
-  status: "pending" | "chosen" | "transformed" | "active" | "closed";
-  choice: { day: 1; targetId: number } | null;
-  eligibleNight: number | null;
-  activeFromNight: number | null;
-}
 export function freshWildChildState(): WildChildState {
   return {
     policy: WILD_CHILD_POLICY,
@@ -19,14 +17,14 @@ export function freshWildChildState(): WildChildState {
     activeFromNight: null,
   };
 }
-export function getWildChildState(role: RoleComponent | undefined): WildChildState | undefined {
+export function getWildChildState(role: RoleComponent | undefined): WildChildReadState | undefined {
   const container = role && Object.getOwnPropertyDescriptor(role, "privateState");
   const value =
     container &&
     Object.hasOwn(container, "value") &&
     container.value &&
     Object.getOwnPropertyDescriptor(container.value, "wildChild");
-  return value && Object.hasOwn(value, "value") ? (value.value as WildChildState) : undefined;
+  return value && Object.hasOwn(value, "value") ? (value.value as WildChildReadState) : undefined;
 }
 export function readWildChildTool(
   value: unknown,

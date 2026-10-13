@@ -67,7 +67,7 @@ test("Only last-wolf exile can defer; wrong phase and repeated transitions fail 
 test("Raw Red Moon inventory tampering cannot become an audited transition", () => {
   const { world } = dayWorld();
   const state = getRedMoonState(world.getComponent<RoleComponent>(4, COMPONENT.Role))!;
-  state.lastWolfBlastPolicy = "forbidden";
+  (state as { lastWolfBlastPolicy: "ends_game" | "forbidden" }).lastWolfBlastPolicy = "forbidden";
   expect(commitDemonRedMoonTransition(world, 4, "blast", 1)).toBe(false);
   expect(() => demonHunterCheckpointPlayers(world, true)).toThrow();
 });

@@ -4,6 +4,7 @@
  * decisions. Only the bound original players share an exchange, without silently replacing its
  * source.
  */
+import type { WolfSorcererReadState } from "@ai-werewolf-arena/game-contract";
 import { resolveOrderedSeatTarget } from "./seat_mapping";
 import { types } from "node:util";
 import { COMPONENT, type RoleComponent, type World } from "../../../../core";
@@ -13,12 +14,7 @@ import {
   type AliveComponent,
 } from "../../../../core/domain/components/alive";
 import type { NightLifeScope } from "../../../../core/domain/night_effects";
-import {
-  getWolfSorcererState,
-  projectWolfSorcererState,
-  WOLF_SORCERER_ROLE,
-  type WolfSorcererState,
-} from "./state";
+import { getWolfSorcererState, projectWolfSorcererState, WOLF_SORCERER_ROLE } from "./state";
 
 interface OriginalPlayer {
   id: number;
@@ -42,7 +38,7 @@ interface ExchangeNight {
 }
 interface Board {
   actorId: number;
-  state: WolfSorcererState;
+  state: WolfSorcererReadState;
   expectedState: string;
   players: ReadonlyMap<number, OriginalPlayer>;
   night: ExchangeNight | null;
@@ -107,7 +103,7 @@ export function installWolfSorcererBoard(world: World): void {
   const players = new Map<number, OriginalPlayer>();
   const seats = new Set<number>();
   let actorId: number | null = null;
-  let state: WolfSorcererState | undefined;
+  let state: WolfSorcererReadState | undefined;
   for (const id of world.entityIds()) {
     const role = world.getComponent(id, COMPONENT.Role);
     const life = world.getComponent(id, COMPONENT.Alive);

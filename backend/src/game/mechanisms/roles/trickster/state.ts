@@ -1,15 +1,17 @@
+/**
+ * Owns Trickster state construction, exact live reads and detached next-choice data.
+ * Inputs are original role/history and legal pair IDs; outputs preserve existing validation,
+ * copied choices and rejection order. This boundary never commits exile or frame authority.
+ */
+import type {
+  TricksterChoice,
+  TricksterState,
+  TricksterReadState,
+} from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import { Camp, type RoleComponent } from "../../../../core";
 export const TRICKSTER_ROLE = "trickster" as const;
 export const TRICKSTER_POLICY = "awa_trickster_exile_v1" as const;
-export interface TricksterChoice {
-  day: number;
-  pair: [number, number] | null;
-}
-export interface TricksterState {
-  policy: typeof TRICKSTER_POLICY;
-  history: TricksterChoice[];
-}
 function field(value: unknown, key: PropertyKey): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
   const d = Object.getOwnPropertyDescriptor(value, key);
@@ -47,7 +49,7 @@ function arrayItems(value: unknown): unknown[] | null {
   return result;
 }
 /** Validate without invoking user-owned accessors, iterators or array methods. */
-export function getTricksterState(role: RoleComponent | undefined): TricksterState | undefined {
+export function getTricksterState(role: RoleComponent | undefined): TricksterReadState | undefined {
   if (field(role, "role") !== TRICKSTER_ROLE || field(role, "camp") !== Camp.Wolf) return undefined;
   const state = field(field(role, "privateState"), "trickster");
   if (!exact(state, ["policy", "history"])) return undefined;
@@ -80,7 +82,7 @@ export function getTricksterState(role: RoleComponent | undefined): TricksterSta
     used.add(pair[0]);
     used.add(pair[1]);
   }
-  return state as TricksterState;
+  return state as TricksterReadState;
 }
 export function createTricksterState(): TricksterState {
   return { policy: TRICKSTER_POLICY, history: [] };

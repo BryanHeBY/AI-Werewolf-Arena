@@ -5,7 +5,7 @@
  * settlement order; alias routing adds no capability.
  * The guarded Idiot replacement restores only its idiot slot; sealed native stock and all original JSON/descriptor checks remain separate.
  */
-import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
+import type { ReadonlyBoardConfig, RedMoonState } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { recordNobleContractClosure } from "../noble_secret_body/facts";
 import type { NobleContractClosedFact } from "@ai-werewolf-arena/game-text";
@@ -1602,9 +1602,9 @@ export function commitDemonRedMoonTransition(
     } else return false;
   }
   const expected = JSON.stringify({ ...original, redMoon: next });
-  state.blastDay = next.blastDay;
-  state.exileDay = next.exileDay;
-  state.expirySettled = next.expirySettled;
+  (state as Pick<RedMoonState, "blastDay">).blastDay = next.blastDay;
+  (state as Pick<RedMoonState, "exileDay">).exileDay = next.exileDay;
+  (state as Pick<RedMoonState, "expirySettled">).expirySettled = next.expirySettled;
   if (demonJson(p.privateState) !== expected) throw new Error("red_moon_state_commit_failed");
   p.auditPrivateJson = expected;
   return true;

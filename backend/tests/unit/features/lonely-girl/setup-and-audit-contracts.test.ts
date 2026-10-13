@@ -8,7 +8,24 @@
  */
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Camp, Phase, COMPONENT, WinCondition, createRoleComponent, createCampComponent, createVictoryComponent, createAliveComponent, type BoardConfig, type ActionRequest, type ToolCall, type GameEvent, type RoleComponent, type AliveComponent, type VictoryComponent } from "../../../../src/core";
+import {
+  Role,
+  Camp,
+  Phase,
+  COMPONENT,
+  WinCondition,
+  createRoleComponent,
+  createCampComponent,
+  createVictoryComponent,
+  createAliveComponent,
+  type BoardConfig,
+  type ActionRequest,
+  type ToolCall,
+  type GameEvent,
+  type RoleComponent,
+  type AliveComponent,
+  type VictoryComponent,
+} from "../../../../src/core";
 import { foxBoard } from "../../../support/cursed_fox_scenarios";
 import { LonelyGirlSetupWindow } from "../../../../src/game/mechanisms/roles/lonely_girl/setup";
 import {
@@ -151,7 +168,7 @@ const changes: { name: string; apply: (g: Fixture) => void }[] = [
   {
     name: "state changed",
     apply: (g) => {
-      getLonelyGirlState(role(g))!.remaining = 0;
+      (getLonelyGirlState(role(g))! as { remaining: 0 | 1 }).remaining = 0;
     },
   },
   {
@@ -616,7 +633,7 @@ for (const change of ["mutation", "getter"] as const)
     await setup(g);
     const original = getLonelyGirlState(role(g))!.choice!;
     let reads = 0;
-    if (change === "mutation") original.targetId = 6;
+    if (change === "mutation") (original as { targetId: number }).targetId = 6;
     else
       Object.defineProperty(original, "targetId", {
         get() {

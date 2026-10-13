@@ -1,19 +1,22 @@
+/**
+ * Owns Scholar/Mentor state normalization, detached choice data and finite resolution.
+ * Inputs are original data structures, roster and choices; outputs preserve writable copied
+ * states and literal effect summaries. This boundary never stores a World or grants a lease;
+ * the night-frame owner validates live references and commits actual resources.
+ */
+import type {
+  ModifierCaster,
+  ModifierMode,
+  ModifierChoice,
+  ModifierState,
+  ModifierPlayer,
+  CommittedModifier,
+  ModifierResolution,
+  ModifierReadState,
+} from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 
 export const SCHOLAR_MENTOR_POLICY = "awa_scholar_mentor_twelve_v1" as const;
-export type ModifierCaster = "day_scholar" | "night_mentor";
-export type ModifierMode = "enhance" | "weaken";
-export interface ModifierChoice {
-  day: number;
-  mode: ModifierMode | null;
-  targetId: number | null;
-}
-export interface ModifierState {
-  policy: typeof SCHOLAR_MENTOR_POLICY;
-  caster: ModifierCaster;
-  remaining: { enhance: number; weaken: number };
-  history: ModifierChoice[];
-}
 function object(value: unknown): value is Record<string, unknown> {
   return !!value && typeof value === "object" && !types.isProxy(value) && !Array.isArray(value);
 }
@@ -105,7 +108,7 @@ export function readModifierState(value: unknown): ModifierState | undefined {
 }
 /** Pure selection: no effect or collision is revealed to the caster. */
 export function selectModifier(
-  state: ModifierState,
+  state: ModifierReadState,
   day: number,
   mode: ModifierMode | null,
   targetId: number | null,
@@ -137,25 +140,6 @@ export function selectModifier(
   }
   next.history.push({ day, mode, targetId });
   return next;
-}
-export interface ModifierPlayer {
-  id: number;
-  role: string;
-  camp: "good" | "wolf";
-  alive: boolean;
-}
-export interface CommittedModifier {
-  actorId: number;
-  caster: ModifierCaster;
-  mode: ModifierMode;
-  targetId: number;
-}
-export interface ModifierResolution {
-  pendingDeaths: number[];
-  conflict: "same_good" | "both_wolves" | null;
-  goodEffects: Array<{ targetId: number; role: "seer" | "guard" | "witch"; mode: ModifierMode }>;
-  bonusKnifeActorId: number | null;
-  blockWolfKnife: boolean;
 }
 /** Finite-board resolution. Immune caster targets are filtered before collision. */
 export function resolveModifiers(

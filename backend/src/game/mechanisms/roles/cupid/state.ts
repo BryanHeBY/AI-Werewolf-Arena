@@ -1,16 +1,17 @@
+/**
+ * Owns Cupid slot reads and player-state projection. Inputs are the original role record
+ * and choice data; outputs retain the live record or the existing detached pair view.
+ * This boundary never binds lovers, commits stock or evaluates relationship victory.
+ */
+import type { CupidReadState } from "@ai-werewolf-arena/game-contract";
 import { playerDataField } from "../player_state";
-import type { CupidPolicy } from "../../../../core/domain/board";
+
 import type { RoleComponent } from "../../../../core/domain/components/role";
-export interface CupidState {
-  policy: CupidPolicy;
-  remaining: 0 | 1;
-  choice: { day: 1; pairIds: [number, number] } | null;
-}
-export function getCupidState(role: RoleComponent | undefined): CupidState | undefined {
-  return role?.privateState.cupid as CupidState | undefined;
+export function getCupidState(role: RoleComponent | undefined): CupidReadState | undefined {
+  return role?.privateState.cupid as CupidReadState | undefined;
 }
 export function projectCupidState(
-  state: CupidState,
+  state: CupidReadState,
 ): import("../player_extended_state").PlayerCupidState {
   const policy = playerDataField(state, "policy"),
     choice = playerDataField(state, "choice"),

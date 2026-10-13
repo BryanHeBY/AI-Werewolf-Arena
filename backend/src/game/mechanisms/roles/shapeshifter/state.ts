@@ -1,13 +1,16 @@
+/**
+ * Owns Shapeshifter descriptor-based state reads and choice-data projection. Inputs are
+ * original role fields and setup status; outputs preserve exact slot checks and a copied
+ * player view. This boundary never deals cards, changes identity or installs abilities.
+ */
+import type { ShapeshifterState, ShapeshifterReadState } from "@ai-werewolf-arena/game-contract";
 import { Role, type RoleComponent, type World } from "../../../../core/domain";
 import { shapeshifterSetupStatus } from "./deal";
 export const SHAPESHIFTER_POLICY = "awa_netease_shapeshifter_two_extra_villagers_v1" as const;
-export interface ShapeshifterState {
-  policy: typeof SHAPESHIFTER_POLICY;
-  remaining: 0 | 1;
-  choice: 0 | 1 | null;
-}
 import { dataField } from "../thief/state";
-export function getShapeshifterState(role: RoleComponent | undefined): ShapeshifterState | null {
+export function getShapeshifterState(
+  role: RoleComponent | undefined,
+): ShapeshifterReadState | null {
   if (!role || dataField(role, "role") !== Role.Shapeshifter) return null;
   const state = dataField(dataField(role, "privateState"), "shapeshifter");
   if (!state || typeof state !== "object" || Array.isArray(state)) return null;
@@ -23,7 +26,7 @@ export function getShapeshifterState(role: RoleComponent | undefined): Shapeshif
   return policy === SHAPESHIFTER_POLICY &&
     (remaining === 0 || remaining === 1) &&
     (choice === null || choice === 0 || choice === 1)
-    ? (state as ShapeshifterState)
+    ? (state as ShapeshifterReadState)
     : null;
 }
 export function projectShapeshifterState(

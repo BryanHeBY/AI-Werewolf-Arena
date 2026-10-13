@@ -4,7 +4,11 @@
  * the setup scope is current. Failed selection and closed setup remain local terminal
  * decisions; metadata carries no permission.
  */
-import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
+import type {
+  ReadonlyBoardConfig,
+  ThiefState,
+  ShapeshifterState,
+} from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { copyEventData } from "@ai-werewolf-arena/game-text";
 import {
@@ -402,16 +406,16 @@ export class InitialIdentitySetupWindow {
       // No await, provider callback or event between physical swap and identity installation.
       if (chosen && slot !== null && newRole && newCamp && newVictory) {
         if (this.kind === "shapeshifter") {
-          state.remaining = 0;
-          state.choice = slot;
+          (state as Pick<ThiefState | ShapeshifterState, "remaining">).remaining = 0;
+          (state as Pick<ThiefState | ShapeshifterState, "choice">).choice = slot;
         }
         selectInitialIdentityCard(this.world, actorId, slot);
         this.world.addComponent(actorId, COMPONENT.Role, newRole);
         this.world.addComponent(actorId, COMPONENT.Camp, newCamp);
         this.world.addComponent(actorId, COMPONENT.Victory, newVictory);
       } else {
-        state.remaining = 0;
-        state.choice = null;
+        (state as Pick<ThiefState | ShapeshifterState, "remaining">).remaining = 0;
+        (state as Pick<ThiefState | ShapeshifterState, "choice">).choice = null;
         selectInitialIdentityCard(this.world, actorId, null);
       }
       status = "complete";
@@ -456,8 +460,8 @@ export class InitialIdentitySetupWindow {
           Object.getOwnPropertyDescriptor(original, "remaining")?.writable &&
           Object.getOwnPropertyDescriptor(original, "choice")?.writable
         ) {
-          original.remaining = 0;
-          original.choice = null;
+          (original as Pick<ThiefState | ShapeshifterState, "remaining">).remaining = 0;
+          (original as Pick<ThiefState | ShapeshifterState, "choice">).choice = null;
         }
       }
       scopes.delete(this.world);

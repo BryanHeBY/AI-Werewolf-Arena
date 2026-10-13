@@ -7,14 +7,34 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Camp, COMPONENT, createAliveComponent, createRoleComponent, createCampComponent, createVictoryComponent, type BoardConfig, type RoleComponent, type AliveComponent, type GameEvent, type ToolCall, type ActionRequest } from "../../../../src/core";
+import {
+  Role,
+  Camp,
+  COMPONENT,
+  createAliveComponent,
+  createRoleComponent,
+  createCampComponent,
+  createVictoryComponent,
+  type BoardConfig,
+  type RoleComponent,
+  type AliveComponent,
+  type GameEvent,
+  type ToolCall,
+  type ActionRequest,
+} from "../../../../src/core";
 import { foxBoard } from "../../../support/cursed_fox_scenarios";
 import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";
 import {
   getWildChildState,
   readWildChildTool,
 } from "../../../../src/game/mechanisms/roles/wild_child/state";
-import { wildChildBinding, wildChildRequestScope, inheritWildChildDeadlineRequest, hasActiveWildChild, wildChildReady } from "../../../../src/game/mechanisms/roles/wild_child/lifecycle";
+import {
+  wildChildBinding,
+  wildChildRequestScope,
+  inheritWildChildDeadlineRequest,
+  hasActiveWildChild,
+  wildChildReady,
+} from "../../../../src/game/mechanisms/roles/wild_child/lifecycle";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { readWildChildEventFact } from "@ai-werewolf-arena/game-text";
@@ -72,7 +92,7 @@ const changes: Record<string, (g: Fixture) => void> = {
     };
   },
   actorResource: (g) => {
-    getWildChildState(role(g))!.remaining = 0;
+    (getWildChildState(role(g))! as { remaining: 0 | 1 }).remaining = 0;
   },
   camp: (g) => g.world.addComponent(1, COMPONENT.Camp, createCampComponent(Camp.Good)),
   victory: (g) =>

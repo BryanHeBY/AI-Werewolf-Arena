@@ -254,7 +254,8 @@ for (const stage of ["debate_challenge", "debate_speech", "debate_ballot"])
           if (change === "actor_state")
             (role(g, 1) as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
           if (change === "actor_stock")
-            getDebaterState(role(g, 1))!.remaining = stage === "debate_challenge" ? 0 : 1;
+            (getDebaterState(role(g, 1))! as { remaining: 0 | 1 }).remaining =
+              stage === "debate_challenge" ? 0 : 1;
           if (change === "badge")
             g.world.getComponent<BadgeComponent>(2, COMPONENT.Badge)!.voteWeight = 9;
           if (change === "phase") current = false;

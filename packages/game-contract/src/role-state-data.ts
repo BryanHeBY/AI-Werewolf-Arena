@@ -11,6 +11,8 @@ import type { RoleId } from "./role-ids";
 import type { InspectionResult } from "./inspection";
 import type { ExileFeedback } from "./events";
 import type {
+  CupidPolicy,
+  DebaterPolicy,
   HunterDeathActionPolicy,
   DeathActionPolicy,
   BeautyDeathLinkPolicy,
@@ -201,3 +203,215 @@ export type MerchantReadState = Readonly<Omit<MerchantState, "choice">> & {
 export type BlackMarketReadState = Readonly<Omit<BlackMarketState, "choice">> & {
   readonly choice: Readonly<NonNullable<BlackMarketState["choice"]>> | null;
 };
+
+export interface CupidState {
+  policy: CupidPolicy;
+  remaining: 0 | 1;
+  choice: { day: 1; pairIds: [number, number] } | null;
+}
+
+export interface HybridState {
+  remaining: 0 | 1;
+  choice: { day: number; targetId: number } | null;
+}
+
+export interface WildChildState {
+  policy: "awa_lui_meme_wild_child_v1";
+  remaining: 0 | 1;
+  status: "pending" | "chosen" | "transformed" | "active" | "closed";
+  choice: { day: 1; targetId: number } | null;
+  eligibleNight: number | null;
+  activeFromNight: number | null;
+}
+
+export interface ThiefState {
+  policy: "lui_meme_thief_two_extra_villagers_v1";
+  remaining: 0 | 1;
+  choice: 0 | 1 | null;
+}
+
+export interface ShapeshifterState {
+  policy: "awa_netease_shapeshifter_two_extra_villagers_v1";
+  remaining: 0 | 1;
+  choice: 0 | 1 | null;
+}
+
+export interface DebaterState {
+  policy: DebaterPolicy;
+  remaining: 0 | 1;
+  choice: { day: number; targetId: number } | null;
+}
+
+export type EvilKnightShotPolicy = "night_shot_immune" | "hunter_shot_bypasses";
+
+export interface EvilKnightState {
+  policy: "awa_evil_knight_v1";
+  shotPolicy: EvilKnightShotPolicy;
+  reflectionRemaining: 0 | 1;
+}
+
+export type FearActionPolicy = "optional" | "required_when_legal";
+
+export type NightmareWolfActionPolicy = "standard" | "no_blast_no_self_knife";
+
+export interface NightmareShadowState {
+  policy: "awa_nightmare_dreamer_v1";
+  fearActionPolicy: FearActionPolicy;
+  wolfActionPolicy: NightmareWolfActionPolicy;
+  packReady: boolean;
+  lastDay: number | null;
+  lastTarget: EntityId | null;
+  history: { day: number; targetId: EntityId | null }[];
+}
+
+export interface MagicianChoice {
+  day: number;
+  pair: [number, number] | null;
+}
+
+export interface MagicianState {
+  policy: "awa_magician_wolf_king_v1";
+  firstNight: 1 | 2;
+  deathShotTargetPolicy: "original" | "exchanged";
+  history: MagicianChoice[];
+}
+
+export interface TricksterChoice {
+  day: number;
+  pair: [number, number] | null;
+}
+
+export interface TricksterState {
+  policy: "awa_trickster_exile_v1";
+  history: TricksterChoice[];
+}
+
+export interface WolfSorcererChoice {
+  day: number;
+  pair: [number, number] | null;
+}
+
+export interface WolfSorcererState {
+  policy: "awa_wolf_sorcerer_seats_v1";
+  firstNight: 1 | 2;
+  history: WolfSorcererChoice[];
+}
+
+export type ReflectionScope = "whole_night" | "first_effect";
+
+export interface TimeConsortChoice {
+  day: number;
+  targetId: number | null;
+}
+
+export interface TimeConsortState {
+  policy: "awa_time_consort_reflection_v1";
+  reflectionScope: ReflectionScope;
+  history: TimeConsortChoice[];
+  triggeredDay: number | null;
+}
+
+export type ReflectableSkill = "check" | "guard" | "poison";
+
+export type ModifierCaster = "day_scholar" | "night_mentor";
+
+export type ModifierMode = "enhance" | "weaken";
+
+export interface ModifierChoice {
+  day: number;
+  mode: ModifierMode | null;
+  targetId: number | null;
+}
+
+export interface ModifierState {
+  policy: "awa_scholar_mentor_twelve_v1";
+  caster: ModifierCaster;
+  remaining: { enhance: number; weaken: number };
+  history: ModifierChoice[];
+}
+
+export interface ModifierPlayer {
+  id: number;
+  role: string;
+  camp: "good" | "wolf";
+  alive: boolean;
+}
+
+export interface CommittedModifier {
+  actorId: number;
+  caster: ModifierCaster;
+  mode: ModifierMode;
+  targetId: number;
+}
+
+export interface ModifierResolution {
+  pendingDeaths: number[];
+  conflict: "same_good" | "both_wolves" | null;
+  goodEffects: Array<{ targetId: number; role: "seer" | "guard" | "witch"; mode: ModifierMode }>;
+  bonusKnifeActorId: number | null;
+  blockWolfKnife: boolean;
+}
+
+export interface LonelyGirlState {
+  policy: "awa_netease_lonely_girl_v1";
+  remaining: 0 | 1;
+  choice: { day: 1; targetId: number } | null;
+}
+
+export type LastWolfBlastPolicy = "ends_game" | "forbidden";
+
+export interface RedMoonState {
+  policy: "awa_red_moon_demon_v1";
+  lastWolfBlastPolicy: LastWolfBlastPolicy;
+  blastDay: number | null;
+  exileDay: number | null;
+  expirySettled: boolean;
+}
+
+export type CupidReadState = Readonly<Omit<CupidState, "choice">> & {
+  readonly choice: { readonly day: 1; readonly pairIds: readonly [number, number] } | null;
+};
+export type HybridReadState = Readonly<Omit<HybridState, "choice">> & {
+  readonly choice: { readonly day: number; readonly targetId: number } | null;
+};
+export type WildChildReadState = Readonly<Omit<WildChildState, "choice">> & {
+  readonly choice: { readonly day: 1; readonly targetId: number } | null;
+};
+export type ThiefReadState = Readonly<ThiefState>;
+export type ShapeshifterReadState = Readonly<ShapeshifterState>;
+export type DebaterReadState = Readonly<Omit<DebaterState, "choice">> & {
+  readonly choice: { readonly day: number; readonly targetId: number } | null;
+};
+export type EvilKnightReadState = Readonly<EvilKnightState>;
+export type NightmareShadowReadState = Readonly<Omit<NightmareShadowState, "history">> & {
+  readonly history: readonly Readonly<NightmareShadowState["history"][number]>[];
+};
+export type MagicianReadChoice = Readonly<Omit<MagicianChoice, "pair">> & {
+  readonly pair: readonly [number, number] | null;
+};
+export type MagicianReadState = Readonly<Omit<MagicianState, "history">> & {
+  readonly history: readonly MagicianReadChoice[];
+};
+export type TricksterReadChoice = Readonly<Omit<TricksterChoice, "pair">> & {
+  readonly pair: readonly [number, number] | null;
+};
+export type TricksterReadState = Readonly<Omit<TricksterState, "history">> & {
+  readonly history: readonly TricksterReadChoice[];
+};
+export type WolfSorcererReadChoice = Readonly<Omit<WolfSorcererChoice, "pair">> & {
+  readonly pair: readonly [number, number] | null;
+};
+export type WolfSorcererReadState = Readonly<Omit<WolfSorcererState, "history">> & {
+  readonly history: readonly WolfSorcererReadChoice[];
+};
+export type TimeConsortReadState = Readonly<Omit<TimeConsortState, "history">> & {
+  readonly history: readonly Readonly<TimeConsortChoice>[];
+};
+export type ModifierReadState = Readonly<Omit<ModifierState, "remaining" | "history">> & {
+  readonly remaining: Readonly<ModifierState["remaining"]>;
+  readonly history: readonly Readonly<ModifierChoice>[];
+};
+export type LonelyGirlReadState = Readonly<Omit<LonelyGirlState, "choice">> & {
+  readonly choice: { readonly day: 1; readonly targetId: number } | null;
+};
+export type RedMoonReadState = Readonly<RedMoonState>;

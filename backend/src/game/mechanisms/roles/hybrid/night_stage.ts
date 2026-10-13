@@ -4,8 +4,9 @@
  * corresponding facts. Selection never replaces the original role component or silently repeats
  * a completed choice.
  */
+import type { HybridState } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+
 import {
   createVictoryComponent,
   type VictoryComponent,
@@ -100,8 +101,8 @@ export const HYBRID_STAGE: NightStageHandler = {
           continue;
         const membership = createVictoryComponent([{ kind: "faction", faction: target.camp }]);
         // No await between the final checks and both owned writes. A second reply loses its original scope.
-        state.remaining = 0;
-        state.choice = { day, targetId };
+        (state as Pick<HybridState, "remaining">).remaining = 0;
+        (state as Pick<HybridState, "choice">).choice = { day, targetId };
         ctx.world.addComponent(actorId, COMPONENT.Victory, membership);
         const days = committed.get(ctx.world) ?? new Set<number>();
         days.add(day);

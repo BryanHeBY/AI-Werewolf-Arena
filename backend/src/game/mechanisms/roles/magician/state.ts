@@ -1,17 +1,17 @@
+/**
+ * Owns Magician state construction, exact live reads and detached player projection.
+ * Inputs are original role/history data; outputs retain existing descriptor, day and pair
+ * validation. This boundary never exchanges an effect, commits history or closes a frame.
+ */
+import type {
+  MagicianChoice,
+  MagicianState,
+  MagicianReadState,
+} from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import { Camp, type RoleComponent } from "../../../../core";
 export const MAGICIAN_ROLE = "magician" as const;
 export const MAGICIAN_POLICY = "awa_magician_wolf_king_v1" as const;
-export interface MagicianChoice {
-  day: number;
-  pair: [number, number] | null;
-}
-export interface MagicianState {
-  policy: typeof MAGICIAN_POLICY;
-  firstNight: 1 | 2;
-  deathShotTargetPolicy: "original" | "exchanged";
-  history: MagicianChoice[];
-}
 function field(value: unknown, key: PropertyKey): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
   const d = Object.getOwnPropertyDescriptor(value, key);
@@ -49,7 +49,7 @@ function arrayItems(value: unknown): unknown[] | null {
   return result;
 }
 /** Validate without invoking user-owned accessors, iterators or array methods. */
-export function getMagicianState(role: RoleComponent | undefined): MagicianState | undefined {
+export function getMagicianState(role: RoleComponent | undefined): MagicianReadState | undefined {
   if (field(role, "role") !== MAGICIAN_ROLE || field(role, "camp") !== Camp.Good) return undefined;
   const state = field(field(role, "privateState"), "magician");
   if (!exact(state, ["policy", "firstNight", "deathShotTargetPolicy", "history"])) return undefined;
@@ -83,7 +83,7 @@ export function getMagicianState(role: RoleComponent | undefined): MagicianState
     used.add(pair[0]);
     used.add(pair[1]);
   }
-  return state as MagicianState;
+  return state as MagicianReadState;
 }
 export function createMagicianState(
   firstNight: 1 | 2,

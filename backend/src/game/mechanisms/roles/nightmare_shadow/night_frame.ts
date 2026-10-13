@@ -4,13 +4,17 @@
  * choice state. Only the bound roster participates; a replaced component cannot silently reopen
  * the night.
  */
+import type {
+  NightmareShadowState,
+  NightmareShadowReadState,
+} from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import {
   aliveLifeVersion,
   aliveLifeDescriptor,
   type AliveComponent,
 } from "../../../../core/domain/components/alive";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+
 import type { World } from "../../../../core/domain/world";
 import { Camp, type EntityId } from "../../../../core/domain/identity";
 import {
@@ -19,9 +23,9 @@ import {
   type NightLifeScope,
 } from "../../../../core/domain/night_effects";
 import type { NightAbilityReadView } from "../abilities";
-import { getNightmareShadowState, nightmareFearTargets, type NightmareShadowState } from "./state";
+import { getNightmareShadowState, nightmareFearTargets } from "./state";
 
-function stateIdentity(state: NightmareShadowState): string {
+function stateIdentity(state: NightmareShadowReadState): string {
   const history: Array<[number, EntityId | null]> = [];
   for (let i = 0; i < state.history.length; i++) {
     const entry = state.history[i]!;
@@ -117,7 +121,7 @@ function captureRole(world: World, id: EntityId) {
 }
 type Board = {
   actorId: EntityId;
-  state: NightmareShadowState;
+  state: NightmareShadowReadState;
   expectedState: string;
   roster: ReturnType<typeof captureRole>[];
   night: {
@@ -209,9 +213,9 @@ export function commitNightmareFear(
   if (targetId !== null && !target) throw new Error("nightmare_fear_target_invalid");
   const wolfBlocked =
     targetId !== null && world.getComponent(targetId, COMPONENT.Role)?.camp === Camp.Wolf;
-  board.state.lastDay = day;
-  board.state.lastTarget = targetId;
-  board.state.packReady = true;
+  (board.state as Pick<NightmareShadowState, "lastDay">).lastDay = day;
+  (board.state as Pick<NightmareShadowState, "lastTarget">).lastTarget = targetId;
+  (board.state as Pick<NightmareShadowState, "packReady">).packReady = true;
   Array.prototype.push.call(board.state.history, { day, targetId });
   board.expectedState = stateIdentity(board.state);
   night.committed = true;

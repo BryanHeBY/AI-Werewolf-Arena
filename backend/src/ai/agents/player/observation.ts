@@ -1,3 +1,9 @@
+/**
+ * Defines projected player-observation data and detached observation freezing.
+ * Inputs are already projected facts and own-state DTOs; outputs preserve their
+ * existing fields and cloned frozen observations. This boundary never exposes a
+ * World, installs a role slot or grants a runtime resource write permission.
+ */
 import type {
   PlayerHiddenWolfState,
   PlayerGravekeeperState,
@@ -42,29 +48,29 @@ export interface PlayerObservation {
     eclipse?: import("../../../game/mechanisms/roles/radiant_eclipse/state").EclipseState;
     alchemist?: import("../../../game/mechanisms/roles/mist_raven/player_projection").PlayerAlchemistState;
     ravenClaw?: import("../../../game/mechanisms/roles/mist_raven/player_projection").PlayerRavenState;
-    scholarMentor?: import("../../../game/mechanisms/roles/scholar_mentor/state").ModifierState;
+    scholarMentor?: import("@ai-werewolf-arena/game-contract").ModifierState;
     timeConsort?: NonNullable<
       ReturnType<
         typeof import("../../../game/mechanisms/roles/time_wolf_consort/state").projectTimeConsortState
       >
     >;
-    wolfSorcerer?: import("../../../game/mechanisms/roles/wolf_sorcerer/state").WolfSorcererState;
-    trickster?: import("../../../game/mechanisms/roles/trickster/state").TricksterState;
+    wolfSorcerer?: import("@ai-werewolf-arena/game-contract").WolfSorcererState;
+    trickster?: import("@ai-werewolf-arena/game-contract").TricksterState;
     orderPrince?: import("../../../game/mechanisms/roles/order_prince/state").OrderPrinceState;
-    magician?: import("../../../game/mechanisms/roles/magician/state").MagicianState;
-    redMoon?: import("../../../game/mechanisms/roles/red_moon_apostle/state").RedMoonState;
-    nightmare?: import("../../../game/mechanisms/roles/nightmare_shadow/state").NightmareShadowState;
-    evilKnight?: import("../../../game/mechanisms/roles/evil_knight/state").EvilKnightState;
+    magician?: import("@ai-werewolf-arena/game-contract").MagicianState;
+    redMoon?: import("@ai-werewolf-arena/game-contract").RedMoonState;
+    nightmare?: import("@ai-werewolf-arena/game-contract").NightmareShadowState;
+    evilKnight?: import("@ai-werewolf-arena/game-contract").EvilKnightState;
     demonHunter?: import("../../../game/mechanisms/roles/demon_hunter/state").DemonHunterState;
     ghostBride?: import("@ai-werewolf-arena/game-text").GhostBrideState;
     wedding?: import("../../../game/mechanisms/roles/ghost_bride/authority").WeddingActorView;
-    lonelyGirl?: import("../../../game/mechanisms/roles/lonely_girl/state").LonelyGirlState;
-    wildChild?: import("../../../game/mechanisms/roles/wild_child/state").WildChildState;
-    thief?: import("../../../game/mechanisms/roles/thief/state").ThiefState & {
+    lonelyGirl?: import("@ai-werewolf-arena/game-contract").LonelyGirlState;
+    wildChild?: import("@ai-werewolf-arena/game-contract").WildChildState;
+    thief?: import("@ai-werewolf-arena/game-contract").ThiefState & {
       required?: boolean;
       cards?: Array<{ slot: 0 | 1; role: Role }>;
     };
-    shapeshifter?: import("../../../game/mechanisms/roles/shapeshifter/state").ShapeshifterState & {
+    shapeshifter?: import("@ai-werewolf-arena/game-contract").ShapeshifterState & {
       mustChoose?: boolean;
       allowedSlots?: Array<0 | 1>;
       cards?: Array<{ slot: 0 | 1; role: Role }>;

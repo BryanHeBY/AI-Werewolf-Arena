@@ -4,6 +4,7 @@
  * later target-death settlement only while current. Closed or replaced participant scopes
  * revoke local permission, including deadline aliases.
  */
+import type { LonelyGirlState, LonelyGirlReadState } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { copyEventData } from "@ai-werewolf-arena/game-text";
@@ -20,13 +21,7 @@ import {
   type VictoryComponent,
 } from "../../../../core/domain";
 import { aliveLifeVersion, type AliveComponent } from "../../../../core/domain/components/alive";
-import {
-  freshLonelyGirlState,
-  getLonelyGirlState,
-  LONELY_GIRL_POLICY,
-  lonelyData,
-  type LonelyGirlState,
-} from "./state";
+import { freshLonelyGirlState, getLonelyGirlState, LONELY_GIRL_POLICY, lonelyData } from "./state";
 interface Participant {
   id: number;
   life: AliveComponent;
@@ -45,13 +40,13 @@ export interface LonelyGirlBinding {
   actorId: number;
   actor: Participant;
   participants: ReadonlyMap<number, Participant>;
-  state: LonelyGirlState;
+  state: LonelyGirlReadState;
   config: ReadonlyBoardConfig;
   configJson: string;
   victory: VictoryComponent;
   affiliations: VictoryComponent["affiliations"];
   status: "pending" | "active" | "complete" | "failed" | "cancelled";
-  choice: LonelyGirlState["choice"];
+  choice: LonelyGirlReadState["choice"];
   membership: Camp | null;
   isCurrent: (() => boolean) | null;
 }
@@ -281,8 +276,8 @@ export function commitLonelyGirlChoice(b: LonelyGirlBinding, targetId: number): 
   const choice = { day: 1 as const, targetId },
     membership = createVictoryComponent([{ kind: "faction", faction: target.campValue }]);
   // No await or callback between the final authority checks and owned writes.
-  b.state.remaining = 0;
-  b.state.choice = choice;
+  (b.state as Pick<LonelyGirlState, "remaining">).remaining = 0;
+  (b.state as Pick<LonelyGirlState, "choice">).choice = choice;
   b.world.addComponent(b.actorId, COMPONENT.Victory, membership);
   b.choice = Object.freeze({ ...choice });
   b.membership = target.campValue;
@@ -303,7 +298,10 @@ export function closeLonelyGirlChoice(b: LonelyGirlBinding, status: "failed" | "
       Object.defineProperty(b.state, key, { ...d, value });
   }
 }
-export function projectLonelyGirl(world: World, role: RoleComponent): LonelyGirlState | undefined {
+export function projectLonelyGirl(
+  world: World,
+  role: RoleComponent,
+): LonelyGirlReadState | undefined {
   const b = bindings.get(world);
   if (!b || b.actor.role !== role) return undefined;
   return b.status === "complete"

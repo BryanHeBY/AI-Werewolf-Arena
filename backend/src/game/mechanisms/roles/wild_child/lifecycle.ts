@@ -4,6 +4,7 @@
  * model-death conversion only through current local windows. Replacement or closed choice
  * invalidates local authority; deadline aliases preserve its checks.
  */
+import type { WildChildState, WildChildReadState } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { copyEventData } from "@ai-werewolf-arena/game-text";
@@ -29,12 +30,12 @@ import {
   type NightLifeScope,
 } from "../../../../core/domain/night_effects";
 import { captureDebateParticipant, type DebateParticipant } from "../debater/authority";
-import { freshWildChildState, getWildChildState, type WildChildState } from "./state";
+import { freshWildChildState, getWildChildState } from "./state";
 export interface WildChildBinding {
   world: World;
   actorId: number;
   actor: DebateParticipant;
-  state: WildChildState;
+  state: WildChildReadState;
   config: ReadonlyBoardConfig;
   configJson: string;
   camp: CampComponent;
@@ -148,7 +149,10 @@ function validWildChildIdentity(b: WildChildBinding): boolean {
 export function validWildChildOwner(b: WildChildBinding): boolean {
   return validWildChildIdentity(b) && livingNightLife(b.world, b.actor.life);
 }
-export function projectWildChild(world: World, role: RoleComponent): WildChildState | undefined {
+export function projectWildChild(
+  world: World,
+  role: RoleComponent,
+): WildChildReadState | undefined {
   const b = bindings.get(world);
   if (!b || b.actor.role !== role) return undefined;
   if (!validWildChildOwner(b)) return { ...freshWildChildState(), remaining: 0, status: "closed" };
@@ -264,9 +268,9 @@ export function commitWildChildChoice(b: WildChildBinding, targetId: number): bo
     )
   )
     return false;
-  b.state.remaining = 0;
-  b.state.status = "chosen";
-  b.state.choice = choice;
+  (b.state as Pick<WildChildState, "remaining">).remaining = 0;
+  (b.state as Pick<WildChildState, "status">).status = "chosen";
+  (b.state as Pick<WildChildState, "choice">).choice = choice;
   b.model = target.life;
   b.expectedState = safeJson(b.state);
   b.setup = "complete";
@@ -278,8 +282,8 @@ export function closeWildChildChoice(b: WildChildBinding, status: "failed" | "ca
   b.setup = status;
   windows.delete(b.world);
   if (["remaining", "status"].every((k) => Object.getOwnPropertyDescriptor(b.state, k)?.writable)) {
-    b.state.remaining = 0;
-    b.state.status = "closed";
+    (b.state as Pick<WildChildState, "remaining">).remaining = 0;
+    (b.state as Pick<WildChildState, "status">).status = "closed";
     b.expectedState = safeJson(b.state);
   }
 }
@@ -353,8 +357,8 @@ export function resolveWildChildDeathWave(
   b.camp = camp;
   b.victory = victory;
   b.victoryJson = safeJson(victory);
-  b.state.status = "transformed";
-  b.state.eligibleNight = day + 1;
+  (b.state as Pick<WildChildState, "status">).status = "transformed";
+  (b.state as Pick<WildChildState, "eligibleNight">).eligibleNight = day + 1;
   b.expectedState = safeJson(b.state);
   events.push({
     timestamp: Date.now(),
@@ -403,8 +407,8 @@ export function openWildChildNight(world: World, day: number, events: GameEvent[
         (k) => Object.getOwnPropertyDescriptor(b.state, k)?.writable,
       )
     ) {
-      b.state.status = "active";
-      b.state.activeFromNight = day;
+      (b.state as Pick<WildChildState, "status">).status = "active";
+      (b.state as Pick<WildChildState, "activeFromNight">).activeFromNight = day;
       b.expectedState = safeJson(b.state);
       events.push({
         timestamp: Date.now(),

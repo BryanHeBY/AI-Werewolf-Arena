@@ -1,16 +1,17 @@
+/**
+ * Owns Debater live slot reads and inert player-state projection. Inputs are original
+ * role/choice fields and committed status; outputs preserve descriptor reads and the
+ * existing detached choice data. This boundary never executes a debate or settles a death.
+ */
+import type { DebaterReadState } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "../../../../core/domain/components/role";
-import type { DebaterPolicy } from "../../../../core/domain/board";
+
 import { playerDataField } from "../player_state";
-export interface DebaterState {
-  policy: DebaterPolicy;
-  remaining: 0 | 1;
-  choice: { day: number; targetId: number } | null;
-}
-export function getDebaterState(role: RoleComponent | undefined): DebaterState | undefined {
+export function getDebaterState(role: RoleComponent | undefined): DebaterReadState | undefined {
   return playerDataField(playerDataField(role, "privateState"), "debater") as
-    DebaterState | undefined;
+    DebaterReadState | undefined;
 }
-export function projectDebaterState(state: DebaterState, committed = false) {
+export function projectDebaterState(state: DebaterReadState, committed = false) {
   const choice = playerDataField(state, "choice"),
     day = playerDataField(choice, "day"),
     targetId = playerDataField(choice, "targetId");

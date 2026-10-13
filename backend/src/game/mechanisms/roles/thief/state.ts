@@ -1,17 +1,18 @@
+/**
+ * Owns Thief descriptor-based state reads and initial-choice tool parsing. Inputs are
+ * original role data, setup status and candidate fields; outputs preserve exact slot checks,
+ * the live reference and copied player state. This boundary never deals or replaces a role.
+ */
+import type { ThiefState, ThiefReadState } from "@ai-werewolf-arena/game-contract";
 import { Role, type RoleComponent, type World } from "../../../../core/domain";
 import { thiefSetupStatus } from "./deal";
 export const THIEF_POLICY = "lui_meme_thief_two_extra_villagers_v1" as const;
-export interface ThiefState {
-  policy: typeof THIEF_POLICY;
-  remaining: 0 | 1;
-  choice: 0 | 1 | null;
-}
 export function dataField(value: unknown, key: string): unknown {
   if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
   const descriptor = Object.getOwnPropertyDescriptor(value, key);
   return descriptor && Object.hasOwn(descriptor, "value") ? descriptor.value : undefined;
 }
-export function getThiefState(role: RoleComponent | undefined): ThiefState | null {
+export function getThiefState(role: RoleComponent | undefined): ThiefReadState | null {
   if (!role || dataField(role, "role") !== Role.Thief) return null;
   const state = dataField(dataField(role, "privateState"), "thief");
   if (!state || typeof state !== "object" || Array.isArray(state)) return null;
@@ -27,7 +28,7 @@ export function getThiefState(role: RoleComponent | undefined): ThiefState | nul
   return policy === THIEF_POLICY &&
     (remaining === 0 || remaining === 1) &&
     (choice === null || choice === 0 || choice === 1)
-    ? (state as ThiefState)
+    ? (state as ThiefReadState)
     : null;
 }
 export function projectThiefState(

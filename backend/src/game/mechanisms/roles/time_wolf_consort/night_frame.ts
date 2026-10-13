@@ -4,6 +4,7 @@
  * currentness checks. Close/abort ends the lock night without transferring its effect to revived
  * targets.
  */
+import type { TimeConsortState, TimeConsortReadState } from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../core";
 import {
@@ -12,12 +13,7 @@ import {
   type AliveComponent,
 } from "../../../../core/domain/components/alive";
 import type { NightLifeScope } from "../../../../core/domain/night_effects";
-import {
-  getTimeConsortState,
-  projectTimeConsortState,
-  TIME_CONSORT_ROLE,
-  type TimeConsortState,
-} from "./state";
+import { getTimeConsortState, projectTimeConsortState, TIME_CONSORT_ROLE } from "./state";
 
 interface OriginalPlayer {
   abilityAuthority: () => boolean;
@@ -43,7 +39,7 @@ interface ExchangeNight {
 }
 interface Board {
   actorId: number;
-  state: TimeConsortState;
+  state: TimeConsortReadState;
   expectedState: string;
   players: ReadonlyMap<number, OriginalPlayer>;
   night: ExchangeNight | null;
@@ -181,7 +177,7 @@ export function installTimeConsortBoard(world: World): void {
   const players = new Map<number, OriginalPlayer>();
   const seats = new Set<number>();
   let actorId: number | null = null;
-  let state: TimeConsortState | undefined;
+  let state: TimeConsortReadState | undefined;
   for (const id of world.entityIds()) {
     const role = world.getComponent(id, COMPONENT.Role);
     const life = world.getComponent(id, COMPONENT.Alive);
@@ -386,7 +382,7 @@ export function resolveTimeConsortTarget(
       if (!current()) throw new Error("time_consort_receipt_stale");
       used = true;
       if (reflected) {
-        b.state.triggeredDay = day;
+        (b.state as Pick<TimeConsortState, "triggeredDay">).triggeredDay = day;
         n.revision++;
         b.expectedState = stateIdentity(b.players.get(b.actorId)!.role);
       }

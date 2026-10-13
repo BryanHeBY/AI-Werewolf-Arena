@@ -8,7 +8,20 @@
 import { expect, test } from "bun:test";
 import { shuffled } from "../../../../src/core";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Camp, COMPONENT, WitchSelfHealRule, createRandom, type BoardConfig, type RoleComponent, type ActionRequest, type ToolCall, type GameEvent, type VictoryComponent, type AliveComponent } from "../../../../src/core";
+import {
+  Role,
+  Camp,
+  COMPONENT,
+  WitchSelfHealRule,
+  createRandom,
+  type BoardConfig,
+  type RoleComponent,
+  type ActionRequest,
+  type ToolCall,
+  type GameEvent,
+  type VictoryComponent,
+  type AliveComponent,
+} from "../../../../src/core";
 import { foxBoard } from "../../../support/cursed_fox_scenarios";
 import {
   ShapeshifterSetupWindow,
@@ -417,7 +430,7 @@ for (const [label, mutate] of [
   [
     "resource",
     (g: Fixture) => {
-      getShapeshifterState(actor(g))!.remaining = 0;
+      (getShapeshifterState(actor(g))! as { remaining: 0 | 1 }).remaining = 0;
     },
   ],
   [

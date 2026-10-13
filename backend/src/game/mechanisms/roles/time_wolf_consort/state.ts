@@ -1,18 +1,18 @@
+/**
+ * Owns Time Consort state construction, exact live reads and pure reflection selection.
+ * Inputs are original role/history data and requested target facts; outputs preserve copied
+ * player knowledge and existing target decisions. This boundary never commits a receipt.
+ */
+import type {
+  ReflectionScope,
+  TimeConsortChoice,
+  TimeConsortState,
+  TimeConsortReadState,
+} from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import { Camp, type RoleComponent } from "../../../../core";
 export const TIME_CONSORT_ROLE = "time_wolf_consort" as const;
 export const TIME_CONSORT_POLICY = "awa_time_consort_reflection_v1" as const;
-export type ReflectionScope = "whole_night" | "first_effect";
-export interface TimeConsortChoice {
-  day: number;
-  targetId: number | null;
-}
-export interface TimeConsortState {
-  policy: typeof TIME_CONSORT_POLICY;
-  reflectionScope: ReflectionScope;
-  history: TimeConsortChoice[];
-  triggeredDay: number | null;
-}
 function field(value: unknown, key: PropertyKey): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
   const d = Object.getOwnPropertyDescriptor(value, key);
@@ -50,7 +50,9 @@ function arrayItems(value: unknown): unknown[] | null {
   return result;
 }
 
-export function getTimeConsortState(role: RoleComponent | undefined): TimeConsortState | undefined {
+export function getTimeConsortState(
+  role: RoleComponent | undefined,
+): TimeConsortReadState | undefined {
   if (field(role, "role") !== TIME_CONSORT_ROLE || field(role, "camp") !== Camp.Wolf)
     return undefined;
   const state = field(field(role, "privateState"), "timeConsort");
@@ -88,7 +90,7 @@ export function getTimeConsortState(role: RoleComponent | undefined): TimeConsor
     previousTarget = target as number | null;
   }
   if (!triggerFound) return undefined;
-  return state as TimeConsortState;
+  return state as TimeConsortReadState;
 }
 export function createTimeConsortState(
   reflectionScope: ReflectionScope = "whole_night",
@@ -113,7 +115,6 @@ export function projectTimeConsortState(role: RoleComponent | undefined, day: nu
     exhausted: trigger !== null && trigger < day,
   };
 }
-export type ReflectableSkill = "check" | "guard" | "poison";
 /** Pure rule decision. Real effect ownership/version validation belongs to the night receipt. */
 export function timeConsortReflectionTarget(
   role: RoleComponent | undefined,

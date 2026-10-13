@@ -62,7 +62,7 @@ for (const policy of ["ends_game", "forbidden"] as const)
         expect(() => {
           snapshot.blastDay = 2;
         }).toThrow();
-        state.blastDay = 1;
+        (state as { blastDay: number | null }).blastDay = 1;
         expect(snapshot.blastDay).toBeNull();
         await provider.getAction(request(other));
         expect(seen[1]!.ownState.redMoon).toBeUndefined();

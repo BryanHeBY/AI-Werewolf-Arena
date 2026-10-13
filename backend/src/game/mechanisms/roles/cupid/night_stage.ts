@@ -3,8 +3,9 @@
  * validated paired choice; outputs are the installed lovers relation and its original event. It
  * does not replace the relation owner or independently choose a victory result.
  */
+import type { CupidState } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+
 import {
   createVictoryComponent,
   type VictoryComponent,
@@ -126,8 +127,8 @@ export const CUPID_STAGE: NightStageHandler = {
         if (policy === "netease_2017_cupid_follows_lovers_v1") memberIds.add(actorId);
         // Final authorization has no await before atomic relation/state/membership writes.
         bindLovers(ctx.world, record, [first.life, second.life]);
-        state.remaining = 0;
-        state.choice = { day: 1, pairIds: [...pairIds] };
+        (state as Pick<CupidState, "remaining">).remaining = 0;
+        (state as Pick<CupidState, "choice">).choice = { day: 1, pairIds: [...pairIds] };
         for (const id of memberIds)
           ctx.world.addComponent(
             id,

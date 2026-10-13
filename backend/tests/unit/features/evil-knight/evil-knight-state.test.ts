@@ -5,6 +5,7 @@
  * immutable-fixture oracle; these module assertions invoke no model or complete-game
  * driver.
  */
+import type { EvilKnightShotPolicy } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
@@ -25,7 +26,6 @@ import {
   freshEvilKnightState,
   evilKnightNightShotImmune,
   getEvilKnightState,
-  type EvilKnightShotPolicy,
 } from "../../../../src/game/mechanisms/roles/evil_knight/state";
 
 function fixture(policy: EvilKnightShotPolicy = "night_shot_immune") {

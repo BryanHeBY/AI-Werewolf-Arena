@@ -4,6 +4,7 @@
  * close/abort behavior. It never lets a stale source redirect a later native action using the
  * old exchange.
  */
+import type { MagicianReadState } from "@ai-werewolf-arena/game-contract";
 import { isWolfSorcererBoard, resolveWolfSorcererNightTarget } from "../wolf_sorcerer/night_frame";
 import { matchingExchangePairs } from "../trickster/exile_mapping";
 import { types } from "node:util";
@@ -14,7 +15,7 @@ import {
   type AliveComponent,
 } from "../../../../core/domain/components/alive";
 import type { NightLifeScope } from "../../../../core/domain/night_effects";
-import { getMagicianState, projectMagicianState, MAGICIAN_ROLE, type MagicianState } from "./state";
+import { getMagicianState, projectMagicianState, MAGICIAN_ROLE } from "./state";
 
 interface OriginalPlayer {
   id: number;
@@ -38,7 +39,7 @@ interface ExchangeNight {
 }
 interface Board {
   actorId: number;
-  state: MagicianState;
+  state: MagicianReadState;
   expectedState: string;
   players: ReadonlyMap<number, OriginalPlayer>;
   night: ExchangeNight | null;
@@ -103,7 +104,7 @@ export function installMagicianBoard(world: World): void {
   const players = new Map<number, OriginalPlayer>();
   const seats = new Set<number>();
   let actorId: number | null = null;
-  let state: MagicianState | undefined;
+  let state: MagicianReadState | undefined;
   for (const id of world.entityIds()) {
     const role = world.getComponent(id, COMPONENT.Role);
     const life = world.getComponent(id, COMPONENT.Alive);

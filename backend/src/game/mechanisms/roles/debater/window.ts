@@ -4,7 +4,7 @@
  * debate event and window result. It never bypasses participant identity checks after the
  * provider await.
  */
-import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
+import type { ReadonlyBoardConfig, DebaterState } from "@ai-werewolf-arena/game-contract";
 import {
   COMPONENT,
   Role,
@@ -167,9 +167,9 @@ export class DebaterWindow {
       );
       authority.participants = participants;
       commitDebate(this.world, actorId);
-      state.remaining = 0;
+      (state as Pick<DebaterState, "remaining">).remaining = 0;
       choice = { day, targetId };
-      state.choice = choice;
+      (state as Pick<DebaterState, "choice">).choice = choice;
       accepted = true;
       this.events.push(
         { timestamp: Date.now(), type: "debater_revealed", payload: { actorId, day } },

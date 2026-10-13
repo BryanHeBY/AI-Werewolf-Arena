@@ -4,6 +4,11 @@
  * reflection claims. These runtime state references are not player DTOs, and a replaced state
  * cannot reuse the captured right.
  */
+import type {
+  EvilKnightShotPolicy,
+  EvilKnightState,
+  EvilKnightReadState,
+} from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -18,12 +23,6 @@ import type { World } from "../../../../core/domain/world";
 
 export const EVIL_KNIGHT_ROLE = "evil_knight" as const;
 export const EVIL_KNIGHT_POLICY = "awa_evil_knight_v1" as const;
-export type EvilKnightShotPolicy = "night_shot_immune" | "hunter_shot_bypasses";
-export interface EvilKnightState {
-  policy: typeof EVIL_KNIGHT_POLICY;
-  shotPolicy: EvilKnightShotPolicy;
-  reflectionRemaining: 0 | 1;
-}
 function data(value: unknown, key: string): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
   const d = Object.getOwnPropertyDescriptor(value, key);
@@ -34,7 +33,9 @@ export function freshEvilKnightState(
 ): EvilKnightState {
   return { policy: EVIL_KNIGHT_POLICY, shotPolicy, reflectionRemaining: 1 };
 }
-export function getEvilKnightState(role: RoleComponent | undefined): EvilKnightState | undefined {
+export function getEvilKnightState(
+  role: RoleComponent | undefined,
+): EvilKnightReadState | undefined {
   if (data(role, "role") !== EVIL_KNIGHT_ROLE || data(role, "camp") !== Camp.Wolf) return undefined;
   const state = data(data(role, "privateState"), "evilKnight");
   const shot = data(state, "shotPolicy"),
@@ -42,7 +43,7 @@ export function getEvilKnightState(role: RoleComponent | undefined): EvilKnightS
   return data(state, "policy") === EVIL_KNIGHT_POLICY &&
     (shot === "night_shot_immune" || shot === "hunter_shot_bypasses") &&
     (remaining === 0 || remaining === 1)
-    ? (state as EvilKnightState)
+    ? (state as EvilKnightReadState)
     : undefined;
 }
 /** Capture the original identity before awaiting another player's submission. */
@@ -86,7 +87,7 @@ export function commitEvilKnightReflection(
   )
     return null;
   const privateState = casterRole.privateState;
-  binding.state.reflectionRemaining = 0;
+  (binding.state as Pick<EvilKnightState, "reflectionRemaining">).reflectionRemaining = 0;
   return {
     actorId: binding.target.id,
     target: caster,

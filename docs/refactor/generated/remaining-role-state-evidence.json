@@ -1,0 +1,1943 @@
+{
+  "schema": "awa-remaining-role-state-evidence-v1",
+  "baseline": "2cca067c",
+  "counts": {
+    "paths": 46,
+    "movedDataDeclarations": 31,
+    "addedReadAliases": 18,
+    "ownerFieldRights": 33,
+    "existingFixtureSeedCasts": 9,
+    "newUnit": 1
+  },
+  "files": [
+    {
+      "path": "backend/src/ai/agents/player/observation.ts",
+      "sha256": "16801f84a9be21b02ebd188d238805f190bbd45e0ef395128ea6a935f3038c44",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "sha256": "8ddf060c292e556dbe247e9d47c43a08d9785bf8231ad6ae7c5576c445e22878",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/state.ts",
+      "sha256": "bfa25c14e7867aaf97377b3ecdd946b3893c7206c9a4b7c3eb59e16762f0374e",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "sha256": "5ad67dc8e3da186510e90ac7263c03430e8398c89ef5311bf99e026f3ec3a781",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "sha256": "e9db3fa19b83adf47df98f1d0d58eacc5a10f205d5c67dad97143bfa7ffbdba2",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "1ebb4b0c0a319292657cf0360a78abe175f196aee43d798b3d9d892a90219c24",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+      "sha256": "2a2b10d3b963c88b26aee230e2d2009043981a368884140ccfc030117a4fc135",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "sha256": "10ed9279d4560bc88faebb2a23a62069e23b7a487ae61aeef0e7a838584bb61a",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+      "sha256": "0f874e53113ecf55b1c25317a19f8e8c0dac36fa99a6dc060eac77af6b663ea4",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "dcd150d53211f90f6ded048ac822a562dbeb2ec26dc81e7946bf8534d06b5b6c",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "sha256": "9fa93ca1e44d88447aa278cc441588783607da6f94ed17d9e7427024f46090ba",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "sha256": "1de0c69cb3f4ffbf37af90e954ad74847e7cad037e6339493715e684d4ae6a44",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+      "sha256": "5893304c47d830c6b36e942f7426ca4efd3124ad9ee1180b3022460263725b53",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/state.ts",
+      "sha256": "734a7bfc900fd06efdb45668074bf4e7deed866f3c456e982b1b7069fb7fdb05",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+      "sha256": "2d166a269fc8ba534588cca0fc9d5370cc34a4864f9dacecac4c99f9074112de",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+      "sha256": "28e413e19b6e5426a8e386f16cc96c8f8043cd91b4c33b134f6168e404aaa755",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+      "sha256": "fe938fea3793e29dc7582a6b9954b3c7cd51ec9eced8de0300095a928a983428",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+      "sha256": "e50c030bc86c4f649923533aa6563653c6aae55913087798364458d076ff08c8",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+      "sha256": "e924c515b6e898a15d2ab6185bbdadf5f7354c6c5627a87c98e17dac88694c90",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "sha256": "8e0a56a9487e6722f682258bd9ac880328dbf5a0333c99a9d4c6a7354d81cf82",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "sha256": "5d1d9a41f32d518947cb0e0706077402656380b3d2a6c683ccb78929dc602410",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "sha256": "0697ec1068efcf6cd33b3e6a2adaf4ccbf4c8ca3bde576ff0fb8ee8156c0d3b8",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+      "sha256": "568cce949bfd063dd9d7e3533905daf5bd29083281459dcb1250e0af6789999a",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/night_frame.ts",
+      "sha256": "45d1afe02e176eb0bc3c66a8a890ff8b1dbdca5a6ca790778d6c3e2d34ebfcfa",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/state.ts",
+      "sha256": "9f547879c98b92a9133f38f75d73b611c4ef5c178356ea892209104ebe5b6ba9",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "0a460276d3fe98650e1177c57d19d84bac6925b83daa419fdd6c8739483826f2",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+      "sha256": "28a7ebacfbe61432bda43b835f61fc5d68f8e4315e3fe322560ed908c2399452",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+      "sha256": "68b2e65685ffba341eb36038f776067304c4c1c9dbb1872257c337682cc28277",
+      "new": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state.ts",
+      "sha256": "dba657a15c531366b0f12a42ded1b710120c503a1256416c33c60678bbc92647",
+      "new": false
+    },
+    {
+      "path": "backend/tests/support/features/red-moon/builders/candidate-world.ts",
+      "sha256": "d82d0cb0e73a9c0b09642583643a496d9a3bacf1f4d68ce0048c149ae76ab7e5",
+      "new": false
+    },
+    {
+      "path": "backend/tests/unit/agents/red-moon-apostle/red-moon-observation.test.ts",
+      "sha256": "a51453bcfac6753918edfbf9fcc4dcc585095787651e05c40fc1776d9488996c",
+      "new": false
+    },
+    {
+      "path": "backend/tests/unit/features/cupid/choice-and-membership-contracts.test.ts",
+      "sha256": "6d79264591d4c20a52b2dd9788898d9d018be7b02de6ff267a663310ab6ee387",
+      "new": false
+    },
+    {
+      "path": "backend/tests/unit/features/debater/debater.test.ts",
+      "sha256": "58faf1f89ae4f81247b68515e402c66d801ed60d7be9cbc861439a259b4bee2a",
+      "new": false
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight/evil-knight-state.test.ts",
+      "sha256": "e2c0ef1120fca21d3d77623c31c285be61e1d822842b4c9637bc8043e3abb600",
+      "new": false
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "sha256": "cc3f53d10c7285ca459d0f5ca602d18523462159ec93860dc3c31d3b24b17289",
+      "new": false
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-audit.test.ts",
+      "sha256": "76d70b3af6814adb78d6e514476ab91a48f803a2675aee719707dd539bbd069e",
+      "new": false
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/frame.test.ts",
+      "sha256": "db51a7f3db70c8b529fe050cb630ac845ccb6ba27ae10ba5acd1d57479fb32c8",
+      "new": false
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/state.test.ts",
+      "sha256": "c657e79076130375f9fd04342f415c82ba981f5a25773d0ae1cc8f9da3c7b4d4",
+      "new": false
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "sha256": "4afd3d0c0a2649a6fb8aacce8c91e81f860919d9c148d1a8d9ff433b5f0f2b8f",
+      "new": false
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "sha256": "082003b8c88d03ed84ab684664e486be768bb13838e2fa24ad01887f916fec2b",
+      "new": false
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/frame.test.ts",
+      "sha256": "86f7bb76c1eeccad3bb506714db6708b25cd9f0b990f617d81c227f71e86f29f",
+      "new": false
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/state.test.ts",
+      "sha256": "9a8001342156e8f3ad378f52c3ac19fef6500586f68935ad7cf450cb3a19551d",
+      "new": false
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "sha256": "3e764d51632bc443a64a292d32631b63a4fdb3dde58273a1627331e014a9b121",
+      "new": false
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "8b72c611e839c9829f2c501d8828639a537865c24a7f610757fb1f3c4cc56f25",
+      "new": true
+    },
+    {
+      "path": "packages/game-contract/src/index.ts",
+      "sha256": "cded5ffccfd9f7344a2b07e2449373ed8f78599c1e56d484188563c59d51db36",
+      "new": false
+    },
+    {
+      "path": "packages/game-contract/src/role-state-data.ts",
+      "sha256": "6192fd518c879e135b994905919485caea4ff173dd7fefc13d7c8d78869d933e",
+      "new": false
+    }
+  ],
+  "declarations": {
+    "baseline": "2cca067c",
+    "rows": [
+      {
+        "path": "backend/src/game/mechanisms/roles/cupid/state.ts",
+        "name": "CupidState",
+        "same": true,
+        "original": "export interface CupidState {\n  policy: CupidPolicy;\n  remaining: 0 | 1;\n  choice: { day: 1; pairIds: [number, number] } | null;\n}",
+        "canonical": "export interface CupidState {\n  policy: CupidPolicy;\n  remaining: 0 | 1;\n  choice: { day: 1; pairIds: [number, number] } | null;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+        "name": "HybridState",
+        "same": true,
+        "original": "export interface HybridState {\n  remaining: 0 | 1;\n  choice: { day: number; targetId: number } | null;\n}",
+        "canonical": "export interface HybridState {\n  remaining: 0 | 1;\n  choice: { day: number; targetId: number } | null;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+        "name": "WildChildState",
+        "same": true,
+        "original": "export interface WildChildState {\n  policy: typeof WILD_CHILD_POLICY;\n  remaining: 0 | 1;\n  status: \"pending\" | \"chosen\" | \"transformed\" | \"active\" | \"closed\";\n  choice: { day: 1; targetId: number } | null;\n  eligibleNight: number | null;\n  activeFromNight: number | null;\n}",
+        "canonical": "export interface WildChildState {\n  policy: \"awa_lui_meme_wild_child_v1\";\n  remaining: 0 | 1;\n  status: \"pending\" | \"chosen\" | \"transformed\" | \"active\" | \"closed\";\n  choice: { day: 1; targetId: number } | null;\n  eligibleNight: number | null;\n  activeFromNight: number | null;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/thief/state.ts",
+        "name": "ThiefState",
+        "same": true,
+        "original": "export interface ThiefState {\n  policy: typeof THIEF_POLICY;\n  remaining: 0 | 1;\n  choice: 0 | 1 | null;\n}",
+        "canonical": "export interface ThiefState {\n  policy: \"lui_meme_thief_two_extra_villagers_v1\";\n  remaining: 0 | 1;\n  choice: 0 | 1 | null;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+        "name": "ShapeshifterState",
+        "same": true,
+        "original": "export interface ShapeshifterState {\n  policy: typeof SHAPESHIFTER_POLICY;\n  remaining: 0 | 1;\n  choice: 0 | 1 | null;\n}",
+        "canonical": "export interface ShapeshifterState {\n  policy: \"awa_netease_shapeshifter_two_extra_villagers_v1\";\n  remaining: 0 | 1;\n  choice: 0 | 1 | null;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+        "name": "DebaterState",
+        "same": true,
+        "original": "export interface DebaterState {\n  policy: DebaterPolicy;\n  remaining: 0 | 1;\n  choice: { day: number; targetId: number } | null;\n}",
+        "canonical": "export interface DebaterState {\n  policy: DebaterPolicy;\n  remaining: 0 | 1;\n  choice: { day: number; targetId: number } | null;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+        "name": "EvilKnightShotPolicy",
+        "same": true,
+        "original": "export type EvilKnightShotPolicy = \"night_shot_immune\" | \"hunter_shot_bypasses\";",
+        "canonical": "export type EvilKnightShotPolicy = \"night_shot_immune\" | \"hunter_shot_bypasses\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+        "name": "EvilKnightState",
+        "same": true,
+        "original": "export interface EvilKnightState {\n  policy: typeof EVIL_KNIGHT_POLICY;\n  shotPolicy: EvilKnightShotPolicy;\n  reflectionRemaining: 0 | 1;\n}",
+        "canonical": "export interface EvilKnightState {\n  policy: \"awa_evil_knight_v1\";\n  shotPolicy: EvilKnightShotPolicy;\n  reflectionRemaining: 0 | 1;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+        "name": "FearActionPolicy",
+        "same": true,
+        "original": "export type FearActionPolicy = \"optional\" | \"required_when_legal\";",
+        "canonical": "export type FearActionPolicy = \"optional\" | \"required_when_legal\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+        "name": "NightmareWolfActionPolicy",
+        "same": true,
+        "original": "export type NightmareWolfActionPolicy = \"standard\" | \"no_blast_no_self_knife\";",
+        "canonical": "export type NightmareWolfActionPolicy = \"standard\" | \"no_blast_no_self_knife\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+        "name": "NightmareShadowState",
+        "same": true,
+        "original": "export interface NightmareShadowState {\n  policy: typeof NIGHTMARE_SHADOW_POLICY;\n  fearActionPolicy: FearActionPolicy;\n  wolfActionPolicy: NightmareWolfActionPolicy;\n  packReady: boolean;\n  lastDay: number | null;\n  lastTarget: EntityId | null;\n  history: { day: number; targetId: EntityId | null }[];\n}",
+        "canonical": "export interface NightmareShadowState {\n  policy: \"awa_nightmare_dreamer_v1\";\n  fearActionPolicy: FearActionPolicy;\n  wolfActionPolicy: NightmareWolfActionPolicy;\n  packReady: boolean;\n  lastDay: number | null;\n  lastTarget: EntityId | null;\n  history: { day: number; targetId: EntityId | null }[];\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/magician/state.ts",
+        "name": "MagicianChoice",
+        "same": true,
+        "original": "export interface MagicianChoice {\n  day: number;\n  pair: [number, number] | null;\n}",
+        "canonical": "export interface MagicianChoice {\n  day: number;\n  pair: [number, number] | null;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/magician/state.ts",
+        "name": "MagicianState",
+        "same": true,
+        "original": "export interface MagicianState {\n  policy: typeof MAGICIAN_POLICY;\n  firstNight: 1 | 2;\n  deathShotTargetPolicy: \"original\" | \"exchanged\";\n  history: MagicianChoice[];\n}",
+        "canonical": "export interface MagicianState {\n  policy: \"awa_magician_wolf_king_v1\";\n  firstNight: 1 | 2;\n  deathShotTargetPolicy: \"original\" | \"exchanged\";\n  history: MagicianChoice[];\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/trickster/state.ts",
+        "name": "TricksterChoice",
+        "same": true,
+        "original": "export interface TricksterChoice {\n  day: number;\n  pair: [number, number] | null;\n}",
+        "canonical": "export interface TricksterChoice {\n  day: number;\n  pair: [number, number] | null;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/trickster/state.ts",
+        "name": "TricksterState",
+        "same": true,
+        "original": "export interface TricksterState {\n  policy: typeof TRICKSTER_POLICY;\n  history: TricksterChoice[];\n}",
+        "canonical": "export interface TricksterState {\n  policy: \"awa_trickster_exile_v1\";\n  history: TricksterChoice[];\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state.ts",
+        "name": "WolfSorcererChoice",
+        "same": true,
+        "original": "export interface WolfSorcererChoice {\n  day: number;\n  pair: [number, number] | null;\n}",
+        "canonical": "export interface WolfSorcererChoice {\n  day: number;\n  pair: [number, number] | null;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state.ts",
+        "name": "WolfSorcererState",
+        "same": true,
+        "original": "export interface WolfSorcererState {\n  policy: typeof WOLF_SORCERER_POLICY;\n  firstNight: 1 | 2;\n  history: WolfSorcererChoice[];\n}",
+        "canonical": "export interface WolfSorcererState {\n  policy: \"awa_wolf_sorcerer_seats_v1\";\n  firstNight: 1 | 2;\n  history: WolfSorcererChoice[];\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+        "name": "ReflectionScope",
+        "same": true,
+        "original": "export type ReflectionScope = \"whole_night\" | \"first_effect\";",
+        "canonical": "export type ReflectionScope = \"whole_night\" | \"first_effect\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+        "name": "TimeConsortChoice",
+        "same": true,
+        "original": "export interface TimeConsortChoice {\n  day: number;\n  targetId: number | null;\n}",
+        "canonical": "export interface TimeConsortChoice {\n  day: number;\n  targetId: number | null;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+        "name": "TimeConsortState",
+        "same": true,
+        "original": "export interface TimeConsortState {\n  policy: typeof TIME_CONSORT_POLICY;\n  reflectionScope: ReflectionScope;\n  history: TimeConsortChoice[];\n  triggeredDay: number | null;\n}",
+        "canonical": "export interface TimeConsortState {\n  policy: \"awa_time_consort_reflection_v1\";\n  reflectionScope: ReflectionScope;\n  history: TimeConsortChoice[];\n  triggeredDay: number | null;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+        "name": "ReflectableSkill",
+        "same": true,
+        "original": "export type ReflectableSkill = \"check\" | \"guard\" | \"poison\";",
+        "canonical": "export type ReflectableSkill = \"check\" | \"guard\" | \"poison\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+        "name": "ModifierCaster",
+        "same": true,
+        "original": "export type ModifierCaster = \"day_scholar\" | \"night_mentor\";",
+        "canonical": "export type ModifierCaster = \"day_scholar\" | \"night_mentor\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+        "name": "ModifierMode",
+        "same": true,
+        "original": "export type ModifierMode = \"enhance\" | \"weaken\";",
+        "canonical": "export type ModifierMode = \"enhance\" | \"weaken\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+        "name": "ModifierChoice",
+        "same": true,
+        "original": "export interface ModifierChoice {\n  day: number;\n  mode: ModifierMode | null;\n  targetId: number | null;\n}",
+        "canonical": "export interface ModifierChoice {\n  day: number;\n  mode: ModifierMode | null;\n  targetId: number | null;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+        "name": "ModifierState",
+        "same": true,
+        "original": "export interface ModifierState {\n  policy: typeof SCHOLAR_MENTOR_POLICY;\n  caster: ModifierCaster;\n  remaining: { enhance: number; weaken: number };\n  history: ModifierChoice[];\n}",
+        "canonical": "export interface ModifierState {\n  policy: \"awa_scholar_mentor_twelve_v1\";\n  caster: ModifierCaster;\n  remaining: { enhance: number; weaken: number };\n  history: ModifierChoice[];\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+        "name": "ModifierPlayer",
+        "same": true,
+        "original": "export interface ModifierPlayer {\n  id: number;\n  role: string;\n  camp: \"good\" | \"wolf\";\n  alive: boolean;\n}",
+        "canonical": "export interface ModifierPlayer {\n  id: number;\n  role: string;\n  camp: \"good\" | \"wolf\";\n  alive: boolean;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+        "name": "CommittedModifier",
+        "same": true,
+        "original": "export interface CommittedModifier {\n  actorId: number;\n  caster: ModifierCaster;\n  mode: ModifierMode;\n  targetId: number;\n}",
+        "canonical": "export interface CommittedModifier {\n  actorId: number;\n  caster: ModifierCaster;\n  mode: ModifierMode;\n  targetId: number;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+        "name": "ModifierResolution",
+        "same": true,
+        "original": "export interface ModifierResolution {\n  pendingDeaths: number[];\n  conflict: \"same_good\" | \"both_wolves\" | null;\n  goodEffects: Array<{ targetId: number; role: \"seer\" | \"guard\" | \"witch\"; mode: ModifierMode }>;\n  bonusKnifeActorId: number | null;\n  blockWolfKnife: boolean;\n}",
+        "canonical": "export interface ModifierResolution {\n  pendingDeaths: number[];\n  conflict: \"same_good\" | \"both_wolves\" | null;\n  goodEffects: Array<{ targetId: number; role: \"seer\" | \"guard\" | \"witch\"; mode: ModifierMode }>;\n  bonusKnifeActorId: number | null;\n  blockWolfKnife: boolean;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+        "name": "LonelyGirlState",
+        "same": true,
+        "original": "export interface LonelyGirlState {\n  policy: typeof LONELY_GIRL_POLICY;\n  remaining: 0 | 1;\n  choice: { day: 1; targetId: number } | null;\n}",
+        "canonical": "export interface LonelyGirlState {\n  policy: \"awa_netease_lonely_girl_v1\";\n  remaining: 0 | 1;\n  choice: { day: 1; targetId: number } | null;\n}"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+        "name": "LastWolfBlastPolicy",
+        "same": true,
+        "original": "export type LastWolfBlastPolicy = \"ends_game\" | \"forbidden\";",
+        "canonical": "export type LastWolfBlastPolicy = \"ends_game\" | \"forbidden\";"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+        "name": "RedMoonState",
+        "same": true,
+        "original": "export interface RedMoonState {\n  policy: typeof RED_MOON_POLICY;\n  lastWolfBlastPolicy: LastWolfBlastPolicy;\n  blastDay: number | null;\n  exileDay: number | null;\n  expirySettled: boolean;\n}",
+        "canonical": "export interface RedMoonState {\n  policy: \"awa_red_moon_demon_v1\";\n  lastWolfBlastPolicy: LastWolfBlastPolicy;\n  blastDay: number | null;\n  exileDay: number | null;\n  expirySettled: boolean;\n}"
+      }
+    ],
+    "controls": [
+      {
+        "name": "HunterState",
+        "same": true
+      },
+      {
+        "name": "WolfKingState",
+        "same": true
+      },
+      {
+        "name": "WhiteWolfKingState",
+        "same": true
+      },
+      {
+        "name": "KnightState",
+        "same": true
+      },
+      {
+        "name": "GravekeeperReport",
+        "same": true
+      },
+      {
+        "name": "GravekeeperState",
+        "same": true
+      },
+      {
+        "name": "WolfBeautyState",
+        "same": true
+      },
+      {
+        "name": "BearState",
+        "same": true
+      },
+      {
+        "name": "HiddenWolfState",
+        "same": true
+      },
+      {
+        "name": "GargoyleState",
+        "same": true
+      },
+      {
+        "name": "IdiotState",
+        "same": true
+      },
+      {
+        "name": "MechanicalMode",
+        "same": true
+      },
+      {
+        "name": "MechanicalSkill",
+        "same": true
+      },
+      {
+        "name": "MechanicalLearning",
+        "same": true
+      },
+      {
+        "name": "MechanicalState",
+        "same": true
+      },
+      {
+        "name": "AwakenedSkill",
+        "same": true
+      },
+      {
+        "name": "AwakenedActiveSkill",
+        "same": true
+      },
+      {
+        "name": "AwakenedTemplateRole",
+        "same": true
+      },
+      {
+        "name": "AwakenedLearning",
+        "same": true
+      },
+      {
+        "name": "AwakenedState",
+        "same": true
+      },
+      {
+        "name": "MiracleSkill",
+        "same": true
+      },
+      {
+        "name": "MerchantState",
+        "same": true
+      },
+      {
+        "name": "BlackMarketSkill",
+        "same": true
+      },
+      {
+        "name": "BlackMarketState",
+        "same": true
+      },
+      {
+        "name": "HunterReadState",
+        "same": true
+      },
+      {
+        "name": "WolfKingReadState",
+        "same": true
+      },
+      {
+        "name": "WhiteWolfKingReadState",
+        "same": true
+      },
+      {
+        "name": "KnightReadState",
+        "same": true
+      },
+      {
+        "name": "IdiotReadState",
+        "same": true
+      },
+      {
+        "name": "HiddenWolfReadState",
+        "same": true
+      },
+      {
+        "name": "GargoyleReadState",
+        "same": true
+      },
+      {
+        "name": "BearReadState",
+        "same": true
+      },
+      {
+        "name": "WolfBeautyReadState",
+        "same": true
+      },
+      {
+        "name": "GravekeeperReadReport",
+        "same": true
+      },
+      {
+        "name": "GravekeeperReadState",
+        "same": true
+      },
+      {
+        "name": "MechanicalReadSkill",
+        "same": true
+      },
+      {
+        "name": "MechanicalReadLearning",
+        "same": true
+      },
+      {
+        "name": "MechanicalReadState",
+        "same": true
+      },
+      {
+        "name": "AwakenedReadSkill",
+        "same": true
+      },
+      {
+        "name": "AwakenedReadActiveSkill",
+        "same": true
+      },
+      {
+        "name": "AwakenedReadLearning",
+        "same": true
+      },
+      {
+        "name": "AwakenedReadState",
+        "same": true
+      },
+      {
+        "name": "MerchantReadState",
+        "same": true
+      },
+      {
+        "name": "BlackMarketReadState",
+        "same": true
+      }
+    ],
+    "normalizations": "Only backend immutable policy typeof queries become their exact already observed literal type; Cupid/Debater policies resolve to the same neutral boards owner. No member/order/readonly/optional/null/union/tuple/extension change. Prior24 data declarations and finite read aliases remain exact.",
+    "findings": []
+  },
+  "programs": {
+    "baseline": "2cca067c",
+    "rows": [
+      {
+        "path": "backend/src/ai/agents/player/observation.ts",
+        "originalSha256": "2df86b349e94d1629347d584acbd94c63727b9b8246e4b1ce4283bb99d5eb9cf",
+        "currentSha256": "16801f84a9be21b02ebd188d238805f190bbd45e0ef395128ea6a935f3038c44",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+        "originalSha256": "7f3666b04a824c5fe67a6a3fc96d7100036a9f6e520fffe3065555744bbd6efb",
+        "currentSha256": "8ddf060c292e556dbe247e9d47c43a08d9785bf8231ad6ae7c5576c445e22878",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/cupid/state.ts",
+        "originalSha256": "145ec9d5cd23a1a38cbef662ef38c7509fe8e1b24f91b08ef028fb811ef11164",
+        "currentSha256": "bfa25c14e7867aaf97377b3ecdd946b3893c7206c9a4b7c3eb59e16762f0374e",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+        "originalSha256": "5282fe2326b0cdf8fed6e8427d9400b2b847fcfc631031b6f0fe83a3a3f63bb1",
+        "currentSha256": "5ad67dc8e3da186510e90ac7263c03430e8398c89ef5311bf99e026f3ec3a781",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+        "originalSha256": "f3be8acd6b6db0dbecddc603a89c2ede89b723d4aaeef3ff95699fc43d2fe5f3",
+        "currentSha256": "e9db3fa19b83adf47df98f1d0d58eacc5a10f205d5c67dad97143bfa7ffbdba2",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+        "originalSha256": "a72767b7a6d8bbd40871ca71b4401419e4c22a8096dcfc3ee6c835ae8e6cd574",
+        "currentSha256": "1ebb4b0c0a319292657cf0360a78abe175f196aee43d798b3d9d892a90219c24",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+        "originalSha256": "932d9e226e7347a5315f76a1ca52f0981b62d9b704d6e6ae9d0ca02ca91b7a6b",
+        "currentSha256": "2a2b10d3b963c88b26aee230e2d2009043981a368884140ccfc030117a4fc135",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+        "originalSha256": "8dba13ecf1c36445a7187e95d83d4da67ea8aa9ee0792269aa7a3eeb79534735",
+        "currentSha256": "10ed9279d4560bc88faebb2a23a62069e23b7a487ae61aeef0e7a838584bb61a",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+        "originalSha256": "30cef3c419e230ba491494b1e8fd05d8cb28c7e634bfee64321a9859476f29df",
+        "currentSha256": "0f874e53113ecf55b1c25317a19f8e8c0dac36fa99a6dc060eac77af6b663ea4",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+        "originalSha256": "fdd3c27ed25396a570dff922119dbf4012f9d5a591b2d753b0227a93ef2976e6",
+        "currentSha256": "dcd150d53211f90f6ded048ac822a562dbeb2ec26dc81e7946bf8534d06b5b6c",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+        "originalSha256": "a082b67aabf41fb6f90159c2671cf5cc1ed092e5dd0a64858841a1daef07ad63",
+        "currentSha256": "9fa93ca1e44d88447aa278cc441588783607da6f94ed17d9e7427024f46090ba",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+        "originalSha256": "7ec13856f1cb71903cbe14ff8d9c1f341d1ebafe283f07682a3b8b15ccd1bdf5",
+        "currentSha256": "1de0c69cb3f4ffbf37af90e954ad74847e7cad037e6339493715e684d4ae6a44",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+        "originalSha256": "7c1d1c71a2adff07b0360c457e13378af37b6aec96e4a1fc373aa4ae911da4f2",
+        "currentSha256": "5893304c47d830c6b36e942f7426ca4efd3124ad9ee1180b3022460263725b53",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/magician/state.ts",
+        "originalSha256": "dc7b0fa43471297e927c0681652d555fe00e4ff3ac59a04bfdb581e5f3d43a74",
+        "currentSha256": "734a7bfc900fd06efdb45668074bf4e7deed866f3c456e982b1b7069fb7fdb05",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+        "originalSha256": "77f48ca641141e4498c458d889c088f3177813acdb9d783545bb4af0b451c150",
+        "currentSha256": "2d166a269fc8ba534588cca0fc9d5370cc34a4864f9dacecac4c99f9074112de",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+        "originalSha256": "0fb3e8fc785c065641352843534312dc2642c2540043522e459e7dc1537cb8e6",
+        "currentSha256": "28e413e19b6e5426a8e386f16cc96c8f8043cd91b4c33b134f6168e404aaa755",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+        "originalSha256": "39d03bc26798b57ac9b1fa923ad23d41d3d7e7480b999c6401b2853afd01d6de",
+        "currentSha256": "fe938fea3793e29dc7582a6b9954b3c7cd51ec9eced8de0300095a928a983428",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+        "originalSha256": "ec7282af086f6672d3e185d7c8ee499407e52944326a3c7111f5bac0aa0f465e",
+        "currentSha256": "e50c030bc86c4f649923533aa6563653c6aae55913087798364458d076ff08c8",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+        "originalSha256": "ecfae15b855efe44909f5514d76ca071a418d4067cbb3df8c25f3ff8b2f14d7b",
+        "currentSha256": "e924c515b6e898a15d2ab6185bbdadf5f7354c6c5627a87c98e17dac88694c90",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+        "originalSha256": "8b1f66f287a823177464b3aaaea8b3a3c5dcbd93f1c6d7245d8b368f8006d063",
+        "currentSha256": "8e0a56a9487e6722f682258bd9ac880328dbf5a0333c99a9d4c6a7354d81cf82",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/thief/state.ts",
+        "originalSha256": "196621806cf96f3ea59776da313268e879981fdb9bab68cb45155d8962aa04d8",
+        "currentSha256": "5d1d9a41f32d518947cb0e0706077402656380b3d2a6c683ccb78929dc602410",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+        "originalSha256": "cc12722938076c686540df278e9d4b86b8471a6edcdaa20e6bc7144d655d941a",
+        "currentSha256": "0697ec1068efcf6cd33b3e6a2adaf4ccbf4c8ca3bde576ff0fb8ee8156c0d3b8",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+        "originalSha256": "d331612b3e463395f5fc7edc6a76c7024bd5c763b51b1c87c1ff8cbcc82db433",
+        "currentSha256": "568cce949bfd063dd9d7e3533905daf5bd29083281459dcb1250e0af6789999a",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/trickster/night_frame.ts",
+        "originalSha256": "90e04efc562935b7aa3d937901926ba5e7f60fa622f2225b106215aefd9eafe6",
+        "currentSha256": "45d1afe02e176eb0bc3c66a8a890ff8b1dbdca5a6ca790778d6c3e2d34ebfcfa",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/trickster/state.ts",
+        "originalSha256": "fd25d1c4ad60e09d99708b1e620d7f6ca92d8a09a59facf7c6b48f91b222b4e7",
+        "currentSha256": "9f547879c98b92a9133f38f75d73b611c4ef5c178356ea892209104ebe5b6ba9",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+        "originalSha256": "6242468d552ba178901607c75a7d4fba15897651ab87ae1ca95d9348dae6cfef",
+        "currentSha256": "0a460276d3fe98650e1177c57d19d84bac6925b83daa419fdd6c8739483826f2",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+        "originalSha256": "30ef46c2ff0a463a6a50f90bb13045a87607bb13554378d3ac76eb1707e34327",
+        "currentSha256": "28a7ebacfbe61432bda43b835f61fc5d68f8e4315e3fe322560ed908c2399452",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+        "originalSha256": "1ee17010c138c3b8c18e80a8514d6a9e1742762c3bc8cc1dfd1ba084b57eb060",
+        "currentSha256": "68b2e65685ffba341eb36038f776067304c4c1c9dbb1872257c337682cc28277",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state.ts",
+        "originalSha256": "31242d9a5caee966884b2dede54fecd1b4cbd942609b2418b0be49309a7a2814",
+        "currentSha256": "dba657a15c531366b0f12a42ded1b710120c503a1256416c33c60678bbc92647",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/tests/support/features/red-moon/builders/candidate-world.ts",
+        "originalSha256": "ed08ad6db3c5c4127e3eb38f5fa92c022467fcfe75763a24d4b9c3441cdcefbd",
+        "currentSha256": "d82d0cb0e73a9c0b09642583643a496d9a3bacf1f4d68ce0048c149ae76ab7e5",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/tests/unit/agents/red-moon-apostle/red-moon-observation.test.ts",
+        "originalSha256": "10cdb0c9f7683c2b5327ab816c6e1bcb2d50b7012e16b2746dba6477a6d9b185",
+        "currentSha256": "a51453bcfac6753918edfbf9fcc4dcc585095787651e05c40fc1776d9488996c",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/cupid/choice-and-membership-contracts.test.ts",
+        "originalSha256": "c48f932f8b64b993d3b38c6abe2926b797bba88a7375a569a53b2f3ea8954e6d",
+        "currentSha256": "6d79264591d4c20a52b2dd9788898d9d018be7b02de6ff267a663310ab6ee387",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/debater/debater.test.ts",
+        "originalSha256": "2cf05456b2f825c5497fc1eaec39571d072e8cebdb9d4533f7c149470236a5f8",
+        "currentSha256": "58faf1f89ae4f81247b68515e402c66d801ed60d7be9cbc861439a259b4bee2a",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/evil-knight/evil-knight-state.test.ts",
+        "originalSha256": "356d3f35c994264abfbf4f6213832ac79ca3cce6da913921fb47fc4da40a6cf2",
+        "currentSha256": "e2c0ef1120fca21d3d77623c31c285be61e1d822842b4c9637bc8043e3abb600",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+        "originalSha256": "ee8ec50a573a5fd32b77eb9966c836b33eb4526da3fb33b91a3b37b6aed32ee2",
+        "currentSha256": "cc3f53d10c7285ca459d0f5ca602d18523462159ec93860dc3c31d3b24b17289",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/red-moon-audit.test.ts",
+        "originalSha256": "8c12bad9bcc21629f3c74bc3149cb015ee10dba982c472d36256ed6db8751b7f",
+        "currentSha256": "76d70b3af6814adb78d6e514476ab91a48f803a2675aee719707dd539bbd069e",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/scholar-mentor/frame.test.ts",
+        "originalSha256": "876127250de631123e1afe4c20b5415e86572f12019ce3c7d6222d1a56016c97",
+        "currentSha256": "db51a7f3db70c8b529fe050cb630ac845ccb6ba27ae10ba5acd1d57479fb32c8",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/scholar-mentor/state.test.ts",
+        "originalSha256": "89602b25ac3caf09283836ed4a50c426cbc03624739f4861e1789af781c0bcd7",
+        "currentSha256": "c657e79076130375f9fd04342f415c82ba981f5a25773d0ae1cc8f9da3c7b4d4",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+        "originalSha256": "17797825344c7886bc297b56eb637757f5d881fed55fa7700bdbdb789b5f1529",
+        "currentSha256": "4afd3d0c0a2649a6fb8aacce8c91e81f860919d9c148d1a8d9ff433b5f0f2b8f",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+        "originalSha256": "40499b8e49f36612702c52193abe83c8f6759d161af852e80b7265b54f549c02",
+        "currentSha256": "082003b8c88d03ed84ab684664e486be768bb13838e2fa24ad01887f916fec2b",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/time-consort/frame.test.ts",
+        "originalSha256": "c8d1126d82d2f5e7e1581ea6809187cdaab502c4d10ff9f18ae04c4c09b62608",
+        "currentSha256": "86f7bb76c1eeccad3bb506714db6708b25cd9f0b990f617d81c227f71e86f29f",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/time-consort/state.test.ts",
+        "originalSha256": "7bd9526e384ebb3b60accdd6ebd964ea7efc645e362cb3dfa4f3fc8f00e176a8",
+        "currentSha256": "9a8001342156e8f3ad378f52c3ac19fef6500586f68935ad7cf450cb3a19551d",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+        "originalSha256": "72075ad8a503d3a058b2a996adee9b76d067e038b0376777d02b150fea3d5e38",
+        "currentSha256": "3e764d51632bc443a64a292d32631b63a4fdb3dde58273a1627331e014a9b121",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "packages/game-contract/src/index.ts",
+        "originalSha256": "328909f6fa3772c69c9d2752769c291a3ac7d9c45c857492adf0e4d2cb1b79d3",
+        "currentSha256": "cded5ffccfd9f7344a2b07e2449373ed8f78599c1e56d484188563c59d51db36",
+        "esnextSame": true,
+        "commonjsSame": true
+      },
+      {
+        "path": "packages/game-contract/src/role-state-data.ts",
+        "originalSha256": "a4b12e9d696baa4de0c50aa9e286889fe923a2cfff9b719555482d3c49fbbee0",
+        "currentSha256": "6192fd518c879e135b994905919485caea4ff173dd7fefc13d7c8d78869d933e",
+        "esnextSame": true,
+        "commonjsSame": true
+      }
+    ],
+    "findings": [],
+    "normalizations": "Transpile strips types/comments. Parsed expression grouping is compared structurally with only ParenthesizedExpression wrappers erased; OptionalChain node flags remain explicit. Only optional final ObjectLiteral/NamedImports/NamedExports separators are normalized; arrays/holes/bindings/order/receiver/await/calls/operators remain exact.",
+    "newUnit": "New literal tests have no old program; independent API/ref/descriptor/copy assertions are reviewed separately."
+  },
+  "reviews": {
+    "root": "Read actual full canonical data/read additions,15 valid compiler negatives and3 original-ref/copy/zero-accessor unit cases; actual source getter and field-right changes preserve the original reference/copy/guard split. Final46 current SHA matches.",
+    "independent": {
+      "base": "2cca067c",
+      "scope": [
+        {
+          "path": "backend/src/ai/agents/player/observation.ts",
+          "sha256": "16801f84a9be21b02ebd188d238805f190bbd45e0ef395128ea6a935f3038c44",
+          "new": false,
+          "actualSha256": "16801f84a9be21b02ebd188d238805f190bbd45e0ef395128ea6a935f3038c44",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+          "sha256": "8ddf060c292e556dbe247e9d47c43a08d9785bf8231ad6ae7c5576c445e22878",
+          "new": false,
+          "actualSha256": "8ddf060c292e556dbe247e9d47c43a08d9785bf8231ad6ae7c5576c445e22878",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/cupid/state.ts",
+          "sha256": "bfa25c14e7867aaf97377b3ecdd946b3893c7206c9a4b7c3eb59e16762f0374e",
+          "new": false,
+          "actualSha256": "bfa25c14e7867aaf97377b3ecdd946b3893c7206c9a4b7c3eb59e16762f0374e",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+          "sha256": "5ad67dc8e3da186510e90ac7263c03430e8398c89ef5311bf99e026f3ec3a781",
+          "new": false,
+          "actualSha256": "5ad67dc8e3da186510e90ac7263c03430e8398c89ef5311bf99e026f3ec3a781",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+          "sha256": "e9db3fa19b83adf47df98f1d0d58eacc5a10f205d5c67dad97143bfa7ffbdba2",
+          "new": false,
+          "actualSha256": "e9db3fa19b83adf47df98f1d0d58eacc5a10f205d5c67dad97143bfa7ffbdba2",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "sha256": "1ebb4b0c0a319292657cf0360a78abe175f196aee43d798b3d9d892a90219c24",
+          "new": false,
+          "actualSha256": "1ebb4b0c0a319292657cf0360a78abe175f196aee43d798b3d9d892a90219c24",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+          "sha256": "2a2b10d3b963c88b26aee230e2d2009043981a368884140ccfc030117a4fc135",
+          "new": false,
+          "actualSha256": "2a2b10d3b963c88b26aee230e2d2009043981a368884140ccfc030117a4fc135",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+          "sha256": "10ed9279d4560bc88faebb2a23a62069e23b7a487ae61aeef0e7a838584bb61a",
+          "new": false,
+          "actualSha256": "10ed9279d4560bc88faebb2a23a62069e23b7a487ae61aeef0e7a838584bb61a",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+          "sha256": "0f874e53113ecf55b1c25317a19f8e8c0dac36fa99a6dc060eac77af6b663ea4",
+          "new": false,
+          "actualSha256": "0f874e53113ecf55b1c25317a19f8e8c0dac36fa99a6dc060eac77af6b663ea4",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+          "sha256": "dcd150d53211f90f6ded048ac822a562dbeb2ec26dc81e7946bf8534d06b5b6c",
+          "new": false,
+          "actualSha256": "dcd150d53211f90f6ded048ac822a562dbeb2ec26dc81e7946bf8534d06b5b6c",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+          "sha256": "9fa93ca1e44d88447aa278cc441588783607da6f94ed17d9e7427024f46090ba",
+          "new": false,
+          "actualSha256": "9fa93ca1e44d88447aa278cc441588783607da6f94ed17d9e7427024f46090ba",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+          "sha256": "1de0c69cb3f4ffbf37af90e954ad74847e7cad037e6339493715e684d4ae6a44",
+          "new": false,
+          "actualSha256": "1de0c69cb3f4ffbf37af90e954ad74847e7cad037e6339493715e684d4ae6a44",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+          "sha256": "5893304c47d830c6b36e942f7426ca4efd3124ad9ee1180b3022460263725b53",
+          "new": false,
+          "actualSha256": "5893304c47d830c6b36e942f7426ca4efd3124ad9ee1180b3022460263725b53",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/magician/state.ts",
+          "sha256": "734a7bfc900fd06efdb45668074bf4e7deed866f3c456e982b1b7069fb7fdb05",
+          "new": false,
+          "actualSha256": "734a7bfc900fd06efdb45668074bf4e7deed866f3c456e982b1b7069fb7fdb05",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "sha256": "2d166a269fc8ba534588cca0fc9d5370cc34a4864f9dacecac4c99f9074112de",
+          "new": false,
+          "actualSha256": "2d166a269fc8ba534588cca0fc9d5370cc34a4864f9dacecac4c99f9074112de",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "sha256": "28e413e19b6e5426a8e386f16cc96c8f8043cd91b4c33b134f6168e404aaa755",
+          "new": false,
+          "actualSha256": "28e413e19b6e5426a8e386f16cc96c8f8043cd91b4c33b134f6168e404aaa755",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+          "sha256": "fe938fea3793e29dc7582a6b9954b3c7cd51ec9eced8de0300095a928a983428",
+          "new": false,
+          "actualSha256": "fe938fea3793e29dc7582a6b9954b3c7cd51ec9eced8de0300095a928a983428",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+          "sha256": "e50c030bc86c4f649923533aa6563653c6aae55913087798364458d076ff08c8",
+          "new": false,
+          "actualSha256": "e50c030bc86c4f649923533aa6563653c6aae55913087798364458d076ff08c8",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+          "sha256": "e924c515b6e898a15d2ab6185bbdadf5f7354c6c5627a87c98e17dac88694c90",
+          "new": false,
+          "actualSha256": "e924c515b6e898a15d2ab6185bbdadf5f7354c6c5627a87c98e17dac88694c90",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+          "sha256": "8e0a56a9487e6722f682258bd9ac880328dbf5a0333c99a9d4c6a7354d81cf82",
+          "new": false,
+          "actualSha256": "8e0a56a9487e6722f682258bd9ac880328dbf5a0333c99a9d4c6a7354d81cf82",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/thief/state.ts",
+          "sha256": "5d1d9a41f32d518947cb0e0706077402656380b3d2a6c683ccb78929dc602410",
+          "new": false,
+          "actualSha256": "5d1d9a41f32d518947cb0e0706077402656380b3d2a6c683ccb78929dc602410",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+          "sha256": "0697ec1068efcf6cd33b3e6a2adaf4ccbf4c8ca3bde576ff0fb8ee8156c0d3b8",
+          "new": false,
+          "actualSha256": "0697ec1068efcf6cd33b3e6a2adaf4ccbf4c8ca3bde576ff0fb8ee8156c0d3b8",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+          "sha256": "568cce949bfd063dd9d7e3533905daf5bd29083281459dcb1250e0af6789999a",
+          "new": false,
+          "actualSha256": "568cce949bfd063dd9d7e3533905daf5bd29083281459dcb1250e0af6789999a",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/trickster/night_frame.ts",
+          "sha256": "45d1afe02e176eb0bc3c66a8a890ff8b1dbdca5a6ca790778d6c3e2d34ebfcfa",
+          "new": false,
+          "actualSha256": "45d1afe02e176eb0bc3c66a8a890ff8b1dbdca5a6ca790778d6c3e2d34ebfcfa",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/trickster/state.ts",
+          "sha256": "9f547879c98b92a9133f38f75d73b611c4ef5c178356ea892209104ebe5b6ba9",
+          "new": false,
+          "actualSha256": "9f547879c98b92a9133f38f75d73b611c4ef5c178356ea892209104ebe5b6ba9",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+          "sha256": "0a460276d3fe98650e1177c57d19d84bac6925b83daa419fdd6c8739483826f2",
+          "new": false,
+          "actualSha256": "0a460276d3fe98650e1177c57d19d84bac6925b83daa419fdd6c8739483826f2",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+          "sha256": "28a7ebacfbe61432bda43b835f61fc5d68f8e4315e3fe322560ed908c2399452",
+          "new": false,
+          "actualSha256": "28a7ebacfbe61432bda43b835f61fc5d68f8e4315e3fe322560ed908c2399452",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+          "sha256": "68b2e65685ffba341eb36038f776067304c4c1c9dbb1872257c337682cc28277",
+          "new": false,
+          "actualSha256": "68b2e65685ffba341eb36038f776067304c4c1c9dbb1872257c337682cc28277",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state.ts",
+          "sha256": "dba657a15c531366b0f12a42ded1b710120c503a1256416c33c60678bbc92647",
+          "new": false,
+          "actualSha256": "dba657a15c531366b0f12a42ded1b710120c503a1256416c33c60678bbc92647",
+          "same": true
+        },
+        {
+          "path": "backend/tests/support/features/red-moon/builders/candidate-world.ts",
+          "sha256": "d82d0cb0e73a9c0b09642583643a496d9a3bacf1f4d68ce0048c149ae76ab7e5",
+          "new": false,
+          "actualSha256": "d82d0cb0e73a9c0b09642583643a496d9a3bacf1f4d68ce0048c149ae76ab7e5",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/agents/red-moon-apostle/red-moon-observation.test.ts",
+          "sha256": "a51453bcfac6753918edfbf9fcc4dcc585095787651e05c40fc1776d9488996c",
+          "new": false,
+          "actualSha256": "a51453bcfac6753918edfbf9fcc4dcc585095787651e05c40fc1776d9488996c",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/cupid/choice-and-membership-contracts.test.ts",
+          "sha256": "6d79264591d4c20a52b2dd9788898d9d018be7b02de6ff267a663310ab6ee387",
+          "new": false,
+          "actualSha256": "6d79264591d4c20a52b2dd9788898d9d018be7b02de6ff267a663310ab6ee387",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/debater/debater.test.ts",
+          "sha256": "58faf1f89ae4f81247b68515e402c66d801ed60d7be9cbc861439a259b4bee2a",
+          "new": false,
+          "actualSha256": "58faf1f89ae4f81247b68515e402c66d801ed60d7be9cbc861439a259b4bee2a",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/evil-knight/evil-knight-state.test.ts",
+          "sha256": "e2c0ef1120fca21d3d77623c31c285be61e1d822842b4c9637bc8043e3abb600",
+          "new": false,
+          "actualSha256": "e2c0ef1120fca21d3d77623c31c285be61e1d822842b4c9637bc8043e3abb600",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+          "sha256": "cc3f53d10c7285ca459d0f5ca602d18523462159ec93860dc3c31d3b24b17289",
+          "new": false,
+          "actualSha256": "cc3f53d10c7285ca459d0f5ca602d18523462159ec93860dc3c31d3b24b17289",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/red-moon-audit.test.ts",
+          "sha256": "76d70b3af6814adb78d6e514476ab91a48f803a2675aee719707dd539bbd069e",
+          "new": false,
+          "actualSha256": "76d70b3af6814adb78d6e514476ab91a48f803a2675aee719707dd539bbd069e",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/scholar-mentor/frame.test.ts",
+          "sha256": "db51a7f3db70c8b529fe050cb630ac845ccb6ba27ae10ba5acd1d57479fb32c8",
+          "new": false,
+          "actualSha256": "db51a7f3db70c8b529fe050cb630ac845ccb6ba27ae10ba5acd1d57479fb32c8",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/scholar-mentor/state.test.ts",
+          "sha256": "c657e79076130375f9fd04342f415c82ba981f5a25773d0ae1cc8f9da3c7b4d4",
+          "new": false,
+          "actualSha256": "c657e79076130375f9fd04342f415c82ba981f5a25773d0ae1cc8f9da3c7b4d4",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+          "sha256": "4afd3d0c0a2649a6fb8aacce8c91e81f860919d9c148d1a8d9ff433b5f0f2b8f",
+          "new": false,
+          "actualSha256": "4afd3d0c0a2649a6fb8aacce8c91e81f860919d9c148d1a8d9ff433b5f0f2b8f",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+          "sha256": "082003b8c88d03ed84ab684664e486be768bb13838e2fa24ad01887f916fec2b",
+          "new": false,
+          "actualSha256": "082003b8c88d03ed84ab684664e486be768bb13838e2fa24ad01887f916fec2b",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/time-consort/frame.test.ts",
+          "sha256": "86f7bb76c1eeccad3bb506714db6708b25cd9f0b990f617d81c227f71e86f29f",
+          "new": false,
+          "actualSha256": "86f7bb76c1eeccad3bb506714db6708b25cd9f0b990f617d81c227f71e86f29f",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/time-consort/state.test.ts",
+          "sha256": "9a8001342156e8f3ad378f52c3ac19fef6500586f68935ad7cf450cb3a19551d",
+          "new": false,
+          "actualSha256": "9a8001342156e8f3ad378f52c3ac19fef6500586f68935ad7cf450cb3a19551d",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+          "sha256": "3e764d51632bc443a64a292d32631b63a4fdb3dde58273a1627331e014a9b121",
+          "new": false,
+          "actualSha256": "3e764d51632bc443a64a292d32631b63a4fdb3dde58273a1627331e014a9b121",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+          "sha256": "8b72c611e839c9829f2c501d8828639a537865c24a7f610757fb1f3c4cc56f25",
+          "new": true,
+          "actualSha256": "8b72c611e839c9829f2c501d8828639a537865c24a7f610757fb1f3c4cc56f25",
+          "same": true
+        },
+        {
+          "path": "packages/game-contract/src/index.ts",
+          "sha256": "cded5ffccfd9f7344a2b07e2449373ed8f78599c1e56d484188563c59d51db36",
+          "new": false,
+          "actualSha256": "cded5ffccfd9f7344a2b07e2449373ed8f78599c1e56d484188563c59d51db36",
+          "same": true
+        },
+        {
+          "path": "packages/game-contract/src/role-state-data.ts",
+          "sha256": "6192fd518c879e135b994905919485caea4ff173dd7fefc13d7c8d78869d933e",
+          "new": false,
+          "actualSha256": "6192fd518c879e135b994905919485caea4ff173dd7fefc13d7c8d78869d933e",
+          "same": true
+        }
+      ],
+      "counts": {
+        "paths": 46,
+        "movedDataDeclarations": 31,
+        "addedReadAliases": 18,
+        "ownerFieldRights": 33,
+        "existingFixtureSeedCasts": 9,
+        "newUnit": 1
+      },
+      "declarations": [
+        {
+          "path": "backend/src/game/mechanisms/roles/cupid/state.ts",
+          "name": "CupidState",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+          "name": "HybridState",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+          "name": "WildChildState",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": [
+            {
+              "name": "WILD_CHILD_POLICY",
+              "oldValue": "\"awa_lui_meme_wild_child_v1\" as const",
+              "neutralLiteral": "\"awa_lui_meme_wild_child_v1\""
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/thief/state.ts",
+          "name": "ThiefState",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": [
+            {
+              "name": "THIEF_POLICY",
+              "oldValue": "\"lui_meme_thief_two_extra_villagers_v1\" as const",
+              "neutralLiteral": "\"lui_meme_thief_two_extra_villagers_v1\""
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+          "name": "ShapeshifterState",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": [
+            {
+              "name": "SHAPESHIFTER_POLICY",
+              "oldValue": "\"awa_netease_shapeshifter_two_extra_villagers_v1\" as const",
+              "neutralLiteral": "\"awa_netease_shapeshifter_two_extra_villagers_v1\""
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+          "name": "DebaterState",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+          "name": "EvilKnightShotPolicy",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+          "name": "EvilKnightState",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": [
+            {
+              "name": "EVIL_KNIGHT_POLICY",
+              "oldValue": "\"awa_evil_knight_v1\" as const",
+              "neutralLiteral": "\"awa_evil_knight_v1\""
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "name": "FearActionPolicy",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "name": "NightmareWolfActionPolicy",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "name": "NightmareShadowState",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": [
+            {
+              "name": "NIGHTMARE_SHADOW_POLICY",
+              "oldValue": "\"awa_nightmare_dreamer_v1\" as const",
+              "neutralLiteral": "\"awa_nightmare_dreamer_v1\""
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/magician/state.ts",
+          "name": "MagicianChoice",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/magician/state.ts",
+          "name": "MagicianState",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": [
+            {
+              "name": "MAGICIAN_POLICY",
+              "oldValue": "\"awa_magician_wolf_king_v1\" as const",
+              "neutralLiteral": "\"awa_magician_wolf_king_v1\""
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/trickster/state.ts",
+          "name": "TricksterChoice",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/trickster/state.ts",
+          "name": "TricksterState",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": [
+            {
+              "name": "TRICKSTER_POLICY",
+              "oldValue": "\"awa_trickster_exile_v1\" as const",
+              "neutralLiteral": "\"awa_trickster_exile_v1\""
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state.ts",
+          "name": "WolfSorcererChoice",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/state.ts",
+          "name": "WolfSorcererState",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": [
+            {
+              "name": "WOLF_SORCERER_POLICY",
+              "oldValue": "\"awa_wolf_sorcerer_seats_v1\" as const",
+              "neutralLiteral": "\"awa_wolf_sorcerer_seats_v1\""
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+          "name": "ReflectionScope",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+          "name": "TimeConsortChoice",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+          "name": "TimeConsortState",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": [
+            {
+              "name": "TIME_CONSORT_POLICY",
+              "oldValue": "\"awa_time_consort_reflection_v1\" as const",
+              "neutralLiteral": "\"awa_time_consort_reflection_v1\""
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+          "name": "ReflectableSkill",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+          "name": "ModifierCaster",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+          "name": "ModifierMode",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+          "name": "ModifierChoice",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+          "name": "ModifierState",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": [
+            {
+              "name": "SCHOLAR_MENTOR_POLICY",
+              "oldValue": "\"awa_scholar_mentor_twelve_v1\" as const",
+              "neutralLiteral": "\"awa_scholar_mentor_twelve_v1\""
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+          "name": "ModifierPlayer",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+          "name": "CommittedModifier",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/scholar_mentor/state.ts",
+          "name": "ModifierResolution",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+          "name": "LonelyGirlState",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": [
+            {
+              "name": "LONELY_GIRL_POLICY",
+              "oldValue": "\"awa_netease_lonely_girl_v1\" as const",
+              "neutralLiteral": "\"awa_netease_lonely_girl_v1\""
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+          "name": "LastWolfBlastPolicy",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+          "name": "RedMoonState",
+          "allMembersModifiersNullsTuplesLiteralConstraintsSame": true,
+          "literalRoutes": [
+            {
+              "name": "RED_MOON_POLICY",
+              "oldValue": "\"awa_red_moon_demon_v1\" as const",
+              "neutralLiteral": "\"awa_red_moon_demon_v1\""
+            }
+          ]
+        }
+      ],
+      "concreteWrites": [
+        {
+          "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+          "field": "remaining",
+          "originalAssignment": "state.remaining = 0",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(state as Pick<CupidState, \"remaining\">).remaining = 0"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+          "field": "choice",
+          "originalAssignment": "state.choice = { day: 1, pairIds: [...pairIds] }",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(state as Pick<CupidState, \"choice\">).choice = { day: 1, pairIds: [...pairIds] }"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+          "field": "remaining",
+          "originalAssignment": "state.remaining = 0",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(state as Pick<DebaterState, \"remaining\">).remaining = 0"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+          "field": "choice",
+          "originalAssignment": "state.choice = choice",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(state as Pick<DebaterState, \"choice\">).choice = choice"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "field": "blastDay",
+          "originalAssignment": "state.blastDay = next.blastDay",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(state as Pick<RedMoonState, \"blastDay\">).blastDay = next.blastDay"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "field": "exileDay",
+          "originalAssignment": "state.exileDay = next.exileDay",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(state as Pick<RedMoonState, \"exileDay\">).exileDay = next.exileDay"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "field": "expirySettled",
+          "originalAssignment": "state.expirySettled = next.expirySettled",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(state as Pick<RedMoonState, \"expirySettled\">).expirySettled = next.expirySettled"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+          "field": "reflectionRemaining",
+          "originalAssignment": "binding.state.reflectionRemaining = 0",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(binding.state as Pick<EvilKnightState, \"reflectionRemaining\">).reflectionRemaining = 0"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+          "field": "remaining",
+          "originalAssignment": "state.remaining = 0",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(state as Pick<HybridState, \"remaining\">).remaining = 0"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+          "field": "choice",
+          "originalAssignment": "state.choice = { day, targetId }",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(state as Pick<HybridState, \"choice\">).choice = { day, targetId }"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+          "field": "remaining",
+          "originalAssignment": "state.remaining = 0",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(state as Pick<ThiefState | ShapeshifterState, \"remaining\">).remaining = 0"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+          "field": "choice",
+          "originalAssignment": "state.choice = slot",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(state as Pick<ThiefState | ShapeshifterState, \"choice\">).choice = slot"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+          "field": "remaining",
+          "originalAssignment": "state.remaining = 0",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(state as Pick<ThiefState | ShapeshifterState, \"remaining\">).remaining = 0"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+          "field": "choice",
+          "originalAssignment": "state.choice = null",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(state as Pick<ThiefState | ShapeshifterState, \"choice\">).choice = null"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+          "field": "remaining",
+          "originalAssignment": "original.remaining = 0",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(original as Pick<ThiefState | ShapeshifterState, \"remaining\">).remaining = 0"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+          "field": "choice",
+          "originalAssignment": "original.choice = null",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(original as Pick<ThiefState | ShapeshifterState, \"choice\">).choice = null"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+          "field": "remaining",
+          "originalAssignment": "b.state.remaining = 0",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(b.state as Pick<LonelyGirlState, \"remaining\">).remaining = 0"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+          "field": "choice",
+          "originalAssignment": "b.state.choice = choice",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(b.state as Pick<LonelyGirlState, \"choice\">).choice = choice"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "field": "lastDay",
+          "originalAssignment": "board.state.lastDay = day",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(board.state as Pick<NightmareShadowState, \"lastDay\">).lastDay = day"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "field": "lastTarget",
+          "originalAssignment": "board.state.lastTarget = targetId",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(board.state as Pick<NightmareShadowState, \"lastTarget\">).lastTarget = targetId"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "field": "packReady",
+          "originalAssignment": "board.state.packReady = true",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(board.state as Pick<NightmareShadowState, \"packReady\">).packReady = true"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+          "field": "enhance",
+          "originalAssignment": "c.remaining.enhance = next.remaining.enhance",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(c.remaining as Pick<ModifierState[\"remaining\"], \"enhance\">).enhance = next.remaining.enhance"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+          "field": "weaken",
+          "originalAssignment": "c.remaining.weaken = next.remaining.weaken",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(c.remaining as Pick<ModifierState[\"remaining\"], \"weaken\">).weaken = next.remaining.weaken"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+          "field": "triggeredDay",
+          "originalAssignment": "b.state.triggeredDay = day",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(b.state as Pick<TimeConsortState, \"triggeredDay\">).triggeredDay = day"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+          "field": "remaining",
+          "originalAssignment": "b.state.remaining = 0",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(b.state as Pick<WildChildState, \"remaining\">).remaining = 0"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+          "field": "status",
+          "originalAssignment": "b.state.status = \"chosen\"",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(b.state as Pick<WildChildState, \"status\">).status = \"chosen\""
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+          "field": "choice",
+          "originalAssignment": "b.state.choice = choice",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(b.state as Pick<WildChildState, \"choice\">).choice = choice"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+          "field": "remaining",
+          "originalAssignment": "b.state.remaining = 0",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(b.state as Pick<WildChildState, \"remaining\">).remaining = 0"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+          "field": "status",
+          "originalAssignment": "b.state.status = \"closed\"",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(b.state as Pick<WildChildState, \"status\">).status = \"closed\""
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+          "field": "status",
+          "originalAssignment": "b.state.status = \"transformed\"",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(b.state as Pick<WildChildState, \"status\">).status = \"transformed\""
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+          "field": "eligibleNight",
+          "originalAssignment": "b.state.eligibleNight = day + 1",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(b.state as Pick<WildChildState, \"eligibleNight\">).eligibleNight = day + 1"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+          "field": "status",
+          "originalAssignment": "b.state.status = \"active\"",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(b.state as Pick<WildChildState, \"status\">).status = \"active\""
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+          "field": "activeFromNight",
+          "originalAssignment": "b.state.activeFromNight = day",
+          "exactReceiverOperatorRhsGetterPrefix": true,
+          "currentRaw": "(b.state as Pick<WildChildState, \"activeFromNight\">).activeFromNight = day"
+        }
+      ],
+      "fixtureSeeds": [
+        {
+          "path": "backend/tests/unit/agents/red-moon-apostle/red-moon-observation.test.ts",
+          "field": "blastDay",
+          "originalStatement": "state.blastDay = 1",
+          "actualGitOriginalAssignmentExists": true,
+          "sameCurrentRuntimeReceiverRhsAndOperation": true
+        },
+        {
+          "path": "backend/tests/unit/features/debater/debater.test.ts",
+          "field": "remaining",
+          "originalStatement": "getDebaterState(role(g, 1))!.remaining = stage === \"debate_challenge\" ? 0 : 1",
+          "actualGitOriginalAssignmentExists": true,
+          "sameCurrentRuntimeReceiverRhsAndOperation": true
+        },
+        {
+          "path": "backend/tests/unit/features/red-moon-audit.test.ts",
+          "field": "lastWolfBlastPolicy",
+          "originalStatement": "state.lastWolfBlastPolicy = \"forbidden\"",
+          "actualGitOriginalAssignmentExists": true,
+          "sameCurrentRuntimeReceiverRhsAndOperation": true
+        },
+        {
+          "path": "backend/tests/unit/features/cupid/choice-and-membership-contracts.test.ts",
+          "field": "policy",
+          "originalStatement": "oldState.policy = \"lui_meme_lovers_only_v1\"",
+          "actualGitOriginalAssignmentExists": true,
+          "sameCurrentRuntimeReceiverRhsAndOperation": true
+        },
+        {
+          "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+          "field": "remaining",
+          "originalStatement": "getLonelyGirlState(role(g))!.remaining = 0",
+          "actualGitOriginalAssignmentExists": true,
+          "sameCurrentRuntimeReceiverRhsAndOperation": true
+        },
+        {
+          "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+          "field": "targetId",
+          "originalStatement": "original.targetId = 6",
+          "actualGitOriginalAssignmentExists": true,
+          "sameCurrentRuntimeReceiverRhsAndOperation": true
+        },
+        {
+          "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+          "field": "remaining",
+          "originalStatement": "getShapeshifterState(actor(g))!.remaining = 0",
+          "actualGitOriginalAssignmentExists": true,
+          "sameCurrentRuntimeReceiverRhsAndOperation": true
+        },
+        {
+          "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+          "field": "remaining",
+          "originalStatement": "getThiefState(actor(g))!.remaining = 0",
+          "actualGitOriginalAssignmentExists": true,
+          "sameCurrentRuntimeReceiverRhsAndOperation": true
+        },
+        {
+          "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+          "field": "remaining",
+          "originalStatement": "getWildChildState(role(g))!.remaining = 0",
+          "actualGitOriginalAssignmentExists": true,
+          "sameCurrentRuntimeReceiverRhsAndOperation": true
+        }
+      ],
+      "conclusions": [
+        "Actual original writable DTO constraints and31 declaration members/nullability/order/tuples retained; policy typeof replaced only after its actual Git string initializer is proven. ModifierPlayer.role stays string, not strengthened to RoleId.",
+        "18 installed finite read aliases cover nested choices/pairs/history/remaining; detached ModifierState normalizer still returns fresh mutable remaining/history copies; selectModifier copies before writing.",
+        "Original Magician getter still validates descriptor/proxy/exact fields/history without invoking foreign getters, returns same stored reference.",
+        "Cupid binds relation before stock/choice/member writes; Hybrid commits remaining then choice then membership; initial identity preserves paid/nonchosen/catch write positions; sealed Demon RedMoon retains blast/exile/expiry writes then original JSON validation/audit capture.",
+        "Nine fixture seeds remain exact original getter/LHS/RHS actions, no new setter/helper/input; C13 will separately own only future support-import delta in released consumers.",
+        "Recording independent ModifierState is deliberately not unified with live production state; no schema2/parser/checkpoint/private projection operation moved in this batch."
+      ],
+      "findings": [],
+      "limits": [
+        "Read-only limited schema/assignment/new unit inputs review. No types/tests/games/discovery/gates or repeated45whole-program proof.",
+        "Assignment-node comparison proves exact receiver/operator/RHS; preserved source order additionally read from actual diffs, not claimed inferred from a type cast.",
+        "This finite46 slice does not mark entire P3/P4/P9 complete; actual C13 future importer bytes excluded."
+      ]
+    }
+  },
+  "receipts": [
+    {
+      "kind": "first-source-types",
+      "session": 43889,
+      "actualClosedExit": 2,
+      "diagnostics": 33,
+      "policy": "Specific original owner-field rights only; initial red retained."
+    },
+    {
+      "kind": "fixed-source-finite-author-types",
+      "session": 78561,
+      "actualClosedExit": 0,
+      "policy": "Exact2cca source plus author46 candidate/selected test consumers; no parallel P4 or C13 changes claimed."
+    },
+    {
+      "kind": "bidirectional-data-types",
+      "assignments": 62,
+      "actualExit": 0
+    },
+    {
+      "kind": "literal-units",
+      "passed": 3,
+      "failed": 0,
+      "assertions": 17,
+      "actualExit": 0
+    },
+    {
+      "kind": "responsibility-heads",
+      "paths": 46,
+      "failures": 0,
+      "actualExit": 0
+    },
+    {
+      "kind": "current-combined-backend-source-types",
+      "session": 9989,
+      "actualClosedExit": 0,
+      "policy": "Root current source check also includes P4 changes; no test/integration/full-gate claim."
+    }
+  ],
+  "fixtures": {
+    "testOnlyFieldCasts": 9,
+    "originalInputValuesOrCallsChanged": false,
+    "runtimePrograms": 45,
+    "dataDeclarationsMoved": 31,
+    "earlierDeclarationsAndAliasesUnchanged": 44
+  },
+  "initialReds": [
+    "Missing Bun types in first external harness project",
+    "Exact nine readonly fixture writes and temporary snapshot fixture/cjs/public-example omissions; original checks and source input policy not weakened",
+    "First header findings recovered from original tool output after helper JSON overwrite, explicitly distinguished from rerunning an old candidate"
+  ],
+  "notRun": [
+    "Full runtime suites",
+    "Games",
+    "Discovery",
+    "Models",
+    "Package installation"
+  ],
+  "remaining": [
+    "Opaque core container and actual external raw readers",
+    "Full schema/codec/custom contribution ownership",
+    "Old facade exit",
+    "Complete lifecycle/ruleset/effect/observation and final same-source gates"
+  ]
+}

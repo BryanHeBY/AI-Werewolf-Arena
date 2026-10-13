@@ -6,6 +6,7 @@
  * Test-owned mocks/components exercise this boundary without a model or physical
  * transport. Support files, fixture bytes, policy and state behavior are retained.
  */
+import type { ReflectionScope } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
 import { Camp, type RoleComponent } from "../../../../src/core";
 import {
@@ -13,7 +14,6 @@ import {
   getTimeConsortState,
   projectTimeConsortState,
   timeConsortReflectionTarget,
-  type ReflectionScope,
 } from "../../../../src/game/mechanisms/roles/time_wolf_consort/state";
 function fixture(scope: ReflectionScope = "whole_night") {
   const state = createTimeConsortState(scope);

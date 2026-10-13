@@ -6,16 +6,18 @@
  * Test-owned mocks/components exercise this boundary without a model or physical
  * transport. Support files, fixture bytes, policy and state behavior are retained.
  */
+import type {
+  ModifierCaster,
+  ModifierMode,
+  ModifierPlayer,
+  CommittedModifier,
+} from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
 import {
   createModifierState,
   readModifierState,
   selectModifier,
   resolveModifiers,
-  type ModifierCaster,
-  type ModifierMode,
-  type ModifierPlayer,
-  type CommittedModifier,
 } from "../../../../src/game/mechanisms/roles/scholar_mentor/state";
 const roster: ModifierPlayer[] = [
   { id: 1, role: "day_scholar", camp: "good", alive: true },
