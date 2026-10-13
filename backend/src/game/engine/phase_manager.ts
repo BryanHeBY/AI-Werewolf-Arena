@@ -80,7 +80,7 @@ import { WallNotesWindow } from "../mechanisms/events/wall_notes/window";
 import { hasActiveWall } from "../mechanisms/events/wall_notes/authority";
 import { GameActionRequestFactory } from "./action_request_factory";
 import { replaceWithFoxVictory } from "../mechanisms/roles/cursed_fox/victory";
-import { readGameOutcome, readVictoryPoint } from "@ai-werewolf-arena/replay-contract";
+import { validateVictoryDecision } from "../mechanisms/win_conditions/validated-victory";
 import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-catalog";
 import { text, DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-text";
 import { NightFaultPlan, type FaultPlan } from "./fault_plan";
@@ -147,7 +147,6 @@ import { VotingRightComponent } from "../../core/domain/components/voting_right"
 import { IdentityComponent } from "../../core/domain/entities/player";
 import { RoleComponent } from "../../core/domain/components/role";
 import { createRandom, type RandomSource } from "../../core/domain/random";
-import { victoryDecision } from "../mechanisms/win_conditions/results";
 
 /**
  * PhaseManager 是游戏引擎的时序中枢。
@@ -293,10 +292,7 @@ export class PhaseManager {
     }
   }
 
-  /**
-   * 获取当前运行时快照（浅拷贝）。
-   */
-  /** Immutable offline input, separate from board parameters and recorded cancellation facts. */
+  /** 获取不可变的离线故障输入；它与板子参数、已记录的取消事实分别持有。 */
   getFaultPlan(): FaultPlan | undefined {
     return this.nightFaultPlan?.plan;
   }
@@ -305,13 +301,12 @@ export class PhaseManager {
     this.nightFaultPlan?.assertConsumed();
   }
 
+  /** 脱离克隆当前运行状态和完整结果数据，调用方不能通过快照修改内部胜利成员。 */
   getSnapshot(): RuntimeSnapshot {
     return structuredClone(this.state);
   }
 
-  /**
-   * 获取当前累计事件列表（浅拷贝）。
-   */
+  /** 获取脱离克隆的累计事件；历史 audience 数组在副本中保持冻结。 */
   getEvents(): GameEvent[] {
     return this.events.map((event) => {
       const copy = structuredClone(event);
@@ -535,7 +530,7 @@ export class PhaseManager {
             nightDay,
             committedDemonFaultBoundary(this.world),
             (fault) => {
-              // Mandatory when recording: a failed write must not create an unproven successful Tape.
+              // 开启录制时这是必需写入；写入失败不能生成缺少证据却标记成功的 Tape。
               getSessionRecorder()?.recordRequiredLogicOp({
                 scope: "resolution",
                 op: "fault_applied",
@@ -768,7 +763,7 @@ export class PhaseManager {
         this.assertDemonReadable();
         if (!nightIsCurrent()) return this.getSnapshot();
         const expiryActor = ownsDemon ? demonRedMoonExpiry(this.world, nightDay) : null;
-        // The delayed last wolf still participates in the ordinary night's victory decision.
+        // 延期的最后一狼仍参与本次普通夜的胜负判断。
         const beforeExpiryResult =
           expiryActor === null
             ? null
@@ -1041,7 +1036,7 @@ export class PhaseManager {
       isCurrent: dayIsCurrent,
       commitSelfDestruct: async (choice, window) => {
         if (!dayIsCurrent()) return false;
-        // Keep pending night information private; a doomed White Wolf King cannot swallow its death with this skill.
+        // 尚未发表的夜间信息继续保密；已注定死亡的白狼王不能用此技能吞掉自身死亡。
         if (
           !nightSettled &&
           choice.kind === "white_wolf_king" &&
@@ -1316,31 +1311,14 @@ export class PhaseManager {
     if (this.state.gameOver) return;
     this.assertFaultPlanConsumed();
     if (weddingSetup(this.world)) weddingAssignment(this.world);
-    const outcome = readGameOutcome(decision.outcome, this.world.entityIds());
-    const winner =
-      outcome.kind === "victory" && outcome.primary.kind === "faction"
-        ? (outcome.primary.faction as Camp)
-        : null;
-    if (
-      winner !== decision.winner ||
-      typeof decision.reason !== "string" ||
-      decision.reason.length === 0
-    )
-      throw new Error("game_result_invalid");
-    if (outcome.kind === "victory") {
-      const targets = [outcome.primary, ...outcome.additional].map(
-        ({ winningPlayerIds: _ids, ...target }) => target,
-      );
-      const expected = victoryDecision(
-        this.world,
-        targets[0],
-        decision.reason,
-        targets.slice(1),
-      ).outcome;
-      if (JSON.stringify(expected) !== JSON.stringify(outcome))
-        throw new Error("game_result_membership_invalid");
-    }
-    const decidedAt = readVictoryPoint({ day: this.state.day, phase, checkpoint });
+    // 候选先完成结构／成员／时点验证；本经理随后才写唯一终态并执行原阶段关闭与发布。
+    const { winner, outcome, decidedAt } = validateVictoryDecision(
+      decision,
+      checkpoint,
+      phase,
+      () => this.world,
+      () => this.state.day,
+    );
     this.state.result = { winner, reason: decision.reason, outcome, decidedAt };
     this.state.gameOver = true;
     this.setPhase(Phase.GameOver);

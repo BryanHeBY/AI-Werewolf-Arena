@@ -1,0 +1,256 @@
+{
+  "baseline": "c946777bedd7246bf903243f7edeb3c8f8a3d7de",
+  "scope": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "afce14b69e672b770b2308c7171587d6c872cbf67b9f0a4bccda85275367ef92"
+    },
+    {
+      "path": "backend/src/game/mechanisms/win_conditions/validated-victory.ts",
+      "sha256": "bf097eaedd568e21b2d14fbb9c15ef580dd740fccbab1fb5ce021426f6e44545"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/validated-victory.test.ts",
+      "sha256": "88b12e32e2b06bcd0f3811498af35b7af8c030f2866b768f8862ab9efc305291"
+    }
+  ],
+  "programProof": {
+    "baseline": "c946777bedd7246bf903243f7edeb3c8f8a3d7de",
+    "actualGitSame": true,
+    "validationWholeBlockSame": true,
+    "wholeManagerInverse": [
+      {
+        "module": "ESNext",
+        "same": true
+      },
+      {
+        "module": "CommonJS",
+        "same": true
+      }
+    ],
+    "actualLeafImports": [
+      {
+        "path": "@ai-werewolf-arena/game-contract",
+        "typeOnly": true
+      },
+      {
+        "path": "../../../core/domain/world",
+        "typeOnly": true
+      },
+      {
+        "path": "@ai-werewolf-arena/replay-contract",
+        "typeOnly": false
+      },
+      {
+        "path": "./results",
+        "typeOnly": false
+      }
+    ],
+    "registeredInverse": {
+      "onlyOriginalValidationBlock": [
+        49974,
+        50914
+      ],
+      "onlyNewCallBlock": [
+        49740,
+        49913
+      ],
+      "twoWorldSupplierCallsAndOneDayAtOriginalPoints": true,
+      "reasonStillOriginalResultObjectPosition": true,
+      "managerFaultWeddingWritePhasePublishStillWhole": true
+    },
+    "headers": [],
+    "scope": [
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "sha256": "afce14b69e672b770b2308c7171587d6c872cbf67b9f0a4bccda85275367ef92"
+      },
+      {
+        "path": "backend/src/game/mechanisms/win_conditions/validated-victory.ts",
+        "sha256": "bf097eaedd568e21b2d14fbb9c15ef580dd740fccbab1fb5ce021426f6e44545"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/validated-victory.test.ts",
+        "sha256": "88b12e32e2b06bcd0f3811498af35b7af8c030f2866b768f8862ab9efc305291"
+      }
+    ],
+    "passed": true,
+    "limits": "Complete exact non-import manager inverse and complete validation block; import route separately explicit. No runtime/compiler in this proof."
+  },
+  "architectureFinalReview": {
+    "baseline": "c946777bedd7246bf903243f7edeb3c8f8a3d7de",
+    "headAtRead": "c946777bedd7246bf903243f7edeb3c8f8a3d7de",
+    "scope": [
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "sha256": "afce14b69e672b770b2308c7171587d6c872cbf67b9f0a4bccda85275367ef92",
+        "actualSha": "afce14b69e672b770b2308c7171587d6c872cbf67b9f0a4bccda85275367ef92"
+      },
+      {
+        "path": "backend/src/game/mechanisms/win_conditions/validated-victory.ts",
+        "sha256": "bf097eaedd568e21b2d14fbb9c15ef580dd740fccbab1fb5ce021426f6e44545",
+        "actualSha": "bf097eaedd568e21b2d14fbb9c15ef580dd740fccbab1fb5ce021426f6e44545"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/validated-victory.test.ts",
+        "sha256": "88b12e32e2b06bcd0f3811498af35b7af8c030f2866b768f8862ab9efc305291",
+        "actualSha": "88b12e32e2b06bcd0f3811498af35b7af8c030f2866b768f8862ab9efc305291"
+      }
+    ],
+    "checks": [
+      {
+        "name": "complete_validation_block_actualGit_same",
+        "passed": true
+      },
+      {
+        "name": "complete_manager_nonimport_inverse_same",
+        "passed": true
+      },
+      {
+        "name": "final_three_SHA_match",
+        "passed": true
+      },
+      {
+        "name": "leaf_owns_no_state_store_or_clock",
+        "passed": true
+      }
+    ],
+    "findings": [],
+    "passed": true,
+    "sourceAssessment": {
+      "owner": "具体 WinDecision 结构/胜利成员/决定时点验证真实消费方；manager 仍唯一封盘写者。",
+      "evaluationOrder": "fault→wedding 前置仍manager；outcome getter→first World→winner/reason校验→second World/membership→day→result LHS→reason RHS→gameOver→setPhase→Date.now/clone/push。",
+      "reads": "world/day 每次由晚读 supplier 委托，不缓存实例，不额外读取日期、World 或 RNG。",
+      "failurePolicy": "结构、winner/reason、membership、时点首错误及已写状态/事件前缀保持；新leaf不汇总/改写错误。",
+      "typeBoundary": "只返回已校验数据，无 branded 权限或第二终局 store；公开校验函数不替代 manager gameOver/fault/必要死亡链。",
+      "tests": "手读三个新boundedcase：真实Victory归属与Role阵营不同、first winner错误和validshape forgedmembership；手写值/调用trace，不借生产算法生成oracle。",
+      "comments": "中文输入/输出/职责/验证顺序说明准确，未宣称完整C29机制验收。"
+    },
+    "receiptAttribution": {
+      "runtime": "Root 报告新3+旧forged1 actual4/0/11，本审未运行或独立poll。",
+      "type": "Root 报告62499 actualterminal0，24504原newmatcherenum诊断保留；本审未编译或独立poll。"
+    },
+    "limits": [
+      "Readonly source/SHA/program review only.",
+      "This functional slice does not claim full C29 victory candidate/policy/checkpoint matrix complete."
+    ],
+    "headAtFinalCommentReview": "7b50e5e9bd9a3c16598418493b239d7c561dd186",
+    "commentOnlyDelta": {
+      "previousScopePreserved": "architecture-final-review-before-comment-delta.json",
+      "previousManagerSHA": "d3415bdeb6450b42aebdc3a829cd0e7caeebff9086757dd99b28cd00eeafb563",
+      "previousSourceReconstructionMatchedExactSHA": true,
+      "diff": "manager-comment-delta.diff",
+      "scopeCurrentSHAAllMatch": true,
+      "otherTwoUnchanged": true,
+      "review": "仅三职责注释：fault输入职责回正确方法；snapshot明确structuredClone全部state；events副本structuredClone后仅已有audience数组Object.freeze。与当前三个真实method bodies一致。",
+      "noProgramOrReceiptsRerun": true
+    }
+  },
+  "independentThirdReview": {
+    "passed": true,
+    "findings": [],
+    "baseline": "c946777bedd7246bf903243f7edeb3c8f8a3d7de",
+    "paths": [
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "sha256": "afce14b69e672b770b2308c7171587d6c872cbf67b9f0a4bccda85275367ef92",
+        "matchesFinalSha": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/win_conditions/validated-victory.ts",
+        "sha256": "bf097eaedd568e21b2d14fbb9c15ef580dd740fccbab1fb5ce021426f6e44545",
+        "matchesFinalSha": true
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/validated-victory.test.ts",
+        "sha256": "88b12e32e2b06bcd0f3811498af35b7af8c030f2866b768f8862ab9efc305291",
+        "matchesFinalSha": true
+      }
+    ],
+    "checks": {
+      "actualOriginalMatchesAuthor": true,
+      "completeValidationStatementsSame": true,
+      "wholeManagerNonImportProgramSame": true,
+      "literalThreeOwnDataReturn": true,
+      "exactCallerThunks": true
+    },
+    "originalValidationStatements": 5,
+    "originalValidationSourceSpan": {
+      "start": 49978,
+      "end": 50914
+    },
+    "readSequence": [
+      "Original gameOver/fault-plan/wedding gates remain manager before validation",
+      "readGameOutcome callee→decision.outcome→world.entityIds",
+      "winner/reason checks before second world or date",
+      "Victory affiliations reconstructed using same victoryDecision/world/decision.reason and JSON order",
+      "readVictoryPoint after all members, day() at original this.state.day location",
+      "Return three literal own-data fields, then manager original result RHS re-reads decision.reason",
+      "Original result→gameOver→setPhase(GameOver) close hooks→game_over structuredClone event preserved"
+    ],
+    "newTests": "Three handwritten World fixtures: actual Role.Wolf/Camp.Wolf with separate Victory.Good affiliation and individual target, literal members and world/world/day trace; mismatched winner stops before membership/date; valid-shaped forged membership stops before date. No producer-generated oracle or full stage/game.",
+    "chineseReview": "Validation responsibility and no-state-write head, late day comment, exact manager validation-before-terminal comment, moved getFaultPlan/snapshot/events comments match actual immutable clone/frozen behavior.",
+    "limits": [
+      "Static whole source/typed-AST/SHA/input review only; no compiler/tests/runtime/discovery",
+      "New second test exercises mismatched winner specifically, not a separately executed bad-reason branch; old reason program is byte/token-preserved",
+      "Only validation ownership extracted; complete C29 checkpoint/victory/terminal matrix is not declared achieved",
+      "Imports are routed to same actual readGameOutcome/readVictoryPoint/victoryDecision functions; no all-module initialization-order equivalence claim"
+    ]
+  },
+  "rootReview": {
+    "originalAndNewValidationAndAllNewCasesRead": true,
+    "final3SHA": true,
+    "passed": true
+  },
+  "receipts": {
+    "runtime": {
+      "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/mechanisms/validated-victory.test.ts tests/scenarios/features/victory/checkpoints-and-terminal-sealing.test.ts -t 'membership|date|day is captured'",
+      "actualExitCode": 0,
+      "passes": 4,
+      "fails": 0,
+      "assertions": 11,
+      "filtered": 6,
+      "new": 3,
+      "original": 1,
+      "log": "/tmp/awa-c29-victory-validation/tests-first.log"
+    },
+    "typesFirst": {
+      "execSession": 24504,
+      "actualTerminalExitCode": 2,
+      "cause": "新测试Bun matcher将字面good约束为Camp；仅加expect<unknown>保持字面与JS，未修改实际输入/预期。",
+      "log": "/tmp/awa-c29-victory-validation/types-first.log"
+    },
+    "typesFinal": {
+      "execSession": 62499,
+      "actualTerminalExitCode": 0,
+      "config": "/tmp/awa-c29-victory-validation/tsconfig.json",
+      "log": "/tmp/awa-c29-victory-validation/types-final.log",
+      "scope": "3候选及原terminal-sealing场景roots，原strict backendtests配置不放宽。"
+    },
+    "static": {
+      "actualExitCode": 0,
+      "wholeManagerESNextAndCommonJSRawInverseSame": true,
+      "wholeValidationBlockASTSame": true,
+      "header3Failures": 0,
+      "diffCheckExitCode": 0
+    }
+  },
+  "ownership": "完整终局候选结构/winner/reason/membership/point校验归具体模块，manager保fault/wedding/唯一state写/checkpoint调度/阶段关闭及事件。",
+  "preservedPolicies": [
+    "world supplier逐原两读点，day在完整验证后；reason在原result对象RHS位置再次读，保state LHS/异常顺序。",
+    "成员按Victory归属重建，不由Role/camp/Alive猜测；个体、关系、附加胜利与no-winner原规则保持。",
+    "所有失败先于state/gameOver/event写，原mandatory死亡链/封盘时点不变。"
+  ],
+  "harnessNotes": [
+    "首全文件formatter扩了Exile对象布局，完整逆rawfalse；仅退回无关格式变化至Root-owned实际Git原字节，validation/runtime本体不变，最终ES/CJSraw同。",
+    "第二方向首scanner模板/JSDoc误报只修完整AST证明，源码不为取绿改；初报告保。",
+    "原getSnapshot浅拷贝注释错挂fault方法，events也实际deepclone；按实现修并各方向comment/SHA增量审，不重types/runtime。"
+  ],
+  "limits": [
+    "完整当前候选验证owner交付，不代表全C29死亡链与最终全机制矩阵完成。",
+    "new第二例只验winner firstfailure，不冒全部reason异常覆盖；所有原reason代码仍完整程序证据。",
+    "结构结果不携带权限或自动封盘；manager继续唯一负责必要链和最终发布。",
+    "未运行全suite/整局/网络/模型，schema2/规则/RNG/strict身份不改。"
+  ],
+  "status": "independently_reviewed_ready_to_commit"
+}
