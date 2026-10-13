@@ -1,0 +1,205 @@
+{
+  "baseline": "496414bf",
+  "paths": 5,
+  "files": [
+    {
+      "path": "backend/src/core/domain/damage-evidence.ts",
+      "sha256": "b9eef5f6c769072e07a8413ecd50e88990852e730f1399a58272f31e4d6002f6"
+    },
+    {
+      "path": "backend/src/core/domain/night-damage-target.ts",
+      "sha256": "8b0e3b6ddd49c36a713db079f198ca5e9daf86c135e6931e2f088cc0d189526c"
+    },
+    {
+      "path": "backend/src/core/domain/systems/damage_resolution_system.ts",
+      "sha256": "5544f82a72547a6c9c23632a4abe5fb93719faaf251b355f5b5f3131e77cc676"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/pending_night.ts",
+      "sha256": "7828cb1d7e0bc3706cf4e32d94149a8252b49f38e23bc2bb2b0b1e1c730efc5f"
+    },
+    {
+      "path": "backend/tests/unit/domain/damage-poison-evidence.test.ts",
+      "sha256": "8209c68666f414be2cebc49d80fe07752778fd8c24a332c0ecbeea61be9affc7"
+    }
+  ],
+  "programProof": {
+    "rows": [
+      {
+        "path": "backend/src/core/domain/night-damage-target.ts",
+        "sourceSHA": "8b0e3b6ddd49c36a713db079f198ca5e9daf86c135e6931e2f088cc0d189526c",
+        "actualGitBaseline": "496414bf",
+        "registeredInverseCount": 3,
+        "wholeTypedProgramSameAfterRegisteredMetadataInverse": true
+      },
+      {
+        "path": "backend/src/core/domain/systems/damage_resolution_system.ts",
+        "sourceSHA": "5544f82a72547a6c9c23632a4abe5fb93719faaf251b355f5b5f3131e77cc676",
+        "actualGitBaseline": "496414bf",
+        "registeredInverseCount": 6,
+        "wholeTypedProgramSameAfterRegisteredMetadataInverse": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/pending_night.ts",
+        "sourceSHA": "7828cb1d7e0bc3706cf4e32d94149a8252b49f38e23bc2bb2b0b1e1c730efc5f",
+        "actualGitBaseline": "496414bf",
+        "registeredInverseCount": 3,
+        "wholeTypedProgramSameAfterRegisteredMetadataInverse": true
+      }
+    ],
+    "findings": [],
+    "limit": "新增accept callback、metadata容器和copy过滤单独源审；逆证只证明保留原完整程序/读顺序，不假称新metadata或malicious新callback完全等价"
+  },
+  "heads": {
+    "files": 5,
+    "documentationPaths": [
+      "docs/expansion/rules/awa-mist-raven-twelve-v1.md"
+    ],
+    "findings": []
+  },
+  "independentSecond": {
+    "scope": [
+      {
+        "path": "backend/src/core/domain/damage-evidence.ts",
+        "sha256": "b9eef5f6c769072e07a8413ecd50e88990852e730f1399a58272f31e4d6002f6",
+        "matchesOwnerFreeze": true
+      },
+      {
+        "path": "backend/src/core/domain/night-damage-target.ts",
+        "sha256": "8b0e3b6ddd49c36a713db079f198ca5e9daf86c135e6931e2f088cc0d189526c",
+        "matchesOwnerFreeze": true
+      },
+      {
+        "path": "backend/src/core/domain/systems/damage_resolution_system.ts",
+        "sha256": "5544f82a72547a6c9c23632a4abe5fb93719faaf251b355f5b5f3131e77cc676",
+        "matchesOwnerFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/pending_night.ts",
+        "sha256": "7828cb1d7e0bc3706cf4e32d94149a8252b49f38e23bc2bb2b0b1e1c730efc5f",
+        "matchesOwnerFreeze": true
+      },
+      {
+        "path": "backend/tests/unit/domain/damage-poison-evidence.test.ts",
+        "sha256": "8209c68666f414be2cebc49d80fe07752778fd8c24a332c0ecbeea61be9affc7",
+        "matchesOwnerFreeze": true
+      }
+    ],
+    "findings": [],
+    "passed": true,
+    "semanticReview": [
+      "目标真毒分支由原hasPoison && !dreamProtected && !awakenedShield驱动；direct复用原hasDirectPoison，不通过反射存在伪造同目标未标记原毒。反射routes独立接受，不按cause.description去重。",
+      "接收collector只是本次resolve局部数组push；不多读World、Date.now、RNG、生命、库存或印记，不回滚原取消/清理前缀。",
+      "Mist copy先原deaths/deathSources纯事实复制，再以复制后最终Poison原因过滤已接受证据；无新legacy元数据读取或对梦派生目标制造毒源。",
+      "结果helper WeakSet只证明已关联到此runtime对象，不是死亡/资格权限；nonenumerable Symbol与frozen detached路由容器不进入JSON、spread、schema2。inner原体引用保留等待真正Wavelife-validation。",
+      "外部旧result/Proxy WeakSet.has短路，不新增Symbol/getter读取；公开attach只关联证据，不能作为Root下游已授权/已标死判断。"
+    ],
+    "newTestsScope": "5个输入是actual factory Life+字面marks/独立poison+shield；具体目标/原因/序列化预期手写。此审只读取这些测试与Source，不重新运行。",
+    "limits": [
+      "未重复作者5/0/25、原25/0/117或finite12174；不自称独立运行收据。",
+      "未重复inventory完整Git/runtime inverse审，仅本方向源码语义及当前5SHA。",
+      "完整Wave、life提交及自主构造metadata权限仍后续范围；关联品牌不替代这些验证。"
+    ]
+  },
+  "independentThird": {
+    "baseline": "496414bfad89cf0555a8b0a8ebc9fbcee989bdd9",
+    "files": [
+      {
+        "path": "backend/src/core/domain/damage-evidence.ts",
+        "sha256": "b9eef5f6c769072e07a8413ecd50e88990852e730f1399a58272f31e4d6002f6",
+        "currentSHA": "b9eef5f6c769072e07a8413ecd50e88990852e730f1399a58272f31e4d6002f6",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/src/core/domain/night-damage-target.ts",
+        "sha256": "8b0e3b6ddd49c36a713db079f198ca5e9daf86c135e6931e2f088cc0d189526c",
+        "currentSHA": "8b0e3b6ddd49c36a713db079f198ca5e9daf86c135e6931e2f088cc0d189526c",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/src/core/domain/systems/damage_resolution_system.ts",
+        "sha256": "5544f82a72547a6c9c23632a4abe5fb93719faaf251b355f5b5f3131e77cc676",
+        "currentSHA": "5544f82a72547a6c9c23632a4abe5fb93719faaf251b355f5b5f3131e77cc676",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/pending_night.ts",
+        "sha256": "7828cb1d7e0bc3706cf4e32d94149a8252b49f38e23bc2bb2b0b1e1c730efc5f",
+        "currentSHA": "7828cb1d7e0bc3706cf4e32d94149a8252b49f38e23bc2bb2b0b1e1c730efc5f",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/tests/unit/domain/damage-poison-evidence.test.ts",
+        "sha256": "8209c68666f414be2cebc49d80fe07752778fd8c24a332c0ecbeea61be9affc7",
+        "currentSHA": "8209c68666f414be2cebc49d80fe07752778fd8c24a332c0ecbeea61be9affc7",
+        "sameSHA": true
+      }
+    ],
+    "inverseRows": [
+      {
+        "path": "backend/src/core/domain/night-damage-target.ts",
+        "originTrueGit": true,
+        "completeProgramAfterRegisteredInsertsSame": true,
+        "changedNodes": 2
+      },
+      {
+        "path": "backend/src/core/domain/systems/damage_resolution_system.ts",
+        "originTrueGit": true,
+        "completeProgramAfterRegisteredInsertsSame": true,
+        "changedNodes": 3
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/pending_night.ts",
+        "originTrueGit": true,
+        "completeProgramAfterRegisteredInsertsSame": true,
+        "changedNodes": 1
+      }
+    ],
+    "checks": {
+      "newLeafOnlyTypeImport": true,
+      "identityGuardBeforeSymbol": true,
+      "sameResultHiddenProperty": true,
+      "directOriginalFlagOnly": true,
+      "mistFiltersCopyNotOriginal": true
+    },
+    "heads": [],
+    "findings": [],
+    "semantics": [
+      "Only the original Poison push-success branch invokes optional capture. It reuses the old hasDirectPoison flag and dream/awakened checks; reflected cause does not smuggle unmarked direct cause for the same entity. The system passive-immune continue bypasses capture.",
+      "New route collection reads same frozen mechanical origin rows, not World/marks/protection/currentness. Existing marks remove/clear receivers, eligibility checks and partial failure prefix remain in complete original token-tree order after exact new metadata inserts are removed.",
+      "The system attaches evidence only to the same fresh original result object; array copy frozen and identity WeakSet holds no second World/effect ledger. External legacy result Proxy never touches a new symbol.",
+      "Mist copy preserves original deaths/source reads and allocation; evidence filter reads the fresh plain copy, not extra legacy input getters. Stale deaths/deleted Poison causes are dropped in later original copies; new dream/knife reasons cannot create poison origins.",
+      "New literal tests use actual original life factory, hand Poison marks and independent cause Symbols. They cover distinct accepted poison causes, protected route exclusion, reflected vs unmarked direct to same entity, actual Mist copied evidence and legacy Proxy zero getters without claiming real inventory authority.",
+      "The evidence brand is causal metadata, not a death permission or committed-life receipt. The attach function being public does not grant inventory, Alive or role stock; later typed Wave/Receipt still needs actual consumer wiring."
+    ],
+    "limits": [
+      "Finite independent source/trueGit/inverse/SHA/read/head review. No compiler/runtime/tests/World execution/game/discovery repeated.",
+      "No schema/Tape/event shape change claimed; old result enumerable facts remain original, nonenumerable metadata excludes handles from the real serializer paths. Whole Effect→Wave→Commit chain is pending subsequent actual consumer integration."
+    ]
+  },
+  "acceptance": {
+    "newBoundedTests": {
+      "pass": 5,
+      "fail": 0,
+      "assertions": 25,
+      "log": "/tmp/awa-damage-evidence-tests-first.log"
+    },
+    "originalMistAndPlanBoundaryTests": {
+      "pass": 25,
+      "fail": 0,
+      "assertions": 117,
+      "log": "/tmp/awa-damage-evidence-existing-tests.log"
+    },
+    "focusedStrictTypes": {
+      "actualSession": 12174,
+      "observedTerminalExit": 0,
+      "roots": 7,
+      "note": "冻结作者5path及原2测试模块的局部编译；live传递输入，不冒最终同源全量门禁"
+    }
+  },
+  "limits": [
+    "完整Wave/Receipt真实消费由后续提交完成",
+    "其他效果族以及C31业务时钟继续",
+    "没有重游戏/发现/模型/网络/全量套件"
+  ]
+}

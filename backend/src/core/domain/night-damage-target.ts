@@ -9,7 +9,7 @@
 import { DeathCause } from "./deaths";
 import { StatusMark, type EntityId } from "./identity";
 import type { StatusMarksComponent } from "./components/status_marks";
-import { livingNightLife, nightPoisonRouteTargets, type NightEffectQuery, type NightLifeReadScope } from "./night_effects";
+import { livingNightLife, nightPoisonRouteTargets, nightPoisonRoutes, type NightPoisonRoute, type NightEffectQuery, type NightLifeReadScope } from "./night_effects";
 import type { NightDamageEffects, NightDamagePlan } from "./night-damage-plan";
 
 /**
@@ -33,6 +33,7 @@ export function resolveNightDamageTarget(
   plan: NightDamagePlan,
   marks: Readonly<Pick<StatusMarksComponent, "has">> | undefined,
   cancelOrdinaryProtection: () => void,
+  captureAcceptedPoison?: (routes: readonly NightPoisonRoute[]) => void,
 ): DeathCause[] {
   const {
     awakenedShields,
@@ -66,7 +67,16 @@ export function resolveNightDamageTarget(
   const mechanicalShield = mechanical.shields.has(entityId);
   const awakenedShield = awakenedShields.has(entityId);
   if (foxInspections.has(entityId) && !dreamProtected) sources.push(DeathCause.FoxInspection);
-  if (hasPoison && !dreamProtected && !awakenedShield) sources.push(DeathCause.Poison);
+  if (hasPoison && !dreamProtected && !awakenedShield) {
+    sources.push(DeathCause.Poison);
+    // 只在真实毒接受点携带来源；direct 复用原已读旗标，不能另查印记或扩大源资格。
+    // 已反射路由独立保留，即使同目标同时存在另一直接毒，也不合并其 cause 身份。
+    captureAcceptedPoison?.(
+      nightPoisonRoutes(mechanical).filter(
+        (route) => route.targetId === entityId && (route.route === "reflected" || hasDirectPoison),
+      ),
+    );
+  }
 
   if (hasGuard && hasHeal) {
     // 同守同救互相抵消，但若同时被狼刀命中仍会死亡。

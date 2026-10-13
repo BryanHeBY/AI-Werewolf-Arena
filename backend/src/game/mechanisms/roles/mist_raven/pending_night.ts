@@ -1,7 +1,8 @@
 /**
- * Owns handed-off Mist damage and the bounded Snake reaction window. Inputs are captured
- * original lives and copied pending damage; outputs are claimed reactions and finalized damage.
- * Finish or abort retires the pending night without replacing any target body.
+ * 负责雾鸦夜间伤害交接与有界蛇反应窗口。输入为原生命和脱离的待结算伤害；
+ * 输出为已 claim 的反应和最终伤害。finish／abort 终止本次 pending，不替换任何目标原体。
+ * 本模块不切换阶段或标死；延期副本保留真实毒因果，疗救和梦扩展仍用原政策。
+ * 规则依据：docs/expansion/rules/awa-mist-raven-twelve-v1.md。
  */
 import {
   AliveComponent,
@@ -11,6 +12,7 @@ import {
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { DeathCause } from "../../../../core/domain/deaths";
 import type { World } from "../../../../core/domain/world";
+import { attachDamagePoisonEvidence, damagePoisonRoutes } from "../../../../core/domain/damage-evidence";
 import type { DamageResolutionResult } from "../../../../core/domain/systems/damage_resolution_system";
 import type { DreamNightFrame } from "../dreamer/night_frame";
 
@@ -20,12 +22,17 @@ interface OriginalLife {
   readonly version: number;
 }
 function copyDamage(damage: DamageResolutionResult): DamageResolutionResult {
-  return {
+  const copy = {
     deaths: [...damage.deaths],
     deathSources: Object.fromEntries(
       damage.deaths.map((id) => [id, [...(damage.deathSources[id] ?? [])]]),
     ),
   };
+  // 使用原复制时点的最终死因过滤证据；疗救或扩展不凭空制造原毒来源。
+  return attachDamagePoisonEvidence(copy, damagePoisonRoutes(damage).filter(
+    (route) => copy.deaths.includes(route.targetId) &&
+      copy.deathSources[route.targetId]?.includes(DeathCause.Poison),
+  ));
 }
 function factoryLife(life: AliveComponent): boolean {
   const original = aliveLifeDescriptor(life);
@@ -41,7 +48,7 @@ function factoryLife(life: AliveComponent): boolean {
   );
 }
 
-/** One delayed mist-board night, owned solely by its PhaseManager. No phase or death is committed here. */
+/** 单次延期夜只归所属 PhaseManager；这里不提交阶段或死亡。 */
 export class MistPendingNight {
   private currentStatus: PendingStatus = "pending";
   private readonly lives = new Map<number, OriginalLife>();
@@ -60,7 +67,7 @@ export class MistPendingNight {
   ) {
     if (!Number.isSafeInteger(day) || day < 1 || day >= Number.MAX_SAFE_INTEGER)
       throw new Error("mist_pending_night_invalid");
-    // Future linked targets are not necessarily in the direct death list.
+    // 后续梦关联目标未必在直接死亡名单中，原生命捕获仍覆盖潜在闭包。
     for (const id of world.entityIds()) {
       const life = world.getComponent(id, COMPONENT.Alive);
       if (!life) continue;
@@ -136,7 +143,7 @@ export class MistPendingNight {
     }
   }
 
-  /** Uses only already resolved direct sources; status marks are never consumed a second time. */
+  /** 只使用已解析的直接来源，不再次消费印记；疗救后在原时点展开梦关联。 */
   prepareFinalDamage(
     healedTarget: number | null,
     isCurrent: () => boolean,
@@ -163,8 +170,7 @@ export class MistPendingNight {
     damage.deaths = damage.deaths.filter((id) => !!damage.deathSources[id]?.length);
     for (const id of Object.keys(damage.deathSources).map(Number))
       if (!damage.deaths.includes(id)) delete damage.deathSources[id];
-    // linkedDeaths writes causal reasons; do this once, after the snake has been decided.
-    // DreamNightFrame also reads actors/targets outside the direct death list.
+    // 蛇行动结束后才扩展一次梦死因；梦的行动者／目标可能在直接死亡名单之外。
     for (const [id, scope] of this.lives) {
       if (this.world.getComponent(id, COMPONENT.Alive) === scope.life && !factoryLife(scope.life)) {
         this.abort();
@@ -182,7 +188,7 @@ export class MistPendingNight {
     return copyDamage(damage);
   }
 
-  /** Called only after DeathResolution has actually committed the prepared original lives. */
+  /** 只在 DeathResolution 已提交准备的原生命之后完成本次延期。 */
   finish(isCurrent: () => boolean): void {
     if (
       this.currentStatus !== "committing" ||
