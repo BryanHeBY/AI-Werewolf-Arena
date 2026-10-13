@@ -1,65 +1,18 @@
 /**
- * Tests Radiant shelter and Eclipse swallowing with scripted night actions.
- * Inputs are literal board variants, accepted target choices and deliberately
- * altered bottle/dream slots; outputs are night facts, stock and guarded failures.
- * Test-only casts preserve each original seed and mutation; this legacy mixed
- * runtime test file supplies no production authorization or model response.
+ * Scenario tests drive actual Radiant shelter, Eclipse borrowing and native night matrices. Inputs are public board setup, literal protection/death/resource choices and original stock edits; handwritten requests, causes and no-writeback outcomes are the oracle. Public board fixture bytes and URL remain unchanged; no model is called.
  */
 import { expect, test } from "bun:test";
-import {
-  Role,
-  Phase,
-  DeathCause,
-  COMPONENT,
-  type AliveComponent,
-  type ToolCall,
-  type ActionRequest,
-} from "../../../src/core";
+import { DeathCause, COMPONENT, type AliveComponent } from "../../../../src/core";
 import {
   radiantFixture,
   radiantProvider,
   type RadiantChoices,
-} from "../../support/radiant_eclipse";
-import {
-  knownWolfTeammates,
-  wolfChatParticipants,
-  wolfKnifeHolders,
-} from "../../../src/game/mechanisms/roles/wolf_team";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import { getDefaultNightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
-import { findNightAbility, abilityStatus } from "../../../src/game/mechanisms/roles/abilities";
-test("exact public board runs first night without Count or Maid new requests", async () => {
-  const f = await radiantFixture(),
-    c = getDefaultRoleCatalog();
-  expect(knownWolfTeammates(f.world, 1, c)).toEqual([10, 11, 12]);
-  expect(knownWolfTeammates(f.world, 10, c)).not.toContain(1);
-  expect(wolfChatParticipants(f.world, c)).toEqual([10, 11, 12]);
-  const stages = getDefaultNightStageRegistry()
-    .getStages(f.board.config, f.world)
-    .map((s) => [s.id, s.priority]);
-  expect(
-    stages.filter(([s]) =>
-      ["reset_night_role_state", "eclipse_swallow", "radiant_shelter", "dreamer_action"].includes(
-        String(s),
-      ),
-    ),
-  ).toEqual([
-    ["reset_night_role_state", 100],
-    ["eclipse_swallow", 110],
-    ["radiant_shelter", 120],
-    ["dreamer_action", 150],
-  ]);
-  const result = await f.pipeline.execute(f.board.config, radiantProvider(f.requests), 1);
-  expect(result.interrupted).toBe(false);
-  expect(
-    f.requests.some((r) => ["eclipse_swallow", "radiant_shelter"].includes(r.context.stage)),
-  ).toBe(false);
-  expect(f.events.filter((e) => e.type === "eclipse_lease_closed").at(-1)?.payload).toMatchObject({
-    day: 1,
-    status: "committed",
-    abilityId: null,
-  });
-});
+} from "../../../support/radiant_eclipse";
+import { knownWolfTeammates, wolfChatParticipants } from "../../../../src/game/mechanisms/roles/wolf_team";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultNightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { findNightAbility, abilityStatus } from "../../../../src/game/mechanisms/roles/abilities";
+
 const matrix: Array<{
   name: string;
   choices: RadiantChoices;
@@ -149,6 +102,40 @@ const matrix: Array<{
     deaths: [],
   },
 ];
+
+test("exact public board runs first night without Count or Maid new requests", async () => {
+  const f = await radiantFixture(),
+    c = getDefaultRoleCatalog();
+  expect(knownWolfTeammates(f.world, 1, c)).toEqual([10, 11, 12]);
+  expect(knownWolfTeammates(f.world, 10, c)).not.toContain(1);
+  expect(wolfChatParticipants(f.world, c)).toEqual([10, 11, 12]);
+  const stages = getDefaultNightStageRegistry()
+    .getStages(f.board.config, f.world)
+    .map((s) => [s.id, s.priority]);
+  expect(
+    stages.filter(([s]) =>
+      ["reset_night_role_state", "eclipse_swallow", "radiant_shelter", "dreamer_action"].includes(
+        String(s),
+      ),
+    ),
+  ).toEqual([
+    ["reset_night_role_state", 100],
+    ["eclipse_swallow", 110],
+    ["radiant_shelter", 120],
+    ["dreamer_action", 150],
+  ]);
+  const result = await f.pipeline.execute(f.board.config, radiantProvider(f.requests), 1);
+  expect(result.interrupted).toBe(false);
+  expect(
+    f.requests.some((r) => ["eclipse_swallow", "radiant_shelter"].includes(r.context.stage)),
+  ).toBe(false);
+  expect(f.events.filter((e) => e.type === "eclipse_lease_closed").at(-1)?.payload).toMatchObject({
+    day: 1,
+    status: "committed",
+    abilityId: null,
+  });
+});
+
 for (const row of matrix)
   test(`literal night matrix: ${row.name}`, async () => {
     const f = await radiantFixture();
@@ -182,6 +169,7 @@ for (const row of matrix)
       { status: "committed" },
     );
   });
+
 for (const [heal, poison] of [
   [1, 1],
   [1, 0],
@@ -213,6 +201,7 @@ for (const [heal, poison] of [
       poison ? [heal, poison - 1] : heal ? [heal - 1, poison] : [0, 0],
     );
   });
+
 test("night-start last wolf gets one knife together with borrowed skill and never chats", async () => {
   const f = await radiantFixture();
   for (const id of [10, 11, 12])
@@ -233,65 +222,4 @@ test("night-start last wolf gets one knife together with borrowed skill and neve
     false,
   );
   expect(f.requests.filter((r) => r.context.stage === "seer").map((r) => r.actorId)).toEqual([1]);
-});
-for (const stage of [
-  "eclipse_swallow",
-  "radiant_shelter",
-  "dreamer",
-  "wolf_discussion",
-  "wolf_vote",
-  "witch",
-  "seer",
-] as const)
-  for (const mode of ["missing", "wrong_tool"] as const)
-    test(`strict ${stage} ${mode} stores prefix and closes lease`, async () => {
-      const f = await radiantFixture();
-      const provider = radiantProvider(
-        f.requests,
-        {
-          swallow:
-            stage === "radiant_shelter" ? 2 : stage === "dreamer" ? 5 : stage === "witch" ? 4 : 3,
-        },
-        (r) =>
-          r.context.stage === stage
-            ? mode === "missing"
-              ? null
-              : { name: "vote", args: { target_id: 6, abstain: false } }
-            : undefined,
-      );
-      await expect(f.pipeline.execute(f.board.config, provider, 2)).rejects.toThrow();
-      expect(f.native(2).nightSuppression).toBeUndefined();
-      expect(f.native(3).nightSuppression).toBeUndefined();
-      expect(f.native(4).nightSuppression).toBeUndefined();
-      expect(f.native(5).nightSuppression).toBeUndefined();
-      if (f.borrowed()) expect(abilityStatus(f.borrowed()!, 2)).toBe("disabled");
-      expect(f.events.at(-1)?.type).toBe("eclipse_lease_closed");
-      expect(f.events.at(-1)?.payload).toMatchObject({ status: "aborted" });
-      expect(
-        f.events.some((e) =>
-          ["eclipse_native_restored", "night_resolved", "game_over"].includes(e.type),
-        ),
-      ).toBe(false);
-      await expect(f.pipeline.execute(f.board.config, provider, 2)).rejects.toThrow(
-        "radiant_night_reentry",
-      );
-    });
-test("interruption after submitted borrowing closes only authorization and retains actual stock", async () => {
-  const f = await radiantFixture();
-  let current = true;
-  const provider = radiantProvider(
-    f.requests,
-    { swallow: 4, potion: { target_id: 6, potion_type: "poison" } },
-    (r) => {
-      if (r.context.stage === "seer") current = false;
-      return undefined;
-    },
-  );
-  const result = await f.pipeline.execute(f.board.config, provider, 2, {
-    isCurrent: () => current,
-  });
-  expect(result.interrupted).toBe(true);
-  expect(f.events.at(-1)?.payload).toMatchObject({ status: "aborted" });
-  expect(findNightAbility(f.role(1), "potion")!.state.poison).toBe(0);
-  expect(findNightAbility(f.role(4), "potion")!.state.poison).toBe(1);
 });

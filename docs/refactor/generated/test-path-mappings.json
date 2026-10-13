@@ -95703,13 +95703,460 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/radiant_eclipse_runtime.test.ts",
+      "to": "backend/tests/scenarios/features/radiant-eclipse/native-shelter-and-borrowed-stock-matrices.test.ts",
+      "sourceCommit": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "4977281646775eb8cdc49b04b6dfe4389ce67ffca7297ca0b16df832e1d04c94",
+      "candidateSha256": "b010bf2ddd06790f3451dce87f044938a1147d95e467efc2b096224ee2064655",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 579,
+          "end": 623,
+          "original": "../../../src/game/mechanisms/roles/abilities",
+          "value": "../../../../src/game/mechanisms/roles/abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 465,
+          "end": 527,
+          "original": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "value": "../../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/stages/night/night_stage_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 374,
+          "end": 416,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 288,
+          "end": 332,
+          "original": "../../../src/game/mechanisms/roles/wolf_team",
+          "value": "../../../../src/game/mechanisms/roles/wolf_team",
+          "originalResolved": "backend/src/game/mechanisms/roles/wolf_team.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/wolf_team.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 198,
+          "end": 227,
+          "original": "../../support/radiant_eclipse",
+          "value": "../../../support/radiant_eclipse",
+          "originalResolved": "backend/tests/support/radiant_eclipse.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 101,
+          "end": 118,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "be85071dcfefa0e217df652f23db3a98ccfd1ab847e57fcf72855f1e32f40dd6",
+          "title": "exact public board runs first night without Count or Maid new requests",
+          "occurrence": 1
+        },
+        {
+          "id": "39c83477a4ce164d37304303bda17db3f003a1c18f279ee456b35c53f2683b11",
+          "title": "literal night matrix: shelter blocks ordinary knife",
+          "occurrence": 1
+        },
+        {
+          "id": "4e950b28f267e10b2bf7df13c11828dc3b38ba574eb9bf0ed25fefe6069808ad",
+          "title": "literal night matrix: shelter blocks poison",
+          "occurrence": 1
+        },
+        {
+          "id": "6407c56f4b613d61d1aa74e426df80224cf9ad6822d299ef983863771a9712a8",
+          "title": "literal night matrix: shelter blocks consecutive dream",
+          "occurrence": 1
+        },
+        {
+          "id": "019ad19a0807838684da73dea7e2870af485016b280ee7bc0d71baf72e8dac15",
+          "title": "literal night matrix: shelter blocks caster death link",
+          "occurrence": 1
+        },
+        {
+          "id": "0f5edf2c53458ad52ac7e02c0577ed9d247c5ed4d530c5cbd6123546a9871ab4",
+          "title": "literal night matrix: borrowed shelter survives Maids backlash",
+          "occurrence": 1
+        },
+        {
+          "id": "5aef3a6c12cd1acad7d5599b1e077b699c9c462368e02048418713362f1244e4",
+          "title": "literal night matrix: swallowed sheltered Seer gets own check and backlash",
+          "occurrence": 1
+        },
+        {
+          "id": "408f88abcb7154ce70c0d35efce6bde98af55dd816ab7d9aa1d99584f79183fa",
+          "title": "literal night matrix: dream blocks separate backlash",
+          "occurrence": 1
+        },
+        {
+          "id": "fdb7a72fa36308240f103585780b6c6f007f8e016ccc736373a9dd3d8b04fe6c",
+          "title": "literal night matrix: dead dream caster still links after backlash filtered",
+          "occurrence": 1
+        },
+        {
+          "id": "389d1018023c62139051e20c7ebc0397c3350eb745857f08ec0454c5f4704f9e",
+          "title": "literal night matrix: consecutive dream remains separate from blocked backlash",
+          "occurrence": 1
+        },
+        {
+          "id": "4320b030a5cf6a493cf9ab0a3d08fbf609681b0567506bedf9ed654735bf488a",
+          "title": "literal night matrix: sheltered dream caster has no false linked death",
+          "occurrence": 1
+        },
+        {
+          "id": "ff11371cab74f0f5ec91db52827172bce74d071150cb8e6756061896eeef2802",
+          "title": "literal night matrix: borrowed dream is owned by Maid not original Dreamer",
+          "occurrence": 1
+        },
+        {
+          "id": "39d52bcd8ef9b5fb0cc0005a9e4b50d0c3409838452a81541b349d449cbadea1",
+          "title": "literal night matrix: borrowed caster death links despite closed authorization",
+          "occurrence": 1
+        },
+        {
+          "id": "c0397033c8a6da76e164db010cd6cb61b81d670b5dcf5d1895ec94d4243765e2",
+          "title": "literal night matrix: borrowed shelter and native dream jointly cover card17",
+          "occurrence": 1
+        },
+        {
+          "id": "62622c3a3be37c18cfdbe2b6ab39667de87a740e8b03ab9ef3436a3158a6a7f5",
+          "title": "borrowed stock (1,1) never refreshes or writes back",
+          "occurrence": 1
+        },
+        {
+          "id": "41487f40643ca74ad9a032cdef6f88276485483d091f7ef797733d7f892465a3",
+          "title": "borrowed stock (1,0) never refreshes or writes back",
+          "occurrence": 1
+        },
+        {
+          "id": "c059bdb9053719bb0298a26714a68be9d9aed29c37e6e641f5332a8dfcc3363b",
+          "title": "borrowed stock (0,1) never refreshes or writes back",
+          "occurrence": 1
+        },
+        {
+          "id": "f3cd1721b9fed51bd3675d8c2ab022cd1629a02bf7dd876d55be913d10573acc",
+          "title": "borrowed stock (0,0) never refreshes or writes back",
+          "occurrence": 1
+        },
+        {
+          "id": "89d4f9a20e4a879022727a59dfbba4013f5a634bbbd9789aa8a4f4a1ea4e854f",
+          "title": "night-start last wolf gets one knife together with borrowed skill and never chats",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Role,\n  Phase,\n  DeathCause,\n  COMPONENT,\n  type AliveComponent,\n  type ToolCall,\n  type ActionRequest,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { DeathCause, COMPONENT, type AliveComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/wolf_team",
+          "originalImport": "import {\n  knownWolfTeammates,\n  wolfChatParticipants,\n  wolfKnifeHolders,\n} from \"../../../src/game/mechanisms/roles/wolf_team\";",
+          "currentImportBeforeRebase": "import { knownWolfTeammates, wolfChatParticipants } from \"../../../src/game/mechanisms/roles/wolf_team\";",
+          "droppedBindings": [
+            {
+              "name": "wolfKnifeHolders",
+              "imported": "wolfKnifeHolders",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/radiant_eclipse_runtime.test.ts",
+      "to": "backend/tests/scenarios/failures/radiant-eclipse/strict-action-prefix-and-interruption.test.ts",
+      "sourceCommit": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "4977281646775eb8cdc49b04b6dfe4389ce67ffca7297ca0b16df832e1d04c94",
+      "candidateSha256": "754f577f8cbf8c12ecd438defec5afe56a99e17d3c5e9babb110f2b501db35bc",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 171,
+          "end": 215,
+          "original": "../../../src/game/mechanisms/roles/abilities",
+          "value": "../../../../src/game/mechanisms/roles/abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 90,
+          "end": 119,
+          "original": "../../support/radiant_eclipse",
+          "value": "../../../support/radiant_eclipse",
+          "originalResolved": "backend/tests/support/radiant_eclipse.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "453d2b1e10f55a57e6c0289af85a42fdfed2641cef01ee727452bda2cd4356ba",
+          "title": "strict eclipse_swallow missing stores prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "97578a574defe75e75b245e0fdc5a4d56c254667e4f3ef827455cddd31826c47",
+          "title": "strict eclipse_swallow wrong_tool stores prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "08f2334a4cd476ddb5b62166f1d1da39feb60460c0d7a2ea9af69a0d9eec5552",
+          "title": "strict radiant_shelter missing stores prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "e41575f8e71cef3c992cb6901a05d543cee97c96e1123745e223d166dcd2f31c",
+          "title": "strict radiant_shelter wrong_tool stores prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "9c5cd434afc002c23fbf153384f4aa4c4a3e81c60c8dc755b4c639c3e6c9e562",
+          "title": "strict dreamer missing stores prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "f491285e80af0c37a3965d90e32280a113593f463ad63c7e9638c665ad4865ba",
+          "title": "strict dreamer wrong_tool stores prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "7b3db845ffae44e57def72804aa5bff8cf61d04948bcb5f17b5c6788cca2695e",
+          "title": "strict wolf_discussion missing stores prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "a5037195e49066c5170cc0aa86158effc56cd99a6e01fa1dd1987d87d854758b",
+          "title": "strict wolf_discussion wrong_tool stores prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "fa2a821a6c810b1e40ec29acb1762e59334f962472b9fbed16a6e25b3e23a593",
+          "title": "strict wolf_vote missing stores prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "caf07f390cfd3c291ce04a30bf30cd8dec0d2e26ac0049dbe8f20cfd54367c66",
+          "title": "strict wolf_vote wrong_tool stores prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "14d6d80d1bc45cf77bf3fd25d9198b99668efc5597a4644f359adc2283c037b9",
+          "title": "strict witch missing stores prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "5a25cd6cb4c6cc76fb318a8af478661415f31bbc21fc13b7038d90669d055332",
+          "title": "strict witch wrong_tool stores prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "ef849a223d75848032000c194e5238409c2ccbe45c5ae9f3d6bb0bc9e24ab496",
+          "title": "strict seer missing stores prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "35fecadaeec192db5957f7fbd02d0ef4f06e33ea7d51ca342f4253fee3e4219c",
+          "title": "strict seer wrong_tool stores prefix and closes lease",
+          "occurrence": 1
+        },
+        {
+          "id": "92cc321dcca7a3ddb390c36910268fcabdc641823619eea2e5d234990c1e077e",
+          "title": "interruption after submitted borrowing closes only authorization and retains actual stock",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Role,\n  Phase,\n  DeathCause,\n  COMPONENT,\n  type AliveComponent,\n  type ToolCall,\n  type ActionRequest,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "DeathCause",
+              "imported": "DeathCause",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "AliveComponent",
+              "imported": "AliveComponent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/radiant_eclipse",
+          "originalImport": "import {\n  radiantFixture,\n  radiantProvider,\n  type RadiantChoices,\n} from \"../../support/radiant_eclipse\";",
+          "currentImportBeforeRebase": "import { radiantFixture, radiantProvider } from \"../../support/radiant_eclipse\";",
+          "droppedBindings": [
+            {
+              "name": "RadiantChoices",
+              "imported": "RadiantChoices",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/wolf_team",
+          "originalImport": "import {\n  knownWolfTeammates,\n  wolfChatParticipants,\n  wolfKnifeHolders,\n} from \"../../../src/game/mechanisms/roles/wolf_team\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "knownWolfTeammates",
+              "imported": "knownWolfTeammates",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "wolfChatParticipants",
+              "imported": "wolfChatParticipants",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "wolfKnifeHolders",
+              "imported": "wolfKnifeHolders",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/catalog",
+          "originalImport": "import { getDefaultRoleCatalog } from \"../../../src/game/mechanisms/roles/catalog\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "originalImport": "import { getDefaultNightStageRegistry } from \"../../../src/game/mechanisms/stages/night/night_stage_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultNightStageRegistry",
+              "imported": "getDefaultNightStageRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 575,
-    "targetFiles": 654,
-    "mappingEntries": 654,
-    "baselineCases": 7514,
+    "sourceFiles": 576,
+    "targetFiles": 656,
+    "mappingEntries": 656,
+    "baselineCases": 7548,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
