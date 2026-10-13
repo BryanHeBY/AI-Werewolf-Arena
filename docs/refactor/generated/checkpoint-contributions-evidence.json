@@ -1,0 +1,329 @@
+{
+  "baseline": "927c650e",
+  "paths": 7,
+  "files": [
+    {
+      "path": "backend/src/runtime/simulation/reproduction_context.ts",
+      "sha256": "dfad020815c3de0d39dd6ea1ba871306091460a0e66431f0be3357da1a7becff"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/animal-audit.ts",
+      "sha256": "e26dc743b0c8ce60ff9a2760edacdff04886f412a4a680355cfbc7c7387fa028"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/authority-snapshots.ts",
+      "sha256": "fb7a8a9fa39cd55aa96cb6a206a8edeaf30a892a00fce994ebb45cffb92f9690"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/contributions.ts",
+      "sha256": "0229bc557b7fdfa5749feffc4f7fc9a73aca7a9ecb2e2701a6c8f055361c2733"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/identity-setups.ts",
+      "sha256": "28fcbde4b67742185b55eed56cfe166fd4874c674a53dfa91cbd8c41415e7661"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/player-snapshots.ts",
+      "sha256": "75e71ca1a5868c6de98717692cd26ff2a615753d84f363d61fee68a9c6b44a1b"
+    },
+    {
+      "path": "backend/tests/unit/recording/checkpoint-contributions.test.ts",
+      "sha256": "593246c860b409d54d5b321a9f719081de0e83b52d7e5df2a59b0af12d71ccd2"
+    }
+  ],
+  "programProof": {
+    "assemblyPreparation": true,
+    "assemblyCapture": true,
+    "moduleHasOnlyDeclarations": true,
+    "baseline": "927c650e",
+    "actualGitSame": true,
+    "programs": [
+      {
+        "module": "ESNext",
+        "same": true
+      },
+      {
+        "module": "CommonJS",
+        "same": true
+      }
+    ],
+    "allMeaningfulOriginalBindingsRetained": true,
+    "missing": [],
+    "completePlayerExpressionSame": true,
+    "originalCaptureSchemaChanged": false
+  },
+  "heads": {
+    "paths": 7,
+    "violations": []
+  },
+  "controls": {
+    "baseline": "927c650e",
+    "controls": [
+      {
+        "path": "backend/src/recording/reproduction.ts",
+        "same": true,
+        "sha256": "cd34cc70733df39bc547e720ac3c1c2a0bbc77790c1eb76024b6a2f40ed14822"
+      },
+      {
+        "path": "backend/src/recording/animal_dream_checkpoint.ts",
+        "same": true,
+        "sha256": "cc14ed49a6e5f31a5bb182c791b8c278a54a59a220530a637b493fc74dc11753"
+      },
+      {
+        "path": "backend/src/recording/fragrant_pair_seer_checkpoint.ts",
+        "same": true,
+        "sha256": "0c6a3c47dc7af3b3426fb391426345c83755d2a20fc1b78ec29b3f9a66ab094f"
+      },
+      {
+        "path": "backend/src/recording/noble_secret_body_checkpoint.ts",
+        "same": true,
+        "sha256": "8bc3901708ab47dd0f63ae661f25d523949325f0894db39ca704de2d9db4a9be"
+      },
+      {
+        "path": "backend/src/core/domain/plain_data.ts",
+        "same": true,
+        "sha256": "f7d6eadcc86bfe4ca3582c385649b8388911cd78520bc65bedce640039d07517"
+      },
+      {
+        "path": "backend/src/core/domain/components/alive.ts",
+        "same": true,
+        "sha256": "4cd02da4dbfdbcec15c4086b75e2a80f949bdc390fe341efacf9e36b378c882f"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+        "same": true,
+        "sha256": "a8e6baedf56c000e545baa41dba893e3e132567f75a1be66e6fe952080849af4"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/animal_dream/roster.ts",
+        "same": true,
+        "sha256": "6975e9923b0d20851d351c48da33b010c652d958fd85dd3df95bbb802030d0bb"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+        "same": true,
+        "sha256": "cb3f60fa77d945fa9a31a6733ef5264c30771805b5ad6d7eea3cd2b53558f367"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+        "same": false,
+        "sha256": "00d80acfc1c8cdca88c53b91feaaa8f9fc5e2879409d7a5bcb42b5501f48faa7",
+        "outsideScopeConcurrentNightUnitOwner": true,
+        "snapshotEntryFunctions": [
+          {
+            "name": "checkpointNobleBodyAuthority",
+            "rawSame": true
+          },
+          {
+            "name": "isNobleBodyBoard",
+            "rawSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+        "same": true,
+        "sha256": "1ebb4b0c0a319292657cf0360a78abe175f196aee43d798b3d9d892a90219c24"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "same": true,
+        "sha256": "8866d4bc4edb7ca30c53ba35fc6ed22632bcfd5061c0d6676e8f09667ac7b825"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+        "same": true,
+        "sha256": "9fa93ca1e44d88447aa278cc441588783607da6f94ed17d9e7427024f46090ba"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+        "same": true,
+        "sha256": "709ab407961bc13de1b04dadf5bbdc4cd7e5fdec1430f3c82cb6384021b60122"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+        "same": true,
+        "sha256": "c8b16b4a6a9dc16800b1afe3203c3b7bca523e483f532ff0d489d6900e4f8521"
+      },
+      {
+        "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+        "same": true,
+        "sha256": "e1596a73e0f3a9039013b4a2a9e8291df05441547248c571ae70a7748c0bc1a0"
+      }
+    ],
+    "passed": true,
+    "rawSame": 15,
+    "outsideScope": 1
+  },
+  "independentReview": {
+    "baseline": "927c650e",
+    "files": [
+      {
+        "path": "backend/src/runtime/simulation/reproduction_context.ts",
+        "sha256": "dfad020815c3de0d39dd6ea1ba871306091460a0e66431f0be3357da1a7becff",
+        "currentSHA": "dfad020815c3de0d39dd6ea1ba871306091460a0e66431f0be3357da1a7becff",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/src/recording/checkpoint/animal-audit.ts",
+        "sha256": "e26dc743b0c8ce60ff9a2760edacdff04886f412a4a680355cfbc7c7387fa028",
+        "currentSHA": "e26dc743b0c8ce60ff9a2760edacdff04886f412a4a680355cfbc7c7387fa028",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/src/recording/checkpoint/authority-snapshots.ts",
+        "sha256": "fb7a8a9fa39cd55aa96cb6a206a8edeaf30a892a00fce994ebb45cffb92f9690",
+        "currentSHA": "fb7a8a9fa39cd55aa96cb6a206a8edeaf30a892a00fce994ebb45cffb92f9690",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/src/recording/checkpoint/contributions.ts",
+        "sha256": "0229bc557b7fdfa5749feffc4f7fc9a73aca7a9ecb2e2701a6c8f055361c2733",
+        "currentSHA": "0229bc557b7fdfa5749feffc4f7fc9a73aca7a9ecb2e2701a6c8f055361c2733",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/src/recording/checkpoint/identity-setups.ts",
+        "sha256": "28fcbde4b67742185b55eed56cfe166fd4874c674a53dfa91cbd8c41415e7661",
+        "currentSHA": "28fcbde4b67742185b55eed56cfe166fd4874c674a53dfa91cbd8c41415e7661",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/src/recording/checkpoint/player-snapshots.ts",
+        "sha256": "75e71ca1a5868c6de98717692cd26ff2a615753d84f363d61fee68a9c6b44a1b",
+        "currentSHA": "75e71ca1a5868c6de98717692cd26ff2a615753d84f363d61fee68a9c6b44a1b",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/tests/unit/recording/checkpoint-contributions.test.ts",
+        "sha256": "593246c860b409d54d5b321a9f719081de0e83b52d7e5df2a59b0af12d71ccd2",
+        "currentSHA": "593246c860b409d54d5b321a9f719081de0e83b52d7e5df2a59b0af12d71ccd2",
+        "sameSHA": true
+      }
+    ],
+    "checks": {
+      "trueGitOriginal": true,
+      "fullCaptureAfterActualFiveLeavesInlineSame": true,
+      "entirePlayerExpressionSame": true,
+      "auditWholeDeclarationSame": true,
+      "prepareAssemblyExplicitOrder": true,
+      "captureAssemblyAuthorityBeforeIdentity": true,
+      "playersRemainAfterFailure": true,
+      "fiveLeafNoNewTopLevelSideEffects": true
+    },
+    "controlRows": [
+      {
+        "path": "backend/src/recording/reproduction.ts",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/recording/animal_dream_checkpoint.ts",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/recording/fragrant_pair_seer_checkpoint.ts",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/recording/noble_secret_body_checkpoint.ts",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/core/domain/plain_data.ts",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/core/domain/components/alive.ts",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/animal_dream/roster.ts",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+        "wholeBytesSame": false,
+        "actualTwoCheckpointFunctionsSame": true,
+        "scope": "Concurrent NightUnit owner modifications excluded; only actual checkpoint query declarations checked"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+        "wholeBytesSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+        "wholeBytesSame": true
+      }
+    ],
+    "heads": [],
+    "findings": [],
+    "semantics": [
+      "Capture API still accepts original same World/snapshot/cycle/complete/eventCount/failure/cursors and returns original key order. Actual fixed assembly prepares initial Animal audit then four setup reads, encodes Animal→Fragrant→Noble and cursors, inserts setup flags, then original failure before players.",
+      "Player expression remains entire original: Demon actual original-body records first; Animal original roster/descriptor/private-state audit; Fragrant and Wedding/Lonely overrides; ordinary structuredClone last. Debate penalty numeric lifeVersion, Lovers, victory, vote, badge, marks fields preserve old positions, repeated reads and unknown custom data acceptance.",
+      "Authority schema parse and repeated snapshots retain original method lookup/receiver and exception timing; no shape policy, actor inventory write, World cache or new generic contribution registry. auditData is exact original own descriptor/undefined snapshot function and not falsely upgraded to arbitrary Proxy zero-trap guarantees.",
+      "Five new helper leaves only imports/exports/function declarations; recording production schemas remain original. Independent verification control files are not changed or made to depend on new writer helpers; Noble concurrent NightUnit edits are excluded while its exact checkpoint/read functions remain original.",
+      "Four new bounded units use real factory components and hand key lists, private data clone and original getter exception/read sequence; fixed affiliation faction:good belongs new fixture only, not production/schema loosening. Existing special authority and cold import receipts are author-run and were not repeated."
+    ],
+    "limits": [
+      "Finite source/actualGit/typed AST inline/fields and clone read/current7SHA/head/control bytes review. No compiler/transpile/type/runtime/tests/game/discovery/cold import repeated.",
+      "This owns current complete capture formation responsibility, not all55 role codecs or full independent verifier assembly. Current engine source/lock fingerprints and initial reproduction plan identity remain old existing outside-capture responsibility.",
+      "Noble authority is simultaneously owned by Root NightUnit development; only two unchanged actual checkpoint predicate/query functions are certified, not its whole current file."
+    ]
+  },
+  "rootReview": {
+    "findings": [],
+    "source": "固定prepare/capture assembly、authority重复查询/schema/cursor顺序、四setup原ref、完整players优先/clone、原API位置和newfixture数据真实字段已读；未重复compiler/运行",
+    "snapshotShape": "原schema2/cycle/complete/snapshotRef/failure/events/seq同；独立verifier无生产贡献导入"
+  },
+  "acceptance": {
+    "newAnimalAuditFirst": {
+      "pass": 1,
+      "assertions": 4
+    },
+    "newThreeFixedFixtureCases": {
+      "pass": 3,
+      "fail": 0,
+      "assertions": 13
+    },
+    "originalAnimalCP0AndDemonBadge": {
+      "pass": 2,
+      "fail": 0,
+      "assertions": 8
+    },
+    "finiteStrictCompiler": {
+      "actualSession": 42285,
+      "observedTerminalExit": 0
+    },
+    "freshBaselineCurrentImports": "实际两fresh入口success/same3exports；无fingerprint IO或完整游戏"
+  },
+  "limits": [
+    "完整checkpoint形成链职责归并非全55codec或独立verifier注册完成",
+    "原15control bytes全同；Noble并行Night变化只两个实际checkpoint函数同，非整个16文件same",
+    "首newfixture affiliation及harness hoisted helper/return parentheses红保；未修production适配proof",
+    "没有重全量门禁/模型/网络/整局"
+  ]
+}

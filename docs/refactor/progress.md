@@ -11,7 +11,7 @@
 | P4 规则计划与生命周期  | 进行中 | RulePlan实际同引用消费、late计划与周期单位已落；C22–C24完整机制矩阵继续                |
 | P5 效果、死亡与判胜    | 进行中 | C25/26真实毒来源、C27实际Wave/Receipt与提交、C28馥郁／动物边界已落；全效果/关系继续              |
 | P6 能力、观察与展示    | 进行中 | C35第五包、F01默认生产观察回退已落；C30–C34完整投影、C36与其余展示贡献继续                      |
-| P7 记录与独立复现      | 待执行 | C37–C40                                                                                |
+| P7 记录与独立复现      | 进行中 | C37完整checkpoint形成链归实际贡献owner；verifier/记录生命周期与C38–C40继续                                                                                |
 | P8 目录、命名与文档    | 待执行 | C41–C44                                                                                |
 | P9 全仓收敛与验收      | 待执行 | C45–C48；同源固定输入、门禁零债务                                                      |
 
@@ -438,3 +438,5 @@
 - C27/28 实际typedWave→CommitReceipt：5paths，initial/逐proposal真实unit共享及revisit原身份、2真正mark站传同ids/source引用、原ledger.set位置同对象version保、接受Poison匹配锁origin原体/版本进entry；PM三夜分支真实carrier、callback/枪/公开关联不改事件。data-only badtail预拒、新plan一致性和第三callback参/receipt返回明列政策；legacy同名getters+customMap.get两实际finding修own-data/nativeMap诊断。new7+old3为10/0/68、变route2/0/18、原paid/stale3/0/11、真实链增量1/0/16、兼容增量2/0/27，各自收据不冒最后整套；finite87022/58522/58007/末predicateleaf11470作者actualclosed0。3原程序6inverse/属性read37/123/238同、中文5heads/Root和两独立final5SHA审0；首config/testtype/proof红保。全effect/time/relation/record/P9继续，见typed-death-wave.md。
 
 - C31 PhaseRevision唯一owner：原单值/2原++/3捕获3比较全部实接，samephase debug+1/noClose，新phase debug+2/state先写/close先event保；新3/0/14+有限23269Rootactualclosed0、完整manager逆/3中文heads/两独立3SHA源审0。首3newtest红为误忽略bootstrap初Nightday1事实，手写payload修无prod改；manager Night候选随后接同file，用已审phase精确blob暂存不覆盖工作树，Night/Exile/完整C31继续。见phase-revision-owner.md。
+
+- C37 完整checkpoint形成链：7paths，5业务叶与固定assembly实际替原capture；authority/preflight→四setup→schema/cursor→原failure→Demon/Animal/关系/通用player整个表达式保原clone/ref/lookup序和schema2键序，无新registry/worldstore/规则重推/动态topIO。真Git927 whole源inline ES/CJS/整players/原bindings同、7CNheads/SHA和Root实际源/独立直接AST审0；control15whole+Noble2函数同明确。新Audit首1/4+fixture修后3/0/13、原2/0/8、finite42285作者actualclosed0、cold old/new same3exports；首fixture/fingerprint harness红保，不重games/fullgate。全rolecodec/verifierAssembly/记录生命周期继续，见checkpoint-contributions.md。
