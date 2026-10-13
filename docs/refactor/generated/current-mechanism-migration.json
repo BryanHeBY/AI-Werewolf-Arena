@@ -1,6 +1,6 @@
 {
   "schema": "awa-current-mechanism-migration-v1",
-  "observedCommit": "82fc02318a7448b7182acedb3224838dcfb33719",
+  "observedCommit": "23511ef7aa0d8d052f913f64f22712c2e3a7ba06",
   "baseline": {
     "path": "docs/refactor/generated/mechanism-matrix.json",
     "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
@@ -127,8 +127,20 @@
       "baselineOwner": "feature:awakened-hidden-wolf",
       "cells": {
         "state": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Original private-slot data and finite deep read contract use canonical public declarations; real getters/consumers and concrete field/history writers retain reference/copy and failure prefixes. Full schema/codec and final opaque container work remains.",
+              "commit": "23511ef7",
+              "owners": [
+                "packages/game-contract/src/role-state-data.ts",
+                "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-role-state-boundaries.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
           ]
@@ -216,6 +228,17 @@
               "evidence": [
                 "docs/refactor/role-state-owners.md"
               ]
+            },
+            {
+              "part": "Original private-slot data and finite deep read contract use canonical public declarations; real getters/consumers and concrete field/history writers retain reference/copy and failure prefixes. Full schema/codec and final opaque container work remains.",
+              "commit": "23511ef7",
+              "owners": [
+                "packages/game-contract/src/role-state-data.ts",
+                "backend/src/game/mechanisms/roles/bear/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-role-state-boundaries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -294,8 +317,20 @@
       "baselineOwner": "feature:black-market-merchant",
       "cells": {
         "state": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Original private-slot data and finite deep read contract use canonical public declarations; real getters/consumers and concrete field/history writers retain reference/copy and failure prefixes. Full schema/codec and final opaque container work remains.",
+              "commit": "23511ef7",
+              "owners": [
+                "packages/game-contract/src/role-state-data.ts",
+                "backend/src/game/mechanisms/roles/black_market_merchant/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-role-state-boundaries.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
           ]
@@ -638,8 +673,19 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Original pipeline acquisition/cleanup transfer and manager terminal sites are owned by concrete night units; complete effect/death/relationship lifecycle remains.",
+              "commit": "05a198cb",
+              "owners": [
+                "backend/src/game/mechanisms/roles/demon_hunter/night-lifecycle.ts"
+              ],
+              "evidence": [
+                "docs/refactor/demon-wedding-night-lifecycle.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
           ]
@@ -726,6 +772,16 @@
               "evidence": [
                 "docs/refactor/night-ability-read-boundary.md",
                 "docs/refactor/generated/night-ability-read-evidence.json"
+              ]
+            },
+            {
+              "part": "Original neutral night-ability input/read declarations have one public data owner; live storage and complete codecs remain feature-owned work.",
+              "commit": "61027053",
+              "owners": [
+                "packages/game-contract/src/night-ability-data.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-data.md"
               ]
             }
           ],
@@ -916,6 +972,16 @@
               "evidence": [
                 "docs/refactor/fragrant-pair-state-owner.md"
               ]
+            },
+            {
+              "part": "Original neutral night-ability input/read declarations have one public data owner; live storage and complete codecs remain feature-owned work.",
+              "commit": "61027053",
+              "owners": [
+                "packages/game-contract/src/night-ability-data.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-data.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -1037,6 +1103,17 @@
               "evidence": [
                 "docs/refactor/role-state-owners.md"
               ]
+            },
+            {
+              "part": "Original private-slot data and finite deep read contract use canonical public declarations; real getters/consumers and concrete field/history writers retain reference/copy and failure prefixes. Full schema/codec and final opaque container work remains.",
+              "commit": "23511ef7",
+              "owners": [
+                "packages/game-contract/src/role-state-data.ts",
+                "backend/src/game/mechanisms/roles/gargoyle/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-role-state-boundaries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -1147,8 +1224,19 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Original pipeline acquisition/cleanup transfer and manager terminal sites are owned by concrete night units; complete effect/death/relationship lifecycle remains.",
+              "commit": "05a198cb",
+              "owners": [
+                "backend/src/game/mechanisms/roles/ghost_bride/night-lifecycle.ts"
+              ],
+              "evidence": [
+                "docs/refactor/demon-wedding-night-lifecycle.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
           ]
@@ -1224,6 +1312,17 @@
               ],
               "evidence": [
                 "docs/refactor/role-state-owners.md"
+              ]
+            },
+            {
+              "part": "Original private-slot data and finite deep read contract use canonical public declarations; real getters/consumers and concrete field/history writers retain reference/copy and failure prefixes. Full schema/codec and final opaque container work remains.",
+              "commit": "23511ef7",
+              "owners": [
+                "packages/game-contract/src/role-state-data.ts",
+                "backend/src/game/mechanisms/roles/gravekeeper/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-role-state-boundaries.md"
               ]
             }
           ],
@@ -1335,6 +1434,16 @@
               "evidence": [
                 "docs/refactor/night-ability-read-boundary.md",
                 "docs/refactor/generated/night-ability-read-evidence.json"
+              ]
+            },
+            {
+              "part": "Original neutral night-ability input/read declarations have one public data owner; live storage and complete codecs remain feature-owned work.",
+              "commit": "61027053",
+              "owners": [
+                "packages/game-contract/src/night-ability-data.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-data.md"
               ]
             }
           ],
@@ -1456,6 +1565,17 @@
               "evidence": [
                 "docs/refactor/role-state-owners.md"
               ]
+            },
+            {
+              "part": "Original private-slot data and finite deep read contract use canonical public declarations; real getters/consumers and concrete field/history writers retain reference/copy and failure prefixes. Full schema/codec and final opaque container work remains.",
+              "commit": "23511ef7",
+              "owners": [
+                "packages/game-contract/src/role-state-data.ts",
+                "backend/src/game/mechanisms/roles/hidden_wolf/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-role-state-boundaries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -1544,6 +1664,17 @@
               ],
               "evidence": [
                 "docs/refactor/role-state-owners.md"
+              ]
+            },
+            {
+              "part": "Original private-slot data and finite deep read contract use canonical public declarations; real getters/consumers and concrete field/history writers retain reference/copy and failure prefixes. Full schema/codec and final opaque container work remains.",
+              "commit": "23511ef7",
+              "owners": [
+                "packages/game-contract/src/role-state-data.ts",
+                "backend/src/game/mechanisms/roles/hunter/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-role-state-boundaries.md"
               ]
             }
           ],
@@ -1711,6 +1842,17 @@
               ],
               "evidence": [
                 "docs/refactor/role-state-owners.md"
+              ]
+            },
+            {
+              "part": "Original private-slot data and finite deep read contract use canonical public declarations; real getters/consumers and concrete field/history writers retain reference/copy and failure prefixes. Full schema/codec and final opaque container work remains.",
+              "commit": "23511ef7",
+              "owners": [
+                "packages/game-contract/src/role-state-data.ts",
+                "backend/src/game/mechanisms/roles/idiot/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-role-state-boundaries.md"
               ]
             }
           ],
@@ -1899,6 +2041,17 @@
               ],
               "evidence": [
                 "docs/refactor/role-state-owners.md"
+              ]
+            },
+            {
+              "part": "Original private-slot data and finite deep read contract use canonical public declarations; real getters/consumers and concrete field/history writers retain reference/copy and failure prefixes. Full schema/codec and final opaque container work remains.",
+              "commit": "23511ef7",
+              "owners": [
+                "packages/game-contract/src/role-state-data.ts",
+                "backend/src/game/mechanisms/roles/knight/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-role-state-boundaries.md"
               ]
             }
           ],
@@ -2158,8 +2311,20 @@
       "baselineOwner": "feature:mechanical-wolf",
       "cells": {
         "state": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Original private-slot data and finite deep read contract use canonical public declarations; real getters/consumers and concrete field/history writers retain reference/copy and failure prefixes. Full schema/codec and final opaque container work remains.",
+              "commit": "23511ef7",
+              "owners": [
+                "packages/game-contract/src/role-state-data.ts",
+                "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-role-state-boundaries.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
           ]
@@ -2236,8 +2401,20 @@
       "baselineOwner": "feature:miracle-merchant",
       "cells": {
         "state": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Original private-slot data and finite deep read contract use canonical public declarations; real getters/consumers and concrete field/history writers retain reference/copy and failure prefixes. Full schema/codec and final opaque container work remains.",
+              "commit": "23511ef7",
+              "owners": [
+                "packages/game-contract/src/role-state-data.ts",
+                "backend/src/game/mechanisms/roles/miracle_merchant/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-role-state-boundaries.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
           ]
@@ -2959,8 +3136,19 @@
       "baselineOwner": "feature:radiant-eclipse",
       "cells": {
         "state": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Original neutral night-ability input/read declarations have one public data owner; live storage and complete codecs remain feature-owned work.",
+              "commit": "61027053",
+              "owners": [
+                "packages/game-contract/src/night-ability-data.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-data.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
           ]
@@ -3169,6 +3357,16 @@
               "evidence": [
                 "docs/refactor/night-ability-read-boundary.md",
                 "docs/refactor/generated/night-ability-read-evidence.json"
+              ]
+            },
+            {
+              "part": "Original neutral night-ability input/read declarations have one public data owner; live storage and complete codecs remain feature-owned work.",
+              "commit": "61027053",
+              "owners": [
+                "packages/game-contract/src/night-ability-data.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-data.md"
               ]
             }
           ],
@@ -3396,6 +3594,16 @@
               "evidence": [
                 "docs/refactor/night-ability-read-boundary.md",
                 "docs/refactor/generated/night-ability-read-evidence.json"
+              ]
+            },
+            {
+              "part": "Original neutral night-ability input/read declarations have one public data owner; live storage and complete codecs remain feature-owned work.",
+              "commit": "61027053",
+              "owners": [
+                "packages/game-contract/src/night-ability-data.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-data.md"
               ]
             }
           ],
@@ -3933,6 +4141,17 @@
               "evidence": [
                 "docs/refactor/role-state-owners.md"
               ]
+            },
+            {
+              "part": "Original private-slot data and finite deep read contract use canonical public declarations; real getters/consumers and concrete field/history writers retain reference/copy and failure prefixes. Full schema/codec and final opaque container work remains.",
+              "commit": "23511ef7",
+              "owners": [
+                "packages/game-contract/src/role-state-data.ts",
+                "backend/src/game/mechanisms/roles/white_wolf_king/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-role-state-boundaries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -4133,6 +4352,16 @@
                 "docs/refactor/night-ability-read-boundary.md",
                 "docs/refactor/generated/night-ability-read-evidence.json"
               ]
+            },
+            {
+              "part": "Original neutral night-ability input/read declarations have one public data owner; live storage and complete codecs remain feature-owned work.",
+              "commit": "61027053",
+              "owners": [
+                "packages/game-contract/src/night-ability-data.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-data.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -4332,6 +4561,17 @@
               "evidence": [
                 "docs/refactor/role-state-owners.md"
               ]
+            },
+            {
+              "part": "Original private-slot data and finite deep read contract use canonical public declarations; real getters/consumers and concrete field/history writers retain reference/copy and failure prefixes. Full schema/codec and final opaque container work remains.",
+              "commit": "23511ef7",
+              "owners": [
+                "packages/game-contract/src/role-state-data.ts",
+                "backend/src/game/mechanisms/roles/wolf_beauty/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-role-state-boundaries.md"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -4420,6 +4660,17 @@
               ],
               "evidence": [
                 "docs/refactor/role-state-owners.md"
+              ]
+            },
+            {
+              "part": "Original private-slot data and finite deep read contract use canonical public declarations; real getters/consumers and concrete field/history writers retain reference/copy and failure prefixes. Full schema/codec and final opaque container work remains.",
+              "commit": "23511ef7",
+              "owners": [
+                "packages/game-contract/src/role-state-data.ts",
+                "backend/src/game/mechanisms/roles/wolf_king/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-role-state-boundaries.md"
               ]
             }
           ],
@@ -7975,8 +8226,8 @@
     "currentOnlyRows": 2,
     "rows": 91,
     "cells": 910,
-    "pending": 855,
-    "partial": 55,
+    "pending": 848,
+    "partial": 62,
     "complete": 0,
     "not-applicable": 0
   },

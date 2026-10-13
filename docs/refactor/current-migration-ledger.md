@@ -25,3 +25,5 @@ Git `f6c48778` 为既有 Seer state 格追加真实深只读入口子项，原�
 Git `03cf07e8` 登记原角色容器的独立读取／初始化契约 owner 为第二个 current-only 跟踪行；这不是新增玩法或第二份状态。该行仅 state 为 partial，能力元数据／payload、全部 schema／codec、扩展编码和最终 opaque 表面仍待闭合，其余列继续 pending。当前 91 行、910 格，52 partial、858 pending，零 complete/N/A；89 行冻结基线保持。
 
 Git `82fc0231` 为 abilities、ability_changes 和 night-ability-actors 的普通 live 读取／写入边界登记 state partial，另给五个已有 payload state 格追加真实读取子项。该检查点仅修改八个 state 格；规则、schema／codec、完整能力生命周期和旧出口要求保持。当前 91 行、910 格，55 partial、855 pending，零 complete/N/A；冻结基线与其他格未改。
+
+Git `61027053`、`05a198cb`、`23511ef7` 在一次有限登记中分别补入七族能力数据声明、猎魔／婚礼普通夜间交接，以及十四族普通私有状态实际读写入口，共 23 个具体子项。既有剩余要求逐字保持；只改对应 state／lifecycle 格和统计，不扩大到 schema／codec、完整 RulePlan 或整阶段验收。当前 91 行、910 格，62 partial、848 pending，零 complete/N/A；冻结矩阵摘要保持。
