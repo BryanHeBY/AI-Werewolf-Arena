@@ -94937,13 +94937,575 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/ghost_bride_runtime.test.ts",
+      "to": "backend/tests/unit/rulesets/ghost-bride-local-stage-priority.test.ts",
+      "sourceCommit": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "reason": "Actual selected unit module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "5769745dad78790f7e0cf7b1a1564b0141e3c68452c8db91a879015512b1f95f",
+      "candidateSha256": "29fda1525febbb6ce6eaa850d6422f8cd590b164fd3941dbf4fe76482437b41a",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 222,
+          "end": 250,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 116,
+          "end": 151,
+          "original": "../../support/ghost_bride_scenarios",
+          "value": "../../support/ghost_bride_scenarios",
+          "originalResolved": "backend/tests/support/ghost_bride_scenarios.ts",
+          "expectedResolved": "backend/tests/support/ghost_bride_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 63,
+          "end": 80,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "393283d571793e4a41d9ad17911f9d1992624f2baad3e24abf3ca5813a340718",
+          "title": "stage registry uses local Guard/chat priority without mutating ordinary stage descriptors",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "bun:test",
+          "originalImport": "import { expect, test, spyOn } from \"bun:test\";",
+          "currentImportBeforeRebase": "import { expect, test } from \"bun:test\";",
+          "droppedBindings": [
+            {
+              "name": "spyOn",
+              "imported": "spyOn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/app/bootstrap",
+          "originalImport": "import { bootstrapGame } from \"../../../src/app/bootstrap\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "bootstrapGame",
+              "imported": "bootstrapGame",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalImport": "import { NightPipeline } from \"../../../src/game/engine/phase_pipeline/night_pipeline\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NightPipeline",
+              "imported": "NightPipeline",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/player_prompt_policy",
+          "originalImport": "import { PlayerPromptPolicy } from \"../../../src/ai/agents/player/player_prompt_policy\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PlayerPromptPolicy",
+              "imported": "PlayerPromptPolicy",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Camp,\n  Role,\n  Phase,\n  PotionType,\n  type ActionRequest,\n  type ToolCall,\n  type GameEvent,\n  type RoleComponent,\n  type AliveComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Role } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Camp",
+              "imported": "Camp",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "GameEvent",
+              "imported": "GameEvent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "AliveComponent",
+              "imported": "AliveComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/ghost_bride_scenarios",
+          "originalImport": "import { ghostBrideBoard, ghostBrideDeck } from \"../../support/ghost_bride_scenarios\";",
+          "currentImportBeforeRebase": "import { ghostBrideBoard } from \"../../support/ghost_bride_scenarios\";",
+          "droppedBindings": [
+            {
+              "name": "ghostBrideDeck",
+              "imported": "ghostBrideDeck",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/ghost_bride/setup",
+          "originalImport": "import { GhostBrideSetupWindow } from \"../../../src/game/mechanisms/roles/ghost_bride/setup\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GhostBrideSetupWindow",
+              "imported": "GhostBrideSetupWindow",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/ghost_bride/authority",
+          "originalImport": "import {\n  ghostBrideReady,\n  hasActiveGhostBride,\n  weddingGroup,\n  weddingSetup,\n} from \"../../../src/game/mechanisms/roles/ghost_bride/authority\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ghostBrideReady",
+              "imported": "ghostBrideReady",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "hasActiveGhostBride",
+              "imported": "hasActiveGhostBride",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "weddingGroup",
+              "imported": "weddingGroup",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "weddingSetup",
+              "imported": "weddingSetup",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/action_reception",
+          "originalImport": "import { ActionReception } from \"../../../src/ai/agents/player/action_reception\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ActionReception",
+              "imported": "ActionReception",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/wolf_team",
+          "originalImport": "import { knownWolfTeammates, wolfKnifeHolders } from \"../../../src/game/mechanisms/roles/wolf_team\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "knownWolfTeammates",
+              "imported": "knownWolfTeammates",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "wolfKnifeHolders",
+              "imported": "wolfKnifeHolders",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import {\n  getDefaultRoleCatalog,\n  getDefaultWinConditionRegistry,\n  NightStageRegistry,\n  getDefaultTargetHintRegistry,\n  getDefaultPhaseStageLocalizationRegistry,\n  getDefaultConfigRenderRegistry,\n  getDefaultToolSpecRegistry,\n} from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": "import { getDefaultWinConditionRegistry, NightStageRegistry } from \"../../../src/game/mechanisms\";",
+          "droppedBindings": [
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultTargetHintRegistry",
+              "imported": "getDefaultTargetHintRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultPhaseStageLocalizationRegistry",
+              "imported": "getDefaultPhaseStageLocalizationRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultToolSpecRegistry",
+              "imported": "getDefaultToolSpecRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/agent_visible_event_feed",
+          "originalImport": "import { buildAgentVisibleEventFeed } from \"../../../src/game/engine/agent_visible_event_feed\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "buildAgentVisibleEventFeed",
+              "imported": "buildAgentVisibleEventFeed",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/inspection",
+          "originalImport": "import { resolveInspection } from \"../../../src/game/mechanisms/roles/inspection\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "resolveInspection",
+              "imported": "resolveInspection",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/ghost_bride_runtime.test.ts",
+      "to": "backend/tests/scenarios/features/ghost-bride/native-setup-night-and-private-relations.test.ts",
+      "sourceCommit": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "5769745dad78790f7e0cf7b1a1564b0141e3c68452c8db91a879015512b1f95f",
+      "candidateSha256": "07c3be37f46b6620c7171548df2785dbbd742eff333ceb150667bb39be439089",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1366,
+          "end": 1411,
+          "original": "../../../src/game/mechanisms/roles/inspection",
+          "value": "../../../../src/game/mechanisms/roles/inspection",
+          "originalResolved": "backend/src/game/mechanisms/roles/inspection.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/inspection.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1279,
+          "end": 1328,
+          "original": "../../../src/game/engine/agent_visible_event_feed",
+          "value": "../../../../src/game/engine/agent_visible_event_feed",
+          "originalResolved": "backend/src/game/engine/agent_visible_event_feed.ts",
+          "expectedResolved": "backend/src/game/engine/agent_visible_event_feed.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1204,
+          "end": 1232,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 986,
+          "end": 1030,
+          "original": "../../../src/game/mechanisms/roles/wolf_team",
+          "value": "../../../../src/game/mechanisms/roles/wolf_team",
+          "originalResolved": "backend/src/game/mechanisms/roles/wolf_team.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/wolf_team.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 883,
+          "end": 929,
+          "original": "../../../src/ai/agents/player/action_reception",
+          "value": "../../../../src/ai/agents/player/action_reception",
+          "originalResolved": "backend/src/ai/agents/player/action_reception.ts",
+          "expectedResolved": "backend/src/ai/agents/player/action_reception.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 809,
+          "end": 847,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 721,
+          "end": 777,
+          "original": "../../../src/game/mechanisms/roles/ghost_bride/authority",
+          "value": "../../../../src/game/mechanisms/roles/ghost_bride/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 575,
+          "end": 627,
+          "original": "../../../src/game/mechanisms/roles/ghost_bride/setup",
+          "value": "../../../../src/game/mechanisms/roles/ghost_bride/setup",
+          "originalResolved": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 498,
+          "end": 533,
+          "original": "../../support/ghost_bride_scenarios",
+          "value": "../../../support/ghost_bride_scenarios",
+          "originalResolved": "backend/tests/support/ghost_bride_scenarios.ts",
+          "expectedResolved": "backend/tests/support/ghost_bride_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 429,
+          "end": 446,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 232,
+          "end": 282,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 139,
+          "end": 193,
+          "original": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "value": "../../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 79,
+          "end": 105,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "475561bd721df124916a3baf4e82dbec2ca99ffdb9835c59cfc797ccfa21d9b6",
+          "title": "actual bootstrap/factory/setup preserves native 2/3 and final independent goals",
+          "occurrence": 1
+        },
+        {
+          "id": "a0ccc245fc5ef72286df3b7ff3ad3428723344ceaadd2bcaeb33c5fa9d494f2c",
+          "title": "actual bootstrap/factory/setup preserves native 9/10 and final independent goals",
+          "occurrence": 1
+        },
+        {
+          "id": "a258c49f20a646b45207604a0f9dfb371f7b4475c746bdbcb31ae7451c025e61",
+          "title": "actual bootstrap/factory/setup preserves native 10/11 and final independent goals",
+          "occurrence": 1
+        },
+        {
+          "id": "7a8af08341abe012250cf743723ce6cba9e7016413f7966de428b8b2e7e1ae46",
+          "title": "actual bootstrap/factory/setup preserves native 12/9 and final independent goals",
+          "occurrence": 1
+        },
+        {
+          "id": "0576d7f00c4b0e905ca719d2c242682a7d823c549f5c0a719602df1c0116a915",
+          "title": "actual first-night factory order keeps Guard before ordinary chat and native skills; relation settles inside Night",
+          "occurrence": 1
+        },
+        {
+          "id": "13cb0a936d92498dcf9c0378083027eb37766079ca7c3d1447c06726c14367d2",
+          "title": "setup failure blocks ordinary actions and cycle rescue",
+          "occurrence": 1
+        },
+        {
+          "id": "4701bfacac1ad4d06b6c42f37cdda1cba19520e863a5f46b13ded1db0aa55049",
+          "title": "handoff revokes WolfKill before actual death and preserves independent poison=false",
+          "occurrence": 1
+        },
+        {
+          "id": "90d3c2c147b811ad620913035c4b1c0be0ae600c11f99356cdb769e355c32c77",
+          "title": "handoff revokes WolfKill before actual death and preserves independent poison=true",
+          "occurrence": 1
+        },
+        {
+          "id": "4561aed28904e9022a1389c0f0fd1264a0bdf475b768c9f301ca9ab76d727b5b",
+          "title": "day exile publishes partner death IDs without exposing marriage metadata",
+          "occurrence": 1
+        },
+        {
+          "id": "2ad203d3cdcfd8734d813c4ae4736ad405485bee2e879f763f1f0b9faf473516",
+          "title": "zh-CN: post-knife ordinary wolf request, observation and both prompts contain no marriage fact",
+          "occurrence": 1
+        },
+        {
+          "id": "6c50c4de9a8c0a7abd5925460c1699f836d5336d3ce51b07adb286cde3744c72",
+          "title": "en: post-knife ordinary wolf request, observation and both prompts contain no marriage fact",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Camp,\n  Role,\n  Phase,\n  PotionType,\n  type ActionRequest,\n  type ToolCall,\n  type GameEvent,\n  type RoleComponent,\n  type AliveComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, Camp, Phase, PotionType, type ActionRequest, type ToolCall, type GameEvent, type RoleComponent, type AliveComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import {\n  getDefaultRoleCatalog,\n  getDefaultWinConditionRegistry,\n  NightStageRegistry,\n  getDefaultTargetHintRegistry,\n  getDefaultPhaseStageLocalizationRegistry,\n  getDefaultConfigRenderRegistry,\n  getDefaultToolSpecRegistry,\n} from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": "import { getDefaultRoleCatalog, getDefaultTargetHintRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultConfigRenderRegistry, getDefaultToolSpecRegistry } from \"../../../src/game/mechanisms\";",
+          "droppedBindings": [
+            {
+              "name": "getDefaultWinConditionRegistry",
+              "imported": "getDefaultWinConditionRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "NightStageRegistry",
+              "imported": "NightStageRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 572,
-    "targetFiles": 650,
-    "mappingEntries": 650,
-    "baselineCases": 7490,
+    "sourceFiles": 573,
+    "targetFiles": 652,
+    "mappingEntries": 652,
+    "baselineCases": 7502,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

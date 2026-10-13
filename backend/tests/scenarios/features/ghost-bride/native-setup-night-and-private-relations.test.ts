@@ -1,42 +1,26 @@
+/**
+ * Scenario tests drive original Ghost Bride setup and full phase/partner-death interactions. Inputs are fixed groom/witness rosters, actual request factories and controlled choices; literal role/stock identity, goals, death IDs and private-prompt exclusion are the oracle. Native stocks remain their actual owners and no model is called.
+ */
 import { expect, test, spyOn } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-
-import {
-  COMPONENT,
-  Camp,
-  Role,
-  Phase,
-  PotionType,
-  type ActionRequest,
-  type ToolCall,
-  type GameEvent,
-  type RoleComponent,
-  type AliveComponent,
-} from "../../../src/core";
-import { ghostBrideBoard, ghostBrideDeck } from "../../support/ghost_bride_scenarios";
-import { GhostBrideSetupWindow } from "../../../src/game/mechanisms/roles/ghost_bride/setup";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import { COMPONENT, Camp, Phase, PotionType, type ActionRequest, type ToolCall, type GameEvent, type RoleComponent, type AliveComponent } from "../../../../src/core";
+import { ghostBrideBoard, ghostBrideDeck } from "../../../support/ghost_bride_scenarios";
+import { GhostBrideSetupWindow } from "../../../../src/game/mechanisms/roles/ghost_bride/setup";
 import {
   ghostBrideReady,
   hasActiveGhostBride,
   weddingGroup,
   weddingSetup,
-} from "../../../src/game/mechanisms/roles/ghost_bride/authority";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../src/ai/agents/player/action_reception";
-import { knownWolfTeammates, wolfKnifeHolders } from "../../../src/game/mechanisms/roles/wolf_team";
-import {
-  getDefaultRoleCatalog,
-  getDefaultWinConditionRegistry,
-  NightStageRegistry,
-  getDefaultTargetHintRegistry,
-  getDefaultPhaseStageLocalizationRegistry,
-  getDefaultConfigRenderRegistry,
-  getDefaultToolSpecRegistry,
-} from "../../../src/game/mechanisms";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
-import { resolveInspection } from "../../../src/game/mechanisms/roles/inspection";
+} from "../../../../src/game/mechanisms/roles/ghost_bride/authority";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { knownWolfTeammates, wolfKnifeHolders } from "../../../../src/game/mechanisms/roles/wolf_team";
+import { getDefaultRoleCatalog, getDefaultTargetHintRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultConfigRenderRegistry, getDefaultToolSpecRegistry } from "../../../../src/game/mechanisms";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
+
 function fixture(locale: "zh-CN" | "en" = "zh-CN") {
   const config = ghostBrideBoard();
   return {
@@ -45,6 +29,7 @@ function fixture(locale: "zh-CN" | "en" = "zh-CN") {
     events: [] as GameEvent[],
   };
 }
+
 function choices(groom = 2, witness = 3) {
   return async (request: ActionRequest): Promise<ToolCall | null> => {
     if (request.allowedTools.includes("choose_bridegroom"))
@@ -56,6 +41,26 @@ function choices(groom = 2, witness = 3) {
     return null;
   };
 }
+
+function neutral(request: ActionRequest): ToolCall | null {
+  if (request.allowedTools.includes("guard"))
+    return { name: "guard", args: { target_id: null, abstain: true } };
+  if (request.allowedTools.includes("speak_to_wolves"))
+    return { name: "speak_to_wolves", args: { text: "", end_chat: true } };
+  if (request.allowedTools.includes("kill_vote"))
+    return { name: "kill_vote", args: { target_id: null, abstain: true } };
+  if (request.allowedTools.includes("use_potion"))
+    return { name: "use_potion", args: { target_id: 10, potion_type: PotionType.None } };
+  if (request.allowedTools.includes("check_identity"))
+    return { name: "check_identity", args: { target_id: 5 } };
+  if (request.allowedTools.includes("speak")) return { name: "speak", args: { text: "" } };
+  if (request.allowedTools.includes("run_for_sheriff"))
+    return { name: "run_for_sheriff", args: { run: false } };
+  if (request.allowedTools.includes("vote"))
+    return { name: "vote", args: { target_id: null, abstain: true } };
+  return null;
+}
+
 for (const [groom, witness] of [
   [2, 3],
   [9, 10],
@@ -114,6 +119,7 @@ for (const [groom, witness] of [
       ),
     ).toHaveLength(2);
   });
+
 test("actual first-night factory order keeps Guard before ordinary chat and native skills; relation settles inside Night", async () => {
   const g = fixture(),
     stages: string[] = [];
@@ -163,6 +169,7 @@ test("actual first-night factory order keeps Guard before ordinary chat and nati
   expect(g.world.getComponent<AliveComponent>(2, COMPONENT.Alive)!.alive).toBe(false);
   expect(g.phaseManager.getSnapshot().gameOver).toBe(false);
 });
+
 test("setup failure blocks ordinary actions and cycle rescue", async () => {
   const g = fixture();
   await expect(g.phaseManager.runSingleCycle({ getAction: async () => null }, 1)).rejects.toThrow(
@@ -174,50 +181,7 @@ test("setup failure blocks ordinary actions and cycle rescue", async () => {
   );
   expect(() => g.phaseManager.jumpTo(Phase.Day)).toThrow("ghost_bride_phase_reentry");
 });
-test("stage registry uses local Guard/chat priority without mutating ordinary stage descriptors", () => {
-  const config = ghostBrideBoard(),
-    registry = new NightStageRegistry();
-  const before = registry
-    .getStages({
-      ...config,
-      roleSetups: config.roleSetups.filter((r) => r.role !== Role.GhostBride),
-    })
-    .find((s) => s.id === "wolf_discussion")!.priority;
-  expect(registry.getStages(config).find((s) => s.id === "wolf_discussion")!.priority).toBe(350);
-  expect(
-    registry
-      .getStages({
-        ...config,
-        roleSetups: config.roleSetups.filter((r) => r.role !== Role.GhostBride),
-      })
-      .find((s) => s.id === "wolf_discussion")!.priority,
-  ).toBe(before);
-  expect(
-    getDefaultWinConditionRegistry()
-      .all()
-      .some((s) => s.id === "three_factions_elimination"),
-  ).toBe(true);
-});
 
-// A finite neutral provider keeps these counterexamples on real production requests.
-function neutral(request: ActionRequest): ToolCall | null {
-  if (request.allowedTools.includes("guard"))
-    return { name: "guard", args: { target_id: null, abstain: true } };
-  if (request.allowedTools.includes("speak_to_wolves"))
-    return { name: "speak_to_wolves", args: { text: "", end_chat: true } };
-  if (request.allowedTools.includes("kill_vote"))
-    return { name: "kill_vote", args: { target_id: null, abstain: true } };
-  if (request.allowedTools.includes("use_potion"))
-    return { name: "use_potion", args: { target_id: 10, potion_type: PotionType.None } };
-  if (request.allowedTools.includes("check_identity"))
-    return { name: "check_identity", args: { target_id: 5 } };
-  if (request.allowedTools.includes("speak")) return { name: "speak", args: { text: "" } };
-  if (request.allowedTools.includes("run_for_sheriff"))
-    return { name: "run_for_sheriff", args: { run: false } };
-  if (request.allowedTools.includes("vote"))
-    return { name: "vote", args: { target_id: null, abstain: true } };
-  return null;
-}
 for (const poison of [false, true])
   test(`handoff revokes WolfKill before actual death and preserves independent poison=${poison}`, async () => {
     const g = fixture();
@@ -254,6 +218,7 @@ for (const poison of [false, true])
       intercepted.mockRestore();
     }
   });
+
 test("day exile publishes partner death IDs without exposing marriage metadata", async () => {
   const g = fixture();
   await g.phaseManager.runSingleCycle(
@@ -278,6 +243,7 @@ test("day exile publishes partner death IDs without exposing marriage metadata",
   ).toEqual([]);
   expect(g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!.alive).toBe(false);
 });
+
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: post-knife ordinary wolf request, observation and both prompts contain no marriage fact`, async () => {
     const g = fixture(locale);
