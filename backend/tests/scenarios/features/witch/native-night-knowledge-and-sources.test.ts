@@ -1,7 +1,7 @@
 /**
  * 女巫场景测试通过完整夜晚验证耗尽狼刀信息的隐私及守／救／毒复合死因。输入保留原 locale 计划、受控 NightPipeline 行动和当前标记／库存；原请求与提示知识、隐藏事件和被毒猎人禁枪是明确预期，不重新计算预期结果。
  */
-import { completedNight } from "../../../engine/night_stage_fixture";
+import { completedNight } from "../../../support/builders/night-stage-context";
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";

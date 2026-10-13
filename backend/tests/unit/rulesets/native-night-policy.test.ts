@@ -15,7 +15,7 @@ import {
   type NativeReflectedTarget,
 } from "../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../src/rulesets/native-night-effects";
-import { nightStageContext } from "../../engine/night_stage_fixture";
+import { nightStageContext } from "../../support/builders/night-stage-context";
 
 function readersCannotMutateTargets(mapped: NativeMappedTarget, reflected: NativeReflectedTarget) {
   // @ts-expect-error Mapping exposes an original life reference with read-only status.

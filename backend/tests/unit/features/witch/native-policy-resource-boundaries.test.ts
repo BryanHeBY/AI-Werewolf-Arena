@@ -33,7 +33,7 @@ import {
   parseBoardDefinition,
 } from "../../../../src/runtime/config/board_definition";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { nightStageContext } from "../../../engine/night_stage_fixture";
+import { nightStageContext } from "../../../support/builders/night-stage-context";
 
 const potionOrders: Array<Array<PotionType.Heal | PotionType.Poison>> = [
   [PotionType.Heal, PotionType.Poison],

@@ -5,7 +5,7 @@
  */
 import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import type { NightStageState } from "../../../src/game/mechanisms/stages/night/contracts";
-import { nightStageContext } from "../../engine/night_stage_fixture";
+import { nightStageContext } from "../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Role, Phase, WinCondition, COMPONENT, type BoardConfig, type GameEvent, StatusMark } from "../../../src/core";

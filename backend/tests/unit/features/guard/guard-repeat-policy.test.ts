@@ -27,7 +27,7 @@ import {
   parseBoardDefinition,
 } from "../../../../src/runtime/config/board_definition";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { nightStageContext } from "../../../engine/night_stage_fixture";
+import { nightStageContext } from "../../../support/builders/night-stage-context";
 
 const roles = [Role.Wolf, Role.Guard, Role.Seer, Role.Villager, Role.Villager, Role.Villager];
 const guard = GUARD_NIGHT_STAGES.find((stage) => stage.id === "guard_action")!;

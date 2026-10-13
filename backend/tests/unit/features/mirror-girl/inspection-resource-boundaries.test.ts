@@ -3,7 +3,7 @@
  */
 import { roleInspectionPolicy } from "../../../../src/game/mechanisms/roles/role_inspection/ports";
 import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
-import { nightStageContext } from "../../../engine/night_stage_fixture";
+import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {

@@ -1,7 +1,7 @@
 /**
  * 单元测试验证查验 scope 的能力 ID 变更、持有回复与注入历史。原所有者、结果唯一性和期限断言是最终授权重检预期；保留原字面输入及样本，不调用模型或完整对局 driver。
  */
-import { nightStageContext } from "../../engine/night_stage_fixture";
+import { nightStageContext } from "../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {

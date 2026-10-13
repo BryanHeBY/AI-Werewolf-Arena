@@ -1,7 +1,7 @@
 /**
  * 石像鬼场景验证真实阶段的查验／继承、死亡连锁和查验后撤权。输入为固定底牌与受控行动；手写仅本人报告、存活名单和事件序列是预期。原生产观察断言仅保留既有范围，不声称新增独立整局覆盖。
  */
-import { nightStageContext } from "../../../engine/night_stage_fixture";
+import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";

@@ -2,7 +2,7 @@
  * 单元测试验证石像鬼查验许可、阶段捕获作用域与独立原生／gift／copy 历史。输入为字面角色组、受控单阶段回调及撤权修改；字面报告、次数和原引用是预期。完整阶段及死亡交互链由场景测试拥有。
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
-import { nightStageContext } from "../../../engine/night_stage_fixture";
+import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {

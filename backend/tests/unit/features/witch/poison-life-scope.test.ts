@@ -3,7 +3,7 @@
  * 提交断言验证 gateway 校验后的最终施加；输入及字面／不可变 fixture 预期保持原样，不运行模型或完整对局。
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
-import { nightStageContext } from "../../../engine/night_stage_fixture";
+import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";

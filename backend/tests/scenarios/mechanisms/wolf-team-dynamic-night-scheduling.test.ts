@@ -1,7 +1,7 @@
 /**
  * 狼队运行场景验证原方向性狼聊／刀权、在途回复和事实时点受众。字面回执、引用／getter／错误轨迹、事实及状态为预期。真实 NightPipeline 协调独立变化的聊天／刀权，包括在途取消；决策来自受控 Provider，不新生成 golden。
  */
-import { completedNight } from "../../engine/night_stage_fixture";
+import { completedNight } from "../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {

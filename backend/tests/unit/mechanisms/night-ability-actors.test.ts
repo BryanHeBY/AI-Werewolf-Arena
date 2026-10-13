@@ -22,7 +22,7 @@ import { bindScholarMentorNightEligibility } from "../../../src/game/mechanisms/
 import { SEER_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/seer/night_stages";
 import { GUARD_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/guard/night_stages";
 import { WITCH_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/witch/night_stages";
-import { nightStageContext } from "../../engine/night_stage_fixture";
+import { nightStageContext } from "../../support/builders/night-stage-context";
 
 const ability = (id: string): NightAbility<"seer_check"> => ({
   id,

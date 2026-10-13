@@ -11,7 +11,7 @@ import { GUARD_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/guard/nig
 import { DREAMER_NIGHT_STAGE } from "../../../src/game/mechanisms/roles/dreamer/night_stages";
 import { WITCH_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/witch/night_stages";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { nightStageContext } from "../../engine/night_stage_fixture";
+import { nightStageContext } from "../../support/builders/night-stage-context";
 
 const cases = [
   { role: Role.Seer, kind: "seer_check", stage: SEER_NIGHT_STAGES[0]! },

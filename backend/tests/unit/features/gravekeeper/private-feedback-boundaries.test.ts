@@ -2,7 +2,7 @@
  * 单元测试：验证守墓人私密反馈字段及前次放逐的直接交付，不泄漏待结算或精确角色。输入为语言矩阵、字面畸形反馈与直接阶段上下文；原 null／接受、零 accessor 读及资格／历史为预期，不运行完整夜或 PhaseManager 周期。
  */
 import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
-import { nightStageContext } from "../../../engine/night_stage_fixture";
+import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {

@@ -12,7 +12,7 @@ import { AWAKENED_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/awaken
 import { getAwakenedState } from "../../../src/game/mechanisms/roles/awakened_hidden_wolf/state";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { nightStageContext } from "../../engine/night_stage_fixture";
+import { nightStageContext } from "../../support/builders/night-stage-context";
 
 const modes = [
   "clean_wait",

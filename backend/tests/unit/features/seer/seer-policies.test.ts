@@ -31,7 +31,7 @@ import {
   parseBoardDefinition,
 } from "../../../../src/runtime/config/board_definition";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { nightStageContext } from "../../../engine/night_stage_fixture";
+import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
 

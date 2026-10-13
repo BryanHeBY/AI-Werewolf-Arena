@@ -15,7 +15,7 @@ import {
   livingOriginalLovers,
 } from "../../../../src/game/mechanisms/roles/cupid/relation";
 import { cupidCityDecision } from "../../../../src/game/mechanisms/roles/cupid/victory";
-import { nightStageContext } from "../../../engine/night_stage_fixture";
+import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";

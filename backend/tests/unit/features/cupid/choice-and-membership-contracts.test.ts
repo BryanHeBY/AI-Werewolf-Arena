@@ -32,7 +32,7 @@ import {
   hasCupidNightCommit,
 } from "../../../../src/game/mechanisms/roles/cupid/relation";
 import { cupidCityDecision } from "../../../../src/game/mechanisms/roles/cupid/victory";
-import { nightStageContext } from "../../../engine/night_stage_fixture";
+import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";

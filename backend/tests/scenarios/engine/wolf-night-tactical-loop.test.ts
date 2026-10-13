@@ -1,7 +1,7 @@
 /**
  * 整夜场景测试：验证完整狼队讨论／投票、守卫／毒结算、预言家状态及有限重试。输入为原局部 provider 类与公开十二人配置变体；请求次序、目标、死亡和私有结果为精确字面预期，保留完整夜流程但不调用模型。
  */
-import { completedNight } from "../../engine/night_stage_fixture";
+import { completedNight } from "../../support/builders/night-stage-context";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { RoleComponent } from "../../../src/core/domain/components/role";

@@ -1,7 +1,7 @@
 /**
  * 通灵师场景验证完整夜重入及梦／魅惑死亡链保留判胜前私有历史。输入为原 pass 矩阵、固定角色与受控 Pipeline／经理；手写报告、库存、死亡隐私和事实结果是预期。Catalog 查询仍返回原缓存贡献引用，不复制 authority。
  */
-import { nightStageContext } from "../../../engine/night_stage_fixture";
+import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";

@@ -1,7 +1,7 @@
 /**
  * 场景测试验证夜能力共用契约。输入保留原 grant／copy／transfer／expiry 实例与原生配置；原字面回执、引用／getter／错误轨迹、事实和状态是预期。实际 NightPipeline 执行独立赠予实例、许可失效、到期与逐实例库存；模型由受控 provider 替代，生产输出不生成新 golden。
  */
-import { completedNight } from "../../engine/night_stage_fixture";
+import { completedNight } from "../../support/builders/night-stage-context";
 import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";

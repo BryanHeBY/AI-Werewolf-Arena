@@ -28,7 +28,7 @@ import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { nightStageContext } from "../../../engine/night_stage_fixture";
+import { nightStageContext } from "../../../support/builders/night-stage-context";
 
 const potionOrders: Array<Array<PotionType.Heal | PotionType.Poison>> = [
   [PotionType.Heal, PotionType.Poison],

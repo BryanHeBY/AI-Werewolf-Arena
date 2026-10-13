@@ -48,7 +48,7 @@ import { getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms/pro
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
-import { nightStageContext } from "../../engine/night_stage_fixture";
+import { nightStageContext } from "../../support/builders/night-stage-context";
 
 const inspectionPolicies = [
   "awa_unique_required_v1",

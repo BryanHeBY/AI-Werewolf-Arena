@@ -15,7 +15,7 @@ import type { NightStageHandler } from "../../../src/game/mechanisms/stages/nigh
 import { NightStageRegistry } from "../../../src/rulesets/night-stage-plan";
 import { applyGhostBrideStageRegistration } from "../../../src/rulesets/night-stage-registration";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { nightStageContext } from "../../engine/night_stage_fixture";
+import { nightStageContext } from "../../support/builders/night-stage-context";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
