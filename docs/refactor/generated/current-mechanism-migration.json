@@ -1,6 +1,6 @@
 {
   "schema": "awa-current-mechanism-migration-v1",
-  "observedCommit": "9695d888c13a780583c3f2aea7e06540373f93af",
+  "observedCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
   "baseline": {
     "path": "docs/refactor/generated/mechanism-matrix.json",
     "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
@@ -7776,15 +7776,110 @@
           ]
         }
       }
+    },
+    {
+      "kind": "domain-owner",
+      "name": "role-private-container",
+      "slug": "role-private-container",
+      "origin": "current-only tracking of the original role container; read contract migrated by 03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "owner": "Original RoleComponent container and explicit profile-initialization write contract",
+      "cells": {
+        "state": {
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Ordinary readonly container surface and initialization-only extension/replacement contract; all diagnosed concrete runtime writers and original fixture writes compile without runtime changes",
+              "commit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+              "owners": [
+                "backend/src/core/domain/components/role.ts",
+                "backend/src/game/mechanisms/roles/contracts.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-private-container.md",
+                "docs/refactor/generated/role-private-container-evidence.json"
+              ]
+            }
+          ],
+          "remainingRequirements": [
+            "Complete ordinary ability metadata/payload read boundaries and every builtin owner/read/write/schema/codec consumer.",
+            "Preserve custom initialization extension policy and finish its explicit full codec contributions.",
+            "Remove searchable Record surface only after concrete owner readers cover real consumers; remove obsolete exports and close final zero-debt gates."
+          ]
+        },
+        "lease": {
+          "status": "pending",
+          "deliveredParts": [],
+          "remainingRequirements": [
+            "Classify this existing domain-owner requirement with actual consumers and corresponding bounded evidence; no automatic N/A or whole-phase completion."
+          ]
+        },
+        "eligibility": {
+          "status": "pending",
+          "deliveredParts": [],
+          "remainingRequirements": [
+            "Classify this existing domain-owner requirement with actual consumers and corresponding bounded evidence; no automatic N/A or whole-phase completion."
+          ]
+        },
+        "lifecycle": {
+          "status": "pending",
+          "deliveredParts": [],
+          "remainingRequirements": [
+            "Classify this existing domain-owner requirement with actual consumers and corresponding bounded evidence; no automatic N/A or whole-phase completion."
+          ]
+        },
+        "effect": {
+          "status": "pending",
+          "deliveredParts": [],
+          "remainingRequirements": [
+            "Classify this existing domain-owner requirement with actual consumers and corresponding bounded evidence; no automatic N/A or whole-phase completion."
+          ]
+        },
+        "observation": {
+          "status": "pending",
+          "deliveredParts": [],
+          "remainingRequirements": [
+            "Classify this existing domain-owner requirement with actual consumers and corresponding bounded evidence; no automatic N/A or whole-phase completion."
+          ]
+        },
+        "checkpoint": {
+          "status": "pending",
+          "deliveredParts": [],
+          "remainingRequirements": [
+            "Classify this existing domain-owner requirement with actual consumers and corresponding bounded evidence; no automatic N/A or whole-phase completion."
+          ]
+        },
+        "verifier": {
+          "status": "pending",
+          "deliveredParts": [],
+          "remainingRequirements": [
+            "Classify this existing domain-owner requirement with actual consumers and corresponding bounded evidence; no automatic N/A or whole-phase completion."
+          ]
+        },
+        "text": {
+          "status": "pending",
+          "deliveredParts": [],
+          "remainingRequirements": [
+            "Classify this existing domain-owner requirement with actual consumers and corresponding bounded evidence; no automatic N/A or whole-phase completion."
+          ]
+        },
+        "oldExports": {
+          "status": "pending",
+          "deliveredParts": [],
+          "remainingRequirements": [
+            "Classify this existing domain-owner requirement with actual consumers and corresponding bounded evidence; no automatic N/A or whole-phase completion."
+          ]
+        }
+      }
     }
   ],
   "counts": {
     "baselineRows": 89,
-    "currentOnlyRows": 1,
-    "rows": 90,
-    "cells": 900,
-    "pending": 849,
-    "partial": 51,
+    "currentOnlyRows": 2,
+    "rows": 91,
+    "cells": 910,
+    "pending": 858,
+    "partial": 52,
     "complete": 0,
     "not-applicable": 0
   },
