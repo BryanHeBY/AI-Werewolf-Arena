@@ -1,16 +1,13 @@
 /**
- * Records committed exile feedback in Gravekeeper history at its feedback stage. Inputs are the
- * accepted exile result and current Gravekeeper state; outputs are the received report and
- * event. It never reveals an uncommitted target identity or changes exile resolution.
- * Ordinary payload history writes delegate to the local state owner at the original
- * commit position; all checks, use accounting and publication remain in this flow.
+ * 负责在守墓人反馈阶段记录已提交的放逐结果。输入为接受的放逐结果及当前守墓人状态；输出为报告与事件。不公开未提交目标的身份或改变放逐结算。普通历史写入在原提交位置交给本地状态所有者；校验、使用记账和发布仍在此流程。
  */
 import { recordExileFeedback } from "./state";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { World } from "../../../../core/domain/world";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Role, type EntityId, type ExileFeedback } from "../../../../core/domain/model";
-import { RoleCatalog, getDefaultRoleCatalog } from "../catalog";
+import { RoleCatalog } from "../catalog";
+import { getDefaultRoleCatalog } from "../role-catalog-assembly";
 import { resolveInspection } from "../inspection";
 import { getGravekeeperState } from "./state";
 import type { NightStageHandler } from "../../stages/night/contracts";

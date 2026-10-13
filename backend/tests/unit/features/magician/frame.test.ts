@@ -1,14 +1,12 @@
 /**
- * Unit tests for magician; Isolated magician frame contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试验证 magician 的独立 frame.test 契约。输入为既有内存 fixture、原回调控制和明确非法
+ * 修改；原字面预期、身份快照及拒绝断言是预期，不在迁移中重新生成。仅调用原生内存
+ * owner／frame／reader，测试自有 mock／组件不运行完整对局、模型或真实传输，support／fixture 字节及政策状态不变。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { COMPONENT, Camp, type World, type RoleComponent } from "../../../../src/core";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { createMagicianState } from "../../../../src/game/mechanisms/roles/magician/state";
 import {
   installMagicianBoard,

@@ -1,13 +1,14 @@
 /**
  * 单元测试：验证普通狼公开目标贡献和固定 live 查询顺序。输入为字面限制、记录 Role 读取、畸形候选及有限雾鸦板子；独立布尔／trace 预期验证短路失败前缀、重复读与零绑定查询，不运行模型、完整对局或生成规则 oracle。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { Camp, Role, type EntityId } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT, type ComponentName } from "../../../src/core/domain/components/names";
 import { type RoleComponent } from "../../../src/core/domain/components/role";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+
 import { createNobleState } from "../../../src/game/mechanisms/roles/noble_secret_body/state";
 import { freshNightmareShadowState } from "../../../src/game/mechanisms/roles/nightmare_shadow/state";
 import {

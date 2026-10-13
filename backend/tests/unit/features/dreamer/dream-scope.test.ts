@@ -1,10 +1,5 @@
 /**
- * Unit tests: Dream scopes use held role replies and deliberate actor/target replacements;
- * original committed-prefix and rejection assertions check that stale scopes cannot
- * request, consume or commit again. Inputs and expected outcomes remain the original
- * literal or immutable-fixture oracle; these module assertions invoke no model or
- * complete-game driver.
- * The controlled context binds its query at the original World read position.
+ * 单元测试验证摄梦人持有回复期间替换玩家／目标后的 scope。原已提交前缀及拒绝是预期，检查旧许可不能再请求、付款或提交；输入和样本保留原值，不调用模型或完整对局。受控上下文在原 World 读取点绑定查询。
  */
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
@@ -24,7 +19,7 @@ import { AliveComponent } from "../../../../src/core/domain/components/alive";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { transferNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { DREAMER_NIGHT_STAGE } from "../../../../src/game/mechanisms/roles/dreamer/night_stages";
 import { hasDreamNightCommit } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";

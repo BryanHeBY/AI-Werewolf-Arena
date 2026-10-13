@@ -1,13 +1,18 @@
-/** 文件说明：聚合所有角色与机制的 LLM 修复规则。 */
+/**
+ * 负责聚合通用、警长与角色运行贡献的参数修复规则。输入为原修复包及回合上下文；
+ * 输出为原 coercion 结果或原参数副本。注册保持顺序和最后处理函数引用；
+ * 本索引不接受动作、消耗库存或授予当前请求权限。
+ */
 import { ToolName } from "../../../core/domain/model";
 import { COMMON_LLM_REPAIR_PACK } from "../common/llm_repair";
-import { RoleCatalog, getDefaultRoleCatalog } from "../roles/catalog";
+import { RoleCatalog } from "../roles/catalog";
+import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";
 import { SHERIFF_LLM_REPAIR_PACK } from "../sheriff/llm_repair";
 import { CoerceContext, ToolRepairPack } from "./contracts";
 
 function buildDefaultPacks(roleProfileRegistry: RoleCatalog): ToolRepairPack[] {
   const packs: ToolRepairPack[] = [COMMON_LLM_REPAIR_PACK, SHERIFF_LLM_REPAIR_PACK];
-  for (const profile of roleProfileRegistry.all()) {
+  for (const { runtime: profile } of roleProfileRegistry.allRuntime()) {
     if (profile.llmRepair) {
       packs.push(profile.llmRepair);
     }

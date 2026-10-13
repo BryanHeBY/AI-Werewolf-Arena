@@ -1,6 +1,7 @@
 /**
  * 场景测试验证 badge-death-handoff-and-revocation 的原请求、已付行动与失败记录链。输入保留原固定角色、动作脚本、故障与归档矩阵；原字面结果及检查点作为预期。显式特权回退仅服务该控制驱动，不将生产对局输出称作独立玩法 oracle。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
 import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
 import { NoActionToolLoopClient, ToolLoopClient } from "../../../support/drivers/agents/llm-clients";
@@ -20,7 +21,7 @@ import {
 import type { BadgeComponent } from "../../../../src/core/domain/components/badge";
 import type { AliveComponent } from "../../../../src/core/domain/components/alive";
 import type { VotingRightComponent } from "../../../../src/core/domain/components/voting_right";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";

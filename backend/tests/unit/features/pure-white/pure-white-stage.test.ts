@@ -1,10 +1,5 @@
 /**
- * Unit tests: Pure White stages use paired controlled inspections and abstentions; exact
- * simultaneous-life, private-report and stock assertions check independent stage results
- * and cancellation. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
- * The controlled context binds its query at the original World read position.
+ * 单元测试验证纯白之女受控成对查验与弃权。精确生命、私密报告、库存与取消断言为原独立预期；保留原输入／样本，不调用模型或完整对局。受控上下文在原 World 读取点绑定查询。
  */
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
@@ -21,7 +16,7 @@ import type { StatusMarksComponent } from "../../../../src/core/domain/component
 import { DeathCause } from "../../../../src/core/domain/deaths";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { getRoleInspectionState } from "../../../../src/game/mechanisms/roles/role_inspection/ports";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";

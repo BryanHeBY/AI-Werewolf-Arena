@@ -1,9 +1,7 @@
 /**
- * Unit tests: Localization contracts use public Chinese/English dictionaries and machine
- * IDs; exact key, placeholder, immutability and catalog-owned role-name assertions check
- * shared text completeness. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证双语词典 key、占位符、不可变性及共享角色资料。输入为原机器 ID、字面参数
+ * 与显式自定义原文；精确字面文案和完整 key 集合为独立预期，不执行模型或完整对局。
+ * 三贡献装配不改变翻译策略，用户昵称、人格及自定义资料保持原文。
  */
 import { expect, test } from "bun:test";
 import { ROLE_DEFINITIONS } from "@ai-werewolf-arena/game-catalog";
@@ -17,7 +15,7 @@ import {
   type MessageKey,
 } from "@ai-werewolf-arena/game-text";
 import { ACTION_STAGES, Camp, Phase, PotionType, Role, WinCondition } from "../../../src/core";
-import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { createRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { WOLF_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/wolf/profile";
 
 test("shared Chinese/English keys and placeholders are complete and immutable", () => {
@@ -64,7 +62,7 @@ test("formatters reject missing text and parameters and never translate user con
   );
   const original = "苏茶茶\nExact custom text";
   expect(text("en", "role.generic.state", { role: original })).toContain(original);
-  // Locale interleaving has no global switch or shared mutable rendering state.
+  // 交错语言调用没有全局语言切换或共享可变展示状态。
   expect([
     text("en", "common.none"),
     text("zh-CN", "common.none"),
@@ -73,14 +71,19 @@ test("formatters reject missing text and parameters and never translate user con
 });
 
 test("explicit custom profile text remains original while built-in briefs have one shared owner", () => {
-  const custom = new RoleCatalog([
-    { ...WOLF_ROLE_PROFILE, label: "Custom Wolf", skillBrief: "Private custom rules" },
+  const custom = createRoleCatalog([
+    {
+      ...WOLF_ROLE_PROFILE.metadata,
+      ...WOLF_ROLE_PROFILE.runtime,
+      label: "Custom Wolf",
+      skillBrief: "Private custom rules",
+    },
   ]);
   for (const locale of ["zh-CN", "en"] as const) {
     expect(custom.label(Role.Wolf, locale)).toBe("Custom Wolf");
     expect(custom.skillBrief(Role.Wolf, locale)).toBe("Private custom rules");
   }
-  const defaults = new RoleCatalog();
+  const defaults = createRoleCatalog();
   expect(defaults.skillBrief(Role.Wolf, "zh-CN")).toBe(text("zh-CN", "role.wolf.brief"));
   expect(defaults.skillBrief(Role.Wolf, "en")).toBe(text("en", "role.wolf.brief"));
 });

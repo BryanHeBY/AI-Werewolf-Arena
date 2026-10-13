@@ -1,10 +1,9 @@
 /**
- * Checks exile, vote and sheriff participation from current World components. Inputs are player
- * IDs and their life/role rights; outputs are the existing eligibility booleans. It does not
- * submit ballots, change vote weights or apply elimination.
+ * 负责查询放逐、投票和警长参与资格。输入为玩家编号及当前生命／角色权利；输出为原资格布尔值。不提交票、修改票重或执行出局。
  */
 import { COMPONENT, type RoleComponent, type World, type EntityId } from "../../../core/domain";
-import { getDefaultRoleCatalog, type RoleCatalog } from "../roles/catalog";
+import { type RoleCatalog } from "../roles/catalog";
+import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";
 
 import { debateVoteBlocked } from "../roles/debater/authority";
 

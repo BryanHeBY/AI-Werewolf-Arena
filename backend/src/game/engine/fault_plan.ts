@@ -1,9 +1,8 @@
 /**
- * Applies the explicit night fault plan at its declared decision and source-freeze boundaries.
- * Inputs are scheduled fault descriptors and current World references; outputs are the actual
- * fault occurrences and consumed-plan checks. This controlled fault driver never invents normal
- * role actions or alter the RNG draw order.
+ * 负责在声明的决策与来源冻结边界执行显式夜间故障计划。输入为计划描述与当前 World 引用；
+ * 输出保留实际故障及计划消费检查。这个受控故障驱动不创造正常角色动作，也不改变 RNG 抽取顺序。
  */
+import { createAliveComponent } from "../observation/component-presentation";
 import { types } from "node:util";
 import { z } from "zod";
 import { readFaultPlan, type FaultPlan, type FaultStep } from "../../core/domain/fault_plan";
@@ -14,14 +13,7 @@ function inputData(value: unknown): unknown {
   return readFaultPlanData(value);
 }
 import { readFaultPlanData } from "../../core/domain/fault_plan";
-import {
-  COMPONENT,
-  aliveLifeVersion,
-  aliveLifeDescriptor,
-  createAliveComponent,
-  type AliveComponent,
-  type World,
-} from "../../core";
+import { COMPONENT, aliveLifeVersion, aliveLifeDescriptor, type AliveComponent, type World } from "../../core";
 
 const nativePromiseThen = Promise.prototype.then;
 const nativePromiseSpecies = Object.getOwnPropertyDescriptor(Promise, Symbol.species)?.get;

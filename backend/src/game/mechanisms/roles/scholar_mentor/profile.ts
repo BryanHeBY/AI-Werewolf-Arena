@@ -1,6 +1,6 @@
 /**
  * 负责 白昼学者／寂夜导师 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
- * 输入为原板子参数、角色组件与请求上下文；输出为原 RoleProfile 与具名内建展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
+ * 输入为原板子参数、角色组件与请求上下文；输出为分别登记的资料、运行及展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
@@ -9,7 +9,7 @@ import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { Role, Camp, WinCondition, Phase } from "../../../../core/domain/identity";
-import type { RoleProfile } from "../contracts";
+import type { NativeRoleContributions } from "../contracts";
 import { WOLF_ROLE_PROFILE } from "../wolf/profile";
 import { SCHOLAR_MENTOR_POLICY, createModifierState } from "./state";
 import {
@@ -34,164 +34,170 @@ const supported = [
   Role.Witch,
   Role.Guard,
 ];
-function profile(roleNameId: Role.DayScholar | Role.NightMentor): RoleProfile {
+function profile(roleNameId: Role.DayScholar | Role.NightMentor): NativeRoleContributions {
   const mentor = roleNameId === Role.NightMentor;
   const base = mentor ? WOLF_ROLE_PROFILE : undefined;
   return {
-    ...base,
-    role: roleNameId,
-    camp: mentor ? Camp.Wolf : Camp.Good,
-    goodSide: mentor ? undefined : "god",
-    maxCount: 1,
-    canSelfDestruct: false,
-    wolfTeam: mentor
-      ? (role, world) => ({
-          recognizedByPack: true,
-          recognizes: "none",
-          canChat: false,
-          canVoteForKill: scholarMentorRoleCanKnife(world, role),
-        })
-      : undefined,
-    supportedWinConditions: [WinCondition.SlaughterSide],
-    supportedBoardRoles: supported,
-    label: roleName(roleNameId),
-    skillBrief: text("zh-CN", mentor ? "role.night_mentor.brief" : "role.day_scholar.brief"),
-    ...nativeRolePresentation(roleNameId),
-    init: (role, ctx) => {
-      parameters.parse(ctx.boardConfig?.scholarMentor ?? {});
-      role.privateState.scholarMentor = createModifierState(
-        mentor ? "night_mentor" : "day_scholar",
-      );
+    metadata: {
+      ...base?.metadata,
+      role: roleNameId,
+      camp: mentor ? Camp.Wolf : Camp.Good,
+      goodSide: mentor ? undefined : "god",
+      maxCount: 1,
+      supportedWinConditions: [WinCondition.SlaughterSide],
+      supportedBoardRoles: supported,
+      label: roleName(roleNameId),
+      skillBrief: text("zh-CN", mentor ? "role.night_mentor.brief" : "role.day_scholar.brief"),
     },
-    configuration: {
-      schema: parameters,
-      defaults: parameters.parse({}),
-      apply: (config, value) => ({ ...config, scholarMentor: parameters.parse(value) }),
-      serialize: (config) => parameters.parse(config.scholarMentor ?? {}),
-    },
-    toolSpecs: [
-      ...(base?.toolSpecs ?? []),
-      {
-        name: "modify_skill",
-        parameters: {
-          type: "object",
-          properties: {
-            mode: { type: ["string", "null"], enum: ["enhance", "weaken", null] },
-            target_id: { type: ["integer", "null"], minimum: 1 },
-          },
-          required: ["mode", "target_id"],
-          additionalProperties: false,
-        },
-        argHint: 'modify_skill args: {"mode":"enhance"|"weaken"|null,"target_id":number|null}',
-        userPromptHintKey: "action.modify_skill.hint",
+    runtime: {
+      ...base?.runtime,
+      canSelfDestruct: false,
+      wolfTeam: mentor
+        ? (role, world) => ({
+            recognizedByPack: true,
+            recognizes: "none",
+            canChat: false,
+            canVoteForKill: scholarMentorRoleCanKnife(world, role),
+          })
+        : undefined,
+      init: (role, ctx) => {
+        parameters.parse(ctx.boardConfig?.scholarMentor ?? {});
+        role.privateState.scholarMentor = createModifierState(
+          mentor ? "night_mentor" : "day_scholar",
+        );
       },
-      {
-        name: "bonus_action",
-        parameters: {
-          type: "object",
-          properties: {
-            kind: { type: "string", enum: ["check", "guard", "poison", "kill"] },
-            target_id: { type: ["integer", "null"], minimum: 1 },
-            abstain: { type: "boolean" },
-          },
-          required: ["kind", "target_id", "abstain"],
-          additionalProperties: false,
-        },
-        argHint:
-          'bonus_action args: {"kind":"check"|"guard"|"poison"|"kill","target_id":number|null,"abstain":boolean}',
-        userPromptHintKey: "action.bonus_action.hint",
+      configuration: {
+        schema: parameters,
+        defaults: parameters.parse({}),
+        apply: (config, value) => ({ ...config, scholarMentor: parameters.parse(value) }),
+        serialize: (config) => parameters.parse(config.scholarMentor ?? {}),
       },
-    ],
-    stageDirectives: [
-      ...(base?.stageDirectives ?? []),
-      {
-        match: (tools) => tools.length === 1 && tools[0] === "modify_skill",
-        messageKey: "action.modify_skill.directive",
-        text: text("zh-CN", "action.modify_skill.directive"),
-      },
-      {
-        match: (tools) => tools.length === 1 && tools[0] === "bonus_action",
-        messageKey: "action.bonus_action.directive",
-        text: text("zh-CN", "action.bonus_action.directive"),
-      },
-    ],
-    validationRules: {
-      ...base?.validationRules,
-      modify_skill: ({ world, role, actorId, day, phase, toolCall }) => {
-        const state = scholarMentorStateForRole(role);
-        if (
-          !state ||
-          !isScholarMentorBoard(world) ||
-          day === undefined ||
-          phase !== Phase.Night ||
-          toolCall.name !== "modify_skill" ||
-          !scholarMentorChoicePending(world, day, actorId)
-        )
-          return { code: RuleError.ModifierUnavailable };
-        const { mode, target_id } = toolCall.args;
-        if (mode === null) return target_id === null ? null : { code: RuleError.ModifierTarget };
-        return (mode === "enhance" || mode === "weaken") &&
-          state.remaining[mode] === 1 &&
-          target_id !== null &&
-          scholarMentorChoiceTargets(world, day, actorId).includes(target_id)
-          ? null
-          : { code: RuleError.ModifierTarget };
-      },
-      bonus_action: ({ world, actorId, day, phase, toolCall }) => {
-        if (
-          !isScholarMentorBoard(world) ||
-          day === undefined ||
-          phase !== Phase.Night ||
-          toolCall.name !== "bonus_action"
-        )
-          return { code: RuleError.ModifierUnavailable };
-        const { kind, target_id, abstain } = toolCall.args;
-        if (
-          !["check", "guard", "poison", "kill"].includes(kind) ||
-          typeof abstain !== "boolean" ||
-          (abstain ? target_id !== null : target_id === null)
-        )
-          return { code: RuleError.ModifierTarget };
-        try {
-          captureScholarMentorBonus(world, day, actorId, kind, target_id);
-          return null;
-        } catch {
-          return { code: RuleError.ModifierTarget };
-        }
-      },
-    },
-    nightStages: [...SCHOLAR_MENTOR_NIGHT_STAGES, ...(base?.nightStages ?? [])],
-    baselineAction: (role, request, pick, pickCamp, locale, world) => {
-      if (request.allowedTools.includes("modify_skill") && world) {
-        const state = scholarMentorStateForRole(role),
-          targets = scholarMentorChoiceTargets(world, request.context.day, request.actorId);
-        const mode =
-          state?.remaining.enhance === 1
-            ? "enhance"
-            : state?.remaining.weaken === 1
-              ? "weaken"
-              : null;
-        const target = targets.find((id) => id !== request.actorId) ?? targets[0] ?? null;
-        return {
+      toolSpecs: [
+        ...(base?.runtime.toolSpecs ?? []),
+        {
           name: "modify_skill",
-          args: { mode: target === null ? null : mode, target_id: mode === null ? null : target },
-        };
-      }
-      if (
-        request.allowedTools.includes("bonus_action") &&
-        world &&
-        request.context.modifier_bonus_kind
-      ) {
-        const kind = request.context.modifier_bonus_kind,
-          target =
-            scholarMentorBonusTargets(world, request.context.day, request.actorId, kind)[0] ?? null;
-        return {
+          parameters: {
+            type: "object",
+            properties: {
+              mode: { type: ["string", "null"], enum: ["enhance", "weaken", null] },
+              target_id: { type: ["integer", "null"], minimum: 1 },
+            },
+            required: ["mode", "target_id"],
+            additionalProperties: false,
+          },
+          argHint: 'modify_skill args: {"mode":"enhance"|"weaken"|null,"target_id":number|null}',
+          userPromptHintKey: "action.modify_skill.hint",
+        },
+        {
           name: "bonus_action",
-          args: { kind, target_id: target, abstain: target === null },
-        };
-      }
-      return base?.baselineAction?.(role, request, pick, pickCamp, locale, world) ?? null;
+          parameters: {
+            type: "object",
+            properties: {
+              kind: { type: "string", enum: ["check", "guard", "poison", "kill"] },
+              target_id: { type: ["integer", "null"], minimum: 1 },
+              abstain: { type: "boolean" },
+            },
+            required: ["kind", "target_id", "abstain"],
+            additionalProperties: false,
+          },
+          argHint:
+            'bonus_action args: {"kind":"check"|"guard"|"poison"|"kill","target_id":number|null,"abstain":boolean}',
+          userPromptHintKey: "action.bonus_action.hint",
+        },
+      ],
+      stageDirectives: [
+        ...(base?.runtime.stageDirectives ?? []),
+        {
+          match: (tools) => tools.length === 1 && tools[0] === "modify_skill",
+          messageKey: "action.modify_skill.directive",
+          text: text("zh-CN", "action.modify_skill.directive"),
+        },
+        {
+          match: (tools) => tools.length === 1 && tools[0] === "bonus_action",
+          messageKey: "action.bonus_action.directive",
+          text: text("zh-CN", "action.bonus_action.directive"),
+        },
+      ],
+      validationRules: {
+        ...base?.runtime.validationRules,
+        modify_skill: ({ world, role, actorId, day, phase, toolCall }) => {
+          const state = scholarMentorStateForRole(role);
+          if (
+            !state ||
+            !isScholarMentorBoard(world) ||
+            day === undefined ||
+            phase !== Phase.Night ||
+            toolCall.name !== "modify_skill" ||
+            !scholarMentorChoicePending(world, day, actorId)
+          )
+            return { code: RuleError.ModifierUnavailable };
+          const { mode, target_id } = toolCall.args;
+          if (mode === null) return target_id === null ? null : { code: RuleError.ModifierTarget };
+          return (mode === "enhance" || mode === "weaken") &&
+            state.remaining[mode] === 1 &&
+            target_id !== null &&
+            scholarMentorChoiceTargets(world, day, actorId).includes(target_id)
+            ? null
+            : { code: RuleError.ModifierTarget };
+        },
+        bonus_action: ({ world, actorId, day, phase, toolCall }) => {
+          if (
+            !isScholarMentorBoard(world) ||
+            day === undefined ||
+            phase !== Phase.Night ||
+            toolCall.name !== "bonus_action"
+          )
+            return { code: RuleError.ModifierUnavailable };
+          const { kind, target_id, abstain } = toolCall.args;
+          if (
+            !["check", "guard", "poison", "kill"].includes(kind) ||
+            typeof abstain !== "boolean" ||
+            (abstain ? target_id !== null : target_id === null)
+          )
+            return { code: RuleError.ModifierTarget };
+          try {
+            captureScholarMentorBonus(world, day, actorId, kind, target_id);
+            return null;
+          } catch {
+            return { code: RuleError.ModifierTarget };
+          }
+        },
+      },
+      nightStages: [...SCHOLAR_MENTOR_NIGHT_STAGES, ...(base?.runtime.nightStages ?? [])],
+      baselineAction: (role, request, pick, pickCamp, locale, world) => {
+        if (request.allowedTools.includes("modify_skill") && world) {
+          const state = scholarMentorStateForRole(role),
+            targets = scholarMentorChoiceTargets(world, request.context.day, request.actorId);
+          const mode =
+            state?.remaining.enhance === 1
+              ? "enhance"
+              : state?.remaining.weaken === 1
+                ? "weaken"
+                : null;
+          const target = targets.find((id) => id !== request.actorId) ?? targets[0] ?? null;
+          return {
+            name: "modify_skill",
+            args: { mode: target === null ? null : mode, target_id: mode === null ? null : target },
+          };
+        }
+        if (
+          request.allowedTools.includes("bonus_action") &&
+          world &&
+          request.context.modifier_bonus_kind
+        ) {
+          const kind = request.context.modifier_bonus_kind,
+            target =
+              scholarMentorBonusTargets(world, request.context.day, request.actorId, kind)[0] ??
+              null;
+          return {
+            name: "bonus_action",
+            args: { kind, target_id: target, abstain: target === null },
+          };
+        }
+        return base?.runtime.baselineAction?.(role, request, pick, pickCamp, locale, world) ?? null;
+      },
     },
+    presentation: nativeRolePresentation(roleNameId),
   };
 }
 export const SCHOLAR_ROLE_PROFILE = profile(Role.DayScholar);

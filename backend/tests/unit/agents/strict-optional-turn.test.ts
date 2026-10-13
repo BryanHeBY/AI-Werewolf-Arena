@@ -7,7 +7,7 @@ import { COMPONENT, Phase, Role, type GameEvent, type RoleComponent } from "../.
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
 import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { AWAKENED_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/awakened_hidden_wolf/night_stages";
 import { getAwakenedState } from "../../../src/game/mechanisms/roles/awakened_hidden_wolf/state";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";

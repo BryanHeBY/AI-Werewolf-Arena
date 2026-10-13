@@ -1,11 +1,8 @@
 /**
- * Compatibility identity exit for existing core/domain, engine and agent callers.
- * Inputs are the game-contract-owned machine identities; outputs re-export the
- * same enum objects and types without a second ID declaration or transformation.
- * PromptRenderable remains a presentation compatibility type until its consumers
- * migrate; no role execution, state mutation or text is implemented here.
+ * 为现有领域与引擎消费者重导出 game-contract 拥有的机器身份。输出保持原枚举对象
+ * 和类型，不声明第二套 ID；领域展示方法与 PromptRenderable 已退出，此处不渲染
+ * 文案、执行角色规则或修改状态。
  */
-import type { Locale } from "@ai-werewolf-arena/game-contract";
 export {
   Camp,
   Role,
@@ -18,7 +15,3 @@ export {
   WitchSelfHealRule,
 } from "@ai-werewolf-arena/game-contract";
 export type { EntityId, TieBreakerStrategy } from "@ai-werewolf-arena/game-contract";
-
-export interface PromptRenderable {
-  renderPrompt(locale?: Locale): string;
-}

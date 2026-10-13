@@ -1,11 +1,5 @@
 /**
- * Owns ordered supported-board rejection and role-deck construction for bootstrap.
- * Inputs are the original ReadonlyBoardConfig, optional exact fixed cards and narrow readonly
- * catalog/event support queries; outputs are the original mutable card sequence or
- * original first rejection. The catalog factory and profile fields are observed at
- * their existing repeated read sites, without copying or freezing either source.
- * This owner never creates World/components, draws RNG, parses external configuration
- * or grants actor authority; bootstrap retains deal shuffle and assembly timing.
+ * 负责 bootstrap 的有限板子拒绝顺序与角色牌组构造。输入为原只读板子、可选固定底牌及窄 Catalog／事件支持查询；输出为原可写牌序或首个原拒绝。工厂及资料字段仍在原重复调用点读取，不复制或冻结来源。不创建 World／组件、消费 RNG、解析外部配置或授予权限；洗牌与装配时点仍由 bootstrap 维护。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { Camp, Role, WinCondition } from "@ai-werewolf-arena/game-contract";
@@ -13,7 +7,7 @@ import { boardPresetViolation } from "./board-support";
 
 /** Read-only metadata queries preserve the original catalog and profile identities. */
 export interface SupportedRoleDeckCatalog {
-  readonly require: (role: Role) => {
+  readonly requireMetadata: (role: Role) => {
     readonly maxCount?: number;
     readonly supportedWinConditions?: readonly WinCondition[];
     readonly supportedBoardRoles?: readonly Role[];
@@ -44,12 +38,12 @@ export function buildSupportedRoleDeck(
   const counts = new Map<Role, number>();
   for (const role of deck) counts.set(role, (counts.get(role) ?? 0) + 1);
   for (const [role, count] of counts) {
-    const maximum = getDefaultRoleCatalog().require(role).maxCount;
+    const maximum = getDefaultRoleCatalog().requireMetadata(role).maxCount;
     if (maximum !== undefined && count > maximum)
       throw new Error(`role_count_exceeds_limit: ${role}`);
   }
   for (const role of counts.keys()) {
-    const profile = getDefaultRoleCatalog().require(role);
+    const profile = getDefaultRoleCatalog().requireMetadata(role);
     const conditions = config.winConditions?.length
       ? config.winConditions
       : [config.winCondition ?? WinCondition.SlaughterCity];

@@ -4,12 +4,13 @@
  * 枪权、事件顺序及已付失败前缀验收。首次死亡后收尾，复活不能刷新旧原体权限。
  * 不执行完整死亡波、模型、传输或文件录制，也不使用生产规则生成预期。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { Camp, Role, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../../src/core/domain/world";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import * as publicGun from "../../../../src/game/mechanisms/roles/death_abilities";
 import * as owner from "../../../../src/game/mechanisms/roles/death-gun-lifecycle";
 import { projectDeathGun } from "../../../../src/game/mechanisms/roles/player_state";

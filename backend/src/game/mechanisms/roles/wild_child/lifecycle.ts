@@ -1,28 +1,14 @@
 /**
- * Owns Wild Child model selection, participant snapshots and conversion lifetime. Receives
- * original World components and first-night requests; writes choice bindings and later
- * model-death conversion only through current local windows. Replacement or closed choice
- * invalidates local authority; deadline aliases preserve its checks.
+ * 负责野孩子榜样选择、参与者快照与转阵营生命周期。输入为原 World 组件和首夜请求；
+ * 仅通过仍当前的局部窗口写选择绑定及榜样死亡后的转换。组件替换或选择关闭撤销局部
+ * 权限，截止时间别名仍保留原检查。
  */
+import { createCampComponent } from "../../../observation/component-presentation";
 import type { WildChildState, WildChildReadState } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { copyEventData } from "@ai-werewolf-arena/game-text";
-import {
-  COMPONENT,
-  Camp,
-  Role,
-  Phase,
-  createCampComponent,
-  createVictoryComponent,
-  type World,
-  type ActionRequest,
-  type RoleComponent,
-  type CampComponent,
-  type VictoryComponent,
-  type GameEvent,
-  type DeathSources,
-} from "../../../../core/domain";
+import { COMPONENT, Camp, Role, Phase, createVictoryComponent, type World, type ActionRequest, type RoleComponent, type CampComponent, type VictoryComponent, type GameEvent, type DeathSources } from "../../../../core/domain";
 import { aliveLifeVersion } from "../../../../core/domain/components/alive";
 import {
   captureNightLife,

@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证奇迹商人直接交易创建一个不透明幸运实例，拒绝变化的 owner／target 权限。输入为语言、技能、梦境与撤权矩阵；有界阶段和伤害的库存、顺序、真实阵营、反噬及隐私断言保持，不运行完整夜或录制器。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
@@ -30,12 +31,12 @@ import { allNightAbilities } from "../../../../src/game/mechanisms/roles/abiliti
 import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
 import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 
 const deck = [Role.MiracleMerchant, Role.Wolf, Role.WolfKing, Role.Seer, Role.Witch, Role.Villager];
 

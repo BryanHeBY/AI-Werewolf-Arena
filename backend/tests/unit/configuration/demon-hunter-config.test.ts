@@ -1,9 +1,5 @@
 /**
- * Unit tests: Demon Hunter configuration reads immutable public examples across sizes and
- * win goals; literal roster, prompts and reverse-config assertions check supported setup
- * and invalid variants. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试验证猎魔人在公开 example 的不同人数和胜负条件下的配置。字面 roster、提示、反向配置与无效变体是预期，保留原样本，不调用模型或完整对局 driver。
  */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
@@ -13,7 +9,7 @@ import {
 } from "../../../src/runtime/config/board_definition";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Role, WinCondition } from "../../../src/core";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { demonHunterDeck } from "../../support/features/demon-hunter/builders/candidate-world";
 const read = async (size: number, goal: string) =>
   JSON.parse(
@@ -35,7 +31,7 @@ for (const size of [6, 12] as const)
         goal === "city" ? WinCondition.SlaughterCity : WinCondition.SlaughterSide,
       ]);
       expect(b.config.roleSetups.find((r) => r.role === Role.DemonHunter)?.count).toBe(1);
-      expect(getDefaultRoleCatalog().require(Role.DemonHunter).goodSide).toBe("god");
+      expect(getDefaultRoleCatalog().requireMetadata(Role.DemonHunter).goodSide).toBe("god");
       const written = boardDefinitionFromConfig(b.definition.id, b.config);
       expect(parseBoardDefinition(written).config).toEqual(b.config);
     });

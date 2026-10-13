@@ -1,14 +1,11 @@
 /**
- * Scenario tests drive real Demon native phases and inspect complete/failed checkpoints. Inputs are original stock, foreign getters, replacement bodies and controlled late failures; literal resource prefixes, original roster and metadata revocation are the oracle. Checkpoint evidence is retained without treating production projection as a new independent outcome algorithm.
+ * 场景测试驱动真实猎魔人原生阶段并检查完整／失败 checkpoint。输入为原库存、外来 getter、
+ * 替换躯体和受控迟到失败；字面资源前缀、原名单与元数据撤销是预期。checkpoint 证据保留，
+ * 不能把生产投影称为新的独立结果算法。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
-import {
-  COMPONENT,
-  PotionType,
-  createAliveComponent,
-  type ActionRequest,
-  type RoleComponent,
-} from "../../../../src/core";
+import { COMPONENT, PotionType, type ActionRequest, type RoleComponent } from "../../../../src/core";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { demonHunterAuditPlayer } from "../../../../src/game/mechanisms/roles/demon_hunter/authority";

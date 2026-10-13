@@ -1,11 +1,12 @@
 /**
  * 单元测试：验证窄夜间资格端口及 eager 演员枚举。输入为字面 live 实例、记录读端口与可替换 World getter 的原上下文；完整 filter 顺序、失败前缀、引用和零绑定读取为预期，不运行完整对局或模型，也不生成 oracle。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import type { NightAbility } from "../../../src/game/mechanisms/roles/abilities";
 import {

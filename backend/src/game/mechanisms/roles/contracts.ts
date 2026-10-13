@@ -1,7 +1,8 @@
 /**
- * 负责定义角色资料、初始化、运行贡献与展示贡献契约的数据结构。输入为原 profile 及其
- * 原角色／上下文；Catalog 保持同一贡献对象和实际读取顺序。初始化可写原扩展键与容器，
- * 普通读方不取得写权。内建展示只声明中立标识，自定义原文回调仍受信任，不授予租约或动作权限。
+ * 负责定义角色资料、运行贡献及展示贡献的独立装配契约。资料只有身份、公开名称和组合约束，
+ * 运行贡献拥有原初始化、许可、工具、阶段与 hook，展示声明只标识原生捕获或受信任原文。
+ * 三者不相互授权或复制状态；自定义 flat profile 是明确支持的输入，Catalog 保留其原对象、
+ * getter、receiver 与读取时点，不在接入时摊平或调用展示。初始化仍仅获得原容器写权。
  */
 import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
 
@@ -9,7 +10,6 @@ import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
 import type { VictoryAffiliation } from "@ai-werewolf-arena/game-catalog";
 import type { InspectionCamp, RoleId } from "@ai-werewolf-arena/game-catalog";
-/** 文件说明：角色 profile 的统一契约定义。 */
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, BoardConfig, Camp, Role, ToolCall } from "../../../core/domain/model";
 import type { ToolSpec, StageDirectiveRule } from "../contracts";
@@ -40,8 +40,8 @@ export interface WolfTeamPermissions {
   readonly canVoteForKill: boolean;
 }
 
-/** 单个角色在机制层的完整配置描述。 */
-export interface RoleProfile {
+/** 不携带执行回调的角色资料；注册资料本身不授予角色运行支持。 */
+export interface RoleMetadata {
   role: Role;
   camp?: Camp;
   label: string;
@@ -53,6 +53,10 @@ export interface RoleProfile {
   supportedBoardRoles?: readonly Role[];
   /** 有限来源目标；公开解析与内部初始化均拒绝不兼容目标。 */
   supportedWinConditions?: readonly import("../../../core/domain/identity").WinCondition[];
+}
+
+/** 具体机制的运行贡献；其原函数引用、资源所有权及失败前缀不由资料或展示改变。 */
+export interface RoleRuntimeContribution {
   /** 熊的被动感知独立于主动查验标签和刀权。 */
   detectableByBear?: (world: World, role: RoleComponent) => boolean;
   initialVictoryAffiliations?:
@@ -78,10 +82,6 @@ export interface RoleProfile {
     serialize: (config: BoardConfig) => unknown;
   };
   init?: (roleComp: RoleInitializationComponent, ctx: RoleInitContext) => void;
-  /** 内建展示的语言中立标识；不绑定当前请求能力或传出运行状态。 */
-  nativePresentation?: import("./presentation-contribution").NativeRolePresentationContribution;
-  /** 旧 profile 展示 API 的临时兼容入口；内建与受信任自定义回调均保留原 receiver 和晚 World 读取，待 C44 消费者切换后退出。 */
-  renderPrompt?: (roleComp: RoleComponent, locale?: Locale, world?: World) => string;
   toolSpecs?: ToolSpec[];
   stageDirectives?: StageDirectiveRule[];
   validationRules?: ToolRuleMap;
@@ -99,4 +99,29 @@ export interface RoleProfile {
     locale?: Locale,
     world?: World,
   ) => ToolCall | null;
+}
+
+/** 展示贡献不拥有运行状态；原生只声明捕获 ID，自定义方法保留实际贡献对象作为 receiver。 */
+export type RolePresentationContribution =
+  | {
+      readonly kind: "native";
+      readonly id: import("@ai-werewolf-arena/game-contract").NativeRolePresentationId;
+    }
+  | { readonly kind: "custom"; renderPrompt?: RoleProfile["renderPrompt"] };
+
+/** 实际组合根分别登记这三份贡献，禁止把它们再次摊平成一个内建 profile。 */
+export interface RoleContributions {
+  metadata: RoleMetadata;
+  runtime: RoleRuntimeContribution;
+  presentation: RolePresentationContribution;
+}
+
+/** 明确支持的用户 flat 输入；读取与调用仍针对原对象，不经复制或强制规范化。 */
+export interface RoleProfile extends RoleMetadata, RoleRuntimeContribution {
+  renderPrompt?: (roleComp: RoleComponent, locale?: Locale, world?: World) => string;
+}
+
+/** 内建 55 个角色均有原生展示声明，不能被宽化为可缺失原生 ID 的自定义分支。 */
+export interface NativeRoleContributions extends RoleContributions {
+  presentation: Extract<RolePresentationContribution, { kind: "native" }>;
 }

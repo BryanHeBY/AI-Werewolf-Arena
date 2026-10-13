@@ -1,9 +1,5 @@
 /**
- * Responsibility: verify unit / composition compatibility of public identity exports.
- * Input: public core and shared-contract exports; literal runtime registry counts
- * and object identity are the oracle. The old core exit must refer to the same
- * enum object, including enum member types, rather than a second declaration.
- * Catalog metadata may contain planned IDs; it never grants engine execution.
+ * 单元／装配测试验证公开身份出口兼容。输入为 core 和共享契约出口；原注册数量及对象身份是字面预期。旧 core 出口必须引用同一枚举对象，包括成员类型，不能重复定义。Catalog 的资料条目不授予引擎执行权限。
  */
 import { expect, test } from "bun:test";
 import { Role as CoreRole, Camp as CoreCamp, type EntityId as CoreEntityId } from "../../src/core";
@@ -32,7 +28,7 @@ test("public core identity is the shared enum instance and preserves the 55-role
 
 test("planned metadata is not a registered profile or execution capability", () => {
   const catalog = getDefaultRoleCatalog();
-  for (const role of Object.values(Role)) expect(catalog.require(role).role).toBe(role);
-  expect(() => catalog.require("awakened_knight" as Role)).toThrow();
+  for (const role of Object.values(Role)) expect(catalog.requireMetadata(role).role).toBe(role);
+  expect(() => catalog.requireMetadata("awakened_knight" as Role)).toThrow();
   expect(ROLE_DEFINITIONS.find((row) => row.id === "awakened_knight")?.status).toBe("planned");
 });

@@ -1,8 +1,9 @@
 /**
- * Unit tests verify Black Market Merchant direct trade/recipient stages preserve original identity, opaque gifts and stale-resource refusal.
- * Input: Original skill/change/transfer matrices, bounded night contexts and explicit damage operations.
- * Output and oracle: Exact independent stock, wait/backlash/privacy and zero-getter assertions remain unchanged; no complete PM cycle or recorded game runs.
+ * 单元测试验证黑市商人直接交易／接受者阶段保留原身份、不透明赠予及过期资源拒绝。输入为原
+ * 技能／变化／转移矩阵、有界夜上下文和显式伤害操作；精确独立库存、等待／反噬／隐私及零 getter
+ * 断言保持原样，不运行完整 PhaseManager 周期或记录对局。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
@@ -21,10 +22,7 @@ import {
   type ActionProvider,
   type GameEvent,
 } from "../../../../src/core";
-import {
-  createAliveComponent,
-  type AliveComponent,
-} from "../../../../src/core/domain/components/alive";
+import { type AliveComponent } from "../../../../src/core/domain/components/alive";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
@@ -36,7 +34,7 @@ import {
 import { allNightAbilities } from "../../../../src/game/mechanisms/roles/abilities";
 import { projectNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { transferNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";

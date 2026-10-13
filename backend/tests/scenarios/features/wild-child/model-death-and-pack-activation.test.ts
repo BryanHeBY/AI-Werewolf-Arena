@@ -1,17 +1,32 @@
 /**
- * Scenario tests for wild child model. Inputs are original model choices, life replacements and real
- * initial/additional death causes. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Actual central DeathResolution and/or complete PM cycles drive faction
- * changes, true initial/additional death waves and next-night pack activation. Engine sequencing remains
- * real and models remain controlled providers; production output is not a newly generated golden.
+ * 野孩子榜样场景以原选择、生命替换与真实初始／追加死因为输入。原字面回执、引用／getter／
+ * 错误轨迹、事实与状态是预期；真实中央死亡结算及完整 PhaseManager 周期驱动转阵营、实际
+ * 死亡波和下一夜狼群激活。模型受控，不从生产输出新建 golden。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Camp, Phase, COMPONENT, DeathCause, createAliveComponent, type BoardConfig, type RoleComponent, type AliveComponent, type GameEvent, type ToolCall, type ActionRequest, type VictoryComponent } from "../../../../src/core";
+import {
+  Role,
+  Camp,
+  Phase,
+  COMPONENT,
+  DeathCause,
+  type BoardConfig,
+  type RoleComponent,
+  type AliveComponent,
+  type GameEvent,
+  type ToolCall,
+  type ActionRequest,
+  type VictoryComponent,
+} from "../../../../src/core";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";
 import { getWildChildState } from "../../../../src/game/mechanisms/roles/wild_child/state";
-import { openWildChildNight, projectWildChild } from "../../../../src/game/mechanisms/roles/wild_child/lifecycle";
+import {
+  openWildChildNight,
+  projectWildChild,
+} from "../../../../src/game/mechanisms/roles/wild_child/lifecycle";
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
@@ -118,8 +133,8 @@ for (const source of [
     expect(knownWolfTeammates(g.world, 3, catalog)).toEqual([1, 2]);
     expect(knownWolfTeammates(g.world, 1, catalog)).toEqual([2, 3]);
     expect(wolfKnifeHolders(g.world, catalog)).toEqual([1, 3]);
-    expect(getDefaultRoleCatalog().require(Role.WildChild).canSelfDestruct).toBe(false);
-    expect(getDefaultRoleCatalog().require(Role.Wolf).canSelfDestruct).toBe(true);
+    expect(getDefaultRoleCatalog().requireRuntime(Role.WildChild).canSelfDestruct).toBe(false);
+    expect(getDefaultRoleCatalog().requireRuntime(Role.Wolf).canSelfDestruct).toBe(true);
     const privateFacts = buildAgentVisibleEventFeed(g.world, g.events, 1);
     expect(privateFacts.some((e) => e.type === "wild_child_model_eliminated")).toBe(false);
     const p = privateFacts.find((e) => e.type === "wild_child_transformed")!.payload;

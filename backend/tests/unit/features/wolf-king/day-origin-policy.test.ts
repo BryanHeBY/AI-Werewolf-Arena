@@ -144,7 +144,7 @@ for (const locale of ["zh-CN", "en"] as const)
   test(`configured personal and public rules explain the AWA day policy/${locale}`, () => {
     const f = fixture();
     for (const prose of [
-      captureNativeRolePresentation(WOLF_KING_ROLE_PROFILE.nativePresentation!.id, f.king, locale),
+      captureNativeRolePresentation(WOLF_KING_ROLE_PROFILE.presentation!.id, f.king, locale),
       getDefaultConfigRenderRegistry().renderBoardConfigPrompt(f.config, locale),
     ]) {
       expect(prose).toContain(
@@ -340,7 +340,7 @@ for (const timing of ["await", "deferred"] as const)
                   ).deathActionPolicy = "awa_knife_or_exile_v1";
                 if (field === "cause") sources[3] = [DeathCause.Poison];
               };
-              const result = await WOLF_KING_ROLE_PROFILE.deathHook!(...args);
+              const result = await WOLF_KING_ROLE_PROFILE.runtime.deathHook!(...args);
               if (timing === "deferred" && result.pendingShots?.length) mutate();
               return result;
             },
@@ -391,7 +391,7 @@ test("resolver-owned origin cannot be rewritten through a hook context", async (
         async (...args) => {
           context = args[5];
           expect(Object.isFrozen(context)).toBe(true);
-          return WOLF_KING_ROLE_PROFILE.deathHook!(...args);
+          return WOLF_KING_ROLE_PROFILE.runtime.deathHook!(...args);
         },
       ],
     ),
@@ -428,7 +428,7 @@ for (const timing of ["await", "deferred"] as const)
     };
     const permit = f.world.openDeathAction(3, "shoot", Phase.Day, 2);
     try {
-      const result = await WOLF_KING_ROLE_PROFILE.deathHook!(
+      const result = await WOLF_KING_ROLE_PROFILE.runtime.deathHook!(
         f.world,
         [3],
         { 3: [DeathCause.Exile] },
@@ -455,7 +455,7 @@ test("direct hooks with no origin reject only the new policy", async () => {
     const f = fixture(selected);
     f.world.getComponent<{ alive: boolean }>(3, COMPONENT.Alive)!.alive = false;
     let requests = 0;
-    const result = await WOLF_KING_ROLE_PROFILE.deathHook!(
+    const result = await WOLF_KING_ROLE_PROFILE.runtime.deathHook!(
       f.world,
       [3],
       { 3: [DeathCause.Exile] },

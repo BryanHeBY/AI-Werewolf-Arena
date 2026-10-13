@@ -1,10 +1,8 @@
 /**
- * Unit tests: Mechanical damage uses literal toxin/reflection claims and current bodies;
- * exact original source, merged-death and one-pass assertions check nonrecursive shield
- * resolution. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试用字面毒素／反射声明与当前躯体验证机械伤害。精确原来源、合并死亡及单次处理断言
+ * 验证非递归护盾结算。输入及字面／不可变 fixture 预期保持原样，不运行模型或完整对局。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Role, COMPONENT, StatusMark, DeathCause, type BoardConfig } from "../../../src/core";
@@ -16,7 +14,7 @@ import {
   type NightPoisonClaim,
 } from "../../../src/core/domain/night_effects";
 import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+
 import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
 import { permitsDeathShot } from "../../../src/core/domain/deaths";
 const roles = [Role.Wolf, Role.Witch, Role.Seer, Role.Guard, Role.Villager, Role.Villager],

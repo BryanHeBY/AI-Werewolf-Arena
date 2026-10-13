@@ -1,6 +1,6 @@
 /**
  * 负责 夜之贵族／觉醒愚者 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
- * 输入为原板子参数、角色组件与请求上下文；输出为原 RoleProfile 与具名内建展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
+ * 输入为原板子参数、角色组件与请求上下文；输出为分别登记的资料、运行及展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
@@ -9,7 +9,7 @@ import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Phase, Role, WinCondition } from "../../../../core/domain/identity";
-import type { RoleProfile } from "../contracts";
+import type { NativeRoleContributions } from "../contracts";
 import { WOLF_ROLE_PROFILE } from "../wolf/profile";
 import { createNobleState, createSecretBodyState, readNobleState } from "./state";
 import { canSubmitNobleBodyChoice } from "./requests";
@@ -23,17 +23,20 @@ const body = z.strictObject({
     .default("awa_nonconsecutive_nights_v1"),
 });
 const common = {
-  maxCount: 1,
-  supportedBoardRoles: [
-    Role.NightNoble,
-    Role.AwakenedIdiot,
-    Role.Wolf,
-    Role.Villager,
-    Role.Seer,
-    Role.Witch,
-    Role.DemonHunter,
-  ],
-  supportedWinConditions: [WinCondition.SlaughterSide],
+  metadata: {
+    maxCount: 1,
+    supportedBoardRoles: [
+      Role.NightNoble,
+      Role.AwakenedIdiot,
+      Role.Wolf,
+      Role.Villager,
+      Role.Seer,
+      Role.Witch,
+      Role.DemonHunter,
+    ],
+    supportedWinConditions: [WinCondition.SlaughterSide],
+  },
+  runtime: {},
 };
 const parameters = {
   type: "object",
@@ -41,110 +44,126 @@ const parameters = {
   required: ["target_id"],
   additionalProperties: false,
 };
-export const NIGHT_NOBLE_ROLE_PROFILE: RoleProfile = {
-  ...WOLF_ROLE_PROFILE,
-  ...common,
-  role: Role.NightNoble,
-  camp: Camp.Wolf,
-  label: roleName("night_noble"),
-  skillBrief: text("zh-CN", "role.night_noble.brief"),
-  init: (role, ctx) => {
-    role.privateState.noble = createNobleState(
-      noble.parse(ctx.boardConfig?.nightNoble ?? {}).wolfActionPolicy,
-    );
+export const NIGHT_NOBLE_ROLE_PROFILE: NativeRoleContributions = {
+  metadata: {
+    ...WOLF_ROLE_PROFILE.metadata,
+    ...common.metadata,
+    role: Role.NightNoble,
+    camp: Camp.Wolf,
+    label: roleName("night_noble"),
+    skillBrief: text("zh-CN", "role.night_noble.brief"),
   },
-  ...nativeRolePresentation("night_noble"),
-  canSelfDestruct: (role) =>
-    readNobleState((role.privateState as { readonly noble?: unknown }).noble)?.wolfActionPolicy ===
-    "standard",
-  configuration: {
-    schema: noble,
-    defaults: noble.parse({}),
-    apply: (config, value) => ({
-      ...config,
-      nobleSecretBody: { policy: "awa_noble_secret_body_v1" },
-      nightNoble: noble.parse(value),
-    }),
-    serialize: (config) => noble.parse(config.nightNoble ?? {}),
-  },
-  toolSpecs: [
-    ...(WOLF_ROLE_PROFILE.toolSpecs ?? []),
-    {
-      name: "choose_servant",
-      parameters,
-      argHint: 'choose_servant args: {"target_id":number|null}',
-      userPromptHintKey: "action.choose_servant.hint",
+  runtime: {
+    ...WOLF_ROLE_PROFILE.runtime,
+    ...common.runtime,
+    init: (role, ctx) => {
+      role.privateState.noble = createNobleState(
+        noble.parse(ctx.boardConfig?.nightNoble ?? {}).wolfActionPolicy,
+      );
     },
-  ],
-  stageDirectives: [
-    ...(WOLF_ROLE_PROFILE.stageDirectives ?? []),
-    {
-      match: (tools) => tools.length === 1 && tools[0] === "choose_servant",
-      messageKey: "action.choose_servant.directive",
-      text: text("zh-CN", "action.choose_servant.directive"),
+    canSelfDestruct: (role) =>
+      readNobleState(
+        (
+          role.privateState as {
+            readonly noble?: unknown;
+          }
+        ).noble,
+      )?.wolfActionPolicy === "standard",
+    configuration: {
+      schema: noble,
+      defaults: noble.parse({}),
+      apply: (config, value) => ({
+        ...config,
+        nobleSecretBody: { policy: "awa_noble_secret_body_v1" },
+        nightNoble: noble.parse(value),
+      }),
+      serialize: (config) => noble.parse(config.nightNoble ?? {}),
     },
-  ],
-  validationRules: {
-    ...WOLF_ROLE_PROFILE.validationRules,
-    choose_servant: ({ world, actorId, phase, day, nobleBodyScope, toolCall }) =>
-      canSubmitNobleBodyChoice(world, actorId, phase, day ?? 0, nobleBodyScope, toolCall)
-        ? null
-        : { code: RuleError.NobleBodyUnavailable },
+    toolSpecs: [
+      ...(WOLF_ROLE_PROFILE.runtime.toolSpecs ?? []),
+      {
+        name: "choose_servant",
+        parameters,
+        argHint: 'choose_servant args: {"target_id":number|null}',
+        userPromptHintKey: "action.choose_servant.hint",
+      },
+    ],
+    stageDirectives: [
+      ...(WOLF_ROLE_PROFILE.runtime.stageDirectives ?? []),
+      {
+        match: (tools) => tools.length === 1 && tools[0] === "choose_servant",
+        messageKey: "action.choose_servant.directive",
+        text: text("zh-CN", "action.choose_servant.directive"),
+      },
+    ],
+    validationRules: {
+      ...WOLF_ROLE_PROFILE.runtime.validationRules,
+      choose_servant: ({ world, actorId, phase, day, nobleBodyScope, toolCall }) =>
+        canSubmitNobleBodyChoice(world, actorId, phase, day ?? 0, nobleBodyScope, toolCall)
+          ? null
+          : { code: RuleError.NobleBodyUnavailable },
+    },
+    nightStages: [...(WOLF_ROLE_PROFILE.runtime.nightStages ?? []), NOBLE_CHOICE_STAGE],
+    baselineAction: (role, request, ...rest) =>
+      request.allowedTools.includes("choose_servant")
+        ? { name: "choose_servant", args: { target_id: null } }
+        : (WOLF_ROLE_PROFILE.runtime.baselineAction?.(role, request, ...rest) ?? null),
   },
-  nightStages: [...(WOLF_ROLE_PROFILE.nightStages ?? []), NOBLE_CHOICE_STAGE],
-  baselineAction: (role, request, ...rest) =>
-    request.allowedTools.includes("choose_servant")
-      ? { name: "choose_servant", args: { target_id: null } }
-      : (WOLF_ROLE_PROFILE.baselineAction?.(role, request, ...rest) ?? null),
+  presentation: nativeRolePresentation("night_noble"),
 };
-export const AWAKENED_IDIOT_ROLE_PROFILE: RoleProfile = {
-  ...common,
-  role: Role.AwakenedIdiot,
-  camp: Camp.Good,
-  goodSide: "god",
-  canSelfDestruct: false,
-  label: roleName("awakened_idiot"),
-  skillBrief: text("zh-CN", "role.awakened_idiot.brief"),
-  init: (role, ctx) => {
-    role.privateState.secretBody = createSecretBodyState(
-      body.parse(ctx.boardConfig?.awakenedIdiot ?? {}).protectionRepeatPolicy,
-    );
+export const AWAKENED_IDIOT_ROLE_PROFILE: NativeRoleContributions = {
+  metadata: {
+    ...common.metadata,
+    role: Role.AwakenedIdiot,
+    camp: Camp.Good,
+    goodSide: "god",
+    label: roleName("awakened_idiot"),
+    skillBrief: text("zh-CN", "role.awakened_idiot.brief"),
   },
-  ...nativeRolePresentation("awakened_idiot"),
-  configuration: {
-    schema: body,
-    defaults: body.parse({}),
-    apply: (config, value) => ({
-      ...config,
-      nobleSecretBody: { policy: "awa_noble_secret_body_v1" },
-      awakenedIdiot: body.parse(value),
-    }),
-    serialize: (config) => body.parse(config.awakenedIdiot ?? {}),
-  },
-  toolSpecs: [
-    {
-      name: "protect_secret_body",
-      parameters,
-      argHint: 'protect_secret_body args: {"target_id":number|null}',
-      userPromptHintKey: "action.protect_secret_body.hint",
+  runtime: {
+    ...common.runtime,
+    canSelfDestruct: false,
+    init: (role, ctx) => {
+      role.privateState.secretBody = createSecretBodyState(
+        body.parse(ctx.boardConfig?.awakenedIdiot ?? {}).protectionRepeatPolicy,
+      );
     },
-  ],
-  stageDirectives: [
-    {
-      match: (tools) => tools.length === 1 && tools[0] === "protect_secret_body",
-      messageKey: "action.protect_secret_body.directive",
-      text: text("zh-CN", "action.protect_secret_body.directive"),
+    configuration: {
+      schema: body,
+      defaults: body.parse({}),
+      apply: (config, value) => ({
+        ...config,
+        nobleSecretBody: { policy: "awa_noble_secret_body_v1" },
+        awakenedIdiot: body.parse(value),
+      }),
+      serialize: (config) => body.parse(config.awakenedIdiot ?? {}),
     },
-  ],
-  validationRules: {
-    protect_secret_body: ({ world, actorId, phase, day, nobleBodyScope, toolCall }) =>
-      canSubmitNobleBodyChoice(world, actorId, phase, day ?? 0, nobleBodyScope, toolCall)
-        ? null
-        : { code: RuleError.NobleBodyUnavailable },
+    toolSpecs: [
+      {
+        name: "protect_secret_body",
+        parameters,
+        argHint: 'protect_secret_body args: {"target_id":number|null}',
+        userPromptHintKey: "action.protect_secret_body.hint",
+      },
+    ],
+    stageDirectives: [
+      {
+        match: (tools) => tools.length === 1 && tools[0] === "protect_secret_body",
+        messageKey: "action.protect_secret_body.directive",
+        text: text("zh-CN", "action.protect_secret_body.directive"),
+      },
+    ],
+    validationRules: {
+      protect_secret_body: ({ world, actorId, phase, day, nobleBodyScope, toolCall }) =>
+        canSubmitNobleBodyChoice(world, actorId, phase, day ?? 0, nobleBodyScope, toolCall)
+          ? null
+          : { code: RuleError.NobleBodyUnavailable },
+    },
+    nightStages: [SECRET_BODY_STAGE],
+    baselineAction: (_role, request) =>
+      request.allowedTools.includes("protect_secret_body")
+        ? { name: "protect_secret_body", args: { target_id: null } }
+        : null,
   },
-  nightStages: [SECRET_BODY_STAGE],
-  baselineAction: (_role, request) =>
-    request.allowedTools.includes("protect_secret_body")
-      ? { name: "protect_secret_body", args: { target_id: null } }
-      : null,
+  presentation: nativeRolePresentation("awakened_idiot"),
 };

@@ -1,13 +1,11 @@
 /**
- * Configuration filesystem integration tests verify public board contributions round-trip and normal loaders refuse legacy fallback files.
- * Input: Original public example directory, actual temporary runtime/game/board files and explicit migration data.
- * Output and oracle: Exact registered schema results, missing/migration error codes and effective normalized boards preserve source-file wiring; no fixture bytes are rewritten.
+ * 文件系统集成测试验证公开板子贡献往返及正常加载器拒绝旧 fallback 文件。输入为原公开 example、真实临时 runtime／game／board 文件和明确迁移数据；原 schema 结果、缺失／迁移错误码及有效板子是预期，不重写 fixture 字节。
  */
 import { expect, test } from "bun:test";
 import { readdir, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { Role } from "../../../../src/core";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
@@ -28,7 +26,7 @@ test("all public example boards round-trip through every registered contribution
     for (const [id, value] of Object.entries(serialized.roles))
       expect(
         getDefaultRoleCatalog()
-          .require(id as Role)
+          .requireRuntime(id as Role)
           .configuration!.schema.parse(value),
       ).toEqual(value);
   }

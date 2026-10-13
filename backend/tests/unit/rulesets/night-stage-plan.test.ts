@@ -7,6 +7,7 @@
  * from opaque-source prefix preservation; no model or compiler oracle runs.
  * The controlled context binds its query at the original World read position.
  */
+import { createRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { bindNativeNightFailurePolicy } from "../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../src/rulesets/native-night-effects";
@@ -40,7 +41,7 @@ function context(world = new World("en")): NightStageContext {
     get nativeNightEffects() {
       return bindNativeNightEffects(() => this);
     },
-    roleCatalog: new RoleCatalog([]),
+    roleCatalog: createRoleCatalog([]),
     toolGateway: new ToolGateway(),
     events: [],
     actionProvider: { getAction: async () => null },
@@ -87,7 +88,7 @@ test("virtual getStages is called once and safe native membership freezes withou
       return source;
     }
   }
-  const plan = new Custom(new RoleCatalog([])).getPlan(config, world);
+  const plan = new Custom(createRoleCatalog([])).getPlan(config, world);
   if (plan.mode !== "snapshot") throw new Error("expected_snapshot_plan");
   expect(calls).toBe(1);
   expect(plan.stages).not.toBe(source);
@@ -153,7 +154,7 @@ test("accessor, inherited and Proxy stage metadata is opaque without invoking ge
       return [accessor, new Inherited(), proxy];
     }
   }
-  const plan = new Custom(new RoleCatalog([])).getPlan(config);
+  const plan = new Custom(createRoleCatalog([])).getPlan(config);
   if (plan.mode !== "snapshot") throw new Error("expected_snapshot_plan");
   expect(plan.metadata).toEqual([
     { ordinal: 0, kind: "opaque" },
@@ -177,12 +178,12 @@ test("C22 explicitly rejects the original distinct-handler collision with the sa
       { role: Role.Seer, label: "seer", skillBrief: "seer", nightStages: [conflict, alpha] },
     ];
   class ObservedCatalog extends RoleCatalog {
-    override get(role: Role) {
+    override runtime(role: Role) {
       reads.push(role);
-      return super.get(role);
+      return super.runtime(role);
     }
   }
-  const registry = new NightStageRegistry(new ObservedCatalog(profiles));
+  const registry = new NightStageRegistry(new ObservedCatalog(profiles, []));
   // Fixed f4bbd7b accepted the first handler for this literal collision. C22
   // strengthens that policy; the original conflicting input is preserved.
   expect(() =>
@@ -219,7 +220,7 @@ test("plan execution keeps current World lookup after an earlier stage creates a
       return [first, second];
     }
   }
-  const plan = new Custom(new RoleCatalog([])).getPlan(config, ctx.world);
+  const plan = new Custom(createRoleCatalog([])).getPlan(config, ctx.world);
   for (const handler of plan.stages) await handler.execute(ctx);
   expect(seen).toEqual([[1]]);
   expect(plan.metadata).toEqual([
@@ -265,7 +266,7 @@ for (const condition of ["throw-after-first", "requires-first-commit"] as const)
         return source;
       }
     }
-    const plan = new Custom(new RoleCatalog([])).getPlan(config);
+    const plan = new Custom(createRoleCatalog([])).getPlan(config);
     expect(plan.mode).toBe("opaque");
     expect(plan.stages).toBe(source);
     expect(plan.metadata).toEqual([]);
@@ -316,7 +317,7 @@ test("opaque source index getter is pulled only after the preceding stage commit
       return source;
     }
   }
-  const plan = new Custom(new RoleCatalog([])).getPlan(config);
+  const plan = new Custom(createRoleCatalog([])).getPlan(config);
   expect(plan.mode).toBe("opaque");
   expect(plan.stages).toBe(source);
   expect(events).toEqual([]);
@@ -362,7 +363,7 @@ test("Proxy arrays, Array subclasses and foreign iterables stay opaque without e
         return source;
       }
     }
-    const plan = new Custom(new RoleCatalog([])).getPlan(config);
+    const plan = new Custom(createRoleCatalog([])).getPlan(config);
     expect(plan.mode).toBe("opaque");
     expect(plan.stages).toBe(source);
     expect(plan.metadata).toEqual([]);
@@ -397,7 +398,7 @@ test("native array snapshot intentionally excludes stages appended during await 
         return source;
       }
     }
-    const registry = new Custom(new RoleCatalog([]));
+    const registry = new Custom(createRoleCatalog([]));
     const selected = snapshot ? registry.getPlan(config).stages : registry.getStages();
     for (const handler of selected) await handler.execute(context());
     return effects;

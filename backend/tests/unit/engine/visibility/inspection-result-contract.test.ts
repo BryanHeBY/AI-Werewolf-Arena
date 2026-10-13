@@ -7,7 +7,12 @@ import { text } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Camp, Role, type GameEvent, type RoleComponent } from "../../../../src/core";
-import { RoleCatalog, getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
@@ -18,21 +23,22 @@ for (const locale of ["zh-CN", "en"] as const) {
   test(`${locale}: camp/role/combined projections are exact detached labels, independent of real identity and wolf permissions`, () => {
     const { world } = bootstrapGame(sixPlayerMvpConfig, { fixedRoles, locale });
     const wolf = world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
-    const catalog = new RoleCatalog(
-      getDefaultRoleCatalog()
-        .all()
-        .map((profile) =>
-          profile.role !== Role.Wolf
-            ? profile
-            : {
-                ...profile,
+    const catalog = createRoleCatalog({
+      contributions: getDefaultRoleContributions().map((profile) =>
+        profile.metadata.role !== Role.Wolf
+          ? profile
+          : {
+              ...profile,
+              runtime: {
+                ...profile.runtime,
                 inspectionLabels: (state: RoleComponent) =>
                   (state.privateState as { readonly unmasked?: unknown }).unmasked === true
                     ? { camp: Camp.Wolf, role: Role.Wolf }
                     : { camp: Camp.Good, role: Role.Villager },
               },
-        ),
-    );
+            },
+      ),
+    });
     const before = structuredClone(wolf.privateState);
     expect(resolveInspection(world, 1, "camp", catalog)).toEqual({ kind: "camp", camp: "good" });
     expect(resolveInspection(world, 1, "role", catalog)).toEqual({
@@ -44,8 +50,8 @@ for (const locale of ["zh-CN", "en"] as const) {
     expect(wolf.privateState).toEqual(before);
     expect(wolf.role).toBe(Role.Wolf);
     expect(wolf.camp).toBe(Camp.Wolf);
-    expect(catalog.get(Role.Wolf)?.wolfTeam).toEqual(
-      getDefaultRoleCatalog().get(Role.Wolf)?.wolfTeam,
+    expect(catalog.runtime(Role.Wolf)?.wolfTeam).toEqual(
+      getDefaultRoleCatalog().runtime(Role.Wolf)?.wolfTeam,
     );
     (wolf.privateState as Record<string, unknown>).unmasked = true;
     expect(resolveInspection(world, 1, "combined", catalog)).toEqual({

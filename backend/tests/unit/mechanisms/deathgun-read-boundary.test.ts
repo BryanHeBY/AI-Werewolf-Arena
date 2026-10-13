@@ -1,13 +1,14 @@
 /**
  * 单元测试：验证赠枪只读引用及原生命／转移所有权。输入为字面 Role／Alive、授予／上膛／转移命令和 accessor 库存；身份、首次死亡行与写入轨迹为预期。合法字段修改仅作不执行的编译反例，不运行对局、模型或传输。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";
 import { Camp, Role, type DeathGunReadView } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+
 import {
   allDeathGuns,
   findDeathGun,

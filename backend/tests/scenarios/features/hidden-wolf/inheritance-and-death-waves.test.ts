@@ -1,11 +1,9 @@
 /**
- * Scenario tests for hidden wolf inheritance. Inputs are original directional knowledge, life/permission
- * changes and ordered death proposals. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Actual central DeathResolution or complete PM cycles commit inheritance
- * and subsequent gun/Dream/Bear/Beauty/victory effects. Four previously heuristic unit nodes use real
- * central waves. Engine sequencing remains real and models remain controlled providers; production output
- * is not a newly generated golden.
+ * 隐狼继承场景以原定向知识、生命／许可变化和有序死亡建议为输入。原字面回执、引用／getter／
+ * 错误轨迹、事实与状态是预期；真实中央死亡结算或完整 PhaseManager 周期提交继承及后续枪、
+ * 梦境、熊、魅惑、胜利效果。四个原启发式单元已用真实中央波；模型受控，不从生产输出新建 golden。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -27,13 +25,13 @@ import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden
 import { getBearState } from "../../../../src/game/mechanisms/roles/bear/ports";
 import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
 import { canHiddenWolfKnife } from "../../../../src/game/mechanisms/roles/hidden_wolf/inheritance";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { captureExileFeedback } from "../../../../src/game/mechanisms/roles/gravekeeper/feedback";
 import { HookRegistry } from "../../../../src/game/mechanisms/hooks/hook_registry";
 import { grantNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";

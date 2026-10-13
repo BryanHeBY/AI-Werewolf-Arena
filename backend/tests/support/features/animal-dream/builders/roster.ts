@@ -1,17 +1,15 @@
 /**
  * 构造动物梦境测试的原 World、角色对象与初始座位。输入为原配置、组件和调用方字段，输出为显式 fixture 值；玩家身份和手写断言由测试提供。这里只造输入，不运行阶段、完整对局、传输、归档或规则验证器。
  */
+import { createAliveComponent, createCampComponent, createVotingRightComponent } from "../../../../../src/game/observation/component-presentation";
 import { World } from "../../../../../src/core/domain/world";
 import { Role, Camp } from "../../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../../src/core/domain/components/names";
 import { type RoleComponent } from "../../../../../src/core/domain/components/role";
 import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
-import {
-  createAliveComponent,
-  type AliveComponent,
-} from "../../../../../src/core/domain/components/alive";
-import { createCampComponent } from "../../../../../src/core/domain/components/camp";
-import { createVotingRightComponent } from "../../../../../src/core/domain/components/voting_right";
+import { type AliveComponent } from "../../../../../src/core/domain/components/alive";
+
+
 import { createVictoryComponent } from "../../../../../src/core/domain/components/victory";
 import { createIdentityComponent } from "../../../../../src/core/domain/entities/player";
 import {

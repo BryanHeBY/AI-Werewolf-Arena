@@ -1,9 +1,5 @@
 /**
- * Scenario tests for wolf team access. Inputs are original directional chat/knife policies, in-flight
- * replies and event-time audiences. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Actual NightPipeline coordinates independently changing chat and knife
- * permissions, including an in-flight cancellation. Engine sequencing remains real and models remain
- * controlled providers; production output is not a newly generated golden.
+ * 狼队运行场景验证原方向性狼聊／刀权、在途回复和事实时点受众。字面回执、引用／getter／错误轨迹、事实及状态为预期。真实 NightPipeline 协调独立变化的聊天／刀权，包括在途取消；决策来自受控 Provider，不新生成 golden。
  */
 import { completedNight } from "../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
@@ -18,7 +14,12 @@ import {
   type World,
 } from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { RoleCatalog, getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
 import { ActionValidator } from "../../../src/game/gateway/action_validator";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
@@ -36,13 +37,13 @@ const alive = (world: World, id: number) =>
 
 function fixture(locale: "zh-CN" | "en") {
   const game = bootstrapGame(sixPlayerMvpConfig, { locale, fixedRoles });
-  const catalog = new RoleCatalog(
-    getDefaultRoleCatalog()
-      .all()
-      .map((profile) => {
-        if (profile.role === Role.Seer)
-          return {
-            ...profile,
+  const catalog = createRoleCatalog({
+    contributions: getDefaultRoleContributions().map((profile) => {
+      if (profile.metadata.role === Role.Seer)
+        return {
+          ...profile,
+          runtime: {
+            ...profile.runtime,
             nightStages: [],
             wolfTeam: (state: RoleComponent) => ({
               recognizedByPack: false,
@@ -50,10 +51,13 @@ function fixture(locale: "zh-CN" | "en") {
               canChat: false,
               canVoteForKill: (state.privateState as { readonly knife?: unknown }).knife === true,
             }),
-          };
-        if (profile.role === Role.Guard)
-          return {
-            ...profile,
+          },
+        };
+      if (profile.metadata.role === Role.Guard)
+        return {
+          ...profile,
+          runtime: {
+            ...profile.runtime,
             nightStages: [],
             wolfTeam: {
               recognizedByPack: true,
@@ -61,20 +65,24 @@ function fixture(locale: "zh-CN" | "en") {
               canChat: true,
               canVoteForKill: false,
             },
-          };
-        if (profile.role === Role.Villager)
-          return {
-            ...profile,
+          },
+        };
+      if (profile.metadata.role === Role.Villager)
+        return {
+          ...profile,
+          runtime: {
+            ...profile.runtime,
             wolfTeam: {
               recognizedByPack: false,
               recognizes: [Role.Seer],
               canChat: false,
               canVoteForKill: false,
             },
-          };
-        return profile;
-      }),
-  );
+          },
+        };
+      return profile;
+    }),
+  });
   for (const id of [3, 4, 5]) role(game.world, id).camp = Camp.Wolf;
   return { ...game, catalog };
 }
@@ -84,25 +92,28 @@ for (const locale of ["zh-CN", "en"] as const)
     const { world, catalog } = fixture(locale),
       events: GameEvent[] = [],
       asked: Array<[number, string]> = [];
-    const dynamicCatalog = new RoleCatalog(
-      catalog.all().map((profile) =>
-        profile.role !== Role.Seer
+    const dynamicCatalog = createRoleCatalog({
+      contributions: getDefaultRoleContributions().map((profile) =>
+        profile.metadata.role !== Role.Seer
           ? profile
           : {
               ...profile,
-              nightStages: [
-                {
-                  id: "synthetic_grant",
-                  priority: 350,
-                  async execute() {
-                    (role(world, 3).privateState as Record<string, unknown>).knife = true;
-                    alive(world, 2).alive = false;
+              runtime: {
+                ...profile.runtime,
+                nightStages: [
+                  {
+                    id: "synthetic_grant",
+                    priority: 350,
+                    async execute() {
+                      (role(world, 3).privateState as Record<string, unknown>).knife = true;
+                      alive(world, 2).alive = false;
+                    },
                   },
-                },
-              ],
+                ],
+              },
             },
       ),
-    );
+    });
     const pipeline = new NightPipeline({
       world,
       events,

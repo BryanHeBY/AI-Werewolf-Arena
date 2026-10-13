@@ -1,8 +1,5 @@
 /**
- * Builds in-memory controlled night-stage contexts and extracts completed summaries.
- * Inputs are explicit World/provider overrides; outputs retain typed stage ports
- * with the original current World getter timing. Unexpected dependencies throw.
- * This builder owns no expected rule result, fixture rewrite or complete-game run.
+ * 负责测试中构造内存夜间上下文和提取已完成摘要。输入为明确 World／Provider 覆盖；输出保留 typed 阶段端口和原 World getter 时点，未配置依赖直接抛错。本 builder 不拥有规则预期、不改 fixture、不运行完整对局。
  */
 import { bindNightAbilityActorQuery } from "../../src/game/mechanisms/roles/night-ability-actors";
 import { bindNativeNightFailurePolicy } from "../../src/rulesets/native-night-failure-policy";
@@ -10,7 +7,7 @@ import { bindNativeNightTargetPolicy } from "../../src/rulesets/native-night-tar
 import { bindNativeNightEffects } from "../../src/rulesets/native-night-effects";
 import { COMPONENT, type World } from "../../src/core";
 import { StatusMarksComponent } from "../../src/core/domain/components/status_marks";
-import { getDefaultRoleCatalog } from "../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../src/game/mechanisms/roles/role-catalog-assembly";
 import type { NightStageContext } from "../../src/game/mechanisms/stages/night/contracts";
 import { ToolGateway } from "../../src/game/gateway/tool_gateway";
 import type { NightPipelineResult } from "../../src/game/engine/phase_pipeline/night_pipeline";

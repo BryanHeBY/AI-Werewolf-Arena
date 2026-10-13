@@ -1,6 +1,7 @@
 /**
  * 场景测试验证狼美人关系链与判胜。输入保留魅惑／死因／locale／胜利参数及受控迟到提案；原字面回执、引用／getter／错误轨迹、事实和状态是预期。实际中心 DeathResolution（含异步撤销 hook）及 PhaseManager 周期结算复合死因、枪、魅惑、警徽与有序胜利；模型由受控 provider 替代，生产输出不生成新 golden。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -22,7 +23,7 @@ import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_vi
 import { bindCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
 import { DeathCause, type GameEvent } from "../../../../src/core";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { HookRegistry } from "../../../../src/game/mechanisms/hooks/hook_registry";

@@ -4,10 +4,11 @@
  * 路由只属于一次伤害折叠，反射改变目标但不改变原因果身份；不运行完整对局或模型。
  * 测试中的集合清空只验证真实路由消费者，既不恢复库存也不调用生产规则生成预期。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+
 import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
 import { StatusMark, DeathCause } from "../../../src/core/domain/model";
 import {

@@ -3,10 +3,11 @@
  * 输入为内存 World、字面原体、独立毒及盾；预期死因与目标由手写常量给出。
  * 验证保护抑制、同目标直接／反射区别、legacy Proxy 和原序列化形状，不运行整局或模型。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+
 import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
 import { StatusMark, DeathCause } from "../../../src/core/domain/model";
 import {

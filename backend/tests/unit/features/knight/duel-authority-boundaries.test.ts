@@ -22,7 +22,12 @@ import { KnightDuelWindow as DuelCollector } from "../../../../src/game/engine/k
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
-import { RoleCatalog, getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import { setIdiotState } from "../../../../src/game/mechanisms/roles/idiot/ports";
 import { DefaultTargetHintRegistry } from "../../../../src/game/mechanisms/llm/target_hint_registry";
@@ -79,15 +84,13 @@ for (const locale of ["zh-CN", "en"] as const)
       },
     );
     const defaultCatalog = getDefaultRoleCatalog(),
-      catalog = new RoleCatalog(
-        defaultCatalog
-          .all()
-          .map((profile) =>
-            profile.role === Role.Wolf
-              ? { ...profile, inspectionLabels: { camp: Camp.Good } }
-              : profile,
-          ),
-      );
+      catalog = createRoleCatalog({
+        contributions: getDefaultRoleContributions().map((profile) =>
+          profile.metadata.role === Role.Wolf
+            ? { ...profile, runtime: { ...profile.runtime, inspectionLabels: { camp: Camp.Good } } }
+            : profile,
+        ),
+      });
     expect(resolveInspection(world, 2, "camp", catalog)).toEqual({ kind: "camp", camp: Camp.Good });
     setIdiotState(role(world, 4), { revealed: true });
     expect(catalog.participation(role(world, 4)).canBeExiled).toBe(false);

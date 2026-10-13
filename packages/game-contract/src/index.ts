@@ -236,3 +236,5 @@ export type {
   NativeRoleMessagePart,
   NativeRolePresentationPart,
 } from "./role-presentation-data";
+
+export type { ComponentPresentationPart } from "./component-presentation-data";

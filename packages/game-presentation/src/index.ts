@@ -46,3 +46,5 @@ export {
 } from "./events/night-mechanisms";
 
 export { formatNativeRolePart } from "./native-role-state";
+
+export { formatComponentPart } from "./component-state";

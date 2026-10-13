@@ -9,7 +9,7 @@ import { COMPONENT } from "../../../../src/core/domain/components/names";
 import type { AliveComponent } from "../../../../src/core/domain/components/alive";
 import type { ActionRequest } from "../../../../src/core/domain/actions";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultTargetHintRegistry,

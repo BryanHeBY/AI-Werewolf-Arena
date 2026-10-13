@@ -1,25 +1,10 @@
 /**
  * 单元测试验证孤独少女准备窗口、必须选择、getter／撤权矩阵和公开板子配置。预期来自字面回执、引用／错误轨迹、阵营账本和 checkpoint 字段。阶段入口只在准备权限未完成时被拒绝，不运行完整夜间或模型。
  */
+import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import {
-  Role,
-  Camp,
-  Phase,
-  COMPONENT,
-  WinCondition,
-  createCampComponent,
-  createVictoryComponent,
-  createAliveComponent,
-  type BoardConfig,
-  type ActionRequest,
-  type ToolCall,
-  type GameEvent,
-  type RoleComponent,
-  type AliveComponent,
-  type VictoryComponent,
-} from "../../../../src/core";
+import { Role, Camp, Phase, COMPONENT, WinCondition, createVictoryComponent, type BoardConfig, type ActionRequest, type ToolCall, type GameEvent, type RoleComponent, type AliveComponent, type VictoryComponent } from "../../../../src/core";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { LonelyGirlSetupWindow } from "../../../../src/game/mechanisms/roles/lonely_girl/setup";

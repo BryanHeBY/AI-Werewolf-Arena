@@ -1,17 +1,9 @@
 /**
  * 场景测试验证 native-night-receipts 的原请求、已付行动与失败记录链。输入保留原固定角色、动作脚本、故障与归档矩阵；原字面结果及检查点作为预期。显式特权回退仅服务该控制驱动，不将生产对局输出称作独立玩法 oracle。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
-import {
-  COMPONENT,
-  StatusMark,
-  PotionType,
-  createAliveComponent,
-  deferRequestDelivery,
-  type ActionRequest,
-  type RoleComponent,
-  type StatusMarksComponent,
-} from "../../../../src/core";
+import { COMPONENT, StatusMark, PotionType, deferRequestDelivery, type ActionRequest, type RoleComponent, type StatusMarksComponent } from "../../../../src/core";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { demonHunterAuditPlayer } from "../../../../src/game/mechanisms/roles/demon_hunter/authority";

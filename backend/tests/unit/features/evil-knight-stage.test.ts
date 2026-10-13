@@ -1,10 +1,5 @@
 /**
- * Unit tests: Evil Knight stages use controlled inspection and potion replies; literal
- * reflection stock, private reports and independent shot-policy assertions check native
- * stage application. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
- * The controlled context binds its query at the original World read position.
+ * 单元测试验证恶灵骑士受控查验与用药回复。字面反射库存、私密报告和独立枪政策是预期，检验原生阶段结果；保留原输入／样本，不调用模型或完整对局。受控上下文在原 World 读取点绑定查询。
  */
 import { bindNativeNightFailurePolicy } from "../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../src/rulesets/native-night-target-policy";
@@ -22,7 +17,7 @@ import type { StatusMarksComponent } from "../../../src/core/domain/components/s
 import { DeathCause } from "../../../src/core/domain/deaths";
 import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
 import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
 import { getEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/state";

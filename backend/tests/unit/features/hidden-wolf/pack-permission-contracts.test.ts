@@ -25,7 +25,12 @@ import {
   wolfKnifeHolders,
   wolfTeamPermissions,
 } from "../../../../src/game/mechanisms/roles/wolf_team";
-import { getDefaultRoleCatalog, RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
@@ -63,21 +68,24 @@ for (const change of ["camp", "permission"] as const)
       events: GameEvent[] = [],
       base = new ToolGateway();
     let chat = true;
-    const custom = new RoleCatalog(
-      catalog.all().map((p) =>
-        p.role === Role.Wolf
+    const custom = createRoleCatalog({
+      contributions: getDefaultRoleContributions().map((p) =>
+        p.metadata.role === Role.Wolf
           ? {
               ...p,
-              wolfTeam: () => ({
-                recognizedByPack: true,
-                recognizes: "pack" as const,
-                canChat: chat,
-                canVoteForKill: true,
-              }),
+              runtime: {
+                ...p.runtime,
+                wolfTeam: () => ({
+                  recognizedByPack: true,
+                  recognizes: "pack" as const,
+                  canChat: chat,
+                  canVoteForKill: true,
+                }),
+              },
             }
           : p,
       ),
-    );
+    });
     const gateway = new ToolGateway();
     gateway.validateAndSanitize = (world, actor, action, context) => {
       const result = base.validateAndSanitize(world, actor, action, context);

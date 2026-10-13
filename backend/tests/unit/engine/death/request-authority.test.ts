@@ -1,6 +1,7 @@
 /**
  * 单元测试验证有界死亡许可在接收和清理间绑定原 actor、工具、时钟及 generation。输入为新内存 World、字面死亡请求，以及注入错误、复活、阶段变化和微任务撤权；预期保留明确许可错误、枪／死亡计数及隐藏 generation 观察相等，不执行完整对局或 provider 传输。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -19,7 +20,7 @@ import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import {
   getDefaultToolSpecRegistry,

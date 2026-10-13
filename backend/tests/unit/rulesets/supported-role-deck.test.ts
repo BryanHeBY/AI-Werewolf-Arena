@@ -1,16 +1,15 @@
 /**
- * Unit tests: supported role-deck construction uses literal boards, exact card
- * sequences and instrumented readonly support queries. Handwritten rejection,
- * extra-card, copy and query-order expectations check this pure assembly owner.
- * A few bootstrap-only calls assert original locale/fork/rejection/draw timing;
- * they never advance a phase, contact models, read private config or run games.
+ * 单元测试验证有限牌组 owner 的字面板子、精确底牌与只读查询轨迹。手写拒绝、额外牌、复制和查询顺序是预期；少量 bootstrap 用例验证原 locale／fork／拒绝／抽样时点，不推进阶段、读私有配置或调用模型。
  */
 import { expect, test } from "bun:test";
 import { Camp, Role, WinCondition, type BoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame, type BootstrapOptions } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import type { RandomSource } from "../../../src/core/domain/random";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { supportsWallRoles } from "../../../src/game/mechanisms/events/wall_notes/authority";
 import {
   buildSupportedRoleDeck,
@@ -41,29 +40,29 @@ const supported = (config: BoardConfig, fixed?: readonly Role[]) =>
 /** Compile-only: metadata contributors expose reads, not mutation or runtime assembly. */
 function readPortTypes(catalog: SupportedRoleDeckCatalog) {
   // @ts-expect-error The support owner cannot assign a profile's configured count limit.
-  catalog.require(Role.Wolf).maxCount = 2;
+  catalog.requireMetadata(Role.Wolf).maxCount = 2;
   // @ts-expect-error The support owner cannot mutate supported-role metadata.
-  catalog.require(Role.Wolf).supportedBoardRoles!.push(Role.Wolf);
+  catalog.requireMetadata(Role.Wolf).supportedBoardRoles!.push(Role.Wolf);
   // @ts-expect-error The support owner cannot replace the catalog's query method.
-  catalog.require = () => ({});
+  catalog.requireMetadata = () => ({});
 }
 
 test("supported assembly returns original ordered cards and does not mutate inputs or profiles", () => {
   const config = board(),
     before = structuredClone(config),
     catalog = getDefaultRoleCatalog(),
-    profile = catalog.require(Role.Wolf);
+    profile = catalog.requireMetadata(Role.Wolf);
   expect(supported(config)).toEqual(cards);
   expect(config).toEqual(before);
-  expect(catalog.require(Role.Wolf)).toBe(profile);
-  expect(catalog.all().length).toBe(55);
+  expect(catalog.requireMetadata(Role.Wolf)).toBe(profile);
+  expect(getDefaultRoleContributions().length).toBe(55);
 });
 
 test("catalog factory and require calls retain both original passes and query receiver", () => {
   const trace: string[] = [],
     metadata = {};
   const catalog: SupportedRoleDeckCatalog = {
-    require(role) {
+    requireMetadata(role) {
       expect(this).toBe(catalog);
       trace.push(`require:${role}`);
       return metadata;

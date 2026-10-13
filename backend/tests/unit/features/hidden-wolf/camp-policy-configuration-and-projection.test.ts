@@ -19,7 +19,7 @@ import {
   type RoleComponent,
 } from "../../../../src/core";
 import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden_wolf/state";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import { getDefaultConfigRenderRegistry } from "../../../../src/game/mechanisms/prompt/config_render_registry";
 import {

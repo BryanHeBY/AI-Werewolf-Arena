@@ -26,7 +26,12 @@ import {
 } from "../../../src/game/mechanisms/roles/ability_changes";
 import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
 import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
-import { RoleCatalog, getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { NightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
 import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
 import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
@@ -170,17 +175,17 @@ for (const grantPriority of [150, 700])
     const events: GameEvent[] = [],
       seen: number[] = [];
     let granted = false;
-    const catalog = new RoleCatalog(
-      getDefaultRoleCatalog()
-        .all()
-        .map((profile) =>
-          profile.role !== Role.Wolf
-            ? profile
-            : {
-                ...profile,
+    const catalog = createRoleCatalog({
+      contributions: getDefaultRoleContributions().map((profile) =>
+        profile.metadata.role !== Role.Wolf
+          ? profile
+          : {
+              ...profile,
+              runtime: {
+                ...profile.runtime,
                 possibleNightAbilities: ["seer_check" as const],
                 nightStages: [
-                  ...profile.nightStages!,
+                  ...profile.runtime.nightStages!,
                   {
                     id: "synthetic_gift",
                     priority: grantPriority,
@@ -204,8 +209,9 @@ for (const grantPriority of [150, 700])
                   },
                 ],
               },
-        ),
-    );
+            },
+      ),
+    });
     const pipeline = new NightPipeline({
       world,
       events,
@@ -406,17 +412,17 @@ for (const [rule, day, stale, healed] of [
   test(`a potion granted after reset derives self-heal from the actual day (${rule}/${day})`, async () => {
     const { world } = fixture(),
       events: GameEvent[] = [];
-    const catalog = new RoleCatalog(
-      getDefaultRoleCatalog()
-        .all()
-        .map((profile) =>
-          profile.role !== Role.Wolf
-            ? profile
-            : {
-                ...profile,
+    const catalog = createRoleCatalog({
+      contributions: getDefaultRoleContributions().map((profile) =>
+        profile.metadata.role !== Role.Wolf
+          ? profile
+          : {
+              ...profile,
+              runtime: {
+                ...profile.runtime,
                 possibleNightAbilities: ["potion" as const],
                 nightStages: [
-                  ...profile.nightStages!,
+                  ...profile.runtime.nightStages!,
                   {
                     id: "late_potion",
                     priority: 450,
@@ -445,8 +451,9 @@ for (const [rule, day, stale, healed] of [
                   },
                 ],
               },
-        ),
-    );
+            },
+      ),
+    });
     const pipeline = new NightPipeline({
       world,
       events,

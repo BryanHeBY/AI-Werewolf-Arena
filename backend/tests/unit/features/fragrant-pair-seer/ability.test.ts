@@ -4,11 +4,12 @@
  * 原 owner、frame 和 readers 真实执行，native/install/use 只迁向同一实际实例 owner。
  * 不运行完整对局、模型或传输，不替换支持 fixture、规则与原历史矩阵。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { Role, Camp } from "../../../../src/core/domain/identity";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import type { GameEvent } from "../../../../src/core/domain/events";
 import { freshPairSeerState } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";

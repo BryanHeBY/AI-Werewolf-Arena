@@ -1,21 +1,11 @@
 /**
- * Scenario tests drive actual Demon Hunter NightPipeline/PhaseManager and committed-stock failure handoffs. Inputs are original six/twelve rosters, guarded heal/poison/hunt choices and foreign component replacements; handwritten causes, payment prefixes, no-getter reads and terminal ordering are the oracle. No model or changed source fixture supplies expected outcomes.
+ * 场景测试驱动真实猎魔人 NightPipeline／PhaseManager 及已付款库存的失败移交。输入为原
+ * 六／十二人名单、受守护影响的救／毒／猎选择及外来组件替换；手写死因、付款前缀、零 getter
+ * 读取与终结顺序是预期，不调用模型或改来源 fixture 来生成结果。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
-import {
-  COMPONENT,
-  Camp,
-  Phase,
-  PotionType,
-  WinCondition,
-  DeathCause,
-  StatusMark,
-  createAliveComponent,
-  type AliveComponent,
-  type ActionRequest,
-  type RoleComponent,
-  type StatusMarksComponent,
-} from "../../../../src/core";
+import { COMPONENT, Camp, Phase, PotionType, WinCondition, DeathCause, StatusMark, type AliveComponent, type ActionRequest, type RoleComponent, type StatusMarksComponent } from "../../../../src/core";
 import type { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";

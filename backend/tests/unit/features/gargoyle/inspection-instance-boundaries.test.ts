@@ -1,6 +1,7 @@
 /**
  * 单元测试验证石像鬼查验许可、阶段捕获作用域与独立原生／gift／copy 历史。输入为字面角色组、受控单阶段回调及撤权修改；字面报告、次数和原引用是预期。完整阶段及死亡交互链由场景测试拥有。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -31,7 +32,7 @@ import {
   wolfChatParticipants,
   wolfKnifeHolders,
 } from "../../../../src/game/mechanisms/roles/wolf_team";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
@@ -41,7 +42,7 @@ import {
   grantNightAbility,
   transferNightAbility,
 } from "../../../../src/game/mechanisms/roles/ability_changes";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 
 const deck = [Role.Gargoyle, Role.Wolf, Role.Seer, Role.Gravekeeper, Role.Villager, Role.Villager],
   catalog = getDefaultRoleCatalog();

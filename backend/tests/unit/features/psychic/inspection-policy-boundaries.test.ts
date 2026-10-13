@@ -1,6 +1,7 @@
 /**
  * 单元测试验证通灵师重复查验政策、只读预检、可选关闭及复制资源隐私。输入保留原 locale／变化／gateway／旧政策矩阵、有界直接查验与原缓存 catalog 引用；精确角色／历史／库存、取消及外来原生刀拒绝是预期，不运行完整夜晚、PhaseManager 或模型。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -33,12 +34,12 @@ import {
 import { hasRoleInspectionNightCommit } from "../../../../src/game/mechanisms/roles/role_inspection/night_scope";
 import { canGargoyleKnife } from "../../../../src/game/mechanisms/roles/gargoyle/inheritance";
 import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
 
 const deck = [Role.Psychic, Role.Wolf, Role.Witch, Role.Guard, Role.Villager, Role.Villager],

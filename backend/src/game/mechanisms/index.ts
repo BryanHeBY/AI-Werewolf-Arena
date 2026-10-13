@@ -1,8 +1,5 @@
 /**
- * Publishes mechanism contracts, registries and concrete feature assembly exports.
- * Inputs are named definitions from their owners; outputs are the existing public
- * mechanism API plus the night actor query owner. This facade never enumerates
- * actors, spends ability resources or owns a second eligibility algorithm.
+ * 为后端消费者公开机制契约、注册器及具体机制装配出口。输入来自各唯一所有者的具名定义；导出保留公开机制 API 与夜间玩家资格查询。不枚举玩家、消费能力库存或建立第二套资格算法。
  */
 export * from "./contracts";
 export * from "./broadcast/agent_event_visibility_registry";
@@ -22,6 +19,7 @@ export * from "./registries/tool_spec_registry";
 export * from "./registries/win_condition_registry";
 export * from "./roles/contracts";
 export * from "./roles/catalog";
+export * from "./roles/role-catalog-assembly";
 export * from "./roles/wolf_team";
 export * from "./roles/inspection";
 export * from "./roles/abilities";

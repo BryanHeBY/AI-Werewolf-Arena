@@ -1,8 +1,5 @@
 /**
- * Defines configured elimination predicates from actual alive faction statistics. Inputs are
- * World state and win-condition configuration; outputs are rule decisions for city, side and
- * wolf-half conditions. These predicates never seal the result or resolve special relation
- * victories.
+ * 负责按真实存活阵营统计定义配置的淘汰条件。输入为 World 与胜负配置；输出为屠城、屠边和狼半条件的候选结果。不封盘或执行特殊关系胜利；判胜时点及唯一终态仍由引擎维护。
  */
 import { ELIMINATION_PRIORITIES, type EliminationPriority } from "../../../core/domain/board";
 import { demonHunterIsGod } from "../roles/demon_hunter/authority";
@@ -13,7 +10,7 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { Camp, type WinDecision, WinCondition } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
-import { getDefaultRoleCatalog } from "../roles/catalog";
+import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";
 import { WinConditionSpec } from "./contracts";
 import { victoryDecision } from "./results";
 
@@ -45,7 +42,7 @@ function statAlive(world: World): AliveStat {
 
     if (roleComp.camp === Camp.Good) {
       stat.good += 1;
-      const profile = getDefaultRoleCatalog().get(roleComp.role);
+      const profile = getDefaultRoleCatalog().metadata(roleComp.role);
       if (profile?.goodSide === "god" || demonHunterIsGod(world, roleComp)) stat.gods += 1;
       else if (profile?.goodSide === "villager") stat.villagers += 1;
     }

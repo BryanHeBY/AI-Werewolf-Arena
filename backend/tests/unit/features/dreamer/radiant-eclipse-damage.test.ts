@@ -1,14 +1,12 @@
 /**
- * Unit tests: Radiant Eclipse damage uses submitted status marks and explicit
- * shelter/backlash claims; handwritten cause filtering and unchanged guard/heal assertions
- * check damage resolution. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试用提交的状态印记及明确庇护／反噬声明验证日辉月蚀伤害。手写死因过滤与原守护／救药
+ * 断言验证结算，输入及字面／不可变 fixture 预期保持原样，不运行模型或完整对局。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createAliveComponent, aliveLifeVersion } from "../../../../src/core/domain/components/alive";
+import { aliveLifeVersion } from "../../../../src/core/domain/components/alive";
 import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
 import { DeathCause } from "../../../../src/core/domain/deaths";
 import { StatusMark } from "../../../../src/core/domain/identity";

@@ -1,12 +1,10 @@
 /**
- * Unit tests: Fault plans use literal replacement requests and hostile input shapes;
- * original life identity, exact boundary mutation and zero foreign-code assertions check
- * independent fault input ownership. Inputs and expected outcomes remain the original
- * literal or immutable-fixture oracle; these module assertions invoke no model or
- * complete-game driver.
+ * 单元测试用字面替换请求与恶意输入形状验证独立故障输入所有权。原生命身份、精确边界修改和
+ * 零外来代码断言是预期；输入及字面／不可变 fixture 保持原样，不运行模型或完整对局。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { World, COMPONENT, createAliveComponent, type AliveComponent } from "../../../src/core";
+import { World, COMPONENT, type AliveComponent } from "../../../src/core";
 import { NightFaultPlan, readFaultPlan, type AppliedFault } from "../../../src/game/engine/fault_plan";
 const plan = () => ({
   version: "awa_fault_plan_v1",

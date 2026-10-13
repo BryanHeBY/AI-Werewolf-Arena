@@ -4,14 +4,15 @@
  * 外层完整夜仍真实运行，嵌套进入应拒绝；实例入口迁移不改变已付资格和生命周期。
  * 不调用模型／网络，也不以新生产输出重写 fixture 或 golden。
  */
+import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { Role, Camp, WitchSelfHealRule } from "../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { type RoleComponent } from "../../../../src/core/domain/components/role";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
-import { createCampComponent } from "../../../../src/core/domain/components/camp";
+
+
 import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";

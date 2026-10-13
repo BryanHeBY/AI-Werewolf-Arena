@@ -1,13 +1,11 @@
 /**
- * Unit tests: Mist Raven pending-night handling uses explicit roots, links, healing and
- * penetrating claims; handwritten cause sets and unchanged-prefix assertions check
- * selective source removal. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试用明确根、连线、救药及穿透声明验证雾鸦待处理夜晚。手写死因集合与原前缀断言
+ * 验证选择性来源移除，输入及字面／不可变 fixture 预期保持原样，不运行模型或完整对局。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../src/core/domain/world";
-import { createAliveComponent, aliveLifeVersion } from "../../../src/core/domain/components/alive";
+import { aliveLifeVersion } from "../../../src/core/domain/components/alive";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { DeathCause, type DeathSources } from "../../../src/core/domain/deaths";
 import {

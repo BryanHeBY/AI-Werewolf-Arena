@@ -20,7 +20,7 @@ import {
 } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
 import { getWolfBeautyState } from "./state";
-import { getDefaultRoleCatalog } from "../catalog";
+import { getDefaultRoleCatalog } from "../role-catalog-assembly";
 import { victoryDecision } from "../../win_conditions/results";
 
 export interface CharmBinding {
@@ -187,7 +187,7 @@ export function captureBeautyExile(world: World, actorId: EntityId): BeautyExile
   )
     return null;
   const target = world.getComponent(binding.targetId, COMPONENT.Role),
-    side = target ? getDefaultRoleCatalog().get(target.role)?.goodSide : undefined;
+    side = target ? getDefaultRoleCatalog().metadata(target.role)?.goodSide : undefined;
   return target?.camp === Camp.Good && side
     ? { actorId, targetId: binding.targetId, side, binding }
     : null;
@@ -207,7 +207,7 @@ export function resolveBeautyExileVictory(
     const role = world.getComponent(id, COMPONENT.Role);
     return (
       role?.camp === Camp.Good &&
-      getDefaultRoleCatalog().get(role.role)?.goodSide === candidate.side
+      getDefaultRoleCatalog().metadata(role.role)?.goodSide === candidate.side
     );
   });
   return sideAlive

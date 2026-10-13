@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证雾鸦独立 night frame 的原状态／读接口。输入为内存 fixture、受控回调和畸形修改；原引用、字面值及拒绝断言为预期，不执行装配周期、模型或实体传输。
  */
+import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { Camp, Role, WinCondition } from "../../../../src/core/domain/identity";
@@ -9,13 +10,10 @@ import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/p
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { type RoleComponent } from "../../../../src/core/domain/components/role";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { createCampComponent } from "../../../../src/core/domain/components/camp";
-import {
-  createAliveComponent,
-  type AliveComponent,
-} from "../../../../src/core/domain/components/alive";
+
+import { type AliveComponent } from "../../../../src/core/domain/components/alive";
 import { createIdentityComponent } from "../../../../src/core/domain/entities/player";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {
   createAlchemistState,
   createRavenState,

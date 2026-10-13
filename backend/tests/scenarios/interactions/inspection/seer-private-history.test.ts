@@ -8,7 +8,12 @@ import { text } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Camp, Role, type GameEvent, type RoleComponent } from "../../../../src/core";
-import { RoleCatalog, getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
 import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
@@ -26,15 +31,19 @@ for (const locale of ["zh-CN", "en"] as const) {
     test(`${locale}: actual seer stage records only its authorized ${inspectedCamp} label and detached private history`, async () => {
       const { world } = bootstrapGame(sixPlayerMvpConfig, { fixedRoles, locale }),
         events: GameEvent[] = [];
-      const catalog = new RoleCatalog(
-        getDefaultRoleCatalog()
-          .all()
-          .map((profile) =>
-            profile.role !== Role.Wolf
-              ? profile
-              : { ...profile, inspectionLabels: { camp: inspectedCamp, role: Role.Villager } },
-          ),
-      );
+      const catalog = createRoleCatalog({
+        contributions: getDefaultRoleContributions().map((profile) =>
+          profile.metadata.role !== Role.Wolf
+            ? profile
+            : {
+                ...profile,
+                runtime: {
+                  ...profile.runtime,
+                  inspectionLabels: { camp: inspectedCamp, role: Role.Villager },
+                },
+              },
+        ),
+      });
       const pipeline = new NightPipeline({
         world,
         events,

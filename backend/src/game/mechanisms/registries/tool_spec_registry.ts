@@ -1,23 +1,18 @@
 /**
- * Owns the domain-tool index and ordered localized hints/directives from common,
- * sheriff and role declarations. Inputs are original specs and directive arrays;
- * outputs are selected original specs and presentation text, never action permission.
- * Duplicate own-data schemas must match completely; compatible or opaque legacy
- * overrides retain the last original reference and its prose. Parameters getters
- * and runtime schema parsing remain deferred to ActionReception's existing first use.
- * This index does not merge the separate three SDK/MCP transport tools or write state.
+ * 负责通用、警长和角色运行贡献的领域工具索引，以及有序本地化提示和指令。输入为原规格与指令数组；输出为同一规格和展示文字，不授予行动权限。重复的自有数据 schema 必须完全一致；兼容或不透明覆盖保留最后原引用与原文。参数 getter 和 schema 解析仍延迟至 ActionReception 首次使用；不合并 SDK／MCP 三项传输工具或写入领域状态。
  */
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { registerToolSpecs } from "../../../rulesets/tool-spec-registration";
 import { ToolName } from "../../../core/domain/model";
 import { COMMON_TOOL_SPECS } from "../common/tool_specs";
 import { StageDirectiveRule, ToolSpec } from "../contracts";
-import { RoleCatalog, getDefaultRoleCatalog } from "../roles/catalog";
+import { RoleCatalog } from "../roles/catalog";
+import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";
 import { SHERIFF_TOOL_SPECS } from "../sheriff/tool_specs";
 
 function buildDefaultSpecs(roleProfileRegistry: RoleCatalog): ToolSpec[] {
   const specs: ToolSpec[] = [...COMMON_TOOL_SPECS, ...SHERIFF_TOOL_SPECS];
-  for (const profile of roleProfileRegistry.all()) {
+  for (const { runtime: profile } of roleProfileRegistry.allRuntime()) {
     if (profile.toolSpecs) {
       specs.push(...profile.toolSpecs);
     }
@@ -27,7 +22,7 @@ function buildDefaultSpecs(roleProfileRegistry: RoleCatalog): ToolSpec[] {
 
 function buildDefaultStageDirectives(roleProfileRegistry: RoleCatalog): StageDirectiveRule[] {
   const directives: StageDirectiveRule[] = [];
-  for (const profile of roleProfileRegistry.all()) {
+  for (const { runtime: profile } of roleProfileRegistry.allRuntime()) {
     if (profile.stageDirectives) {
       directives.push(...profile.stageDirectives);
     }
@@ -70,7 +65,7 @@ export class ToolSpecRegistry {
   getStageDirective(allowedTools: ToolName[], locale: Locale = "zh-CN"): string | null {
     const matched = this.stageDirectives.find((rule) => rule.match(allowedTools));
     if (!matched) return null;
-    // A caller may spread a built-in rule and replace its text; preserve that override.
+    // 调用方可以复制内建规则后覆盖原文；只在原文仍等于内建字节时采用对应翻译。
     return matched.messageKey && matched.text === text("zh-CN", matched.messageKey)
       ? text(locale, matched.messageKey)
       : matched.text;

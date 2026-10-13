@@ -1,11 +1,17 @@
 /**
- * Gifted gun scenarios verify actual PM/whole-night activation, ordered native/gift deaths and final judgment with real recording.
- * Input: Original fixed role plans, controlled stage providers and existing temporary session files where the original case records.
- * Output and oracle: Handwritten gun/death/order, exact recorded assertions and reentry behavior remain unchanged; source/fixture bytes and expected data are not regenerated.
+ * 赠枪场景验证真实经理／整夜武装、原生与赠枪死亡顺序及实际录制的最终判胜。输入为原固定角色、受控阶段 Provider 及原用例临时文件；手写枪／死亡／顺序、精确录制断言和重入行为是预期，不重生成样本或预期数据。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Camp, Phase, Role, type ActionRequest, type GameEvent, type RoleComponent } from "../../../src/core";
+import {
+  COMPONENT,
+  Camp,
+  Phase,
+  Role,
+  type ActionRequest,
+  type GameEvent,
+  type RoleComponent,
+} from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { allDeathGuns, grantDeathGun } from "../../../src/game/mechanisms/roles/death_abilities";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
@@ -17,7 +23,12 @@ import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { RoleCatalog, getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { NightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
 
 const roles = [Role.Wolf, Role.Hunter, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
@@ -202,16 +213,16 @@ test("a declared death capability collects final activation before a gift is pro
     },
     game = bootstrapGame(config, { fixedRoles: roles }),
     events: GameEvent[] = [];
-  const catalog = new RoleCatalog(
-      getDefaultRoleCatalog()
-        .all()
-        .map((profile) =>
-          profile.role === Role.Seer
-            ? {
-                ...profile,
+  const catalog = createRoleCatalog({
+      contributions: getDefaultRoleContributions().map((profile) =>
+        profile.metadata.role === Role.Seer
+          ? {
+              ...profile,
+              runtime: {
+                ...profile.runtime,
                 possibleDeathAbilities: ["gun" as const],
                 nightStages: [
-                  ...(profile.nightStages ?? []),
+                  ...(profile.runtime.nightStages ?? []),
                   {
                     id: "controlled_gift",
                     priority: 230,
@@ -222,10 +233,11 @@ test("a declared death capability collects final activation before a gift is pro
                     },
                   },
                 ],
-              }
-            : profile,
-        ),
-    ),
+              },
+            }
+          : profile,
+      ),
+    }),
     stageRegistry = new NightStageRegistry(catalog);
   expect(allDeathGuns(game.world.getComponent<RoleComponent>(5, COMPONENT.Role))).toHaveLength(0);
   expect(

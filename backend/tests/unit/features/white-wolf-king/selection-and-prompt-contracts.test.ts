@@ -134,7 +134,7 @@ for (const locale of ["zh-CN", "en"] as const)
       ),
     ).toBeNull();
     expect(events).toHaveLength(1);
-    expect(getDefaultRoleCatalog().require(Role.WhiteWolfKing).deathHook).toBeUndefined();
+    expect(getDefaultRoleCatalog().requireRuntime(Role.WhiteWolfKing).deathHook).toBeUndefined();
   });
 
 for (const locale of ["zh-CN", "en"] as const)

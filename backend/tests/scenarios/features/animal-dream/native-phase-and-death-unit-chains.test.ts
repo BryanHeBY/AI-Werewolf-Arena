@@ -1,6 +1,8 @@
 /**
- * Scenario tests drive actual Animal Dream phase/death units, Cat expiry and Fox/Puffer/Beauty interactions. Inputs are fixed original rosters, literal choices and foreign original-life replacements; handwritten death/badge/stock ordering and rejection are the oracle. No model or replacement expected fixture is generated.
+ * 场景测试验证真实动物梦境阶段／死亡单元、白猫到期及狐狸／河豚／狼美人交互。输入为固定
+ * 原名单、字面选择和外来原生命替换；手写死亡／警徽／库存顺序及拒绝是预期，不调用模型或生成替代 fixture。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { animalInternalConfig } from "../../../support/features/animal-dream/builders/roster";
@@ -16,7 +18,7 @@ import {
   type ActionProvider,
   type AliveComponent,
 } from "../../../../src/core";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { aliveLifeVersion } from "../../../../src/core/domain/components/alive";
 import { animalAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/animal_dream/authority";

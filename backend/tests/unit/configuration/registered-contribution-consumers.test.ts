@@ -1,7 +1,5 @@
 /**
- * Unit tests verify registered configuration contributions round-trip into bounded role, gateway, Knight-window and bilingual prompt consumers.
- * Input: Original Witch-rule/window matrix, fixed literal role rows and controlled null-action requests.
- * Output and oracle: Handwritten self-heal/window/prompt and unknown-field assertions remain unchanged; no full phase, record file, transport or replacement golden is executed.
+ * 单元测试验证注册配置往返至有界角色、Gateway、骑士窗口和双语提示消费者。输入为原女巫规则／窗口矩阵、固定角色与受控空回复；手写自救／窗口／提示／未知字段是预期，不执行完整阶段、录制文件或传输，不替换 golden。
  */
 import { expect, spyOn, test } from "bun:test";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
@@ -25,7 +23,7 @@ import { GameActionRequestFactory } from "../../../src/game/engine/action_reques
 import { KnightDuelWindow as DuelExecutor } from "../../../src/game/engine/knight_duel_window";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms/prompt/config_render_registry";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
 import {
   boardDefinitionFromConfig,
@@ -142,7 +140,7 @@ for (const rule of Object.values(WitchSelfHealRule))
   }
 
 test("reverse writing calls the contributor and rejects internal fields which have no consumer", () => {
-  const contribution = getDefaultRoleCatalog().require(Role.Witch).configuration!;
+  const contribution = getDefaultRoleCatalog().requireRuntime(Role.Witch).configuration!;
   const serialize = spyOn(contribution, "serialize");
   try {
     boardDefinitionFromConfig("closure_test", base);

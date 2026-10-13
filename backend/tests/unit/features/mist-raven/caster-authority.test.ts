@@ -1,12 +1,13 @@
 /**
  * 单元测试：验证雾鸦施法者的独立权限契约与原 owner／frame／reader。输入为内存 fixture、受控回调和畸形修改；原引用、字面值及拒绝断言为预期，不执行装配周期、模型或实体传输。
  */
+import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { Camp, type Role } from "../../../../src/core/domain/identity";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { createCampComponent } from "../../../../src/core/domain/components/camp";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
+
 import { createIdentityComponent } from "../../../../src/core/domain/entities/player";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import {

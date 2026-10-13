@@ -4,10 +4,11 @@
  * 取消命令的部分失败还需保留第一项已提交移除；不从生产输出推导预期。
  * 本模块不调用模型、传输或完整对局驱动。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+
 import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
 import { StatusMark } from "../../../src/core/domain/identity";
 import { captureNightLife } from "../../../src/core/domain/night_effects";

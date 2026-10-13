@@ -1,15 +1,13 @@
 /**
  * 负责驱动夜贵族子系统的原 World fixture、有界夜选择、伤害和关闭。输入为脚本步骤、回调与资源请求，输出为原受控轨迹、句柄及边界响应。测试保留字面行动和失败预期；不运行完整对局或传输，也不引入付费模型。
  */
+import { createAliveComponent, createCampComponent } from "../../../../../src/game/observation/component-presentation";
 import { World } from "../../../../../src/core/domain/world";
 import { COMPONENT } from "../../../../../src/core/domain/components/names";
 import { Role, Camp } from "../../../../../src/core/domain/identity";
 import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
-import {
-  createAliveComponent,
-  type AliveComponent,
-} from "../../../../../src/core/domain/components/alive";
-import { createCampComponent } from "../../../../../src/core/domain/components/camp";
+import { type AliveComponent } from "../../../../../src/core/domain/components/alive";
+
 import { createVictoryComponent } from "../../../../../src/core/domain/components/victory";
 import { createIdentityComponent } from "../../../../../src/core/domain/entities/player";
 import {

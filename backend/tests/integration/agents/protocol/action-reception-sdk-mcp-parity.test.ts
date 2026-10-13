@@ -1,11 +1,11 @@
 /**
- * Integration tests for action reception parity. Inputs are original receipt/permission matrices and
- * synthetic SDK callbacks or local HTTP/MCP endpoints. Original literal receipts, reference/getter/error
- * traces, facts and expected state remain the oracle. Actual Bun HTTP listeners plus spawned stdio MCP
- * exercise business receipt parity; one original case writes temporary recorder output. Original finally
- * closes transports and servers. Actual public filesystem or synthetic local transport boundaries are
- * exercised; private config/auth and paid model services are excluded.
+ * 集成测试验证行动接收在 SDK／MCP 的一致性。输入为原回执／权限矩阵、合成 SDK 回调或本机 HTTP／MCP；字面回执、引用／getter／错误轨迹、事实和状态为预期。真实 Bun 监听与 stdio sidecar 检验业务回执，一项原用例写临时录制。finally 关闭原传输和服务；不读取私有配置／认证或调用计费模型。
  */
+import {
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -441,14 +441,14 @@ for (const locale of ["zh-CN", "en"] as const)
         await import("../../../../src/ai/agents/acp/acp_action_provider");
       const { BaselineBotActionProvider } =
         await import("../../../../src/ai/agents/providers/action_providers");
-      const catalog = new RoleCatalog(
-        getDefaultRoleCatalog()
-          .all()
-          .map((profile) =>
-            profile.role !== Role.Wolf
-              ? profile
-              : {
-                  ...profile,
+      const catalog = createRoleCatalog({
+        contributions: getDefaultRoleContributions().map((profile) =>
+          profile.metadata.role !== Role.Wolf
+            ? profile
+            : {
+                ...profile,
+                runtime: {
+                  ...profile.runtime,
                   wolfTeam: {
                     recognizedByPack: false,
                     recognizes: "none" as const,
@@ -456,8 +456,9 @@ for (const locale of ["zh-CN", "en"] as const)
                     canVoteForKill: false,
                   },
                 },
-          ),
-      );
+              },
+        ),
+      });
       const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
       const acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
       const input: ActionRequest = {
@@ -631,14 +632,14 @@ for (const locale of ["zh-CN", "en"] as const)
     const { RoleCatalog } = await import("../../../../src/game/mechanisms/roles/catalog");
     const { LlmActionProvider } = await import("../../../../src/ai/agents/llm/llm_action_provider");
     const { AcpActionProvider } = await import("../../../../src/ai/agents/acp/acp_action_provider");
-    const catalog = new RoleCatalog(
-      getDefaultRoleCatalog()
-        .all()
-        .map((profile) =>
-          profile.role !== Role.Seer
-            ? profile
-            : {
-                ...profile,
+    const catalog = createRoleCatalog({
+      contributions: getDefaultRoleContributions().map((profile) =>
+        profile.metadata.role !== Role.Seer
+          ? profile
+          : {
+              ...profile,
+              runtime: {
+                ...profile.runtime,
                 wolfTeam: (state: RoleComponent) => ({
                   recognizedByPack:
                     (state.privateState as { readonly revealed?: unknown }).revealed === true,
@@ -647,8 +648,9 @@ for (const locale of ["zh-CN", "en"] as const)
                   canVoteForKill: false,
                 }),
               },
-        ),
-    );
+            },
+      ),
+    });
     const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale }),
       acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
     sdk.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.camp =

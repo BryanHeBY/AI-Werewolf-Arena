@@ -1,8 +1,9 @@
 /**
- * Unit tests verify bounded Lucky/native skill resources, target history, transfer/expiry and late-scope commitment.
- * Input: All original direct stage/death operations, literal rosters/actions and controlled owner/life changes.
- * Output and oracle: Exact independent bottles, stock/history, protection and optional prompt assertions remain unchanged; no complete NightPipeline or PM cycle runs.
+ * 单元测试验证有界幸运／原生技能资源、目标历史、转移／到期及晚 scope 提交。输入保留所有原
+ * 直接阶段／死亡操作、字面名单／行动和受控 owner／生命变化；精确独立药瓶、库存／历史、
+ * 防护和可选提示断言不变，不运行完整 NightPipeline 或 PhaseManager 周期。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { bindNativeNightFailurePolicy } from "../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../src/rulesets/native-night-effects";
@@ -41,12 +42,12 @@ import {
 } from "../../../src/game/mechanisms/roles/night_action_history";
 import { LUCKY_ABILITY_STAGE } from "../../../src/game/mechanisms/roles/miracle_merchant/lucky_stage";
 import { NightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
 import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+
 import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
 import { DeathResolution } from "../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../src/game/engine/event_registry";

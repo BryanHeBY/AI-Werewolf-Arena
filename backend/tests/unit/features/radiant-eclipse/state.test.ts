@@ -186,13 +186,13 @@ test("shelter repeat is inherited per ability, not globally from the borrower's 
 
 test("a real default Dream ability cannot silently gain the finite board's stronger protection", () => {
   const role = createRoleComponent(Role.Dreamer, Camp.Good);
-  DREAMER_ROLE_PROFILE.init!(role as RoleInitializationComponent, {});
+  DREAMER_ROLE_PROFILE.runtime.init!(role as RoleInitializationComponent, {});
   const original = getDreamerState(role)!;
   expect(original.protectionPolicy).toBeUndefined();
   expect(() => snapshotBorrowedState("dream", original, 2)).toThrow(
     "eclipse_borrow_policy_invalid",
   );
-  DREAMER_ROLE_PROFILE.init!(role as RoleInitializationComponent, {
+  DREAMER_ROLE_PROFILE.runtime.init!(role as RoleInitializationComponent, {
     boardConfig: {
       ...sixPlayerMvpConfig,
       dreamer: { protectionPolicy: "netease_2026_night_immunity_v1" },
@@ -225,7 +225,7 @@ test("all four native potion stocks are copied exactly without historical or lif
   for (const heal of [0, 1])
     for (const poison of [0, 1]) {
       const role = createRoleComponent(Role.Witch, Camp.Good);
-      WITCH_ROLE_PROFILE.init!(role as RoleInitializationComponent, {
+      WITCH_ROLE_PROFILE.runtime.init!(role as RoleInitializationComponent, {
         boardConfig: { ...sixPlayerMvpConfig, witch: { canSelfHeal: WitchSelfHealRule.Disabled } },
       });
       const original = getWitchState(role)!;

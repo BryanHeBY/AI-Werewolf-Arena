@@ -1,19 +1,20 @@
 /**
- * Unit tests verify the direct wolf ballot stage counts only the original target life and a fresh valid replacement ballot.
- * Input: Original mutation matrix, bounded night-stage context and controlled second voter callbacks.
- * Output and oracle: Exact collected vote/target identity outcomes preserve original assertions; no whole NightPipeline, PM cycle or model runs.
+ * 单元测试验证直接狼刀票阶段只计算原目标生命及有效的新替代票。输入为原修改矩阵、有界
+ * 夜阶段上下文和受控第二投票者回调；精确收集票／目标身份结果保持原断言，不运行完整
+ * NightPipeline、PhaseManager 周期或模型。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import type { NightStageState } from "../../../src/game/mechanisms/stages/night/contracts";
 import { nightStageContext } from "../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { Role, Phase, WinCondition, COMPONENT, type BoardConfig, type GameEvent, StatusMark } from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+
 import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { WOLF_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/wolf/night_stages";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 
 const config = (deck: Role[]): BoardConfig => ({
   ...sixPlayerMvpConfig,

@@ -161,7 +161,7 @@ test("fresh target policy rechecks history after await and exhausts without an i
   });
   const role = game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!;
   expect(
-    SEER_ROLE_PROFILE.baselineAction!(
+    SEER_ROLE_PROFILE.runtime.baselineAction!(
       role,
       req,
       () => 1,
@@ -185,7 +185,7 @@ for (const locale of ["zh-CN", "en"] as const)
       locale,
     );
     const prompt = captureNativeRolePresentation(
-      SEER_ROLE_PROFILE.nativePresentation!.id,
+      SEER_ROLE_PROFILE.presentation!.id,
       game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!,
       locale,
     );

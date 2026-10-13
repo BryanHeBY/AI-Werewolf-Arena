@@ -1,10 +1,9 @@
 /**
- * Unit tests for awakened native runtime. Inputs are original learned-template, activation, scope and
- * paid-effect matrices. Original literal receipts, reference/getter/error traces, facts and expected state
- * remain the oracle. Bounded original feature stages/requests/readers/death-hook check activation, stock
- * and original-scope revocation; no complete pipeline or PhaseManager cycle. No complete game phase or paid
- * model runs; existing local windows and denied entry probes remain bounded.
+ * 单元测试以原学习模板、激活、scope 与已付款效果矩阵验证觉醒原生运行。原字面回执、引用／
+ * getter／错误轨迹、事实和状态是预期；有界具体阶段／请求／reader／死亡 hook 检查激活、库存
+ * 及原 scope 撤销，不运行完整流水线、PhaseManager 周期或计费模型，保留局部窗口和拒绝探针。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
@@ -24,10 +23,7 @@ import {
   type RoleComponent,
   type ToolCall,
 } from "../../../../src/core";
-import {
-  createAliveComponent,
-  type AliveComponent,
-} from "../../../../src/core/domain/components/alive";
+import { type AliveComponent } from "../../../../src/core/domain/components/alive";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
@@ -38,7 +34,12 @@ import {
   findNightAbility,
 } from "../../../../src/game/mechanisms/roles/abilities";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
-import { getDefaultRoleCatalog, RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { MIRROR_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/night_stages";
 import { awakenedDeathHook } from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/death_hook";
 import {
@@ -281,19 +282,22 @@ for (const boundary of ["await", "gateway", "label"] as const)
         };
       }
       if (boundary === "label")
-        next.roleCatalog = new RoleCatalog(
-          next.roleCatalog.all().map((profile) =>
-            profile.role === Role.Villager
+        next.roleCatalog = createRoleCatalog({
+          contributions: getDefaultRoleContributions().map((profile) =>
+            profile.metadata.role === Role.Villager
               ? {
                   ...profile,
-                  inspectionLabels: () => {
-                    mutate();
-                    return { role: Role.Villager };
+                  runtime: {
+                    ...profile.runtime,
+                    inspectionLabels: () => {
+                      mutate();
+                      return { role: Role.Villager };
+                    },
                   },
                 }
               : profile,
           ),
-        );
+        });
       await stage("awakened_opening").execute(next);
       await MIRROR_INSPECTION_STAGE.execute(next);
       expect(ability.uses).toBe(0);

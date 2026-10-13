@@ -1,151 +1,100 @@
 /**
- * 负责角色贡献的实际有序注册、运行初始化和展示装配。输入为原 profile、角色对象与
- * 上下文；输出保持 Catalog 查询及同一组件。初始化仍先于默认语言捕获，展示时才按
- * 当前 role 查贡献；自定义回调保留原 this、两次方法读取与晚 World 参数读取。
- * 内建展示消费具体捕获与纯格式化所有者，不复制状态、不授予租约；失败保留原前缀。
+ * 管理角色资料、运行和展示的独立查询与有序注册。内建输入已经由实际组合根分开登记，
+ * 自定义 flat 输入保留原对象，输出为原贡献引用与晚执行的展示绑定；查询不复制字段、提前求值 getter 或改变回调 receiver。
+ * 初始化仍先于默认语言读取，展示才按当前 role 查具体贡献；Catalog 不导入捕获程序。
+ * 资料、运行贡献和原文不能相互授予权限，原重复／缺失角色错误前缀保持不变。
  */
-import { NIGHT_NOBLE_ROLE_PROFILE, AWAKENED_IDIOT_ROLE_PROFILE } from "./noble_secret_body/profile";
-import {
-  WHITE_CAT_ROLE_PROFILE,
-  FOX_CUB_ROLE_PROFILE,
-  PUFFERFISH_ROLE_PROFILE,
-} from "./animal_dream/profile";
-import {
-  FRAGRANT_PHANTOM_ROLE_PROFILE,
-  AWAKENED_SEER_ROLE_PROFILE,
-} from "./fragrant_pair_seer/profile";
-import { SCHOLAR_ROLE_PROFILE, MENTOR_ROLE_PROFILE } from "./scholar_mentor/profile";
-import { ALCHEMIST_ROLE_PROFILE, RAVEN_CLAW_ROLE_PROFILE } from "./mist_raven/profile";
-import { TIME_CONSORT_ROLE_PROFILE } from "./time_wolf_consort/profile";
-import { WOLF_SORCERER_ROLE_PROFILE } from "./wolf_sorcerer/profile";
-import { TRICKSTER_ROLE_PROFILE } from "./trickster/profile";
-import { ORDER_PRINCE_ROLE_PROFILE } from "./order_prince/profile";
-import { MAGICIAN_ROLE_PROFILE } from "./magician/profile";
-import { RED_MOON_ROLE_PROFILE } from "./red_moon_apostle/profile";
-import { NIGHTMARE_SHADOW_ROLE_PROFILE } from "./nightmare_shadow/profile";
-import { EVIL_KNIGHT_ROLE_PROFILE } from "./evil_knight/profile";
-import { DEMON_HUNTER_ROLE_PROFILE } from "./demon_hunter/profile";
-import { PURE_WHITE_ROLE_PROFILE, WOLF_WITCH_ROLE_PROFILE } from "./pure_white/profile";
-import { GHOST_BRIDE_ROLE_PROFILE } from "./ghost_bride/profile";
-import { LONELY_GIRL_ROLE_PROFILE } from "./lonely_girl/profile";
-import { WILD_CHILD_ROLE_PROFILE } from "./wild_child/profile";
-import { SHAPESHIFTER_ROLE_PROFILE } from "./shapeshifter/profile";
-import { THIEF_ROLE_PROFILE } from "./thief/profile";
-/** 文件说明：集中注册角色 profile，并提供阵营、提示词和运行时适配能力。 */
-import { RoleComponent } from "../../../core/domain/components/role";
-import { Camp, Role } from "../../../core/domain/model";
-import { RoleInitContext, RoleProfile, type RoleInitializationComponent } from "./contracts";
-import { GUARD_ROLE_PROFILE } from "./guard/profile";
-import { HUNTER_ROLE_PROFILE } from "./hunter/profile";
-import { IDIOT_ROLE_PROFILE } from "./idiot/profile";
-import { roleName, text, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
-import { SEER_ROLE_PROFILE } from "./seer/profile";
-import { VILLAGER_ROLE_PROFILE } from "./villager/profile";
-import { WITCH_ROLE_PROFILE } from "./witch/profile";
-import { WOLF_ROLE_PROFILE } from "./wolf/profile";
-import { WOLF_KING_ROLE_PROFILE } from "./wolf_king/profile";
-import { WHITE_WOLF_KING_ROLE_PROFILE } from "./white_wolf_king/profile";
-import { KNIGHT_ROLE_PROFILE } from "./knight/profile";
-import { GRAVEKEEPER_ROLE_PROFILE } from "./gravekeeper/profile";
-import { DREAMER_ROLE_PROFILE } from "./dreamer/profile";
-import { WOLF_BEAUTY_ROLE_PROFILE } from "./wolf_beauty/profile";
-import { BEAR_ROLE_PROFILE } from "./bear/profile";
-import { HIDDEN_WOLF_ROLE_PROFILE } from "./hidden_wolf/profile";
-import { GARGOYLE_ROLE_PROFILE } from "./gargoyle/profile";
-
-import { PSYCHIC_ROLE_PROFILE } from "./psychic/profile";
-import { MECHANICAL_WOLF_ROLE_PROFILE } from "./mechanical_wolf/profile";
-import { BLACK_MARKET_MERCHANT_ROLE_PROFILE } from "./black_market_merchant/profile";
-import { MIRACLE_MERCHANT_ROLE_PROFILE } from "./miracle_merchant/profile";
-
-import { HYBRID_ROLE_PROFILE } from "./hybrid/profile";
-import { MIRROR_GIRL_ROLE_PROFILE } from "./mirror_girl/profile";
-import { AWAKENED_HIDDEN_WOLF_ROLE_PROFILE } from "./awakened_hidden_wolf/profile";
-
-import { CURSED_FOX_ROLE_PROFILE } from "./cursed_fox/profile";
-
-import { DEBATER_ROLE_PROFILE } from "./debater/profile";
-import { CUPID_ROLE_PROFILE } from "./cupid/profile";
-
-import { RADIANT_COUNT_ROLE_PROFILE, ECLIPSE_MAID_ROLE_PROFILE } from "./radiant_eclipse/profile";
+import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import { Camp, type Role, type NativeRolePresentationId } from "@ai-werewolf-arena/game-contract";
+import { roleName, text, type MessageKey } from "@ai-werewolf-arena/game-text";
+import type { RoleComponent } from "../../../core/domain/components/role";
+import type { World } from "../../../core/domain/world";
 import { bindRolePresentation } from "../../observation/role-presentation";
+import type {
+  RoleContributions,
+  RoleInitContext,
+  RoleInitializationComponent,
+  RoleMetadata,
+  RoleProfile,
+  RoleRuntimeContribution,
+} from "./contracts";
 
-const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
-  WHITE_CAT_ROLE_PROFILE,
-  FOX_CUB_ROLE_PROFILE,
-  PUFFERFISH_ROLE_PROFILE,
-  FRAGRANT_PHANTOM_ROLE_PROFILE,
-  AWAKENED_SEER_ROLE_PROFILE,
-  NIGHT_NOBLE_ROLE_PROFILE,
-  AWAKENED_IDIOT_ROLE_PROFILE,
-  RADIANT_COUNT_ROLE_PROFILE,
-  ECLIPSE_MAID_ROLE_PROFILE,
-  ALCHEMIST_ROLE_PROFILE,
-  RAVEN_CLAW_ROLE_PROFILE,
-  SCHOLAR_ROLE_PROFILE,
-  MENTOR_ROLE_PROFILE,
-  TIME_CONSORT_ROLE_PROFILE,
-  WOLF_SORCERER_ROLE_PROFILE,
-  TRICKSTER_ROLE_PROFILE,
-  ORDER_PRINCE_ROLE_PROFILE,
-  MAGICIAN_ROLE_PROFILE,
-  RED_MOON_ROLE_PROFILE,
-  NIGHTMARE_SHADOW_ROLE_PROFILE,
-  EVIL_KNIGHT_ROLE_PROFILE,
-  PURE_WHITE_ROLE_PROFILE,
-  WOLF_WITCH_ROLE_PROFILE,
-  DEMON_HUNTER_ROLE_PROFILE,
-  GHOST_BRIDE_ROLE_PROFILE,
-  WILD_CHILD_ROLE_PROFILE,
-  LONELY_GIRL_ROLE_PROFILE,
-  THIEF_ROLE_PROFILE,
-  SHAPESHIFTER_ROLE_PROFILE,
-  WOLF_ROLE_PROFILE,
-  WOLF_KING_ROLE_PROFILE,
-  WHITE_WOLF_KING_ROLE_PROFILE,
-  KNIGHT_ROLE_PROFILE,
-  GRAVEKEEPER_ROLE_PROFILE,
-  DREAMER_ROLE_PROFILE,
-  WOLF_BEAUTY_ROLE_PROFILE,
-  BEAR_ROLE_PROFILE,
-  CURSED_FOX_ROLE_PROFILE,
-  CUPID_ROLE_PROFILE,
-  DEBATER_ROLE_PROFILE,
-  HIDDEN_WOLF_ROLE_PROFILE,
-  GARGOYLE_ROLE_PROFILE,
-  PSYCHIC_ROLE_PROFILE,
-  MECHANICAL_WOLF_ROLE_PROFILE,
-  MIRACLE_MERCHANT_ROLE_PROFILE,
-  BLACK_MARKET_MERCHANT_ROLE_PROFILE,
-  HYBRID_ROLE_PROFILE,
-  MIRROR_GIRL_ROLE_PROFILE,
-  AWAKENED_HIDDEN_WOLF_ROLE_PROFILE,
-  VILLAGER_ROLE_PROFILE,
-  SEER_ROLE_PROFILE,
-  GUARD_ROLE_PROFILE,
-  WITCH_ROLE_PROFILE,
-  HUNTER_ROLE_PROFILE,
-  IDIOT_ROLE_PROFILE,
-];
+export type NativeRoleRenderer = (
+  id: NativeRolePresentationId,
+  role: RoleComponent,
+  locale: Locale,
+  world?: World,
+) => string;
 
-/** 角色目录：集中提供角色完整 profile 及其轻量派生视图。 */
+/** 内建运行必须显式提供展示装配；自定义数组保持既有 flat 用户输入协议。 */
+export type RoleCatalogInput =
+  | readonly RoleProfile[]
+  | { contributions: readonly RoleContributions[]; renderNative: NativeRoleRenderer };
+
+type Entry =
+  | { kind: "custom-profile"; profile: RoleProfile }
+  | { kind: "contributions"; contributions: RoleContributions; renderNative: NativeRoleRenderer };
+
 export class RoleCatalog {
-  private readonly profileByRole = new Map<Role, RoleProfile>();
+  private readonly byRole = new Map<Role, Entry>();
 
-  constructor(profiles: RoleProfile[] = DEFAULT_ROLE_PROFILES) {
-    for (const profile of profiles) {
-      if (this.profileByRole.has(profile.role))
-        throw new Error(`role_profile_duplicate: ${profile.role}`);
-      this.profileByRole.set(profile.role, profile);
+  constructor(
+    input: RoleCatalogInput,
+    private readonly builtinMetadata: readonly RoleMetadata[],
+  ) {
+    // 输入形态由调用者明确选择；不为识别新协议而探测用户 profile 的新字段或 descriptor。
+    if (Array.isArray(input)) {
+      for (const profile of input) {
+        if (this.byRole.has(profile.role))
+          throw new Error(`role_profile_duplicate: ${profile.role}`);
+        this.byRole.set(profile.role, { kind: "custom-profile", profile });
+      }
+    } else {
+      const native = input as Exclude<RoleCatalogInput, readonly RoleProfile[]>;
+      for (const contributions of native.contributions) {
+        if (this.byRole.has(contributions.metadata.role))
+          throw new Error(`role_profile_duplicate: ${contributions.metadata.role}`);
+        this.byRole.set(contributions.metadata.role, {
+          kind: "contributions",
+          contributions,
+          renderNative: native.renderNative,
+        });
+      }
     }
   }
 
-  get(role: Role): RoleProfile | undefined {
-    return this.profileByRole.get(role);
+  metadata(role: Role): RoleMetadata | undefined {
+    const entry = this.byRole.get(role);
+    return entry?.kind === "custom-profile" ? entry.profile : entry?.contributions.metadata;
   }
 
-  all(): RoleProfile[] {
-    return Array.from(this.profileByRole.values());
+  runtime(role: Role): RoleRuntimeContribution | undefined {
+    const entry = this.byRole.get(role);
+    return entry?.kind === "custom-profile" ? entry.profile : entry?.contributions.runtime;
+  }
+
+  allMetadata(): RoleMetadata[] {
+    return Array.from(this.byRole.values(), (entry) =>
+      entry.kind === "custom-profile" ? entry.profile : entry.contributions.metadata,
+    );
+  }
+
+  allRuntime(): { role: Role; metadata: RoleMetadata; runtime: RoleRuntimeContribution }[] {
+    return Array.from(this.byRole, ([role, entry]) => ({
+      role,
+      metadata: entry.kind === "custom-profile" ? entry.profile : entry.contributions.metadata,
+      runtime: entry.kind === "custom-profile" ? entry.profile : entry.contributions.runtime,
+    }));
+  }
+
+  requireMetadata(role: Role): RoleMetadata {
+    const entry = this.requireEntry(role);
+    return entry.kind === "custom-profile" ? entry.profile : entry.contributions.metadata;
+  }
+
+  requireRuntime(role: Role): RoleRuntimeContribution {
+    const entry = this.requireEntry(role);
+    return entry.kind === "custom-profile" ? entry.profile : entry.contributions.runtime;
   }
 
   participation(role: RoleComponent): {
@@ -153,59 +102,62 @@ export class RoleCatalog {
     canBeExiled: boolean;
     canBeSheriff: boolean;
   } {
-    const profile = this.get(role.role);
-    if (!profile) return { canVote: false, canBeExiled: false, canBeSheriff: false };
-    return typeof profile.participation === "function"
-      ? { ...profile.participation(role) }
-      : { ...(profile.participation ?? { canVote: true, canBeExiled: true, canBeSheriff: true }) };
+    const runtime = this.runtime(role.role);
+    if (!runtime) return { canVote: false, canBeExiled: false, canBeSheriff: false };
+    return typeof runtime.participation === "function"
+      ? { ...runtime.participation(role) }
+      : { ...(runtime.participation ?? { canVote: true, canBeExiled: true, canBeSheriff: true }) };
   }
 
   getCamp(role: Role): Camp {
-    const profile = this.require(role);
-    return profile.camp ?? Camp.Good;
+    return this.requireMetadata(role).camp ?? Camp.Good;
   }
 
   label(role: Role, locale: Locale = "zh-CN"): string {
-    const profile = this.get(role);
-    const builtIn = DEFAULT_ROLE_PROFILES.find((entry) => entry.role === role);
-    // 注入的原文属于用户内容；仅与内建字节一致的资料走原翻译路径。
-    if (profile && (!builtIn || profile.label !== builtIn.label)) return profile.label;
+    const metadata = this.metadata(role);
+    const builtIn = this.builtinMetadata.find((entry) => entry.role === role);
+    // 显式用户原文继续绕过内建翻译；仅等于原内建文字时采用原翻译策略。
+    if (metadata && (!builtIn || metadata.label !== builtIn.label)) return metadata.label;
     return roleName(role, locale);
   }
 
   skillBrief(role: Role, locale: Locale = "zh-CN"): string {
-    const profile = this.get(role);
-    if (!profile) return role;
-    const builtIn = DEFAULT_ROLE_PROFILES.find((entry) => entry.role === role);
-    if (!builtIn || profile.skillBrief !== builtIn.skillBrief) return profile.skillBrief;
+    const metadata = this.metadata(role);
+    if (!metadata) return role;
+    const builtIn = this.builtinMetadata.find((entry) => entry.role === role);
+    if (!builtIn || metadata.skillBrief !== builtIn.skillBrief) return metadata.skillBrief;
     return text(locale, `role.${role}.brief` as MessageKey);
   }
 
   applyRuntime(roleComp: RoleComponent, ctx: RoleInitContext = {}): void {
-    const profile = this.require(roleComp.role);
-    profile.init?.(roleComp as RoleInitializationComponent, ctx);
+    const entry = this.requireEntry(roleComp.role);
+    const runtime = entry.kind === "custom-profile" ? entry.profile : entry.contributions.runtime;
+    runtime.init?.(roleComp as RoleInitializationComponent, ctx);
     const defaultLocale = ctx.locale ?? "zh-CN";
     bindRolePresentation(roleComp, (locale = defaultLocale) => {
-      const active = this.require(roleComp.role);
-      return active.renderPrompt
-        ? active.renderPrompt(roleComp, locale, ctx.world)
-        : text(locale, "role.generic.state", { role: this.label(active.role, locale) });
+      const active = this.requireEntry(roleComp.role);
+      if (active.kind === "custom-profile") {
+        // 保留原两次方法 getter、profile receiver 及随后 ctx.world 求值的完整失败前缀。
+        return active.profile.renderPrompt
+          ? active.profile.renderPrompt(roleComp, locale, ctx.world)
+          : text(locale, "role.generic.state", {
+              role: this.label(active.profile.role, locale),
+            });
+      }
+      const presentation = active.contributions.presentation;
+      if (presentation.kind === "native")
+        return active.renderNative(presentation.id, roleComp, locale, ctx.world);
+      return presentation.renderPrompt
+        ? presentation.renderPrompt(roleComp, locale, ctx.world)
+        : text(locale, "role.generic.state", {
+            role: this.label(active.contributions.metadata.role, locale),
+          });
     });
   }
 
-  require(role: Role): RoleProfile {
-    const profile = this.get(role);
-    if (!profile) throw new Error(`role_profile_not_registered: ${role}`);
-    return profile;
+  private requireEntry(role: Role): Entry {
+    const entry = this.byRole.get(role);
+    if (!entry) throw new Error(`role_profile_not_registered: ${role}`);
+    return entry;
   }
-}
-
-let defaultCatalog: RoleCatalog | null = null;
-
-/** 获取默认角色目录实例。 */
-export function getDefaultRoleCatalog(): RoleCatalog {
-  if (!defaultCatalog) {
-    defaultCatalog = new RoleCatalog();
-  }
-  return defaultCatalog;
 }

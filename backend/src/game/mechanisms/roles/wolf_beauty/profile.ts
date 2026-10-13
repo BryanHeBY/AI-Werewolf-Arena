@@ -1,6 +1,6 @@
 /**
  * 负责 狼美人 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
- * 输入为原板子参数、角色组件与请求上下文；输出为原 RoleProfile 与具名内建展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
+ * 输入为原板子参数、角色组件与请求上下文；输出为分别登记的资料、运行及展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
@@ -10,7 +10,7 @@ import { BEAUTY_DEATH_LINK_POLICIES } from "../../../../core/domain/board";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Role, Camp, Phase } from "../../../../core/domain/model";
-import type { RoleProfile } from "../contracts";
+import type { NativeRoleContributions } from "../contracts";
 import { getWolfBeautyState, setWolfBeautyState } from "./state";
 import { WOLF_ROLE_PROFILE } from "../wolf/profile";
 import { WOLF_VALIDATION_RULES } from "../wolf/validation_rules";
@@ -26,102 +26,107 @@ const parameters = z.strictObject({
   deathLinkPolicy: z.enum(BEAUTY_DEATH_LINK_POLICIES).default("awa_exile_poison_v1"),
 });
 
-export const WOLF_BEAUTY_ROLE_PROFILE: RoleProfile = {
-  ...WOLF_ROLE_PROFILE,
-  role: Role.WolfBeauty,
-  canSelfDestruct: false,
-  label: roleName("wolf_beauty"),
-  skillBrief: text("zh-CN", "role.wolf_beauty.brief"),
-  init: (role, ctx) => {
-    setWolfBeautyState(role, {
-      targetId: null,
-      lastActedDay: null,
-      history: [],
-      ...(ctx.boardConfig?.wolfBeauty?.deathLinkPolicy &&
-      ctx.boardConfig.wolfBeauty.deathLinkPolicy !== "awa_exile_poison_v1"
-        ? { deathLinkPolicy: ctx.boardConfig.wolfBeauty.deathLinkPolicy }
-        : {}),
-    });
+export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
+  metadata: {
+    ...WOLF_ROLE_PROFILE.metadata,
+    role: Role.WolfBeauty,
+    label: roleName("wolf_beauty"),
+    skillBrief: text("zh-CN", "role.wolf_beauty.brief"),
   },
-  ...nativeRolePresentation("wolf_beauty"),
-  configuration: {
-    schema: parameters,
-    defaults: { deathLinkPolicy: "awa_exile_poison_v1" },
-    apply: (config, value) => ({ ...config, wolfBeauty: parameters.parse(value) }),
-    serialize: (config) => parameters.parse(config.wolfBeauty ?? {}),
-  },
-  nightStages: [...WOLF_ROLE_PROFILE.nightStages!, WOLF_BEAUTY_CHARM_STAGE],
-  deathHook: wolfBeautyDeathHook,
-  toolSpecs: [
-    ...WOLF_ROLE_PROFILE.toolSpecs!.filter((spec) => spec.name !== "self_destruct"),
-    {
-      name: "charm",
-      parameters: {
-        type: "object",
-        properties: { target_id: { type: ["number", "null"] } },
-        required: ["target_id"],
-        additionalProperties: false,
-      },
-      argHint: 'charm args: {"target_id":number|null}',
-      userPromptHintKey: "action.charm.hint",
+  runtime: {
+    ...WOLF_ROLE_PROFILE.runtime,
+    canSelfDestruct: false,
+    init: (role, ctx) => {
+      setWolfBeautyState(role, {
+        targetId: null,
+        lastActedDay: null,
+        history: [],
+        ...(ctx.boardConfig?.wolfBeauty?.deathLinkPolicy &&
+        ctx.boardConfig.wolfBeauty.deathLinkPolicy !== "awa_exile_poison_v1"
+          ? { deathLinkPolicy: ctx.boardConfig.wolfBeauty.deathLinkPolicy }
+          : {}),
+      });
     },
-  ],
-  validationRules: {
-    ...WOLF_VALIDATION_RULES,
-    kill_vote: (ctx) => {
-      const inherited = WOLF_VALIDATION_RULES.kill_vote!(ctx);
-      if (inherited) return inherited;
-      return ctx.toolCall.name === "kill_vote" &&
-        !ctx.toolCall.args.abstain &&
-        ctx.toolCall.args.target_id === ctx.actorId
-        ? { code: RuleError.BeautySelfKnife }
-        : null;
+    configuration: {
+      schema: parameters,
+      defaults: { deathLinkPolicy: "awa_exile_poison_v1" },
+      apply: (config, value) => ({ ...config, wolfBeauty: parameters.parse(value) }),
+      serialize: (config) => parameters.parse(config.wolfBeauty ?? {}),
     },
-    charm: ({ world, actorId, role, phase, day, toolCall }) => {
-      const state = getWolfBeautyState(role);
-      if (
-        role.role !== Role.WolfBeauty ||
-        role.camp !== Camp.Wolf ||
-        !state ||
-        !animalBeautyCharmAllowed(world, day ?? 0) ||
-        state.lastActedDay === day
-      )
-        return { code: RuleError.CharmUnavailable };
-      if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
-      if (toolCall.name !== "charm") return { code: RuleError.ToolMismatch };
-      if (toolCall.args.target_id === null) return null;
-      if (toolCall.args.target_id === actorId || !isAliveTarget(world, toolCall.args.target_id))
-        return { code: RuleError.CharmTarget };
-      const previous = state.history.at(-1);
-      return previous?.day === (day ?? 1) - 1 && previous.targetId === toolCall.args.target_id
-        ? { code: RuleError.CharmRepeat }
-        : null;
-    },
-  },
-  llmRepair: {
-    coerce: {
-      ...WOLF_ROLE_PROFILE.llmRepair?.coerce,
-      charm: (args) => {
-        if (args.target_id === null) return { target_id: null };
-        const target = numberOrNull(args.target_id);
-        return target === null ? null : { target_id: target };
-      },
-    },
-  },
-  baselineAction: (role, request, pick, byCamp, locale) => {
-    if (request.allowedTools.includes("charm")) {
-      const target = pick(),
-        previous = getWolfBeautyState(role)?.history.at(-1);
-      return {
+    nightStages: [...WOLF_ROLE_PROFILE.runtime.nightStages!, WOLF_BEAUTY_CHARM_STAGE],
+    deathHook: wolfBeautyDeathHook,
+    toolSpecs: [
+      ...WOLF_ROLE_PROFILE.runtime.toolSpecs!.filter((spec) => spec.name !== "self_destruct"),
+      {
         name: "charm",
-        args: {
-          target_id:
-            previous?.day === request.context.day - 1 && previous.targetId === target
-              ? null
-              : target,
+        parameters: {
+          type: "object",
+          properties: { target_id: { type: ["number", "null"] } },
+          required: ["target_id"],
+          additionalProperties: false,
         },
-      };
-    }
-    return WOLF_ROLE_PROFILE.baselineAction!(role, request, pick, byCamp, locale);
+        argHint: 'charm args: {"target_id":number|null}',
+        userPromptHintKey: "action.charm.hint",
+      },
+    ],
+    validationRules: {
+      ...WOLF_VALIDATION_RULES,
+      kill_vote: (ctx) => {
+        const inherited = WOLF_VALIDATION_RULES.kill_vote!(ctx);
+        if (inherited) return inherited;
+        return ctx.toolCall.name === "kill_vote" &&
+          !ctx.toolCall.args.abstain &&
+          ctx.toolCall.args.target_id === ctx.actorId
+          ? { code: RuleError.BeautySelfKnife }
+          : null;
+      },
+      charm: ({ world, actorId, role, phase, day, toolCall }) => {
+        const state = getWolfBeautyState(role);
+        if (
+          role.role !== Role.WolfBeauty ||
+          role.camp !== Camp.Wolf ||
+          !state ||
+          !animalBeautyCharmAllowed(world, day ?? 0) ||
+          state.lastActedDay === day
+        )
+          return { code: RuleError.CharmUnavailable };
+        if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };
+        if (toolCall.name !== "charm") return { code: RuleError.ToolMismatch };
+        if (toolCall.args.target_id === null) return null;
+        if (toolCall.args.target_id === actorId || !isAliveTarget(world, toolCall.args.target_id))
+          return { code: RuleError.CharmTarget };
+        const previous = state.history.at(-1);
+        return previous?.day === (day ?? 1) - 1 && previous.targetId === toolCall.args.target_id
+          ? { code: RuleError.CharmRepeat }
+          : null;
+      },
+    },
+    llmRepair: {
+      coerce: {
+        ...WOLF_ROLE_PROFILE.runtime.llmRepair?.coerce,
+        charm: (args) => {
+          if (args.target_id === null) return { target_id: null };
+          const target = numberOrNull(args.target_id);
+          return target === null ? null : { target_id: target };
+        },
+      },
+    },
+    baselineAction: (role, request, pick, byCamp, locale) => {
+      if (request.allowedTools.includes("charm")) {
+        const target = pick(),
+          previous = getWolfBeautyState(role)?.history.at(-1);
+        return {
+          name: "charm",
+          args: {
+            target_id:
+              previous?.day === request.context.day - 1 && previous.targetId === target
+                ? null
+                : target,
+          },
+        };
+      }
+      return WOLF_ROLE_PROFILE.runtime.baselineAction!(role, request, pick, byCamp, locale);
+    },
   },
+  presentation: nativeRolePresentation("wolf_beauty"),
 };

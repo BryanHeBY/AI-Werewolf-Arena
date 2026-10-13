@@ -11,7 +11,7 @@ import {
   findNightAbility,
   type NightAbility,
 } from "../../../../src/game/mechanisms/roles/abilities";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {
   installPairStateSlot,
   commitPairStateSlot,
@@ -34,7 +34,7 @@ function fixture() {
 test("actual profile initialization owns separate native instances with one state behind both checkpoint aliases", () => {
   const first = createRoleComponent(Role.AwakenedSeer, Camp.Good, "en"),
     second = createRoleComponent(Role.AwakenedSeer, Camp.Good, "en");
-  const profile = getDefaultRoleCatalog().get(Role.AwakenedSeer)!;
+  const profile = getDefaultRoleCatalog().runtime(Role.AwakenedSeer)!;
   profile.init!(first as RoleInitializationComponent, { locale: "en" });
   profile.init!(second as RoleInitializationComponent, { locale: "en" });
   const one = findNightAbility(first, "pair_check")!,

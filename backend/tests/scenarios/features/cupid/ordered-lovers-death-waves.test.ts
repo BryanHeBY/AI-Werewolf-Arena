@@ -1,25 +1,12 @@
 /**
- * Scenario tests for cupid relations. Inputs are original finite Cupid policies, pair choices, life
- * replacements and death causes. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Actual DeathResolution resolves original initial/additional waves and
- * role hooks, words, guns, Dream/Beauty interactions and cancellation. Engine sequencing remains real and
- * models remain controlled providers; production output is not a newly generated golden.
+ * 场景测试以原有限丘比特政策、恋人选择、生命替换及死因为输入。原字面回执、引用／getter／
+ * 错误轨迹、事实与状态是预期；真实 DeathResolution 处理初始／追加死亡波、角色 hook、遗言、
+ * 枪、梦境／魅惑交互与取消。引擎顺序保持真实，模型由受控 provider 代替，不从生产输出新建 golden。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import {
-  COMPONENT,
-  DeathCause,
-  Phase,
-  Role,
-  createAliveComponent,
-  type RoleComponent,
-  type AliveComponent,
-  type GameEvent,
-  type ActionRequest,
-  type ToolCall,
-  type RuntimeSnapshot,
-} from "../../../../src/core";
+import { COMPONENT, DeathCause, Phase, Role, type RoleComponent, type AliveComponent, type GameEvent, type ActionRequest, type ToolCall, type RuntimeSnapshot } from "../../../../src/core";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { CUPID_STAGE } from "../../../../src/game/mechanisms/roles/cupid/night_stage";
 import {

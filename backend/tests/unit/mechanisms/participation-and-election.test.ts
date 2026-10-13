@@ -1,6 +1,11 @@
 /**
  * 单元测试验证白痴参与和有界警长选举 API 的原资格、候选及平票规则。输入保留全部 locale／模式矩阵、受控本地角色 profile 及直接选举／警徽／死亡操作；精确接收、提名／投票／候选／生命周期和晚资格断言是预期，不推进完整白天／PhaseManager 或记录器。
  */
+import {
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
+
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -391,18 +396,19 @@ test("candidate snapshots cannot be changed by one provider; late loss of eligib
 
 test("injected participation profiles govern reception, baseline targets, hints and election assignment", async () => {
   const { world } = fixture("en");
-  const catalog = new RoleCatalog(
-    getDefaultRoleCatalog()
-      .all()
-      .map((profile) =>
-        profile.role === Role.Villager
-          ? {
-              ...profile,
+  const catalog = createRoleCatalog({
+    contributions: getDefaultRoleContributions().map((profile) =>
+      profile.metadata.role === Role.Villager
+        ? {
+            ...profile,
+            runtime: {
+              ...profile.runtime,
               participation: { canVote: true, canBeExiled: false, canBeSheriff: false },
-            }
-          : profile,
-      ),
-  );
+            },
+          }
+        : profile,
+    ),
+  });
   const rules = new ToolValidationRuleRegistry(undefined, catalog),
     reception = new ActionReception(world, undefined, undefined, rules);
   expect(
@@ -425,7 +431,7 @@ test("injected participation profiles govern reception, baseline targets, hints 
   });
   expect(hint).toContain("2, 3, 4, 5, 6, 7, 8");
   expect(hint).not.toContain("9, 10, 11, 12");
-  const noProfile = new RoleCatalog([]);
+  const noProfile = createRoleCatalog([]);
   expect(canVote(world, 1, noProfile)).toBe(false);
   expect(canBeSheriff(world, 1, noProfile)).toBe(false);
   expect(canBeExiled(world, 1, noProfile)).toBe(false);

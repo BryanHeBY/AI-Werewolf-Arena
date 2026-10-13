@@ -1,6 +1,13 @@
 /**
  * 负责构造猎魔人测试的候选、固定板子及显式玩家／标记数据。输入为变体、语言和种子选择；输出保留原数组、库存参数与配置身份。发牌可构造输入身份，期望结果仍为外部手写数据，不运行对局／模型或改变 oracle 算法。
  */
+import {
+  createCampComponent,
+  createAliveComponent,
+  createStatusMarksComponent,
+  createVotingRightComponent,
+  createBadgeComponent,
+} from "../../../../../src/game/observation/component-presentation";
 import "../../../../../src/app/bootstrap";
 import { Role } from "../../../../../src/core";
 import { DEMON_HUNTER_ROLE } from "../../../../../src/game/mechanisms/roles/demon_hunter/state";
@@ -13,12 +20,9 @@ import { World } from "../../../../../src/core";
 import { Camp } from "../../../../../src/core";
 import { COMPONENT } from "../../../../../src/core";
 import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
-import { createCampComponent } from "../../../../../src/core";
+
 import { createVictoryComponent } from "../../../../../src/core";
-import { createAliveComponent } from "../../../../../src/core";
-import { createStatusMarksComponent } from "../../../../../src/core";
-import { createVotingRightComponent } from "../../../../../src/core";
-import { createBadgeComponent } from "../../../../../src/core";
+
 import { createRandom } from "../../../../../src/core";
 import type { ToolName } from "../../../../../src/core";
 import { createIdentityComponent } from "../../../../../src/core/domain/entities/player";
@@ -29,7 +33,11 @@ import { PhaseManager } from "../../../../../src/game/engine/phase_manager";
 import { ToolGateway } from "../../../../../src/game/gateway/tool_gateway";
 import { ActionValidator } from "../../../../../src/game/gateway/action_validator";
 import { RoleCatalog } from "../../../../../src/game/mechanisms/roles/catalog";
-import { getDefaultRoleCatalog } from "../../../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { createDefaultRoleRegistry } from "../../../../../src/game/mechanisms/roles/permissions";
 import { getDefaultWinConditionRegistry } from "../../../../../src/game/mechanisms";
 import { ToolValidationRuleRegistry } from "../../../../../src/game/mechanisms/validation/tool_validation_rule_registry";
@@ -107,19 +115,22 @@ export function demonHunterFixture(
   const world = new World(locale),
     config = demonHunterBoard(size, goal),
     deck = demonHunterDeck(size);
-  const catalog = new RoleCatalog([
-    ...getDefaultRoleCatalog()
-      .all()
-      .filter((p) => p.role !== Role.DemonHunter),
-    {
-      role: DEMON_HUNTER_ROLE as Role,
-      camp: Camp.Good,
-      goodSide: "god",
-      label: "Demon Hunter candidate",
-      skillBrief: "Candidate",
-      validationRules: { ["demon_hunt" as ToolName]: DEMON_HUNTER_TOOL_RULE },
-    },
-  ]);
+  const catalog = createRoleCatalog({
+    contributions: [
+      ...getDefaultRoleContributions().filter((p) => p.metadata.role !== Role.DemonHunter),
+      {
+        metadata: {
+          role: DEMON_HUNTER_ROLE as Role,
+          camp: Camp.Good,
+          goodSide: "god",
+          label: "Demon Hunter candidate",
+          skillBrief: "Candidate",
+        },
+        runtime: { validationRules: { ["demon_hunt" as ToolName]: DEMON_HUNTER_TOOL_RULE } },
+        presentation: { kind: "custom" },
+      },
+    ],
+  });
   for (const kind of deck) {
     const id = world.createEntity(),
       camp = kind === Role.Wolf ? Camp.Wolf : Camp.Good,

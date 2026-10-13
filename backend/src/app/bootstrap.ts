@@ -5,6 +5,13 @@
  * 校验后的配置克隆在角色初始化前冻结，原 World、actor、RNG 和调用方均不冻结。
  * PhaseManager 创建规则计划，流水线、开局上下文和记录入口消费同一引用。
  */
+import {
+  createAliveComponent,
+  createBadgeComponent,
+  createCampComponent,
+  createStatusMarksComponent,
+  createVotingRightComponent,
+} from "../game/observation/component-presentation";
 import { installNobleBodyAuthority } from "../game/mechanisms/roles/noble_secret_body/authority";
 import { installAnimalAuthority } from "../game/mechanisms/roles/animal_dream/authority";
 import { buildSupportedRoleDeck } from "../rulesets/supported-role-deck";
@@ -32,14 +39,11 @@ import { installShapeshifterDeal } from "../game/mechanisms/roles/shapeshifter/d
 import { installThiefDeal } from "../game/mechanisms/roles/thief/deal";
 import { supportsWallRoles } from "../game/mechanisms/events/wall_notes/authority";
 import { text } from "@ai-werewolf-arena/game-text";
-import { createAliveComponent } from "../core/domain/components/alive";
-import { createBadgeComponent } from "../core/domain/components/badge";
-import { createCampComponent } from "../core/domain/components/camp";
+
 import { COMPONENT } from "../core/domain/components/names";
 import type { RoleComponent } from "../core/domain/components/role";
 import { createRoleComponent } from "../game/observation/role-presentation";
-import { createStatusMarksComponent } from "../core/domain/components/status_marks";
-import { createVotingRightComponent } from "../core/domain/components/voting_right";
+
 import { createVictoryComponent } from "../core/domain/components/victory";
 import { createIdentityComponent } from "../core/domain/entities/player";
 import { BoardConfig, EntityId, Role } from "../core/domain/model";
@@ -167,7 +171,7 @@ function createPlayers(
     );
     world.addComponent(entityId, COMPONENT.Role, roleComp);
     world.addComponent(entityId, COMPONENT.Camp, createCampComponent(roleComp.camp, world.locale));
-    const membership = roleCatalog.require(role).initialVictoryAffiliations;
+    const membership = roleCatalog.requireRuntime(role).initialVictoryAffiliations;
     world.addComponent(
       entityId,
       COMPONENT.Victory,

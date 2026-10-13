@@ -1,6 +1,10 @@
 /**
  * 单元测试：验证雾鸦 profile 的默认配置、语言与狼群政策。原双语文案、分离的知识能力和历史 audience 为字面预期；只调用有界模块，不运行模型或完整对局驱动。
  */
+import {
+  createAliveComponent,
+  createCampComponent,
+} from "../../../../src/game/observation/component-presentation";
 import { captureNativeRolePresentation } from "../../../../src/game/observation/native-role-presentation-capture";
 import { expect, test } from "bun:test";
 import {
@@ -10,15 +14,18 @@ import {
   WinCondition,
   Phase,
   COMPONENT,
-  createAliveComponent,
-  createCampComponent,
   createIdentityComponent,
   type RoleComponent,
   type ToolCall,
 } from "../../../../src/core";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
-import { RoleCatalog, getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {
   ALCHEMIST_ROLE_PROFILE,
   RAVEN_CLAW_ROLE_PROFILE,
@@ -41,13 +48,15 @@ import {
 } from "../../../../src/game/mechanisms/roles/wolf_team";
 
 function fixture() {
-  const catalog = new RoleCatalog([
-      ...getDefaultRoleCatalog()
-        .all()
-        .filter((p) => p.role !== Role.Alchemist && p.role !== Role.RavenClawWolf),
-      ALCHEMIST_ROLE_PROFILE,
-      RAVEN_CLAW_ROLE_PROFILE,
-    ]),
+  const catalog = createRoleCatalog({
+      contributions: [
+        ...getDefaultRoleContributions().filter(
+          (p) => p.metadata.role !== Role.Alchemist && p.metadata.role !== Role.RavenClawWolf,
+        ),
+        ALCHEMIST_ROLE_PROFILE,
+        RAVEN_CLAW_ROLE_PROFILE,
+      ],
+    }),
     world = new World();
   const roles = [
     Role.Alchemist,
@@ -92,7 +101,7 @@ function fixture() {
   installMistRavenBoard(world);
   const rule = (id: number, call: ToolCall, phase = Phase.Night, day = 1) =>
     catalog
-      .require(world.getComponent<RoleComponent>(id, COMPONENT.Role)!.role)
+      .requireRuntime(world.getComponent<RoleComponent>(id, COMPONENT.Role)!.role)
       .validationRules?.[call.name]?.({
         world,
         actorId: id,
@@ -109,30 +118,28 @@ function fixture() {
 }
 test("original profiles contribute exact defaults and bilingual mechanism meaning", () => {
   for (const profile of [ALCHEMIST_ROLE_PROFILE, RAVEN_CLAW_ROLE_PROFILE]) {
-    expect(profile.configuration?.schema.safeParse({ policy: "awa_mist_raven_v1" }).success).toBe(
-      true,
+    expect(
+      profile.runtime.configuration?.schema.safeParse({ policy: "awa_mist_raven_v1" }).success,
+    ).toBe(true);
+    expect(profile.runtime.configuration?.schema.safeParse({ policy: "invented" }).success).toBe(
+      false,
     );
-    expect(profile.configuration?.schema.safeParse({ policy: "invented" }).success).toBe(false);
-    expect(profile.canSelfDestruct).toBe(false);
+    expect(profile.runtime.canSelfDestruct).toBe(false);
   }
   const { world } = fixture(),
     alchemist = world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
     raven = world.getComponent<RoleComponent>(9, COMPONENT.Role)!;
   expect(
-    captureNativeRolePresentation(
-      ALCHEMIST_ROLE_PROFILE.nativePresentation!.id,
-      alchemist,
-      "zh-CN",
-    ),
+    captureNativeRolePresentation(ALCHEMIST_ROLE_PROFILE.presentation!.id, alchemist, "zh-CN"),
   ).toContain("发言结束");
   expect(
-    captureNativeRolePresentation(ALCHEMIST_ROLE_PROFILE.nativePresentation!.id, alchemist, "en"),
+    captureNativeRolePresentation(ALCHEMIST_ROLE_PROFILE.presentation!.id, alchemist, "en"),
   ).toContain("after daytime speeches");
   expect(
-    captureNativeRolePresentation(RAVEN_CLAW_ROLE_PROFILE.nativePresentation!.id, raven, "zh-CN"),
+    captureNativeRolePresentation(RAVEN_CLAW_ROLE_PROFILE.presentation!.id, raven, "zh-CN"),
   ).toContain("不补发");
   expect(
-    captureNativeRolePresentation(RAVEN_CLAW_ROLE_PROFILE.nativePresentation!.id, raven, "en"),
+    captureNativeRolePresentation(RAVEN_CLAW_ROLE_PROFILE.presentation!.id, raven, "en"),
   ).toContain("fewer than three");
 });
 test("pack recognition, sealed exclusion, permanent snapshot and historical audience are separate", () => {

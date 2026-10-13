@@ -3,10 +3,11 @@
  * 字面玩家序号及注入的枪列表或继承异常；独立手写的事件数量、生命身份和已结算断言
  * 作为预期，不由另一场对局生成。本测试不推进阶段，不请求遗言、警徽、模型或完整游戏。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { DeathCommitter } from "../../../../src/game/engine/death-committer";
 import { World } from "../../../../src/core/domain/world";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import {

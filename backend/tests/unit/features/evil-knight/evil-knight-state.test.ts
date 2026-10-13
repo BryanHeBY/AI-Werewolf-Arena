@@ -1,19 +1,14 @@
 /**
- * Unit tests: Evil Knight state uses accepted inspection causes and explicit retaliation
- * policies; literal single-reflection, immunity and serialized-history expectations check
- * independent stocks. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试用已接受查验死因与明确反击政策验证恶灵骑士的独立库存。字面单次反射、免疫及
+ * 序列化历史是预期，输入及字面／不可变 fixture 保持原样，不运行模型或完整对局。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import type { EvilKnightShotPolicy } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
-import {
-  createAliveComponent,
-  type AliveComponent,
-} from "../../../../src/core/domain/components/alive";
+import { type AliveComponent } from "../../../../src/core/domain/components/alive";
 import type { RoleComponent } from "../../../../src/core/domain/components/role";
 import type { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
 import { Camp, Role, StatusMark } from "../../../../src/core/domain/identity";

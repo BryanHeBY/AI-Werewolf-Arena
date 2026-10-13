@@ -1,8 +1,9 @@
 /**
  * 单元测试：验证机械狼的独立 scope 与原 owner／frame／reader。输入为内存 fixture、受控回调与畸形修改；原引用、字面值和拒绝断言为预期，不执行装配周期、模型或实体传输。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { Camp, Role } from "../../../../src/core/domain/model";
 import { COMPONENT } from "../../../../src/core/domain/components/names";

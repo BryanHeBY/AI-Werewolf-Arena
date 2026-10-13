@@ -1,14 +1,11 @@
 /**
- * Owns a configured day self-destruct opportunity and its captured alive actors. Inputs are a
- * window description, provider and gateway; outputs are the accepted blast choice or the
- * unchanged window result. Only the selected current actor may commit, without reusing a
- * replaced body.
+ * 负责按配置开启白天自爆机会，并捕获原存活玩家。输入为窗口、Provider 与 Gateway；输出为接受的自爆选择或原窗口结果。只有仍有效的原玩家可以提交，不以替换身体恢复机会。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { RED_MOON_ROLE } from "../mechanisms/roles/red_moon_apostle/state";
 import { demonRedMoonCanBlast } from "../mechanisms/roles/demon_hunter/authority";
 import { canRoleSelfDestruct } from "../mechanisms/roles/self_destruct_capability";
-import { getDefaultRoleCatalog } from "../mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../mechanisms/roles/role-catalog-assembly";
 import {
   weddingMember,
   weddingSetup,

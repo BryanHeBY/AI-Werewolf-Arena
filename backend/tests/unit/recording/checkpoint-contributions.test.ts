@@ -4,6 +4,7 @@
  * 组件读取序列及原异常构成独立预期，不以另一个生产快照生成答案。
  * 不推进对局、不写文件或调用模型；特殊权威分支由原有 bounded checkpoint 案例覆盖。
  */
+import { createAliveComponent, createBadgeComponent, createVotingRightComponent, createStatusMarksComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
 import { auditData } from "../../../src/recording/checkpoint/animal-audit";
@@ -11,11 +12,11 @@ import { World } from "../../../src/core/domain/world";
 import { COMPONENT, type ComponentName } from "../../../src/core/domain/components/names";
 import { createIdentityComponent } from "../../../src/core/domain/entities/player";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { createBadgeComponent } from "../../../src/core/domain/components/badge";
-import { createVotingRightComponent } from "../../../src/core/domain/components/voting_right";
+
+
+
 import { createVictoryComponent } from "../../../src/core/domain/components/victory";
-import { createStatusMarksComponent } from "../../../src/core/domain/components/status_marks";
+
 import {
   Role,
   Camp,

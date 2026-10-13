@@ -1,6 +1,7 @@
 /**
  * 单元测试验证熊按原生命／座位采样只公布公开布尔值，并保持新鲜度和玩家历史边界。输入为原相邻位置、生命／阵营、语言及修改矩阵；有界 capture／publish／projection 的吼声、历史、隐私和原样本断言为预期，不运行完整夜或模型。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -18,8 +19,13 @@ import {
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { BearNightFrame } from "../../../../src/game/mechanisms/roles/bear/night_frame";
 import { getBearState } from "../../../../src/game/mechanisms/roles/bear/state";
-import { getDefaultRoleCatalog, RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import type { IdentityComponent } from "../../../../src/core/domain/entities/player";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
@@ -97,19 +103,28 @@ for (const [kind, expected] of [
 
 test("Bear sensing requires true Wolf faction, ignores Seer disguise, and respects its independent explicit role policy", () => {
   const game = bootstrapGame(config(), { fixedRoles: deck }),
-    profiles = getDefaultRoleCatalog().all(),
-    wolf = profiles.find((p) => p.role === Role.Wolf)!;
+    profiles = getDefaultRoleContributions(),
+    wolf = profiles.find((p) => p.metadata.role === Role.Wolf)!;
   for (const [camp, sense, expected] of [
     [Camp.Wolf, undefined, true],
     [Camp.Wolf, () => false, false],
     [Camp.Good, () => true, false],
   ] as const) {
     role(game, 2).camp = camp;
-    const catalog = new RoleCatalog(
-        profiles.map((p) =>
-          p === wolf ? { ...p, inspectionLabels: { camp: Camp.Good }, detectableByBear: sense } : p,
+    const catalog = createRoleCatalog({
+        contributions: profiles.map((p) =>
+          p === wolf
+            ? {
+                ...p,
+                runtime: {
+                  ...p.runtime,
+                  inspectionLabels: { camp: Camp.Good },
+                  detectableByBear: sense,
+                },
+              }
+            : p,
         ),
-      ),
+      }),
       events: GameEvent[] = [];
     (
       getBearState(role(game, 1))! as unknown as { history: { day: number; roared: boolean }[] }
@@ -237,7 +252,7 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(renderRolePrompt(role(game, 1), locale)).toContain(
       locale === "en" ? "No Bear announcement has been published" : "尚无已公布的熊公告",
     );
-    expect(getDefaultRoleCatalog().require(Role.Bear).toolSpecs ?? []).toEqual([]);
+    expect(getDefaultRoleCatalog().requireRuntime(Role.Bear).toolSpecs ?? []).toEqual([]);
     expect(
       new ActionReception(game.world).validate(
         { ...request, phase: Phase.Night, allowedTools: ["kill_vote"] },

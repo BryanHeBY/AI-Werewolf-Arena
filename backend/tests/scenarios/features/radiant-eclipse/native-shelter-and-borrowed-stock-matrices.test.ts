@@ -1,12 +1,18 @@
 /**
- * Scenario tests drive actual Radiant shelter, Eclipse borrowing and native night matrices. Inputs are public board setup, literal protection/death/resource choices and original stock edits; handwritten requests, causes and no-writeback outcomes are the oracle. Public board fixture bytes and URL remain unchanged; no model is called.
+ * 辉光／夜仆场景验证真实庇护、借用和原生夜间矩阵。输入为公开板子、字面保护／死亡／库存选择及原库存变更；手写请求、死因及不写回结果是预期。公开样本字节和 URL 不变，不调用模型。
  */
 import { expect, test } from "bun:test";
 import { DeathCause, COMPONENT, type AliveComponent } from "../../../../src/core";
 import { radiantFixture } from "../../../support/features/radiant-eclipse/builders/runtime-game";
-import { radiantProvider, type RadiantChoices } from "../../../support/features/radiant-eclipse/drivers/actions";
-import { knownWolfTeammates, wolfChatParticipants } from "../../../../src/game/mechanisms/roles/wolf_team";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import {
+  radiantProvider,
+  type RadiantChoices,
+} from "../../../support/features/radiant-eclipse/drivers/actions";
+import {
+  knownWolfTeammates,
+  wolfChatParticipants,
+} from "../../../../src/game/mechanisms/roles/wolf_team";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { getDefaultNightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
 import { findNightAbility, abilityStatus } from "../../../../src/game/mechanisms/roles/abilities";
 

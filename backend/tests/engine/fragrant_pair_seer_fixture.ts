@@ -4,13 +4,14 @@
  * 字面角色／状态是 fixture 设置而非生产规则 oracle；Pair 别名、容器写入 LHS 时点保持。
  * 实例安装入口迁共享 owner，但不运行 profile、流水线、传输或模型。
  */
+import { createAliveComponent, createCampComponent } from "../../src/game/observation/component-presentation";
 import { World } from "../../src/core/domain/world";
 import { Role, Camp } from "../../src/core/domain/identity";
 import { COMPONENT } from "../../src/core/domain/components/names";
-import { createAliveComponent, type AliveComponent } from "../../src/core/domain/components/alive";
+import { type AliveComponent } from "../../src/core/domain/components/alive";
 import { type RoleComponent } from "../../src/core/domain/components/role";
 import { createRoleComponent } from "../../src/game/observation/role-presentation";
-import { createCampComponent } from "../../src/core/domain/components/camp";
+
 import { createIdentityComponent } from "../../src/core/domain/entities/player";
 import { createVictoryComponent } from "../../src/core/domain/components/victory";
 import type { GameEvent } from "../../src/core/domain/events";

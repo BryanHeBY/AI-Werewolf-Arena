@@ -5,7 +5,11 @@ import { renderRolePrompt } from "../../../src/game/observation/role-presentatio
 import { expect, test } from "bun:test";
 import { ROLE_DEFINITIONS, ROLE_IDS, isRoleId, roleName } from "@ai-werewolf-arena/game-catalog";
 import { Role } from "../../../src/core/domain/identity";
-import { RoleCatalog, getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { Camp } from "../../../src/core/domain/identity";
 import { createDefaultRoleRegistry } from "../../../src/game/mechanisms/roles/permissions";
@@ -23,18 +27,18 @@ test("shared catalog distinguishes planned definitions from registered roles", (
     expect(ROLE_DEFINITIONS.find((item) => item.id === role)?.status).toBe("implemented");
   expect(
     getDefaultRoleCatalog()
-      .all()
+      .allMetadata()
       .map((item) => item.role)
       .sort(),
   ).toEqual(Object.values(Role).sort());
   expect(isRoleId("awakened_hidden_wolf")).toBe(true);
-  expect(getDefaultRoleCatalog().require(Role.AwakenedHiddenWolf).role).toBe(
+  expect(getDefaultRoleCatalog().requireMetadata(Role.AwakenedHiddenWolf).role).toBe(
     Role.AwakenedHiddenWolf,
   );
-  expect(getDefaultRoleCatalog().require(Role.BlackMarketMerchant).role).toBe(
+  expect(getDefaultRoleCatalog().requireMetadata(Role.BlackMarketMerchant).role).toBe(
     Role.BlackMarketMerchant,
   );
-  expect(() => getDefaultRoleCatalog().require("awakened_knight" as Role)).toThrow(
+  expect(() => getDefaultRoleCatalog().requireMetadata("awakened_knight" as Role)).toThrow(
     "role_profile_not_registered",
   );
   expect(roleName("wolf", "zh-CN")).toBe("狼人");
@@ -42,9 +46,11 @@ test("shared catalog distinguishes planned definitions from registered roles", (
 });
 
 test("runtime catalog rejects duplicate or missing profiles", () => {
-  const profile = getDefaultRoleCatalog().require(Role.Wolf);
-  expect(() => new RoleCatalog([profile, profile])).toThrow("role_profile_duplicate");
-  expect(() => new RoleCatalog([]).getCamp(Role.Seer)).toThrow("role_profile_not_registered");
+  const profile = getDefaultRoleContributions().find((item) => item.metadata.role === Role.Wolf)!;
+  expect(() => createRoleCatalog({ contributions: [profile, profile] })).toThrow(
+    "role_profile_duplicate",
+  );
+  expect(() => createRoleCatalog([]).getCamp(Role.Seer)).toThrow("role_profile_not_registered");
   const component = createRoleComponent(Role.Wolf, Camp.Wolf);
   getDefaultRoleCatalog().applyRuntime(component);
   component.role = "awakened_knight" as Role;
@@ -52,7 +58,7 @@ test("runtime catalog rejects duplicate or missing profiles", () => {
 });
 
 test("evil knight keeps wolf night tools without inheriting self-destruct requests", () => {
-  const profile = getDefaultRoleCatalog().require(Role.EvilKnight);
+  const profile = getDefaultRoleCatalog().requireRuntime(Role.EvilKnight);
   const registry = createDefaultRoleRegistry();
   expect(profile.canSelfDestruct).toBe(false);
   const tools = registry.getAllowedTools(Role.EvilKnight);

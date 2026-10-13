@@ -1,32 +1,9 @@
 /**
  * 单元测试验证 authority 的原权限和记录边界。输入为原 fixture、请求及显式故障／特权回调；原字面量、引用身份与错误／状态断言为预期。测试注入保留原请求，领域合法性与付款仍由原被测 owner 执行。
  */
+import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
-import {
-  World,
-  Role,
-  Camp,
-  Phase,
-  COMPONENT,
-  WinCondition,
-  ActionWindow,
-  WitchSelfHealRule,
-  PotionType,
-  StatusMark,
-  StatusMarksComponent,
-  createCampComponent,
-  createVictoryComponent,
-  createAliveComponent,
-  assertRequestDelivery,
-  deferRequestDelivery,
-  bindRequestDeliveryGuard,
-  type BoardConfig,
-  type ActionStage,
-  type ToolName,
-  type GameEvent,
-  type RoleComponent,
-  type AliveComponent,
-} from "../../../../src/core";
+import { World, Role, Camp, Phase, COMPONENT, WinCondition, ActionWindow, WitchSelfHealRule, PotionType, StatusMark, StatusMarksComponent, createVictoryComponent, assertRequestDelivery, deferRequestDelivery, bindRequestDeliveryGuard, type BoardConfig, type ActionStage, type ToolName, type GameEvent, type RoleComponent, type AliveComponent } from "../../../../src/core";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import {
   installDemonHunter,

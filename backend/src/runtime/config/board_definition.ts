@@ -1,9 +1,5 @@
 /**
- * Responsibility: validate and normalize the public board configuration format.
- * Input: inert public JSON with registered role declarations; output: the original
- * normalized BoardConfig, diagnostics and reverse serialized configuration.
- * Parsing owns field/default normalization; rulesets own finite support verdicts.
- * This module never reads credentials, executes a game or grants action leases.
+ * 负责校验和规范化公开板子格式。输入为纯公开 JSON 与已登记角色声明；输出为原 BoardConfig、诊断和反向序列化配置。解析拥有字段／默认值规范化，规则集拥有有限支持裁决；不读取认证、执行对局或授予行动租约。
  */
 import { boardPresetViolation } from "../../rulesets";
 /** The single public board format. Unknown fields and unregistered roles fail closed. */
@@ -11,7 +7,7 @@ import { supportsWallRoles } from "../../game/mechanisms/events/wall_notes/autho
 import { z } from "zod";
 import { ROLE_IDS, RULESET, isRoleId } from "@ai-werewolf-arena/game-catalog";
 import { ActionWindow, Camp, Role, WinCondition, type BoardConfig } from "../../core/domain/model";
-import { getDefaultRoleCatalog } from "../../game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../game/mechanisms/roles/role-catalog-assembly";
 import {
   EVENT_PACK_IDS,
   DEATH_REVEAL_POLICIES,
@@ -113,10 +109,10 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
   const seen = new Set<string>();
   let total = 0;
   for (const [index, entry] of definition.board.roleSetups.entries()) {
-    if (!isRoleId(entry.role) || !catalog.get(entry.role as Role))
+    if (!isRoleId(entry.role) || !catalog.metadata(entry.role as Role))
       fail("board_config_role_not_implemented", `board.roleSetups.${index}.role`);
     if (seen.has(entry.role)) fail("board_config_duplicate_role", `board.roleSetups.${index}.role`);
-    const maximum = catalog.require(entry.role as Role).maxCount;
+    const maximum = catalog.requireMetadata(entry.role as Role).maxCount;
     if (maximum !== undefined && entry.count > maximum)
       fail("board_config_invalid_field", `board.roleSetups.${index}.count`);
     seen.add(entry.role);
@@ -160,7 +156,9 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
       ))
   )
     fail("board_config_role_combination_not_supported", "board.roleSetups");
-  const profiles = definition.board.roleSetups.map((entry) => catalog.require(entry.role as Role));
+  const profiles = definition.board.roleSetups.map((entry) =>
+    catalog.requireMetadata(entry.role as Role),
+  );
   for (const profile of profiles) {
     if (
       profile.supportedBoardRoles &&
@@ -258,7 +256,7 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
   };
   for (const [id, value] of Object.entries(definition.roles)) {
     if (!seen.has(id)) fail("board_config_role_parameters_without_role", `roles.${id}`);
-    const contribution = catalog.require(id as Role).configuration;
+    const contribution = catalog.requireRuntime(id as Role).configuration;
     if (!contribution) fail("board_config_role_parameters_not_supported", `roles.${id}`);
     const parsed = contribution.schema.safeParse(value);
     if (!parsed.success) {
@@ -273,7 +271,7 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
     config = contribution.apply(config, parsed.data);
   }
   for (const id of seen) {
-    const contribution = catalog.require(id as Role).configuration;
+    const contribution = catalog.requireRuntime(id as Role).configuration;
     if (contribution && !(id in definition.roles)) {
       const defaults = contribution.schema.parse(contribution.defaults);
       definition.roles[id] = defaults;
@@ -309,7 +307,7 @@ export function boardDefinitionFromConfig(id: string, config: BoardConfig): Boar
   const catalog = getDefaultRoleCatalog();
   const roles: Record<string, unknown> = {};
   for (const entry of config.roleSetups.filter((entry) => entry.count > 0)) {
-    const contribution = catalog.require(entry.role).configuration;
+    const contribution = catalog.requireRuntime(entry.role).configuration;
     if (contribution) roles[entry.role] = contribution.serialize(config);
   }
   const conditions = config.winConditions?.length

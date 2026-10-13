@@ -23,7 +23,7 @@ import {
   parseBoardDefinition,
 } from "../../../src/runtime/config/board_definition";
 import { boardConfigSchema } from "../../../src/core/domain/board_schema";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {
   findNightAbility,
   projectNightAbility,
@@ -93,7 +93,7 @@ for (const kind of [
 ] as const)
   test(`${kind}: omitted, empty, explicit defaults and legacy reverse config normalize identically; unknown variants fail closed`, () => {
     const game = fixture(kind),
-      contribution = getDefaultRoleCatalog().require(kind).configuration!;
+      contribution = getDefaultRoleCatalog().requireRuntime(kind).configuration!;
     const publicBoard = boardDefinitionFromConfig("role_policy", game.config);
     const omitted = structuredClone(publicBoard);
     delete omitted.roles[kind];
@@ -209,7 +209,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
           requiresAction: policy === "awa_unique_required_v1",
           summary: "Offline",
         });
-        const baseline = getDefaultRoleCatalog().require(kind).baselineAction!(
+        const baseline = getDefaultRoleCatalog().requireRuntime(kind).baselineAction!(
           role,
           request,
           () => 2,
@@ -343,7 +343,8 @@ for (const kind of [Role.Hunter, Role.WolfKing] as const)
         game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive = false;
         let asks = 0;
         const events: GameEvent[] = [];
-        const hook = kind === Role.Hunter ? hunterDeathHook : WOLF_KING_ROLE_PROFILE.deathHook!;
+        const hook =
+          kind === Role.Hunter ? hunterDeathHook : WOLF_KING_ROLE_PROFILE.runtime.deathHook!;
         let permit: ReturnType<typeof game.world.openDeathAction> | undefined;
         const result = await hook(
           game.world,

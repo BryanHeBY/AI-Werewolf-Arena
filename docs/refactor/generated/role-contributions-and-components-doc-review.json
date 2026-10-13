@@ -1,0 +1,16 @@
+{
+  "status": "approved",
+  "scope": "Final documentation only; no source/runtime/type check repeated. Exact selected244backend type-root and248header set correction reviewed against already-read real tsconfig include.",
+  "closedFinding": "MD now separates244 selectedbackend roots (currentunion240backend+previouslycommittedAnimal4) from244sourceunion (240backend+4package); heads248 explicitly sourceunion244+Animal4.",
+  "files": [
+    {
+      "path": "docs/refactor/role-contributions-and-components.md",
+      "sha256": "0cbd734464f63e99b0be568737269623e4f05d520b6821837a6ac0788fdc5034"
+    },
+    {
+      "path": "docs/refactor/generated/role-contributions-and-components-evidence.json",
+      "sha256": "83b7c7a786cdab1939ccbd3dbe077ccee01731d5f628da24a2a15a8cc115d0ff"
+    }
+  ],
+  "remainingFindings": []
+}

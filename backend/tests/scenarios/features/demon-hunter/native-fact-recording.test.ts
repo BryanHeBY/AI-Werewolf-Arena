@@ -1,18 +1,12 @@
 /**
- * Demon Hunter scenarios verify actual two-night facts, late cancellation and persisted God/player evidence retain precise sources.
- * Input: Original controlled potion/hunt plans, damage spy restoration and real temporary recording scope.
- * Output and oracle: Handwritten source facts, audience/sequence checks and recorder outputs remain exact; complete causal cycles stay scenario coverage rather than transport integration.
+ * 猎魔人场景验证真实两夜事实、晚取消和持久化上帝／玩家证据保留精确来源。输入为原受控
+ * 药瓶／狩猎计划、伤害 spy 恢复与真实临时记录 scope；手写来源、audience／sequence 与记录
+ * 输出是预期，完整因果周期属于场景覆盖，不被称为传输集成。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
 import { DEMON_HUNTER_POLICY, DEMON_HUNTER_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
-import {
-  COMPONENT,
-  PotionType,
-  createAliveComponent,
-  type ActionRequest,
-  type RoleComponent,
-  type GameEvent,
-} from "../../../../src/core";
+import { COMPONENT, PotionType, type ActionRequest, type RoleComponent, type GameEvent } from "../../../../src/core";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";

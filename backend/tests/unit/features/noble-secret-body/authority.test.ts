@@ -1,9 +1,10 @@
 /**
  * 单元测试：验证夜贵族独立 authority 与原 owner／frame／reader。输入为内存 fixture、受控回调和畸形修改；原字面值、身份快照和拒绝断言为预期，不执行装配周期、模型或实体传输。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { Role, Camp } from "../../../../src/core/domain/identity";
 import { nobleBodyAuthorityFixture } from "../../../support/features/noble-secret-body/drivers/authority";

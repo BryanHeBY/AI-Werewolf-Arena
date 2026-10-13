@@ -1,6 +1,7 @@
 /**
  * 单元测试：验证鬼新娘授权与只读事实边界。输入为有限板子、精确事实和畸形 descriptor；setup、scope、婚姻库存及隐私的字面断言验证原生所有权。不调用模型或完整对局驱动，不从生产输出重建 oracle。
  */
+import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
 import {
   GHOST_BRIDE_POLICY,
@@ -14,27 +15,7 @@ import {
   readWeddingKnifeCapture,
   readWeddingTool,
 } from "@ai-werewolf-arena/game-text";
-import {
-  World,
-  assertRequestDelivery,
-  deferRequestDelivery,
-  Role,
-  Camp,
-  Phase,
-  COMPONENT,
-  ActionWindow,
-  WitchSelfHealRule,
-  WinCondition,
-  DeathCause,
-  createCampComponent,
-  createAliveComponent,
-  createVictoryComponent,
-  type BoardConfig,
-  type RoleComponent,
-  type AliveComponent,
-  type VictoryComponent,
-  type DeathSources,
-} from "../../../../src/core";
+import { World, assertRequestDelivery, deferRequestDelivery, Role, Camp, Phase, COMPONENT, ActionWindow, WitchSelfHealRule, WinCondition, DeathCause, createVictoryComponent, type BoardConfig, type RoleComponent, type AliveComponent, type VictoryComponent, type DeathSources } from "../../../../src/core";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { assertGhostBridePreset } from "../../../../src/game/mechanisms/roles/ghost_bride/preset";
 import {

@@ -1,14 +1,12 @@
 /**
- * Unit tests: Wolf Sorcerer frames use ordered two-caster choices and first-night
- * knowledge policies; literal composed targets, cycle handling and withheld-knowledge
- * assertions check the frame module. Inputs and expected outcomes remain the original
- * literal or immutable-fixture oracle; these module assertions invoke no model or
- * complete-game driver.
+ * 单元测试用有序双施法者选择及首夜知识政策验证狼术师 frame。字面组合目标、循环处理和
+ * withheld 知识断言是预期，输入及字面／不可变 fixture 保持原样，不运行模型或完整对局。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { WOLF_SORCERER_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/wolf_sorcerer/profile";
 import { expect, test } from "bun:test";
 import { COMPONENT, Camp, type World, type RoleComponent } from "../../../src/core";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+
 import { createMagicianState } from "../../../src/game/mechanisms/roles/magician/state";
 import { createWolfSorcererState } from "../../../src/game/mechanisms/roles/wolf_sorcerer/state";
 import {
@@ -189,7 +187,7 @@ test("Composed receipts reject history mutation, replacement and independent cle
 test("Wolf Sorcerer retains learned pack identities before later exchanges", () => {
   const f = fixture(2),
     role = f.roles.get(2)!;
-  const capability = WOLF_SORCERER_ROLE_PROFILE.wolfTeam;
+  const capability = WOLF_SORCERER_ROLE_PROFILE.runtime.wolfTeam;
   if (typeof capability !== "function") throw new Error("expected_dynamic_pack_capability");
   f.begin(1);
   expect(capability(role, f.world)).toEqual({

@@ -4,12 +4,10 @@
  * 静态坏 proposal 必须在本 proposal 的角色事实前拒绝；先前合法死亡不回滚。
  * 不推进完整对局、不访问模型或归档文件；只读负例不执行，也不授予运行时死亡权限。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
-import {
-  createAliveComponent,
-  aliveLifeVersion,
-} from "../../../../src/core/domain/components/alive";
+import { aliveLifeVersion } from "../../../../src/core/domain/components/alive";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import type { ComponentName } from "../../../../src/core/domain/components/names";
 import type { DeathHookResult } from "../../../../src/game/mechanisms/hooks/hook_registry";

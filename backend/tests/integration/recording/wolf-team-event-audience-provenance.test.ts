@@ -1,10 +1,5 @@
 /**
- * Integration tests for wolf team access. Inputs are original directional chat/knife policies, in-flight
- * replies and event-time audiences. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Real temp SessionRecordManager/GameEventRecorder writes and reads
- * per-seat JSON; frozen event-time audiences survive later identity changes. Actual public filesystem or
- * synthetic local transport boundaries are exercised; private config/auth and paid model services are
- * excluded.
+ * 录制集成测试验证狼队访问。输入为原方向性狼聊／刀权、在途回复和事实时点受众；字面回执、引用／getter／错误、事实和状态为预期。真实临时 Recorder 写读逐席 JSON，事实发生时冻结的受众不随后续身份变化；不读私有配置／认证或调用计费模型。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";
@@ -21,7 +16,12 @@ import {
   type World,
 } from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { RoleCatalog, getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { wolfTeamEvent } from "../../../src/game/mechanisms/roles/wolf_team";
 import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
 import { AgentEventVisibilityRegistry } from "../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
@@ -38,13 +38,13 @@ const alive = (world: World, id: number) =>
 
 function fixture(locale: "zh-CN" | "en") {
   const game = bootstrapGame(sixPlayerMvpConfig, { locale, fixedRoles });
-  const catalog = new RoleCatalog(
-    getDefaultRoleCatalog()
-      .all()
-      .map((profile) => {
-        if (profile.role === Role.Seer)
-          return {
-            ...profile,
+  const catalog = createRoleCatalog({
+    contributions: getDefaultRoleContributions().map((profile) => {
+      if (profile.metadata.role === Role.Seer)
+        return {
+          ...profile,
+          runtime: {
+            ...profile.runtime,
             nightStages: [],
             wolfTeam: (state: RoleComponent) => ({
               recognizedByPack: false,
@@ -52,10 +52,13 @@ function fixture(locale: "zh-CN" | "en") {
               canChat: false,
               canVoteForKill: (state.privateState as { readonly knife?: unknown }).knife === true,
             }),
-          };
-        if (profile.role === Role.Guard)
-          return {
-            ...profile,
+          },
+        };
+      if (profile.metadata.role === Role.Guard)
+        return {
+          ...profile,
+          runtime: {
+            ...profile.runtime,
             nightStages: [],
             wolfTeam: {
               recognizedByPack: true,
@@ -63,20 +66,24 @@ function fixture(locale: "zh-CN" | "en") {
               canChat: true,
               canVoteForKill: false,
             },
-          };
-        if (profile.role === Role.Villager)
-          return {
-            ...profile,
+          },
+        };
+      if (profile.metadata.role === Role.Villager)
+        return {
+          ...profile,
+          runtime: {
+            ...profile.runtime,
             wolfTeam: {
               recognizedByPack: false,
               recognizes: [Role.Seer],
               canChat: false,
               canVoteForKill: false,
             },
-          };
-        return profile;
-      }),
-  );
+          },
+        };
+      return profile;
+    }),
+  });
   for (const id of [3, 4, 5]) role(game.world, id).camp = Camp.Wolf;
   return { ...game, catalog };
 }

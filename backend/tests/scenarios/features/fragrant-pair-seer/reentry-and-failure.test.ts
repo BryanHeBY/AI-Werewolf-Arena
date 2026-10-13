@@ -1,17 +1,15 @@
 /**
- * Fragrant lifecycle scenarios verify actual day reentry and aborted night preserve original provider failure and held ownership.
- * Input: Original scripted role actions, nested cycle attempt and actor replacement matrix.
- * Output and oracle: Exact error identity, aborted night/knowledge state and unchanged outer phase/feed retain causal assertions; no expected result is regenerated.
+ * 双生查验生命周期场景验证白天重入与中止夜晚保留原 provider 错误和已持有所有权。输入为原
+ * 脚本角色动作、嵌套周期尝试与演员替换矩阵；精确错误身份、中止夜晚／知识状态、外层阶段／
+ * 事件流不变是因果预期，不重新生成结果。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { fragrantRuntimeGame as game } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
 import { fragrantRuntimeAction as act } from "../../../support/features/fragrant-pair-seer/drivers/actions";
 import { fragrantAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
-import {
-  createAliveComponent,
-  type AliveComponent,
-} from "../../../../src/core/domain/components/alive";
+import { type AliveComponent } from "../../../../src/core/domain/components/alive";
 
 test("day cycle reentry rejects before mutating the outer phase or feed", async () => {
   const g = game();

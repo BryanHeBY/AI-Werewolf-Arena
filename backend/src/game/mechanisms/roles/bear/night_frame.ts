@@ -1,7 +1,5 @@
 /**
- * Owns the Bear night frame and deferred dawn publication. Inputs are original neighbor bodies
- * and the sampled roar; outputs are history and dawn events only for the still-matching frame.
- * It does not publish the same captured night twice or substitute revived neighbor bodies.
+ * 负责熊的夜间采样 frame 与延迟到天亮的发布。输入为原相邻玩家和采样吼声；只有匹配原 frame 时才产生历史与天亮事件。不重复发布同一夜，不以复活或替换相邻身体继续旧采样；关闭和失败保持原前缀。
  */
 import { recordBearRoar } from "./state";
 
@@ -18,7 +16,8 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { IdentityComponent } from "../../../../core/domain/entities/player";
 import { Camp, Role, type GameEvent, type EntityId } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
-import { RoleCatalog, getDefaultRoleCatalog } from "../catalog";
+import { RoleCatalog } from "../catalog";
+import { getDefaultRoleCatalog } from "../role-catalog-assembly";
 import { getBearState } from "./state";
 import { BEAR_SIGNAL_POLICIES, type BearSignalPolicy } from "@ai-werewolf-arena/game-text";
 import {
@@ -84,7 +83,7 @@ function sampleRoar(world: World, actorId: EntityId, catalog: RoleCatalog): bool
     const target = world.getComponent(id, COMPONENT.Role);
     return (
       target?.camp === Camp.Wolf &&
-      (catalog.get(target.role)?.detectableByBear?.(world, target) ?? true)
+      (catalog.runtime(target.role)?.detectableByBear?.(world, target) ?? true)
     );
   });
 }

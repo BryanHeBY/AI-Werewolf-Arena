@@ -1,23 +1,14 @@
 /**
- * Interaction scenarios verify Mist/Raven pending owners retain original lives, paid effects and unique Snake authority across failures.
- * Input: Existing public board bytes, controlled currentness/reentry/life/target mutations and actual phase-cycle replies.
- * Output and oracle: Explicit original errors, stock, closed windows and unpublished/queued death prefixes preserve owner order; source board bytes and action matrices remain unchanged.
+ * 交互场景验证雾鸦待处理所有者在失败后保留原生命、已付款效果与唯一蛇能力权限。输入为既有
+ * 公开板子字节、受控当前性／重入／生命／目标修改及真实阶段周期回复；原错误、库存、关闭窗口
+ * 和未发表／排队死亡前缀验证所有者顺序，来源板子与行动矩阵保持原样。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
-import {
-  ActionWindow,
-  Role,
-  Phase,
-  COMPONENT,
-  createAliveComponent,
-  type ActionRequest,
-  type ToolCall,
-  type AliveComponent,
-  type RoleComponent,
-} from "../../../../src/core";
+import { ActionWindow, Role, Phase, COMPONENT, type ActionRequest, type ToolCall, type AliveComponent, type RoleComponent } from "../../../../src/core";
 import {
   beginMistNight,
   snakeWindowTargets,

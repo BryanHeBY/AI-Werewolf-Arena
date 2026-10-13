@@ -1,19 +1,24 @@
 /**
- * Unit tests for bear; Isolated bear dawn-frame contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试验证 bear 的独立 dawn-frame.test 契约。输入为既有内存 fixture、原回调控制和明确非法
+ * 修改；原字面预期、身份快照及拒绝断言是预期，不在迁移中重新生成。仅调用原生内存
+ * owner／frame／reader，测试自有 mock／组件不运行完整对局、模型或真实传输，support／fixture 字节及政策状态不变。
  */
+import {
+  createAliveComponent,
+  createCampComponent,
+} from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
 import { BearNightFrame } from "../../../../src/game/mechanisms/roles/bear/night_frame";
 import { getBearState } from "../../../../src/game/mechanisms/roles/bear/state";
-import { RoleCatalog, getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
-import { createCampComponent } from "../../../../src/core/domain/components/camp";
+
 import { Camp, Role, type GameEvent } from "../../../../src/core/domain/model";
 const frame = (f: ReturnType<typeof animalRosterFixture>, day = 1) =>
   BearNightFrame.capture(f.world, day, undefined, "netease_dawn_live_v1")!;
@@ -104,21 +109,22 @@ for (const mutate of [
 test("trusted sensing callback cannot publish a neighbor sample after mutating that neighbor's life", () => {
   const f = animalRosterFixture();
   f.life(12).alive = false;
-  const catalog = new RoleCatalog(
-      getDefaultRoleCatalog()
-        .all()
-        .map((p) =>
-          p.role === Role.WolfBeauty
-            ? {
-                ...p,
+  const catalog = createRoleCatalog({
+      contributions: getDefaultRoleContributions().map((p) =>
+        p.metadata.role === Role.WolfBeauty
+          ? {
+              ...p,
+              runtime: {
+                ...p.runtime,
                 detectableByBear: () => {
                   f.life(1).alive = false;
                   return true;
                 },
-              }
-            : p,
-        ),
-    ),
+              },
+            }
+          : p,
+      ),
+    }),
     next = BearNightFrame.capture(f.world, 1, catalog, "netease_dawn_live_v1")!,
     events: GameEvent[] = [];
   next.publish(f.world, events, () => true);
@@ -148,13 +154,13 @@ for (const mutation of ["phase", "reentry", "new-live", "freeze-events"] as cons
     let current = true,
       called = false;
     let next: BearNightFrame;
-    const catalog = new RoleCatalog(
-      getDefaultRoleCatalog()
-        .all()
-        .map((p) =>
-          p.role === Role.WolfBeauty
-            ? {
-                ...p,
+    const catalog = createRoleCatalog({
+      contributions: getDefaultRoleContributions().map((p) =>
+        p.metadata.role === Role.WolfBeauty
+          ? {
+              ...p,
+              runtime: {
+                ...p.runtime,
                 detectableByBear: () => {
                   if (!called) {
                     called = true;
@@ -165,10 +171,11 @@ for (const mutation of ["phase", "reentry", "new-live", "freeze-events"] as cons
                   }
                   return true;
                 },
-              }
-            : p,
-        ),
-    );
+              },
+            }
+          : p,
+      ),
+    });
     next = BearNightFrame.capture(f.world, 1, catalog, "netease_dawn_live_v1")!;
     next.publish(f.world, events, () => current);
     expect(events).toEqual([]);

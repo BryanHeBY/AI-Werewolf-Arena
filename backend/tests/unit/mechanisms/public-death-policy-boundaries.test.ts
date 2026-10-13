@@ -1,8 +1,9 @@
 /**
- * Unit tests verify public death/last-word policy normalization, bounded wave disclosure and changed-policy revocation.
- * Input: Original phase/day/policy/mutation/locale tables and controlled direct DeathResolution operations.
- * Output and oracle: Exact field defaults, reveal/grant ordering, original life identity and no late permission assertions remain unchanged; no PM cycle or public file load executes.
+ * 单元测试验证公开死亡／遗言政策归一化、有界死亡波披露与变化政策撤销。输入为原阶段／
+ * 日数／政策／修改／语言表和受控直接死亡结算；精确字段默认值、翻牌／授予顺序、原生命身份
+ * 和无迟到权限断言保持原样，不运行 PhaseManager 周期或加载公开文件。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -19,7 +20,7 @@ import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
 import { getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms/prompt/config_render_registry";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+
 
 const roles = [Role.Wolf, Role.Hunter, Role.WolfKing, Role.Villager, Role.Villager, Role.Villager];
 

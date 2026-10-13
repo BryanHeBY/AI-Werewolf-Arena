@@ -8,11 +8,6 @@
  */
 import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
 
-/**
- * Collects, deduplicates and orders registered night stages for present and declared abilities.
- * Inputs are catalog profiles, current roles and possible ability roles; output is the assembled
- * stage list. It does not freeze which player will act or instantiate an ability resource.
- */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { demonHunterActorId } from "../game/mechanisms/roles/demon_hunter/authority";
 import { types } from "node:util";
@@ -23,7 +18,8 @@ import {
 } from "../game/mechanisms/roles/ghost_bride/night_stages";
 /** 文件说明：根据板子角色集合构建夜间阶段列表。 */
 import { Role } from "../core/domain/model";
-import { RoleCatalog, getDefaultRoleCatalog } from "../game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../game/mechanisms/roles/role-catalog-assembly";
 import { NightStageHandler } from "../game/mechanisms/stages/night/contracts";
 import type { World } from "../core/domain/world";
 import { COMPONENT } from "../core/domain/components/names";
@@ -162,9 +158,13 @@ function supportedProfile(
   const night = descriptors.possibleNightAbilities?.value ?? [];
   const death = descriptors.possibleDeathAbilities?.value ?? [];
   if (!Array.isArray(night) || !Array.isArray(death)) return null;
-  const nightMembers = snapshotMembers(night), deathMembers = snapshotMembers(death);
+  const nightMembers = snapshotMembers(night),
+    deathMembers = snapshotMembers(death);
   if (!handlers || !nightMembers || !deathMembers) return null;
-  if (!nightMembers.every((kind) => typeof kind === "string") || !deathMembers.every((kind) => kind === "gun"))
+  if (
+    !nightMembers.every((kind) => typeof kind === "string") ||
+    !deathMembers.every((kind) => kind === "gun")
+  )
     return null;
   return Object.freeze({
     role,
@@ -217,8 +217,13 @@ export class NightStageRegistry {
       ),
     );
     return Object.freeze({
-      mode: "snapshot", stages, entries, metadata,
-      definition: metadata.every((row) => row.kind === "data") ? collection?.definition ?? null : null,
+      mode: "snapshot",
+      stages,
+      entries,
+      metadata,
+      definition: metadata.every((row) => row.kind === "data")
+        ? (collection?.definition ?? null)
+        : null,
       definitionScope: collection?.builtIn ? "built-in" : "injected",
     });
   }
@@ -227,7 +232,7 @@ export class NightStageRegistry {
     const roleSet = new Set<Role>(config.roleSetups.map((item) => item.role));
     let hasRoleChecks = false;
     for (const role of [...roleSet])
-      for (const kind of this.roleCatalog.get(role)?.possibleNightAbilities ?? []) {
+      for (const kind of this.roleCatalog.runtime(role)?.possibleNightAbilities ?? []) {
         roleSet.add(abilityRole[kind]);
         if (kind === "role_check") hasRoleChecks = true;
       }
@@ -253,7 +258,7 @@ export class NightStageRegistry {
     }
     if (
       [...roleSet].some((role) =>
-        this.roleCatalog.get(role)?.possibleDeathAbilities?.includes("gun"),
+        this.roleCatalog.runtime(role)?.possibleDeathAbilities?.includes("gun"),
       ) ||
       world
         ?.getAliveEntityIds()
@@ -273,7 +278,7 @@ export class NightStageRegistry {
       );
     }
     for (const role of roleSet.values()) {
-      const profile = this.roleCatalog.get(role);
+      const profile = this.roleCatalog.runtime(role);
       const pack = profile?.nightStages ?? [];
       const start = collected.length;
       collected.push(...pack);
@@ -364,19 +369,28 @@ export class NightStageRegistry {
     const frozenSources = new Map<NightStageHandler, readonly NightStageContributionSource[]>();
     for (const [handler, contributions] of sources)
       frozenSources.set(handler, Object.freeze(contributions));
-    this.sourceByCollection.set(stages, Object.freeze({
-      sources: frozenSources,
-      builtIn: this === defaultRegistry,
-      definition: standardDefinition ? Object.freeze({
-        roles: Object.freeze(declarations),
-        // 预约仅补齐未来合法赠予/复制所需的定义，不增添当夜执行条目。
-        reservations: Object.freeze([
-          DEMON_HUNTER_NIGHT_STAGE, DEATH_ABILITY_ACTIVATION_STAGE,
-          ROLE_INSPECTION_STAGE, PSYCHIC_INSPECTION_STAGE, MIRROR_INSPECTION_STAGE,
-          LUCKY_ABILITY_STAGE, BLACK_MARKET_RECIPIENT_STAGE,
-        ]),
-      }) : null,
-    }));
+    this.sourceByCollection.set(
+      stages,
+      Object.freeze({
+        sources: frozenSources,
+        builtIn: this === defaultRegistry,
+        definition: standardDefinition
+          ? Object.freeze({
+              roles: Object.freeze(declarations),
+              // 预约仅补齐未来合法赠予/复制所需的定义，不增添当夜执行条目。
+              reservations: Object.freeze([
+                DEMON_HUNTER_NIGHT_STAGE,
+                DEATH_ABILITY_ACTIVATION_STAGE,
+                ROLE_INSPECTION_STAGE,
+                PSYCHIC_INSPECTION_STAGE,
+                MIRROR_INSPECTION_STAGE,
+                LUCKY_ABILITY_STAGE,
+                BLACK_MARKET_RECIPIENT_STAGE,
+              ]),
+            })
+          : null,
+      }),
+    );
     return stages;
   }
 }

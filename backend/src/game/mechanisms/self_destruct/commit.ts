@@ -1,7 +1,5 @@
 /**
- * Commits the selected self-destruct choice through its configured role hook. Inputs are the
- * captured actor, validated blast and current window; outputs are existing blast effects and
- * death proposals. It does not reuse a revoked actor or perform final phase/victory sealing.
+ * 负责通过配置的角色 hook 提交已选自爆。输入为捕获玩家、已校验选择和当前窗口；输出为原爆炸效果与死亡提案。不复用已撤销玩家，不执行最终阶段／胜负封盘。
  */
 import { RED_MOON_ROLE } from "../roles/red_moon_apostle/state";
 import { commitDemonRedMoonBlast } from "../roles/demon_hunter/authority";
@@ -25,7 +23,7 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import type { World } from "../../../core/domain/world";
 import { getWhiteWolfKingState, consumeWhiteWolfDetonation } from "../roles/white_wolf_king/ports";
-import { getDefaultRoleCatalog } from "../roles/catalog";
+import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";
 
 /** Commits only this public ability's resource/event/facts; the resolver owns death writes. */
 export function commitSelfDestructSelection(

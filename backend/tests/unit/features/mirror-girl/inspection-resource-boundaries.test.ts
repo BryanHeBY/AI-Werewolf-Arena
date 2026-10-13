@@ -30,7 +30,11 @@ import {
 } from "../../../../src/game/mechanisms/roles/ability_changes";
 import { freshMirrorInspectionState } from "../../../../src/game/mechanisms/roles/mirror_girl/profile";
 import { MIRROR_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/night_stages";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import {
   canGargoyleKnife,
@@ -133,7 +137,7 @@ for (const locale of ["zh-CN", "en"] as const)
       events: GameEvent[] = [],
       receive = new ActionReception(game.world);
     expect(role(game)).toMatchObject({ role: Role.MirrorGirl, camp: Camp.Good });
-    expect(getDefaultRoleCatalog().require(Role.MirrorGirl)).toMatchObject({
+    expect(getDefaultRoleCatalog().requireRuntime(Role.MirrorGirl)).toMatchObject({
       goodSide: "god",
       maxCount: 1,
     });
@@ -532,10 +536,11 @@ test("a gifted Mirror instance runs without a Mirror entity and cannot replace n
 test("actual role-check capabilities collect all policy handlers even when an injected role catalog omits a Gargoyle profile", async () => {
   const game = fixture(),
     { RoleCatalog } = await import("../../../../src/game/mechanisms/roles/catalog");
-  const minimal = new RoleCatalog([
-    getDefaultRoleCatalog().require(Role.Wolf),
-    getDefaultRoleCatalog().require(Role.Villager),
-  ]);
+  const minimal = createRoleCatalog({
+    contributions: getDefaultRoleContributions().filter(
+      (entry) => entry.metadata.role === Role.Wolf || entry.metadata.role === Role.Villager,
+    ),
+  });
   expect(
     new NightStageRegistry(minimal)
       .getStages(game.config, game.world)
@@ -618,21 +623,22 @@ for (const point of ["gateway", "label"] as const)
     }
     if (point === "label") {
       const { RoleCatalog } = await import("../../../../src/game/mechanisms/roles/catalog");
-      ctx.roleCatalog = new RoleCatalog(
-        getDefaultRoleCatalog()
-          .all()
-          .map((profile) =>
-            profile.role === Role.Wolf
-              ? {
-                  ...profile,
+      ctx.roleCatalog = createRoleCatalog({
+        contributions: getDefaultRoleContributions().map((profile) =>
+          profile.metadata.role === Role.Wolf
+            ? {
+                ...profile,
+                runtime: {
+                  ...profile.runtime,
                   inspectionLabels: () => {
                     inject();
                     return { role: Role.Wolf };
                   },
-                }
-              : profile,
-          ),
-      );
+                },
+              }
+            : profile,
+        ),
+      });
     }
     await MIRROR_INSPECTION_STAGE.execute(ctx);
     expect(calls).toBe(1);

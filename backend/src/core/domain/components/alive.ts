@@ -1,17 +1,15 @@
 /**
- * 负责原生命的存活值、版本及工厂描述符。输入为初始存活值和展示语言；
+ * 负责原生命的存活值、版本及工厂描述符。输入为初始存活值；
  * 输出保留同一组件对象，只有存活值发生变化时推进版本，以识别复活后的新生命。
  * 身份表与描述符留在运行时；机制可记录版本数字快照（如 debatePenalty.lifeVersion），
  * 该数字不携带原组件或授权，描述符查询不执行访问器。
- * 展示方法暂保原兼容接口，后续组件退出 PromptRenderable 时由展示贡献接替。
+ * 展示语言与文案绑定已交游戏观察层；领域不格式化存活信息。
  */
-import { text, type Locale } from "@ai-werewolf-arena/game-text";
-import { PromptRenderable } from "../model";
 
 /**
  * 存活状态组件：标记玩家是否仍在场。
  */
-export interface AliveComponent extends PromptRenderable {
+export interface AliveComponent {
   alive: boolean;
 }
 
@@ -33,7 +31,6 @@ export function aliveLifeVersion(component: AliveComponent): number | undefined 
  */
 export function createAliveComponent(
   alive: boolean = true,
-  locale: Locale = "zh-CN",
 ): AliveComponent {
   const component: AliveComponent = {
     get alive() {
@@ -47,9 +44,7 @@ export function createAliveComponent(
         lifeVersions.set(component, lifeVersions.get(component)! + 1);
       }
     },
-    renderPrompt(displayLocale: Locale = locale): string {
-      return text(displayLocale, this.alive ? "component.alive" : "component.dead");
-    },
+
   };
   originalDescriptors.set(component, Object.getOwnPropertyDescriptor(component, "alive")!);
   lifeVersions.set(component, 0);

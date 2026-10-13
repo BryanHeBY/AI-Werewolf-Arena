@@ -4,14 +4,15 @@
  * 施法者生命、库存付款和晚阶段失败保持因果顺序，场景不是独立纯 reader。
  * 不调用模型／网络，不生成或重写原预期数据。
  */
+import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { Role, Camp, WitchSelfHealRule } from "../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { type RoleComponent } from "../../../../src/core/domain/components/role";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
-import { createCampComponent } from "../../../../src/core/domain/components/camp";
+
+
 import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";

@@ -1,8 +1,9 @@
 /**
- * Unit tests verify typed Awakened shields/knives and Mechanical/poison/Dream interactions preserve independent lethal sources.
- * Input: Original protection/base/change tables, bounded life claims and direct DamageResolutionSystem operations.
- * Output and oracle: Handwritten death/cause/reflection, mark cleanup and gun/word permissions remain unchanged; no complete night, model or record file runs.
+ * 单元测试验证 typed 觉醒护盾／刀及机械／毒药／梦境交互保留独立致死来源。输入为原防护／
+ * 基础／变化表、有界生命声明和直接伤害结算；手写死亡／死因／反射、印记清理及枪／遗言权限
+ * 保持原样，不运行完整夜、模型或记录文件。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -13,10 +14,7 @@ import {
   StatusMark,
   type BoardConfig,
 } from "../../../src/core";
-import {
-  createAliveComponent,
-  type AliveComponent,
-} from "../../../src/core/domain/components/alive";
+import { type AliveComponent } from "../../../src/core/domain/components/alive";
 import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
 import { permitsDeathShot } from "../../../src/core/domain/deaths";
 import {

@@ -100,7 +100,7 @@ for (const locale of ["zh-CN", "en"] as const)
         events: GameEvent[] = [];
       let choices = 0;
       try {
-        const hook = getDefaultRoleCatalog().require(Role.WolfKing).deathHook!;
+        const hook = getDefaultRoleCatalog().requireRuntime(Role.WolfKing).deathHook!;
         const result = await hook(
           world,
           [1],
@@ -141,7 +141,7 @@ for (const locale of ["zh-CN", "en"] as const)
       const permit = world.openDeathAction(1, "shoot", Phase.Day, 2),
         events: GameEvent[] = [];
       try {
-        const result = await getDefaultRoleCatalog().require(Role.WolfKing).deathHook!(
+        const result = await getDefaultRoleCatalog().requireRuntime(Role.WolfKing).deathHook!(
           world,
           [1],
           { 1: [DeathCause.Exile] },
@@ -321,7 +321,7 @@ for (const locale of ["zh-CN", "en"] as const)
         original = getWolfKingState(role(world, 1))!,
         failure = new Error("original-shot-failure");
       try {
-        const task = getDefaultRoleCatalog().require(Role.WolfKing).deathHook!(
+        const task = getDefaultRoleCatalog().requireRuntime(Role.WolfKing).deathHook!(
           world,
           [1],
           { 1: [DeathCause.Exile] },

@@ -1,12 +1,13 @@
 /**
  * 单元测试：验证骑士在原决斗提交点的资源所有权。输入为手写双人 World 和抛错资源／公布端口；访问日志、原生命与错误身份为预期。验证付费前缀及捕获，不新增决斗政策或执行完整白天；编译反例拒绝读视图写入。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import type { KnightState } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
 import { Camp, Role, Phase, DeathCause, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { World } from "../../../src/core/domain/world";
 import { getKnightState } from "../../../src/game/mechanisms/roles/knight/ports";

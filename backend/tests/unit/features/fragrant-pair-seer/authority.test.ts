@@ -4,15 +4,13 @@
  * 原 owner、frame 和 readers 真实执行，native/install/use 只迁向同一实际实例 owner。
  * 不运行完整对局、模型或传输，不替换支持 fixture、规则与原历史矩阵。
  */
+import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { Role, Camp, Phase } from "../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
-import {
-  createAliveComponent,
-  type AliveComponent,
-} from "../../../../src/core/domain/components/alive";
+import { type AliveComponent } from "../../../../src/core/domain/components/alive";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { createCampComponent } from "../../../../src/core/domain/components/camp";
+
 import { createIdentityComponent } from "../../../../src/core/domain/entities/player";
 import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
 import type { GameEvent } from "../../../../src/core/domain/events";

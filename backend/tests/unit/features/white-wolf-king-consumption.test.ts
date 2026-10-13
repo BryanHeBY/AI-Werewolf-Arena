@@ -1,12 +1,13 @@
 /**
  * 单元测试：验证白狼王选择资源后的消耗边界。输入为两个手写活人及抛错资源／公布端口；访问顺序、原错误及未改生命为预期。提交在公布前花库存并返回死亡提议，实际死亡结算与窗口生命周期不在此测试中。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import type { WhiteWolfKingState } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
 import { Role, Camp, Phase, ActionWindow, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
+
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { World } from "../../../src/core/domain/world";
 import { getWhiteWolfKingState } from "../../../src/game/mechanisms/roles/white_wolf_king/ports";

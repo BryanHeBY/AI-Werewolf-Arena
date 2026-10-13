@@ -4,11 +4,12 @@
  * 输出以领取旗标、独立事件、引用与错误前缀验收。被梦阻断仍付款，同波首次死亡有效，复活无效。
  * 规则依据 docs/expansion/rules/awa-wolf-beauty-v1.md；不执行完整对局、模型或网络，预期不从生产生成。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { Camp, Role, Phase, DeathCause, type GameEvent } from "../../../../src/core/domain/model";
 import {
   getWolfBeautyState,

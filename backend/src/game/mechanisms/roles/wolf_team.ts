@@ -1,7 +1,5 @@
 /**
- * Derives wolf teammate knowledge, discussion participation and knife-holder permissions. Inputs
- * are current World roles and explicit role policies; outputs preserve separate teammate, chat
- * and knife sets plus team audiences. Wolf camp alone never grants every wolf-team permission.
+ * 负责分别推导狼队知识、聊天参与和刀权。输入为当前 World 角色及明确运行政策；输出保留队友、狼聊、狼刀名单和事件受众。狼阵营本身不等于拥有全部狼队权限，不据历史知识授予当前刀权。
  */
 import { scholarMentorPackBlocked } from "./scholar_mentor/night_frame";
 import { animalPackKnifeBlocked } from "./animal_dream/authority";
@@ -27,7 +25,7 @@ const NO_ACCESS: WolfTeamPermissions = Object.freeze({
   canVoteForKill: false,
 });
 
-/** Pure query over the role's current explicit permissions; no global registry. */
+/** 只查询角色当前的明确权限；不依赖全局目录，也不写入角色或库存。 */
 export function wolfTeamPermissions(
   role: RoleComponent | undefined,
   catalog: RoleCatalog,
@@ -37,7 +35,7 @@ export function wolfTeamPermissions(
   if (!role || role.camp !== Camp.Wolf) return NO_ACCESS;
   if (world && weddingSetup(world) && (!ghostBrideReady(world) || weddingMember(world, role)))
     return NO_ACCESS;
-  const permissions = catalog.get(role.role)?.wolfTeam;
+  const permissions = catalog.runtime(role.role)?.wolfTeam;
   const result =
     typeof permissions === "function" ? permissions(role, world) : (permissions ?? NO_ACCESS);
   return world &&
@@ -56,13 +54,13 @@ export function knownWolfTeammates(
   const viewer = wolfTeamPermissions(world.getComponent(actorId, COMPONENT.Role), catalog, world);
   if (viewer === NO_ACCESS) return [];
   const role = world.getComponent(actorId, COMPONENT.Role);
-  const snapshot = role?.camp === Camp.Wolf && catalog.get(role.role)?.knownTeammates;
+  const snapshot = role?.camp === Camp.Wolf && catalog.runtime(role.role)?.knownTeammates;
   if (snapshot)
     return [...new Set(snapshot(role!, world))]
       .filter((id) => id !== actorId && world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf)
       .sort((a, b) => a - b);
   if (viewer.recognizes === "none") return [];
-  // Identity knowledge is independent of unannounced deaths.
+  // 身份知识独立于尚未公告的死亡，不能按真实存活状态重写已知队友。
   return world
     .entityIds()
     .filter((id) => {
@@ -96,7 +94,7 @@ export function wolfKnifeHolders(world: World, catalog: RoleCatalog): EntityId[]
     .sort((a, b) => a - b);
 }
 
-/** Capture once at emission. This envelope stays internal to the engine/Tape. */
+/** 在事实发布时捕获一次受众；此受众包只用于引擎／Tape，不随后续阵营变化补发历史。 */
 export function wolfTeamEvent<K extends WolfTeamEventType>(
   world: World,
   catalog: RoleCatalog,

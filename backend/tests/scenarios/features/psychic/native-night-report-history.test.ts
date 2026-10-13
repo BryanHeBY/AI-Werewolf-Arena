@@ -1,7 +1,5 @@
 /**
- * Spirit Seer scenarios verify complete-night reentry and actual Dream/Beauty deaths preserve private inspection histories before judgment.
- * Input: Original pass matrix, fixed role plans and controlled NightPipeline/PM requests.
- * Output and oracle: Handwritten report/resource/death privacy and event outcomes remain unchanged; catalog lookup remains the same cached reference, not a copied authority.
+ * 通灵师场景验证完整夜重入及梦／魅惑死亡链保留判胜前私有历史。输入为原 pass 矩阵、固定角色与受控 Pipeline／经理；手写报告、库存、死亡隐私和事实结果是预期。Catalog 查询仍返回原缓存贡献引用，不复制 authority。
  */
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { PotionType } from "../../../../src/core";
@@ -23,7 +21,7 @@ import { getRoleInspectionState } from "../../../../src/game/mechanisms/roles/ro
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { PSYCHIC_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/night_stages";
 import { hasRoleInspectionNightCommit } from "../../../../src/game/mechanisms/roles/role_inspection/night_scope";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";

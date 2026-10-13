@@ -1,9 +1,5 @@
 /**
- * Unit tests: Role inspection scopes use changed ability IDs, held replies and injected
- * history; original owner, unique-result and deadline assertions check final authority
- * revalidation. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试验证查验 scope 的能力 ID 变更、持有回复与注入历史。原所有者、结果唯一性和期限断言是最终授权重检预期；保留原字面输入及样本，不调用模型或完整对局 driver。
  */
 import { nightStageContext } from "../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
@@ -18,7 +14,11 @@ import {
 } from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { findNightAbility } from "../../../src/game/mechanisms/roles/abilities";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {
   ROLE_INSPECTION_STAGE,
   PSYCHIC_INSPECTION_STAGE,
@@ -173,12 +173,12 @@ test("Gargoyle final report rechecks unique history after an inspection-label ca
     calls++;
     return { name: "inspect_role", args: { target_id: calls === 1 ? 2 : 3 } };
   });
-  const profiles = getDefaultRoleCatalog()
-    .all()
-    .map((profile) =>
-      profile.role === Role.Wolf
-        ? {
-            ...profile,
+  const profiles = getDefaultRoleContributions().map((profile) =>
+    profile.metadata.role === Role.Wolf
+      ? {
+          ...profile,
+          runtime: {
+            ...profile.runtime,
             inspectionLabels: () => {
               (
                 game.ability.state.history as {
@@ -196,11 +196,12 @@ test("Gargoyle final report rechecks unique history after an inspection-label ca
               });
               return { role: Role.Wolf };
             },
-          }
-        : profile,
-    );
+          },
+        }
+      : profile,
+  );
   const { RoleCatalog } = await import("../../../src/game/mechanisms/roles/catalog");
-  ctx.roleCatalog = new RoleCatalog(profiles);
+  ctx.roleCatalog = createRoleCatalog({ contributions: profiles });
   await game.stage.execute(ctx);
   expect(calls).toBe(2);
   expect(game.ability.state.history.map((row) => row.targetId)).toEqual([2, 3]);
@@ -295,21 +296,22 @@ for (const point of ["await", "gateway", "label"] as const)
     }
     if (point === "label") {
       const { RoleCatalog } = await import("../../../src/game/mechanisms/roles/catalog");
-      ctx.roleCatalog = new RoleCatalog(
-        getDefaultRoleCatalog()
-          .all()
-          .map((profile) =>
-            profile.role === Role.Seer
-              ? {
-                  ...profile,
+      ctx.roleCatalog = createRoleCatalog({
+        contributions: getDefaultRoleContributions().map((profile) =>
+          profile.metadata.role === Role.Seer
+            ? {
+                ...profile,
+                runtime: {
+                  ...profile.runtime,
                   inspectionLabels: () => {
                     promote();
                     return { role: Role.Seer };
                   },
-                }
-              : profile,
-          ),
-      );
+                },
+              }
+            : profile,
+        ),
+      });
     }
     await game.stage.execute(ctx);
     expect(calls).toBe(1);

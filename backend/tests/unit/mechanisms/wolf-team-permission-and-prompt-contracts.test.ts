@@ -15,7 +15,12 @@ import {
   type World,
 } from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { RoleCatalog, getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {
   knownWolfTeammates,
   wolfChatParticipants,
@@ -58,13 +63,13 @@ const request = (
 
 function fixture(locale: "zh-CN" | "en") {
   const game = bootstrapGame(sixPlayerMvpConfig, { locale, fixedRoles });
-  const catalog = new RoleCatalog(
-    getDefaultRoleCatalog()
-      .all()
-      .map((profile) => {
-        if (profile.role === Role.Seer)
-          return {
-            ...profile,
+  const catalog = createRoleCatalog({
+    contributions: getDefaultRoleContributions().map((profile) => {
+      if (profile.metadata.role === Role.Seer)
+        return {
+          ...profile,
+          runtime: {
+            ...profile.runtime,
             nightStages: [],
             wolfTeam: (state: RoleComponent) => ({
               recognizedByPack: false,
@@ -72,10 +77,13 @@ function fixture(locale: "zh-CN" | "en") {
               canChat: false,
               canVoteForKill: (state.privateState as { readonly knife?: unknown }).knife === true,
             }),
-          };
-        if (profile.role === Role.Guard)
-          return {
-            ...profile,
+          },
+        };
+      if (profile.metadata.role === Role.Guard)
+        return {
+          ...profile,
+          runtime: {
+            ...profile.runtime,
             nightStages: [],
             wolfTeam: {
               recognizedByPack: true,
@@ -83,20 +91,24 @@ function fixture(locale: "zh-CN" | "en") {
               canChat: true,
               canVoteForKill: false,
             },
-          };
-        if (profile.role === Role.Villager)
-          return {
-            ...profile,
+          },
+        };
+      if (profile.metadata.role === Role.Villager)
+        return {
+          ...profile,
+          runtime: {
+            ...profile.runtime,
             wolfTeam: {
               recognizedByPack: false,
               recognizes: [Role.Seer],
               canChat: false,
               canVoteForKill: false,
             },
-          };
-        return profile;
-      }),
-  );
+          },
+        };
+      return profile;
+    }),
+  });
   for (const id of [3, 4, 5]) role(game.world, id).camp = Camp.Wolf;
   return { ...game, catalog };
 }
@@ -130,9 +142,12 @@ for (const locale of ["zh-CN", "en"] as const) {
     expect(
       policy.buildSystem(request(1, "kill_vote"), { supportsDebugReporting: false }).systemPrompt,
     ).toContain("2, 4");
-    const noPermission = new RoleCatalog(
-      catalog.all().map((profile) => ({ ...profile, wolfTeam: undefined })),
-    );
+    const noPermission = createRoleCatalog({
+      contributions: getDefaultRoleContributions().map((profile) => ({
+        ...profile,
+        runtime: { ...profile.runtime, wolfTeam: undefined },
+      })),
+    });
     expect(knownWolfTeammates(world, 1, noPermission)).toEqual([]);
     expect(wolfChatParticipants(world, noPermission)).toEqual([]);
     expect(wolfKnifeHolders(world, noPermission)).toEqual([]);
@@ -231,14 +246,14 @@ for (const locale of ["zh-CN", "en"] as const)
       const { LlmActionProvider } = await import("../../../src/ai/agents/llm/llm_action_provider");
       const { AcpActionProvider } = await import("../../../src/ai/agents/acp/acp_action_provider");
       const { world } = fixture(locale);
-      const catalog = new RoleCatalog(
-        getDefaultRoleCatalog()
-          .all()
-          .map((profile) =>
-            profile.role !== Role.Wolf
-              ? profile
-              : {
-                  ...profile,
+      const catalog = createRoleCatalog({
+        contributions: getDefaultRoleContributions().map((profile) =>
+          profile.metadata.role !== Role.Wolf
+            ? profile
+            : {
+                ...profile,
+                runtime: {
+                  ...profile.runtime,
                   wolfTeam: {
                     recognizedByPack: true,
                     recognizes: "pack" as const,
@@ -246,8 +261,9 @@ for (const locale of ["zh-CN", "en"] as const)
                     canVoteForKill: false,
                   },
                 },
-          ),
-      );
+              },
+        ),
+      });
       const sdk = new LlmActionProvider(
         world,
         {

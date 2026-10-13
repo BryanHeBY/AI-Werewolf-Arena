@@ -4,16 +4,14 @@
  * 实际原生 owner/frame/readers 仍按原顺序执行，use/install 入口只随实际实例 owner 迁移。
  * 不运行完整对局、模型或物理传输，不重建 fixture、矩阵或生产生成的预期。
  */
+import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { Role, Camp, WitchSelfHealRule } from "../../../../src/core/domain/identity";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
-import {
-  createAliveComponent,
-  type AliveComponent,
-} from "../../../../src/core/domain/components/alive";
-import { createCampComponent } from "../../../../src/core/domain/components/camp";
+import { type AliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { createIdentityComponent } from "../../../../src/core/domain/entities/player";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";

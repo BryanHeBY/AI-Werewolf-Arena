@@ -1,8 +1,12 @@
+/**
+ * 负责聚合通用、警长和角色运行校验贡献。输入为原上下文与工具调用；输出为首个规则拒绝或 null。
+ * 有来源赠枪保留专属校验，普通角色在原时点读取当前规则；不提交动作、付款或执行结算。
+ */
 import { RuleError, type RuleViolation } from "@ai-werewolf-arena/game-catalog";
-/** 文件说明：聚合通用/角色/机制校验规则并提供统一校验入口。 */
 import { ToolName } from "../../../core/domain/model";
 import { COMMON_VALIDATION_RULES } from "../common/validation_rules";
-import { RoleCatalog, getDefaultRoleCatalog } from "../roles/catalog";
+import { RoleCatalog } from "../roles/catalog";
+import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";
 import { SHERIFF_VALIDATION_RULES } from "../sheriff/validation_rules";
 import { ToolRuleMap, ValidationRuleContext } from "./contracts";
 import { validateGiftGun } from "../roles/death_abilities";
@@ -12,7 +16,7 @@ function buildDefaultRules(roleProfileRegistry: RoleCatalog): ToolRuleMap {
     ...COMMON_VALIDATION_RULES,
     ...SHERIFF_VALIDATION_RULES,
   };
-  for (const profile of roleProfileRegistry.all()) {
+  for (const { runtime: profile } of roleProfileRegistry.allRuntime()) {
     if (profile.validationRules) {
       Object.assign(rules, profile.validationRules);
     }
@@ -36,10 +40,10 @@ export class ToolValidationRuleRegistry {
   validate(ctx: Omit<ValidationRuleContext, "roleCatalog">): RuleViolation | null {
     if (this.useProfileRules && ctx.toolCall.name === "shoot" && ctx.abilityId !== undefined)
       return validateGiftGun({ ...ctx, roleCatalog: this.roleProfileRegistry });
-    // Two roles may share a tool name while owning different resources/rules.
+    // 同名工具可以归不同角色库存；在原调用点按当前角色读取规则，不能只靠全局索引授权。
     const rule =
       (this.useProfileRules
-        ? this.roleProfileRegistry.get(ctx.role.role)?.validationRules?.[ctx.toolCall.name]
+        ? this.roleProfileRegistry.runtime(ctx.role.role)?.validationRules?.[ctx.toolCall.name]
         : undefined) ?? this.rules[ctx.toolCall.name as ToolName];
     if (!rule) {
       return { code: RuleError.UnknownTool };

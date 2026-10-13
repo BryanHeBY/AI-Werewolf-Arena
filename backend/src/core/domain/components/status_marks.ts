@@ -1,6 +1,10 @@
+/**
+ * 负责状态印记的原工厂库存、修订与只读计数查询。输入为初始印记及具体修改，输出保留
+ * 原组件、原 Set 顺序和修订语义；Proxy 与外来库存仍被拒绝，不返回可写 Set。
+ * 展示语言、文案与 map 调用移到游戏观察层，领域不格式化印记或改变资源权限。
+ */
 import { types } from "node:util";
-import { text, type Locale, type MessageKey } from "@ai-werewolf-arena/game-text";
-import { PromptRenderable, StatusMark } from "../model";
+import { StatusMark } from "@ai-werewolf-arena/game-contract";
 interface MarkStorage {
   marks: Set<StatusMark>;
   revisions: Map<StatusMark, number>;
@@ -21,14 +25,14 @@ function storage(component: object): MarkStorage {
   if (!original) throw new Error("status_marks_component_invalid");
   return original;
 }
-/** Inspect only factory storage; no getter or Proxy and no writable Set escapes. */
+/** 只检查工厂库存；不执行 getter 或 Proxy，也不返回可写 Set。 */
 export function statusMarkSnapshot(
   component: unknown,
   mark: StatusMark,
 ): Readonly<StatusMarkSnapshot> | null {
   if (!component || typeof component !== "object" || types.isProxy(component)) return null;
   const original = markOrigins.get(component);
-  // A legacy-looking shadow is foreign data; it never becomes the real private storage.
+  // 外来旧形状影子不属于真实私有库存，不能通过此处读取原状态。
   if (!original || Object.getOwnPropertyDescriptor(component, "marks")) return null;
   return Object.freeze({
     revision: original.revisions.get(mark) ?? 0,
@@ -38,12 +42,9 @@ export function statusMarkSnapshot(
 function revise(original: MarkStorage, mark: StatusMark): void {
   original.revisions.set(mark, (original.revisions.get(mark) ?? 0) + 1);
 }
-/** Temporary protection and damage marks with a factory-owned mutation ledger. */
-export class StatusMarksComponent implements PromptRenderable {
-  constructor(
-    initialMarks: StatusMark[] = [],
-    private readonly locale: Locale = "zh-CN",
-  ) {
+/** 临时防护与伤害印记；变更台账只属于原工厂库存。 */
+export class StatusMarksComponent {
+  constructor(initialMarks: StatusMark[] = []) {
     const original: MarkStorage = { marks: new Set(), revisions: new Map() };
     markOrigins.set(this, original);
     for (const mark of initialMarks) {
@@ -72,15 +73,13 @@ export class StatusMarksComponent implements PromptRenderable {
   values(): StatusMark[] {
     return Array.from(nativeValues.call(storage(this).marks));
   }
-  renderPrompt(locale: Locale = this.locale): string {
-    if (nativeSize.call(storage(this).marks) === 0) return text(locale, "component.marks_none");
-    return text(locale, "component.marks", {
-      marks: this.values()
-        .map((mark) => text(locale, `component.mark.${mark}` as MessageKey))
-        .join(" "),
-    });
-  }
+
 }
-export function createStatusMarksComponent(locale: Locale = "zh-CN"): StatusMarksComponent {
-  return new StatusMarksComponent([], locale);
+export function createStatusMarksComponent(): StatusMarksComponent {
+  return new StatusMarksComponent([]);
+}
+
+/** 原生计数读口不执行 values 方法；展示可保持空集合时的原短路与失败顺序。 */
+export function statusMarksSize(component: StatusMarksComponent): number {
+  return nativeSize.call(storage(component).marks);
 }

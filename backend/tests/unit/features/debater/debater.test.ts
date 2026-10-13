@@ -1,6 +1,7 @@
 /**
  * 单元测试验证杠精的存活投票分母、阈值、翻牌、拒绝与原生库存。输入为有限板子、显式票和受控请求 scope；预期为字面量或不变 fixture，不请求模型或完整对局。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { rolePresentationRenderer } from "../../../../src/game/observation/role-presentation";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import {
@@ -19,7 +20,6 @@ import {
   Camp,
   Phase,
   WinCondition,
-  createAliveComponent,
   type RoleComponent,
   type AliveComponent,
   type BadgeComponent,
@@ -48,7 +48,7 @@ import {
   canVoteExile,
   canBeSheriff,
 } from "../../../../src/game/mechanisms/common/participation";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { createDefaultRoleRegistry } from "../../../../src/game/mechanisms";
 import { DayPipeline } from "../../../../src/game/engine/phase_pipeline/day_pipeline";
 import { VotingPipeline } from "../../../../src/game/engine/phase_pipeline/voting_pipeline";
@@ -179,7 +179,7 @@ test("source configuration, finite roster and all supported AWA goals", () => {
   ).toEqual({ policy: "awa_melbourne_2026_speech_gap_v1" });
   expect(
     getDefaultRoleCatalog()
-      .require(Role.Debater)
+      .requireRuntime(Role.Debater)
       .configuration!.schema.safeParse({ policy: "other" }).success,
   ).toBe(false);
   expect(() => fixture([Role.Debater, Role.Debater, Role.Wolf])).toThrow(

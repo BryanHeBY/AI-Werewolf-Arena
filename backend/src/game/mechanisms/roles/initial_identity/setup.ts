@@ -1,6 +1,7 @@
 /**
  * 负责盗贼／变形者的初始选择 scope 与请求绑定。输入为原 World 参与者和首夜请求；输出保留原选择结果与请求绑定，仅在 setup 仍当前时写选择及接受的别名。失败选择与已关闭 setup 保留原终结决定；元数据不携带行动许可。
  */
+import { createCampComponent } from "../../../observation/component-presentation";
 import type {
   ReadonlyBoardConfig,
   ThiefState,
@@ -8,25 +9,11 @@ import type {
 } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { copyEventData } from "@ai-werewolf-arena/game-text";
-import {
-  COMPONENT,
-  Camp,
-  Phase,
-  Role,
-  createCampComponent,
-  createVictoryComponent,
-  type ActionProvider,
-  type ActionRequest,
-  type CampComponent,
-  type GameEvent,
-  type RoleComponent,
-  type VictoryComponent,
-  type World,
-} from "../../../../core/domain";
+import { COMPONENT, Camp, Phase, Role, createVictoryComponent, type ActionProvider, type ActionRequest, type CampComponent, type GameEvent, type RoleComponent, type VictoryComponent, type World } from "../../../../core/domain";
 import { createRoleComponent } from "../../../observation/role-presentation";
 import { GameActionRequestFactory } from "../../../engine/action_request_factory";
 import { ToolGateway } from "../../../gateway/tool_gateway";
-import { getDefaultRoleCatalog } from "../catalog";
+import { getDefaultRoleCatalog } from "../role-catalog-assembly";
 import {
   captureDebateParticipant,
   sameDebateParticipant,

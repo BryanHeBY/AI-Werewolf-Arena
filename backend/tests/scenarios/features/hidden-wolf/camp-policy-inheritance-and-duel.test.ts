@@ -1,5 +1,5 @@
 /**
- * Scenario tests check actual pack self-knife inheritance and Knight duel under Hidden Wolf camp inspection variants. Inputs are fixed decks and controlled actions over real phase cycles; literal private history, true faction, knife membership and duel facts are the oracle. Policy projection never substitutes for the original faction or role owner.
+ * 隐狼场景验证查验阵营变体下的真实狼队自刀继承和骑士决斗。输入为固定底牌与真实阶段受控行动；字面私有历史、真实阵营、刀名单和决斗事实是预期。政策投影不能替代真实阵营或角色所有者。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -15,7 +15,7 @@ import {
 import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden_wolf/ports";
 import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {
   knownWolfTeammates,
   wolfChatParticipants,

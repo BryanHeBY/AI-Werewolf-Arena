@@ -1,6 +1,7 @@
 /**
  * 单元测试验证混血儿直接归属阶段、中立目标接收与同步选择所有权。输入为语言／目标／变化矩阵和局部夜间上下文；预期为阵营、身份、胜利、隐私与陈旧选择断言，已提交前缀的重入在阶段运行前被拒绝，不执行完整周期。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
@@ -22,7 +23,7 @@ import {
   type ToolCall,
 } from "../../../../src/core";
 import type { VictoryComponent } from "../../../../src/core/domain/components/victory";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 import { ConditionRegistry } from "../../../../src/core/domain/registries/condition_registry";
@@ -32,7 +33,7 @@ import {
   getHybridState,
   projectHybridState,
 } from "../../../../src/game/mechanisms/roles/hybrid/state";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import {
   knownWolfTeammates,
@@ -181,7 +182,7 @@ for (const locale of ["zh-CN", "en"] as const)
         choice: { day: 1, targetId: target },
       });
       expect(role(game)).toMatchObject({ role: Role.Hybrid, camp: Camp.Good });
-      expect(getDefaultRoleCatalog().require(Role.Hybrid).goodSide).toBe("villager");
+      expect(getDefaultRoleCatalog().requireMetadata(Role.Hybrid).goodSide).toBe("villager");
       expect(resolveInspection(game.world, 1, "camp", getDefaultRoleCatalog())).toEqual({
         kind: "camp",
         camp: "good",

@@ -1,10 +1,5 @@
 /**
- * Scenario tests for awakened native runtime. Inputs are original learned-template, activation, scope and
- * paid-effect matrices. Original literal receipts, reference/getter/error traces, facts and expected state
- * remain the oracle. Actual paid stages feed DamageResolution or complete NightPipeline/PhaseManager;
- * original reentry cleanup, cross-source damage and ordered gun/victory behavior require causal engine
- * execution. Engine sequencing remains real and models remain controlled providers; production output is
- * not a newly generated golden.
+ * 觉醒原生运行场景验证学习模板、激活、作用域及已付效果矩阵。输入和预期保留原回执、引用／getter／错误、事实及状态。真实阶段连接 DamageResolution 或完整 Pipeline／经理，重入清理、跨来源伤害及枪／判胜顺序通过引擎因果链验证；决策来自受控 Provider，不新生成 golden。
  */
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
@@ -33,7 +28,7 @@ import { GameActionRequestFactory } from "../../../../src/game/engine/action_req
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {
   canAwakenedKnife,
   refreshAwakenedInheritance,

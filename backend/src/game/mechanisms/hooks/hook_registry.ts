@@ -12,7 +12,7 @@ import {
   type DeathShotSelection,
 } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
-import { getDefaultRoleCatalog } from "../roles/catalog";
+import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";
 import type { NightLifeScope } from "../../../core/domain/night_effects";
 import type { CharmBinding } from "../roles/wolf_beauty/relation";
 import { giftGunDeathHook } from "../roles/gift_gun_death_hook";
@@ -83,15 +83,15 @@ export type DeathHook = (
 
 function buildDefaultVotedOutHooks(): VotedOutHook[] {
   return getDefaultRoleCatalog()
-    .all()
-    .map((profile) => profile.votedOutHook)
+    .allRuntime()
+    .map(({ runtime }) => runtime.votedOutHook)
     .filter((hook): hook is VotedOutHook => Boolean(hook));
 }
 
 function buildDefaultDeathHooks(): DeathHook[] {
   return getDefaultRoleCatalog()
-    .all()
-    .map((profile) => profile.deathHook)
+    .allRuntime()
+    .map(({ runtime }) => runtime.deathHook)
     .filter((hook): hook is DeathHook => Boolean(hook))
     .concat(giftGunDeathHook);
 }

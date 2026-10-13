@@ -5,6 +5,7 @@
  * prefix expectations verify one-pass collection without extra handler getters.
  * No model, complete-game driver, fixture rewrite or compiler-generated oracle runs.
  */
+import { createRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { expect, test } from "bun:test";
 import { Role } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/core/domain/world";
@@ -50,7 +51,7 @@ test("same handler records every observed role source without new ID or priority
       },
     };
   const plan = new NightStageRegistry(
-    new RoleCatalog([profile(Role.Wolf, [shared]), profile(Role.Guard, [shared])]),
+    createRoleCatalog([profile(Role.Wolf, [shared]), profile(Role.Guard, [shared])]),
   ).getPlan(config([Role.Wolf, Role.Guard]));
   expect(idReads).toBe(5);
   expect(priorityReads).toBe(0);
@@ -96,7 +97,7 @@ test("source capture preserves the original spread completion and iterator failu
   let thrown: unknown;
   try {
     new NightStageRegistry(
-      new RoleCatalog([profile(Role.Wolf, [seed]), profile(Role.Seer, pack)]),
+      createRoleCatalog([profile(Role.Wolf, [seed]), profile(Role.Seer, pack)]),
     ).getPlan(config([Role.Wolf, Role.Seer]));
   } catch (error) {
     thrown = error;
@@ -121,7 +122,7 @@ test("possible ability closure remains one initial-role pass and derived templat
       throw new Error("derived_possible_read");
     },
   });
-  const plan = new NightStageRegistry(new RoleCatalog([wolf, seer])).getPlan(config([Role.Wolf]));
+  const plan = new NightStageRegistry(createRoleCatalog([wolf, seer])).getPlan(config([Role.Wolf]));
   expect(extraReads).toBe(0);
   if (plan.mode !== "snapshot") throw new Error("expected_owned_snapshot");
   expect(plan.entries.map((entry) => entry.handler)).toEqual([first, second]);
@@ -147,7 +148,7 @@ test("a native virtual override has explicit unknown source and original handler
       return [handler];
     }
   }
-  const plan = new Custom(new RoleCatalog([])).getPlan(config([]));
+  const plan = new Custom(createRoleCatalog([])).getPlan(config([]));
   expect(calls).toBe(1);
   if (plan.mode !== "snapshot") throw new Error("expected_owned_snapshot");
   expect(plan.entries[0]!.sources).toEqual([{ kind: "unknown", reason: "override" }]);
@@ -192,7 +193,7 @@ for (const mode of ["throw-after-first", "depends-on-first"] as const)
         return source;
       }
     }
-    const plan = new Custom(new RoleCatalog([])).getPlan(config([]));
+    const plan = new Custom(createRoleCatalog([])).getPlan(config([]));
     expect(plan.mode).toBe("opaque");
     expect(iteratorCalls).toBe(0);
     let thrown: unknown;
@@ -290,7 +291,7 @@ test("the actual pipeline executes owned entries and preserves the original hand
     events: [],
     toolGateway: new ToolGateway(),
     damageResolutionSystem: new DamageResolutionSystem(),
-    stageRegistry: new EntriesOnly(new RoleCatalog([profile(Role.Wolf, [handler])])),
+    stageRegistry: new EntriesOnly(createRoleCatalog([profile(Role.Wolf, [handler])])),
   });
   const result = await pipeline.execute(sixPlayerMvpConfig, { getAction: async () => null }, 1);
   expect(result.interrupted).toBe(false);

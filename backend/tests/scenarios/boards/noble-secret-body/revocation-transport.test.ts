@@ -1,9 +1,9 @@
 /**
- * Real transport revocation scenarios verify replaced original Noble/Body life cancels outstanding requests.
- * Input: Actual turn openings, controlled original-role/life replacement and late model responses.
- * Output and independent oracle: No consumed/committed choice after revocation and original literal partial checkpoint/wire outcome.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 真实传输撤销场景验证原贵族／躯体生命被替换后，未结束请求会取消。输入为实际 turn 开启、
+ * 受控原角色／生命替换及迟到模型回复；撤销后无消费／提交选择与原字面部分 checkpoint／wire
+ * 结果是独立预期。不调用计费模型，也不重写 fixture 或 Tape 预期字节。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, spyOn, test } from "bun:test";
 import {
   COMPONENT,
@@ -12,7 +12,7 @@ import {
   type World,
   type AliveComponent,
 } from "../../../../src/core";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { PhaseManager } from "../../../../src/game/engine/phase_manager";
 import { type PlannedTurn } from "../../../support/transport/contracts";
 import { nobleTransportScenario } from "../../../support/features/noble-secret-body/builders/transport-plan";

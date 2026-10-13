@@ -1,9 +1,7 @@
 /**
- * Owns the domain-only type relation between component names and stored objects.
- * Input is the existing eleven slot IDs and component interfaces; output types
- * give World callers the original mutable component references without casts.
- * This map never creates storage, copies values, grants authority or serializes
- * runtime handles. Component factories and lifecycle owners retain validation.
+ * 定义领域组件名称与存储对象之间的类型关系。输入为既有十一种槽 ID 和组件接口；
+ * 输出允许 World 返回原可写组件引用，不强转、不复制值或存储。工厂与生命周期所有者
+ * 仍负责各自校验，此关系不授予资源权限或序列化运行句柄。
  */
 import type { COMPONENT, ComponentName } from "./components/names";
 import type { IdentityComponent } from "./entities/player";
@@ -37,10 +35,9 @@ type ComponentFields = {
 }[ComponentName];
 
 /**
- * Keep arbitrary custom fields, while rejecting another slot's exclusive public
- * fields. Role structurally contains Camp; role/privateState cannot occupy Camp.
- * Shared fields such as renderPrompt remain valid. This is type-only, never a
- * runtime shape check or an exact-object policy.
+ * 保留自定义扩展字段，同时拒绝另一槽的独有公开字段。Role 在结构上包含 Camp，
+ * 但 role／privateState 不能装入 Camp 槽；展示方法已退出组件结构。此关系只属于类型，
+ * 不执行运行时 shape 检查，也不把扩展对象限制为精确字段集合。
  */
 export type ComponentWrite<K extends ComponentName> = K extends ComponentName
   ? ComponentMap[K] & {

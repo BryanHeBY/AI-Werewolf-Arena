@@ -1,23 +1,28 @@
 /**
  * 构造蚀日者有界机制测试的显式 World、组件、Catalog 与初始座位。输入为原配置、组件及调用方字段，输出为原 fixture；手写断言和身份快照由测试持有，不运行完整对局、传输或生产规则验证器。
  */
+import {
+  createAliveComponent,
+  createBadgeComponent,
+  createCampComponent,
+  createStatusMarksComponent,
+  createVotingRightComponent,
+} from "../../../../../src/game/observation/component-presentation";
 import type { LastWolfBlastPolicy } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../../../src/core/domain/world";
 import { Role } from "../../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../../src/core/domain/components/names";
 import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
-import { createAliveComponent } from "../../../../../src/core/domain/components/alive";
-import { createBadgeComponent } from "../../../../../src/core/domain/components/badge";
-import { createCampComponent } from "../../../../../src/core/domain/components/camp";
-import { createStatusMarksComponent } from "../../../../../src/core/domain/components/status_marks";
-import { createVotingRightComponent } from "../../../../../src/core/domain/components/voting_right";
+
 import { createVictoryComponent } from "../../../../../src/core/domain/components/victory";
 import { createIdentityComponent } from "../../../../../src/core/domain/entities/player";
 import { installInitialRoster } from "../../../../../src/core/domain/initial_roster";
+import { RoleCatalog } from "../../../../../src/game/mechanisms/roles/catalog";
 import {
   getDefaultRoleCatalog,
-  RoleCatalog,
-} from "../../../../../src/game/mechanisms/roles/catalog";
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { RED_MOON_ROLE_PROFILE } from "../../../../../src/game/mechanisms/roles/red_moon_apostle/profile";
 import { installDemonHunter } from "../../../../../src/game/mechanisms/roles/demon_hunter/authority";
 import { redMoonTwelveConfig } from "../../../../../src/runtime/scenarios/red_moon_twelve";
@@ -26,12 +31,14 @@ export function redMoonCandidateWorld(policy: LastWolfBlastPolicy = "ends_game")
   const world = new World();
   const config = structuredClone(redMoonTwelveConfig);
   config.redMoon!.lastWolfBlastPolicy = policy;
-  const catalog = new RoleCatalog([
-    ...getDefaultRoleCatalog()
-      .all()
-      .filter((p) => String(p.role) !== "red_moon_apostle"),
-    RED_MOON_ROLE_PROFILE,
-  ]);
+  const catalog = createRoleCatalog({
+    contributions: [
+      ...getDefaultRoleContributions().filter(
+        (p) => String(p.metadata.role) !== "red_moon_apostle",
+      ),
+      RED_MOON_ROLE_PROFILE,
+    ],
+  });
   const roles = config.roleSetups.flatMap((row) => Array<Role>(row.count).fill(row.role));
   const ids = roles.map((kind, i) => {
     const id = world.createEntity();

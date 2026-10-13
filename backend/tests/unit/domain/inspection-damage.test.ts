@@ -1,17 +1,12 @@
 /**
- * Unit tests: Inspection damage uses literal sourced death claims and revoked authority;
- * exact independent causes, immunity and current-life assertions check the damage resolver
- * without ordinary guard/heal reinterpretation. Inputs and expected outcomes remain the
- * original literal or immutable-fixture oracle; these module assertions invoke no model or
- * complete-game driver.
+ * 单元测试用字面带来源死亡声明与已撤销权限验证查验伤害。精确独立死因、免疫与当前生命断言
+ * 验证伤害结算，不重新解释普通守护／救药。输入及字面／不可变 fixture 预期保持原样，不运行模型或完整对局。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
-import {
-  createAliveComponent,
-  type AliveComponent,
-} from "../../../src/core/domain/components/alive";
+import { type AliveComponent } from "../../../src/core/domain/components/alive";
 import type { RoleComponent } from "../../../src/core/domain/components/role";
 import type { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
 import { DeathCause } from "../../../src/core/domain/deaths";

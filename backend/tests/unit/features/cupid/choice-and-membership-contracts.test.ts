@@ -1,6 +1,7 @@
 /**
  * 单元测试验证丘比特的有限政策、恋人选择、生命替换及死因。输入为原选择阶段、票／PK 门槛和惰性归档投影；字面回执、引用与错误轨迹构成预期，不运行中央死亡波或完整周期。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -10,7 +11,6 @@ import {
   Phase,
   Role,
   WinCondition,
-  createAliveComponent,
   createVictoryComponent,
   type RoleComponent,
   type VictoryComponent,
@@ -40,7 +40,7 @@ import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../../src/runtime/config/board_definition";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {
   knownWolfTeammates,
   wolfKnifeHolders,
@@ -119,7 +119,7 @@ test("source schema, normalized reverse config, counts and finite goals are stri
   expect(parseBoardDefinition(definition).config.cupid).toEqual(game.config.cupid);
   expect(
     getDefaultRoleCatalog()
-      .require(Role.Cupid)
+      .requireRuntime(Role.Cupid)
       .configuration!.schema.safeParse({ policy: "arbitrary" }).success,
   ).toBe(false);
   for (const goal of [WinCondition.SlaughterSide, WinCondition.WolfReachHalf]) {

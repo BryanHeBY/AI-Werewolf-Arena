@@ -30,7 +30,7 @@ import {
   transferNightAbility,
 } from "../../../src/game/mechanisms/roles/ability_changes";
 import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { ActionReception } from "../../../src/game/gateway/action-reception";
 import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";

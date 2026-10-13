@@ -1,6 +1,7 @@
 /**
  * 场景验证机械狼的学习、模式、库存及原身体撤权。每个用例至少完成一次真实 PhaseManager 夜；原资源回执、引用／getter／错误轨迹和事实为预期，不拆去前置夜后假称单元测试。受控 provider 保留原引擎时序，不生成新 golden。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
@@ -25,7 +26,7 @@ import {
   getMechanicalState,
   projectMechanicalState,
 } from "../../../../src/game/mechanisms/roles/mechanical_wolf/state";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import { canMechanicalKnife } from "../../../../src/game/mechanisms/roles/mechanical_wolf/inheritance";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
@@ -35,7 +36,7 @@ import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { MECHANICAL_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/mechanical_wolf/night_stages";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
 import { DeathCause } from "../../../../src/core/domain/deaths";
 import { grantNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";

@@ -1,14 +1,17 @@
 /**
- * Cursed Fox scenarios verify whole-night committed reentry, sheriff-time replacement filtering and complete-night individual victory.
- * Input: Original poison matrix, fixed role plans and actual NightPipeline/PM providers.
- * Output and oracle: Handwritten retained claims, independent poison and final Fox-only result preserve original causal assertions; no expected data is regenerated.
+ * 咒狐场景验证完整夜提交后重入、警长时点替换过滤和个人终局。输入为原毒矩阵、固定角色和真实 Pipeline／经理；手写保留效果、独立毒结果与咒狐唯一胜者是预期，不重生成预期数据。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Camp, COMPONENT, Role, PotionType, type RoleComponent } from "../../../../src/core";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
-import { getDefaultRoleCatalog, RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { SEER_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/seer/night_stages";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
@@ -23,14 +26,14 @@ test("committed Fox inspection interrupted later cannot be silently lost by full
   const { world } = fixture();
   let current = true,
     requests = 0;
-  const catalog = new RoleCatalog(
-    getDefaultRoleCatalog()
-      .all()
-      .map((profile) => ({
-        ...profile,
+  const catalog = createRoleCatalog({
+    contributions: getDefaultRoleContributions().map((profile) => ({
+      ...profile,
+      runtime: {
+        ...profile.runtime,
         possibleNightAbilities: [],
         nightStages:
-          profile.role === Role.Seer
+          profile.metadata.role === Role.Seer
             ? [
                 SEER_NIGHT_STAGES[0]!,
                 {
@@ -42,8 +45,9 @@ test("committed Fox inspection interrupted later cannot be silently lost by full
                 },
               ]
             : [],
-      })),
-  );
+      },
+    })),
+  });
   const pipeline = new NightPipeline({
     world,
     events: [],

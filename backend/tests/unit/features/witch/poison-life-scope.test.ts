@@ -1,10 +1,8 @@
 /**
- * Unit tests: Poison life scopes use held potion replies and actor/target replacements;
- * original stock, current-body and rejected-commit assertions check final application
- * after gateway validation. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试用持有中的药瓶回复与演员／目标替换验证毒药生命 scope。原库存、当前躯体和拒绝
+ * 提交断言验证 gateway 校验后的最终施加；输入及字面／不可变 fixture 预期保持原样，不运行模型或完整对局。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
@@ -22,10 +20,10 @@ import {
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { WITCH_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/witch/night_stages";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
-import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";

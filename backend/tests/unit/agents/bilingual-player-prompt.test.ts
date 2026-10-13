@@ -1,6 +1,7 @@
 /**
  * 单元测试验证 bilingual-player-prompt 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
+import { createRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { renderRolePrompt } from "../../../src/game/observation/role-presentation";
 import {
   WOLF_STAGE_DIRECTIVES,
@@ -214,9 +215,10 @@ test("player original text and explicit injected profile/directive text survive 
     expect(game.policy.buildSystem(req, { supportsDebugReporting: true }).systemPrompt).toContain(
       "统计控：我估计概率为60% {actor}",
     );
-    const catalog = new RoleCatalog([
+    const catalog = createRoleCatalog([
       {
-        ...getDefaultRoleCatalog().require(Role.Wolf),
+        ...getDefaultRoleCatalog().requireMetadata(Role.Wolf),
+        ...getDefaultRoleCatalog().requireRuntime(Role.Wolf),
         label: "自定狼人",
         skillBrief: "原文说明",
         renderPrompt: () => "原文私有状态",

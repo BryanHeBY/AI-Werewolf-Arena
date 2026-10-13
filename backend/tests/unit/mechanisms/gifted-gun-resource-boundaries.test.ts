@@ -1,6 +1,7 @@
 /**
  * 单元测试验证赠枪原 World 授权、独立原生／gift 库存及有界死亡／转移／迟到回复。输入保留 locale／原生／死因／变化矩阵、明确生命 scope 和直接 hook／死亡结算；精确请求新鲜性、消费／到期库存、来源私有事实及陈旧 owner 拒绝是预期，不运行完整夜晚或原生文件记录器。
  */
+import { createAliveComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -13,10 +14,7 @@ import {
   type GameEvent,
   type RoleComponent,
 } from "../../../src/core";
-import {
-  createAliveComponent,
-  type AliveComponent,
-} from "../../../src/core/domain/components/alive";
+import { type AliveComponent } from "../../../src/core/domain/components/alive";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   allDeathGuns,

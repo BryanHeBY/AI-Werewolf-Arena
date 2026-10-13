@@ -1,3 +1,8 @@
+/**
+ * 负责合并已解析配置、运行参数和座位／角色 Agent 选择。输入为公开配置与 CLI 覆盖；
+ * 输出为完整对局设置、逐玩家配置和语言回退诊断。仅选择已登记角色，不创建对局、
+ * 读取认证或授予行动权限；名字和人格保留原文，不参与模型选择。
+ */
 import type { BoardConfig } from "../../core";
 import type {
   GameConfig,
@@ -14,7 +19,7 @@ import {
   type BoardOverride,
 } from "../scenarios/board_config_resolver";
 import { type ResolvedBoardDefinition } from "./board_definition";
-import { getDefaultRoleCatalog } from "../../game/mechanisms/roles/catalog";
+import { getDefaultRoleCatalog } from "../../game/mechanisms/roles/role-catalog-assembly";
 import { Role } from "../../core/domain/identity";
 
 export interface RunGameOptions {
@@ -231,12 +236,12 @@ export function resolveGameSetup(
 
 export function validateGameBindings(game: GameConfig, board: BoardConfig): void {
   const catalog = getDefaultRoleCatalog();
-  for (const entry of board.roleSetups) catalog.require(entry.role);
+  for (const entry of board.roleSetups) catalog.requireMetadata(entry.role);
   const present = new Set(
     board.roleSetups.filter((entry) => entry.count > 0).map((entry) => entry.role),
   );
   for (const key of Object.keys(game.roleAgents ?? {})) {
-    if (!catalog.get(key as Role) || !present.has(key as Role))
+    if (!catalog.metadata(key as Role) || !present.has(key as Role))
       throw new Error(`runtime_config_role_binding_invalid: ${key}`);
   }
   for (const key of Object.keys(game.playerAgents ?? {})) {

@@ -1,8 +1,5 @@
 /**
- * Complete Seer Tape scenarios verify native default target/action policies agree with actual requests.
- * Input: Public default/override boards, literal choices, fixed RNG and real records.
- * Output and independent oracle: Independent allowed target/required action sequence and exact strict JSON Tape replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 完整预言家 Tape 场景验证原生默认目标／必选政策与实际请求一致。输入为公开默认／覆盖板子、字面行动、固定 RNG 和真实记录；独立目标／请求序列及严格 JSON Tape 复现是预期，不调用计费模型或改写 Tape 样本。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";
@@ -62,8 +59,8 @@ for (const [name, parameters] of cases)
     const actionPolicy = name === "optional" ? "awa_optional_v1" : "awa_required_when_legal_v1";
     const targetPolicy = name === "target-only" ? "awa_fresh_others_v1" : "awa_alive_v1";
     expect(config.seer).toEqual({ actionPolicy, targetPolicy });
-    expect(SEER_ROLE_PROFILE.configuration!.schema.parse({})).toEqual(
-      SEER_ROLE_PROFILE.configuration!.defaults,
+    expect(SEER_ROLE_PROFILE.runtime.configuration!.schema.parse({})).toEqual(
+      SEER_ROLE_PROFILE.runtime.configuration!.defaults,
     );
     expect(parseBoardDefinition(boardDefinitionFromConfig("seer_default", config)).config).toEqual(
       config,

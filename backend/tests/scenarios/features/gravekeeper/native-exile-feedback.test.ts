@@ -1,6 +1,11 @@
 /**
  * 场景验证守墓人真实周期修订、放逐时点、共享赠予技能和完整夜的私密反馈顺序。输入为原模式／语言／目标矩阵及受控 PhaseManager 或 NightPipeline 动作；原阵营历史、顺序、终结反馈和恢复交付断言保持，不从生产输出新增期望。
  */
+import {
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
+
 import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
@@ -234,15 +239,13 @@ for (const locale of ["zh-CN", "en"] as const)
         locale,
       }),
       events: GameEvent[] = [];
-    const catalog = new RoleCatalog(
-      getDefaultRoleCatalog()
-        .all()
-        .map((profile) =>
-          profile.role === Role.Wolf
-            ? { ...profile, inspectionLabels: { camp: Camp.Good } }
-            : profile,
-        ),
-    );
+    const catalog = createRoleCatalog({
+      contributions: getDefaultRoleContributions().map((profile) =>
+        profile.metadata.role === Role.Wolf
+          ? { ...profile, runtime: { ...profile.runtime, inspectionLabels: { camp: Camp.Good } } }
+          : profile,
+      ),
+    });
     const fact = captureExileFeedback(world, 1, 1, catalog)!;
     expect(fact).toEqual({ exileDay: 1, targetId: 1, result: { kind: "camp", camp: "good" } });
     role(world, 1).camp = Camp.ThirdParty;
@@ -254,14 +257,14 @@ for (const locale of ["zh-CN", "en"] as const)
     const stages = new NightStageRegistry();
     expect(stages.getStages(board).map((stage) => stage.id)).toContain("gravekeeper_feedback");
     const executionOrder: string[] = [];
-    const instrumented = new RoleCatalog(
-      getDefaultRoleCatalog()
-        .all()
-        .map((profile) =>
-          profile.role !== Role.Gravekeeper
-            ? profile
-            : {
-                ...profile,
+    const instrumented = createRoleCatalog({
+      contributions: getDefaultRoleContributions().map((profile) =>
+        profile.metadata.role !== Role.Gravekeeper
+          ? profile
+          : {
+              ...profile,
+              runtime: {
+                ...profile.runtime,
                 nightStages: [
                   {
                     ...GRAVEKEEPER_FEEDBACK_STAGE,
@@ -272,8 +275,9 @@ for (const locale of ["zh-CN", "en"] as const)
                   },
                 ],
               },
-        ),
-    );
+            },
+      ),
+    });
     const pipeline = new NightPipeline({
       world,
       events,

@@ -1,8 +1,9 @@
 /**
- * Unit tests verify Cursed Fox finite scope, readonly inspection and bounded native/lucky stage authority through exact damage operations.
- * Input: Original role/change/stage matrices, local life/role/state replacements and controlled direct inspection handlers.
- * Output and oracle: Exact claims, immunity/protection/cause and stale-selection assertions remain unchanged; no complete night or PM cycle runs.
+ * 单元测试用精确伤害操作验证咒狐有限 scope、只读查验及有界原生／幸运技能权限。输入为原
+ * 角色／变化／阶段矩阵、局部生命／角色／状态替换及受控直接查验；精确声明、免疫／防护／死因
+ * 和过期选择断言保持原样，不运行完整夜或 PhaseManager 周期。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -21,7 +22,7 @@ import {
   parseBoardDefinition,
 } from "../../../../src/runtime/config/board_definition";
 import { captureNightLife } from "../../../../src/core/domain/night_effects";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
 import {
@@ -29,7 +30,12 @@ import {
   commitFoxInspection,
 } from "../../../../src/game/mechanisms/roles/cursed_fox/inspection_effect";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
-import { getDefaultRoleCatalog, RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import {
+  getDefaultRoleCatalog,
+  getDefaultRoleContributions,
+  createRoleCatalog,
+} from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { permitsDeathShot } from "../../../../src/core/domain/deaths";
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { SEER_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/seer/night_stages";
@@ -92,7 +98,7 @@ test("Fox schema and internal entrypoints reject unsupported goals, counts and b
     );
     expect(() => bootstrapGame(board)).toThrow("role_win_condition_not_supported");
   }
-  const role = getDefaultRoleCatalog().require(Role.CursedFox);
+  const role = getDefaultRoleCatalog().requireRuntime(Role.CursedFox);
   expect(role.configuration!.schema.safeParse({ anyImmunity: true }).success).toBe(false);
   expect(() =>
     bootstrapGame(foxBoard([Role.CursedFox, Role.CursedFox, Role.Wolf, Role.Villager])),
@@ -207,13 +213,13 @@ for (const stage of ["native", "lucky"] as const) {
   test(`${stage}: callback identity replacement revokes report, lethal effect and consumption`, async () => {
     const { world } = fixture();
     const gift = stage === "lucky" ? lucky(world) : undefined;
-    const catalog = new RoleCatalog(
-      getDefaultRoleCatalog()
-        .all()
-        .map((profile) =>
-          profile.role === Role.CursedFox
-            ? {
-                ...profile,
+    const catalog = createRoleCatalog({
+      contributions: getDefaultRoleContributions().map((profile) =>
+        profile.metadata.role === Role.CursedFox
+          ? {
+              ...profile,
+              runtime: {
+                ...profile.runtime,
                 inspectionLabels: () => {
                   const role = world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
                   role.role = Role.Villager;
@@ -221,10 +227,11 @@ for (const stage of ["native", "lucky"] as const) {
                   (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
                   return { camp: Camp.Good };
                 },
-              }
-            : profile,
-        ),
-    );
+              },
+            }
+          : profile,
+      ),
+    });
     let attempts = 0;
     const ctx = requestContext(
       world,

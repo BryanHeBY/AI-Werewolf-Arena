@@ -1,8 +1,8 @@
 /**
- * Owns native Demon-board Witch request bindings and shared earliest deadlines. Receives
- * original turn/context references and bounded aliases; writes local bindings only after
- * native scope and body validation. Expired, replaced or invalid original requests revoke
- * delivery; completion stays owned by the original scope.
+ * 负责原生猎魔板女巫的请求绑定与共享最早截止时间。输入为原 turn／context 引用及
+ * 有界别名；输出为原请求绑定，仅在原生 scope 与躯体校验后写局部绑定。过期、替换或非法原请求撤销
+ * 交付，完成仍归原 scope。印记信任检查保留原库存方法身份及描述符读取顺序；
+ * 退出的展示属性不授予行动，也不能借注入旧名称绕过可信库存检查。
  */
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import {
@@ -213,7 +213,7 @@ export function readDemonPotionTool(
 }
 
 const trustedMarkMethods = Object.fromEntries(
-  ["has", "add", "remove", "clear", "values", "renderPrompt"].map((key) => [
+  ["has", "add", "remove", "clear", "values"].map((key) => [
     key,
     Object.getOwnPropertyDescriptor(StatusMarksComponent.prototype, key)!.value,
   ]),
@@ -226,11 +226,15 @@ export function demonWitchMarksSafe(world: World, targetId: number): boolean {
     Object.getPrototypeOf(marks) !== StatusMarksComponent.prototype
   )
     return false;
+  // 仍先检查原五个库存方法，再在原最后位置拒绝实例／原型注入已退休的展示名称。
+  // 展示属性退出领域，不把旧名称的消失变成修改方法身份的绕过入口。
   return Object.entries(trustedMarkMethods).every(
     ([key, method]) =>
       !Object.getOwnPropertyDescriptor(marks, key) &&
       Object.getOwnPropertyDescriptor(StatusMarksComponent.prototype, key)?.value === method,
-  );
+  ) &&
+    !Object.getOwnPropertyDescriptor(marks, "renderPrompt") &&
+    !Object.getOwnPropertyDescriptor(StatusMarksComponent.prototype, "renderPrompt");
 }
 export function demonWitchRequestTargetCurrent(
   world: World,

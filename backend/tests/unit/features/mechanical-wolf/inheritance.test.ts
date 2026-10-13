@@ -1,9 +1,10 @@
 /**
  * 单元测试：验证机械狼的独立继承契约及原 owner／frame／reader。输入为内存 fixture、受控回调与畸形修改；原字面值、身份快照和拒绝断言为预期，不执行装配周期、模型或实体传输。
  */
+import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { Camp, Role } from "../../../../src/core/domain/model";
 import { World } from "../../../../src/core/domain/world";

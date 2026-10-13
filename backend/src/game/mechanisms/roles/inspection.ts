@@ -1,8 +1,5 @@
 /**
- * Projects inspection labels from the current target role and catalog rule labels. Inputs are
- * target ID and requested camp/role/combined kind; output is the corresponding revealed result
- * or null. It is not action authorization, and revealed labels need not equal the true
- * role/camp.
+ * 负责按当前目标角色和运行查验标签形成披露结果。输入为目标编号及阵营／身份／组合查验类型；输出为对应结果或 null。结果不授予行动权限，披露标签可以不同于真实角色和阵营。
  */
 import type { InspectionKind, InspectionResult } from "@ai-werewolf-arena/game-catalog";
 import { COMPONENT } from "../../../core/domain/components/names";
@@ -20,7 +17,7 @@ export function resolveInspection<K extends InspectionKind>(
 ): Extract<InspectionResult, { kind: K }> | null {
   const target = world.getComponent(targetId, COMPONENT.Role);
   if (!target) return null;
-  const definition = catalog.get(target.role)?.inspectionLabels;
+  const definition = catalog.runtime(target.role)?.inspectionLabels;
   const labels = typeof definition === "function" ? definition(target) : definition;
   const camp = labels?.camp ?? target.camp,
     role = labels?.role ?? target.role;

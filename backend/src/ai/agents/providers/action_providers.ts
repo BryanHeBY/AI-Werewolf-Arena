@@ -219,7 +219,7 @@ export class BaselineBotActionProvider implements ActionProvider {
           null;
       return { name: "bonus_action", args: { kind, target_id: target, abstain: target === null } };
     }
-    const roleProfile = this.roleCatalog.get(abilityRole);
+    const roleProfile = this.roleCatalog.runtime(abilityRole);
     if (roleProfile?.baselineAction) {
       const action = roleProfile.baselineAction(
         role,
