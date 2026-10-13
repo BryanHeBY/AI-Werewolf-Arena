@@ -615,6 +615,19 @@ export function checkDependencies(
           "Engine timing imports concrete feature rather than an extension contract.",
           target,
         );
+      // 游戏侧预检也只消费机制公开契约；从 AI 迁入 gateway 不能使原内部耦合逃过检查。
+      if (
+        /^backend\/src\/game\/gateway\//.test(file.path) &&
+        targetOwner &&
+        !publicFeatureTarget(target, ["contracts", "ports"])
+      )
+        add(
+          "dependency.gateway-feature",
+          file.path,
+          ref,
+          "Game preflight imports concrete feature rather than a public mechanism contract.",
+          target,
+        );
       if (
         domainSource(file.path) &&
         /^backend\/src\/(?:game|features|engine|ai|adapters|app|runtime|recording|verification|audit|rulesets)\//.test(

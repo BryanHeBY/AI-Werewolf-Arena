@@ -71,6 +71,26 @@ test("adapters and engine cannot reach role authority through import or re-expor
   expect(rules(graph)).toEqual(["dependency.adapter-feature", "dependency.engine-feature"]);
 });
 
+test("game gateway preflight cannot conceal private role access by moving out of the adapter directory", () => {
+  const privateGraph = input({
+    "backend/src/game/gateway/preflight.ts":
+      "import { x } from '../mechanisms/roles/fox/authority'; type T=import('../mechanisms/roles/fox/state').State;",
+    "backend/src/game/mechanisms/roles/fox/authority.ts": "export const x=1;",
+    "backend/src/game/mechanisms/roles/fox/state.ts": "export interface State {}",
+  });
+  expect(rules(privateGraph)).toEqual([
+    "dependency.gateway-feature",
+    "dependency.gateway-feature",
+  ]);
+  const publicGraph = input({
+    "backend/src/game/gateway/preflight.ts":
+      "import { x } from '../mechanisms/roles/fox/ports'; type T=import('../mechanisms/roles/fox/contracts').State;",
+    "backend/src/game/mechanisms/roles/fox/ports.ts": "export const x=1;",
+    "backend/src/game/mechanisms/roles/fox/contracts.ts": "export interface State {}",
+  });
+  expect(rules(publicGraph)).toEqual([]);
+});
+
 test("cross package deep path fails while declared package and subpath exports resolve", () => {
   const graph = input({
     "packages/a/package.json": pkg("@ai-werewolf-arena/a", {
