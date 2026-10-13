@@ -1,0 +1,317 @@
+{
+  "baseline": "496414bf",
+  "paths": 5,
+  "files": [
+    {
+      "path": "backend/src/game/engine/death-wave.ts",
+      "sha256": "4791ee52ab45449f4bc6e9c102c0cd87b7de048d261f4b550eb817eecc735430"
+    },
+    {
+      "path": "backend/src/game/engine/death-committer.ts",
+      "sha256": "fcf4f8ccd0395dccb74bc741e007d3c3bdf7e8802fc8eb2772fbea2c64d9a004"
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "103bc0cbe49d67cee56359fba58f83b21924e339bf04f09d8770093ced0f3d44"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "17af66f47d1bdd318fa11a560b487092e82169a4efdf56818c2f9d0cdedaf0ee"
+    },
+    {
+      "path": "backend/tests/unit/engine/death/typed-wave-receipts.test.ts",
+      "sha256": "070522e948888ee3bbc9a3750d8d50762c976726930171f8e2ee02906af7976a"
+    }
+  ],
+  "programProof": {
+    "baseline": "496414bf",
+    "policy": "Explicit typed plans/receipts/metadata, data-only invalid input early refusal, frozen new ledger evidence; all other executable programs inverse-identical",
+    "rows": [
+      {
+        "path": "backend/src/game/engine/death-committer.ts",
+        "originActualGitSame": true,
+        "emits": [
+          {
+            "module": "ESNext",
+            "same": true
+          },
+          {
+            "module": "CommonJS",
+            "same": true
+          }
+        ],
+        "sameOldImports": true,
+        "sha256": "fcf4f8ccd0395dccb74bc741e007d3c3bdf7e8802fc8eb2772fbea2c64d9a004"
+      },
+      {
+        "path": "backend/src/game/engine/death_resolution.ts",
+        "originActualGitSame": true,
+        "emits": [
+          {
+            "module": "ESNext",
+            "same": true
+          },
+          {
+            "module": "CommonJS",
+            "same": true
+          }
+        ],
+        "sameOldImports": true,
+        "sha256": "103bc0cbe49d67cee56359fba58f83b21924e339bf04f09d8770093ced0f3d44"
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "originActualGitSame": true,
+        "emits": [
+          {
+            "module": "ESNext",
+            "same": true
+          },
+          {
+            "module": "CommonJS",
+            "same": true
+          }
+        ],
+        "sameOldImports": true,
+        "sha256": "17af66f47d1bdd318fa11a560b487092e82169a4efdf56818c2f9d0cdedaf0ee"
+      }
+    ],
+    "passed": true
+  },
+  "heads": {
+    "paths": 5,
+    "violations": []
+  },
+  "rootReview": {
+    "baseline": "496414bf",
+    "files": [
+      {
+        "path": "backend/src/game/engine/death-wave.ts",
+        "sha256": "4791ee52ab45449f4bc6e9c102c0cd87b7de048d261f4b550eb817eecc735430",
+        "match": true
+      },
+      {
+        "path": "backend/src/game/engine/death-committer.ts",
+        "sha256": "fcf4f8ccd0395dccb74bc741e007d3c3bdf7e8802fc8eb2772fbea2c64d9a004",
+        "match": true
+      },
+      {
+        "path": "backend/src/game/engine/death_resolution.ts",
+        "sha256": "103bc0cbe49d67cee56359fba58f83b21924e339bf04f09d8770093ced0f3d44",
+        "match": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "sha256": "17af66f47d1bdd318fa11a560b487092e82169a4efdf56818c2f9d0cdedaf0ee",
+        "match": true
+      },
+      {
+        "path": "backend/tests/unit/engine/death/typed-wave-receipts.test.ts",
+        "sha256": "070522e948888ee3bbc9a3750d8d50762c976726930171f8e2ee02906af7976a",
+        "match": true
+      }
+    ],
+    "findings": [],
+    "actualRootSourceReview": [
+      "真实初始与逐枪两提交点，不改pending/allSources/seen/gunsToExpire原所有权；计划名单/原因引用必须与命令一致",
+      "原ledger.set lookup/原version表达式及合法写入/事实/继承前缀保留，成功后复用已写原条目，失败无成功返回或回滚",
+      "初始unit及每proposal unit在实际打开点创建，逐目标同unit，next重访沿成功receipt保留原身份，不伪造新合并波",
+      "接受毒路由绑定真实mark原体与原origin锁定direct/reflectedbody/version，stillPoison条件明确，legacyunknown不变死亡资格",
+      "PM原读取点捕获sourceDamage/deathLives，三真实夜分支提供accepted路由；实际callback/publication不反射或改动GameEvent",
+      "静态data-only无效根/原因/阶段拒绝在原clone后且Animal/关系事实前；opaque依原读取，不声称完整所有域输入语义闭合",
+      "legacy同名getter/Proxy及自定义Map.get的真实source问题已修为own-data和cachednativeMap读；2增量测试归作者收据，无重类型/测试"
+    ],
+    "limits": [
+      "Root源码/固定SHA/完整程序证明检查；类型和运行收据由实施者实际终态提供，非Root重复运行",
+      "NightId/ExileUnitId/PhaseRevision及全部effectfamilies/关系贡献/记录回执C37仍待",
+      "新pure-data坏输入拒绝和新plan一致性守卫是明列接口/策略变化，不伪称所有输入旧新等价"
+    ]
+  },
+  "independentSecond": {
+    "mode": "independent_readonly_source_second_direction",
+    "status": "final_independent_source_green",
+    "baseline": "496414bf",
+    "scope": [
+      {
+        "path": "backend/src/game/engine/death-wave.ts",
+        "sha256": "4791ee52ab45449f4bc6e9c102c0cd87b7de048d261f4b550eb817eecc735430",
+        "matchesSuppliedFinal": true
+      },
+      {
+        "path": "backend/src/game/engine/death-committer.ts",
+        "sha256": "fcf4f8ccd0395dccb74bc741e007d3c3bdf7e8802fc8eb2772fbea2c64d9a004",
+        "matchesSuppliedFinal": true
+      },
+      {
+        "path": "backend/src/game/engine/death_resolution.ts",
+        "sha256": "103bc0cbe49d67cee56359fba58f83b21924e339bf04f09d8770093ced0f3d44",
+        "matchesSuppliedFinal": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "sha256": "17af66f47d1bdd318fa11a560b487092e82169a4efdf56818c2f9d0cdedaf0ee",
+        "matchesSuppliedFinal": true
+      },
+      {
+        "path": "backend/tests/unit/engine/death/typed-wave-receipts.test.ts",
+        "sha256": "070522e948888ee3bbc9a3750d8d50762c976726930171f8e2ee02906af7976a",
+        "matchesSuppliedFinal": true
+      }
+    ],
+    "findings": [],
+    "checkedActualSemantics": [
+      "原ledger.set的callee lookup保持先于第二参数原version读取；local settled只捕获实际传给原set的同对象，成功set后才freeze/entry。事实、记录、枪列表、实际到期和继承失败均保原前缀，成功receipt没有提前返回。",
+      "Initial关系闭包后只开一个initial unit；真正proposal开additional unit并传同对象给逐目标mark，next/revisit通过真实previousCommits沿用各units，没有按玩家循环生成新波ID或按day伪装全部业务时钟。",
+      "Poison路由只在实际仍Poison且origin锁定body/version吻合原settled component/version时记录；direct targetBody/targetVersion，reflected sourceBody/sourceVersion，不信后来可改route.target，未知只缺证据、不拒旧死亡。",
+      "发布关联只保原event身份和ids副本，不读payload、getter、Symbol、descriptor，不freeze或改GameEvent。published与committed是不同证据状态，关联不授予死亡行动。",
+      "已知两个真实兼容finding在当前源关闭：nightEffects新元数据仅own-data并先拒Proxy；origin/life诊断用nativeMapGet直读真实Map内部条目，不查找或调用覆盖.get，Map Proxy记unknown。",
+      "新negative输入是合法原factory/Map及明确getter/Proxy，不更换原input掩盖边界；新协议plan身份/data-only预检/receipt返回和callback第三参数差异已公开记录，不冒称任意旧callback可观察参数完全不变。"
+    ],
+    "limits": [
+      "本审未重作者测试、compiler或完整registered inverse；仅源码、5当前SHA及新两个兼容case有效输入。",
+      "最终5SHA实际匹配最新finalscope；作者终态类型与修复覆盖由Root读取其terminal receipt确认，本审不冒充独立运行。",
+      "receipt/class/unit及关联品牌是运行时提交证据，不是通用死亡行动许可；完整Night/Exile时钟和其它effect-family因果链仍后续。"
+    ],
+    "finalConfirmation": "Root read author final confirmation: original compatibility two fixes and null/primitive predicate final finite11470 actualclosed0; after source freeze only one interface-comment relocation, no program change. This reviewer did not rerun or independently poll author compiler."
+  },
+  "independentThird": {
+    "baseline": "496414bf",
+    "files": [
+      {
+        "path": "backend/src/game/engine/death-wave.ts",
+        "sha256": "4791ee52ab45449f4bc6e9c102c0cd87b7de048d261f4b550eb817eecc735430",
+        "currentSHA": "4791ee52ab45449f4bc6e9c102c0cd87b7de048d261f4b550eb817eecc735430",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/src/game/engine/death-committer.ts",
+        "sha256": "fcf4f8ccd0395dccb74bc741e007d3c3bdf7e8802fc8eb2772fbea2c64d9a004",
+        "currentSHA": "fcf4f8ccd0395dccb74bc741e007d3c3bdf7e8802fc8eb2772fbea2c64d9a004",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/src/game/engine/death_resolution.ts",
+        "sha256": "103bc0cbe49d67cee56359fba58f83b21924e339bf04f09d8770093ced0f3d44",
+        "currentSHA": "103bc0cbe49d67cee56359fba58f83b21924e339bf04f09d8770093ced0f3d44",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "sha256": "17af66f47d1bdd318fa11a560b487092e82169a4efdf56818c2f9d0cdedaf0ee",
+        "currentSHA": "17af66f47d1bdd318fa11a560b487092e82169a4efdf56818c2f9d0cdedaf0ee",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/tests/unit/engine/death/typed-wave-receipts.test.ts",
+        "sha256": "070522e948888ee3bbc9a3750d8d50762c976726930171f8e2ee02906af7976a",
+        "currentSHA": "070522e948888ee3bbc9a3750d8d50762c976726930171f8e2ee02906af7976a",
+        "sameSHA": true
+      }
+    ],
+    "inputRows": [
+      {
+        "path": "backend/src/game/engine/death-committer.ts",
+        "trueGit": true,
+        "completeOriginalWorldEventStateAndNightPropertyReadOrderSame": true,
+        "oldReadCount": 37,
+        "currentReadCount": 37
+      },
+      {
+        "path": "backend/src/game/engine/death_resolution.ts",
+        "trueGit": true,
+        "completeOriginalWorldEventStateAndNightPropertyReadOrderSame": true,
+        "oldReadCount": 123,
+        "currentReadCount": 123
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "trueGit": true,
+        "completeOriginalWorldEventStateAndNightPropertyReadOrderSame": true,
+        "oldReadCount": 238,
+        "currentReadCount": 238
+      }
+    ],
+    "checks": {
+      "ledgerCalleeAndValueSameOriginalSite": true,
+      "singleSettlementField": true,
+      "entryOnlyAfterLedgerSet": true,
+      "successReceiptOnlyAfterInheritance": true,
+      "legacyEffectsGuardBeforeReflection": true,
+      "nativeMapMethodNoCustomGet": true,
+      "noDirectNewLegacyMetadataGets": true,
+      "allActualResolutionUnitOpens": true,
+      "bodyVersionFromLockedOrigin": true,
+      "noEntryQualificationWorldQueries": true,
+      "liveCollectionsRetained": true,
+      "actualCarrierThreePaths": true,
+      "actualProducerReceiptLiteralCasePresent": true
+    },
+    "heads": [],
+    "findings": [],
+    "semantics": [
+      "One initial actual resolution unit and one additional unit per real hook proposal; individual target mark receipts share the latter. The original next set/causes/origins remain one store; combined revisit keeps prior actual proposal identities, not a fabricated new WaveId.",
+      "Original ledger.set callee lookup remains before original aliveLifeVersion argument; same object is inserted once and only then frozen for diagnostic entry. All original World/events/state/night.damage/night.deathLives property reads preserve complete lexical order and count; metadata does not add World, clock or target eligibility reads.",
+      "Facts, required records, gun accumulation and lucky expiry precede ledger. Receipt is returned only after original inheritance succeeds. Throw keeps actual earlier lives/ledger/facts, without reporting whole-command success. Per-target additional receipts cannot roll back later publication/cancel/target failure.",
+      "Root accepted poison result evidence flows through actual PM special, ordinary and Mist consumers. Entry uses still-Poison own data and original origin target/source body+version matching committed ledger; changed replaceable route.target scope is not authority. Missing, replaced, unversioned, stale or opaque metadata is unknown, not permission or a new reason.",
+      "Legacy metadata same-name getters and Proxies are never reflected by the new selector. Inert native Map.get reads internal entries without executing custom get/accessor; Proxy Map is unknown. Original legacy current/World/structuredClone/iterator reads keep their own old sites.",
+      "New static data-only roots/causes/phases refusal is an explicit policy at original clone/spread boundaries before Animal/relationship/proposal facts. Opaque accessor/Proxy/custom iterator inputs keep old reads, no false statement of all hostile-input strict normalization.",
+      "Events are never changed/frozen/extended by receipt association. Original callback keeps old pending/sources then explicit new third receipt; PM preserves original Animal/Fragrant filtering. Publication links are internal associations, not a new event-audience authorization, and actual receipts do not grant death-gun targets.",
+      "New real-chain bounded unit now uses actual originalPoisonIntent→real PoisonMark→DamageResolutionSystem→damagePoisonRoutes→actual resolver mark→entry/publication with handwritten death/body/version/origin/shape expected values. It does not pretend factory metadata spends real Witch inventory. New compatibility units address empty/nonempty own getters/Proxy and Map accessor/Proxy; author receipts were not rerun."
+    ],
+    "limits": [
+      "Finite read/trueGit/critical AST trace/current SHA/head review only; no compiler/transpiler/typecheck/runtime/tests/game/discovery. Author complete three-program registered inverse supplied separately; this reviewer checked actual operations, guard/collection/source API, not merely that artifact.",
+      "Receipt/unit are new diagnostic interfaces. Successful-return constructor/public attach do not create resource authority. No NightId/ExileUnitId/all effect-family source/serialized causal archive completion claim.",
+      "Queries are readonly types and exposed entry data frozen, while existing live component and resolver-owned collection references remain same objects as explicitly stated. Full P5/role rule/currentness matrix acceptance remains separate."
+    ]
+  },
+  "acceptance": {
+    "initialNewSevenAndOriginalCommitterThree": {
+      "pass": 10,
+      "fail": 0,
+      "assertions": 68,
+      "log": "/tmp/awa-p5-typed-death-wave/tests-first.log"
+    },
+    "lastChangedRouteCases": {
+      "pass": 2,
+      "fail": 0,
+      "assertions": 18,
+      "log": "/tmp/awa-p5-typed-death-wave/tests-route-final.log"
+    },
+    "originalPaidAndStaleShotBranches": {
+      "pass": 3,
+      "fail": 0,
+      "assertions": 11,
+      "log": "/tmp/awa-p5-typed-death-wave/existing-paid-prefix.log"
+    },
+    "realProducerToReceiptChain": {
+      "pass": 1,
+      "fail": 0,
+      "assertions": 16,
+      "log": "/tmp/awa-p5-typed-death-wave/test-real-chain.log"
+    },
+    "legacyGetterAndMapFixCases": {
+      "pass": 2,
+      "fail": 0,
+      "assertions": 27,
+      "log": "/tmp/awa-p5-typed-death-wave/tests-metadata-fix.log"
+    },
+    "strictTypeReceipts": {
+      "initialFinalActualSession": 87022,
+      "realChainSession": 58522,
+      "metadataFixSession": 58007,
+      "lastPredicateLeafSession": 11470,
+      "observedTerminalExits": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "provenance": "作者实际终态收据，各时点范围分别保留；Root/独立审不重复运行，末注释trivia不需重编译"
+    }
+  },
+  "limits": [
+    "各次变动仅对应其必要测试，不把历史10通过伪报为最终整套重跑",
+    "原Night/Exile/PhaseRevision时钟、其它effect族、关系/记录贡献及P9验收继续",
+    "data-only拒绝/新plan身份检查/返回值与callback第三参数明确变更，非所有输入机械等价"
+  ]
+}

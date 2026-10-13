@@ -1,10 +1,17 @@
 /**
  * 负责原生命死亡提交与唯一的已结算生命账本。输入是有序玩家名单、原死亡原因，以及
  * 延迟读取结算器 World、事件数组和运行状态的上下文；输出是原 Alive 修改、事实事件、
- * 待过期枪列表及继承更新。isSettledLife 仅查询，markPlayersDead 是专用死亡写命令。
+ * 待过期枪列表、继承更新及成功提交凭证。isSettledLife 仅查询，markPlayersDead 是专用死亡写命令。
  * 本所有者不收集死亡波、遗言、枪击选择或警徽决定，不切换阶段，也不执行枪的最终过期。
  * 写入与记录失败均保留原先已提交的前缀，不回滚或提前发布已结算账本条目。
  */
+import {
+  DeathCommitReceipt,
+  committedDeathEntry,
+  planDeathWave,
+  type DeathCommitEntry,
+  type DeathWavePlan,
+} from "./death-wave";
 import { getSessionRecorder } from "../../recording/recording_context";
 import { isRoleId } from "@ai-werewolf-arena/game-catalog";
 import { aliveLifeVersion, type AliveComponent } from "../../core/domain/components/alive";
@@ -72,7 +79,12 @@ export class DeathCommitter {
     reveal = false,
     sources: DeathSources = {},
     animalScope?: object | (() => boolean),
-  ): void {
+    wave?: DeathWavePlan,
+  ): DeathCommitReceipt {
+    if (wave && (wave.ids !== playerIds || wave.sources !== sources))
+      throw new Error("death_wave_commit_input_mismatch");
+    const committedWave = wave ?? planDeathWave(playerIds, sources, "legacy");
+    const entries: DeathCommitEntry[] = [];
     for (const id of playerIds) {
       const alive = this.context.world.getComponent(id, COMPONENT.Alive);
       if (!alive) {
@@ -156,7 +168,11 @@ export class DeathCommitter {
       gunsToExpire.push(...firstDeathGuns(this.context.world, id));
       expireLuckyAbilitiesOnDeath(this.context.world, id, this.context.events);
       // 事实、记录、枪列表和能力过期均成功之后才发布账本；任何早期异常不伪造完成。
-      this.settledLives.set(id, { component: alive, version: aliveLifeVersion(alive) });
+      let settled: { component: AliveComponent; version: number | undefined };
+      this.settledLives.set(id, (settled = { component: alive, version: aliveLifeVersion(alive) }));
+      // 凭证复用已写账本的原条目；此后失败仍不返回成功凭证，也不撤销此前死亡。
+      Object.freeze(settled);
+      entries.push(committedDeathEntry(committedWave, id, firstSettlement, settled));
     }
     // 整波生命提交之后按原顺序刷新继承；此处失败不能撤销已写入的生命与账本。
     if (refreshInheritance) {
@@ -165,5 +181,6 @@ export class DeathCommitter {
       refreshMechanicalInheritance(this.context.world, this.context.state.day, this.context.events);
       refreshAwakenedInheritance(this.context.world, this.context.state.day, this.context.events);
     }
+    return new DeathCommitReceipt(committedWave, Object.freeze(entries));
   }
 }

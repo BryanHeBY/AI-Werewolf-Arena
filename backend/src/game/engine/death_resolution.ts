@@ -1,10 +1,21 @@
 /**
  * 负责有序死亡波、角色死亡钩子、枪击选择、遗言与警徽交接。输入是待处理的死亡名单、
- * 原死因与原生命行动权限；输出是按原顺序提交的死亡和事件。实际生命修改和唯一已结算
+ * 原死因与原生命行动权限；输出是按原顺序提交的死亡、事件和内部关联凭证。实际生命修改和唯一已结算
  * 账本委托 DeathCommitter，双生事实发布委托本角色 publication；参数仍使用同一深只读规则视图。
  * 本模块不切换阶段或确定最终胜负；关系扩展、遗言、警徽和枪的最终过期保留原执行顺序。
  */
 import { AnimalDeathWavePreparation } from "../mechanisms/roles/animal_dream/ports";
+import {
+  planDeathWave,
+  openDeathWave,
+  deathWaveOriginalLives,
+  deathWavePoisonMetadata,
+  type DeathWaveUnit,
+  preflightDeathWaveData,
+  DeathCommitReceipt,
+  type DeathOriginalLife,
+} from "./death-wave";
+import type { NightPoisonRoute } from "../../core/domain/night_effects";
 import { DeathCommitter } from "./death-committer";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
@@ -170,7 +181,13 @@ export class DeathResolution {
       blocksPassiveNightShot?: (targetId: EntityId) => boolean;
       nightOriginIds?: readonly EntityId[];
       isCurrent?: () => boolean;
-      onInitialWaveCommitted?: (deaths: readonly EntityId[], sources?: DeathSources) => GameEvent;
+      onInitialWaveCommitted?: (
+        deaths: readonly EntityId[],
+        sources: DeathSources | undefined,
+        receipt: DeathCommitReceipt,
+      ) => GameEvent;
+      originalLives?: ReadonlyMap<EntityId, DeathOriginalLife>;
+      poisonRoutes?: readonly NightPoisonRoute[];
       animalUnit?: object;
     },
   ): Promise<void> {
@@ -205,6 +222,8 @@ export class DeathResolution {
       },
     );
     const preparedSources: DeathSources = structuredClone(sources);
+    // 普通静态输入在任何角色事实前完成整波预检；getter／Proxy 仍沿旧表达式惰性读取。
+    preflightDeathWaveData(deadIds, preparedSources, deathPhases);
     deadIds = animalDeathWave.prepare(deadIds, preparedSources, phase);
     // seen 追踪本次结算已纳入的席位；DeathCommitter 的账本另按原体及版本判断已结算生命。
     const seen = new Set<EntityId>(
@@ -264,6 +283,9 @@ export class DeathResolution {
         type: "additional_deaths",
         payload: { deaths: publicLinkedInitial },
       });
+    const initialUnit = openDeathWave("initial", resolutionDay, resolutionPhase);
+    let pendingUnits: readonly DeathWaveUnit[] = [initialUnit];
+    let previousCommits: readonly DeathCommitReceipt[] = [];
     let firstBatch = true;
     let fragrantInitialCommitted = false;
     // 只收集原实例，在原 finally 位置尝试过期；先取消未提交双生波凭据，取消失败时过期尚未执行。
@@ -271,18 +293,42 @@ export class DeathResolution {
     const gunsToExpire: ReturnType<typeof firstDeathGuns> = [];
 
     try {
-      if (pending.length === 0 && nightEffects?.onInitialWaveCommitted && isCurrent())
-        nightEffects.onInitialWaveCommitted([], {});
+      if (pending.length === 0 && nightEffects?.onInitialWaveCommitted && isCurrent()) {
+        const receipt = new DeathCommitReceipt(
+          planDeathWave(
+            [],
+            {},
+            "initial",
+            originPhases,
+            deathWaveOriginalLives(nightEffects),
+            deathWavePoisonMetadata(nightEffects),
+            pendingUnits,
+          ),
+          Object.freeze([]),
+        );
+        const event = nightEffects.onInitialWaveCommitted([], {}, receipt);
+        receipt.recordPublication(event, []);
+      }
       while (pending.length > 0) {
         if (!isCurrent()) return;
         const deathPhase = firstBatch ? phase : this.state.phase;
-        this.deathCommitter.markPlayersDead(
+        const receipt = this.deathCommitter.markPlayersDead(
           pending,
           true,
           gunsToExpire,
           revealPolicy === "netease_2017_open_v1",
           allSources,
           nightEffects?.animalUnit ?? isCurrent,
+          planDeathWave(
+            pending,
+            allSources,
+            firstBatch ? "initial" : "revisit",
+            originPhases,
+            deathWaveOriginalLives(nightEffects),
+            deathWavePoisonMetadata(nightEffects),
+            pendingUnits,
+            previousCommits,
+          ),
         );
         if (firstBatch && fragrantInitial) {
           commitFragrantDeathWave(this.world, fragrantInitial);
@@ -298,7 +344,8 @@ export class DeathResolution {
             firstBatch,
           );
         if (firstBatch && nightEffects?.onInitialWaveCommitted) {
-          const event = nightEffects.onInitialWaveCommitted(pending, allSources);
+          const event = nightEffects.onInitialWaveCommitted(pending, allSources, receipt);
+          receipt.recordPublication(event, pending);
           this.fragrantDeathWave.publishVisibleWave(fragrantInitial, event);
         }
         if (ownsAnimal && firstBatch) {
@@ -334,6 +381,7 @@ export class DeathResolution {
             payload: { deaths: [fragrantInitial.addedTargetId] },
           };
           this.events.push(event);
+          receipt.recordPublication(event, [fragrantInitial.addedTargetId]);
           this.fragrantDeathWave.publishVisibleWave(fragrantInitial, event);
         }
         resolveWildChildDeathWave(
@@ -407,6 +455,8 @@ export class DeathResolution {
         }
 
         const next = new Set<EntityId>();
+        const nextCommits: DeathCommitReceipt[] = [];
+        const nextUnits: DeathWaveUnit[] = [];
         for (const deadId of pending) {
           if (!isCurrent()) return;
           // 来源阶段属于这次死亡；黎明后处理夜间死亡仍必须保留夜间枪权／关系保护规则。
@@ -440,6 +490,9 @@ export class DeathResolution {
                 const proposed = [...result.extraDeaths],
                   proposedSources = structuredClone(result.extraDeathSources),
                   nightTargets = [...(result.nightEffectTargets ?? [])];
+                preflightDeathWaveData(proposed, proposedSources);
+                preflightDeathWaveData(nightTargets, {});
+                const additionalUnit = openDeathWave("additional", resolutionDay, resolutionPhase);
                 const shots = new Map(
                   (result.pendingShots ?? []).map((shot) => [shot.targetScope.id, shot]),
                 );
@@ -462,6 +515,7 @@ export class DeathResolution {
                   publicLinked: EntityId[] = [];
                 let newlyMarked = false;
                 const marked: number[] = [];
+                const additionalReceipts: DeathCommitReceipt[] = [];
                 const charmBindings: CharmBinding[] = [];
                 for (const proposal of result.charmLinks ?? []) {
                   const binding = proposal.binding;
@@ -587,14 +641,26 @@ export class DeathResolution {
                     seen.add(id);
                     allSources[id] = [...new Set(proposedSources[id] ?? [])];
                     originPhases.set(id, ownsFragrant ? this.state.phase : sourcePhase);
-                    this.deathCommitter.markPlayersDead(
-                      [id],
+                    const commitIds = [id];
+                    const receipt = this.deathCommitter.markPlayersDead(
+                      commitIds,
                       false,
                       gunsToExpire,
                       revealCurrent(),
                       allSources,
                       nightEffects?.animalUnit ?? isCurrent,
+                      planDeathWave(
+                        commitIds,
+                        allSources,
+                        "additional",
+                        originPhases,
+                        shot ? new Map([[id, shot.targetScope]]) : undefined,
+                        [],
+                        [additionalUnit],
+                      ),
                     );
+                    additionalReceipts.push(receipt);
+                    nextCommits.push(receipt);
                     if (ownsAnimal)
                       appendAnimalFact(this.world, this.events, "animal_wave_committed", {
                         policy: "awa_animal_dream_v1",
@@ -608,6 +674,7 @@ export class DeathResolution {
                     if (shot) {
                       if (shot.event.type === "hunter_shot") nativeHunterShotTargets.add(id);
                       this.events.push(shot.event);
+                      receipt.recordPublication(shot.event, [id]);
                     }
                     if (
                       charmTargets.has(id) ||
@@ -618,6 +685,7 @@ export class DeathResolution {
                     next.add(id);
                   }
                   if (newlyMarked) {
+                    nextUnits.push(additionalUnit);
                     if (fragrantGun) {
                       commitFragrantDeathWave(this.world, fragrantGun);
                       fragrantGunCommitted = true;
@@ -642,6 +710,11 @@ export class DeathResolution {
                       payload: { deaths: publicLinked },
                     };
                     this.events.push(event);
+                    for (const receipt of additionalReceipts)
+                      receipt.recordPublication(
+                        event,
+                        publicLinked.filter((id) => receipt.committed(id) !== undefined),
+                      );
                     this.fragrantDeathWave.publishVisibleWave(fragrantGun, event);
                   }
                   for (const binding of charmBindings)
@@ -679,6 +752,8 @@ export class DeathResolution {
         }
 
         pending = [...next];
+        pendingUnits = nextUnits;
+        previousCommits = nextCommits;
         firstBatch = false;
       }
     } finally {

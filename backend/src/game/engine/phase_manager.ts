@@ -5,22 +5,26 @@
  * 每夜仍创建独立生命周期 receiver，沿原 current 检查和重复 finally 消费同一已交接单位。
  * 计划中的具名 checkpoint 只提供原值，最终死亡链和判胜时点仍由本经理拥有。
  */
+import { damagePoisonRoutes } from "../../core/domain/damage-evidence";
+import type { DeathCommitReceipt, DeathOriginalLife } from "./death-wave";
+import type { DamageResolutionResult } from "../../core/domain/systems/damage_resolution_system";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { NightManagerLifecycle } from "../../rulesets/night-lifecycle-plan";
 
-
 import { bindBoardParameters } from "../../rulesets/board-parameters";
 import { RulePlan } from "../../rulesets/rule-plan";
-import { expireServantAtNightEnd, resolveSecretBodyDamage, checkpointNobleBodyAuthority, appendNobleContractClosure } from "../mechanisms/roles/noble_secret_body/ports";
+import {
+  expireServantAtNightEnd,
+  resolveSecretBodyDamage,
+  checkpointNobleBodyAuthority,
+  appendNobleContractClosure,
+} from "../mechanisms/roles/noble_secret_body/ports";
 import type { SecretBodySources } from "../mechanisms/roles/noble_secret_body/damage";
 import { hasRadiantNight } from "../mechanisms/roles/radiant_eclipse/night_frame";
 
 import { assertMistRosterCurrent } from "../mechanisms/roles/mist_raven/ports";
 import { MistPendingNight } from "../mechanisms/roles/mist_raven/pending_night";
 import { decideSnake } from "../mechanisms/roles/mist_raven/snake_window";
-
-
-
 
 import {
   demonRedMoonExpiry,
@@ -120,7 +124,13 @@ import {
 } from "../mechanisms/roles/wolf_beauty/relation";
 import { BearNightFrame } from "../mechanisms/roles/bear/night_frame";
 import type { AliveComponent } from "../../core/domain/components/alive";
-import { beginAnimalExileUnit, prepareAnimalCatExpiry, closeAnimalExileUnit, animalPufferReaction, animalAuthoritySnapshot } from "../mechanisms/roles/animal_dream/ports";
+import {
+  beginAnimalExileUnit,
+  prepareAnimalCatExpiry,
+  closeAnimalExileUnit,
+  animalPufferReaction,
+  animalAuthoritySnapshot,
+} from "../mechanisms/roles/animal_dream/ports";
 import {
   appendAnimalFact,
   appendAnimalBeautyNotice,
@@ -369,9 +379,15 @@ export class PhaseManager {
     const startedDay = this.state.day;
     const manager = this;
     const lifecycle = this.#rulePlan.createNightManagerLifecycle({
-      get world() { return manager.world; },
-      get config() { return manager.config; },
-      abortMistPending() { manager.mistPending?.abort(); },
+      get world() {
+        return manager.world;
+      },
+      get config() {
+        return manager.config;
+      },
+      abortMistPending() {
+        manager.mistPending?.abort();
+      },
     });
     let completed = false;
     try {
@@ -533,8 +549,13 @@ export class PhaseManager {
         const demon = ownsDemon
           ? freezeDeliveredDemonNightSources(this.world, night.demonSources!, faults[0] ?? null)
           : null;
+        let sourceDamage: DamageResolutionResult;
+        let originalLives: ReadonlyMap<EntityId, DeathOriginalLife> | undefined;
         const proposedSources: DeathSources = Object.fromEntries(
-          night.damage.deaths.map((id) => [id, [...(night.damage.deathSources[id] ?? [])]]),
+          (sourceDamage = night.damage).deaths.map((id) => [
+            id,
+            [...(night.damage.deathSources[id] ?? [])],
+          ]),
         );
         const guardOverrides: Array<{ targetId: number; guard: boolean }> = [];
         if (demon) {
@@ -589,7 +610,7 @@ export class PhaseManager {
         const deaths = Object.keys(proposedSources)
           .map(Number)
           .filter((id) => {
-            const scope = night.deathLives.get(id);
+            const scope = (originalLives = night.deathLives).get(id);
             return (
               scope &&
               this.world.getComponent(id, COMPONENT.Alive) === scope.life &&
@@ -730,6 +751,8 @@ export class PhaseManager {
           {
             nightOriginIds: deaths,
             isCurrent: nightIsCurrent,
+            originalLives,
+            poisonRoutes: damagePoisonRoutes(sourceDamage!),
             blocksPassiveNightShot: (id) => {
               const binding = night.evilKnightBindings?.get(id);
               return (
@@ -801,7 +824,8 @@ export class PhaseManager {
           );
           return this.getSnapshot();
         }
-        if (this.checkAndSealResult(this.#rulePlan.checkpoints.nightSettled)) return this.getSnapshot();
+        if (this.checkAndSealResult(this.#rulePlan.checkpoints.nightSettled))
+          return this.getSnapshot();
       } finally {
         lifecycle.abortSpecialNight(night, nightDay);
       }
@@ -872,13 +896,22 @@ export class PhaseManager {
         Phase.Night,
         Phase.Day,
         {},
-        { dreams: night.dreamFrame, nightOriginIds: damage.deaths, isCurrent: current },
+        {
+          dreams: night.dreamFrame,
+          nightOriginIds: damage.deaths,
+          isCurrent: current,
+          poisonRoutes: damagePoisonRoutes(damage),
+        },
       );
       assertMistRosterCurrent(this.world);
       pending.finish(current);
       lifecycle.closeMistNormally(cycleDay);
       nightSettled = true;
-      return this.checkAndSealResult(interrupted ? this.#rulePlan.checkpoints.dayInterrupted : this.#rulePlan.checkpoints.nightSettled);
+      return this.checkAndSealResult(
+        interrupted
+          ? this.#rulePlan.checkpoints.dayInterrupted
+          : this.#rulePlan.checkpoints.nightSettled,
+      );
     };
     const settleNight = async (
       blast?: { deaths: number[]; sources: DeathSources },
@@ -886,8 +919,10 @@ export class PhaseManager {
     ) => {
       if (nightSettled) return this.state.gameOver;
       nightSettled = true;
+      let sourceDamage: DamageResolutionResult;
+      let originalLives: ReadonlyMap<EntityId, DeathOriginalLife> | undefined;
       const retainedSources: DeathSources = Object.fromEntries(
-        night.damage.deaths.map((id) => [
+        (sourceDamage = night.damage).deaths.map((id) => [
           id,
           (night.damage.deathSources[id] ?? []).filter(
             (source) =>
@@ -899,7 +934,7 @@ export class PhaseManager {
         ]),
       );
       const nightDeaths = night.damage.deaths.filter((id) => {
-        const scope = night.deathLives.get(id);
+        const scope = (originalLives = night.deathLives).get(id);
         return (
           scope &&
           retainedSources[id]?.length &&
@@ -935,14 +970,17 @@ export class PhaseManager {
             dreams: night.dreamFrame,
             nightOriginIds: nightDeaths,
             isCurrent: dayIsCurrent,
+            originalLives,
+            poisonRoutes: damagePoisonRoutes(sourceDamage!),
             ...(animalSkip ? { animalUnit: animalSkip } : {}),
             ...(this.config.fragrantPairSeer || this.config.animalDream
               ? {
                   onInitialWaveCommitted: (
                     actualIds: readonly number[],
-                    actualSources?: DeathSources,
-                  ) =>
-                    this.emitNightResolved(
+                    actualSources: DeathSources | undefined,
+                    receipt: DeathCommitReceipt,
+                  ) => {
+                    const event = this.emitNightResolved(
                       this.config.animalDream
                         ? nightDeaths.filter(
                             (id) =>
@@ -952,7 +990,11 @@ export class PhaseManager {
                               ),
                           )
                         : nightDeaths,
-                    ),
+                    );
+                    // 只关联真正的公开事件；不以凭证缺项更改原 Animal／双生 pending 筛选。
+                    receipt.recordPublication(event, actualIds);
+                    return event;
+                  },
                 }
               : {}),
           },
@@ -978,7 +1020,11 @@ export class PhaseManager {
         noteAnimalBearPublication(this.world, this.events, bearStart);
         appendAnimalBeautyNotice(this.world, this.events, cycleDay);
       }
-      return this.checkAndSealResult(blast !== undefined ? this.#rulePlan.checkpoints.dayInterrupted : this.#rulePlan.checkpoints.nightSettled);
+      return this.checkAndSealResult(
+        blast !== undefined
+          ? this.#rulePlan.checkpoints.dayInterrupted
+          : this.#rulePlan.checkpoints.nightSettled,
+      );
     };
     if (!night.mistDelay && !firstDaySheriffBeforeNightInfo && (await settleNight()))
       return this.getSnapshot();
@@ -1067,7 +1113,10 @@ export class PhaseManager {
     if (this.state.gameOver || !dayIsCurrent()) return this.getSnapshot();
     if (dayResult.interrupted) {
       // 白天被自爆中断时直接结束当日并切到下一夜。
-      if (this.state.gameOver || this.checkAndSealResult(this.#rulePlan.checkpoints.dayInterrupted)) {
+      if (
+        this.state.gameOver ||
+        this.checkAndSealResult(this.#rulePlan.checkpoints.dayInterrupted)
+      ) {
         return this.getSnapshot();
       }
       this.state.day += 1;

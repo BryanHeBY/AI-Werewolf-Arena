@@ -9,7 +9,7 @@
 | P2 测试、fixture、词典 | 进行中 | C14成套archive/C15及mixed/support职责已落；593来源、693目标、8112旧IDs；阶段验收待汇合 |
 | P3 状态与请求授权      | 进行中 | C16读取/C18/F02/C19与opaque／旧状态门面退出已落；完整能力schema／codec继续             |
 | P4 规则计划与生命周期  | 进行中 | RulePlan实际同引用消费、late计划与周期单位已落；C22–C24完整机制矩阵继续                |
-| P5 效果、死亡与判胜    | 进行中 | C25/26来源毒路由与目标政策、C27提交owner、C28馥郁／动物边界已落；完整死亡链继续              |
+| P5 效果、死亡与判胜    | 进行中 | C25/26真实毒来源、C27实际Wave/Receipt与提交、C28馥郁／动物边界已落；全效果/关系继续              |
 | P6 能力、观察与展示    | 进行中 | C35第五包、F01默认生产观察回退已落；C30–C34完整投影、C36与其余展示贡献继续                      |
 | P7 记录与独立复现      | 待执行 | C37–C40                                                                                |
 | P8 目录、命名与文档    | 待执行 | C41–C44                                                                                |
@@ -434,3 +434,5 @@
 - 八已提交功能台账汇合：只登记9a8337/a483/d4c/95ee/157/7d63/dfd7/1099的53具体parts/51格；91rows910cells及freeze89 SHA、旧parts/remaining全文同序保，追加51条具体未完说明，现109partial801pending/0complete/N/A。Root独立真commit/owner/doc/12links与前缀/计数审0，首remaining完全相等的过强检查已改明确append规则，未改候选。中文注释不算结构交付，新d323/99fac已提交但本次未登记，fullWave/普通夜metadata真WIP不登记；不重tests/types/games。见current-delivery-ledger.md及generated/current-delivery-ledger-evidence.json。
 
 - C30 普通夜实例metadata写权：37paths/19生产+17原test/support+1new，3完整原生安装/start/use归既有changes、34consumer/41binding同原名alias接线，旧query3出口清零无桥、Pair原pure函数仅canonicalexport，无反向环/新store。36actualGit whole程序及3decl/Pair原body同、37中文heads/SHA独立0；4精确intent调用末comma current21/orig3窄规范化说明及首红保，无arrays/fields/values屏蔽。新3/0/15+原安装transfer2/0/12/Pair1/0/3/WitchLucky1/0/8，finite24087由实现者actualclosed0，首Bun matcher type-only泛型修无输入/预期变动；Root实际职责/权限/时序审绿，不重fullgate。其余borrowlease/clock/具体payload与C30完整矩阵仍续，见night-instance-metadata-owner.md。
+
+- C27/28 实际typedWave→CommitReceipt：5paths，initial/逐proposal真实unit共享及revisit原身份、2真正mark站传同ids/source引用、原ledger.set位置同对象version保、接受Poison匹配锁origin原体/版本进entry；PM三夜分支真实carrier、callback/枪/公开关联不改事件。data-only badtail预拒、新plan一致性和第三callback参/receipt返回明列政策；legacy同名getters+customMap.get两实际finding修own-data/nativeMap诊断。new7+old3为10/0/68、变route2/0/18、原paid/stale3/0/11、真实链增量1/0/16、兼容增量2/0/27，各自收据不冒最后整套；finite87022/58522/58007/末predicateleaf11470作者actualclosed0。3原程序6inverse/属性read37/123/238同、中文5heads/Root和两独立final5SHA审0；首config/testtype/proof红保。全effect/time/relation/record/P9继续，见typed-death-wave.md。
