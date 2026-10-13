@@ -15,7 +15,7 @@ import type {
   NightAbilityReadStates,
 } from "@ai-werewolf-arena/game-contract";
 import { readPairSeerState } from "./fragrant_pair_seer/state";
-import { readShelterState } from "./radiant_eclipse/state";
+import { projectShelterState } from "./radiant_eclipse/shelter-state";
 import { INSPECTION_POLICIES } from "../../../core/domain/board";
 import { nativePotionSecondTurn } from "./witch/policies";
 import { Role, type EventPayloadMap } from "../../../core/domain/model";
@@ -44,11 +44,7 @@ export const ROLE_INSPECTION_POLICY_ROLES: Readonly<Record<RoleInspectionPolicy,
   wolf_witch: Role.WolfWitch,
 };
 
-function projectShelterState(value: unknown) {
-  const state = readShelterState(value);
-  if (!state) throw new Error("radiant_shelter_state_invalid");
-  return state;
-}
+
 /** Pair 初始化和玩家投影共享此原纯数据校验；不读实例、World 或授予能力权限。 */
 export function projectPairState(value: unknown): PairSeerState {
   const state = readPairSeerState(value);

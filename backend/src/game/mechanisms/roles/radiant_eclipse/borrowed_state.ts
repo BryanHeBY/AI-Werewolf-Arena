@@ -1,9 +1,7 @@
 /**
- * Owns checked detached installation data for Eclipse's existing borrowed kinds.
- * Inputs are unknown source payload, kind and day; outputs preserve fresh copied
- * stock/policy/history data with the original own-field and Proxy rejection rules.
- * Shared payload declarations remain pure data; this reader never mutates a live
- * ability, transfers authority or refunds the source resource.
+ * 黯月借用各原能力 kind 的独立安装数据 reader。输入为未知 source payload、kind 与日期；
+ * 输出保留原库存、政策及 fresh history 的复制形状和 own-field／Proxy 拒绝集合。
+ * 此 reader 不修改 live 能力、转移授权或退回来源库存；只有庇护 reader 的导入归属改变。
  */
 
 import type {
@@ -14,7 +12,7 @@ import type {
 } from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import { WitchSelfHealRule } from "../../../../core/domain/identity";
-import { readShelterState } from "./state";
+import { readShelterState } from "./shelter-state";
 
 interface BorrowedStates {
   seer_check: SeerState;

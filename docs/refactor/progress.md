@@ -500,3 +500,5 @@
 - C13 夜间阶段构造器归属：实际30原文件／29调用方，旧 engine/night_stage_fixture.ts 删除，完整 helper 移至 support/builders/night-stage-context.ts。39精确模块路径修改，getter原this／闭包与末尾spread／默认构造时点、机器异常串及全部assert保持；60完整逆向运行输出相同，finite30roots14738实际exit0，30职责头无诊断。独立真实Git／51996节点／绑定和目标解析／35合并SHA审通过，不重测试或全量门禁。见night-stage-context-builder.md。
 
 - 中文维护说明随实现继续：五Agent源仅注释，补真实创建与可取消等待／迟到回收／关闭去重／历史窗口与失败前缀／数据accepted≠commit／工具包装与授权边界。5真实Git原文／完整typedAST／10wholeemit相同，5职责头无诊断；两处独立措辞finding已修，35合并独立SHA及doc终摘要核准，不重type/runtime/globalgate。首scanner模板假差异及自动词项诊断如实保留，不因注释声称架构清零。见agent-chinese-comment-contracts.md。
+
+- C17 摄梦人与明辉庇护完整状态槽：29path／28现存+删旧Dream叶，四owner保原JSONprepare≠Shelter strictreader／history target-day前缀／paid-effect→uses→原assign字段前缀与callee/state顺序；Eclipse借用及首死仍原owner。24真实Gitbefore／24whole21726格式规范节点、48emit46raw+2format而48token同／23importerbindings0，局部31module两slot反向path空不冒全仓。新7/0/40、finite28roots62030仅新test5类型红后typeonly双rawsame、79270actual0；28CN头和关键序说明准确。Root完整源审＋独立实际29SHA/301imports/状态失败与权限边界＋MDJSON终审批准，不重旧测试/模型/全门禁。其余schema与完整借用死亡矩阵继续，见dream-shelter-state-slots.md。

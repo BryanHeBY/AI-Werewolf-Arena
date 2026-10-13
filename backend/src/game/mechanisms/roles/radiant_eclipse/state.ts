@@ -1,16 +1,14 @@
 /**
- * Owns Radiant/Eclipse strict readers, pure selections and its separate Eclipse history data structure.
- * Inputs are unknown data or read-only shelter state, day and legal target IDs;
- * outputs are checked detached data and newly selected shelter/eclipse state.
- * This leaf never changes a live ability slot, consumes stock or commits a lease;
- * ability installation and authority publication remain with their actual owners.
+ * 黯月独立 history 的严格读取、纯选择与原私有状态投影。共享政策和 scalar reader 来自
+ * state-data，数组与吞噬 history 的完整校验仍在此处；本模块不写 live 能力或借用 lease。
+ * 明辉庇护的数据已归独立 owner，不能借迁移合并两种状态的验证或付款规则。
  */
-import type { ShelterState } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 
 import { types } from "node:util";
+import { RADIANT_ECLIPSE_POLICY, record, positive } from "./state-data";
+export { RADIANT_ECLIPSE_POLICY } from "./state-data";
 
-export const RADIANT_ECLIPSE_POLICY = "awa_radiant_eclipse_v1" as const;
 const goodRoles = ["villager", "seer", "witch", "dreamer", "radiant_count"] as const;
 export type EclipseSwallowedRole = (typeof goodRoles)[number];
 export interface EclipseState {
@@ -22,20 +20,7 @@ export interface EclipseState {
     abilityId: string | null;
   }>;
 }
-function record(value: unknown, keys: readonly string[]): Record<string, unknown> | undefined {
-  if (!value || typeof value !== "object" || types.isProxy(value) || Array.isArray(value)) return;
-  const prototype = Object.getPrototypeOf(value);
-  if (prototype !== Object.prototype && prototype !== null) return;
-  const fields = Object.getOwnPropertyDescriptors(value);
-  if (Reflect.ownKeys(fields).length !== keys.length) return;
-  const out: Record<string, unknown> = {};
-  for (const key of keys) {
-    const field = fields[key];
-    if (!field || !("value" in field)) return;
-    out[key] = field.value;
-  }
-  return out;
-}
+
 function items(value: unknown): unknown[] | undefined {
   if (types.isProxy(value) || !Array.isArray(value)) return;
   const fields: Record<string, PropertyDescriptor> = Object.getOwnPropertyDescriptors(
@@ -57,63 +42,12 @@ function items(value: unknown): unknown[] | undefined {
   }
   return out;
 }
-function positive(value: unknown): value is number {
-  return (
-    typeof value === "number" &&
-    Number.isSafeInteger(value) &&
-    value > 0 &&
-    value < Number.MAX_SAFE_INTEGER
-  );
-}
-export const createShelterState = (): ShelterState => ({
-  policy: RADIANT_ECLIPSE_POLICY,
-  lastTarget: null,
-  lastDay: null,
-});
+
 export const createEclipseState = (): EclipseState => ({
   policy: RADIANT_ECLIPSE_POLICY,
   history: [],
 });
-export function readShelterState(value: unknown): ShelterState | undefined {
-  const current = record(value, ["policy", "lastTarget", "lastDay"]);
-  if (
-    !current ||
-    current.policy !== RADIANT_ECLIPSE_POLICY ||
-    (current.lastTarget !== null && !positive(current.lastTarget)) ||
-    (current.lastDay !== null && (!positive(current.lastDay) || current.lastDay < 2)) ||
-    (current.lastDay === null && current.lastTarget !== null)
-  )
-    return;
-  return {
-    policy: RADIANT_ECLIPSE_POLICY,
-    lastTarget: current.lastTarget as number | null,
-    lastDay: current.lastDay as number | null,
-  };
-}
-export function selectShelter(
-  state: Readonly<ShelterState>,
-  day: number,
-  targetId: unknown,
-  actorId: number,
-  livingIds: readonly number[],
-): ShelterState {
-  const current = readShelterState(state);
-  if (!current || !positive(day) || day < 2 || (current.lastDay !== null && day <= current.lastDay))
-    throw new Error("radiant_shelter_unavailable");
-  if (
-    targetId !== null &&
-    (!positive(targetId) ||
-      targetId === actorId ||
-      !livingIds.includes(targetId) ||
-      (current.lastDay === day - 1 && current.lastTarget === targetId))
-  )
-    throw new Error("radiant_shelter_target");
-  return {
-    policy: RADIANT_ECLIPSE_POLICY,
-    lastTarget: targetId as number | null,
-    lastDay: day,
-  };
-}
+
 export function readEclipseState(value: unknown): EclipseState | undefined {
   const current = record(value, ["policy", "history"]);
   if (!current || current.policy !== RADIANT_ECLIPSE_POLICY) return;
@@ -187,7 +121,7 @@ export function selectEclipse(
   };
 }
 
-/** Project the original Eclipse slot through its existing detached-data reader. */
+/** 原 Eclipse 私有槽仍通过既有 reader 投影为独立数据。 */
 export function projectEclipseState(role: RoleComponent): EclipseState | undefined {
   return readEclipseState((role.privateState as { readonly eclipse?: unknown }).eclipse);
 }

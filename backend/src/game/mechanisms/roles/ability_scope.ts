@@ -15,6 +15,8 @@ import type { EntityId } from "../../../core/domain/model";
 import { activeNightAbility, type NightAbilityReadView } from "./abilities";
 import { aliveLifeVersion } from "../../../core/domain/components/alive";
 
+import { DREAMER_STATE_SLOT } from "./dreamer/ports";
+import { SHELTER_STATE_SLOT } from "./radiant_eclipse/shelter-state-slot";
 import { SEER_STATE_SLOT } from "./seer/ports";
 import { GUARD_STATE_SLOT } from "./guard/ports";
 import { WITCH_STATE_SLOT } from "./witch/ports";
@@ -26,7 +28,7 @@ function policyIdentity(ability: NightAbilityReadView): string {
     case "pair_check":
       return JSON.stringify([ability.state.policy]);
     case "shelter":
-      return JSON.stringify([ability.state.policy]);
+      return SHELTER_STATE_SLOT.invalidations.policyIdentity(ability);
     case "seer_check":
       return SEER_STATE_SLOT.invalidations.policyIdentity(ability);
     case "potion":
@@ -36,7 +38,7 @@ function policyIdentity(ability: NightAbilityReadView): string {
     case "role_check":
       return ROLE_INSPECTION_STATE_SLOT.checkpoint.policyIdentity(ability);
     case "dream":
-      return JSON.stringify([ability.state.protectionPolicy]);
+      return DREAMER_STATE_SLOT.invalidations.policyIdentity(ability);
   }
 }
 

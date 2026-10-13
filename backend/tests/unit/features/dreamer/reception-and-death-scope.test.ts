@@ -13,7 +13,7 @@ import {
   type ActionRequest,
 } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/state";
+import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import {

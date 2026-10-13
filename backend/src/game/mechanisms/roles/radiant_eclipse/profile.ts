@@ -14,7 +14,8 @@ import { activeNightAbility } from "../abilities";
 import { setNightAbilityStartDay, installNativeAbility } from "../ability_changes";
 import { WOLF_ROLE_PROFILE } from "../wolf/profile";
 import { RADIANT_SHELTER_STAGE, ECLIPSE_SWALLOW_STAGE } from "./night_stages";
-import { createShelterState, createEclipseState, RADIANT_ECLIPSE_POLICY } from "./state";
+import { createEclipseState, RADIANT_ECLIPSE_POLICY } from "./state";
+import { createShelterState } from "./shelter-state";
 import {
   isRadiantEclipseBoard,
   captureRadiantTurn,

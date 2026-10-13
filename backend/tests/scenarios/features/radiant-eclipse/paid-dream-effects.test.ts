@@ -16,10 +16,8 @@ import { createRoleComponent } from "../../../../src/game/observation/role-prese
 import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
-import {
-  createEclipseState,
-  createShelterState,
-} from "../../../../src/game/mechanisms/roles/radiant_eclipse/state";
+import { createEclipseState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/state";
+import { createShelterState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state";
 import { installRadiantEclipseBoard } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
 import type { GameEvent } from "../../../../src/core/domain/events";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";

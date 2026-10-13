@@ -1,10 +1,10 @@
 /**
- * 负责梦摄对当前能力及原目标生命的行动。
+ * 负责摄梦人对当前能力及原目标生命的行动。
  * 输入为查询给出的 actor、夜请求和合法梦目标；输出保留历史与有来源梦保护。
  * 具体状态写入和共享 use 命令仍在原 commit 位置，资格／事实顺序不变。
  * 本阶段不执行死亡波或刷新已失效目标，也不回滚已付历史。
  */
-import { recordDreamSelection } from "./state";
+import { DREAMER_STATE_SLOT } from "./ports";
 import { isRadiantEclipseBoard, captureRadiantPaidEffect } from "../radiant_eclipse/night_frame";
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -97,7 +97,7 @@ export const DREAMER_NIGHT_STAGE: NightStageHandler = {
         )
           continue;
         const consecutive = state.lastDay === day - 1 && state.lastTarget === targetId;
-        recordDreamSelection(state, targetId, day);
+        DREAMER_STATE_SLOT.allowedWrites.recordDreamSelection(state, targetId, day);
         recordNightAbilityUse(ability, day, true);
         markDreamNightCommitted(ctx.world, day);
         applied = true;

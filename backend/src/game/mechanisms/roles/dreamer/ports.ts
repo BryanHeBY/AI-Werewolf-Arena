@@ -1,6 +1,6 @@
 /**
- * 提供摄梦人原状态读取函数的公开入口。输入是调用方在原读取时点传入的角色对象；
- * 输出保留同一只读状态引用和原 getter 契约。读取之前的权限检查与失败、关闭窗口
- * 仍由原调用方负责。本入口仅具名导出本角色函数，不安装、校验、复制、冻结或存储状态。
+ * 摄梦状态族的公开契约：初始化可安装 owned JSON 副本，读取保留原库存引用，普通夜行动
+ * 只通过明确命令写 target/day/history。连续目标、生命、次数、付款与阶段关闭仍归原 caller。
+ * schema 不新增形状拒绝，政策 codec 仅保留既有 scope 身份，不授予新能力或租约。
  */
-export { getDreamerState } from "./state";
+export { DREAMER_STATE_SLOT, getDreamerState, setDreamerState } from "./state-slot";

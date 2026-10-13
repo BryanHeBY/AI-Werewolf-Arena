@@ -24,6 +24,8 @@ import { allNightAbilities, abilityStatus, projectPairState, copyAbilityData, pr
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 
 import { commitPreparedNativeAbility } from "./prepared-native-install";
+import { DREAMER_STATE_SLOT } from "./dreamer/ports";
+import { SHELTER_STATE_SLOT } from "./radiant_eclipse/shelter-state-slot";
 import { SEER_STATE_SLOT } from "./seer/ports";
 import { GUARD_STATE_SLOT } from "./guard/ports";
 import { WITCH_STATE_SLOT } from "./witch/ports";
@@ -411,7 +413,11 @@ export function installNativeAbility<K extends NightAbilityKind>(
             ? GUARD_STATE_SLOT.create(state as NightAbilityStates["guard"])
             : kind === "potion"
               ? WITCH_STATE_SLOT.create(state as NightAbilityStates["potion"])
-              : copyAbilityData(state)
+              : kind === "dream"
+                ? DREAMER_STATE_SLOT.create(state as NightAbilityStates["dream"])
+                : kind === "shelter"
+                  ? SHELTER_STATE_SLOT.prepare(state as NightAbilityStates["shelter"])
+                  : copyAbilityData(state)
   ) as NightAbilityStates[K];
   return commitPreparedNativeAbility(role, kind, ownedState);
 }

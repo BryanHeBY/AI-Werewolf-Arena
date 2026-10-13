@@ -26,7 +26,8 @@ import { allNightAbilities, abilityStatus, type NightAbilityReadView } from "../
 import { grantNightAbility, retireBorrowedNightAbility } from "../ability_changes";
 import { openEclipseSuppression } from "./suppression";
 import { snapshotBorrowedState, type BorrowedKind } from "./borrowed_state";
-import { readEclipseState, readShelterState, selectEclipse, type EclipseState } from "./state";
+import { readEclipseState, selectEclipse, type EclipseState } from "./state";
+import { readShelterState } from "./shelter-state";
 
 const invalid = Symbol("invalid_radiant_binding");
 function own(value: unknown, key: PropertyKey): unknown {

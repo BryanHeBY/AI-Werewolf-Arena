@@ -12,7 +12,7 @@ import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Camp, Role, Phase } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { activeNightAbility } from "../abilities";
-import { getDreamerState, setDreamerState } from "./state";
+import { getDreamerState, setDreamerState } from "./ports";
 import { isAliveTarget } from "../../validation/contracts";
 import { numberOrNull } from "../../llm/helpers";
 import { DREAMER_NIGHT_STAGE } from "./night_stages";

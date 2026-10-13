@@ -10,7 +10,8 @@ import { Phase, Role } from "../../../../core/domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { recordNightAbilityUse } from "../ability_changes";
 import { captureNightAbilityScope } from "../ability_scope";
-import { readShelterState, selectShelter } from "./state";
+import { readShelterState, selectShelter } from "./shelter-state";
+import { SHELTER_STATE_SLOT } from "./shelter-state-slot";
 import {
   assertRadiantRosterCurrent,
   eclipseSwallowTargets,
@@ -92,7 +93,7 @@ export const RADIANT_SHELTER_STAGE: NightStageHandler = {
       );
       commitRadiantShelter(ctx.world, day, actorId, ability, target, ctx.events);
       recordNightAbilityUse(ability, day, target !== null);
-      Object.assign(ability.state, next);
+      SHELTER_STATE_SLOT.allowedWrites.recordShelterSelection(ability, next);
     }
   },
 };

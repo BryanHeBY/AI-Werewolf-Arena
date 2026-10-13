@@ -1,0 +1,2018 @@
+{
+  "source": {
+    "base": "e1aec71c528530a5e165c85a1d137ab908e0a3db",
+    "paths": [
+      "backend/src/game/mechanisms/roles/dreamer/state.ts",
+      "backend/src/game/mechanisms/roles/dreamer/ports.ts",
+      "backend/src/game/mechanisms/roles/dreamer/profile.ts",
+      "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+      "backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+      "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+      "backend/src/game/mechanisms/roles/radiant_eclipse/borrowed_state.ts",
+      "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+      "backend/src/game/mechanisms/roles/abilities.ts",
+      "backend/src/game/mechanisms/roles/ability_scope.ts",
+      "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "backend/tests/unit/features/radiant-eclipse/native-binding.test.ts",
+      "backend/tests/unit/features/radiant-eclipse/await.test.ts",
+      "backend/tests/unit/features/radiant-eclipse/paid-effect.test.ts",
+      "backend/tests/unit/features/radiant-eclipse/lifecycle.test.ts",
+      "backend/tests/unit/features/radiant-eclipse/state.test.ts",
+      "backend/tests/unit/features/radiant-eclipse/descriptors.test.ts",
+      "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+      "backend/tests/unit/features/radiant-eclipse/radiant-eclipse-effect-immutability.test.ts",
+      "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+      "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+      "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+      "backend/src/game/mechanisms/roles/radiant_eclipse/state-data.ts",
+      "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts",
+      "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+      "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts"
+    ],
+    "files": [
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/state.ts",
+        "deleted": true,
+        "beforeSha256": "ee2ce81f940e7e76cd05581a480106a67ba9eadbe36d5205db54bdf26279dd50"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/ports.ts",
+        "sha256": "960e84db3a5f3d5feb6788b5afcda50cebf1a57268fd8f1fa615868f313138b0"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/profile.ts",
+        "sha256": "02bab91dfb0a4792a0b229ab016d7b51b7f59ca44d4dc619f50b3fef6df10a46"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+        "sha256": "48ff74ddb1d95e7e7564a58a2075e8abc6e22b3e952641205241eb719ef34189"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+        "sha256": "e4d4218b34e40d4e61f1844cdf25fe6311182ec1cd365cbd68f9513205d1d59b"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+        "sha256": "3e61eca39c9f9b47e009b2dcecc46de15ac0232bb431ee137871ca446f734871"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+        "sha256": "8d0de94a125c520d79a2786fcf7cac49a35345790fa2ec962068a9f427445e9a"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/borrowed_state.ts",
+        "sha256": "95925bf500a0028cdc883a511b66b3b98fb469efde81c744372af8cdfc57ae01"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+        "sha256": "55f4ced96ae286d4c50d125ff348e5f5be495b69cebc51479abce2727cba7d5d"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+        "sha256": "b4056750db96fde74330d2bf75d0acb402b77728dd79f15ffb94a0a8f05e7524"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/abilities.ts",
+        "sha256": "04d035beff1ee29ce771f4e4790282d6ba6439a71478e8233fd26ba7429e7e17"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+        "sha256": "0ee74cdb94177045b4496b45462e208e0ec16ce62bb477845a851c3f68767c9a"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "sha256": "5a2f6f988f07b5eb15a8411ba680fe5e61db175f733dcae8aa5b69724005276e"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/native-binding.test.ts",
+        "sha256": "c958298b4df5e7b67d9d13f6a64aa8c48436272d08bae6a2268d595baf9b7529"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/await.test.ts",
+        "sha256": "7106f1bda6ba24fdde6ee2fdec5227219716ca6a127a4fb6626f1d20a70e1cec"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/paid-effect.test.ts",
+        "sha256": "b1f9b8f1d0627294648f6ee82f2760164f738d0a64dc0d39661c54a241a28fff"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/lifecycle.test.ts",
+        "sha256": "80d0e943ebc14c6f3e219ec06e90aa03eb85bda31b8808183d9a3e5a1347e1c7"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/state.test.ts",
+        "sha256": "b7b1275e28ee5c369b71e497a83e321251cbd24e711150eab7fe29d3c0651cce"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/descriptors.test.ts",
+        "sha256": "2a4cd23aaac842815e63133098c8a45bb4d33abc0ea05b0f2189bb72cdb6a10b"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+        "sha256": "5967e32a4e54784f192649835018d6021a27fe640b24116c31f8d7a4acd87b70"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/radiant-eclipse-effect-immutability.test.ts",
+        "sha256": "6248d1b2defc2aca2b4afa05e97f712c0780e1d91906d3f78a31c0679aa98f81"
+      },
+      {
+        "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+        "sha256": "a95505e4ba367a65115803fedfcabd9891245ab9c0b483e87020bd82666dd5b3"
+      },
+      {
+        "path": "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+        "sha256": "034444463553ba55193aa7689a9f3af464e435312283c5ef9272e3212c6b0dcd"
+      },
+      {
+        "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+        "sha256": "bee5a74dac0bfb03d818330147cf66e7f3efd5e6618face1e1546cbcb24593c0"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+        "sha256": "91cd3fffb1d087486f3eca78b49e9dc54bd700545fbaee0b8dffeb43800d34c7"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state-data.ts",
+        "sha256": "aaeb070837e28b4fdb2a206bdc16af67825d4bcc3f3db36e889c4e1ab707cbfb"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts",
+        "sha256": "ebea4ff5cdb5d753877f91f67ea8d1d9ee7ab73ae449d6eec05ec6fcf7d74454"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+        "sha256": "ca2beabf2049ab78e4ed3026352a5a4de56209899c0de13f7ae87c39d75d4a59"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+        "sha256": "ab98eb6f88f9b9129954876b8f93e5431bc452fd4a4664b3019d485e3545da7e"
+      }
+    ],
+    "notes": [
+      "Actual24before=23existing source/test +one deletedDreamstate;4newowners+1newtest yield29scope/28current.",
+      "Root owns any concurrent controlled-builder import-only edits, not this source semantic delta. Freeze must be refreshed after that known sharedbinding delta, not re-run runtime/types for comments/import-only."
+    ]
+  },
+  "programProof": {
+    "base": "e1aec71c528530a5e165c85a1d137ab908e0a3db",
+    "checks": [
+      {
+        "label": "actual captured before Git backend/src/game/mechanisms/roles/dreamer/state.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/src/game/mechanisms/roles/dreamer/ports.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/src/game/mechanisms/roles/dreamer/profile.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/src/game/mechanisms/roles/radiant_eclipse/borrowed_state.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/src/game/mechanisms/roles/abilities.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/src/game/mechanisms/roles/ability_scope.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/src/game/mechanisms/roles/ability_changes.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/tests/unit/features/radiant-eclipse/native-binding.test.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/tests/unit/features/radiant-eclipse/await.test.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/tests/unit/features/radiant-eclipse/paid-effect.test.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/tests/unit/features/radiant-eclipse/lifecycle.test.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/tests/unit/features/radiant-eclipse/state.test.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/tests/unit/features/radiant-eclipse/descriptors.test.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/tests/unit/features/radiant-eclipse/radiant-eclipse-effect-immutability.test.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before Git backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+        "equal": true
+      },
+      {
+        "label": "complete strict scalar function record",
+        "equal": true,
+        "beforeNodes": 135,
+        "afterNodes": 135
+      },
+      {
+        "label": "complete strict scalar function positive",
+        "equal": true,
+        "beforeNodes": 39,
+        "afterNodes": 39
+      },
+      {
+        "label": "dream original policy identity",
+        "equal": true,
+        "beforeNodes": 14,
+        "afterNodes": 14
+      },
+      {
+        "label": "shelter original policy identity",
+        "equal": true,
+        "beforeNodes": 14,
+        "afterNodes": 14
+      },
+      {
+        "label": "shelter original complete payload writer",
+        "equal": true,
+        "beforeNodes": 12,
+        "afterNodes": 12
+      },
+      {
+        "label": "shelter prepared native install exact pipeline",
+        "equal": true,
+        "beforeNodes": 13,
+        "afterNodes": 13
+      },
+      {
+        "label": "DREAMER_STATE_SLOT.create actual function identity",
+        "equal": true
+      },
+      {
+        "label": "DREAMER_STATE_SLOT.schema actual function identity",
+        "equal": true
+      },
+      {
+        "label": "DREAMER_STATE_SLOT.get actual function identity",
+        "equal": true
+      },
+      {
+        "label": "DREAMER_STATE_SLOT.install actual function identity",
+        "equal": true
+      },
+      {
+        "label": "SHELTER_STATE_SLOT.create actual function identity",
+        "equal": true
+      },
+      {
+        "label": "SHELTER_STATE_SLOT.prepare actual function identity",
+        "equal": true
+      },
+      {
+        "label": "SHELTER_STATE_SLOT.schema actual function identity",
+        "equal": true
+      },
+      {
+        "label": "SHELTER_STATE_SLOT.project actual function identity",
+        "equal": true
+      },
+      {
+        "label": "SHELTER_STATE_SLOT.select actual function identity",
+        "equal": true
+      },
+      {
+        "label": "SHELTER_STATE_SLOT.install actual function identity",
+        "equal": true
+      }
+    ],
+    "wholePrograms": [
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/state.ts",
+        "equal": true,
+        "beforeNodes": 101,
+        "afterNodes": 101,
+        "rawTypedAstEqual": true,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/ports.ts",
+        "equal": true,
+        "beforeNodes": 7,
+        "afterNodes": 7,
+        "rawTypedAstEqual": true,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/profile.ts",
+        "equal": true,
+        "beforeNodes": 419,
+        "afterNodes": 419,
+        "rawTypedAstEqual": true,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+        "equal": true,
+        "beforeNodes": 695,
+        "afterNodes": 695,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+        "equal": true,
+        "beforeNodes": 1170,
+        "afterNodes": 1170,
+        "rawTypedAstEqual": true,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+        "equal": true,
+        "beforeNodes": 26,
+        "afterNodes": 26,
+        "rawTypedAstEqual": true,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+        "equal": true,
+        "beforeNodes": 821,
+        "afterNodes": 821,
+        "rawTypedAstEqual": true,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/borrowed_state.ts",
+        "equal": true,
+        "beforeNodes": 492,
+        "afterNodes": 492,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+        "equal": true,
+        "beforeNodes": 4489,
+        "afterNodes": 4489,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+        "equal": true,
+        "beforeNodes": 514,
+        "afterNodes": 514,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/abilities.ts",
+        "equal": true,
+        "beforeNodes": 1464,
+        "afterNodes": 1464,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+        "equal": true,
+        "beforeNodes": 577,
+        "afterNodes": 577,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "equal": true,
+        "beforeNodes": 2312,
+        "afterNodes": 2312,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": false,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": false,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/native-binding.test.ts",
+        "equal": true,
+        "beforeNodes": 465,
+        "afterNodes": 465,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/await.test.ts",
+        "equal": true,
+        "beforeNodes": 759,
+        "afterNodes": 759,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/paid-effect.test.ts",
+        "equal": true,
+        "beforeNodes": 605,
+        "afterNodes": 605,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/lifecycle.test.ts",
+        "equal": true,
+        "beforeNodes": 1044,
+        "afterNodes": 1044,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/state.test.ts",
+        "equal": true,
+        "beforeNodes": 1385,
+        "afterNodes": 1385,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/descriptors.test.ts",
+        "equal": true,
+        "beforeNodes": 663,
+        "afterNodes": 663,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+        "equal": true,
+        "beforeNodes": 470,
+        "afterNodes": 470,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/radiant-eclipse-effect-immutability.test.ts",
+        "equal": true,
+        "beforeNodes": 612,
+        "afterNodes": 612,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+        "equal": true,
+        "beforeNodes": 818,
+        "afterNodes": 818,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+        "equal": true,
+        "beforeNodes": 638,
+        "afterNodes": 638,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+        "equal": true,
+        "beforeNodes": 1180,
+        "afterNodes": 1180,
+        "rawTypedAstEqual": false,
+        "emits": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "completeParserTokenEqual": true
+          }
+        ]
+      }
+    ],
+    "canary": [
+      {
+        "label": "nonfirst field/deep callback mutation rejected",
+        "rejected": true,
+        "originalNodes": 27,
+        "mutatedNodes": 27
+      },
+      {
+        "label": "nonfirst field/deep callback mutation rejected",
+        "rejected": true,
+        "originalNodes": 27,
+        "mutatedNodes": 27
+      }
+    ],
+    "failures": [],
+    "files": [
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/state.ts",
+        "deleted": true,
+        "beforeSha256": "ee2ce81f940e7e76cd05581a480106a67ba9eadbe36d5205db54bdf26279dd50"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/ports.ts",
+        "sha256": "960e84db3a5f3d5feb6788b5afcda50cebf1a57268fd8f1fa615868f313138b0"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/profile.ts",
+        "sha256": "02bab91dfb0a4792a0b229ab016d7b51b7f59ca44d4dc619f50b3fef6df10a46"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+        "sha256": "48ff74ddb1d95e7e7564a58a2075e8abc6e22b3e952641205241eb719ef34189"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+        "sha256": "e4d4218b34e40d4e61f1844cdf25fe6311182ec1cd365cbd68f9513205d1d59b"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+        "sha256": "3e61eca39c9f9b47e009b2dcecc46de15ac0232bb431ee137871ca446f734871"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+        "sha256": "8d0de94a125c520d79a2786fcf7cac49a35345790fa2ec962068a9f427445e9a"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/borrowed_state.ts",
+        "sha256": "95925bf500a0028cdc883a511b66b3b98fb469efde81c744372af8cdfc57ae01"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+        "sha256": "55f4ced96ae286d4c50d125ff348e5f5be495b69cebc51479abce2727cba7d5d"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+        "sha256": "b4056750db96fde74330d2bf75d0acb402b77728dd79f15ffb94a0a8f05e7524"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/abilities.ts",
+        "sha256": "04d035beff1ee29ce771f4e4790282d6ba6439a71478e8233fd26ba7429e7e17"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+        "sha256": "0ee74cdb94177045b4496b45462e208e0ec16ce62bb477845a851c3f68767c9a"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "sha256": "5a2f6f988f07b5eb15a8411ba680fe5e61db175f733dcae8aa5b69724005276e"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/native-binding.test.ts",
+        "sha256": "c958298b4df5e7b67d9d13f6a64aa8c48436272d08bae6a2268d595baf9b7529"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/await.test.ts",
+        "sha256": "7106f1bda6ba24fdde6ee2fdec5227219716ca6a127a4fb6626f1d20a70e1cec"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/paid-effect.test.ts",
+        "sha256": "b1f9b8f1d0627294648f6ee82f2760164f738d0a64dc0d39661c54a241a28fff"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/lifecycle.test.ts",
+        "sha256": "80d0e943ebc14c6f3e219ec06e90aa03eb85bda31b8808183d9a3e5a1347e1c7"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/state.test.ts",
+        "sha256": "b7b1275e28ee5c369b71e497a83e321251cbd24e711150eab7fe29d3c0651cce"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/descriptors.test.ts",
+        "sha256": "2a4cd23aaac842815e63133098c8a45bb4d33abc0ea05b0f2189bb72cdb6a10b"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+        "sha256": "5967e32a4e54784f192649835018d6021a27fe640b24116c31f8d7a4acd87b70"
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/radiant-eclipse-effect-immutability.test.ts",
+        "sha256": "6248d1b2defc2aca2b4afa05e97f712c0780e1d91906d3f78a31c0679aa98f81"
+      },
+      {
+        "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+        "sha256": "a95505e4ba367a65115803fedfcabd9891245ab9c0b483e87020bd82666dd5b3"
+      },
+      {
+        "path": "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+        "sha256": "034444463553ba55193aa7689a9f3af464e435312283c5ef9272e3212c6b0dcd"
+      },
+      {
+        "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+        "sha256": "bee5a74dac0bfb03d818330147cf66e7f3efd5e6618face1e1546cbcb24593c0"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+        "sha256": "91cd3fffb1d087486f3eca78b49e9dc54bd700545fbaee0b8dffeb43800d34c7"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state-data.ts",
+        "sha256": "aaeb070837e28b4fdb2a206bdc16af67825d4bcc3f3db36e889c4e1ab707cbfb"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts",
+        "sha256": "ebea4ff5cdb5d753877f91f67ea8d1d9ee7ab73ae449d6eec05ec6fcf7d74454"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+        "sha256": "ca2beabf2049ab78e4ed3026352a5a4de56209899c0de13f7ae87c39d75d4a59"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+        "sha256": "ab98eb6f88f9b9129954876b8f93e5431bc452fd4a4664b3019d485e3545da7e"
+      }
+    ],
+    "notes": [
+      "Actual baseline24 source files from frozen e1aec; whole typed AST with void traversal includes all statements, arrays, fields, literal inputs, assertions and callback bodies.",
+      "Both typed programs normalized by the same TypeScript printer solely to remove formatting/trailing-comma differences, with raw typed AST equality also recorded; no field or node omission. Exact new API bindings and branches alone reversed; all imports inspected separately.",
+      "Pure reader helper export modifiers are explicit API move; original runtime expressions and strict rejection boundaries retained.",
+      "Any Root concurrent controlled fixture import route belongs to separate C13 import-only work, not masked in source-body proof."
+    ]
+  },
+  "importProof": {
+    "rows": [
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/ports.ts",
+        "originalBindings": 0,
+        "currentBindings": 0,
+        "delta": []
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/profile.ts",
+        "originalBindings": 16,
+        "currentBindings": 16,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "./state",
+              "name": "getDreamerState",
+              "local": "getDreamerState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./ports",
+              "name": "getDreamerState",
+              "local": "getDreamerState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "./state",
+              "name": "setDreamerState",
+              "local": "setDreamerState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./ports",
+              "name": "setDreamerState",
+              "local": "setDreamerState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+        "originalBindings": 11,
+        "currentBindings": 11,
+        "delta": [
+          {
+            "kind": "complete-owned-function-contribution-replaces-private-binding",
+            "before": {
+              "source": "./state",
+              "name": "recordDreamSelection",
+              "local": "recordDreamSelection",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-owned-contribution",
+            "after": {
+              "source": "./ports",
+              "name": "DREAMER_STATE_SLOT",
+              "local": "DREAMER_STATE_SLOT",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+        "originalBindings": 3,
+        "currentBindings": 5,
+        "delta": [
+          {
+            "kind": "complete-owned-function-contribution-replaces-private-binding",
+            "before": {
+              "source": "@ai-werewolf-arena/game-contract",
+              "name": "ShelterState",
+              "local": "ShelterState",
+              "kind": "type"
+            }
+          },
+          {
+            "kind": "actual-owned-contribution",
+            "after": {
+              "source": "./state-data",
+              "name": "RADIANT_ECLIPSE_POLICY",
+              "local": "RADIANT_ECLIPSE_POLICY",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-owned-contribution",
+            "after": {
+              "source": "./state-data",
+              "name": "record",
+              "local": "record",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-owned-contribution",
+            "after": {
+              "source": "./state-data",
+              "name": "positive",
+              "local": "positive",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+        "originalBindings": 0,
+        "currentBindings": 0,
+        "delta": []
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+        "originalBindings": 27,
+        "currentBindings": 27,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "./state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./shelter-state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/borrowed_state.ts",
+        "originalBindings": 7,
+        "currentBindings": 7,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "./state",
+              "name": "readShelterState",
+              "local": "readShelterState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./shelter-state",
+              "name": "readShelterState",
+              "local": "readShelterState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+        "originalBindings": 26,
+        "currentBindings": 26,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "./state",
+              "name": "readShelterState",
+              "local": "readShelterState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./shelter-state",
+              "name": "readShelterState",
+              "local": "readShelterState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+        "originalBindings": 15,
+        "currentBindings": 16,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "./state",
+              "name": "readShelterState",
+              "local": "readShelterState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./shelter-state",
+              "name": "readShelterState",
+              "local": "readShelterState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "./state",
+              "name": "selectShelter",
+              "local": "selectShelter",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./shelter-state",
+              "name": "selectShelter",
+              "local": "selectShelter",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-owned-contribution",
+            "after": {
+              "source": "./shelter-state-slot",
+              "name": "SHELTER_STATE_SLOT",
+              "local": "SHELTER_STATE_SLOT",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/abilities.ts",
+        "originalBindings": 25,
+        "currentBindings": 25,
+        "delta": [
+          {
+            "kind": "complete-owned-function-contribution-replaces-private-binding",
+            "before": {
+              "source": "./radiant_eclipse/state",
+              "name": "readShelterState",
+              "local": "readShelterState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-owned-contribution",
+            "after": {
+              "source": "./radiant_eclipse/shelter-state",
+              "name": "projectShelterState",
+              "local": "projectShelterState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+        "originalBindings": 14,
+        "currentBindings": 16,
+        "delta": [
+          {
+            "kind": "actual-owned-contribution",
+            "after": {
+              "source": "./dreamer/ports",
+              "name": "DREAMER_STATE_SLOT",
+              "local": "DREAMER_STATE_SLOT",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-owned-contribution",
+            "after": {
+              "source": "./radiant_eclipse/shelter-state-slot",
+              "name": "SHELTER_STATE_SLOT",
+              "local": "SHELTER_STATE_SLOT",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "originalBindings": 28,
+        "currentBindings": 30,
+        "delta": [
+          {
+            "kind": "actual-owned-contribution",
+            "after": {
+              "source": "./dreamer/ports",
+              "name": "DREAMER_STATE_SLOT",
+              "local": "DREAMER_STATE_SLOT",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-owned-contribution",
+            "after": {
+              "source": "./radiant_eclipse/shelter-state-slot",
+              "name": "SHELTER_STATE_SLOT",
+              "local": "SHELTER_STATE_SLOT",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/native-binding.test.ts",
+        "originalBindings": 22,
+        "currentBindings": 22,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/await.test.ts",
+        "originalBindings": 22,
+        "currentBindings": 22,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/paid-effect.test.ts",
+        "originalBindings": 27,
+        "currentBindings": 27,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/lifecycle.test.ts",
+        "originalBindings": 27,
+        "currentBindings": 27,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/state.test.ts",
+        "originalBindings": 19,
+        "currentBindings": 19,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/state",
+              "name": "readShelterState",
+              "local": "readShelterState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state",
+              "name": "readShelterState",
+              "local": "readShelterState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/state",
+              "name": "selectShelter",
+              "local": "selectShelter",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state",
+              "name": "selectShelter",
+              "local": "selectShelter",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/descriptors.test.ts",
+        "originalBindings": 24,
+        "currentBindings": 24,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+        "originalBindings": 24,
+        "currentBindings": 24,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/radiant-eclipse-effect-immutability.test.ts",
+        "originalBindings": 31,
+        "currentBindings": 31,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+        "originalBindings": 30,
+        "currentBindings": 30,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/dreamer/state",
+              "name": "getDreamerState",
+              "local": "getDreamerState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/dreamer/ports",
+              "name": "getDreamerState",
+              "local": "getDreamerState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+        "originalBindings": 26,
+        "currentBindings": 26,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+        "originalBindings": 29,
+        "currentBindings": 29,
+        "delta": [
+          {
+            "kind": "canonical-real-owner-route",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state",
+              "name": "createShelterState",
+              "local": "createShelterState",
+              "kind": "value"
+            }
+          }
+        ]
+      }
+    ],
+    "failures": [],
+    "notes": [
+      "All original named/local/type/value binding identities and source routes, not only source string replacement.",
+      "Original Eclipse consumers unchanged except exact shelter reader binding; policy constant now actual shared pure owner with explicit original state reexport."
+    ]
+  },
+  "runtimeGraph": {
+    "perSlot": [
+      {
+        "role": "dreamer",
+        "pathToGenericInstaller": null,
+        "abilitiesPathToSlot": null
+      },
+      {
+        "role": "radiant_eclipse/shelter",
+        "pathToGenericInstaller": null,
+        "abilitiesPathToSlot": null
+      }
+    ],
+    "resolvedSourceModules": 31,
+    "slotsToGenericInstallerRuntimePath": null,
+    "abilitiesToSlotRuntimePath": null,
+    "preparedOwnerRuntimeEdges": [],
+    "roots": [
+      {
+        "path": "backend/src/game/mechanisms/roles/abilities.ts",
+        "runtimeImports": [
+          "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+          "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts",
+          "backend/src/core/domain/board.ts",
+          "backend/src/game/mechanisms/roles/witch/policies.ts",
+          "backend/src/core/domain/model.ts",
+          "backend/src/core/domain/components/names.ts",
+          "backend/src/game/mechanisms/roles/player_state.ts"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "runtimeImports": [
+          "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+          "backend/src/core/domain/board.ts",
+          "backend/src/core/domain/components/names.ts",
+          "backend/src/core/domain/model.ts",
+          "backend/src/game/mechanisms/roles/abilities.ts",
+          "backend/src/core/domain/night_effects.ts",
+          "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+          "backend/src/game/mechanisms/roles/dreamer/ports.ts",
+          "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+          "backend/src/game/mechanisms/roles/seer/ports.ts",
+          "backend/src/game/mechanisms/roles/guard/ports.ts",
+          "backend/src/game/mechanisms/roles/witch/ports.ts"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+        "runtimeImports": [
+          "backend/src/game/mechanisms/roles/abilities.ts",
+          "backend/src/game/mechanisms/roles/prepared-native-install.ts"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+        "runtimeImports": [
+          "backend/src/game/mechanisms/roles/abilities.ts",
+          "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+          "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts",
+        "runtimeImports": [
+          "backend/src/game/mechanisms/roles/radiant_eclipse/state-data.ts"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+        "runtimeImports": []
+      }
+    ],
+    "notes": [
+      "Real runtime static import/export graph excludes type-only imports, follows relative source endpoints transitively; no tests/types/gate run.",
+      "No copied graph or name-only cycle claim; actual candidate sources read."
+    ]
+  },
+  "commentHeads": {
+    "files": [
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/ports.ts",
+        "sha256": "960e84db3a5f3d5feb6788b5afcda50cebf1a57268fd8f1fa615868f313138b0",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/profile.ts",
+        "sha256": "02bab91dfb0a4792a0b229ab016d7b51b7f59ca44d4dc619f50b3fef6df10a46",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+        "sha256": "48ff74ddb1d95e7e7564a58a2075e8abc6e22b3e952641205241eb719ef34189",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+        "sha256": "e4d4218b34e40d4e61f1844cdf25fe6311182ec1cd365cbd68f9513205d1d59b",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+        "sha256": "3e61eca39c9f9b47e009b2dcecc46de15ac0232bb431ee137871ca446f734871",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+        "sha256": "8d0de94a125c520d79a2786fcf7cac49a35345790fa2ec962068a9f427445e9a",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/borrowed_state.ts",
+        "sha256": "95925bf500a0028cdc883a511b66b3b98fb469efde81c744372af8cdfc57ae01",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+        "sha256": "55f4ced96ae286d4c50d125ff348e5f5be495b69cebc51479abce2727cba7d5d",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+        "sha256": "b4056750db96fde74330d2bf75d0acb402b77728dd79f15ffb94a0a8f05e7524",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/abilities.ts",
+        "sha256": "04d035beff1ee29ce771f4e4790282d6ba6439a71478e8233fd26ba7429e7e17",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+        "sha256": "0ee74cdb94177045b4496b45462e208e0ec16ce62bb477845a851c3f68767c9a",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "sha256": "5a2f6f988f07b5eb15a8411ba680fe5e61db175f733dcae8aa5b69724005276e",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/native-binding.test.ts",
+        "sha256": "c958298b4df5e7b67d9d13f6a64aa8c48436272d08bae6a2268d595baf9b7529",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/await.test.ts",
+        "sha256": "7106f1bda6ba24fdde6ee2fdec5227219716ca6a127a4fb6626f1d20a70e1cec",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/paid-effect.test.ts",
+        "sha256": "b1f9b8f1d0627294648f6ee82f2760164f738d0a64dc0d39661c54a241a28fff",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/lifecycle.test.ts",
+        "sha256": "80d0e943ebc14c6f3e219ec06e90aa03eb85bda31b8808183d9a3e5a1347e1c7",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/state.test.ts",
+        "sha256": "b7b1275e28ee5c369b71e497a83e321251cbd24e711150eab7fe29d3c0651cce",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/descriptors.test.ts",
+        "sha256": "2a4cd23aaac842815e63133098c8a45bb4d33abc0ea05b0f2189bb72cdb6a10b",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+        "sha256": "5967e32a4e54784f192649835018d6021a27fe640b24116c31f8d7a4acd87b70",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/radiant-eclipse-effect-immutability.test.ts",
+        "sha256": "6248d1b2defc2aca2b4afa05e97f712c0780e1d91906d3f78a31c0679aa98f81",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+        "sha256": "a95505e4ba367a65115803fedfcabd9891245ab9c0b483e87020bd82666dd5b3",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+        "sha256": "034444463553ba55193aa7689a9f3af464e435312283c5ef9272e3212c6b0dcd",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+        "sha256": "bee5a74dac0bfb03d818330147cf66e7f3efd5e6618face1e1546cbcb24593c0",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+        "sha256": "91cd3fffb1d087486f3eca78b49e9dc54bd700545fbaee0b8dffeb43800d34c7",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state-data.ts",
+        "sha256": "aaeb070837e28b4fdb2a206bdc16af67825d4bcc3f3db36e889c4e1ab707cbfb",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts",
+        "sha256": "ebea4ff5cdb5d753877f91f67ea8d1d9ee7ab73ae449d6eec05ec6fcf7d74454",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+        "sha256": "ca2beabf2049ab78e4ed3026352a5a4de56209899c0de13f7ae87c39d75d4a59",
+        "chineseHead": true
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+        "sha256": "ab98eb6f88f9b9129954876b8f93e5431bc452fd4a4664b3019d485e3545da7e",
+        "chineseHead": true
+      }
+    ],
+    "failures": []
+  },
+  "testTypeOnlyFix": {
+    "testpath": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+    "rows": [
+      {
+        "module": "ESNext",
+        "wholeRawEmitEqual": true
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawEmitEqual": true
+      }
+    ],
+    "notes": [
+      "First finite28roots failed5 test-only contextual extra-field diagnostics. Explicit type assertions/expect unknown fixed exactly the tested original literal and call program; both complete raw emits identical, so runtime not repeated.",
+      "79270 actual finite28roots completed exit0 after fixes. Earlier62030 completedexit2 preserved; no alltypes/fullsuite."
+    ]
+  },
+  "independentReview": {
+    "status": "approved",
+    "reviewer": "/root/native_final_architecture_review",
+    "base": "e1aec71c528530a5e165c85a1d137ab908e0a3db",
+    "scopeFiles": [
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/state.ts",
+        "deleted": true,
+        "beforeSha256": "ee2ce81f940e7e76cd05581a480106a67ba9eadbe36d5205db54bdf26279dd50",
+        "deletedConfirmed": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/ports.ts",
+        "sha256": "960e84db3a5f3d5feb6788b5afcda50cebf1a57268fd8f1fa615868f313138b0",
+        "currentSha256": "960e84db3a5f3d5feb6788b5afcda50cebf1a57268fd8f1fa615868f313138b0",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/profile.ts",
+        "sha256": "02bab91dfb0a4792a0b229ab016d7b51b7f59ca44d4dc619f50b3fef6df10a46",
+        "currentSha256": "02bab91dfb0a4792a0b229ab016d7b51b7f59ca44d4dc619f50b3fef6df10a46",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+        "sha256": "48ff74ddb1d95e7e7564a58a2075e8abc6e22b3e952641205241eb719ef34189",
+        "currentSha256": "48ff74ddb1d95e7e7564a58a2075e8abc6e22b3e952641205241eb719ef34189",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+        "sha256": "e4d4218b34e40d4e61f1844cdf25fe6311182ec1cd365cbd68f9513205d1d59b",
+        "currentSha256": "e4d4218b34e40d4e61f1844cdf25fe6311182ec1cd365cbd68f9513205d1d59b",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+        "sha256": "3e61eca39c9f9b47e009b2dcecc46de15ac0232bb431ee137871ca446f734871",
+        "currentSha256": "3e61eca39c9f9b47e009b2dcecc46de15ac0232bb431ee137871ca446f734871",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+        "sha256": "8d0de94a125c520d79a2786fcf7cac49a35345790fa2ec962068a9f427445e9a",
+        "currentSha256": "8d0de94a125c520d79a2786fcf7cac49a35345790fa2ec962068a9f427445e9a",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/borrowed_state.ts",
+        "sha256": "95925bf500a0028cdc883a511b66b3b98fb469efde81c744372af8cdfc57ae01",
+        "currentSha256": "95925bf500a0028cdc883a511b66b3b98fb469efde81c744372af8cdfc57ae01",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+        "sha256": "55f4ced96ae286d4c50d125ff348e5f5be495b69cebc51479abce2727cba7d5d",
+        "currentSha256": "55f4ced96ae286d4c50d125ff348e5f5be495b69cebc51479abce2727cba7d5d",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_stages.ts",
+        "sha256": "b4056750db96fde74330d2bf75d0acb402b77728dd79f15ffb94a0a8f05e7524",
+        "currentSha256": "b4056750db96fde74330d2bf75d0acb402b77728dd79f15ffb94a0a8f05e7524",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/abilities.ts",
+        "sha256": "04d035beff1ee29ce771f4e4790282d6ba6439a71478e8233fd26ba7429e7e17",
+        "currentSha256": "04d035beff1ee29ce771f4e4790282d6ba6439a71478e8233fd26ba7429e7e17",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+        "sha256": "0ee74cdb94177045b4496b45462e208e0ec16ce62bb477845a851c3f68767c9a",
+        "currentSha256": "0ee74cdb94177045b4496b45462e208e0ec16ce62bb477845a851c3f68767c9a",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "sha256": "5a2f6f988f07b5eb15a8411ba680fe5e61db175f733dcae8aa5b69724005276e",
+        "currentSha256": "5a2f6f988f07b5eb15a8411ba680fe5e61db175f733dcae8aa5b69724005276e",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/native-binding.test.ts",
+        "sha256": "c958298b4df5e7b67d9d13f6a64aa8c48436272d08bae6a2268d595baf9b7529",
+        "currentSha256": "c958298b4df5e7b67d9d13f6a64aa8c48436272d08bae6a2268d595baf9b7529",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/await.test.ts",
+        "sha256": "7106f1bda6ba24fdde6ee2fdec5227219716ca6a127a4fb6626f1d20a70e1cec",
+        "currentSha256": "7106f1bda6ba24fdde6ee2fdec5227219716ca6a127a4fb6626f1d20a70e1cec",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/paid-effect.test.ts",
+        "sha256": "b1f9b8f1d0627294648f6ee82f2760164f738d0a64dc0d39661c54a241a28fff",
+        "currentSha256": "b1f9b8f1d0627294648f6ee82f2760164f738d0a64dc0d39661c54a241a28fff",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/lifecycle.test.ts",
+        "sha256": "80d0e943ebc14c6f3e219ec06e90aa03eb85bda31b8808183d9a3e5a1347e1c7",
+        "currentSha256": "80d0e943ebc14c6f3e219ec06e90aa03eb85bda31b8808183d9a3e5a1347e1c7",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/state.test.ts",
+        "sha256": "b7b1275e28ee5c369b71e497a83e321251cbd24e711150eab7fe29d3c0651cce",
+        "currentSha256": "b7b1275e28ee5c369b71e497a83e321251cbd24e711150eab7fe29d3c0651cce",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/descriptors.test.ts",
+        "sha256": "2a4cd23aaac842815e63133098c8a45bb4d33abc0ea05b0f2189bb72cdb6a10b",
+        "currentSha256": "2a4cd23aaac842815e63133098c8a45bb4d33abc0ea05b0f2189bb72cdb6a10b",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/membership.test.ts",
+        "sha256": "5967e32a4e54784f192649835018d6021a27fe640b24116c31f8d7a4acd87b70",
+        "currentSha256": "5967e32a4e54784f192649835018d6021a27fe640b24116c31f8d7a4acd87b70",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/tests/unit/features/radiant-eclipse/radiant-eclipse-effect-immutability.test.ts",
+        "sha256": "6248d1b2defc2aca2b4afa05e97f712c0780e1d91906d3f78a31c0679aa98f81",
+        "currentSha256": "6248d1b2defc2aca2b4afa05e97f712c0780e1d91906d3f78a31c0679aa98f81",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+        "sha256": "a95505e4ba367a65115803fedfcabd9891245ab9c0b483e87020bd82666dd5b3",
+        "currentSha256": "a95505e4ba367a65115803fedfcabd9891245ab9c0b483e87020bd82666dd5b3",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/tests/scenarios/features/radiant-eclipse/pending-dream-reentry.test.ts",
+        "sha256": "034444463553ba55193aa7689a9f3af464e435312283c5ef9272e3212c6b0dcd",
+        "currentSha256": "034444463553ba55193aa7689a9f3af464e435312283c5ef9272e3212c6b0dcd",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+        "sha256": "bee5a74dac0bfb03d818330147cf66e7f3efd5e6618face1e1546cbcb24593c0",
+        "currentSha256": "bee5a74dac0bfb03d818330147cf66e7f3efd5e6618face1e1546cbcb24593c0",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+        "sha256": "91cd3fffb1d087486f3eca78b49e9dc54bd700545fbaee0b8dffeb43800d34c7",
+        "currentSha256": "91cd3fffb1d087486f3eca78b49e9dc54bd700545fbaee0b8dffeb43800d34c7",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state-data.ts",
+        "sha256": "aaeb070837e28b4fdb2a206bdc16af67825d4bcc3f3db36e889c4e1ab707cbfb",
+        "currentSha256": "aaeb070837e28b4fdb2a206bdc16af67825d4bcc3f3db36e889c4e1ab707cbfb",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts",
+        "sha256": "ebea4ff5cdb5d753877f91f67ea8d1d9ee7ab73ae449d6eec05ec6fcf7d74454",
+        "currentSha256": "ebea4ff5cdb5d753877f91f67ea8d1d9ee7ab73ae449d6eec05ec6fcf7d74454",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+        "sha256": "ca2beabf2049ab78e4ed3026352a5a4de56209899c0de13f7ae87c39d75d4a59",
+        "currentSha256": "ca2beabf2049ab78e4ed3026352a5a4de56209899c0de13f7ae87c39d75d4a59",
+        "matchesFreeze": true
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+        "sha256": "ab98eb6f88f9b9129954876b8f93e5431bc452fd4a4664b3019d485e3545da7e",
+        "currentSha256": "ab98eb6f88f9b9129954876b8f93e5431bc452fd4a4664b3019d485e3545da7e",
+        "matchesFreeze": true
+      }
+    ],
+    "findings": [],
+    "resolvedFinding": {
+      "kind": "Chinese role-name comment precision",
+      "paths": [
+        "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+        "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts"
+      ],
+      "resolution": "author changed 梦摄 to 摄梦人 comment only; final SHA independently matched"
+    },
+    "independentChecks": {
+      "currentPaths": 28,
+      "deletedLeaf": 1,
+      "frozenShaMismatches": 0,
+      "actualGitOriginals": 24,
+      "actualGitOriginalMismatches": 0,
+      "actualImportStatementsAllForms": {
+        "statements": 301,
+        "default": 0,
+        "namespace": 0,
+        "sideEffect": 0
+      },
+      "noNamespaceDefaultSideEffectBindingsInScope": true
+    },
+    "sourceReview": [
+      "Dream get retains findNightAbility kind/optional-id/native-first reference. Direct install calls original JSON copy preparation then exact shared prepared-native writer; generic dream branch uses same function reference, no stronger schema or role guard.",
+      "Dream complete selection writer preserves target then day then history.get/push. If history getter or push throws, earlier target/day prefix remains; no rollback/new lifecycle policy.",
+      "Shelter pure create/read/select/project preserve original exact key sets, data descriptors, Node Proxy rejection, positive bounds, N2/current-day/consecutive-target rules and error strings. Native prepare remains copyAbilityData and does not invoke strict read; borrowed/player/scope strict boundaries remain in original callers.",
+      "State-data genuinely serves separate Shelter and Eclipse owners; record and positive are original complete algorithms and policy constant original byte. Eclipse dense-array/history validation and full selectors retain original body. Public Eclipse policy reexport remains stable.",
+      "Shelter payload writer owns complete Object.assign call, callee lookup before ability.state getter and next key assignment order. Night caller retains select then commitRadiantShelter (paid effect/event), recordNightAbilityUse, payload assign; no resource rollback on partial failure.",
+      "Both policy identity codecs retain JSON.stringify callee before single original state/policy access and exact encoding. Checkpoint/invalidations share same real function, no second store or lease.",
+      "Role profiles preserve original runtime/init/stage hooks with precise import contribution moves. Actual frame roster/currentness/life/borrow/activation/stateGuard/paid-effect/close algorithms unchanged except canonical Shelter read import.",
+      "Dream leaf retired with all callers using public ports. Slot runtime edges go through pure abilities and prepared-native-install; abilities only imports pure shelter-state and prepared writer has zero runtime dependencies. Inspected 31-module relative graph excludes both reverse installer/slot cycles, not a claim about every repository cycle.",
+      "New seven tests use literal fixtures/outputs and meaningful reference, getter/Proxy, JSON-vs-strict, partial-prefix, gifted-history and codec assertions. Type fixes preserve exact emitted runtime; source proof preserves all old assertions/literal inputs."
+    ],
+    "evidenceAudit": {
+      "producerChecks": 40,
+      "wholeOriginalPrograms": 24,
+      "fullNodes": 21726,
+      "completeEmits": 48,
+      "rawEqual": 46,
+      "tokensEqual": 48,
+      "proofFailures": [],
+      "traversal": "Actual void forEachChild child and NodeArray visitors; regular-expression/template content included; two non-first/deep-callback mutations are rejected. Whole ES/CJS emissions inspect parser leaves including raw literal spelling. Imports audited separately; no claim all raw typed AST same.",
+      "receipts": "Author actual new7/0/40 tests-first.log; finite28root62030 exit2 test-only then79270 exit0 recorded. This reviewer did not rerun tests or types."
+    },
+    "limits": [
+      "No complete game/model/gate execution; no new strict schema acceptance rule.",
+      "This role-state boundary does not relocate native metadata, leases, first death or paid-effect currentness from their actual owners.",
+      "Source review covers 29 frozen paths; prepared-native-install is reused existing owner, not modified in this scope.",
+      "Initial independent Node nested git exec reported EPERM despite stdout; discarded that failed attempt and independently fetched all24 Git blobs through successful Python subprocess calls (origin-check.json), no success claim for failed command."
+    ]
+  },
+  "rootReview": {
+    "status": "approved",
+    "read": [
+      "完整 Dream／Shelter 两个实例槽、Shelter strict reader 与共享 scalar owner",
+      "全部生产差分、Dream 原状态叶、两个夜间调用的写入顺序",
+      "generic native 安装与 scope codec 路由、Eclipse 借用／frame 保留正文",
+      "新七个字面测试、节点与完整运行输出差异说明、导入与局部拓扑"
+    ],
+    "findings": "原梦摄措辞三处改为摄梦人，仅注释；没有未关闭源码问题。"
+  },
+  "verification": {
+    "newTests": {
+      "cases": 7,
+      "failures": 0,
+      "assertions": 40,
+      "actualExitCode": 0
+    },
+    "finiteTypes": {
+      "roots": 28,
+      "firstActualSession": 62030,
+      "firstExitCode": 2,
+      "firstDiagnostic": "新测试五处 contextual extra 属性诊断；原样本仅类型标注修复，运行字节保持。",
+      "finalActualSession": 79270,
+      "finalExitCode": 0
+    },
+    "limits": "不代表完整借用／已付效果／死亡矩阵或全局门禁；没有重复模型、整局或既有测试。"
+  }
+}
