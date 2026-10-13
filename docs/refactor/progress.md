@@ -550,3 +550,5 @@
 - C44纯查验政策公共所有者：19source含17既有TS、1package与1新GC纯叶，完整5声明迁移、18旧命名点→17直接引用，ports不留查询转发；原getter/配置短路/缺省表可变性/错误码与slot copy→原校验→install及两历史写权保持。真实694a Git18before与全部5decl/17非import程序/每binding、有限package增量/全仓owner核同；18CN头和关键政策/提示权限说明实际职责0，Root与独立19SHA/source/doc审批准。早BE/pkg定向types实际terminal0但环境切换临时log缺席如实限制；两原suite36pass2fail/254保真，红仅基线Mirror测试错用runtime读取metadata，将另笔修，不冒本批全绿或整矩阵完成，见 inspection-policy-contract.md。
 
 - 固定694a结构检查收口：真实3107Git公共blob／424doc、不混未提交policy/矩阵候选，0new/426debt/1353clear，原1779债SHA297b保持。后台session92629实际closed0；独立全路径/字节SHA/5工具source/sourceDigest/426exactlegacy+1353分区核准，不重门禁。首临时harness读大JSON默认buffer失败只修工具，历史原stderr缺席限定如实保；仅依赖/命名/职责检查，不替代最终same-source验收，见 architecture-checkpoint-694a2593.md。
+
+- 镜女测试元数据入口修正：只改requireRuntime→requireMetadata一个调用并补中文权属，原test标题/两语言矩阵/god/max1与全部后续断言同；真实546Git全文件经该callee+comment精准逆raw同，生产catalog/profile全bytes不改。只重前次两红现2/0/47、16filtered，不重36greens/类型或全gate，旧红不回写。Root真实facet读审与独立源码／doc最终SHA批准，见 mirror-metadata-query.md。

@@ -133,7 +133,8 @@ for (const locale of ["zh-CN", "en"] as const)
       events: GameEvent[] = [],
       receive = new ActionReception(game.world);
     expect(role(game)).toMatchObject({ role: Role.MirrorGirl, camp: Camp.Good });
-    expect(getDefaultRoleCatalog().requireRuntime(Role.MirrorGirl)).toMatchObject({
+    // 阵营分类和人数上限归角色元数据；运行贡献只提供能力、阶段与回调。
+    expect(getDefaultRoleCatalog().requireMetadata(Role.MirrorGirl)).toMatchObject({
       goodSide: "god",
       maxCount: 1,
     });

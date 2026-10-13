@@ -1,0 +1,60 @@
+{
+  "reviewer": "/root/native_final_architecture_review",
+  "status": "approved",
+  "base": "54644228947ec4684b24605aca5e0b9146812cfb",
+  "source": {
+    "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+    "sha256": "54012714535dc85cfce5f14aa1478bf4a22a2cc4bd965d0aeb700e088684bd56"
+  },
+  "actualBeforeSha256": "b78068b92703a970655c5fe7930beacc37abdb733956140a1ae593586f9a0c43",
+  "independentExactDelta": {
+    "onlyOneCallChanged": true,
+    "onlyOneChineseCommentAdded": true,
+    "entireOriginalSourceBytesAfterExactCallAndCommentInverseSame": true,
+    "preserved": "All original test names, zh-CN/en matrix, body statements, callbacks, fixtures and every assertion/expected literal, including goodSide god/maxCount1 and later identity/history/life revival/unique-target/privacy/lease cases; no whole callback/body masks."
+  },
+  "actualOwnerReview": {
+    "controls": [
+      {
+        "path": "backend/src/game/mechanisms/roles/catalog.ts",
+        "sha256": "6a1fd6b06edb63d05a0d26ae06a62f834d62b29cea6dfc86ef2cd9d23ec9ac72",
+        "byteSameToActualBase": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+        "sha256": "818d71a88d452376babb8cd288105dcfad3eac5670668894c52a4a9e950d5a99",
+        "byteSameToActualBase": true
+      }
+    ],
+    "semantics": "Catalog.requireMetadata returns built-in contributions.metadata; requireRuntime returns contributions.runtime. Actual unchanged Mirror profile metadata already contains goodSide god and maxCount1. Correct source of test expectation, no production rules, ownership shape or stored role data changed. Added Chinese note explains metadata versus execution contributions."
+  },
+  "executionAttribution": {
+    "actualRootReceipt": {
+      "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts --test-name-pattern 'native Mirror keeps Good identity'",
+      "cwd": "backend",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "filtered": 16,
+      "assertions": 47,
+      "rawLog": "bun test v1.4.3 (c6da4a4d3)\n\ntests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts:\n(pass) zh-CN: native Mirror keeps Good identity and specific-role privacy while repeats stay forbidden after target/owner revival and role changes [40.43ms]\n(pass) en: native Mirror keeps Good identity and specific-role privacy while repeats stay forbidden after target/owner revival and role changes [2.20ms]\n\n 2 pass\n 16 filtered out\n 0 fail\n 47 expect() calls\nRan 2 tests across 1 file. [222.00ms]\n",
+      "rawLogSha256": "4e5090ceebfebf90c46bcf210c53630415cbc67dfca8183b804689af6f8a58d9"
+    },
+    "rawLogUTF8HashVerified": true,
+    "scope": "Only exact previous two failing locale cases selected, 2 pass/0 fail/47 assert,16 filtered; previous other36 already green not repeated. Previous policy36/2/254 failure artifact retained, not rewritten."
+  },
+  "documentation": {
+    "path": "docs/refactor/mirror-metadata-query.md",
+    "sha256": "53389d0491f77c98383fa78f896e25f275be76ff87c7266921f4d569818a9aa3",
+    "evidencePath": "docs/refactor/generated/mirror-metadata-query-evidence.json",
+    "evidenceSha256": "12839881210a1fb515db2ed438e4996fcaa82b225fe700810f5b053efbcb1a80",
+    "claimsApproved": true,
+    "limits": "Test ownership correction only; no broad type/fullgate/model run or retrospective all-suite pass claim."
+  },
+  "notRunByReviewer": [
+    "runtime tests",
+    "types",
+    "whole architecture/comments gate"
+  ],
+  "findings": []
+}
