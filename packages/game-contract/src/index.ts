@@ -175,3 +175,5 @@ export type {
   MerchantReadState,
   BlackMarketReadState,
 } from "./role-state-data";
+
+export type { DeathGun, DeathGunReadView } from "./death-ability-data";

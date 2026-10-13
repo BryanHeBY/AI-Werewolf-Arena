@@ -1,11 +1,11 @@
 /**
  * Owns granted/copied death-gun instances, original-life arming and first-death consumption.
- * Inputs are gun grants, transfer policy and trusted death permissions; outputs are owned
+ * Inputs are gun grants, transfer policy and trusted death permissions; outputs are same-reference read views, owned
  * inventory changes and player projections. Spent or replaced original-life guns never refresh
  * themselves on a later death.
  * Only deathAbilities and retiredDeathAbilityIds are writable here, at their original nested install/retire expressions.
  */
-import type { AbilitySource } from "@ai-werewolf-arena/game-contract";
+import type { DeathGun, DeathGunReadView } from "@ai-werewolf-arena/game-contract";
 
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
@@ -17,17 +17,7 @@ import type { ValidationRuleContext } from "../validation/contracts";
 import { validateDeathShot } from "./death_shot";
 
 /** A passive single-use resource. Night abilities and native role stocks stay separate. */
-export interface DeathGun {
-  id: string;
-  kind: "gun";
-  source: Extract<AbilitySource, { kind: "gift" | "transfer" }>;
-  sourceDisclosed: false;
-  grantedNight: number;
-  armedOnNight: number | null;
-  remaining: 0 | 1;
-  disabled: boolean;
-  deathExpired: boolean;
-}
+
 export type PlayerDeathGun = Omit<DeathGun, "source"> & {
   source: { kind: "gift" | "transfer" };
   status: "pending" | "active" | "spent" | "disabled";
@@ -42,24 +32,27 @@ interface GunOwner {
   life: AliveComponent;
   version: number;
   id: string;
-  source: DeathGun["source"];
+  source: DeathGunReadView["source"];
   sourceKind: DeathGun["source"]["kind"];
   sourceActor: number;
   sourceId?: string;
   grantedNight: number;
   armedOnNight: number | null;
 }
-const owners = new WeakMap<DeathGun, GunOwner>(),
+const owners = new WeakMap<DeathGunReadView, GunOwner>(),
   counters = new WeakMap<World, number>();
-export function allDeathGuns(role: RoleComponent | undefined): DeathGun[] {
-  return Object.values((role?.privateState.deathAbilities ?? {}) as Record<string, DeathGun>).sort(
-    (a, b) => a.id.localeCompare(b.id),
-  );
+export function allDeathGuns(role: RoleComponent | undefined): DeathGunReadView[] {
+  return Object.values(
+    (role?.privateState.deathAbilities ?? {}) as Readonly<Record<string, DeathGunReadView>>,
+  ).sort((a, b) => a.id.localeCompare(b.id));
 }
-export function findDeathGun(role: RoleComponent | undefined, id: string): DeathGun | undefined {
+export function findDeathGun(
+  role: RoleComponent | undefined,
+  id: string,
+): DeathGunReadView | undefined {
   return allDeathGuns(role).find((gun) => gun.id === id);
 }
-export function projectDeathGun(gun: DeathGun): PlayerDeathGun {
+export function projectDeathGun(gun: DeathGunReadView): PlayerDeathGun {
   return {
     id: gun.id,
     kind: "gun",
@@ -107,7 +100,7 @@ function bind(world: World, actorId: number, gun: DeathGun): void {
 export function deathGunOwnerCurrent(
   world: World,
   actorId: number,
-  gun: DeathGun,
+  gun: DeathGunReadView,
   onDeath = false,
 ): boolean {
   const owner = owners.get(gun);
@@ -138,7 +131,7 @@ function emit(
   events: GameEvent[],
   actorId: number,
   gun: Pick<
-    DeathGun,
+    DeathGunReadView,
     "id" | "grantedNight" | "armedOnNight" | "remaining" | "disabled" | "deathExpired"
   >,
   operation: "granted" | "armed" | "disabled" | "enabled" | "transferred_out",
@@ -165,7 +158,7 @@ export function grantDeathGun(
   toId: EntityId,
   night: number,
   events: GameEvent[],
-): DeathGun {
+): DeathGunReadView {
   const from = world.getComponent(fromId, COMPONENT.Role),
     to = world.getComponent(toId, COMPONENT.Role);
   if (
@@ -208,7 +201,7 @@ export function grantDeathGun(
 export function armDeathGun(
   world: World,
   actorId: number,
-  gun: DeathGun,
+  gun: DeathGunReadView,
   night: number,
   events: GameEvent[],
 ): void {
@@ -222,7 +215,7 @@ export function armDeathGun(
     gun.remaining === 0
   )
     return;
-  gun.armedOnNight = night;
+  (gun as { armedOnNight: number | null }).armedOnNight = night;
   owners.get(gun)!.armedOnNight = night;
   emit(events, actorId, gun, "armed");
 }
@@ -232,7 +225,7 @@ export function activeDeathGun(
   id: string,
   day: number,
   onDeath = false,
-): DeathGun | undefined {
+): DeathGunReadView | undefined {
   const gun = findDeathGun(world.getComponent(actorId, COMPONENT.Role), id);
   return gun &&
     deathGunOwnerCurrent(world, actorId, gun, onDeath) &&
@@ -247,7 +240,7 @@ export function activeDeathGun(
 export function captureDeathGun(
   world: World,
   actorId: number,
-  gun: DeathGun,
+  gun: DeathGunReadView,
   day: number,
   current: () => boolean,
 ) {
@@ -287,7 +280,7 @@ export function firstDeathGuns(
   actorId: number,
 ): Array<{
   actorId: number;
-  gun: DeathGun;
+  gun: DeathGunReadView;
   id: string;
   grantedNight: number;
   armedOnNight: number | null;
@@ -308,9 +301,9 @@ export function finishDeathGuns(
 ): void {
   for (const { actorId, gun, id, grantedNight, armedOnNight } of rows) {
     if (gun.deathExpired) continue;
-    gun.remaining = 0;
-    gun.disabled = true;
-    gun.deathExpired = true;
+    (gun as { remaining: 0 | 1 }).remaining = 0;
+    (gun as { disabled: boolean }).disabled = true;
+    (gun as { deathExpired: boolean }).deathExpired = true;
     emit(
       events,
       actorId,
@@ -332,7 +325,7 @@ export function setDeathGunEnabled(
     throw new Error("death_ability_instance_unavailable");
   if (enabled && gun.deathExpired) throw new Error("death_ability_expired");
   if (gun.disabled === !enabled) return;
-  gun.disabled = !enabled;
+  (gun as { disabled: boolean }).disabled = !enabled;
   emit(events, actorId, gun, enabled ? "enabled" : "disabled");
 }
 export function transferDeathGun(
@@ -341,7 +334,7 @@ export function transferDeathGun(
   toId: number,
   id: string,
   events: GameEvent[],
-): DeathGun {
+): DeathGunReadView {
   const source = world.getComponent(fromId, COMPONENT.Role),
     target = world.getComponent(toId, COMPONENT.Role),
     gun = findDeathGun(source, id);
@@ -384,4 +377,9 @@ export function validateGiftGun(ctx: ValidationRuleContext) {
     ctx,
     !!activeDeathGun(ctx.world, ctx.actorId, ctx.abilityId, ctx.day, true),
   );
+}
+
+/** Caller retains original currentness, selected-target and permission checks. */
+export function consumeDeathGunShot(gun: DeathGunReadView): void {
+  (gun as { remaining: 0 | 1 }).remaining = 0;
 }

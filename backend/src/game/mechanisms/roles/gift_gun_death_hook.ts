@@ -9,7 +9,12 @@ import type { RoleComponent } from "../../../core/domain/components/role";
 import { DeathCause, permitsHunterShot } from "../../../core/domain/model";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 import type { DeathHook } from "../hooks/hook_registry";
-import { activeDeathGun, allDeathGuns, captureDeathGun } from "./death_abilities";
+import {
+  activeDeathGun,
+  allDeathGuns,
+  captureDeathGun,
+  consumeDeathGunShot,
+} from "./death_abilities";
 
 /** One transferred/gifted stock per actor, after their native role hook has actually committed. */
 export const giftGunDeathHook: DeathHook = async (world, ids, sources, choose, events, context) => {
@@ -43,12 +48,12 @@ export const giftGunDeathHook: DeathHook = async (world, ids, sources, choose, e
     )
       continue;
     if (selected.kind === "pass") {
-      gun.remaining = 0;
+      consumeDeathGunShot(gun);
       continue;
     }
     const target = selected.targetScope ?? targets.get(selected.targetId);
     if (!target || target.id !== selected.targetId || !livingNightLife(world, target)) continue;
-    gun.remaining = 0;
+    consumeDeathGunShot(gun);
     if (context?.nightEffect && context.blocksNightShot(target.id)) {
       events.push({
         timestamp: Date.now(),

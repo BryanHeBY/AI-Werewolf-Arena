@@ -206,7 +206,7 @@ for (const change of ["none", "private", "revive", "target_replace", "metadata"]
             }
             if (change === "target_replace")
               game.world.addComponent(1, COMPONENT.Alive, createAliveComponent());
-            if (change === "metadata") game.gun.source.actorId = 4;
+            if (change === "metadata") (game.gun.source as { actorId: number }).actorId = 4;
           }
           return result;
         },
@@ -407,8 +407,8 @@ for (const change of [
               {};
           if (change === "role") role(game, 5).role = Role.Seer;
           if (change === "camp") role(game, 5).camp = Camp.Wolf;
-          if (change === "source") original.source.actorId = 4;
-          if (change === "metadata") original.grantedNight = 2;
+          if (change === "source") (original.source as { actorId: number }).actorId = 4;
+          if (change === "metadata") (original as { grantedNight: number }).grantedNight = 2;
           if (change === "clock") game.state.phase = Phase.Voting;
           if (change === "cancel") throw new DOMException("Cancelled", "AbortError");
           return { name: "shoot", args: { target_id: 1 } };
