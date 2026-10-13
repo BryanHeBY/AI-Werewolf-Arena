@@ -53,7 +53,9 @@ function fixture() {
   // Isolated frame fixture; production role registration is a later integration step.
   const role = world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
   role.role = "trickster" as Role;
-  role.privateState = { trickster: createTricksterState() };
+  (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
+    trickster: createTricksterState(),
+  };
   installTricksterBoard(world);
   return { world, role };
 }
@@ -145,7 +147,10 @@ for (const kind of ["state", "role", "revival"] as const)
     beginTricksterNight(f.world, 1);
     commitTricksterExchange(f.world, 1, 1, [2, 6]);
     finishTricksterNight(f.world, 1);
-    if (kind === "state") f.role.privateState = { ...f.role.privateState };
+    if (kind === "state")
+      (f.role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
+        ...f.role.privateState,
+      };
     if (kind === "role") f.role.camp = Camp.Good;
     if (kind === "revival") {
       const life = f.world.getComponent<AliveComponent>(6, COMPONENT.Alive)!;

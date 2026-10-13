@@ -3,6 +3,7 @@
  * Inputs are source instances and copied grant data; outputs are stored instances and lifecycle
  * events. Transfer requires its own state policy and never silently clones spent resources or
  * changes the recipient role.
+ * Installation/retirement restore only abilities and retiredAbilityIds in this owner; original reference and delete/push order remain.
  */
 import { isDeepStrictEqual } from "node:util";
 import { DREAM_PROTECTION_POLICIES } from "../../../core/domain/board";
@@ -170,7 +171,8 @@ function installAbility(
     )
   )
     throw new Error("ability_source_mismatch");
-  const stored = (role.privateState.abilities ??= {}) as Record<string, NightAbility>;
+  const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=
+    {}) as Record<string, NightAbility>;
   stored[ability.id] = ability;
   emit(events, actorId, ability, "granted");
   return ability;
@@ -356,6 +358,8 @@ export function transferNightAbility<K extends NightAbilityKind>(
   }) as NightAbility;
   installAbility(world, toId, received, events);
   delete (source.privateState.abilities as Record<string, NightAbility>)[id];
-  ((source.privateState.retiredAbilityIds ??= []) as string[]).push(id);
+  (
+    ((source.privateState as { retiredAbilityIds?: string[] }).retiredAbilityIds ??= []) as string[]
+  ).push(id);
   emit(events, fromId, ability, "transferred_out");
 }

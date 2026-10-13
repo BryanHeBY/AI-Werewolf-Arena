@@ -25,8 +25,9 @@ function fixture(caster: "alchemist" | "raven_claw_wolf" = "alchemist", day = 1)
     role = createRoleComponent(caster as Role, caster === "alchemist" ? Camp.Good : Camp.Wolf),
     life = createAliveComponent(),
     identity = createIdentityComponent(id, 1, "Literal Player");
-  role.privateState[caster === "alchemist" ? "alchemist" : "ravenClaw"] =
-    caster === "alchemist" ? createAlchemistState() : createRavenState();
+  (role.privateState as Record<string, unknown>)[
+    caster === "alchemist" ? "alchemist" : "ravenClaw"
+  ] = caster === "alchemist" ? createAlchemistState() : createRavenState();
   world.addComponent(id, COMPONENT.Role, role);
   world.addComponent(id, COMPONENT.Camp, createCampComponent(role.camp));
   world.addComponent(id, COMPONENT.Alive, life);
@@ -123,10 +124,14 @@ for (const edit of [
         identity.seat = 2;
         break;
       case "private_container":
-        role.privateState = { ...role.privateState };
+        (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
+          ...role.privateState,
+        };
         break;
       case "state_equal_copy":
-        role.privateState.alchemist = structuredClone(role.privateState.alchemist);
+        (role.privateState as Record<string, unknown>).alchemist = structuredClone(
+          role.privateState.alchemist,
+        );
         break;
       case "history_equal_copy":
         (role.privateState.alchemist as ReturnType<typeof createAlchemistState>).mistHistory = [];
@@ -181,7 +186,7 @@ test("state binding never calls a foreign array map accessor", () => {
     },
   });
   Object.setPrototypeOf(initial.mistHistory, prototype);
-  role.privateState.alchemist = initial;
+  (role.privateState as Record<string, unknown>).alchemist = initial;
   const authority = new MistCasterAuthority(world, 1, 1, "alchemist");
   expect(authority.isCurrent()).toBe(true);
   expect(authority.state()).toEqual(createAlchemistState());

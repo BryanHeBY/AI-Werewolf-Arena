@@ -197,7 +197,9 @@ for (const change of ["none", "private", "revive", "target_replace", "metadata"]
         async (...args) => {
           const result = await giftGunDeathHook(...args);
           if (result.pendingShots?.length) {
-            if (change === "private") role(game, 5).privateState = {};
+            if (change === "private")
+              (role(game, 5) as { privateState: Readonly<Record<string, unknown>> }).privateState =
+                {};
             if (change === "revive") {
               life(game, 5).alive = true;
               life(game, 5).alive = false;
@@ -400,7 +402,9 @@ for (const change of [
           }
           if (change === "replace")
             game.world.addComponent(5, COMPONENT.Alive, createAliveComponent(false));
-          if (change === "private") role(game, 5).privateState = {};
+          if (change === "private")
+            (role(game, 5) as { privateState: Readonly<Record<string, unknown>> }).privateState =
+              {};
           if (change === "role") role(game, 5).role = Role.Seer;
           if (change === "camp") role(game, 5).camp = Camp.Wolf;
           if (change === "source") original.source.actorId = 4;

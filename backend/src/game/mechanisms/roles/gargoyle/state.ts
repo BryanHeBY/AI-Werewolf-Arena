@@ -13,7 +13,7 @@ export interface GargoyleState {
 }
 
 export function setGargoyleState(role: RoleComponent, state: GargoyleState): GargoyleState {
-  role.privateState["gargoyle"] = state as unknown;
+  (role.privateState as { gargoyle: GargoyleState })["gargoyle"] = state;
   return state;
 }
 

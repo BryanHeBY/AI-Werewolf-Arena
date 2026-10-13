@@ -1,3 +1,10 @@
+/**
+ * Owns Fragrant authority test support with a fixed component roster and native pair resource.
+ * Inputs are original installation/night callbacks; outputs are the same World,
+ * events, open/choice helpers and controlled life mutations. Literal role/state
+ * data is fixture setup, not a production rule oracle. Test-only container writes
+ * preserve pair aliases and LHS timing; no profile, pipeline or transport runs here.
+ */
 import { World } from "../../src/core/domain/world";
 import { Role, Camp } from "../../src/core/domain/identity";
 import { COMPONENT } from "../../src/core/domain/components/names";
@@ -44,9 +51,13 @@ export function fragrantPairOwnerFixture(
     const id = world.createEntity(),
       camp = index < 4 ? Camp.Wolf : Camp.Good,
       role = createRoleComponent(roleId, camp);
-    if (id === 1) role.privateState.fragrant = freshFragrantState();
+    if (id === 1) (role.privateState as Record<string, unknown>).fragrant = freshFragrantState();
     if (id === 5)
-      role.privateState.pairSeer = installNativeAbility(role, "pair_check", freshPairSeerState());
+      (role.privateState as Record<string, unknown>).pairSeer = installNativeAbility(
+        role,
+        "pair_check",
+        freshPairSeerState(),
+      );
     world.addComponent(id, COMPONENT.Role, role);
     world.addComponent(id, COMPONENT.Camp, createCampComponent(camp));
     world.addComponent(id, COMPONENT.Alive, createAliveComponent());

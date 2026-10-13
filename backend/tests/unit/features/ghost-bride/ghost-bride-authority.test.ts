@@ -127,7 +127,7 @@ function fixture(groom = 2, witness = 3, install = true) {
             ? Camp.Wolf
             : Camp.Good,
       role = createRoleComponent(kind, camp);
-    role.privateState =
+    (role as { privateState: Readonly<Record<string, unknown>> }).privateState =
       kind === (GHOST_BRIDE_ROLE as Role)
         ? { ghostBride: freshGhostBrideState() }
         : { native: { stock: 1 } };
@@ -375,7 +375,8 @@ const mutations: Record<string, (g: Fixture) => void> = {
     g.world.addComponent(3, COMPONENT.Role, createRoleComponent(Role.Wolf, Camp.Wolf)),
   roleTruth: (g) => (role(g, 3).role = Role.Villager),
   roleCamp: (g) => (role(g, 3).camp = Camp.Good),
-  state: (g) => (role(g, 3).privateState = {}),
+  state: (g) =>
+    ((role(g, 3) as { privateState: Readonly<Record<string, unknown>> }).privateState = {}),
   stock: (g) => ((role(g, 3).privateState.native as { stock: number }).stock = 0),
   goal: (g) => (goal(g, 3).affiliations = [{ kind: "faction", faction: Camp.Good }]),
   goalValue: (g) => (goal(g, 3).affiliations[0] = { kind: "faction", faction: Camp.Good }),

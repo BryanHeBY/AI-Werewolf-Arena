@@ -813,8 +813,12 @@ for (const locale of ["zh-CN", "en"] as const)
     try {
       for (const turn of [1, 2, 3]) {
         for (const game of [sdk, acp])
-          game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState.revealed =
-            turn === 2;
+          (
+            game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState as Record<
+              string,
+              unknown
+            >
+          ).revealed = turn === 2;
         expect(await sdkProvider.getAction(input)).toEqual({
           name: "speak",
           args: { text: `turn-${turn}` },

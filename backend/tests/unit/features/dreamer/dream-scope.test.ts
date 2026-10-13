@@ -157,7 +157,9 @@ for (const point of ["await", "gateway"] as const)
         if (change === "id") ability.id = "native:renamed";
         if (change === "activation") ability.activation = "lucky";
         if (change === "private_owner")
-          game.role(1).privateState = { ...game.role(1).privateState };
+          (game.role(1) as { privateState: Readonly<Record<string, unknown>> }).privateState = {
+            ...game.role(1).privateState,
+          };
         if (change === "life") {
           const life = game.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!;
           life.alive = false;

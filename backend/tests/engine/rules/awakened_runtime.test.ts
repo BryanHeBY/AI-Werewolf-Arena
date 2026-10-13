@@ -193,14 +193,14 @@ test("registered finite stages put immediate role masking before native Mirror a
 
 test("Mirror template whose own capability was removed is still learnable; own activation never replenishes a transferred copy", async () => {
   const game = fixture(Role.MirrorGirl);
-  role(game, 3).privateState.abilities = {};
-  role(game, 3).privateState.retiredAbilityIds = ["native:role_check"];
+  (role(game, 3).privateState as Record<string, unknown>).abilities = {};
+  (role(game, 3).privateState as Record<string, unknown>).retiredAbilityIds = ["native:role_check"];
   const ctx = context(game, 1, async () => ({ name: "awakened_mimic", args: { target_id: 3 } }));
   await stage("awakened_opening").execute(ctx);
   await stage("awakened_mimic").execute(ctx);
   await stage("awakened_activation").execute(ctx);
-  role(game).privateState.abilities = {};
-  role(game).privateState.retiredAbilityIds = ["native:role_check"];
+  (role(game).privateState as Record<string, unknown>).abilities = {};
+  (role(game).privateState as Record<string, unknown>).retiredAbilityIds = ["native:role_check"];
   const next = context(game, 2, async () => {
     throw new Error("unexpected_action");
   });
@@ -286,7 +286,7 @@ for (const boundary of ["await", "gateway", "label"] as const)
 
 test("an independent gifted Mirror instance on Aw does not depend on its native learning state", async () => {
   const game = fixture();
-  role(game).privateState.abilities = {
+  (role(game).privateState as Record<string, unknown>).abilities = {
     "gift:test": {
       id: "gift:test",
       kind: "role_check",
@@ -418,9 +418,13 @@ for (const mutation of [
             life.alive = false;
             life.alive = true;
           }
-          if (mutation === "private") role(game).privateState = { ...role(game).privateState };
+          if (mutation === "private")
+            (role(game) as { privateState: Readonly<Record<string, unknown>> }).privateState = {
+              ...role(game).privateState,
+            };
           if (mutation === "state")
-            role(game).privateState.awakened_hidden_wolf = structuredClone(original);
+            (role(game).privateState as Record<string, unknown>).awakened_hidden_wolf =
+              structuredClone(original);
           if (mutation === "role") role(game).role = Role.Wolf;
           if (mutation === "camp") role(game).camp = Camp.Good;
           if (mutation === "phase") clock.open = false;
@@ -498,7 +502,9 @@ test("revoked paid copied poison does not fall through its old PoisonMark or era
     const ctx = context(game, 2, async () => ({ name: "awakened_poison", args: { target_id: 6 } }));
     await stage("awakened_opening").execute(ctx);
     await stage("awakened_skill").execute(ctx);
-    role(game).privateState.awakened_hidden_wolf = structuredClone(state(game));
+    (role(game).privateState as Record<string, unknown>).awakened_hidden_wolf = structuredClone(
+      state(game),
+    );
     if (other)
       ctx.state.poisonClaims!.push({
         source: captureNightLife(game.world, 4)!,

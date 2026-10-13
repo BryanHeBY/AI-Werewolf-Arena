@@ -70,7 +70,7 @@ test("Magician state refuses getters and proxies without invoking them", () => {
   expect(getMagicianState(f.role)).toBeUndefined();
   expect(reads).toBe(0);
   const g = fixture();
-  g.role.privateState.magician = new Proxy(g.state, {
+  (g.role.privateState as Record<string, unknown>).magician = new Proxy(g.state, {
     ownKeys() {
       reads++;
       throw new Error("must_not_trap");

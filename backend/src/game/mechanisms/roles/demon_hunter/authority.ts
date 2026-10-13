@@ -3,6 +3,7 @@
  * original World/state/request references; writes only current sealed turns and accepted
  * deadline aliases. Invalid or retired scopes fail locally, preserving partial-write and
  * settlement order; alias routing adds no capability.
+ * The guarded Idiot replacement restores only its idiot slot; sealed native stock and all original JSON/descriptor checks remain separate.
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
@@ -1652,7 +1653,7 @@ export function commitDemonIdiotReveal(world: World, actorId: number): boolean {
   const original = JSON.parse(p.auditPrivateJson) as Record<string, unknown>;
   const expectedPrivate = JSON.stringify({ ...original, idiot: next });
   const expectedVote = JSON.stringify({ ...JSON.parse(cp.voteJson), canVote: false, weight: 0 });
-  p.privateState.idiot = next;
+  (p.privateState as { idiot: typeof next }).idiot = next;
   (cp.vote as VotingRightComponent).canVote = false;
   (cp.vote as VotingRightComponent).weight = 0;
   if (demonJson(p.privateState) !== expectedPrivate || demonVoteJson(cp.vote) !== expectedVote)

@@ -4,6 +4,8 @@
  * catalog assembly without granting runtime authority. Initialization sees deeply
  * readonly board parameters; configuration builders retain mutable serialization
  * DTOs and return their own data. Role owners alone mutate resources and state.
+ * Only the initialization callback receives explicit container write rights;
+ * custom profiles retain arbitrary extension keys on the original role object.
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
@@ -27,6 +29,11 @@ export interface RoleInitContext {
   boardConfig?: ReadonlyBoardConfig;
   world?: World;
 }
+
+/** Profile initialization only: preserves custom keys without a runtime mutable-role API. */
+export type RoleInitializationComponent = Omit<RoleComponent, "privateState"> & {
+  privateState: Record<string, unknown>;
+};
 
 /** Faction membership alone never grants knowledge, chat access or a knife. */
 export interface WolfTeamPermissions {
@@ -73,7 +80,7 @@ export interface RoleProfile {
     /** Serialize only this role's public parameters from a resolved internal board. */
     serialize: (config: BoardConfig) => unknown;
   };
-  init?: (roleComp: RoleComponent, ctx: RoleInitContext) => void;
+  init?: (roleComp: RoleInitializationComponent, ctx: RoleInitContext) => void;
   renderPrompt?: (roleComp: RoleComponent, locale?: Locale, world?: World) => string;
   toolSpecs?: ToolSpec[];
   stageDirectives?: StageDirectiveRule[];

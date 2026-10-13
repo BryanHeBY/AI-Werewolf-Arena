@@ -90,7 +90,7 @@ test("Wolf Sorcerer parser does not invoke supplied accessors or proxy traps", (
   expect(getWolfSorcererState(a.role)).toBeUndefined();
   expect(calls).toBe(0);
   const b = make();
-  b.role.privateState.wolfSorcerer = new Proxy(b.state, {
+  (b.role.privateState as Record<string, unknown>).wolfSorcerer = new Proxy(b.state, {
     get() {
       calls++;
       throw new Error("read");

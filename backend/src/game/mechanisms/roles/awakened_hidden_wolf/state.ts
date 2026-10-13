@@ -1,3 +1,10 @@
+/**
+ * Owns Awakened Hidden Wolf's learned template state and copied installation slot.
+ * Inputs are the original role or learned state; outputs retain activation/skill
+ * data and the selected stored reference. Only awakened_hidden_wolf is restored
+ * for its original installation write; this leaf never broadens private-container
+ * writes, verifies a request, refunds stock or redraws a learned template.
+ */
 import type { PlayerAwakenedState } from "../player_extended_state";
 import type { RoleId } from "@ai-werewolf-arena/game-catalog";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -50,7 +57,7 @@ export function getAwakenedState(role: RoleComponent | undefined): AwakenedState
 /** Persist semantic facts only; references and night authorization live outside this object. */
 export function setAwakenedState(role: RoleComponent, state: AwakenedState): AwakenedState {
   const owned = copyAbilityData(state);
-  role.privateState.awakened_hidden_wolf = owned;
+  (role.privateState as { awakened_hidden_wolf: AwakenedState }).awakened_hidden_wolf = owned;
   return owned;
 }
 

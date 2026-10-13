@@ -485,7 +485,9 @@ for (const revoke of [
         if (revoke === "actor_life")
           game.world.addComponent(1, COMPONENT.Alive, createAliveComponent());
         if (revoke === "actor_state")
-          game.role.privateState.mechanical_wolf = structuredClone(game.state);
+          (game.role.privateState as Record<string, unknown>).mechanical_wolf = structuredClone(
+            game.state,
+          );
         if (revoke === "learning") game.state.learned = { ...game.state.learned! };
         if (revoke === "mode") game.state.mode = { ...game.state.mode! };
         if (revoke === "target_life") replaceTarget();
@@ -569,8 +571,12 @@ for (const revoke of ["camp", "private_state", "owner_state", "learning"] as con
         { 1: [DeathCause.Exile] },
         async () => {
           if (revoke === "camp") game.role.camp = Camp.Good;
-          if (revoke === "private_state") game.role.privateState = { ...game.role.privateState };
-          if (revoke === "owner_state") game.role.privateState.mechanical_wolf = { ...game.state };
+          if (revoke === "private_state")
+            (game.role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
+              ...game.role.privateState,
+            };
+          if (revoke === "owner_state")
+            (game.role.privateState as Record<string, unknown>).mechanical_wolf = { ...game.state };
           if (revoke === "learning") game.state.learned = { ...game.state.learned! };
           return { kind: "shot", targetId: 4, deathActionId: permit.id };
         },

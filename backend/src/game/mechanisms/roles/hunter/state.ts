@@ -13,7 +13,7 @@ export interface HunterState {
 }
 
 export function setHunterState(roleComp: RoleComponent, state: HunterState): HunterState {
-  roleComp.privateState["hunter"] = state as unknown;
+  (roleComp.privateState as { hunter: HunterState })["hunter"] = state;
   return state;
 }
 

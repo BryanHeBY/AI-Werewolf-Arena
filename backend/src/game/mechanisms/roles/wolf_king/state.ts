@@ -13,7 +13,7 @@ export interface WolfKingState {
 }
 
 export function setWolfKingState(roleComp: RoleComponent, state: WolfKingState): WolfKingState {
-  roleComp.privateState["wolf_king"] = state as unknown;
+  (roleComp.privateState as { wolf_king: WolfKingState })["wolf_king"] = state;
   return state;
 }
 

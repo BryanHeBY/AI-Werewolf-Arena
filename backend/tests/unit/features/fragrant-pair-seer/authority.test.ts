@@ -13,7 +13,10 @@ import {
   createAliveComponent,
   type AliveComponent,
 } from "../../../../src/core/domain/components/alive";
-import { createRoleComponent, type RoleComponent } from "../../../../src/core/domain/components/role";
+import {
+  createRoleComponent,
+  type RoleComponent,
+} from "../../../../src/core/domain/components/role";
 import { createCampComponent } from "../../../../src/core/domain/components/camp";
 import { createIdentityComponent } from "../../../../src/core/domain/entities/player";
 import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
@@ -156,7 +159,8 @@ for (const field of ["life", "role", "camp", "actorState"] as const)
     if (field === "role")
       f.world.addComponent(6, COMPONENT.Role, createRoleComponent(Role.Witch, Camp.Good));
     if (field === "camp") f.world.addComponent(6, COMPONENT.Camp, createCampComponent(Camp.Good));
-    if (field === "actorState") f.role(5).privateState.pairSeer = freshPairSeerState();
+    if (field === "actorState")
+      (f.role(5).privateState as Record<string, unknown>).pairSeer = freshPairSeerState();
     expect(lease.isCurrent()).toBe(false);
     expect(() => lease.commit([5, 6])).toThrow();
     expect(originalState).toEqual(freshPairSeerState());

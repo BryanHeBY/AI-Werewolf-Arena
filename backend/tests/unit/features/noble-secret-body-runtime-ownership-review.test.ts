@@ -117,7 +117,8 @@ for (const kind of ["original-getter", "foreign-state", "foreign-role"] as const
         },
         configurable: true,
       });
-    if (kind === "foreign-state") role.privateState.secretBody = foreign;
+    if (kind === "foreign-state")
+      (role.privateState as Record<string, unknown>).secretBody = foreign;
     if (kind === "foreign-role")
       g.world.addComponent<unknown>(5, COMPONENT.Role, {
         get privateState() {
@@ -136,7 +137,7 @@ test("delegation does not adopt another private key or changes to original Witch
   beginNobleBodyNight(g.world, 1, () => true);
   openSecretBodyChoice(g.world, 1).commit(6);
   const role = g.world.getComponent<RoleComponent>(5, COMPONENT.Role)!;
-  role.privateState.foreign = { uses: 0 };
+  (role.privateState as Record<string, unknown>).foreign = { uses: 0 };
   expect(() => demonHunterCheckpointPlayers(g.world, true)).toThrow();
   expect(
     demonHunterCheckpointPlayers(g.world, false)!.find((p) => p.id === 5)!.privateState,
@@ -220,9 +221,12 @@ test("Demon installation rejects an existing Noble owner bound to wrong native a
       if (v !== undefined) world.addComponent(id, name, v);
     }
   }
-  world.getComponent<RoleComponent>(10, COMPONENT.Role)!.privateState.noble = createNobleState();
-  world.getComponent<RoleComponent>(6, COMPONENT.Role)!.privateState.secretBody =
-    createSecretBodyState();
+  (
+    world.getComponent<RoleComponent>(10, COMPONENT.Role)!.privateState as Record<string, unknown>
+  ).noble = createNobleState();
+  (
+    world.getComponent<RoleComponent>(6, COMPONENT.Role)!.privateState as Record<string, unknown>
+  ).secretBody = createSecretBodyState();
   installNobleBodyAuthority(world, 10, 6);
   expect(() => installDemonHunter(world, source.config)).toThrow();
 });

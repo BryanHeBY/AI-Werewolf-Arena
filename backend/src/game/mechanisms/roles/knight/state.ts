@@ -13,7 +13,7 @@ export interface KnightState {
 }
 
 export function setKnightState(roleComp: RoleComponent, state: KnightState): KnightState {
-  roleComp.privateState["knight"] = state as unknown;
+  (roleComp.privateState as { knight: KnightState })["knight"] = state;
   return state;
 }
 

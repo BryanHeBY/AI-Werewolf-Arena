@@ -5,7 +5,17 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Camp, Phase, WinCondition, COMPONENT, type BoardConfig, type RoleComponent, type ActionRequest, type GameEvent } from "../../../../src/core";
+import {
+  Role,
+  Camp,
+  Phase,
+  WinCondition,
+  COMPONENT,
+  type BoardConfig,
+  type RoleComponent,
+  type ActionRequest,
+  type GameEvent,
+} from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { BearNightFrame } from "../../../../src/game/mechanisms/roles/bear/night_frame";
 import { getBearState } from "../../../../src/game/mechanisms/roles/private_state";
@@ -133,7 +143,8 @@ for (const mutation of [
       getDefaultRoleCatalog().applyRuntime(fresh);
       game.world.addComponent(1, COMPONENT.Role, fresh);
     }
-    if (mutation === "state_replace") role(game, 1).privateState.bear = { history: [] };
+    if (mutation === "state_replace")
+      (role(game, 1).privateState as Record<string, unknown>).bear = { history: [] };
     if (mutation === "faction") role(game, 1).camp = Camp.Wolf;
     frame.publish(game.world, events, () => mutation !== "clock");
     expect(events).toEqual([]);

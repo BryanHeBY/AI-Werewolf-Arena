@@ -320,7 +320,7 @@ for (const [label, mutate] of [
   [
     "state",
     (g: Fixture) => {
-      actor(g).privateState = {};
+      (actor(g) as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
     },
   ],
   [

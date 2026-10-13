@@ -1,3 +1,10 @@
+/**
+ * Tests verify rejected Radiant pipeline reentry retains the first borrowed Dream lease.
+ * Inputs are original component fixtures, held replies and pending private slots;
+ * literal request/effect/lease observations are the oracle. Test-only container
+ * writes preserve the same references and cancellation prefix, not a fresh state
+ * command or a regenerated expected result.
+ */
 import { expect, test } from "bun:test";
 import { World } from "../../../src/core/domain/world";
 import { Role, Camp, WitchSelfHealRule } from "../../../src/core/domain/identity";
@@ -62,8 +69,8 @@ function fixture() {
       sessionId: "synthetic",
     });
     if (kind === Role.EclipseMaid) {
-      role.privateState.eclipse = createEclipseState();
-      role.privateState.abilities = {};
+      (role.privateState as Record<string, unknown>).eclipse = createEclipseState();
+      (role.privateState as Record<string, unknown>).abilities = {};
     }
     if (kind === Role.RadiantCount) installNativeAbility(role, "shelter", createShelterState());
     if (kind === Role.Seer)

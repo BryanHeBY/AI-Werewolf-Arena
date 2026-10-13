@@ -1,3 +1,10 @@
+/**
+ * Owns Black Market Merchant's trade-state slot, copied installation and player projection.
+ * Inputs are the original role/state or trade day; outputs retain copied slot data,
+ * remaining stock and closed-day decisions. Only this owner restores the literal
+ * black_market_merchant key at installation; no other private key write is granted.
+ * It never validates a request lease, refunds a gift or replaces the role container.
+ */
 import type { PlayerBlackMarketState } from "../player_extended_state";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { copyAbilityData } from "../abilities";
@@ -16,7 +23,8 @@ export function getBlackMarketState(role: RoleComponent | undefined): BlackMarke
   return role?.privateState.black_market_merchant as BlackMarketState | undefined;
 }
 export function setBlackMarketState(role: RoleComponent, state: BlackMarketState): void {
-  role.privateState.black_market_merchant = copyAbilityData(state);
+  (role.privateState as { black_market_merchant: BlackMarketState }).black_market_merchant =
+    copyAbilityData(state);
 }
 export function projectBlackMarketState(state: BlackMarketState): PlayerBlackMarketState {
   return {

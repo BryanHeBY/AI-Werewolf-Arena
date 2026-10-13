@@ -4,6 +4,7 @@
  * outputs are stored references, status and detached player projections. Seer
  * payload writes belong to its feature owner; this store never infers player
  * knowledge from true camp or executes a Seer inspection command.
+ * Native installation restores only the abilities slot at its original expression; no general private-container setter is exposed.
  */
 import { readPairSeerState, type PairSeerState } from "./fragrant_pair_seer/state";
 import { readShelterState } from "./radiant_eclipse/state";
@@ -288,7 +289,8 @@ export function installNativeAbility<K extends NightAbilityKind>(
     kind === "pair_check" ? copyAbilityData(projectPairState(state)) : copyAbilityData(state)
   ) as NightAbilityStates[K];
   if (kind === "role_check") roleInspectionPolicy(ownedState as RoleInspectionState);
-  const stored = (role.privateState.abilities ??= {}) as Record<string, NightAbility>;
+  const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=
+    {}) as Record<string, NightAbility>;
   const retired = (role.privateState.retiredAbilityIds ?? []) as string[];
   const baseId = `native:${kind}`;
   let id = baseId,

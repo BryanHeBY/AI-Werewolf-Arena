@@ -20,7 +20,7 @@ export function setWolfBeautyState(
   roleComp: RoleComponent,
   state: WolfBeautyState,
 ): WolfBeautyState {
-  roleComp.privateState["wolf_beauty"] = state as unknown;
+  (roleComp.privateState as { wolf_beauty: WolfBeautyState })["wolf_beauty"] = state;
   return state;
 }
 

@@ -10,7 +10,10 @@ import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { Role, Camp, WitchSelfHealRule } from "../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createRoleComponent, type RoleComponent } from "../../../../src/core/domain/components/role";
+import {
+  createRoleComponent,
+  type RoleComponent,
+} from "../../../../src/core/domain/components/role";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import { createCampComponent } from "../../../../src/core/domain/components/camp";
 import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
@@ -70,8 +73,8 @@ function fixture() {
       sessionId: "synthetic",
     });
     if (kind === Role.EclipseMaid) {
-      role.privateState.eclipse = createEclipseState();
-      role.privateState.abilities = {};
+      (role.privateState as Record<string, unknown>).eclipse = createEclipseState();
+      (role.privateState as Record<string, unknown>).abilities = {};
     }
     if (kind === Role.RadiantCount) installNativeAbility(role, "shelter", createShelterState());
     if (kind === Role.Seer)

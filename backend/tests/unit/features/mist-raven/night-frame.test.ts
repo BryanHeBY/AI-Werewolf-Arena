@@ -12,7 +12,10 @@ import { Camp, Role, WinCondition } from "../../../../src/core/domain/identity";
 import type { BoardConfig } from "../../../../src/core/domain/board";
 import { getDreamerState } from "../../../../src/game/mechanisms/roles/private_state";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createRoleComponent, type RoleComponent } from "../../../../src/core/domain/components/role";
+import {
+  createRoleComponent,
+  type RoleComponent,
+} from "../../../../src/core/domain/components/role";
 import { createCampComponent } from "../../../../src/core/domain/components/camp";
 import {
   createAliveComponent,
@@ -76,8 +79,10 @@ function fixture() {
     const id = world.createEntity(),
       camp = ["raven_claw_wolf", "wolf"].includes(name) ? Camp.Wolf : Camp.Good,
       role = createRoleComponent(name as Role, camp);
-    if (name === "alchemist") role.privateState.alchemist = createAlchemistState();
-    else if (name === "raven_claw_wolf") role.privateState.ravenClaw = createRavenState();
+    if (name === "alchemist")
+      (role.privateState as Record<string, unknown>).alchemist = createAlchemistState();
+    else if (name === "raven_claw_wolf")
+      (role.privateState as Record<string, unknown>).ravenClaw = createRavenState();
     else getDefaultRoleCatalog().applyRuntime(role, { boardConfig });
     world.addComponent(id, COMPONENT.Role, role);
     world.addComponent(id, COMPONENT.Camp, createCampComponent(camp));
@@ -281,8 +286,12 @@ for (const edit of [
     let calls = 0;
     switch (edit) {
       case "caster_state":
-        world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState.alchemist =
-          createAlchemistState();
+        (
+          world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState as Record<
+            string,
+            unknown
+          >
+        ).alchemist = createAlchemistState();
         break;
       case "noncaster_role":
         role.role = Role.Wolf;
@@ -326,14 +335,18 @@ for (const id of [1, 9])
     const { world } = fixture(),
       role = world.getComponent<RoleComponent>(id, COMPONENT.Role)!,
       key = id === 1 ? "alchemist" : "ravenClaw";
-    role.privateState[key] = structuredClone(role.privateState[key]);
+    (role.privateState as Record<string, unknown>)[key] = structuredClone(role.privateState[key]);
     expect(() => assertMistRosterCurrent(world)).toThrow("mist_original_roster_revoked");
     expect(() => beginMistNight(world, 1)).toThrow("mist_original_roster_revoked");
   });
 test("four-wolf night cannot inherit a forged pre-start awakening", () => {
   const { world } = fixture(),
     role = world.getComponent<RoleComponent>(9, COMPONENT.Role)!;
-  role.privateState.ravenClaw = { ...createRavenState(), awakenedDay: 1, knownTeammateIds: [10] };
+  (role.privateState as Record<string, unknown>).ravenClaw = {
+    ...createRavenState(),
+    awakenedDay: 1,
+    knownTeammateIds: [10],
+  };
   expect(() => beginMistNight(world, 1)).toThrow("mist_original_roster_revoked");
 });
 test("mist effective targets derive from canonical committed history and never from raw array methods", () => {

@@ -5,7 +5,16 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Camp, COMPONENT, Role, WinCondition, DeathCause, StatusMark, Phase, type RoleComponent } from "../../../../src/core";
+import {
+  Camp,
+  COMPONENT,
+  Role,
+  WinCondition,
+  DeathCause,
+  StatusMark,
+  Phase,
+  type RoleComponent,
+} from "../../../../src/core";
 import { foxBoard } from "../../../support/cursed_fox_scenarios";
 import {
   boardDefinitionFromConfig,
@@ -118,7 +127,8 @@ for (const changed of ["life", "role", "camp", "state", "owner"] as const)
     if (changed === "life") world.addComponent(1, COMPONENT.Alive, createAliveComponent(true));
     if (changed === "role") role.role = Role.Villager;
     if (changed === "camp") role.camp = Camp.Good;
-    if (changed === "state") role.privateState = {};
+    if (changed === "state")
+      (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
     if (changed === "owner") current = false;
     if (changed !== "owner") expect(identity.isCurrent()).toBe(false);
     expect(
@@ -208,7 +218,7 @@ for (const stage of ["native", "lucky"] as const) {
                   const role = world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
                   role.role = Role.Villager;
                   role.camp = Camp.Good;
-                  role.privateState = {};
+                  (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
                   return { camp: Camp.Good };
                 },
               }

@@ -3,6 +3,7 @@
  * World and selected target; outputs are currentness checks, reveal state and committed choice
  * evidence. Only the matching pending choice writes; a closed choice prevents stale targets from
  * completing it.
+ * The checked orderPrince replacement restores only that slot after the original authority checks, without caching the container.
  */
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -135,7 +136,7 @@ export function commitOrderPrinceChoice(
   const b = requireAuthority(world);
   const next = nextOrderPrinceChoice(b.role, day, activate);
   if (!next) throw new Error("order_prince_choice_invalid");
-  b.privateState.orderPrince = next;
+  (b.privateState as { orderPrince: OrderPrinceState }).orderPrince = next;
   b.state = next;
   b.expected = JSON.stringify(next);
   b.pendingDay = null;

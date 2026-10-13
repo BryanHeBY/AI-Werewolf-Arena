@@ -147,7 +147,9 @@ for (const stage of [
         if (r.context.stage === stage && !replaced) {
           replaced = true;
           const role = f.world.getComponent<RoleComponent>(12, COMPONENT.Role)!;
-          role.privateState = { ...role.privateState };
+          (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
+            ...role.privateState,
+          };
         }
         if (stage.startsWith("exile_pk") && r.context.stage === "order_prince_revote")
           return vote(r.actorId <= 6 ? 1 : 2);

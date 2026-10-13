@@ -207,7 +207,10 @@ for (const change of ["id", "source", "private_owner", "activation", "actor_tran
     const prefix = structuredClone(game.ability.state.history);
     if (change === "id") game.ability.id = "native:renamed";
     if (change === "source") game.ability.source = { kind: "gift", actorId: 3 };
-    if (change === "private_owner") role.privateState = { ...role.privateState };
+    if (change === "private_owner")
+      (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
+        ...role.privateState,
+      };
     if (change === "activation") game.ability.activation = "lucky";
     if (change === "actor_transfer") {
       const otherRole = game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!,

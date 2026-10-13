@@ -72,7 +72,10 @@ for (const revoke of [
     if (revoke === "role") f.role.role = Role.Villager;
     if (revoke === "camp") f.role.camp = Camp.Good;
     if (revoke === "component") f.world.addComponent(f.actor, COMPONENT.Role, { ...f.role });
-    if (revoke === "private_state") f.role.privateState = { ...f.role.privateState };
+    if (revoke === "private_state")
+      (f.role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
+        ...f.role.privateState,
+      };
     if (revoke === "state") setMechanicalState(f.role, f.state);
     if (revoke === "life") f.world.addComponent(f.actor, COMPONENT.Alive, createAliveComponent());
     if (revoke === "revive") {

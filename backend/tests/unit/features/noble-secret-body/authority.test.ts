@@ -128,7 +128,9 @@ for (const replace of ["role", "state", "life", "revive"] as const)
     if (replace === "role")
       f.world.addComponent(2, COMPONENT.Role, createRoleComponent(Role.Villager, Camp.Good));
     if (replace === "state")
-      f.roles[1]!.privateState.secretBody = structuredClone(f.roles[1]!.privateState.secretBody);
+      (f.roles[1]!.privateState as Record<string, unknown>).secretBody = structuredClone(
+        f.roles[1]!.privateState.secretBody,
+      );
     if (replace === "life") f.world.addComponent(2, COMPONENT.Alive, createAliveComponent());
     if (replace === "revive") {
       f.life(2).alive = false;

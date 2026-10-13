@@ -51,7 +51,7 @@ test("Consort refuses malformed state without invoking accessors or proxy traps"
   expect(getTimeConsortState(f.role)).toBeUndefined();
   expect(calls).toBe(0);
   const g = fixture();
-  g.role.privateState.timeConsort = new Proxy(g.state, {
+  (g.role.privateState as Record<string, unknown>).timeConsort = new Proxy(g.state, {
     ownKeys() {
       calls++;
       throw new Error("trap");

@@ -12,7 +12,7 @@ export interface IdiotState {
 }
 
 export function setIdiotState(roleComp: RoleComponent, state: IdiotState): IdiotState {
-  roleComp.privateState["idiot"] = state as unknown;
+  (roleComp.privateState as { idiot: IdiotState })["idiot"] = state;
   return state;
 }
 

@@ -36,10 +36,10 @@ test("order prince: pass permits a later first ballot, activation consumes once"
   const pass = nextOrderPrinceChoice(r, 1, false)!;
   expect(pass.history).toEqual([{ day: 1, activate: false }]);
   expect(getOrderPrinceState(r)?.history).toEqual([]);
-  r.privateState.orderPrince = pass;
+  (r.privateState as Record<string, unknown>).orderPrince = pass;
   expect(nextOrderPrinceChoice(r, 1, true)).toBeUndefined();
   const active = nextOrderPrinceChoice(r, 2, true)!;
-  r.privateState.orderPrince = active;
+  (r.privateState as Record<string, unknown>).orderPrince = active;
   expect(nextOrderPrinceChoice(r, 3, false)).toBeUndefined();
   expect(nextOrderPrinceChoice(r, 3, true)).toBeUndefined();
   expect(projectOrderPrinceState(r)?.history).toEqual([

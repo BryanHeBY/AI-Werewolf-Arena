@@ -148,8 +148,9 @@ test("Noble and Nightmare preserve the conditional second live Role lookup witho
   const ordinary = createRoleComponent(Role.Villager, Camp.Good, "en"),
     nobleFirst = createRoleComponent(Role.NightNoble, Camp.Wolf, "en"),
     nobleSecond = createRoleComponent(Role.Villager, Camp.Good, "en");
-  nobleFirst.privateState.noble = createNobleState("no_blast_no_self_knife");
-  nobleSecond.privateState.noble = createNobleState("standard");
+  (nobleFirst.privateState as Record<string, unknown>).noble =
+    createNobleState("no_blast_no_self_knife");
+  (nobleSecond.privateState as Record<string, unknown>).noble = createNobleState("standard");
   const a = targetWorld(ordinary),
     aTrace: string[] = [];
   observeRoleReads(a.world, aTrace, (read) =>
@@ -160,11 +161,10 @@ test("Noble and Nightmare preserve the conditional second live Role lookup witho
 
   const nightmareFirst = createRoleComponent(Role.NightmareShadow, Camp.Wolf, "en"),
     nightmareSecond = createRoleComponent(Role.NightmareShadow, Camp.Wolf, "en");
-  nightmareFirst.privateState.nightmareShadow = freshNightmareShadowState(
-    "optional",
-    "no_blast_no_self_knife",
-  );
-  nightmareSecond.privateState.nightmareShadow = freshNightmareShadowState("optional", "standard");
+  (nightmareFirst.privateState as Record<string, unknown>).nightmareShadow =
+    freshNightmareShadowState("optional", "no_blast_no_self_knife");
+  (nightmareSecond.privateState as Record<string, unknown>).nightmareShadow =
+    freshNightmareShadowState("optional", "standard");
   const b = targetWorld(ordinary),
     bTrace: string[] = [];
   observeRoleReads(b.world, bTrace, (read) =>
@@ -177,8 +177,9 @@ test("Noble and Nightmare preserve the conditional second live Role lookup witho
 test("live role restrictions remain active outside installed boards and reject malformed candidates without coercion", () => {
   const noble = createRoleComponent(Role.NightNoble, Camp.Wolf, "en"),
     nightmare = createRoleComponent(Role.NightmareShadow, Camp.Wolf, "en");
-  noble.privateState.noble = createNobleState("no_blast_no_self_knife");
-  nightmare.privateState.nightmareShadow = freshNightmareShadowState(
+  (noble.privateState as Record<string, unknown>).noble =
+    createNobleState("no_blast_no_self_knife");
+  (nightmare.privateState as Record<string, unknown>).nightmareShadow = freshNightmareShadowState(
     "optional",
     "no_blast_no_self_knife",
   );

@@ -6,7 +6,18 @@
 import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Role, Phase, Camp, DeathCause, StatusMark, WinCondition, type RoleComponent, type ActionProvider, type GameEvent } from "../../../../src/core";
+import {
+  COMPONENT,
+  Role,
+  Phase,
+  Camp,
+  DeathCause,
+  StatusMark,
+  WinCondition,
+  type RoleComponent,
+  type ActionProvider,
+  type GameEvent,
+} from "../../../../src/core";
 import {
   createAliveComponent,
   type AliveComponent,
@@ -168,7 +179,8 @@ for (const change of [
       }
       if (change === "actor_replace")
         game.world.addComponent(3, COMPONENT.Alive, createAliveComponent());
-      if (change === "actor_private") role(game).privateState = {};
+      if (change === "actor_private")
+        (role(game) as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
       if (change === "target_revive") {
         life(game, 6).alive = false;
         life(game, 6).alive = true;
@@ -228,7 +240,8 @@ test("paid Black backlash ignores consumption/closure but revokes on changed sta
         args: { target_id: 1, skill: "poison" },
       }));
     await BLACK_MARKET_TRADE_STAGE.execute(ctx);
-    if (change === "private") role(game).privateState = {};
+    if (change === "private")
+      (role(game) as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
     if (change === "revive") {
       life(game, 3).alive = false;
       life(game, 3).alive = true;
@@ -300,7 +313,9 @@ for (const change of [
             life(game, 6).alive = false;
             life(game, 6).alive = true;
           }
-          if (change === "private") role(game, 6).privateState = {};
+          if (change === "private")
+            (role(game, 6) as { privateState: Readonly<Record<string, unknown>> }).privateState =
+              {};
           if (change === "target_life") {
             life(game, 4).alive = false;
             life(game, 4).alive = true;

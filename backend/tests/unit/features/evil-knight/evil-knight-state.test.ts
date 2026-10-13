@@ -41,7 +41,9 @@ function fixture(policy: EvilKnightShotPolicy = "night_shot_immune") {
   world.getComponent<RoleComponent>(witch, COMPONENT.Role)!.role = Role.Witch;
   role.role = "evil_knight" as Role;
   const state = freshEvilKnightState(policy);
-  role.privateState = { evilKnight: state };
+  (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
+    evilKnight: state,
+  };
   const binding = captureEvilKnight(world, captureNightLife(world, knight)!)!;
   let current = true;
   const commit = (kind: "seer_check" | "poison" = "seer_check") =>
@@ -91,7 +93,10 @@ for (const mode of ["role", "state", "camp", "policy", "life", "revive"] as cons
     const f = fixture(),
       effect = f.commit()!;
     if (mode === "role") f.role.role = Role.Wolf;
-    if (mode === "state") f.role.privateState = { evilKnight: freshEvilKnightState() };
+    if (mode === "state")
+      (f.role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
+        evilKnight: freshEvilKnightState(),
+      };
     if (mode === "camp") f.role.camp = Camp.Good;
     if (mode === "policy") f.state.shotPolicy = "hunter_shot_bypasses";
     if (mode === "life") f.world.addComponent(f.knight, COMPONENT.Alive, createAliveComponent());

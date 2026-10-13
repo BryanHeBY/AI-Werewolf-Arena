@@ -1,3 +1,10 @@
+/**
+ * Tests verify paid borrowed Dream facts survive close/death while stale effects retire.
+ * Inputs are original Radiant component fixtures, caster-death variants and later
+ * stage failure; literal facts, stock and effect-validity assertions are the oracle.
+ * Explicit test-only private slots keep the original authority aliases and inputs;
+ * neither paid resource consumption nor failed-prefix expectations are regenerated.
+ */
 import { expect, test } from "bun:test";
 import { World } from "../../../src/core/domain/world";
 import { Role, Camp, WitchSelfHealRule } from "../../../src/core/domain/identity";
@@ -62,8 +69,8 @@ function fixture() {
       sessionId: "synthetic",
     });
     if (kind === Role.EclipseMaid) {
-      role.privateState.eclipse = createEclipseState();
-      role.privateState.abilities = {};
+      (role.privateState as Record<string, unknown>).eclipse = createEclipseState();
+      (role.privateState as Record<string, unknown>).abilities = {};
     }
     if (kind === Role.RadiantCount) installNativeAbility(role, "shelter", createShelterState());
     if (kind === Role.Seer)

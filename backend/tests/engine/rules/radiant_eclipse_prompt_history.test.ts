@@ -1,3 +1,10 @@
+/**
+ * Tests verify Radiant source-history prompts and equivalent SDK/ACP receipt errors.
+ * Original locale/ability/history matrices and synthetic local turn controls supply
+ * inputs; literal prompt/error/state expectations remain the oracle. Deliberate
+ * private-slot fixtures retain their original getters and explicit test-only writes,
+ * without changing transport decisions or production observation permissions.
+ */
 import { ActionReception, ActionTurn } from "../../../src/ai/agents/player/action_reception";
 import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
 import { PotionType } from "../../../src/core";
@@ -66,7 +73,7 @@ async function run(locale: "zh-CN" | "en", spec: (typeof cases)[number], variant
   const owner = world.getComponent<RoleComponent>(spec.owner, COMPONENT.Role)!;
   const original = findNightAbility(owner, spec.kind)!;
   const tag = variant ? "ORIGINAL_HISTORY_B_841327" : "ORIGINAL_HISTORY_A_527841";
-  owner.privateState.privateNote = tag;
+  (owner.privateState as Record<string, unknown>).privateNote = tag;
   original.uses = variant ? 4 : 2;
   original.lastUsedDay = variant ? 2 : 1;
   if (spec.kind === "seer_check")

@@ -1,3 +1,10 @@
+/**
+ * Tests verify Cupid setup, lover membership and actual death/game interactions.
+ * Inputs are original finite boards, mandatory-choice replies and deliberately
+ * replaced private records. Literal affiliation, privacy, checkpoint and rejection
+ * assertions remain the oracle; fixture writes retain their original targets and
+ * use explicit test-only container access without widening production read rights.
+ */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -231,7 +238,9 @@ for (const mutation of [
           const victory = game.world.getComponent<VictoryComponent>(2, COMPONENT.Victory)!;
           if (mutation === "target_role") role(game, 2).role = Role.Villager;
           if (mutation === "target_camp") role(game, 2).camp = Camp.Wolf;
-          if (mutation === "target_state") role(game, 2).privateState = {};
+          if (mutation === "target_state")
+            (role(game, 2) as { privateState: Readonly<Record<string, unknown>> }).privateState =
+              {};
           if (mutation === "target_life")
             game.world.addComponent(2, COMPONENT.Alive, createAliveComponent());
           if (mutation === "target_revive") {
@@ -247,7 +256,9 @@ for (const mutation of [
           if (mutation === "target_affiliations") victory.affiliations = [...victory.affiliations];
           if (mutation === "target_member")
             victory.affiliations[0] = { kind: "faction", faction: Camp.Wolf };
-          if (mutation === "owner_state") role(game, 1).privateState = {};
+          if (mutation === "owner_state")
+            (role(game, 1) as { privateState: Readonly<Record<string, unknown>> }).privateState =
+              {};
           if (mutation === "owner_life")
             game.world.addComponent(1, COMPONENT.Alive, createAliveComponent());
           if (mutation === "owner_policy") oldState.policy = "lui_meme_lovers_only_v1";
@@ -290,7 +301,7 @@ test("request construction revocation never reaches provider; committed reentry 
   expect(calls).toBe(0);
   expect(events).toEqual([]);
   await connect(game, 2, 3, events);
-  role(game, 1).privateState = {
+  (role(game, 1) as { privateState: Readonly<Record<string, unknown>> }).privateState = {
     cupid: { policy: "netease_2017_cupid_follows_lovers_v1", remaining: 1, choice: null },
   };
   expect(hasCupidNightCommit(game.world, 1)).toBe(true);
@@ -501,10 +512,10 @@ test("paid relation survives Cupid/partner role replacement, while revived or re
   await connect(game, 2, 3);
   const record = loversRecord(game.world)!;
   role(game, 1).role = Role.Villager;
-  role(game, 1).privateState = {};
+  (role(game, 1) as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
   life(game, 1).alive = false;
   role(game, 2).role = Role.Villager;
-  role(game, 2).privateState = {};
+  (role(game, 2) as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
   expect(loversRecord(game.world)).toBe(record);
   expect(projectLover(game.world, 2)).toEqual({ partnerId: 3, mayNotVotePartner: false });
   await resolver(game, []).resolve(

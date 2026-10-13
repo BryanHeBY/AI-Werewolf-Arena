@@ -15,7 +15,7 @@ export interface HiddenWolfState {
 }
 
 export function setHiddenWolfState(role: RoleComponent, state: HiddenWolfState): HiddenWolfState {
-  role.privateState["hidden_wolf"] = state as unknown;
+  (role.privateState as { hidden_wolf: HiddenWolfState })["hidden_wolf"] = state;
   return state;
 }
 

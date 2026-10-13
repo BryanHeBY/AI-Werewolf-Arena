@@ -38,7 +38,7 @@ test("pending Cat keeps its actual living seat; actual later death changes the n
     events: GameEvent[] = [];
   f.life(10).alive = false;
   // A pure Cat deferral never changes its original Alive.
-  f.role(9).privateState.whiteCat = {
+  (f.role(9).privateState as Record<string, unknown>).whiteCat = {
     policy: "awa_animal_dream_v1",
     form: {
       kind: "deferred",

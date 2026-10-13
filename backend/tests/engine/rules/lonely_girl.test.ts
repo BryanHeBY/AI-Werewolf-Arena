@@ -1,3 +1,10 @@
+/**
+ * Tests verify Lonely Girl's mandatory model choice, independent membership and late revocation.
+ * Inputs are original target/change/getter matrices and private-record replacements;
+ * literal stock, notification, faction and error assertions remain the oracle.
+ * Test-only container access preserves malformed inputs and ownership checks;
+ * no production setter substitutes for the original fixture mutation.
+ */
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -178,13 +185,17 @@ const changes: { name: string; apply: (g: Fixture) => void }[] = [
   {
     name: "actor private container",
     apply: (g) => {
-      role(g).privateState = { ...role(g).privateState };
+      (role(g) as { privateState: Readonly<Record<string, unknown>> }).privateState = {
+        ...role(g).privateState,
+      };
     },
   },
   {
     name: "actor replacement state",
     apply: (g) => {
-      role(g).privateState.lonelyGirl = { ...getLonelyGirlState(role(g))! };
+      (role(g).privateState as Record<string, unknown>).lonelyGirl = {
+        ...getLonelyGirlState(role(g))!,
+      };
     },
   },
   {
@@ -247,7 +258,7 @@ const changes: { name: string; apply: (g: Fixture) => void }[] = [
   {
     name: "target private container",
     apply: (g) => {
-      role(g, 2).privateState = {};
+      (role(g, 2) as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
     },
   },
   {

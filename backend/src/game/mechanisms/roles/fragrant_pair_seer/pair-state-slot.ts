@@ -6,6 +6,7 @@
  * Authority owns roster/phase/currentness checks and commits its lease afterward.
  * This owner never clones on read, replaces stored state, catches a partial write,
  * refunds a resource or subscribes to request completion.
+ * Its pairSeer slot write alone restores container access; the LHS still precedes ability installation and shares its returned state.
  */
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { installNativeAbility, recordNightAbilityUse, type NightAbility } from "../abilities";
@@ -22,7 +23,11 @@ export interface PairStateSlot {
 
 /** The left-hand privateState reference is evaluated before ability installation. */
 export function installPairStateSlot(role: RoleComponent): void {
-  role.privateState.pairSeer = installNativeAbility(role, "pair_check", freshPairSeerState());
+  (role.privateState as { pairSeer: PairSeerState }).pairSeer = installNativeAbility(
+    role,
+    "pair_check",
+    freshPairSeerState(),
+  );
 }
 
 /** The caller already passed the original currentness and active-ability checks. */

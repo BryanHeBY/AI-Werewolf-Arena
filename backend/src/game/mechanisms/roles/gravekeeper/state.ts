@@ -21,7 +21,7 @@ export function setGravekeeperState(
   roleComp: RoleComponent,
   state: GravekeeperState,
 ): GravekeeperState {
-  roleComp.privateState["gravekeeper"] = state as unknown;
+  (roleComp.privateState as { gravekeeper: GravekeeperState })["gravekeeper"] = state;
   return state;
 }
 

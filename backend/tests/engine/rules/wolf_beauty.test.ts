@@ -1,3 +1,10 @@
+/**
+ * Tests verify Wolf Beauty charm proposals, compound death causes and special side completion.
+ * Inputs are original cause/life/permission matrices and controlled late replies;
+ * literal chain facts, gun/word suppression and winners remain the oracle. Explicit
+ * test-only private writes retain hostile inputs and original hook ownership,
+ * without adding a new death policy or rerouting a fixture through production setters.
+ */
 import { nightStageContext } from "../night_stage_fixture";
 import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
@@ -80,7 +87,7 @@ for (const mutation of [
                 state.deathLinkPolicy = "heroes_s7_2017_exile_hunter_v1";
               if (mutation === "clear_binding") bindCharm(game.world, 1, null);
               if (mutation === "replace_state")
-                role(game, 1).privateState.wolf_beauty = {
+                (role(game, 1).privateState as Record<string, unknown>).wolf_beauty = {
                   targetId: null,
                   lastActedDay: null,
                   history: [],
@@ -289,7 +296,7 @@ for (const mutation of ["phase", "actor_life", "target_life", "state"] as const)
             life.alive = true;
           }
           if (mutation === "state")
-            role(game, 1).privateState.wolf_beauty = {
+            (role(game, 1).privateState as Record<string, unknown>).wolf_beauty = {
               targetId: null,
               lastActedDay: null,
               history: [],

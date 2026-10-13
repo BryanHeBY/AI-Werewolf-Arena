@@ -12,7 +12,7 @@ export interface BearState {
 }
 
 export function setBearState(role: RoleComponent, state: BearState): BearState {
-  role.privateState["bear"] = state as unknown;
+  (role.privateState as { bear: BearState })["bear"] = state;
   return state;
 }
 

@@ -1,3 +1,10 @@
+/**
+ * Owns Miracle Merchant's copied trade-state data slot and its existing public projection.
+ * Inputs are the original role/state and night day; outputs retain choice fields,
+ * stock and wait eligibility. This owner restores only miracle_merchant at the
+ * original assignment, preserving installation copy and field failure order.
+ * No generic private-state writer, fresh inventory or turn permission is created.
+ */
 import type { PlayerMerchantState } from "../player_extended_state";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { copyAbilityData } from "../abilities";
@@ -17,7 +24,8 @@ export function getMerchantState(role: RoleComponent | undefined): MerchantState
   return role?.privateState.miracle_merchant as MerchantState | undefined;
 }
 export function setMerchantState(role: RoleComponent, state: MerchantState): void {
-  role.privateState.miracle_merchant = copyAbilityData(state);
+  (role.privateState as { miracle_merchant: MerchantState }).miracle_merchant =
+    copyAbilityData(state);
 }
 export function projectMerchantState(state: MerchantState): PlayerMerchantState {
   return {

@@ -44,7 +44,7 @@ function worldWithAbility(selected: NightAbility<"seer_check">) {
   const world = new World("en"),
     id = world.createEntity(),
     role = createRoleComponent(Role.Villager, Camp.Good, "en");
-  role.privateState.abilities = { [selected.id]: selected };
+  (role.privateState as Record<string, unknown>).abilities = { [selected.id]: selected };
   world.addComponent(id, COMPONENT.Role, role);
   world.addComponent(id, COMPONENT.Alive, createAliveComponent(true, "en"));
   return { world, role, id };
@@ -170,7 +170,7 @@ test("the real roster port retains sorted stored references and queries status l
   const z = ability("z"),
     a = ability("a"),
     f = worldWithAbility(z);
-  f.role.privateState.abilities = { z, a };
+  (f.role.privateState as Record<string, unknown>).abilities = { z, a };
   const query = bindNightAbilityActorQuery(f.world);
   const rows = query.actors("seer_check", 1);
   expect(rows.map((row) => row.ability.id)).toEqual(["a", "z"]);

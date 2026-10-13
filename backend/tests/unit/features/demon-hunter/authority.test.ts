@@ -73,7 +73,8 @@ function fixture(locale: "zh-CN" | "en" = "zh-CN") {
     const id = world.createEntity(),
       camp = kind === Role.Wolf ? Camp.Wolf : Camp.Good,
       role = createRoleComponent(kind, camp);
-    if (String(kind) === DEMON_HUNTER_ROLE) role.privateState.demonHunter = freshDemonHunterState();
+    if (String(kind) === DEMON_HUNTER_ROLE)
+      (role.privateState as Record<string, unknown>).demonHunter = freshDemonHunterState();
     if (kind === Role.Witch)
       installNativeAbility(role, "potion", {
         heal: 1,
@@ -302,7 +303,8 @@ for (const variant of [
         createRoleComponent(DEMON_HUNTER_ROLE as Role, Camp.Good),
       );
     if (variant === "camp") f.role.camp = Camp.Wolf;
-    if (variant === "state") f.role.privateState.demonHunter = freshDemonHunterState();
+    if (variant === "state")
+      (f.role.privateState as Record<string, unknown>).demonHunter = freshDemonHunterState();
     if (variant === "victory")
       f.world.addComponent(
         6,
@@ -320,12 +322,15 @@ for (const variant of [
         },
       });
     if (variant === "proxy")
-      f.role.privateState.demonHunter = new Proxy(f.role.privateState.demonHunter as object, {
-        getPrototypeOf() {
-          reads++;
-          return Object.prototype;
+      (f.role.privateState as Record<string, unknown>).demonHunter = new Proxy(
+        f.role.privateState.demonHunter as object,
+        {
+          getPrototypeOf() {
+            reads++;
+            return Object.prototype;
+          },
         },
-      });
+      );
     const result = freezeDemonHunt(f.world);
     expect(result.choice).toEqual({ day: 2, targetId: 1 });
     expect(result.damage).toBeNull();
@@ -404,16 +409,19 @@ test("the original native potion consumption is independently audited; getter/Pr
   const g = fixture(),
     before = demonHunterAuditPlayer(g.world, 5)!;
   const original = g.world.getComponent<RoleComponent>(5, COMPONENT.Role)!;
-  original.privateState.abilities = new Proxy(original.privateState.abilities as object, {
-    getOwnPropertyDescriptor() {
-      reads++;
-      return undefined;
+  (original.privateState as Record<string, unknown>).abilities = new Proxy(
+    original.privateState.abilities as object,
+    {
+      getOwnPropertyDescriptor() {
+        reads++;
+        return undefined;
+      },
+      getPrototypeOf() {
+        reads++;
+        return Object.prototype;
+      },
     },
-    getPrototypeOf() {
-      reads++;
-      return Object.prototype;
-    },
-  });
+  );
   expect(demonHunterAuditPlayer(g.world, 5)).toEqual(before);
   expect(reads).toBe(0);
 });
@@ -442,7 +450,7 @@ test("actual domain commit caches its history before later actor identity revoca
   const f = fixture(),
     { scope } = turn(f);
   commitDemonHunt(f.world, scope, hunt(1));
-  f.role.privateState.demonHunter = freshDemonHunterState();
+  (f.role.privateState as Record<string, unknown>).demonHunter = freshDemonHunterState();
   expect(freezeDemonHunt(f.world).damage).toBeNull();
   expect(demonHunterAuditPlayer(f.world, 6)).toEqual({
     demonHunter: { policy: "awa_netease_demon_hunter_v1", history: [{ day: 2, targetId: 1 }] },

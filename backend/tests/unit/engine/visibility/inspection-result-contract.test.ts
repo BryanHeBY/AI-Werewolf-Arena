@@ -48,7 +48,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     expect(catalog.get(Role.Wolf)?.wolfTeam).toEqual(
       getDefaultRoleCatalog().get(Role.Wolf)?.wolfTeam,
     );
-    wolf.privateState.unmasked = true;
+    (wolf.privateState as Record<string, unknown>).unmasked = true;
     expect(resolveInspection(world, 1, "combined", catalog)).toEqual({
       kind: "combined",
       role: "wolf",

@@ -8,8 +8,14 @@
 import { World } from "../../../../../src/core/domain/world";
 import { Role, Camp } from "../../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../../src/core/domain/components/names";
-import { createRoleComponent, type RoleComponent } from "../../../../../src/core/domain/components/role";
-import { createAliveComponent, type AliveComponent } from "../../../../../src/core/domain/components/alive";
+import {
+  createRoleComponent,
+  type RoleComponent,
+} from "../../../../../src/core/domain/components/role";
+import {
+  createAliveComponent,
+  type AliveComponent,
+} from "../../../../../src/core/domain/components/alive";
 import { createCampComponent } from "../../../../../src/core/domain/components/camp";
 import { createVotingRightComponent } from "../../../../../src/core/domain/components/voting_right";
 import { createVictoryComponent } from "../../../../../src/core/domain/components/victory";
@@ -20,7 +26,10 @@ import {
   freshWhiteCatState,
 } from "../../../../../src/game/mechanisms/roles/animal_dream/state";
 import { installAnimalRoster } from "../../../../../src/game/mechanisms/roles/animal_dream/roster";
-import { setWolfBeautyState, setBearState } from "../../../../../src/game/mechanisms/roles/private_state";
+import {
+  setWolfBeautyState,
+  setBearState,
+} from "../../../../../src/game/mechanisms/roles/private_state";
 
 export const animalInternalConfig = () => ({
   boardSize: 12,
@@ -83,9 +92,12 @@ export function animalRosterFixture(
     const id = world.createEntity(),
       camp = index < 4 ? Camp.Wolf : Camp.Good,
       role = createRoleComponent(roleId as Role, camp);
-    if (roleId === "white_cat") role.privateState.whiteCat = freshWhiteCatState();
-    if (roleId === "fox_cub") role.privateState.foxCub = freshFoxCubState();
-    if (roleId === "pufferfish") role.privateState.pufferfish = freshPufferfishState();
+    if (roleId === "white_cat")
+      (role.privateState as Record<string, unknown>).whiteCat = freshWhiteCatState();
+    if (roleId === "fox_cub")
+      (role.privateState as Record<string, unknown>).foxCub = freshFoxCubState();
+    if (roleId === "pufferfish")
+      (role.privateState as Record<string, unknown>).pufferfish = freshPufferfishState();
     if (roleId === "wolf_beauty")
       setWolfBeautyState(role, { targetId: null, lastActedDay: null, history: [] });
     if (roleId === "bear") setBearState(role, { history: [] });

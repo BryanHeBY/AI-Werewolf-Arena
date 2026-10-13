@@ -129,7 +129,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     expect(knownWolfTeammates(world, 1, catalog)).toEqual([2, 4]);
     expect(wolfChatParticipants(world, catalog)).toEqual([1, 4]);
     expect(wolfKnifeHolders(world, catalog)).toEqual([1]);
-    role(world, 3).privateState.knife = true;
+    (role(world, 3).privateState as Record<string, unknown>).knife = true;
     expect(wolfKnifeHolders(world, catalog)).toEqual([1, 3]);
     const policy = new PlayerPromptPolicy(world, {
       roleCatalog: catalog,
@@ -198,9 +198,9 @@ for (const locale of ["zh-CN", "en"] as const) {
       expect(state()).toEqual(before);
     }
     expect(reception.validate(request(4, "speak_to_wolves"), chat.name, chat.args).ok).toBe(true);
-    role(world, 3).privateState.knife = true;
+    (role(world, 3).privateState as Record<string, unknown>).knife = true;
     expect(reception.validate(request(3, "kill_vote"), knife.name, knife.args).ok).toBe(true);
-    role(world, 3).privateState.knife = false;
+    (role(world, 3).privateState as Record<string, unknown>).knife = false;
     expect(gateway.validateAndSanitize(world, 3, knife, { phase: Phase.Night })).toMatchObject({
       ok: false,
       error: "wolf_kill_permission",
@@ -248,7 +248,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     alive(world, 2).alive = false;
     role(world, 6).role = Role.Wolf;
     role(world, 6).camp = Camp.Wolf;
-    role(world, 3).privateState.knife = true;
+    (role(world, 3).privateState as Record<string, unknown>).knife = true;
     events.push(
       wolfTeamEvent(world, catalog, {
         timestamp: 5,
@@ -363,7 +363,7 @@ for (const locale of ["zh-CN", "en"] as const)
                   id: "synthetic_grant",
                   priority: 350,
                   async execute() {
-                    role(world, 3).privateState.knife = true;
+                    (role(world, 3).privateState as Record<string, unknown>).knife = true;
                     alive(world, 2).alive = false;
                   },
                 },

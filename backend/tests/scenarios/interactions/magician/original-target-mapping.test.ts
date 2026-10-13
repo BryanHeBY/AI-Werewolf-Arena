@@ -193,7 +193,9 @@ test("Magician refuses a late reply after in-place original identity mutation", 
         const action = await base.getAction(r);
         if (r.allowedTools.includes("check_identity")) {
           const role = f.world.getComponent<RoleComponent>(v, COMPONENT.Role)!;
-          role.privateState = { ...role.privateState };
+          (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
+            ...role.privateState,
+          };
         }
         return action;
       },

@@ -10,7 +10,10 @@ import { World } from "../../../../../src/core/domain/world";
 import { COMPONENT } from "../../../../../src/core/domain/components/names";
 import { Role, Camp } from "../../../../../src/core/domain/identity";
 import { createRoleComponent } from "../../../../../src/core/domain/components/role";
-import { createAliveComponent, type AliveComponent } from "../../../../../src/core/domain/components/alive";
+import {
+  createAliveComponent,
+  type AliveComponent,
+} from "../../../../../src/core/domain/components/alive";
 import { createCampComponent } from "../../../../../src/core/domain/components/camp";
 import { createVictoryComponent } from "../../../../../src/core/domain/components/victory";
 import { createIdentityComponent } from "../../../../../src/core/domain/entities/player";
@@ -36,8 +39,9 @@ export function nobleBodyAuthorityFixture() {
     const actual = world.createEntity(),
       camp = id === 1 ? Camp.Wolf : Camp.Good,
       role = createRoleComponent(id === 1 ? Role.Wolf : Role.Villager, camp);
-    if (id === 1) role.privateState.noble = createNobleState();
-    if (id === 2) role.privateState.secretBody = createSecretBodyState();
+    if (id === 1) (role.privateState as Record<string, unknown>).noble = createNobleState();
+    if (id === 2)
+      (role.privateState as Record<string, unknown>).secretBody = createSecretBodyState();
     world.addComponent(actual, COMPONENT.Role, role);
     world.addComponent(
       actual,

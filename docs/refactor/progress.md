@@ -6,8 +6,8 @@
 | ---------------------- | ------ | ------------------------------------------------------------------------------------ |
 | P0 基线与契约          | 已完成 | C01 `144f48b` 已提交；C02 `aba9347`；C03 `b56d282`；七样例、89行静态台账与三方向审查 |
 | P1 依赖与共享契约      | 已完成 | C04–C09 数据/支持职责与 public consumer 闭合；零基础包循环，兼容桥按 C44 退出        |
-| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；C11累计188单测/C12累计89场景进程，余mixed tests/support继续  |
-| P3 状态与请求授权      | 进行中 | C16生产读取/C18传播/F02/C19完成；Seer/Fragrant试点，其余状态继续                     |
+| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；当前映射556来源、615目标、7159旧IDs；余mixed tests/support继续 |
+| P3 状态与请求授权      | 进行中 | C16生产读取/C18传播/F02/C19完成；容器读取边界及实际写者闭合，能力查询/schema继续      |
 | P4 规则计划与生命周期  | 进行中 | C21阶段成员快照与opaque lazy完成；完整RulePlan/C22–C24继续                           |
 | P5 效果、死亡与判胜    | 待执行 | C25–C29                                                                              |
 | P6 能力、观察与展示    | 待执行 | C30–C36、C33a                                                                        |
@@ -16,6 +16,8 @@
 | P9 全仓收敛与验收      | 待执行 | C45–C48；同源固定输入、门禁零债务                                                    |
 
 每个切片记录 commit、实现者、独立审查、命令 / 输入指纹及剩余风险。编译与发现范围在每笔提交保持有效。阶段跨越不代表跳过未完成的切片。
+
+重门禁按用户要求在固定输入后台检查点或多个大阶段汇合后执行。机械迁移以实际输入程序、引用和有限类型／边界证据验收；实际行为修改运行对应必要用例。最终 P9 同源全量验收仍需完成，不逐笔重复整局、发现或浏览器。
 
 ## 切片记录
 
@@ -317,3 +319,5 @@
 - C12 mixed8h witch-correctness：1原file→2targets/8旧IDs实际分层；overall8→15/185IDs136unit49scene，83callback80raw+3仅5exactdynamicpaths，gift inline type path同原target未改，77helper/table/matrix/loop原raw、194bindings/15heads0。RootactualGit/full selectedprogram/physical/原ID singleowner0，独立真实bounded/full/setup/cachedcatalog/fileresource判读0；Psychic同cache额外factory读取显式记录，不称evalcount同。19unique removed0add、prune92=70whole22partial、必需preload/FS清理owner保持。finite15 session93504 actualclosed0，无tests/night/discovery重复；caseSplit及Mirrorwholeowner保持各自证明，mapping现555source/613target/7137IDs。
 
 - C12 mixed8h witch-policies：1原file→2targets/22旧IDs实际分层；overall8→15/185IDs136unit49scene，83callback80raw+3仅5exactdynamicpaths，gift inline type path同原target未改，77helper/table/matrix/loop原raw、194bindings/15heads0。RootactualGit/full selectedprogram/physical/原ID singleowner0，独立真实bounded/full/setup/cachedcatalog/fileresource判读0；Psychic同cache额外factory读取显式记录，不称evalcount同。19unique removed0add、prune92=70whole22partial、必需preload/FS清理owner保持。finite15 session93504 actualclosed0，无tests/night/discovery重复；caseSplit及Mirrorwholeowner保持各自证明，mapping现556source/615target/7159IDs。
+
+- C16/C17角色容器读取边界：23生产、63既有测试支持、1新unit；readonly privateState保同对象，init专用写契约保自定义键和原容器替换；20实际owner仅原具体槽擦除cast。原86运行程序保真，两路独立实际Git/87SHA审查闭合、37控制字节同、133测试造数cast反移后完整typed/runtime同；3新/0/22，完整src/tests compiler14063实际0、有限87头0/新dep0/原债3。原诊断与25可选尾逗号proof红保留并说明语法等价范围，newunit locale annotation单文件补核。没有重复对局/发现/full；普通可写能力句柄、全角色schema/codec及核心容器最终opaque仍待。详见role-private-container.md及generated/role-private-container-evidence.json。

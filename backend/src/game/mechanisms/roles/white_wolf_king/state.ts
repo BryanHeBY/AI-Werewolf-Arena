@@ -16,7 +16,7 @@ export function setWhiteWolfKingState(
   roleComp: RoleComponent,
   state: WhiteWolfKingState,
 ): WhiteWolfKingState {
-  roleComp.privateState["white_wolf_king"] = state as unknown;
+  (roleComp.privateState as { white_wolf_king: WhiteWolfKingState })["white_wolf_king"] = state;
   return state;
 }
 

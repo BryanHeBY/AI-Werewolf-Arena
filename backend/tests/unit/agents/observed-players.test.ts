@@ -32,8 +32,12 @@ test("hidden opponent identities and private state cannot change a villager obse
   const guard = second.world.getComponent<RoleComponent>(3, COMPONENT.Role)!;
   second.world.addComponent(2, COMPONENT.Role, guard);
   second.world.addComponent(3, COMPONENT.Role, wolf);
-  second.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState.hiddenTest =
-    "PRIVATE_OPPONENT_STATE";
+  (
+    second.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState as Record<
+      string,
+      unknown
+    >
+  ).hiddenTest = "PRIVATE_OPPONENT_STATE";
   // An unannounced state change cannot be promoted into public knowledge by the observer adapter.
   second.world.getComponent<AliveComponent>(6, COMPONENT.Alive)!.alive = false;
   const observed: PlayerObservation[] = [];

@@ -1,3 +1,11 @@
+/**
+ * Owns assembly of built-in and injected role profiles and their original runtime callbacks.
+ * Inputs are profile contributions, the original role object and initialization context;
+ * outputs retain catalog queries, custom text and the same configured component.
+ * The initializer receives explicit private-container write rights at this call
+ * only, preserving custom keys, two arguments and the profile receiver. This
+ * catalog never copies state, introduces a runtime setter or authorizes a turn.
+ */
 import { NIGHT_NOBLE_ROLE_PROFILE, AWAKENED_IDIOT_ROLE_PROFILE } from "./noble_secret_body/profile";
 import {
   WHITE_CAT_ROLE_PROFILE,
@@ -28,7 +36,7 @@ import { THIEF_ROLE_PROFILE } from "./thief/profile";
 /** 文件说明：集中注册角色 profile，并提供阵营、提示词和运行时适配能力。 */
 import { RoleComponent } from "../../../core/domain/components/role";
 import { Camp, Role } from "../../../core/domain/model";
-import { RoleInitContext, RoleProfile } from "./contracts";
+import { RoleInitContext, RoleProfile, type RoleInitializationComponent } from "./contracts";
 import { GUARD_ROLE_PROFILE } from "./guard/profile";
 import { HUNTER_ROLE_PROFILE } from "./hunter/profile";
 import { IDIOT_ROLE_PROFILE } from "./idiot/profile";
@@ -175,7 +183,7 @@ export class RoleCatalog {
 
   applyRuntime(roleComp: RoleComponent, ctx: RoleInitContext = {}): void {
     const profile = this.require(roleComp.role);
-    profile.init?.(roleComp, ctx);
+    profile.init?.(roleComp as RoleInitializationComponent, ctx);
     const defaultLocale = ctx.locale ?? "zh-CN";
     roleComp.renderPrompt = (locale = defaultLocale) => {
       const active = this.require(roleComp.role);

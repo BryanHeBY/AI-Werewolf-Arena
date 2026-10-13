@@ -1,3 +1,10 @@
+/**
+ * Tests verify wall-note configuration, request scoping, publication and recording boundaries.
+ * Inputs are original hook overrides, optional replies and changed component/private
+ * records; literal event/feed/expiry/error assertions remain the oracle. Fixture
+ * container writes are explicitly test-only and preserve original actions; runtime
+ * initialization, source snapshots and role eligibility are not changed here.
+ */
 import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
 import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
 import { ActionReception } from "../../../src/ai/agents/player/action_reception";
@@ -262,7 +269,7 @@ for (const mutation of [
             rc.camp = Camp.Good;
             break;
           case "state":
-            rc.privateState = {};
+            (rc as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
             break;
           case "component":
             g.world.addComponent(1, COMPONENT.WallNote, { ...n });
@@ -302,7 +309,8 @@ test("accepted then later gateway revocation omits paid author without refund", 
     gateway = new ToolGateway(),
     original = gateway.validateAndSanitize.bind(gateway);
   gateway.validateAndSanitize = ((world, id, call, context) => {
-    if (id === 2) role(g, 1).privateState = {};
+    if (id === 2)
+      (role(g, 1) as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
     return original(world, id, call, context);
   }) as typeof gateway.validateAndSanitize;
   await run(g, async (r) => text(String(r.actorId)), undefined, 1, gateway);
@@ -462,7 +470,7 @@ for (const seam of ["factory", "next"])
         mutated = true;
         if (mode === "phase") current = false;
         else if (mode === "pack") g.config.events = undefined as any;
-        else role(g, 1).privateState = {};
+        else (role(g, 1) as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
       };
       const source = createRandom("seam");
       const original = source.next.bind(source);

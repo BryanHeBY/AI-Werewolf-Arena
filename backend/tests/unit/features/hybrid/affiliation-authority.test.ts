@@ -329,7 +329,8 @@ for (const point of ["await", "gateway"] as const)
         if (change === "actor_life")
           game.world.addComponent(1, COMPONENT.Alive, createAliveComponent());
         if (change === "actor_role") game.world.addComponent(1, COMPONENT.Role, { ...role(game) });
-        if (change === "actor_state") role(game).privateState.hybrid = { ...state };
+        if (change === "actor_state")
+          (role(game).privateState as Record<string, unknown>).hybrid = { ...state };
         if (change === "actor_camp") role(game).camp = Camp.Wolf;
         if (change === "victory_component")
           game.world.addComponent(1, COMPONENT.Victory, createVictoryComponent([]));

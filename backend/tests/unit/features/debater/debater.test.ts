@@ -251,7 +251,8 @@ for (const stage of ["debate_challenge", "debate_speech", "debate_ballot"])
           if (change === "target_replace")
             g.world.addComponent(2, COMPONENT.Alive, createAliveComponent());
           if (change === "actor_role") role(g, 1).role = Role.Villager;
-          if (change === "actor_state") role(g, 1).privateState = {};
+          if (change === "actor_state")
+            (role(g, 1) as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
           if (change === "actor_stock")
             getDebaterState(role(g, 1))!.remaining = stage === "debate_challenge" ? 0 : 1;
           if (change === "badge")
@@ -315,7 +316,7 @@ test("committed stock cannot be reset by replacing private state or role instanc
   const g = fixture(),
     events: GameEvent[] = [];
   await run(g, events, provider([false, false, false, false, false, false]));
-  role(g, 1).privateState.debater = {
+  (role(g, 1).privateState as Record<string, unknown>).debater = {
     policy: "awa_melbourne_2026_speech_gap_v1",
     remaining: 1,
     choice: null,

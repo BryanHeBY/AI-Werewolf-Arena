@@ -1,3 +1,10 @@
+/**
+ * Tests verify Wild Child mandatory model binding, retained death knowledge and transformation.
+ * Original finite configuration, target/reply/getter matrices and foreign private
+ * records supply inputs; literal membership, state, facts and errors are the oracle.
+ * Typed fixture writes keep their original pointer/slot replacement, without
+ * replacing the guarded camp transition or changing source/schema expectations.
+ */
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -205,7 +212,9 @@ const changes: Record<string, (g: Fixture) => void> = {
   actorRoleRef: (g) =>
     g.world.addComponent(1, COMPONENT.Role, createRoleComponent(Role.WildChild, Camp.Good)),
   actorState: (g) => {
-    role(g).privateState = { ...role(g).privateState };
+    (role(g) as { privateState: Readonly<Record<string, unknown>> }).privateState = {
+      ...role(g).privateState,
+    };
   },
   actorResource: (g) => {
     getWildChildState(role(g))!.remaining = 0;

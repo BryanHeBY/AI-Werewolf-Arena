@@ -1,3 +1,10 @@
+/**
+ * Tests verify Hidden Wolf pack permission and inheritance across real proposal boundaries.
+ * Original death-order matrices, controlled gateway replies and replaced role/life
+ * slots supply inputs; literal inheritance, chat and death facts supply the oracle.
+ * Native stages and complete chains keep their existing scopes. Fixture corruption
+ * uses test-only container access, preserving every original callback and action.
+ */
 import { nightStageContext } from "../night_stage_fixture";
 import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
@@ -681,7 +688,9 @@ for (const mutation of ["revive", "replace_life", "replace_state", "replace_role
           if (mutation === "replace_life")
             game.world.addComponent(1, COMPONENT.Alive, createAliveComponent());
           if (mutation === "replace_state")
-            role(game, 1).privateState.hidden_wolf = { hasInheritedKnife: true };
+            (role(game, 1).privateState as Record<string, unknown>).hidden_wolf = {
+              hasInheritedKnife: true,
+            };
           if (mutation === "replace_role") {
             const old = role(game, 1);
             game.world.addComponent(1, COMPONENT.Role, {

@@ -28,7 +28,7 @@ describe("ToolGateway validation", () => {
 
     const guard = world.getComponent<RoleComponent>(guardId!, COMPONENT.Role)!;
     const guardState = getGuardState(guard)!;
-    guardState.lastTarget = 1;
+    (guardState as { lastTarget: number | null }).lastTarget = 1;
 
     const result = toolGateway.validateAndSanitize(
       world,

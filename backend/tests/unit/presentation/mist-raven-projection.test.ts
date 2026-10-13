@@ -27,21 +27,22 @@ import { ScriptEventRenderRegistry } from "../../../src/game/mechanisms/script/e
 import { buildAgentVisibleEvent } from "../../../src/game/engine/agent_visible_event_feed";
 const role = (kind: Role) => {
   const value = createRoleComponent(kind, kind === Role.Alchemist ? Camp.Good : Camp.Wolf);
-  if (kind === Role.Alchemist) value.privateState.alchemist = createAlchemistState();
-  else value.privateState.ravenClaw = createRavenState();
+  if (kind === Role.Alchemist)
+    (value.privateState as Record<string, unknown>).alchemist = createAlchemistState();
+  else (value.privateState as Record<string, unknown>).ravenClaw = createRavenState();
   return value;
 };
 test("owner DTOs use independent whitelists and detach all nested history and knowledge", () => {
   const a = role(Role.Alchemist),
     r = role(Role.RavenClawWolf);
-  a.privateState.alchemist = {
+  (a.privateState as Record<string, unknown>).alchemist = {
     policy: "awa_mist_raven_v1",
     mistRemaining: 0,
     healRemaining: 1,
     mistHistory: [{ day: 1, targetIds: [1, 2, 3] }],
     healHistory: [{ day: 1, targetId: null }],
   };
-  r.privateState.ravenClaw = {
+  (r.privateState as Record<string, unknown>).ravenClaw = {
     policy: "awa_mist_raven_v1",
     awakenedDay: 2,
     knownTeammateIds: [10],
@@ -87,7 +88,7 @@ test("DTO queries execute no private accessors or proxy traps", () => {
   expect(projectAlchemist(proxied)).toBeUndefined();
   expect(reads).toBe(0);
   const container = role(Role.RavenClawWolf);
-  container.privateState = new Proxy(
+  (container as { privateState: Readonly<Record<string, unknown>> }).privateState = new Proxy(
     {},
     {
       getOwnPropertyDescriptor() {

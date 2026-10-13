@@ -13,7 +13,10 @@ import { createAliveComponent } from "../../../../src/core/domain/components/ali
 import type { CampComponent } from "../../../../src/core/domain/components/camp";
 import type { RoleComponent } from "../../../../src/core/domain/components/role";
 import type { IdentityComponent } from "../../../../src/core/domain/entities/player";
-import { animalRosterFixture, animalInternalConfig } from "../../../support/features/animal-dream/builders/roster";
+import {
+  animalRosterFixture,
+  animalInternalConfig,
+} from "../../../support/features/animal-dream/builders/roster";
 import {
   installAnimalRoster,
   animalRosterCurrent,
@@ -65,7 +68,9 @@ test("replacement body cannot revive roster ownership", () => {
 });
 test("Identity metadata mutation revokes, ordinary private JSON state updates do not", () => {
   const f = animalRosterFixture();
-  f.role(11).privateState.bear = { history: [{ day: 1, roared: false }] };
+  (f.role(11).privateState as Record<string, unknown>).bear = {
+    history: [{ day: 1, roared: false }],
+  };
   expect(animalRosterCurrent(f.world)).toBe(true);
   f.world.getComponent<IdentityComponent>(11, COMPONENT.Identity)!.name = "changed";
   expect(animalRosterCurrent(f.world)).toBe(false);
@@ -85,10 +90,11 @@ const invalid: Record<string, (w: ReturnType<typeof animalRosterFixture>["world"
     w.addComponent<unknown>(10, COMPONENT.Camp, w.getComponent(10, COMPONENT.Role));
   },
   "shared private container": (w) => {
-    w.getComponent<RoleComponent>(6, COMPONENT.Role)!.privateState = w.getComponent<RoleComponent>(
-      5,
-      COMPONENT.Role,
-    )!.privateState;
+    (
+      w.getComponent<RoleComponent>(6, COMPONENT.Role)! as {
+        privateState: Readonly<Record<string, unknown>>;
+      }
+    ).privateState = w.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState;
   },
   "duplicate seat": (w) => {
     w.getComponent<IdentityComponent>(6, COMPONENT.Identity)!.seat = 5;

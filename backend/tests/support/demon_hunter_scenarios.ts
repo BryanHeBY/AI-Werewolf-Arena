@@ -1,4 +1,11 @@
-/** Private installed candidate fixtures. These do not claim public bootstrap/profile support. */
+/**
+ * Owns installed Demon test scenario support with original players, private stocks and actions.
+ * Inputs are fixed candidate configurations and controlled scenario variants;
+ * outputs are the same installed Worlds, providers and literal expected outcome data.
+ * These fixtures deliberately do not claim public profile/bootstrap support.
+ * Test-only container access retains raw slot setup and native authority checks;
+ * it does not generate a new oracle, model request or production state writer.
+ */
 import "../../src/app/bootstrap";
 import {
   World,
@@ -126,7 +133,8 @@ export function demonHunterFixture(
     const id = world.createEntity(),
       camp = kind === Role.Wolf ? Camp.Wolf : Camp.Good,
       role = createRoleComponent(kind, camp, locale);
-    if (String(kind) === DEMON_HUNTER_ROLE) role.privateState.demonHunter = freshDemonHunterState();
+    if (String(kind) === DEMON_HUNTER_ROLE)
+      (role.privateState as Record<string, unknown>).demonHunter = freshDemonHunterState();
     else getDefaultRoleCatalog().applyRuntime(role, { boardConfig: config, locale, world });
     world.addComponent(id, COMPONENT.Identity, createIdentityComponent(id, id, String(id)));
     world.addComponent(id, COMPONENT.Role, role);

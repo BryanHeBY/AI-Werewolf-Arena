@@ -1,3 +1,10 @@
+/**
+ * Owns Mechanical Wolf's learned-skill state data, copied installation and projections.
+ * Inputs are the original role or learned state; outputs retain the same declared
+ * learning/mode/knife fields and selected stored reference. The installer alone
+ * restores the mechanical_wolf slot at its original write; inherited resource,
+ * phase and receipt checks remain separate. No container copy or parser is added.
+ */
 import type { PlayerMechanicalState } from "../player_extended_state";
 import type { InspectionResult, RoleId } from "@ai-werewolf-arena/game-catalog";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -50,7 +57,7 @@ export function getMechanicalState(role: RoleComponent | undefined): MechanicalS
 }
 export function setMechanicalState(role: RoleComponent, state: MechanicalState): MechanicalState {
   const owned = copyAbilityData(state);
-  role.privateState.mechanical_wolf = owned;
+  (role.privateState as { mechanical_wolf: MechanicalState }).mechanical_wolf = owned;
   return owned;
 }
 export function mechanicalLearning(

@@ -3,6 +3,7 @@
  * Inputs are gun grants, transfer policy and trusted death permissions; outputs are owned
  * inventory changes and player projections. Spent or replaced original-life guns never refresh
  * themselves on a later death.
+ * Only deathAbilities and retiredDeathAbilityIds are writable here, at their original nested install/retire expressions.
  */
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
@@ -195,7 +196,9 @@ export function grantDeathGun(
     deathExpired: false,
   };
   bind(world, toId, gun);
-  const stored = (to.privateState.deathAbilities ??= {}) as Record<string, DeathGun>;
+  const stored = ((
+    to.privateState as { deathAbilities?: Record<string, DeathGun> }
+  ).deathAbilities ??= {}) as Record<string, DeathGun>;
   stored[id] = gun;
   counters.set(world, next);
   emit(events, toId, gun, "granted");
@@ -358,9 +361,15 @@ export function transferDeathGun(
   };
   delete (received as DeathGun & { status?: string }).status;
   bind(world, toId, received);
-  ((target.privateState.deathAbilities ??= {}) as Record<string, DeathGun>)[id] = received;
+  (
+    ((target.privateState as { deathAbilities?: Record<string, DeathGun> }).deathAbilities ??=
+      {}) as Record<string, DeathGun>
+  )[id] = received;
   delete (source!.privateState.deathAbilities as Record<string, DeathGun>)[id];
-  ((source!.privateState.retiredDeathAbilityIds ??= []) as string[]).push(id);
+  (
+    ((source!.privateState as { retiredDeathAbilityIds?: string[] }).retiredDeathAbilityIds ??=
+      []) as string[]
+  ).push(id);
   emit(events, fromId, gun, "transferred_out");
   emit(events, toId, received, "granted");
   return received;

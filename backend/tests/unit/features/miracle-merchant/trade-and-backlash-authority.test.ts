@@ -6,7 +6,18 @@
 import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Camp, Phase, WinCondition, DeathCause, COMPONENT, StatusMark, type BoardConfig, type RoleComponent, type GameEvent } from "../../../../src/core";
+import {
+  Role,
+  Camp,
+  Phase,
+  WinCondition,
+  DeathCause,
+  COMPONENT,
+  StatusMark,
+  type BoardConfig,
+  type RoleComponent,
+  type GameEvent,
+} from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import {
   getMerchantState,
@@ -283,7 +294,8 @@ for (const revoke of [
         if (revoke === "clock") current = false;
         if (revoke === "actor_life")
           game.world.addComponent(1, COMPONENT.Alive, createAliveComponent());
-        if (revoke === "actor_state") role(game).privateState.miracle_merchant = { ...state };
+        if (revoke === "actor_state")
+          (role(game).privateState as Record<string, unknown>).miracle_merchant = { ...state };
         if (revoke === "target_life") changeTarget();
         if (revoke === "target_role")
           game.world.addComponent(6, COMPONENT.Role, { ...role(game, 6) });

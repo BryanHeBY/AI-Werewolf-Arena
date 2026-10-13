@@ -92,7 +92,7 @@ for (const poison of [false, true])
             const role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
             role.role = Role.Villager;
             role.camp = Camp.Good;
-            role.privateState = {};
+            (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
             replaced = true;
           }
           if (req.allowedTools.includes("vote"))

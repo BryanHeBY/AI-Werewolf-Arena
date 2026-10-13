@@ -69,7 +69,7 @@ function fixture() {
     [5, "potion"],
   ] as const) {
     const role = roles.get(id)!;
-    role.privateState.abilities = {
+    (role.privateState as Record<string, unknown>).abilities = {
       native: {
         id: "native",
         kind,

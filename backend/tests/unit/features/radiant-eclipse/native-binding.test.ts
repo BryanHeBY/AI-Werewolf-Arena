@@ -54,8 +54,8 @@ function fixture() {
       camp = [Role.EclipseMaid, Role.Wolf].includes(kind) ? Camp.Wolf : Camp.Good,
       role = createRoleComponent(kind, camp);
     if (kind === Role.EclipseMaid) {
-      role.privateState.eclipse = createEclipseState();
-      role.privateState.abilities = {};
+      (role.privateState as Record<string, unknown>).eclipse = createEclipseState();
+      (role.privateState as Record<string, unknown>).abilities = {};
     }
     if (kind === Role.RadiantCount) installNativeAbility(role, "shelter", createShelterState());
     if (kind === Role.Witch)
