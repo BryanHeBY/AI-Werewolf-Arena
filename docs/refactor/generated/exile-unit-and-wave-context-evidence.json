@@ -1,0 +1,321 @@
+{
+  "baseline": "d5a71042195a6570d975cd04f948ee944477e055",
+  "files": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "sha256": "c84ea20071a88ed8e1fc20062eb12c40d268b1f75cf19d93afdb6d16dfa04e70"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "4147b797af1a416cb77337a97892acedf43ae3f850f525897d06e87f8f2a1cde"
+    },
+    {
+      "path": "backend/src/game/engine/death-wave.ts",
+      "sha256": "04e0b0c33e1eed211d744443bb55684a92274abedfaca2d5641a1c61fc5a195c"
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "e6b1bd8bf9779e18fd88f234f73667e71e3851b591888ce965370e5de8f23d23"
+    },
+    {
+      "path": "backend/src/core/domain/exile-unit.ts",
+      "sha256": "a2f27f3e1ab9dde7e7089400f2d81aea15af087e152a36857f68a3a38f43d9c2"
+    },
+    {
+      "path": "backend/tests/unit/engine/exile-unit-ownership.test.ts",
+      "sha256": "73461a34fb9fc473d3dfcc19d5f5d477fc083058f465351d3099fec1bd2c12e8"
+    }
+  ],
+  "programProof": {
+    "rows": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+        "registeredChanges": 6,
+        "wholeProgramSame": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "registeredChanges": 14,
+        "wholeProgramSame": true
+      },
+      {
+        "path": "backend/src/game/engine/death-wave.ts",
+        "registeredChanges": 7,
+        "wholeProgramSame": true
+      },
+      {
+        "path": "backend/src/game/engine/death_resolution.ts",
+        "registeredChanges": 4,
+        "wholeProgramSame": true
+      }
+    ],
+    "findings": [],
+    "limits": "新增identity/receiver expiry/explicit unit mismatch单独审查；不冒全输入等价。基线4源actualD5a；执行上下文非独立死因，new clock字段单列"
+  },
+  "heads": {
+    "files": 6,
+    "documentationPaths": [
+      "docs/expansion/rules/awa-noble-secret-body-twelve-v1.md"
+    ],
+    "findings": []
+  },
+  "independentSecond": {
+    "passed": true,
+    "findings": [],
+    "baseline": "d5a71042195a6570d975cd04f948ee944477e055",
+    "files": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+        "actualSha256": "c84ea20071a88ed8e1fc20062eb12c40d268b1f75cf19d93afdb6d16dfa04e70",
+        "finalScopeShaMatches": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "actualSha256": "4147b797af1a416cb77337a97892acedf43ae3f850f525897d06e87f8f2a1cde",
+        "finalScopeShaMatches": true
+      },
+      {
+        "path": "backend/src/game/engine/death-wave.ts",
+        "actualSha256": "04e0b0c33e1eed211d744443bb55684a92274abedfaca2d5641a1c61fc5a195c",
+        "finalScopeShaMatches": true
+      },
+      {
+        "path": "backend/src/game/engine/death_resolution.ts",
+        "actualSha256": "e6b1bd8bf9779e18fd88f234f73667e71e3851b591888ce965370e5de8f23d23",
+        "finalScopeShaMatches": true
+      },
+      {
+        "path": "backend/src/core/domain/exile-unit.ts",
+        "actualSha256": "a2f27f3e1ab9dde7e7089400f2d81aea15af087e152a36857f68a3a38f43d9c2",
+        "finalScopeShaMatches": true
+      },
+      {
+        "path": "backend/tests/unit/engine/exile-unit-ownership.test.ts",
+        "actualSha256": "73461a34fb9fc473d3dfcc19d5f5d477fc083058f465351d3099fec1bd2c12e8",
+        "finalScopeShaMatches": true
+      }
+    ],
+    "origins": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+        "actualGitSourceMatches": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "actualGitSourceMatches": true
+      },
+      {
+        "path": "backend/src/game/engine/death-wave.ts",
+        "actualGitSourceMatches": true
+      },
+      {
+        "path": "backend/src/game/engine/death_resolution.ts",
+        "actualGitSourceMatches": true
+      }
+    ],
+    "checks": {
+      "normalOneMintSevenSameResultAttachments": true,
+      "twoEarlyResultsBeforeActualMint": true,
+      "dayCapturesOnlyAtOriginalReads": true,
+      "managerExactlyTwoSelfDestructSkips": true,
+      "managerTenResolveCallsTenExecutionContexts": true,
+      "animalIdOriginalTokenNoSecondCounter": true,
+      "resultHiddenDescriptorBrandGuard": true,
+      "legacyContextDescriptorOnly": true,
+      "knightFreshNullPrototypeAfterActualDuel": true,
+      "nightAndOriginRemainDistinct": true
+    },
+    "readSourceEvidence": [
+      "手读全部新增 ExileUnit 代码；正常成功、空票、SecretBody/missed/Idiot均用一次尝试身份。preVote自爆和开票前current拒绝仍零normalunit。",
+      "手读全部4现有源diff和新8 bounded cases；manager10 Wave入口上下文为真实已捕获Night/Exile/phaseRevision，旧per-target originPhases与deadIds/source不由metadata改写。",
+      "Knight新无原型envelope只传execution；DeathResolution及AnimalPreparation原可选字段从无原型对象得到undefined，与旧无nightEffects兼容且不执行继承getter。",
+      "原Animal token与closed/count/expiry流程未改；仅selfdestruct的两实际commit分支新skippedunit，Knight中断不伪造skip。",
+      "元数据只关联运行结果／Wave identity，非新的死亡许可、资源权或schema2字段。"
+    ],
+    "limits": "只读第二方向 actualsource+6SHA与4 actualGit来源，未重复Root/inventory完整registered inverse、编译、测试或完整对局；Root实际runtime/types收据不冒独立运行。"
+  },
+  "independentThird": {
+    "passed": true,
+    "findings": [],
+    "bodyFindings": [],
+    "rows": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+        "sha256": "c84ea20071a88ed8e1fc20062eb12c40d268b1f75cf19d93afdb6d16dfa04e70",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "sha256": "4147b797af1a416cb77337a97892acedf43ae3f850f525897d06e87f8f2a1cde",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/engine/death-wave.ts",
+        "sha256": "04e0b0c33e1eed211d744443bb55684a92274abedfaca2d5641a1c61fc5a195c",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/engine/death_resolution.ts",
+        "sha256": "e6b1bd8bf9779e18fd88f234f73667e71e3851b591888ce965370e5de8f23d23",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/core/domain/exile-unit.ts",
+        "sha256": "a2f27f3e1ab9dde7e7089400f2d81aea15af087e152a36857f68a3a38f43d9c2",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/tests/unit/engine/exile-unit-ownership.test.ts",
+        "sha256": "73461a34fb9fc473d3dfcc19d5f5d477fc083058f465351d3099fec1bd2c12e8",
+        "shaMatch": true
+      }
+    ],
+    "origins": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+        "actualGitSame": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "actualGitSame": true
+      },
+      {
+        "path": "backend/src/game/engine/death-wave.ts",
+        "actualGitSame": true
+      },
+      {
+        "path": "backend/src/game/engine/death_resolution.ts",
+        "actualGitSame": true
+      }
+    ],
+    "unchangedMethods": [
+      {
+        "name": "collectVotes",
+        "bodyRawSame": true
+      },
+      {
+        "name": "collectVoterVote",
+        "bodyRawSame": true
+      },
+      {
+        "name": "recordVotesInSeatOrder",
+        "bodyRawSame": true
+      },
+      {
+        "name": "pickMajorityTarget",
+        "bodyRawSame": true
+      }
+    ],
+    "returns": [
+      {
+        "line": 152,
+        "attached": false
+      },
+      {
+        "line": 170,
+        "attached": false
+      },
+      {
+        "line": 188,
+        "attached": true
+      },
+      {
+        "line": 248,
+        "attached": true
+      },
+      {
+        "line": 276,
+        "attached": true
+      },
+      {
+        "line": 317,
+        "attached": true
+      },
+      {
+        "line": 370,
+        "attached": true
+      },
+      {
+        "line": 447,
+        "attached": true
+      },
+      {
+        "line": 466,
+        "attached": true
+      }
+    ],
+    "checks": {
+      "nineExecuteReturns": true,
+      "exactSevenPostOpenAttached": true,
+      "oneActualMintInExecute": true,
+      "mintAfterPreVoteCurrentBeforeVoters": true,
+      "onlyOldDayReadsCapture": true,
+      "animalOriginalTokenIdAndNoCounter": true,
+      "legacyExileGuardBeforeSymbol": true,
+      "nonEnumerableResultMeta": true,
+      "nativeMetaSelectorsBeforeReflect": true,
+      "knownExecutionIsContextNotCause": true,
+      "sameInitialAdditionalAndRevisit": true,
+      "noChangedDeathEntryCausePolicy": true,
+      "twoActualSkipOnly": true,
+      "redMoonExpiryActualNightContext": true,
+      "knightHasOnlyOriginalDayRevision": true,
+      "waveUnitCommentCorrectTarget": true
+    },
+    "additionalSourceRisk": "Closed: original Knight has new null-prototype execution-only envelope after actual duel commit succeeds; no inherited missing old-night callbacks/protection getters. No extra current predicate.",
+    "inputReview": "New7 bounded cases have genuine6seat role setup/valid votes; Animal same originaltoken/skip-policy literal count; mixed Night/Day originPhases literal assertions; hostile execution getter/Proxy skipped. No new expectation generated from producer.",
+    "limits": "Read-only finite source/Git/AST; no types/tests/full inverse/cold import repeated. Captured revision execution context is not per-cause provenance nor death permission. Original numeric Animal states/schema resources untouched. Final pass rechecks only six hashes and exact Knight metadata2stmt/unchanged post-call gate; prior method/origin review not rerun. No full C31/allfamily/schema completion claim.",
+    "priorReadReview": "/tmp/awa-c31-exile-third-current-review.json",
+    "firstSourceFindings": "/tmp/awa-c31-exile-third-first-source-findings.json",
+    "finalDeltaChecks": {
+      "nullPrototypeCreatedAfterActualCommitSuccess": true,
+      "onlyNewOwnExecutionAssigned": true,
+      "originalResolveCalleeAndArgumentReadsFollowLocalMetadataOnly": true,
+      "noNewKnightCurrentGate": true,
+      "noKnightExileUnit": true,
+      "testPrototypeDescriptorsRestored": true
+    },
+    "closedSourceFindings": [
+      "RedMoon expiry actual Night/NightRevision carrier",
+      "Knight actual DayRevision only carrier, no Exile/skip",
+      "actual WaveUnit JSDoc moved to right declaration",
+      "Knight previously absent nightEffects no new inherited optional getter through null-prototype envelope"
+    ],
+    "ownerReceiptsOnly": "Root new7/28, original selectedPK3 once; final nullproto single1/0; exactfinal有限19264 closed0 plus earlier enum36557 closed0 separate. No independent runtime/type repeated."
+  },
+  "acceptance": {
+    "newInitialSeven": {
+      "pass": 7,
+      "fail": 0,
+      "assertions": 28
+    },
+    "nullPrototypeIncrement": {
+      "pass": 1,
+      "fail": 0,
+      "assertions": 1
+    },
+    "originalPKSelected": {
+      "pass": 3,
+      "fail": 0,
+      "assertions": 33
+    },
+    "strictTypes": {
+      "sourceSession": 34646,
+      "enumFixedSession": 36557,
+      "lastNullPrototypeSession": 19264,
+      "actualTerminalExit": 0
+    }
+  },
+  "findingsClosed": [
+    "RedMoon真实到期缺night/revision carrier",
+    "Knight真实duel缺phaseRevision carrier，非Exile",
+    "Unit描述原JSDoc位置",
+    "原无options Knight新metadata envelope用nullproto避免继承getter"
+  ],
+  "limits": [
+    "execution仅上下文，per-entry因果仍由原originPhases/nightOrigin保持",
+    "Animal原authority/state字节全同，token作为id不复制counts",
+    "首fixture enum和harness双read匹配红保，不修改生产为proof",
+    "C31完整机制阶段矩阵/其它具体期限策略与P9全门禁继续"
+  ]
+}

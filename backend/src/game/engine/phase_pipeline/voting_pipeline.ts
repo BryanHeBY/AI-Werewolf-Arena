@@ -1,9 +1,10 @@
 /**
- * Collects exile votes and resolves their configured rounds, tie choices and vote weights.
- * Inputs are current voters, candidates and provider actions; outputs preserve seat-ordered vote
- * evidence and the selected exile result. Sheriff election and wolf knife ballots remain
- * separate mechanisms.
+ * 负责放逐投票的实际单位、候选、席位顺序及既有回合／平票／票权政策。
+ * 输入为当前玩家与行动；输出为原票据和放逐结果。preVote中断不制造普通开票单位；
+ * 首票前开同一单位，王子复收票与PK共用，零放逐、翻牌或映射落空仍属于已开单位。
+ * Animal复用原token且独占计数／到期政策。警长选举和狼刀维持各自流程，不合并为通用投票器。
  */
+import { openExileUnit, attachExileUnit } from "../../../core/domain/exile-unit";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import {
   checkpointNobleBodyAuthority,
@@ -120,7 +121,8 @@ export class VotingPipeline {
     actionProvider: ActionProvider,
     options: VotingPipelineOptions,
   ): Promise<VotingPipelineResult> {
-    const requests = new GameActionRequestFactory(this.world, this.events, options.day);
+    let unitDay: number;
+    const requests = new GameActionRequestFactory(this.world, this.events, (unitDay = options.day));
     safeRecordLogicOp({
       scope: "phase_pipeline",
       op: "voting_pipeline_start",
@@ -169,11 +171,13 @@ export class VotingPipeline {
     const animalUnit = config.animalDream
       ? beginAnimalExileUnit(
           this.world,
-          options.day,
+          (unitDay = options.day),
           "exile",
           () => options.isCurrent?.() !== false,
         )
       : undefined;
+    // 此门禁已开启一次真实放逐；后续重新收票／PK仍消费同一个对象。
+    const exileUnit = openExileUnit(unitDay, "exile", animalUnit);
     const voters = this.world
       .getAliveEntityIds()
       .filter((id) => canVoteExile(this.world, id, options.day));
@@ -181,7 +185,7 @@ export class VotingPipeline {
     // Requests run in parallel; Promise.all retains voter order for deterministic replay events.
     const voteResults = await this.collectVotes(voters, requests, actionProvider, options);
     if (options.isCurrent?.() === false)
-      return { summary: { tally: {}, target: null, removed: [] }, interrupted: false, removed: [] };
+      return attachExileUnit({ summary: { tally: {}, target: null, removed: [] }, interrupted: false, removed: [] }, exileUnit);
     let { tally, publicVotes } = this.recordVotesInSeatOrder(voteResults, options.day);
     if (animalUnit) recordAnimalBallotRound(this.world, animalUnit, 1, publicVotes);
     if (config.roleSetups.some((setup) => setup.role === Role.OrderPrince && setup.count > 0)) {
@@ -241,11 +245,11 @@ export class VotingPipeline {
       });
       for (const actorId of tied) {
         if (options.isCurrent?.() === false)
-          return {
+          return attachExileUnit({
             summary: { tally: {}, target: null, removed: [] },
             interrupted: false,
             removed: [],
-          };
+          }, exileUnit);
         const life = captureNightLife(this.world, actorId);
         if (!life || !canBeExiled(this.world, actorId)) {
           if (options.strictRequired) throw new Error("order_prince_pk_candidate_stale");
@@ -269,11 +273,11 @@ export class VotingPipeline {
         });
         const action = await actionProvider.getAction(request);
         if (options.isCurrent?.() === false)
-          return {
+          return attachExileUnit({
             summary: { tally: {}, target: null, removed: [] },
             interrupted: false,
             removed: [],
-          };
+          }, exileUnit);
         if (
           action?.name !== "speak" ||
           !livingNightLife(this.world, life) ||
@@ -310,11 +314,11 @@ export class VotingPipeline {
         candidates,
       );
       if (options.isCurrent?.() === false)
-        return {
+        return attachExileUnit({
           summary: { tally: {}, target: null, removed: [] },
           interrupted: false,
           removed: [],
-        };
+        }, exileUnit);
       ({ tally, publicVotes } = this.recordVotesInSeatOrder(
         results,
         options.day,
@@ -363,7 +367,7 @@ export class VotingPipeline {
       );
     }
     if (target === null) {
-      return {
+      return attachExileUnit({
         summary: {
           tally,
           target: null,
@@ -372,7 +376,7 @@ export class VotingPipeline {
         interrupted: false,
         removed: [],
         ...(animalUnit ? { animalUnit, animalRetaliation } : {}),
-      };
+      }, exileUnit);
     }
 
     const mapped = config.trickster ? resolveTricksterExile(this.world, options.day, target) : null;
@@ -440,7 +444,7 @@ export class VotingPipeline {
         } finally {
           closeNobleBodyRequest(scope);
         }
-        return { summary: { tally, target, removed: [] }, removed: [], interrupted: false };
+        return attachExileUnit({ summary: { tally, target, removed: [] }, removed: [], interrupted: false }, exileUnit);
       }
     }
     const votedOut = mapped?.missed
@@ -459,7 +463,7 @@ export class VotingPipeline {
       });
     }
 
-    return {
+    return attachExileUnit({
       summary: {
         tally,
         target,
@@ -469,7 +473,7 @@ export class VotingPipeline {
       interrupted: false,
       removed,
       ...(animalUnit ? { animalUnit, animalRetaliation } : {}),
-    };
+    }, exileUnit);
   }
 
   private async collectVotes(

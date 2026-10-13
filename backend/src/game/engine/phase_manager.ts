@@ -5,6 +5,8 @@
  * 每夜仍创建独立生命周期 receiver，沿原 current 检查和重复 finally 消费同一已交接单位。
  * 计划中的具名 checkpoint 只提供原值，最终死亡链和判胜时点仍由本经理拥有。
  */
+import { openExileUnit, exileUnitOf, type ExileUnit } from "../../core/domain/exile-unit";
+import { nightUnitOf } from "../../core/domain/night-unit";
 import { PhaseRevisionClock } from "./phase-revision";
 import { damagePoisonRoutes } from "../../core/domain/damage-evidence";
 import type { DeathCommitReceipt, DeathOriginalLife } from "./death-wave";
@@ -754,6 +756,7 @@ export class PhaseManager {
             isCurrent: nightIsCurrent,
             originalLives,
             poisonRoutes: damagePoisonRoutes(sourceDamage!),
+            execution: { night: nightUnitOf(night), phaseRevision: nightRevision },
             blocksPassiveNightShot: (id) => {
               const binding = night.evilKnightBindings?.get(id);
               return (
@@ -782,7 +785,7 @@ export class PhaseManager {
             Phase.Night,
             Phase.Night,
             {},
-            { nightOriginIds: [expiryActor], isCurrent: nightIsCurrent },
+            { nightOriginIds: [expiryActor], isCurrent: nightIsCurrent, execution: { night: nightUnitOf(night), phaseRevision: nightRevision } },
           );
           this.assertDemonReadable();
           if (!nightIsCurrent()) return this.getSnapshot();
@@ -902,6 +905,7 @@ export class PhaseManager {
           nightOriginIds: damage.deaths,
           isCurrent: current,
           poisonRoutes: damagePoisonRoutes(damage),
+          execution: { night: nightUnitOf(night), phaseRevision: dayRevision },
         },
       );
       assertMistRosterCurrent(this.world);
@@ -917,6 +921,7 @@ export class PhaseManager {
     const settleNight = async (
       blast?: { deaths: number[]; sources: DeathSources },
       animalSkip?: object,
+      skippedUnit?: ExileUnit,
     ) => {
       if (nightSettled) return this.state.gameOver;
       nightSettled = true;
@@ -973,6 +978,7 @@ export class PhaseManager {
             isCurrent: dayIsCurrent,
             originalLives,
             poisonRoutes: damagePoisonRoutes(sourceDamage!),
+            execution: { night: nightUnitOf(night), exile: skippedUnit, phaseRevision: dayRevision },
             ...(animalSkip ? { animalUnit: animalSkip } : {}),
             ...(this.config.fragrantPairSeer || this.config.animalDream
               ? {
@@ -1053,6 +1059,7 @@ export class PhaseManager {
         const animalSkip = this.config.animalDream
           ? beginAnimalExileUnit(this.world, cycleDay, "skipped_day", dayIsCurrent)
           : undefined;
+        const skippedUnit = openExileUnit(cycleDay, "skipped_day", animalSkip);
         if (!nightSettled && this.mistPending) {
           this.mistPending.claim(dayIsCurrent);
           await this.deathResolution.resolve(
@@ -1062,10 +1069,10 @@ export class PhaseManager {
             Phase.Day,
             Phase.Day,
             {},
-            { isCurrent: dayIsCurrent },
+            { isCurrent: dayIsCurrent, execution: { exile: skippedUnit, phaseRevision: dayRevision } },
           );
           if (dayIsCurrent()) await settleMist(true, true);
-        } else if (!nightSettled) await settleNight(blast, animalSkip);
+        } else if (!nightSettled) await settleNight(blast, animalSkip, skippedUnit);
         else {
           await this.deathResolution.resolve(
             blast.deaths,
@@ -1074,7 +1081,7 @@ export class PhaseManager {
             Phase.Day,
             Phase.Day,
             {},
-            { isCurrent: dayIsCurrent, ...(animalSkip ? { animalUnit: animalSkip } : {}) },
+            { isCurrent: dayIsCurrent, execution: { exile: skippedUnit, phaseRevision: dayRevision }, ...(animalSkip ? { animalUnit: animalSkip } : {}) },
           );
           if (animalSkip) {
             closeAnimalExileUnit(this.world, animalSkip);
@@ -1096,12 +1103,17 @@ export class PhaseManager {
         if (!dayIsCurrent() || !nightSettled) return "rejected";
         const duel = commitKnightDuel(this.world, choice, Phase.Day, this.events);
         if (!duel) return "rejected";
+        // 原决斗没有 nightEffects；新元数据包无原型，不让缺项读取继承的回调／保护 getter。
+        const duelMetadata = Object.create(null) as { execution: { phaseRevision: number } };
+        duelMetadata.execution = { phaseRevision: dayRevision };
         await this.deathResolution.resolve(
           duel.deaths,
           duel.sources,
           actionProvider,
           Phase.Day,
           Phase.Day,
+          {},
+          duelMetadata,
         );
         if (!dayIsCurrent()) return "terminal";
         if (this.checkAndSealResult(this.#rulePlan.checkpoints.dayInterrupted)) return "terminal";
@@ -1148,6 +1160,7 @@ export class PhaseManager {
         const animalSkip = this.config.animalDream
           ? beginAnimalExileUnit(this.world, cycleDay, "skipped_day", votingIsCurrent)
           : undefined;
+        const skippedUnit = openExileUnit(cycleDay, "skipped_day", animalSkip);
         await this.deathResolution.resolve(
           blast.deaths,
           blast.sources,
@@ -1155,7 +1168,7 @@ export class PhaseManager {
           Phase.Voting,
           Phase.Voting,
           {},
-          { isCurrent: votingIsCurrent, ...(animalSkip ? { animalUnit: animalSkip } : {}) },
+          { isCurrent: votingIsCurrent, execution: { exile: skippedUnit, phaseRevision: votingRevision }, ...(animalSkip ? { animalUnit: animalSkip } : {}) },
         );
         if (animalSkip) {
           closeAnimalExileUnit(this.world, animalSkip);
@@ -1198,7 +1211,7 @@ export class PhaseManager {
         Phase.Voting,
         Phase.Voting,
         {},
-        { isCurrent: votingIsCurrent, animalUnit: votingResult.animalUnit },
+        { isCurrent: votingIsCurrent, animalUnit: votingResult.animalUnit, execution: { exile: exileUnitOf(votingResult), phaseRevision: votingRevision } },
       );
       if (!votingIsCurrent()) return this.getSnapshot();
       closeAnimalExileUnit(this.world, votingResult.animalUnit);
@@ -1238,7 +1251,7 @@ export class PhaseManager {
         Phase.Voting,
         Phase.Voting,
         {},
-        { isCurrent: votingIsCurrent },
+        { isCurrent: votingIsCurrent, execution: { exile: exileUnitOf(votingResult), phaseRevision: votingRevision } },
       );
     }
     if (!votingIsCurrent()) return this.getSnapshot();

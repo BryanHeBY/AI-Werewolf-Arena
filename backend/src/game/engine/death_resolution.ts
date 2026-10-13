@@ -8,6 +8,8 @@ import { AnimalDeathWavePreparation } from "../mechanisms/roles/animal_dream/por
 import {
   planDeathWave,
   openDeathWave,
+  deathExecutionContext,
+  type DeathExecutionContext,
   deathWaveOriginalLives,
   deathWavePoisonMetadata,
   type DeathWaveUnit,
@@ -189,6 +191,7 @@ export class DeathResolution {
       originalLives?: ReadonlyMap<EntityId, DeathOriginalLife>;
       poisonRoutes?: readonly NightPoisonRoute[];
       animalUnit?: object;
+      execution?: DeathExecutionContext;
     },
   ): Promise<void> {
     const resolutionPhase = this.state.phase;
@@ -283,7 +286,7 @@ export class DeathResolution {
         type: "additional_deaths",
         payload: { deaths: publicLinkedInitial },
       });
-    const initialUnit = openDeathWave("initial", resolutionDay, resolutionPhase);
+    const initialUnit = openDeathWave("initial", resolutionDay, resolutionPhase, deathExecutionContext(nightEffects));
     let pendingUnits: readonly DeathWaveUnit[] = [initialUnit];
     let previousCommits: readonly DeathCommitReceipt[] = [];
     let firstBatch = true;
@@ -492,7 +495,7 @@ export class DeathResolution {
                   nightTargets = [...(result.nightEffectTargets ?? [])];
                 preflightDeathWaveData(proposed, proposedSources);
                 preflightDeathWaveData(nightTargets, {});
-                const additionalUnit = openDeathWave("additional", resolutionDay, resolutionPhase);
+                const additionalUnit = openDeathWave("additional", resolutionDay, resolutionPhase, deathExecutionContext(nightEffects));
                 const shots = new Map(
                   (result.pendingShots ?? []).map((shot) => [shot.targetScope.id, shot]),
                 );

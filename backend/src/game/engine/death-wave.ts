@@ -4,6 +4,8 @@
  * 计划只引用调用方已有集合，不创建第二套 seen／原因／枪库存；凭证不是死亡行动授权。
  * 发布关联留在凭证内部，绝不修改事件、原 Alive 或归档形状；失败不生成成功凭证。
  */
+import { isNightUnit, type NightUnit } from "../../core/domain/night-unit";
+import { isExileUnit, type ExileUnit } from "../../core/domain/exile-unit";
 import { types } from "node:util";
 import type { AliveComponent } from "../../core/domain/components/alive";
 import {
@@ -20,20 +22,28 @@ export interface DeathOriginalLife {
   readonly version: number | undefined;
 }
 
+/** 执行上下文不等于每个目标的因果来源；真正 Night／Day 来源仍由原 originPhases 决定。 */
+export interface DeathExecutionContext {
+  readonly night?: NightUnit;
+  readonly exile?: ExileUnit;
+  readonly phaseRevision?: number;
+}
 /** 只在实际初始波／角色追加 proposal 打开时创建；逐目标提交及再次访问复用此身份。 */
 export interface DeathWaveUnit {
   readonly id: symbol;
   readonly kind: "initial" | "additional" | "legacy";
   readonly day: number | undefined;
   readonly actionPhase: Phase | undefined;
+  readonly execution: DeathExecutionContext | undefined;
 }
 
 export function openDeathWave(
   kind: DeathWaveUnit["kind"],
   day?: number,
   actionPhase?: Phase,
+  execution?: DeathExecutionContext,
 ): DeathWaveUnit {
-  return Object.freeze({ id: Symbol("death_wave"), kind, day, actionPhase });
+  return Object.freeze({ id: Symbol("death_wave"), kind, day, actionPhase, execution });
 }
 
 /** 来源集合可继续由结算器按原位置扩展；只读接口不冻结 live 原体或调用方数组。 */
@@ -55,6 +65,19 @@ function ownMetadataValue(input: object | undefined, key: string): unknown {
   if (typeof input !== "object" || input === null || types.isProxy(input)) return undefined;
   const descriptor = Object.getOwnPropertyDescriptor(input, key);
   return descriptor && "value" in descriptor ? descriptor.value : undefined;
+}
+
+/** 只读新时钟 own-data，旧同名 getter／Proxy 不因迁移多执行；身份不授予死亡资格。 */
+export function deathExecutionContext(input: object | undefined): DeathExecutionContext | undefined {
+  const value = ownMetadataValue(input, "execution");
+  if (typeof value !== "object" || value === null || types.isProxy(value)) return undefined;
+  const night = ownMetadataValue(value, "night"), exile = ownMetadataValue(value, "exile");
+  const phaseRevision = ownMetadataValue(value, "phaseRevision");
+  return Object.freeze({
+    ...(isNightUnit(night) ? { night } : {}),
+    ...(isExileUnit(exile) ? { exile } : {}),
+    ...(typeof phaseRevision === "number" ? { phaseRevision } : {}),
+  });
 }
 
 /** 新元数据只消费 own-data，旧同名 getter／Proxy 不属于新增读取契约。 */
