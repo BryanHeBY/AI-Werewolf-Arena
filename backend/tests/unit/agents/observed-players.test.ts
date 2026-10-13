@@ -9,7 +9,7 @@ import { COMPONENT, Phase, Role, type AliveComponent, type RoleComponent } from 
 import { createRandom, randomDraws } from "../../../src/core/domain/random";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
+import { ObservedPlayersActionProvider } from "../../../src/app/observed-players-action-provider";
 import type { PlayerObservation } from "../../../src/game/observation/player-observation";
 import { getGuardState } from "../../../src/game/mechanisms/roles/guard/ports";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";

@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type RoleComponent, type GameEvent } from "../../../../src/core";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import type { PlayerObservation } from "../../../../src/game/observation/player-observation";
 import { AgentEventVisibilityRegistry } from "../../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
 import { magicianTwelveConfig } from "../../../../src/runtime/scenarios/magician_twelve";

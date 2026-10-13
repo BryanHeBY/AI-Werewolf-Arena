@@ -1,0 +1,153 @@
+{
+  "typeChecks": [
+    {
+      "attempt": "首临时配置",
+      "chunk": "b9f3ae",
+      "exitCode": 2,
+      "log": "error TS2688: Cannot find type definition file for 'bun-types'.\n  The file is in the program because:\n    Entry point of type library 'bun-types' specified in compilerOptions\nerror TS2688: Cannot find type definition file for 'bun-types/test-globals'.\n  The file is in the program because:\n    Entry point of type library 'bun-types/test-globals' specified in compilerOptions\n",
+      "原因": "临时typeRoots未列实际bun-types父目录；只修临时配置。"
+    },
+    {
+      "attempt": "实际类型红",
+      "launchChunk": "50381c",
+      "session": 96797,
+      "terminalChunk": "7df1d2",
+      "exitCode": 2,
+      "log": "backend/src/app/observed-players-action-provider.ts(8,15): error TS2305: Module '\"@ai-werewolf-arena/game-contract\"' has no exported member 'ActionProvider'.\n",
+      "原因": "Root新增ActionProvider错误指向GC，改准确backend core/domain/actions纯type；其他三个机器类型仍GC。"
+    },
+    {
+      "attempt": "最终有限26根",
+      "launchChunk": "a1aa45",
+      "session": 80924,
+      "terminalChunk": "c25f3a",
+      "exitCode": 0,
+      "log": "",
+      "config": {
+        "compilerOptions": {
+          "target": "ES2022",
+          "module": "ESNext",
+          "lib": [
+            "ES2024",
+            "DOM"
+          ],
+          "outDir": "./dist",
+          "strict": true,
+          "esModuleInterop": true,
+          "skipLibCheck": true,
+          "forceConsistentCasingInFileNames": true,
+          "resolveJsonModule": true,
+          "moduleResolution": "bundler",
+          "ignoreDeprecations": "5.0",
+          "declaration": true,
+          "declarationMap": true,
+          "sourceMap": true,
+          "downlevelIteration": true,
+          "allowJs": true,
+          "checkJs": true,
+          "noEmit": true,
+          "types": [
+            "node",
+            "bun-types",
+            "bun-types/test-globals"
+          ],
+          "typeRoots": [
+            "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+            "/home/hby/dev/AI-Werewolf-Arena/node_modules/@types",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules",
+            "/home/hby/dev/AI-Werewolf-Arena/node_modules"
+          ],
+          "baseUrl": "/home/hby/dev/AI-Werewolf-Arena/backend"
+        },
+        "include": [],
+        "files": [
+          "/home/hby/dev/AI-Werewolf-Arena/backend/src/runtime/simulation/simulate_games.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/seer/seer-policies.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/architecture/refactor-characterization.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/agents/magician/magician-observation.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/agents/red-moon-apostle/red-moon-observation.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/agents/observed-players.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/agents/order-prince/order-prince-observation.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/agents/nightmare-shadow/nightmare-observation.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/interactions/time-consort/reflection-cycle-controls.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/interactions/time-consort/native-scope-revocation.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/red-moon/seeded-world.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/trickster/seeded-world.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/wolf-sorcerer/seeded-world.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/boards/trickster/reproduction.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/magician/seeded-world.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/interactions/scholar-mentor/modifier-cycle-controls.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/order-prince/seeded-world.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/boards/wolf-sorcerer/reproduction.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/time-wolf-consort/seeded-world.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/failures/scholar-mentor/native-second-cycle-response.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/scholar-mentor/seeded-world.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/demon-hunter/seeded-world.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/src/app/observed-players-action-provider.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/agents/observation-adapter.test.ts"
+        ],
+        "exclude": []
+      },
+      "configSha256": "2c6378839c9cc9f0097bc10485e799c426a113f1617b9c33faa3273433bc9c1c"
+    }
+  ],
+  "runtimeCheck": {
+    "chunk": "14e9e1",
+    "exitCode": 0,
+    "rawLog": "bun test v1.4.3 (c6da4a4d3)\n\ntests/unit/agents/observed-players.test.ts:\n(pass) hidden opponent identities and private state cannot change a villager observation or decision [40.66ms]\n(pass) own skill resources are detached and immutable, while teammate knowledge is authorized [2.02ms]\n(pass) a wolf cannot infer a teammate's unannounced death from identity knowledge [1.66ms]\n(pass) a decision RNG capability has no seed, path or access to other streams [0.07ms]\n(pass) a neutral public shot updates observer knowledge and excludes the victim from decisions [1.19ms]\n\ntests/unit/agents/observation-adapter.test.ts:\n(pass) observation adapter construction does not inspect World or initialize prompt counts [0.99ms]\n(pass) missing observed strategy rejects before any World query [0.62ms]\n\n 7 pass\n 0 fail\n 31 expect() calls\nRan 7 tests across 2 files. [159.00ms]\n",
+    "counts": {
+      "tests": 7,
+      "failures": 0,
+      "assertions": 31
+    },
+    "scope": "新构造/缺失策略2单元＋原观察5单元一次；不包含整局或全部角色矩阵。"
+  },
+  "postGreenDelta": "运行检查后仅纠正ActionProvider纯类型入口与魔术师测试中文首句；原运行分支、条件、调用、期望及机器字符串未变，后续有限类型真实通过，不重已有行为绿。；独立审查后应用头“只持有目录”改准确三对象所有权说明，仅注释增量，不重类型或行为。",
+  "proofHistory": [
+    {
+      "chunk": "807d95",
+      "exitCode": 1,
+      "原因": "初scanner未重扫模板尾，导致模板中后续整段当字符串误比；只修proof为完整AST kind/leaf遍历，callback显式void。"
+    },
+    {
+      "chunk": "0b2ece",
+      "exitCode": 1,
+      "原因": "诊断确认同一模板scanner误报，未改业务源。"
+    },
+    {
+      "chunk": "fd44cd",
+      "exitCode": 1,
+      "原因": "完整程序保持已通过，仅魔术师中文首句缺职责动词，改真实验证职责。"
+    },
+    {
+      "chunk": "0519e0",
+      "exitCode": 0,
+      "output": "{\"moveClass\":true,\"consumers\":24,\"calls\":27,\"heads\":26,\"violations\":0}"
+    },
+    {
+      "chunk": "1e6c74",
+      "exitCode": 0,
+      "原因": "应用所有权头精度修正后重新绑定26finalSHA及完整M1/M2程序保持，不重编译/运行测试。",
+      "output": "{\"moveClass\":true,\"consumers\":24,\"calls\":27,\"heads\":26,\"violations\":0}"
+    }
+  ],
+  "inventoryHistory": [
+    {
+      "chunk": "90e6e9",
+      "exitCode": 1,
+      "原因": "首工具拒绝两已登记O3共享工作树，未写before；改读取实际Git before而非把working当旧字节。"
+    },
+    {
+      "chunk": "4f025e",
+      "exitCode": 1,
+      "原因": "真实Git没有并行新增Demon编译fixture，工具改先按实际含目标标识筛选，未写before。"
+    },
+    {
+      "chunk": "5baf04",
+      "exitCode": 0,
+      "scope": "实际53Git25文件/27constructor"
+    }
+  ]
+}

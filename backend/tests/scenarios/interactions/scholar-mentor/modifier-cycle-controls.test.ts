@@ -15,7 +15,7 @@ import {
   type ToolCall,
 } from "../../../../src/core";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import { scholarMentorStateForRole } from "../../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
 const variants = [
   "same-good",

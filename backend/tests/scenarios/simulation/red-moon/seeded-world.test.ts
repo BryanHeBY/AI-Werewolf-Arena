@@ -13,7 +13,7 @@ import {
   type RoleComponent,
 } from "../../../../src/core";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 for (const policy of ["ends_game", "forbidden"] as const)
   for (const locale of ["zh-CN", "en"] as const)
     test(

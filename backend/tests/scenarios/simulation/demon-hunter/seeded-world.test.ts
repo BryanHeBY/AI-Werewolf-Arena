@@ -14,7 +14,7 @@ import {
   type RoleComponent,
 } from "../../../../src/core";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import { demonHunterBoard } from "../../../support/features/demon-hunter/builders/candidate-world";
 for (const size of [6, 12] as const)
   for (const goal of [WinCondition.SlaughterCity, WinCondition.SlaughterSide])

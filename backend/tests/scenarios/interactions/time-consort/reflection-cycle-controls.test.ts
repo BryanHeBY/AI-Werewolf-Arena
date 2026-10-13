@@ -15,7 +15,7 @@ import {
   type ToolCall,
 } from "../../../../src/core";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import { getTimeConsortState } from "../../../../src/game/mechanisms/roles/time_wolf_consort/state";
 for (const scope of ["whole_night", "first_effect"] as const)
   for (const variant of ["heal", "knife", "pass", "self", "repeat", "repeat-lock"] as const)

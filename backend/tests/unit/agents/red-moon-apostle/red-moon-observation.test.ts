@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type RoleComponent } from "../../../../src/core";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
-import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import type { PlayerObservation } from "../../../../src/game/observation/player-observation";
 import { redMoonTwelveConfig } from "../../../../src/runtime/scenarios/red_moon_twelve";
 import { getRedMoonState } from "../../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";

@@ -47,7 +47,7 @@ import { getDefaultTargetHintRegistry } from "../../../src/game/mechanisms/llm/t
 import { getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms/prompt/config_render_registry";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
+import { ObservedPlayersActionProvider } from "../../../src/app/observed-players-action-provider";
 import { nightStageContext } from "../../support/builders/night-stage-context";
 
 const inspectionPolicies = [

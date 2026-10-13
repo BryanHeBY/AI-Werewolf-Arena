@@ -9,7 +9,7 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { orderPrinceTwelveConfig } from "../../../../src/runtime/scenarios/order_prince_twelve";
 import { createRandom, randomDraws } from "../../../../src/core";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 for (const locale of ["zh-CN", "en"] as const)
   test(
     "Order Prince actual World 20 seeds/" + locale,

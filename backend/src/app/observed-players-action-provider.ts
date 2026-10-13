@@ -4,16 +4,16 @@
  * 完整观察由游戏侧 owner 形成并脱离冻结；此适配器保留请求、知识与策略调用的原时点。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import type { ActionProvider, ActionRequest, ToolCall, World } from "../../../core";
-import { PlayerPromptPolicy } from "../player/player_prompt_policy";
-import type { ObservedPlayerStrategy } from "../../../game/observation/player-observation";
+import type { ActionProvider, ActionRequest, ToolCall, World } from "../core";
+import { PlayerPromptPolicy } from "../ai/agents/player/player_prompt_policy";
+import type { ObservedPlayerStrategy } from "../game/observation/player-observation";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultRoleCatalog,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../game/mechanisms";
+} from "../game/mechanisms";
 
 /** 特权捕获适配器只把共用玩家投影交给受限策略。 */
 export class ObservedPlayersActionProvider implements ActionProvider {

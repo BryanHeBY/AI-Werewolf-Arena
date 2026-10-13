@@ -11,7 +11,7 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { magicianTwelveConfig } from "../../../../src/runtime/scenarios/magician_twelve";
 import { createRandom, randomDraws } from "../../../../src/core";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 for (const gunPolicy of ["awa_qualified_sources_v1", "awa_day_deaths_v1"] as const)
   for (const firstNight of [1, 2] as const)
     for (const shot of ["original", "exchanged"] as const)

@@ -1,0 +1,780 @@
+{
+  "schema": "awa-observed-provider-independent-review-v1",
+  "状态": "批准",
+  "审查者": "/root/preflight_final_review",
+  "发现": [],
+  "已修正审查发现": [
+    {
+      "范围": "backend/src/app/observed-players-action-provider.ts",
+      "原说明": "此应用适配器只持有默认角色目录",
+      "问题": "实际还持有World和策略表，原句持有范围不准确。",
+      "最终说明": "除 World 和策略表外，仅保存默认角色目录",
+      "修改": "仅一条中文头；Root实际1e6c74重绑定完整M1/M2/26头及finalSHA，未重类型或行为。"
+    }
+  ],
+  "M1物理迁移独立审查": {
+    "状态": "批准",
+    "基线": "53d40005e67cfbd33fb36f81c80de3f373f90759",
+    "真实Git全文输入": 25,
+    "源码路径": 26,
+    "范围说明": "25原路径中旧AI叶删除、新应用叶增加；实际消费者24。该冻结候选不同于M2最终26个现存文件。",
+    "真实原类完整文件": {
+      "oldPath": "backend/src/ai/agents/providers/observed_players.ts",
+      "oldSHA256": "74cd8a65518e56f8d91bab4acdaf791089d8de269d304a57441897bbb21eace3",
+      "newPath": "backend/src/app/observed-players-action-provider.ts",
+      "movedSHA256": "ddc0428548c8686714da1d641a5b426244d5f2e3d3c021e0c455334b24b06030",
+      "仅四个原物理import路径逆后完整原字节相同": true
+    },
+    "24完整消费者": [
+      {
+        "path": "backend/src/runtime/simulation/simulate_games.ts",
+        "beforeWorkingSHA256": "fc91fe854e1e24f01e75d052b40abbf4c6d2c493e601eb17facfb281c058f72b",
+        "M1SHA256": "381406b4d07cec6b46dd28a357802c1b8d61caf32b168752a47e9f1db4135793",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/unit/features/seer/seer-policies.test.ts",
+        "beforeWorkingSHA256": "0fb851de763988f598910a849f26c010db05ee5efb9f3dbd320fc2a38c01e06c",
+        "M1SHA256": "34035db99271193f8e647d37db0d266a05aebd182e77a1754fe01d0e43f53414",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/architecture/refactor-characterization.test.ts",
+        "beforeWorkingSHA256": "041b61e03e96acdfa498e6df810f9e1e3a4a094fddb8b4642222b3478225d539",
+        "M1SHA256": "e41bb4cdccfbe81016aea73764e26523145ee9043662a006dcce60ab409b7370",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+        "beforeWorkingSHA256": "11e0ecdcaad0587eb45f259cb183e355fd90b7ef51851043a458756b87e72317",
+        "M1SHA256": "84ed60b56117a2ff6355db8a8995b3ec0ffe496e38c4d26d06bfb7228bf1e2f2",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/unit/agents/magician/magician-observation.test.ts",
+        "beforeWorkingSHA256": "3fb0d5f40e269d45ca58ad45b028b114a3ea7149b1b0c89195d9df2cf73c095c",
+        "M1SHA256": "4e77cce576447bd45b9d1b8d9db00d48d3766263c8a9eb054a8240d337fd3eae",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/unit/agents/red-moon-apostle/red-moon-observation.test.ts",
+        "beforeWorkingSHA256": "c7d85aff49378f7a5cc515ff0dfddff2f9ab3afd871bd720925700d89947fbc5",
+        "M1SHA256": "a9e539254ca9a7cdead98c99e6c6216c1d66c8e7e8e2c7c676e8d381b7b8d394",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/unit/agents/observed-players.test.ts",
+        "beforeWorkingSHA256": "50830cff248c91f8f9ed154a5d354a40c9f6ec0c138dba52cc2df6d1e902659f",
+        "M1SHA256": "d2744841592975026da7152d36d32f95b176f251bd0b8e793ba7ae603cc0232c",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/unit/agents/order-prince/order-prince-observation.test.ts",
+        "beforeWorkingSHA256": "cf6964294bee5ac7ec89225854c94903b8c905b6e360a76c6257e7ffb1a7d2d3",
+        "M1SHA256": "27b49ed5f99e4696df36716fe32611236393a9e3c76a43a50a9e5cac5f8adda8",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/unit/agents/nightmare-shadow/nightmare-observation.test.ts",
+        "beforeWorkingSHA256": "f222aeb78a46090c730e09e04d78ad811d81322c98fffdf9f724d065057a732e",
+        "M1SHA256": "b04ebce9658463f2ee70b0354dca592749c8bc93f142adecf4c5c93e47b1569b",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/interactions/time-consort/reflection-cycle-controls.test.ts",
+        "beforeWorkingSHA256": "1614cfbb1c840f290ed6ff7667c02e9aa5aac9cb818880a3dadf786faf64c9cf",
+        "M1SHA256": "dd9f75b5292173a2866b190c4358b017f54096733a8b7436714e7748c22573cb",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/interactions/time-consort/native-scope-revocation.test.ts",
+        "beforeWorkingSHA256": "540507a66cfe0315e18bee09442164dce0f6a3b687bf81012172b836658144da",
+        "M1SHA256": "d94a9b6ae1f22b72de4c49bf90ebd4da181d677c6ac201982f6adb9525a87259",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/red-moon/seeded-world.test.ts",
+        "beforeWorkingSHA256": "c38c0376fb3d081fa7220474ccb4d0751797356cc2324c09195b377073f5d93d",
+        "M1SHA256": "578811b0d0a145a747c74cc37fbcaaad2b5009345f729cbd74c5758bc9b5ba59",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/trickster/seeded-world.test.ts",
+        "beforeWorkingSHA256": "d29da915607ec62ecea4b9bebd12b84ef9e5243e554cfbb723588ab2dc11c42b",
+        "M1SHA256": "fa1299307f19de5caaf6dba2b831b5a2d46c364d18dc4df2b9b88ea6ec89e8a7",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/wolf-sorcerer/seeded-world.test.ts",
+        "beforeWorkingSHA256": "8da9536ae9da5db9946426b4e7645aa00331cabc300d90c7b02f2b55a84ba0b1",
+        "M1SHA256": "937858d5f97c96037b59d75a99afd5b00178fcb11bb9342553d803cacc26dcc1",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/boards/trickster/reproduction.test.ts",
+        "beforeWorkingSHA256": "f06ed36573a0cc2eda987d7ff018d19796d6b2a4e62beb7ace537c1d086608af",
+        "M1SHA256": "9b346eed9e9cb3b571c7a6aa21a200062fb01737ed9bf397c1a337618488a8e2",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/magician/seeded-world.test.ts",
+        "beforeWorkingSHA256": "b428425bbd121104ca16b907d3771c400e4a9b1ebeb5f474fbe53dcbd6024177",
+        "M1SHA256": "ca59a7a3e6a87d60a24011f2973fadf7811a223780fc66f6dda1b333f1420f69",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/interactions/scholar-mentor/modifier-cycle-controls.test.ts",
+        "beforeWorkingSHA256": "9a2e12753519f0233c1ddf66473eb1413ad3747d929f423fe784e58eda0b67ed",
+        "M1SHA256": "c2b5912d3b4596544d0ad1ee6ee8ba6b037644cdc6b4a33603c6872f69bae120",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/order-prince/seeded-world.test.ts",
+        "beforeWorkingSHA256": "c88fc0bc11e85ba1f9cd3dc9c5c88e8b5b7b5c57382f8af220a9defef629eb15",
+        "M1SHA256": "24e833e53d0cf1061e0399218d5b5c8c7362e473de8d21aad22ff51e2d497a4c",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/boards/wolf-sorcerer/reproduction.test.ts",
+        "beforeWorkingSHA256": "5a5e0c204e83f9b467b21dd5b797b482c5ed79674a8d82dfcca49ca67da47205",
+        "M1SHA256": "b22bc9145be23896e1458eb90837cc204b21ca187ca69dabf4cd2775eb94a693",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/time-wolf-consort/seeded-world.test.ts",
+        "beforeWorkingSHA256": "b63e300a3e32b3dff6c3340ccdf1152a3f23c77f9dec8f961eb10c87d8ccf604",
+        "M1SHA256": "a0f06cd6269b8727d5b182fc506dba7aa81e1411c49c8aae3d0a39f60d2ff4b3",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/failures/scholar-mentor/native-second-cycle-response.test.ts",
+        "beforeWorkingSHA256": "4404134b832e504b8d9e36c0da6804a94a6844a0b8e3c38f916d55fc2b7d65cb",
+        "M1SHA256": "8d8a1c4f918288b70dfb5c451b88458500d148fc189269fc65822818f4ae141e",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/scholar-mentor/seeded-world.test.ts",
+        "beforeWorkingSHA256": "d5bdecbf2d3b78fd122061ac884351f83b9d0a6bd2d3493722656c7583716f8e",
+        "M1SHA256": "3971ec893b2a689d5ee97d714c80aae37a82bbbe8c6f6074823ccf1d9a6addf7",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/demon-hunter/seeded-world.test.ts",
+        "beforeWorkingSHA256": "abf6958eaf6ebe09bbaa52fbd0bc916828ee76c9a0936d12d4bfeaf29d0ceaef",
+        "M1SHA256": "972680e21c1553fef37fe327558ece66dad9c65e836a06fe2364f6ab74990ce2",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "beforeWorkingSHA256": "e702f4c8d0937e948edce25a46ef1280fd09e1ce6c4a251d2584a7077b3afb56",
+        "M1SHA256": "4edad0546b3c270ec5f3d6ad18644d6bf349bfa4ca8cef4343f57e22df24d1fe",
+        "exactSingleNamedImportInverseEntireByteSame": true
+      }
+    ],
+    "O3共享层": {
+      "paths": [
+        "backend/tests/unit/features/seer/seer-policies.test.ts",
+        "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts"
+      ],
+      "来源": "actual53原Git另保存；M1 working-before含O3投影import及中文头，该完整后一层保留，不归M1差异。",
+      "提交前提": "Root已确认先提交已独立审查的O3，再暂存M1冻结候选；不把O3新imports作为本批物理迁移。"
+    },
+    "接口与依赖": "直接叶进口路径迁移，旧AI文件删除、24具名进口连接app；原类、三参构造、Policy初始化和getAction原样。没有桥或新公开根export。",
+    "验证归属": "M1未单独执行测试或编译；原7测试及26根类型检查属于最终M2汇合，不作为中间M1独立构建已绿的证据。"
+  },
+  "M2职责分离独立审查": {
+    "状态": "批准",
+    "当前现存源码": [
+      {
+        "path": "backend/src/runtime/simulation/simulate_games.ts",
+        "sha256": "cc78a408ec4e5eb57e2a5a549dd8f31992891d910fd9e1b67931e32506a83696"
+      },
+      {
+        "path": "backend/tests/unit/features/seer/seer-policies.test.ts",
+        "sha256": "a8e6f80380d39054dbeeda1a5d61353819748e7de39c6552681042b057d96bbf"
+      },
+      {
+        "path": "backend/tests/architecture/refactor-characterization.test.ts",
+        "sha256": "619c9f33d492b70ef5fa581ee77176a29a6775cb71a08250b9baaece815d439a"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+        "sha256": "7475fc164c212477405e8d3cd0d6a75b591e8791018540a8c22119b664b05db1"
+      },
+      {
+        "path": "backend/tests/unit/agents/magician/magician-observation.test.ts",
+        "sha256": "f47e232285286df738f61b9e67a2675d8e994cb8e2e38b46b4c1c3e9ade6f5bd"
+      },
+      {
+        "path": "backend/tests/unit/agents/red-moon-apostle/red-moon-observation.test.ts",
+        "sha256": "111bbf39224285d4fee4ec0908e09d1b95a362bcde5ae0eb4565b15ac2350c2c"
+      },
+      {
+        "path": "backend/tests/unit/agents/observed-players.test.ts",
+        "sha256": "7d0c9ed563192dafb7488e4f4037f9e9ccff5a2dbf8e42ec8e370dbc871c794c"
+      },
+      {
+        "path": "backend/tests/unit/agents/order-prince/order-prince-observation.test.ts",
+        "sha256": "d3fc14c61b07efb85fb6f7af167ee5fefd2bc232813f580ca693ef706d241cbf"
+      },
+      {
+        "path": "backend/tests/unit/agents/nightmare-shadow/nightmare-observation.test.ts",
+        "sha256": "8f82a4dc242067625de17b4f6a5f35ca8f3f58da79d84b3fdf658ad62be00e54"
+      },
+      {
+        "path": "backend/tests/scenarios/interactions/time-consort/reflection-cycle-controls.test.ts",
+        "sha256": "d0cd54378c101a789c9590bbac06818fd44afcaa39a1dce6e59350c81c22e820"
+      },
+      {
+        "path": "backend/tests/scenarios/interactions/time-consort/native-scope-revocation.test.ts",
+        "sha256": "25ee29dc829e7e315e89c3c3cc6d1247db91ddc54d70952f81c1290e473a808c"
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/red-moon/seeded-world.test.ts",
+        "sha256": "28f5f6b9eb6913b219d95cae6b980134a49c41b9c18ee379ad6f276cd5bc61ab"
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/trickster/seeded-world.test.ts",
+        "sha256": "1a24fa735b5865db830a62a2d9986eefcaf6c2cfbc9eba63f39ecd59c1c2e4cc"
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/wolf-sorcerer/seeded-world.test.ts",
+        "sha256": "8014006e143680f9d971f247d420f29dd3051e141f69f0ec3352838965629ee4"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/trickster/reproduction.test.ts",
+        "sha256": "0e539c4c87290faacf37b8939064d2007c1257568bb1d815f5f681c30caf0431"
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/magician/seeded-world.test.ts",
+        "sha256": "1f648ec2b90ab24f5f8dcfad9cfbd3ea485c3c6b9ec085ec14d7cf058a63119e"
+      },
+      {
+        "path": "backend/tests/scenarios/interactions/scholar-mentor/modifier-cycle-controls.test.ts",
+        "sha256": "54be13fb113eed1086e0bde442656694c3ba387831527d23b49e42801a4caf97"
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/order-prince/seeded-world.test.ts",
+        "sha256": "33ca54336b01f79529c0532cfe99d8db6e60b23a42aeee865f74a9e526fdb2c0"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/wolf-sorcerer/reproduction.test.ts",
+        "sha256": "e51f76f43fe83557125fd6d500e01d93fe7e83bb24db33c0c92288e3135a51d3"
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/time-wolf-consort/seeded-world.test.ts",
+        "sha256": "fe8f9bde21a93010fd7f3a11d2d7bdbd53810748becbd9ae7188ae4ae3d7e8cb"
+      },
+      {
+        "path": "backend/tests/scenarios/failures/scholar-mentor/native-second-cycle-response.test.ts",
+        "sha256": "cf8ee60e4217c49e29cd920dc76a631c80e40b8e5b8ae8867d10da5ec49eb90a"
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/scholar-mentor/seeded-world.test.ts",
+        "sha256": "07af83cce3688fc7078e09aca729a12013dcdb39d5159303439c9ee66ce54310"
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/demon-hunter/seeded-world.test.ts",
+        "sha256": "cea44b5a35126b6ab10f9e2ce92bfbe75548691fd3f6bed0f492db1fbfa93610"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "sha256": "9d60de3919fbfbf3d0f7a575755107686c42d678a8442588a1d6c7de036a0cca"
+      },
+      {
+        "path": "backend/src/app/observed-players-action-provider.ts",
+        "sha256": "d5bdf9eccddd24d094b9ccd3cb8f45219a2759cd390038142057fe47d983b665"
+      },
+      {
+        "path": "backend/tests/unit/agents/observation-adapter.test.ts",
+        "sha256": "96330f4d068282e7da6d113c6d7fffbec19aa69f0f0051facffad1af29aa240d"
+      }
+    ],
+    "新增单元": "backend/tests/unit/agents/observation-adapter.test.ts",
+    "24完整消费者": [
+      {
+        "path": "backend/src/runtime/simulation/simulate_games.ts",
+        "M1SHA256": "381406b4d07cec6b46dd28a357802c1b8d61caf32b168752a47e9f1db4135793",
+        "currentSHA256": "cc78a408ec4e5eb57e2a5a549dd8f31992891d910fd9e1b67931e32506a83696",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "context.boardConfig"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/unit/features/seer/seer-policies.test.ts",
+        "M1SHA256": "34035db99271193f8e647d37db0d266a05aebd182e77a1754fe01d0e43f53414",
+        "currentSHA256": "a8e6f80380d39054dbeeda1a5d61353819748e7de39c6552681042b057d96bbf",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "game.config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/architecture/refactor-characterization.test.ts",
+        "M1SHA256": "e41bb4cdccfbe81016aea73764e26523145ee9043662a006dcce60ab409b7370",
+        "currentSHA256": "619c9f33d492b70ef5fa581ee77176a29a6775cb71a08250b9baaece815d439a",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+        "M1SHA256": "84ed60b56117a2ff6355db8a8995b3ec0ffe496e38c4d26d06bfb7228bf1e2f2",
+        "currentSHA256": "7475fc164c212477405e8d3cd0d6a75b591e8791018540a8c22119b664b05db1",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "game.config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/unit/agents/magician/magician-observation.test.ts",
+        "M1SHA256": "4e77cce576447bd45b9d1b8d9db00d48d3766263c8a9eb054a8240d337fd3eae",
+        "currentSHA256": "f47e232285286df738f61b9e67a2675d8e994cb8e2e38b46b4c1c3e9ade6f5bd",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/unit/agents/red-moon-apostle/red-moon-observation.test.ts",
+        "M1SHA256": "a9e539254ca9a7cdead98c99e6c6216c1d66c8e7e8e2c7c676e8d381b7b8d394",
+        "currentSHA256": "111bbf39224285d4fee4ec0908e09d1b95a362bcde5ae0eb4565b15ac2350c2c",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/unit/agents/observed-players.test.ts",
+        "M1SHA256": "d2744841592975026da7152d36d32f95b176f251bd0b8e793ba7ae603cc0232c",
+        "currentSHA256": "7d0c9ed563192dafb7488e4f4037f9e9ccff5a2dbf8e42ec8e370dbc871c794c",
+        "originalConstructors": 4,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "sixPlayerMvpConfig",
+          "sixPlayerMvpConfig",
+          "sixPlayerMvpConfig",
+          "sixPlayerMvpConfig"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/unit/agents/order-prince/order-prince-observation.test.ts",
+        "M1SHA256": "27b49ed5f99e4696df36716fe32611236393a9e3c76a43a50a9e5cac5f8adda8",
+        "currentSHA256": "d3fc14c61b07efb85fb6f7af167ee5fefd2bc232813f580ca693ef706d241cbf",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/unit/agents/nightmare-shadow/nightmare-observation.test.ts",
+        "M1SHA256": "b04ebce9658463f2ee70b0354dca592749c8bc93f142adecf4c5c93e47b1569b",
+        "currentSHA256": "8f82a4dc242067625de17b4f6a5f35ca8f3f58da79d84b3fdf658ad62be00e54",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/scenarios/interactions/time-consort/reflection-cycle-controls.test.ts",
+        "M1SHA256": "dd9f75b5292173a2866b190c4358b017f54096733a8b7436714e7748c22573cb",
+        "currentSHA256": "d0cd54378c101a789c9590bbac06818fd44afcaa39a1dce6e59350c81c22e820",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/scenarios/interactions/time-consort/native-scope-revocation.test.ts",
+        "M1SHA256": "d94a9b6ae1f22b72de4c49bf90ebd4da181d677c6ac201982f6adb9525a87259",
+        "currentSHA256": "25ee29dc829e7e315e89c3c3cc6d1247db91ddc54d70952f81c1290e473a808c",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/red-moon/seeded-world.test.ts",
+        "M1SHA256": "578811b0d0a145a747c74cc37fbcaaad2b5009345f729cbd74c5758bc9b5ba59",
+        "currentSHA256": "28f5f6b9eb6913b219d95cae6b980134a49c41b9c18ee379ad6f276cd5bc61ab",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/trickster/seeded-world.test.ts",
+        "M1SHA256": "fa1299307f19de5caaf6dba2b831b5a2d46c364d18dc4df2b9b88ea6ec89e8a7",
+        "currentSHA256": "1a24fa735b5865db830a62a2d9986eefcaf6c2cfbc9eba63f39ecd59c1c2e4cc",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/wolf-sorcerer/seeded-world.test.ts",
+        "M1SHA256": "937858d5f97c96037b59d75a99afd5b00178fcb11bb9342553d803cacc26dcc1",
+        "currentSHA256": "8014006e143680f9d971f247d420f29dd3051e141f69f0ec3352838965629ee4",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/scenarios/boards/trickster/reproduction.test.ts",
+        "M1SHA256": "9b346eed9e9cb3b571c7a6aa21a200062fb01737ed9bf397c1a337618488a8e2",
+        "currentSHA256": "0e539c4c87290faacf37b8939064d2007c1257568bb1d815f5f681c30caf0431",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/magician/seeded-world.test.ts",
+        "M1SHA256": "ca59a7a3e6a87d60a24011f2973fadf7811a223780fc66f6dda1b333f1420f69",
+        "currentSHA256": "1f648ec2b90ab24f5f8dcfad9cfbd3ea485c3c6b9ec085ec14d7cf058a63119e",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/scenarios/interactions/scholar-mentor/modifier-cycle-controls.test.ts",
+        "M1SHA256": "c2b5912d3b4596544d0ad1ee6ee8ba6b037644cdc6b4a33603c6872f69bae120",
+        "currentSHA256": "54be13fb113eed1086e0bde442656694c3ba387831527d23b49e42801a4caf97",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/order-prince/seeded-world.test.ts",
+        "M1SHA256": "24e833e53d0cf1061e0399218d5b5c8c7362e473de8d21aad22ff51e2d497a4c",
+        "currentSHA256": "33ca54336b01f79529c0532cfe99d8db6e60b23a42aeee865f74a9e526fdb2c0",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/scenarios/boards/wolf-sorcerer/reproduction.test.ts",
+        "M1SHA256": "b22bc9145be23896e1458eb90837cc204b21ca187ca69dabf4cd2775eb94a693",
+        "currentSHA256": "e51f76f43fe83557125fd6d500e01d93fe7e83bb24db33c0c92288e3135a51d3",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/time-wolf-consort/seeded-world.test.ts",
+        "M1SHA256": "a0f06cd6269b8727d5b182fc506dba7aa81e1411c49c8aae3d0a39f60d2ff4b3",
+        "currentSHA256": "fe8f9bde21a93010fd7f3a11d2d7bdbd53810748becbd9ae7188ae4ae3d7e8cb",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/scenarios/failures/scholar-mentor/native-second-cycle-response.test.ts",
+        "M1SHA256": "8d8a1c4f918288b70dfb5c451b88458500d148fc189269fc65822818f4ae141e",
+        "currentSHA256": "cf8ee60e4217c49e29cd920dc76a631c80e40b8e5b8ae8867d10da5ec49eb90a",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/scholar-mentor/seeded-world.test.ts",
+        "M1SHA256": "3971ec893b2a689d5ee97d714c80aae37a82bbbe8c6f6074823ccf1d9a6addf7",
+        "currentSHA256": "07af83cce3688fc7078e09aca729a12013dcdb39d5159303439c9ee66ce54310",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/demon-hunter/seeded-world.test.ts",
+        "M1SHA256": "972680e21c1553fef37fe327558ece66dad9c65e836a06fe2364f6ab74990ce2",
+        "currentSHA256": "cea44b5a35126b6ab10f9e2ce92bfbe75548691fd3f6bed0f492db1fbfa93610",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "M1SHA256": "4edad0546b3c270ec5f3d6ad18644d6bf349bfa4ca8cef4343f57e22df24d1fe",
+        "currentSHA256": "9d60de3919fbfbf3d0f7a575755107686c42d678a8442588a1d6c7de036a0cca",
+        "originalConstructors": 1,
+        "firstTwoArgumentProgramsSame": true,
+        "thirdArgs": [
+          "config"
+        ],
+        "fullPrintedTypedConsumerProgramSameAfterOnlyReinsertingThirdArgs": true
+      }
+    ],
+    "退出第三实参": 27,
+    "精确范围": "完整消费者程序只恢复原第3实参后回到M1；首两实参、其他调用/判断/回调/数组/矩阵/断言均完整保留。未恢复整个新owner以冒充原类等价。",
+    "真实owner语义": [
+      "构造保存World/strategies及一次默认Catalog，不构造PlayerPromptPolicy/公开初配比缓存/四展示注册表。旧board第三实参表达式读取、旧初始化查询及其失败路径真实退出，是API和构造时序变化。",
+      "每次strategy map.get(request.actorId)先行，missing错误早于任何capture/World读；strategy.decide callee仍在捕获观察之前查找。",
+      "role thunk先查this.role，再调用actorId()，方法内才查World.getComponent；wolf thunk同样先查方法/actor，随后knownWolfTeammates callee→World→actor参数→catalog，保原内部查询序。",
+      "共用capture只投影玩家知识及已发表死亡；原freezeObservation先structuredClone再递归freeze，World/queries/Catalog不进入策略输入。不存在把其他玩家真实alive直接当knownAlive或任意对手私态传入策略的新路径。",
+      "Catalog独立于PromptPolicy保存，但从原同默认目录取得；策略只返回工具，权限、生命、库存、付款与实际提交仍原引擎复验。",
+      "新两个单元用固定角色、拒绝World查询探针及错误字面核构造无读与missing先行；不以生产DTO生成expected。原五个观察单元的原断言与随机能力/隐藏身份/未公告死亡边界保持。",
+      "三个原英文场景头准确译中文；魔术师首句职责动词与App持有范围两说明问题已闭。纯ActionProvider类型由真正backend actions owner提供，其他机器数据类型由GC拥有。"
+    ],
+    "行为差异边界": "删旧提示对象字段、私有接收方和构造读取是明确变化，不宣称伪造私有字段／monkeypatch／模块冷加载／全部初始化失败轨迹等价。非Fxx游戏规则改动，不改RNG/资源/请求/录制格式。"
+  },
+  "作者收据核对": {
+    "来源": "Root真实已完成工具回执，独立审查未重复执行",
+    "测试": {
+      "chunk": "14e9e1",
+      "exitCode": 0,
+      "rawLog": "bun test v1.4.3 (c6da4a4d3)\n\ntests/unit/agents/observed-players.test.ts:\n(pass) hidden opponent identities and private state cannot change a villager observation or decision [40.66ms]\n(pass) own skill resources are detached and immutable, while teammate knowledge is authorized [2.02ms]\n(pass) a wolf cannot infer a teammate's unannounced death from identity knowledge [1.66ms]\n(pass) a decision RNG capability has no seed, path or access to other streams [0.07ms]\n(pass) a neutral public shot updates observer knowledge and excludes the victim from decisions [1.19ms]\n\ntests/unit/agents/observation-adapter.test.ts:\n(pass) observation adapter construction does not inspect World or initialize prompt counts [0.99ms]\n(pass) missing observed strategy rejects before any World query [0.62ms]\n\n 7 pass\n 0 fail\n 31 expect() calls\nRan 7 tests across 2 files. [159.00ms]\n",
+      "counts": {
+        "tests": 7,
+        "failures": 0,
+        "assertions": 31
+      },
+      "scope": "新构造/缺失策略2单元＋原观察5单元一次；不包含整局或全部角色矩阵。"
+    },
+    "类型过程": [
+      {
+        "attempt": "首临时配置",
+        "chunk": "b9f3ae",
+        "exitCode": 2,
+        "log": "error TS2688: Cannot find type definition file for 'bun-types'.\n  The file is in the program because:\n    Entry point of type library 'bun-types' specified in compilerOptions\nerror TS2688: Cannot find type definition file for 'bun-types/test-globals'.\n  The file is in the program because:\n    Entry point of type library 'bun-types/test-globals' specified in compilerOptions\n",
+        "原因": "临时typeRoots未列实际bun-types父目录；只修临时配置。"
+      },
+      {
+        "attempt": "实际类型红",
+        "launchChunk": "50381c",
+        "session": 96797,
+        "terminalChunk": "7df1d2",
+        "exitCode": 2,
+        "log": "backend/src/app/observed-players-action-provider.ts(8,15): error TS2305: Module '\"@ai-werewolf-arena/game-contract\"' has no exported member 'ActionProvider'.\n",
+        "原因": "Root新增ActionProvider错误指向GC，改准确backend core/domain/actions纯type；其他三个机器类型仍GC。"
+      },
+      {
+        "attempt": "最终有限26根",
+        "launchChunk": "a1aa45",
+        "session": 80924,
+        "terminalChunk": "c25f3a",
+        "exitCode": 0,
+        "log": "",
+        "config": {
+          "compilerOptions": {
+            "target": "ES2022",
+            "module": "ESNext",
+            "lib": [
+              "ES2024",
+              "DOM"
+            ],
+            "outDir": "./dist",
+            "strict": true,
+            "esModuleInterop": true,
+            "skipLibCheck": true,
+            "forceConsistentCasingInFileNames": true,
+            "resolveJsonModule": true,
+            "moduleResolution": "bundler",
+            "ignoreDeprecations": "5.0",
+            "declaration": true,
+            "declarationMap": true,
+            "sourceMap": true,
+            "downlevelIteration": true,
+            "allowJs": true,
+            "checkJs": true,
+            "noEmit": true,
+            "types": [
+              "node",
+              "bun-types",
+              "bun-types/test-globals"
+            ],
+            "typeRoots": [
+              "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+              "/home/hby/dev/AI-Werewolf-Arena/node_modules/@types",
+              "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules",
+              "/home/hby/dev/AI-Werewolf-Arena/node_modules"
+            ],
+            "baseUrl": "/home/hby/dev/AI-Werewolf-Arena/backend"
+          },
+          "include": [],
+          "files": [
+            "/home/hby/dev/AI-Werewolf-Arena/backend/src/runtime/simulation/simulate_games.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/seer/seer-policies.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/architecture/refactor-characterization.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/agents/magician/magician-observation.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/agents/red-moon-apostle/red-moon-observation.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/agents/observed-players.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/agents/order-prince/order-prince-observation.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/agents/nightmare-shadow/nightmare-observation.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/interactions/time-consort/reflection-cycle-controls.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/interactions/time-consort/native-scope-revocation.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/red-moon/seeded-world.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/trickster/seeded-world.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/wolf-sorcerer/seeded-world.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/boards/trickster/reproduction.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/magician/seeded-world.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/interactions/scholar-mentor/modifier-cycle-controls.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/order-prince/seeded-world.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/boards/wolf-sorcerer/reproduction.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/time-wolf-consort/seeded-world.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/failures/scholar-mentor/native-second-cycle-response.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/scholar-mentor/seeded-world.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/simulation/demon-hunter/seeded-world.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/src/app/observed-players-action-provider.ts",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/agents/observation-adapter.test.ts"
+          ],
+          "exclude": []
+        },
+        "configSha256": "2c6378839c9cc9f0097bc10485e799c426a113f1617b9c33faa3273433bc9c1c"
+      }
+    ],
+    "首工具及证明失败": {
+      "inventory": [
+        {
+          "chunk": "90e6e9",
+          "exitCode": 1,
+          "原因": "首工具拒绝两已登记O3共享工作树，未写before；改读取实际Git before而非把working当旧字节。"
+        },
+        {
+          "chunk": "4f025e",
+          "exitCode": 1,
+          "原因": "真实Git没有并行新增Demon编译fixture，工具改先按实际含目标标识筛选，未写before。"
+        },
+        {
+          "chunk": "5baf04",
+          "exitCode": 0,
+          "scope": "实际53Git25文件/27constructor"
+        }
+      ],
+      "proof": [
+        {
+          "chunk": "807d95",
+          "exitCode": 1,
+          "原因": "初scanner未重扫模板尾，导致模板中后续整段当字符串误比；只修proof为完整AST kind/leaf遍历，callback显式void。"
+        },
+        {
+          "chunk": "0b2ece",
+          "exitCode": 1,
+          "原因": "诊断确认同一模板scanner误报，未改业务源。"
+        },
+        {
+          "chunk": "fd44cd",
+          "exitCode": 1,
+          "原因": "完整程序保持已通过，仅魔术师中文首句缺职责动词，改真实验证职责。"
+        },
+        {
+          "chunk": "0519e0",
+          "exitCode": 0,
+          "output": "{\"moveClass\":true,\"consumers\":24,\"calls\":27,\"heads\":26,\"violations\":0}"
+        },
+        {
+          "chunk": "1e6c74",
+          "exitCode": 0,
+          "原因": "应用所有权头精度修正后重新绑定26finalSHA及完整M1/M2程序保持，不重编译/运行测试。",
+          "output": "{\"moveClass\":true,\"consumers\":24,\"calls\":27,\"heads\":26,\"violations\":0}"
+        }
+      ]
+    },
+    "运行后增量": "运行检查后仅纠正ActionProvider纯类型入口与魔术师测试中文首句；原运行分支、条件、调用、期望及机器字符串未变，后续有限类型真实通过，不重已有行为绿。；独立审查后应用头“只持有目录”改准确三对象所有权说明，仅注释增量，不重类型或行为。",
+    "首错真实分类": "bun-types缺目录是临时配置启动问题；随后ActionProvider误GC是本批实际源码类型错误，准确修回actions后最终80924/c25f3a exit0。"
+  },
+  "实际源码证明审查": {
+    "作者完整proof脚本SHA256": "39154a68a39047a2d5425e6d81b0751dca4e36a98d806f22eac9170198c5d1bf",
+    "读过全部脚本": true,
+    "遍历": "forEachChild callback显式void，完整AST种类与原叶文本；修模板scanner后未屏蔽条件、callback、数组或assert。",
+    "独立程序源码分析SHA256": "cb52b5deafba6ed200f2121370aa634596972c0c9c9b2b5691994f34511f4166",
+    "独立验证": "M1 wholefile四物理route/24whole文本单import逆；M2完整printer typedconsumer仅插原第3实参，无runtime或compiler emit执行。",
+    "输出说明": "本次作者proof是完整AST/token保持，不宣称M2owner原运行二进制或全initgraph相同。"
+  },
+  "documents": [
+    {
+      "path": "docs/refactor/observed-provider-application-owner.md",
+      "sha256": "2531248ce0cecdfeb826e407d7bcfefa9da45eb69a51ae494a4a940a6ea1dba4"
+    },
+    {
+      "path": "docs/refactor/observed-provider-prompt-separation.md",
+      "sha256": "df13dd4d2677a98c0140677e7a226e77a23aca60784735b648e1cc6c4301d850"
+    }
+  ],
+  "证据文件": [
+    {
+      "path": "docs/refactor/generated/observed-provider-before.json",
+      "sha256": "065bd898ac10ba48571095bf09b4d661420716ec5cbef8d61a2e5e638fe059d5"
+    },
+    {
+      "path": "docs/refactor/generated/observed-provider-move-candidate.json",
+      "sha256": "9b96bcbc26ae8ce2fd9670eb3c66a448ac4ed7349112c0b5b48d5ff29d386f5b"
+    },
+    {
+      "path": "docs/refactor/generated/observed-provider-decouple-edits.json",
+      "sha256": "231200ff841ecbe1adb686588db24713d0bcc1505a431d934d4100c59c7b1705"
+    },
+    {
+      "path": "docs/refactor/generated/observed-provider-proof.json",
+      "sha256": "0015dee2fa3224489f52d511eae5bf4c02d84d42230c911f4869809679c9ac19"
+    },
+    {
+      "path": "docs/refactor/generated/observed-provider-receipts.json",
+      "sha256": "420e66406572374af151d34b6ddd4db38dc1e76c23f934008a26aad281d92930"
+    }
+  ],
+  "限制": [
+    "独立审查未执行类型、runtime测试、编译输出、结构门禁、整局、模型、网络或提交。",
+    "范围合并为27路径：M1删除旧AI叶、M2当前26现存；两阶段不可混称同一26源码完全等价。",
+    "O3两个共享测试输入按真实工作层保留，其业务投影迁移及并行Demon类型不作为M1/M2等价证据。",
+    "类型和行为收据属于最终工作树有限依赖闭包，不是固定53或M1中间构建完整同源验收。",
+    "动作数据不是资源付款/成功凭据，纯DTO边界不构成进程隔离或运行权限屏障。"
+  ]
+}

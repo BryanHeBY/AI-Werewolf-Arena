@@ -20,7 +20,7 @@ import {
   deriveBoundedRequest,
 } from "../../src/core/domain/request_delivery";
 import { BaselineBotActionProvider } from "../../src/game/drivers/privileged-baseline";
-import { ObservedPlayersActionProvider } from "../../src/ai/agents/providers/observed_players";
+import { ObservedPlayersActionProvider } from "../../src/app/observed-players-action-provider";
 import { ObservedBot } from "../../src/ai/agents/providers/observed_bot";
 import type { PlayerObservation } from "../../src/game/observation/player-observation";
 import { LlmObserver } from "../../src/ai/agents/player/player_observer";

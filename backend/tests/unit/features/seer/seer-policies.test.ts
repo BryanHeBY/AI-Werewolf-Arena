@@ -33,7 +33,7 @@ import {
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { nightStageContext } from "../../../support/builders/night-stage-context";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 
 const roles = [Role.Wolf, Role.Seer, Role.Villager, Role.Guard, Role.Villager, Role.Villager];
 function setup(parameters?: BoardConfig["seer"], locale: "zh-CN" | "en" = "en") {

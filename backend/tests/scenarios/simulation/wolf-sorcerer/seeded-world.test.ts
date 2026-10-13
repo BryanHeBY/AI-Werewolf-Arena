@@ -9,7 +9,7 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { wolfSorcererTwelveConfig } from "../../../../src/runtime/scenarios/wolf_sorcerer_twelve";
 import { createRandom, randomDraws } from "../../../../src/core";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 for (const firstNight of [1, 2] as const)
   for (const shot of ["original", "exchanged"] as const)
     for (const locale of ["zh-CN", "en"] as const)

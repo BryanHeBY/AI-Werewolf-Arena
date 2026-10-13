@@ -14,7 +14,7 @@ import {
 } from "../../core";
 import { readFile } from "node:fs/promises";
 import { ObservedBot, type BotStyle } from "../../ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../ai/agents/providers/observed_players";
+import { ObservedPlayersActionProvider } from "../../app/observed-players-action-provider";
 import type { ResolvedBoardDefinition } from "../config/board_definition";
 import { SessionRecordManager } from "../../recording/session_recorder";
 import { runWithSessionRecorder } from "../../recording/recording_context";

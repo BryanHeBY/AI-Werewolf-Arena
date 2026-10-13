@@ -26,7 +26,7 @@ import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import { tricksterTwelveConfig } from "../../../../src/runtime/scenarios/trickster_twelve";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
-import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
+import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import { randomDraws } from "../../../../src/core";
 import { validateTricksterRecord } from "../../../../src/recording/trickster_record";
 const records = new Map<string, Promise<ReproductionRecord>>();
