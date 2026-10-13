@@ -15,9 +15,9 @@ import type { GameEvent } from "../../../../src/core/domain/events";
 import { freshPairSeerState } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
 import {
   findNightAbility,
-  projectNightAbility,
   abilityStatus,
 } from "../../../../src/game/mechanisms/roles/abilities";
+import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
 import {
   installNativeAbility,
   recordNightAbilityUse,

@@ -1,0 +1,524 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_final_architecture_review",
+  "mode": "独立源码/完整差异/真实Gitbefore/持久harness、收据与MD审，只写本报告；不重作者程序证明、types/tests/gates。",
+  "base": "53d40005e67cfbd33fb36f81c80de3f373f90759",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "b2ea4dacb1d10f007bbd1c7259c417194112f1d549f6abadd866bb26153d8f38",
+      "actualWorkingSha256": "b2ea4dacb1d10f007bbd1c7259c417194112f1d549f6abadd866bb26153d8f38",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "b2ea4dacb1d10f007bbd1c7259c417194112f1d549f6abadd866bb26153d8f38",
+      "independentWorkingSHA256": "b2ea4dacb1d10f007bbd1c7259c417194112f1d549f6abadd866bb26153d8f38",
+      "verified": true
+    },
+    {
+      "path": "backend/src/game/engine/agent_visible_event_feed.ts",
+      "sha256": "10dd956adabbc9cde195d0910a8cc80fbc32c91afc1a26048182d2df926487a3",
+      "actualWorkingSha256": "10dd956adabbc9cde195d0910a8cc80fbc32c91afc1a26048182d2df926487a3",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "10dd956adabbc9cde195d0910a8cc80fbc32c91afc1a26048182d2df926487a3",
+      "independentWorkingSHA256": "10dd956adabbc9cde195d0910a8cc80fbc32c91afc1a26048182d2df926487a3",
+      "verified": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "e1e1271cb6a6e3ac8c4c37ec96be64f1dfd33852fac37346245a2e88ff465e1d",
+      "actualWorkingSha256": "e1e1271cb6a6e3ac8c4c37ec96be64f1dfd33852fac37346245a2e88ff465e1d",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "e1e1271cb6a6e3ac8c4c37ec96be64f1dfd33852fac37346245a2e88ff465e1d",
+      "independentWorkingSHA256": "e1e1271cb6a6e3ac8c4c37ec96be64f1dfd33852fac37346245a2e88ff465e1d",
+      "verified": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "8310a635b34a995bedf1935302b4f0594b26a192280bc09511391e1d1277cd68",
+      "actualWorkingSha256": "8310a635b34a995bedf1935302b4f0594b26a192280bc09511391e1d1277cd68",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "8310a635b34a995bedf1935302b4f0594b26a192280bc09511391e1d1277cd68",
+      "independentWorkingSHA256": "8310a635b34a995bedf1935302b4f0594b26a192280bc09511391e1d1277cd68",
+      "verified": true
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "sha256": "db4651345f4b8c68a58c6f19cd6e69e748badc45637e130cc773721caac73ec5",
+      "actualWorkingSha256": "db4651345f4b8c68a58c6f19cd6e69e748badc45637e130cc773721caac73ec5",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "db4651345f4b8c68a58c6f19cd6e69e748badc45637e130cc773721caac73ec5",
+      "independentWorkingSHA256": "db4651345f4b8c68a58c6f19cd6e69e748badc45637e130cc773721caac73ec5",
+      "verified": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/borrowed-prompt-history.test.ts",
+      "sha256": "2a724adc0ba5d9b948aa001d9c6f669f6fa842698c0c4d91d7e8f42f95102aab",
+      "actualWorkingSha256": "2a724adc0ba5d9b948aa001d9c6f669f6fa842698c0c4d91d7e8f42f95102aab",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "2a724adc0ba5d9b948aa001d9c6f669f6fa842698c0c4d91d7e8f42f95102aab",
+      "independentWorkingSHA256": "2a724adc0ba5d9b948aa001d9c6f669f6fa842698c0c4d91d7e8f42f95102aab",
+      "verified": true
+    },
+    {
+      "path": "backend/tests/unit/engine/agent-event-projection.test.ts",
+      "sha256": "65fd29b1f958a2397c65b18464a4bbf738e0a3eb1592e9c206b0a71bb7da2a85",
+      "actualWorkingSha256": "65fd29b1f958a2397c65b18464a4bbf738e0a3eb1592e9c206b0a71bb7da2a85",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "65fd29b1f958a2397c65b18464a4bbf738e0a3eb1592e9c206b0a71bb7da2a85",
+      "independentWorkingSHA256": "65fd29b1f958a2397c65b18464a4bbf738e0a3eb1592e9c206b0a71bb7da2a85",
+      "verified": true
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "sha256": "7e209a413d4777dbfe0ec5d15823d1271b35a0c2b873783b8ed8c1bd59eb615d",
+      "actualWorkingSha256": "7e209a413d4777dbfe0ec5d15823d1271b35a0c2b873783b8ed8c1bd59eb615d",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "7e209a413d4777dbfe0ec5d15823d1271b35a0c2b873783b8ed8c1bd59eb615d",
+      "independentWorkingSHA256": "7e209a413d4777dbfe0ec5d15823d1271b35a0c2b873783b8ed8c1bd59eb615d",
+      "verified": true
+    },
+    {
+      "path": "backend/tests/unit/engine/prepared-agent-event.test.ts",
+      "sha256": "6a2837cb84c77e2a05a615dbdaaba4d12c920b8dbf1f803da4669b6a6739f5bf",
+      "actualWorkingSha256": "6a2837cb84c77e2a05a615dbdaaba4d12c920b8dbf1f803da4669b6a6739f5bf",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "6a2837cb84c77e2a05a615dbdaaba4d12c920b8dbf1f803da4669b6a6739f5bf",
+      "independentWorkingSHA256": "6a2837cb84c77e2a05a615dbdaaba4d12c920b8dbf1f803da4669b6a6739f5bf",
+      "verified": true
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sha256": "1eef9a016d4b2dadb1a4654cf215daadec9989bf805d10dd3c1f2dbc144c679a",
+      "actualWorkingSha256": "1eef9a016d4b2dadb1a4654cf215daadec9989bf805d10dd3c1f2dbc144c679a",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "1eef9a016d4b2dadb1a4654cf215daadec9989bf805d10dd3c1f2dbc144c679a",
+      "independentWorkingSHA256": "1eef9a016d4b2dadb1a4654cf215daadec9989bf805d10dd3c1f2dbc144c679a",
+      "verified": true
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "sha256": "c39d45293a577ab2f035fbb381d0962efa61c1062fae4dcb66a1c2fd6d7caee8",
+      "actualWorkingSha256": "c39d45293a577ab2f035fbb381d0962efa61c1062fae4dcb66a1c2fd6d7caee8",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "c39d45293a577ab2f035fbb381d0962efa61c1062fae4dcb66a1c2fd6d7caee8",
+      "independentWorkingSHA256": "c39d45293a577ab2f035fbb381d0962efa61c1062fae4dcb66a1c2fd6d7caee8",
+      "verified": true
+    },
+    {
+      "path": "backend/tests/unit/features/guard/guard-repeat-policy.test.ts",
+      "sha256": "1569d15dcadef4a2f1126734623a3050274c818cdc228ad59134e11676b4e3a9",
+      "actualWorkingSha256": "1569d15dcadef4a2f1126734623a3050274c818cdc228ad59134e11676b4e3a9",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "1569d15dcadef4a2f1126734623a3050274c818cdc228ad59134e11676b4e3a9",
+      "independentWorkingSHA256": "1569d15dcadef4a2f1126734623a3050274c818cdc228ad59134e11676b4e3a9",
+      "verified": true
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "3bb731282e86d1799fc016e59ed90c48e543c8d985d4de9b63102987661027ab",
+      "actualWorkingSha256": "3bb731282e86d1799fc016e59ed90c48e543c8d985d4de9b63102987661027ab",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "3bb731282e86d1799fc016e59ed90c48e543c8d985d4de9b63102987661027ab",
+      "independentWorkingSHA256": "3bb731282e86d1799fc016e59ed90c48e543c8d985d4de9b63102987661027ab",
+      "verified": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/suppression.test.ts",
+      "sha256": "f1c5cc56cffbfa206d3b45e8e98cdf8312eb4a569276e386247aa40753ce2485",
+      "actualWorkingSha256": "f1c5cc56cffbfa206d3b45e8e98cdf8312eb4a569276e386247aa40753ce2485",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "f1c5cc56cffbfa206d3b45e8e98cdf8312eb4a569276e386247aa40753ce2485",
+      "independentWorkingSHA256": "f1c5cc56cffbfa206d3b45e8e98cdf8312eb4a569276e386247aa40753ce2485",
+      "verified": true
+    },
+    {
+      "path": "backend/tests/unit/features/seer/seer-policies.test.ts",
+      "sha256": "0fb851de763988f598910a849f26c010db05ee5efb9f3dbd320fc2a38c01e06c",
+      "actualWorkingSha256": "a8e6f80380d39054dbeeda1a5d61353819748e7de39c6552681042b057d96bbf",
+      "candidateSource": "持久O3-only完整working freeze（RootO4随后精确delta单列）",
+      "independentCandidateSHA256": "0fb851de763988f598910a849f26c010db05ee5efb9f3dbd320fc2a38c01e06c",
+      "independentWorkingSHA256": "a8e6f80380d39054dbeeda1a5d61353819748e7de39c6552681042b057d96bbf",
+      "verified": true
+    },
+    {
+      "path": "backend/tests/unit/features/witch/native-policy-resource-boundaries.test.ts",
+      "sha256": "bf337624226b19f524bab9870755f3612a5ad4f417df2050abb102fa00fb2def",
+      "actualWorkingSha256": "bf337624226b19f524bab9870755f3612a5ad4f417df2050abb102fa00fb2def",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "bf337624226b19f524bab9870755f3612a5ad4f417df2050abb102fa00fb2def",
+      "independentWorkingSHA256": "bf337624226b19f524bab9870755f3612a5ad4f417df2050abb102fa00fb2def",
+      "verified": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "11e0ecdcaad0587eb45f259cb183e355fd90b7ef51851043a458756b87e72317",
+      "actualWorkingSha256": "7475fc164c212477405e8d3cd0d6a75b591e8791018540a8c22119b664b05db1",
+      "candidateSource": "持久O3-only完整working freeze（RootO4随后精确delta单列）",
+      "independentCandidateSHA256": "11e0ecdcaad0587eb45f259cb183e355fd90b7ef51851043a458756b87e72317",
+      "independentWorkingSHA256": "7475fc164c212477405e8d3cd0d6a75b591e8791018540a8c22119b664b05db1",
+      "verified": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "sha256": "b7d4021d81f28ec0074f033eb1afb6315885df6732cff2df1085d18a48ece07c",
+      "actualWorkingSha256": "b7d4021d81f28ec0074f033eb1afb6315885df6732cff2df1085d18a48ece07c",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "b7d4021d81f28ec0074f033eb1afb6315885df6732cff2df1085d18a48ece07c",
+      "independentWorkingSHA256": "b7d4021d81f28ec0074f033eb1afb6315885df6732cff2df1085d18a48ece07c",
+      "verified": true
+    },
+    {
+      "path": "backend/src/game/observation/night-ability-projection.ts",
+      "sha256": "5b98de29024534fec0b3bb3b7207d3bad3b1c54cfa4bd6e121d2fc554bfa7ed0",
+      "actualWorkingSha256": "5b98de29024534fec0b3bb3b7207d3bad3b1c54cfa4bd6e121d2fc554bfa7ed0",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "5b98de29024534fec0b3bb3b7207d3bad3b1c54cfa4bd6e121d2fc554bfa7ed0",
+      "independentWorkingSHA256": "5b98de29024534fec0b3bb3b7207d3bad3b1c54cfa4bd6e121d2fc554bfa7ed0",
+      "verified": true
+    },
+    {
+      "path": "backend/tests/unit/engine/night-ability-projection.test.ts",
+      "sha256": "ac9722a14ac40deda42e784a9903a81ed046df7e3db47ddd826516de2bb8af22",
+      "actualWorkingSha256": "ac9722a14ac40deda42e784a9903a81ed046df7e3db47ddd826516de2bb8af22",
+      "candidateSource": "当前本批源码",
+      "independentCandidateSHA256": "ac9722a14ac40deda42e784a9903a81ed046df7e3db47ddd826516de2bb8af22",
+      "independentWorkingSHA256": "ac9722a14ac40deda42e784a9903a81ed046df7e3db47ddd826516de2bb8af22",
+      "verified": true
+    }
+  ],
+  "actualGitBefore": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "4612df932e3da12d29edd836ceb450f323ce1b331a1e1615d727ea4d053fa1b7",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/src/game/engine/agent_visible_event_feed.ts",
+      "sha256": "0fbaa9de5c548448883d778280c98221baf7669c8fcb61761657ec7fd174f8ab",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "b7425a2e0ee4c83802a91c6c2b004f61580e7a5860bc7d45d50ac786ba682ca7",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "e7719c8d2416f726e238b6c3d982f90e6ec4e7e4c0fc75d38ff7f687512f9b49",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "sha256": "7fe7b369147b7042ea443ad281fe21383b5d8ecf83eee079523ed95fdc491a82",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/borrowed-prompt-history.test.ts",
+      "sha256": "f7bb9d00913bb7619c3f3e1b76ab3318021ccf60c1c38633edfb1c1e0a70c646",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/tests/unit/engine/agent-event-projection.test.ts",
+      "sha256": "57809723b434dd7f376998162daf4dfc7c106fa14050a415c83eb325d10c7b9c",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "sha256": "2aeaf7e1217ade24c306822b812fa0552630a62869c30ef251da75c6cf26e347",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/tests/unit/engine/prepared-agent-event.test.ts",
+      "sha256": "23f9d57405e6c6713e9aace178b2f4f258383cdc534a0452beff553e336c2d79",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sha256": "ea76c56290ca246b2bae9b916cd82ff165f668131a3dce6591681b0c2ae386b4",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "sha256": "245f301c922ef32fcb49f968911d0036ae07e0e8d775b8981f66f114fa31fecb",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/tests/unit/features/guard/guard-repeat-policy.test.ts",
+      "sha256": "6b6b5136fdf04d05a642c8bdef07fcdfe539aff9b078ecafaa7c2e07e15e433f",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "54012714535dc85cfce5f14aa1478bf4a22a2cc4bd965d0aeb700e088684bd56",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/suppression.test.ts",
+      "sha256": "562fb111d6aba270408a4cc7a8a74612db7147a0ef6f4ae25abe383c34d05860",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/tests/unit/features/seer/seer-policies.test.ts",
+      "sha256": "5109b76eff4eff498c217f8f4cccc4a5281b3d747eb48009ea88343bfd294222",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/tests/unit/features/witch/native-policy-resource-boundaries.test.ts",
+      "sha256": "634410bdb2cb1c3fa9d429f3fa13112fcd5ad2ae35b0f799e62e345a78bcc63f",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "e18157e90c00f7e0104d3425382ceb3d2991b084789418c08004b66ddcba0af3",
+      "actualWholeGitBeforeVerified": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "sha256": "ab98eb6f88f9b9129954876b8f93e5431bc452fd4a4664b3019d485e3545da7e",
+      "actualWholeGitBeforeVerified": true
+    }
+  ],
+  "scope": {
+    "paths": 20,
+    "actualExistingGitSources": 18,
+    "newProjectionLeaf": 1,
+    "newUnit": 1,
+    "namedImportConsumers": 17,
+    "sharedO4Candidates": 2
+  },
+  "findings": [],
+  "sourceReview": [
+    "完整读取原abilities与新projection三函数、实际caller变化及control：source隐匿时只读origin.kind；披露分支原kind重读次数与role/actorId/abilityId字段顺序同。无新增目标阵营、真实Role、World或资源句柄。",
+    "projectNightAbility仍先读取完整metadata，再status，再kind/payload裁剪；expires/activation/deathExpired的条件与实际重读未缓存。nightAbilityDisabled descriptor查询、disabled getter、status第二次查询及失败prefix原序，未把数据标签改为许可快照。",
+    "七kind仍调用原Pair/Shelter/Seer/Witch/RoleInspection/Guard/Dream各自reader/formatter，额外字段/知识历史/库存可见性未改。new module不安装资源、不写槽、不推进clock或RNG，不创造World快照。",
+    "Pair共同规范化projectPairState仍原ability owner与nativeinstall共用，未把库存初始化变成观察依赖。能力status/potionSecondTurn/repeatPolicy/borrow数据owner保；nightAbilityDisabled原完整body仅新增export，非法accessor阻塞但不额外承诺Proxy零trap。",
+    "完整Black transfer局部实读：4处projectNightState位于before复制、statePolicy输入、callback后当前性/deepEqual复查和最终targetState对等，World/Role/原life/source/private容器/已付元数据/错误短路与付款前缀都保。其它transfer/fullstate机制未变。",
+    "事件feed的queries.projectAbilitySource仍按原origin()→disclosed()时点及方法receiver调用，仅实际函数binding换归属。agent-event-projection纯queries方法自身整文件与实际Git相同，不能把该同名接口算被迁运行函数。",
+    "完整17caller只精确剥旧named binding并导同名新owner；other bindings/local名/type修饰/顺序及整imports之外字节保持。全部原机器字符串、测试名/locale矩阵、手写样本、回调、数组和assert无改变。",
+    "新7单元独立5source字面轨迹与2metadata/ref/error case，12旧函数API拒绝type imports全部用于typeof tuple，不执行不存在value binding。末directive定位与readonly数组unknown→string[]cast仅测试类型，不放宽生产schema或改数组oracle。",
+    "中文head及重要说明正确区分来源披露、DTO知识、规则owner、Black规范化及付款/许可，函数query公开不冒授权。模块初始化/CJS共享helper导出反射变化已明列，未虚构全部旧模块二进制等价。"
+  ],
+  "proofReview": {
+    "actualMovedFunctions": 3,
+    "completeFunctionNodes": 785,
+    "retainedOwnerNodes": 1574,
+    "consumerWholeProgramNodes": 65770,
+    "consumerInverseWholeOutputs": 34,
+    "movedFunctionOnlyOutputs": 2,
+    "retainedOwnerExpectedOutputs": 2,
+    "completeHarnessRead": true,
+    "harnessSHA256": "a7ca2687ec6c9565ee1639509a77ffa57023664c28c6df0f6ff7a1908c60218c",
+    "traversal": "getChildren全层、全部非注释raw leaf、NodeArray及所有函数/条件/数组保；forEachChild回调void；后部metadata lastUsedDay非首反例实捕获。",
+    "scopeAccuracy": "retained owner只在原程序移3函数+批准query export后比较；3函数单独完整程序只比其声明，不宣称旧整个module/cold图相同。17consumer exact import inverse整源字节一致；两个共享采用实际O3-only完整snapshot，不mask其它body。",
+    "queryControl": "agent-event-projection.ts真实Git完整原字节同。",
+    "runtimeGraph": {
+      "actualBackendModules": 15,
+      "noReturnToProjection": true,
+      "noReachAbilityChanges": true,
+      "review": "沿实际newProjection→abilities/playerState/shelter及其runtime模型/数据叶检查；type擦除图包含imports/reexports，包边界与动态载入非本证明范围。"
+    }
+  },
+  "sharedSources": {
+    "artifact": "docs/refactor/generated/night-ability-projection-shared-o3-candidate.json",
+    "sha256": "cccf3bd4a8a4da3591e663e217bc6e85ba0dee1ada229fa49647a30f479fb8b8",
+    "actualCapturedO3BeforeO4": true,
+    "candidates": [
+      {
+        "path": "backend/tests/unit/features/seer/seer-policies.test.ts",
+        "sha256": "0fb851de763988f598910a849f26c010db05ee5efb9f3dbd320fc2a38c01e06c",
+        "origin": "真实O3精确imports完成、O4构造delta前的working完整bytes。"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+        "sha256": "11e0ecdcaad0587eb45f259cb183e355fd90b7ef51851043a458756b87e72317",
+        "origin": "真实O3精确imports完成、O4构造delta前的working完整bytes。"
+      }
+    ],
+    "classification": "两共享working另含RootO4 app provider route/旧第三实参退出，workingSHA与O3candidateSHA均独立核真；O3 only精确stage来自candidate，不覆worktree后层。types20使用当时集成真实工作输入，不伪称只编译这些candidate旧入口。"
+  },
+  "validation": {
+    "tests": [
+      {
+        "kind": "new",
+        "pass": 7,
+        "fail": 0,
+        "assertions": 15,
+        "filtered": 0,
+        "exitCode": 0,
+        "toolChunkId": "6f4516",
+        "logPath": "docs/refactor/generated/night-ability-projection-new-tests.log",
+        "logSha256": "087264e875677014620033e31fb29139e01602a4e7afaf3a12d2943c229e3182"
+      },
+      {
+        "kind": "suppression",
+        "pass": 2,
+        "fail": 0,
+        "assertions": 13,
+        "filtered": 19,
+        "exitCode": 0,
+        "toolChunkId": "c3ee17",
+        "logPath": "docs/refactor/generated/night-ability-projection-suppression-tests.log",
+        "logSha256": "08f2d439024fff5ce6d8d66310940b474d53bee3e7340c1584cb146ecd893bf0"
+      },
+      {
+        "kind": "potion",
+        "pass": 1,
+        "fail": 0,
+        "assertions": 8,
+        "filtered": 19,
+        "exitCode": 0,
+        "toolChunkId": "0cb26d",
+        "logPath": "docs/refactor/generated/night-ability-projection-potion-tests.log",
+        "logSha256": "9e501d3a4c742c8338be773a86f785ec0e043aa5a2ee4e45069f962000d20d2c"
+      },
+      {
+        "kind": "transfer",
+        "pass": 2,
+        "fail": 0,
+        "assertions": 5,
+        "filtered": 19,
+        "exitCode": 0,
+        "toolChunkId": "93f768",
+        "logPath": "docs/refactor/generated/night-ability-projection-transfer-tests.log",
+        "logSha256": "ef550152d4a36fd8edcc70cb9fcbbb33c2c19bd0e90062049693dd62c1b9ccf5"
+      }
+    ],
+    "distinctCases": 12,
+    "assertions": 41,
+    "runs": 4,
+    "firstFinite20Root": {
+      "roots": 20,
+      "sessionId": 23887,
+      "launchChunk": "f9fda7",
+      "completionChunk": "3502cb",
+      "exitCode": 2,
+      "diagnostics": 1,
+      "scope": "仅new unit readonly scenario.reads与Bun matcher的mutable签名不兼容；其余十九根无诊断。",
+      "logPath": "docs/refactor/generated/night-ability-projection-types.log",
+      "logSha256": "3f8a9980c3091e6ab765d528ba76d84da646a4f5830937312d631362cc9cf9d6",
+      "config": {
+        "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+        "compilerOptions": {
+          "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+          "typeRoots": [
+            "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+          ]
+        },
+        "files": [
+          "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/abilities.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/agent_visible_event_feed.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/ability_changes.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/observation/player-observation-projector.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/observation/player-prompt-directives.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/features/radiant-eclipse/borrowed-prompt-history.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/engine/agent-event-projection.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/engine/player-state-projection.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/engine/prepared-agent-event.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/guard/guard-repeat-policy.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/radiant-eclipse/suppression.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/seer/seer-policies.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/witch/native-policy-resource-boundaries.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/observation/night-ability-projection.ts",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/engine/night-ability-projection.test.ts"
+        ],
+        "include": [],
+        "exclude": []
+      }
+    },
+    "onlyFailedNewUnitCorrection": {
+      "roots": 1,
+      "sessionId": 9167,
+      "launchChunk": "55bdce",
+      "completionChunk": "7bfee3",
+      "exitCode": 0,
+      "scope": "仅失败新单元根复查，不重十九根；纯type cast双emit同，无production改动。",
+      "logPath": "docs/refactor/generated/night-ability-projection-test-types-corrected.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "config": {
+        "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+        "compilerOptions": {
+          "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+          "typeRoots": [
+            "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+            "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+          ]
+        },
+        "files": [
+          "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/engine/night-ability-projection.test.ts"
+        ],
+        "include": [],
+        "exclude": []
+      }
+    },
+    "receiptMeaning": "首20根实际exit2仅新matcher1诊断，不能记首全绿；类型适配后仅该新单元9167/7bfee3实际0，未重复其余19root。空log非成功推断。",
+    "testFinalTypeBridge": {
+      "path": "backend/tests/unit/engine/night-ability-projection.test.ts",
+      "runtimeReceiptSourceSha256": "d7da2222f5c1188d5218d91da6f8ef2bc16fcfb5d1c02c9e6465541c97925936",
+      "firstTypesSourceSha256": "4a07850d4161a8d575b06cfc3b03ccc46a5c19cb4ea2e43f31c38eab7bc05527",
+      "finalSha256": "ac9722a14ac40deda42e784a9903a81ed046df7e3db47ddd826516de2bb8af22",
+      "changes": [
+        "仅把12 API负例directive放到实际specifier诊断行；type-only负例imports仍全部擦除。",
+        "仅readonly场景预期数组加unknown→string[]类型视图，实际matcher参数与字面数组不变。"
+      ],
+      "outputs": [
+        {
+          "module": "ESNext",
+          "runtimeReceiptToFinalWholeRawSame": true,
+          "typeFixWholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "runtimeReceiptToFinalWholeRawSame": true,
+          "typeFixWholeRawSame": true
+        }
+      ],
+      "approved": true
+    },
+    "comments": {
+      "tsFiles": 20,
+      "capturedDocumentationPaths": 440,
+      "actualDiagnostics": 0,
+      "chinesePresenceSeparate": true
+    },
+    "noNewChecksByReviewer": true
+  },
+  "limits": [
+    "批准本批3实际投影owner与17consumer路线、旧3export退休和新只读query，不等于C30–C34全部结构消债。",
+    "source原read/copy算法保；API命名空间、模块加载路径、CJS monkeypatch局部绑定影响和sourceHash改变是明示退出边界，不许由完整函数相等外推全部cold初始化相等。",
+    "夜能力数据/active/status/disabled与投影可见性不授予World/life/source/request/resource许可，真实提交owner仍复验。",
+    "并行RootO4/Demon/identity以及NightData中文comment为外部独立批次；未把全部传递依赖图或当前20working全部算O3同源。",
+    "没有重复全量或有限types/tests/gates/模型/浏览器或作者wholeproof。"
+  ],
+  "documents": [
+    {
+      "path": "docs/refactor/night-ability-projection.md",
+      "sha256": "b6acf2f26d06a34a835a031a5400ce7eb5ec8de5f20a8010adf35985ce8de359"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-projection-evidence.json",
+      "sha256": "09a7c7b0d7ff332b249b21e978455d416b7e5e19d9f076d9d23274ccad85e1c9"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-projection-scope-final.json",
+      "sha256": "96227d681292b4ac29e3a14de3abe9b6906c6a45adf94ee218540faa0ef27d9f"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-projection-program-proof.json",
+      "sha256": "82f7498d14f673b14c3c54a36ca842c8b3e4c7c67d9511b22dcc6e263e2e768f"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-projection-bindings.json",
+      "sha256": "c3ccbb7c6d6a866a38d10a0bf71686ff08d23786c217dda7a4155284dfaade31"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-projection-test-delta.json",
+      "sha256": "117918fd9252a1ab32bc1de6f23c42c27bf5bdc4a9bed431e9ade994611b66ed"
+    }
+  ],
+  "docApproved": true
+}

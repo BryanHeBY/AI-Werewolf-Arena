@@ -20,7 +20,7 @@ import {
   prepareInertAgentEvent,
   type InertAgentEvent,
 } from "../../../src/game/observation/agent-event-facts";
-import { projectAbilitySource } from "../../../src/game/mechanisms/roles/abilities";
+import { projectAbilitySource } from "../../../src/game/observation/night-ability-projection";
 
 test("boolean visibility keeps its historical Mist audience mode while the feed rejects duplicate recipients", () => {
   const world = new World();

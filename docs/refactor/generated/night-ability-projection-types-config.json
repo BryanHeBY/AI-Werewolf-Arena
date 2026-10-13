@@ -1,0 +1,34 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/abilities.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/agent_visible_event_feed.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/ability_changes.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/observation/player-observation-projector.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/observation/player-prompt-directives.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/features/radiant-eclipse/borrowed-prompt-history.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/engine/agent-event-projection.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/engine/player-state-projection.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/engine/prepared-agent-event.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/guard/guard-repeat-policy.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/radiant-eclipse/suppression.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/seer/seer-policies.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/witch/native-policy-resource-boundaries.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/observation/night-ability-projection.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/engine/night-ability-projection.test.ts"
+  ],
+  "include": [],
+  "exclude": []
+}

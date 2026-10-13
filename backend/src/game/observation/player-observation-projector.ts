@@ -88,7 +88,8 @@ import { getMerchantState, projectMerchantState } from "../mechanisms/roles/mira
 import { projectEclipseState } from "../mechanisms/roles/radiant_eclipse/ports";
 import { COMPONENT } from "../../core/domain/components/names";
 import { Camp, Role, type ActionRequest } from "@ai-werewolf-arena/game-contract";
-import { allNightAbilities, projectNightAbility } from "../mechanisms";
+import { allNightAbilities } from "../mechanisms";
+import { projectNightAbility } from "./night-ability-projection";
 import { getGuardState } from "../mechanisms/roles/guard/ports";
 import { getHunterState } from "../mechanisms/roles/hunter/ports";
 import { getWolfKingState } from "../mechanisms/roles/wolf_king/ports";

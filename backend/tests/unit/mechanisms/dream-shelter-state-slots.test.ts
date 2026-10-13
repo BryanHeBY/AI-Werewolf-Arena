@@ -8,7 +8,8 @@ import { Camp, Role, type DreamerState, type ShelterState } from "@ai-werewolf-a
 import { DREAMER_STATE_SLOT as dream } from "../../../src/game/mechanisms/roles/dreamer/ports";
 import { SHELTER_STATE_SLOT as shelter } from "../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot";
 import { createShelterState, readShelterState, selectShelter } from "../../../src/game/mechanisms/roles/radiant_eclipse/shelter-state";
-import { copyAbilityData, findNightAbility, projectNightState, type NightAbilityReadView } from "../../../src/game/mechanisms/roles/abilities";
+import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../../../src/game/mechanisms/roles/abilities";
+import { projectNightState } from "../../../src/game/observation/night-ability-projection";
 import { grantNightAbility, installNativeAbility } from "../../../src/game/mechanisms/roles/ability_changes";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { World } from "../../../src/core/domain/world";

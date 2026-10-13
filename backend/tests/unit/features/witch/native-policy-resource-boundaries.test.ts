@@ -25,8 +25,8 @@ import { WITCH_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/witch/
 import {
   abilityStatus,
   findNightAbility,
-  projectNightAbility,
 } from "../../../../src/game/mechanisms/roles/abilities";
+import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
 import { getDefaultConfigRenderRegistry } from "../../../../src/game/mechanisms/prompt/config_render_registry";
 import {
   boardDefinitionFromConfig,

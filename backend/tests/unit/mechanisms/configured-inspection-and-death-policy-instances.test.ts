@@ -26,8 +26,8 @@ import { boardConfigSchema } from "../../../src/core/domain/board_schema";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import {
   findNightAbility,
-  projectNightAbility,
 } from "../../../src/game/mechanisms/roles/abilities";
+import { projectNightAbility } from "../../../src/game/observation/night-ability-projection";
 import {
   grantNightAbility,
   transferNightAbility,

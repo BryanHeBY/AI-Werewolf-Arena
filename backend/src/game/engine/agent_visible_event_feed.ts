@@ -9,7 +9,7 @@ import { types } from "node:util";
 import type { EntityId, GameEvent, PlayerVisibleEvent } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../../core/domain/world";
 import { getDefaultAgentEventVisibilityRegistry } from "../mechanisms";
-import { projectAbilitySource } from "../mechanisms/roles/abilities";
+import { projectAbilitySource } from "../observation/night-ability-projection";
 import { projectPreparedAgentEvent } from "../observation/agent-event-projection";
 import { prepareInertAgentEvent, type InertAgentEvent } from "../observation/agent-event-facts";
 

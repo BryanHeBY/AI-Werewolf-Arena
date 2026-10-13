@@ -18,7 +18,8 @@ import {
   type RoleComponent,
 } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { findNightAbility, allNightAbilities, projectNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { findNightAbility, allNightAbilities } from "../../../../src/game/mechanisms/roles/abilities";
+import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
 import {
   grantNightAbility,
   transferNightAbility,

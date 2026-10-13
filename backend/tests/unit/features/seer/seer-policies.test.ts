@@ -21,8 +21,8 @@ import { SEER_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/seer/ni
 import { SEER_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/seer/profile";
 import {
   findNightAbility,
-  projectNightAbility,
 } from "../../../../src/game/mechanisms/roles/abilities";
+import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
 import { getDefaultTargetHintRegistry } from "../../../../src/game/mechanisms/llm/target_hint_registry";
 import { getDefaultConfigRenderRegistry } from "../../../../src/game/mechanisms/prompt/config_render_registry";
 import { boardConfigSchema } from "../../../../src/core/domain/board_schema";

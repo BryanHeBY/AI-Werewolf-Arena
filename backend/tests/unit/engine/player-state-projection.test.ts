@@ -22,8 +22,8 @@ import {
 } from "../../../src/game/mechanisms";
 import {
   findNightAbility,
-  projectNightAbility,
 } from "../../../src/game/mechanisms/roles/abilities";
+import { projectNightAbility } from "../../../src/game/observation/night-ability-projection";
 import { getBearState } from "../../../src/game/mechanisms/roles/bear/ports";
 import { getDreamerState } from "../../../src/game/mechanisms/roles/dreamer/ports";
 import { getGuardState } from "../../../src/game/mechanisms/roles/guard/ports";

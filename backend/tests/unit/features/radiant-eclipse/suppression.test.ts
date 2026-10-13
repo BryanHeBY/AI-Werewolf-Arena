@@ -16,9 +16,9 @@ import { createRoleComponent } from "../../../../src/game/observation/role-prese
 import {
   findNightAbility,
   abilityStatus,
-  projectNightAbility,
   activeNightAbility,
 } from "../../../../src/game/mechanisms/roles/abilities";
+import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
 import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
 import {
   openEclipseSuppression,

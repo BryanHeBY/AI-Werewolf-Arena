@@ -24,7 +24,7 @@ import {
   canViewPreparedAgentEvent,
   projectPreparedAgentEvent,
 } from "../../../src/game/observation/agent-event-projection";
-import { projectAbilitySource } from "../../../src/game/mechanisms/roles/abilities";
+import { projectAbilitySource } from "../../../src/game/observation/night-ability-projection";
 import {
   buildAgentVisibleEvent,
   buildAgentVisibleEventFeed,

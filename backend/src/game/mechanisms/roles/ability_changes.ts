@@ -20,7 +20,8 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import { Role, type EntityId, type GameEvent } from "../../../core/domain/model";
 import type { World } from "../../../core/domain/world";
-import { allNightAbilities, abilityStatus, projectPairState, copyAbilityData, projectNightState, type NightAbility, type NightAbilityReadView } from "./abilities";
+import { allNightAbilities, abilityStatus, projectPairState, copyAbilityData, type NightAbility, type NightAbilityReadView } from "./abilities";
+import { projectNightState } from "../../observation/night-ability-projection";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 
 import { commitPreparedNativeAbility } from "./prepared-native-install";

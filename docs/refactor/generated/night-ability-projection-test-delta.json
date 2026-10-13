@@ -1,0 +1,23 @@
+{
+  "path": "backend/tests/unit/engine/night-ability-projection.test.ts",
+  "runtimeReceiptSourceSha256": "d7da2222f5c1188d5218d91da6f8ef2bc16fcfb5d1c02c9e6465541c97925936",
+  "firstTypesSourceSha256": "4a07850d4161a8d575b06cfc3b03ccc46a5c19cb4ea2e43f31c38eab7bc05527",
+  "finalSha256": "ac9722a14ac40deda42e784a9903a81ed046df7e3db47ddd826516de2bb8af22",
+  "changes": [
+    "仅把12 API负例directive放到实际specifier诊断行；type-only负例imports仍全部擦除。",
+    "仅readonly场景预期数组加unknown→string[]类型视图，实际matcher参数与字面数组不变。"
+  ],
+  "outputs": [
+    {
+      "module": "ESNext",
+      "runtimeReceiptToFinalWholeRawSame": true,
+      "typeFixWholeRawSame": true
+    },
+    {
+      "module": "CommonJS",
+      "runtimeReceiptToFinalWholeRawSame": true,
+      "typeFixWholeRawSame": true
+    }
+  ],
+  "approved": true
+}

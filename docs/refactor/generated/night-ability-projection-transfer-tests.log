@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts:
+(pass) resources: a transfer callback cannot turn a spent Black gift into new inventory or another body's resource [39.85ms]
+(pass) Black seer state and nested reports select declared fields without reading unknown getters [1.73ms]
+
+ 2 pass
+ 19 filtered out
+ 0 fail
+ 5 expect() calls
+Ran 2 tests across 1 file. [151.00ms]

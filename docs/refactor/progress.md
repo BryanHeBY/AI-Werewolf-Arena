@@ -572,3 +572,5 @@
 - 受限观察原生工具直接消费机器枚举：3source，PotionType从core聚合出口直连GC，实际同identity唯一声明，全部策略分支／随机／字段保持；handlers与identity职责头及绑定药／双药／多刀／空行动／两目标抽取／已知耗身逻辑中文化。真实2f三个完整token和六whole输出仅逆单条导入同，三职责头0，有限3roots12872→0b6d2d actual0；Root实读与独立3SHA／完整出口链／中文语义审批准，不重行为或全gate。冷加载依赖及严格构建身份变化明列，全AI观察／注释仍继续，见 observed-native-contract.md。
 
 - O2猎魔人纯数据唯一契约：5source，原Choice迁GC既有facts，后端重复State／Tool接口退出；两authority type和Observer inline直连公共owner，原可写/null/政策/工具三形状保。真实2f四Git源及三metadata controls、完整23176程序节点/8raw输出同，5roots57078→9678b2 actual0、3旧API及3私态negative/6双向/ObserverExact有效。Root真实源权限/API审与独立5finalSHA批准，中文角色名按现行目录“猎魔人”修三头及MD，精确comment delta保原type/runtime收据不重绿。其余观察私态和完整机制继续，见 demon-hunter-data-contract.md。
+
+- O3夜能力投影完整归游戏观察：20source，原三完整函数及17真正具名import消费者迁canonical观察叶，旧三出口自然退休；Pair安装规范化及唯一disabled/status政策仍共同owner，黑市四投影规范化位置保。真实53Git十八before/三785＋owner1574＋消费者65770完整nodes与34+2+2各完整输出同，两O4shared用真实O3-only候选独立stage。new7/15＋old5/26＝12不同41断言四次；20finite首只newunit matcher红，type-only修后仅失败根9167实际0不重19，20CN头440doc职责0。Root实际3函数／blackmarket读序与独立20finalSHA/源/doc批准，无额外World缓存/规则／schema变化；C33/34及全P9继续，见 night-ability-projection.md。

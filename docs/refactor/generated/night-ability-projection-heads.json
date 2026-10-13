@@ -1,0 +1,169 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "b2ea4dacb1d10f007bbd1c7259c417194112f1d549f6abadd866bb26153d8f38"
+    },
+    {
+      "path": "backend/src/game/engine/agent_visible_event_feed.ts",
+      "sha256": "10dd956adabbc9cde195d0910a8cc80fbc32c91afc1a26048182d2df926487a3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "e1e1271cb6a6e3ac8c4c37ec96be64f1dfd33852fac37346245a2e88ff465e1d"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "8310a635b34a995bedf1935302b4f0594b26a192280bc09511391e1d1277cd68"
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "sha256": "db4651345f4b8c68a58c6f19cd6e69e748badc45637e130cc773721caac73ec5"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/borrowed-prompt-history.test.ts",
+      "sha256": "2a724adc0ba5d9b948aa001d9c6f669f6fa842698c0c4d91d7e8f42f95102aab"
+    },
+    {
+      "path": "backend/tests/unit/engine/agent-event-projection.test.ts",
+      "sha256": "65fd29b1f958a2397c65b18464a4bbf738e0a3eb1592e9c206b0a71bb7da2a85"
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "sha256": "7e209a413d4777dbfe0ec5d15823d1271b35a0c2b873783b8ed8c1bd59eb615d"
+    },
+    {
+      "path": "backend/tests/unit/engine/prepared-agent-event.test.ts",
+      "sha256": "6a2837cb84c77e2a05a615dbdaaba4d12c920b8dbf1f803da4669b6a6739f5bf"
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sha256": "1eef9a016d4b2dadb1a4654cf215daadec9989bf805d10dd3c1f2dbc144c679a"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "sha256": "c39d45293a577ab2f035fbb381d0962efa61c1062fae4dcb66a1c2fd6d7caee8"
+    },
+    {
+      "path": "backend/tests/unit/features/guard/guard-repeat-policy.test.ts",
+      "sha256": "1569d15dcadef4a2f1126734623a3050274c818cdc228ad59134e11676b4e3a9"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "3bb731282e86d1799fc016e59ed90c48e543c8d985d4de9b63102987661027ab"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/suppression.test.ts",
+      "sha256": "f1c5cc56cffbfa206d3b45e8e98cdf8312eb4a569276e386247aa40753ce2485"
+    },
+    {
+      "path": "backend/tests/unit/features/seer/seer-policies.test.ts",
+      "sha256": "0fb851de763988f598910a849f26c010db05ee5efb9f3dbd320fc2a38c01e06c"
+    },
+    {
+      "path": "backend/tests/unit/features/witch/native-policy-resource-boundaries.test.ts",
+      "sha256": "bf337624226b19f524bab9870755f3612a5ad4f417df2050abb102fa00fb2def"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "11e0ecdcaad0587eb45f259cb183e355fd90b7ef51851043a458756b87e72317"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "sha256": "b7d4021d81f28ec0074f033eb1afb6315885df6732cff2df1085d18a48ece07c"
+    },
+    {
+      "path": "backend/src/game/observation/night-ability-projection.ts",
+      "sha256": "5b98de29024534fec0b3bb3b7207d3bad3b1c54cfa4bd6e121d2fc554bfa7ed0"
+    },
+    {
+      "path": "backend/tests/unit/engine/night-ability-projection.test.ts",
+      "sha256": "ac9722a14ac40deda42e784a9903a81ed046df7e3db47ddd826516de2bb8af22"
+    }
+  ],
+  "documentationPaths": 440,
+  "diagnostics": [],
+  "chinesePresence": [
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "present": true
+    },
+    {
+      "path": "backend/src/game/engine/agent_visible_event_feed.ts",
+      "present": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "present": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "present": true
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "present": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/borrowed-prompt-history.test.ts",
+      "present": true
+    },
+    {
+      "path": "backend/tests/unit/engine/agent-event-projection.test.ts",
+      "present": true
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "present": true
+    },
+    {
+      "path": "backend/tests/unit/engine/prepared-agent-event.test.ts",
+      "present": true
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "present": true
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/ability.test.ts",
+      "present": true
+    },
+    {
+      "path": "backend/tests/unit/features/guard/guard-repeat-policy.test.ts",
+      "present": true
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "present": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/suppression.test.ts",
+      "present": true
+    },
+    {
+      "path": "backend/tests/unit/features/seer/seer-policies.test.ts",
+      "present": true
+    },
+    {
+      "path": "backend/tests/unit/features/witch/native-policy-resource-boundaries.test.ts",
+      "present": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "present": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/dream-shelter-state-slots.test.ts",
+      "present": true
+    },
+    {
+      "path": "backend/src/game/observation/night-ability-projection.ts",
+      "present": true
+    },
+    {
+      "path": "backend/tests/unit/engine/night-ability-projection.test.ts",
+      "present": true
+    }
+  ],
+  "approved": true
+}

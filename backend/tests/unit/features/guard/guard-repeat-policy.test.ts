@@ -18,8 +18,8 @@ import { GameActionRequestFactory } from "../../../../src/game/engine/action_req
 import { GUARD_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/guard/night_stages";
 import {
   findNightAbility,
-  projectNightAbility,
 } from "../../../../src/game/mechanisms/roles/abilities";
+import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
 import { getDefaultTargetHintRegistry } from "../../../../src/game/mechanisms/llm/target_hint_registry";
 import { getDefaultConfigRenderRegistry } from "../../../../src/game/mechanisms/prompt/config_render_registry";
 import {

@@ -24,8 +24,8 @@ import { DamageResolutionSystem } from "../../../../src/core/domain/systems/dama
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import {
   findNightAbility,
-  projectNightAbility,
 } from "../../../../src/game/mechanisms/roles/abilities";
+import { projectNightAbility } from "../../../../src/game/observation/night-ability-projection";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
