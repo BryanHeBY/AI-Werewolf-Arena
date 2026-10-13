@@ -1,11 +1,8 @@
 /**
- * Owns Mechanical Wolf's learned-skill state data, copied installation and projections.
- * Inputs are the original role or learned state; outputs retain the same declared
- * learning/mode/knife fields and selected stored reference. The installer alone
- * restores the mechanical_wolf slot at its original write; inherited resource,
- * phase and receipt checks remain separate. No container copy or parser is added.
- * Pure payload/read data structures belong to the neutral role-state data owner;
- * this leaf retains original live references and concrete installation/commit operations.
+ * 负责机械狼的学习模板、所属槽安装、模式／刀资源提交和玩家投影。输入为原角色、状态与日次；
+ * 输出保留原学习、模式、刀权字段以及存储引用，公开 DTO 类型独立归公共契约。
+ * 模板创建不克隆其他玩家库存；本模块只写 mechanical_wolf 及其资源，不替换角色容器或授予请求许可。
+ * 实际开夜才武装枪和处理首刀过期；提交按原字段顺序，异常不回滚此前状态。
  */
 import type {
   MechanicalMode,
@@ -17,7 +14,7 @@ import type {
   MechanicalReadState,
 } from "@ai-werewolf-arena/game-contract";
 
-import type { PlayerMechanicalState } from "../player_extended_state";
+import type { PlayerMechanicalState } from "@ai-werewolf-arena/game-contract/player-state-views";
 import type { InspectionResult, RoleId } from "@ai-werewolf-arena/game-catalog";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { EntityId } from "../../../../core/domain/identity";
@@ -33,7 +30,7 @@ export function freshMechanicalState(): MechanicalState {
     skillClosedDay: null,
   };
 }
-/** One owner for all native mechanical facts and consumable resources. */
+/** 从所属槽返回原存储引用；类型只读不等于复制或运行时冻结，写入仍由具名提交函数负责。 */
 export function getMechanicalState(
   role: RoleComponent | undefined,
 ): MechanicalReadState | undefined {
@@ -79,7 +76,7 @@ export function mechanicalLearning(
   return { targetId, role, day, readyOnNight: day + 1, skill };
 }
 
-/** Only the assembly/death owner calls this after a full actual death proposal. */
+/** 开局／死亡检查点调用此处一次提交继承字段；后续刀权资格和事实发布仍由原调用方负责。 */
 export function recordMechanicalInheritance(state: MechanicalReadState, day: number): boolean {
   if (state.hasInheritedKnife) return false;
   (state as { hasInheritedKnife: boolean }).hasInheritedKnife = true;
@@ -95,7 +92,7 @@ export function canMechanicalMimic(state: MechanicalReadState, day: number): boo
   );
 }
 
-/** A legal wait closes this night's opportunity without spending the once-per-game learning. */
+/** 合法等待只关闭本夜学习机会，保留整局一次的学习库存。 */
 export function closeMechanicalMimic(state: MechanicalReadState, day: number): boolean {
   if (!canMechanicalMimic(state, day)) return false;
   (state as { mimicClosedDay: number | null }).mimicClosedDay = day;
@@ -122,7 +119,7 @@ export function learnMechanicalRole(
   return true;
 }
 
-/** Entering an actual night arms passive guns and expires an elapsed first-knife window. */
+/** 进入实际夜才武装被动枪，并将已经过去的首刀窗口标为过期，不能靠日次跳转补刀。 */
 export function advanceMechanicalNight(state: MechanicalReadState, day: number): void {
   const learned = state.learned;
   if (!learned) return;
@@ -142,7 +139,7 @@ export function canSelectMechanicalMode(state: MechanicalReadState, day: number)
   return day >= 2 && (state.mode === null || state.mode.day < day);
 }
 
-/** Passing uses the same skill-mode choice; accepting a second choice never changes it. */
+/** 等待沿用技能模式选择；本夜第二次选择被拒，不重写第一次模式。 */
 export function selectMechanicalMode(
   state: MechanicalReadState,
   day: number,
@@ -184,7 +181,7 @@ export function closeMechanicalSkill(state: MechanicalReadState, day: number): b
   return true;
 }
 
-/** Caller additionally verifies live sole-Wolf ownership and the scoped mode choice. */
+/** 调用方另行核对当前唯一活狼的刀权及原模式许可；本字段查询不授予出刀资格。 */
 export function mechanicalKnifeSelected(state: MechanicalReadState, day: number): boolean {
   return (
     day >= 2 &&
@@ -208,7 +205,7 @@ export function canMechanicalExtraKnife(state: MechanicalReadState, day: number)
   );
 }
 
-/** Consecutive IDs are compared across actual night numbers, even if a target has revived. */
+/** 按相邻实际夜与目标编号判重复守护，同编号复活不会清除该历史；两字段按原顺序写入。 */
 export function chooseMechanicalGuard(
   skill: Extract<MechanicalReadSkill, { kind: "guard" }>,
   targetId: EntityId | null,
@@ -221,7 +218,7 @@ export function chooseMechanicalGuard(
   return { failed };
 }
 
-/** Explicit player projection: future God-only debug fields must not become player input. */
+/** 玩家投影逐字段列出知识和资源摘要；以后新增的全局调试字段不会自动成为玩家输入。 */
 export function projectMechanicalState(state: MechanicalReadState): PlayerMechanicalState {
   const learned = state.learned;
   let skill: MechanicalSkill | undefined;
@@ -276,7 +273,7 @@ export function projectMechanicalState(state: MechanicalReadState): PlayerMechan
   };
 }
 
-/** Caller retains inspection/currentness checks; history lookup precedes target.id. */
+/** 调用方保留查验与当前性检查；先读取原历史容器，再读取 target.id 并追加一行。 */
 export function recordMechanicalInspection(
   skill: Extract<MechanicalReadSkill, { kind: "inspection" }>,
   day: number,
@@ -289,13 +286,13 @@ export function recordMechanicalInspection(
     result: { ...result },
   });
 }
-/** Payment follows the original poison claims and marks, without an extra check. */
+/** 原毒提案与标记之后提交库存消耗，不增加复检、回滚或新的付款时点。 */
 export function consumeMechanicalPoison(
   skill: Extract<MechanicalReadSkill, { kind: "poison" }>,
 ): void {
   (skill as { remaining: 0 | 1 }).remaining = 0;
 }
-/** Caller retains the original attack's nullable target and completion ordering. */
+/** 调用方保留原攻击可空目标与完成顺序；非空目标标花费，空目标只按原机械首刀规则过期。 */
 export function closeMechanicalExtraKnife(
   skill: Extract<MechanicalReadSkill, { kind: "wolf" }>,
   target: unknown,

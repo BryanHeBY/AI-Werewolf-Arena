@@ -1,11 +1,8 @@
 /**
- * Owns Black Market Merchant's trade-state slot, copied installation and player projection.
- * Inputs are the original role/state or trade day; outputs retain copied slot data,
- * remaining stock and closed-day decisions. Only this owner restores the literal
- * black_market_merchant key at installation; no other private key write is granted.
- * It never validates a request lease, refunds a gift or replaces the role container.
- * Pure payload/read data structures belong to the neutral role-state data owner;
- * this leaf retains original live references and concrete installation/commit operations.
+ * 负责黑市商人的状态安装、原槽读取、交易记录与玩家投影。输入为原角色、状态和交易日次；
+ * 输出为复制安装后的状态、原只读引用或裁剪数据，实际类型归公共玩家视图契约。
+ * 本模块只写所属 black_market_merchant 槽及交易字段，不替换角色容器、退款或创建行动许可。
+ * 次数、关窗日和选择按原顺序提交；复制或字段写入失败保留此前已经完成的前缀。
  */
 import type {
   BlackMarketSkill,
@@ -13,7 +10,7 @@ import type {
   BlackMarketReadState,
 } from "@ai-werewolf-arena/game-contract";
 
-import type { PlayerBlackMarketState } from "../player_extended_state";
+import type { PlayerBlackMarketState } from "@ai-werewolf-arena/game-contract/player-state-views";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { copyAbilityData } from "../abilities";
 
@@ -46,11 +43,11 @@ export function canBlackMarketTrade(state: BlackMarketReadState, day: number): b
   return state.remaining === 1 && day >= 1 && (state.closedDay === null || state.closedDay < day);
 }
 
-/** Caller keeps original wait/currentness/commit boundaries; this closes only day. */
+/** 调用方保留原等待、当前性与提交边界；这里只关闭当日机会，不消费交易库存。 */
 export function closeBlackMarketTrade(state: BlackMarketReadState, day: number): void {
   (state as { closedDay: number | null }).closedDay = day;
 }
-/** Original paid trade writes stock, day then the same stored choice object. */
+/** 已付交易依次写库存、关窗日和选择对象；失败保留先完成的字段，不回滚或补发通知。 */
 export function recordBlackMarketTrade(
   state: BlackMarketReadState,
   day: number,

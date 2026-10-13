@@ -1,11 +1,8 @@
 /**
- * Owns Miracle Merchant's copied trade-state data slot and its existing public projection.
- * Inputs are the original role/state and night day; outputs retain choice fields,
- * stock and wait eligibility. This owner restores only miracle_merchant at the
- * original assignment, preserving installation copy and field failure order.
- * No generic private-state writer, fresh inventory or turn permission is created.
- * Pure payload/read data structures belong to the neutral role-state data owner;
- * this leaf retains original live references and concrete installation/commit operations.
+ * 负责奇迹商人的复制安装、原槽读取、交易记录与玩家投影。输入为原角色、状态及夜间日次；
+ * 输出保留选择、库存和等待资格，公开 DTO 类型归公共契约。
+ * 只写所属 miracle_merchant 槽及交易字段，保持复制后安装与原字段失败顺序；
+ * 不提供通用私有状态写口，不刷新库存、退款或创建行动许可。
  */
 import type {
   MiracleSkill,
@@ -13,7 +10,7 @@ import type {
   MerchantReadState,
 } from "@ai-werewolf-arena/game-contract";
 
-import type { PlayerMerchantState } from "../player_extended_state";
+import type { PlayerMerchantState } from "@ai-werewolf-arena/game-contract/player-state-views";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { copyAbilityData } from "../abilities";
 
@@ -43,11 +40,11 @@ export function canMerchantTrade(state: MerchantReadState, day: number): boolean
   return state.remaining > 0 && day >= 1 && (state.closedDay === null || state.closedDay < day);
 }
 
-/** Caller keeps original wait/currentness/commit boundaries; this closes only day. */
+/** 调用方保留原等待、当前性与提交边界；这里只关闭当日机会，不消费交易库存。 */
 export function closeMerchantTrade(state: MerchantReadState, day: number): void {
   (state as { closedDay: number | null }).closedDay = day;
 }
-/** Original paid trade writes stock, day then the same stored choice object. */
+/** 已付交易依次写库存、关窗日和选择对象；失败保留先完成的字段，不回滚或补发通知。 */
 export function recordMerchantTrade(
   state: MerchantReadState,
   day: number,

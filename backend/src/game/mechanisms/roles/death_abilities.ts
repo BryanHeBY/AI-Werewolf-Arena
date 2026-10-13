@@ -1,7 +1,7 @@
 /**
  * 负责赠枪的公开查询／生命周期入口、玩家投影及工具枪权政策装配。
  * 输入为原实例或 gateway 校验上下文；输出保留真实函数引用、裁剪后的玩家 DTO 与拒绝代码。
- * 实例生命周期和原体证明由 death-gun-lifecycle 唯一拥有，玩家数据归 player_state。
+ * 实例生命周期和原体证明归 death-gun-lifecycle，玩家投影归 player_state，公共类型归 game-contract。
  * 本入口仅在原参数位置查询枪权；不修改库存、标记死亡、复制运行时授权或执行录制 I/O。
  */
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
@@ -23,7 +23,7 @@ export {
   consumeDeathGunShot,
 } from "./death-gun-lifecycle";
 export { projectDeathGun } from "./player_state";
-export type { PlayerDeathGun } from "./player_state";
+
 
 export function copyDeathGun(): never {
   throw new Error("death_ability_copy_not_supported");

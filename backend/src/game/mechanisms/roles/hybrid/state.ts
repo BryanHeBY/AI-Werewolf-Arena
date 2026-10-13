@@ -1,10 +1,10 @@
 /**
- * Owns Hybrid state construction, live slot reads and exemplar eligibility queries.
- * Inputs are original role/choice data and day; outputs retain the stored reference or
- * an independently copied player choice. This boundary never changes hidden membership.
+ * 负责混血儿初态、原槽读取、榜样选择资格和玩家投影。输入为原角色、选择数据与日次；
+ * 输出为原只读存储引用或单独复制的选择，公开 DTO 类型归公共契约。
+ * 本模块不写榜样选择、改变隐藏胜利归属或授予行动许可；真正选择提交由夜间机制负责。
  */
 import type { HybridState, HybridReadState } from "@ai-werewolf-arena/game-contract";
-import type { PlayerHybridState } from "../player_extended_state";
+import type { PlayerHybridState } from "@ai-werewolf-arena/game-contract/player-state-views";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 export const freshHybridState = (): HybridState => ({ remaining: 1, choice: null });
 export function getHybridState(role: RoleComponent | undefined): HybridReadState | undefined {

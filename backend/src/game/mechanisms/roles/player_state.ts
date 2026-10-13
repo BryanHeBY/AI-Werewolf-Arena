@@ -1,82 +1,27 @@
 /**
- * 负责将角色／能力状态裁剪为已授权玩家可见 DTO，并持有这些投影的纯数据类型。
+ * 负责将角色／能力状态裁剪为已授权玩家可见 DTO；公共结构归 game-contract 的玩家视图契约。
  * 输入为现有状态读视图或显式事实字段；输出为独立投影，不泄露内部来源身份、库存写权或授权句柄。
  * 赠枪投影同时供原 transfer 制作安装数据，字段／status 求值顺序保持；本模块不授枪或转移资源。
  * 纯字段校验和复制只作用于数据，不读 World、时钟、RNG、文件或模型服务。
  */
-import type { DeathGun, DeathGunReadView } from "@ai-werewolf-arena/game-contract";
-import { WitchSelfHealRule, type GuardRepeatPolicy } from "../../../core/domain/model";
+import type { DeathGunReadView } from "@ai-werewolf-arena/game-contract";
+import type {
+  PlayerGuardState,
+  PlayerHunterState,
+  PlayerWolfKingState,
+  PlayerWhiteWolfKingState,
+  PlayerKnightState,
+  PlayerIdiotState,
+  PlayerDreamerState,
+  PlayerWolfBeautyState,
+  PlayerBearState,
+  PlayerSeerState,
+  PlayerWitchState,
+  PlayerRoleInspectionState,
+  PlayerDeathGun,
+} from "@ai-werewolf-arena/game-contract/player-state-views";
+import { WitchSelfHealRule } from "../../../core/domain/model";
 import { readInspectionResult } from "@ai-werewolf-arena/replay-contract";
-import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
-
-/** 玩家 DTO 显式声明可见字段，不自动继承引擎状态或内部报告行。 */
-export interface PlayerGuardState {
-  lastTarget: number | null;
-  repeatPolicy?: GuardRepeatPolicy;
-}
-export interface PlayerHunterState {
-  deathActionPolicy?: import("../../../core/domain/board").HunterDeathActionPolicy;
-  canShoot: boolean;
-}
-export interface PlayerWolfKingState {
-  deathActionPolicy?: import("../../../core/domain/board").DeathActionPolicy;
-  canShoot: boolean;
-}
-export interface PlayerWhiteWolfKingState {
-  canDetonate: boolean;
-}
-export interface PlayerKnightState {
-  canDuel: boolean;
-}
-export interface PlayerIdiotState {
-  revealed: boolean;
-}
-export interface PlayerDreamerState {
-  protectionPolicy?: import("../../../core/domain/board").DreamProtectionPolicy;
-  lastTarget: number | null;
-  lastDay: number | null;
-  history: Array<{ day: number; targetId: number }>;
-}
-export interface PlayerWolfBeautyState {
-  charmAllowed?: boolean;
-  linkAllowed?: boolean;
-  deathLinkPolicy?: import("../../../core/domain/board").BeautyDeathLinkPolicy;
-  targetId: number | null;
-  lastActedDay: number | null;
-  history: Array<{ day: number; targetId: number | null }>;
-}
-export interface PlayerBearState {
-  history: Array<{ day: number; roared: boolean }>;
-}
-export interface PlayerSeerState {
-  targetPolicy?: import("../../../core/domain/board").SeerTargetPolicy;
-  actionPolicy?: import("../../../core/domain/board").SeerActionPolicy;
-  lastTarget: number | null;
-  lastIsWerewolf: boolean | null;
-  lastResult?: InspectionResult | null;
-  history: Array<{ targetId: number; isWerewolf: boolean; result?: InspectionResult }>;
-}
-export interface PlayerWitchState {
-  knifeVisibility?: import("../../../core/domain/board").WitchKnifeVisibilityPolicy;
-  potionPolicy?: import("../../../core/domain/board").WitchPotionPolicy;
-  heal: number;
-  poison: number;
-  selfHealRule: WitchSelfHealRule;
-  canSelfHeal: boolean;
-  healUsedThisNight: boolean;
-  poisonUsedThisNight: boolean;
-}
-export interface PlayerRoleInspectionState {
-  inspectionPolicy?: import("../../../core/domain/board").InspectionPolicy;
-  policy?: "gargoyle" | "psychic" | "mirror" | "pure_white" | "wolf_witch";
-  lastTarget: number | null;
-  lastDay: number | null;
-  history: Array<{
-    day: number;
-    targetId: number;
-    result: Extract<InspectionResult, { kind: "role" }>;
-  }>;
-}
 
 /** 只读取声明的自身数据属性，不调用该字段访问器；不承诺对任意 Proxy 零反射 trap。 */
 export function playerDataField(value: unknown, key: string): unknown {
@@ -272,11 +217,6 @@ export function projectRoleInspectionState(state: unknown): PlayerRoleInspection
     }),
   };
 }
-
-export type PlayerDeathGun = Omit<DeathGun, "source"> & {
-  source: { kind: "gift" | "transfer" };
-  status: "pending" | "active" | "spent" | "disabled";
-};
 
 export function projectDeathGun(gun: DeathGunReadView): PlayerDeathGun {
   return {

@@ -12,7 +12,7 @@ import type {
   PlayerHybridState,
   PlayerBlackMarketState,
   PlayerMerchantState,
-} from "../mechanisms/roles/player_extended_state";
+} from "@ai-werewolf-arena/game-contract/player-state-views";
 import type { ActionRequest, Camp, Role } from "@ai-werewolf-arena/game-contract";
 import type {
   PlayerGuardState,
@@ -27,9 +27,9 @@ import type {
   PlayerSeerState,
   PlayerWitchState,
   PlayerRoleInspectionState,
-} from "../mechanisms/roles/player_state";
+} from "@ai-werewolf-arena/game-contract/player-state-views";
 import type { PlayerNightAbility } from "../mechanisms/roles/abilities";
-import type { PlayerDeathGun } from "../mechanisms/roles/death_abilities";
+import type { PlayerDeathGun } from "@ai-werewolf-arena/game-contract/player-state-views";
 import type { OwnNightAction } from "../mechanisms/roles/night_action_history";
 
 /** 玩家决策端口只携带已投影事实和自己的知识，不提供 World。 */
@@ -89,7 +89,7 @@ export interface PlayerObservation {
       choice: { day: number; targetId: number } | null;
     };
     debatePenalty?: { day: number };
-    cupid?: import("../mechanisms/roles/player_extended_state").PlayerCupidState;
+    cupid?: import("@ai-werewolf-arena/game-contract/player-state-views").PlayerCupidState;
     lover?: { partnerId: number; mayNotVotePartner: boolean };
     merchant?: PlayerMerchantState;
     mechanical?: PlayerMechanicalState;

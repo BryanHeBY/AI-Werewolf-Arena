@@ -27,12 +27,14 @@ import {
   projectRoleInspectionState,
   projectSeerState,
   projectWitchState,
-  type PlayerDreamerState,
-  type PlayerGuardState,
-  type PlayerRoleInspectionState,
-  type PlayerSeerState,
-  type PlayerWitchState,
 } from "./player_state";
+import type {
+  PlayerDreamerState,
+  PlayerGuardState,
+  PlayerRoleInspectionState,
+  PlayerSeerState,
+  PlayerWitchState,
+} from "@ai-werewolf-arena/game-contract/player-state-views";
 export { projectRoleInspectionState, projectSeerState, projectWitchState } from "./player_state";
 
 

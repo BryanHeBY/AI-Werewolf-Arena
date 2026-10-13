@@ -1,11 +1,8 @@
 /**
- * Owns Awakened Hidden Wolf's learned template state and copied installation slot.
- * Inputs are the original role or learned state; outputs retain activation/skill
- * data and the selected stored reference. Only awakened_hidden_wolf is restored
- * for its original installation write; this leaf never broadens private-container
- * writes, verifies a request, refunds stock or redraws a learned template.
- * Pure payload/read data structures belong to the neutral role-state data owner;
- * this leaf retains original live references and concrete installation/commit operations.
+ * 负责觉醒隐狼的学习模板、所属槽安装、激活／技能资源提交和玩家投影。输入为原角色、状态与实际夜；
+ * 输出保留激活、技能和原存储引用，公开 DTO 类型独立归公共契约。
+ * 只写 awakened_hidden_wolf 及其学习资源，不扩大角色容器写权、重抽模板、退款或授予请求许可。
+ * 激活与主动技能生效夜分别保存；次数／关窗和字段提交保持原顺序，失败保留已写前缀。
  */
 import type {
   AwakenedSkill,
@@ -19,7 +16,7 @@ import type {
   AwakenedReadState,
 } from "@ai-werewolf-arena/game-contract";
 
-import type { PlayerAwakenedState } from "../player_extended_state";
+import type { PlayerAwakenedState } from "@ai-werewolf-arena/game-contract/player-state-views";
 import type { RoleId } from "@ai-werewolf-arena/game-catalog";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { EntityId } from "../../../../core/domain/identity";
@@ -42,7 +39,7 @@ export function getAwakenedState(role: RoleComponent | undefined): AwakenedReadS
     role as { readonly privateState: { readonly awakened_hidden_wolf?: unknown } } | undefined
   )?.privateState.awakened_hidden_wolf as AwakenedReadState | undefined;
 }
-/** Persist semantic facts only; references and night authorization live outside this object. */
+/** 复制数据后安装到原私有槽；请求许可和原体证明另有所有者，不随此数据复制。 */
 export function setAwakenedState(role: RoleComponent, state: AwakenedState): AwakenedReadState {
   const owned = copyAbilityData(state);
   (role.privateState as { awakened_hidden_wolf: AwakenedState }).awakened_hidden_wolf = owned;
@@ -101,7 +98,7 @@ export function learnAwakenedRole(
   return true;
 }
 
-/** Called at the actual night-end commit, never when selecting a template or entering a later night. */
+/** 只在实际夜末提交激活；选择模板或进入以后日次不会补造激活夜。 */
 export function activateAwakenedLearning(
   state: AwakenedReadState,
   night: number,
@@ -124,7 +121,7 @@ export function activateAwakenedLearning(
   return true;
 }
 
-/** Passive Hunter readiness is read from its gun; active skills begin after the actual activation night. */
+/** 被动猎人枪的可用性从枪自身读取；主动技能要在实际激活后的生效夜查询。 */
 export function awakenedSkillForNight(
   state: AwakenedReadState,
   night: number,
@@ -153,7 +150,7 @@ export function closeAwakenedSkill(state: AwakenedReadState, night: number): boo
   return true;
 }
 
-/** The assembly/death owner commits inheritance once, independent of learning or skill selection. */
+/** 装配／死亡检查点一次提交继承；它不依赖学习或技能选择，不消费学习资源。 */
 export function recordAwakenedInheritance(state: AwakenedReadState, day: number): boolean {
   if (!validDay(day) || state.hasInheritedKnife) return false;
   (state as { hasInheritedKnife: boolean }).hasInheritedKnife = true;
@@ -168,14 +165,14 @@ export function awakenedKnifeReady(state: AwakenedReadState, night: number): boo
     night >= state.firstKnifeNight
   );
 }
-/** The caller additionally checks current original-owner and sole-living-Wolf permission. */
+/** 调用方还核对当前原持有者与唯一活狼许可；这里的字段条件不单独授予刀权。 */
 export function canAwakenedExtraKnife(state: AwakenedReadState, night: number): boolean {
   const skill = awakenedSkillForNight(state, night);
   return (
     awakenedKnifeReady(state, night) && skill?.kind === "wolf" && skill.extraKnife === "available"
   );
 }
-/** Passing closes only this night. A real nonempty attack spends the once-per-game stock. */
+/** 空刀只关闭本夜机会；实际非空攻击才花费整局一次的额外刀库存。 */
 export function chooseAwakenedAttack(
   state: AwakenedReadState,
   targetId: EntityId | null,
@@ -207,7 +204,7 @@ export function chooseAwakenedGuard(
   (state as { skillClosedDay: number | null }).skillClosedDay = night;
   return true;
 }
-/** A legal tool-free wait also breaks consecutive guarding. */
+/** 合法的无工具等待也按空目标结束本夜守护，打断连续守同一编号的历史。 */
 export function skipAwakenedSkill(state: AwakenedReadState, night: number): boolean {
   const skill = awakenedSkillForNight(state, night);
   if (!skill) return false;
@@ -223,7 +220,7 @@ export function useAwakenedPoison(state: AwakenedReadState, night: number): bool
   return true;
 }
 
-/** Known-field projection; Mirror history and inventory belong solely to its ability instance. */
+/** 只投影列出的玩家字段；魔镜查验历史与库存由其能力实例唯一拥有，不复制进学习模板。 */
 export function projectAwakenedState(state: AwakenedReadState): PlayerAwakenedState {
   const learned = state.learned;
   let skill: AwakenedSkill | undefined;

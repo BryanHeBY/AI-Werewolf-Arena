@@ -38,7 +38,8 @@
     "./facts/mechanical": "./src/facts/mechanical.ts",
     "./facts/merchant": "./src/facts/merchant.ts",
     "./facts/death-ability": "./src/facts/death-ability.ts",
-    "./facts/black-market": "./src/facts/black-market.ts"
+    "./facts/black-market": "./src/facts/black-market.ts",
+    "./player-state-views": "./src/player-state-views.ts"
   },
   "scripts": {
     "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
@@ -151,6 +152,9 @@
       ],
       "facts/black-market": [
         "src/facts/black-market.ts"
+      ],
+      "player-state-views": [
+        "src/player-state-views.ts"
       ]
     }
   }
