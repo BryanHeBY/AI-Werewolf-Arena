@@ -3,6 +3,7 @@
  * 输入保留原 World／日期与请求，输出为同一准备结果、关闭能力或原已告知投影。
  * 实际夜间入口仍先检查准备状态再开启，返回 close 沿原 finally 顺序调用；终态和当前性归生命周期。
  * 该出口不重开已关闭的准备／行动窗口，不新增状态、复制、校验或规则；资源与知识仍归原所有者。
+ * 只读绑定不扩大查询权限；返回关闭函数仍只移除本 World 的原活跃标记，不补做当前性校验。
  */
 export { hasActiveLonelyGirl, lonelyGirlReady, openLonelyGirlNight } from "./lifecycle";
 

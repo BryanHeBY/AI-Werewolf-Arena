@@ -3,6 +3,7 @@
  * 输入为原 World／日期与魔术师只读移交视图；输出保留清理单元、经理终结端口与名单断言。
  * 开启仍由优先级 100 的阶段拥有，出口不授予目标或库存写者；原 frame 错误在原时点传播。
  * 查询不渲染、不记录，也不为共享移交值建立第二个所有者。
+ * 单元的关闭终态与失败前缀仍由夜间生命周期维护，出口不重开已结束的夜间窗口。
  */
 export { WolfSorcererNightUnit, wolfSorcererNightTerminal } from "./night-lifecycle";
 export type { WolfSorcererNightRuntime } from "./night-lifecycle";

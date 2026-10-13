@@ -1,0 +1,302 @@
+{
+  "files": [
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/ports.ts",
+      "sha256": "f8b8ae86251f662520e359213fbfe36aa2f1373a05596100e8e3c5207f20e1e3",
+      "authorShaSame": true,
+      "actualGitBeforeSame": true,
+      "tokenSame": true,
+      "outputs": [
+        {
+          "mode": "ESNext",
+          "equal": true,
+          "beforeSha": "252c8ea77949c8ec5d274e7d56595418433452787cc8046f96435cd8a903ca92",
+          "afterSha": "252c8ea77949c8ec5d274e7d56595418433452787cc8046f96435cd8a903ca92"
+        },
+        {
+          "mode": "CommonJS",
+          "equal": true,
+          "beforeSha": "1bb8a29256b8563cfca6f94971ec575cb8ae17d023da7040defacb5fa0bd38b2",
+          "afterSha": "1bb8a29256b8563cfca6f94971ec575cb8ae17d023da7040defacb5fa0bd38b2"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/ports.ts",
+      "sha256": "51a8bf0ce830ce7606a5aa4c0e4b2125eef67e535af7ddb93147a4f0576b3f40",
+      "authorShaSame": true,
+      "actualGitBeforeSame": true,
+      "tokenSame": true,
+      "outputs": [
+        {
+          "mode": "ESNext",
+          "equal": true,
+          "beforeSha": "9eafa613596255bd4e331ba60b54255ed95328761ee48ac6965c98191ececbaa",
+          "afterSha": "9eafa613596255bd4e331ba60b54255ed95328761ee48ac6965c98191ececbaa"
+        },
+        {
+          "mode": "CommonJS",
+          "equal": true,
+          "beforeSha": "816ce2d11761071c41a8b2580d3b070ce618fbb33552ed65583cf7b8ae67aecb",
+          "afterSha": "816ce2d11761071c41a8b2580d3b070ce618fbb33552ed65583cf7b8ae67aecb"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/ports.ts",
+      "sha256": "a90aacc29b762579e2c451f9163563d1bf3eb9e6ddbc74a8fa0da49fefde2692",
+      "authorShaSame": true,
+      "actualGitBeforeSame": true,
+      "tokenSame": true,
+      "outputs": [
+        {
+          "mode": "ESNext",
+          "equal": true,
+          "beforeSha": "498e459aa3bb66a5f80b965d1535243ca6a6007bf26c723e7f0278baea835727",
+          "afterSha": "498e459aa3bb66a5f80b965d1535243ca6a6007bf26c723e7f0278baea835727"
+        },
+        {
+          "mode": "CommonJS",
+          "equal": true,
+          "beforeSha": "633cd68d30ace3d51a70de101031fe72430b010be88f7366be0e2ecc6359112b",
+          "afterSha": "633cd68d30ace3d51a70de101031fe72430b010be88f7366be0e2ecc6359112b"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/ports.ts",
+      "sha256": "837e16ea3cf80d720954e8ef40e866856c595881f74c500caf56fd3e94856aa0",
+      "authorShaSame": true,
+      "actualGitBeforeSame": true,
+      "tokenSame": true,
+      "outputs": [
+        {
+          "mode": "ESNext",
+          "equal": true,
+          "beforeSha": "da17e9880bd108fe64edc61e84f992fdbe448534323d2c330691f069260a204d",
+          "afterSha": "da17e9880bd108fe64edc61e84f992fdbe448534323d2c330691f069260a204d"
+        },
+        {
+          "mode": "CommonJS",
+          "equal": true,
+          "beforeSha": "16f72f56cd26c30cfb86f396df2b2533624efbdf5a80f00c37eb153c544d3484",
+          "afterSha": "16f72f56cd26c30cfb86f396df2b2533624efbdf5a80f00c37eb153c544d3484"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/ports.ts",
+      "sha256": "a8a0fde2a0fc98bfd40c80534b9682cffb318e9628b0b131dc3a376cc0bae2ae",
+      "authorShaSame": true,
+      "actualGitBeforeSame": true,
+      "tokenSame": true,
+      "outputs": [
+        {
+          "mode": "ESNext",
+          "equal": true,
+          "beforeSha": "92ef4caba572674f4737f7fa22ad05fb95a908b652629c576ccca88514d42b95",
+          "afterSha": "92ef4caba572674f4737f7fa22ad05fb95a908b652629c576ccca88514d42b95"
+        },
+        {
+          "mode": "CommonJS",
+          "equal": true,
+          "beforeSha": "68a6aab827dfff2de748a8e81a662552a52c4341c782442b29f8bbd95b524e1c",
+          "afterSha": "68a6aab827dfff2de748a8e81a662552a52c4341c782442b29f8bbd95b524e1c"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "sha256": "3cd7f94bef024fd3b740ed3f2c48c1d37a88bf24fb85cad247e51598898726f8",
+      "authorShaSame": true,
+      "actualGitBeforeSame": true,
+      "tokenSame": true,
+      "outputs": [
+        {
+          "mode": "ESNext",
+          "equal": true,
+          "beforeSha": "5bb27172464332bbbf3c7bb1eed6e47f91b0e2f1915e64dfa75977c0bebf154c",
+          "afterSha": "5bb27172464332bbbf3c7bb1eed6e47f91b0e2f1915e64dfa75977c0bebf154c"
+        },
+        {
+          "mode": "CommonJS",
+          "equal": true,
+          "beforeSha": "dcdfb72df96daaf919887c7631b3980875b61ae8f61be915ce4ef12c0c1312b0",
+          "afterSha": "dcdfb72df96daaf919887c7631b3980875b61ae8f61be915ce4ef12c0c1312b0"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/magician/ports.ts",
+      "sha256": "a9ae82143eefdb660e5888caa2397669519013388050a421c4102e6cf3769070",
+      "authorShaSame": true,
+      "actualGitBeforeSame": true,
+      "tokenSame": true,
+      "outputs": [
+        {
+          "mode": "ESNext",
+          "equal": true,
+          "beforeSha": "b864b9bfa76e0bae0ffc6304189399254713e55bb3fc454e1ae1f79caaffeeeb",
+          "afterSha": "b864b9bfa76e0bae0ffc6304189399254713e55bb3fc454e1ae1f79caaffeeeb"
+        },
+        {
+          "mode": "CommonJS",
+          "equal": true,
+          "beforeSha": "d9146cd1945da7704d77ffdb5e072e7b57610ca9a4e79884463e48974b7c1a32",
+          "afterSha": "d9146cd1945da7704d77ffdb5e072e7b57610ca9a4e79884463e48974b7c1a32"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/ports.ts",
+      "sha256": "343f2649a9e4536d68b06ad358d34e40cb1a7f68533857996817d3faefd3956a",
+      "authorShaSame": true,
+      "actualGitBeforeSame": true,
+      "tokenSame": true,
+      "outputs": [
+        {
+          "mode": "ESNext",
+          "equal": true,
+          "beforeSha": "8307a44d0687d1ca2515638bd2b24b571044997c3adb31718e4a73a1acfdb870",
+          "afterSha": "8307a44d0687d1ca2515638bd2b24b571044997c3adb31718e4a73a1acfdb870"
+        },
+        {
+          "mode": "CommonJS",
+          "equal": true,
+          "beforeSha": "c0ddfe93ae22b59c843bc2a2207a473c2ef6d33c63a12ee7f6fcadadc3861bfc",
+          "afterSha": "c0ddfe93ae22b59c843bc2a2207a473c2ef6d33c63a12ee7f6fcadadc3861bfc"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/ports.ts",
+      "sha256": "c040c81b8ef4cfdae1a8f4f60c7e79df1047c2fc636bb7346eb54839ea6da458",
+      "authorShaSame": true,
+      "actualGitBeforeSame": true,
+      "tokenSame": true,
+      "outputs": [
+        {
+          "mode": "ESNext",
+          "equal": true,
+          "beforeSha": "22bbfd06c7df171a00c24c2e07a43729a012e8ad1e79f9c0027dea60f5f6a90c",
+          "afterSha": "22bbfd06c7df171a00c24c2e07a43729a012e8ad1e79f9c0027dea60f5f6a90c"
+        },
+        {
+          "mode": "CommonJS",
+          "equal": true,
+          "beforeSha": "fe86821c1aa0951b3a2331c1f800369786b86bbe15b3a4231082cebcb16f9c65",
+          "afterSha": "fe86821c1aa0951b3a2331c1f800369786b86bbe15b3a4231082cebcb16f9c65"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+      "sha256": "f98369419f6b6040ca55b612145ece1717f4b506c05a756c2ef296015c219303",
+      "authorShaSame": true,
+      "actualGitBeforeSame": true,
+      "tokenSame": true,
+      "outputs": [
+        {
+          "mode": "ESNext",
+          "equal": true,
+          "beforeSha": "350f8f6022ba7da1bc4f8e41e58a1041a823c3ce607e1a9e41554caa7eb59e3f",
+          "afterSha": "350f8f6022ba7da1bc4f8e41e58a1041a823c3ce607e1a9e41554caa7eb59e3f"
+        },
+        {
+          "mode": "CommonJS",
+          "equal": true,
+          "beforeSha": "9bc3c60c5c16541e04595abf8138d156a4946295d941a9ae6f75ab26fdcdf6d8",
+          "afterSha": "9bc3c60c5c16541e04595abf8138d156a4946295d941a9ae6f75ab26fdcdf6d8"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/ports.ts",
+      "sha256": "8a643007910ea687bfc8a5853fdcd588c08a8f5f53966be86a172beed6dc6c77",
+      "authorShaSame": true,
+      "actualGitBeforeSame": true,
+      "tokenSame": true,
+      "outputs": [
+        {
+          "mode": "ESNext",
+          "equal": true,
+          "beforeSha": "f7b17225ea77c6beb43169a59a792bb10d61245053fb484b5fcbd64b95efb6cb",
+          "afterSha": "f7b17225ea77c6beb43169a59a792bb10d61245053fb484b5fcbd64b95efb6cb"
+        },
+        {
+          "mode": "CommonJS",
+          "equal": true,
+          "beforeSha": "5190f4a5c49b5da3e7147ebf19111c8cf4dba1a4ca378545130b7ae8ae5d02a0",
+          "afterSha": "5190f4a5c49b5da3e7147ebf19111c8cf4dba1a4ca378545130b7ae8ae5d02a0"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/ports.ts",
+      "sha256": "fa658942b569253b3a4ed2b1769676d2c5bf7a6b7838f3b322ae33252ff86a79",
+      "authorShaSame": true,
+      "actualGitBeforeSame": true,
+      "tokenSame": true,
+      "outputs": [
+        {
+          "mode": "ESNext",
+          "equal": true,
+          "beforeSha": "5b60dc55855ba0fd00e7b6a8ab01fc7139e5ed920a3603d02e4499f3277ec35a",
+          "afterSha": "5b60dc55855ba0fd00e7b6a8ab01fc7139e5ed920a3603d02e4499f3277ec35a"
+        },
+        {
+          "mode": "CommonJS",
+          "equal": true,
+          "beforeSha": "4256ff09bff30d96222ec8e2af8324e1cc60a6ecfbf077c4e68b2f36948c7d86",
+          "afterSha": "4256ff09bff30d96222ec8e2af8324e1cc60a6ecfbf077c4e68b2f36948c7d86"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/gateway/turn-constraints.ts",
+      "sha256": "01f176add4d6bc6424e78a6b6fea3c02cf201a288af6e2a92c8f93e5bbd8b9f6",
+      "authorShaSame": true,
+      "actualGitBeforeSame": true,
+      "tokenSame": true,
+      "outputs": [
+        {
+          "mode": "ESNext",
+          "equal": true,
+          "beforeSha": "868d814523db4f856af43cefa587c93e5cf1b1595e6109b35729eaaf7824cf08",
+          "afterSha": "868d814523db4f856af43cefa587c93e5cf1b1595e6109b35729eaaf7824cf08"
+        },
+        {
+          "mode": "CommonJS",
+          "equal": true,
+          "beforeSha": "72551bdf43592a3c4013c21029e47946b787c2132208d577c2b02187b831f673",
+          "afterSha": "72551bdf43592a3c4013c21029e47946b787c2132208d577c2b02187b831f673"
+        }
+      ]
+    }
+  ],
+  "sourceCommit": "a6e621268f8b4cf2ae02686f07db30a100080062",
+  "fixedReportSame": true,
+  "actualCounts": {
+    "files": 3083,
+    "violations": 574,
+    "failures": 23,
+    "remainingDebt": 551,
+    "clearedDebt": 1228
+  },
+  "internalCountsConsistent": true,
+  "distinctFailedPorts": 12,
+  "headReceipt": {
+    "checked": 13,
+    "failures": []
+  },
+  "failures": [],
+  "semanticFindings": [
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "finding": "Added statement claims returned close checks currentness; actual openLonelyGirlNight close only deletes activeNights World marker.",
+      "status": "Corrected by Root: returned close only removes original activeNights marker; actual source independently re-read."
+    }
+  ],
+  "semanticFollowup": "Magician wording now explicitly preserves original repeat-call and error policy, without claiming idempotency or retry suppression.",
+  "result": "accept final 13 source SHA; no remaining finding"
+}

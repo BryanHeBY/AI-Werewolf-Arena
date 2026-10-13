@@ -3,6 +3,7 @@
  * 输入是绑定原 World 的目标序号，或具体原体／查验上下文；输出保留原存活角色允许结果，
  * 包括未安装专用板子时的原政策。查询错误原样传播，绑定不提前读组件或授予生命、反射写权。
  * 资格与反射命令仍保留原来源校验、付款时点和 frame 写入；狼刀目标查询本身只读。
+ * 反射终态与失败前缀由状态命令维护，出口不拦截错误或尝试回滚。
  */
 import { Role, type EntityId } from "../../../../core/domain/identity";
 import { COMPONENT } from "../../../../core/domain/components/names";
