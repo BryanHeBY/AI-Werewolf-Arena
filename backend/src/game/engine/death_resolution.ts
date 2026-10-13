@@ -47,7 +47,6 @@ import { expandWeddingDeaths, weddingGroup } from "../mechanisms/roles/ghost_bri
 import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-text";
 import { resolveWildChildDeathWave } from "../mechanisms/roles/wild_child/lifecycle";
 import { expandLoversWave } from "../mechanisms/roles/cupid/relation";
-import { permitsCharm } from "../mechanisms/roles/wolf_beauty/relation";
 import type { BoardConfig, LastWordsPolicy } from "../../core/domain/board";
 import { captureNightLife, livingNightLife } from "../../core/domain/night_effects";
 import { COMPONENT } from "../../core/domain/components/names";
@@ -73,10 +72,11 @@ import { GameActionRequestFactory } from "./action_request_factory";
 import { EventRegistry } from "./event_registry";
 import type { DreamNightFrame } from "../mechanisms/roles/dreamer/night_frame";
 import {
-  claimCharm,
+  attemptCharmTrigger,
   commitCharmDeath,
   type CharmBinding,
-} from "../mechanisms/roles/wolf_beauty/relation";
+  type CharmClaimReceipt,
+} from "../mechanisms/roles/wolf_beauty/ports";
 import { refreshHiddenWolfInheritance } from "../mechanisms/roles/hidden_wolf/ports";
 import { refreshGargoyleInheritance } from "../mechanisms/roles/gargoyle/ports";
 import { refreshMechanicalInheritance } from "../mechanisms/roles/mechanical_wolf/ports";
@@ -516,22 +516,23 @@ export class DeathResolution {
                 let newlyMarked = false;
                 const marked: number[] = [];
                 const additionalReceipts: DeathCommitReceipt[] = [];
-                const charmBindings: CharmBinding[] = [];
+                const charmTriggers: Array<{ binding: CharmBinding; receipt: CharmClaimReceipt }> =
+                  [];
                 for (const proposal of result.charmLinks ?? []) {
                   const binding = proposal.binding;
-                  if (
-                    !permitsCharm(
-                      allSources[binding.actorId] ?? [],
-                      binding.deathLinkPolicy,
-                      nativeHunterShotTargets.has(binding.actorId),
-                    ) ||
-                    !claimCharm(this.world, binding, seen)
-                  )
-                    continue;
-                  if (
-                    proposal.nightEffect &&
-                    nightEffects?.dreams?.blocksNightCharm(this.world, binding.targetId, seen)
-                  ) {
+                  // 具体关系 owner 在原位置领取和查询保护；延迟 World，permit 失败不新增读取。
+                  const trigger = attemptCharmTrigger(
+                    binding,
+                    allSources,
+                    nativeHunterShotTargets,
+                    seen,
+                    () => this.world,
+                    () =>
+                      proposal.nightEffect &&
+                      nightEffects?.dreams?.blocksNightCharm(this.world, binding.targetId, seen),
+                  );
+                  if (!trigger) continue;
+                  if (trigger.kind === "blocked") {
                     this.events.push({
                       timestamp: Date.now(),
                       type: "charm_blocked",
@@ -543,14 +544,14 @@ export class DeathResolution {
                     });
                     continue;
                   }
-                  charmBindings.push(binding);
+                  charmTriggers.push({ binding, receipt: trigger });
                   if (!proposed.includes(binding.targetId)) proposed.push(binding.targetId);
                   proposedSources[binding.targetId] = [
                     ...new Set([...(proposedSources[binding.targetId] ?? []), DeathCause.Charm]),
                   ];
                   if (proposal.nightEffect) nightTargets.push(binding.targetId);
                 }
-                const charmTargets = new Set(charmBindings.map((binding) => binding.targetId));
+                const charmTargets = new Set(charmTriggers.map(({ binding }) => binding.targetId));
                 for (const id of nightTargets) nightOrigin.add(id);
                 if (nightEffects?.dreams && nightTargets.length)
                   for (const id of nightEffects.dreams.linkedDeaths(
@@ -717,13 +718,15 @@ export class DeathResolution {
                       );
                     this.fragrantDeathWave.publishVisibleWave(fragrantGun, event);
                   }
-                  for (const binding of charmBindings)
-                    if (commitCharmDeath(this.world, binding))
+                  for (const { binding, receipt } of charmTriggers) {
+                    const applied = commitCharmDeath(this.world, receipt);
+                    if (applied?.kind === "applied")
                       this.events.push({
                         timestamp: Date.now(),
                         type: "charm_death",
                         payload: { actorId: binding.actorId, targetId: binding.targetId },
                       });
+                  }
                   nightEffects?.dreams?.recordDeaths([...next, ...linked], this.events);
                   for (const permit of actions.permits.splice(0)) permit.close();
                 } finally {
