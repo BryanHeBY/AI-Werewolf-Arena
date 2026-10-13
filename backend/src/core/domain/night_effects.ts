@@ -1,8 +1,7 @@
 /**
- * Defines runtime night-effect claim data and original-life identity checks. Inputs are World
- * component references and sourced effect claims; outputs are captured life/version scopes and
- * the mechanical damage fold. These handles never become serialized player knowledge, and this
- * helper does not mark a player dead.
+ * 负责运行时夜间效果声明、原生命身份检查与机械伤害折叠。
+ * 输入为原组件引用和具有来源的效果；输出为捕获的生命版本及原机械伤害计划。
+ * 所有者保留资源提交权限，句柄不进入序列化或玩家知识，本模块不将玩家标记为死亡。
  */
 import type { DeathCause } from "./deaths";
 import { COMPONENT } from "./components/names";
@@ -11,18 +10,22 @@ import type { World } from "./world";
 import type { EntityId } from "./identity";
 import type { StatusMarksComponent } from "./components/status_marks";
 
-/** Queries original life and mark identity without exposing component commands. */
+/** 查询原生命和印记身份，不暴露组件修改命令。 */
 export interface NightEffectQuery {
   getComponent(id: EntityId, name: typeof COMPONENT.Alive): Readonly<AliveComponent> | undefined;
   getComponent(id: EntityId, name: typeof COMPONENT.StatusMarks): object | undefined;
 }
 
-/** Runtime-only ownership. Component references never enter events or recordings. */
+/** 仅供运行时的身份绑定；组件引用不进入事件或录制。 */
 export interface NightLifeScope {
   readonly id: EntityId;
   readonly life: AliveComponent;
   readonly version: number;
 }
+/** 同一原体的只读查询视图；不复制组件，也不授予修改存活状态的权限。 */
+export type NightLifeReadScope = Omit<NightLifeScope, "life"> & {
+  readonly life: Readonly<AliveComponent>;
+};
 export interface NightPoisonClaim {
   readonly source: NightLifeScope;
   readonly target: NightLifeScope;
@@ -30,7 +33,7 @@ export interface NightPoisonClaim {
 }
 export interface NightFoxInspectionClaim {
   readonly target: NightLifeScope;
-  /** Target binding survives the phase change before first-day sheriff settlement. */
+  /** 首日警长结算前切换阶段不会撤销原目标绑定。 */
   readonly isTargetCurrent: () => boolean;
   readonly isCurrent: () => boolean;
 }
@@ -48,7 +51,7 @@ export interface NightBlackMarketBacklash {
   readonly target: NightLifeScope;
   readonly isCurrent: () => boolean;
 }
-/** Swallowing backlash is a separate attack, never a merchant effect or dream death. */
+/** 吞噬反噬是独立攻击，不归入商人效果或梦境死亡。 */
 export interface NightRadiantBacklash {
   readonly target: NightLifeScope;
   readonly isCurrent: () => boolean;
@@ -58,21 +61,21 @@ export function captureNightLife(world: World, id: EntityId): NightLifeScope | n
     version = life && aliveLifeVersion(life);
   return life?.alive && version !== undefined ? { id, life, version } : null;
 }
-export function sameNightLife(world: NightEffectQuery, scope: NightLifeScope): boolean {
+export function sameNightLife(world: NightEffectQuery, scope: NightLifeReadScope): boolean {
   return (
     world.getComponent(scope.id, COMPONENT.Alive) === scope.life &&
     aliveLifeVersion(scope.life) === scope.version
   );
 }
-export function livingNightLife(world: NightEffectQuery, scope: NightLifeScope): boolean {
+export function livingNightLife(world: NightEffectQuery, scope: NightLifeReadScope): boolean {
   return sameNightLife(world, scope) && scope.life.alive;
 }
 
-/** A submitted mechanical effect binds original bodies; inventories remain in their owner. */
+/** 已提交机械效果绑定原体；库存仍由具体机制所有者持有。 */
 export interface NightMechanicalEffect {
   readonly actorId: EntityId;
   readonly target: NightLifeScope;
-  /** Recheck the submitting owner's role, state, life and phase without changing it. */
+  /** 只读重检提交者的角色、状态、生命与阶段，不修改原体。 */
   readonly isCurrent: () => boolean;
 }
 export interface NightMechanicalEffects {
@@ -80,18 +83,18 @@ export interface NightMechanicalEffects {
   readonly attacks: readonly NightMechanicalEffect[];
   readonly failures: readonly NightMechanicalEffect[];
 }
-/** Awakened guard absorbs toxins; its extra knife follows ordinary protection. */
+/** 觉醒守护吸收毒药；其额外狼刀按普通保护规则判定。 */
 export interface NightAwakenedEffect {
   readonly actorId: EntityId;
   readonly target: NightLifeScope;
-  /** Paid effects recheck their original owner, rather than the closed action window. */
+  /** 已付款效果重检原所有者；行动窗口关闭不等于撤销合法已付效果。 */
   readonly isCurrent: () => boolean;
 }
 export interface NightAwakenedEffects {
   readonly shields: readonly NightAwakenedEffect[];
   readonly attacks: readonly NightAwakenedEffect[];
 }
-/** God-only causal facts. Player projections must not expose the poison's source. */
+/** 仅全知视角的因果事实；玩家投影不得泄露施毒来源。 */
 export interface NightPoisonReflection {
   readonly actorId: EntityId;
   readonly protectedTargetId: EntityId;
@@ -105,7 +108,7 @@ export interface MechanicalDamagePlan {
   readonly failures: ReadonlySet<EntityId>;
   readonly reflections: readonly NightPoisonReflection[];
 }
-/** Fold each original toxin once; reflected toxins are never fed back through shields. */
+/** 每份原毒只折叠一次；反射毒不再送回盾内，避免递归反射。 */
 export function planMechanicalDamage(
   world: NightEffectQuery,
   effects: NightMechanicalEffects | undefined,
@@ -161,7 +164,7 @@ export function planMechanicalDamage(
   };
 }
 
-/** Original owner and target bindings for the finite pure-white inspection rules. */
+/** 有限纯白查验规则的原所有者与目标绑定。 */
 export interface NightInspectionAttack {
   readonly actorId: EntityId;
   readonly target: NightLifeScope;
@@ -169,14 +172,14 @@ export interface NightInspectionAttack {
   readonly isCurrent: () => boolean;
 }
 
-/** Finite evil-knight retaliation, paid at accepted native action and settled at night end. */
+/** 恶灵骑士反击在原行动接受时付款，于夜末按原体绑定结算。 */
 export interface NightRetaliationAttack {
   readonly actorId: EntityId;
   readonly target: NightLifeScope;
   readonly isCurrent: () => boolean;
 }
 
-/** Original life and role authority for persistent passive night immunity. */
+/** 持续被动夜间免疫保留原生命与角色授权。 */
 export interface NightImmunityClaim {
   readonly target: NightLifeScope;
   readonly isCurrent: () => boolean;

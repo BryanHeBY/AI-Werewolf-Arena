@@ -397,3 +397,5 @@
 - C17/C44 状态门面退出：100真实consumer/102静态import+5dynamic/175binding直达原15owner，113paths含9实际port/3既有port+旧facade删除。100非importtyped程序0；beforedelete惰性175funcidentity0、完整src/tests/scripts2781实际closed0。Root实际源审+独立175准确站/27publicbinding/113SHA/112heads终审0；仅一preloaded mixed Promise.all微任务不同明确，四single仅route。13新／触及职责头中文化非头byte同，不重复compiler；Hunter缺项真红及重复dynamicmatcher红保留修正。全schema/codec/能力观察及其他C44继续。见role-state-facade-exit.md。
 
 - 用户补充维护要求：重构不中断，新增与修改注释使用中文；触及文件顺带翻译职责头，在重要逻辑、数据结构、授权、排序和失败边界补准确说明，审查检查真实性。规范进入plan.md第16节，注释增量以程序保持／职责门禁验证，不重复行为测试。
+
+- C26 单目标伤害政策：原23条目标语句归night-damage-target，resolver保持前置filter/结果append/finalclear；只读plan+四lateID/只读modifierlife+marks.has，唯一取消命令两remove同receiver/原branch。完整原token/cancelinverse/alloc/return与独立5SHA审绿；原75/0/181，新增两prefix后boundary5/0/20，88420/82764及5权限负例42845 actualclosed0。五相关文件头与重要逻辑改中文，原生命/单反射/晚查询/部分取消说明有效，runtimeerase保持、heads0，不重fullgate。完整来源贡献/死亡wave/receipt仍继续。见night-target-damage.md。

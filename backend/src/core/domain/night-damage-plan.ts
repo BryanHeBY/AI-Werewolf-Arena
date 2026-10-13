@@ -1,11 +1,9 @@
 /**
- * Folds original night claims into the damage resolver's readonly contribution plan.
- * Inputs retain original-life handles and paid owners' currentness callbacks; output
- * sets and cause order belong to this one resolution only. The fold queries Alive
- * and mark identity through a narrow port, without changing stock, marks or lives.
- * Original getter, callback, toxin-absorption and single-reflection order is kept.
- * Deferred per-player protection queries and mark clearing remain in the resolver;
- * these runtime handles and sets are never serialized or player-visible facts.
+ * 负责将原夜间效果声明折叠为伤害结算使用的只读计划。
+ * 输入保留原生命句柄与已付款 owner 的有效性回调；输出集合和死因顺序仅属于本次结算。
+ * 通过窄查询端口读取生命与印记身份，不修改库存、印记或存活状态。
+ * 保留原 getter、回调、毒吸收与单次反射的执行顺序；每玩家的晚读取和印记清理由结算器负责。
+ * 运行时句柄与集合不会进入序列化归档，也不是玩家可见事实。
  */
 import { COMPONENT } from "./components/names";
 import { DeathCause } from "./deaths";
@@ -38,7 +36,7 @@ export interface NightDamageEffects {
   protectedTargets?: readonly EntityId[];
   wolfImmuneTargets?: readonly EntityId[];
   foxInspections?: readonly NightFoxInspectionClaim[];
-  /** Sourced night immunity; extension interactions are an explicit AWA completion. */
+  /** 具有来源的夜间免疫；扩展效果的交互遵循现有 AWA 规则。 */
   immuneNightTargets?: readonly EntityId[];
   consecutiveDeaths?: readonly EntityId[];
   poisonClaims?: readonly NightPoisonClaim[];
@@ -49,7 +47,7 @@ export interface NightDamageEffects {
   awakenedEffects?: NightAwakenedEffects;
 }
 
-/** Runtime-only fold; current entity marks are still consumed by the resolver. */
+/** 本次运行的折叠结果；集合只读，当前实体印记仍由结算器消费。 */
 export interface NightDamagePlan {
   readonly awakenedShields: ReadonlySet<EntityId>;
   readonly awakenedAttacks: ReadonlySet<EntityId>;
@@ -65,7 +63,7 @@ export interface NightDamagePlan {
   readonly passiveImmuneTargets: ReadonlySet<EntityId>;
 }
 
-/** Evaluated once at the original resolve point, with the same World receiver. */
+/** 在原 resolve 时点仅求值一次，传入同一 World，保留查询方法的 receiver。 */
 export function planNightDamage(
   world: NightEffectQuery,
   effects: NightDamageEffects,
@@ -80,7 +78,7 @@ export function planNightDamage(
       .filter((effect) => effect.isCurrent() && livingNightLife(world, effect.target))
       .map((effect) => effect.target.id),
   );
-  // Absorbed original toxins never enter mechanical reflection; returning toxins are checked below.
+  // 先吸收原毒，避免其进入机械反射；返回毒随后仍按目标保护独立判定。
   const mechanical = planMechanicalDamage(
     world,
     effects.mechanicalEffects,
@@ -89,6 +87,7 @@ export function planNightDamage(
   );
   const claimedPoisonTargets = new Set(effects.poisonClaims?.map((claim) => claim.target.id));
   const claimedGuardTargets = new Set(effects.guardClaims?.map((claim) => claim.target.id));
+  // 守护仍只检查原生命与印记对象身份；不能额外调用 isCurrent 改变既有规则。
   const guarded = new Set(
     effects.guardClaims
       ?.filter(

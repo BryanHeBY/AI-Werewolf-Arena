@@ -1,13 +1,14 @@
 /**
- * Implements dawn damage resolution from current night marks and sourced protection, inspection
- * and retaliation claims. Outputs are pending death IDs, causes and private reflection evidence,
- * while consumed night marks are cleared. It does not write Alive state or run death hooks;
- * those belong to death resolution.
+ * 负责黎明伤害结算：输入为当前夜间印记以及有来源的保护、查验和反击声明；
+ * 输出为待结算死亡 ID、死因与仅供全知视角的反射证据，并按原顺序清理已消费印记。
+ * 效果折叠和单目标政策委托具体 owner；本模块拥有取消冲突保护与清理印记的写权限。
+ * 不修改 Alive 或执行死亡钩子，这两项由死亡结算负责；失败保留已经生效的清理前缀。
  */
 import { COMPONENT } from "../components/names";
-import { EntityId, StatusMark, DeathCause, type DeathSources } from "../model";
+import { EntityId, StatusMark, type DeathSources } from "../model";
 import { World } from "../world";
-import { livingNightLife, type NightPoisonReflection } from "../night_effects";
+import type { NightPoisonReflection } from "../night_effects";
+import { resolveNightDamageTarget } from "../night-damage-target";
 import { planNightDamage, type NightDamageEffects } from "../night-damage-plan";
 
 /**
@@ -16,7 +17,7 @@ import { planNightDamage, type NightDamageEffects } from "../night-damage-plan";
 export interface DamageResolutionResult {
   deaths: EntityId[];
   deathSources: DeathSources;
-  /** God-only causal output; never included in a player's night summary or state. */
+  /** 全知视角的因果输出；不进入玩家夜间摘要或状态。 */
   poisonReflections?: readonly NightPoisonReflection[];
 }
 
@@ -34,20 +35,17 @@ export class DamageResolutionSystem {
   resolve(world: World, effects: NightDamageEffects = {}): DamageResolutionResult {
     const deaths: EntityId[] = [];
     const deathSources: DeathSources = {};
+    const plan = planNightDamage(world, effects);
     const {
-      awakenedShields,
       awakenedAttacks,
       mechanical,
-      claimedPoisonTargets,
-      claimedGuardTargets,
-      guarded,
       blackBacklashes,
       radiantBacklashes,
       backlashTargets,
       foxInspections,
       inspectionSources,
       passiveImmuneTargets,
-    } = planNightDamage(world, effects);
+    } = plan;
     for (const entityId of world.getAliveEntityIds()) {
       const marks = world.getComponent(entityId, COMPONENT.StatusMarks);
       if (passiveImmuneTargets.has(entityId)) {
@@ -72,81 +70,11 @@ export class DamageResolutionSystem {
           continue;
       }
 
-      const sources: DeathCause[] = [...(inspectionSources.get(entityId) ?? [])];
-      const hasGuard =
-        marks?.has(StatusMark.GuardMark) === true &&
-        (!claimedGuardTargets.has(entityId) || guarded.has(entityId));
-      const hasHeal = marks?.has(StatusMark.HealMark) === true;
-      const effectiveHeal = hasHeal && !hasGuard;
-      const hasWolfKill =
-        marks?.has(StatusMark.WolfKillMark) === true &&
-        !effects.wolfImmuneTargets?.includes(entityId);
-      const hasDirectPoison =
-        marks?.has(StatusMark.PoisonMark) === true &&
-        (!claimedPoisonTargets.has(entityId) || mechanical.directPoisonTargets.has(entityId));
-      const hasPoison = hasDirectPoison || mechanical.reflectedPoisonTargets.has(entityId);
-      // Poison is independent of protection and must survive a conflict.
-      const dreamProtected = effects.protectedTargets?.includes(entityId) === true;
-      const mechanicalShield = mechanical.shields.has(entityId);
-      const awakenedShield = awakenedShields.has(entityId);
-      if (foxInspections.has(entityId) && !dreamProtected) sources.push(DeathCause.FoxInspection);
-      if (hasPoison && !dreamProtected && !awakenedShield) sources.push(DeathCause.Poison);
-
-      if (hasGuard && hasHeal) {
-        // 同守同救互相抵消，但若同时被狼刀命中仍会死亡。
+      // 取消和最终清理分别执行，后续目标查询失败不能回滚前一目标的清理。
+      const sources = resolveNightDamageTarget(world, entityId, effects, plan, marks, () => {
         marks?.remove(StatusMark.GuardMark);
         marks?.remove(StatusMark.HealMark);
-        if (hasWolfKill && !dreamProtected && !mechanicalShield && !awakenedShield) {
-          sources.push(DeathCause.WolfKill);
-        }
-      } else {
-        if (
-          hasWolfKill &&
-          !dreamProtected &&
-          !mechanicalShield &&
-          !awakenedShield &&
-          !(hasGuard || hasHeal)
-        ) {
-          sources.push(DeathCause.WolfKill);
-        }
-      }
-      // An extra knife pierces ordinary Guard, but not Heal, Dream or a mechanical shield.
-      if (
-        mechanical.attacks.has(entityId) &&
-        !effectiveHeal &&
-        !dreamProtected &&
-        !mechanicalShield &&
-        !awakenedShield
-      ) {
-        sources.push(DeathCause.MechanicalKnife);
-      }
-      const ordinaryProtection = hasGuard !== hasHeal;
-      if (
-        awakenedAttacks.has(entityId) &&
-        !ordinaryProtection &&
-        !dreamProtected &&
-        !mechanicalShield &&
-        !awakenedShield
-      ) {
-        sources.push(DeathCause.AwakenedHiddenKnife);
-      }
-      const nightImmune = effects.immuneNightTargets?.includes(entityId) === true;
-      if (mechanical.failures.has(entityId) && !nightImmune)
-        sources.push(DeathCause.MechanicalGuardFailure);
-      if (blackBacklashes.has(entityId) && !nightImmune)
-        sources.push(DeathCause.BlackMarketBacklash);
-      if (backlashTargets.has(entityId) && !dreamProtected)
-        sources.push(DeathCause.MerchantBacklash);
-      if (radiantBacklashes.has(entityId) && !dreamProtected)
-        sources.push(DeathCause.RadiantBacklash);
-      if (effects.consecutiveDeaths?.includes(entityId)) sources.push(DeathCause.Dream);
-
-      if (
-        effects.modifierDeaths?.some(
-          (target) => target.id === entityId && livingNightLife(world, target),
-        )
-      )
-        sources.push(DeathCause.Ability);
+      });
       if (sources.length > 0) {
         deaths.push(entityId);
         deathSources[entityId] = sources;

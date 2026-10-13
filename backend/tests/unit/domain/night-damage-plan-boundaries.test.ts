@@ -1,9 +1,8 @@
 /**
- * Unit tests for the damage-plan query and resolver mutation boundary. Literal
- * original-life claims and mark states supply independent expected results:
- * folding leaves marks/lives intact, a failed fold clears no marks, and a late
- * per-player query failure retains the original earlier clear prefix. These
- * module tests invoke no model, transport or complete-game driver.
+ * 单元测试：验证伤害计划查询与结算修改的边界。输入为原生命声明与字面量印记状态，
+ * 独立预期检查折叠不消费印记／生命、折叠失败不清理、后续查询失败保留先前修改。
+ * 取消命令的部分失败还需保留第一项已提交移除；不从生产输出推导预期。
+ * 本模块不调用模型、传输或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { World } from "../../../src/core/domain/world";
@@ -91,4 +90,43 @@ test("a late protection getter failure retains the earlier entity's cleared-mark
   expect(marks[0]!.values()).toEqual([]);
   expect(marks[1]!.values()).toEqual([StatusMark.WolfKillMark]);
   expect(ids.map((id) => world.getComponent(id, COMPONENT.Alive)!.alive)).toEqual([true, true]);
+});
+
+test("ordinary protection cancellation retains the first removal when the second fails", () => {
+  const { world, ids } = fixture();
+  const failure = Error("heal_mark_removal_failed");
+  const removals: StatusMark[] = [];
+  class FailingMarks extends StatusMarksComponent {
+    override remove(mark: StatusMark) {
+      expect<unknown>(this).toBe(marks);
+      removals.push(mark);
+      if (mark === StatusMark.HealMark) throw failure;
+      super.remove(mark);
+    }
+  }
+  const marks = new FailingMarks([
+    StatusMark.GuardMark,
+    StatusMark.HealMark,
+    StatusMark.WolfKillMark,
+  ]);
+  world.addComponent(ids[0]!, COMPONENT.StatusMarks, marks);
+  expect(() => new DamageResolutionSystem().resolve(world)).toThrow(failure);
+  expect(removals).toEqual([StatusMark.GuardMark, StatusMark.HealMark]);
+  expect(marks.values()).toEqual([StatusMark.HealMark, StatusMark.WolfKillMark]);
+});
+
+test("a later immunity query observes cancellation before failing without final clearing", () => {
+  const { world, marks } = fixture();
+  marks[0]!.add(StatusMark.GuardMark);
+  marks[0]!.add(StatusMark.HealMark);
+  const failure = Error("immunity_query_failed");
+  expect(() =>
+    new DamageResolutionSystem().resolve(world, {
+      get immuneNightTargets(): readonly number[] {
+        expect(marks[0]!.values()).toEqual([StatusMark.WolfKillMark]);
+        throw failure;
+      },
+    }),
+  ).toThrow(failure);
+  expect(marks[0]!.values()).toEqual([StatusMark.WolfKillMark]);
 });
