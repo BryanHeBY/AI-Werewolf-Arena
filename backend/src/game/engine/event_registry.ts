@@ -1,7 +1,7 @@
 /**
- * Dispatches catalog voted-out and death hooks for the affected original player. Inputs are the
- * World, action provider and role-hook context; outputs are exile substitutions or additional
- * death-hook results. It does not select a game phase or independently apply the death wave.
+ * 负责分发放逐、已提交整波与死亡动作的真实机制贡献。
+ * 输入为原 World、名单／原因、日期／阶段及角色动作上下文；输出保留免死替换或追加死亡提案。
+ * 整波扩展在实际 Alive 提交后、梦记录／遗言前同步运行；分发器不标死、改阶段或回滚事实。
  */
 import { AliveComponent } from "../../core/domain/components/alive";
 import { COMPONENT } from "../../core/domain/components/names";
@@ -11,9 +11,14 @@ import {
   GameEvent,
   type DeathSources,
   type DeathShotSelection,
+  type Phase,
 } from "../../core/domain/model";
 import { getDefaultHookRegistry, HookRegistry } from "../mechanisms";
 import { World } from "../../core/domain/world";
+import {
+  createCommittedDeathWaveContributions,
+  type CommittedDeathWaveHook,
+} from "../mechanisms/hooks/hook_registry";
 
 /**
  * 放逐阶段处理结果。
@@ -31,7 +36,24 @@ export type DeathHookResult = import("../mechanisms").DeathHookResult;
  * - onDeath: 返回追加死亡提案；DeathResolution 写入死亡状态。
  */
 export class EventRegistry {
+  // 此列表只装配必需的整波贡献，不让旧注入的放逐／晚死亡 hooks 替换野孩子榜样结算。
+  // 列表持有原函数引用，不持有第二份角色状态或生命账本。
+  private readonly committedDeathWaveHooks: readonly CommittedDeathWaveHook[] =
+    createCommittedDeathWaveContributions();
   constructor(private readonly hookRegistry: HookRegistry = getDefaultHookRegistry()) {}
+
+  /** 只消费已经提交的原整波，首异常原样传播；不合并到后面的异步枪／死亡钩子。 */
+  onCommittedDeathWave(
+    world: World,
+    deadIds: readonly EntityId[],
+    deathSources: DeathSources,
+    day: number,
+    phase: Phase,
+    events: GameEvent[],
+  ): void {
+    for (const hook of this.committedDeathWaveHooks)
+      hook(world, deadIds, deathSources, day, phase, events);
+  }
 
   /**
    * 处理放逐资格和免死，不提前写死亡或处理死亡警徽。

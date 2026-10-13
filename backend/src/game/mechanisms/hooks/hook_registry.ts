@@ -1,4 +1,9 @@
-/** 文件说明：统一注册与执行投票/死亡相关机制钩子。 */
+/**
+ * 负责原放逐／死亡动作分发，以及独立于可替换晚 hook 的必需整波贡献装配。
+ * 输入为原 World、原名单／原因、日期／阶段和事件；输出保留免死结果或额外死亡提案。
+ * 已提交整波贡献在实际标死之后、梦记录及遗言之前同步执行；榜样首次死亡由野孩子唯一绑定 owner 提交。
+ * 这里不修改 Alive、选择阶段或回滚贡献已写事实；首失败原样传播，停止后续贡献并保留已付／已提交前缀。
+ */
 import {
   EntityId,
   GameEvent,
@@ -11,6 +16,22 @@ import { getDefaultRoleCatalog } from "../roles/catalog";
 import type { NightLifeScope } from "../../../core/domain/night_effects";
 import type { CharmBinding } from "../roles/wolf_beauty/relation";
 import { giftGunDeathHook } from "../roles/gift_gun_death_hook";
+import { resolveWildChildDeathWave } from "../roles/wild_child/ports";
+
+/** 已完成本批 Alive 提交后的具名扩展时点；不是可追加死亡或选择枪的晚 deathHook。 */
+export type CommittedDeathWaveHook = (
+  world: World,
+  deadIds: readonly EntityId[],
+  deathSources: DeathSources,
+  day: number,
+  phase: Phase,
+  events: GameEvent[],
+) => void;
+
+/** 真实必需整波贡献装配；不属于调用方可替换的 votedOut／晚 deathHook 列表。 */
+export function createCommittedDeathWaveContributions(): readonly CommittedDeathWaveHook[] {
+  return [resolveWildChildDeathWave];
+}
 
 /** 放逐钩子返回结果。 */
 export interface VotedOutResult {

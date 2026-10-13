@@ -1,0 +1,94 @@
+{
+  "passed": true,
+  "findings": [],
+  "checks": {
+    "reportExact": true,
+    "reportDigestExact": true,
+    "fixedHead": true,
+    "inputHash": true,
+    "terminalReceipt": true,
+    "counts": true,
+    "debtCountsExact": true,
+    "failuresComplete": true,
+    "mdCountsAndLimits": true
+  },
+  "paths": [
+    {
+      "path": "docs/refactor/architecture-checkpoint-d94b482c.md",
+      "sha256": "252297a343a82b00b4525ab1cff84ba13f23a479845571b5e2d0d4832e578647"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-d94b482c.json",
+      "sha256": "449f30ec3c23135dde3f5d7e1848ae1013d1e7f3bb192dd474cb1a0536979af7"
+    }
+  ],
+  "actualFailures": [
+    {
+      "rule": "dependency.engine-feature",
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "specifier": "../mechanisms/roles/noble_secret_body/authority"
+    },
+    {
+      "rule": "dependency.engine-feature",
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "specifier": "../mechanisms/roles/animal_dream/authority"
+    },
+    {
+      "rule": "dependency.engine-feature",
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "specifier": "../mechanisms/roles/wild_child/lifecycle"
+    },
+    {
+      "rule": "dependency.unresolved-alias",
+      "path": "frontend/tests/architecture/stage-coverage.test.ts",
+      "specifier": "typescript"
+    },
+    {
+      "rule": "dependency.unresolved-alias",
+      "path": "frontend/tests/architecture/typecheck-coverage.test.ts",
+      "specifier": "typescript"
+    },
+    {
+      "rule": "comment.layer",
+      "path": "tooling/refactor/fixture-source-relocations.test.ts",
+      "specifier": null
+    }
+  ],
+  "finiteSourceRecommendations": [
+    {
+      "sequence": 1,
+      "scope": "Close these six actual new failures via feature contribution owners and exact own declared external alias handling; current author slices are independently reviewed, not evidence that frozen d94 passed."
+    },
+    {
+      "sequence": 2,
+      "scope": "Group remaining engine-feature 67 and adapter-feature 54 by actual permission/lifecycle owner. Preserve deferred World reads/payment/cleanup prefix; route through used named public contracts without thin wrappers."
+    },
+    {
+      "sequence": 3,
+      "scope": "Close actual cross-feature 76 and role metadata registration as coherent lifecycle/public-query modules, preserving custom init and same-function behavior."
+    },
+    {
+      "sequence": 4,
+      "scope": "Complete canonical DTO/schema/codec consumers and remove old bridges only after actual imports are gone. The extended bag naming issue must be addressed by splitting its real responsibilities."
+    },
+    {
+      "sequence": 5,
+      "scope": "Physical final layout and gate classification evolve together: game/observation and proposed agents source cannot clear coupling solely by changing directories. Do not widen frozen debt."
+    },
+    {
+      "sequence": 6,
+      "scope": "Remaining 400 comment violations are rules, not 400 files. Write real Chinese owner/ordering/permission/failure-prefix explanations in each touched module; avoid template satisfaction."
+    },
+    {
+      "sequence": 7,
+      "scope": "After whole-stage integration, run final frozen-input zero-debt/full acceptance gate. Do not equate this architecture-only checkpoint with tests/types/browser/reproduction."
+    }
+  ],
+  "limits": [
+    "Architecture scan only; not a test, type, browser, live model or whole-game result.",
+    "Fixed immutable 1779-entry baseline is not the current remaining debt count.",
+    "Current game/observation consumer is outside adapter-feature and engine-feature special matching; no-failure is not proof of closed public actor boundaries.",
+    "Later worktree edits are not inputs of this frozen report.",
+    "Reviewer compared maintained report/digest/counts and read all six descriptions; did not independently rerun the architecture scan or claim current WIP uses the frozen input."
+  ]
+}

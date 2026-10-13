@@ -1,7 +1,8 @@
 /**
  * 负责有序死亡波、角色死亡钩子、枪击选择、遗言与警徽交接。输入是待处理的死亡名单、
  * 原死因与原生命行动权限；输出是按原顺序提交的死亡、事件和内部关联凭证。实际生命修改和唯一已结算
- * 账本委托 DeathCommitter，双生事实发布委托本角色 publication；参数仍使用同一深只读规则视图。
+ * 账本委托 DeathCommitter，双生与动物事实归具体贡献；已提交整波在梦／遗言前交角色扩展，
+ * 野孩子贡献自行核对榜样原生命。参数仍使用同一深只读规则视图，不建立第二份角色状态。
  * 本模块不切换阶段或确定最终胜负；关系扩展、遗言、警徽和枪的最终过期保留原执行顺序。
  */
 import { AnimalDeathWavePreparation } from "../mechanisms/roles/animal_dream/ports";
@@ -22,13 +23,6 @@ import { DeathCommitter } from "./death-committer";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
 import {
-  isAnimalDreamBoard,
-  filterAnimalLethalWave,
-  prepareAnimalCatExpiry,
-  animalAuthoritySnapshot,
-} from "../mechanisms/roles/animal_dream/authority";
-import { appendAnimalFact } from "../mechanisms/roles/animal_dream/facts";
-import {
   FragrantDeathWavePublication,
   isFragrantPairBoard,
   prepareFragrantDeathWave,
@@ -37,7 +31,6 @@ import {
   cancelFragrantDeathWave,
   fragrantAuthoritySnapshot,
 } from "../mechanisms/roles/fragrant_pair_seer/ports";
-import { isNobleBodyBoard } from "../mechanisms/roles/noble_secret_body/authority";
 import { assertMagicianRosterCurrent } from "../mechanisms/roles/magician/night_frame";
 import {
   isMagicianBoard,
@@ -47,7 +40,6 @@ import { nightmareFearBlocks } from "../mechanisms/roles/nightmare_shadow/night_
 import { demonHunterNativeGunCurrent } from "../mechanisms/roles/demon_hunter/authority";
 import { expandWeddingDeaths, weddingGroup } from "../mechanisms/roles/ghost_bride/authority";
 import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-text";
-import { resolveWildChildDeathWave } from "../mechanisms/roles/wild_child/lifecycle";
 import { expandLoversWave } from "../mechanisms/roles/cupid/relation";
 import type { BoardConfig, LastWordsPolicy } from "../../core/domain/board";
 import { captureNightLife, livingNightLife } from "../../core/domain/night_effects";
@@ -210,20 +202,21 @@ export class DeathResolution {
       this.config?.disclosure?.deathRevealPolicy === revealPolicy;
     const lastWordsCurrent = () =>
       isCurrent() && (this.config?.lastWords?.policy ?? "awa_initial_wave_v1") === lastWordsPolicy;
-    const ownsAnimal = isAnimalDreamBoard(this.world);
-    const animalDeathWave = new AnimalDeathWavePreparation(
-      ownsAnimal,
+    const resolution = this;
+    const animalDeathWave = AnimalDeathWavePreparation.fromRuntime(
+      {
+        get world() {
+          return resolution.world;
+        },
+        get events() {
+          return resolution.events;
+        },
+      },
       resolutionDay,
       nightEffects,
       isCurrent,
-      {
-        filter: (day, phase, ids, sources, scope) =>
-          filterAnimalLethalWave(this.world, day, phase, ids, sources, scope()),
-        authority: () => animalAuthoritySnapshot(this.world),
-        prepareExpiry: (unit) => prepareAnimalCatExpiry(this.world, unit()),
-        appendFact: (type, payload) => appendAnimalFact(this.world, this.events, type, payload()),
-      },
     );
+    const ownsAnimal = animalDeathWave.enabled;
     const preparedSources: DeathSources = structuredClone(sources);
     // 普通静态输入在任何角色事实前完成整波预检；getter／Proxy 仍沿旧表达式惰性读取。
     preflightDeathWaveData(deadIds, preparedSources, deathPhases);
@@ -351,28 +344,8 @@ export class DeathResolution {
           receipt.recordPublication(event, pending);
           this.fragrantDeathWave.publishVisibleWave(fragrantInitial, event);
         }
-        if (ownsAnimal && firstBatch) {
-          for (const id of pending)
-            if (
-              this.world.getComponent(id, COMPONENT.Role)?.role === Role.Pufferfish &&
-              (allSources[id] ?? []).includes(DeathCause.WolfKill)
-            )
-              appendAnimalFact(this.world, this.events, "animal_puffer_revealed", {
-                policy: "awa_animal_dream_v1",
-                day: resolutionDay,
-                actorId: id,
-                reason: "knife_death",
-              });
-          appendAnimalFact(this.world, this.events, "animal_wave_committed", {
-            policy: "awa_animal_dream_v1",
-            day: resolutionDay,
-            phase: deathPhase as "night" | "day" | "voting",
-            deaths: [...pending],
-            deathSources: Object.fromEntries(
-              pending.map((id) => [String(id), [...(allSources[id] ?? [])]]),
-            ),
-          });
-        }
+        if (ownsAnimal && firstBatch)
+          animalDeathWave.recordInitialWave(pending, allSources, deathPhase);
         if (
           firstBatch &&
           fragrantInitial?.addedTargetId !== null &&
@@ -387,7 +360,7 @@ export class DeathResolution {
           receipt.recordPublication(event, [fragrantInitial.addedTargetId]);
           this.fragrantDeathWave.publishVisibleWave(fragrantInitial, event);
         }
-        resolveWildChildDeathWave(
+        this.eventRegistry.onCommittedDeathWave(
           this.world,
           pending,
           allSources,
@@ -666,13 +639,7 @@ export class DeathResolution {
                     additionalReceipts.push(receipt);
                     nextCommits.push(receipt);
                     if (ownsAnimal)
-                      appendAnimalFact(this.world, this.events, "animal_wave_committed", {
-                        policy: "awa_animal_dream_v1",
-                        day: resolutionDay,
-                        phase: sourcePhase as "night" | "day" | "voting",
-                        deaths: [id],
-                        deathSources: { [String(id)]: [...(allSources[id] ?? [])] },
-                      });
+                      animalDeathWave.recordAdditionalDeath(id, allSources, sourcePhase);
                     newlyMarked = true;
                     marked.push(id);
                     if (shot) {
