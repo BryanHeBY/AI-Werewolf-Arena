@@ -1,15 +1,11 @@
 /**
- * Badge-choice tests cover bounded permit/configuration checks and actual death-resolution handoff.
- * Inputs are literal six-seat boards, holder/target changes and scripted or inert
- * LLM/ACP responses; fixed successor, vote-weight, closure and error expectations
- * are the oracle. Death-chain cases drive the original resolution owner; request
- * cases do not turn preflight metadata into authority. No real model is contacted.
+ * Actual death-resolution scenarios check badge handoff, destruction, revocation and refusal without fallback. Inputs are original successor actions, life/phase/badge mutations and inert LLM/ACP clients; fixed transfer/weight, original failure and closed permit expectations are the oracle. Original complete resolution and provider cleanup remain; no billed model runs.
  */
-import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
-import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
-import { NoActionToolLoopClient, ToolLoopClient } from "../../support/drivers/agents/llm-clients";
+import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
+import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
+import { NoActionToolLoopClient, ToolLoopClient } from "../../../support/drivers/agents/llm-clients";
 import { expect, test, spyOn } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   COMPONENT,
   DeathCause,
@@ -20,21 +16,17 @@ import {
   type GameEvent,
   type RuntimeSnapshot,
   type ToolCall,
-} from "../../../src/core";
-import type { BadgeComponent } from "../../../src/core/domain/components/badge";
-import type { AliveComponent } from "../../../src/core/domain/components/alive";
-import type { VotingRightComponent } from "../../../src/core/domain/components/voting_right";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { ActionReception, ActionTurn } from "../../../src/ai/agents/player/action_reception";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms";
-import {
-  boardDefinitionFromConfig,
-  parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../../src/core";
+import type { BadgeComponent } from "../../../../src/core/domain/components/badge";
+import type { AliveComponent } from "../../../../src/core/domain/components/alive";
+import type { VotingRightComponent } from "../../../../src/core/domain/components/voting_right";
+import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+import { DeathResolution } from "../../../../src/game/engine/death_resolution";
+import { EventRegistry } from "../../../../src/game/engine/event_registry";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { ActionReception, ActionTurn } from "../../../../src/ai/agents/player/action_reception";
+import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
+import { getDefaultConfigRenderRegistry } from "../../../../src/game/mechanisms";
 
 function fixture(locale: "zh-CN" | "en" = "en", choice = true, idiot = false) {
   const roles = [
@@ -88,9 +80,11 @@ function fixture(locale: "zh-CN" | "en" = "en", choice = true, idiot = false) {
   }
   return { world, events, state, gateway, registry, resolution, resolve, config, requests };
 }
+
 function badge(f: ReturnType<typeof fixture>, id: number) {
   return f.world.getComponent<BadgeComponent>(id, COMPONENT.Badge)!;
 }
+
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: actual death holder chooses a successor and retains badge weight`, async () => {
     const f = fixture(locale);
@@ -127,6 +121,7 @@ for (const locale of ["zh-CN", "en"] as const)
       locale === "en" ? "deceased holder" : "死亡持有者",
     );
   });
+
 for (const [name, action] of [
   ["explicit destroy", { name: "choose_badge_successor", args: { target_id: null } }],
   ["no action", null],
@@ -144,6 +139,7 @@ for (const [name, action] of [
     await f.resolve(() => action);
     expect(f.requests).toHaveLength(1);
   });
+
 test("default retains automatic first eligible seat with no choice request", async () => {
   const f = fixture("en", false);
   await f.resolve(() => {
@@ -153,6 +149,7 @@ test("default retains automatic first eligible seat with no choice request", asy
   expect(badge(f, 1).isSheriff).toBe(true);
   expect(badge(f, 1).voteWeight).toBe(2.25);
 });
+
 test("no eligible successor destroys without opening any dead action", async () => {
   const f = fixture();
   for (const id of [1, 3, 4, 5, 6])
@@ -164,14 +161,7 @@ test("no eligible successor destroys without opening any dead action", async () 
   expect(badge(f, 2).destroyed).toBe(true);
   expect(f.world.activeDeathActionCount).toBe(0);
 });
-test("revealed Idiot destroys directly under holder choice without a dead permit", () => {
-  const f = fixture("en", true, true);
-  expect(f.registry.onVotedOut(f.world, 2, f.events).prevented).toBe(true);
-  expect(f.world.getComponent<AliveComponent>(2, COMPONENT.Alive)?.alive).toBe(true);
-  expect(f.events.filter((e) => e.type === "sheriff_badge_destroyed")).toHaveLength(1);
-  expect(f.events.some((e) => e.type === "sheriff_badge_transferred")).toBe(false);
-  expect(f.world.activeDeathActionCount).toBe(0);
-});
+
 for (const change of [
   "phase",
   "day",
@@ -204,6 +194,7 @@ for (const change of [
     ).toBe(false);
     expect(f.world.activeDeathActionCount).toBe(0);
   });
+
 for (const change of ["death", "revival", "voting", "destroyed"] as const)
   test(`badge ${change} successor cannot receive the original pending choice`, async () => {
     const f = fixture();
@@ -222,6 +213,7 @@ for (const change of ["death", "revival", "voting", "destroyed"] as const)
     expect(f.events.some((e) => e.type === "sheriff_badge_transferred")).toBe(false);
     expect(f.world.activeDeathActionCount).toBe(0);
   });
+
 test("provider exception closes the engine permit and remains an explicit failure", async () => {
   const f = fixture();
   await expect(
@@ -233,54 +225,6 @@ test("provider exception closes the engine permit and remains an explicit failur
   await Promise.resolve();
   expect(f.world.activeDeathActionCount).toBe(0);
 });
-test("badge preflight metadata alone grants nothing; malformed, stage/day/phase and generation changes reject", () => {
-  const f = fixture();
-  f.world.getComponent<AliveComponent>(2, COMPONENT.Alive)!.alive = false;
-  const make = (id?: number) =>
-    new GameActionRequestFactory(f.world, f.events, 2).create({
-      phase: Phase.Voting,
-      actorId: 2,
-      allowedTools: ["choose_badge_successor"],
-      stage: "sheriff_badge_choice",
-      requiresAction: true,
-      summary: { key: "request.summary.badge_choice" },
-      context: {
-        trigger: "badge_handoff",
-        badge_candidates: [1, 3, 4, 5, 6],
-        ...(id ? { death_action_id: id } : {}),
-      },
-    });
-  const receive = new ActionReception(f.world);
-  expect(receive.validate(make(), "choose_badge_successor", { target_id: 5 }).ok).toBe(false);
-  const permit = f.world.openDeathAction(2, "choose_badge_successor", Phase.Voting, 2);
-  const request = make(permit.id);
-  expect(receive.validate(request, "choose_badge_successor", { target_id: null }).ok).toBe(true);
-  for (const args of [{}, { target_id: true }, { target_id: 0 }, { target_id: 5, extra: true }])
-    expect(receive.validate(request, "choose_badge_successor", args).ok).toBe(false);
-  for (const context of [
-    { ...request.context, day: 3 },
-    { ...request.context, stage: "day_speech" as const },
-    { ...request.context, trigger: "on_death" },
-    { ...request.context, death_action_id: permit.id + 1 },
-  ])
-    expect(
-      receive.validate({ ...request, context }, "choose_badge_successor", { target_id: 5 }).ok,
-    ).toBe(false);
-  expect(
-    receive.validate({ ...request, phase: Phase.Day }, "choose_badge_successor", { target_id: 5 })
-      .ok,
-  ).toBe(false);
-  permit.close();
-  expect(receive.validate(request, "choose_badge_successor", { target_id: 5 }).ok).toBe(false);
-});
-for (const choice of [false, true])
-  test(`${choice}: badge policy public round trip`, () => {
-    const f = fixture("en", choice);
-    const definition = boardDefinitionFromConfig("badge", f.config);
-    expect(
-      parseBoardDefinition(JSON.parse(JSON.stringify(definition))).config.sheriff?.badgePolicy,
-    ).toBe(f.config.sheriff?.badgePolicy);
-  });
 
 test("request construction revocation prevents contacting the badge provider", async () => {
   const f = fixture();
@@ -306,6 +250,7 @@ test("request construction revocation prevents contacting the badge provider", a
     hook.mockRestore();
   }
 });
+
 test("gateway revocation prevents committing even an accepted badge selection", async () => {
   const f = fixture();
   const validate = f.gateway.validateAndSanitize.bind(f.gateway);
@@ -327,32 +272,6 @@ test("gateway revocation prevents committing even an accepted badge selection", 
   } finally {
     hook.mockRestore();
   }
-});
-test("unknown and disabled badge policy parameters fail before play", () => {
-  const definition = boardDefinitionFromConfig("badge", fixture().config);
-  expect(() =>
-    parseBoardDefinition({
-      ...definition,
-      mechanisms: {
-        ...definition.mechanisms,
-        sheriff: { ...definition.mechanisms.sheriff, badgePolicy: "foreign" },
-      },
-    }),
-  ).toThrow();
-  expect(() =>
-    parseBoardDefinition({
-      ...definition,
-      mechanisms: {
-        ...definition.mechanisms,
-        sheriff: {
-          ...definition.mechanisms.sheriff,
-          enabled: false,
-          initialSeat: undefined,
-          voteWeight: 1.5,
-        },
-      },
-    }),
-  ).toThrow("board_config_disabled_mechanism_parameters");
 });
 
 for (const locale of ["zh-CN", "en"] as const)

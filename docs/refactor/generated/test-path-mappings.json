@@ -91820,13 +91820,609 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Copied runRecorded/fixture helpers are latent function declarations; original case-local Worlds, scripts, recorders and cleanup stay one allocation per original call. No extra eager cached catalog read was introduced.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 473 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/badge_choice.test.ts",
+      "to": "backend/tests/unit/mechanisms/sheriff/badge-policy-and-permit-validation.test.ts",
+      "sourceCommit": "346b1f0020a03d220b7af3971853d0ae202614a8",
+      "reason": "Actual selected unit module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "34e585b248966abe3493b8a826c000b011861fb770078f3cfddf51226c57f4be",
+      "candidateSha256": "f50285c6257db339450a597fa6eefda4b21e80c07e5b5173f560f16f8e262ebc",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 828,
+          "end": 872,
+          "original": "../../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 708,
+          "end": 755,
+          "original": "../../../src/game/engine/action_request_factory",
+          "value": "../../../../src/game/engine/action_request_factory",
+          "originalResolved": "backend/src/game/engine/action_request_factory.ts",
+          "expectedResolved": "backend/src/game/engine/action_request_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 617,
+          "end": 663,
+          "original": "../../../src/ai/agents/player/action_reception",
+          "value": "../../../../src/ai/agents/player/action_reception",
+          "originalResolved": "backend/src/ai/agents/player/action_reception.ts",
+          "expectedResolved": "backend/src/ai/agents/player/action_reception.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 543,
+          "end": 581,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 472,
+          "end": 511,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 397,
+          "end": 438,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 320,
+          "end": 361,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 263,
+          "end": 280,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "7dd27e32271fc80ffae642837253596fc89f95348413943eeb13f4ea83ea3ae5",
+          "title": "revealed Idiot destroys directly under holder choice without a dead permit",
+          "occurrence": 1
+        },
+        {
+          "id": "77ac6196da06e99d3b895954a601011456aaa0735ecfca46fc34fe2c0484b8df",
+          "title": "badge preflight metadata alone grants nothing; malformed, stage/day/phase and generation changes reject",
+          "occurrence": 1
+        },
+        {
+          "id": "21fab90ee156d89fc062824fe2289d9cd5d4b1496d72c2c862f7f6f47f568faf",
+          "title": "false: badge policy public round trip",
+          "occurrence": 1
+        },
+        {
+          "id": "61832f13168245a3e952844b8e438fa5fff7ed87124f9d87cab1ffad39c4d057",
+          "title": "true: badge policy public round trip",
+          "occurrence": 1
+        },
+        {
+          "id": "d8ea14b677ab8bf6587ea070cce0f3b61ec933fe64dcaf2caee21632a62a2aa2",
+          "title": "unknown and disabled badge policy parameters fail before play",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/ai/agents/llm/llm_action_provider",
+          "originalImport": "import { LlmActionProvider } from \"../../../src/ai/agents/llm/llm_action_provider\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "LlmActionProvider",
+              "imported": "LlmActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/acp/acp_action_provider",
+          "originalImport": "import { AcpActionProvider } from \"../../../src/ai/agents/acp/acp_action_provider\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AcpActionProvider",
+              "imported": "AcpActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/drivers/agents/llm-clients",
+          "originalImport": "import { NoActionToolLoopClient, ToolLoopClient } from \"../../support/drivers/agents/llm-clients\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "NoActionToolLoopClient",
+              "imported": "NoActionToolLoopClient",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ToolLoopClient",
+              "imported": "ToolLoopClient",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "bun:test",
+          "originalImport": "import { expect, test, spyOn } from \"bun:test\";",
+          "currentImportBeforeRebase": "import { expect, test } from \"bun:test\";",
+          "droppedBindings": [
+            {
+              "name": "spyOn",
+              "imported": "spyOn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/badge",
+          "originalImport": "import type { BadgeComponent } from \"../../../src/core/domain/components/badge\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "BadgeComponent",
+              "imported": "BadgeComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/voting_right",
+          "originalImport": "import type { VotingRightComponent } from \"../../../src/core/domain/components/voting_right\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "VotingRightComponent",
+              "imported": "VotingRightComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import { createAliveComponent } from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAliveComponent",
+              "imported": "createAliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/action_reception",
+          "originalImport": "import { ActionReception, ActionTurn } from \"../../../src/ai/agents/player/action_reception\";",
+          "currentImportBeforeRebase": "import { ActionReception } from \"../../../src/ai/agents/player/action_reception\";",
+          "droppedBindings": [
+            {
+              "name": "ActionTurn",
+              "imported": "ActionTurn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import { getDefaultConfigRenderRegistry } from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Copied runRecorded/fixture helpers are latent function declarations; original case-local Worlds, scripts, recorders and cleanup stay one allocation per original call. No extra eager cached catalog read was introduced.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 473 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/badge_choice.test.ts",
+      "to": "backend/tests/scenarios/features/sheriff/badge-death-handoff-and-revocation.test.ts",
+      "sourceCommit": "346b1f0020a03d220b7af3971853d0ae202614a8",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "34e585b248966abe3493b8a826c000b011861fb770078f3cfddf51226c57f4be",
+      "candidateSha256": "7325f8f801f880738b06d25931d41a5f4e36aefd33174183f1f7a1863728baf3",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1349,
+          "end": 1377,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1251,
+          "end": 1298,
+          "original": "../../../src/game/engine/action_request_factory",
+          "value": "../../../../src/game/engine/action_request_factory",
+          "originalResolved": "backend/src/game/engine/action_request_factory.ts",
+          "expectedResolved": "backend/src/game/engine/action_request_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1160,
+          "end": 1206,
+          "original": "../../../src/ai/agents/player/action_reception",
+          "value": "../../../../src/ai/agents/player/action_reception",
+          "originalResolved": "backend/src/ai/agents/player/action_reception.ts",
+          "expectedResolved": "backend/src/ai/agents/player/action_reception.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1074,
+          "end": 1112,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1003,
+          "end": 1042,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 928,
+          "end": 969,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 851,
+          "end": 892,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 762,
+          "end": 810,
+          "original": "../../../src/core/domain/components/voting_right",
+          "value": "../../../../src/core/domain/components/voting_right",
+          "originalResolved": "backend/src/core/domain/components/voting_right.ts",
+          "expectedResolved": "backend/src/core/domain/components/voting_right.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 675,
+          "end": 716,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 594,
+          "end": 635,
+          "original": "../../../src/core/domain/components/badge",
+          "value": "../../../../src/core/domain/components/badge",
+          "originalResolved": "backend/src/core/domain/components/badge.ts",
+          "expectedResolved": "backend/src/core/domain/components/badge.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 537,
+          "end": 554,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 346,
+          "end": 372,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 224,
+          "end": 264,
+          "original": "../../support/drivers/agents/llm-clients",
+          "value": "../../../support/drivers/agents/llm-clients",
+          "originalResolved": "backend/tests/support/drivers/agents/llm-clients.ts",
+          "expectedResolved": "backend/tests/support/drivers/agents/llm-clients.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 119,
+          "end": 165,
+          "original": "../../../src/ai/agents/acp/acp_action_provider",
+          "value": "../../../../src/ai/agents/acp/acp_action_provider",
+          "originalResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/acp/acp_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 35,
+          "end": 81,
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "ff716b1fdc727e7047fb897a7787706a73b815e08168dbfca7d047d9a9482446",
+          "title": "zh-CN: actual death holder chooses a successor and retains badge weight",
+          "occurrence": 1
+        },
+        {
+          "id": "2727641721223d5a351657016bee9fcc5201bd92f22bc2c3fc85a5e9edd3c0c4",
+          "title": "en: actual death holder chooses a successor and retains badge weight",
+          "occurrence": 1
+        },
+        {
+          "id": "9a7912a566429bafccc209a6dc329a0f97ac8e0a585ea9a17a4f980dfc626566",
+          "title": "badge explicit destroy destroys once instead of inventing next seat",
+          "occurrence": 1
+        },
+        {
+          "id": "6034e02baa93c065c455ec22fb7508949d5be0622e0de32ce815838afaa6d8d6",
+          "title": "badge no action destroys once instead of inventing next seat",
+          "occurrence": 1
+        },
+        {
+          "id": "4adbcb0d274a76988f230614a7637ecf2c5a06f36ba8f3bafb7ff108c265df3a",
+          "title": "badge self destroys once instead of inventing next seat",
+          "occurrence": 1
+        },
+        {
+          "id": "b43dc1200d2ded38f74f10ddb40170a47cb3b2141ea35a6256b71e100d412cce",
+          "title": "badge unknown destroys once instead of inventing next seat",
+          "occurrence": 1
+        },
+        {
+          "id": "25988530fe9dec5434becfc4e1be90fda45eb15ca5520b111551e4193c29808d",
+          "title": "badge fractional destroys once instead of inventing next seat",
+          "occurrence": 1
+        },
+        {
+          "id": "fa0645fc6fa5dbd2d8bdfdc3c123b6ecc8443e7f8127b89f3091fafcfd93508c",
+          "title": "badge wrong tool destroys once instead of inventing next seat",
+          "occurrence": 1
+        },
+        {
+          "id": "b7e5562767e14b749081471bd9711000f1600a0dc34aa60e77df068a6c4f276f",
+          "title": "default retains automatic first eligible seat with no choice request",
+          "occurrence": 1
+        },
+        {
+          "id": "427ca2636234ddf715501940edc135e215010fae848300590509f8984ab09a1e",
+          "title": "no eligible successor destroys without opening any dead action",
+          "occurrence": 1
+        },
+        {
+          "id": "27e14c0dea06d8792bbca0b06dfed54e4bfb8e925ee26bec2392fe9e27616f82",
+          "title": "badge stale phase reply commits no transfer or destruction",
+          "occurrence": 1
+        },
+        {
+          "id": "c92aa3f60b4dd0f0338a8f895bdd79e393961abdaf0f14e16d6632f83ff99960",
+          "title": "badge stale day reply commits no transfer or destruction",
+          "occurrence": 1
+        },
+        {
+          "id": "a7b1cdb6606bc4d4dd433ecfe5c4629e07dcf2c04e1a4d92f958b64f2f153908",
+          "title": "badge stale gameover reply commits no transfer or destruction",
+          "occurrence": 1
+        },
+        {
+          "id": "08bb09d898f67d85032d77470777c96058527cff97c4b9eea004d0e6275bf0b7",
+          "title": "badge stale revive reply commits no transfer or destruction",
+          "occurrence": 1
+        },
+        {
+          "id": "d0c6cdd7b04c379f87456ffed5404e6d8e7fcd5f6630aad880c2557be40e4795",
+          "title": "badge stale new-life reply commits no transfer or destruction",
+          "occurrence": 1
+        },
+        {
+          "id": "21ffb71647dbbb869142cebb4f71c930b11685266ed4bce03fdc83b3c22556f4",
+          "title": "badge stale new-badge reply commits no transfer or destruction",
+          "occurrence": 1
+        },
+        {
+          "id": "6d02eb2e394170552013574c991a8679dc4bbfe25b66ea16475fa734621678bb",
+          "title": "badge stale policy reply commits no transfer or destruction",
+          "occurrence": 1
+        },
+        {
+          "id": "d32da76efbcf6ff1687dbd0812478cc81b28be34ac65a0e8126f1cc0d50e96fb",
+          "title": "badge stale weight reply commits no transfer or destruction",
+          "occurrence": 1
+        },
+        {
+          "id": "5df4cfcd0faa20e447d70a5c301d404a259c76982913b41435dbeaa692b2b60e",
+          "title": "badge death successor cannot receive the original pending choice",
+          "occurrence": 1
+        },
+        {
+          "id": "08b85bf4ecaea444fb9424df1d5f63773821bf203e203255da3087735939fa8f",
+          "title": "badge revival successor cannot receive the original pending choice",
+          "occurrence": 1
+        },
+        {
+          "id": "6205d7adc0bd252afcfb0f5b39a62e5174db521d621250bb42480f405193dd58",
+          "title": "badge voting successor cannot receive the original pending choice",
+          "occurrence": 1
+        },
+        {
+          "id": "09485bef5a8373a63838eab69dae4ac53378636c39c17d0956b792a7546b83b4",
+          "title": "badge destroyed successor cannot receive the original pending choice",
+          "occurrence": 1
+        },
+        {
+          "id": "63b94449c1e52402d3e3d95c33c7b035aba15e5681e9c4e2f9e0456105222ca5",
+          "title": "provider exception closes the engine permit and remains an explicit failure",
+          "occurrence": 1
+        },
+        {
+          "id": "8554be7d970da8c2c3623ba8ad9bd1a6cf7a8e58222f0c6bf306510729ea34cf",
+          "title": "request construction revocation prevents contacting the badge provider",
+          "occurrence": 1
+        },
+        {
+          "id": "8b78951768c95117bfae583615a977788d310b47adc8f9f8d52ce60b1adafb3d",
+          "title": "gateway revocation prevents committing even an accepted badge selection",
+          "occurrence": 1
+        },
+        {
+          "id": "15966f26af1f156ef10b9e1b7275937fb093f3a844cfafe912d61bbc137132d8",
+          "title": "zh-CN/llm_empty: declined or rejected badge reply never fabricates a fallback successor",
+          "occurrence": 1
+        },
+        {
+          "id": "6a32907d0238a93d94abb4c4b1c787d43aad50aaf8f3c2f26b5544f42e156499",
+          "title": "zh-CN/llm_invalid: declined or rejected badge reply never fabricates a fallback successor",
+          "occurrence": 1
+        },
+        {
+          "id": "36ddac629fdb508c677db7d8f237d1f1b0bc355801f74c132b1aaba9649ff98a",
+          "title": "zh-CN/acp_empty: declined or rejected badge reply never fabricates a fallback successor",
+          "occurrence": 1
+        },
+        {
+          "id": "44a777d4e3f40c484644893aff48109981edf909966bf4a1afbfbfcf6bf063a5",
+          "title": "zh-CN/acp_invalid: declined or rejected badge reply never fabricates a fallback successor",
+          "occurrence": 1
+        },
+        {
+          "id": "aff99093355486fdbac31db04a07b0dcf50b142117023f2f2c4fd5a79e9a2128",
+          "title": "en/llm_empty: declined or rejected badge reply never fabricates a fallback successor",
+          "occurrence": 1
+        },
+        {
+          "id": "791fc24d7e5aeffc9ba7983f767117bdc16f957a100d8e0c3108b3da732bfd85",
+          "title": "en/llm_invalid: declined or rejected badge reply never fabricates a fallback successor",
+          "occurrence": 1
+        },
+        {
+          "id": "6a184be705e3bd91fd4979b93a6bbb0e2d8e93cbc183e245b5fd095d2148c465",
+          "title": "en/acp_empty: declined or rejected badge reply never fabricates a fallback successor",
+          "occurrence": 1
+        },
+        {
+          "id": "0c37eb85cf86bd316252ef82363d5c4b16f2ef26e16042b9afe17829df29d50d",
+          "title": "en/acp_invalid: declined or rejected badge reply never fabricates a fallback successor",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/runtime/config/board_definition",
+          "originalImport": "import {\n  boardDefinitionFromConfig,\n  parseBoardDefinition,\n} from \"../../../src/runtime/config/board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "boardDefinitionFromConfig",
+              "imported": "boardDefinitionFromConfig",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "parseBoardDefinition",
+              "imported": "parseBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Copied runRecorded/fixture helpers are latent function declarations; original case-local Worlds, scripts, recorders and cleanup stay one allocation per original call. No extra eager cached catalog read was introduced.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 473 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 566,
-    "targetFiles": 638,
-    "mappingEntries": 638,
-    "baselineCases": 7301,
+    "sourceFiles": 567,
+    "targetFiles": 640,
+    "mappingEntries": 640,
+    "baselineCases": 7339,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
