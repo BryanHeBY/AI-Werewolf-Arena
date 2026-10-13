@@ -1,4 +1,5 @@
 /**
+ * 输入为未知数据与精确字段列表；输出为只含原 data descriptor 值的新记录、正整数判定或无效结果。
  * 明辉／黯月共享的政策字节与严格 scalar 读取规则。两个真实状态 reader 使用同一实现，
  * Proxy 在反射之前拒绝，字段只读 data descriptor，既不调用 getter 也不安装能力。
  * 正整数上界、普通／null prototype 和精确 key 集合均沿用旧接受集合。
