@@ -1,5 +1,5 @@
 /**
- * 单元测试负责验证红月独立基础契约：使用原内存 owner／frame／reader、回调控制及明确畸形修改。手写预期、身份快照和拒绝断言不变，不推进装配后的完整日夜或使用模型／实体传输。
+ * 单元测试负责验证赤月使徒独立基础契约：使用原内存 owner／frame／reader、回调控制及明确畸形修改。手写预期、身份快照和拒绝断言不变，不推进装配后的完整日夜或使用模型／实体传输。
  */
 import { describe, expect, test } from "bun:test";
 import { Camp } from "../../../../src/core/domain/identity";
@@ -8,7 +8,7 @@ import {
   freshRedMoonState,
   getRedMoonState,
   RED_MOON_ROLE,
-} from "../../../../src/game/mechanisms/roles/red_moon_apostle/state";
+} from "../../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
 import { readRedMoonNextNightFact, readRedMoonExpiryFact, RED_MOON_BLAST_EVENT, RED_MOON_EXILE_EVENT, RED_MOON_EXPIRY_EVENT } from "@ai-werewolf-arena/game-contract/facts/red-moon";
 function role(state: unknown = freshRedMoonState()): RoleComponent {
   return {

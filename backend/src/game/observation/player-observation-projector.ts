@@ -30,7 +30,7 @@ import { projectWolfSorcererState } from "../mechanisms/roles/wolf_sorcerer/stat
 import { projectTricksterState } from "../mechanisms/roles/trickster/state";
 import { projectOrderPrinceState } from "../mechanisms/roles/order_prince/state";
 import { projectMagicianState } from "../mechanisms/roles/magician/state";
-import { projectRedMoonState } from "../mechanisms/roles/red_moon_apostle/state";
+import { projectRedMoonState } from "../mechanisms/roles/red_moon_apostle/ports";
 import { projectNightmareShadowState } from "../mechanisms/roles/nightmare_shadow/state";
 import { projectEvilKnightState } from "../mechanisms/roles/evil_knight/state";
 import { projectDemonHunter } from "../mechanisms/roles/demon_hunter/authority";

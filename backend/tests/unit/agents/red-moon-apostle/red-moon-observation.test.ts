@@ -1,5 +1,5 @@
 /**
- * 单元测试验证红月两种显式政策和恶意描述符下的私有观察。输入为原内存 fixture、访问器与冻结对象；
+ * 单元测试验证赤月使徒两种显式政策和恶意描述符下的私有观察。输入为原内存 fixture、访问器与冻结对象；
  * 手写 owner 字段和脱离副本断言确保外来访问器不能读出库存，不运行模型或完整对局。
  * 保原字面／fixture oracle；类型迁移不改变状态读取和拒绝边界。
  */
@@ -10,7 +10,7 @@ import { GameActionRequestFactory } from "../../../../src/game/engine/action_req
 import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
 import type { PlayerObservation } from "../../../../src/game/observation/player-observation";
 import { redMoonTwelveConfig } from "../../../../src/runtime/scenarios/red_moon_twelve";
-import { getRedMoonState } from "../../../../src/game/mechanisms/roles/red_moon_apostle/state";
+import { getRedMoonState } from "../../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
 for (const policy of ["ends_game", "forbidden"] as const)
   for (const locale of ["zh-CN", "en"] as const)
     test(

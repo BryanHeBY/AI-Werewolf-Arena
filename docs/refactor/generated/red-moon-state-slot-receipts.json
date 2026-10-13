@@ -1,0 +1,92 @@
+{
+  "schema": "awa-red-moon-state-slot-receipts-v1",
+  "tests": [
+    {
+      "log": "docs/refactor/generated/red-moon-state-slot-new-tests.log",
+      "cases": 4,
+      "assertions": 18,
+      "executionChunk": "0b3490",
+      "terminalExitCode": 0,
+      "runs": 1
+    },
+    {
+      "log": "docs/refactor/generated/red-moon-state-slot-existing-audit.log",
+      "cases": 2,
+      "assertions": 13,
+      "filteredCases": 11,
+      "executionChunk": "ceb162",
+      "terminalExitCode": 0,
+      "runs": 1
+    }
+  ],
+  "types": {
+    "presentSourceRoots": 15,
+    "config": "docs/refactor/generated/red-moon-state-slot-types.json",
+    "chronology": [
+      {
+        "stage": "nonexistent root-local compiler harness",
+        "terminalExitCode": 127,
+        "log": "docs/refactor/generated/red-moon-state-slot-compiler-harness-first.log",
+        "actualCompilerStarted": false
+      },
+      {
+        "stage": "first actual finite compiler",
+        "session": 73978,
+        "terminalChunk": "dbc488",
+        "terminalExitCode": 2,
+        "log": "docs/refactor/generated/red-moon-state-slot-types-first.log",
+        "diagnostics": [
+          "new matcher inferred null; fixed with erased number|null view",
+          "old handwritten observation query missing required catalog supplier; independently corrected by Root in bbbace42"
+        ]
+      },
+      {
+        "stage": "next necessary finite compiler",
+        "session": 68106,
+        "terminalChunk": "403667",
+        "terminalExitCode": 2,
+        "log": "docs/refactor/generated/red-moon-state-slot-types-final.log",
+        "ownDiagnostics": 0,
+        "foreignDiagnostics": 4,
+        "foreignCause": "Parallel GC DTO migration producer/Observer inline import-type route mismatch; subsequently resolved by its owners, metadata commit b1534c26."
+      },
+      {
+        "stage": "final stable necessary finite compiler",
+        "session": 52419,
+        "terminalChunk": "1d1ff9",
+        "terminalExitCode": 0,
+        "log": "docs/refactor/generated/red-moon-state-slot-types-final-stable.log",
+        "logBytes": 0
+      }
+    ]
+  },
+  "comments": {
+    "scopePresentSources": 15,
+    "documentationPaths": 433,
+    "firstActualFailures": [
+      {
+        "id": "ea6a49ca412d5dcc87e682b618f64f760e601105ee1c976b05be5f24e8fc7dc7",
+        "rule": "comment.timing",
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+        "line": 1,
+        "column": 1,
+        "detail": "hook head lacks its timing contract."
+      }
+    ],
+    "finalActualFailures": [],
+    "firstIncompleteDependencyHarnessDiagnostics": 160,
+    "dependencyLimit": "The first invocation supplied only 15 source files without target/package/tsconfig inventory. These unresolved diagnostics are harness limitations, not a complete architecture result. A separate focused actual endpoint inventory assesses the RedMoon routes."
+  },
+  "proofHarnessChronology": [
+    "Initial side-effect import shape caused TypeError before report; corrected checker only.",
+    "First complete inverse collected late imports at the front and misreported foundation full-program mismatch; actual source changed only import/header. Checker now replaces precise import nodes in original statement positions. No product algorithm was changed.",
+    "Initial AST node counter captured zero before recursive walk; fixed counter evaluation order before final report.",
+    "Final source proof covers whole old owner and 12 consumers; final ports comment delta is independently bridged without repeating type/runtime checks."
+  ],
+  "notExecuted": [
+    "full test suite",
+    "full architecture gate",
+    "paid model/network",
+    "complete game simulation"
+  ]
+}

@@ -1,5 +1,5 @@
 /**
- * 单元测试验证蚀日者声明的末狼政策和有限 roster 资格。原安装贡献／状态相等是字面预期，保留原输入及样本，不调用模型或完整对局 driver。
+ * 单元测试验证赤月使徒声明的末狼政策和有限 roster 资格。原安装贡献／状态相等是字面预期，保留原输入及样本，不调用模型或完整对局 driver。
  */
 import { expect, test } from "bun:test";
 import { isDemonHunterPreset, isRedMoonPreset } from "../../../src/rulesets";
@@ -9,7 +9,7 @@ import {
   getDefaultRoleCatalog,
   getDefaultRoleContributions,
 } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
-import { getRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state";
+import { getRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
 import {
   demonHunterActorId,
   demonHunterCheckpointPlayers,

@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/features/red-moon-audit.test.ts:
+(pass) Red Moon blast audit commits once and seals only the next night after death [78.42ms]
+(pass) Only last-wolf exile can defer; wrong phase and repeated transitions fail closed [2.12ms]
+
+ 2 pass
+ 11 filtered out
+ 0 fail
+ 13 expect() calls
+Ran 2 tests across 1 file. [166.00ms]

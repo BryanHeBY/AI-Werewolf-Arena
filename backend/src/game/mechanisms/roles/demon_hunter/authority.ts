@@ -5,7 +5,7 @@
  * 失效或失败保持部分写入与结算顺序，别名不增加能力；受保护白痴替换只恢复 idiot 槽，
  * 原生库存及 JSON／descriptor 检查仍归各自领域所有者。
  */
-import type { ReadonlyBoardConfig, RedMoonState } from "@ai-werewolf-arena/game-contract";
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { recordNobleContractClosure } from "../noble_secret_body/facts";
 import type { NobleContractClosedFact } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
@@ -15,7 +15,14 @@ import {
   checkpointNobleBodyAuthority,
   clearServantFromHunt,
 } from "../noble_secret_body/authority";
-import { RED_MOON_ROLE, getRedMoonState } from "../red_moon_apostle/state";
+import {
+  RED_MOON_ROLE,
+  getRedMoonState,
+  readRedMoonShadow,
+  copyRedMoonPayload,
+  encodeRedMoonShadow,
+  writeRedMoonTransition,
+} from "../red_moon_apostle/ports";
 import { types } from "node:util";
 import {
   COMPONENT,
@@ -1573,8 +1580,9 @@ export function commitDemonRedMoonTransition(
   const state = getRedMoonState(p.role);
   if (!state || !writableDemonFields(state, ["blastDay", "exileDay", "expirySettled"]))
     return false;
-  const original = JSON.parse(p.auditPrivateJson) as Record<string, unknown>;
-  const next = { ...state };
+  // 本族编码函数只消费已捕获的影子；解析查找先于 audit 字段读取，原体／夜权限仍留在这里。
+  const original = readRedMoonShadow(() => p.auditPrivateJson);
+  const next = copyRedMoonPayload(state);
   if (kind === "expire") {
     if (n.closed || !n.frozen || state.exileDay !== day - 1 || state.expirySettled) return false;
     next.expirySettled = true;
@@ -1600,10 +1608,9 @@ export function commitDemonRedMoonTransition(
       next.exileDay = day;
     } else return false;
   }
-  const expected = JSON.stringify({ ...original, redMoon: next });
-  (state as Pick<RedMoonState, "blastDay">).blastDay = next.blastDay;
-  (state as Pick<RedMoonState, "exileDay">).exileDay = next.exileDay;
-  (state as Pick<RedMoonState, "expirySettled">).expirySettled = next.expirySettled;
+  const expected = encodeRedMoonShadow(original, next);
+  // 三写只归本族 slot；完整容器验收和 audit 最终更新保持原点，后续失败不撤销先前字段。
+  writeRedMoonTransition(state, next);
   if (demonJson(p.privateState) !== expected) throw new Error("red_moon_state_commit_failed");
   p.auditPrivateJson = expected;
   return true;

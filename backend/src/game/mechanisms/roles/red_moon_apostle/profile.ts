@@ -11,7 +11,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Role, WinCondition } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
 import { WOLF_ROLE_PROFILE } from "../wolf/profile";
-import { RED_MOON_POLICY, freshRedMoonState, getRedMoonState } from "./state";
+import { RED_MOON_POLICY, RED_MOON_STATE_SLOT } from "./state-slot";
 const parameters = z.strictObject({
   policy: z.literal(RED_MOON_POLICY).default(RED_MOON_POLICY),
   lastWolfBlastPolicy: z.enum(["ends_game", "forbidden"]).default("ends_game"),
@@ -39,8 +39,10 @@ export const RED_MOON_ROLE_PROFILE: NativeRoleContributions = {
     ...WOLF_ROLE_PROFILE.runtime,
     votedOutHook: redMoonVotedOutHook,
     init: (role, ctx) => {
-      role.privateState.redMoon = freshRedMoonState(
-        parameters.parse(ctx.boardConfig?.redMoon ?? {}).lastWolfBlastPolicy,
+      // 延迟政策读取，保原左值容器先于 fresh／配置字段的顺序；安装仍归本族唯一数据槽。
+      RED_MOON_STATE_SLOT.install(
+        role,
+        () => parameters.parse(ctx.boardConfig?.redMoon ?? {}).lastWolfBlastPolicy,
       );
     },
     configuration: {

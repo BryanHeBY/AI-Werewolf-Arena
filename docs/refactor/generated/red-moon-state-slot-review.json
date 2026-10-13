@@ -1,0 +1,461 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_final_architecture_review",
+  "mode": "独立只读源/diff/真实Gitbefore/完整证明脚本/收据与最终doc审；只写本报告，未修改产品源或运行types/tests/gates/作者全程序证明",
+  "base": "2117e4979a0256f95c990d25f209e347fdef9a83",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+      "sha256": null,
+      "matchesFinalFrozenScope": true,
+      "deleted": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+      "sha256": "2283b11decba1707764fb866711bb9cdf74f3ba2aeea6693a1f29c0fd30835fe",
+      "matchesFinalFrozenScope": true,
+      "deleted": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+      "sha256": "0f855e1d5d7a65941bf75c8eb8248cfe0c27508255ced563a75721e9410e6802",
+      "matchesFinalFrozenScope": true,
+      "deleted": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "64ebaddc512e6fe111d35e9f0eda2d1d107f5cc2c0a20bbc7ef3f16e2c49649e",
+      "matchesFinalFrozenScope": true,
+      "deleted": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "sha256": "daf1a131794093c639b12ff2021ea2f1c2f358f222bfd298e2934da7208ee064",
+      "matchesFinalFrozenScope": true,
+      "deleted": false
+    },
+    {
+      "path": "backend/src/game/engine/self_destruct_window.ts",
+      "sha256": "d7632aa658e11053e78f6e9894dc7b368dd4b789d1c4902194b8d3085db754cf",
+      "matchesFinalFrozenScope": true,
+      "deleted": false
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "e7719c8d2416f726e238b6c3d982f90e6ec4e7e4c0fc75d38ff7f687512f9b49",
+      "matchesFinalFrozenScope": true,
+      "deleted": false
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon/foundation.test.ts",
+      "sha256": "0895f96182080d8590a2a94d33b5fd4f8a6e2e1750d88b116de7ab499a800f17",
+      "matchesFinalFrozenScope": true,
+      "deleted": false
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-audit.test.ts",
+      "sha256": "c291d1e7391f733b46207fe44da9ba482e5931f64a260b1533a88035af85c18a",
+      "matchesFinalFrozenScope": true,
+      "deleted": false
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "0bdcdecdc7b56aa6609845ee3c72d086b9b7b3fafabff9118a3ce347b5de3891",
+      "matchesFinalFrozenScope": true,
+      "deleted": false
+    },
+    {
+      "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+      "sha256": "09eab4988254ea5603194352c16e49387a5ce0bee8563c6c15e12860f4b7f6a1",
+      "matchesFinalFrozenScope": true,
+      "deleted": false
+    },
+    {
+      "path": "backend/tests/unit/agents/red-moon-apostle/red-moon-observation.test.ts",
+      "sha256": "c7d85aff49378f7a5cc515ff0dfddff2f9ab3afd871bd720925700d89947fbc5",
+      "matchesFinalFrozenScope": true,
+      "deleted": false
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/red-moon/deferred-terminal-night.test.ts",
+      "sha256": "c59edba0f81d33bf13653c26a374d2f7fc3361a4e7b205366f2ded8f6b1899b7",
+      "matchesFinalFrozenScope": true,
+      "deleted": false
+    },
+    {
+      "path": "backend/tests/unit/configuration/red-moon-candidate.test.ts",
+      "sha256": "e119d14dfe5dc4a6ad71cf091467b619fd7ff6ce615bc8019c7eb93e67f9db0e",
+      "matchesFinalFrozenScope": true,
+      "deleted": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+      "sha256": "17f64b00868bdbe6d4291c75d576ea3812ca5d40c87b5540f383236bc722031b",
+      "matchesFinalFrozenScope": true,
+      "deleted": false
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon/state-slot.test.ts",
+      "sha256": "7348189b89a8e218ff2b66531017fd87ced953e7a590480948ef8462fd2a849a",
+      "matchesFinalFrozenScope": true,
+      "deleted": false
+    }
+  ],
+  "sourceScope": {
+    "paths": 16,
+    "present": 15,
+    "deleted": 1,
+    "oldGitSources": 14,
+    "newSlot": 1,
+    "newBoundedUnit": 1
+  },
+  "actualGitBefore": [
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+      "sha256": "be172d7100c142c4e95196ffc082261136f6af3908b43d11fe6d0f62458330b9",
+      "actualGitWholeBytesVerified": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+      "sha256": "359d1e900ab8359a92fa4af2e5043979ae495bda0ce3f9f5565c1694d26bfe8a",
+      "actualGitWholeBytesVerified": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+      "sha256": "f98369419f6b6040ca55b612145ece1717f4b506c05a756c2ef296015c219303",
+      "actualGitWholeBytesVerified": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "5ead60c725d4e9adc9c37fa6f5d366b640cbfecdaf17dc895090c7db0b4d1399",
+      "actualGitWholeBytesVerified": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "sha256": "d800bb94ebee513107a9884a43bf32700b43d2f1023b8f997322c9aaeb3b5a3c",
+      "actualGitWholeBytesVerified": true
+    },
+    {
+      "path": "backend/src/game/engine/self_destruct_window.ts",
+      "sha256": "c71b4c61381d41a85f7379d02a7daa5af877c7987966fbb41a7cc8586725499a",
+      "actualGitWholeBytesVerified": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "ac96d32a81e5c069838d7b9e3e9b2114245c890b4462d6d6257aa0e69b2f76bb",
+      "actualGitWholeBytesVerified": true
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon/foundation.test.ts",
+      "sha256": "49c423ef1b897a44333d4e00ebbf92fcd2f99dcb63269d6327e89a2cd79826b2",
+      "actualGitWholeBytesVerified": true
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-audit.test.ts",
+      "sha256": "b01182e019bf9bdff634e6934f205770b681a9fc89449cbb654600f41a80492d",
+      "actualGitWholeBytesVerified": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "959642197638d9409ef751ecca4c80801507eb3630beb919a59c3c2be30e79e1",
+      "actualGitWholeBytesVerified": true
+    },
+    {
+      "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+      "sha256": "24e6d7a959d60e059d1dc9448b989d6ad4587c98b5f06fc185cf83e9e24d555a",
+      "actualGitWholeBytesVerified": true
+    },
+    {
+      "path": "backend/tests/unit/agents/red-moon-apostle/red-moon-observation.test.ts",
+      "sha256": "3865d7c4daa66b818f913be1e464fd7f8e6f0b15078210e94ff1f9b5d04d5e49",
+      "actualGitWholeBytesVerified": true
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/red-moon/deferred-terminal-night.test.ts",
+      "sha256": "40cb399fbcdb07d5007336b4b1863b01180f25c58bdae09d29ee60a94df1f730",
+      "actualGitWholeBytesVerified": true
+    },
+    {
+      "path": "backend/tests/unit/configuration/red-moon-candidate.test.ts",
+      "sha256": "c8cd468c3991223b386e30b492031fbce7fcee095491f6337e98d96d1df9ce4e",
+      "actualGitWholeBytesVerified": true
+    }
+  ],
+  "singleConsumerBaseline": {
+    "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+    "commit": "bbbace42070b3738c880da9f6cec7861e68e9ab7",
+    "sha256": "90ca584bec20fd5281d2d82feb9704c5e94509001552df37d76f186e0458b0bc",
+    "actualGitWholeBytesVerified": true,
+    "classification": "Root另笔必填Catalog供给修复改变测试输入；本批该file仅type/value import路由与中文头，不能逆为全2117同输入。"
+  },
+  "findings": [
+    {
+      "kind": "comment_requirement",
+      "severity": "low",
+      "status": "closed",
+      "paths": [
+        "backend/src/game/engine/self_destruct_window.ts",
+        "backend/src/game/mechanisms/self_destruct/commit.ts"
+      ],
+      "finding": "已触及两个核心流程的JSDoc仍为英文，原最低ID说明也未显式描述callback false跳过。",
+      "resolution": "两原重要说明准确中文化；并发选项→编号升序复验→callback明确false跳过→返回首个未被拒绝选择，不宣称callback后再核alive。另一函数只提交资源/事件/事实并返回死亡提案，真实死亡写归结算器。",
+      "independentFinalDelta": [
+        {
+          "path": "backend/src/game/engine/self_destruct_window.ts",
+          "beforeSHA256": "3c7dd351f6228c274e15f477a5fd0de6262ee56a57f7cf8f5f72f9ee2dd77757",
+          "afterSHA256": "d7632aa658e11053e78f6e9894dc7b368dd4b789d1c4902194b8d3085db754cf",
+          "independentWholeRawExceptExactlyOneCommentSame": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+          "beforeSHA256": "62fb21e2aab16f89fb93428526dbcefb8426038cd6116b677d904f251b2abe42",
+          "afterSHA256": "daf1a131794093c639b12ff2021ea2f1c2f358f222bfd298e2934da7208ee064",
+          "independentWholeRawExceptExactlyOneCommentSame": true
+        }
+      ],
+      "authorStrongBridge": "488/268全部非注释leaf与4完整ES/CJS raw相同；原source-proof/收据保持其先前真实来源。"
+    }
+  ],
+  "sourceReview": [
+    "旧state完整算法真实迁到同族slot：fresh/own/day/project完整保，schema取原get payload段；角色→阵营→privateState→redMoon读取仍先于payload检查，Proxy/accessor无trap，五字段/政策/安全日次/互斥/settled依赖及返回原ref完全保。非枚举/readonly数据仍可读，不新增plain-object/schema严拒或执行getter。",
+    "get及invalidations.readCurrent均指同一原角色读取函数；这是角色数据当前形状检查，不包含World/id/life/lease原体许可。create/schema/get/install/checkpoint/write均由同一slot实拥有，不建第二份live库存或补默认。",
+    "真实profile改slot.install(role, latePolicy)：内部左值role.privateState.redMoon先捕获，fresh callee在原政策读取前；parameters.parse的receiver、ctx.boardConfig getter、redMoon nullish/default和lastWolfBlastPolicy读取保持原序。新具名install调用和table/namespace装配为明确新API，未假装所有冷加载/调用栈相同。",
+    "Demon原绑定、role/camp/currentness、原生命与version、全部名单、末狼、夜已封存/关闭/先后日、kind政策和可写三字段预检仍在原点且短路顺序保。slot命令不重复World/Role槽读取，也不授予请求窗口、产权或已付资格。",
+    "readRedMoonShadow内部JSON.parse方法读取在延迟p.auditPrivateJson供给前，保JSON receiver；prepare为原{...state}浅copy；encode保JSON.stringify方法读取先于完整original spread、redMoon覆盖及序列化。对已捕获影子没有额外schema/clone/strictArchive要求，保完整容器其他键。",
+    "三赋值仍逐次读取next值再写captured state的blastDay/exileDay/expirySettled。第二写失败不预读第三值、不回滚第一写；expected已先encode。demonJson(p.privateState)完整验收与原red_moon_state_commit_failed错误、p.auditPrivateJson最后写保持，不追加await/RNG/事件。",
+    "端口7named exports实绑定同族slot原functions/constant refs，外族Demon与engine/观察只消费ports；本族profile直接slot，tests可直接本族slot。actual9生产引用含builtin资料/native presentation既有合法路由，未余state旧入口或外族directslot。slot的RoleInitialization/RoleComponent为type import，运行依赖仍node:util+identity，无Demon/Profile反向运行边。",
+    "12既有消费者除profile initializer、Demon四实际委托展开和精确imports/中文头外的条件、回调、数组、名称、机器字符串、locale矩阵、样本、expect全部保持。旧场景未重跑，未将单元等价冒成全局玩法或归档验收。",
+    "新4字面case分别核冻结/非枚举同ref、extra/accessor/proxy零读取、真实Profile LHS与left失败、JSON callee晚供给及完整额外键、三写失败前缀；类型fix仅明确number|null matcher和初始化writer输入类型，未改变原字面或assert。"
+  ],
+  "strongProofReview": {
+    "oldStateOwnerNodes": 452,
+    "originalConsumerPrograms": 12,
+    "wholeNormalizedInverseOutputs": 26,
+    "method": "完整审读持久proof.cjs：source来自真实before14+唯一真实bbbace override；只展开完整payload schema/具名initializer的实际晚供给/三影子表达式与三assignments，按真实import语句原位置逆；未遮蔽完整回调、函数、数组、条件或期望。",
+    "traversal": "完整printer规范程序同时相等；forEachChild两个callback均void，nodearrays/trailingcomma及identifier/string/numeric/regex/template字面保；counter在完整visit后读取，非首import失配曾为harness顺序错误，真实修正记录保。",
+    "notClaimed": "26输出为旧与完整逆恢复程序printer规范后输出，不是新delegation直接生成二进制与原相同。新slot/table/函数/callstack/export/load路径是已明列变化。",
+    "finalBridges": {
+      "portsHeader": {
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+        "beforeSHA256": "706ff92bbc541dbcb5208a15fb56b6430669809371559b73d7dab243c082199e",
+        "afterSHA256": "0f855e1d5d7a65941bf75c8eb8248cfe0c27508255ced563a75721e9410e6802",
+        "completeNonCommentLeafSame": true,
+        "leafCount": 9,
+        "wholeOutputs": [
+          {
+            "mode": "ESNext",
+            "wholeRawSame": true,
+            "beforeSHA256": "208815d08b64e4d860026eddfb9285c4c0bf650588a9a38648fcd40f885cd0eb",
+            "afterSHA256": "208815d08b64e4d860026eddfb9285c4c0bf650588a9a38648fcd40f885cd0eb"
+          },
+          {
+            "mode": "CommonJS",
+            "wholeRawSame": true,
+            "beforeSHA256": "fda1e12e06bf7d32b496c612d5cdfd69c6e98dfa45a5a4368d9229e463634a72",
+            "afterSHA256": "fda1e12e06bf7d32b496c612d5cdfd69c6e98dfa45a5a4368d9229e463634a72"
+          }
+        ]
+      },
+      "peerComments": {
+        "rows": [
+          {
+            "path": "backend/src/game/engine/self_destruct_window.ts",
+            "beforeSHA256": "3c7dd351f6228c274e15f477a5fd0de6262ee56a57f7cf8f5f72f9ee2dd77757",
+            "afterSHA256": "d7632aa658e11053e78f6e9894dc7b368dd4b789d1c4902194b8d3085db754cf",
+            "exactOnlyDocumentedCommentReplacement": true,
+            "completeNonCommentLeafSame": true,
+            "allLeafCount": 488,
+            "wholeOutputs": [
+              {
+                "mode": "ESNext",
+                "wholeRawSame": true,
+                "beforeSHA256": "f9f6551956ea3fc57db3f6a608cb271cc1059349e20c127fd72a744d49da75a5",
+                "afterSHA256": "f9f6551956ea3fc57db3f6a608cb271cc1059349e20c127fd72a744d49da75a5"
+              },
+              {
+                "mode": "CommonJS",
+                "wholeRawSame": true,
+                "beforeSHA256": "d1b92db0b2c18496406b0381c9bad1f7e992af953d09515c33c0aaf0d1f90915",
+                "afterSHA256": "d1b92db0b2c18496406b0381c9bad1f7e992af953d09515c33c0aaf0d1f90915"
+              }
+            ]
+          },
+          {
+            "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+            "beforeSHA256": "62fb21e2aab16f89fb93428526dbcefb8426038cd6116b677d904f251b2abe42",
+            "afterSHA256": "daf1a131794093c639b12ff2021ea2f1c2f358f222bfd298e2934da7208ee064",
+            "exactOnlyDocumentedCommentReplacement": true,
+            "completeNonCommentLeafSame": true,
+            "allLeafCount": 268,
+            "wholeOutputs": [
+              {
+                "mode": "ESNext",
+                "wholeRawSame": true,
+                "beforeSHA256": "f1e56328f289870565dcd71f1d0bf80b7b6f5583e44e84c6046f65607ce6b752",
+                "afterSHA256": "f1e56328f289870565dcd71f1d0bf80b7b6f5583e44e84c6046f65607ce6b752"
+              },
+              {
+                "mode": "CommonJS",
+                "wholeRawSame": true,
+                "beforeSHA256": "10ad178a3743fd571ab6ac7fe9be3e5d4504d86debffdd7691cb9c00ea12387e",
+                "afterSHA256": "10ad178a3743fd571ab6ac7fe9be3e5d4504d86debffdd7691cb9c00ea12387e"
+              }
+            ]
+          }
+        ],
+        "sourceReadBeforeEditing": true,
+        "compilerOutputs": 4,
+        "noTypesRuntimeOrHeadGateRepeated": true,
+        "semanticCorrections": [
+          "The collector tries sorted revalidated choices and skips only explicit callback false, then returns its first nonrejected choice; it does not promise another living check after callback.",
+          "The ability commits resource/events/facts and returns death proposals; actual death writes remain resolver-owned."
+        ]
+      },
+      "currentFinalIndependentCommentCheck": [
+        {
+          "path": "backend/src/game/engine/self_destruct_window.ts",
+          "beforeSHA256": "3c7dd351f6228c274e15f477a5fd0de6262ee56a57f7cf8f5f72f9ee2dd77757",
+          "afterSHA256": "d7632aa658e11053e78f6e9894dc7b368dd4b789d1c4902194b8d3085db754cf",
+          "independentWholeRawExceptExactlyOneCommentSame": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+          "beforeSHA256": "62fb21e2aab16f89fb93428526dbcefb8426038cd6116b677d904f251b2abe42",
+          "afterSHA256": "daf1a131794093c639b12ff2021ea2f1c2f358f222bfd298e2934da7208ee064",
+          "independentWholeRawExceptExactlyOneCommentSame": true
+        }
+      ]
+    },
+    "independentArtifactManifestHashes": 18,
+    "artifactHashMismatches": 0
+  },
+  "authorValidation": {
+    "tests": [
+      {
+        "log": "docs/refactor/generated/red-moon-state-slot-new-tests.log",
+        "cases": 4,
+        "assertions": 18,
+        "executionChunk": "0b3490",
+        "terminalExitCode": 0,
+        "runs": 1
+      },
+      {
+        "log": "docs/refactor/generated/red-moon-state-slot-existing-audit.log",
+        "cases": 2,
+        "assertions": 13,
+        "filteredCases": 11,
+        "executionChunk": "ceb162",
+        "terminalExitCode": 0,
+        "runs": 1
+      }
+    ],
+    "uniqueCases": 6,
+    "assertions": 31,
+    "existingAuditFiltered": 11,
+    "notWholeRoleSuite": true,
+    "typeCheck": {
+      "presentSourceRoots": 15,
+      "config": "docs/refactor/generated/red-moon-state-slot-types.json",
+      "chronology": [
+        {
+          "stage": "nonexistent root-local compiler harness",
+          "terminalExitCode": 127,
+          "log": "docs/refactor/generated/red-moon-state-slot-compiler-harness-first.log",
+          "actualCompilerStarted": false
+        },
+        {
+          "stage": "first actual finite compiler",
+          "session": 73978,
+          "terminalChunk": "dbc488",
+          "terminalExitCode": 2,
+          "log": "docs/refactor/generated/red-moon-state-slot-types-first.log",
+          "diagnostics": [
+            "new matcher inferred null; fixed with erased number|null view",
+            "old handwritten observation query missing required catalog supplier; independently corrected by Root in bbbace42"
+          ]
+        },
+        {
+          "stage": "next necessary finite compiler",
+          "session": 68106,
+          "terminalChunk": "403667",
+          "terminalExitCode": 2,
+          "log": "docs/refactor/generated/red-moon-state-slot-types-final.log",
+          "ownDiagnostics": 0,
+          "foreignDiagnostics": 4,
+          "foreignCause": "Parallel GC DTO migration producer/Observer inline import-type route mismatch; subsequently resolved by its owners, metadata commit b1534c26."
+        },
+        {
+          "stage": "final stable necessary finite compiler",
+          "session": 52419,
+          "terminalChunk": "1d1ff9",
+          "terminalExitCode": 0,
+          "log": "docs/refactor/generated/red-moon-state-slot-types-final-stable.log",
+          "logBytes": 0
+        }
+      ]
+    },
+    "comments": {
+      "scopePresentSources": 15,
+      "documentationPaths": 433,
+      "firstActualFailures": [
+        {
+          "id": "ea6a49ca412d5dcc87e682b618f64f760e601105ee1c976b05be5f24e8fc7dc7",
+          "rule": "comment.timing",
+          "path": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+          "line": 1,
+          "column": 1,
+          "detail": "hook head lacks its timing contract."
+        }
+      ],
+      "finalActualFailures": [],
+      "firstIncompleteDependencyHarnessDiagnostics": 160,
+      "dependencyLimit": "The first invocation supplied only 15 source files without target/package/tsconfig inventory. These unresolved diagnostics are harness limitations, not a complete architecture result. A separate focused actual endpoint inventory assesses the RedMoon routes."
+    },
+    "foreignFourDiagnosticProvenance": "O2两个家族DTO生产声明已迁，但Observer四inline当时尚旧路径；由O2在工作区精确补四route关闭。b1534仅夜Metadata已提交基线，不含这些四route，也不是RedMoon产品修复。",
+    "resultSource": "收据52419/1d1ff9 actualterminal0；空日志不作成功推断。首127工具没启动compiler、首2真实diag、后4foreign真实红以及不完整依赖160、首端口timing头诊断均如实保。",
+    "lastCommentsOnly": "有限类型与原green tests之后只有端口时点头与两个核心JSDoc准确中文改；对应完整leaf/wholeemit桥接，不伪称重新执行15root类型或职责门禁。"
+  },
+  "limits": [
+    "批准这一个C17家族的完整数据/审计codec/三写所有权迁移，不是全部角色槽或P3完成。",
+    "裸data writer/schema不提供安全brand/lease或authoritative生命/请求许可，Demon原owner前置与最后完整审计继续必须。",
+    "内部影子JSONcodec并非strict磁盘格式、历史指纹或跨构建严格Tape读取授权；归档owner原有职责未迁。",
+    "模块路径、声明表、中文注释和公开接口变化属于来源指纹变化，不改历史身份，不以算法逆相同承诺跨构建复现。",
+    "静态674生产引用库存仅本族9references/7canonical binding验证，不是完整依赖门禁或全世界初始化图证明。",
+    "独立审未再跑任何测试、types、gate、旧全程序证明或模型；review轻Python首次缩进错误只导致读取脚本失败，无source/artifact修改，修读取脚本后实际Git/SHA核对完成。"
+  ],
+  "documents": [
+    {
+      "path": "docs/refactor/red-moon-state-slot.md",
+      "sha256": "de82bfb71e92c24b62397262b99aa13b7082d322bf1a44aab0175436fa6bb4f7"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-evidence.json",
+      "sha256": "57fff176c96ca512052a8ed3c87862f05199bd5a929f0da2c642214c42a76e4a"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-scope-final.json",
+      "sha256": "7c7248e73ce2888af48d8e2069e131483c4b8f051ddd41ceea63d27a36d0e26f"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-source-proof.json",
+      "sha256": "8b8d1cbb2dcb8f9229c79e57ba414dd697ceea9a4cd773a6d056279107908762"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-final-delta-proof.json",
+      "sha256": "78c16bbf185a99647d47f98a56af5bf2f2bae99f5916d308eb9829efcb0a3d61"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-receipts.json",
+      "sha256": "b9986b91016b9b1aa1bbd769ece5138d1c68bb37fb0f768a90269b0678f663fb"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-peer-comments-proof.json",
+      "sha256": "09b60be1819f7849c8ff72eaded53bdbad4f9748367d212aff25c68e326a9354"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-handoff.md",
+      "sha256": "e80c888346b9c1a84100c3ff8a8a16eb3fa2a6c1f75ccfdce94d04025025bb00"
+    }
+  ],
+  "documentApproval": "最终source16、两个真实基线/首红归属/有限范围/中文精度整改/26normalized逆输出与末comment direct输出分类及所有限制均准确；MD/evidence/handoff允许功能提交。"
+}

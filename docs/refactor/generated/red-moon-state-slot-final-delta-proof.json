@@ -1,0 +1,189 @@
+{
+  "commentDelta": {
+    "path": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+    "beforeSHA256": "706ff92bbc541dbcb5208a15fb56b6430669809371559b73d7dab243c082199e",
+    "afterSHA256": "0f855e1d5d7a65941bf75c8eb8248cfe0c27508255ced563a75721e9410e6802",
+    "completeNonCommentLeafSame": true,
+    "leafCount": 9,
+    "wholeOutputs": [
+      {
+        "mode": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA256": "208815d08b64e4d860026eddfb9285c4c0bf650588a9a38648fcd40f885cd0eb",
+        "afterSHA256": "208815d08b64e4d860026eddfb9285c4c0bf650588a9a38648fcd40f885cd0eb"
+      },
+      {
+        "mode": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA256": "fda1e12e06bf7d32b496c612d5cdfd69c6e98dfa45a5a4368d9229e463634a72",
+        "afterSHA256": "fda1e12e06bf7d32b496c612d5cdfd69c6e98dfa45a5a4368d9229e463634a72"
+      }
+    ]
+  },
+  "endpoint": {
+    "method": "Focused actual production import/export/ImportType/dynamic-literal inventory against existing featureRoot/publicFeatureTarget/engine/adapter rules; not a complete architecture/dependency gate.",
+    "scannedProductionTypedFiles": 674,
+    "gateSource": {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "sha256": "acfd1dae8ad2142178ed1a67ebb573a618cfc2f3808913401b75ee5071e9c069"
+    },
+    "roleReferences": [
+      {
+        "path": "backend/src/game/engine/self_destruct_window.ts",
+        "line": 5,
+        "kind": "import",
+        "specifier": "../mechanisms/roles/red_moon_apostle/ports",
+        "typeOnly": false,
+        "target": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+        "sameFeature": false,
+        "gateRules": [
+          "dependency.engine-feature"
+        ],
+        "legal": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/builtin-contributions.ts",
+        "line": 24,
+        "kind": "import",
+        "specifier": "./red_moon_apostle/profile",
+        "typeOnly": false,
+        "target": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+        "sameFeature": false,
+        "gateRules": [],
+        "legal": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+        "line": 18,
+        "kind": "import",
+        "specifier": "../red_moon_apostle/ports",
+        "typeOnly": false,
+        "target": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+        "sameFeature": false,
+        "gateRules": [
+          "dependency.feature-internal"
+        ],
+        "legal": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+        "line": 8,
+        "kind": "export",
+        "specifier": "./state-slot",
+        "typeOnly": false,
+        "target": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+        "sameFeature": true,
+        "gateRules": [],
+        "legal": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+        "line": 8,
+        "kind": "import",
+        "specifier": "./voted_out_hook",
+        "typeOnly": false,
+        "target": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+        "sameFeature": true,
+        "gateRules": [],
+        "legal": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+        "line": 14,
+        "kind": "import",
+        "specifier": "./state-slot",
+        "typeOnly": false,
+        "target": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+        "sameFeature": true,
+        "gateRules": [],
+        "legal": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+        "line": 4,
+        "kind": "import",
+        "specifier": "../roles/red_moon_apostle/ports",
+        "typeOnly": false,
+        "target": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+        "sameFeature": false,
+        "gateRules": [],
+        "legal": true
+      },
+      {
+        "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+        "line": 25,
+        "kind": "import",
+        "specifier": "../mechanisms/roles/red_moon_apostle/ports",
+        "typeOnly": false,
+        "target": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+        "sameFeature": false,
+        "gateRules": [],
+        "legal": true
+      },
+      {
+        "path": "backend/src/game/observation/player-observation-projector.ts",
+        "line": 33,
+        "kind": "import",
+        "specifier": "../mechanisms/roles/red_moon_apostle/ports",
+        "typeOnly": false,
+        "target": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+        "sameFeature": false,
+        "gateRules": [],
+        "legal": true
+      }
+    ],
+    "canonicalPublicBindings": [
+      {
+        "public": "RED_MOON_ROLE",
+        "owner": "RED_MOON_ROLE",
+        "from": "./state-slot",
+        "canonicalOwner": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+        "exists": true
+      },
+      {
+        "public": "getRedMoonState",
+        "owner": "getRedMoonState",
+        "from": "./state-slot",
+        "canonicalOwner": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+        "exists": true
+      },
+      {
+        "public": "projectRedMoonState",
+        "owner": "projectRedMoonState",
+        "from": "./state-slot",
+        "canonicalOwner": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+        "exists": true
+      },
+      {
+        "public": "readRedMoonShadow",
+        "owner": "readRedMoonShadow",
+        "from": "./state-slot",
+        "canonicalOwner": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+        "exists": true
+      },
+      {
+        "public": "copyRedMoonPayload",
+        "owner": "copyRedMoonPayload",
+        "from": "./state-slot",
+        "canonicalOwner": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+        "exists": true
+      },
+      {
+        "public": "encodeRedMoonShadow",
+        "owner": "encodeRedMoonShadow",
+        "from": "./state-slot",
+        "canonicalOwner": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+        "exists": true
+      },
+      {
+        "public": "writeRedMoonTransition",
+        "owner": "writeRedMoonTransition",
+        "from": "./state-slot",
+        "canonicalOwner": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+        "exists": true
+      }
+    ],
+    "violations": [],
+    "limitations": "Unrelated architecture debt and whole package graph were not assessed. New public functions are unbranded data commands; original authority preflight remains required."
+  }
+}

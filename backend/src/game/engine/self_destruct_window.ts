@@ -2,7 +2,7 @@
  * 负责按配置开启白天自爆机会，并捕获原存活玩家。输入为窗口、Provider 与 Gateway；输出为接受的自爆选择或原窗口结果。只有仍有效的原玩家可以提交，不以替换身体恢复机会。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { RED_MOON_ROLE } from "../mechanisms/roles/red_moon_apostle/state";
+import { RED_MOON_ROLE } from "../mechanisms/roles/red_moon_apostle/ports";
 import { demonRedMoonCanBlast } from "../mechanisms/roles/demon_hunter/authority";
 import { canRoleSelfDestruct } from "../mechanisms/roles/self_destruct_capability";
 import { getDefaultRoleCatalog } from "../mechanisms/roles/role-catalog-assembly";
@@ -26,7 +26,7 @@ import { ToolGateway } from "../gateway/tool_gateway";
 import { GameActionRequestFactory } from "./action_request_factory";
 import { getWhiteWolfKingState } from "../mechanisms/roles/white_wolf_king/ports";
 
-/** Collect choices concurrently, then commit only the lowest-ID still-valid choice. */
+/** 并发收集选项，按编号升序复验并尝试提交；回调明确返回 false 时跳过该选项，返回首个未被拒绝的选择。 */
 export class SelfDestructWindow {
   constructor(
     private readonly world: World,

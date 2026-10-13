@@ -30,7 +30,7 @@ import { getTimeConsortState } from "../../../src/game/mechanisms/roles/time_wol
 import { scholarMentorStateForRole } from "../../../src/game/mechanisms/roles/scholar_mentor/night_frame";
 import { readModifierState } from "../../../src/game/mechanisms/roles/scholar_mentor/state";
 import { getLonelyGirlState } from "../../../src/game/mechanisms/roles/lonely_girl/state";
-import { getRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state";
+import { getRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
 
 function forbiddenLiveWrites(
   cupid: NonNullable<ReturnType<typeof getCupidState>>,

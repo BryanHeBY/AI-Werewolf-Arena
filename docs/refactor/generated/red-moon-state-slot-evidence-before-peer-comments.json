@@ -1,0 +1,265 @@
+{
+  "schema": "awa-red-moon-state-slot-evidence-v1",
+  "base": "2117e4979a0256f95c990d25f209e347fdef9a83",
+  "singleConsumerFixtureBase": "bbbace42070b3738c880da9f6cec7861e68e9ab7",
+  "scope": [
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+      "sha256": null
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+      "sha256": "2283b11decba1707764fb866711bb9cdf74f3ba2aeea6693a1f29c0fd30835fe"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+      "sha256": "0f855e1d5d7a65941bf75c8eb8248cfe0c27508255ced563a75721e9410e6802"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "64ebaddc512e6fe111d35e9f0eda2d1d107f5cc2c0a20bbc7ef3f16e2c49649e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/self_destruct/commit.ts",
+      "sha256": "62fb21e2aab16f89fb93428526dbcefb8426038cd6116b677d904f251b2abe42"
+    },
+    {
+      "path": "backend/src/game/engine/self_destruct_window.ts",
+      "sha256": "3c7dd351f6228c274e15f477a5fd0de6262ee56a57f7cf8f5f72f9ee2dd77757"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "e7719c8d2416f726e238b6c3d982f90e6ec4e7e4c0fc75d38ff7f687512f9b49"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon/foundation.test.ts",
+      "sha256": "0895f96182080d8590a2a94d33b5fd4f8a6e2e1750d88b116de7ab499a800f17"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-audit.test.ts",
+      "sha256": "c291d1e7391f733b46207fe44da9ba482e5931f64a260b1533a88035af85c18a"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "0bdcdecdc7b56aa6609845ee3c72d086b9b7b3fafabff9118a3ce347b5de3891"
+    },
+    {
+      "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+      "sha256": "09eab4988254ea5603194352c16e49387a5ce0bee8563c6c15e12860f4b7f6a1"
+    },
+    {
+      "path": "backend/tests/unit/agents/red-moon-apostle/red-moon-observation.test.ts",
+      "sha256": "c7d85aff49378f7a5cc515ff0dfddff2f9ab3afd871bd720925700d89947fbc5"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/red-moon/deferred-terminal-night.test.ts",
+      "sha256": "c59edba0f81d33bf13653c26a374d2f7fc3361a4e7b205366f2ded8f6b1899b7"
+    },
+    {
+      "path": "backend/tests/unit/configuration/red-moon-candidate.test.ts",
+      "sha256": "e119d14dfe5dc4a6ad71cf091467b619fd7ff6ce615bc8019c7eb93e67f9db0e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+      "sha256": "17f64b00868bdbe6d4291c75d576ea3812ca5d40c87b5540f383236bc722031b"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon/state-slot.test.ts",
+      "sha256": "7348189b89a8e218ff2b66531017fd87ced953e7a590480948ef8462fd2a849a"
+    }
+  ],
+  "wholeProgramProof": {
+    "oldOwnerNodes": 452,
+    "consumerPrograms": 12,
+    "outputs": 26,
+    "allActualInversePrintedTypedProgramsAndASTSame": true,
+    "allInverseWholeRawESNextAndCommonJSSame": true,
+    "limitation": "Actual final source expands only the complete known payload schema, one exact initializer LHS/policy supplier, three actual shadow expressions and the original three assignments, with exact reviewed imports. All callbacks, arrays, conditions, labels, assertions and remainder bodies retained. Output comparison is for full printer-normalized inverse and original programs, not untransformed runtime byte identity. New functions/table/ports and structural schema method change the public namespace/load routes/call stack. Internal shadow codec is not a strict archive reader; original id/life/day/lease/last-wolf/private-audit validity/final shadow update remain Demon authority. Root fixture correction has its actual separate committed before, not masked as a C17 same-program change."
+  },
+  "lateHeaderDelta": {
+    "path": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+    "beforeSHA256": "706ff92bbc541dbcb5208a15fb56b6430669809371559b73d7dab243c082199e",
+    "afterSHA256": "0f855e1d5d7a65941bf75c8eb8248cfe0c27508255ced563a75721e9410e6802",
+    "completeNonCommentLeafSame": true,
+    "leafCount": 9,
+    "wholeOutputs": [
+      {
+        "mode": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA256": "208815d08b64e4d860026eddfb9285c4c0bf650588a9a38648fcd40f885cd0eb",
+        "afterSHA256": "208815d08b64e4d860026eddfb9285c4c0bf650588a9a38648fcd40f885cd0eb"
+      },
+      {
+        "mode": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA256": "fda1e12e06bf7d32b496c612d5cdfd69c6e98dfa45a5a4368d9229e463634a72",
+        "afterSHA256": "fda1e12e06bf7d32b496c612d5cdfd69c6e98dfa45a5a4368d9229e463634a72"
+      }
+    ]
+  },
+  "canonicalEndpointSummary": {
+    "scannedProductionTypedSources": 674,
+    "roleReferences": 9,
+    "sameCanonicalPublicBindings": 7,
+    "violations": 0,
+    "method": "Focused actual production import/export/ImportType/dynamic-literal inventory against existing featureRoot/publicFeatureTarget/engine/adapter rules; not a complete architecture/dependency gate."
+  },
+  "receipts": {
+    "schema": "awa-red-moon-state-slot-receipts-v1",
+    "tests": [
+      {
+        "log": "docs/refactor/generated/red-moon-state-slot-new-tests.log",
+        "cases": 4,
+        "assertions": 18,
+        "executionChunk": "0b3490",
+        "terminalExitCode": 0,
+        "runs": 1
+      },
+      {
+        "log": "docs/refactor/generated/red-moon-state-slot-existing-audit.log",
+        "cases": 2,
+        "assertions": 13,
+        "filteredCases": 11,
+        "executionChunk": "ceb162",
+        "terminalExitCode": 0,
+        "runs": 1
+      }
+    ],
+    "types": {
+      "presentSourceRoots": 15,
+      "config": "docs/refactor/generated/red-moon-state-slot-types.json",
+      "chronology": [
+        {
+          "stage": "nonexistent root-local compiler harness",
+          "terminalExitCode": 127,
+          "log": "docs/refactor/generated/red-moon-state-slot-compiler-harness-first.log",
+          "actualCompilerStarted": false
+        },
+        {
+          "stage": "first actual finite compiler",
+          "session": 73978,
+          "terminalChunk": "dbc488",
+          "terminalExitCode": 2,
+          "log": "docs/refactor/generated/red-moon-state-slot-types-first.log",
+          "diagnostics": [
+            "new matcher inferred null; fixed with erased number|null view",
+            "old handwritten observation query missing required catalog supplier; independently corrected by Root in bbbace42"
+          ]
+        },
+        {
+          "stage": "next necessary finite compiler",
+          "session": 68106,
+          "terminalChunk": "403667",
+          "terminalExitCode": 2,
+          "log": "docs/refactor/generated/red-moon-state-slot-types-final.log",
+          "ownDiagnostics": 0,
+          "foreignDiagnostics": 4,
+          "foreignCause": "Parallel GC DTO migration producer/Observer inline import-type route mismatch; subsequently resolved by its owners, metadata commit b1534c26."
+        },
+        {
+          "stage": "final stable necessary finite compiler",
+          "session": 52419,
+          "terminalChunk": "1d1ff9",
+          "terminalExitCode": 0,
+          "log": "docs/refactor/generated/red-moon-state-slot-types-final-stable.log",
+          "logBytes": 0
+        }
+      ]
+    },
+    "comments": {
+      "scopePresentSources": 15,
+      "documentationPaths": 433,
+      "firstActualFailures": [
+        {
+          "id": "ea6a49ca412d5dcc87e682b618f64f760e601105ee1c976b05be5f24e8fc7dc7",
+          "rule": "comment.timing",
+          "path": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+          "line": 1,
+          "column": 1,
+          "detail": "hook head lacks its timing contract."
+        }
+      ],
+      "finalActualFailures": [],
+      "firstIncompleteDependencyHarnessDiagnostics": 160,
+      "dependencyLimit": "The first invocation supplied only 15 source files without target/package/tsconfig inventory. These unresolved diagnostics are harness limitations, not a complete architecture result. A separate focused actual endpoint inventory assesses the RedMoon routes."
+    },
+    "proofHarnessChronology": [
+      "Initial side-effect import shape caused TypeError before report; corrected checker only.",
+      "First complete inverse collected late imports at the front and misreported foundation full-program mismatch; actual source changed only import/header. Checker now replaces precise import nodes in original statement positions. No product algorithm was changed.",
+      "Initial AST node counter captured zero before recursive walk; fixed counter evaluation order before final report.",
+      "Final source proof covers whole old owner and 12 consumers; final ports comment delta is independently bridged without repeating type/runtime checks."
+    ],
+    "notExecuted": [
+      "full test suite",
+      "full architecture gate",
+      "paid model/network",
+      "complete game simulation"
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-before.json",
+      "sha256": "51a428beeb826567687e325ddb8c1829b530557de77bbf79c2add2e364423c6c"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-consumer-before.json",
+      "sha256": "b05ed3ff66fcaf7ee758c20d3f2842cbf023b101c8c7de95f1947561405890f8"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-source-proof.json",
+      "sha256": "8b8d1cbb2dcb8f9229c79e57ba414dd697ceea9a4cd773a6d056279107908762"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-proof.cjs",
+      "sha256": "9afb6bebca3b39ed9b64f8fbbf602c149a523d7441b8c5c9f2729cf42ac0a6a2"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-final-delta-proof.json",
+      "sha256": "78c16bbf185a99647d47f98a56af5bf2f2bae99f5916d308eb9829efcb0a3d61"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-final-proof.cjs",
+      "sha256": "c2debfe86141c816e3bd98ea762d3f9c6b99fa13cc4fb78dba804b51f0b36853"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-scope-final.json",
+      "sha256": "91db525bac8233118292ad6b776a30f611032c52bae01b2d5d03ed7849e83a10"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-type-fix-before.json",
+      "sha256": "07da8001eb41d92cfc0931fb9cc06bf144cdcea58f20457dd495b80b95b51bc6"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-type-fix-proof.json",
+      "sha256": "5be3daa52d49f8e73eaaadcc72e34543918821d52bbc51f4f01c0b74ecd53c4d"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-heads-first.json",
+      "sha256": "124d7892f3cc672dbe9a98617e7bb8927663ae710282b1d584854ac5b2572946"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-heads-first.ts",
+      "sha256": "42cadedb4da1607ca3b7b8c2e92f5db75b69e8c55242c3e97854c76c6528bf56"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-heads.json",
+      "sha256": "eca030d75f47af4d3ab878b98f0fa6082e6f9aa49c0fdef15f94e71814da3e7b"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-heads.ts",
+      "sha256": "8a17093bda18f4b950a1bec98673849bc6ead0ce19f5b0f080046744de680752"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-state-slot-receipts.json",
+      "sha256": "b9986b91016b9b1aa1bbd769ece5138d1c68bb37fb0f768a90269b0678f663fb"
+    }
+  ],
+  "sourceFrozen": true,
+  "unresolvedSourceFindings": [],
+  "limits": [
+    "Partial C17 family migration; not completion of all roles/state slots or Phase P3.",
+    "Internal shadow codec has real Demon callers but is not strict disk/archive schema validation.",
+    "No new lease/brand/runtime permission barrier. Existing World/life/id/day/request/audit authority retains invalidation and final publication.",
+    "New declarations, table, function calls, named public exports and loading paths are intentional API/composition changes; direct delegation binary and full initialization graph are not claimed unchanged."
+  ]
+}

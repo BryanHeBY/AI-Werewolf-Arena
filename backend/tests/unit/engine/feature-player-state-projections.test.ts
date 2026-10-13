@@ -1,5 +1,5 @@
 /**
- * 单元测试验证血月、梦魇、恶灵骑士各自拥有的玩家数据裁剪与实际观察消费。
+ * 单元测试验证赤月使徒、梦魇、恶灵骑士各自拥有的玩家数据裁剪与实际观察消费。
  * 输入为手写合法／畸形私有状态及内存 World；预期使用独立字面字段，不调用投影生成 oracle。
  * 检查副本隔离、历史额外属性不执行、畸形字段拒绝及观察统一冻结；不运行模型或完整对局。
  */
@@ -8,7 +8,7 @@ import { Camp, Phase, Role, type ActionRequest } from "@ai-werewolf-arena/game-c
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
-import { projectRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state";
+import { projectRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
 import { projectNightmareShadowState } from "../../../src/game/mechanisms/roles/nightmare_shadow/state";
 import { projectEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/state";
 import { capturePlayerObservation } from "../../../src/game/observation/player-observation-projector";
