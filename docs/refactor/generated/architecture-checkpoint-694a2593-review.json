@@ -1,0 +1,117 @@
+{
+  "status": "approved",
+  "reviewer": "/root/preflight_final_review",
+  "captureCommit": "694a2593a53758e3ae9999311b37de9b45c923ad",
+  "documents": [
+    {
+      "path": "docs/refactor/architecture-checkpoint-694a2593.md",
+      "sha256": "460bf8e12da8938c8fa655e0453473ef8b45f21fe27ed2987367eeb65e486761"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-694a2593.json",
+      "sha256": "c96f10b34ba1fa35dc4a7a851061d5689232e8216e30a55b3076dd5df4dd251d"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-694a2593-harness-history.json",
+      "sha256": "345371853bccfe30521e1c4d39ccc315c964451bcc273a428f5a7dffdc303492"
+    }
+  ],
+  "actualPublicGitFiles": 3107,
+  "actualFixedDocumentPaths": 424,
+  "publicInputAudit": {
+    "completeAllowedGitSetAndOrderSame": true,
+    "regularBlobModesOnly": true,
+    "allRawGitBlobSHAsMatch": true,
+    "rawSHAMismatches": [],
+    "sourceDigestActual": "0b971f711ab3ddfa6d0e1f1ffae12aa9490ce777ad74ef8af833fa1387179bbc",
+    "reportInputHashSame": true,
+    "privateConfigurationAndParallelWIPExcluded": "Actual fixed Git public whitelist only; no current input or private configuration reader used."
+  },
+  "fiveGateModuleChecks": [
+    {
+      "path": "tooling/refactor/architecture/run.ts",
+      "recordedSHA": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394",
+      "actualGitSHA": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394",
+      "sameRecordedGitSHA": true,
+      "currentBytesSameFixedGit": true
+    },
+    {
+      "path": "tooling/refactor/architecture/contracts.ts",
+      "recordedSHA": "4fb704dfc26fd1e326c520856c8d751e86b9ae62d73bf1d2350d4ac1e5a0863d",
+      "actualGitSHA": "4fb704dfc26fd1e326c520856c8d751e86b9ae62d73bf1d2350d4ac1e5a0863d",
+      "sameRecordedGitSHA": true,
+      "currentBytesSameFixedGit": true
+    },
+    {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "recordedSHA": "acfd1dae8ad2142178ed1a67ebb573a618cfc2f3808913401b75ee5071e9c069",
+      "actualGitSHA": "acfd1dae8ad2142178ed1a67ebb573a618cfc2f3808913401b75ee5071e9c069",
+      "sameRecordedGitSHA": true,
+      "currentBytesSameFixedGit": true
+    },
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "recordedSHA": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db",
+      "actualGitSHA": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db",
+      "sameRecordedGitSHA": true,
+      "currentBytesSameFixedGit": true
+    },
+    {
+      "path": "tooling/refactor/architecture/naming-check.ts",
+      "recordedSHA": "2747a2f36e3b5ffe21dae807a70a6a894cd10b1df96439ab799ef292ecb9ccb3",
+      "actualGitSHA": "2747a2f36e3b5ffe21dae807a70a6a894cd10b1df96439ab799ef292ecb9ccb3",
+      "sameRecordedGitSHA": true,
+      "currentBytesSameFixedGit": true
+    }
+  ],
+  "frozenDebt": {
+    "schema": "awa-architecture-debt-v1",
+    "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
+    "count": 1779,
+    "sha256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+    "currentBytesSameFixedGit": true,
+    "originalInputMetadataDigestSame": true
+  },
+  "reportClassificationAudit": {
+    "actualCounts": {
+      "files": 3107,
+      "violations": 426,
+      "failures": 0,
+      "remainingDebt": 426,
+      "clearedDebt": 1353
+    },
+    "originalLegacyMatches": 426,
+    "clearedOriginalIDs": 1353,
+    "complete1779Partition": true,
+    "classificationProblems": [],
+    "rawDataClassificationOnly": "Uses recorded remaining rows and exact frozen legacy rule/path/specifier/binding/target policy, not a rerun or independent discovery of violations."
+  },
+  "actualTerminalAttribution": {
+    "sessionId": 92629,
+    "chunkId": "6264d7",
+    "exitCode": 0,
+    "source": "Root supplied actual terminal tool receipt; persistent evidence reference matches. Reviewer did not run/poll this process."
+  },
+  "harnessFailureHistory": {
+    "historyArtifact": "docs/refactor/generated/architecture-checkpoint-694a2593-harness-history.json",
+    "summaryRecord": {
+      "failure": "spawnSync git ENOBUFS; default stdout buffer too small for existing debt JSON",
+      "logSha256": "ac0ed7fda2b85692239967dbb105d8eb520b94d5410028618778faa06f9996bf",
+      "logBytes": 2321093,
+      "exitCode": 1,
+      "applicationGateExecuted": false
+    },
+    "actualFrozenDebtBytes": 1069944,
+    "defaultBufferFailureConsistentWithDebtSize": true,
+    "limit": "Raw failed harness stderr and lost temporary executable are unavailable after environment continuation; the recorded old log hash is not independently recomputed or portrayed as a surviving full log. No product/source/gate/debt change is inferred from the harness buffer correction."
+  },
+  "semanticReview": [
+    "Fixed 694a input excludes uncommitted pure inspection-policy, matrix registration and newly added review files. The complete raw Git fingerprint set and documentation paths match the persistent capture.",
+    "Recorded zero new failures is an actual successful shape gate result with 426 residual debts, not zero-debt, whole types, behavior, games, transports or final source-equivalence acceptance.",
+    "All 1779 original debt identities are retained; 426 exact legacy matches plus 1353 cleared IDs partition them. No new baseline entry, matching-policy relaxation or rewritten debt is required.",
+    "The fixed pipeline actually delegates composition through rulesets and has no concrete DreamNightFrame import, consistent with resolving the earlier specific caef regression. This source observation does not replace the separate full owner review.",
+    "First harness failure is accurately separate from application gate execution and final terminal0; only persistent summary/receipt attribution is available for that historical failure."
+  ],
+  "findings": [],
+  "executed": "Read persistent MD/evidence/history and actual Git tree/blobs; independently recomputed all selected raw SHAs, source/debt metadata digests and recorded debt partition. No checkArchitecture/allViolations/compiler/type/tests/models/network/full gate/source mutation or commit."
+}

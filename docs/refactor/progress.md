@@ -548,3 +548,5 @@
 - 已提交机制切片登记候选收口：独立从真实1313149e..040b7713的30commit核13结构交付43parts；当前91×10矩阵保原249parts/1071remaining完整raw前缀与40旧commit，25行41格、18pending→partial，711pending199partial/0complete0NA，新增13commit与owner/doc真实存在。Root逐映射重建、独立完整JSON已知增量逆和immutable89基线SHA批准；不重复types/tests/gate、不把partial当阶段完成，见 committed-mechanism-parts.md。
 
 - C44纯查验政策公共所有者：19source含17既有TS、1package与1新GC纯叶，完整5声明迁移、18旧命名点→17直接引用，ports不留查询转发；原getter/配置短路/缺省表可变性/错误码与slot copy→原校验→install及两历史写权保持。真实694a Git18before与全部5decl/17非import程序/每binding、有限package增量/全仓owner核同；18CN头和关键政策/提示权限说明实际职责0，Root与独立19SHA/source/doc审批准。早BE/pkg定向types实际terminal0但环境切换临时log缺席如实限制；两原suite36pass2fail/254保真，红仅基线Mirror测试错用runtime读取metadata，将另笔修，不冒本批全绿或整矩阵完成，见 inspection-policy-contract.md。
+
+- 固定694a结构检查收口：真实3107Git公共blob／424doc、不混未提交policy/矩阵候选，0new/426debt/1353clear，原1779债SHA297b保持。后台session92629实际closed0；独立全路径/字节SHA/5工具source/sourceDigest/426exactlegacy+1353分区核准，不重门禁。首临时harness读大JSON默认buffer失败只修工具，历史原stderr缺席限定如实保；仅依赖/命名/职责检查，不替代最终same-source验收，见 architecture-checkpoint-694a2593.md。

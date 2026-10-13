@@ -1,0 +1,7 @@
+{
+  "failure": "spawnSync git ENOBUFS; default stdout buffer too small for existing debt JSON",
+  "logSha256": "ac0ed7fda2b85692239967dbb105d8eb520b94d5410028618778faa06f9996bf",
+  "logBytes": 2321093,
+  "exitCode": 1,
+  "applicationGateExecuted": false
+}
