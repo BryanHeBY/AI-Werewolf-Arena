@@ -4,10 +4,13 @@
  * live-role allowance, including outside an installed Evil Knight board.
  * When queried, original lookup failures propagate. Binding never reads a
  * component or exposes World, life, reflection writes or a commit method.
+ * Named actor qualification and reflection commands retain their original source checks, paid timing and frame writes; the knife query itself remains readonly.
  */
 import { Role, type EntityId } from "../../../../core/domain/identity";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { World } from "../../../../core/domain/world";
+export { isEvilKnightBoard, assertEvilKnightNativeActor } from "./night_frame";
+export { commitEvilKnightReflection } from "./state";
 
 export interface EvilKnightKnifeTargetQuery {
   allows(targetId: EntityId): boolean;

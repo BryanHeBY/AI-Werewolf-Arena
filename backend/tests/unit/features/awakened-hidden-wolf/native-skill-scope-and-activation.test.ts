@@ -5,11 +5,25 @@
  * and original-scope revocation; no complete pipeline or PhaseManager cycle. No complete game phase or paid
  * model runs; existing local windows and denied entry probes remain bounded.
  */
+import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
+import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
+import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
 import type { AwakenedTemplateRole } from "@ai-werewolf-arena/game-contract";
 import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Camp, DeathCause, Phase, Role, type ActionProvider, type BoardConfig, type GameEvent, type RoleComponent, type ToolCall } from "../../../../src/core";
+import {
+  COMPONENT,
+  Camp,
+  DeathCause,
+  Phase,
+  Role,
+  type ActionProvider,
+  type BoardConfig,
+  type GameEvent,
+  type RoleComponent,
+  type ToolCall,
+} from "../../../../src/core";
 import {
   createAliveComponent,
   type AliveComponent,
@@ -19,7 +33,10 @@ import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_vi
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
 import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
-import { allNightAbilities, findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import {
+  allNightAbilities,
+  findNightAbility,
+} from "../../../../src/game/mechanisms/roles/abilities";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import { getDefaultRoleCatalog, RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import { MIRROR_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/night_stages";
@@ -79,6 +96,15 @@ function context(
     world: game.world,
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
+    },
+    get nativeNightFailure() {
+      return bindNativeNightFailurePolicy(() => this.world);
+    },
+    get nativeNightTargets() {
+      return bindNativeNightTargetPolicy(() => this);
+    },
+    get nativeNightEffects() {
+      return bindNativeNightEffects(() => this);
     },
     events,
     roleCatalog: getDefaultRoleCatalog(),

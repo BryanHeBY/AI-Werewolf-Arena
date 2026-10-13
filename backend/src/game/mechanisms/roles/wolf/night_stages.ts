@@ -6,20 +6,9 @@
  * original preflight, captured-life and final accepted-target call boundaries.
  */
 import { checkpointNobleBodyAuthority, isNobleBodyBoard } from "../noble_secret_body/authority";
-import { isFragrantPairBoard } from "../fragrant_pair_seer/authority";
-import { isRadiantEclipseBoard } from "../radiant_eclipse/night_frame";
-import { isTimeConsortBoard } from "../time_wolf_consort/night_frame";
 import { isMistRavenBoard, mistKnifeTargets, originalMistTarget } from "../mist_raven/night_frame";
-import {
-  isScholarMentorBoard,
-  scholarMentorKnifeEligible,
-  recordScholarMentorNativeTarget,
-} from "../scholar_mentor/night_frame";
-import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
-import { isRedMoonBoard } from "../demon_hunter/authority";
-import { nightmareKnifeBlocked, isNightmareBoard } from "../nightmare_shadow/night_frame";
+import { nightmareKnifeBlocked } from "../nightmare_shadow/ports";
 import { bindWolfKnifeTargetQuery } from "./ports";
-import { isEvilKnightBoard } from "../evil_knight/night_frame";
 /** 文件说明：狼人夜聊与刀人投票阶段处理。 */
 import { EntityId, Phase, StatusMark } from "../../../../core/domain/model";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
@@ -36,17 +25,7 @@ const WOLF_KILL_VOTE_MAX_RETRIES = 3;
 
 /** Keep named board errors while applying one failure policy to chat and knife requests. */
 function strictWolfFailurePrefix(ctx: NightStageContext): string | null {
-  if (isFragrantPairBoard(ctx.world)) return "fragrant_pair_seer";
-  if (isNobleBodyBoard(ctx.world)) return "noble_secret_body";
-  if (isRadiantEclipseBoard(ctx.world)) return "radiant_eclipse";
-  if (isMistRavenBoard(ctx.world)) return "mist";
-  if (isScholarMentorBoard(ctx.world)) return "scholar_mentor";
-  if (isTimeConsortBoard(ctx.world)) return "time_consort";
-  if (isNightmareBoard(ctx.world)) return "nightmare";
-  if (isMagicianBoard(ctx.world)) return "magician";
-  if (isRedMoonBoard(ctx.world)) return "red_moon";
-  if (isEvilKnightBoard(ctx.world)) return "evil_knight";
-  return null;
+  return ctx.nativeNightFailure.strictWolfFailurePrefix();
 }
 
 function captureActorScope(ctx: NightStageContext, actorId: EntityId): () => boolean {
@@ -64,7 +43,7 @@ function captureActorScope(ctx: NightStageContext, actorId: EntityId): () => boo
     role.role === kind &&
     role.camp === camp &&
     role.privateState === state &&
-    refs.every(([key, value]) => state![key] === value) &&
+    refs.every(([key, value]) => (state! as Readonly<Record<string, unknown>>)[key] === value) &&
     !!life &&
     ctx.world.getComponent(actorId, COMPONENT.Alive) === life &&
     life.alive &&
@@ -395,13 +374,7 @@ const wolfKillVoteStage: NightStageHandler = {
       }
     }
     ctx.state.wolfTarget = wolfTarget;
-    if (isScholarMentorBoard(ctx.world)) {
-      const actor = ctx.world
-        .getAliveEntityIds()
-        .find((id) => scholarMentorKnifeEligible(ctx.world, ctx.currentDay(), id));
-      if (actor !== undefined)
-        recordScholarMentorNativeTarget(ctx.world, ctx.currentDay(), actor, "kill", wolfTarget);
-    }
+    ctx.nativeNightEffects.recordKnifeModifierTarget(() => wolfTarget);
     ctx.state.wolfTargetVoters = acceptedTargets
       .filter((target) => target.targetId === wolfTarget)
       .map((target) => target.actorId);
@@ -426,9 +399,10 @@ const wolfKillVoteStage: NightStageHandler = {
             bindWolfKnifeTargetQuery(ctx.world).allows(item.targetId),
         );
       if (target) {
-        const mapping = isMagicianBoard(ctx.world)
-          ? resolveMagicianNightTarget(ctx.world, ctx.currentDay(), wolfTarget)
-          : null;
+        const mapping = ctx.nativeNightTargets.mappedTarget(
+          () => ctx.currentDay(),
+          () => wolfTarget,
+        );
         if (mapping && !mapping.isCurrent()) throw new Error("magician_knife_target_stale");
         const effectiveId = mapping?.effectiveId ?? wolfTarget;
         const marks = ctx.ensureMarks(effectiveId);

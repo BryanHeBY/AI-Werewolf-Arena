@@ -5,15 +5,7 @@
  * without assigning it to a replacement mark component. Guard actor enumeration
  * consumes the bound qualification port before any captured protection request.
  */
-import {
-  isScholarMentorBoard,
-  recordScholarMentorNativeTarget,
-} from "../scholar_mentor/night_frame";
-import { isTimeConsortBoard, resolveTimeConsortTarget } from "../time_wolf_consort/night_frame";
-import { commitTimeConsortEffect } from "../time_wolf_consort/effects";
-import { isEvilKnightBoard, assertEvilKnightNativeActor } from "../evil_knight/night_frame";
 /** 文件说明：守卫夜间阶段处理。 */
-import { demonHunterActorId } from "../demon_hunter/authority";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, Role, StatusMark } from "../../../../core/domain/model";
@@ -29,14 +21,14 @@ const guardActionStage: NightStageHandler = {
   id: "guard_action",
   priority: 300,
   async execute(ctx): Promise<void> {
-    if (demonHunterActorId(ctx.world) !== null) {
-      const { executeDemonNativeNight } = await import("../demon_hunter/native_night_controller");
+    if (ctx.nativeNightFailure.usesDemonController()) {
+      const { executeDemonNativeNight } = await ctx.nativeNightEffects.loadSealedNightController();
       await executeDemonNativeNight(ctx, "guard");
       return;
     }
     for (const { actorId: guardId, ability } of ctx.nightActors.actors("guard", ctx.currentDay())) {
       if (ability.activation === "lucky" || ability.activation === "black_market") continue;
-      assertEvilKnightNativeActor(ctx.world, guardId, Role.Guard);
+      ctx.nativeNightFailure.assertNativeActor(guardId, Role.Guard);
       const day = ctx.currentDay(),
         scope = captureNightAbilityScope(
           ctx.world,
@@ -61,21 +53,17 @@ const guardActionStage: NightStageHandler = {
         continue;
       const req = ctx.makeRequest(guardId, ["guard"], { stage: "guard", ability_id: ability.id });
       if (!scope.isEligible()) {
-        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_guard_scope_stale");
-        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_guard_scope_stale");
+        ctx.nativeNightFailure.scopeStale("guard");
         continue;
       }
       const action = await ctx.actionProvider.getAction(req);
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) {
-        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_guard_scope_stale");
-        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_guard_scope_stale");
+        ctx.nativeNightFailure.scopeStale("guard");
         continue;
       }
       if (action?.name !== "guard") {
-        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_guard_action_missing");
-        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_guard_action_missing");
-        if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_guard_action_missing");
+        ctx.nativeNightFailure.actionMissing("guard");
         continue;
       }
 
@@ -86,14 +74,11 @@ const guardActionStage: NightStageHandler = {
       });
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) {
-        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_guard_scope_stale");
-        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_guard_scope_stale");
+        ctx.nativeNightFailure.scopeStale("guard");
         continue;
       }
       if (!result.ok || !result.sanitizedCall) {
-        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_guard_action_invalid");
-        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_guard_action_invalid");
-        if (isEvilKnightBoard(ctx.world)) throw new Error("evil_knight_guard_action_invalid");
+        ctx.nativeNightFailure.actionInvalid("guard");
         safeRecordLogicOp({
           scope: "phase_pipeline",
           op: "guard_action_rejected",
@@ -116,12 +101,15 @@ const guardActionStage: NightStageHandler = {
       )
         continue;
       if (!abstain && targetId !== null) {
-        const receipt = isTimeConsortBoard(ctx.world)
-          ? resolveTimeConsortTarget(ctx.world, day, guardId, targetId, "guard")
-          : null;
+        const receipt = ctx.nativeNightTargets.reflectedTarget(
+          () => day,
+          () => guardId,
+          () => targetId,
+          "guard",
+        );
         if (receipt && (ability.source.kind !== "native" || ability.source.role !== Role.Guard))
           throw new Error("time_consort_guard_source_invalid");
-        commitTimeConsortEffect(ctx, receipt, day, guardId, "guard");
+        ctx.nativeNightEffects.commitReflectedTarget(receipt, day, guardId, "guard");
         const marks = ctx.ensureMarks(receipt?.effectiveId ?? targetId);
         marks.add(StatusMark.GuardMark);
         (ctx.state.guardClaims ??= []).push({ target: receipt?.scope ?? target!, marks });
@@ -151,8 +139,7 @@ const guardActionStage: NightStageHandler = {
         recordGuardTarget(guardState, targetId);
       }
       recordNightAbilityUse(ability, ctx.currentDay(), !abstain);
-      if (isScholarMentorBoard(ctx.world))
-        recordScholarMentorNativeTarget(ctx.world, day, guardId, "guard", targetId);
+      ctx.nativeNightEffects.recordModifierTarget(day, guardId, "guard", () => targetId);
       if (!abstain && targetId !== null)
         recordOwnNightAction(ctx.world, guardId, day, "guard", targetId, false);
     }

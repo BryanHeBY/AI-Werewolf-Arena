@@ -10,7 +10,6 @@
 import type { RoleInspectionPolicy } from "@ai-werewolf-arena/game-contract";
 
 import { recordRoleInspection } from "./state";
-import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { Phase, Role } from "../../../../core/domain/model";
@@ -162,9 +161,10 @@ async function executeInspections(
         aliveLifeVersion(target.target) === target.version;
       if (!targetCurrent() || !roleInspectionTargets(ctx.world, actorId, state).includes(targetId))
         continue;
-      const mapping = isMagicianBoard(ctx.world)
-        ? resolveMagicianNightTarget(ctx.world, day, targetId)
-        : null;
+      const mapping = ctx.nativeNightTargets.mappedTarget(
+        () => day,
+        () => targetId,
+      );
       const result = resolveInspection(
         ctx.world,
         mapping?.effectiveId ?? targetId,

@@ -4,12 +4,14 @@
  * fear predicate and wolf-action policy allowance. Binding only captures the original World reference;
  * consumers receive no World, state writer, night opener or effect-commit method.
  * When queried, original revoked-roster and target-life failures propagate.
+ * The board predicate is the original readonly binding, preserving feature-specific rejection and repeated caller argument reads.
  */
 import type { EntityId } from "../../../../core/domain/model";
 import { Role } from "../../../../core/domain/identity";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { World } from "../../../../core/domain/world";
 import { nightmareFearBlocks } from "./night_frame";
+export { isNightmareBoard, nightmareKnifeBlocked } from "./night_frame";
 import { getNightmareShadowState } from "./state";
 
 export interface NightmareNightEligibility {

@@ -7,6 +7,7 @@
  * Inputs and outputs keep the original World, opening and terminal references;
  * the actual unit owns acquisition/transfer, while sealed authority owns rules.
  * Named exports add no wrapper state, inventory, runtime permit or codec policy.
+ * Native controller loaders return the original dynamic import Promise only when used; exporting them does not eagerly initialize either controller.
  */
 export { DemonNightUnit, demonNightTerminal } from "./night-lifecycle";
 
@@ -23,4 +24,14 @@ export {
   committedDemonFaultBoundary,
   assertDemonOriginalRoster,
   hasDemonNightStarted,
+  demonWitchRequiredThisNight,
 } from "./authority";
+
+/** Native controllers keep the original lazy import Promise and initialize only on use. */
+export function loadDemonNativeNightController() {
+  return import("./native_night_controller");
+}
+
+export function loadDemonNativePotionController() {
+  return import("./native_potion_controller");
+}

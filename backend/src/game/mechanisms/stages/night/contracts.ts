@@ -22,6 +22,9 @@ import type { RoleCatalog } from "../../roles/catalog";
 import type { DreamNightLink } from "../../roles/dreamer/night_frame";
 import type { NightAbilityActorQuery } from "../../roles/night-ability-actors";
 import type { AliveComponent } from "../../../../core/domain/components/alive";
+import type { NativeNightFailurePolicy } from "../../../../rulesets/native-night-failure-policy";
+import type { NativeNightTargetPolicy } from "../../../../rulesets/native-night-target-policy";
+import type { NativeNightEffects } from "../../../../rulesets/native-night-effects";
 
 import type {
   NightPoisonClaim,
@@ -86,6 +89,9 @@ export interface NightStageContext {
   world: World;
   roleCatalog: RoleCatalog;
   readonly nightActors: NightAbilityActorQuery;
+  readonly nativeNightFailure: NativeNightFailurePolicy;
+  readonly nativeNightTargets: NativeNightTargetPolicy;
+  readonly nativeNightEffects: NativeNightEffects;
   toolGateway: ToolGateway;
   events: GameEvent[];
   actionProvider: ActionProvider;

@@ -6,6 +6,9 @@
  * driver.
  * The controlled context binds its query at the original World read position.
  */
+import { bindNativeNightFailurePolicy } from "../../../src/rulesets/native-night-failure-policy";
+import { bindNativeNightTargetPolicy } from "../../../src/rulesets/native-night-target-policy";
+import { bindNativeNightEffects } from "../../../src/rulesets/native-night-effects";
 import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
 import { expect, test } from "bun:test";
 import { COMPONENT, type AliveComponent, type RoleComponent } from "../../../src/core";
@@ -52,6 +55,15 @@ test("Red Moon sealed night runs all good native stages without requests or inve
     world,
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
+    },
+    get nativeNightFailure() {
+      return bindNativeNightFailurePolicy(() => this.world);
+    },
+    get nativeNightTargets() {
+      return bindNativeNightTargetPolicy(() => this);
+    },
+    get nativeNightEffects() {
+      return bindNativeNightEffects(() => this);
     },
     roleCatalog: catalog,
     toolGateway: new ToolGateway(),

@@ -3,6 +3,9 @@
  * Input: Original locale/target/change matrices, local night contexts and committed-prefix reentry rejection before stages run.
  * Output and oracle: Exact camp/identity/victory/privacy and stale-choice assertions remain unchanged; the reentry refusal is bounded, with no complete PM cycle.
  */
+import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
+import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
+import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
 import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -93,6 +96,15 @@ function context(
     world: game.world,
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
+    },
+    get nativeNightFailure() {
+      return bindNativeNightFailurePolicy(() => this.world);
+    },
+    get nativeNightTargets() {
+      return bindNativeNightTargetPolicy(() => this);
+    },
+    get nativeNightEffects() {
+      return bindNativeNightEffects(() => this);
     },
     events,
     roleCatalog: getDefaultRoleCatalog(),

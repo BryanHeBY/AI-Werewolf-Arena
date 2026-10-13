@@ -7,19 +7,6 @@
  * Potion coordination keeps live read-only instances; its concrete payload and
  * inventory commands retain their original commit and bottle-payment positions.
  */
-import { isRadiantEclipseBoard } from "../radiant_eclipse/night_frame";
-import {
-  isScholarMentorBoard,
-  scholarMentorBlocks,
-  recordScholarMentorNativeTarget,
-} from "../scholar_mentor/night_frame";
-import { isTimeConsortBoard, resolveTimeConsortTarget } from "../time_wolf_consort/night_frame";
-import { commitTimeConsortEffect } from "../time_wolf_consort/effects";
-import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
-import { isNightmareBoard } from "../nightmare_shadow/night_frame";
-import { commitEvilKnightReflection } from "../evil_knight/state";
-import { isEvilKnightBoard, assertEvilKnightNativeActor } from "../evil_knight/night_frame";
-import { demonHunterActorId, demonWitchRequiredThisNight } from "../demon_hunter/authority";
 /** 文件说明：女巫夜间用药阶段处理。 */
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -50,7 +37,7 @@ const resetNightRoleStateStage: NightStageHandler = {
   id: "reset_night_role_state",
   priority: 100,
   async execute(ctx): Promise<void> {
-    if (demonHunterActorId(ctx.world) !== null) return;
+    if (ctx.nativeNightFailure.usesDemonController()) return;
     for (const id of ctx.world.getAliveEntityIds()) {
       const role = ctx.world.getComponent(id, COMPONENT.Role);
       for (const ability of allNightAbilities(role)) {
@@ -66,9 +53,9 @@ const witchActionStage: NightStageHandler = {
   id: "witch_action",
   priority: 500,
   async execute(ctx): Promise<void> {
-    if (demonHunterActorId(ctx.world) !== null) {
-      if (!demonWitchRequiredThisNight(ctx.world)) return;
-      const { executeDemonWitchTurn } = await import("../demon_hunter/native_potion_controller");
+    if (ctx.nativeNightFailure.usesDemonController()) {
+      if (!ctx.nativeNightFailure.requiresDemonPotionTurn()) return;
+      const { executeDemonWitchTurn } = await ctx.nativeNightEffects.loadSealedPotionController();
       const result = await executeDemonWitchTurn({
         world: ctx.world,
         gateway: ctx.toolGateway,
@@ -85,13 +72,7 @@ const witchActionStage: NightStageHandler = {
       ctx.currentDay(),
     )) {
       if (ability.activation === "lucky" || ability.activation === "black_market") continue;
-      if (
-        isRadiantEclipseBoard(ctx.world) &&
-        ability.source.kind === "copy" &&
-        ability.state.heal === 0 &&
-        ability.state.poison === 0
-      )
-        continue;
+      if (ctx.nativeNightFailure.skipsEmptyBorrowedPotion(ability)) continue;
       const day = ctx.currentDay();
       const ownership = captureNightAbilityScope(
         ctx.world,
@@ -136,12 +117,8 @@ async function executePotionTurn(
   witchId: number,
   ability: NightAbilityReadView<"potion">,
 ): Promise<boolean> {
-  assertEvilKnightNativeActor(ctx.world, witchId, Role.Witch);
-  if (
-    isEvilKnightBoard(ctx.world) &&
-    (ability.source.kind !== "native" || ability.source.role !== Role.Witch)
-  )
-    throw new Error("evil_knight_witch_source_invalid");
+  ctx.nativeNightFailure.assertNativeActor(witchId, Role.Witch);
+  ctx.nativeNightFailure.assertPotionSource(ability);
   const day = ctx.currentDay();
   const scope = captureNightAbilityScope(
     ctx.world,
@@ -158,59 +135,27 @@ async function executePotionTurn(
   const attribution = ability.source.kind === "native" ? {} : { abilityId: ability.id };
   const req = ctx.makeRequest(witchId, ["use_potion"], {
     stage: "witch",
-    ...(isScholarMentorBoard(ctx.world)
-      ? {
-          modifier_poison_blocked: scholarMentorBlocks(
-            ctx.world,
-            ctx.currentDay(),
-            witchId,
-            "poison",
-          ),
-        }
-      : {}),
+    ...ctx.nativeNightTargets.potionModifierHints(witchId),
     ability_id: ability.id,
     ...(witchKnifeVisible(ability)
       ? {
           wolf_target: ctx.state.wolfTarget,
-          ...(isScholarMentorBoard(ctx.world)
-            ? {
-                wolf_targets: [
-                  ...new Set(
-                    [ctx.state.wolfTarget, ...(ctx.state.modifierKnifeTargets ?? [])].filter(
-                      (id): id is number => id !== null,
-                    ),
-                  ),
-                ],
-              }
-            : {}),
+          ...ctx.nativeNightTargets.potionKnifeHints(),
         }
       : {}),
   });
   if (!scope.isEligible()) {
-    if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_witch_scope_stale");
-    if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_witch_scope_stale");
-    if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_scope_stale");
+    ctx.nativeNightFailure.scopeStale("witch");
     return false;
   }
   const action = await ctx.actionProvider.getAction(req);
   if (!ctx.isCurrent()) return false;
   if (!scope.isEligible()) {
-    if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_witch_scope_stale");
-    if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_witch_scope_stale");
-    if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_scope_stale");
+    ctx.nativeNightFailure.scopeStale("witch");
     return false;
   }
   if (action?.name !== "use_potion") {
-    if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_witch_action_missing");
-    if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_witch_action_missing");
-    if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_action_missing");
-    if (isMagicianBoard(ctx.world)) throw new Error("magician_witch_action_missing");
-    if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
-      throw new Error(
-        isNightmareBoard(ctx.world)
-          ? "nightmare_witch_action_missing"
-          : "evil_knight_witch_action_missing",
-      );
+    ctx.nativeNightFailure.actionMissing("witch");
     ctx.events.push({
       timestamp: Date.now(),
       type: "witch_potion_skipped",
@@ -232,22 +177,11 @@ async function executePotionTurn(
   });
   if (!ctx.isCurrent()) return false;
   if (!scope.isEligible()) {
-    if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_witch_scope_stale");
-    if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_witch_scope_stale");
-    if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_scope_stale");
+    ctx.nativeNightFailure.scopeStale("witch");
     return false;
   }
   if (!result.ok || !result.sanitizedCall) {
-    if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_witch_action_invalid");
-    if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_witch_action_invalid");
-    if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_witch_action_invalid");
-    if (isMagicianBoard(ctx.world)) throw new Error("magician_witch_action_invalid");
-    if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
-      throw new Error(
-        isNightmareBoard(ctx.world)
-          ? "nightmare_witch_action_invalid"
-          : "evil_knight_witch_action_invalid",
-      );
+    ctx.nativeNightFailure.actionInvalid("witch");
     ctx.events.push({
       timestamp: Date.now(),
       type: "witch_potion_skipped",
@@ -277,13 +211,21 @@ async function executePotionTurn(
   )
     return false;
   const mapping =
-    potion !== PotionType.None && isMagicianBoard(ctx.world)
-      ? resolveMagicianNightTarget(ctx.world, day, targetId)
+    potion !== PotionType.None
+      ? ctx.nativeNightTargets.mappedTarget(
+          () => day,
+          () => targetId,
+        )
       : null;
   if (mapping && !mapping.isCurrent()) throw new Error("magician_potion_target_stale");
   const receipt =
-    potion === PotionType.Poison && isTimeConsortBoard(ctx.world)
-      ? resolveTimeConsortTarget(ctx.world, day, witchId, targetId, "poison")
+    potion === PotionType.Poison
+      ? ctx.nativeNightTargets.reflectedTarget(
+          () => day,
+          () => witchId,
+          () => targetId,
+          "poison",
+        )
       : null;
   if (receipt && (ability.source.kind !== "native" || ability.source.role !== Role.Witch))
     throw new Error("time_consort_witch_source_invalid");
@@ -317,23 +259,18 @@ async function executePotionTurn(
     if (!luckyTargetAllowed(ctx.world, witchId, ability, day, "poison", targetId)) return false;
     const source = captureNightLife(ctx.world, witchId);
     if (!source || !target) return false;
-    commitTimeConsortEffect(ctx, receipt, day, witchId, "poison");
+    ctx.nativeNightEffects.commitReflectedTarget(receipt, day, witchId, "poison");
     recordNightAbilityUse(ability, day, true);
     (ctx.state.poisonClaims ??= []).push({ source, target });
     ctx.ensureMarks(effectiveId).add(StatusMark.PoisonMark);
     consumeWitchPoison(witchState);
-    if (isEvilKnightBoard(ctx.world)) {
-      if (ability.source.kind !== "native" || ability.source.role !== Role.Witch)
-        throw new Error("evil_knight_witch_source_invalid");
-      const reflection = commitEvilKnightReflection(
-        ctx.world,
-        ctx.state.evilKnightBindings?.get(targetId) ?? null,
-        source,
-        "poison",
-        () => scope.isOwnerCurrent() && !ability.disabled && !ability.deathExpired,
-      );
-      if (reflection) (ctx.state.retaliationAttacks ??= []).push(reflection);
-    }
+    ctx.nativeNightEffects.commitNativeReflection(
+      "poison",
+      ability,
+      targetId,
+      () => source,
+      () => scope.isOwnerCurrent() && !ability.disabled && !ability.deathExpired,
+    );
     recordOwnNightAction(ctx.world, witchId, day, "poison", targetId, false);
     ctx.events.push({
       timestamp: Date.now(),
@@ -350,13 +287,8 @@ async function executePotionTurn(
     });
   }
   if (potion === PotionType.None) recordNightAbilityUse(ability, day, false);
-  if (isScholarMentorBoard(ctx.world))
-    recordScholarMentorNativeTarget(
-      ctx.world,
-      day,
-      witchId,
-      "poison",
-      potion === PotionType.Poison ? targetId : null,
-    );
+  ctx.nativeNightEffects.recordModifierTarget(day, witchId, "poison", () =>
+    potion === PotionType.Poison ? targetId : null,
+  );
   return potion !== PotionType.None;
 }

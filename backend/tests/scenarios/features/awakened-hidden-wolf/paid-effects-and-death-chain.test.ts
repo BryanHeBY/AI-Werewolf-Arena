@@ -6,12 +6,26 @@
  * execution. Engine sequencing remains real and models remain controlled providers; production output is
  * not a newly generated golden.
  */
+import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
+import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
+import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
 import type { AwakenedTemplateRole } from "@ai-werewolf-arena/game-contract";
 import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Camp, DeathCause, Phase, Role, StatusMark, type ActionProvider, type BoardConfig, type GameEvent, type RoleComponent } from "../../../../src/core";
+import {
+  COMPONENT,
+  Camp,
+  DeathCause,
+  Phase,
+  Role,
+  StatusMark,
+  type ActionProvider,
+  type BoardConfig,
+  type GameEvent,
+  type RoleComponent,
+} from "../../../../src/core";
 import { type AliveComponent } from "../../../../src/core/domain/components/alive";
 import { captureNightLife } from "../../../../src/core/domain/night_effects";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
@@ -26,7 +40,11 @@ import {
 } from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/inheritance";
 import { AWAKENED_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/night_stages";
 import { captureAwakenedOwner } from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/night_scope";
-import { activateAwakenedLearning, getAwakenedState, learnAwakenedRole } from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/state";
+import {
+  activateAwakenedLearning,
+  getAwakenedState,
+  learnAwakenedRole,
+} from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/state";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 
 const fixture = (targetRole = Role.Hunter) => {
@@ -68,6 +86,15 @@ function context(
     world: game.world,
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
+    },
+    get nativeNightFailure() {
+      return bindNativeNightFailurePolicy(() => this.world);
+    },
+    get nativeNightTargets() {
+      return bindNativeNightTargetPolicy(() => this);
+    },
+    get nativeNightEffects() {
+      return bindNativeNightEffects(() => this);
     },
     events,
     roleCatalog: getDefaultRoleCatalog(),

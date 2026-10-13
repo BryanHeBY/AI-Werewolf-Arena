@@ -25,6 +25,9 @@ import { DemonNightUnit } from "../../mechanisms/roles/demon_hunter/ports";
 import { WeddingNightUnit } from "../../mechanisms/roles/ghost_bride/ports";
 import { bindBoardParameters } from "../../../rulesets/board-parameters";
 import { bindNightAbilityActorQuery } from "../../mechanisms/roles/night-ability-actors";
+import { bindNativeNightFailurePolicy } from "../../../rulesets/native-night-failure-policy";
+import { bindNativeNightTargetPolicy } from "../../../rulesets/native-night-target-policy";
+import { bindNativeNightEffects } from "../../../rulesets/native-night-effects";
 import {
   FragrantNightUnit,
   isFragrantPairBoard,
@@ -152,6 +155,7 @@ import {
 import { World } from "../../../core/domain/world";
 import { ToolGateway } from "../../gateway/tool_gateway";
 import { NightStageState } from "../../mechanisms";
+import type { NightStageContext } from "../../mechanisms/stages/night/contracts";
 import {
   getDefaultNightStageRegistry,
   NightStageRegistry,
@@ -502,12 +506,21 @@ export class NightPipeline {
       };
 
       const requests = new GameActionRequestFactory(this.world, this.events, day);
-      const stageCtx = {
+      const stageCtx: NightStageContext = {
         isCurrent,
         previousExile: options.previousExile ? structuredClone(options.previousExile) : null,
         world: this.world,
         get nightActors() {
           return bindNightAbilityActorQuery(this.world);
+        },
+        get nativeNightFailure() {
+          return bindNativeNightFailurePolicy(() => this.world);
+        },
+        get nativeNightTargets() {
+          return bindNativeNightTargetPolicy(() => this);
+        },
+        get nativeNightEffects() {
+          return bindNativeNightEffects(() => this);
         },
         roleCatalog: this.stageRegistry.roleCatalog,
         toolGateway: this.toolGateway,

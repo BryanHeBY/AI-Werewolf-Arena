@@ -5,6 +5,9 @@
  * This builder owns no expected rule result, fixture rewrite or complete-game run.
  */
 import { bindNightAbilityActorQuery } from "../../src/game/mechanisms/roles/night-ability-actors";
+import { bindNativeNightFailurePolicy } from "../../src/rulesets/native-night-failure-policy";
+import { bindNativeNightTargetPolicy } from "../../src/rulesets/native-night-target-policy";
+import { bindNativeNightEffects } from "../../src/rulesets/native-night-effects";
 import { COMPONENT, type World } from "../../src/core";
 import { StatusMarksComponent } from "../../src/core/domain/components/status_marks";
 import { getDefaultRoleCatalog } from "../../src/game/mechanisms/roles/catalog";
@@ -23,6 +26,15 @@ export function nightStageContext(
   return {
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
+    },
+    get nativeNightFailure() {
+      return bindNativeNightFailurePolicy(() => this.world);
+    },
+    get nativeNightTargets() {
+      return bindNativeNightTargetPolicy(() => this);
+    },
+    get nativeNightEffects() {
+      return bindNativeNightEffects(() => this);
     },
     previousExile: null,
     events: [],

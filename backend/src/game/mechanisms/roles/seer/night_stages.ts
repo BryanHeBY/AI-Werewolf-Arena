@@ -6,19 +6,7 @@
  * eligibility check; actor enumeration consumes the bound night query, while
  * Demon Hunter's sealed native controller remains separate.
  */
-import { isRadiantEclipseBoard } from "../radiant_eclipse/night_frame";
-import {
-  isScholarMentorBoard,
-  recordScholarMentorNativeTarget,
-} from "../scholar_mentor/night_frame";
-import { isTimeConsortBoard, resolveTimeConsortTarget } from "../time_wolf_consort/night_frame";
-import { commitTimeConsortEffect } from "../time_wolf_consort/effects";
-import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
-import { isNightmareBoard } from "../nightmare_shadow/night_frame";
-import { commitEvilKnightReflection } from "../evil_knight/state";
-import { isEvilKnightBoard, assertEvilKnightNativeActor } from "../evil_knight/night_frame";
 /** 文件说明：预言家夜间查验阶段处理。 */
-import { demonHunterActorId } from "../demon_hunter/authority";
 import { seerTargetAllowed } from "./ports";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { RoleComponent } from "../../../../core/domain/components/role";
@@ -37,8 +25,8 @@ const seerCheckStage: NightStageHandler = {
   id: "seer_check",
   priority: 600,
   async execute(ctx): Promise<void> {
-    if (demonHunterActorId(ctx.world) !== null) {
-      const { executeDemonNativeNight } = await import("../demon_hunter/native_night_controller");
+    if (ctx.nativeNightFailure.usesDemonController()) {
+      const { executeDemonNativeNight } = await ctx.nativeNightEffects.loadSealedNightController();
       await executeDemonNativeNight(ctx, "seer_check");
       return;
     }
@@ -47,12 +35,8 @@ const seerCheckStage: NightStageHandler = {
       ctx.currentDay(),
     )) {
       if (ability.activation === "lucky" || ability.activation === "black_market") continue;
-      if (
-        isEvilKnightBoard(ctx.world) &&
-        (ability.source.kind !== "native" || ability.source.role !== Role.Seer)
-      )
-        throw new Error("evil_knight_seer_source_invalid");
-      assertEvilKnightNativeActor(ctx.world, seerId, Role.Seer);
+      ctx.nativeNightFailure.assertSeerSource(ability);
+      ctx.nativeNightFailure.assertNativeActor(seerId, Role.Seer);
       const day = ctx.currentDay(),
         scope = captureNightAbilityScope(
           ctx.world,
@@ -94,31 +78,17 @@ const seerCheckStage: NightStageHandler = {
         requiresAction: ability.state.actionPolicy !== "awa_optional_v1",
       });
       if (!scope.isEligible()) {
-        if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_seer_scope_stale");
-        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_seer_scope_stale");
-        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_scope_stale");
+        ctx.nativeNightFailure.scopeStale("seer");
         continue;
       }
       const action = await ctx.actionProvider.getAction(req);
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) {
-        if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_seer_scope_stale");
-        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_seer_scope_stale");
-        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_scope_stale");
+        ctx.nativeNightFailure.scopeStale("seer");
         continue;
       }
       if (action?.name !== "check_identity") {
-        if (isRadiantEclipseBoard(ctx.world))
-          throw new Error("radiant_eclipse_seer_action_missing");
-        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_seer_action_missing");
-        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_action_missing");
-        if (isMagicianBoard(ctx.world)) throw new Error("magician_seer_action_missing");
-        if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
-          throw new Error(
-            isNightmareBoard(ctx.world)
-              ? "nightmare_seer_action_missing"
-              : "evil_knight_seer_action_missing",
-          );
+        ctx.nativeNightFailure.actionMissing("seer");
         continue;
       }
 
@@ -129,23 +99,11 @@ const seerCheckStage: NightStageHandler = {
       });
       if (!ctx.isCurrent()) return;
       if (!scope.isEligible()) {
-        if (isRadiantEclipseBoard(ctx.world)) throw new Error("radiant_eclipse_seer_scope_stale");
-        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_seer_scope_stale");
-        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_scope_stale");
+        ctx.nativeNightFailure.scopeStale("seer");
         continue;
       }
       if (!result.ok || !result.sanitizedCall) {
-        if (isRadiantEclipseBoard(ctx.world))
-          throw new Error("radiant_eclipse_seer_action_invalid");
-        if (isScholarMentorBoard(ctx.world)) throw new Error("scholar_mentor_seer_action_invalid");
-        if (isTimeConsortBoard(ctx.world)) throw new Error("time_consort_seer_action_invalid");
-        if (isMagicianBoard(ctx.world)) throw new Error("magician_seer_action_invalid");
-        if (isEvilKnightBoard(ctx.world) || isNightmareBoard(ctx.world))
-          throw new Error(
-            isNightmareBoard(ctx.world)
-              ? "nightmare_seer_action_invalid"
-              : "evil_knight_seer_action_invalid",
-          );
+        ctx.nativeNightFailure.actionInvalid("seer");
         continue;
       }
 
@@ -153,12 +111,16 @@ const seerCheckStage: NightStageHandler = {
       const target = targets.get(targetId);
       if (!target || !livingNightLife(ctx.world, target) || !identities.get(targetId)?.isCurrent())
         continue;
-      const mapping = isMagicianBoard(ctx.world)
-        ? resolveMagicianNightTarget(ctx.world, day, targetId)
-        : null;
-      const receipt = isTimeConsortBoard(ctx.world)
-        ? resolveTimeConsortTarget(ctx.world, day, seerId, targetId, "check")
-        : null;
+      const mapping = ctx.nativeNightTargets.mappedTarget(
+        () => day,
+        () => targetId,
+      );
+      const receipt = ctx.nativeNightTargets.reflectedTarget(
+        () => day,
+        () => seerId,
+        () => targetId,
+        "check",
+      );
       if (receipt && (ability.source.kind !== "native" || ability.source.role !== Role.Seer))
         throw new Error("time_consort_seer_source_invalid");
       const effectiveId = receipt?.effectiveId ?? mapping?.effectiveId ?? targetId;
@@ -184,7 +146,7 @@ const seerCheckStage: NightStageHandler = {
       const seerState = seerRole ? getSeerState(seerRole, ability.id) : undefined;
       if (receipt && (!receipt.isCurrent() || !effectiveIdentity?.isCurrent()))
         throw new Error("time_consort_inspection_target_stale");
-      commitTimeConsortEffect(ctx, receipt, day, seerId, "check");
+      ctx.nativeNightEffects.commitReflectedTarget(receipt, day, seerId, "check");
       if (seerState) {
         recordSeerInspection(seerState, targetId, isWerewolf, inspection);
       }
@@ -192,20 +154,14 @@ const seerCheckStage: NightStageHandler = {
       commitFoxInspection(ctx.world, ctx.state, target, day, () => scope.isOwnerCurrent(true));
       ctx.state.seerChecks.push({ seerId, targetId, isWerewolf, result: { ...inspection } });
       recordNightAbilityUse(ability, ctx.currentDay(), true);
-      if (isScholarMentorBoard(ctx.world))
-        recordScholarMentorNativeTarget(ctx.world, day, seerId, "check", targetId);
-      if (isEvilKnightBoard(ctx.world)) {
-        if (ability.source.kind !== "native" || ability.source.role !== Role.Seer)
-          throw new Error("evil_knight_seer_source_invalid");
-        const reflection = commitEvilKnightReflection(
-          ctx.world,
-          ctx.state.evilKnightBindings?.get(targetId) ?? null,
-          scope.life,
-          "seer_check",
-          () => scope.isOwnerCurrent() && !ability.disabled && !ability.deathExpired,
-        );
-        if (reflection) (ctx.state.retaliationAttacks ??= []).push(reflection);
-      }
+      ctx.nativeNightEffects.recordModifierTarget(day, seerId, "check", () => targetId);
+      ctx.nativeNightEffects.commitNativeReflection(
+        "seer_check",
+        ability,
+        targetId,
+        () => scope.life,
+        () => scope.isOwnerCurrent() && !ability.disabled && !ability.deathExpired,
+      );
       recordOwnNightAction(ctx.world, seerId, day, "check", targetId, false);
       ctx.events.push({
         timestamp: Date.now(),

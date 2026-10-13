@@ -3,6 +3,9 @@
  * Input: Original skill/change/transfer matrices, bounded night contexts and explicit damage operations.
  * Output and oracle: Exact independent stock, wait/backlash/privacy and zero-getter assertions remain unchanged; no complete PM cycle or recorded game runs.
  */
+import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
+import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
+import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
 import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -68,6 +71,15 @@ function context(game: Game, getAction: ActionProvider["getAction"], day = 1): N
     world: game.world,
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
+    },
+    get nativeNightFailure() {
+      return bindNativeNightFailurePolicy(() => this.world);
+    },
+    get nativeNightTargets() {
+      return bindNativeNightTargetPolicy(() => this);
+    },
+    get nativeNightEffects() {
+      return bindNativeNightEffects(() => this);
     },
     events,
     roleCatalog: getDefaultRoleCatalog(),

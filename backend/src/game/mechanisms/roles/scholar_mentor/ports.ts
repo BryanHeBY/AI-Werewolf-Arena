@@ -7,6 +7,7 @@
  * Lifecycle inputs are original World/day reads; its unit only transfers cleanup
  * at the original late point. Manager close and repeated abort keep their timing,
  * while frame authority owns grant completion, aborted fate and roster failures.
+ * Named native-target recording keeps its original paid fact write; the eligibility query remains a distinct readonly interface with no commit method.
  */
 import type { EntityId } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
@@ -14,6 +15,9 @@ import { scholarMentorBlocks } from "./night_frame";
 export { ScholarMentorNightUnit, scholarMentorNightTerminal } from "./night-lifecycle";
 export type { ScholarMentorNightRuntime } from "./night-lifecycle";
 export { isScholarMentorBoard, assertScholarMentorRosterCurrent } from "./night_frame";
+export { recordScholarMentorNativeTarget } from "./night_frame";
+export { scholarMentorBlocks } from "./night_frame";
+export { scholarMentorKnifeEligible } from "./night_frame";
 
 export interface ScholarMentorNightEligibility {
   blocks(actorId: EntityId, day: number, kind: "guard" | "check"): boolean;

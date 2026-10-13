@@ -6,6 +6,9 @@
  * Engine sequencing remains real and models remain controlled providers; production output is not a newly
  * generated golden.
  */
+import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
+import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
+import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
 import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
@@ -139,6 +142,15 @@ function stageContext(
     world: game.world,
     get nightActors() {
       return bindNightAbilityActorQuery(this.world);
+    },
+    get nativeNightFailure() {
+      return bindNativeNightFailurePolicy(() => this.world);
+    },
+    get nativeNightTargets() {
+      return bindNativeNightTargetPolicy(() => this);
+    },
+    get nativeNightEffects() {
+      return bindNativeNightEffects(() => this);
     },
     events,
     currentDay: () => day,
