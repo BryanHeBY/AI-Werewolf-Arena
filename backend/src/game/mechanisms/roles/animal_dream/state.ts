@@ -1,4 +1,9 @@
-/** Pure native resources and clocks; the board owner separately proves lives, targets and issued units. */
+/**
+ * 负责子狐、河豚、白猫原资源和时钟的严格 schema、初始数据与纯转换。
+ * 输入为原未知数据或已声明状态；输出维持 Node 安全副本、精确字段、顺序、大小限制和原错误。
+ * 本族状态槽直接引用这些唯一工厂和 schema；本模块不写 live 容器或授权生命、目标、租约与单元。
+ * 子狐 pass、河豚主动／狼刀被动及白猫延迟期限各自计付，不能用归档合法性替代运行权限。
+ */
 import { z } from "zod";
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
 
@@ -19,6 +24,7 @@ const ids = z
   .array(id)
   .max(12)
   .refine((v) => v.every((value, index) => index === 0 || v[index - 1]! < value));
+// 子狐至多有一次非空目标付款；历史严格递增，已付款日期必须是最后一次选择。
 const foxSchema = z
   .strictObject({
     policy: z.literal(ANIMAL_DREAM_POLICY),
@@ -35,6 +41,7 @@ const foxSchema = z
     )
       ctx.addIssue({ code: "custom", message: "animal_fox_state_invalid" });
   });
+// 河豚主动至多付款一次；狼刀被动日期独立且必须晚于最后一次主动历史。
 const pufferSchema = z
   .strictObject({
     policy: z.literal(ANIMAL_DREAM_POLICY),
@@ -62,6 +69,7 @@ const deferralSchema = z
     expiresAfterUnit: id,
   })
   .refine((s) => s.firstUnit === null || s.expiresAfterUnit === s.firstUnit + 1);
+// 白猫 form 显式区分未揭露、延迟与到期；首次单元决定下次到期，跳过单元保留原例外。
 const catSchema = z
   .strictObject({
     policy: z.literal(ANIMAL_DREAM_POLICY),
@@ -123,7 +131,7 @@ export const freshWhiteCatState = (): WhiteCatState => ({
   form: { kind: "veiled" },
 });
 
-/** Lease/target ownership is checked by the board owner immediately before this pure payment. */
+/** authority 在此纯付款前已检查租约和目标；免费 pass 追加历史但不消耗一次性保护。 */
 export function payFoxCubChoice(
   value: FoxCubState,
   day: number,
@@ -140,7 +148,7 @@ export function payFoxCubChoice(
     history: [...state.history, { day, targetId }],
   });
 }
-/** The caller supplies the owner's full authorized voter set; this pure function only validates its shape. */
+/** 调用方提供完整的已授权投票者集合；纯数据函数只检查其排序、非空和形状。 */
 export function payPufferfishChoice(
   value: PufferfishState,
   day: number,
@@ -163,14 +171,14 @@ export function payPufferfishChoice(
     history: [...state.history, { day, activate, targetIds: targets }],
   });
 }
-/** Independent passive fact; an already spent active reaction does not disable this. */
+/** 狼刀死亡为独立被动事实；已经付款的主动报复不会禁用它，原日期检查保持。 */
 export function notePufferfishKnifeDeath(value: PufferfishState, day: number): PufferfishState {
   const state = readPufferfishState(value);
   id.parse(day);
   if (state.knifeDeathDay !== null) throw Error("animal_puffer_knife_death_duplicate");
   return readPufferfishState({ ...state, knifeDeathDay: day });
 }
-/** Never touches Alive. A pending Cat rejects further lethal proposals without renewing its clock. */
+/** 不修改 Alive；已延迟白猫继续挡掉致死提议，同时保留首次期限，不重新续时。 */
 export function deferWhiteCat(
   value: WhiteCatState,
   day: number,
@@ -201,7 +209,7 @@ export function deferWhiteCat(
     },
   });
 }
-/** The manager supplies an issued terminal unit receipt, not a phase label. */
+/** 调用方提供实际签发的终态单元回执；到期按该单元及板子政策判断，阶段文案不授予死亡。 */
 export function expireWhiteCat(
   value: WhiteCatState,
   rawUnit: AnimalDeathUnit,

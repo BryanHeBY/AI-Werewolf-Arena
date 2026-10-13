@@ -1,10 +1,9 @@
 /**
- * Owns Animal Dream roster resources, Fox choices and Cat/Puffer death or exile units. Inputs
- * are original player bodies, ballots and scoped choices; writes produce accepted effects and
- * authority snapshots only while the matching unit remains current. Close and abort retire those
- * windows without letting replacement bodies resume them.
+ * 负责动物梦境原 roster、子狐租约和白猫／河豚死亡、放逐单元的实际授权与结算。
+ * 输入为原玩家生命、票、受作用域约束的选择；仅在匹配单元仍有效时形成效果和权威快照。
+ * 三族状态捕获／唯一替换／JSON 由 state-slot 拥有；此处仍拥有生命、当前性、付款及关闭顺序。
+ * 关闭、失败和中止永久撤销原窗口，不允许替换身体恢复，不退还已提交的效果或记录前缀。
  */
-import { types } from "node:util";
 import type { World } from "../../../../core/domain/world";
 import { Camp } from "../../../../core/domain/identity";
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
@@ -25,31 +24,17 @@ import {
   animalRosterPolicies,
   type AnimalOriginalPlayer,
 } from "./roster";
+import type { AnimalDeathUnit } from "./state";
 import {
-  freshFoxCubState,
-  freshPufferfishState,
-  freshWhiteCatState,
-  readFoxCubState,
-  readPufferfishState,
-  readWhiteCatState,
-  payFoxCubChoice,
-  deferWhiteCat,
-  expireWhiteCat,
-  payPufferfishChoice,
-  notePufferfishKnifeDeath,
-  type AnimalDeathUnit,
-  type FoxCubState,
-  type PufferfishState,
-  type WhiteCatState,
-} from "./state";
+  FOX_STATE_SLOT,
+  PUFFER_STATE_SLOT,
+  CAT_STATE_SLOT,
+  captureResource,
+  descriptor,
+  plainJson,
+  type Resource,
+} from "./state-slot";
 
-interface Resource<T extends object> {
-  readonly actor: AnimalOriginalPlayer;
-  readonly key: string;
-  state: object;
-  json: string;
-  readonly read: (value: unknown) => T;
-}
 interface FoxLease {
   opened: boolean;
   paid: boolean;
@@ -75,9 +60,9 @@ interface FoxEffect {
   beautyBlocked: boolean;
 }
 interface Owner {
-  readonly fox: Resource<FoxCubState>;
-  readonly puffer: Resource<PufferfishState>;
-  readonly cat: Resource<WhiteCatState>;
+  readonly fox: Resource<ReturnType<typeof FOX_STATE_SLOT.create>>;
+  readonly puffer: Resource<ReturnType<typeof PUFFER_STATE_SLOT.create>>;
+  readonly cat: Resource<ReturnType<typeof CAT_STATE_SLOT.create>>;
   stopped: boolean;
   night: AnimalNight | null;
   effect: FoxEffect | null;
@@ -143,42 +128,6 @@ function permitDeadlineCurrent(requests: ReadonlySet<object>, kind: "fox" | "puf
   }
   return now() < earliest;
 }
-function descriptor(value: unknown, key: string): PropertyDescriptor | undefined {
-  if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
-  const d = Object.getOwnPropertyDescriptor(value, key);
-  return d && "value" in d && d.enumerable ? d : undefined;
-}
-function plainJson(value: unknown): string | null {
-  try {
-    return JSON.stringify(snapshotPlainData(value, new Set(), 0, 65536));
-  } catch {
-    return null;
-  }
-}
-function captureResource<T extends object>(
-  world: World,
-  role: "fox_cub" | "pufferfish" | "white_cat",
-  key: string,
-  read: (value: unknown) => T,
-  fresh: T,
-): Resource<T> {
-  const actor = animalOriginalRolePlayer(world, role),
-    d = actor && descriptor(actor.privateState, key),
-    value = d?.value,
-    json = plainJson(value);
-  if (
-    !actor ||
-    !d?.writable ||
-    json === null ||
-    JSON.stringify(read(value)) !== JSON.stringify(fresh)
-  )
-    throw Error("animal_initial_resource_invalid");
-  return { actor, key, state: value as object, json, read };
-}
-function resourceCurrent<T extends object>(r: Resource<T>): boolean {
-  const d = descriptor(r.actor.privateState, r.key);
-  return !!d?.writable && d.value === r.state && plainJson(r.state) === r.json;
-}
 function stop(owner: Owner): void {
   owner.stopped = true;
   if (owner.night) {
@@ -198,9 +147,9 @@ function currentOwner(world: World): Owner | null {
   if (!owner || owner.stopped) return null;
   if (
     !animalRosterCurrent(world) ||
-    !resourceCurrent(owner.fox) ||
-    !resourceCurrent(owner.puffer) ||
-    !resourceCurrent(owner.cat)
+    !FOX_STATE_SLOT.invalidations.current(owner.fox) ||
+    !PUFFER_STATE_SLOT.invalidations.current(owner.puffer) ||
+    !CAT_STATE_SLOT.invalidations.current(owner.cat)
   ) {
     stop(owner);
     return null;
@@ -216,19 +165,19 @@ function beautyState(world: World): { value: object; json: string } | null {
   if (!value || typeof value !== "object" || !target?.writable || json === null) return null;
   return { value, json };
 }
-/** Sole owner of three native resources; original roster installation cannot be repeated. */
+/** 捕获三个原生资源的唯一 authority；原 roster 安装不能重复，不初始化替代库存。 */
 export function installAnimalAuthority(world: World, config: unknown): void {
   if (owners.has(world)) throw Error("animal_authority_already_installed");
   installAnimalRoster(world, config);
-  const fox = captureResource(world, "fox_cub", "foxCub", readFoxCubState, freshFoxCubState()),
+  const fox = captureResource(world, "fox_cub", "foxCub", FOX_STATE_SLOT.schema, FOX_STATE_SLOT.create()),
     puffer = captureResource(
       world,
       "pufferfish",
       "pufferfish",
-      readPufferfishState,
-      freshPufferfishState(),
+      PUFFER_STATE_SLOT.schema,
+      PUFFER_STATE_SLOT.create(),
     ),
-    cat = captureResource(world, "white_cat", "whiteCat", readWhiteCatState, freshWhiteCatState());
+    cat = captureResource(world, "white_cat", "whiteCat", CAT_STATE_SLOT.schema, CAT_STATE_SLOT.create());
   if (!beautyState(world)) throw Error("animal_initial_resource_invalid");
   owners.set(world, {
     fox,
@@ -244,7 +193,7 @@ export function installAnimalAuthority(world: World, config: unknown): void {
     beautyLinkBlockedDay: null,
   });
 }
-/** Reservation precedes the phase callback, so reentry or a failed callback never reopens this night. */
+/** 先保留本夜再调用阶段回调；重入或回调失败不能重新开启同一个夜间。 */
 export function beginAnimalNight(world: World, day: number, isCurrent: () => boolean): void {
   const owner = currentOwner(world);
   if (owner) rejectDeathReentry(owner);
@@ -262,7 +211,7 @@ export function beginAnimalNight(world: World, day: number, isCurrent: () => boo
     stop(owner);
     throw Error("animal_resource_revoked");
   }
-  const state = readFoxCubState(JSON.parse(owner.fox.json));
+  const state = FOX_STATE_SLOT.schema(FOX_STATE_SLOT.checkpoint.decode(() => owner.fox.json));
   const lives = world.entityIds().map((id) => {
     const player = animalOriginalPlayer(world, id, false)!;
     return { player, version: aliveLifeVersion(player.scope.life) };
@@ -330,8 +279,7 @@ function foxCurrent(world: World, owner: Owner, night: AnimalNight): boolean {
       beauty.json !== lease.beautyJson
     )
       throw Error("animal_fox_lease_revoked");
-    // The only external callback has finished. These checks read private data only:
-    // no later alias callback can revoke an earlier deadline or request sample.
+    // 唯一外部回调已结束；之后只读私有数据，不再调用可能撤销旧期限或请求样本的别名回调。
     const checkedAt = now();
     for (const token of lease.requests) {
       const request = foxRequests.get(token);
@@ -353,12 +301,6 @@ function foxCurrent(world: World, owner: Owner, night: AnimalNight): boolean {
   } finally {
     lease.checking = false;
   }
-}
-function replaceResource<T extends object>(r: Resource<T>, next: T, encoded: string): void {
-  // Each mutable slot was checked after the last external callback. No setters or callbacks are invoked.
-  r.actor.privateState[r.key] = next;
-  r.state = next;
-  r.json = encoded;
 }
 export function openAnimalFoxChoice(world: World, day: number, requestToken?: object) {
   const owner = currentOwner(world),
@@ -392,8 +334,8 @@ export function openAnimalFoxChoice(world: World, day: number, requestToken?: ob
     commit: (targetId: number | null) => {
       if (!foxCurrent(world, owner, night)) throw Error("animal_fox_choice_unavailable");
       const target = targetId === null ? null : animalOriginalPlayer(world, targetId),
-        next = payFoxCubChoice(readFoxCubState(JSON.parse(owner.fox.json)), day, targetId),
-        encoded = JSON.stringify(next);
+        next = FOX_STATE_SLOT.allowedWrites.choose(FOX_STATE_SLOT.schema(FOX_STATE_SLOT.checkpoint.decode(() => owner.fox.json)), day, targetId),
+        encoded = FOX_STATE_SLOT.checkpoint.encode(next);
       if (targetId !== null && !target) throw Error("animal_fox_target_unavailable");
       if (
         !foxCurrent(world, owner, night) ||
@@ -415,15 +357,14 @@ export function openAnimalFoxChoice(world: World, day: number, requestToken?: ob
         (night.fox.beauty as { targetId: number | null }).targetId = null;
         bindCharm(world, beauty.scope.id, null);
       }
-      replaceResource(owner.fox, next, encoded);
+      FOX_STATE_SLOT.allowedWrites.commit(owner.fox, next, encoded);
       owner.effect = effect;
       night.fox.paid = true;
       return Object.freeze({ day, targetId });
     },
   });
 }
-/** Request-layer ownership: a fixed absolute deadline and terminal cancellation,
- * never arbitrary callbacks. The token is opaque and tied to this real night. */
+/** 请求层只持有固定绝对期限和终态取消；opaque token 绑定实际本夜，不接任意回调。 */
 export function createAnimalFoxRequest(
   world: World,
   day: number,
@@ -522,7 +463,7 @@ function checkDeathScope(world: World, owner: Owner, isCurrent: () => boolean): 
     owner.checkingDeath = false;
   }
 }
-/** Manager-issued actual exile/skip unit. PK belongs to the same token, never another unit. */
+/** manager 签发实际放逐／跳过单元；PK 属于同一 token，不额外开启另一个单元。 */
 export function beginAnimalExileUnit(
   world: World,
   day: number,
@@ -582,8 +523,8 @@ function ownedUnit(world: World, token: object): { owner: Owner; unit: OwnedUnit
   if (unit.status !== "open") throw Error("animal_exile_unit_revoked");
   return { owner, unit };
 }
-/** Filter at the real lethal commit boundary, before seen/Alive/words/badge/hooks.
- * The returned ids are proposals only; DeathResolution remains the sole life writer. */
+/** 在实际致死提交边界过滤，早于 seen、Alive、遗言、警徽和死亡钩子。
+ * 返回编号仍只是提议；生命写入始终归 DeathResolution，本函数不授予死亡或遗言资格。 */
 export function filterAnimalLethalWave(
   world: World,
   day: number,
@@ -621,7 +562,7 @@ export function filterAnimalLethalWave(
   )
     throw Error("animal_death_proposals_invalid");
   const catId = owner.cat.actor.scope.id,
-    before = readWhiteCatState(JSON.parse(owner.cat.json)),
+    before = CAT_STATE_SLOT.schema(CAT_STATE_SLOT.checkpoint.decode(() => owner.cat.json)),
     hasCat = ids.includes(catId),
     unit = owner.unit?.status === "open" && owner.unit.value.day === day ? owner.unit : null,
     countedUnit =
@@ -632,7 +573,7 @@ export function filterAnimalLethalWave(
         : null,
     next =
       hasCat && before.form.kind === "veiled"
-        ? deferWhiteCat(
+        ? CAT_STATE_SLOT.allowedWrites.defer(
             before,
             day,
             phase,
@@ -641,20 +582,20 @@ export function filterAnimalLethalWave(
             countedUnit?.value ?? null,
           )
         : before,
-    encoded = JSON.stringify(next);
+    encoded = CAT_STATE_SLOT.checkpoint.encode(next);
   if (unit ? scope !== unit.token : typeof scope !== "function")
     throw Error("animal_death_scope_unavailable");
   checkDeathScope(world, owner, unit ? unit.current : (scope as () => boolean));
-  // A callback may have legally changed a life without replacing its original body.
+  // 回调可能合法改变生命而保留原身体；回调结束后仍须重新检查提议目标的生命。
   if (ids.some((id) => !animalOriginalPlayer(world, id))) {
     stop(owner);
     throw Error("animal_death_scope_revoked");
   }
   const blocked = hasCat && next.form.kind !== "expired";
   if (encoded !== owner.cat.json) {
-    replaceResource(owner.cat, next, encoded);
+    CAT_STATE_SLOT.allowedWrites.commit(owner.cat, next, encoded);
     if (unit) {
-      // A prior empty preparation cannot settle a clock created by a later wave.
+      // 先前空准备不能结算后来死亡波新创建的时钟，实际写入后撤销旧准备回执。
       unit.expiryPrepared = false;
       unit.expiryCatId = null;
     }
@@ -665,7 +606,7 @@ export function filterAnimalLethalWave(
     blockedCatId: blocked ? catId : null,
   });
 }
-/** Prepare the clock before this unit's final wave. No historical cause grants death or last words. */
+/** 在本单元最终死亡波前准备时钟；历史死因不会授予死亡提交或遗言资格。 */
 export function prepareAnimalCatExpiry(world: World, token: object): number | null {
   const { owner, unit } = ownedUnit(world, token);
   if (
@@ -674,16 +615,16 @@ export function prepareAnimalCatExpiry(world: World, token: object): number | nu
   )
     throw Error("animal_exile_unit_not_complete");
   if (unit.expiryPrepared) throw Error("animal_cat_expiry_already_prepared");
-  const before = readWhiteCatState(JSON.parse(owner.cat.json)),
+  const before = CAT_STATE_SLOT.schema(CAT_STATE_SLOT.checkpoint.decode(() => owner.cat.json)),
     policy = animalRosterPolicies(world)!.skippedVotePolicy,
-    next = expireWhiteCat(before, unit.value, policy),
-    encoded = JSON.stringify(next);
+    next = CAT_STATE_SLOT.allowedWrites.expire(before, unit.value, policy),
+    encoded = CAT_STATE_SLOT.checkpoint.encode(next);
   const expires = before.form.kind === "deferred" && next.form.kind === "expired";
   if (expires && !animalOriginalPlayer(world, owner.cat.actor.scope.id)) {
     stop(owner);
     throw Error("animal_death_scope_revoked");
   }
-  if (encoded !== owner.cat.json) replaceResource(owner.cat, next, encoded);
+  if (encoded !== owner.cat.json) CAT_STATE_SLOT.allowedWrites.commit(owner.cat, next, encoded);
   unit.expiryPrepared = true;
   unit.expiryCatId = expires ? owner.cat.actor.scope.id : null;
   return expires ? owner.cat.actor.scope.id : null;
@@ -695,7 +636,7 @@ export function closeAnimalExileUnit(world: World, token: object): void {
     throw Error("animal_exile_unit_not_complete");
   if (unit.puffer && !unit.puffer.paid) throw Error("animal_exile_unit_not_complete");
   if (unit.puffer?.activated) {
-    const catState = readWhiteCatState(JSON.parse(owner.cat.json));
+    const catState = CAT_STATE_SLOT.schema(CAT_STATE_SLOT.checkpoint.decode(() => owner.cat.json));
     for (const target of unit.puffer.targets) {
       const original = animalOriginalPlayer(world, target.scope.id, false);
       if (
@@ -752,8 +693,7 @@ function eligibleAnimalVoters(world: World, candidates: readonly number[]): numb
   }
   return ids;
 }
-/** Trusted VotingPipeline records the entire accepted round, including abstentions,
- * at its real acceptance boundary. No model-supplied target subset is accepted. */
+/** 可信 VotingPipeline 在实际接收边界记录整轮已接受票，包括弃票；不接收模型给出的目标子集。 */
 export function recordAnimalBallotRound(
   world: World,
   token: object,
@@ -766,7 +706,7 @@ export function recordAnimalBallotRound(
   }[],
   rawPkCandidates: readonly number[] = [],
 ): void {
-  // Snapshot the accepted input before the first external unit guard can touch it.
+  // 首次调用外部单元 guard 之前先捕获已接受输入，保留原样本而非回调修改后的值。
   const votes = snapshotPlainData(rawVotes) as typeof rawVotes,
     candidates = snapshotPlainData(rawPkCandidates) as number[];
   const { owner, unit } = ownedUnit(world, token);
@@ -827,7 +767,7 @@ export function recordAnimalBallotRound(
       voting: voting.value,
     });
   });
-  // Final guard is followed only by data checks, then the receipt is installed.
+  // 最后 guard 之后只做数据检查，再安装回执；不插入新的外部回调使旧样本迟到失效。
   checkDeathScope(world, owner, unit.current);
   if (
     JSON.stringify(eligibleAnimalVoters(world, candidates)) !== JSON.stringify(expected) ||
@@ -857,7 +797,7 @@ export function sealAnimalBallots(world: World, token: object): void {
       .filter((v) => !v.abstain && v.target?.scope.id === owner.puffer.actor.scope.id)
       .map((v) => v.voter)
       .sort((a, b) => a.scope.id - b.scope.id),
-    stock = readPufferfishState(JSON.parse(owner.puffer.json));
+    stock = PUFFER_STATE_SLOT.schema(PUFFER_STATE_SLOT.checkpoint.decode(() => owner.puffer.json));
   if (
     targets.length &&
     stock.usedDay === null &&
@@ -974,28 +914,28 @@ export function openAnimalPufferChoice(world: World, token: object, requestToken
     commit: (activate: boolean) => {
       pufferCurrent(world, token);
       const targetIds = lease.targets.map((v) => v.scope.id),
-        next = payPufferfishChoice(
-          readPufferfishState(JSON.parse(owner.puffer.json)),
+        next = PUFFER_STATE_SLOT.allowedWrites.choose(
+          PUFFER_STATE_SLOT.schema(PUFFER_STATE_SLOT.checkpoint.decode(() => owner.puffer.json)),
           unit.value.day,
           activate,
           targetIds,
         ),
-        encoded = JSON.stringify(next);
+        encoded = PUFFER_STATE_SLOT.checkpoint.encode(next);
       pufferCurrent(world, token);
-      replaceResource(owner.puffer, next, encoded);
+      PUFFER_STATE_SLOT.allowedWrites.commit(owner.puffer, next, encoded);
       lease.paid = true;
       lease.activated = activate;
       return Object.freeze({ day: unit.value.day, activate });
     },
   });
 }
-/** God/engine receipt only; already-paid effects retain original first deaths. */
+/** 仅供 God／引擎结算的回执；已付效果保留原首次死亡，玩家提示不消费此权限入口。 */
 export function animalPufferReaction(world: World, token: object): readonly number[] {
   const { unit } = ownedUnit(world, token),
     lease = unit.puffer;
   return Object.freeze(lease?.paid && lease.activated ? lease.targets.map((v) => v.scope.id) : []);
 }
-/** Actual original knife death, never a pending mark or an uncommitted proposal. */
+/** 只接原生命已实际提交的狼刀死亡；待处理标记或未提交提议不能触发河豚被动。 */
 export function commitAnimalPufferKnifeDeath(
   world: World,
   day: number,
@@ -1020,12 +960,12 @@ export function commitAnimalPufferKnifeDeath(
     (unit ? scope !== unit.token : typeof scope !== "function")
   )
     throw Error("animal_puffer_knife_death_unavailable");
-  const next = notePufferfishKnifeDeath(readPufferfishState(JSON.parse(owner.puffer.json)), day),
-    encoded = JSON.stringify(next);
+  const next = PUFFER_STATE_SLOT.allowedWrites.knifeDeath(PUFFER_STATE_SLOT.schema(PUFFER_STATE_SLOT.checkpoint.decode(() => owner.puffer.json)), day),
+    encoded = PUFFER_STATE_SLOT.checkpoint.encode(next);
   checkDeathScope(world, owner, unit ? unit.current : (scope as () => boolean));
   if (animalOriginalPlayer(world, puffer.scope.id, false) !== puffer || puffer.scope.life.alive)
     throw Error("animal_puffer_knife_death_unavailable");
-  replaceResource(owner.puffer, next, encoded);
+  PUFFER_STATE_SLOT.allowedWrites.commit(owner.puffer, next, encoded);
   owner.beautyLinkBlockedDay = day;
 }
 export function animalBeautyLinkBlocked(world: World, day: number): boolean {
@@ -1061,7 +1001,7 @@ export function animalFoxChoiceCandidates(world: World, day: number): readonly n
       .sort((a, b) => a - b),
   );
 }
-/** Runtime permission only, never a player's published knowledge or a hit receipt. */
+/** 只查询当前运行许可；不代表玩家已公布知识，也不是命中效果回执。 */
 export function animalPackKnifeBlocked(world: World): boolean {
   if (!owners.has(world)) return false;
   const owner = currentOwner(world);
@@ -1077,7 +1017,7 @@ export function animalBeautyCharmAllowed(world: World, day: number): boolean {
     owner.effect?.beautyBlocked !== true
   );
 }
-/** God-only paid effect. Actor prompts use a separate publication-aware knowledge projection. */
+/** 已付效果仅向 God 暴露；玩家提示使用独立的按公告披露知识投影。 */
 export function animalFoxEffect(world: World): Readonly<FoxEffect> | null {
   const owner = currentOwner(world);
   return owner?.effect ? { ...owner.effect } : null;
@@ -1090,9 +1030,9 @@ export function animalAuthoritySnapshot(world: World, complete = true) {
     foxId: owner.fox.actor.scope.id,
     pufferId: owner.puffer.actor.scope.id,
     catId: owner.cat.actor.scope.id,
-    fox: JSON.parse(owner.fox.json) as FoxCubState,
-    puffer: JSON.parse(owner.puffer.json) as PufferfishState,
-    cat: JSON.parse(owner.cat.json) as WhiteCatState,
+    fox: FOX_STATE_SLOT.checkpoint.decode(() => owner.fox.json),
+    puffer: PUFFER_STATE_SLOT.checkpoint.decode(() => owner.puffer.json),
+    cat: CAT_STATE_SLOT.checkpoint.decode(() => owner.cat.json),
     stopped: owner.stopped,
     night: owner.night && {
       day: owner.night.day,
