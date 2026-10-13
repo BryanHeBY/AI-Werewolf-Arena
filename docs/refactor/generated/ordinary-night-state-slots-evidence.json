@@ -1,0 +1,2868 @@
+{
+  "baseline": "9265335a5d9e005eef8f59ca7cfea5c41495f084",
+  "author": {
+    "base": "9265335a5d9e005eef8f59ca7cfea5c41495f084",
+    "checks": [
+      {
+        "label": "exact native create/prepared pipeline setSeerState",
+        "equal": true
+      },
+      {
+        "label": "complete original state/get/write getSeerState",
+        "equal": true
+      },
+      {
+        "label": "complete original state/get/write recordSeerInspection",
+        "equal": true
+      },
+      {
+        "label": "complete original state/get/write recordRecipientSeerInspection",
+        "equal": true
+      },
+      {
+        "label": "complete policy identity JSON expression seer",
+        "equal": true
+      },
+      {
+        "label": "exact existing JSON copy function seer.create",
+        "equal": true
+      },
+      {
+        "label": "exact existing JSON copy function seer.schema",
+        "equal": true
+      },
+      {
+        "label": "exact native create/prepared pipeline setGuardState",
+        "equal": true
+      },
+      {
+        "label": "complete original state/get/write getGuardState",
+        "equal": true
+      },
+      {
+        "label": "complete original state/get/write recordGuardTarget",
+        "equal": true
+      },
+      {
+        "label": "complete original state/get/write recordRecipientGuardTarget",
+        "equal": true
+      },
+      {
+        "label": "complete policy identity JSON expression guard",
+        "equal": true
+      },
+      {
+        "label": "exact existing JSON copy function guard.create",
+        "equal": true
+      },
+      {
+        "label": "exact existing JSON copy function guard.schema",
+        "equal": true
+      },
+      {
+        "label": "exact native create/prepared pipeline setWitchState",
+        "equal": true
+      },
+      {
+        "label": "complete original state/get/write getWitchState",
+        "equal": true
+      },
+      {
+        "label": "complete original state/get/write resetWitchNightState",
+        "equal": true
+      },
+      {
+        "label": "complete original state/get/write refreshWitchSelfHeal",
+        "equal": true
+      },
+      {
+        "label": "complete original state/get/write closeWitchPotionTurn",
+        "equal": true
+      },
+      {
+        "label": "complete original state/get/write consumeWitchHeal",
+        "equal": true
+      },
+      {
+        "label": "complete original state/get/write consumeWitchPoison",
+        "equal": true
+      },
+      {
+        "label": "complete original state/get/write consumeRecipientPoison",
+        "equal": true
+      },
+      {
+        "label": "complete policy identity JSON expression witch",
+        "equal": true
+      },
+      {
+        "label": "exact existing JSON copy function witch.create",
+        "equal": true
+      },
+      {
+        "label": "exact existing JSON copy function witch.schema",
+        "equal": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/ability_changes.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/src/game/mechanisms/roles/ability_changes.ts",
+        "equal": true,
+        "beforeNodes": 2258,
+        "inverseNodes": 2258
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/src/game/mechanisms/roles/ability_changes.ts",
+        "equal": false,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/src/game/mechanisms/roles/ability_changes.ts",
+        "equal": false,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/ability_scope.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/src/game/mechanisms/roles/ability_scope.ts",
+        "equal": true,
+        "beforeNodes": 601,
+        "inverseNodes": 601
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/src/game/mechanisms/roles/ability_scope.ts",
+        "equal": false,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/src/game/mechanisms/roles/ability_scope.ts",
+        "equal": false,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/guard/night_stages.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/src/game/mechanisms/roles/guard/night_stages.ts",
+        "equal": true,
+        "beforeNodes": 795,
+        "inverseNodes": 795
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/src/game/mechanisms/roles/guard/night_stages.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/src/game/mechanisms/roles/guard/night_stages.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/guard/ports.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/src/game/mechanisms/roles/guard/ports.ts",
+        "equal": true,
+        "beforeNodes": 60,
+        "inverseNodes": 60
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/src/game/mechanisms/roles/guard/ports.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/src/game/mechanisms/roles/guard/ports.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/guard/profile.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/src/game/mechanisms/roles/guard/profile.ts",
+        "equal": true,
+        "beforeNodes": 557,
+        "inverseNodes": 557
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/src/game/mechanisms/roles/guard/profile.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/src/game/mechanisms/roles/guard/profile.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/guard/state.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+        "equal": true,
+        "beforeNodes": 1435,
+        "inverseNodes": 1435
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/seer/night_stages.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/src/game/mechanisms/roles/seer/night_stages.ts",
+        "equal": true,
+        "beforeNodes": 989,
+        "inverseNodes": 989
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/src/game/mechanisms/roles/seer/night_stages.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/src/game/mechanisms/roles/seer/night_stages.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/seer/ports.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/src/game/mechanisms/roles/seer/ports.ts",
+        "equal": true,
+        "beforeNodes": 64,
+        "inverseNodes": 64
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/src/game/mechanisms/roles/seer/ports.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/src/game/mechanisms/roles/seer/ports.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/seer/profile.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/src/game/mechanisms/roles/seer/profile.ts",
+        "equal": true,
+        "beforeNodes": 531,
+        "inverseNodes": 531
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/src/game/mechanisms/roles/seer/profile.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/src/game/mechanisms/roles/seer/profile.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/seer/state.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/witch/night_stages.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/src/game/mechanisms/roles/witch/night_stages.ts",
+        "equal": true,
+        "beforeNodes": 1457,
+        "inverseNodes": 1457
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/src/game/mechanisms/roles/witch/night_stages.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/src/game/mechanisms/roles/witch/night_stages.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/witch/ports.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/src/game/mechanisms/roles/witch/ports.ts",
+        "equal": true,
+        "beforeNodes": 24,
+        "inverseNodes": 24
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/src/game/mechanisms/roles/witch/ports.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/src/game/mechanisms/roles/witch/ports.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/witch/profile.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/src/game/mechanisms/roles/witch/profile.ts",
+        "equal": true,
+        "beforeNodes": 370,
+        "inverseNodes": 370
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/src/game/mechanisms/roles/witch/profile.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/src/game/mechanisms/roles/witch/profile.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/witch/state.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured before is Git backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+        "equal": true,
+        "beforeNodes": 506,
+        "inverseNodes": 506
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/tests/unit/features/guard/state-ownership.test.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/tests/unit/features/guard/state-ownership.test.ts",
+        "equal": true,
+        "beforeNodes": 418,
+        "inverseNodes": 418
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/tests/unit/features/guard/state-ownership.test.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/tests/unit/features/guard/state-ownership.test.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/tests/unit/features/seer/readonly-state.test.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/tests/unit/features/seer/readonly-state.test.ts",
+        "equal": true,
+        "beforeNodes": 202,
+        "inverseNodes": 202
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/tests/unit/features/seer/readonly-state.test.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/tests/unit/features/seer/readonly-state.test.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/tests/unit/features/seer/state.test.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/tests/unit/features/seer/state.test.ts",
+        "equal": true,
+        "beforeNodes": 821,
+        "inverseNodes": 821
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/tests/unit/features/seer/state.test.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/tests/unit/features/seer/state.test.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/tests/unit/features/witch/reception-and-lethal-source-table.test.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/tests/unit/features/witch/reception-and-lethal-source-table.test.ts",
+        "equal": true,
+        "beforeNodes": 812,
+        "inverseNodes": 812
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/tests/unit/features/witch/reception-and-lethal-source-table.test.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/tests/unit/features/witch/reception-and-lethal-source-table.test.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/tests/unit/features/witch/state-ownership.test.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/tests/unit/features/witch/state-ownership.test.ts",
+        "equal": true,
+        "beforeNodes": 594,
+        "inverseNodes": 594
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/tests/unit/features/witch/state-ownership.test.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/tests/unit/features/witch/state-ownership.test.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "actual captured before is Git backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+        "equal": true
+      },
+      {
+        "label": "complete nonimport typed program API inverse backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+        "equal": true,
+        "beforeNodes": 1035,
+        "inverseNodes": 1035
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+        "equal": true,
+        "completeParserTokenEqual": true
+      }
+    ],
+    "failures": [
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/src/game/mechanisms/roles/ability_changes.ts",
+        "equal": false,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/src/game/mechanisms/roles/ability_changes.ts",
+        "equal": false,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse ESNext backend/src/game/mechanisms/roles/ability_scope.ts",
+        "equal": false,
+        "completeParserTokenEqual": true
+      },
+      {
+        "label": "complete nonimport emit API inverse CommonJS backend/src/game/mechanisms/roles/ability_scope.ts",
+        "equal": false,
+        "completeParserTokenEqual": true
+      }
+    ],
+    "files": [
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "sha256": "540c52e42e6ba0f928902a40f51b01d309e224b6159efa53519b6b13dc9ab4a7"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+        "sha256": "b846be713a7d5751faaee5a19147e1098304fd807e78953661ed1cae2a425942"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/night_stages.ts",
+        "sha256": "93f604bed9553705d5292082c0f60a001678ba1ccbf8cc0fb92fd8a2d6268d72"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/ports.ts",
+        "sha256": "fe081f1726aac0479e96c1df08cb0cf5d5b222430d07b54264f94974c7f74dfc"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/profile.ts",
+        "sha256": "42d85ece3a86fca9c365ba46b451dc381c6a253fa467b4b138708b34dd99a7d0"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+        "sha256": "6d3634683f6bb890e501a40e277c916c4d6c292be947cd810b3939c6c3dc7276"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+        "sha256": "1244e57c0db6d1a25df22929dd02174c506172e38ff029c0ec134c486e5c1059"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/ports.ts",
+        "sha256": "04a5f73a1d08e3cea01f87cc1722e74b9ca7b505ce1e871a374492d065e48f3d"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/profile.ts",
+        "sha256": "51225178dc7deef270e2f6eb7199fbb564c9b4dba3de211cbe86fac1e9895392"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+        "sha256": "d7f25f0b591f05d3469d4b912ed0068000dd265e0b8b92dfd499bb25698ee447"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/ports.ts",
+        "sha256": "bef2a8707ba031671dde6f8aa9c516500f5315cd0b2b4f15dac5a11f2d79a600"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/profile.ts",
+        "sha256": "db94a72a812f7827d25afb796d648e4bcf971c3a26f534b89bca10ce4fc7ffb0"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+        "sha256": "ad8b879ae29de955f98776c188307298771fcb5b2307fa4319ef416995366e1b"
+      },
+      {
+        "path": "backend/tests/unit/features/guard/state-ownership.test.ts",
+        "sha256": "f0c47add14819bf6f8fe12192b7c4f18ed17ed8b11991c9cc7ff50817f2b7824"
+      },
+      {
+        "path": "backend/tests/unit/features/seer/readonly-state.test.ts",
+        "sha256": "4796f2925d49405239e6597807d5c57710ef10c8a8d170d90b21d0858259e090"
+      },
+      {
+        "path": "backend/tests/unit/features/seer/state.test.ts",
+        "sha256": "764ff244bc35b5a1769b047089f015a12fef724e031eba2ce3e915ee7252193b"
+      },
+      {
+        "path": "backend/tests/unit/features/witch/reception-and-lethal-source-table.test.ts",
+        "sha256": "26a341a39c0614ebc02fcfe5956b0a5d3cb12e6332d1c0db24b7ee4e88a8b8bc"
+      },
+      {
+        "path": "backend/tests/unit/features/witch/state-ownership.test.ts",
+        "sha256": "c46a6902ab7d0b2249707d75de9abeb18b2ca6c8516beed2a73b8f01b4f43491"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+        "sha256": "7dc4daabfff473b2e1b66c1bf2c852db47947cc1d874843322083ee4225ecfe2"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/state-slot.ts",
+        "sha256": "4369f772e7c681a59b3cfcd4c297ab21a487df473a2bbf0b493270c9c454043f"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/state-slot.ts",
+        "sha256": "266ad1977e235c1cc265e0fed82179884e8f70b442fc1eb4a58de56afd19d125"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/state-slot.ts",
+        "sha256": "bc46a87101d548ae302384aa04cccea80c7b9d886c83ca96874b4adfda841a91"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+        "sha256": "08c734a11fae112161389c75b664a279f70029f7ae2ef3ba84c30b8c423c8a6a"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/state.ts",
+        "deleted": true,
+        "beforeSha256": "bc44e577d088c671c62fb34f0b42cbb25e1c702823161d2f5723fff4a97718c5"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/state.ts",
+        "deleted": true,
+        "beforeSha256": "ee9f12b9edb1f81559a6031818600fc0530f25f54a36bf9b5060a248acde70d3"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/state.ts",
+        "deleted": true,
+        "beforeSha256": "737fa3affe3826b9f8bcb98b34e0580a666753e79690635c690ba4d7296727da"
+      }
+    ],
+    "notes": [
+      "Full corrected void AST traversal and complete emitted source; no callback body/literal/field omission.",
+      "Imports actual binding/route separately reviewed; three deliberate new canonical public slot exports precisely reversed."
+    ],
+    "importProof": {
+      "rows": [
+        {
+          "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "changes": [
+            {
+              "kind": "actual-slot-contribution",
+              "after": {
+                "source": "./seer/ports",
+                "name": "SEER_STATE_SLOT",
+                "local": "SEER_STATE_SLOT",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "actual-slot-contribution",
+              "after": {
+                "source": "./guard/ports",
+                "name": "GUARD_STATE_SLOT",
+                "local": "GUARD_STATE_SLOT",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "actual-slot-contribution",
+              "after": {
+                "source": "./witch/ports",
+                "name": "WITCH_STATE_SLOT",
+                "local": "WITCH_STATE_SLOT",
+                "kind": "value"
+              }
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+          "changes": [
+            {
+              "kind": "actual-slot-contribution",
+              "after": {
+                "source": "./seer/ports",
+                "name": "SEER_STATE_SLOT",
+                "local": "SEER_STATE_SLOT",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "actual-slot-contribution",
+              "after": {
+                "source": "./guard/ports",
+                "name": "GUARD_STATE_SLOT",
+                "local": "GUARD_STATE_SLOT",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "actual-slot-contribution",
+              "after": {
+                "source": "./witch/ports",
+                "name": "WITCH_STATE_SLOT",
+                "local": "WITCH_STATE_SLOT",
+                "kind": "value"
+              }
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/guard/night_stages.ts",
+          "changes": [
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "./state",
+                "name": "getGuardState",
+                "local": "getGuardState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "./ports",
+                "name": "getGuardState",
+                "local": "getGuardState",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "owned-write-consumer-moved-to-real-contract",
+              "before": {
+                "source": "./state",
+                "name": "recordGuardTarget",
+                "local": "recordGuardTarget",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "actual-slot-contribution",
+              "after": {
+                "source": "./ports",
+                "name": "GUARD_STATE_SLOT",
+                "local": "GUARD_STATE_SLOT",
+                "kind": "value"
+              }
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/guard/ports.ts",
+          "changes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/guard/profile.ts",
+          "changes": [
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "./state",
+                "name": "getGuardState",
+                "local": "getGuardState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "./ports",
+                "name": "getGuardState",
+                "local": "getGuardState",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "./state",
+                "name": "setGuardState",
+                "local": "setGuardState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "./ports",
+                "name": "setGuardState",
+                "local": "setGuardState",
+                "kind": "value"
+              }
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+          "changes": [
+            {
+              "kind": "owned-write-consumer-moved-to-real-contract",
+              "before": {
+                "source": "./seer/state",
+                "name": "recordRecipientSeerInspection",
+                "local": "recordRecipientSeerInspection",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "owned-write-consumer-moved-to-real-contract",
+              "before": {
+                "source": "./guard/ports",
+                "name": "recordRecipientGuardTarget",
+                "local": "recordRecipientGuardTarget",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "owned-write-consumer-moved-to-real-contract",
+              "before": {
+                "source": "./witch/ports",
+                "name": "consumeRecipientPoison",
+                "local": "consumeRecipientPoison",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "actual-slot-contribution",
+              "after": {
+                "source": "./seer/ports",
+                "name": "SEER_STATE_SLOT",
+                "local": "SEER_STATE_SLOT",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "actual-slot-contribution",
+              "after": {
+                "source": "./guard/ports",
+                "name": "GUARD_STATE_SLOT",
+                "local": "GUARD_STATE_SLOT",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "actual-slot-contribution",
+              "after": {
+                "source": "./witch/ports",
+                "name": "WITCH_STATE_SLOT",
+                "local": "WITCH_STATE_SLOT",
+                "kind": "value"
+              }
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+          "changes": [
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "./state",
+                "name": "getSeerState",
+                "local": "getSeerState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "./ports",
+                "name": "getSeerState",
+                "local": "getSeerState",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "owned-write-consumer-moved-to-real-contract",
+              "before": {
+                "source": "./state",
+                "name": "recordSeerInspection",
+                "local": "recordSeerInspection",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "actual-slot-contribution",
+              "after": {
+                "source": "./ports",
+                "name": "SEER_STATE_SLOT",
+                "local": "SEER_STATE_SLOT",
+                "kind": "value"
+              }
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/seer/ports.ts",
+          "changes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/seer/profile.ts",
+          "changes": [
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "./state",
+                "name": "getSeerState",
+                "local": "getSeerState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "./ports",
+                "name": "getSeerState",
+                "local": "getSeerState",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "./state",
+                "name": "setSeerState",
+                "local": "setSeerState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "./ports",
+                "name": "setSeerState",
+                "local": "setSeerState",
+                "kind": "value"
+              }
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+          "changes": [
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "./state",
+                "name": "getWitchState",
+                "local": "getWitchState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "./ports",
+                "name": "getWitchState",
+                "local": "getWitchState",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "owned-write-consumer-moved-to-real-contract",
+              "before": {
+                "source": "./state",
+                "name": "resetWitchNightState",
+                "local": "resetWitchNightState",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "owned-write-consumer-moved-to-real-contract",
+              "before": {
+                "source": "./state",
+                "name": "refreshWitchSelfHeal",
+                "local": "refreshWitchSelfHeal",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "owned-write-consumer-moved-to-real-contract",
+              "before": {
+                "source": "./state",
+                "name": "closeWitchPotionTurn",
+                "local": "closeWitchPotionTurn",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "owned-write-consumer-moved-to-real-contract",
+              "before": {
+                "source": "./state",
+                "name": "consumeWitchHeal",
+                "local": "consumeWitchHeal",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "owned-write-consumer-moved-to-real-contract",
+              "before": {
+                "source": "./state",
+                "name": "consumeWitchPoison",
+                "local": "consumeWitchPoison",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "actual-slot-contribution",
+              "after": {
+                "source": "./ports",
+                "name": "WITCH_STATE_SLOT",
+                "local": "WITCH_STATE_SLOT",
+                "kind": "value"
+              }
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/witch/ports.ts",
+          "changes": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/witch/profile.ts",
+          "changes": [
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "./state",
+                "name": "getWitchState",
+                "local": "getWitchState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "./ports",
+                "name": "getWitchState",
+                "local": "getWitchState",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "./state",
+                "name": "setWitchState",
+                "local": "setWitchState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "./ports",
+                "name": "setWitchState",
+                "local": "setWitchState",
+                "kind": "value"
+              }
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+          "changes": [
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "./state",
+                "name": "getWitchState",
+                "local": "getWitchState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "./ports",
+                "name": "getWitchState",
+                "local": "getWitchState",
+                "kind": "value"
+              }
+            }
+          ]
+        },
+        {
+          "path": "backend/tests/unit/features/guard/state-ownership.test.ts",
+          "changes": [
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "../../../../src/game/mechanisms/roles/guard/state",
+                "name": "setGuardState",
+                "local": "setGuardState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "../../../../src/game/mechanisms/roles/guard/ports",
+                "name": "setGuardState",
+                "local": "setGuardState",
+                "kind": "value"
+              }
+            }
+          ]
+        },
+        {
+          "path": "backend/tests/unit/features/seer/readonly-state.test.ts",
+          "changes": [
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "../../../../src/game/mechanisms/roles/seer/state",
+                "name": "getSeerState",
+                "local": "getSeerState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "../../../../src/game/mechanisms/roles/seer/ports",
+                "name": "getSeerState",
+                "local": "getSeerState",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "../../../../src/game/mechanisms/roles/seer/state",
+                "name": "setSeerState",
+                "local": "setSeerState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "../../../../src/game/mechanisms/roles/seer/ports",
+                "name": "setSeerState",
+                "local": "setSeerState",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "../../../../src/game/mechanisms/roles/seer/state",
+                "name": "recordSeerInspection",
+                "local": "recordSeerInspection",
+                "kind": "value"
+              },
+              "after": {
+                "source": "../../../../src/game/mechanisms/roles/seer/ports",
+                "name": "recordSeerInspection",
+                "local": "recordSeerInspection",
+                "kind": "value"
+              }
+            }
+          ]
+        },
+        {
+          "path": "backend/tests/unit/features/seer/state.test.ts",
+          "changes": [
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "../../../../src/game/mechanisms/roles/seer/state",
+                "name": "getSeerState",
+                "local": "getSeerState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "../../../../src/game/mechanisms/roles/seer/ports",
+                "name": "getSeerState",
+                "local": "getSeerState",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "../../../../src/game/mechanisms/roles/seer/state",
+                "name": "setSeerState",
+                "local": "setSeerState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "../../../../src/game/mechanisms/roles/seer/ports",
+                "name": "setSeerState",
+                "local": "setSeerState",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "../../../../src/game/mechanisms/roles/seer/state",
+                "name": "recordSeerInspection",
+                "local": "recordSeerInspection",
+                "kind": "value"
+              },
+              "after": {
+                "source": "../../../../src/game/mechanisms/roles/seer/ports",
+                "name": "recordSeerInspection",
+                "local": "recordSeerInspection",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "../../../../src/game/mechanisms/roles/seer/state",
+                "name": "recordRecipientSeerInspection",
+                "local": "recordRecipientSeerInspection",
+                "kind": "value"
+              },
+              "after": {
+                "source": "../../../../src/game/mechanisms/roles/seer/ports",
+                "name": "recordRecipientSeerInspection",
+                "local": "recordRecipientSeerInspection",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "../../../../src/game/mechanisms/roles/seer/state",
+                "name": "getSeerState",
+                "local": "legacyGetSeerState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "../../../../src/game/mechanisms/roles/seer/ports",
+                "name": "getSeerState",
+                "local": "legacyGetSeerState",
+                "kind": "value"
+              }
+            },
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "../../../../src/game/mechanisms/roles/seer/state",
+                "name": "setSeerState",
+                "local": "legacySetSeerState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "../../../../src/game/mechanisms/roles/seer/ports",
+                "name": "setSeerState",
+                "local": "legacySetSeerState",
+                "kind": "value"
+              }
+            }
+          ]
+        },
+        {
+          "path": "backend/tests/unit/features/witch/reception-and-lethal-source-table.test.ts",
+          "changes": [
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "../../../../src/game/mechanisms/roles/witch/state",
+                "name": "getWitchState",
+                "local": "getWitchState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "../../../../src/game/mechanisms/roles/witch/ports",
+                "name": "getWitchState",
+                "local": "getWitchState",
+                "kind": "value"
+              }
+            }
+          ]
+        },
+        {
+          "path": "backend/tests/unit/features/witch/state-ownership.test.ts",
+          "changes": [
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "../../../../src/game/mechanisms/roles/witch/state",
+                "name": "setWitchState",
+                "local": "setWitchState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "../../../../src/game/mechanisms/roles/witch/ports",
+                "name": "setWitchState",
+                "local": "setWitchState",
+                "kind": "value"
+              }
+            }
+          ]
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+          "changes": [
+            {
+              "kind": "canonical-public-owner",
+              "before": {
+                "source": "../../../src/game/mechanisms/roles/witch/state",
+                "name": "getWitchState",
+                "local": "getWitchState",
+                "kind": "value"
+              },
+              "after": {
+                "source": "../../../src/game/mechanisms/roles/witch/ports",
+                "name": "getWitchState",
+                "local": "getWitchState",
+                "kind": "value"
+              }
+            }
+          ]
+        }
+      ],
+      "failures": [],
+      "scope": "Every original imported/local/type/value binding across all19existing consumers; actual getter endpoints/public owned writers and frozen slot contributions only. No bridge to old deleted state owners."
+    },
+    "graph": {
+      "perSlot": [
+        {
+          "role": "seer",
+          "pathToGenericInstaller": null,
+          "abilitiesPathToSlot": null
+        },
+        {
+          "role": "guard",
+          "pathToGenericInstaller": null,
+          "abilitiesPathToSlot": null
+        },
+        {
+          "role": "witch",
+          "pathToGenericInstaller": null,
+          "abilitiesPathToSlot": null
+        }
+      ],
+      "resolvedSourceModules": 27,
+      "slotsToGenericInstallerRuntimePath": null,
+      "abilitiesToSlotRuntimePath": null,
+      "preparedOwnerRuntimeEdges": [],
+      "roots": [
+        {
+          "path": "backend/src/game/mechanisms/roles/abilities.ts",
+          "runtimeImports": [
+            "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+            "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+            "backend/src/core/domain/board.ts",
+            "backend/src/game/mechanisms/roles/witch/policies.ts",
+            "backend/src/core/domain/model.ts",
+            "backend/src/core/domain/components/names.ts",
+            "backend/src/game/mechanisms/roles/player_state.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "runtimeImports": [
+            "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+            "backend/src/core/domain/board.ts",
+            "backend/src/core/domain/components/names.ts",
+            "backend/src/core/domain/model.ts",
+            "backend/src/game/mechanisms/roles/abilities.ts",
+            "backend/src/core/domain/night_effects.ts",
+            "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+            "backend/src/game/mechanisms/roles/seer/ports.ts",
+            "backend/src/game/mechanisms/roles/guard/ports.ts",
+            "backend/src/game/mechanisms/roles/witch/ports.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+          "runtimeImports": [
+            "backend/src/game/mechanisms/roles/abilities.ts",
+            "backend/src/core/domain/board.ts",
+            "backend/src/game/mechanisms/roles/prepared-native-install.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+          "runtimeImports": []
+        }
+      ],
+      "notes": [
+        "Real runtime static import/export graph excludes type-only imports, follows relative source endpoints transitively; no tests/types/gate run.",
+        "No copied graph or name-only cycle claim; actual candidate sources read."
+      ]
+    },
+    "verification": {
+      "newBoundedTests": "actual8pass0fail46assert;tests-first.log",
+      "finiteTypes": "real2639actualterminal0;23roots;types-first.log empty",
+      "headLastDelta": "Only3heads made mechanism-specific after Root review; no code change; full source proofs recomputed, no type/runtime repeats",
+      "headsFailures": [],
+      "rawFalseLimit": "Four complete emitted output raw comparisons false solely syntax layout; whole parser token comparisons true, full AST true; preserve false."
+    }
+  },
+  "imports": {
+    "rows": [
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "changes": [
+          {
+            "kind": "actual-slot-contribution",
+            "after": {
+              "source": "./seer/ports",
+              "name": "SEER_STATE_SLOT",
+              "local": "SEER_STATE_SLOT",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-slot-contribution",
+            "after": {
+              "source": "./guard/ports",
+              "name": "GUARD_STATE_SLOT",
+              "local": "GUARD_STATE_SLOT",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-slot-contribution",
+            "after": {
+              "source": "./witch/ports",
+              "name": "WITCH_STATE_SLOT",
+              "local": "WITCH_STATE_SLOT",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+        "changes": [
+          {
+            "kind": "actual-slot-contribution",
+            "after": {
+              "source": "./seer/ports",
+              "name": "SEER_STATE_SLOT",
+              "local": "SEER_STATE_SLOT",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-slot-contribution",
+            "after": {
+              "source": "./guard/ports",
+              "name": "GUARD_STATE_SLOT",
+              "local": "GUARD_STATE_SLOT",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-slot-contribution",
+            "after": {
+              "source": "./witch/ports",
+              "name": "WITCH_STATE_SLOT",
+              "local": "WITCH_STATE_SLOT",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/night_stages.ts",
+        "changes": [
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "./state",
+              "name": "getGuardState",
+              "local": "getGuardState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./ports",
+              "name": "getGuardState",
+              "local": "getGuardState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "owned-write-consumer-moved-to-real-contract",
+            "before": {
+              "source": "./state",
+              "name": "recordGuardTarget",
+              "local": "recordGuardTarget",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-slot-contribution",
+            "after": {
+              "source": "./ports",
+              "name": "GUARD_STATE_SLOT",
+              "local": "GUARD_STATE_SLOT",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/ports.ts",
+        "changes": []
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/profile.ts",
+        "changes": [
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "./state",
+              "name": "getGuardState",
+              "local": "getGuardState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./ports",
+              "name": "getGuardState",
+              "local": "getGuardState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "./state",
+              "name": "setGuardState",
+              "local": "setGuardState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./ports",
+              "name": "setGuardState",
+              "local": "setGuardState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+        "changes": [
+          {
+            "kind": "owned-write-consumer-moved-to-real-contract",
+            "before": {
+              "source": "./seer/state",
+              "name": "recordRecipientSeerInspection",
+              "local": "recordRecipientSeerInspection",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "owned-write-consumer-moved-to-real-contract",
+            "before": {
+              "source": "./guard/ports",
+              "name": "recordRecipientGuardTarget",
+              "local": "recordRecipientGuardTarget",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "owned-write-consumer-moved-to-real-contract",
+            "before": {
+              "source": "./witch/ports",
+              "name": "consumeRecipientPoison",
+              "local": "consumeRecipientPoison",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-slot-contribution",
+            "after": {
+              "source": "./seer/ports",
+              "name": "SEER_STATE_SLOT",
+              "local": "SEER_STATE_SLOT",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-slot-contribution",
+            "after": {
+              "source": "./guard/ports",
+              "name": "GUARD_STATE_SLOT",
+              "local": "GUARD_STATE_SLOT",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-slot-contribution",
+            "after": {
+              "source": "./witch/ports",
+              "name": "WITCH_STATE_SLOT",
+              "local": "WITCH_STATE_SLOT",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+        "changes": [
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "./state",
+              "name": "getSeerState",
+              "local": "getSeerState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./ports",
+              "name": "getSeerState",
+              "local": "getSeerState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "owned-write-consumer-moved-to-real-contract",
+            "before": {
+              "source": "./state",
+              "name": "recordSeerInspection",
+              "local": "recordSeerInspection",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-slot-contribution",
+            "after": {
+              "source": "./ports",
+              "name": "SEER_STATE_SLOT",
+              "local": "SEER_STATE_SLOT",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/ports.ts",
+        "changes": []
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/profile.ts",
+        "changes": [
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "./state",
+              "name": "getSeerState",
+              "local": "getSeerState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./ports",
+              "name": "getSeerState",
+              "local": "getSeerState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "./state",
+              "name": "setSeerState",
+              "local": "setSeerState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./ports",
+              "name": "setSeerState",
+              "local": "setSeerState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+        "changes": [
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "./state",
+              "name": "getWitchState",
+              "local": "getWitchState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./ports",
+              "name": "getWitchState",
+              "local": "getWitchState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "owned-write-consumer-moved-to-real-contract",
+            "before": {
+              "source": "./state",
+              "name": "resetWitchNightState",
+              "local": "resetWitchNightState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "owned-write-consumer-moved-to-real-contract",
+            "before": {
+              "source": "./state",
+              "name": "refreshWitchSelfHeal",
+              "local": "refreshWitchSelfHeal",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "owned-write-consumer-moved-to-real-contract",
+            "before": {
+              "source": "./state",
+              "name": "closeWitchPotionTurn",
+              "local": "closeWitchPotionTurn",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "owned-write-consumer-moved-to-real-contract",
+            "before": {
+              "source": "./state",
+              "name": "consumeWitchHeal",
+              "local": "consumeWitchHeal",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "owned-write-consumer-moved-to-real-contract",
+            "before": {
+              "source": "./state",
+              "name": "consumeWitchPoison",
+              "local": "consumeWitchPoison",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "actual-slot-contribution",
+            "after": {
+              "source": "./ports",
+              "name": "WITCH_STATE_SLOT",
+              "local": "WITCH_STATE_SLOT",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/ports.ts",
+        "changes": []
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/profile.ts",
+        "changes": [
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "./state",
+              "name": "getWitchState",
+              "local": "getWitchState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./ports",
+              "name": "getWitchState",
+              "local": "getWitchState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "./state",
+              "name": "setWitchState",
+              "local": "setWitchState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./ports",
+              "name": "setWitchState",
+              "local": "setWitchState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+        "changes": [
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "./state",
+              "name": "getWitchState",
+              "local": "getWitchState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "./ports",
+              "name": "getWitchState",
+              "local": "getWitchState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/guard/state-ownership.test.ts",
+        "changes": [
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/guard/state",
+              "name": "setGuardState",
+              "local": "setGuardState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/guard/ports",
+              "name": "setGuardState",
+              "local": "setGuardState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/seer/readonly-state.test.ts",
+        "changes": [
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/seer/state",
+              "name": "getSeerState",
+              "local": "getSeerState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/seer/ports",
+              "name": "getSeerState",
+              "local": "getSeerState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/seer/state",
+              "name": "setSeerState",
+              "local": "setSeerState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/seer/ports",
+              "name": "setSeerState",
+              "local": "setSeerState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/seer/state",
+              "name": "recordSeerInspection",
+              "local": "recordSeerInspection",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/seer/ports",
+              "name": "recordSeerInspection",
+              "local": "recordSeerInspection",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/seer/state.test.ts",
+        "changes": [
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/seer/state",
+              "name": "getSeerState",
+              "local": "getSeerState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/seer/ports",
+              "name": "getSeerState",
+              "local": "getSeerState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/seer/state",
+              "name": "setSeerState",
+              "local": "setSeerState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/seer/ports",
+              "name": "setSeerState",
+              "local": "setSeerState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/seer/state",
+              "name": "recordSeerInspection",
+              "local": "recordSeerInspection",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/seer/ports",
+              "name": "recordSeerInspection",
+              "local": "recordSeerInspection",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/seer/state",
+              "name": "recordRecipientSeerInspection",
+              "local": "recordRecipientSeerInspection",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/seer/ports",
+              "name": "recordRecipientSeerInspection",
+              "local": "recordRecipientSeerInspection",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/seer/state",
+              "name": "getSeerState",
+              "local": "legacyGetSeerState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/seer/ports",
+              "name": "getSeerState",
+              "local": "legacyGetSeerState",
+              "kind": "value"
+            }
+          },
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/seer/state",
+              "name": "setSeerState",
+              "local": "legacySetSeerState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/seer/ports",
+              "name": "setSeerState",
+              "local": "legacySetSeerState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/witch/reception-and-lethal-source-table.test.ts",
+        "changes": [
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/witch/state",
+              "name": "getWitchState",
+              "local": "getWitchState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/witch/ports",
+              "name": "getWitchState",
+              "local": "getWitchState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/witch/state-ownership.test.ts",
+        "changes": [
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "../../../../src/game/mechanisms/roles/witch/state",
+              "name": "setWitchState",
+              "local": "setWitchState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../../src/game/mechanisms/roles/witch/ports",
+              "name": "setWitchState",
+              "local": "setWitchState",
+              "kind": "value"
+            }
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+        "changes": [
+          {
+            "kind": "canonical-public-owner",
+            "before": {
+              "source": "../../../src/game/mechanisms/roles/witch/state",
+              "name": "getWitchState",
+              "local": "getWitchState",
+              "kind": "value"
+            },
+            "after": {
+              "source": "../../../src/game/mechanisms/roles/witch/ports",
+              "name": "getWitchState",
+              "local": "getWitchState",
+              "kind": "value"
+            }
+          }
+        ]
+      }
+    ],
+    "failures": [],
+    "scope": "Every original imported/local/type/value binding across all19existing consumers; actual getter endpoints/public owned writers and frozen slot contributions only. No bridge to old deleted state owners."
+  },
+  "runtimeGraph": {
+    "perSlot": [
+      {
+        "role": "seer",
+        "pathToGenericInstaller": null,
+        "abilitiesPathToSlot": null
+      },
+      {
+        "role": "guard",
+        "pathToGenericInstaller": null,
+        "abilitiesPathToSlot": null
+      },
+      {
+        "role": "witch",
+        "pathToGenericInstaller": null,
+        "abilitiesPathToSlot": null
+      }
+    ],
+    "resolvedSourceModules": 27,
+    "slotsToGenericInstallerRuntimePath": null,
+    "abilitiesToSlotRuntimePath": null,
+    "preparedOwnerRuntimeEdges": [],
+    "roots": [
+      {
+        "path": "backend/src/game/mechanisms/roles/abilities.ts",
+        "runtimeImports": [
+          "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+          "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+          "backend/src/core/domain/board.ts",
+          "backend/src/game/mechanisms/roles/witch/policies.ts",
+          "backend/src/core/domain/model.ts",
+          "backend/src/core/domain/components/names.ts",
+          "backend/src/game/mechanisms/roles/player_state.ts"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "runtimeImports": [
+          "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+          "backend/src/core/domain/board.ts",
+          "backend/src/core/domain/components/names.ts",
+          "backend/src/core/domain/model.ts",
+          "backend/src/game/mechanisms/roles/abilities.ts",
+          "backend/src/core/domain/night_effects.ts",
+          "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+          "backend/src/game/mechanisms/roles/seer/ports.ts",
+          "backend/src/game/mechanisms/roles/guard/ports.ts",
+          "backend/src/game/mechanisms/roles/witch/ports.ts"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+        "runtimeImports": [
+          "backend/src/game/mechanisms/roles/abilities.ts",
+          "backend/src/core/domain/board.ts",
+          "backend/src/game/mechanisms/roles/prepared-native-install.ts"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+        "runtimeImports": []
+      }
+    ],
+    "notes": [
+      "Real runtime static import/export graph excludes type-only imports, follows relative source endpoints transitively; no tests/types/gate run.",
+      "No copied graph or name-only cycle claim; actual candidate sources read."
+    ]
+  },
+  "receipts": {
+    "newEight": "bun test v1.4.3 (c6da4a4d3)\n\ntests/unit/mechanisms/ordinary-night-state-slots.test.ts:\n(pass) three slots retain the original JSON schema-copy function and do not invent strict payload rejection [0.35ms]\n(pass) all three actual native installs preserve owned payload, instance identity and native-first reads [0.40ms]\n(pass) generic native installation uses the same Seer Guard and Witch owned state [0.13ms]\n(pass) recipient Seer keeps four state reads and two target getter points [0.10ms]\n(pass) recipient Guard captures its LHS state before a throwing target getter [0.06ms]\n(pass) Witch reset failure preserves both reset writes before currentDay and leaves the old self-heal value [0.05ms]\n(pass) gifted potion recipient writes remain independent from native bottles and metadata [0.41ms]\n(pass) three policy codecs keep stringify lookup before each original state field read [0.10ms]\n\n 8 pass\n 0 fail\n 46 expect() calls\nRan 8 tests across 1 file. [57.00ms]\n",
+    "finite23": {
+      "session": 2639,
+      "exitCode": 0,
+      "log": "",
+      "scope": "23现candidate source/test，不是全仓"
+    }
+  },
+  "rootReview": {
+    "approved": true,
+    "scope": "3完整slot/current实例/JSON复制、recipient与ordinary写前缀、Witch native/gift/Demon不混合、JSONcallee及lease边界、原坏shape接受集合不加强、中文具体heads"
+  },
+  "limits": [
+    "原3kind没有strict完整payload schema，保持原JSON验证集合",
+    "policyIdentity为运行身份，不是新的全归档codec",
+    "38完整source输出34rawsame4rawfalse且fullparser-tokentrue，保留所有字段/数组/断言",
+    "27局部模块图只证明指定反向paths退出，不是全仓无环"
+  ],
+  "independentSource": {
+    "baseline": "9265335a5d9e005eef8f59ca7cfea5c41495f084",
+    "checks": [
+      {
+        "label": "setSeerState exactcopy/preparedpipeline",
+        "equal": true
+      },
+      {
+        "label": "getSeerState fulloriginalfunction",
+        "equal": true
+      },
+      {
+        "label": "recordSeerInspection fulloriginalfunction",
+        "equal": true
+      },
+      {
+        "label": "recordRecipientSeerInspection fulloriginalfunction",
+        "equal": true
+      },
+      {
+        "label": "seer.create actualcopyfnreference",
+        "equal": true
+      },
+      {
+        "label": "seer.schema actualcopyfnreference",
+        "equal": true
+      },
+      {
+        "label": "seer codec exactfirstcallee fields",
+        "equal": true
+      },
+      {
+        "label": "setGuardState exactcopy/preparedpipeline",
+        "equal": true
+      },
+      {
+        "label": "getGuardState fulloriginalfunction",
+        "equal": true
+      },
+      {
+        "label": "recordGuardTarget fulloriginalfunction",
+        "equal": true
+      },
+      {
+        "label": "recordRecipientGuardTarget fulloriginalfunction",
+        "equal": true
+      },
+      {
+        "label": "guard.create actualcopyfnreference",
+        "equal": true
+      },
+      {
+        "label": "guard.schema actualcopyfnreference",
+        "equal": true
+      },
+      {
+        "label": "guard codec exactfirstcallee fields",
+        "equal": true
+      },
+      {
+        "label": "setWitchState exactcopy/preparedpipeline",
+        "equal": true
+      },
+      {
+        "label": "getWitchState fulloriginalfunction",
+        "equal": true
+      },
+      {
+        "label": "resetWitchNightState fulloriginalfunction",
+        "equal": true
+      },
+      {
+        "label": "refreshWitchSelfHeal fulloriginalfunction",
+        "equal": true
+      },
+      {
+        "label": "closeWitchPotionTurn fulloriginalfunction",
+        "equal": true
+      },
+      {
+        "label": "consumeWitchHeal fulloriginalfunction",
+        "equal": true
+      },
+      {
+        "label": "consumeWitchPoison fulloriginalfunction",
+        "equal": true
+      },
+      {
+        "label": "consumeRecipientPoison fulloriginalfunction",
+        "equal": true
+      },
+      {
+        "label": "witch.create actualcopyfnreference",
+        "equal": true
+      },
+      {
+        "label": "witch.schema actualcopyfnreference",
+        "equal": true
+      },
+      {
+        "label": "witch codec exactfirstcallee fields",
+        "equal": true
+      }
+    ],
+    "rows": [
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 2258,
+        "inverseNodes": 2258,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": false,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": false,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 601,
+        "inverseNodes": 601,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/night_stages.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 795,
+        "inverseNodes": 795,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/ports.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 60,
+        "inverseNodes": 60,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/profile.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 557,
+        "inverseNodes": 557,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 1435,
+        "inverseNodes": 1435,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 989,
+        "inverseNodes": 989,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/ports.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 64,
+        "inverseNodes": 64,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/profile.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 531,
+        "inverseNodes": 531,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 1457,
+        "inverseNodes": 1457,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/ports.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 24,
+        "inverseNodes": 24,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/profile.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 370,
+        "inverseNodes": 370,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 506,
+        "inverseNodes": 506,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/guard/state-ownership.test.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 418,
+        "inverseNodes": 418,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/seer/readonly-state.test.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 202,
+        "inverseNodes": 202,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/seer/state.test.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 821,
+        "inverseNodes": 821,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/witch/reception-and-lethal-source-table.test.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 812,
+        "inverseNodes": 812,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/witch/state-ownership.test.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 594,
+        "inverseNodes": 594,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+        "fullTypedBodyInverse": true,
+        "oldNodes": 1035,
+        "inverseNodes": 1035,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          },
+          {
+            "module": "CommonJS",
+            "rawEqual": true,
+            "fullParserTokensSame": true
+          }
+        ]
+      }
+    ],
+    "finalFrozen": [
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "540c52e42e6ba0f928902a40f51b01d309e224b6159efa53519b6b13dc9ab4a7"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "b846be713a7d5751faaee5a19147e1098304fd807e78953661ed1cae2a425942"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/night_stages.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "93f604bed9553705d5292082c0f60a001678ba1ccbf8cc0fb92fd8a2d6268d72"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/ports.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "fe081f1726aac0479e96c1df08cb0cf5d5b222430d07b54264f94974c7f74dfc"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/profile.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "42d85ece3a86fca9c365ba46b451dc381c6a253fa467b4b138708b34dd99a7d0"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "6d3634683f6bb890e501a40e277c916c4d6c292be947cd810b3939c6c3dc7276"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "1244e57c0db6d1a25df22929dd02174c506172e38ff029c0ec134c486e5c1059"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/ports.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "04a5f73a1d08e3cea01f87cc1722e74b9ca7b505ce1e871a374492d065e48f3d"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/profile.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "51225178dc7deef270e2f6eb7199fbb564c9b4dba3de211cbe86fac1e9895392"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "d7f25f0b591f05d3469d4b912ed0068000dd265e0b8b92dfd499bb25698ee447"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/ports.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "bef2a8707ba031671dde6f8aa9c516500f5315cd0b2b4f15dac5a11f2d79a600"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/profile.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "db94a72a812f7827d25afb796d648e4bcf971c3a26f534b89bca10ce4fc7ffb0"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "ad8b879ae29de955f98776c188307298771fcb5b2307fa4319ef416995366e1b"
+      },
+      {
+        "path": "backend/tests/unit/features/guard/state-ownership.test.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "f0c47add14819bf6f8fe12192b7c4f18ed17ed8b11991c9cc7ff50817f2b7824"
+      },
+      {
+        "path": "backend/tests/unit/features/seer/readonly-state.test.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "4796f2925d49405239e6597807d5c57710ef10c8a8d170d90b21d0858259e090"
+      },
+      {
+        "path": "backend/tests/unit/features/seer/state.test.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "764ff244bc35b5a1769b047089f015a12fef724e031eba2ce3e915ee7252193b"
+      },
+      {
+        "path": "backend/tests/unit/features/witch/reception-and-lethal-source-table.test.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "26a341a39c0614ebc02fcfe5956b0a5d3cb12e6332d1c0db24b7ee4e88a8b8bc"
+      },
+      {
+        "path": "backend/tests/unit/features/witch/state-ownership.test.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "c46a6902ab7d0b2249707d75de9abeb18b2ca6c8516beed2a73b8f01b4f43491"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "7dc4daabfff473b2e1b66c1bf2c852db47947cc1d874843322083ee4225ecfe2"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/state-slot.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "4369f772e7c681a59b3cfcd4c297ab21a487df473a2bbf0b493270c9c454043f"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/state-slot.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "266ad1977e235c1cc265e0fed82179884e8f70b442fc1eb4a58de56afd19d125"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/state-slot.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "bc46a87101d548ae302384aa04cccea80c7b9d886c83ca96874b4adfda841a91"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+        "deleted": false,
+        "shaSame": true,
+        "actualSha256": "08c734a11fae112161389c75b664a279f70029f7ae2ef3ba84c30b8c423c8a6a"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/state.ts",
+        "deleted": true,
+        "shaSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/state.ts",
+        "deleted": true,
+        "shaSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/state.ts",
+        "deleted": true,
+        "shaSame": true
+      }
+    ],
+    "findings": [],
+    "scopeTruth": {
+      "actualGit22": true,
+      "wholeBodyTraversal": "Corrected void traversal,27058 nodes acrossbefore+inverse;19 completebody roots, no function/assert/array masks.",
+      "ownRawOutputReceipt": "38 wholeoutputs:36rawsame,2ability_changesrawfalse but fullparserTokensSame. Own printer reconstructs oldWitchcodec from actualoriginal, so ownability_scope outputsrawsame; author4rawfalse remain honestlyretained separately.",
+      "functionOwnership": "Original13non-set functions(getters/writes) wholedecl preserved;3setters directactualcopy/ref and preparedNative same originalpipeline;actualcreate/schema same copy fn, actualcommands and actualpublicexport consumer.",
+      "comments": "3specificslot heads do not claim readonlyruntimeguard, complete lease or archive codec; publicgetter refersdeepreadonly type only; JSONpolicyidentity is runtimeinvalidator byte not archive or authority.",
+      "privateBoundary": "sameability state/privateState slots; no mirror store/nativeeffects or Demonsealedwriter move;Scope metadata/ref/day permissions unchanged.",
+      "graph": "Independentactual27relative runtime modules,3specified slot->generic and abilities->slot paths allnull; not fullrepo cyclefree.",
+      "testsTypes": "Reuse authoractual8/46+2639finite23roots0 only; no runtime/compiler/gate rerun by reviewer.",
+      "firstHarnessIssue": "Own factoryNamedExports firstforgot originaltrailingcomma =>1emit mismatch; fixedNodeArray same originalflag, no sourcechange. Own graphfirstdidnotdedup plusonly4roots ->2counts differ; fixedrealBFS27, no sourcemutation."
+    },
+    "docReview": {
+      "findings": [],
+      "files": [
+        {
+          "path": "docs/refactor/ordinary-night-state-slots.md",
+          "sha256": "97f64f16830c88143bd94ee14b4692120c8a5a01fe473d117091cca966bd73c7"
+        },
+        {
+          "path": "docs/refactor/generated/ordinary-night-state-slots-evidence.json",
+          "sha256": "03607dcafdb2763da675737731ad45a327b45e2e478b41e7f73bebd5ce8b5f7b"
+        }
+      ],
+      "scope": "CurrentMD explicitlyretains fourauthorrawfalse/token comparisons, finite23/8tests attribution,27specifiedpaths only, no allC17/archive completion. Optional wording两个reset means2flagwrites not2resetfunctions."
+    }
+  },
+  "thirdBoundary": {
+    "status": "approved",
+    "base": "9265335a5d9e005eef8f59ca7cfea5c41495f084",
+    "scope": "Independent current26ordinary Seer/Guard/Witch state slot sources/importer implementations and actual3deletions. No runtime/types/full gate repeated.",
+    "files": [
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "sha256": "540c52e42e6ba0f928902a40f51b01d309e224b6159efa53519b6b13dc9ab4a7"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+        "sha256": "b846be713a7d5751faaee5a19147e1098304fd807e78953661ed1cae2a425942"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/night_stages.ts",
+        "sha256": "93f604bed9553705d5292082c0f60a001678ba1ccbf8cc0fb92fd8a2d6268d72"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/ports.ts",
+        "sha256": "fe081f1726aac0479e96c1df08cb0cf5d5b222430d07b54264f94974c7f74dfc"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/profile.ts",
+        "sha256": "42d85ece3a86fca9c365ba46b451dc381c6a253fa467b4b138708b34dd99a7d0"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+        "sha256": "6d3634683f6bb890e501a40e277c916c4d6c292be947cd810b3939c6c3dc7276"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/night_stages.ts",
+        "sha256": "1244e57c0db6d1a25df22929dd02174c506172e38ff029c0ec134c486e5c1059"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/ports.ts",
+        "sha256": "04a5f73a1d08e3cea01f87cc1722e74b9ca7b505ce1e871a374492d065e48f3d"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/profile.ts",
+        "sha256": "51225178dc7deef270e2f6eb7199fbb564c9b4dba3de211cbe86fac1e9895392"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+        "sha256": "d7f25f0b591f05d3469d4b912ed0068000dd265e0b8b92dfd499bb25698ee447"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/ports.ts",
+        "sha256": "bef2a8707ba031671dde6f8aa9c516500f5315cd0b2b4f15dac5a11f2d79a600"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/profile.ts",
+        "sha256": "db94a72a812f7827d25afb796d648e4bcf971c3a26f534b89bca10ce4fc7ffb0"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+        "sha256": "ad8b879ae29de955f98776c188307298771fcb5b2307fa4319ef416995366e1b"
+      },
+      {
+        "path": "backend/tests/unit/features/guard/state-ownership.test.ts",
+        "sha256": "f0c47add14819bf6f8fe12192b7c4f18ed17ed8b11991c9cc7ff50817f2b7824"
+      },
+      {
+        "path": "backend/tests/unit/features/seer/readonly-state.test.ts",
+        "sha256": "4796f2925d49405239e6597807d5c57710ef10c8a8d170d90b21d0858259e090"
+      },
+      {
+        "path": "backend/tests/unit/features/seer/state.test.ts",
+        "sha256": "764ff244bc35b5a1769b047089f015a12fef724e031eba2ce3e915ee7252193b"
+      },
+      {
+        "path": "backend/tests/unit/features/witch/reception-and-lethal-source-table.test.ts",
+        "sha256": "26a341a39c0614ebc02fcfe5956b0a5d3cb12e6332d1c0db24b7ee4e88a8b8bc"
+      },
+      {
+        "path": "backend/tests/unit/features/witch/state-ownership.test.ts",
+        "sha256": "c46a6902ab7d0b2249707d75de9abeb18b2ca6c8516beed2a73b8f01b4f43491"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+        "sha256": "7dc4daabfff473b2e1b66c1bf2c852db47947cc1d874843322083ee4225ecfe2"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/state-slot.ts",
+        "sha256": "4369f772e7c681a59b3cfcd4c297ab21a487df473a2bbf0b493270c9c454043f"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/state-slot.ts",
+        "sha256": "266ad1977e235c1cc265e0fed82179884e8f70b442fc1eb4a58de56afd19d125"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/state-slot.ts",
+        "sha256": "bc46a87101d548ae302384aa04cccea80c7b9d886c83ca96874b4adfda841a91"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/ordinary-night-state-slots.test.ts",
+        "sha256": "08c734a11fae112161389c75b664a279f70029f7ae2ef3ba84c30b8c423c8a6a"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/guard/state.ts",
+        "deleted": true,
+        "beforeSha256": "bc44e577d088c671c62fb34f0b42cbb25e1c702823161d2f5723fff4a97718c5"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/seer/state.ts",
+        "deleted": true,
+        "beforeSha256": "ee9f12b9edb1f81559a6031818600fc0530f25f54a36bf9b5060a248acde70d3"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/witch/state.ts",
+        "deleted": true,
+        "beforeSha256": "737fa3affe3826b9f8bcb98b34e0580a666753e79690635c690ba4d7296727da"
+      }
+    ],
+    "scopeShaMismatches": [],
+    "findings": [],
+    "checks": {
+      "threeRealFullAlgorithmsNotThinForwarders": true,
+      "getReturnsOriginalNativeOrBoundAbilityState": true,
+      "nativeInstallCopyOnceThenSharedPreparedWrites": true,
+      "schemaIsExactOriginalJsonCopyNoNewStrictRejection": true,
+      "ordinarySeerCapturedStateAndRecipientFourStateTwoTargetReads": true,
+      "guardCapturesLhsBeforeRecipientTargetIdGetter": true,
+      "witchResetTwoFlagsThenShortCircuitDayThunk": true,
+      "witchRefreshKeepsLhsAndRepeatedRhsReads": true,
+      "nativeWitchDecrementAndRecipientPostfixSeparate": true,
+      "effectsClaimsMetadataUseAndPublicationRemainCallerOrder": true,
+      "demonSealedControllerBranchAndWriterRemainOriginal": true,
+      "giftLuckyCopyTransferAndOwnLifeAuthorityKeepOriginalOwners": true,
+      "threeJsonCalleeFirstPolicyIdentityExpressionsAndGetterCounts": true,
+      "scopeFullCurrentnessChecksRemainNoNewLease": true,
+      "oldStateLeavesRemovedAndAllExistingPublicBindingsCanonical": true,
+      "realRelativeGraph27NoSlotToGenericInstallerOrAbilitiesToSlots": true,
+      "threeProfileFacetsAlgorithmsUnchangedOnlyImports": true,
+      "sixOldTestsOnlyImportRoutesNoFixtureAssertionChanges": true,
+      "allStrongTraversalsVoidAndNodeArraysExplicit": true,
+      "wholeNineteenPrograms13529NodesComparedWithoutBodyOmission": true
+    },
+    "preciseOutputEvidence": {
+      "sourceChecksTotal": 104,
+      "wholeNonImportPrograms": 19,
+      "fullNodeCount": 13529,
+      "entireModuleOutputs": 38,
+      "wholeRawBytesEqual": 34,
+      "rawFalseButCompleteParserTokensEqual": 4,
+      "falsePaths": [
+        "ability_changes.ts ESNext/CommonJS",
+        "ability_scope.ts ESNext/CommonJS"
+      ],
+      "doesNotClaimAll38RawEqual": true,
+      "importsSeparatelyReviewed": true
+    },
+    "explicitLimits": [
+      "State schema retains original JSON acceptance and stripping of undefined, not complete strict history/resources schema.",
+      "Policy identity codec is runtime invalidation data, not whole archive serializer; existing recording clone remains owner.",
+      "Bounded8cases/46assertions and finite23roots2639 are author/Root receipts, not reexecuted by this reviewer or full55state/replay matrix.",
+      "Relative runtime graph27is bounded source dependency evidence, not global package acyclicity."
+    ],
+    "closedDocFinding": "One Witch reset writes two flags, not two reset functions; Root corrected documentation."
+  }
+}

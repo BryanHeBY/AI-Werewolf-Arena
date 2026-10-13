@@ -12,7 +12,7 @@ import {
   recordGuardTarget,
   recordRecipientGuardTarget,
 } from "../../../../src/game/mechanisms/roles/guard/ports";
-import { setGuardState } from "../../../../src/game/mechanisms/roles/guard/state";
+import { setGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
 function readerPermission(state: GuardState) {
   // @ts-expect-error The last-target field belongs to the Guard payload owner.
   state.lastTarget = 3;

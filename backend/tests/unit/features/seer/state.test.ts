@@ -17,11 +17,11 @@ import {
   setSeerState,
   recordSeerInspection,
   recordRecipientSeerInspection,
-} from "../../../../src/game/mechanisms/roles/seer/state";
+} from "../../../../src/game/mechanisms/roles/seer/ports";
 import {
   getSeerState as legacyGetSeerState,
   setSeerState as legacySetSeerState,
-} from "../../../../src/game/mechanisms/roles/seer/state";
+} from "../../../../src/game/mechanisms/roles/seer/ports";
 
 const emptyState = (): SeerState => ({ lastTarget: null, lastIsWerewolf: null, history: [] });
 

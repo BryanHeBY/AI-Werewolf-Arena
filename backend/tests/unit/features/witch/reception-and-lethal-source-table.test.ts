@@ -15,7 +15,7 @@ import {
   type StatusMarksComponent,
 } from "../../../../src/core";
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/state";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { ActionTurn } from "../../../../src/ai/agents/player/action-turn";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";

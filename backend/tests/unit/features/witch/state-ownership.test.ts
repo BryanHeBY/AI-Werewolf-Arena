@@ -14,7 +14,7 @@ import {
   consumeWitchPoison,
   consumeRecipientPoison,
 } from "../../../../src/game/mechanisms/roles/witch/ports";
-import { setWitchState } from "../../../../src/game/mechanisms/roles/witch/state";
+import { setWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 
 function state(rule = WitchSelfHealRule.FirstNightOnly): WitchState {
   return {

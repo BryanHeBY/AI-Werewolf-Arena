@@ -24,6 +24,9 @@ import { allNightAbilities, abilityStatus, projectPairState, copyAbilityData, pr
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 
 import { commitPreparedNativeAbility } from "./prepared-native-install";
+import { SEER_STATE_SLOT } from "./seer/ports";
+import { GUARD_STATE_SLOT } from "./guard/ports";
+import { WITCH_STATE_SLOT } from "./witch/ports";
 import { ROLE_INSPECTION_STATE_SLOT } from "./role_inspection/ports";
 
 export interface AbilityGrant<K extends NightAbilityKind> {
@@ -402,7 +405,13 @@ export function installNativeAbility<K extends NightAbilityKind>(
       ? copyAbilityData(projectPairState(state))
       : kind === "role_check"
         ? ROLE_INSPECTION_STATE_SLOT.create(state as RoleInspectionState)
-        : copyAbilityData(state)
+        : kind === "seer_check"
+          ? SEER_STATE_SLOT.create(state as NightAbilityStates["seer_check"])
+          : kind === "guard"
+            ? GUARD_STATE_SLOT.create(state as NightAbilityStates["guard"])
+            : kind === "potion"
+              ? WITCH_STATE_SLOT.create(state as NightAbilityStates["potion"])
+              : copyAbilityData(state)
   ) as NightAbilityStates[K];
   return commitPreparedNativeAbility(role, kind, ownedState);
 }

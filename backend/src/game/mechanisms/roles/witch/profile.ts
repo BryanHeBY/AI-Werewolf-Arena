@@ -9,7 +9,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：女巫角色 profile。 */
 import { Camp, PotionType, Role, WitchSelfHealRule } from "../../../../core/domain/model";
 import { NativeRoleContributions } from "../contracts";
-import { getWitchState, setWitchState } from "./state";
+import { getWitchState, setWitchState } from "./ports";
 import { WITCH_LLM_REPAIR_PACK } from "./llm_repair";
 import { WITCH_NIGHT_STAGES } from "./night_stages";
 import { WITCH_TOOL_SPECS, WITCH_STAGE_DIRECTIVES } from "./tool_specs";

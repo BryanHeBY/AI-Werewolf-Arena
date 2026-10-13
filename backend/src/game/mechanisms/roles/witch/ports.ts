@@ -12,6 +12,8 @@ export {
   consumeWitchHeal,
   consumeWitchPoison,
   consumeRecipientPoison,
-} from "./state";
+} from "./state-slot";
 
-export { setWitchState } from "./state";
+export { setWitchState } from "./state-slot";
+
+export { WITCH_STATE_SLOT } from "./state-slot";

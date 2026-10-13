@@ -5,6 +5,7 @@
  * 付款、目标映射、第二次行动、角色专有失败和 poison-only 限制保持原位置。
  * 来源句柄只供运行时消费，不进入玩家信息或 schema2；瓶数／旗标归 Witch 状态 owner，公共次数归实例 owner。
  */
+import { WITCH_STATE_SLOT } from "./ports";
 /** 文件说明：女巫夜间用药阶段处理。 */
 import {
   captureNightLife,
@@ -25,12 +26,7 @@ import { nativePotionsCanCombine, witchKnifeVisible } from "./policies";
 import { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import {
   getWitchState,
-  resetWitchNightState,
-  refreshWitchSelfHeal,
-  closeWitchPotionTurn,
-  consumeWitchHeal,
-  consumeWitchPoison,
-} from "./state";
+} from "./ports";
 import { activeNightAbility, allNightAbilities } from "../abilities";
 import { recordNightAbilityUse } from "../ability_changes";
 import { recordOwnNightAction, luckyTargetAllowed } from "../night_action_history";
@@ -46,7 +42,7 @@ const resetNightRoleStateStage: NightStageHandler = {
       for (const ability of allNightAbilities(role)) {
         if (ability.kind !== "potion") continue;
         const witchState = ability.state;
-        resetWitchNightState(witchState, () => ctx.currentDay());
+        WITCH_STATE_SLOT.allowedWrites.resetWitchNightState(witchState, () => ctx.currentDay());
       }
     }
   },
@@ -87,7 +83,7 @@ const witchActionStage: NightStageHandler = {
       if (!ownership?.isEligible()) continue;
       const close = () => {
         if (ownership.isOwnerCurrent() && !ability.disabled && !ability.deathExpired)
-          closeWitchPotionTurn(ability, day);
+          WITCH_STATE_SLOT.allowedWrites.closeWitchPotionTurn(ability, day);
       };
       const both = nativePotionsCanCombine(ability);
       for (let turn = 0; turn < (both ? 2 : 1); turn++) {
@@ -131,7 +127,7 @@ async function executePotionTurn(
     () => ctx.isCurrent() && ctx.currentDay() === day,
   );
   if (!scope?.isEligible()) return false;
-  refreshWitchSelfHeal(ability, day);
+  WITCH_STATE_SLOT.allowedWrites.refreshWitchSelfHeal(ability, day);
   const targets = new Map(
     ctx.world.getAliveEntityIds().map((id) => [id, captureNightLife(ctx.world, id)]),
   );
@@ -245,7 +241,7 @@ async function executePotionTurn(
       return false;
     recordNightAbilityUse(ability, day, true);
     ctx.ensureMarks(effectiveId).add(StatusMark.HealMark);
-    consumeWitchHeal(witchState);
+    WITCH_STATE_SLOT.allowedWrites.consumeWitchHeal(witchState);
     ctx.events.push({
       timestamp: Date.now(),
       type: "witch_potion_used",
@@ -279,7 +275,7 @@ async function executePotionTurn(
       ),
     );
     ctx.ensureMarks(effectiveId).add(StatusMark.PoisonMark);
-    consumeWitchPoison(witchState);
+    WITCH_STATE_SLOT.allowedWrites.consumeWitchPoison(witchState);
     ctx.nativeNightEffects.commitNativeReflection(
       "poison",
       ability,

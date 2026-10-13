@@ -1,0 +1,23 @@
+{
+  "status": "approved",
+  "scope": "Final ordinary26state-slot documentation only; independent26source review separate, no types/runtime/full gate repeated.",
+  "checks": [
+    "One Witch reset/twoflags wording corrected.",
+    "26paths=23current+3deleted, sixexistingtest imports, readonly live refs/ordinary vsrecipient/Demon ownership explicit.",
+    "104checks/19wholeprograms13529nodes and38emits precisely34rawsame+4rawfalse/tokenequal.",
+    "27relativegraph limits/no new strict schema/nonarchive policyIdentity codec explicitly retained.",
+    "Real new8/46 and finite23roots2639 attributed to author, no full55/state/replay claim."
+  ],
+  "files": [
+    {
+      "path": "docs/refactor/ordinary-night-state-slots.md",
+      "sha256": "cfe51e8383d1cc1ac8609d593d873ac9111f4fbf303f12c395fc61a419db318f"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-night-state-slots-evidence.json",
+      "sha256": "e079112a291e4155881070255547e520ec00e99f9c3ab624ca6adc241bf54b92"
+    }
+  ],
+  "findings": [],
+  "closedDelta": "Only actual approved thirdBoundary report added; source26 and MD unchanged."
+}

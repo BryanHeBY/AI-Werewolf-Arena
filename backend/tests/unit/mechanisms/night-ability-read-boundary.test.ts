@@ -26,7 +26,7 @@ import {
   createNightAbilityActorQuery,
   type NightAbilityActorQuery,
 } from "../../../src/game/mechanisms/roles/night-ability-actors";
-import { getWitchState } from "../../../src/game/mechanisms/roles/witch/state";
+import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
 import {
   getRoleInspectionState,
   recordAbilityRoleInspection,

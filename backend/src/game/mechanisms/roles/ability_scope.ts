@@ -15,6 +15,9 @@ import type { EntityId } from "../../../core/domain/model";
 import { activeNightAbility, type NightAbilityReadView } from "./abilities";
 import { aliveLifeVersion } from "../../../core/domain/components/alive";
 
+import { SEER_STATE_SLOT } from "./seer/ports";
+import { GUARD_STATE_SLOT } from "./guard/ports";
+import { WITCH_STATE_SLOT } from "./witch/ports";
 import { ROLE_INSPECTION_STATE_SLOT } from "./role_inspection/ports";
 
 /** 即使库存对象仍同一引用，政策编辑也会改变授权身份。 */
@@ -25,15 +28,11 @@ function policyIdentity(ability: NightAbilityReadView): string {
     case "shelter":
       return JSON.stringify([ability.state.policy]);
     case "seer_check":
-      return JSON.stringify([ability.state.targetPolicy, ability.state.actionPolicy]);
+      return SEER_STATE_SLOT.invalidations.policyIdentity(ability);
     case "potion":
-      return JSON.stringify([
-        ability.state.selfHealRule,
-        ability.state.knifeVisibility,
-        ability.state.potionPolicy,
-      ]);
+      return WITCH_STATE_SLOT.invalidations.policyIdentity(ability);
     case "guard":
-      return JSON.stringify([ability.state.repeatPolicy]);
+      return GUARD_STATE_SLOT.invalidations.policyIdentity(ability);
     case "role_check":
       return ROLE_INSPECTION_STATE_SLOT.checkpoint.policyIdentity(ability);
     case "dream":

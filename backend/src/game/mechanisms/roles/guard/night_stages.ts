@@ -4,13 +4,14 @@
  * 原贡献 owner 保留已付效果有效性，不能把它转移给替换的印记组件。
  * 查询、请求、资格、状态命令与事实发布仍按原位置执行，不增加重复目标重检或退款。
  */
+import { GUARD_STATE_SLOT } from "./ports";
 /** 文件说明：守卫夜间阶段处理。 */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, Role, StatusMark } from "../../../../core/domain/model";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
 import { NightStageHandler } from "../../stages/night/contracts";
-import { getGuardState, recordGuardTarget } from "./state";
+import { getGuardState } from "./ports";
 import { activeNightAbility } from "../abilities";
 import { recordNightAbilityUse } from "../ability_changes";
 import { captureNightAbilityScope } from "../ability_scope";
@@ -136,7 +137,7 @@ const guardActionStage: NightStageHandler = {
       const role = ctx.world.getComponent(guardId, COMPONENT.Role);
       const guardState = role ? getGuardState(role, ability.id) : undefined;
       if (guardState) {
-        recordGuardTarget(guardState, targetId);
+        GUARD_STATE_SLOT.allowedWrites.recordGuardTarget(guardState, targetId);
       }
       recordNightAbilityUse(ability, ctx.currentDay(), !abstain);
       ctx.nativeNightEffects.recordModifierTarget(day, guardId, "guard", () => targetId);

@@ -14,7 +14,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：守卫角色 profile。 */
 import { Camp, Role, Phase } from "../../../../core/domain/model";
 import { NativeRoleContributions } from "../contracts";
-import { getGuardState, setGuardState } from "./state";
+import { getGuardState, setGuardState } from "./ports";
 import { numberOrNull } from "../../llm/helpers";
 import { GUARD_NIGHT_STAGES } from "./night_stages";
 import { GUARD_TOOL_SPECS } from "./tool_specs";

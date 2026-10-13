@@ -1,7 +1,7 @@
 /**
- * Defines Witch potion validation for stock, target, self-heal and current knife context. Inputs
- * are sanitized potion tools and trusted validation context; outputs are the original structured
- * rule results. It never consumes a potion during preflight or invents a missing heal target.
+ * 定义女巫药瓶库存、目标、自救及当前狼刀上下文的工具校验。输入为已清洗用药工具与
+ * 可信校验上下文；输出保留原结构化规则结果。预检不消费药瓶，不虚构缺失的救药目标；
+ * 状态只读入口已归完整状态槽，付款与真实效果仍在原提交边界。
  */
 import { scholarMentorBlocks } from "../scholar_mentor/night_frame";
 import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
@@ -13,7 +13,7 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import type { StatusMarksComponent } from "../../../../core/domain/components/status_marks";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
-import { getWitchState } from "./state";
+import { getWitchState } from "./ports";
 import { activeNightAbility } from "../abilities";
 import { luckyTargetAllowed } from "../night_action_history";
 

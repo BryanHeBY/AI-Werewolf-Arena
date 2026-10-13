@@ -19,7 +19,7 @@ import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 /** 文件说明：预言家角色 profile。 */
 import { Camp, Role, Phase } from "../../../../core/domain/model";
 import { NativeRoleContributions } from "../contracts";
-import { getSeerState, setSeerState } from "./state";
+import { getSeerState, setSeerState } from "./ports";
 import { numberOrNull } from "../../llm/helpers";
 import { SEER_NIGHT_STAGES } from "./night_stages";
 import { SEER_TOOL_SPECS } from "./tool_specs";

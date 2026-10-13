@@ -3,12 +3,12 @@
  * 输入是只读预言家状态及行动者、目标序号；输出保留原历史去重和自身目标规则。
  * 每次查询之前，原字段读取失败继续传播；权限与失败、关闭窗口由既有租约所有者负责。
  * 公开 getter 返回同一深只读状态引用；初始化具名绑定保留原输入复制契约。
- * 本入口不重置回合、不捕获行动权限，也不提交查验或修改库存。
+ * 本入口的初始化 setter 仅安装原生库存；普通查询不重置回合、不捕获行动权限或提交查验。
  */
 
 import type { SeerReadState } from "@ai-werewolf-arena/game-contract";
 
-export { getSeerState } from "./state";
+export { getSeerState } from "./state-slot";
 
 export function seerTargetAllowed(
   state: SeerReadState | undefined,
@@ -21,4 +21,8 @@ export function seerTargetAllowed(
   );
 }
 
-export { setSeerState } from "./state";
+export { setSeerState } from "./state-slot";
+
+export { SEER_STATE_SLOT } from "./state-slot";
+
+export { recordSeerInspection, recordRecipientSeerInspection } from "./state-slot";

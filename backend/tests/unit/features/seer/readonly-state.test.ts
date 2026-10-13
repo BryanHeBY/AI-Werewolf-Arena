@@ -11,7 +11,7 @@ import {
   getSeerState,
   setSeerState,
   recordSeerInspection,
-} from "../../../../src/game/mechanisms/roles/seer/state";
+} from "../../../../src/game/mechanisms/roles/seer/ports";
 
 function rejectedWrites(state: SeerReadState): void {
   // @ts-expect-error A read view grants no scalar write.

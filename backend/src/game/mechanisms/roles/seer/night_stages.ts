@@ -4,13 +4,14 @@
  * 资格枚举走只读查询，具体 Seer 状态与公共 use 命令在原 commit 位置执行；映射与子狐顺序不变。
  * Demon 封存原生控制器保持独立，不额外验证租约、退款或将原体信息写入玩家知识。
  */
+import { SEER_STATE_SLOT } from "./ports";
 /** 文件说明：预言家夜间查验阶段处理。 */
 import { seerTargetAllowed } from "./ports";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Phase, Role } from "../../../../core/domain/model";
 import { NightStageHandler } from "../../stages/night/contracts";
-import { getSeerState, recordSeerInspection } from "./state";
+import { getSeerState } from "./ports";
 import { resolveInspection } from "../inspection";
 import { activeNightAbility } from "../abilities";
 import { recordNightAbilityUse } from "../ability_changes";
@@ -147,7 +148,7 @@ const seerCheckStage: NightStageHandler = {
         throw new Error("time_consort_inspection_target_stale");
       ctx.nativeNightEffects.commitReflectedTarget(receipt, day, seerId, "check");
       if (seerState) {
-        recordSeerInspection(seerState, targetId, isWerewolf, inspection);
+        SEER_STATE_SLOT.allowedWrites.recordSeerInspection(seerState, targetId, isWerewolf, inspection);
       }
 
       commitFoxInspection(ctx.world, ctx.state, target, day, () => scope.isOwnerCurrent(true));

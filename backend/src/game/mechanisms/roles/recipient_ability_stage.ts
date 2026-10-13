@@ -20,9 +20,9 @@ import { recordNightAbilityUse } from "./ability_changes";
 import { captureNightAbilityScope } from "./ability_scope";
 import { luckyTargetAllowed, recordOwnNightAction } from "./night_action_history";
 import { resolveInspection } from "./inspection";
-import { recordRecipientSeerInspection } from "./seer/state";
-import { recordRecipientGuardTarget } from "./guard/ports";
-import { consumeRecipientPoison } from "./witch/ports";
+import { SEER_STATE_SLOT } from "./seer/ports";
+import { GUARD_STATE_SLOT } from "./guard/ports";
+import { WITCH_STATE_SLOT } from "./witch/ports";
 
 type RecipientPolicy = "lucky" | "black_market";
 const committed = new WeakMap<World, Map<RecipientPolicy, Set<number>>>();
@@ -176,7 +176,7 @@ export function recipientAbilityStage(
               )
                 continue;
               const isWerewolf = result.camp === Camp.Wolf;
-              recordRecipientSeerInspection(ability, target, isWerewolf, result);
+              SEER_STATE_SLOT.allowedWrites.recordRecipientSeerInspection(ability, target, isWerewolf, result);
               commitFoxInspection(ctx.world, ctx.state, target, day, () =>
                 scope.isOwnerCurrent(true),
               );
@@ -201,7 +201,7 @@ export function recipientAbilityStage(
               const marks = ctx.ensureMarks(target.id);
               marks.add(StatusMark.GuardMark);
               (ctx.state.guardClaims ??= []).push({ target, marks });
-              recordRecipientGuardTarget(ability, target);
+              GUARD_STATE_SLOT.allowedWrites.recordRecipientGuardTarget(ability, target);
               ctx.events.push({
                 timestamp: Date.now(),
                 type: "guard_applied",
@@ -239,7 +239,7 @@ export function recipientAbilityStage(
                 ),
               );
               ctx.ensureMarks(target.id).add(StatusMark.PoisonMark);
-              consumeRecipientPoison(ability);
+              WITCH_STATE_SLOT.allowedWrites.consumeRecipientPoison(ability);
               ctx.events.push({
                 timestamp: Date.now(),
                 type: "witch_potion_used",
