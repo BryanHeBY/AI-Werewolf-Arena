@@ -93012,13 +93012,905 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/configured_role_policies.test.ts",
+      "to": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sourceCommit": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "reason": "Actual selected unit module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "54cc9137b09fcd7d5caabf567f080d5554d2d5d4f01471d9d03e1f53b1459701",
+      "candidateSha256": "1896319b8120ba8cba7f3bff065ad76e01cd967ada009df0b2ad3b890768ee49",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 19343,
+          "end": 19398,
+          "original": "../../../src/game/mechanisms/roles/gargoyle/inheritance",
+          "value": "../../../src/game/mechanisms/roles/gargoyle/inheritance",
+          "originalResolved": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 2046,
+          "end": 2068,
+          "original": "../night_stage_fixture",
+          "value": "../../engine/night_stage_fixture",
+          "originalResolved": "backend/tests/engine/night_stage_fixture.ts",
+          "expectedResolved": "backend/tests/engine/night_stage_fixture.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1959,
+          "end": 2008,
+          "original": "../../../src/ai/agents/providers/observed_players",
+          "value": "../../../src/ai/agents/providers/observed_players",
+          "originalResolved": "backend/src/ai/agents/providers/observed_players.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_players.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1864,
+          "end": 1909,
+          "original": "../../../src/ai/agents/providers/observed_bot",
+          "value": "../../../src/ai/agents/providers/observed_bot",
+          "originalResolved": "backend/src/ai/agents/providers/observed_bot.ts",
+          "expectedResolved": "backend/src/ai/agents/providers/observed_bot.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1794,
+          "end": 1832,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1704,
+          "end": 1762,
+          "original": "../../../src/game/mechanisms/prompt/config_render_registry",
+          "value": "../../../src/game/mechanisms/prompt/config_render_registry",
+          "originalResolved": "backend/src/game/mechanisms/prompt/config_render_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/prompt/config_render_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1600,
+          "end": 1653,
+          "original": "../../../src/game/mechanisms/llm/target_hint_registry",
+          "value": "../../../src/game/mechanisms/llm/target_hint_registry",
+          "originalResolved": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/llm/target_hint_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1504,
+          "end": 1551,
+          "original": "../../../src/game/engine/action_request_factory",
+          "value": "../../../src/game/engine/action_request_factory",
+          "originalResolved": "backend/src/game/engine/action_request_factory.ts",
+          "expectedResolved": "backend/src/game/engine/action_request_factory.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1407,
+          "end": 1459,
+          "original": "../../../src/game/mechanisms/roles/wolf_king/profile",
+          "value": "../../../src/game/mechanisms/roles/wolf_king/profile",
+          "originalResolved": "backend/src/game/mechanisms/roles/wolf_king/profile.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/wolf_king/profile.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1312,
+          "end": 1364,
+          "original": "../../../src/game/mechanisms/roles/hunter/death_hook",
+          "value": "../../../src/game/mechanisms/roles/hunter/death_hook",
+          "originalResolved": "backend/src/game/mechanisms/roles/hunter/death_hook.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/hunter/death_hook.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1228,
+          "end": 1276,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1119,
+          "end": 1175,
+          "original": "../../../src/game/mechanisms/roles/role_inspection/rules",
+          "value": "../../../src/game/mechanisms/roles/role_inspection/rules",
+          "originalResolved": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/role_inspection/rules.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1014,
+          "end": 1077,
+          "original": "../../../src/game/mechanisms/roles/role_inspection/night_stages",
+          "value": "../../../src/game/mechanisms/roles/role_inspection/night_stages",
+          "originalResolved": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 864,
+          "end": 914,
+          "original": "../../../src/game/mechanisms/roles/ability_changes",
+          "value": "../../../src/game/mechanisms/roles/ability_changes",
+          "originalResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/ability_changes.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 755,
+          "end": 799,
+          "original": "../../../src/game/mechanisms/roles/abilities",
+          "value": "../../../src/game/mechanisms/roles/abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 650,
+          "end": 692,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 571,
+          "end": 608,
+          "original": "../../../src/core/domain/board_schema",
+          "value": "../../../src/core/domain/board_schema",
+          "originalResolved": "backend/src/core/domain/board_schema.ts",
+          "expectedResolved": "backend/src/core/domain/board_schema.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 489,
+          "end": 533,
+          "original": "../../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 371,
+          "end": 416,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 315,
+          "end": 332,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+          "originalExpression": "import(\"../../../src/game/mechanisms/roles/gargoyle/inheritance\")",
+          "currentExpression": "import(\"../../../src/game/mechanisms/roles/gargoyle/inheritance\")",
+          "currentHead": "../../../src/game/mechanisms/roles/gargoyle/inheritance",
+          "kind": "dynamic-module-path"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "61ce9909f2d484eca682a2fef9f682e6f3cacd934888a8e45fb27402adfa0cc2",
+          "title": "gargoyle: omitted, empty, explicit defaults and legacy reverse config normalize identically; unknown variants fail closed",
+          "occurrence": 1
+        },
+        {
+          "id": "ae5d366cc39fea65d27e9bd1769de9307632e818f91e41ccad38b960dc6ce4be",
+          "title": "psychic: omitted, empty, explicit defaults and legacy reverse config normalize identically; unknown variants fail closed",
+          "occurrence": 1
+        },
+        {
+          "id": "02cfa59c04ef8dd15df913b3929644b0603edfb7769978d2fd0a06905115f277",
+          "title": "mirror_girl: omitted, empty, explicit defaults and legacy reverse config normalize identically; unknown variants fail closed",
+          "occurrence": 1
+        },
+        {
+          "id": "d0e904b4e36eee1810b40af5e4f8c7b5d022dabf1acad175d7d6391e2ffeed7b",
+          "title": "hunter: omitted, empty, explicit defaults and legacy reverse config normalize identically; unknown variants fail closed",
+          "occurrence": 1
+        },
+        {
+          "id": "2f1d4cde593f85c8faa1f564ac5cc7c16316e49cf596128ed8bae7d7ca2df1a7",
+          "title": "wolf_king: omitted, empty, explicit defaults and legacy reverse config normalize identically; unknown variants fail closed",
+          "occurrence": 1
+        },
+        {
+          "id": "9424e4e9418820b8edb0a13f8440cdd067432163580c6a69185e0930ecf9a1d4",
+          "title": "gargoyle/awa_unique_required_v1/zh-CN: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "fc78328d99349f8a72acc4b4af58d08b88c8dd6efe1f0734c1fa54b252ac6b2b",
+          "title": "gargoyle/awa_unique_required_v1/en: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "372b2a088918f13333deb6c3f55d80e1ac0f24cb680c6fbfd67c22719cacdf8d",
+          "title": "gargoyle/awa_repeat_optional_v1/zh-CN: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "af00a0de5200eccf70e672c64c87b9265f59f33f7e373c418bfbad13a923c442",
+          "title": "gargoyle/awa_repeat_optional_v1/en: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "781e44a22617b757961c5e69f7f88f3705df919cc25b25e33432c2cf7dc104d6",
+          "title": "gargoyle/awa_unique_optional_v1/zh-CN: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "91c637a5813fb0b5cb07f2b505914776e54adfd01c64aceefefd671ae1eaae8b",
+          "title": "gargoyle/awa_unique_optional_v1/en: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "62dfba324056a8a5aac1c2d7f70f46990c43cc64b52945fa7decd97b5013056d",
+          "title": "psychic/awa_unique_required_v1/zh-CN: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "92248990f679e089aa0c499bf5ca304e1718ed5428c1aae93b5c4fe732fd7a59",
+          "title": "psychic/awa_unique_required_v1/en: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "71df55d97d2be407287caf90d5dabb211703e6463d88e542ac0777957e1d28eb",
+          "title": "psychic/awa_repeat_optional_v1/zh-CN: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "b7b7ae89a25e4d9e8f2047c4a68fc8fde9d6e5c971e48357c4b196208f6edb04",
+          "title": "psychic/awa_repeat_optional_v1/en: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "667763dc99da6a718e1560708675b2f8a72c52fe2c522806f18e3850d3f91b3f",
+          "title": "psychic/awa_unique_optional_v1/zh-CN: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "9b8977ee93cd43e8fd8b561e90fd5acee153d24453227b20c5f9007cd4fa6884",
+          "title": "psychic/awa_unique_optional_v1/en: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "fc12aedb5fe8903c9edea276771d5b0b7d5ef52ac01fd2bb18192e9965513fed",
+          "title": "mirror_girl/awa_unique_required_v1/zh-CN: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "a93cd0459fc66376b2eb6e432e48162c091923addee085ba252d4af43a4770b5",
+          "title": "mirror_girl/awa_unique_required_v1/en: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "118e6b9e2651ab2eca663d0805d8fb3ff7bee761be1939f244d46459330a5b93",
+          "title": "mirror_girl/awa_repeat_optional_v1/zh-CN: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "6d75afa16ea6a4901e96d23a9a1586f34d954d804022a37921ca308c14fc8b52",
+          "title": "mirror_girl/awa_repeat_optional_v1/en: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "b70c0b05a4bd4a5b3346f442e147190d37f30df410da20895d60e978ad090885",
+          "title": "mirror_girl/awa_unique_optional_v1/zh-CN: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "855618f65bdd197efd39b0b169696daca3714c0b6653f4fb76d3eb760f06a44d",
+          "title": "mirror_girl/awa_unique_optional_v1/en: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity",
+          "occurrence": 1
+        },
+        {
+          "id": "027b9a3dd56c5358d9c964f230e62e5735201e782af5b7d05b0516bb83a24ea0",
+          "title": "gargoyle/construct: policy mutation revokes pending inspection rather than reinterpreting it",
+          "occurrence": 1
+        },
+        {
+          "id": "f1a160b4931c306d790f29c1ef3fe061544f7688fa4f95f1778b569179c664a0",
+          "title": "gargoyle/await: policy mutation revokes pending inspection rather than reinterpreting it",
+          "occurrence": 1
+        },
+        {
+          "id": "c0f737c2481637dc55fe530e37c8b8b826aa650342f51b86013ba65822d58597",
+          "title": "gargoyle/gateway: policy mutation revokes pending inspection rather than reinterpreting it",
+          "occurrence": 1
+        },
+        {
+          "id": "66f9908c742f01e32c7b7a1bef455c87db2aefca800770cdeb3ae399b117eb84",
+          "title": "psychic/construct: policy mutation revokes pending inspection rather than reinterpreting it",
+          "occurrence": 1
+        },
+        {
+          "id": "708ba1ca3dd16b228fe9009c9ab0d795ed85ea45f4322ceafde3320e19d1b391",
+          "title": "psychic/await: policy mutation revokes pending inspection rather than reinterpreting it",
+          "occurrence": 1
+        },
+        {
+          "id": "e816340c17f709d51f48700472c32039ef3a0784cd839c0afb6f6e5dc42409f9",
+          "title": "psychic/gateway: policy mutation revokes pending inspection rather than reinterpreting it",
+          "occurrence": 1
+        },
+        {
+          "id": "a359d1cd1551a447796954ac4707143610d380e7976f8052b6724b060cb6d8e5",
+          "title": "mirror_girl/construct: policy mutation revokes pending inspection rather than reinterpreting it",
+          "occurrence": 1
+        },
+        {
+          "id": "1f76b5312a9820301eedff2c29eeacc7089f2cd0e283dd4ab0565415d953bf03",
+          "title": "mirror_girl/await: policy mutation revokes pending inspection rather than reinterpreting it",
+          "occurrence": 1
+        },
+        {
+          "id": "256d11e6977f0b9ae6f3761487a0c3bc91dea0b11441769cac04f132490aa89e",
+          "title": "mirror_girl/gateway: policy mutation revokes pending inspection rather than reinterpreting it",
+          "occurrence": 1
+        },
+        {
+          "id": "1b877e2bdc71bcf45aff1cfb269a75d4e7cbc4025582ac72c07ee9e3fb95c4ed",
+          "title": "hunter/awa_qualified_sources_v1: every single and compound death cause follows native policy; poison, empty and unknown remain blocked",
+          "occurrence": 1
+        },
+        {
+          "id": "f72f95437aaef3cc35a743f1749eed67d295ab6ae1e4eed95845ec80ec5a8b37",
+          "title": "hunter/awa_knife_or_exile_v1: every single and compound death cause follows native policy; poison, empty and unknown remain blocked",
+          "occurrence": 1
+        },
+        {
+          "id": "52af18871f32517c657ccade0bc98191afae6d50ea608dcb3e5d05c74ec55429",
+          "title": "wolf_king/awa_qualified_sources_v1: every single and compound death cause follows native policy; poison, empty and unknown remain blocked",
+          "occurrence": 1
+        },
+        {
+          "id": "36254ecd771c4e6b975340fc3adaa9e4421698163376fb5427ffa8752e33053a",
+          "title": "wolf_king/awa_knife_or_exile_v1: every single and compound death cause follows native policy; poison, empty and unknown remain blocked",
+          "occurrence": 1
+        },
+        {
+          "id": "48bb84f6f4bd86ce4a05127b947bfa78aaa80a59ec19956948bd6dbf16a23628",
+          "title": "gift/copy explicit inspection state is independent of holder board; transfer retains configured history",
+          "occurrence": 1
+        },
+        {
+          "id": "4a93f00cc406532b76ebad2781e12ab5071e489d0c4c0ae2f79e92290a10f7c8",
+          "title": "gargoyle/awa_unique_required_v1: missing/invalid actions are bounded and exhausted targets do not force an impossible request",
+          "occurrence": 1
+        },
+        {
+          "id": "329ae9004f9982116754cbeea76d78f345eb9c71340d0122a3b6f4c4fa3e1a0c",
+          "title": "gargoyle/awa_repeat_optional_v1: missing/invalid actions are bounded and exhausted targets do not force an impossible request",
+          "occurrence": 1
+        },
+        {
+          "id": "c51406cd4ecdf14fcb6c77c4e5d6065a461fed01867bd58bf7e786f29204312b",
+          "title": "gargoyle/awa_unique_optional_v1: missing/invalid actions are bounded and exhausted targets do not force an impossible request",
+          "occurrence": 1
+        },
+        {
+          "id": "2522137406eb6ed5189c07d009de86c7b372bae3f8547e2cf5a817bd6de2b9a3",
+          "title": "psychic/awa_unique_required_v1: missing/invalid actions are bounded and exhausted targets do not force an impossible request",
+          "occurrence": 1
+        },
+        {
+          "id": "babd299c6b7a660c28ad8ec2ca819c0a366b99571d43fdcb2343f264beb11a9a",
+          "title": "psychic/awa_repeat_optional_v1: missing/invalid actions are bounded and exhausted targets do not force an impossible request",
+          "occurrence": 1
+        },
+        {
+          "id": "8062bb6ea664830db0912c378aac0bfffe9047e5a031a725d57d6c1c38bd7069",
+          "title": "psychic/awa_unique_optional_v1: missing/invalid actions are bounded and exhausted targets do not force an impossible request",
+          "occurrence": 1
+        },
+        {
+          "id": "eb1a254df08360c8034e694c03567f369128b8532191a31faf32a22e3e68c2f8",
+          "title": "mirror_girl/awa_unique_required_v1: missing/invalid actions are bounded and exhausted targets do not force an impossible request",
+          "occurrence": 1
+        },
+        {
+          "id": "dd97cb87cf6f6ac2d9b4ca8c3fa2734e0904ae44f03110707ada699a86cef9ad",
+          "title": "mirror_girl/awa_repeat_optional_v1: missing/invalid actions are bounded and exhausted targets do not force an impossible request",
+          "occurrence": 1
+        },
+        {
+          "id": "ea0a358618e2511bc7c34b48ab54952e87f0fca595eaf96c7c55db7faeb308db",
+          "title": "mirror_girl/awa_unique_optional_v1: missing/invalid actions are bounded and exhausted targets do not force an impossible request",
+          "occurrence": 1
+        },
+        {
+          "id": "42b3f83ae6d61b5460a1735868e5e72d9b4e360411841462a01d6bad2c40f4c3",
+          "title": "optional Gargoyle pass completes only its native current-policy knife gate",
+          "occurrence": 1
+        },
+        {
+          "id": "398910c2152b5bb498fb37648e27754d5688cffb4e43832605391cedd921c3d3",
+          "title": "a native death proposal is revoked by a policy edit before central commit",
+          "occurrence": 1
+        },
+        {
+          "id": "245ef232b8a9d1ed93ce506996f8aa66c1b6c7bf6baf3e490c6f747ad6fb6a65",
+          "title": "zh-CN: mixed board policy descriptions identify the role they govern",
+          "occurrence": 1
+        },
+        {
+          "id": "77f7cb5cb1f974d83bd0faff4169bbb126c34005dd262fd53621fa174048a273",
+          "title": "en: mixed board policy descriptions identify the role they govern",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/game/engine/death_resolution",
+          "originalImport": "import { DeathResolution } from \"../../../src/game/engine/death_resolution\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DeathResolution",
+              "imported": "DeathResolution",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/event_registry",
+          "originalImport": "import { EventRegistry } from \"../../../src/game/engine/event_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "EventRegistry",
+              "imported": "EventRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/configured_role_policies.test.ts",
+      "to": "backend/tests/scenarios/mechanisms/configured-death-policy-permits-and-copied-guns.test.ts",
+      "sourceCommit": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "54cc9137b09fcd7d5caabf567f080d5554d2d5d4f01471d9d03e1f53b1459701",
+      "candidateSha256": "b3ca0872b1fdad503064e5d8ecc4814778c4e52dbea4d26cc9723669f048c212",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 6173,
+          "end": 6234,
+          "original": "../../../src/game/mechanisms/roles/awakened_hidden_wolf/state",
+          "value": "../../../src/game/mechanisms/roles/awakened_hidden_wolf/state",
+          "originalResolved": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 5908,
+          "end": 5964,
+          "original": "../../../src/game/mechanisms/roles/mechanical_wolf/state",
+          "value": "../../../src/game/mechanisms/roles/mechanical_wolf/state",
+          "originalResolved": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 3870,
+          "end": 3920,
+          "original": "../../../src/game/mechanisms/roles/death_abilities",
+          "value": "../../../src/game/mechanisms/roles/death_abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/death_abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/death_abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 755,
+          "end": 793,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 684,
+          "end": 723,
+          "original": "../../../src/game/engine/event_registry",
+          "value": "../../../src/game/engine/event_registry",
+          "originalResolved": "backend/src/game/engine/event_registry.ts",
+          "expectedResolved": "backend/src/game/engine/event_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 609,
+          "end": 650,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 525,
+          "end": 573,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 428,
+          "end": 472,
+          "original": "../../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 310,
+          "end": 355,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 254,
+          "end": 271,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/game/mechanisms/roles/death_abilities.ts",
+          "originalExpression": "import(\"../../../src/game/mechanisms/roles/death_abilities\")",
+          "currentExpression": "import(\"../../../src/game/mechanisms/roles/death_abilities\")",
+          "currentHead": "../../../src/game/mechanisms/roles/death_abilities",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+          "originalExpression": "import(\"../../../src/game/mechanisms/roles/mechanical_wolf/state\")",
+          "currentExpression": "import(\"../../../src/game/mechanisms/roles/mechanical_wolf/state\")",
+          "currentHead": "../../../src/game/mechanisms/roles/mechanical_wolf/state",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+          "originalExpression": "import(\"../../../src/game/mechanisms/roles/awakened_hidden_wolf/state\")",
+          "currentExpression": "import(\"../../../src/game/mechanisms/roles/awakened_hidden_wolf/state\")",
+          "currentHead": "../../../src/game/mechanisms/roles/awakened_hidden_wolf/state",
+          "kind": "dynamic-module-path"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "3fdaa06d66d1bfbb4c276fdb546d4a6394802951625c54b6b46985c231e8a3e9",
+          "title": "hunter: death request policy edit revokes real gateway permit and late selection",
+          "occurrence": 1
+        },
+        {
+          "id": "026b8aeed62daaea266e729e35876c1c58dfc4b9c73d0ae3fc8dd5ff4f793639",
+          "title": "wolf_king: death request policy edit revokes real gateway permit and late selection",
+          "occurrence": 1
+        },
+        {
+          "id": "b9adc72f813058cdc1947bde8a2ce5054b087a29fe2b01d941fdca1926b47bc4",
+          "title": "strict native Hunter policy does not restrict an independently gifted gun on the same holder",
+          "occurrence": 1
+        },
+        {
+          "id": "864e07553b0afd77265a6571134bb5acbb698d4a4423193bb460a5a5adf9067c",
+          "title": "mechanical_wolf: learning a strict-policy Hunter retains the copied gun's original death-cause policy",
+          "occurrence": 1
+        },
+        {
+          "id": "7bd2d38b35e506f0b2aed6fd92286e28f4fe453982b1bd3314d904a39a4feab8",
+          "title": "awakened_hidden_wolf: learning a strict-policy Hunter retains the copied gun's original death-cause policy",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  DeathCause,\n  Phase,\n  Role,\n  permitsDeathShot,\n  type BoardConfig,\n  type ActionRequest,\n  type GameEvent,\n  type RoleComponent,\n  type DeathActionPolicy,\n  type InspectionPolicy,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, DeathCause, Phase, Role, type BoardConfig, type GameEvent, type RoleComponent, type DeathActionPolicy, type InspectionPolicy } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "permitsDeathShot",
+              "imported": "permitsDeathShot",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/board_schema",
+          "originalImport": "import { boardConfigSchema } from \"../../../src/core/domain/board_schema\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "boardConfigSchema",
+              "imported": "boardConfigSchema",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/catalog",
+          "originalImport": "import { getDefaultRoleCatalog } from \"../../../src/game/mechanisms/roles/catalog\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/abilities",
+          "originalImport": "import {\n  findNightAbility,\n  projectNightAbility,\n} from \"../../../src/game/mechanisms/roles/abilities\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "findNightAbility",
+              "imported": "findNightAbility",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "projectNightAbility",
+              "imported": "projectNightAbility",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/ability_changes",
+          "originalImport": "import {\n  grantNightAbility,\n  transferNightAbility,\n} from \"../../../src/game/mechanisms/roles/ability_changes\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "grantNightAbility",
+              "imported": "grantNightAbility",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "transferNightAbility",
+              "imported": "transferNightAbility",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/role_inspection/night_stages",
+          "originalImport": "import {\n  ROLE_INSPECTION_STAGE,\n  PSYCHIC_INSPECTION_STAGE,\n  MIRROR_INSPECTION_STAGE,\n} from \"../../../src/game/mechanisms/roles/role_inspection/night_stages\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ROLE_INSPECTION_STAGE",
+              "imported": "ROLE_INSPECTION_STAGE",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "PSYCHIC_INSPECTION_STAGE",
+              "imported": "PSYCHIC_INSPECTION_STAGE",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "MIRROR_INSPECTION_STAGE",
+              "imported": "MIRROR_INSPECTION_STAGE",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/role_inspection/rules",
+          "originalImport": "import { roleInspectionTargets } from \"../../../src/game/mechanisms/roles/role_inspection/rules\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "roleInspectionTargets",
+              "imported": "roleInspectionTargets",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/hunter/death_hook",
+          "originalImport": "import { hunterDeathHook } from \"../../../src/game/mechanisms/roles/hunter/death_hook\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "hunterDeathHook",
+              "imported": "hunterDeathHook",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/wolf_king/profile",
+          "originalImport": "import { WOLF_KING_ROLE_PROFILE } from \"../../../src/game/mechanisms/roles/wolf_king/profile\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "WOLF_KING_ROLE_PROFILE",
+              "imported": "WOLF_KING_ROLE_PROFILE",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/action_request_factory",
+          "originalImport": "import { GameActionRequestFactory } from \"../../../src/game/engine/action_request_factory\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameActionRequestFactory",
+              "imported": "GameActionRequestFactory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/llm/target_hint_registry",
+          "originalImport": "import { getDefaultTargetHintRegistry } from \"../../../src/game/mechanisms/llm/target_hint_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultTargetHintRegistry",
+              "imported": "getDefaultTargetHintRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/prompt/config_render_registry",
+          "originalImport": "import { getDefaultConfigRenderRegistry } from \"../../../src/game/mechanisms/prompt/config_render_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/providers/observed_bot",
+          "originalImport": "import { ObservedBot } from \"../../../src/ai/agents/providers/observed_bot\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ObservedBot",
+              "imported": "ObservedBot",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/providers/observed_players",
+          "originalImport": "import { ObservedPlayersActionProvider } from \"../../../src/ai/agents/providers/observed_players\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ObservedPlayersActionProvider",
+              "imported": "ObservedPlayersActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../night_stage_fixture",
+          "originalImport": "import { nightStageContext } from \"../night_stage_fixture\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "nightStageContext",
+              "imported": "nightStageContext",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 569,
-    "targetFiles": 644,
-    "mappingEntries": 644,
-    "baselineCases": 7362,
+    "sourceFiles": 570,
+    "targetFiles": 646,
+    "mappingEntries": 646,
+    "baselineCases": 7417,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

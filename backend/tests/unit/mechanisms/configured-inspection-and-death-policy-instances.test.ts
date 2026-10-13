@@ -1,10 +1,5 @@
 /**
- * Tests configured target/action policies through validators, native/recipient
- * stages and controlled phase flows. Inputs are literal boards, scripted actions
- * and deliberate live-slot edits; outputs are request options, inspection history,
- * effect records and original error codes asserted from handwritten expectations.
- * Test-only field casts preserve those old mutations; no model or fixture oracle
- * is regenerated and this mixed legacy file does not define production policy.
+ * Unit tests check configured inspection/death policies through bounded stages, hooks, validation, hints and projections. Inputs are literal role/policy/locale matrices and original live-slot edits; handwritten permissions, resource/history counts and error IDs are the oracle. DeathResolution interaction chains stay in scenarios; no complete phase or model executes here.
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -46,21 +41,21 @@ import { getHunterState, getWolfKingState } from "../../../src/game/mechanisms/r
 import { hunterDeathHook } from "../../../src/game/mechanisms/roles/hunter/death_hook";
 import { WOLF_KING_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/wolf_king/profile";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { getDefaultTargetHintRegistry } from "../../../src/game/mechanisms/llm/target_hint_registry";
 import { getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms/prompt/config_render_registry";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
-import { nightStageContext } from "../night_stage_fixture";
+import { nightStageContext } from "../../engine/night_stage_fixture";
 
 const inspectionPolicies = [
   "awa_unique_required_v1",
   "awa_repeat_optional_v1",
   "awa_unique_optional_v1",
 ] as const;
+
 const deathPolicies = ["awa_qualified_sources_v1", "awa_knife_or_exile_v1"] as const;
+
 const keys = {
   [Role.Gargoyle]: "gargoyle",
   [Role.Psychic]: "psychic",
@@ -68,6 +63,7 @@ const keys = {
   [Role.Hunter]: "hunter",
   [Role.WolfKing]: "wolfKing",
 } as const;
+
 function fixture(
   kind: keyof typeof keys,
   parameters?: { inspectionPolicy: InspectionPolicy } | { deathActionPolicy: DeathActionPolicy },
@@ -85,6 +81,7 @@ function fixture(
   const config = parseBoardDefinition(boardDefinitionFromConfig("role_policy", raw)).config;
   return { ...bootstrapGame(config, { fixedRoles: roles, locale }), config };
 }
+
 for (const kind of [
   Role.Gargoyle,
   Role.Psychic,
@@ -119,6 +116,7 @@ for (const kind of [
       }),
     ).toThrow();
   });
+
 for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
   for (const policy of inspectionPolicies)
     for (const locale of ["zh-CN", "en"] as const)
@@ -246,6 +244,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
         );
         expect(role.role).toBe(kind);
       });
+
 for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
   for (const point of ["construct", "await", "gateway"] as const)
     test(`${kind}/${point}: policy mutation revokes pending inspection rather than reinterpreting it`, async () => {
@@ -314,6 +313,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
       expect(ability.lastUsedDay).toBeNull();
       expect(events.filter((e) => e.type === "role_inspected")).toEqual([]);
     });
+
 for (const kind of [Role.Hunter, Role.WolfKing] as const)
   for (const policy of deathPolicies)
     test(`${kind}/${policy}: every single and compound death cause follows native policy; poison, empty and unknown remain blocked`, async () => {
@@ -364,66 +364,6 @@ for (const kind of [Role.Hunter, Role.WolfKing] as const)
         ).toBe(false);
       }
     });
-for (const kind of [Role.Hunter, Role.WolfKing] as const)
-  test(`${kind}: death request policy edit revokes real gateway permit and late selection`, async () => {
-    const game = fixture(kind),
-      role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
-      state = kind === Role.Hunter ? getHunterState(role)! : getWolfKingState(role)!;
-    const events: GameEvent[] = [],
-      snapshot = { ...game.phaseManager.getSnapshot(), phase: Phase.Day };
-    let asks = 0;
-    const resolver = new DeathResolution(
-      game.world,
-      events,
-      new ToolGateway(),
-      new EventRegistry(),
-      snapshot,
-    );
-    await resolver.resolve(
-      [1],
-      { 1: [DeathCause.Shot] },
-      {
-        async getAction(request) {
-          if (request.allowedTools.includes("shoot")) {
-            asks++;
-            state.deathActionPolicy = "awa_knife_or_exile_v1";
-            expect(
-              new ToolGateway().validateAndSanitize(
-                game.world,
-                1,
-                { name: "shoot", args: { target_id: 2 } },
-                {
-                  phase: request.phase,
-                  day: request.context.day,
-                  deathActionId: request.context.death_action_id,
-                },
-              ).ok,
-            ).toBe(false);
-            return { name: "shoot", args: { target_id: 2 } };
-          }
-          return { name: "speak", args: { text: "Offline" } };
-        },
-      },
-      Phase.Day,
-      Phase.Day,
-    );
-    expect(asks).toBe(1);
-    expect(events.filter((e) => e.type === "hunter_shot" || e.type === "wolf_king_shot")).toEqual(
-      [],
-    );
-    expect(state.canShoot).toBe(true);
-    expect(
-      events.filter((e) => e.type === "hunter_shot" || e.type === "wolf_king_shot"),
-    ).toHaveLength(0);
-    expect(
-      new ToolGateway().validateAndSanitize(
-        game.world,
-        1,
-        { name: "shoot", args: { target_id: 2 } },
-        { phase: Phase.Day, day: 1, deathActionId: 1 },
-      ).ok,
-    ).toBe(false);
-  });
 
 test("gift/copy explicit inspection state is independent of holder board; transfer retains configured history", () => {
   const game = fixture(Role.Psychic, { inspectionPolicy: "awa_unique_required_v1" }),
@@ -604,106 +544,6 @@ test("optional Gargoyle pass completes only its native current-policy knife gate
   ).inspectionPolicy = "awa_unique_required_v1";
   expect(canGargoyleKnife(role, game.world)).toBe(false);
 });
-
-test("strict native Hunter policy does not restrict an independently gifted gun on the same holder", async () => {
-  const { grantDeathGun, armDeathGun } =
-    await import("../../../src/game/mechanisms/roles/death_abilities");
-  const game = fixture(Role.Hunter, { deathActionPolicy: "awa_knife_or_exile_v1" }),
-    events: GameEvent[] = [];
-  const gun = grantDeathGun(game.world, 3, 1, 1, events);
-  armDeathGun(game.world, 1, gun, 1, events);
-  const snapshot = { day: 1, phase: Phase.Day, gameOver: false, result: null };
-  let nativeAsks = 0,
-    giftAsks = 0;
-  await new DeathResolution(
-    game.world,
-    events,
-    new ToolGateway(),
-    new EventRegistry(),
-    snapshot,
-  ).resolve(
-    [1],
-    { 1: [DeathCause.Shot] },
-    {
-      async getAction(request) {
-        if (request.allowedTools.includes("shoot")) {
-          if (request.context.ability_id === gun.id) giftAsks++;
-          else nativeAsks++;
-          return { name: "shoot", args: { target_id: 2 } };
-        }
-        return { name: "speak", args: { text: "Offline" } };
-      },
-    },
-    Phase.Day,
-    Phase.Day,
-  );
-  expect(nativeAsks).toBe(0);
-  expect(giftAsks).toBe(1);
-  expect(events.filter((e) => e.type === "hunter_shot")).toEqual([]);
-  expect(events.filter((e) => e.type === "player_shot")).toHaveLength(1);
-  expect(gun.remaining).toBe(0);
-  expect(game.world.activeDeathActionCount).toBe(0);
-});
-
-for (const kind of [Role.MechanicalWolf, Role.AwakenedHiddenWolf] as const)
-  test(`${kind}: learning a strict-policy Hunter retains the copied gun's original death-cause policy`, async () => {
-    const roles = [
-      kind,
-      Role.Hunter,
-      kind === Role.MechanicalWolf ? Role.Psychic : Role.MirrorGirl,
-      Role.Witch,
-      Role.Villager,
-      Role.Villager,
-    ];
-    const config: BoardConfig = {
-      ...sixPlayerMvpConfig,
-      roleSetups: roles.map((role) => ({ role, count: 1 })),
-      hunter: { deathActionPolicy: "awa_knife_or_exile_v1" },
-    };
-    const game = bootstrapGame(config, { fixedRoles: roles }),
-      role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
-      events: GameEvent[] = [];
-    if (kind === Role.MechanicalWolf) {
-      const m = await import("../../../src/game/mechanisms/roles/mechanical_wolf/state");
-      const state = m.getMechanicalState(role)!;
-      expect(m.learnMechanicalRole(state, 2, "hunter", 1)).toBe(true);
-      m.advanceMechanicalNight(state, 2);
-    } else {
-      const m = await import("../../../src/game/mechanisms/roles/awakened_hidden_wolf/state");
-      const state = m.getAwakenedState(role)!;
-      expect(m.learnAwakenedRole(state, 2, "hunter", 1)).toBe(true);
-      expect(m.activateAwakenedLearning(state, 1)).toBe(true);
-    }
-    let asks = 0;
-    await new DeathResolution(game.world, events, new ToolGateway(), new EventRegistry(), {
-      day: 2,
-      phase: Phase.Day,
-      gameOver: false,
-      result: null,
-    }).resolve(
-      [1],
-      { 1: [DeathCause.Shot] },
-      {
-        async getAction(request) {
-          if (request.allowedTools.includes("shoot")) {
-            asks++;
-            return { name: "shoot", args: { target_id: 5 } };
-          }
-          return { name: "speak", args: { text: "Offline" } };
-        },
-      },
-      Phase.Day,
-      Phase.Day,
-    );
-    expect(asks).toBe(1);
-    expect(
-      events.filter((e) => e.type === "mechanical_shot" || e.type === "player_shot"),
-    ).toHaveLength(1);
-    expect(
-      getHunterState(game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!)?.canShoot,
-    ).toBe(true);
-    expect(game.world.activeDeathActionCount).toBe(0);
-  });
 
 test("a native death proposal is revoked by a policy edit before central commit", async () => {
   const game = fixture(Role.Hunter),
