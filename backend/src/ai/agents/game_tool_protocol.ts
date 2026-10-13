@@ -1,8 +1,13 @@
+/**
+ * 为 SDK 与 MCP 生成同一游戏工具的 Zod 输入结构、描述和静态协议。
+ * 输入为 locale；输出参数校验器及 JSON Schema，文案可变而工具名、字段和协议版本固定。
+ * 本模块只校验工具包装结构，具体行动规则、回合开放状态和提交权限由运行端口确认。
+ */
 import { z } from "zod";
 import type { ToolSchema } from "../integrations/llm/transport";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 
-/** SDK and MCP derive the same descriptions, parameter schemas and static protocol. */
+/** 两种传输复用同一结构定义，避免参数 schema 与说明各自漂移。 */
 export function gameToolProtocol(locale: Locale = "zh-CN") {
   const schemaError = text(locale, "error.schema_input");
   const inputs = {
@@ -57,6 +62,7 @@ export function gameToolProtocol(locale: Locale = "zh-CN") {
     submit_action: text(locale, "schema.game.submit"),
     report_bug: text(locale, "schema.game.report"),
   };
+  // 从同一 inputs 导出模型工具 schema；任意 arguments 仍需在行动网关按具体工具继续校验。
   const specs: ToolSchema[] = (Object.keys(inputs) as Array<keyof typeof inputs>).map((name) => ({
     name,
     description: descriptions[name],
@@ -68,7 +74,7 @@ export function gameToolProtocol(locale: Locale = "zh-CN") {
   return { inputs, descriptions, schema, specs };
 }
 
-// Compatibility exports retain the original default language and machine contracts.
+// 默认语言出口保留既有消费契约；显式 locale 的调用方使用上方工厂。
 const defaultProtocol = gameToolProtocol();
 export const getGameSchemaInput = defaultProtocol.inputs.get_game_schema;
 export const submitGameActionInput = defaultProtocol.inputs.submit_action;

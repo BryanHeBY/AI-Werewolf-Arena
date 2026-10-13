@@ -1,3 +1,9 @@
+/**
+ * 持有 SDK 提示会话中每位玩家的追加历史、可见事件游标、回合计数和首次系统提示。
+ * 输入为调用方传入的 ActionRequest 与提示政策；输出为历史窗口和本轮提示，记录指标随结果返回。
+ * 请求授权与 currentness 仍归请求所有者，此处只解析可见事件并构建文本。
+ * 历史只追加，窗口仅影响本次发送；本模块不选择行动、不执行工具，也不改变游戏阶段。
+ */
 import { text } from "@ai-werewolf-arena/game-text";
 import { ActionRequest, EntityId, PlayerVisibleEvent, ToolName } from "../../../core/domain";
 import { encodePlayerVisibleEvent, parsePlayerVisibleEvents } from "../visible_event_protocol";
@@ -10,7 +16,7 @@ export interface PlayerPromptSessionOptions {
   promptPolicy: PlayerPromptPolicy;
 }
 
-/** Append-only owner of per-player visible history, event cursors and stable prompts. */
+/** 以玩家编号隔离历史与提示缓存；事件和回合使用各自的计数语义。 */
 export class PlayerPromptSession {
   static readonly REPORT_BUG_TOOL: ToolName = "report_bug";
 
@@ -34,6 +40,7 @@ export class PlayerPromptSession {
     const system = isInitialRound
       ? this.options.promptPolicy.buildSystem(request, { supportsDebugReporting: true })
       : undefined;
+    // 系统提示只在首次构建后缓存；后续请求复用该文本，本轮行动与观察放在 user 提示中。
     const systemPrompt = this.systemPrompts.get(request.actorId) ?? system!.systemPrompt;
     if (isInitialRound) this.systemPrompts.set(request.actorId, systemPrompt);
     const userPrompt = this.options.promptPolicy.buildUser(request, {
@@ -47,6 +54,7 @@ export class PlayerPromptSession {
       }),
     });
     const currentTurnUser: ChatMessage = { role: "user", content: userPrompt };
+    // 先追加本轮提示再返回。后续传输失败不回滚已经推进的历史、游标和回合计数。
     this.append(request.actorId, currentTurnUser);
     return {
       messages: [
@@ -86,6 +94,7 @@ export class PlayerPromptSession {
     const events = parsePlayerVisibleEvents(request.context.visible_events);
     const cursor = this.eventCursors.get(request.actorId) ?? 0;
     if (!events.length) return { delta: [], cursorBefore: cursor, cursorAfter: cursor };
+    // 只按玩家可见序号去重，保留输入事件顺序；不读取全局事件序号或补齐隐藏缺口。
     const delta = events.filter((event) => event.seq > cursor);
     for (const event of delta) {
       this.append(request.actorId, { role: "user", content: encodePlayerVisibleEvent(event) });
@@ -97,6 +106,7 @@ export class PlayerPromptSession {
 
   private selectHistoryWindow(fullHistory: ChatMessage[]) {
     const total = fullHistory.length;
+    // 窗口按已存消息条数计算，事件、提示和回应均计入；切片不会删掉完整历史。
     const start = Math.max(0, total - Math.max(1, this.options.maxPromptEvents * 6));
     return { start, end: total, total, history: fullHistory.slice(start) };
   }

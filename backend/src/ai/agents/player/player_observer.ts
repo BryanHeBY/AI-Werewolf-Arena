@@ -1,3 +1,8 @@
+/**
+ * 将玩家提示、模型原文和工具轨迹输出到终端，按选项控制日志、思考内容及着色。
+ * 输入为编排器已提供的数据；输出只有日志与诊断文本，不负责事件投影、持久化或行动判定。
+ * 文案依据 locale 渲染，机器标签及模型原文保持原值；console 异常仍交给调用方处理。
+ */
 import { text, dictionaries, type MessageKey, type Locale } from "@ai-werewolf-arena/game-text";
 import { ActionRequest } from "../../../core/domain";
 import { colorize, isAnsiEnabled } from "../../../utils/ansi";
@@ -12,7 +17,7 @@ export interface LlmObserverOptions {
   transport?: "llm" | "acp";
 }
 
-/** Keeps terminal observability outside the game-decision orchestration. */
+/** 终端观察与游戏决策分离；最近 80 条 trace 由本实例持有。 */
 export class LlmObserver {
   private readonly recentEvents: string[] = [];
   private readonly colorizeLogs: boolean;
@@ -91,6 +96,7 @@ export class LlmObserver {
     console.log(`${prefix} end ${marker} · ${text(this.locale, "runtime.thinking_end")}`);
   }
 
+  /** 诊断摘要优先采用最终文本，否则取最后一条非空步骤文本；仅摘要截断，原始日志不由此改写。 */
   thinkingText(assistantText: string, trace: ToolLoopStepTrace[]): string | null {
     const primary = assistantText.trim();
     if (primary) return primary.length > 1200 ? `${primary.slice(0, 1200)}…` : primary;

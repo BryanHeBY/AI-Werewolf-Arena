@@ -498,3 +498,5 @@
 - 四族wolf knife继承真实共同检查点：5paths，PM初装与DR已追加标死/必要关系后发布前actual同步dispatch，RulePlan只注册组合、4机制fn仍原owner；WED/WED/WDE/WDE callee/每次roster/首error止与前prefix全部保，不新await/actorcache/RNG/lease。整PM7340+DR5128+Plan803=13271强node与6whole逆raw同、4calleeAST同，new3/0/10、finite5roots62300actual0；Rootactual5source/new3prefix与独立fiveGit/SHA/3方面+MDJSON终审通过，中文原getter序/uniqueownership限界就地；不把组合入口当整继承本体迁rulesets或55矩阵已完。见wolf-knife-inheritance-checkpoint.md。
 
 - C13 夜间阶段构造器归属：实际30原文件／29调用方，旧 engine/night_stage_fixture.ts 删除，完整 helper 移至 support/builders/night-stage-context.ts。39精确模块路径修改，getter原this／闭包与末尾spread／默认构造时点、机器异常串及全部assert保持；60完整逆向运行输出相同，finite30roots14738实际exit0，30职责头无诊断。独立真实Git／51996节点／绑定和目标解析／35合并SHA审通过，不重测试或全量门禁。见night-stage-context-builder.md。
+
+- 中文维护说明随实现继续：五Agent源仅注释，补真实创建与可取消等待／迟到回收／关闭去重／历史窗口与失败前缀／数据accepted≠commit／工具包装与授权边界。5真实Git原文／完整typedAST／10wholeemit相同，5职责头无诊断；两处独立措辞finding已修，35合并独立SHA及doc终摘要核准，不重type/runtime/globalgate。首scanner模板假差异及自动词项诊断如实保留，不因注释声称架构清零。见agent-chinese-comment-contracts.md。
