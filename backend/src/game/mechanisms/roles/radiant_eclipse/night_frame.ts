@@ -1,8 +1,9 @@
 /**
- * Owns Radiant/Eclipse original roster, borrowing choices and paid shelter/swallow effects.
- * Inputs are current ability identities and target leases; outputs are current turn checks and
- * sealed night claims. Only the original matching source may pay, and night close never revives
- * a revoked borrowed state.
+ * 负责明辉／黯月原阵容、吞噬借用租约及已付庇护／反噬效果的唯一权限。
+ * 输入为当前能力原体和目标租约；输出为当次资格检查、封存夜效果与关闭事实。
+ * 仅原匹配来源可以付款，借用关闭不恢复失效原体；payload、租约和原主抑制仍在此持有。
+ * 公共 metadata 安装和退役写归共享实例 owner，原库存、抑制解除、生命校验和失败前缀不变。
+ * 规则依据：docs/expansion/rules/awa-radiant-eclipse-twelve-v1.md。
  */
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -22,7 +23,7 @@ import {
   type NightRadiantBacklash,
 } from "../../../../core/domain/night_effects";
 import { allNightAbilities, abilityStatus, type NightAbilityReadView } from "../abilities";
-import { grantNightAbility } from "../ability_changes";
+import { grantNightAbility, retireBorrowedNightAbility } from "../ability_changes";
 import { openEclipseSuppression } from "./suppression";
 import { snapshotBorrowedState, type BorrowedKind } from "./borrowed_state";
 import { readEclipseState, readShelterState, selectEclipse, type EclipseState } from "./state";
@@ -603,12 +604,8 @@ export function closeRadiantNight(
       : aliveLifeVersion(maid.life) === maid.version + 1) &&
     own(maid.container, l.borrowedId!) === l.borrowed
   )
-    Object.defineProperty(l.borrowed, "disabled", {
-      value: true,
-      writable: true,
-      enumerable: true,
-      configurable: true,
-    });
+    // 原主抑制的关闭尝试已先执行；只退役原女仆生命／捕获槽实例，保方法查找后才读取 l.borrowed。
+    retireBorrowedNightAbility(() => l.borrowed!);
   events.push({
     timestamp: Date.now(),
     type: "eclipse_lease_closed",

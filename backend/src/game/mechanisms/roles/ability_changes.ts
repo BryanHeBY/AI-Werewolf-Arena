@@ -1,5 +1,5 @@
 /**
- * 负责普通夜能力原生安装、授予、起效日、启停、次数、首次死亡到期和明确转移。
+ * 负责普通夜能力原生安装、授予、起效日、启停、次数、首次死亡到期、借用退役和明确转移。
  * 输入为原角色／实例、安装数据、业务日期及具体转移 statePolicy；输出为原只读存储引用和事实。
  * 仅拥有 abilities、retiredAbilityIds 与公共 metadata 写权，角色 payload 库存仍归具体机制。
  * 保留原 clone、回调、World／getter 重检、安装／delete／push／发布顺序；不更换私有容器、
@@ -202,6 +202,21 @@ export function setNightAbilityEnabled(
   if (ability.disabled === !enabled) return;
   (ability as { disabled: boolean }).disabled = !enabled;
   emit(events, actorId, ability, enabled ? "enabled" : "disabled");
+}
+
+/**
+ * 退役角色已核对原体／捕获槽的借用实例，只重定义原 disabled 数据属性。
+ * 目标 supplier 在 Object.defineProperty 方法查找之后执行，保原 late 字段读取位置。
+ * 不按可变 id 重查、不读或执行替换的 disabled getter/setter、不删槽／退休 ID，不发布启停事实。
+ * 借用租约、原主抑制和已付 payload 仍归具体 Frame；本写入不提供新行动权限或退款。
+ */
+export function retireBorrowedNightAbility(readBorrowed: () => NightAbilityReadView): void {
+  Object.defineProperty(readBorrowed(), "disabled", {
+    value: true,
+    writable: true,
+    enumerable: true,
+    configurable: true,
+  });
 }
 
 /** 实际死亡到期跟随同一实例经过转移／复活；已经付款的夜效果仍按原政策保留。 */

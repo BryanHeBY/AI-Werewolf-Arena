@@ -1,0 +1,232 @@
+{
+  "baseline": "920eac7bab7a5d22c743d436ec3f1eebbff647d2",
+  "scope": [
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "a7f216db1e346616cf34badd25b1c70d97a22908245bd81bd045eb5944a48b8f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+      "sha256": "88231055bef76b9491487de2481370a7d3d6e4a5e61eee1736d04c30a23ac04c"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+      "sha256": "f1ae296145d194f24b9821c8e5fa62ccae7d3b41a6e6b18fcfef26b1948d4668"
+    }
+  ],
+  "programProof": {
+    "baseline": "920eac7bab7a5d22c743d436ec3f1eebbff647d2",
+    "checks": [
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "actualGitMatches": true,
+        "originalSha256": "1264271f813a18ecac9e82198623ff79202f0bec460e4fdd2014215f9c92738c",
+        "currentSha256": "a7f216db1e346616cf34badd25b1c70d97a22908245bd81bd045eb5944a48b8f",
+        "wholeRuntimeInverse": [
+          {
+            "module": "ESNext",
+            "same": true
+          },
+          {
+            "module": "CommonJS",
+            "same": true
+          }
+        ],
+        "sameExistingModuleEdges": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+        "actualGitMatches": true,
+        "originalSha256": "48423f69077494bd89372c1fd30ce6525d790c7d0cefd4415e9c66197368c1ab",
+        "currentSha256": "88231055bef76b9491487de2481370a7d3d6e4a5e61eee1736d04c30a23ac04c",
+        "wholeRuntimeInverse": [
+          {
+            "module": "ESNext",
+            "same": true
+          },
+          {
+            "module": "CommonJS",
+            "same": true
+          }
+        ],
+        "sameExistingModuleEdges": true
+      }
+    ],
+    "commandCheck": {
+      "originalWrite": "Object.defineProperty(l.borrowed, \"disabled\", {\n      value: true,\n      writable: true,\n      enumerable: true,\n      configurable: true,\n    })",
+      "commandBody": "Object.defineProperty(readBorrowed(), \"disabled\", {\n    value: true,\n    writable: true,\n    enumerable: true,\n    configurable: true,\n  });",
+      "targetReadMapping": "l.borrowed -> readBorrowed() after original callee lookup",
+      "wholeDescriptorStatementSame": true,
+      "noNewSourceIdWorldOrEventReads": true,
+      "noStoreAdded": true
+    },
+    "registeredInverse": {
+      "owner": "remove only new concrete command",
+      "frame": {
+        "from": "retireBorrowedNightAbility(() => l.borrowed!)",
+        "to": "Object.defineProperty(l.borrowed, \"disabled\", {\n      value: true,\n      writable: true,\n      enumerable: true,\n      configurable: true,\n    })",
+        "count": 1
+      },
+      "modules": "ESNext/CommonJS whole syntax trees preserve names/literals/operator tokens/optional chaining; no general whitespace/data normalization"
+    },
+    "headers": [],
+    "files": [
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "sha256": "a7f216db1e346616cf34badd25b1c70d97a22908245bd81bd045eb5944a48b8f"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+        "sha256": "88231055bef76b9491487de2481370a7d3d6e4a5e61eee1736d04c30a23ac04c"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+        "sha256": "f1ae296145d194f24b9821c8e5fa62ccae7d3b41a6e6b18fcfef26b1948d4668"
+      }
+    ],
+    "limits": [
+      "Installation already grantNightAbility owner; no extra wrapper/new source enum",
+      "Retirement only rewrites captured disabled descriptor, does not delete/pushretiredId/resetpayload/pay/refund/relookupid/emit",
+      "Frame keeps unique leases/currentness/suppression/source life/allowed bindings; this common trusted write is not playerpermission"
+    ]
+  },
+  "authorHandoff": {
+    "baseline": "920eac7bab7a5d22c743d436ec3f1eebbff647d2",
+    "files": [
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "sha256": "a7f216db1e346616cf34badd25b1c70d97a22908245bd81bd045eb5944a48b8f"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+        "sha256": "88231055bef76b9491487de2481370a7d3d6e4a5e61eee1736d04c30a23ac04c"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+        "sha256": "f1ae296145d194f24b9821c8e5fa62ccae7d3b41a6e6b18fcfef26b1948d4668"
+      }
+    ],
+    "scope": "two real metadata/featureowners+one new boundedunit",
+    "receipts": {
+      "newRuntime": {
+        "actualExitCode": 0,
+        "passes": 3,
+        "fails": 0,
+        "assertions": 15,
+        "log": "/tmp/awa-c30-borrowed-metadata-tests-first.log"
+      },
+      "oldRuntime": {
+        "actualExitCode": 0,
+        "passes": 5,
+        "fails": 0,
+        "filtered": 14,
+        "assertions": 13,
+        "log": "/tmp/awa-c30-borrowed-metadata-original-bounded.log",
+        "cases": [
+          "abort cleanup retires without substitutedsetter",
+          "capturedslot afterid mutation",
+          "independent stock/source survives",
+          "replacement maidlife no disabledwrite",
+          "revived maidlife no disabledwrite"
+        ]
+      },
+      "finiteTypes": {
+        "session": 29847,
+        "actualTerminalExitCode": 0,
+        "log": "/tmp/awa-c30-borrowed-metadata-types-first.log",
+        "config": "/tmp/awa-c30-borrowed-metadata-focused.tsconfig.json",
+        "directRoots": "2 source+newunit+3 originaltest modules; original strict config unchanged"
+      },
+      "static": {
+        "actualExitCode": 0,
+        "proof": "/tmp/awa-c30-borrowed-metadata-source-proof.json",
+        "fullProgramInverse": "2 actualGit sources ESNext/CJS same; one consumer call inverse; new commandexactdescriptorbody; no generaldata/operator normalizations",
+        "headers": 0
+      },
+      "format": {
+        "actualExitCode": 0,
+        "log": "/tmp/awa-c30-borrowed-metadata-format.log"
+      },
+      "whitespace": {
+        "trackedTwoSourceDiffCheckExit": 0,
+        "untrackedNewTestNoIndexCheckExit": 1,
+        "untrackedNewTestNoIndexOutcome": "新文件与/dev/null存在正常差异，exit1，无空白诊断；不冒exit0"
+      }
+    },
+    "owner": [
+      "grantNightAbility/installAbility already sole installer; unchanged",
+      "retireBorrowedNightAbility in existing ability_changes owns exact captured disabled metadata write",
+      "Frame owns roster/borrowchoice/lease/payload/suppression/firstdeathguard/snapshot/resourceevents unchanged"
+    ],
+    "timing": "Object.defineProperty callee lookup precedes readBorrowed() lambda->original l.borrowed; no id/source/world/state reads in command; no disabled getter/setter execution",
+    "wire": "source kind remainscopy; no new event/schema2/id/clock/retiredlist entry",
+    "limits": [
+      "Only complete currentborrowed metadata installation/retirement owner closure; not allC30/source/lease/resources complete",
+      "Explicittrusted instance command is notaction permission/generic setter/callbackframework",
+      "No fullsuite/game/network/model; Root/Char engine/docs sources untouched"
+    ],
+    "commentCorrection": "将Frame原主抑制已关闭改为关闭尝试已先执行；close可能false不移marker，程序/输入/收据不变"
+  },
+  "independentReview": {
+    "passed": true,
+    "baseline": "920eac7b",
+    "paths": [
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "sha256": "a7f216db1e346616cf34badd25b1c70d97a22908245bd81bd045eb5944a48b8f",
+        "matchesAuthorSha": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+        "sha256": "88231055bef76b9491487de2481370a7d3d6e4a5e61eee1736d04c30a23ac04c",
+        "matchesAuthorSha": true
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/borrowed-ability-metadata-owner.test.ts",
+        "sha256": "f1ae296145d194f24b9821c8e5fa62ccae7d3b41a6e6b18fcfef26b1948d4668",
+        "matchesAuthorSha": true
+      }
+    ],
+    "checks": {
+      "wholeOwnerNonImportProgramSame": true,
+      "wholeFrameNonImportProgramSame": true,
+      "exactDescriptorCommandSame": true,
+      "oneSupplierAtOriginalWrite": true,
+      "noExtraWorldIdStateEventRead": true,
+      "noStoreOrRetiredIdMutation": true
+    },
+    "findings": [],
+    "reviewedNewLiteralCases": 3,
+    "metadataOwnership": "Existing ability_changes is the only newly moved captured disabled descriptor writer; Frame retains all leases, captured-slot/life guards, suppression, paid payload and post-write publication.",
+    "failurePrefix": "Frame closed/status assignments and suppression.close occur before the original guards. Native defineProperty lookup precedes late borrowed pointer read. Supplier or descriptor failure propagates before eclipse_lease_closed/restored facts; no new ID lookup, clone, event, retired-ID or uses write.",
+    "newTests": "Real native Seer and actual grant construct the same stored reference; tests independently assert disabled descriptor/accessor 0 reads/writes, old slot identity/state/source/counters/no event, native callee-before-target and thrown supplier identity, and nonconfigurable rejection with original payload/event count.",
+    "chineseHeads": "Three precise Chinese heads reviewed; one overstrong inline suppression wording requires narrow correction.",
+    "limits": [
+      "Static actual Git/program/field/input/SHA review only; no compiler/runtime/tests/discovery repeated",
+      "The command is a trusted metadata write, not new player authorization or generalized state-policy validation",
+      "No claim of complete imported-module evaluation order equivalence"
+    ],
+    "closedFindings": [
+      {
+        "id": "BM-CMT01",
+        "originalFrozenFrameSha256": "73a6238f9817509b9aa27df620befb1c343f75422738d7bb5850dcb7932d1228",
+        "originalWording": "原主抑制已关闭",
+        "finalWording": "原主抑制的关闭尝试已先执行",
+        "reason": "close() may return false and retain marker; only ordering of the closure attempt is guaranteed",
+        "change": "Comment only; independent whole typed-AST inverse remains exact."
+      }
+    ]
+  },
+  "rootReview": {
+    "actualTwoOwnersAndNew3CasesRead": true,
+    "descriptorAndSupplierOrderRead": true,
+    "final3SHAActualSame": true,
+    "passed": true
+  },
+  "limits": [
+    "Only complete currentborrowed metadata installation/retirement owner closure; not allC30/source/lease/resources complete",
+    "Explicittrusted instance command is notaction permission/generic setter/callbackframework",
+    "No fullsuite/game/network/model; Root/Char engine/docs sources untouched"
+  ],
+  "status": "independently_reviewed_ready_to_commit"
+}
