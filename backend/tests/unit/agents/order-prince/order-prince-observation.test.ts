@@ -1,8 +1,7 @@
 /**
- * Unit tests: Order Prince observations use private receipts and forged audiences; literal
- * owner fields and immutability assertions check exact audience authorization and detached
- * history. Inputs and expected outcomes remain the original literal or immutable-fixture
- * oracle; these module assertions invoke no model or complete-game driver.
+ * 单元测试验证定序王子的私有回执、伪造受众和脱离历史。输入为原内存 fixture 与显式事实；
+ * 手写 owner 字段、单受众及不可变断言检查既有授权边界，不用生产运行生成新预期。
+ * 不调用模型或完整对局；本批只迁观察类型进口，原输入、顺序和断言保持。
  */
 import { AgentEventVisibilityRegistry } from "../../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
 import type { GameEvent } from "../../../../src/core";
@@ -11,7 +10,7 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type RoleComponent } from "../../../../src/core";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
-import type { PlayerObservation } from "../../../../src/ai/agents/player/observation";
+import type { PlayerObservation } from "../../../../src/game/observation/player-observation";
 import { orderPrinceTwelveConfig } from "../../../../src/runtime/scenarios/order_prince_twelve";
 import {
   openOrderPrinceChoice,

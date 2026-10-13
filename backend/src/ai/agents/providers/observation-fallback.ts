@@ -7,7 +7,10 @@
  */
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import type { ActionProvider, ActionRequest, ToolCall } from "../../../core/domain/actions";
-import type { ObservedPlayerStrategy, PlayerObservation } from "../player/observation";
+import type {
+  ObservedPlayerStrategy,
+  PlayerObservation,
+} from "../../../game/observation/player-observation";
 import { createObservedBotContext } from "./observed_bot/context";
 import { observedToolHandlers } from "./observed_bot/handlers";
 

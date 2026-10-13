@@ -1,9 +1,7 @@
 /**
- * Unit tests: Nightmare observations use literal first-fear policies and component
- * constructor variants; owner-only field, frozen-history and descriptor expectations check
- * private detached state. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试验证梦魇的首次恐惧政策、组件构造变体及私有观察。输入为字面政策、原 fixture 与 descriptor；
+ * 手写 owner 字段、冻结历史和描述符预期检查脱离状态，不调用模型或完整对局。
+ * 观察类型迁移保原输入与 oracle，不把访问器或他人状态猜成已知事实。
  */
 import { getNightmareShadowState } from "../../../../src/game/mechanisms/roles/nightmare_shadow/state";
 import { expect, test } from "bun:test";
@@ -13,7 +11,7 @@ import { createRandom, randomDraws } from "../../../../src/core/domain/random";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
-import type { PlayerObservation } from "../../../../src/ai/agents/player/observation";
+import type { PlayerObservation } from "../../../../src/game/observation/player-observation";
 import { nightmareTwelveConfig } from "../../../../src/runtime/scenarios/nightmare_twelve";
 import {
   beginNightmareNight,

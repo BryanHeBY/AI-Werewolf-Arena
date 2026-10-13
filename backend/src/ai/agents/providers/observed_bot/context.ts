@@ -1,9 +1,14 @@
+/**
+ * 负责从玩家观察、具名随机流和风格建立受限策略上下文。输入为已投影候选、自己的能力与行动历史；
+ * 输出为同一观察及局部选择／重复目标判断，不查询 World、真实 camp 或提交行动。
+ * undefined 允许继续寻找处理器，null 表示明确不行动；原策略和随机读取顺序保持。
+ */
 import type { RandomDraws, ToolCall } from "../../../../core";
-import type { PlayerObservation } from "../../player/observation";
+import type { PlayerObservation } from "../../../../game/observation/player-observation";
 
 export type BotStyle = "active" | "conservative" | "competitive" | "random";
 export type ObservedBotContext = ReturnType<typeof createObservedBotContext>;
-/** undefined keeps searching; null is an intentional terminal no-action. */
+/** undefined 继续查找；null 是明确的终态不行动。 */
 export type ObservedToolHandler = (context: ObservedBotContext) => ToolCall | null | undefined;
 export interface ObservedToolEntry {
   readonly tool: ToolCall["name"];

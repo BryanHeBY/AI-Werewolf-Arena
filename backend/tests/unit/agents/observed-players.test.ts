@@ -1,10 +1,7 @@
 /**
- * Unit tests for observed-players; In-memory observed-players decision/turn/client control with supplied mocks or DTOs; no physical transport.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试验证玩家观察与策略不随未公开的对手身份／库存变化，并保受限行动历史。
+ * 输入为固定六席牌序、原内存组件干预、请求及具名 RNG；手写 DTO、对象冻结与选择断言为 oracle。
+ * 不调用模型或物理传输，不把未宣告死亡当作玩家已知事实；原输入与决策策略保持。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -13,7 +10,7 @@ import { createRandom, randomDraws } from "../../../src/core/domain/random";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
-import type { PlayerObservation } from "../../../src/ai/agents/player/observation";
+import type { PlayerObservation } from "../../../src/game/observation/player-observation";
 import { getGuardState } from "../../../src/game/mechanisms/roles/guard/ports";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 
@@ -38,7 +35,7 @@ test("hidden opponent identities and private state cannot change a villager obse
       unknown
     >
   ).hiddenTest = "PRIVATE_OPPONENT_STATE";
-  // An unannounced state change cannot be promoted into public knowledge by the observer adapter.
+  // 未发表的状态变化不能被观察适配器提升为公开知识。
   second.world.getComponent<AliveComponent>(6, COMPONENT.Alive)!.alive = false;
   const observed: PlayerObservation[] = [];
   const actions = [];

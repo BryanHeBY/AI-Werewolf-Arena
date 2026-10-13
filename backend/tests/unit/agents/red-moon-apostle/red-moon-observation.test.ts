@@ -1,16 +1,14 @@
 /**
- * Unit tests: Red Moon observations use both explicit policies and hostile descriptors;
- * exact owner-only fields and frozen copies check that private state cannot be read
- * through foreign accessors. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试验证红月两种显式政策和恶意描述符下的私有观察。输入为原内存 fixture、访问器与冻结对象；
+ * 手写 owner 字段和脱离副本断言确保外来访问器不能读出库存，不运行模型或完整对局。
+ * 保原字面／fixture oracle；类型迁移不改变状态读取和拒绝边界。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type RoleComponent } from "../../../../src/core";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
-import type { PlayerObservation } from "../../../../src/ai/agents/player/observation";
+import type { PlayerObservation } from "../../../../src/game/observation/player-observation";
 import { redMoonTwelveConfig } from "../../../../src/runtime/scenarios/red_moon_twelve";
 import { getRedMoonState } from "../../../../src/game/mechanisms/roles/red_moon_apostle/state";
 for (const policy of ["ends_game", "forbidden"] as const)

@@ -1,13 +1,8 @@
 /**
- * P0 architecture characterization: lock the existing F01 decision privilege and
- * F02 request restoration inputs across the separately approved correction. These are small
- * in-process boundary tests, not role acceptance or complete-game scenarios.
- * Oracles are literal target IDs, identity comparisons, rejection codes and
- * unchanged authority snapshots. Noble uses the existing explicit subsystem
- * fixture; Animal provides a second, independently implemented envelope contrast.
- * F01 remains the named baseline exception. C18a gives the original seven Noble
- * restoration inputs explicit terminal expectations; old expectations remain in
- * fixed Git e8de6dc and the revocation policy document.
+ * P0 架构特征测试负责保存 F01 原特权策略与 F02 请求恢复的实际输入，跨独立批准的修正核对边界。
+ * 输入为小型进程内 fixture、Noble 显式子系统和 Animal 的独立封装；预期来自手写目标 ID、对象身份、
+ * 拒绝码和未变权限快照，不用完整角色验收或整局驱动生成 oracle。
+ * 原 Baseline 例外与 C18a 原七项恢复输入分列；旧预期保存在固定 Git e8de6dc 及撤权政策中。
  */
 import { describe, expect, test, setSystemTime } from "bun:test";
 import { bootstrapGame } from "../../src/app/bootstrap";
@@ -27,7 +22,7 @@ import {
 import { BaselineBotActionProvider } from "../../src/ai/agents/providers/action_providers";
 import { ObservedPlayersActionProvider } from "../../src/ai/agents/providers/observed_players";
 import { ObservedBot } from "../../src/ai/agents/providers/observed_bot";
-import type { PlayerObservation } from "../../src/ai/agents/player/observation";
+import type { PlayerObservation } from "../../src/game/observation/player-observation";
 import { LlmObserver } from "../../src/ai/agents/player/player_observer";
 import { FallbackActionPolicy } from "../../src/ai/agents/llm/fallback_action_policy";
 import { AcpTurnRegistry } from "../../src/ai/integrations/acp/acp_turn_registry";

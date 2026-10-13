@@ -1,16 +1,14 @@
 /**
- * Unit tests: Magician observations use owner history and forged audiences; exact
- * detached/frozen fields and singleton-audience expectations check that another actor
- * mapping cannot enter the view. Inputs and expected outcomes remain the original literal
- * or immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试验证魔术师观察的原 owner 历史、脱离冻结字段与伪造受众拒绝。输入为显式状态和单受众事实；
+ * 手写字段及不可变断言确保其他玩家映射不能进入当前观察，不由实际重放生成预期。
+ * 不调用模型或完整对局；保留原字面／fixture oracle 和角色数据形状。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type RoleComponent, type GameEvent } from "../../../../src/core";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ObservedPlayersActionProvider } from "../../../../src/ai/agents/providers/observed_players";
-import type { PlayerObservation } from "../../../../src/ai/agents/player/observation";
+import type { PlayerObservation } from "../../../../src/game/observation/player-observation";
 import { AgentEventVisibilityRegistry } from "../../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
 import { magicianTwelveConfig } from "../../../../src/runtime/scenarios/magician_twelve";
 import {

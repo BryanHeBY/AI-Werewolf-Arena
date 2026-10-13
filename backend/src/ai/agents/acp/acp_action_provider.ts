@@ -40,7 +40,7 @@ import {
   ObservationFallbackActionProvider,
   ObservationFallbackStrategy,
 } from "../providers/observation-fallback";
-import type { ObservedPlayerStrategy } from "../player/observation";
+import type { ObservedPlayerStrategy } from "../../../game/observation/player-observation";
 import { AgentBugReportService } from "../reporting/bug_report_service";
 import { encodePlayerVisibleEventBatch, parsePlayerVisibleEvents } from "../visible_event_protocol";
 import { BuiltPlayerPrompt, PlayerRoundOutcome } from "../player/contracts";

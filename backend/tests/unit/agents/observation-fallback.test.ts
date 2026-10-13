@@ -14,7 +14,7 @@ import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provide
 import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
 import { ObservationFallbackStrategy } from "../../../src/ai/agents/providers/observation-fallback";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-import type { PlayerObservation } from "../../../src/ai/agents/player/observation";
+import type { PlayerObservation } from "../../../src/game/observation/player-observation";
 import {
   getDefaultRoleCatalog,
   getDefaultToolSpecRegistry,

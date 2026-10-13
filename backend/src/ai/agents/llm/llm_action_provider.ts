@@ -25,7 +25,7 @@ import {
   ObservationFallbackActionProvider,
   ObservationFallbackStrategy,
 } from "../providers/observation-fallback";
-import type { ObservedPlayerStrategy } from "../player/observation";
+import type { ObservedPlayerStrategy } from "../../../game/observation/player-observation";
 import { ChatModelClient } from "../../integrations/llm/transport";
 import { FallbackActionPolicy } from "./fallback_action_policy";
 import { LlmObserver } from "../player/player_observer";

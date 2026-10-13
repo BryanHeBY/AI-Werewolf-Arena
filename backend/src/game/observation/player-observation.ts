@@ -1,8 +1,8 @@
 /**
- * Defines projected player-observation data and detached observation freezing.
- * Inputs are already projected facts and own-state DTOs; outputs preserve their
- * existing fields and cloned frozen observations. This boundary never exposes a
- * World, installs a role slot or grants a runtime resource write permission.
+ * 负责定义玩家观察的完整纯数据结构及原脱离冻结程序。输入为已投影事实、自己的知识 DTO 和请求；
+ * 输出保留所有原可选／nullable 字段，先 structuredClone，再按原 Object.values 递归 freeze。
+ * 这里不含 World、角色原体或资源写句柄，不安装状态、解析新 schema 或授予行动权限。
+ * 捕获方决定知识和候选；该数据契约不把未知阵营或当前许可猜测成已知事实。
  */
 import type {
   PlayerHiddenWolfState,
@@ -12,8 +12,8 @@ import type {
   PlayerHybridState,
   PlayerBlackMarketState,
   PlayerMerchantState,
-} from "../../../game/mechanisms/roles/player_extended_state";
-import type { ActionRequest, Camp, Role } from "../../../core";
+} from "../mechanisms/roles/player_extended_state";
+import type { ActionRequest, Camp, Role } from "@ai-werewolf-arena/game-contract";
 import type {
   PlayerGuardState,
   PlayerHunterState,
@@ -27,12 +27,12 @@ import type {
   PlayerSeerState,
   PlayerWitchState,
   PlayerRoleInspectionState,
-} from "../../../game/mechanisms/roles/player_state";
-import type { PlayerNightAbility } from "../../../game/mechanisms/roles/abilities";
-import type { PlayerDeathGun } from "../../../game/mechanisms/roles/death_abilities";
-import type { OwnNightAction } from "../../../game/mechanisms/roles/night_action_history";
+} from "../mechanisms/roles/player_state";
+import type { PlayerNightAbility } from "../mechanisms/roles/abilities";
+import type { PlayerDeathGun } from "../mechanisms/roles/death_abilities";
+import type { OwnNightAction } from "../mechanisms/roles/night_action_history";
 
-/** A player decision port: projected facts and their own state, with no world access. */
+/** 玩家决策端口只携带已投影事实和自己的知识，不提供 World。 */
 export interface PlayerObservation {
   request: ActionRequest;
   identity: { role?: Role; camp?: Camp; name?: string };
@@ -43,27 +43,27 @@ export interface PlayerObservation {
   ownNightActions: OwnNightAction[];
   ownState: {
     fragrantPhantom?: import("@ai-werewolf-arena/game-text").FragrantPlayerState;
-    nightNoble?: import("../../../game/mechanisms/roles/noble_secret_body/player_projection").NoblePlayerState;
-    secretBody?: import("../../../game/mechanisms/roles/noble_secret_body/player_projection").SecretBodyPlayerState;
-    eclipse?: import("../../../game/mechanisms/roles/radiant_eclipse/state").EclipseState;
-    alchemist?: import("../../../game/mechanisms/roles/mist_raven/player_projection").PlayerAlchemistState;
-    ravenClaw?: import("../../../game/mechanisms/roles/mist_raven/player_projection").PlayerRavenState;
+    nightNoble?: import("../mechanisms/roles/noble_secret_body/player_projection").NoblePlayerState;
+    secretBody?: import("../mechanisms/roles/noble_secret_body/player_projection").SecretBodyPlayerState;
+    eclipse?: import("../mechanisms/roles/radiant_eclipse/state").EclipseState;
+    alchemist?: import("../mechanisms/roles/mist_raven/player_projection").PlayerAlchemistState;
+    ravenClaw?: import("../mechanisms/roles/mist_raven/player_projection").PlayerRavenState;
     scholarMentor?: import("@ai-werewolf-arena/game-contract").ModifierState;
     timeConsort?: NonNullable<
       ReturnType<
-        typeof import("../../../game/mechanisms/roles/time_wolf_consort/state").projectTimeConsortState
+        typeof import("../mechanisms/roles/time_wolf_consort/state").projectTimeConsortState
       >
     >;
     wolfSorcerer?: import("@ai-werewolf-arena/game-contract").WolfSorcererState;
     trickster?: import("@ai-werewolf-arena/game-contract").TricksterState;
-    orderPrince?: import("../../../game/mechanisms/roles/order_prince/state").OrderPrinceState;
+    orderPrince?: import("../mechanisms/roles/order_prince/state").OrderPrinceState;
     magician?: import("@ai-werewolf-arena/game-contract").MagicianState;
     redMoon?: import("@ai-werewolf-arena/game-contract").RedMoonState;
     nightmare?: import("@ai-werewolf-arena/game-contract").NightmareShadowState;
     evilKnight?: import("@ai-werewolf-arena/game-contract").EvilKnightState;
-    demonHunter?: import("../../../game/mechanisms/roles/demon_hunter/state").DemonHunterState;
+    demonHunter?: import("../mechanisms/roles/demon_hunter/state").DemonHunterState;
     ghostBride?: import("@ai-werewolf-arena/game-text").GhostBrideState;
-    wedding?: import("../../../game/mechanisms/roles/ghost_bride/authority").WeddingActorView;
+    wedding?: import("../mechanisms/roles/ghost_bride/authority").WeddingActorView;
     lonelyGirl?: import("@ai-werewolf-arena/game-contract").LonelyGirlState;
     wildChild?: import("@ai-werewolf-arena/game-contract").WildChildState;
     thief?: import("@ai-werewolf-arena/game-contract").ThiefState & {
@@ -75,19 +75,19 @@ export interface PlayerObservation {
       allowedSlots?: Array<0 | 1>;
       cards?: Array<{ slot: 0 | 1; role: Role }>;
     };
-    wallNote?: import("../../../core/domain/components/wall_note").WallNoteComponent & {
+    wallNote?: import("../../core/domain/components/wall_note").WallNoteComponent & {
       effectiveRemaining: 0 | 1;
     };
     blackMarket?: PlayerBlackMarketState;
     awakened?: PlayerAwakenedState;
     hybrid?: PlayerHybridState;
     debater?: {
-      policy: import("../../../core/domain/board").DebaterPolicy;
+      policy: import("../../core/domain/board").DebaterPolicy;
       remaining: 0 | 1;
       choice: { day: number; targetId: number } | null;
     };
     debatePenalty?: { day: number };
-    cupid?: import("../../../game/mechanisms/roles/player_extended_state").PlayerCupidState;
+    cupid?: import("../mechanisms/roles/player_extended_state").PlayerCupidState;
     lover?: { partnerId: number; mayNotVotePartner: boolean };
     merchant?: PlayerMerchantState;
     mechanical?: PlayerMechanicalState;
@@ -113,10 +113,12 @@ export interface PlayerObservation {
 }
 
 export interface ObservedPlayerStrategy {
-  decide(observation: PlayerObservation): Promise<import("../../../core").ToolCall | null>;
+  decide(
+    observation: PlayerObservation,
+  ): Promise<import("@ai-werewolf-arena/game-contract").ToolCall | null>;
 }
 
-/** Freeze a detached DTO so strategy code cannot mutate the engine or later observations. */
+/** 先复制再递归冻结，避免策略修改引擎或污染后续观察；保持原接受集合和失败顺序。 */
 export function freezeObservation(observation: PlayerObservation): PlayerObservation {
   const result = structuredClone(observation);
   const freeze = (value: unknown) => {

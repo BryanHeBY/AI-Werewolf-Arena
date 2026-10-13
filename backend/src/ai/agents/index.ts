@@ -11,4 +11,7 @@ export * from "./player/player_round_recorder";
 export * from "./reporting";
 
 export { ObservationFallbackStrategy } from "./providers/observation-fallback";
-export type { ObservedPlayerStrategy, PlayerObservation } from "./player/observation";
+export type {
+  ObservedPlayerStrategy,
+  PlayerObservation,
+} from "../../game/observation/player-observation";

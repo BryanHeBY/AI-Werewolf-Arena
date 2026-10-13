@@ -1,15 +1,12 @@
 /**
- * Unit tests for noble-secret-body-observed-dto-review; In-memory noble-secret-body-observed-dto-review decision/turn/client control with supplied mocks or DTOs; no physical transport.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试验证贵族／秘体受限策略只消费观察 DTO 的显式候选和已知队友。输入为手写 request、
+ * 连续夜限制与自己的知识；原目标 ID／空选择断言为独立 oracle，不回读原体状态或运行完整对局。
+ * 不调用模型或物理传输，保留原自保资格、可选已知队友和失败输入。
  */
 import { expect, test } from "bun:test";
 import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
 import type { BotStyle } from "../../../src/ai/agents/providers/observed_bot";
-import type { PlayerObservation } from "../../../src/ai/agents/player/observation";
+import type { PlayerObservation } from "../../../src/game/observation/player-observation";
 import { Phase } from "../../../src/core";
 
 function dto(

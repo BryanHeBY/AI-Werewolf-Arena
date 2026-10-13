@@ -1,7 +1,8 @@
 /**
- * Builds the player observation, system/user prompts and actionable hints. Inputs are the World,
- * request and prompt policy options; outputs preserve player knowledge, role text and board
- * context. It never commits submitted actions or changes role state.
+ * 负责系统／回合提示、阶段文案与候选提示的既有组织；完整结构观察交游戏侧捕获 owner。
+ * 输入为原 World、请求和提示选项；输出保留机制知识、角色自定义原文和板子说明。
+ * 自定义人设／角色展示仍在原时点调用，不因结构观察迁移而提前捕获；这里不提交行动或更改角色状态。
+ * 已知存活与当前目标许可分别由原捕获和提示查询负责，不把提示候选当作行动授权。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { getWhiteWolfKingState } from "../../../game/mechanisms/roles/white_wolf_king/ports";
@@ -135,7 +136,8 @@ import { getWolfBeautyState } from "../../../game/mechanisms/roles/wolf_beauty/p
 import { getIdiotState } from "../../../game/mechanisms/roles/idiot/ports";
 import { getWitchState } from "../../../game/mechanisms/roles/witch/ports";
 import { getSeerState } from "../../../game/mechanisms/roles/seer/ports";
-import { freezeObservation, type PlayerObservation } from "./observation";
+import type { PlayerObservation } from "../../../game/observation/player-observation";
+import { capturePlayerObservation } from "../../../game/observation/player-observation-projector";
 import { buildBoardInfoPrompt, buildSystemPrompt, buildUserPrompt } from "./prompt_templates";
 import { renderTurnConstraintUserHint, resolveTurnConstraints } from "./turn_constraints";
 
@@ -149,7 +151,7 @@ export interface PlayerPromptPolicyOptions {
   boardConfig?: ReadonlyBoardConfig;
 }
 
-/** Shared game prompt policy; SDK and ACP adapters only choose transport instructions. */
+/** SDK／ACP 共用提示策略；传输适配器只选择其协议提示。 */
 export class PlayerPromptPolicy {
   private readonly publicRoleCounts = new Map<Role, number>();
   private readonly publicBoardSize: number;
@@ -167,7 +169,7 @@ export class PlayerPromptPolicy {
         this.publicRoleCounts.set(role, (this.publicRoleCounts.get(role) ?? 0) + count);
       }
     } else {
-      // Compatibility for callers constructed at opening without a board input.
+      // 无板子输入的旧调用方只在开局构造时统计角色，保留原兼容行为。
       for (const id of world.entityIds()) {
         const role = this.role(id);
         if (role)
@@ -180,254 +182,12 @@ export class PlayerPromptPolicy {
     return this.world.locale;
   }
 
-  /** Structured counterpart of the same identity/private-state/event prompt policy. */
+  /** 真实策略入口委托完整观察捕获，不在提示层重建库存或改变冻结时点。 */
   buildObservation(request: ActionRequest): PlayerObservation {
-    const role = this.role(request.actorId);
-    const dead = new Set<number>();
-    for (const event of request.context.visible_events) {
-      if (
-        (event.type === "night_resolved" || event.type === "additional_deaths") &&
-        Array.isArray(event.payload.deaths)
-      ) {
-        for (const id of event.payload.deaths) if (typeof id === "number") dead.add(id);
-      }
-      const target =
-        event.type === "voted_out"
-          ? event.payload.target
-          : event.type === "wolf_self_destruct"
-            ? event.payload.wolfId
-            : event.type === "player_shot" ||
-                event.type === "hunter_shot" ||
-                event.type === "wolf_king_shot" ||
-                event.type === "mechanical_shot"
-              ? event.payload.targetId
-              : undefined;
-      if (typeof target === "number") dead.add(target);
-      if (event.type === "white_wolf_king_self_destruct") {
-        if (typeof event.payload.actorId === "number") dead.add(event.payload.actorId);
-        if (typeof event.payload.targetId === "number") dead.add(event.payload.targetId);
-      }
-      if (event.type === "knight_duel") {
-        const victim =
-          event.payload.result === "wolf"
-            ? event.payload.targetId
-            : event.payload.result === "not_wolf"
-              ? event.payload.actorId
-              : undefined;
-        if (typeof victim === "number") dead.add(victim);
-      }
-    }
-    const ownState: PlayerObservation["ownState"] = {};
-    if (role?.role === Role.FragrantPhantom && isFragrantPairBoard(this.world)) {
-      const known = fragrantPlayerKnowledge(this.world, request.phase, request.context.day);
-      if (known.actorId === request.actorId) ownState.fragrantPhantom = known;
-    }
-    if (isNobleBodyBoard(this.world)) {
-      const known = getNobleBodyPlayerState(this.world, request.actorId, request.phase);
-      if (known?.kind === "night_noble") ownState.nightNoble = known.state;
-      if (known?.kind === "secret_body") ownState.secretBody = known.state;
-    }
-    const alchemist = projectAlchemist(role),
-      raven = projectRaven(role);
-    if (alchemist) ownState.alchemist = alchemist;
-    if (raven) ownState.ravenClaw = raven;
-    const modifier = readModifierState(scholarMentorStateForRole(role));
-    if (modifier) ownState.scholarMentor = modifier;
-    const timeConsort = projectTimeConsortState(role, request.context.day);
-    if (timeConsort) ownState.timeConsort = timeConsort;
-    const wolfSorcerer = projectWolfSorcererState(role);
-    if (wolfSorcerer) ownState.wolfSorcerer = wolfSorcerer;
-    const trickster = projectTricksterState(role);
-    if (trickster) ownState.trickster = trickster;
-    const prince = projectOrderPrinceState(role);
-    if (prince) ownState.orderPrince = prince;
-    const magician = projectMagicianState(role);
-    if (magician) ownState.magician = magician;
-    const redMoon = getRedMoonState(role);
-    if (redMoon)
-      ownState.redMoon = {
-        policy: redMoon.policy,
-        lastWolfBlastPolicy: redMoon.lastWolfBlastPolicy,
-        blastDay: redMoon.blastDay,
-        exileDay: redMoon.exileDay,
-        expirySettled: redMoon.expirySettled,
-      };
-
-    const nightmare = getNightmareShadowState(role);
-    if (nightmare) {
-      const history: Array<{ day: number; targetId: number | null }> = [];
-      for (let i = 0; i < nightmare.history.length; i++) {
-        const entry = nightmare.history[i]!;
-        history.push({ day: entry.day, targetId: entry.targetId });
-      }
-      ownState.nightmare = {
-        policy: nightmare.policy,
-        fearActionPolicy: nightmare.fearActionPolicy,
-        wolfActionPolicy: nightmare.wolfActionPolicy,
-        packReady: nightmare.packReady,
-        lastDay: nightmare.lastDay,
-        lastTarget: nightmare.lastTarget,
-        history,
-      };
-    }
-    const evilKnight = getEvilKnightState(role);
-    if (evilKnight)
-      ownState.evilKnight = {
-        policy: evilKnight.policy,
-        shotPolicy: evilKnight.shotPolicy,
-        reflectionRemaining: evilKnight.reflectionRemaining,
-      };
-    const thief = projectThiefState(role, this.world),
-      choices = projectThiefChoices(this.world, request.actorId);
-    if (thief) ownState.thief = { ...thief, ...(choices ?? {}) };
-    const shape = projectShapeshifterState(role, this.world),
-      shapeChoices = projectShapeshifterChoices(this.world, request.actorId);
-    if (shape) ownState.shapeshifter = { ...shape, ...(shapeChoices ?? {}) };
-    const wallNote = projectWallNote(this.world, request.actorId);
-    if (wallNote) ownState.wallNote = wallNote;
-    if (debateVoteBlocked(this.world, request.actorId, request.context.day))
-      ownState.debatePenalty = { day: request.context.day };
-    if (role?.role === Role.Debater) {
-      const state = getDebaterState(role);
-      if (state)
-        ownState.debater = projectDebaterState(state, hasDebateCommit(this.world, request.actorId));
-    }
-    const lover = projectLover(this.world, request.actorId);
-    if (lover) ownState.lover = lover;
-    if (role?.role === Role.Cupid) {
-      const state = getCupidState(role);
-      if (state) ownState.cupid = projectCupidState(state);
-    }
-    if (role?.role === Role.BlackMarketMerchant) {
-      const state = getBlackMarketState(role);
-      if (state) ownState.blackMarket = projectBlackMarketState(state);
-    }
-    const wedding = weddingActorView(this.world, request.actorId);
-    if (wedding) ownState.wedding = wedding;
-    if (role?.role === Role.GhostBride) {
-      const brideState = weddingBrideState(this.world, request.actorId);
-      if (brideState) ownState.ghostBride = brideState;
-    }
-    if (role?.role === Role.DemonHunter)
-      ownState.demonHunter = projectDemonHunter(this.world, role);
-    if (role?.role === Role.LonelyGirl) ownState.lonelyGirl = projectLonelyGirl(this.world, role);
-    if (role?.role === Role.WildChild) ownState.wildChild = projectWildChild(this.world, role);
-    if (role?.role === Role.Hybrid) {
-      const state = getHybridState(role);
-      if (state) ownState.hybrid = projectHybridState(state);
-    }
-    if (role?.role === Role.MiracleMerchant) {
-      const state = getMerchantState(role);
-      if (state) ownState.merchant = projectMerchantState(state);
-    }
-    if (role?.role === Role.EclipseMaid) ownState.eclipse = projectEclipseState(role);
-    const witch = role ? getWitchState(role, request.context.ability_id) : undefined;
-    const guard = role ? getGuardState(role, request.context.ability_id) : undefined;
-    if (witch) ownState.witch = projectWitchState(witch);
-    if (guard) ownState.guard = projectGuardState(guard);
-    if (role?.role === Role.Hunter) {
-      const state = getHunterState(role);
-      if (state) ownState.hunter = projectHunterState(state);
-    }
-    if (role?.role === Role.WolfBeauty) {
-      if (isAnimalDreamBoard(this.world))
-        ownState.wolfBeauty = animalBeautyKnowledge(this.world, request.actorId);
-      else {
-        const state = getWolfBeautyState(role);
-        if (state) ownState.wolfBeauty = projectWolfBeautyState(state);
-      }
-    }
-    if (role?.role === Role.Bear) {
-      if (isAnimalDreamBoard(this.world)) ownState.bear = animalBearKnowledge(this.world);
-      else {
-        const state = getBearState(role);
-        if (state) ownState.bear = projectBearState(state);
-      }
-    }
-    if (role?.role === Role.FoxCub)
-      ownState.foxCub = animalFoxKnowledge(this.world, request.actorId);
-    if (role?.role === Role.WhiteCat)
-      ownState.whiteCat = animalCatKnowledge(this.world, request.actorId);
-    if (role?.role === Role.Pufferfish)
-      ownState.pufferfish = animalPufferKnowledge(this.world, request.actorId);
-    if (role?.role === Role.HiddenWolf) {
-      const state = getHiddenWolfState(role);
-      ownState.hiddenWolf = {
-        hasInheritedKnife: state?.hasInheritedKnife === true,
-        canVoteForKill: canHiddenWolfKnife(role, this.world),
-        ...(state?.campInspection === "netease_2020_good_v1"
-          ? { campInspection: state.campInspection }
-          : {}),
-      };
-    }
-    if (role?.role === Role.Gargoyle)
-      ownState.gargoyle = {
-        hasInheritedKnife: getGargoyleState(role)?.hasInheritedKnife === true,
-        canVoteForKill: canGargoyleKnife(role, this.world),
-      };
-    if (role?.role === Role.MechanicalWolf) {
-      const state = getMechanicalState(role);
-      if (state) ownState.mechanical = projectMechanicalState(state);
-    }
-    if (role?.role === Role.AwakenedHiddenWolf) {
-      const state = getAwakenedState(role);
-      if (state) ownState.awakened = projectAwakenedState(state);
-    }
-    if (role) {
-      const inspection = getRoleInspectionState(role, request.context.ability_id);
-      if (inspection) ownState.roleInspection = projectRoleInspectionState(inspection);
-    }
-    if (role?.role === Role.WolfKing) {
-      const state = getWolfKingState(role);
-      if (state) ownState.wolfKing = projectWolfKingState(state);
-    }
-    if (role?.role === Role.WhiteWolfKing) {
-      const state = getWhiteWolfKingState(role);
-      if (state) ownState.whiteWolfKing = projectWhiteWolfKingState(state);
-    }
-    if (role?.role === Role.Knight) {
-      const state = getKnightState(role);
-      if (state) ownState.knight = projectKnightState(state);
-    }
-    if (role?.role === Role.Gravekeeper) {
-      const history = getGravekeeperState(role)?.history;
-      ownState.gravekeeper = {
-        history: Array.isArray(history)
-          ? history.flatMap((item) => {
-              const report = readGravekeeperReport(item);
-              return report ? [report] : [];
-            })
-          : [],
-      };
-    }
-    if (role?.role === Role.Idiot) {
-      const state = getIdiotState(role);
-      if (state) ownState.idiot = projectIdiotState(state);
-    }
-    const seer = role ? getSeerState(role, request.context.ability_id) : undefined;
-    if (seer) ownState.seer = projectSeerState(seer);
-    const dreamer = role ? getDreamerState(role, request.context.ability_id) : undefined;
-    if (dreamer) ownState.dreamer = projectDreamerState(dreamer);
-    const {
-      wall_id: _wallId,
-      death_action_id: _deathActionId,
-      debate_id: _debateId,
-      ...context
-    } = request.context;
-    return freezeObservation({
-      request: { ...request, context },
-      identity: {
-        ...(role ? { role: role.role, camp: role.camp } : {}),
-        name: this.world.getComponent(request.actorId, COMPONENT.Identity)?.name,
-      },
-      knownAliveIds: this.world.entityIds().filter((id) => !dead.has(id)),
-      teammateIds: this.wolfTeammates(request.actorId),
-      ownState,
-      ownNightActions: ownNightActions(this.world, request.actorId, request.context.day),
-      abilities: allNightAbilities(role).map((ability) =>
-        projectNightAbility(ability, request.context.day),
-      ),
-      deathAbilities: allDeathGuns(role).map(projectDeathGun),
+    return capturePlayerObservation(request, {
+      world: () => this.world,
+      role: (actorId) => this.role(actorId()),
+      wolfTeammates: (actorId) => this.wolfTeammates(actorId()),
     });
   }
 
