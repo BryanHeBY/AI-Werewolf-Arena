@@ -74,11 +74,11 @@ test("Raw Red Moon inventory tampering cannot become an audited transition", () 
 test("Idiot reveal keeps the original-world audit and disables voting without killing", () => {
   const { world } = dayWorld();
   const role = world.getComponent<RoleComponent>(12, COMPONENT.Role)!;
-  const before = role.privateState.idiot;
+  const before = (role.privateState as { readonly idiot?: unknown }).idiot;
   const events: Parameters<typeof idiotVotedOutHook>[2] = [];
   expect(idiotVotedOutHook(world, 12, events)?.removed).toEqual([]);
-  expect(role.privateState.idiot).toEqual({ revealed: true });
-  expect(role.privateState.idiot).not.toBe(before);
+  expect((role.privateState as { readonly idiot?: unknown }).idiot).toEqual({ revealed: true });
+  expect((role.privateState as { readonly idiot?: unknown }).idiot).not.toBe(before);
   expect(world.getComponent<VotingRightComponent>(12, COMPONENT.VotingRight)!.canVote).toBe(false);
   expect(world.getComponent<AliveComponent>(12, COMPONENT.Alive)!.alive).toBe(true);
   expect(demonHunterCheckpointPlayers(world, true)).toHaveLength(12);
@@ -91,7 +91,7 @@ test("Idiot readonly vote stock rejects before consuming reveal", () => {
     writable: false,
   });
   expect(() => idiotVotedOutHook(world, 12, [])).toThrow("demon_hunter_idiot_state_revoked");
-  expect(role.privateState.idiot).toEqual({ revealed: false });
+  expect((role.privateState as { readonly idiot?: unknown }).idiot).toEqual({ revealed: false });
 });
 
 for (const getter of [false, true])
@@ -100,14 +100,17 @@ for (const getter of [false, true])
     const role = world.getComponent<RoleComponent>(12, COMPONENT.Role)!;
     let reads = 0;
     if (getter)
-      Object.defineProperty(role.privateState.idiot, "revealed", {
+      Object.defineProperty((role.privateState as { readonly idiot?: unknown }).idiot, "revealed", {
         get() {
           reads++;
           return true;
         },
         configurable: true,
       });
-    else (role.privateState.idiot as { revealed: boolean }).revealed = true;
+    else
+      (
+        (role.privateState as { readonly idiot?: unknown }).idiot as { revealed: boolean }
+      ).revealed = true;
     expect(() => idiotVotedOutHook(world, 12, [])).toThrow("demon_hunter_idiot_state_revoked");
     expect(reads).toBe(0);
     expect(world.getComponent<VotingRightComponent>(12, COMPONENT.VotingRight)!.canVote).toBe(true);
@@ -117,7 +120,7 @@ test("Idiot badge preflight rejects readonly stock before reveal and vote change
   const role = world.getComponent<RoleComponent>(12, COMPONENT.Role)!;
   Object.defineProperty(world.getComponent(12, COMPONENT.Badge)!, "isSheriff", { writable: false });
   expect(() => idiotVotedOutHook(world, 12, [])).toThrow("demon_hunter_badge_stock_revoked");
-  expect(role.privateState.idiot).toEqual({ revealed: false });
+  expect((role.privateState as { readonly idiot?: unknown }).idiot).toEqual({ revealed: false });
   expect(world.getComponent<VotingRightComponent>(12, COMPONENT.VotingRight)!.canVote).toBe(true);
   expect(demonHunterCheckpointPlayers(world, true)).toHaveLength(12);
 });
@@ -145,7 +148,13 @@ test("Readonly sheriff badge rejects before Idiot reveal or vote consumption", (
   const badge = world.getComponent<BadgeComponent>(12, COMPONENT.Badge)!;
   Object.defineProperty(badge, "isSheriff", { writable: false });
   expect(() => idiotVotedOutHook(world, 12, [])).toThrow("demon_hunter_badge_stock_revoked");
-  expect(world.getComponent<RoleComponent>(12, COMPONENT.Role)!.privateState.idiot).toEqual({
+  expect(
+    (
+      world.getComponent<RoleComponent>(12, COMPONENT.Role)!.privateState as {
+        readonly idiot?: unknown;
+      }
+    ).idiot,
+  ).toEqual({
     revealed: false,
   });
   expect(world.getComponent<VotingRightComponent>(12, COMPONENT.VotingRight)!.canVote).toBe(true);

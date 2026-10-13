@@ -18,8 +18,12 @@ export function bindNobleKnifeTargetQuery(world: World): NobleKnifeTargetQuery {
   return Object.freeze({
     allows: (targetId: EntityId) =>
       world.getComponent(targetId, COMPONENT.Role)?.role !== Role.NightNoble ||
-      readNobleState(world.getComponent(targetId, COMPONENT.Role)?.privateState.noble)
-        ?.wolfActionPolicy === "standard",
+      readNobleState(
+        (
+          world.getComponent(targetId, COMPONENT.Role) as
+            { readonly privateState: { readonly noble?: unknown } } | undefined
+        )?.privateState.noble,
+      )?.wolfActionPolicy === "standard",
   });
 }
 

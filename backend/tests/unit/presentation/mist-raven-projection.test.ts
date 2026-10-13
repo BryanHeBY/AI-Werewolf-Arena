@@ -100,7 +100,9 @@ test("DTO queries execute no private accessors or proxy traps", () => {
   expect(projectRaven(container)).toBeUndefined();
   expect(reads).toBe(0);
   const broken = role(Role.Alchemist);
-  (broken.privateState.alchemist as Record<string, unknown>).healRemaining = 0;
+  (
+    (broken.privateState as { readonly alchemist?: unknown }).alchemist as Record<string, unknown>
+  ).healRemaining = 0;
   expect(projectAlchemist(broken)).toBeUndefined();
 });
 const facts: GameEvent[] = [

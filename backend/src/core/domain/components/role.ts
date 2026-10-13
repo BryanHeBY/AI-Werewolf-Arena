@@ -1,8 +1,8 @@
 /**
- * Defines the original role component and its read-only private-state container.
+ * Defines the original role component and its opaque read-only private-state container.
  * Inputs are role/camp/locale; outputs retain the same component and empty record.
  * The core never installs feature slots, clones state or freezes a live actor.
- * Read callers cannot replace the container or assign arbitrary keys; feature
+ * Read callers cannot index or replace the container or assign arbitrary keys; feature
  * owners keep their concrete slots and profile initialization has its own write
  * contract. Role/camp mutation and prompt behavior retain their existing owners.
  */
@@ -18,7 +18,7 @@ export interface RoleComponent extends PromptRenderable {
   /**
    * 角色私有机制状态由机制层管理，框架层仅维护通用容器。
    */
-  readonly privateState: Readonly<Record<string, unknown>>;
+  readonly privateState: object;
 }
 
 /**

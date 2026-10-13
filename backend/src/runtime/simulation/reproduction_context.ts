@@ -215,7 +215,7 @@ export function captureCheckpoint(
             audit?.privateState ??
             (projectLonelyGirl(world, role)
               ? { lonelyGirl: projectLonelyGirl(world, role) }
-              : structuredClone(role.privateState)),
+              : (structuredClone(role.privateState) as Record<string, unknown>)),
           ...(wallNote ? { wallNote } : {}),
           ...(world.getComponent(id, COMPONENT.DebatePenalty)
             ? {

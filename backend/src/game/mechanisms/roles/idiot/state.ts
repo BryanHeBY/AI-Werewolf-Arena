@@ -17,5 +17,6 @@ export function setIdiotState(roleComp: RoleComponent, state: IdiotState): Idiot
 }
 
 export function getIdiotState(roleComp: RoleComponent): IdiotReadState | undefined {
-  return roleComp.privateState["idiot"] as IdiotReadState | undefined;
+  return (roleComp.privateState as { readonly idiot?: unknown })["idiot"] as
+    IdiotReadState | undefined;
 }

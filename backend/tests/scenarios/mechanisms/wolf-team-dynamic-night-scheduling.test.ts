@@ -8,7 +8,15 @@
 import { completedNight } from "../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Camp, Role, type AliveComponent, type GameEvent, type RoleComponent, type World } from "../../../src/core";
+import {
+  COMPONENT,
+  Camp,
+  Role,
+  type AliveComponent,
+  type GameEvent,
+  type RoleComponent,
+  type World,
+} from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { RoleCatalog, getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
@@ -40,7 +48,7 @@ function fixture(locale: "zh-CN" | "en") {
               recognizedByPack: false,
               recognizes: "all" as const,
               canChat: false,
-              canVoteForKill: state.privateState.knife === true,
+              canVoteForKill: (state.privateState as { readonly knife?: unknown }).knife === true,
             }),
           };
         if (profile.role === Role.Guard)

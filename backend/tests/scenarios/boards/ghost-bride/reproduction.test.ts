@@ -30,7 +30,10 @@ import {
   replayReproduction,
 } from "../../../../src/runtime/simulation/replay_reproduction";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
-import { ghostBrideBoard, ghostBrideDeck } from "../../../support/features/ghost-bride/builders/scenario";
+import {
+  ghostBrideBoard,
+  ghostBrideDeck,
+} from "../../../support/features/ghost-bride/builders/scenario";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 async function recordGame(
@@ -104,8 +107,11 @@ async function recordGame(
         };
       }
       if (failure === "proxy_stock" && request.allowedTools.includes("guard")) {
-        const abilities = context.world.getComponent<RoleComponent>(10, COMPONENT.Role)!
-          .privateState.abilities as Record<string, object>;
+        const abilities = (
+          context.world.getComponent<RoleComponent>(10, COMPONENT.Role)!.privateState as {
+            readonly abilities?: unknown;
+          }
+        ).abilities as Record<string, object>;
         abilities["native:potion"] = new Proxy(abilities["native:potion"]!, {
           ownKeys(target) {
             getterReads++;

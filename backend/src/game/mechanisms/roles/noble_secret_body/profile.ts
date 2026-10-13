@@ -1,3 +1,10 @@
+/**
+ * Owns Noble/Secret Body role contributions and their configured action policies.
+ * Inputs are initialization state, board parameters and original request context;
+ * outputs preserve native defaults, prompts, stage metadata and legal-tool checks.
+ * Concrete slots belong to this feature's initialization/read owners; this module
+ * never creates a body contract, settles damage or closes a night authority.
+ */
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
@@ -48,7 +55,8 @@ export const NIGHT_NOBLE_ROLE_PROFILE: RoleProfile = {
   },
   renderPrompt: (_role, locale = "zh-CN") => text(locale, "role.night_noble.brief"),
   canSelfDestruct: (role) =>
-    readNobleState(role.privateState.noble)?.wolfActionPolicy === "standard",
+    readNobleState((role.privateState as { readonly noble?: unknown }).noble)?.wolfActionPolicy ===
+    "standard",
   configuration: {
     schema: noble,
     defaults: noble.parse({}),

@@ -22,7 +22,8 @@ export function setWolfBeautyState(
 }
 
 export function getWolfBeautyState(roleComp: RoleComponent): WolfBeautyReadState | undefined {
-  return roleComp.privateState["wolf_beauty"] as WolfBeautyReadState | undefined;
+  return (roleComp.privateState as { readonly wolf_beauty?: unknown })["wolf_beauty"] as
+    WolfBeautyReadState | undefined;
 }
 
 /** The caller retains every preflight and subsequent use/effect/publication operation. */

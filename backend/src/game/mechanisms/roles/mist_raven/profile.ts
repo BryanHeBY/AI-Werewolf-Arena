@@ -1,3 +1,10 @@
+/**
+ * Owns Alchemist/Raven role contributions, configuration and original tool policies.
+ * Inputs are initialization state, board parameters and projected action context;
+ * outputs preserve native defaults, prompts, legal hints and choice validation.
+ * Profile initialization installs its concrete slots; this module never opens a
+ * night frame, commits a paid choice or transfers lifecycle cleanup ownership.
+ */
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
@@ -116,7 +123,9 @@ export const ALCHEMIST_ROLE_PROFILE: RoleProfile = {
         mistCasterId(world, "alchemist") !== actorId
       )
         return { code: RuleError.MistUnavailable };
-      const state = readAlchemistState(role.privateState.alchemist),
+      const state = readAlchemistState(
+          (role.privateState as { readonly alchemist?: unknown }).alchemist,
+        ),
         targets = mistChoiceTargets(world, day);
       if (!state || targets.length < 3) return { code: RuleError.MistUnavailable };
       try {
@@ -209,7 +218,9 @@ export const RAVEN_CLAW_ROLE_PROFILE: RoleProfile = {
         mistCasterId(world, "raven_claw_wolf") !== actorId
       )
         return { code: RuleError.RavenKnifeUnavailable };
-      const state = readRavenState(role.privateState.ravenClaw),
+      const state = readRavenState(
+          (role.privateState as { readonly ravenClaw?: unknown }).ravenClaw,
+        ),
         targets = ravenKnifeTargets(world, day);
       if (!state || !targets.length) return { code: RuleError.RavenKnifeUnavailable };
       try {

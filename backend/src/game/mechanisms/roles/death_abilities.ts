@@ -43,7 +43,8 @@ const owners = new WeakMap<DeathGunReadView, GunOwner>(),
   counters = new WeakMap<World, number>();
 export function allDeathGuns(role: RoleComponent | undefined): DeathGunReadView[] {
   return Object.values(
-    (role?.privateState.deathAbilities ?? {}) as Readonly<Record<string, DeathGunReadView>>,
+    ((role as { readonly privateState: { readonly deathAbilities?: unknown } } | undefined)
+      ?.privateState.deathAbilities ?? {}) as Readonly<Record<string, DeathGunReadView>>,
   ).sort((a, b) => a.id.localeCompare(b.id));
 }
 export function findDeathGun(
@@ -176,7 +177,12 @@ export function grantDeathGun(
   if (allDeathGuns(to).length) throw new Error("death_ability_gun_already_owned");
   const next = (counters.get(world) ?? 0) + 1,
     id = `gift-gun:${next}`;
-  if ((to.privateState.retiredDeathAbilityIds as string[] | undefined)?.includes(id))
+  if (
+    (
+      (to.privateState as { readonly retiredDeathAbilityIds?: unknown }).retiredDeathAbilityIds as
+        string[] | undefined
+    )?.includes(id)
+  )
     throw new Error("death_ability_id_retired");
   const gun: DeathGun = {
     id,
@@ -346,7 +352,10 @@ export function transferDeathGun(
     target.camp !== Camp.Good ||
     !world.getComponent(toId, COMPONENT.Alive)?.alive ||
     allDeathGuns(target).length ||
-    (target.privateState.retiredDeathAbilityIds as string[] | undefined)?.includes(id)
+    (
+      (target.privateState as { readonly retiredDeathAbilityIds?: unknown })
+        .retiredDeathAbilityIds as string[] | undefined
+    )?.includes(id)
   )
     throw new Error("death_ability_transfer_invalid");
   const received: DeathGun = {
@@ -359,7 +368,12 @@ export function transferDeathGun(
     ((target.privateState as { deathAbilities?: Record<string, DeathGun> }).deathAbilities ??=
       {}) as Record<string, DeathGun>
   )[id] = received;
-  delete (source!.privateState.deathAbilities as Record<string, DeathGun>)[id];
+  delete (
+    (source!.privateState as { readonly deathAbilities?: unknown }).deathAbilities as Record<
+      string,
+      DeathGun
+    >
+  )[id];
   (
     ((source!.privateState as { retiredDeathAbilityIds?: string[] }).retiredDeathAbilityIds ??=
       []) as string[]

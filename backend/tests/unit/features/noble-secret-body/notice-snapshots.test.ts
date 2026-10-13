@@ -265,7 +265,7 @@ test("read boundary also rejects controller reentry and successful outer begin p
 
 test("revoked original state cannot start a night or silently advance notification history", () => {
   const f = nobleBodyAuthorityFixture(),
-    original = f.roles[1]!.privateState.secretBody;
+    original = (f.roles[1]!.privateState as { readonly secretBody?: unknown }).secretBody;
   (f.roles[1]!.privateState as Record<string, unknown>).secretBody = structuredClone(original);
   expect(() => beginNobleBodyNight(f.world, 1, () => true)).toThrow("noble_body_owner_revoked");
   expect(() => getNobleBodyPlayerState(f.world, 2, Phase.Day)).toThrow("noble_body_owner_revoked");

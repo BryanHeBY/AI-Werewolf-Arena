@@ -23,7 +23,8 @@ export const freshMerchantState = (): MerchantState => ({
   choice: null,
 });
 export function getMerchantState(role: RoleComponent | undefined): MerchantReadState | undefined {
-  return role?.privateState.miracle_merchant as MerchantReadState | undefined;
+  return (role as { readonly privateState: { readonly miracle_merchant?: unknown } } | undefined)
+    ?.privateState.miracle_merchant as MerchantReadState | undefined;
 }
 export function setMerchantState(role: RoleComponent, state: MerchantState): void {
   (role.privateState as { miracle_merchant: MerchantState }).miracle_merchant =

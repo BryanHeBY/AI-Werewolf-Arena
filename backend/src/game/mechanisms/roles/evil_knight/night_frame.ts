@@ -64,9 +64,14 @@ export function installEvilKnightBoard(world: World): void {
         camp: role.camp,
         state: role.privateState,
         refs: Object.entries(role.privateState),
-        abilityRefs: Object.entries(role.privateState.abilities ?? {}),
+        abilityRefs: Object.entries(
+          (role.privateState as { readonly abilities?: unknown }).abilities ?? {},
+        ),
         authorities: Object.values(
-          (role.privateState.abilities ?? {}) as Record<string, NightAbilityReadView>,
+          ((role.privateState as { readonly abilities?: unknown }).abilities ?? {}) as Record<
+            string,
+            NightAbilityReadView
+          >,
         ).map((ability) => ({
           ability,
           state: ability.state,
@@ -87,17 +92,23 @@ export function assertEvilKnightRosterCurrent(world: World): void {
       entry.role.role !== entry.kind ||
       entry.role.camp !== entry.camp ||
       entry.role.privateState !== entry.state ||
-      entry.refs.some(([key, value]) => entry.state[key] !== value) ||
+      entry.refs.some(
+        ([key, value]) => (entry.state as Readonly<Record<string, unknown>>)[key] !== value,
+      ) ||
       entry.authorities.some(
         (a) =>
           a.ability.state !== a.state ||
           a.ability.source !== a.source ||
           abilityIdentity(a.ability) !== a.identity,
       ) ||
-      Object.keys(entry.state.abilities ?? {}).length !== entry.abilityRefs.length ||
+      Object.keys((entry.state as { readonly abilities?: unknown }).abilities ?? {}).length !==
+        entry.abilityRefs.length ||
       entry.abilityRefs.some(
         ([key, value]) =>
-          (entry.state.abilities as Record<string, unknown> | undefined)?.[key] !== value,
+          (
+            (entry.state as { readonly abilities?: unknown }).abilities as
+              Record<string, unknown> | undefined
+          )?.[key] !== value,
       )
     )
       throw new Error("evil_knight_roster_revoked");

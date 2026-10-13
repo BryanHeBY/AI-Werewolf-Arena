@@ -37,7 +37,8 @@ export function freshMechanicalState(): MechanicalState {
 export function getMechanicalState(
   role: RoleComponent | undefined,
 ): MechanicalReadState | undefined {
-  return role?.privateState.mechanical_wolf as MechanicalReadState | undefined;
+  return (role as { readonly privateState: { readonly mechanical_wolf?: unknown } } | undefined)
+    ?.privateState.mechanical_wolf as MechanicalReadState | undefined;
 }
 export function setMechanicalState(
   role: RoleComponent,

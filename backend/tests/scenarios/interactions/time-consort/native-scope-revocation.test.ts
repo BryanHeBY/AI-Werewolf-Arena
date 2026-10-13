@@ -63,10 +63,8 @@ for (const [role, stage, event] of [
                 (timing === "before-stage" && r.context.stage === "time_consort_lock")
               ) {
                 const p = game.world.getComponent<RoleComponent>(actor, COMPONENT.Role)!;
-                const abilities = p.privateState.abilities as Record<
-                    string,
-                    Record<string, unknown>
-                  >,
+                const abilities = (p.privateState as { readonly abilities?: unknown })
+                    .abilities as Record<string, Record<string, unknown>>,
                   key = Object.keys(abilities)[0]!,
                   old = abilities[key]!;
                 expect(old).toBeDefined();
@@ -150,7 +148,11 @@ for (const ownerRole of [Role.Villager, Role.TimeWolfConsort] as const)
         const role = game.world.getComponent<RoleComponent>(actor, COMPONENT.Role)!;
         expect(Object.hasOwn(role.privateState, "abilities")).toBe(false);
         const donor = structuredClone(
-          game.world.getComponent<RoleComponent>(guard, COMPONENT.Role)!.privateState.abilities,
+          (
+            game.world.getComponent<RoleComponent>(guard, COMPONENT.Role)!.privateState as {
+              readonly abilities?: unknown;
+            }
+          ).abilities,
         );
         let reads = 0,
           mutated = false;

@@ -28,7 +28,7 @@ for (const locale of ["zh-CN", "en"] as const) {
             : {
                 ...profile,
                 inspectionLabels: (state: RoleComponent) =>
-                  state.privateState.unmasked === true
+                  (state.privateState as { readonly unmasked?: unknown }).unmasked === true
                     ? { camp: Camp.Wolf, role: Role.Wolf }
                     : { camp: Camp.Good, role: Role.Villager },
               },

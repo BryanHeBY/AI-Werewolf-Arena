@@ -25,7 +25,9 @@ export const freshBlackMarketState = (): BlackMarketState => ({
 export function getBlackMarketState(
   role: RoleComponent | undefined,
 ): BlackMarketReadState | undefined {
-  return role?.privateState.black_market_merchant as BlackMarketReadState | undefined;
+  return (
+    role as { readonly privateState: { readonly black_market_merchant?: unknown } } | undefined
+  )?.privateState.black_market_merchant as BlackMarketReadState | undefined;
 }
 export function setBlackMarketState(role: RoleComponent, state: BlackMarketState): void {
   (role.privateState as { black_market_merchant: BlackMarketState }).black_market_merchant =

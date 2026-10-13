@@ -238,7 +238,10 @@ for (const former of [Role.Seer, Role.Witch, Role.Guard]) {
       actor = f.id(former);
     const role = f.world.getComponent<RoleComponent>(actor, COMPONENT.Role)!;
     const abilities = Object.values(
-      role.privateState.abilities as Record<string, { uses: number; state: { poison?: number } }>,
+      (role.privateState as { readonly abilities?: unknown }).abilities as Record<
+        string,
+        { uses: number; state: { poison?: number } }
+      >,
     );
     let changed = false;
     const wrapped = {
@@ -268,7 +271,10 @@ test("witch target role replacement aborts before potion consumption", async () 
   const target = f.world.getComponent<RoleComponent>(f.knight, COMPONENT.Role)!;
   const witch = f.world.getComponent<RoleComponent>(f.witch, COMPONENT.Role)!;
   const abilities = Object.values(
-    witch.privateState.abilities as Record<string, { uses: number; state: { poison?: number } }>,
+    (witch.privateState as { readonly abilities?: unknown }).abilities as Record<
+      string,
+      { uses: number; state: { poison?: number } }
+    >,
   );
   let changed = false;
   const wrapped = {
@@ -298,7 +304,10 @@ for (const stage of ["wolf_discussion", "seer"] as const) {
     const f = fixture("en"),
       base = provider(f);
     const role = f.world.getComponent<RoleComponent>(f.seer, COMPONENT.Role)!;
-    const abilities = role.privateState.abilities as Record<string, { uses: number }>;
+    const abilities = (role.privateState as { readonly abilities?: unknown }).abilities as Record<
+      string,
+      { uses: number }
+    >;
     const key = Object.keys(abilities)[0]!,
       original = abilities[key]!;
     let changed = false;
@@ -344,7 +353,10 @@ for (const mutation of [
       base = provider(f);
     const role = f.world.getComponent<RoleComponent>(f.seer, COMPONENT.Role)!;
     const ability = Object.values(
-      role.privateState.abilities as Record<string, Record<string, unknown>>,
+      (role.privateState as { readonly abilities?: unknown }).abilities as Record<
+        string,
+        Record<string, unknown>
+      >,
     )[0]!;
     let changed = false;
     const wrapped = {

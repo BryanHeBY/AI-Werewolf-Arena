@@ -6,6 +6,7 @@
  * ability installation and authority publication remain with their actual owners.
  */
 import type { ShelterState } from "@ai-werewolf-arena/game-contract";
+import type { RoleComponent } from "../../../../core/domain/components/role";
 
 import { types } from "node:util";
 
@@ -184,4 +185,9 @@ export function selectEclipse(
       },
     ],
   };
+}
+
+/** Project the original Eclipse slot through its existing detached-data reader. */
+export function projectEclipseState(role: RoleComponent): EclipseState | undefined {
+  return readEclipseState((role.privateState as { readonly eclipse?: unknown }).eclipse);
 }

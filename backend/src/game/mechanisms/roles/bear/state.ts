@@ -17,7 +17,7 @@ export function setBearState(role: RoleComponent, state: BearState): BearReadSta
 }
 
 export function getBearState(role: RoleComponent): BearReadState | undefined {
-  return role.privateState["bear"] as BearReadState | undefined;
+  return (role.privateState as { readonly bear?: unknown })["bear"] as BearReadState | undefined;
 }
 
 /** Normal publication keeps original history/push lookup; dawn retains its guarded writer. */

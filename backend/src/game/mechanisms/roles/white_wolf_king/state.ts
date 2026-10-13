@@ -21,7 +21,8 @@ export function setWhiteWolfKingState(
 }
 
 export function getWhiteWolfKingState(roleComp: RoleComponent): WhiteWolfKingReadState | undefined {
-  return roleComp.privateState["white_wolf_king"] as WhiteWolfKingReadState | undefined;
+  return (roleComp.privateState as { readonly white_wolf_king?: unknown })["white_wolf_king"] as
+    WhiteWolfKingReadState | undefined;
 }
 
 /** Caller retains original blast validation, death proposals and publication order. */

@@ -26,7 +26,10 @@ export const ALCHEMIST_MIST_STAGE: NightStageHandler = {
       candidates = mistChoiceTargets(ctx.world, day);
     if (candidates.length < 3) {
       const state = readAlchemistState(
-        ctx.world.getComponent(actorId, COMPONENT.Role)?.privateState.alchemist,
+        (
+          ctx.world.getComponent(actorId, COMPONENT.Role) as
+            { readonly privateState: { readonly alchemist?: unknown } } | undefined
+        )?.privateState.alchemist,
       );
       const reason = !ctx.world.getAliveEntityIds().includes(actorId)
         ? "dead"
@@ -62,7 +65,11 @@ export const ALCHEMIST_MIST_STAGE: NightStageHandler = {
       throw new Error("mist_choice_action_invalid");
     commitMistChoice(ctx.world, day, result.sanitizedCall.args.target_ids);
     const state = readAlchemistState(
-      ctx.world.getComponent(actorId, COMPONENT.Role)!.privateState.alchemist,
+      (
+        ctx.world.getComponent(actorId, COMPONENT.Role)!.privateState as {
+          readonly alchemist?: unknown;
+        }
+      ).alchemist,
     )!;
     ctx.events.push({
       timestamp: Date.now(),
@@ -81,7 +88,10 @@ export const RAVEN_KNIFE_STAGE: NightStageHandler = {
       candidates = ravenKnifeTargets(ctx.world, day);
     if (!candidates.length) {
       const state = readRavenState(
-        ctx.world.getComponent(actorId, COMPONENT.Role)?.privateState.ravenClaw,
+        (
+          ctx.world.getComponent(actorId, COMPONENT.Role) as
+            { readonly privateState: { readonly ravenClaw?: unknown } } | undefined
+        )?.privateState.ravenClaw,
       );
       const reason = !ctx.world.getAliveEntityIds().includes(actorId)
         ? "dead"

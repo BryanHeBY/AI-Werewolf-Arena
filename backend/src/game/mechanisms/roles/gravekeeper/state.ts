@@ -27,7 +27,8 @@ export function setGravekeeperState(
 }
 
 export function getGravekeeperState(roleComp: RoleComponent): GravekeeperReadState | undefined {
-  return roleComp.privateState["gravekeeper"] as GravekeeperReadState | undefined;
+  return (roleComp.privateState as { readonly gravekeeper?: unknown })["gravekeeper"] as
+    GravekeeperReadState | undefined;
 }
 
 /** The caller retains every preflight and subsequent use/effect/publication operation. */

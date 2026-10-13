@@ -190,8 +190,8 @@ export function copyAbilityData<T>(value: T): T {
 
 /** The only resource owner is this player's stored instance; no parallel role state. */
 export function allNightAbilities(role: RoleComponent | undefined): NightAbilityReadView[] {
-  const stored = role?.privateState.abilities as
-    Readonly<Record<string, NightAbilityReadView>> | undefined;
+  const stored = (role as { readonly privateState: { readonly abilities?: unknown } } | undefined)
+    ?.privateState.abilities as Readonly<Record<string, NightAbilityReadView>> | undefined;
   return stored
     ? Object.values(stored).sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))
     : [];
@@ -263,7 +263,8 @@ export function installNativeAbility<K extends NightAbilityKind>(
   if (kind === "role_check") roleInspectionPolicy(ownedState as RoleInspectionState);
   const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=
     {}) as Record<string, NightAbility>;
-  const retired = (role.privateState.retiredAbilityIds ?? []) as string[];
+  const retired = ((role.privateState as { readonly retiredAbilityIds?: unknown })
+    .retiredAbilityIds ?? []) as string[];
   const baseId = `native:${kind}`;
   let id = baseId,
     revision = 1;
@@ -352,4 +353,10 @@ export function projectNightAbility(
     case "dream":
       return { ...metadata, kind: "dream", state: projectDreamerState(ability.state) };
   }
+}
+
+/** Read the original retired-ID list without granting inventory write rights. */
+export function retiredNightAbilityIds(role: RoleComponent): readonly string[] {
+  return ((role.privateState as { readonly retiredAbilityIds?: unknown }).retiredAbilityIds ??
+    []) as readonly string[];
 }

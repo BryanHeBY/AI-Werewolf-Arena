@@ -69,7 +69,7 @@ test("explicit undefined optional fields normalize into a serializable CP/Tape w
     maxDays: 6,
   });
   const tape = trace.build();
-  expect(parseReproductionRecord(tape).checkpoints[0].players[4].privateState).toEqual(
+  expect<unknown>(parseReproductionRecord(tape).checkpoints[0].players[4].privateState).toEqual(
     role(context.world, 5).privateState,
   );
 });

@@ -87,7 +87,7 @@ async function run(locale: "zh-CN" | "en", kind: "body" | "noble", changed: bool
           schema = mcp.getSchema();
         mcp.close();
         expect(observation.abilities).toEqual([]);
-        expect(role.privateState.abilities ?? []).toEqual([]);
+        expect((role.privateState as { readonly abilities?: unknown }).abilities ?? []).toEqual([]);
         expect(disallowed).toMatchObject({ ok: false, error: "tool_not_allowed_in_this_turn" });
         expect(unqualified.ok).toBe(false);
         if (locale === "en")

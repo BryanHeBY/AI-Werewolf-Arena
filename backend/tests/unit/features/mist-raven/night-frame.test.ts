@@ -101,7 +101,11 @@ function fixture() {
     world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
   };
   const healState = () =>
-    world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState.alchemist as AlchemistState;
+    (
+      world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState as {
+        readonly alchemist?: unknown;
+      }
+    ).alchemist as AlchemistState;
   return { world, kill, healState };
 }
 function passNight(world: World, day: number, knife: number | null = 5) {
@@ -281,7 +285,10 @@ for (const edit of [
     const { world, kill } = fixture();
     beginMistNight(world, 1);
     const role = world.getComponent<RoleComponent>(2, COMPONENT.Role)!;
-    const abilities = role.privateState.abilities as Record<string, { state: object }>;
+    const abilities = (role.privateState as { readonly abilities?: unknown }).abilities as Record<
+      string,
+      { state: object }
+    >;
     const ability = Object.values(abilities)[0]!;
     let calls = 0;
     switch (edit) {
@@ -335,7 +342,9 @@ for (const id of [1, 9])
     const { world } = fixture(),
       role = world.getComponent<RoleComponent>(id, COMPONENT.Role)!,
       key = id === 1 ? "alchemist" : "ravenClaw";
-    (role.privateState as Record<string, unknown>)[key] = structuredClone(role.privateState[key]);
+    (role.privateState as Record<string, unknown>)[key] = structuredClone(
+      (role.privateState as { readonly alchemist?: unknown; readonly ravenClaw?: unknown })[key],
+    );
     expect(() => assertMistRosterCurrent(world)).toThrow("mist_original_roster_revoked");
     expect(() => beginMistNight(world, 1)).toThrow("mist_original_roster_revoked");
   });

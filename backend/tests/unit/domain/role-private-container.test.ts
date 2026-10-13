@@ -65,9 +65,9 @@ test("custom initializer keeps extension/replacement rights and original role/co
     init(actualRole, actualContext) {
       trace.push("init");
       expect(this).toBe(profile);
-      expect(actualRole).toBe(role);
+      expect<unknown>(actualRole).toBe(role);
       expect(actualContext).toBe(ctx);
-      expect(actualRole.privateState).toBe(firstRecord);
+      expect<unknown>(actualRole.privateState).toBe(firstRecord);
       actualRole.privateState.extension = extension;
       actualRole.privateState = replacement;
     },
@@ -83,7 +83,7 @@ test("custom initializer keeps extension/replacement rights and original role/co
   const catalog = new RoleCatalog([profile]);
   catalog.applyRuntime(role, ctx);
   expect(trace).toEqual(["init", "locale"]);
-  expect(firstRecord.extension).toBe(extension);
+  expect((firstRecord as { readonly extension?: unknown }).extension).toBe(extension);
   expect(role.privateState).toBe(replacement);
   expect(role.renderPrompt()).toBe("Custom prompt");
   expect(trace).toEqual(["init", "locale", "world", "render"]);

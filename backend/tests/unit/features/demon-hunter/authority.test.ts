@@ -160,12 +160,12 @@ for (const [targetId, expected] of [
   test(`target ${targetId}: commit preserves native identity and freezes the correct independent source`, () => {
     const f = fixture(),
       nativeRole = f.role,
-      state = f.role.privateState.demonHunter,
+      state = (f.role.privateState as { readonly demonHunter?: unknown }).demonHunter,
       { scope } = turn(f);
     expect(commitDemonHunt(f.world, scope, hunt(targetId))).toEqual({ day: 2, targetId });
     expect(f.role).toBe(nativeRole);
     expect(f.role.camp).toBe(Camp.Good);
-    expect(f.role.privateState.demonHunter).toBe(state);
+    expect((f.role.privateState as { readonly demonHunter?: unknown }).demonHunter).toBe(state);
     expect(projectDemonHunter(f.world, f.role)?.history).toEqual([{ day: 2, targetId }]);
     expect(freezeDemonHunt(f.world)).toEqual({
       choice: { day: 2, targetId },
@@ -323,7 +323,7 @@ for (const variant of [
       });
     if (variant === "proxy")
       (f.role.privateState as Record<string, unknown>).demonHunter = new Proxy(
-        f.role.privateState.demonHunter as object,
+        (f.role.privateState as { readonly demonHunter?: unknown }).demonHunter as object,
         {
           getPrototypeOf() {
             reads++;
@@ -380,9 +380,12 @@ test("an independently supplied fault really replaces the life and the engine in
 test("the original native potion consumption is independently audited; getter/Proxy substitutions preserve that last snapshot", () => {
   const f = fixture(),
     witch = f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!;
-  const ability = (witch.privateState.abilities as Record<string, NightAbility<"potion">>)[
-    "native:potion"
-  ]!;
+  const ability = (
+    (witch.privateState as { readonly abilities?: unknown }).abilities as Record<
+      string,
+      NightAbility<"potion">
+    >
+  )["native:potion"]!;
   beginDemonHunterNight(f.world, 2, () => true);
   const token = captureDemonNativePoison(f.world, 5, ability, 6)!;
   recordNightAbilityUse(ability, 2, true);
@@ -410,7 +413,7 @@ test("the original native potion consumption is independently audited; getter/Pr
     before = demonHunterAuditPlayer(g.world, 5)!;
   const original = g.world.getComponent<RoleComponent>(5, COMPONENT.Role)!;
   (original.privateState as Record<string, unknown>).abilities = new Proxy(
-    original.privateState.abilities as object,
+    (original.privateState as { readonly abilities?: unknown }).abilities as object,
     {
       getOwnPropertyDescriptor() {
         reads++;
@@ -429,7 +432,10 @@ test("a same-name replacement nested native inventory cannot lend identity to a 
   const f = fixture(),
     { scope } = turn(f);
   const witch = f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!;
-  const stored = witch.privateState.abilities as Record<string, NightAbility>;
+  const stored = (witch.privateState as { readonly abilities?: unknown }).abilities as Record<
+    string,
+    NightAbility
+  >;
   stored["native:potion"] = structuredClone(stored["native:potion"]!);
   expect(commitDemonHunt(f.world, scope, hunt(1))).toBeNull();
   (stored["native:potion"] as NightAbility<"potion">).state.poison = 0;
@@ -461,9 +467,12 @@ test("a native nested getter rejects the whole bound action without executing it
   const f = fixture(),
     { scope } = turn(f);
   const witch = f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!;
-  const ability = (witch.privateState.abilities as Record<string, NightAbility<"potion">>)[
-    "native:potion"
-  ]!;
+  const ability = (
+    (witch.privateState as { readonly abilities?: unknown }).abilities as Record<
+      string,
+      NightAbility<"potion">
+    >
+  )["native:potion"]!;
   let reads = 0;
   Object.defineProperty(ability.state, "poison", {
     enumerable: true,
@@ -522,9 +531,12 @@ test("a replacement life cannot refresh a native inventory audit", () => {
     before = demonHunterAuditPlayer(f.world, 5)!;
   f.world.addComponent(5, COMPONENT.Alive, createAliveComponent());
   const witch = f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!;
-  const ability = (witch.privateState.abilities as Record<string, NightAbility<"potion">>)[
-    "native:potion"
-  ]!;
+  const ability = (
+    (witch.privateState as { readonly abilities?: unknown }).abilities as Record<
+      string,
+      NightAbility<"potion">
+    >
+  )["native:potion"]!;
   recordNightAbilityUse(ability, 2, true);
   ability.state.poison = 0;
   ability.state.poisonUsedThisNight = true;
@@ -537,7 +549,7 @@ for (const kind of ["truncate", "append"] as const)
     commitDemonHunt(f.world, scope, hunt(1));
     const before = demonHunterAuditPlayer(f.world, 6)!;
     const history = (
-      f.role.privateState.demonHunter as {
+      (f.role.privateState as { readonly demonHunter?: unknown }).demonHunter as {
         history: Array<{ day: number; targetId: number | null }>;
       }
     ).history;
@@ -621,9 +633,12 @@ test("the original first death skips future hunt prompts without borrowing a new
 function poisonFixture(isCurrent = () => true) {
   const f = fixture(),
     witch = f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!,
-    ability = (witch.privateState.abilities as Record<string, NightAbility<"potion">>)[
-      "native:potion"
-    ]!;
+    ability = (
+      (witch.privateState as { readonly abilities?: unknown }).abilities as Record<
+        string,
+        NightAbility<"potion">
+      >
+    )["native:potion"]!;
   beginDemonHunterNight(f.world, 1, isCurrent);
   return { ...f, witch, ability };
 }
@@ -799,9 +814,12 @@ test("incorrect hunt-first freezing cannot silently swallow an otherwise qualifi
 test("batch validates missing required response and all proofs before consuming any source", () => {
   const f = fixture(),
     witch = f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!,
-    ability = (witch.privateState.abilities as Record<string, NightAbility<"potion">>)[
-      "native:potion"
-    ]!;
+    ability = (
+      (witch.privateState as { readonly abilities?: unknown }).abilities as Record<
+        string,
+        NightAbility<"potion">
+      >
+    )["native:potion"]!;
   const { scope } = turn(f),
     token = captureDemonNativePoison(f.world, 5, ability, 6)!;
   consumePoison(ability, 2);
@@ -1266,8 +1284,11 @@ for (const kind of [
             async getAction(request) {
               deferRequestDelivery(request, (accepted) => receipts.push(accepted));
               const ability = (
-                f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState
-                  .abilities as Record<string, NightAbility<"potion">>
+                (
+                  f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState as {
+                    readonly abilities?: unknown;
+                  }
+                ).abilities as Record<string, NightAbility<"potion">>
               )["native:potion"]!;
               if (kind === "throw") throw new Error("offline_failure");
               if (kind === "stock_getter")
@@ -1389,10 +1410,11 @@ test("actual original Witch pass → heal → poison: exact cross-night cache an
   expect(audit.abilities["native:potion"]!.state.heal).toBe(0);
   expect(audit.abilities["native:potion"]!.state.poison).toBe(0);
   const ability = (
-    f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState.abilities as Record<
-      string,
-      NightAbility<"potion">
-    >
+    (
+      f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState as {
+        readonly abilities?: unknown;
+      }
+    ).abilities as Record<string, NightAbility<"potion">>
   )["native:potion"]!;
   ability.state.poison = 1;
   ability.uses = 1;
@@ -1461,10 +1483,11 @@ for (const kind of [
     let reads = 0;
     if (kind === "source_getter") {
       const a = (
-        f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState.abilities as Record<
-          string,
-          NightAbility<"potion">
-        >
+        (
+          f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState as {
+            readonly abilities?: unknown;
+          }
+        ).abilities as Record<string, NightAbility<"potion">>
       )["native:potion"]!;
       Object.defineProperty(a.state, "poison", {
         get() {
@@ -1562,8 +1585,11 @@ for (const kind of [
             async getAction(request) {
               deferRequestDelivery(request, (ok) => receipts.push(ok));
               const ability = (
-                f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState
-                  .abilities as Record<string, NightAbility<"potion">>
+                (
+                  f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState as {
+                    readonly abilities?: unknown;
+                  }
+                ).abilities as Record<string, NightAbility<"potion">>
               )["native:potion"]!;
               if (kind === "target_getter")
                 Object.defineProperty(
@@ -1621,10 +1647,11 @@ for (const kind of [
       expect(spy).not.toHaveBeenCalled();
       expect(demonHunterAuditPlayer(f.world, 5)).toEqual(before);
       const ability = (
-        f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState.abilities as Record<
-          string,
-          NightAbility<"potion">
-        >
+        (
+          f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState as {
+            readonly abilities?: unknown;
+          }
+        ).abilities as Record<string, NightAbility<"potion">>
       )["native:potion"]!;
       expect(ability.uses).toBe(0);
       expect(ability.lastUsedDay).toBeNull();

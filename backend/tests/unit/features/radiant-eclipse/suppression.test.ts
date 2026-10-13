@@ -98,8 +98,12 @@ for (const mode of ["death", "revival", "new_life", "new_ability"] as const)
     let replacement: SuppressibleAbility | undefined;
     if (mode === "new_ability") {
       replacement = { ...f.ability, nightSuppression: { ...scope.marker } };
-      (f.role.privateState.abilities as Record<string, SuppressibleAbility>)[f.ability.id] =
-        replacement;
+      (
+        (f.role.privateState as { readonly abilities?: unknown }).abilities as Record<
+          string,
+          SuppressibleAbility
+        >
+      )[f.ability.id] = replacement;
     }
     expect(scope.isCurrent()).toBe(false);
     expect(scope.close()).toBe(mode === "death");

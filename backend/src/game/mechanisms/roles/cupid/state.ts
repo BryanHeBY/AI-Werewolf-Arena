@@ -8,7 +8,8 @@ import { playerDataField } from "../player_state";
 
 import type { RoleComponent } from "../../../../core/domain/components/role";
 export function getCupidState(role: RoleComponent | undefined): CupidReadState | undefined {
-  return role?.privateState.cupid as CupidReadState | undefined;
+  return (role as { readonly privateState: { readonly cupid?: unknown } } | undefined)?.privateState
+    .cupid as CupidReadState | undefined;
 }
 export function projectCupidState(
   state: CupidReadState,

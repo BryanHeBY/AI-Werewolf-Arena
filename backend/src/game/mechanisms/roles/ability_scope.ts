@@ -83,9 +83,10 @@ export function captureNightAbilityScope<K extends NightAbilityKind>(
     ability.activation === activation &&
     ability.state === state &&
     policyIdentity(ability) === policy &&
-    (role.privateState.abilities as Readonly<Record<string, NightAbilityReadView>> | undefined)?.[
-      id
-    ] === ability &&
+    (
+      (role.privateState as { readonly abilities?: unknown }).abilities as
+        Readonly<Record<string, NightAbilityReadView>> | undefined
+    )?.[id] === ability &&
     ability.source === source &&
     source.kind === sourceKind &&
     (source.kind === "native" ? source.role : source.actorId) === sourceOwner &&

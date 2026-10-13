@@ -17,5 +17,6 @@ export function setHunterState(roleComp: RoleComponent, state: HunterState): Hun
 }
 
 export function getHunterState(roleComp: RoleComponent): HunterReadState | undefined {
-  return roleComp.privateState["hunter"] as HunterReadState | undefined;
+  return (roleComp.privateState as { readonly hunter?: unknown })["hunter"] as
+    HunterReadState | undefined;
 }

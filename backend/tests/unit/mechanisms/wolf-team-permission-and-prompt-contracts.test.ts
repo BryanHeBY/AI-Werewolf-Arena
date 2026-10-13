@@ -7,10 +7,24 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Camp, Phase, Role, type ActionRequest, type AliveComponent, type RoleComponent, type ToolCall, type World } from "../../../src/core";
+import {
+  COMPONENT,
+  Camp,
+  Phase,
+  Role,
+  type ActionRequest,
+  type AliveComponent,
+  type RoleComponent,
+  type ToolCall,
+  type World,
+} from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { RoleCatalog, getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import { knownWolfTeammates, wolfChatParticipants, wolfKnifeHolders } from "../../../src/game/mechanisms/roles/wolf_team";
+import {
+  knownWolfTeammates,
+  wolfChatParticipants,
+  wolfKnifeHolders,
+} from "../../../src/game/mechanisms/roles/wolf_team";
 import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
 import { ActionValidator } from "../../../src/game/gateway/action_validator";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
@@ -60,7 +74,7 @@ function fixture(locale: "zh-CN" | "en") {
               recognizedByPack: false,
               recognizes: "all" as const,
               canChat: false,
-              canVoteForKill: state.privateState.knife === true,
+              canVoteForKill: (state.privateState as { readonly knife?: unknown }).knife === true,
             }),
           };
         if (profile.role === Role.Guard)

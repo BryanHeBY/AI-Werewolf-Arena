@@ -113,7 +113,9 @@ test("Sealed native frames reject direct opening and restore eligibility next ni
   expect(openDemonWitchTurnFrame(world)).toBeNull();
   expect(() => openDemonHunterTurn(world)).toThrow("demon_hunter_turn_unavailable");
   const seer = world.getComponent<RoleComponent>(9, COMPONENT.Role)!;
-  const ability = (seer.privateState.abilities as Record<string, object>)["native:seer_check"]!;
+  const ability = (
+    (seer.privateState as { readonly abilities?: unknown }).abilities as Record<string, object>
+  )["native:seer_check"]!;
   expect(openDemonNativeNightFrame(world, 9, ability, "seer_check", 2)).toBeNull();
   freezeDemonHunt(world);
   closeDemonHunterNight(world);

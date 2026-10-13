@@ -13,7 +13,12 @@ import { Camp, Role } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { setRoleInspectionState } from "../private_state";
-import { allNightAbilities, findNightAbility, roleInspectionPolicy } from "../abilities";
+import {
+  allNightAbilities,
+  findNightAbility,
+  roleInspectionPolicy,
+  retiredNightAbilityIds,
+} from "../abilities";
 import { numberOrNull } from "../../llm/helpers";
 import { MIRROR_INSPECTION_STAGE } from "../role_inspection/night_stages";
 import {
@@ -64,12 +69,7 @@ export const MIRROR_GIRL_ROLE_PROFILE: RoleProfile = {
     if (native?.kind === "role_check" && roleInspectionPolicy(native.state) !== "mirror")
       throw new Error("mirror_native_policy_invalid");
     // Reapplication/revival must neither reset a live native history nor replenish a transferred one.
-    if (
-      !native &&
-      !((role.privateState.retiredAbilityIds ?? []) as string[]).some((id) =>
-        id.startsWith("native:role_check"),
-      )
-    )
+    if (!native && !retiredNightAbilityIds(role).some((id) => id.startsWith("native:role_check")))
       setRoleInspectionState(role, {
         ...freshMirrorInspectionState(),
         ...(ctx.boardConfig?.mirrorGirl?.inspectionPolicy &&

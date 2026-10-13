@@ -166,7 +166,10 @@ function installAbility(
     throw new Error("ability_lucky_policy_invalid");
   if (
     allNightAbilities(role).some((ability) => ability.id === input.id) ||
-    ((role.privateState.retiredAbilityIds ?? []) as string[]).includes(input.id)
+    (
+      ((role.privateState as { readonly retiredAbilityIds?: unknown }).retiredAbilityIds ??
+        []) as string[]
+    ).includes(input.id)
   )
     throw new Error("ability_id_duplicate");
   if (
@@ -362,7 +365,12 @@ export function transferNightAbility<K extends NightAbilityKind>(
     source: { kind: "transfer", actorId: fromId, abilityId: id },
   }) as NightAbility;
   installAbility(world, toId, received, events);
-  delete (source.privateState.abilities as Record<string, NightAbility>)[id];
+  delete (
+    (source.privateState as { readonly abilities?: unknown }).abilities as Record<
+      string,
+      NightAbility
+    >
+  )[id];
   (
     ((source.privateState as { retiredAbilityIds?: string[] }).retiredAbilityIds ??= []) as string[]
   ).push(id);

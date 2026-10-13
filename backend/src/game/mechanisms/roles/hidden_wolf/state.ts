@@ -22,7 +22,8 @@ export function setHiddenWolfState(
 }
 
 export function getHiddenWolfState(role: RoleComponent): HiddenWolfReadState | undefined {
-  return role.privateState["hidden_wolf"] as HiddenWolfReadState | undefined;
+  return (role.privateState as { readonly hidden_wolf?: unknown })["hidden_wolf"] as
+    HiddenWolfReadState | undefined;
 }
 
 /** Caller retains original last-wolf and already-inherited checks. */

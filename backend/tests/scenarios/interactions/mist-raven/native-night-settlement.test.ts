@@ -100,7 +100,11 @@ test("real first night preserves all doomed speakers until one snake and never r
   expect(game.world.getAliveEntityIds()).toContain(5);
   expect(game.world.getAliveEntityIds()).not.toContain(10);
   expect(
-    game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState.alchemist,
+    (
+      game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState as {
+        readonly alchemist?: unknown;
+      }
+    ).alchemist,
   ).toMatchObject({ healRemaining: 0, healHistory: [{ day: 1, targetId: 5 }] });
 });
 for (const window of Object.values(ActionWindow))
@@ -260,7 +264,11 @@ test("real second-night Raven unseals and penetrates a dream-protected target de
     events.filter((event) => event.type === "raven_unsealed").map((event) => event.payload),
   ).toEqual([{ actorId: 9, day: 2, awakened: true, knownTeammateIds: [10] }]);
   expect(
-    game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState.alchemist,
+    (
+      game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState as {
+        readonly alchemist?: unknown;
+      }
+    ).alchemist,
   ).toMatchObject({
     healRemaining: 0,
     healHistory: [

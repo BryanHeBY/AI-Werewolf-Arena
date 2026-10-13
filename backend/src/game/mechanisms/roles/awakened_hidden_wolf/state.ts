@@ -38,7 +38,9 @@ export function freshAwakenedState(): AwakenedState {
   };
 }
 export function getAwakenedState(role: RoleComponent | undefined): AwakenedReadState | undefined {
-  return role?.privateState.awakened_hidden_wolf as AwakenedReadState | undefined;
+  return (
+    role as { readonly privateState: { readonly awakened_hidden_wolf?: unknown } } | undefined
+  )?.privateState.awakened_hidden_wolf as AwakenedReadState | undefined;
 }
 /** Persist semantic facts only; references and night authorization live outside this object. */
 export function setAwakenedState(role: RoleComponent, state: AwakenedState): AwakenedReadState {

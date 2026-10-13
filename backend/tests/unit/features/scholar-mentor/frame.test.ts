@@ -214,10 +214,8 @@ test("Modifier optional bonus pass consumes only ephemeral grant", () => {
   token.commit();
   expect(token.target).toBeNull();
   expect(scholarMentorBonusActors(f.world, 2, "guard")).toEqual([]);
-  const abilities = f.roles.get(4)!.privateState.abilities as Record<
-    string,
-    { uses: number; lastUsedDay: number | null }
-  >;
+  const abilities = (f.roles.get(4)!.privateState as { readonly abilities?: unknown })
+    .abilities as Record<string, { uses: number; lastUsedDay: number | null }>;
   expect(abilities.native!.uses).toBe(0);
   expect(abilities.native!.lastUsedDay).toBeNull();
   closeScholarMentorNight(f.world, 2);
@@ -277,7 +275,10 @@ for (const mutation of [
     } else if (mutation === "abort") abortScholarMentorNight(f.world);
     else {
       const ability = (
-        f.roles.get(4)!.privateState.abilities as Record<string, Record<string, unknown>>
+        (f.roles.get(4)!.privateState as { readonly abilities?: unknown }).abilities as Record<
+          string,
+          Record<string, unknown>
+        >
       ).native!;
       if (mutation === "disabled") ability.disabled = true;
       else Object.defineProperty(ability, "expiresAfterDay", { get: () => 0 });
@@ -333,7 +334,7 @@ for (const owner of [2, 9])
       guardGrant(f);
       const token = captureScholarMentorBonus(f.world, 2, 4, "guard", 10);
       const state = f.roles.get(owner)!.privateState,
-        donor = f.roles.get(4)!.privateState.abilities;
+        donor = (f.roles.get(4)!.privateState as { readonly abilities?: unknown }).abilities;
       let reads = 0;
       if (mutation === "getter")
         Object.defineProperty(state, "abilities", {

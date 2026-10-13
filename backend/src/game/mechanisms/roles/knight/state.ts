@@ -18,7 +18,8 @@ export function setKnightState(roleComp: RoleComponent, state: KnightState): Kni
 }
 
 export function getKnightState(roleComp: RoleComponent): KnightReadState | undefined {
-  return roleComp.privateState["knight"] as KnightReadState | undefined;
+  return (roleComp.privateState as { readonly knight?: unknown })["knight"] as
+    KnightReadState | undefined;
 }
 
 /** The caller has completed the original duel preflight; no second state read or check. */

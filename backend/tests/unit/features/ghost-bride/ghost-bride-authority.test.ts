@@ -362,7 +362,10 @@ for (const target of [1, 0, 99])
     ).toBe(false);
     expect(weddingPair(g.world)).toBeNull();
     closeWeddingSetup(g.world, "failed");
-    expect(readGhostBrideState(role(g, 1).privateState.ghostBride)?.remaining).toBe(0);
+    expect(
+      readGhostBrideState((role(g, 1).privateState as { readonly ghostBride?: unknown }).ghostBride)
+        ?.remaining,
+    ).toBe(0);
   });
 const mutations: Record<string, (g: Fixture) => void> = {
   death: (g) => kill(g, 3),
@@ -377,7 +380,10 @@ const mutations: Record<string, (g: Fixture) => void> = {
   roleCamp: (g) => (role(g, 3).camp = Camp.Good),
   state: (g) =>
     ((role(g, 3) as { privateState: Readonly<Record<string, unknown>> }).privateState = {}),
-  stock: (g) => ((role(g, 3).privateState.native as { stock: number }).stock = 0),
+  stock: (g) =>
+    ((
+      (role(g, 3).privateState as { readonly native?: unknown }).native as { stock: number }
+    ).stock = 0),
   goal: (g) => (goal(g, 3).affiliations = [{ kind: "faction", faction: Camp.Good }]),
   goalValue: (g) => (goal(g, 3).affiliations[0] = { kind: "faction", faction: Camp.Good }),
   config: (g) => (g.c.hooks.onDaybreak = true),
@@ -501,7 +507,8 @@ test("opaque request belongs to original world/window; only reference-preserving
 test("private stock mutates naturally after setup but component/goal drift closes victory", () => {
   const g = fixture(9, 10);
   complete(g);
-  (role(g, 10).privateState.native as { stock: number }).stock = 0;
+  ((role(g, 10).privateState as { readonly native?: unknown }).native as { stock: number }).stock =
+    0;
   expect(weddingAssignment(g.world)).toHaveLength(12);
   goal(g, 10).affiliations[0] = { kind: "faction", faction: Camp.Good };
   expect(() => weddingAssignment(g.world)).toThrow();
@@ -735,13 +742,17 @@ test("illegal native data already present at open cannot authorize knife or vict
   const g = fixture();
   complete(g);
   let calls = 0;
-  Object.defineProperty(role(g, 10).privateState.native, "stock", {
-    enumerable: true,
-    get() {
-      calls++;
-      return 1;
+  Object.defineProperty(
+    (role(g, 10).privateState as { readonly native?: unknown }).native,
+    "stock",
+    {
+      enumerable: true,
+      get() {
+        calls++;
+        return 1;
+      },
     },
-  });
+  );
   expect(() => weddingAssignment(g.world)).toThrow();
   expect(() => captureWeddingKnife(g.world, 1, () => true)).toThrow();
   expect(calls).toBe(0);

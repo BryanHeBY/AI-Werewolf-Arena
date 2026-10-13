@@ -97,7 +97,7 @@ test("pair check returns exactly one boolean and normalized identities, no per-t
   f.open();
   const receipt = openPairCheckChoice(f.world, 1).commit([6, 2]);
   expect(receipt).toEqual({ actorId: 5, day: 1, targetIds: [2, 6], containsWerewolf: true });
-  expect(f.role(5).privateState.pairSeer).toEqual({
+  expect((f.role(5).privateState as { readonly pairSeer?: unknown }).pairSeer).toEqual({
     policy: "awa_fragrant_pair_seer_v1",
     history: [{ day: 1, targetIds: [2, 6], containsWerewolf: true }],
   });
@@ -112,7 +112,9 @@ test("pair history and its only common resource reject late counter edits atomic
   (ability as { uses: number }).uses = 1;
   expect(lease.isCurrent()).toBe(false);
   expect(() => lease.commit([5, 6])).toThrow();
-  expect(f.role(5).privateState.pairSeer).toEqual(freshPairSeerState());
+  expect((f.role(5).privateState as { readonly pairSeer?: unknown }).pairSeer).toEqual(
+    freshPairSeerState(),
+  );
 });
 test("nonwritable common counters cannot leave a paid half-history", () => {
   const f = fixture();
@@ -121,7 +123,9 @@ test("nonwritable common counters cannot leave a paid half-history", () => {
     ability = findNightAbility(f.role(5), "pair_check")!;
   Object.freeze(ability);
   expect(() => lease.commit([5, 6])).toThrow("fragrant_state_write_revoked");
-  expect(f.role(5).privateState.pairSeer).toEqual(freshPairSeerState());
+  expect((f.role(5).privateState as { readonly pairSeer?: unknown }).pairSeer).toEqual(
+    freshPairSeerState(),
+  );
   expect(ability.uses).toBe(0);
   expect(ability.lastUsedDay).toBeNull();
 });
@@ -135,7 +139,9 @@ test("same-value common source replacement revokes owner and retains empty histo
   };
   expect(lease.isCurrent()).toBe(false);
   expect(() => lease.commit([5, 6])).toThrow();
-  expect(f.role(5).privateState.pairSeer).toEqual(freshPairSeerState());
+  expect((f.role(5).privateState as { readonly pairSeer?: unknown }).pairSeer).toEqual(
+    freshPairSeerState(),
+  );
   expect(ability.uses).toBe(0);
 });
 test("initial native disabled must be the boolean false rather than any falsy value", () => {
@@ -153,7 +159,7 @@ for (const field of ["life", "role", "camp", "actorState"] as const)
     const f = fixture();
     f.open();
     const lease = openPairCheckChoice(f.world, 1),
-      originalState = f.role(5).privateState.pairSeer;
+      originalState = (f.role(5).privateState as { readonly pairSeer?: unknown }).pairSeer;
     if (field === "life") f.world.addComponent(6, COMPONENT.Alive, createAliveComponent());
     if (field === "role")
       f.world.addComponent(6, COMPONENT.Role, createRoleComponent(Role.Witch, Camp.Good));
@@ -200,7 +206,9 @@ test("an observed target identity replacement permanently revokes its old choice
   f.world.addComponent(6, COMPONENT.Role, originalRole);
   expect(lease.isCurrent()).toBe(false);
   expect(() => lease.commit([5, 6])).toThrow();
-  expect(f.role(5).privateState.pairSeer).toEqual(freshPairSeerState());
+  expect((f.role(5).privateState as { readonly pairSeer?: unknown }).pairSeer).toEqual(
+    freshPairSeerState(),
+  );
 });
 test("private knowledge reader revalidates owner after live-permit controller changes original life", () => {
   const f = fixture();
@@ -389,7 +397,9 @@ for (const replacement of ["casterRevival", "targetRevival", "identity", "victor
         createVictoryComponent([{ kind: "faction", faction: "good" }]),
       );
     expect(() => prepareFragrantDeathWave(f.world, 1, [9])).toThrow();
-    expect(f.role(1).privateState.fragrant).toMatchObject({ trigger: null });
+    expect((f.role(1).privateState as { readonly fragrant?: unknown }).fragrant).toMatchObject({
+      trigger: null,
+    });
   });
 test("forged cross-World receipt and private or pre-wave events cannot publish actual trigger", () => {
   const f = fixture(),

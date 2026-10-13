@@ -14,6 +14,7 @@ import {
   findNightAbility,
   setNightAbilityStartDay,
   installNativeAbility,
+  retiredNightAbilityIds,
 } from "../abilities";
 import { canAwakenedKnife } from "./inheritance";
 import {
@@ -305,9 +306,7 @@ const activationStage: NightStageHandler = {
           allNightAbilities(owner.role).some(
             (ability) => ability.kind === "role_check" && ability.source.kind === "native",
           ) ||
-          ((owner.role.privateState.retiredAbilityIds ?? []) as string[]).some((id) =>
-            id.startsWith("native:role_check"),
-          )
+          retiredNightAbilityIds(owner.role).some((id) => id.startsWith("native:role_check"))
         )
           throw new Error("awakened_mirror_native_binding_conflict");
         installNativeAbility(owner.role, "role_check", {

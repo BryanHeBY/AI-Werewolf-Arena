@@ -87,9 +87,12 @@ function captureRole(world: World, id: EntityId) {
     );
   };
   const refs = Object.entries(privateState);
-  const slots = Object.entries(privateState.abilities ?? {});
+  const slots = Object.entries((privateState as { readonly abilities?: unknown }).abilities ?? {});
   const abilities = Object.values(
-    (privateState.abilities ?? {}) as Record<string, NightAbilityReadView>,
+    ((privateState as { readonly abilities?: unknown }).abilities ?? {}) as Record<
+      string,
+      NightAbilityReadView
+    >,
   ).map((ability) => ({
     ability,
     state: ability.state,
@@ -105,11 +108,17 @@ function captureRole(world: World, id: EntityId) {
       role.role === kind &&
       role.camp === camp &&
       role.privateState === privateState &&
-      refs.every(([key, value]) => privateState[key] === value) &&
-      Object.keys(privateState.abilities ?? {}).length === slots.length &&
+      refs.every(
+        ([key, value]) => (privateState as Readonly<Record<string, unknown>>)[key] === value,
+      ) &&
+      Object.keys((privateState as { readonly abilities?: unknown }).abilities ?? {}).length ===
+        slots.length &&
       slots.every(
         ([key, value]) =>
-          (privateState.abilities as Record<string, unknown> | undefined)?.[key] === value,
+          (
+            (privateState as { readonly abilities?: unknown }).abilities as
+              Record<string, unknown> | undefined
+          )?.[key] === value,
       ) &&
       abilities.every(
         (a) =>

@@ -434,8 +434,10 @@ for (const locale of ["zh-CN", "en"] as const)
   for (const action of ["speak_to_wolves", "kill_vote"] as const)
     test(`${locale}: SDK and ACP providers use the injected role catalog for prompts, reception and local fallback (${action})`, async () => {
       const { RoleCatalog } = await import("../../../../src/game/mechanisms/roles/catalog");
-      const { LlmActionProvider } = await import("../../../../src/ai/agents/llm/llm_action_provider");
-      const { AcpActionProvider } = await import("../../../../src/ai/agents/acp/acp_action_provider");
+      const { LlmActionProvider } =
+        await import("../../../../src/ai/agents/llm/llm_action_provider");
+      const { AcpActionProvider } =
+        await import("../../../../src/ai/agents/acp/acp_action_provider");
       const { BaselineBotActionProvider } =
         await import("../../../../src/ai/agents/providers/action_providers");
       const catalog = new RoleCatalog(
@@ -637,7 +639,8 @@ for (const locale of ["zh-CN", "en"] as const)
             : {
                 ...profile,
                 wolfTeam: (state: RoleComponent) => ({
-                  recognizedByPack: state.privateState.revealed === true,
+                  recognizedByPack:
+                    (state.privateState as { readonly revealed?: unknown }).revealed === true,
                   recognizes: "none" as const,
                   canChat: false,
                   canVoteForKill: false,

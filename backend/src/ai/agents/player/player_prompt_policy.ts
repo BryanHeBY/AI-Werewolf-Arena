@@ -106,7 +106,7 @@ import {
   getMerchantState,
   projectMerchantState,
 } from "../../../game/mechanisms/roles/miracle_merchant/state";
-import { readEclipseState } from "../../../game/mechanisms/roles/radiant_eclipse/state";
+import { projectEclipseState } from "../../../game/mechanisms/roles/radiant_eclipse/ports";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, ActionWindow, EntityId, Role, ToolName } from "../../../core/domain";
@@ -324,8 +324,7 @@ export class PlayerPromptPolicy {
       const state = getMerchantState(role);
       if (state) ownState.merchant = projectMerchantState(state);
     }
-    if (role?.role === Role.EclipseMaid)
-      ownState.eclipse = readEclipseState(role.privateState.eclipse);
+    if (role?.role === Role.EclipseMaid) ownState.eclipse = projectEclipseState(role);
     const witch = role ? getWitchState(role, request.context.ability_id) : undefined;
     const guard = role ? getGuardState(role, request.context.ability_id) : undefined;
     if (witch) ownState.witch = projectWitchState(witch);
@@ -628,7 +627,7 @@ export class PlayerPromptPolicy {
         );
     }
     if (role?.role === Role.EclipseMaid) {
-      const state = readEclipseState(role.privateState.eclipse);
+      const state = projectEclipseState(role);
       if (state)
         lines.push(text(this.locale, "prompt.status.eclipse", { state: JSON.stringify(state) }));
     }

@@ -277,13 +277,17 @@ test("canonical failure snapshot does not execute a revoked inventory getter or 
   secondNight(f);
   openAnimalFoxChoice(f.world, 2).commit(2);
   let calls = 0;
-  Object.defineProperty(f.role(10).privateState.foxCub!, "usedNight", {
-    enumerable: true,
-    get() {
-      calls++;
-      return null;
+  Object.defineProperty(
+    (f.role(10).privateState as { readonly foxCub?: unknown }).foxCub!,
+    "usedNight",
+    {
+      enumerable: true,
+      get() {
+        calls++;
+        return null;
+      },
     },
-  });
+  );
   expect(animalAuthoritySnapshot(f.world)).toBeNull();
   const saved = animalAuthoritySnapshot(f.world, false)!;
   expect(saved.fox.usedNight).toBe(2);

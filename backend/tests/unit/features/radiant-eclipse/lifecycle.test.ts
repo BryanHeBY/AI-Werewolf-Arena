@@ -124,7 +124,14 @@ test("closing borrowed authorization owns its captured slot even after the insta
     slot = borrowed.id;
   (borrowed as { id: string }).id = "copy:mutated";
   closeRadiantNight(f.world, 2, "aborted", f.events);
-  expect((f.role(1).privateState.abilities as Record<string, NightAbility>)[slot]).toBe(borrowed);
+  expect(
+    (
+      (f.role(1).privateState as { readonly abilities?: unknown }).abilities as Record<
+        string,
+        NightAbility
+      >
+    )[slot],
+  ).toBe(borrowed);
   expect(borrowed.disabled).toBe(true);
   expect(abilityStatus(borrowed, 2)).toBe("disabled");
 });
@@ -137,7 +144,12 @@ test("normal close cannot publish original-native restoration for a replaced sou
       state: { ...source.state },
       nightSuppression: { ...source.nightSuppression! },
     };
-  (f.role(4).privateState.abilities as Record<string, NightAbility>)[source.id] = replacement;
+  (
+    (f.role(4).privateState as { readonly abilities?: unknown }).abilities as Record<
+      string,
+      NightAbility
+    >
+  )[source.id] = replacement;
   closeRadiantNight(f.world, 2, "committed", f.events);
   expect(replacement.nightSuppression).toBeDefined();
   expect(f.events.filter((e) => e.type === "eclipse_native_restored")).toEqual([]);

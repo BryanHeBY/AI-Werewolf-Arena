@@ -10,7 +10,16 @@ import { expect, test } from "bun:test";
 import path from "node:path";
 import { readFile } from "node:fs/promises";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Camp, Phase, Role, type AliveComponent, type GameEvent, type RoleComponent, type World } from "../../../src/core";
+import {
+  COMPONENT,
+  Camp,
+  Phase,
+  Role,
+  type AliveComponent,
+  type GameEvent,
+  type RoleComponent,
+  type World,
+} from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { RoleCatalog, getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import { wolfTeamEvent } from "../../../src/game/mechanisms/roles/wolf_team";
@@ -41,7 +50,7 @@ function fixture(locale: "zh-CN" | "en") {
               recognizedByPack: false,
               recognizes: "all" as const,
               canChat: false,
-              canVoteForKill: state.privateState.knife === true,
+              canVoteForKill: (state.privateState as { readonly knife?: unknown }).knife === true,
             }),
           };
         if (profile.role === Role.Guard)
@@ -73,7 +82,6 @@ function fixture(locale: "zh-CN" | "en") {
 }
 
 for (const locale of ["zh-CN", "en"] as const) {
-
   test(`${locale}: event-time audiences survive death/camp changes and never appear in player wire or delayed recording`, async () => {
     const { world, catalog } = fixture(locale);
     const events: GameEvent[] = [

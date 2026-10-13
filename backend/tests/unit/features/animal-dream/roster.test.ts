@@ -92,7 +92,7 @@ const invalid: Record<string, (w: ReturnType<typeof animalRosterFixture>["world"
   "shared private container": (w) => {
     (
       w.getComponent<RoleComponent>(6, COMPONENT.Role)! as {
-        privateState: Readonly<Record<string, unknown>>;
+        privateState: object;
       }
     ).privateState = w.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState;
   },

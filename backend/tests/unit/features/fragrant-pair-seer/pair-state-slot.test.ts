@@ -5,6 +5,7 @@
  * pre-write snapshots are independent oracles; no model, full-game driver or production
  * command generates expected results. Domain leases remain outside these owner tests.
  */
+import type { RoleInitializationComponent } from "../../../../src/game/mechanisms/roles/contracts";
 import type { PairSeerState } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
@@ -38,12 +39,12 @@ test("actual profile initialization owns separate native instances with one stat
   const first = createRoleComponent(Role.AwakenedSeer, Camp.Good, "en"),
     second = createRoleComponent(Role.AwakenedSeer, Camp.Good, "en");
   const profile = getDefaultRoleCatalog().get(Role.AwakenedSeer)!;
-  profile.init!(first, { locale: "en" });
-  profile.init!(second, { locale: "en" });
+  profile.init!(first as RoleInitializationComponent, { locale: "en" });
+  profile.init!(second as RoleInitializationComponent, { locale: "en" });
   const one = findNightAbility(first, "pair_check")!,
     two = findNightAbility(second, "pair_check")!;
-  expect(first.privateState.pairSeer).toBe(one.state);
-  expect(second.privateState.pairSeer).toBe(two.state);
+  expect((first.privateState as { readonly pairSeer?: unknown }).pairSeer).toBe(one.state);
+  expect((second.privateState as { readonly pairSeer?: unknown }).pairSeer).toBe(two.state);
   expect(one.state).not.toBe(two.state);
   expect(one.state.history).not.toBe(two.state.history);
   expect(Object.keys(first.privateState)).toEqual(["abilities", "pairSeer"]);
@@ -98,7 +99,7 @@ test("pair commitment retains state and aliases while updating history, counters
     };
   commitPairStateSlot(slot, next, 1);
   expect(ability.state).toBe(original);
-  expect(role.privateState.pairSeer).toBe(original);
+  expect((role.privateState as { readonly pairSeer?: unknown }).pairSeer).toBe(original);
   expect(original.history).toBe(next.history);
   expect(original.history).not.toBe(oldHistory);
   expect(original).toEqual({
@@ -150,7 +151,7 @@ test("non-writable ability or state fields reject before history, counters or au
       ),
     ).toThrow("fragrant_state_write_revoked");
     expect(ability.state).toEqual({ policy: "awa_fragrant_pair_seer_v1", history: [] });
-    expect(role.privateState.pairSeer).toBe(ability.state);
+    expect((role.privateState as { readonly pairSeer?: unknown }).pairSeer).toBe(ability.state);
     expect(ability.uses).toBe(0);
     expect(ability.lastUsedDay).toBe(null);
     expect(slot.pairJson).toBe(originalPair);

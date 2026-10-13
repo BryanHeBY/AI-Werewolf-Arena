@@ -37,9 +37,9 @@ function fixture(caster: "alchemist" | "raven_claw_wolf" = "alchemist", day = 1)
 }
 test("same-night legitimate mist update preserves authority for snake and consumes both stocks", () => {
   const { authority, role } = fixture();
-  const original = role.privateState.alchemist;
+  const original = (role.privateState as { readonly alchemist?: unknown }).alchemist;
   authority.commitMist([1, 2, 3], [1, 2, 3]);
-  expect(role.privateState.alchemist).not.toBe(original);
+  expect((role.privateState as { readonly alchemist?: unknown }).alchemist).not.toBe(original);
   expect(authority.isCurrent()).toBe(true);
   expect(authority.commitSnake(1, [1])).toMatchObject({
     mistRemaining: 0,
@@ -130,14 +130,22 @@ for (const edit of [
         break;
       case "state_equal_copy":
         (role.privateState as Record<string, unknown>).alchemist = structuredClone(
-          role.privateState.alchemist,
+          (role.privateState as { readonly alchemist?: unknown }).alchemist,
         );
         break;
       case "history_equal_copy":
-        (role.privateState.alchemist as ReturnType<typeof createAlchemistState>).mistHistory = [];
+        (
+          (role.privateState as { readonly alchemist?: unknown }).alchemist as ReturnType<
+            typeof createAlchemistState
+          >
+        ).mistHistory = [];
         break;
       case "stock":
-        (role.privateState.alchemist as ReturnType<typeof createAlchemistState>).healRemaining = 0;
+        (
+          (role.privateState as { readonly alchemist?: unknown }).alchemist as ReturnType<
+            typeof createAlchemistState
+          >
+        ).healRemaining = 0;
         break;
       case "life_object":
         world.addComponent(id, COMPONENT.Alive, createAliveComponent());
@@ -197,7 +205,9 @@ for (const day of [1, 2])
     const { world, role, authority } = fixture();
     authority.commitMist([1, 2, 3], [1, 2, 3]);
     const current = day === 1 ? authority : new MistCasterAuthority(world, 1, 2, "alchemist");
-    const state = role.privateState.alchemist as ReturnType<typeof createAlchemistState>;
+    const state = (role.privateState as { readonly alchemist?: unknown }).alchemist as ReturnType<
+      typeof createAlchemistState
+    >;
     state.mistHistory[0]!.targetIds = [...state.mistHistory[0]!.targetIds!];
     expect(current.isCurrent()).toBe(false);
     expect(() => current.commitSnake(1, [1])).toThrow("mist_caster_authority_revoked");

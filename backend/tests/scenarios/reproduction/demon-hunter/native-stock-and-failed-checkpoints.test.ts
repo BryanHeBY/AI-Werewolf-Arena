@@ -129,9 +129,12 @@ for (const kind of ["seer_check", "guard"] as const)
         key = `native:${kind}`;
       await f.phaseManager.runSingleCycle({ getAction: async (r) => demonNightChoice(r, 9) }, 10);
       const before = demonHunterAuditPlayer(f.world, id),
-        ability = (role(f, id).privateState.abilities as Record<string, Record<string, unknown>>)[
-          key
-        ]!;
+        ability = (
+          (role(f, id).privateState as { readonly abilities?: unknown }).abilities as Record<
+            string,
+            Record<string, unknown>
+          >
+        )[key]!;
       let reads = 0;
       if (mutation === "refund") ability.uses = 9;
       if (mutation === "getter")
@@ -285,9 +288,10 @@ for (const kind of ["seer", "guard", "hunter"] as const)
           const ability =
             kind === "hunter"
               ? getHunterState(role(f, id))!
-              : (role(f, id).privateState.abilities as Record<string, Record<string, unknown>>)[
-                  `native:${kind === "seer" ? "seer_check" : "guard"}`
-                ]!;
+              : (
+                  (role(f, id).privateState as { readonly abilities?: unknown })
+                    .abilities as Record<string, Record<string, unknown>>
+                )[`native:${kind === "seer" ? "seer_check" : "guard"}`]!;
           const object =
             kind === "guard" ? ((ability as Record<string, unknown>).state as object) : ability;
           Object.defineProperty(

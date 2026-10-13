@@ -201,8 +201,13 @@ for (const kind of ["bind", "pair"] as const)
         }
         expect(accepted).toEqual([false]);
         expect(findNightAbility(f.role(5), "pair_check")!.uses).toBe(0);
-        expect(f.role(5).privateState.pairSeer).toMatchObject({ history: [] });
-        expect(f.role(1).privateState.fragrant).toMatchObject({ lastChoice: null, bindings: [] });
+        expect((f.role(5).privateState as { readonly pairSeer?: unknown }).pairSeer).toMatchObject({
+          history: [],
+        });
+        expect((f.role(1).privateState as { readonly fragrant?: unknown }).fragrant).toMatchObject({
+          lastChoice: null,
+          bindings: [],
+        });
       });
 test("scope query immediately observes a controller closing the request during its own check", () => {
   let revoke = () => {};

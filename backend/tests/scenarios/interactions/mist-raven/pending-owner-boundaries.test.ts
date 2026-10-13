@@ -99,7 +99,11 @@ for (const [stage, id, revive] of [
     expect(has(g, "alchemist_snake_chosen")).toHaveLength(0);
     expect(has(g, "night_resolved")).toHaveLength(0);
     expect(
-      g.world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState.alchemist,
+      (
+        g.world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState as {
+          readonly alchemist?: unknown;
+        }
+      ).alchemist,
     ).toMatchObject({ healRemaining: 1 });
     expect(g.world.activeDeathActionCount).toBe(0);
     await expect(
@@ -353,7 +357,11 @@ test("real Raven badge-await failure preserves spent healing stock and aborted p
   expect(g.world.getAliveEntityIds()).toContain(5);
   expect(g.world.getAliveEntityIds()).not.toContain(6);
   expect(
-    g.world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState.alchemist,
+    (
+      g.world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState as {
+        readonly alchemist?: unknown;
+      }
+    ).alchemist,
   ).toMatchObject({
     healRemaining: 0,
     healHistory: [
@@ -463,7 +471,11 @@ for (const stage of ["alchemist_mist", "wolf_discussion", "wolf_vote", "alchemis
     expect(has(g, "night_resolved")).toHaveLength(0);
     expect(has(g, "game_over")).toHaveLength(0);
     expect(
-      g.world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState.alchemist,
+      (
+        g.world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState as {
+          readonly alchemist?: unknown;
+        }
+      ).alchemist,
     ).toMatchObject({ mistRemaining: 1, healRemaining: 1 });
     expect(g.world.activeDeathActionCount).toBe(0);
   });

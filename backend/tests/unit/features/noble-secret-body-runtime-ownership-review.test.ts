@@ -110,13 +110,17 @@ for (const kind of ["original-getter", "foreign-state", "foreign-role"] as const
       },
     };
     if (kind === "original-getter")
-      Object.defineProperty(role.privateState.secretBody, "body", {
-        get() {
-          reads++;
-          throw Error("original getter");
+      Object.defineProperty(
+        (role.privateState as { readonly secretBody?: unknown }).secretBody,
+        "body",
+        {
+          get() {
+            reads++;
+            throw Error("original getter");
+          },
+          configurable: true,
         },
-        configurable: true,
-      });
+      );
     if (kind === "foreign-state")
       (role.privateState as Record<string, unknown>).secretBody = foreign;
     if (kind === "foreign-role")

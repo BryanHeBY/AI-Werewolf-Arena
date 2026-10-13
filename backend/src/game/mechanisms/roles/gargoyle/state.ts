@@ -18,7 +18,8 @@ export function setGargoyleState(role: RoleComponent, state: GargoyleState): Gar
 }
 
 export function getGargoyleState(role: RoleComponent): GargoyleReadState | undefined {
-  return role.privateState["gargoyle"] as GargoyleReadState | undefined;
+  return (role.privateState as { readonly gargoyle?: unknown })["gargoyle"] as
+    GargoyleReadState | undefined;
 }
 
 /** Caller retains original last-wolf and already-inherited checks. */

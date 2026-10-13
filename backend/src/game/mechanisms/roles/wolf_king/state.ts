@@ -17,5 +17,6 @@ export function setWolfKingState(roleComp: RoleComponent, state: WolfKingState):
 }
 
 export function getWolfKingState(roleComp: RoleComponent): WolfKingReadState | undefined {
-  return roleComp.privateState["wolf_king"] as WolfKingReadState | undefined;
+  return (roleComp.privateState as { readonly wolf_king?: unknown })["wolf_king"] as
+    WolfKingReadState | undefined;
 }

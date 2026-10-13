@@ -7,7 +7,11 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { createRandom, Camp, COMPONENT, Role, type RoleComponent } from "../../../../src/core";
 import { BaselineBotActionProvider } from "../../../../src/ai/agents/providers/action_providers";
-import { FOX_CASES, foxScenario, foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
+import {
+  FOX_CASES,
+  foxScenario,
+  foxBoard,
+} from "../../../support/features/cursed-fox/builders/scenario";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
@@ -98,7 +102,9 @@ for (const { name, board } of boards)
           }
         } else expect(result.reason).toBe("max_days_reached");
         for (const id of game.playerIds)
-          for (const state of Object.values(roles.get(id)!.privateState.abilities ?? {}) as any[]) {
+          for (const state of Object.values(
+            (roles.get(id)!.privateState as { readonly abilities?: unknown }).abilities ?? {},
+          ) as any[]) {
             expect(state.uses).toBeGreaterThanOrEqual(0);
             if (state.maxUses !== null) expect(state.uses).toBeLessThanOrEqual(state.maxUses);
           }

@@ -8,7 +8,8 @@ import type { PlayerHybridState } from "../player_extended_state";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 export const freshHybridState = (): HybridState => ({ remaining: 1, choice: null });
 export function getHybridState(role: RoleComponent | undefined): HybridReadState | undefined {
-  return role?.privateState.hybrid as HybridReadState | undefined;
+  return (role as { readonly privateState: { readonly hybrid?: unknown } } | undefined)
+    ?.privateState.hybrid as HybridReadState | undefined;
 }
 export function projectHybridState(state: HybridReadState): PlayerHybridState {
   return {
