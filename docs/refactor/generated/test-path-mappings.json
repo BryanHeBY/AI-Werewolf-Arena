@@ -90060,13 +90060,263 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/role_catalog.test.ts",
+      "to": "backend/tests/unit/mechanisms/role-catalog-contract.test.ts",
+      "sourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "reason": "Actual selected unit module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "071e6f1debb63a9b196b2001acaf459a89c672885a3dc5f8c0d8d38ed507d21c",
+      "candidateSha256": "e3799a517276a5ce2a688417803c6910eb1aa1e7d8aaabd26e0cd958b6b21f91",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 463,
+          "end": 506,
+          "original": "../../src/game/mechanisms/roles/permissions",
+          "value": "../../../src/game/mechanisms/roles/permissions",
+          "originalResolved": "backend/src/game/mechanisms/roles/permissions.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/permissions.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 387,
+          "end": 417,
+          "original": "../../src/core/domain/identity",
+          "value": "../../../src/core/domain/identity",
+          "originalResolved": "backend/src/core/domain/identity.ts",
+          "expectedResolved": "backend/src/core/domain/identity.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 325,
+          "end": 362,
+          "original": "../../src/core/domain/components/role",
+          "value": "../../../src/core/domain/components/role",
+          "originalResolved": "backend/src/core/domain/components/role.ts",
+          "expectedResolved": "backend/src/core/domain/components/role.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 246,
+          "end": 285,
+          "original": "../../src/game/mechanisms/roles/catalog",
+          "value": "../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 161,
+          "end": 191,
+          "original": "../../src/core/domain/identity",
+          "value": "../../../src/core/domain/identity",
+          "originalResolved": "backend/src/core/domain/identity.ts",
+          "expectedResolved": "backend/src/core/domain/identity.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "113ea4f05e6d43c2d479b04fbb31c56540d7f9124f99bb23254f3aad92a639eb",
+          "title": "shared catalog distinguishes planned definitions from registered roles",
+          "occurrence": 1
+        },
+        {
+          "id": "ed134d0239fb8ed6263d195a21db6ccf281f13c14b05b116bf65903f2a9f4867",
+          "title": "runtime catalog rejects duplicate or missing profiles",
+          "occurrence": 1
+        },
+        {
+          "id": "7f050e5b88e976ad364032226b7af394fb1f9d4d677cc3e16ebfc615d7676bc3",
+          "title": "evil knight keeps wolf night tools without inheriting self-destruct requests",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readFile } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readFile",
+              "imported": "readFile",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:path",
+          "originalImport": "import path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/role_catalog.test.ts",
+      "to": "backend/tests/integration/tooling/role-rule-card-references.test.ts",
+      "sourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "reason": "Actual selected integration module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "071e6f1debb63a9b196b2001acaf459a89c672885a3dc5f8c0d8d38ed507d21c",
+      "candidateSha256": "cf8eb761a8663cdf10053a8faf7faec89a57e4a9c717c411ccd3187c7ec23791",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "public-directory-anchor",
+          "start": 705,
+          "end": 713,
+          "original": "../../..",
+          "value": "../../../..",
+          "originalResolved": "."
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": ".",
+          "originalExpression": "path.resolve(import.meta.dir, \"../../..\", file)",
+          "currentExpression": "path.resolve(import.meta.dir, \"../../../..\", file)",
+          "currentHead": "../../../..",
+          "kind": "public-directory-anchor"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "21fca643f1e60cfe65ec66856d216b6f55142f54b00533e7040851afa40508e4",
+          "title": "every catalog entry has bilingual labels and registered entries have rule cards",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "@ai-werewolf-arena/game-catalog",
+          "originalImport": "import { ROLE_DEFINITIONS, ROLE_IDS, isRoleId, roleName } from \"@ai-werewolf-arena/game-catalog\";",
+          "currentImportBeforeRebase": "import { ROLE_DEFINITIONS } from \"@ai-werewolf-arena/game-catalog\";",
+          "droppedBindings": [
+            {
+              "name": "ROLE_IDS",
+              "imported": "ROLE_IDS",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "isRoleId",
+              "imported": "isRoleId",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "roleName",
+              "imported": "roleName",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core/domain/identity",
+          "originalImport": "import { Role } from \"../../src/core/domain/identity\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Role",
+              "imported": "Role",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/game/mechanisms/roles/catalog",
+          "originalImport": "import { RoleCatalog, getDefaultRoleCatalog } from \"../../src/game/mechanisms/roles/catalog\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "RoleCatalog",
+              "imported": "RoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core/domain/components/role",
+          "originalImport": "import { createRoleComponent } from \"../../src/core/domain/components/role\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createRoleComponent",
+              "imported": "createRoleComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core/domain/identity",
+          "originalImport": "import { Camp } from \"../../src/core/domain/identity\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "Camp",
+              "imported": "Camp",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/game/mechanisms/roles/permissions",
+          "originalImport": "import { createDefaultRoleRegistry } from \"../../src/game/mechanisms/roles/permissions\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createDefaultRoleRegistry",
+              "imported": "createDefaultRoleRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 563,
-    "targetFiles": 630,
-    "mappingEntries": 630,
-    "baselineCases": 7271,
+    "sourceFiles": 564,
+    "targetFiles": 632,
+    "mappingEntries": 632,
+    "baselineCases": 7275,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

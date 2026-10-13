@@ -1,11 +1,13 @@
+/**
+ * Unit tests check registered/planned role catalog entries, duplicate/missing profiles and Evil Knight tool declarations. Inputs are literal role IDs and injected catalog profiles; exact supported ID sets, original lookup errors and declared tools are the oracle. No filesystem rule card, game or model is loaded.
+ */
 import { expect, test } from "bun:test";
 import { ROLE_DEFINITIONS, ROLE_IDS, isRoleId, roleName } from "@ai-werewolf-arena/game-catalog";
-import { Role } from "../../src/core/domain/identity";
-import { RoleCatalog, getDefaultRoleCatalog } from "../../src/game/mechanisms/roles/catalog";
-import { createRoleComponent } from "../../src/core/domain/components/role";
-import { Camp } from "../../src/core/domain/identity";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
+import { Role } from "../../../src/core/domain/identity";
+import { RoleCatalog, getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
+import { createRoleComponent } from "../../../src/core/domain/components/role";
+import { Camp } from "../../../src/core/domain/identity";
+import { createDefaultRoleRegistry } from "../../../src/game/mechanisms/roles/permissions";
 
 test("shared catalog distinguishes planned definitions from registered roles", () => {
   expect(ROLE_DEFINITIONS).toHaveLength(64);
@@ -47,21 +49,6 @@ test("runtime catalog rejects duplicate or missing profiles", () => {
   component.role = "awakened_knight" as Role;
   expect(() => component.renderPrompt()).toThrow("role_profile_not_registered");
 });
-
-test("every catalog entry has bilingual labels and registered entries have rule cards", async () => {
-  for (const entry of ROLE_DEFINITIONS) {
-    expect(entry.names["zh-CN"].trim().length).toBeGreaterThan(0);
-    expect(entry.names.en.trim().length).toBeGreaterThan(0);
-    if (entry.status !== "verified" && entry.status !== "implemented") continue;
-    expect(entry.ruleCardRef).not.toBeNull();
-    const [file, anchor] = entry.ruleCardRef!.split("#");
-    const text = await readFile(path.resolve(import.meta.dir, "../../..", file), "utf8");
-    if (anchor) expect(text).toContain(`## ${anchor}`);
-    else expect(text.trimStart().startsWith("# ")).toBe(true);
-  }
-});
-
-import { createDefaultRoleRegistry } from "../../src/game/mechanisms/roles/permissions";
 
 test("evil knight keeps wolf night tools without inheriting self-destruct requests", () => {
   const profile = getDefaultRoleCatalog().require(Role.EvilKnight);
