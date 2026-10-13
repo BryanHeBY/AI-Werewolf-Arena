@@ -1,0 +1,45 @@
+{
+  "source": [
+    {
+      "path": "packages/game-contract/src/facts/time-consort.ts",
+      "sha256": "458e30c10c93b0106e9549c031f68667d99b478310cab4b1aea87cffa84dab31"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+      "sha256": "b88a27cb1efbfbe62a18c1f5322420e8c744305b0500c0c01f39902a518068f4"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "sha256": "3252a6730b5a2d9c27ad63ab4e7271f3f04c1393107552f05c1b1b3863f31abc"
+    },
+    {
+      "path": "backend/tests/unit/contracts/time-consort-player-dto.types.ts",
+      "sha256": "9f73bc58f9cc5ab515e67157d313dd48aaba1bfc88c374a40de9e428cc35688f"
+    }
+  ],
+  "documentationPathsCount": 445,
+  "diagnostics": [],
+  "chineseHeader": [
+    {
+      "path": "packages/game-contract/src/facts/time-consort.ts",
+      "sha256": "458e30c10c93b0106e9549c031f68667d99b478310cab4b1aea87cffa84dab31",
+      "chineseHeader": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+      "sha256": "b88a27cb1efbfbe62a18c1f5322420e8c744305b0500c0c01f39902a518068f4",
+      "chineseHeader": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "sha256": "3252a6730b5a2d9c27ad63ab4e7271f3f04c1393107552f05c1b1b3863f31abc",
+      "chineseHeader": true
+    },
+    {
+      "path": "backend/tests/unit/contracts/time-consort-player-dto.types.ts",
+      "sha256": "9f73bc58f9cc5ab515e67157d313dd48aaba1bfc88c374a40de9e428cc35688f",
+      "chineseHeader": true
+    }
+  ],
+  "commentShapeIsNotSemanticApproval": true
+}

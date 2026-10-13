@@ -1,12 +1,21 @@
 /**
- * Owns inert Time Wolf Consort lock, skip and reflection fact data for shared consumers.
- * Inputs are a machine event type and JSON.parse/no-reviver or proven inert
- * payload; outputs are the original detached fact shapes or null. Field, ID,
- * null and copy limits retain the existing reader policy. This browser reader
- * does not promise hostile Proxy zero-trap safety: Node ingress owns that check.
- * It never authorizes an action, reads a roster or resolves the mechanism effect.
+ * 负责蚀时狼妃锁定、跳过、反射事实及玩家知识的公共数据契约。输入为机器事件类型与
+ * 无 reviver 的 JSON.parse 或已确认 inert 载荷，输出为原脱离事实／null 或玩家 DTO 结构。
+ * 字段、ID、可空值与复制限制保持原 reader 政策，公共类型唯一拥有玩家投影形状。
+ * 本浏览器 reader 不承诺恶意 Proxy 零 trap，Node 准入仍负责先拒绝；数据不授予行动，
+ * 不读取玩家名单、执行反射、拥有回执或写实际库存。
  */
 import { copyEventData } from "../inert-event-data";
+import type { ReflectionScope, TimeConsortChoice } from "../role-state-data";
+
+/** 原可写知识字段；exhausted 是延迟告知，不携带内部触发日或当前反射权限。 */
+export interface PlayerTimeConsortState {
+  policy: "awa_time_consort_reflection_v1";
+  reflectionScope: ReflectionScope;
+  history: TimeConsortChoice[];
+  exhausted: boolean;
+}
+
 export interface TimeConsortChoiceFact {
   actorId: number;
   day: number;

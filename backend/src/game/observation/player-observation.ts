@@ -50,11 +50,7 @@ export interface PlayerObservation {
     alchemist?: import("@ai-werewolf-arena/game-contract/facts/mist-raven").PlayerAlchemistState;
     ravenClaw?: import("@ai-werewolf-arena/game-contract/facts/mist-raven").PlayerRavenState;
     scholarMentor?: import("@ai-werewolf-arena/game-contract").ModifierState;
-    timeConsort?: NonNullable<
-      ReturnType<
-        typeof import("../mechanisms/roles/time_wolf_consort/state").projectTimeConsortState
-      >
-    >;
+    timeConsort?: import("@ai-werewolf-arena/game-contract/facts/time-consort").PlayerTimeConsortState;
     wolfSorcerer?: import("@ai-werewolf-arena/game-contract").WolfSorcererState;
     trickster?: import("@ai-werewolf-arena/game-contract").TricksterState;
     orderPrince?: import("../mechanisms/roles/order_prince/state").OrderPrinceState;

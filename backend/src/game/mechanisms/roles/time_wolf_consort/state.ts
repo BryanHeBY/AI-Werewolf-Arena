@@ -1,7 +1,8 @@
 /**
- * Owns Time Consort state construction, exact live reads and pure reflection selection.
- * Inputs are original role/history data and requested target facts; outputs preserve copied
- * player knowledge and existing target decisions. This boundary never commits a receipt.
+ * 负责蚀时狼妃状态构造、原槽同引用读取、玩家知识裁剪和纯反射目标选择。
+ * 输入为原角色／历史、日次与请求目标，输出为原状态引用、独立知识 DTO 或原目标决策。
+ * 本数据 owner 保持 Node Proxy／描述符拒绝和精确形状；反射回执、实际状态写权与生命／
+ * 请求权限仍归夜机制，数据检查和字段可写声明不提交效果或授予许可。
  */
 import type {
   ReflectionScope,
@@ -9,6 +10,7 @@ import type {
   TimeConsortState,
   TimeConsortReadState,
 } from "@ai-werewolf-arena/game-contract";
+import type { PlayerTimeConsortState } from "@ai-werewolf-arena/game-contract/facts/time-consort";
 import { types } from "node:util";
 import { Camp, type RoleComponent } from "../../../../core";
 export const TIME_CONSORT_ROLE = "time_wolf_consort" as const;
@@ -97,11 +99,15 @@ export function createTimeConsortState(
 ): TimeConsortState {
   return { policy: TIME_CONSORT_POLICY, reflectionScope, history: [], triggeredDay: null };
 }
-/** Public-to-owner projection delays successful-trigger knowledge until the next night. */
-export function projectTimeConsortState(role: RoleComponent | undefined, day: number) {
+/** 自身知识投影：历史可见至观察 day，触发日严格早于 day 才告知耗尽。 */
+export function projectTimeConsortState(
+  role: RoleComponent | undefined,
+  day: number,
+): PlayerTimeConsortState | undefined {
   const state = getTimeConsortState(role);
   if (!state || !integer(day)) return undefined;
   const history: TimeConsortChoice[] = [];
+  // 保留原 when<=day 的历史边界与逐行新副本；不能把耗尽的严格早于规则套到历史。
   for (const row of arrayItems(field(state, "history"))!) {
     const when = field(row, "day") as number;
     if (when > day) continue;
@@ -115,7 +121,7 @@ export function projectTimeConsortState(role: RoleComponent | undefined, day: nu
     exhausted: trigger !== null && trigger < day,
   };
 }
-/** Pure rule decision. Real effect ownership/version validation belongs to the night receipt. */
+/** 仅选择反射目标；真实效果归属、原体版本与付款／提交仍由夜回执复验。 */
 export function timeConsortReflectionTarget(
   role: RoleComponent | undefined,
   day: number,

@@ -1,0 +1,408 @@
+{
+  "schema": "awa-time-consort-dto-independent-review-v1",
+  "状态": "批准",
+  "审查者": "/root/preflight_final_review",
+  "发现": [],
+  "scope": {
+    "base": "01a69cc7094343fce4cd9b8d30d14f39e4cb66e2",
+    "existing": 3,
+    "new": 1,
+    "source": [
+      {
+        "path": "packages/game-contract/src/facts/time-consort.ts",
+        "sha256": "458e30c10c93b0106e9549c031f68667d99b478310cab4b1aea87cffa84dab31",
+        "actualSHA256": "458e30c10c93b0106e9549c031f68667d99b478310cab4b1aea87cffa84dab31",
+        "same": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+        "sha256": "b88a27cb1efbfbe62a18c1f5322420e8c744305b0500c0c01f39902a518068f4",
+        "actualSHA256": "b88a27cb1efbfbe62a18c1f5322420e8c744305b0500c0c01f39902a518068f4",
+        "same": true
+      },
+      {
+        "path": "backend/src/game/observation/player-observation.ts",
+        "sha256": "3252a6730b5a2d9c27ad63ab4e7271f3f04c1393107552f05c1b1b3863f31abc",
+        "actualSHA256": "3252a6730b5a2d9c27ad63ab4e7271f3f04c1393107552f05c1b1b3863f31abc",
+        "same": true
+      },
+      {
+        "path": "backend/tests/unit/contracts/time-consort-player-dto.types.ts",
+        "sha256": "9f73bc58f9cc5ab515e67157d313dd48aaba1bfc88c374a40de9e428cc35688f",
+        "actualSHA256": "9f73bc58f9cc5ab515e67157d313dd48aaba1bfc88c374a40de9e428cc35688f",
+        "same": true
+      }
+    ]
+  },
+  "actualBefore": [
+    {
+      "path": "packages/game-contract/src/facts/time-consort.ts",
+      "base": "01a69cc7094343fce4cd9b8d30d14f39e4cb66e2",
+      "sha256": "f0ccf045ca14f061bcab8802537d1855d10b15747171d1114515e6a3540fb9d3",
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+      "base": "01a69cc7094343fce4cd9b8d30d14f39e4cb66e2",
+      "sha256": "568cce949bfd063dd9d7e3533905daf5bd29083281459dcb1250e0af6789999a",
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "base": "01a69cc7094343fce4cd9b8d30d14f39e4cb66e2",
+      "sha256": "d66a559d4bd6fbad709a48a426bae9e8441750a8cda8506f5a23362e911c9630",
+      "actualGitSame": true
+    }
+  ],
+  "wholePrograms": [
+    {
+      "path": "packages/game-contract/src/facts/time-consort.ts",
+      "wholeTypedSourceSameAfterOnlyExplicitTypeChangesInverse": true,
+      "oldNodes": 805,
+      "inverseNodes": 805
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+      "wholeTypedSourceSameAfterOnlyExplicitTypeChangesInverse": true,
+      "oldNodes": 1647,
+      "inverseNodes": 1647
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "wholeTypedSourceSameAfterOnlyExplicitTypeChangesInverse": true,
+      "oldNodes": 1171,
+      "inverseNodes": 1171
+    }
+  ],
+  "allProgramNodes": 3623,
+  "wholeProjectionBodySame": true,
+  "finalComments": [
+    {
+      "path": "packages/game-contract/src/facts/time-consort.ts",
+      "beforeSHA256": "64d8d9399c90e2077554db6b8aa22c258ce99ba598aaa3284a80371dd50e0287",
+      "finalSHA256": "458e30c10c93b0106e9549c031f68667d99b478310cab4b1aea87cffa84dab31",
+      "wholeNonCommentNodesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+      "beforeSHA256": "61283c5c9e9fd00c4b5413359d0a766cd276c770f585c8a6815a07dc1ea06963",
+      "finalSHA256": "b88a27cb1efbfbe62a18c1f5322420e8c744305b0500c0c01f39902a518068f4",
+      "wholeNonCommentNodesSame": true
+    }
+  ],
+  "canonicalPlayerFields": [
+    {
+      "name": "policy",
+      "type": "\"awa_time_consort_reflection_v1\"",
+      "optional": false,
+      "readonly": false
+    },
+    {
+      "name": "reflectionScope",
+      "type": "ReflectionScope",
+      "optional": false,
+      "readonly": false
+    },
+    {
+      "name": "history",
+      "type": "TimeConsortChoice[]",
+      "optional": false,
+      "readonly": false
+    },
+    {
+      "name": "exhausted",
+      "type": "boolean",
+      "optional": false,
+      "readonly": false
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "8310a635b34a995bedf1935302b4f0594b26a192280bc09511391e1d1277cd68",
+      "actualGitByteSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "sha256": "0697ec1068efcf6cd33b3e6a2adaf4ccbf4c8ca3bde576ff0fb8ee8156c0d3b8",
+      "actualGitByteSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/state.test.ts",
+      "sha256": "9a8001342156e8f3ad378f52c3ac19fef6500586f68935ad7cf450cb3a19551d",
+      "actualGitByteSame": true
+    },
+    {
+      "path": "packages/game-contract/src/index.ts",
+      "sha256": "64afffcd8c1ffe2415fc7d58114572f6864381525ff7e6e12ba13619707941ce",
+      "actualGitByteSame": true
+    },
+    {
+      "path": "packages/game-contract/package.json",
+      "sha256": "b2112b4b8493b3e2ed18a4b4a22c6876213bb87eb35b51b26471d789e29f6857",
+      "actualGitByteSame": true
+    },
+    {
+      "path": "bun.lock",
+      "sha256": "0cec67d816fe691fd3a428baa40fdfc75d129410ac85fd2faf79f4b5a1d62288",
+      "actualGitByteSame": true
+    }
+  ],
+  "artifactChecks": [
+    {
+      "name": "time-consort-player-dto-before.json",
+      "sha256": "e27bc61d06bbdda552c50b1963a1b788c592034f437d180a00291ad410a5aad9",
+      "same": true
+    },
+    {
+      "name": "time-consort-player-dto-program-proof-first.json",
+      "sha256": "6b751edfb5d0206f1718de6a8f6b775b1787ed0d4b067dffdffb8fb995a1afe1",
+      "same": true
+    },
+    {
+      "name": "time-consort-player-dto-program-proof-colon-corrected.json",
+      "sha256": "6b751edfb5d0206f1718de6a8f6b775b1787ed0d4b067dffdffb8fb995a1afe1",
+      "same": true
+    },
+    {
+      "name": "time-consort-player-dto-program-proof.json",
+      "sha256": "7028a76763d1a0f460d217c6f18376e89d4a5e5b0df8a909935cb6aca007d713",
+      "same": true
+    },
+    {
+      "name": "time-consort-player-dto-comment-delta.json",
+      "sha256": "5a8277ed6e9f172c0ff95fafbdc489a4ce4aa3ca0754be1071c0836f4eb3bd3e",
+      "same": true
+    },
+    {
+      "name": "time-consort-player-dto-scope-final.json",
+      "sha256": "416da435288315ad82c3ecb3f6c625d7992fcb2217031a3ad6af9d72aaf46311",
+      "same": true
+    },
+    {
+      "name": "time-consort-player-dto-heads.json",
+      "sha256": "9f37d929be3c3a49cbd9b2b8a3e9f40b893d29332de24b37a32688f1096328a2",
+      "same": true
+    },
+    {
+      "name": "time-consort-player-dto-bindings.json",
+      "sha256": "6dda28a223edfeb3dcfd35d3ddd556ef2ef8b2e3a1bf1d84ce1249fbf440a097",
+      "same": true
+    },
+    {
+      "name": "time-consort-player-dto-type-receipt.json",
+      "sha256": "374e502e57003a629b1b0ff7bddc8c787a6348712117efa9b65baa6fad87720d",
+      "same": true
+    },
+    {
+      "name": "time-consort-player-dto-types-config.json",
+      "sha256": "b5676e39eb0449c5145e6038dc98c97fbaa59cf120379238c68ac00a3e91a65b",
+      "same": true
+    }
+  ],
+  "sourceSemanticReview": [
+    "现行显示名蚀时狼妃与catalog实际值一致，机器角色/政策标识未改。新DTO唯一归既有GC facts leaf，只有必填可写policy literal/ReflectionScope/history Choice[]/exhausted四字段。",
+    "历史仍复制when<=观察day的逐行独立副本；exhausted严格trigger<day，不新增phase判断，不导出triggeredDay。状态读器、Node Proxy/descriptor拒绝、可接受值、原状态引用和反射分支完整保持。",
+    "原return由真实修改前推断四字段加undefined；公共return annotation保持相同类型，Observer唯一private ReturnType改公共leaf，未新增schema或运行const迁移。",
+    "三运行消费者与GCroot/package/lock六控actualGit字节同；运行状态/World/请求/回执/付款继续原机制，纯DTO可写不授予写库存资格。",
+    "compile-only unit使用独立旧四字段预期、五精确类型/双向关系、可写数组/nullable目标及三个真实禁止内部句柄字段，不运行函数也不靠noUnused错误制造反例。",
+    "两中文精度finding已修：演员→玩家；下一夜→触发严格早于观察day，避免声称函数新增phase门槛。",
+    "全证明harness已读：完整getChildren遍历kind及叶，无函数/callback/数组mask；仅精确return colon/type及新增signature comma，旧程序总3623节点一致。首colon范围实际原本相同，真实两个阶段false原因仅漏signature trailing comma，记录准确。"
+  ],
+  "staticEndpoints": {
+    "publicLeaf": "packages/game-contract/src/facts/time-consort.ts",
+    "existingRootWildcard": "packages/game-contract/src/index.ts export * ./facts/time-consort",
+    "roleData": "packages/game-contract/src/role-state-data.ts ReflectionScope/TimeConsortChoice既有声明",
+    "newTypeImportsOnly": true,
+    "noBackendNodeInPureContract": true,
+    "authorBindingInventory": {
+      "sourceFiles": 1637,
+      "currentReferences": 23,
+      "allFormsRetainActualNodes": true,
+      "newTypeRefsAreNotOldConsumers": true
+    },
+    "reviewLimit": "读实际23条引用及其节点/端点，不重新扫描全仓或执行模块初始化。",
+    "actualReferenceNodes": [
+      {
+        "path": "packages/game-presentation/src/events/night-mechanisms.ts",
+        "kind": "ImportDeclaration",
+        "route": "@ai-werewolf-arena/game-contract/facts/time-consort",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/src/recording/reproduction.ts",
+        "kind": "ImportDeclaration",
+        "route": "@ai-werewolf-arena/game-contract/facts/time-consort",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/src/recording/time_consort_record.ts",
+        "kind": "ImportDeclaration",
+        "route": "@ai-werewolf-arena/game-contract/facts/time-consort",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "packages/game-contract/tests/facts/time-consort.test.ts",
+        "kind": "ImportDeclaration",
+        "route": "@ai-werewolf-arena/game-contract/facts/time-consort",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "packages/game-contract/src/index.ts",
+        "kind": "ExportDeclaration",
+        "route": "./facts/time-consort",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/tests/unit/features/time-consort/state.test.ts",
+        "kind": "ImportDeclaration",
+        "route": "../../../../src/game/mechanisms/roles/time_wolf_consort/state",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/tests/unit/features/time-consort/frame.test.ts",
+        "kind": "ImportDeclaration",
+        "route": "../../../../src/game/mechanisms/roles/time_wolf_consort/state",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/tests/scenarios/interactions/time-consort/reflection-cycle-controls.test.ts",
+        "kind": "ImportDeclaration",
+        "route": "../../../../src/game/mechanisms/roles/time_wolf_consort/state",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/tests/scenarios/interactions/time-consort/native-scope-revocation.test.ts",
+        "kind": "ImportDeclaration",
+        "route": "../../../../src/game/mechanisms/roles/time_wolf_consort/state",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+        "kind": "ImportDeclaration",
+        "route": "../../../src/game/mechanisms/roles/time_wolf_consort/state",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/tests/unit/contracts/time-consort-player-dto.types.ts",
+        "kind": "ImportDeclaration",
+        "route": "@ai-werewolf-arena/game-contract/facts/time-consort",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/tests/unit/contracts/time-consort-player-dto.types.ts",
+        "kind": "ImportDeclaration",
+        "route": "../../../src/game/mechanisms/roles/time_wolf_consort/state",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/tests/scenarios/simulation/time-wolf-consort/seeded-world.test.ts",
+        "kind": "ImportDeclaration",
+        "route": "../../../../src/game/mechanisms/roles/time_wolf_consort/state",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/tests/support/oracles/transport/observations.ts",
+        "kind": "ImportDeclaration",
+        "route": "@ai-werewolf-arena/game-contract/facts/time-consort",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/tests/support/oracles/transport/observations.ts",
+        "kind": "ImportDeclaration",
+        "route": "@ai-werewolf-arena/game-contract/facts/time-consort",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/src/game/observation/agent-event-facts.ts",
+        "kind": "ImportDeclaration",
+        "route": "@ai-werewolf-arena/game-contract/facts/time-consort",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/src/game/observation/player-observation-projector.ts",
+        "kind": "ImportDeclaration",
+        "route": "../mechanisms/roles/time_wolf_consort/state",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/src/game/observation/player-observation.ts",
+        "kind": "ImportType",
+        "route": "@ai-werewolf-arena/game-contract/facts/time-consort",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_stages.ts",
+        "kind": "ImportDeclaration",
+        "route": "./state",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+        "kind": "ImportDeclaration",
+        "route": "@ai-werewolf-arena/game-contract/facts/time-consort",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/time_wolf_consort/ports.ts",
+        "kind": "ExportDeclaration",
+        "route": "./state",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/time_wolf_consort/profile.ts",
+        "kind": "ImportDeclaration",
+        "route": "./state",
+        "matchingCurrentASTNodes": 1
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+        "kind": "ImportDeclaration",
+        "route": "./state",
+        "matchingCurrentASTNodes": 1
+      }
+    ]
+  },
+  "authorVerificationAttribution": {
+    "programs": 3,
+    "typedNodes": 3623,
+    "wholeActualESNextAndCommonJSOutputs": 6,
+    "finalProofChunk": "6539d8",
+    "types": {
+      "roots": 4,
+      "session": 24695,
+      "actualTerminalChunk": "53e936",
+      "exitCode": 0,
+      "来源": "实现者真实工具回执，独立审查未重跑，不从空日志推断"
+    },
+    "headers": {
+      "sources": 4,
+      "documentationPaths": 445,
+      "actualDiagnostics": 0
+    },
+    "runtimeTestsExecuted": false
+  },
+  "documents": [
+    {
+      "path": "docs/refactor/time-consort-player-dto.md",
+      "sha256": "34dbf9ccc017fca2ab34078f20fbdff1c54e14fec7edf40bbfadb6901c53a221"
+    },
+    {
+      "path": "docs/refactor/generated/time-consort-player-dto-evidence.json",
+      "sha256": "5f6ac95318642d6fff293dd1d84253199a889477e91f574c21dc5877abd1d6cd"
+    }
+  ],
+  "proofHarness": {
+    "path": "docs/refactor/generated/time-consort-player-dto-proof-harness.cjs",
+    "actualSHA256": "dc8f45fd74d02cd2b7b2222858456fd2941daf87246dd10ac05904032c7f610a",
+    "readEntireScript": true,
+    "notExecuted": true
+  },
+  "limits": [
+    "独立审查只读实际Git/源码/精确类型逆与现有证据，没有运行types、emit、tests、gate或提交。",
+    "角色状态、反射及其行为消费者仍原owner，本批是玩家知识类型归属，不是完整C17/O2/观察统一。",
+    "纯契约不新增schema校验、资源授权、深freeze或句柄；Readonly未静默加强。",
+    "源与公开类型API变更进入当前来源身份，不重写历史档案/严格Tape或声称跨构建兼容。"
+  ],
+  "reviewHarnessHistory": "额外实际23节点核对的首工具按SyntaxKind逆名称比较，ImportType数值别名显示LastTypeNode而误报；仅改工具按枚举数值比较，实际源及作者证据均未改，23节点随后全部匹配。没有类型／行为／门禁运行。"
+}
