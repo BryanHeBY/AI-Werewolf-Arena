@@ -1,9 +1,9 @@
 /**
- * Owns configured role-inspection policy defaults, schema and displayed policy text.
- * Inputs are read-only instance policy fields, board configuration and locale;
- * outputs are repeat/required decisions, parsed configuration and translated labels.
- * These queries never write the live inspection payload or authorize an action.
+ * 负责身份查验的配置政策默认值、原配置 schema 与政策文案。输入为实例只读政策字段、
+ * 板子配置和语言；输出为重复／必选判断、已解析配置及翻译标签。实例政策读取归完整
+ * 状态槽；配置查询不写 live payload、不安装库存或授予行动权限。
  */
+import { roleInspectionPolicy } from "./state-slot";
 import type { RoleInspectionReadState } from "@ai-werewolf-arena/game-contract";
 
 import { z } from "zod";
@@ -12,7 +12,7 @@ import {
   type BoardConfig,
   type InspectionPolicy,
 } from "../../../../core/domain/board";
-import { roleInspectionPolicy } from "../abilities";
+
 import type { RoleProfile } from "../contracts";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 
@@ -23,7 +23,7 @@ export const DEFAULT_INSPECTION_POLICIES = {
   pure_white: "awa_repeat_optional_v1",
   wolf_witch: "awa_repeat_optional_v1",
 } as const;
-/** Instance identity controls scheduling. Configured target/action policy never changes it. */
+/** 实例身份控制调度；配置的目标／行动政策不改变它，也不能据此新授实例。 */
 export function inspectionPolicy(
   state: Pick<RoleInspectionReadState, "policy" | "inspectionPolicy">,
 ): InspectionPolicy {

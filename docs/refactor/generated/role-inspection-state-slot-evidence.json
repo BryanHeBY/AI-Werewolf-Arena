@@ -1,0 +1,910 @@
+{
+  "originalBaseline": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+  "scope": [
+    {
+      "path": "backend/src/ai/agents/player/player_prompt_policy.ts",
+      "sha256": "5bc9ef729162fe26d11932626d88045b4e5ba5ee589f1e8f2f344cadc2544eed"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/action_providers.ts",
+      "sha256": "ec8017137328ce27cd83986d4ded51ac82a614d0d68a0857eb1f624a7030d1b2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "f5609903e83c20527829f5396efb016435ba9e24083642aba31cdbdda567fca9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "ff21a38364b4ed18245fc1b7b445c5076e8d9053a4b35063951f4b3104709061"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+      "sha256": "cbd5a61bfc1e8b75bc6b45de56e7b385747dd98177abc07c096c65ef95b27dd2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "sha256": "83c6e16b74be5f900f2c5ab105fa69014841a702100fabdf88eca465d79f7f28"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+      "sha256": "7b1b2e611e030d2a5353faec14c54fe2b7c67eef84d15718ff604babf6db85af"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "sha256": "36d3847374ba718e432d7a2793ac58f5cfdef6fdf993dec2279692c9ddc03d87"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+      "sha256": "7fb4997afaab8684d0d8a2c235d6648c00f6560207c0c27b4e37df2ebd3b8367"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+      "sha256": "88f926e8d11088968e2aa4b3ac17f4d90e5a3bea159462e9a735d7a06e7c118a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "sha256": "843da0a51e45d208150cc7757dfe1efc8e5ba7a5aa08da4a272d04fbff89c8dc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "sha256": "810e0dafec2a4764b30fcf1a16f7215b47965af819e03d0185be0ca8ceac9eb6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+      "sha256": "5f8bf4f33e33152d3bdae1dd53c573a9d5ff4246d3fac39b11611f0848199958"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "sha256": "f3e43fd039b0ad7c51cac5e57cc95ef45560169cbdff6120116e99d4fdcf4a26"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "731f7d7fe71a066e998974b8f1420917d76c31426d3820883334cd94c0c3eaff"
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "fe7ae822f7107313c760a1d853943f6b1d2bb2106eba77294fbe64e795a70380"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+      "sha256": "8eabe7021bc22fbcf26dcfd3e3070a4204788ef294accf7d1edbda5eb1f2ce7e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/state.ts",
+      "deleted": true,
+      "beforeSha256": "6806e5a1868094a73e7913792c72a4ff10f1c1cee43aeb8c3d96f651ef6a1512"
+    }
+  ],
+  "author": {
+    "base": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+    "checks": [
+      {
+        "label": "full original state-owner function getRoleInspectionState",
+        "equal": true
+      },
+      {
+        "label": "full original state-owner function recordRoleInspection",
+        "equal": true
+      },
+      {
+        "label": "full original state-owner function recordAbilityRoleInspection",
+        "equal": true
+      },
+      {
+        "label": "complete original native prepared write suffix",
+        "equal": true
+      },
+      {
+        "label": "native state setter exact role_check prepared pipeline",
+        "equal": true
+      },
+      {
+        "label": "full original policy parser body",
+        "equal": true
+      },
+      {
+        "label": "exact original policy identity expression",
+        "equal": true
+      },
+      {
+        "label": "exact original three payload invalidation expressions",
+        "equal": true
+      },
+      {
+        "label": "actual captured source is Git backend/src/game/mechanisms/roles/role_inspection/state.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured source is Git backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original typed program precise owner inverse backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original raw emitted inverse ESNext backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original raw emitted inverse CommonJS backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured source is Git backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original typed program precise owner inverse backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original raw emitted inverse ESNext backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original raw emitted inverse CommonJS backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured source is Git backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original typed program precise owner inverse backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original raw emitted inverse ESNext backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original raw emitted inverse CommonJS backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured source is Git backend/src/game/mechanisms/roles/ability_changes.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original typed program precise owner inverse backend/src/game/mechanisms/roles/ability_changes.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original raw emitted inverse ESNext backend/src/game/mechanisms/roles/ability_changes.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original raw emitted inverse CommonJS backend/src/game/mechanisms/roles/ability_changes.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured source is Git backend/src/game/mechanisms/roles/ability_scope.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original typed program precise owner inverse backend/src/game/mechanisms/roles/ability_scope.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original raw emitted inverse ESNext backend/src/game/mechanisms/roles/ability_scope.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original raw emitted inverse CommonJS backend/src/game/mechanisms/roles/ability_scope.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured source is Git backend/src/game/mechanisms/roles/abilities.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original typed program precise owner inverse backend/src/game/mechanisms/roles/abilities.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original raw emitted inverse ESNext backend/src/game/mechanisms/roles/abilities.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original raw emitted inverse CommonJS backend/src/game/mechanisms/roles/abilities.ts",
+        "equal": true
+      },
+      {
+        "label": "actual captured source is Git backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original typed program precise owner inverse backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original raw emitted inverse ESNext backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+        "equal": true
+      },
+      {
+        "label": "whole original raw emitted inverse CommonJS backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+        "equal": true
+      }
+    ],
+    "failures": [],
+    "files": [
+      {
+        "path": "backend/src/ai/agents/player/player_prompt_policy.ts",
+        "sha256": "5bc9ef729162fe26d11932626d88045b4e5ba5ee589f1e8f2f344cadc2544eed"
+      },
+      {
+        "path": "backend/src/ai/agents/providers/action_providers.ts",
+        "sha256": "ec8017137328ce27cd83986d4ded51ac82a614d0d68a0857eb1f624a7030d1b2"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/abilities.ts",
+        "sha256": "f5609903e83c20527829f5396efb016435ba9e24083642aba31cdbdda567fca9"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "sha256": "ff21a38364b4ed18245fc1b7b445c5076e8d9053a4b35063951f4b3104709061"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+        "sha256": "cbd5a61bfc1e8b75bc6b45de56e7b385747dd98177abc07c096c65ef95b27dd2"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+        "sha256": "83c6e16b74be5f900f2c5ab105fa69014841a702100fabdf88eca465d79f7f28"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+        "sha256": "7b1b2e611e030d2a5353faec14c54fe2b7c67eef84d15718ff604babf6db85af"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+        "sha256": "36d3847374ba718e432d7a2793ac58f5cfdef6fdf993dec2279692c9ddc03d87"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+        "sha256": "7fb4997afaab8684d0d8a2c235d6648c00f6560207c0c27b4e37df2ebd3b8367"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+        "sha256": "88f926e8d11088968e2aa4b3ac17f4d90e5a3bea159462e9a735d7a06e7c118a"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+        "sha256": "843da0a51e45d208150cc7757dfe1efc8e5ba7a5aa08da4a272d04fbff89c8dc"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+        "sha256": "810e0dafec2a4764b30fcf1a16f7215b47965af819e03d0185be0ca8ceac9eb6"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+        "sha256": "5f8bf4f33e33152d3bdae1dd53c573a9d5ff4246d3fac39b11611f0848199958"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+        "sha256": "f3e43fd039b0ad7c51cac5e57cc95ef45560169cbdff6120116e99d4fdcf4a26"
+      },
+      {
+        "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+        "sha256": "731f7d7fe71a066e998974b8f1420917d76c31426d3820883334cd94c0c3eaff"
+      },
+      {
+        "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+        "sha256": "fe7ae822f7107313c760a1d853943f6b1d2bb2106eba77294fbe64e795a70380"
+      },
+      {
+        "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+        "sha256": "8eabe7021bc22fbcf26dcfd3e3070a4204788ef294accf7d1edbda5eb1f2ce7e"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/state.ts",
+        "deleted": true,
+        "beforeSha256": "6806e5a1868094a73e7913792c72a4ff10f1c1cee43aeb8c3d96f651ef6a1512"
+      }
+    ],
+    "notes": [
+      "Exact source APIs/whole bodies/whole raw ES/CJS comparison. No blanking arrays/assertions/callbacks.",
+      "Original policy-only parser intentionally does not become stricter full payload schema; source unchanged.",
+      "Runtime policy identity bytes codec, not a new archive payload encoder. Existing checkpoint player-snapshots full clone untouched."
+    ],
+    "policyImportProof": {
+      "scope": "Eleven actual policy importer programs (9 production and2existing tests), complete nonimport ES/CJS output identical to actual captured working-before; precise only policy binding route changed. Two existing main slot files also have earlier C17 implementation changes, so lineage is explicit working-before rather than pretending every capture is Git131.",
+      "rows": [
+        {
+          "path": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "beforeSha256": "4a8b901d0555cf2cd870438fcd92005aaa7417aef40607fea5c2e8d489f623f8",
+          "sha256": "5bc9ef729162fe26d11932626d88045b4e5ba5ee589f1e8f2f344cadc2544eed",
+          "originalBinding": {
+            "source": "../../../game/mechanisms/roles/abilities",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "canonicalBinding": {
+            "source": "../../../game/mechanisms/roles/role_inspection/ports",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "otherAllBindingsSame": true,
+          "sameLocalTypeValue": true,
+          "checks": [
+            {
+              "module": "ESNext",
+              "entireNonImportRawProgramEqual": true
+            },
+            {
+              "module": "CommonJS",
+              "entireNonImportRawProgramEqual": true
+            }
+          ]
+        },
+        {
+          "path": "backend/src/ai/agents/providers/action_providers.ts",
+          "beforeSha256": "6fe7e504405def1bee02345fd146076bc86b84c203d3a0a3ec11481f7f2622bb",
+          "sha256": "ec8017137328ce27cd83986d4ded51ac82a614d0d68a0857eb1f624a7030d1b2",
+          "originalBinding": {
+            "source": "../../../game/mechanisms",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "canonicalBinding": {
+            "source": "../../../game/mechanisms/roles/role_inspection/ports",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "otherAllBindingsSame": true,
+          "sameLocalTypeValue": true,
+          "checks": [
+            {
+              "module": "ESNext",
+              "entireNonImportRawProgramEqual": true
+            },
+            {
+              "module": "CommonJS",
+              "entireNonImportRawProgramEqual": true
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+          "beforeSha256": "142f884c52f098bdfb6c3115640533fedbc89ffbc63c61c5be6d8cd53b592ef7",
+          "sha256": "843da0a51e45d208150cc7757dfe1efc8e5ba7a5aa08da4a272d04fbff89c8dc",
+          "originalBinding": {
+            "source": "../abilities",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "canonicalBinding": {
+            "source": "./state-slot",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "otherAllBindingsSame": true,
+          "sameLocalTypeValue": true,
+          "checks": [
+            {
+              "module": "ESNext",
+              "entireNonImportRawProgramEqual": true
+            },
+            {
+              "module": "CommonJS",
+              "entireNonImportRawProgramEqual": true
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+          "beforeSha256": "c382c249ade2e8f80ee347838fa4f26cb54841a8b167b2e56edb1dd825a4f0da",
+          "sha256": "88f926e8d11088968e2aa4b3ac17f4d90e5a3bea159462e9a735d7a06e7c118a",
+          "originalBinding": {
+            "source": "../abilities",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "canonicalBinding": {
+            "source": "./state-slot",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "otherAllBindingsSame": true,
+          "sameLocalTypeValue": true,
+          "checks": [
+            {
+              "module": "ESNext",
+              "entireNonImportRawProgramEqual": true
+            },
+            {
+              "module": "CommonJS",
+              "entireNonImportRawProgramEqual": true
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+          "beforeSha256": "49c0b40d84da7126b0345c31e1ff89da9594d6461898b0a8e012fc8e09164e0a",
+          "sha256": "810e0dafec2a4764b30fcf1a16f7215b47965af819e03d0185be0ca8ceac9eb6",
+          "originalBinding": {
+            "source": "../abilities",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "canonicalBinding": {
+            "source": "./state-slot",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "otherAllBindingsSame": true,
+          "sameLocalTypeValue": true,
+          "checks": [
+            {
+              "module": "ESNext",
+              "entireNonImportRawProgramEqual": true
+            },
+            {
+              "module": "CommonJS",
+              "entireNonImportRawProgramEqual": true
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "beforeSha256": "992eb55e921832f868e5adbe49a9bb9fe41e2e6375afb139039f95aa4ab5c719",
+          "sha256": "ff21a38364b4ed18245fc1b7b445c5076e8d9053a4b35063951f4b3104709061",
+          "originalBinding": {
+            "source": "./abilities",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "canonicalBinding": {
+            "source": "./role_inspection/ports",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "otherAllBindingsSame": true,
+          "sameLocalTypeValue": true,
+          "checks": [
+            {
+              "module": "ESNext",
+              "entireNonImportRawProgramEqual": true
+            },
+            {
+              "module": "CommonJS",
+              "entireNonImportRawProgramEqual": true
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+          "beforeSha256": "74e2e985e1aa80d09018eaaeefa8ac65b6a508047653a827ab0f7fad9ccfaf74",
+          "sha256": "83c6e16b74be5f900f2c5ab105fa69014841a702100fabdf88eca465d79f7f28",
+          "originalBinding": {
+            "source": "../abilities",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "canonicalBinding": {
+            "source": "../role_inspection/ports",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "otherAllBindingsSame": true,
+          "sameLocalTypeValue": true,
+          "checks": [
+            {
+              "module": "ESNext",
+              "entireNonImportRawProgramEqual": true
+            },
+            {
+              "module": "CommonJS",
+              "entireNonImportRawProgramEqual": true
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+          "beforeSha256": "29d83bf822e7cdd867f7093cc7f3c470a7b77de5ac271f10f01a7abe23dcb19a",
+          "sha256": "36d3847374ba718e432d7a2793ac58f5cfdef6fdf993dec2279692c9ddc03d87",
+          "originalBinding": {
+            "source": "../abilities",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "canonicalBinding": {
+            "source": "../role_inspection/ports",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "otherAllBindingsSame": true,
+          "sameLocalTypeValue": true,
+          "checks": [
+            {
+              "module": "ESNext",
+              "entireNonImportRawProgramEqual": true
+            },
+            {
+              "module": "CommonJS",
+              "entireNonImportRawProgramEqual": true
+            }
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+          "beforeSha256": "7962d1ebc3c2597547443d8cb3d56de93a7a1a5ff3b48665a157a1493ffe2df0",
+          "sha256": "7fb4997afaab8684d0d8a2c235d6648c00f6560207c0c27b4e37df2ebd3b8367",
+          "originalBinding": {
+            "source": "../abilities",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "canonicalBinding": {
+            "source": "../role_inspection/ports",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "otherAllBindingsSame": true,
+          "sameLocalTypeValue": true,
+          "checks": [
+            {
+              "module": "ESNext",
+              "entireNonImportRawProgramEqual": true
+            },
+            {
+              "module": "CommonJS",
+              "entireNonImportRawProgramEqual": true
+            }
+          ]
+        },
+        {
+          "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+          "beforeSha256": "d8a5fc0f7d2c5f56827be9dffdce262257e16e37c0f8b66d79170debcb762da7",
+          "sha256": "fe7ae822f7107313c760a1d853943f6b1d2bb2106eba77294fbe64e795a70380",
+          "originalBinding": {
+            "source": "../../../../src/game/mechanisms/roles/abilities",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "canonicalBinding": {
+            "source": "../../../../src/game/mechanisms/roles/role_inspection/ports",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "otherAllBindingsSame": true,
+          "sameLocalTypeValue": true,
+          "checks": [
+            {
+              "module": "ESNext",
+              "entireNonImportRawProgramEqual": true
+            },
+            {
+              "module": "CommonJS",
+              "entireNonImportRawProgramEqual": true
+            }
+          ]
+        },
+        {
+          "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+          "beforeSha256": "ae9b34b8dd35be56a64df6df8ed304c57bd6ab19116af3b6a819f7bf3b87ad84",
+          "sha256": "731f7d7fe71a066e998974b8f1420917d76c31426d3820883334cd94c0c3eaff",
+          "originalBinding": {
+            "source": "../../../../src/game/mechanisms/roles/abilities",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "canonicalBinding": {
+            "source": "../../../../src/game/mechanisms/roles/role_inspection/ports",
+            "name": "roleInspectionPolicy",
+            "local": "roleInspectionPolicy",
+            "typeOnly": false
+          },
+          "otherAllBindingsSame": true,
+          "sameLocalTypeValue": true,
+          "checks": [
+            {
+              "module": "ESNext",
+              "entireNonImportRawProgramEqual": true
+            },
+            {
+              "module": "CommonJS",
+              "entireNonImportRawProgramEqual": true
+            }
+          ]
+        }
+      ],
+      "failures": []
+    },
+    "verification": {
+      "newDeltaTests": "closed-install-tests.log2pass0fail12assert8filtered; existing8tests not repeated for imports/closure.",
+      "finiteExpandedType": "real35323 actualterminal0,17files,types-closed-first.log empty.",
+      "ownership": "prepared-native-install complete original35line actual write owner, two directreal callers; only type import abilities. Slot never imports ability_changes; abilities no import/export slot. Role policy clients9prod+2test canonical samefamily slot or public ports, no AI private feature edges.",
+      "priorCountsCorrected": "First proposal approximate12 production references: actual migration11importerfiles=9production+2test, plus abilities retiredexport, scope codec and actualpreparedowner wiring.",
+      "lastCommentDelta": "Two touched English heads and policy logic comment accurately translated; full importer nonimport ES/CJS output22/22same; no extra runtime/types."
+    }
+  },
+  "independentClosed": {
+    "status": "approved",
+    "scope": "Closed C17 native-role-inspection18 candidate source paths and real current deletion. Baseline131 originals for core move; eleven import migrations have explicit actual working-before lineage, including C44 frozen two test blobs. No assumption all18 equals latestGitHEAD.",
+    "base": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+    "files": [
+      {
+        "path": "backend/src/ai/agents/player/player_prompt_policy.ts",
+        "sha256": "5bc9ef729162fe26d11932626d88045b4e5ba5ee589f1e8f2f344cadc2544eed"
+      },
+      {
+        "path": "backend/src/ai/agents/providers/action_providers.ts",
+        "sha256": "ec8017137328ce27cd83986d4ded51ac82a614d0d68a0857eb1f624a7030d1b2"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/abilities.ts",
+        "sha256": "f5609903e83c20527829f5396efb016435ba9e24083642aba31cdbdda567fca9"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "sha256": "ff21a38364b4ed18245fc1b7b445c5076e8d9053a4b35063951f4b3104709061"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+        "sha256": "cbd5a61bfc1e8b75bc6b45de56e7b385747dd98177abc07c096c65ef95b27dd2"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+        "sha256": "83c6e16b74be5f900f2c5ab105fa69014841a702100fabdf88eca465d79f7f28"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+        "sha256": "7b1b2e611e030d2a5353faec14c54fe2b7c67eef84d15718ff604babf6db85af"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+        "sha256": "36d3847374ba718e432d7a2793ac58f5cfdef6fdf993dec2279692c9ddc03d87"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+        "sha256": "7fb4997afaab8684d0d8a2c235d6648c00f6560207c0c27b4e37df2ebd3b8367"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+        "sha256": "88f926e8d11088968e2aa4b3ac17f4d90e5a3bea159462e9a735d7a06e7c118a"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+        "sha256": "843da0a51e45d208150cc7757dfe1efc8e5ba7a5aa08da4a272d04fbff89c8dc"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+        "sha256": "810e0dafec2a4764b30fcf1a16f7215b47965af819e03d0185be0ca8ceac9eb6"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+        "sha256": "5f8bf4f33e33152d3bdae1dd53c573a9d5ff4246d3fac39b11611f0848199958"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+        "sha256": "f3e43fd039b0ad7c51cac5e57cc95ef45560169cbdff6120116e99d4fdcf4a26"
+      },
+      {
+        "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+        "sha256": "731f7d7fe71a066e998974b8f1420917d76c31426d3820883334cd94c0c3eaff"
+      },
+      {
+        "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+        "sha256": "fe7ae822f7107313c760a1d853943f6b1d2bb2106eba77294fbe64e795a70380"
+      },
+      {
+        "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+        "sha256": "8eabe7021bc22fbcf26dcfd3e3070a4204788ef294accf7d1edbda5eb1f2ce7e"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/state.ts",
+        "deleted": true,
+        "beforeSha256": "6806e5a1868094a73e7913792c72a4ff10f1c1cee43aeb8c3d96f651ef6a1512"
+      }
+    ],
+    "scopeShaMismatches": [],
+    "findings": [],
+    "closedPriorTopologyLimits": [
+      "abilities no longer re-exports roleInspectionPolicy; its runtime route back to slot is absent.",
+      "Slot native install no longer calls generic ability_changes; both actually call unique prepared native metadata owner; slot runtime route to generic installer is absent."
+    ],
+    "checks": {
+      "preparedNativeOwnerContainsCompleteOriginalWriteSuffix": true,
+      "preparedOwnerHasNoRuntimeModuleImports": true,
+      "twoActualCallersOnlySlotAndGenericNativeInstaller": true,
+      "roleCheckSlotCopyThenOriginalPolicyBeforePrivateStateWrite": true,
+      "genericPairRoleGuardAndCopyProjectRemainOriginal": true,
+      "genericOtherKindCopyThenSamePreparedWrites": true,
+      "nativeExistingInstancePayloadOnlyReplacementAndRetiredIdRevisionRemain": true,
+      "rolePrivateStateAndSourceRoleReadAtOriginalPoints": true,
+      "sixRealNativeRoleConsumersAndGiftCopyBorrowTransferStillSharedInventory": true,
+      "noNewLeaseStoreOrStrictPayloadSchema": true,
+      "policyOnlyCanonicalParserNoLegacyAbilitiesBridge": true,
+      "nineProductionTwoTestPolicyImportsCanonicalAndLocalTypeValueSame": true,
+      "allOtherImportFormsDefaultNamespaceNamedSideEffectIndependentlyEqual": true,
+      "twoAiConsumersUsePublicPortsNotPrivateSlot": true,
+      "publicSetWritesNativeStockDeclaredAccurately": true,
+      "fullCoreInverseAndFullNonImportProgramsPreserveLiteralCallbacksAssertions": true
+    },
+    "evidenceCounts": {
+      "coreStrongChecks": 37,
+      "includesWholeCoreRawEmittedChecks": 14,
+      "policyImporters": 11,
+      "wholeNonImportEmittedChecks": 22,
+      "relativeRuntimeGraphModules": 21,
+      "graphLimit": "Scoped relative runtime dependency reachability, excludes type-only and external workspace packages. No global all-source acyclicity or cold/test gate rerun claim."
+    },
+    "sourceLineage": "Two C44 test-stage candidates recreated from exact actualworking bytes and recorded typearg removal, each matches frozenC44SHA; C17 current import changes stay unmodified. Snapshot provenance recorded in stage-candidates/path-proof.json.",
+    "remainingLimits": [
+      "Only original policy validator is schema; no new strict complete history/target payload rejection.",
+      "checkpoint.policyIdentity remains runtime fingerprint, complete archive capture stays recording owner.",
+      "No declaration that all55families/C17/lifecycle/reproduction matrix complete."
+    ],
+    "receiptAttribution": "Author/Root own bounded8state tests/91assertions, prepared-install delta and finite types. This review reads real source/proofs and does not rerun these."
+  },
+  "runtimePaths": {
+    "resolvedSourceModules": 21,
+    "slotsToGenericInstallerRuntimePath": null,
+    "abilitiesToSlotRuntimePath": null,
+    "preparedOwnerRuntimeEdges": [],
+    "roots": [
+      {
+        "path": "backend/src/game/mechanisms/roles/abilities.ts",
+        "runtimeImports": [
+          "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+          "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+          "backend/src/core/domain/board.ts",
+          "backend/src/game/mechanisms/roles/witch/policies.ts",
+          "backend/src/core/domain/model.ts",
+          "backend/src/core/domain/components/names.ts",
+          "backend/src/game/mechanisms/roles/player_state.ts"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "runtimeImports": [
+          "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+          "backend/src/core/domain/board.ts",
+          "backend/src/core/domain/components/names.ts",
+          "backend/src/core/domain/model.ts",
+          "backend/src/game/mechanisms/roles/abilities.ts",
+          "backend/src/core/domain/night_effects.ts",
+          "backend/src/game/mechanisms/roles/prepared-native-install.ts"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+        "runtimeImports": [
+          "backend/src/game/mechanisms/roles/abilities.ts",
+          "backend/src/core/domain/board.ts",
+          "backend/src/game/mechanisms/roles/prepared-native-install.ts"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+        "runtimeImports": []
+      }
+    ],
+    "notes": [
+      "Real runtime static import/export graph excludes type-only imports, follows relative source endpoints transitively; no tests/types/gate run.",
+      "No copied graph or name-only cycle claim; actual candidate sources read."
+    ]
+  },
+  "receipts": {
+    "tests-first.log": "bun test v1.4.3 (c6da4a4d3)\n\ntests/unit/features/role-inspection/state-slot.test.ts:\n(pass) slot creation retains legacy extra fields, clone isolation and missing-policy interpretation [0.30ms]\n(pass) policy-only schema keeps original getter order and rejects configured policy before role policy [0.13ms]\n(pass) six implemented native-role paths install one original instance and replace only payload on reapplication [0.43ms]\n(pass) a gifted role-check instance keeps independent knowledge and native selection [0.50ms]\n(pass) ability append preserves three successive state reads and no metadata payment [0.09ms]\n(pass) state append keeps target write when later day write fails [0.05ms]\n(pass) policy identity codec looks up stringify before two live state reads [0.06ms]\n(pass) original ability scope remains the owner of state replacement and real life revocation [0.42ms]\n\nbackend/tests/unit/features/role-inspection/state-slot.test.ts:\n\n# Unhandled error between tests\n-------------------------------\nerror: Cannot find module '../../../../src/game/mechanisms/roles/role_inspection/state-slot' from '/home/hby/dev/AI-Werewolf-Arena/backend/backend/tests/unit/features/role-inspection/state-slot.test.ts'\n-------------------------------\n\n\n 8 pass\n 1 fail\n 1 error\n 91 expect() calls\nRan 9 tests across 2 files. [57.00ms]\n",
+    "tests-final.log": "bun test v1.4.3 (c6da4a4d3)\n\ntests/unit/features/role-inspection/state-slot.test.ts:\n(pass) slot creation retains legacy extra fields, clone isolation and missing-policy interpretation [0.36ms]\n(pass) policy-only schema keeps original getter order and rejects configured policy before role policy [0.15ms]\n(pass) six implemented native-role paths install one original instance and replace only payload on reapplication [0.46ms]\n(pass) a gifted role-check instance keeps independent knowledge and native selection [0.56ms]\n(pass) ability append preserves three successive state reads and no metadata payment [0.08ms]\n(pass) state append keeps target write when later day write fails [0.06ms]\n(pass) policy identity codec looks up stringify before two live state reads [0.06ms]\n(pass) original ability scope remains the owner of state replacement and real life revocation [0.52ms]\n\n 8 pass\n 0 fail\n 91 expect() calls\nRan 8 tests across 1 file. [70.00ms]\n",
+    "types-first.log": "",
+    "closed-install-tests.log": "bun test v1.4.3 (c6da4a4d3)\n\ntests/unit/features/role-inspection/state-slot.test.ts:\n(pass) native entry paths retain clone before two inventory reads and late source role [0.45ms]\n(pass) prepared native writes keep revision and conflict identity before replacing payload [0.22ms]\n\n 2 pass\n 8 filtered out\n 0 fail\n 12 expect() calls\nRan 2 tests across 1 file. [61.00ms]\n",
+    "types-closed-first.log": ""
+  },
+  "rootReview": {
+    "approved": true,
+    "scope": "原store完整35行唯一prepared owner／2实际callers、copy-policy写顺序、state三读/JSONcallee、政策只保旧schema、无新租约、导出/AI公开binding、两新增环实际清零、中文写权准确"
+  },
+  "initialCandidateReview": {
+    "status": "approved_with_explicit_topology_and_coverage_limits",
+    "base": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+    "scope": "Independent current source/ownership/semantic read of10role-inspection slot candidate paths, including actual deletion. No type, runtime or full gate repeated.",
+    "files": [
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+        "sha256": "08ac56368f202db409c81a679323004df0592eff32bf29c2b674be0006be57f9"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+        "sha256": "142f884c52f098bdfb6c3115640533fedbc89ffbc63c61c5be6d8cd53b592ef7"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+        "sha256": "c382c249ade2e8f80ee347838fa4f26cb54841a8b167b2e56edb1dd825a4f0da"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "sha256": "f3357201960b9c6976bae465d62e73e72c9fbf98558423c67401d0cf23cb818b"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+        "sha256": "b7cc6013468bd4413efb0513806f51c64aad43cd37bb4897bc23428410332524"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/abilities.ts",
+        "sha256": "26dd2f9269df94975ce3e9800a0a82da6e21fbdf55551ce51075afc4caea5792"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+        "sha256": "29d83bf822e7cdd867f7093cc7f3c470a7b77de5ac271f10f01a7abe23dcb19a"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+        "sha256": "c75b6f8f5199a67ca9adee269d09b66b492cf25498a10dd481f3cd3d57e5777a"
+      },
+      {
+        "path": "backend/tests/unit/features/role-inspection/state-slot.test.ts",
+        "sha256": "3596ff902cf8e0f30da9299a642864785ce4e94132416a9eee3a893a130373ec"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/state.ts",
+        "deleted": true,
+        "beforeSha256": "6806e5a1868094a73e7913792c72a4ff10f1c1cee43aeb8c3d96f651ef6a1512"
+      }
+    ],
+    "scopeShaMismatches": [],
+    "findings": [],
+    "checks": {
+      "realSixNativeRoleConsumersAndFivePolicies": true,
+      "oneOriginalAbilityInventoryNoSecondSlotStorage": true,
+      "completeOriginalCreateCloneThenPolicyOrder": true,
+      "originalPolicyOnlyAcceptanceNoNewStrictHistorySchema": true,
+      "stateAndAbilityAppendSeparateOriginalWrites": true,
+      "abilityAppendReadsStateThreeTimes": true,
+      "metadataUseAndEventsRemainOriginalCallerAfterAppend": true,
+      "codecRetainsJsonStringifyCalleeBeforeFields": true,
+      "payloadInvalidationThreeOriginalConditionsAtSameGuardPoint": true,
+      "remainingOriginalLifeRoleSourceIdActivationDisabledAndCurrentnessChecksInNightOwner": true,
+      "giftCopyBorrowTransferStillSharedInventory": true,
+      "archiveWholePrivateStateCaptureRemainsRecordingOwner": true,
+      "oldInternalStateLeafDeletedAndActualPortsPointToCanonicalOwner": true,
+      "slotContainsActualAlgorithmsNotNewThinClass": true,
+      "sourceProofUsesVoidTraversalCallbacksAndNodeArrays": true,
+      "sevenFullOwnerProgramsKeepRawESAndCommonJsExactInverse": true
+    },
+    "proofCounts": {
+      "totalChecks": 36,
+      "includedWholeRawEmittedProgramChecks": 14,
+      "otherOriginalAlgorithmSourceAndAstChecks": 22,
+      "notAddedAs50Checks": true
+    },
+    "topologyLimits": [
+      "Direct abilities policy re-export ↔ state-slot shared-query imports and ability_changes ↔ state-slot create/install imports exist. Top-level slot declaration references hoisted functions; no new top-level World/state query seen. This review does not claim global acyclicity or run a cold-load gate.",
+      "Existing abilities.roleInspectionPolicy public API is explicitly retained as C44 exit debt; not a duplicate parser.",
+      "Slot checkpoint.policyIdentity is runtime policy fingerprint codec, not complete public/private archive payload serialization.",
+      "Eight bounded tests6native installations/91assertions are not whole55role lifecycle/lease/replay matrix or completedC17."
+    ],
+    "receiptAttribution": "Author/Root own actual finite56492 terminal0 and new8/91 runtime receipts; reviewer did not repeat them. First authored duplicate wrongpath loader error and proof inverse helper corrections remain in handoff."
+  },
+  "explicitLimits": [
+    "实际6native角色/5policy+赠予复制转移实例，不扩大玩法",
+    "schema只包含原policy校验；checkpoint.policyIdentity只是原运行身份，不是归档payload codec",
+    "21相对运行模块图只证明两个指定反向路径退出，不是全仓无环",
+    "本次18路径包含C44已迁typeargs的2test，policy路由增量使用实际workingbefore且并行来源保留",
+    "其它角色及完整C17/记录/全量矩阵继续"
+  ]
+}

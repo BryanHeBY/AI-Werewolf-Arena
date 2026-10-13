@@ -4,6 +4,7 @@
  * 自定义人设／角色展示仍在原时点调用，不因结构观察迁移而提前捕获；这里不提交行动或更改角色状态。
  * 已知存活与当前目标许可分别由原捕获和提示查询负责，不把提示候选当作行动授权。
  */
+import { roleInspectionPolicy } from "../../../game/mechanisms/roles/role_inspection/ports";
 import { rolePresentationRenderer } from "../../../game/observation/role-presentation";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { getWhiteWolfKingState } from "../../../game/mechanisms/roles/white_wolf_king/ports";
@@ -69,14 +70,7 @@ import { readGravekeeperReport } from "@ai-werewolf-arena/replay-contract";
 import { getBearState } from "../../../game/mechanisms/roles/bear/ports";
 import { getHiddenWolfState } from "../../../game/mechanisms/roles/hidden_wolf/ports";
 import { canHiddenWolfKnife } from "../../../game/mechanisms/roles/hidden_wolf/inheritance";
-import {
-  roleInspectionPolicy,
-  ROLE_INSPECTION_POLICY_ROLES,
-  projectRoleInspectionState,
-  projectSeerState,
-  projectWitchState,
-  projectNightState,
-} from "../../../game/mechanisms/roles/abilities";
+import { ROLE_INSPECTION_POLICY_ROLES, projectRoleInspectionState, projectSeerState, projectWitchState, projectNightState } from "../../../game/mechanisms/roles/abilities";
 import {
   getBlackMarketState,
   projectBlackMarketState,

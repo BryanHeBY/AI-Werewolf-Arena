@@ -4,6 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { roleInspectionPolicy } from "../role_inspection/ports";
 
 import { nativeRolePresentation } from "../presentation-contribution";
 import type { RoleInspectionState } from "@ai-werewolf-arena/game-contract";
@@ -14,12 +15,7 @@ import { Camp, Role } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { setRoleInspectionState } from "../role_inspection/ports";
-import {
-  allNightAbilities,
-  findNightAbility,
-  roleInspectionPolicy,
-  retiredNightAbilityIds,
-} from "../abilities";
+import { allNightAbilities, findNightAbility, retiredNightAbilityIds } from "../abilities";
 import { numberOrNull } from "../../llm/helpers";
 import { MIRROR_INSPECTION_STAGE } from "../role_inspection/night_stages";
 import {

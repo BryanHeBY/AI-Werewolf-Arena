@@ -1,8 +1,8 @@
 /**
- * Defines Pure White inspection targets and the corresponding tool validation rule. Inputs are
- * current World roles and the requested target; outputs are policy-allowed IDs or structured
- * rule rejection. Target enumeration does not commit an inspection or publish private results.
+ * 定义纯白查验目标与对应工具校验。输入为当前 World 角色和请求目标；输出为政策允许
+ * 的编号或结构化拒绝。目标枚举不提交查验或发表私密结果，原目标／来源及失败顺序不变。
  */
+import { roleInspectionPolicy } from "../role_inspection/ports";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { Camp, Phase, Role, type EntityId } from "../../../../core/domain/model";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -10,7 +10,7 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { World } from "../../../../core/domain/world";
 import type { ToolRule } from "../../validation/contracts";
 import type { RoleProfile } from "../contracts";
-import { activeNightAbility, roleInspectionPolicy } from "../abilities";
+import { activeNightAbility } from "../abilities";
 
 export function pureWhiteInspectionTargets(
   world: World,

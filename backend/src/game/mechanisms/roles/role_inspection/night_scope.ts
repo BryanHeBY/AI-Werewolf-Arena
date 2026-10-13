@@ -1,9 +1,10 @@
 /**
- * Records role-inspection night commitment and optional inspection completion. Inputs are World,
- * real night and the completed Gargoyle/inspection choice; outputs are per-night bookkeeping and
- * completed target knowledge. This ledger never manufactures an active ability or a second
- * inspection resource.
+ * 负责角色查验本夜提交和可选完成回执。输入为原 World、实际夜晚、石像鬼／查验完成选择；
+ * 输出为每夜记账及已完成目标知识，不创建活跃能力或第二查验资源。状态族检查同 payload
+ * 引用和政策；此 owner 仍在原顺序检查角色、生命版本、id、来源、激活、禁用及阶段当前性，
+ * 替换或过期后不借合法 payload 恢复原回执。
  */
+import { roleInspectionPolicy } from "./state-slot";
 import type { GargoyleReadState as GargoyleState } from "@ai-werewolf-arena/game-contract";
 
 import type { RoleInspectionReadState } from "@ai-werewolf-arena/game-contract";
@@ -13,8 +14,10 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Role } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
-import { findNightAbility, roleInspectionPolicy, type NightAbilityReadView } from "../abilities";
+import { findNightAbility, type NightAbilityReadView } from "../abilities";
 import { getGargoyleState } from "../gargoyle/ports";
+
+import { ROLE_INSPECTION_STATE_SLOT } from "./state-slot";
 
 interface Completion {
   actorId: number;
@@ -101,9 +104,7 @@ export function completedGargoyleInspection(world: World, role: RoleComponent): 
     scope.ability.source.kind !== "native" ||
     scope.ability.source.role !== Role.Gargoyle ||
     scope.ability.disabled ||
-    scope.ability.state !== scope.inspection ||
-    scope.inspection.inspectionPolicy !== scope.inspectionPolicy ||
-    roleInspectionPolicy(scope.inspection) !== "gargoyle"
+    ROLE_INSPECTION_STATE_SLOT.invalidations.payloadChanged(scope)
   )
     return false;
   return (

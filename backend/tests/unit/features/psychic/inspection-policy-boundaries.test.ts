@@ -1,6 +1,7 @@
 /**
  * 单元测试验证通灵师重复查验政策、只读预检、可选关闭及复制资源隐私。输入保留原 locale／变化／gateway／旧政策矩阵、有界直接查验与原缓存 catalog 引用；精确角色／历史／库存、取消及外来原生刀拒绝是预期，不运行完整夜晚、PhaseManager 或模型。
  */
+import { roleInspectionPolicy } from "../../../../src/game/mechanisms/roles/role_inspection/ports";
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
@@ -18,11 +19,7 @@ import {
 } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { getGargoyleState } from "../../../../src/game/mechanisms/roles/gargoyle/ports";
-import {
-  allNightAbilities,
-  findNightAbility,
-  roleInspectionPolicy,
-} from "../../../../src/game/mechanisms/roles/abilities";
+import { allNightAbilities, findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import {
   grantNightAbility,
   transferNightAbility,

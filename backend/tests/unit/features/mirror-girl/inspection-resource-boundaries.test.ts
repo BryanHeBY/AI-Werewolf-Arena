@@ -1,6 +1,7 @@
 /**
  * 单元测试验证镜女直接查验的身份、唯一目标知识与独立复制／赠予／转移资源。输入为原语言、变化点矩阵及局部角色／生命修改；报告、计数、隐私、关闭和已提交前缀重入拒绝为预期，不执行完整 NightPipeline 或 PhaseManager 周期。
  */
+import { roleInspectionPolicy } from "../../../../src/game/mechanisms/roles/role_inspection/ports";
 import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
@@ -17,12 +18,7 @@ import {
   type RoleComponent,
 } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import {
-  findNightAbility,
-  allNightAbilities,
-  projectNightAbility,
-  roleInspectionPolicy,
-} from "../../../../src/game/mechanisms/roles/abilities";
+import { findNightAbility, allNightAbilities, projectNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import {
   grantNightAbility,
   transferNightAbility,

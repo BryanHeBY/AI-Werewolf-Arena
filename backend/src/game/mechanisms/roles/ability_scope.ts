@@ -1,8 +1,8 @@
 /**
- * Captures an ability owner with original role, life, state, source and policy identities.
- * Inputs are the selected instance and phase-current callback; outputs are owner-current and
- * active-eligibility checks. Replacing a captured slot or policy invalidates the scope without
- * writing state or spending a use.
+ * 捕获原角色、生命、状态、来源及政策身份的夜能力 owner。输入为已选择实例与阶段当前性
+ * 回调；输出为 owner 当前性和活跃资格检查。替换原槽或政策仍撤销 scope，不写状态或付款。
+ * 查验政策身份字节由该状态族的唯一 codec 在原表达式位置生成，生命、id、来源及允许
+ * 首次死亡的版本判断仍只在此 owner，不因 payload 合法而重新授权。
  */
 import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
 
@@ -15,7 +15,9 @@ import type { EntityId } from "../../../core/domain/model";
 import { activeNightAbility, type NightAbilityReadView } from "./abilities";
 import { aliveLifeVersion } from "../../../core/domain/components/alive";
 
-/** A policy edit is an authorization edit, even if the resource object survives. */
+import { ROLE_INSPECTION_STATE_SLOT } from "./role_inspection/ports";
+
+/** 即使库存对象仍同一引用，政策编辑也会改变授权身份。 */
 function policyIdentity(ability: NightAbilityReadView): string {
   switch (ability.kind) {
     case "pair_check":
@@ -33,13 +35,13 @@ function policyIdentity(ability: NightAbilityReadView): string {
     case "guard":
       return JSON.stringify([ability.state.repeatPolicy]);
     case "role_check":
-      return JSON.stringify([ability.state.policy, ability.state.inspectionPolicy]);
+      return ROLE_INSPECTION_STATE_SLOT.checkpoint.policyIdentity(ability);
     case "dream":
       return JSON.stringify([ability.state.protectionPolicy]);
   }
 }
 
-/** Capture before requesting an action; eligibility is read-only and rechecked at commitment. */
+/** 请求动作前先捕获；只读资格仍在实际提交时重检，不因捕获而冻结演员。 */
 export function captureNightAbilityScope<K extends NightAbilityKind>(
   world: World,
   actorId: EntityId,

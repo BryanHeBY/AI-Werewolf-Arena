@@ -4,6 +4,7 @@
  * 默认 SDK、ACP 与生产装配使用 observation-fallback，不进入这里的特权选择。
  * 本模块不调用模型，不是独立预期 oracle；合法性与付款仍由引擎重检。
  */
+import { roleInspectionPolicy } from "../../../game/mechanisms/roles/role_inspection/ports";
 import { scholarMentorBonusTargets } from "../../../game/mechanisms/roles/scholar_mentor/night_frame";
 import { prohibitsLoversVote } from "../../../game/mechanisms/roles/cupid/relation";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -19,15 +20,7 @@ import {
   ToolCall,
 } from "../../../core/domain";
 import { World } from "../../../core/domain/world";
-import {
-  RoleCatalog,
-  getDefaultRoleCatalog,
-  wolfTeamPermissions,
-  allNightAbilities,
-  activeNightAbility,
-  roleInspectionPolicy,
-  ROLE_INSPECTION_POLICY_ROLES,
-} from "../../../game/mechanisms";
+import { RoleCatalog, getDefaultRoleCatalog, wolfTeamPermissions, allNightAbilities, activeNightAbility, ROLE_INSPECTION_POLICY_ROLES } from "../../../game/mechanisms";
 import { canBeExiled, canBeSheriff, canVote } from "../../../game/mechanisms/common/participation";
 
 /**

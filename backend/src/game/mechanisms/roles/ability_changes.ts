@@ -5,6 +5,7 @@
  * 保留原 clone、回调、World／getter 重检、安装／delete／push／发布顺序；不更换私有容器、
  * 恢复已付资源或用新 Store／通用事务遮蔽部分失败。
  */
+import { roleInspectionPolicy } from "./role_inspection/ports";
 import type {
   AbilitySource,
   NightAbilityKind,
@@ -19,17 +20,11 @@ import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import { Role, type EntityId, type GameEvent } from "../../../core/domain/model";
 import type { World } from "../../../core/domain/world";
-import {
-  allNightAbilities,
-  abilityStatus,
-  projectPairState,
-  copyAbilityData,
-  roleInspectionPolicy,
-  projectNightState,
-  type NightAbility,
-  type NightAbilityReadView,
-} from "./abilities";
+import { allNightAbilities, abilityStatus, projectPairState, copyAbilityData, projectNightState, type NightAbility, type NightAbilityReadView } from "./abilities";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
+
+import { commitPreparedNativeAbility } from "./prepared-native-install";
+import { ROLE_INSPECTION_STATE_SLOT } from "./role_inspection/ports";
 
 export interface AbilityGrant<K extends NightAbilityKind> {
   id: string;
@@ -403,41 +398,13 @@ export function installNativeAbility<K extends NightAbilityKind>(
   if (kind === "pair_check" && role.role !== Role.AwakenedSeer)
     throw Error("ability_pair_native_role_invalid");
   const ownedState = (
-    kind === "pair_check" ? copyAbilityData(projectPairState(state)) : copyAbilityData(state)
+    kind === "pair_check"
+      ? copyAbilityData(projectPairState(state))
+      : kind === "role_check"
+        ? ROLE_INSPECTION_STATE_SLOT.create(state as RoleInspectionState)
+        : copyAbilityData(state)
   ) as NightAbilityStates[K];
-  if (kind === "role_check") roleInspectionPolicy(ownedState as RoleInspectionState);
-  const stored = ((role.privateState as { abilities?: Record<string, NightAbility> }).abilities ??=
-    {}) as Record<string, NightAbility>;
-  const retired = ((role.privateState as { readonly retiredAbilityIds?: unknown })
-    .retiredAbilityIds ?? []) as string[];
-  const baseId = `native:${kind}`;
-  let id = baseId,
-    revision = 1;
-  while (retired.includes(id)) id = `${baseId}:${++revision}`;
-  const existing = stored[id];
-  if (existing) {
-    if (
-      existing.kind !== kind ||
-      existing.source.kind !== "native" ||
-      existing.source.role !== role.role
-    )
-      throw new Error("ability_native_binding_conflict");
-    existing.state = ownedState;
-  } else {
-    stored[id] = {
-      id,
-      kind,
-      state: ownedState,
-      source: { kind: "native", role: role.role },
-      sourceDisclosed: true,
-      startsOnDay: 1,
-      maxUses: null,
-      uses: 0,
-      lastUsedDay: null,
-      disabled: false,
-    } as NightAbility;
-  }
-  return ownedState as NightAbilityReadState<K>;
+  return commitPreparedNativeAbility(role, kind, ownedState);
 }
 
 /** 初始化／学习流程仍在原调用点决定起效日；这里只写原 startsOnDay，不推进业务时钟。 */

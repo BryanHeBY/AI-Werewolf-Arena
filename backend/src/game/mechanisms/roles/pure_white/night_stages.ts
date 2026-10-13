@@ -4,17 +4,18 @@
  * 三个状态读取与历史追加委托 RoleInspection 具体 writer，use 委托实例 owner，仍在原位置。
  * 不合并阵营／角色查验、失败语义或阶段顺序，不引入最终目标复检。
  */
+import { roleInspectionPolicy } from "../role_inspection/ports";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Phase, Role } from "../../../../core/domain/model";
 import { DeathCause } from "../../../../core/domain/deaths";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
-import { roleInspectionPolicy } from "../abilities";
+
 import { recordNightAbilityUse } from "../ability_changes";
 import { captureNightAbilityScope } from "../ability_scope";
 import { resolveInspection } from "../inspection";
-import { recordAbilityRoleInspection } from "../role_inspection/ports";
+import { ROLE_INSPECTION_STATE_SLOT } from "../role_inspection/ports";
 import { recordRoleInspectionNightCommit } from "../role_inspection/night_scope";
 import { pureWhiteInspectionTargets } from "./rules";
 
@@ -95,7 +96,7 @@ async function execute(ctx: NightStageContext, policy: "pure_white" | "wolf_witc
     const result = resolveInspection(ctx.world, targetId, "role", ctx.roleCatalog);
     if (!current()) continue;
     if (!result || !targetCurrent()) throw new Error("pure_white_inspection_target_stale");
-    recordAbilityRoleInspection(ability, targetId, day, result);
+    ROLE_INSPECTION_STATE_SLOT.allowedWrites.appendAbility(ability, targetId, day, result);
     recordNightAbilityUse(ability, day, true);
     ctx.events.push({
       timestamp: Date.now(),

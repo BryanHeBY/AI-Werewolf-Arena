@@ -35,6 +35,7 @@ import {
 } from "./player_state";
 export { projectRoleInspectionState, projectSeerState, projectWitchState } from "./player_state";
 
+
 export const ROLE_INSPECTION_POLICY_ROLES: Readonly<Record<RoleInspectionPolicy, Role>> = {
   gargoyle: Role.Gargoyle,
   psychic: Role.Psychic,
@@ -42,20 +43,7 @@ export const ROLE_INSPECTION_POLICY_ROLES: Readonly<Record<RoleInspectionPolicy,
   pure_white: Role.PureWhiteGirl,
   wolf_witch: Role.WolfWitch,
 };
-export function roleInspectionPolicy(state: RoleInspectionReadState): RoleInspectionPolicy {
-  if (state.inspectionPolicy !== undefined && !INSPECTION_POLICIES.includes(state.inspectionPolicy))
-    throw new Error("role_inspection_configuration_policy_invalid");
-  const policy = state.policy === undefined ? "gargoyle" : state.policy;
-  if (
-    policy !== "gargoyle" &&
-    policy !== "psychic" &&
-    policy !== "mirror" &&
-    policy !== "pure_white" &&
-    policy !== "wolf_witch"
-  )
-    throw new Error("role_inspection_policy_invalid");
-  return policy;
-}
+
 function projectShelterState(value: unknown) {
   const state = readShelterState(value);
   if (!state) throw new Error("radiant_shelter_state_invalid");
@@ -184,7 +172,7 @@ export function copyAbilityData<T>(value: T): T {
   return result;
 }
 
-/** The only resource owner is this player's stored instance; no parallel role state. */
+/** 资源只归该玩家实际库存中的实例，不另建并行角色状态。 */
 export function allNightAbilities(role: RoleComponent | undefined): NightAbilityReadView[] {
   const stored = (role as { readonly privateState: { readonly abilities?: unknown } } | undefined)
     ?.privateState.abilities as Readonly<Record<string, NightAbilityReadView>> | undefined;
@@ -229,7 +217,7 @@ export function findNightAbility<K extends NightAbilityKind>(
     (ability): ability is NightAbilityReadView<K> => ability.kind === kind,
   );
   if (id !== undefined) return candidates.find((ability) => ability.id === id);
-  // Legacy callers select the native instance, or one unambiguous granted one.
+  // 原调用者优先选原生实例；仅有一份明确受赠实例时才采用该实例。
   return (
     candidates.find((ability) => ability.source.kind === "native") ??
     (candidates.length === 1 ? candidates[0] : undefined)
@@ -291,7 +279,7 @@ export function projectNightAbility(
   }
 }
 
-/** Read the original retired-ID list without granting inventory write rights. */
+/** 读取原退休 ID 列表，不授予库存写权限。 */
 export function retiredNightAbilityIds(role: RoleComponent): readonly string[] {
   return ((role.privateState as { readonly retiredAbilityIds?: unknown }).retiredAbilityIds ??
     []) as readonly string[];

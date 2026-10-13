@@ -4,14 +4,15 @@
  * 共享资格查询先行，历史委托具体状态 owner，use metadata 委托实例 owner。
  * 各族失败、目标、学习、作用资格和事实发布顺序保持，不合并其不同规则。
  */
+import { roleInspectionPolicy } from "./state-slot";
 import type { RoleInspectionPolicy } from "@ai-werewolf-arena/game-contract";
 
-import { recordRoleInspection } from "./state";
+import { ROLE_INSPECTION_STATE_SLOT } from "./state-slot";
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { Phase, Role } from "../../../../core/domain/model";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
-import { roleInspectionPolicy, type NightAbilityReadView } from "../abilities";
+import { type NightAbilityReadView } from "../abilities";
 import { recordNightAbilityUse } from "../ability_changes";
 import { getGargoyleState } from "../gargoyle/ports";
 import { resolveInspection } from "../inspection";
@@ -173,7 +174,7 @@ async function executeInspections(
         !roleInspectionTargets(ctx.world, actorId, state).includes(targetId)
       )
         continue;
-      recordRoleInspection(state, targetId, day, result);
+      ROLE_INSPECTION_STATE_SLOT.allowedWrites.appendState(state, targetId, day, result);
       recordNightAbilityUse(ability, day, true);
       ctx.events.push({
         timestamp: Date.now(),
