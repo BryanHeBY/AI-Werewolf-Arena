@@ -1,24 +1,26 @@
 /**
- * Real SDK/MCP integration verify equal business receipts and current permission checks on both wires.
- * Input: Synthetic localhost model HTTP, stdio MCP, original World fixtures and explicit invalid/corrected submissions.
- * Output and independent oracle: Literal accepted/rejected receipts, open-turn correction, unchanged resource snapshots and actor-scoped prompt knowledge.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Integration tests for action reception parity. Inputs are original receipt/permission matrices and
+ * synthetic SDK callbacks or local HTTP/MCP endpoints. Original literal receipts, reference/getter/error
+ * traces, facts and expected state remain the oracle. Actual Bun HTTP listeners plus spawned stdio MCP
+ * exercise business receipt parity; one original case writes temporary recorder output. Original finally
+ * closes transports and servers. Actual public filesystem or synthetic local transport boundaries are
+ * exercised; private config/auth and paid model services are excluded.
  */
-import { PotionType } from "../../../src/core";
+import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { text } from "@ai-werewolf-arena/game-text";
 import path from "node:path";
 import { readFile } from "node:fs/promises";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
-import { WerewolfMcpControlServer } from "../../../src/ai/integrations/acp/werewolf_mcp_control";
-import { AiSdkClient } from "../../../src/ai/integrations/llm/ai_sdk_client";
-import { SdkGameToolLoop } from "../../../src/ai/agents/llm/sdk_game_tool_loop";
-import { PlayerPromptSession } from "../../../src/ai/agents/llm/player_prompt_session";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-import { LlmObserver } from "../../../src/ai/agents/player/player_observer";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
+import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
+import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
+import { SdkGameToolLoop } from "../../../../src/ai/agents/llm/sdk_game_tool_loop";
+import { PlayerPromptSession } from "../../../../src/ai/agents/llm/player_prompt_session";
+import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import { LlmObserver } from "../../../../src/ai/agents/player/player_observer";
 import {
   getDefaultToolCallRepairRegistry,
   getDefaultToolSpecRegistry,
@@ -26,8 +28,8 @@ import {
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../src/game/mechanisms";
-import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
+} from "../../../../src/game/mechanisms";
+import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
 import {
   COMPONENT,
   Camp,
@@ -36,17 +38,13 @@ import {
   Role,
   type ActionRequest,
   type RoleComponent,
-} from "../../../src/core";
-import { getHunterState, getWitchState } from "../../../src/game/mechanisms/roles/private_state";
-import type {
-  ChatModelClient,
-  ToolLoopCallbacks,
-  ToolLoopStepTrace,
-} from "../../../src/ai/integrations/llm/transport";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { createTestTempDirectory } from "../../support/drivers/temp-directories";
+} from "../../../../src/core";
+import { getHunterState, getWitchState } from "../../../../src/game/mechanisms/roles/private_state";
+import type { ToolLoopStepTrace } from "../../../../src/ai/integrations/llm/transport";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { SessionRecordManager } from "../../../../src/recording/session_recorder";
+import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
+import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 
 const roles = [
   Role.Wolf,
@@ -62,6 +60,7 @@ const roles = [
   Role.Villager,
   Role.Villager,
 ];
+
 const request: ActionRequest = {
   actorId: 6,
   phase: Phase.Night,
@@ -74,6 +73,7 @@ const request: ActionRequest = {
     turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 },
   },
 };
+
 function sdkLoop(
   world: ReturnType<typeof bootstrapGame>["world"],
   onTrace?: (trace: ToolLoopStepTrace[]) => void,
@@ -94,6 +94,7 @@ function sdkLoop(
     observer,
   );
 }
+
 const submissions = [
   {
     turn_id: "t99",
@@ -132,12 +133,14 @@ const submissions = [
     arguments: { target_id: 9, potion_type: PotionType.Poison },
   },
 ];
+
 const staleReport = {
   turn_id: "t99",
   category: "state",
   severity: "high",
   message: "synthetic stale report",
 };
+
 const expectedCodes = [
   "turn_id_mismatch",
   "turn_id_mismatch",
@@ -288,60 +291,6 @@ for (const locale of ["zh-CN", "en"] as const)
     }
   });
 
-test("SDK owns its accepted action, rejects callbacks after completion/timeout, and ignores a fabricated transport finalAction", async () => {
-  const game = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale: "en" });
-  let callback!: ToolLoopCallbacks<import("../../../src/core").ToolCall>["onToolCall"];
-  const submitted = { id: "synthetic", name: "submit_action", rawArgs: "{}", args: submissions[6] };
-  const forgedClient = {
-    chat: async () => "",
-    async runToolLoop<T>(_messages: unknown, _tools: unknown, callbacks: any) {
-      callback = callbacks.onToolCall;
-      return {
-        finalAction: {
-          name: "use_potion",
-          args: { target_id: 9, potion_type: PotionType.Poison },
-        } as T,
-        assistantText: "",
-      };
-    },
-  } as ChatModelClient;
-  expect((await sdkLoop(game.world).run(forgedClient, request, [], 1000, "t1")).action).toBeNull();
-  expect((await callback(submitted)).toolResult).toMatchObject({
-    ok: false,
-    error: "turn_not_open_or_session_invalid",
-  });
-  const hanging = {
-    chat: async () => "",
-    async runToolLoop<T>(_messages: unknown, _tools: unknown, callbacks: any) {
-      callback = callbacks.onToolCall;
-      return new Promise<never>(() => {});
-    },
-  } as ChatModelClient;
-  await expect(sdkLoop(game.world).run(hanging, request, [], 30, "t1")).rejects.toThrow(
-    "llm_request_timeout_30ms",
-  );
-  expect((await callback(submitted)).toolResult).toMatchObject({
-    ok: false,
-    error: "turn_not_open_or_session_invalid",
-  });
-  expect(
-    (
-      await callback({
-        id: "late-report",
-        name: "report_bug",
-        rawArgs: "{}",
-        args: {
-          turn_id: "t1",
-          category: "state",
-          severity: "high",
-          message: "late synthetic report",
-        },
-      })
-    ).toolResult,
-  ).toMatchObject({ ok: false, error: "turn_not_open_or_session_invalid" });
-  expect(getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!.poison).toBe(1);
-});
-
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: real SDK and MCP enforce wolf chat/knife permissions and phases before accepting a correction`, async () => {
     const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
@@ -484,11 +433,11 @@ for (const locale of ["zh-CN", "en"] as const)
 for (const locale of ["zh-CN", "en"] as const)
   for (const action of ["speak_to_wolves", "kill_vote"] as const)
     test(`${locale}: SDK and ACP providers use the injected role catalog for prompts, reception and local fallback (${action})`, async () => {
-      const { RoleCatalog } = await import("../../../src/game/mechanisms/roles/catalog");
-      const { LlmActionProvider } = await import("../../../src/ai/agents/llm/llm_action_provider");
-      const { AcpActionProvider } = await import("../../../src/ai/agents/acp/acp_action_provider");
+      const { RoleCatalog } = await import("../../../../src/game/mechanisms/roles/catalog");
+      const { LlmActionProvider } = await import("../../../../src/ai/agents/llm/llm_action_provider");
+      const { AcpActionProvider } = await import("../../../../src/ai/agents/acp/acp_action_provider");
       const { BaselineBotActionProvider } =
-        await import("../../../src/ai/agents/providers/action_providers");
+        await import("../../../../src/ai/agents/providers/action_providers");
       const catalog = new RoleCatalog(
         getDefaultRoleCatalog()
           .all()
@@ -676,9 +625,9 @@ for (const locale of ["zh-CN", "en"] as const)
 
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: reused SDK and ACP sessions receive updated authorized teammate knowledge every turn`, async () => {
-    const { RoleCatalog } = await import("../../../src/game/mechanisms/roles/catalog");
-    const { LlmActionProvider } = await import("../../../src/ai/agents/llm/llm_action_provider");
-    const { AcpActionProvider } = await import("../../../src/ai/agents/acp/acp_action_provider");
+    const { RoleCatalog } = await import("../../../../src/game/mechanisms/roles/catalog");
+    const { LlmActionProvider } = await import("../../../../src/ai/agents/llm/llm_action_provider");
+    const { AcpActionProvider } = await import("../../../../src/ai/agents/acp/acp_action_provider");
     const catalog = new RoleCatalog(
       getDefaultRoleCatalog()
         .all()
@@ -1240,7 +1189,7 @@ for (const locale of ["zh-CN", "en"] as const)
     "candidate_vote",
   ] as const)
     test(`${locale}: actual SDK HTTP and MCP share public participation refusals (${scenario})`, async () => {
-      const { EventRegistry } = await import("../../../src/game/engine/event_registry");
+      const { EventRegistry } = await import("../../../../src/game/engine/event_registry");
       const sdk = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale }),
         acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
       for (const game of [sdk, acp]) new EventRegistry().onVotedOut(game.world, 8, []);

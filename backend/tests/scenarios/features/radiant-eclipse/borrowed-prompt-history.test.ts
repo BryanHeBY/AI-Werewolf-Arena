@@ -1,17 +1,18 @@
 /**
- * Tests verify Radiant source-history prompts and equivalent SDK/ACP receipt errors.
- * Original locale/ability/history matrices and synthetic local turn controls supply
- * inputs; literal prompt/error/state expectations remain the oracle. Deliberate
- * private-slot fixtures retain their original getters and explicit test-only writes,
- * without changing transport decisions or production observation permissions.
+ * Scenario tests for radiant prompt history. Inputs are original locale/borrowed-kind matrix and shared
+ * SDK/ACP in-memory turn receivers. Original literal receipts, reference/getter/error traces, facts and
+ * expected state remain the oracle. Helper run executes full original NightPipeline with ActionTurn/ACP
+ * registry and player feeds. These are in-memory control adapters, not HTTP/stdio processes. Engine
+ * sequencing remains real and models remain controlled providers; production output is not a newly
+ * generated golden.
  */
-import { ActionReception, ActionTurn } from "../../../src/ai/agents/player/action_reception";
-import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
-import { PotionType } from "../../../src/core";
+import { ActionReception, ActionTurn } from "../../../../src/ai/agents/player/action_reception";
+import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
+import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { parseBoardDefinition } from "../../../../src/runtime/config/board_definition";
 import {
   Role,
   Phase,
@@ -20,30 +21,33 @@ import {
   type ActionRequest,
   type RoleComponent,
   type GameEvent,
-} from "../../../src/core";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
+} from "../../../../src/core";
+import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import {
   findNightAbility,
   projectNightAbility,
-} from "../../../src/game/mechanisms/roles/abilities";
+} from "../../../../src/game/mechanisms/roles/abilities";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultRoleCatalog,
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
-} from "../../../src/game/mechanisms";
-import { buildAgentVisibleEvent } from "../../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/game/mechanisms";
+import { buildAgentVisibleEvent } from "../../../../src/game/engine/agent_visible_event_feed";
+
 const raw = JSON.parse(
   await readFile(
-    new URL("../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json", import.meta.url),
+    new URL("../../../../../configs.example/boards/awa_radiant_eclipse_12_v1.json", import.meta.url),
     "utf8",
   ),
 );
+
 const board = parseBoardDefinition(raw).config;
+
 const roles = [
   Role.EclipseMaid,
   Role.RadiantCount,
@@ -58,12 +62,14 @@ const roles = [
   Role.Wolf,
   Role.Wolf,
 ];
+
 const cases = [
   { kind: "shelter", owner: 2, stage: "radiant_shelter", tool: "cast_shelter" },
   { kind: "seer_check", owner: 3, stage: "seer", tool: "check_identity" },
   { kind: "potion", owner: 4, stage: "witch", tool: "use_potion" },
   { kind: "dream", owner: 5, stage: "dreamer", tool: "dream" },
 ] as const;
+
 async function run(locale: "zh-CN" | "en", spec: (typeof cases)[number], variant: 0 | 1) {
   const { world } = bootstrapGame(board, {
     locale,
@@ -255,6 +261,7 @@ async function run(locale: "zh-CN" | "en", spec: (typeof cases)[number], variant
   ).toBe(false);
   return { seen, after, originalBefore };
 }
+
 for (const locale of ["zh-CN", "en"] as const)
   for (const spec of cases)
     test(`${locale} ${spec.kind}: actual policy plus SDK ActionTurn and ACP registry errors remain equal across source history variants`, async () => {

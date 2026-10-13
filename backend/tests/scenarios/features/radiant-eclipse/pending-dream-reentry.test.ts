@@ -1,39 +1,33 @@
 /**
- * Tests verify rejected Radiant pipeline reentry retains the first borrowed Dream lease.
- * Inputs are original component fixtures, held replies and pending private slots;
- * literal request/effect/lease observations are the oracle. Test-only container
- * writes preserve the same references and cancellation prefix, not a fresh state
- * command or a regenerated expected result.
+ * Scenario tests for radiant pending reentry. Inputs are one original pending borrowed Dream decision and a
+ * denied nested pipeline entry. Original literal receipts, reference/getter/error traces, facts and
+ * expected state remain the oracle. Outer complete NightPipeline remains running while a nested entry is
+ * rejected; borrowed Dream resource and exact cleanup order are causal scope behavior. Engine sequencing
+ * remains real and models remain controlled providers; production output is not a newly generated golden.
  */
 import { expect, test } from "bun:test";
-import { World } from "../../../src/core/domain/world";
-import { Role, Camp, WitchSelfHealRule } from "../../../src/core/domain/identity";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createRoleComponent, type RoleComponent } from "../../../src/core/domain/components/role";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { createCampComponent } from "../../../src/core/domain/components/camp";
-import { createVictoryComponent } from "../../../src/core/domain/components/victory";
-import {
-  installNativeAbility,
-  findNightAbility,
-  abilityStatus,
-  type NightAbility,
-} from "../../../src/game/mechanisms/roles/abilities";
+import { World } from "../../../../src/core/domain/world";
+import { Role, Camp, WitchSelfHealRule } from "../../../../src/core/domain/identity";
+import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { createRoleComponent, type RoleComponent } from "../../../../src/core/domain/components/role";
+import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+import { createCampComponent } from "../../../../src/core/domain/components/camp";
+import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
+import { installNativeAbility, findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import {
   createEclipseState,
   createShelterState,
-} from "../../../src/game/mechanisms/roles/radiant_eclipse/state";
-import {
-  installRadiantEclipseBoard,
-  beginRadiantNight,
-  openEclipseChoice,
-  commitEclipseChoice,
-  captureRadiantTurn,
-  closeRadiantNight,
-  commitRadiantShelter,
-  sealRadiantNightEffects,
-} from "../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
-import type { GameEvent } from "../../../src/core/domain/events";
+} from "../../../../src/game/mechanisms/roles/radiant_eclipse/state";
+import { installRadiantEclipseBoard } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
+import type { GameEvent } from "../../../../src/core/domain/events";
+import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { ECLIPSE_SWALLOW_STAGE } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_stages";
+import { DREAMER_NIGHT_STAGE } from "../../../../src/game/mechanisms/roles/dreamer/night_stages";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import type { ActionProvider, BoardConfig } from "../../../../src/core/domain/model";
+
 function fixture() {
   const world = new World();
   const roles = [
@@ -102,18 +96,12 @@ function fixture() {
   return { world, role, events };
 }
 
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { NightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
-import { ECLIPSE_SWALLOW_STAGE } from "../../../src/game/mechanisms/roles/radiant_eclipse/night_stages";
-import { DREAMER_NIGHT_STAGE } from "../../../src/game/mechanisms/roles/dreamer/night_stages";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
-import type { ActionProvider, BoardConfig } from "../../../src/core/domain/model";
 class Stages extends NightStageRegistry {
   override getStages() {
     return [ECLIPSE_SWALLOW_STAGE, DREAMER_NIGHT_STAGE];
   }
 }
+
 const config = {
   boardSize: 12,
   enableSheriff: false,
@@ -121,6 +109,7 @@ const config = {
   roleSetups: [],
   radiantEclipse: { policy: "awa_radiant_eclipse_v1" },
 } as BoardConfig;
+
 test("rejected actual pipeline reentry must not abort the original pending borrowed Dream lease", async () => {
   const f = fixture(),
     pipeline = new NightPipeline({

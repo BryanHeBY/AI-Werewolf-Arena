@@ -1,39 +1,35 @@
 /**
- * Tests verify paid borrowed Dream facts survive close/death while stale effects retire.
- * Inputs are original Radiant component fixtures, caster-death variants and later
- * stage failure; literal facts, stock and effect-validity assertions are the oracle.
- * Explicit test-only private slots keep the original authority aliases and inputs;
- * neither paid resource consumption nor failed-prefix expectations are regenerated.
+ * Scenario tests for radiant paid dream. Inputs are original swallowed Dream sources, paid stock and
+ * controlled death/failure stages. Original literal receipts, reference/getter/error traces, facts and
+ * expected state remain the oracle. Actual NightPipeline plus original captured DreamFrame verify
+ * caster-life and later-stage failure effects; stages are not an isolated reader. Engine sequencing remains
+ * real and models remain controlled providers; production output is not a newly generated golden.
  */
 import { expect, test } from "bun:test";
-import { World } from "../../../src/core/domain/world";
-import { Role, Camp, WitchSelfHealRule } from "../../../src/core/domain/identity";
-import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createRoleComponent, type RoleComponent } from "../../../src/core/domain/components/role";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { createCampComponent } from "../../../src/core/domain/components/camp";
-import { createVictoryComponent } from "../../../src/core/domain/components/victory";
-import {
-  installNativeAbility,
-  findNightAbility,
-  abilityStatus,
-  type NightAbility,
-} from "../../../src/game/mechanisms/roles/abilities";
+import { World } from "../../../../src/core/domain/world";
+import { Role, Camp, WitchSelfHealRule } from "../../../../src/core/domain/identity";
+import { COMPONENT } from "../../../../src/core/domain/components/names";
+import { createRoleComponent, type RoleComponent } from "../../../../src/core/domain/components/role";
+import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+import { createCampComponent } from "../../../../src/core/domain/components/camp";
+import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
+import { installNativeAbility, findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import {
   createEclipseState,
   createShelterState,
-} from "../../../src/game/mechanisms/roles/radiant_eclipse/state";
-import {
-  installRadiantEclipseBoard,
-  beginRadiantNight,
-  openEclipseChoice,
-  commitEclipseChoice,
-  captureRadiantTurn,
-  closeRadiantNight,
-  commitRadiantShelter,
-  sealRadiantNightEffects,
-} from "../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
-import type { GameEvent } from "../../../src/core/domain/events";
+} from "../../../../src/game/mechanisms/roles/radiant_eclipse/state";
+import { installRadiantEclipseBoard } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_frame";
+import type { GameEvent } from "../../../../src/core/domain/events";
+import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { ECLIPSE_SWALLOW_STAGE } from "../../../../src/game/mechanisms/roles/radiant_eclipse/night_stages";
+import { DREAMER_NIGHT_STAGE } from "../../../../src/game/mechanisms/roles/dreamer/night_stages";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import type { ActionProvider, BoardConfig } from "../../../../src/core/domain/model";
+import { DreamNightFrame } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
+import { StatusMark, DeathCause } from "../../../../src/core/domain/model";
+
 function fixture() {
   const world = new World();
   const roles = [
@@ -102,18 +98,12 @@ function fixture() {
   return { world, role, events };
 }
 
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { NightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
-import { ECLIPSE_SWALLOW_STAGE } from "../../../src/game/mechanisms/roles/radiant_eclipse/night_stages";
-import { DREAMER_NIGHT_STAGE } from "../../../src/game/mechanisms/roles/dreamer/night_stages";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
-import type { ActionProvider, BoardConfig } from "../../../src/core/domain/model";
 class Stages extends NightStageRegistry {
   override getStages() {
     return [ECLIPSE_SWALLOW_STAGE, DREAMER_NIGHT_STAGE];
   }
 }
+
 const config = {
   boardSize: 12,
   enableSheriff: false,
@@ -122,8 +112,6 @@ const config = {
   radiantEclipse: { policy: "awa_radiant_eclipse_v1" },
 } as BoardConfig;
 
-import { DreamNightFrame } from "../../../src/game/mechanisms/roles/dreamer/night_frame";
-import { StatusMark, DeathCause } from "../../../src/core/domain/model";
 const provider: ActionProvider = {
   getAction: async (request) => {
     if (request.context.stage === "eclipse_swallow")
@@ -132,6 +120,7 @@ const provider: ActionProvider = {
     throw new Error("unexpected_request");
   },
 };
+
 for (const dead of [1, 5])
   test(`paid borrowed Dream after committed close follows actual caster ${dead}`, async () => {
     const f = fixture();
@@ -183,6 +172,7 @@ for (const dead of [1, 5])
       f.events.filter((e) => e.type === "eclipse_native_restored").map((e) => e.payload.playerId),
     ).toEqual([5]);
   });
+
 test("actual later-stage failure retains paid Dream fact and stock but revokes handed-out effect", async () => {
   const f = fixture();
   let links: any[] = [];

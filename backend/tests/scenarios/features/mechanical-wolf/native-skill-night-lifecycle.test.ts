@@ -1,14 +1,15 @@
 /**
- * Mechanism integration tests for Mechanical Wolf learning, live modes and source-bound skill/gun/extra-knife resources.
- * Inputs are literal rosters, actions and targeted owner/life edits; outputs are
- * checked against the original explicit resource, event and rejection assertions.
- * Controlled contexts bind read-only actor queries at the original World read
- * position. No billed agent, fixture rewrite or production-generated oracle runs.
+ * Scenario tests for mechanical native runtime. Inputs are original learning/mode/stock and original-body
+ * revocation inputs. Original literal receipts, reference/getter/error traces, facts and expected state
+ * remain the oracle. Every callback completes at least one actual PM night (including prerequisites before
+ * later direct-stage validation); callbacks stay intact rather than peeling assertions into unit tests.
+ * Engine sequencing remains real and models remain controlled providers; production output is not a newly
+ * generated golden.
  */
-import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
-import { PotionType } from "../../../src/core";
+import { bindNightAbilityActorQuery } from "../../../../src/game/mechanisms/roles/night-ability-actors";
+import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   COMPONENT,
   Camp,
@@ -19,33 +20,29 @@ import {
   type RoleComponent,
   type ToolCall,
   type ActionRequest,
-} from "../../../src/core";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../../src/core";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import {
   getMechanicalState,
   projectMechanicalState,
-} from "../../../src/game/mechanisms/roles/mechanical_wolf/state";
-import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import { resolveInspection } from "../../../src/game/mechanisms/roles/inspection";
-import { canMechanicalKnife } from "../../../src/game/mechanisms/roles/mechanical_wolf/inheritance";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { NightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
-import { ActionReception } from "../../../src/ai/agents/player/action_reception";
-import { MECHANICAL_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/mechanical_wolf/night_stages";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
-import { DeathCause } from "../../../src/core/domain/deaths";
-import { mechanicalDeathHook } from "../../../src/game/mechanisms/roles/mechanical_wolf/death_hook";
-import {
-  advanceMechanicalNight,
-  learnMechanicalRole,
-} from "../../../src/game/mechanisms/roles/mechanical_wolf/state";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/ability_changes";
+} from "../../../../src/game/mechanisms/roles/mechanical_wolf/state";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
+import { canMechanicalKnife } from "../../../../src/game/mechanisms/roles/mechanical_wolf/inheritance";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
+import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { MECHANICAL_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/mechanical_wolf/night_stages";
+import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
+import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
+import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+import { StatusMarksComponent } from "../../../../src/core/domain/components/status_marks";
+import { DeathCause } from "../../../../src/core/domain/deaths";
+import { grantNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
 
 const deck = [Role.MechanicalWolf, Role.Wolf, Role.Psychic, Role.Witch, Role.Guard, Role.Villager];
+
 function board(roles = deck): BoardConfig {
   return {
     ...sixPlayerMvpConfig,
@@ -58,13 +55,16 @@ function board(roles = deck): BoardConfig {
     selfDestruct: { enabledWindows: [] },
   };
 }
+
 function fixture(locale: "zh-CN" | "en" = "zh-CN", roles = deck) {
   const config = board(roles),
     game = bootstrapGame(config, { fixedRoles: roles, locale });
   const role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
   return { ...game, config, role, state: getMechanicalState(role)! };
 }
+
 type Game = ReturnType<typeof fixture>;
+
 function play(
   game: Game,
   options: {
@@ -126,6 +126,58 @@ function play(
     },
   };
 }
+
+function stageContext(
+  game: Game,
+  day: number,
+  getAction: NightStageContext["actionProvider"]["getAction"],
+  isCurrent = () => true,
+): NightStageContext {
+  const events = [] as ReturnType<Game["phaseManager"]["getEvents"]>,
+    factory = new GameActionRequestFactory(game.world, events, day);
+  return {
+    world: game.world,
+    get nightActors() {
+      return bindNightAbilityActorQuery(this.world);
+    },
+    events,
+    currentDay: () => day,
+    isCurrent,
+    previousExile: null,
+    roleCatalog: getDefaultRoleCatalog(),
+    toolGateway: new ToolGateway(),
+    actionProvider: { getAction },
+    makeRequest: (actorId, allowedTools, extras) =>
+      factory.create({
+        actorId,
+        allowedTools,
+        phase: Phase.Night,
+        stage: extras.stage,
+        requiresAction: extras.requiresAction ?? true,
+        summary: { key: "request.summary.night_action" },
+        context: extras,
+      }),
+    getAliveByRole: (role) =>
+      game.world
+        .getAliveEntityIds()
+        .filter((id) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === role),
+    ensureMarks: (id) => game.world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!,
+    pickMajorityTarget: () => null,
+    shuffleWolves: (ids) => ids,
+    state: {
+      wolfChatOrder: [],
+      endedWolves: new Set(),
+      wolfVotes: {},
+      wolfTarget: null,
+      seerChecks: [],
+      dreamLinks: [],
+      poisonClaims: [],
+      mechanicalEffects: { shields: [], attacks: [], failures: [] },
+    },
+  };
+}
+
+const mechanicalStage = (id: string) => MECHANICAL_NIGHT_STAGES.find((s) => s.id === id)!;
 
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: independent true-Wolf identity and strict stages with next-night learning`, async () => {
@@ -345,57 +397,6 @@ test("mechanical skills cannot preflight leak unsupported targets, mutate invent
   expect(game.state).toEqual(before);
 });
 
-function stageContext(
-  game: Game,
-  day: number,
-  getAction: NightStageContext["actionProvider"]["getAction"],
-  isCurrent = () => true,
-): NightStageContext {
-  const events = [] as ReturnType<Game["phaseManager"]["getEvents"]>,
-    factory = new GameActionRequestFactory(game.world, events, day);
-  return {
-    world: game.world,
-    get nightActors() {
-      return bindNightAbilityActorQuery(this.world);
-    },
-    events,
-    currentDay: () => day,
-    isCurrent,
-    previousExile: null,
-    roleCatalog: getDefaultRoleCatalog(),
-    toolGateway: new ToolGateway(),
-    actionProvider: { getAction },
-    makeRequest: (actorId, allowedTools, extras) =>
-      factory.create({
-        actorId,
-        allowedTools,
-        phase: Phase.Night,
-        stage: extras.stage,
-        requiresAction: extras.requiresAction ?? true,
-        summary: { key: "request.summary.night_action" },
-        context: extras,
-      }),
-    getAliveByRole: (role) =>
-      game.world
-        .getAliveEntityIds()
-        .filter((id) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === role),
-    ensureMarks: (id) => game.world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!,
-    pickMajorityTarget: () => null,
-    shuffleWolves: (ids) => ids,
-    state: {
-      wolfChatOrder: [],
-      endedWolves: new Set(),
-      wolfVotes: {},
-      wolfTarget: null,
-      seerChecks: [],
-      dreamLinks: [],
-      poisonClaims: [],
-      mechanicalEffects: { shields: [], attacks: [], failures: [] },
-    },
-  };
-}
-const mechanicalStage = (id: string) => MECHANICAL_NIGHT_STAGES.find((s) => s.id === id)!;
-
 for (const forge of ["serialized", "revive", "switch_mode"] as const)
   test(`${forge}: active skill requires the original live accepted mode authority`, async () => {
     const game = fixture();
@@ -571,55 +572,6 @@ test("player state and prompt discard injected God causal fields at all native r
     expect(prompt).not.toContain(value);
   }
 });
-
-for (const revoke of ["camp", "private_state", "owner_state", "learning"] as const)
-  test(`${revoke}: an armed mechanical gun stays bound to its original owner and learning through death selection`, async () => {
-    const roles = [
-        Role.MechanicalWolf,
-        Role.Wolf,
-        Role.Hunter,
-        Role.Witch,
-        Role.Guard,
-        Role.Villager,
-      ],
-      game = fixture("en", roles);
-    learnMechanicalRole(game.state, 3, Role.Hunter, 1);
-    advanceMechanicalNight(game.state, 2);
-    game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive = false;
-    const gun = game.state.learned!.skill,
-      events = [] as ReturnType<Game["phaseManager"]["getEvents"]>;
-    const permit = game.world.openDeathAction(1, "shoot", Phase.Voting, 2);
-    try {
-      const result = await mechanicalDeathHook(
-        game.world,
-        [1],
-        { 1: [DeathCause.Exile] },
-        async () => {
-          if (revoke === "camp") game.role.camp = Camp.Good;
-          if (revoke === "private_state")
-            (game.role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
-              ...game.role.privateState,
-            };
-          if (revoke === "owner_state")
-            (game.role.privateState as Record<string, unknown>).mechanical_wolf = { ...game.state };
-          if (revoke === "learning")
-            (
-              game.state as {
-                learned: import("@ai-werewolf-arena/game-contract").MechanicalReadLearning | null;
-              }
-            ).learned = { ...game.state.learned! };
-          return { kind: "shot", targetId: 4, deathActionId: permit.id };
-        },
-        events,
-      );
-      expect(result).toEqual({ extraDeaths: [], extraDeathSources: {} });
-      expect(events).toEqual([]);
-      expect(gun).toEqual({ kind: "hunter", canShoot: true, armed: true });
-    } finally {
-      permit.close();
-    }
-    expect(game.world.activeDeathActionCount).toBe(0);
-  });
 
 for (const sameBatch of [true, false])
   test(`${sameBatch}: actual death owner distinguishes a same-proposal death from an inherited prefix before a later Hunter shot`, async () => {

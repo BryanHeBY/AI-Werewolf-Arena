@@ -6,7 +6,7 @@
 | ---------------------- | ------ | ------------------------------------------------------------------------------------ |
 | P0 基线与契约          | 已完成 | C01 `144f48b` 已提交；C02 `aba9347`；C03 `b56d282`；七样例、89行静态台账与三方向审查 |
 | P1 依赖与共享契约      | 已完成 | C04–C09 数据/支持职责与 public consumer 闭合；零基础包循环，兼容桥按 C44 退出        |
-| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；当前映射576来源、656目标、7548旧IDs；余mixed tests/support继续 |
+| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；当前映射583来源、668目标、7705旧IDs；余mixed tests/support继续 |
 | P3 状态与请求授权      | 进行中 | C16生产读取/C18传播/F02/C19完成；容器读取边界及实际写者闭合，能力查询/schema继续      |
 | P4 规则计划与生命周期  | 进行中 | C21阶段成员快照与opaque lazy完成；完整RulePlan/C22–C24继续                           |
 | P5 效果、死亡与判胜    | 待执行 | C25–C29                                                                              |
@@ -375,3 +375,5 @@
 - C23 Demon/Wedding普通night交接：Root6source+1newunit实际7scope；Demon acquired仅begin成功后、Wedding owned失败仍cleanup，原late Wedding→Demon transfer和manager4无guard freshWorld close位保持，captured fact原getter/Date/spread/array序同。Root两engine完整registered-edit复核/两个openingbody token与两独立actualGit/7SHA/17原binding同refs/16recording-sealed-controls原bytes/隔离8cold入口全green。三Demon新case原许可绑定后pass、三Wedding相关最终3/0/32；新fixture初request/ownedconfig/chatdelivery错误保留，补真实原流程不改prodguard。exactc65+7candidate finite90120actual0、最终7scope7478actual0/新债0旧47，首typed/head/inverseharness红保留只具体修。无已付退款/新closeguard/通用cleanup、schema/statepolicy/阶段推进改动，不重fullgame/tests/discovery。
 
 - C17 普通14族状态闭合：24原数据声明与20有限读取别名迁公共契约，14getter及真实捕获／策略／DeathShot读者只读，8具体owner命令保持原引用、访问顺序和已付失败前缀。55路径／23原test完整程序核对，源64 ESNext+CJS及命令body、声明AST绿；新4/0/15，源码51571与完整source/tests22972实际closed0，browser类型0、55scope80862实际0且head/新旧依赖失败0。原损坏fixture仅45具体字段／history适配加1安装DTO断言和1expect variance，输入/断言/运行保持。两独立方向最终SHA收口，不重全局门禁；schema/codec、自定义profile、opaque core与旧入口仍待完整迁移。详见ordinary-role-state-boundaries.md。
+
+- C12 final-mixed agents-and-native-night-capabilities：7原文件→12目标/157旧IDs。完整17→37/564IDs/239原注册由Root actualGit程序核对与独立实际边界/setup/loadset审闭合；234callback和174helper原raw，其余仅精确路径。固定23511的869公开输入+37candidate finite96667实际closed0，首typeRoots红保留无源改。83unique omitted0added，Hidden同singleton暖读取1→2明确不称完全loadorder/evalcount同；原输入/断言/fixture保持。不重runtime/discovery/fullgate，C13 support继续。详见final-mixed-test-migration.md。
