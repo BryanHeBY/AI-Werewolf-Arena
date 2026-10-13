@@ -25,7 +25,7 @@ import {
   fragrantAuthoritySnapshot,
   fragrantCheckpointPrivateState,
 } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
-import { fragrantPairOwnerFixture } from "../../../engine/fragrant_pair_seer_fixture";
+import { fragrantPairOwnerFixture } from "../../../support/features/fragrant-pair-seer/builders/owner";
 
 test("Pair contribution uses the original schema, factory and sole append writer", () => {
   expect(PAIR_STATE_SLOT_CONTRACT.create).toBe(freshPairSeerState);

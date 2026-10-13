@@ -2,7 +2,7 @@
  * 单元测试：验证未提交寻香死亡预约在 false／抛错取消后释放，不花资源或标死。输入为原 owner fixture、有限 DeathResolution 操作与两种当前性模式；存活生命、空触发和可复用预约回执为原字面预期，不执行 PM 周期、录制或模型。
  */
 import { expect, test } from "bun:test";
-import { fragrantPairOwnerFixture } from "../../../engine/fragrant_pair_seer_fixture";
+import { fragrantPairOwnerFixture } from "../../../support/features/fragrant-pair-seer/builders/owner";
 import {
   closeFragrantNight,
   prepareFragrantDeathWave,

@@ -31,7 +31,7 @@ import {
   publishFragrantDeathWave,
 } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
 
-import { fragrantPairOwnerFixture as fixture } from "../../../engine/fragrant_pair_seer_fixture";
+import { fragrantPairOwnerFixture as fixture } from "../../../support/features/fragrant-pair-seer/builders/owner";
 
 test("real open pays singleton once; duplicate entry and aborted continuation do not redraw", () => {
   const f = fixture(),

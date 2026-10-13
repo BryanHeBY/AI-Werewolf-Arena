@@ -4,30 +4,29 @@
  * 字面角色／状态是 fixture 设置而非生产规则 oracle；Pair 别名、容器写入 LHS 时点保持。
  * 实例安装入口迁共享 owner，但不运行 profile、流水线、传输或模型。
  */
-import { createAliveComponent, createCampComponent } from "../../src/game/observation/component-presentation";
-import { World } from "../../src/core/domain/world";
-import { Role, Camp } from "../../src/core/domain/identity";
-import { COMPONENT } from "../../src/core/domain/components/names";
-import { type AliveComponent } from "../../src/core/domain/components/alive";
-import { type RoleComponent } from "../../src/core/domain/components/role";
-import { createRoleComponent } from "../../src/game/observation/role-presentation";
+import { createAliveComponent, createCampComponent } from "../../../../../src/game/observation/component-presentation";
+import { World } from "../../../../../src/core/domain/world";
+import { Role, Camp } from "../../../../../src/core/domain/identity";
+import { COMPONENT } from "../../../../../src/core/domain/components/names";
+import { type AliveComponent } from "../../../../../src/core/domain/components/alive";
+import { type RoleComponent } from "../../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
 
-import { createIdentityComponent } from "../../src/core/domain/entities/player";
-import { createVictoryComponent } from "../../src/core/domain/components/victory";
-import type { GameEvent } from "../../src/core/domain/events";
+import { createIdentityComponent } from "../../../../../src/core/domain/entities/player";
+import { createVictoryComponent } from "../../../../../src/core/domain/components/victory";
+import type { GameEvent } from "../../../../../src/core/domain/events";
 import {
   freshFragrantState,
   freshPairSeerState,
-} from "../../src/game/mechanisms/roles/fragrant_pair_seer/state";
-import { installNativeAbility } from "../../src/game/mechanisms/roles/ability_changes";
+} from "../../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
+import { installNativeAbility } from "../../../../../src/game/mechanisms/roles/ability_changes";
 import {
   installFragrantPairAuthority,
   beginFragrantNight,
   openFragrantBindChoice,
   openPairCheckChoice,
-} from "../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
-/** Component owner fixture with native pair resource. It does not run profile initialization,
- * qualify a board, or execute a pipeline, transport or replay. */
+} from "../../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
+/** 构造固定角色 roster 与原生双验资源供 authority 单元测试使用；不初始化 profile、判断板子支持或运行流水线、传输和复现。 */
 export function fragrantPairOwnerFixture(
   beforeInstall?: (role: RoleComponent) => void,
   nightHook?: () => boolean,
@@ -69,6 +68,7 @@ export function fragrantPairOwnerFixture(
       createVictoryComponent([{ kind: "faction", faction: camp }]),
     );
   }
+  // roster 已按字面顺序写入后才调用测试钩子，再安装 authority；抛错不回滚此前组件写入。
   beforeInstall?.(world.getComponent(5, COMPONENT.Role)!);
   installFragrantPairAuthority(world, events, 1, 5);
   let current = true,
@@ -85,6 +85,7 @@ export function fragrantPairOwnerFixture(
     for (const id of ids) world.getComponent(id, COMPONENT.Alive)!.alive = false;
   };
   const role = (id: number) => world.getComponent(id, COMPONENT.Role)!;
+  // helper 驱动真实选择提交，不从生产结果推导期望；测试须另写独立字面断言。
   const choices = (pair: number[] | null = [9, 10]) => {
     openFragrantBindChoice(world, 1).commit(pair);
     openPairCheckChoice(world, 1).commit([5, 6]);

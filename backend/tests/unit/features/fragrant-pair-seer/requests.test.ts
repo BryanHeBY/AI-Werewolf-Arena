@@ -1,10 +1,7 @@
 /**
- * Unit tests for fragrant-pair-seer; Isolated fragrant-pair-seer requests contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试：独立验证馥郁双生请求契约，真实执行内存 owner、frame 和 reader，不运行装配后的完整对局。
+ * 输入为既有 fixture、原回调控制及明确的非法状态修改；字面预期、对象身份快照和拒绝断言提供独立核对。
+ * 测试自有 mock 与组件只驱动此边界，不调用模型或物理传输；迁移保留样本字节、政策和状态行为。
  */
 import { expect, test, setSystemTime } from "bun:test";
 import type { ActionRequest } from "../../../../src/core/domain/actions";
@@ -13,7 +10,7 @@ import {
   assertRequestDelivery,
   deferRequestDelivery,
 } from "../../../../src/core/domain/request_delivery";
-import { fragrantPairOwnerFixture } from "../../../engine/fragrant_pair_seer_fixture";
+import { fragrantPairOwnerFixture } from "../../../support/features/fragrant-pair-seer/builders/owner";
 import {
   openFragrantPairRequest,
   fragrantPairRequestScope,
