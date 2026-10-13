@@ -5,16 +5,15 @@
  * The commit returns death proposals and spends stock before publication, while
  * the actual death resolver and window lifetime remain outside this test scope.
  */
+import type { WhiteWolfKingState } from "@ai-werewolf-arena/game-contract";
+
 import { expect, test } from "bun:test";
 import { Role, Camp, Phase, ActionWindow, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { createAliveComponent } from "../../../src/core/domain/components/alive";
 import { createRoleComponent } from "../../../src/core/domain/components/role";
 import { World } from "../../../src/core/domain/world";
-import {
-  getWhiteWolfKingState,
-  type WhiteWolfKingState,
-} from "../../../src/game/mechanisms/roles/white_wolf_king/ports";
+import { getWhiteWolfKingState } from "../../../src/game/mechanisms/roles/white_wolf_king/ports";
 import { setWhiteWolfKingState } from "../../../src/game/mechanisms/roles/white_wolf_king/state";
 import { commitSelfDestructSelection } from "../../../src/game/mechanisms/self_destruct/commit";
 function readerPermission(state: WhiteWolfKingState) {

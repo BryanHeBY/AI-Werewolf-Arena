@@ -197,7 +197,7 @@ test("actual poisoned Hunter consumes gun without prompting, failed CP cannot ad
   const before = demonHunterAuditPlayer(f.world, 10);
   expect(before).toMatchObject({ hunter: { canShoot: false } });
   expect(prompts).toBe(0);
-  getHunterState(role(f, 10))!.canShoot = true;
+  (getHunterState(role(f, 10))! as { canShoot: boolean }).canShoot = true;
   expect(() => captureCheckpoint(f.world, f.phaseManager.getSnapshot(), 1, true, 0)).toThrow(
     "original_state_revoked",
   );

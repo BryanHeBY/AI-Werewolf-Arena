@@ -67,7 +67,7 @@ for (const mutation of [
     const game = bootstrapGame(board(), { fixedRoles: deck }),
       events: GameEvent[] = [],
       state = getWolfBeautyState(role(game, 1))!;
-    state.targetId = 5;
+    (state as { targetId: number | null }).targetId = 5;
     bindCharm(game.world, 1, 5);
     const original = game.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!;
     const registry = new EventRegistry(
@@ -84,7 +84,12 @@ for (const mutation of [
                 original.alive = true;
               }
               if (mutation === "change_policy")
-                state.deathLinkPolicy = "heroes_s7_2017_exile_hunter_v1";
+                (
+                  state as {
+                    deathLinkPolicy:
+                      "awa_exile_poison_v1" | "heroes_s7_2017_exile_hunter_v1" | undefined;
+                  }
+                ).deathLinkPolicy = "heroes_s7_2017_exile_hunter_v1";
               if (mutation === "clear_binding") bindCharm(game.world, 1, null);
               if (mutation === "replace_state")
                 (role(game, 1).privateState as Record<string, unknown>).wolf_beauty = {
@@ -314,7 +319,7 @@ for (const mutation of ["phase", "actor_life", "target_life", "state"] as const)
 test("a restored or replaced target life cannot inherit a previous charm", () => {
   const game = bootstrapGame(board(), { fixedRoles: deck }),
     state = getWolfBeautyState(role(game, 1))!;
-  state.targetId = 5;
+  (state as { targetId: number | null }).targetId = 5;
   bindCharm(game.world, 1, 5);
   expect(activeCharm(game.world, 1)).not.toBeNull();
   const life = game.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!;

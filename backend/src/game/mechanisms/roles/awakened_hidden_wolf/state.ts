@@ -4,40 +4,26 @@
  * data and the selected stored reference. Only awakened_hidden_wolf is restored
  * for its original installation write; this leaf never broadens private-container
  * writes, verifies a request, refunds stock or redraws a learned template.
+ * Pure payload/read data structures belong to the neutral role-state data owner;
+ * this leaf retains original live references and concrete installation/commit operations.
  */
+import type {
+  AwakenedSkill,
+  AwakenedActiveSkill,
+  AwakenedTemplateRole,
+  AwakenedLearning,
+  AwakenedState,
+  AwakenedReadSkill,
+  AwakenedReadActiveSkill,
+  AwakenedReadLearning,
+  AwakenedReadState,
+} from "@ai-werewolf-arena/game-contract";
+
 import type { PlayerAwakenedState } from "../player_extended_state";
 import type { RoleId } from "@ai-werewolf-arena/game-catalog";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { EntityId } from "../../../../core/domain/identity";
 import { copyAbilityData } from "../abilities";
-
-export type AwakenedSkill =
-  | { kind: "villager" }
-  | { kind: "inspection"; abilityId: string | null }
-  | { kind: "poison"; remaining: 0 | 1 }
-  | { kind: "guard"; lastTarget: EntityId | null; lastGuardDay: number | null }
-  | { kind: "hunter"; canShoot: boolean; armed: boolean }
-  | { kind: "wolf"; extraKnife: "available" | "spent" };
-export type AwakenedActiveSkill = Extract<AwakenedSkill, { kind: "poison" | "guard" | "wolf" }>;
-export type AwakenedTemplateRole = Extract<
-  RoleId,
-  "villager" | "mirror_girl" | "witch" | "guard" | "hunter" | "wolf"
->;
-export interface AwakenedLearning {
-  readonly targetId: EntityId;
-  readonly role: AwakenedTemplateRole;
-  readonly day: number;
-  activationNight: number | null;
-  activeFromNight: number | null;
-  readonly skill: AwakenedSkill;
-}
-export interface AwakenedState {
-  learned: AwakenedLearning | null;
-  mimicClosedDay: number | null;
-  skillClosedDay: number | null;
-  hasInheritedKnife: boolean;
-  firstKnifeNight: number | null;
-}
 
 const validDay = (day: number) =>
   Number.isSafeInteger(day) && day >= 1 && day < Number.MAX_SAFE_INTEGER;
@@ -51,11 +37,11 @@ export function freshAwakenedState(): AwakenedState {
     firstKnifeNight: null,
   };
 }
-export function getAwakenedState(role: RoleComponent | undefined): AwakenedState | undefined {
-  return role?.privateState.awakened_hidden_wolf as AwakenedState | undefined;
+export function getAwakenedState(role: RoleComponent | undefined): AwakenedReadState | undefined {
+  return role?.privateState.awakened_hidden_wolf as AwakenedReadState | undefined;
 }
 /** Persist semantic facts only; references and night authorization live outside this object. */
-export function setAwakenedState(role: RoleComponent, state: AwakenedState): AwakenedState {
+export function setAwakenedState(role: RoleComponent, state: AwakenedState): AwakenedReadState {
   const owned = copyAbilityData(state);
   (role.privateState as { awakened_hidden_wolf: AwakenedState }).awakened_hidden_wolf = owned;
   return owned;
@@ -88,34 +74,34 @@ export function awakenedLearning(targetId: EntityId, role: RoleId, day: number):
   }
   return { targetId, role, day, activationNight: null, activeFromNight: null, skill };
 }
-export function canAwakenedMimic(state: AwakenedState, day: number): boolean {
+export function canAwakenedMimic(state: AwakenedReadState, day: number): boolean {
   return (
     validDay(day) &&
     state.learned === null &&
     (state.mimicClosedDay === null || state.mimicClosedDay < day)
   );
 }
-export function closeAwakenedMimic(state: AwakenedState, day: number): boolean {
+export function closeAwakenedMimic(state: AwakenedReadState, day: number): boolean {
   if (!canAwakenedMimic(state, day)) return false;
-  state.mimicClosedDay = day;
+  (state as { mimicClosedDay: number | null }).mimicClosedDay = day;
   return true;
 }
 export function learnAwakenedRole(
-  state: AwakenedState,
+  state: AwakenedReadState,
   targetId: EntityId,
   role: RoleId,
   day: number,
 ): boolean {
   if (!canAwakenedMimic(state, day)) return false;
   const learned = awakenedLearning(targetId, role, day);
-  state.learned = learned;
-  state.mimicClosedDay = day;
+  (state as { learned: AwakenedReadState["learned"] }).learned = learned;
+  (state as { mimicClosedDay: number | null }).mimicClosedDay = day;
   return true;
 }
 
 /** Called at the actual night-end commit, never when selecting a template or entering a later night. */
 export function activateAwakenedLearning(
-  state: AwakenedState,
+  state: AwakenedReadState,
   night: number,
   mirrorAbilityId?: string,
 ): boolean {
@@ -128,18 +114,19 @@ export function activateAwakenedLearning(
   )
     return false;
   if (learned.skill.kind !== "inspection" && mirrorAbilityId !== undefined) return false;
-  if (learned.skill.kind === "inspection") learned.skill.abilityId = mirrorAbilityId!;
-  if (learned.skill.kind === "hunter") learned.skill.armed = true;
-  learned.activationNight = night;
-  learned.activeFromNight = night + 1;
+  if (learned.skill.kind === "inspection")
+    (learned.skill as { abilityId: string | null }).abilityId = mirrorAbilityId!;
+  if (learned.skill.kind === "hunter") (learned.skill as { armed: boolean }).armed = true;
+  (learned as { activationNight: number | null }).activationNight = night;
+  (learned as { activeFromNight: number | null }).activeFromNight = night + 1;
   return true;
 }
 
 /** Passive Hunter readiness is read from its gun; active skills begin after the actual activation night. */
 export function awakenedSkillForNight(
-  state: AwakenedState,
+  state: AwakenedReadState,
   night: number,
-): AwakenedActiveSkill | undefined {
+): AwakenedReadActiveSkill | undefined {
   const learned = state.learned;
   if (
     !validDay(night) ||
@@ -158,20 +145,20 @@ export function awakenedSkillForNight(
     ? learned.skill
     : undefined;
 }
-export function closeAwakenedSkill(state: AwakenedState, night: number): boolean {
+export function closeAwakenedSkill(state: AwakenedReadState, night: number): boolean {
   if (!awakenedSkillForNight(state, night)) return false;
-  state.skillClosedDay = night;
+  (state as { skillClosedDay: number | null }).skillClosedDay = night;
   return true;
 }
 
 /** The assembly/death owner commits inheritance once, independent of learning or skill selection. */
-export function recordAwakenedInheritance(state: AwakenedState, day: number): boolean {
+export function recordAwakenedInheritance(state: AwakenedReadState, day: number): boolean {
   if (!validDay(day) || state.hasInheritedKnife) return false;
-  state.hasInheritedKnife = true;
-  state.firstKnifeNight = Math.max(2, day + 1);
+  (state as { hasInheritedKnife: boolean }).hasInheritedKnife = true;
+  (state as { firstKnifeNight: number | null }).firstKnifeNight = Math.max(2, day + 1);
   return true;
 }
-export function awakenedKnifeReady(state: AwakenedState, night: number): boolean {
+export function awakenedKnifeReady(state: AwakenedReadState, night: number): boolean {
   return (
     validDay(night) &&
     state.hasInheritedKnife &&
@@ -180,7 +167,7 @@ export function awakenedKnifeReady(state: AwakenedState, night: number): boolean
   );
 }
 /** The caller additionally checks current original-owner and sole-living-Wolf permission. */
-export function canAwakenedExtraKnife(state: AwakenedState, night: number): boolean {
+export function canAwakenedExtraKnife(state: AwakenedReadState, night: number): boolean {
   const skill = awakenedSkillForNight(state, night);
   return (
     awakenedKnifeReady(state, night) && skill?.kind === "wolf" && skill.extraKnife === "available"
@@ -188,7 +175,7 @@ export function canAwakenedExtraKnife(state: AwakenedState, night: number): bool
 }
 /** Passing closes only this night. A real nonempty attack spends the once-per-game stock. */
 export function chooseAwakenedAttack(
-  state: AwakenedState,
+  state: AwakenedReadState,
   targetId: EntityId | null,
   night: number,
 ): boolean {
@@ -196,13 +183,13 @@ export function chooseAwakenedAttack(
     return false;
   const skill = state.learned!.skill;
   if (skill.kind !== "wolf") return false;
-  if (targetId !== null) skill.extraKnife = "spent";
-  state.skillClosedDay = night;
+  if (targetId !== null) (skill as { extraKnife: "available" | "spent" }).extraKnife = "spent";
+  (state as { skillClosedDay: number | null }).skillClosedDay = night;
   return true;
 }
 
 export function chooseAwakenedGuard(
-  state: AwakenedState,
+  state: AwakenedReadState,
   targetId: EntityId | null,
   night: number,
 ): boolean {
@@ -213,29 +200,29 @@ export function chooseAwakenedGuard(
     (targetId !== null && skill.lastTarget === targetId && skill.lastGuardDay === night - 1)
   )
     return false;
-  skill.lastTarget = targetId;
-  skill.lastGuardDay = night;
-  state.skillClosedDay = night;
+  (skill as { lastTarget: EntityId | null }).lastTarget = targetId;
+  (skill as { lastGuardDay: number | null }).lastGuardDay = night;
+  (state as { skillClosedDay: number | null }).skillClosedDay = night;
   return true;
 }
 /** A legal tool-free wait also breaks consecutive guarding. */
-export function skipAwakenedSkill(state: AwakenedState, night: number): boolean {
+export function skipAwakenedSkill(state: AwakenedReadState, night: number): boolean {
   const skill = awakenedSkillForNight(state, night);
   if (!skill) return false;
   if (skill.kind === "guard") return chooseAwakenedGuard(state, null, night);
   if (skill.kind === "wolf") return chooseAwakenedAttack(state, null, night);
   return closeAwakenedSkill(state, night);
 }
-export function useAwakenedPoison(state: AwakenedState, night: number): boolean {
+export function useAwakenedPoison(state: AwakenedReadState, night: number): boolean {
   const skill = awakenedSkillForNight(state, night);
   if (skill?.kind !== "poison" || skill.remaining !== 1) return false;
-  skill.remaining = 0;
-  state.skillClosedDay = night;
+  (skill as { remaining: 0 | 1 }).remaining = 0;
+  (state as { skillClosedDay: number | null }).skillClosedDay = night;
   return true;
 }
 
 /** Known-field projection; Mirror history and inventory belong solely to its ability instance. */
-export function projectAwakenedState(state: AwakenedState): PlayerAwakenedState {
+export function projectAwakenedState(state: AwakenedReadState): PlayerAwakenedState {
   const learned = state.learned;
   let skill: AwakenedSkill | undefined;
   if (learned)

@@ -5,6 +5,8 @@
  * These tests cover the original last-wolf transition and paid-fact prefix;
  * actual knife permissions, role inspection and death-wave expansion stay separate.
  */
+import type { HiddenWolfState, GargoyleState } from "@ai-werewolf-arena/game-contract";
+
 import { expect, test } from "bun:test";
 import { Role, Camp, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../src/core/domain/components/names";
@@ -14,12 +16,10 @@ import { World } from "../../../src/core/domain/world";
 import {
   getHiddenWolfState,
   setHiddenWolfState,
-  type HiddenWolfState,
 } from "../../../src/game/mechanisms/roles/hidden_wolf/state";
 import {
   getGargoyleState,
   setGargoyleState,
-  type GargoyleState,
 } from "../../../src/game/mechanisms/roles/gargoyle/state";
 import { refreshHiddenWolfInheritance } from "../../../src/game/mechanisms/roles/hidden_wolf/inheritance";
 import { refreshGargoyleInheritance } from "../../../src/game/mechanisms/roles/gargoyle/inheritance";

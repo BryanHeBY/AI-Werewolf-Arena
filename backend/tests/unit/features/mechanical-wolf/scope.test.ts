@@ -76,7 +76,11 @@ for (const revoke of [
       (f.role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
         ...f.role.privateState,
       };
-    if (revoke === "state") setMechanicalState(f.role, f.state);
+    if (revoke === "state")
+      setMechanicalState(
+        f.role,
+        f.state as import("@ai-werewolf-arena/game-contract").MechanicalState,
+      );
     if (revoke === "life") f.world.addComponent(f.actor, COMPONENT.Alive, createAliveComponent());
     if (revoke === "revive") {
       f.life.alive = false;
@@ -98,16 +102,35 @@ for (const revoke of [
   test(`${revoke}: an accepted effect stays bound to its original learning and mode`, () => {
     const f = fixture(),
       bound = bindMechanicalSkill(f.scope, 2)!;
-    if (revoke === "learning") f.state.learned = { ...f.state.learned! };
+    if (revoke === "learning")
+      (
+        f.state as {
+          learned: import("@ai-werewolf-arena/game-contract").MechanicalReadLearning | null;
+        }
+      ).learned = { ...f.state.learned! };
     if (revoke === "skill")
-      f.state.learned = {
+      (
+        f.state as {
+          learned: import("@ai-werewolf-arena/game-contract").MechanicalReadLearning | null;
+        }
+      ).learned = {
         ...f.state.learned!,
         skill: { kind: "guard", lastTarget: null, lastGuardDay: null },
       };
     if (revoke === "skill_kind") (f.state.learned!.skill as { kind: string }).kind = "poison";
-    if (revoke === "mode") f.state.mode = { ...f.state.mode! };
-    if (revoke === "mode_kind") f.state.mode!.kind = "kill";
-    if (revoke === "mode_day") f.state.mode!.day = 3;
+    if (revoke === "mode")
+      (
+        f.state as {
+          mode: {
+            day: number;
+            kind: import("@ai-werewolf-arena/game-contract").MechanicalMode;
+          } | null;
+        }
+      ).mode = { ...f.state.mode! };
+    if (revoke === "mode_kind")
+      (f.state.mode! as { kind: import("@ai-werewolf-arena/game-contract").MechanicalMode }).kind =
+        "kill";
+    if (revoke === "mode_day") (f.state.mode! as { day: number }).day = 3;
     expect(f.scope.isCurrent()).toBe(true);
     expect(bound.isCurrent()).toBe(false);
   });
@@ -118,8 +141,8 @@ test("closing a skill and spending its own resource do not revoke an already com
     bound = bindMechanicalSkill(f.scope, 2)!;
   expect(closeMechanicalSkill(f.state, 2)).toBe(true);
   if (bound.skill.kind !== "guard") throw new Error("wrong fixture");
-  bound.skill.lastTarget = 5;
-  bound.skill.lastGuardDay = 2;
+  (bound.skill as { lastTarget: number | null }).lastTarget = 5;
+  (bound.skill as { lastGuardDay: number | null }).lastGuardDay = 2;
   expect(bound.isCurrent()).toBe(true);
 });
 
@@ -138,7 +161,8 @@ test("mode facts cannot authorize a knife without a live runtime scope, and quer
 test("mutating an accepted skill-mode object cannot turn its saved scope into kill authority", () => {
   const f = fixture("skill");
   recordMechanicalModeScope(f.world, f.scope, 2);
-  f.state.mode!.kind = "kill";
+  (f.state.mode! as { kind: import("@ai-werewolf-arena/game-contract").MechanicalMode }).kind =
+    "kill";
   expect(hasCurrentMechanicalKillMode(f.world, f.role)).toBe(false);
   expect(recordMechanicalModeScope(f.world, f.scope, 2)).toBe(false);
 });

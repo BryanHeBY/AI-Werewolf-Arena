@@ -5,7 +5,17 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, DeathCause, Phase, Role, WinCondition, permitsHunterShot, type GameEvent, type RoleComponent, type DeathSources } from "../../../src/core";
+import {
+  COMPONENT,
+  DeathCause,
+  Phase,
+  Role,
+  WinCondition,
+  permitsHunterShot,
+  type GameEvent,
+  type RoleComponent,
+  type DeathSources,
+} from "../../../src/core";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { getHunterState, setHunterState } from "../../../src/game/mechanisms/roles/private_state";
@@ -359,7 +369,7 @@ for (const locale of ["zh-CN", "en"] as const)
         [7],
         { 7: [DeathCause.Exile] },
         async () => {
-          if (revoke === "resource") originalGun.canShoot = false;
+          if (revoke === "resource") (originalGun as { canShoot: boolean }).canShoot = false;
           if (revoke === "state") setHunterState(originalRole, { canShoot: false });
           if (revoke === "role") originalRole.role = Role.Villager;
           if (revoke === "component") world.addComponent(7, COMPONENT.Role, { ...originalRole });

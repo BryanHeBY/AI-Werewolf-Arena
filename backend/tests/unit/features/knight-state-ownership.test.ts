@@ -5,13 +5,15 @@
  * These cases verify paid-prefix and capture behavior, not full-day resolution or
  * a new duel policy. Compiler examples reject writes through the public state view.
  */
+import type { KnightState } from "@ai-werewolf-arena/game-contract";
+
 import { expect, test } from "bun:test";
 import { Camp, Role, Phase, DeathCause, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { createAliveComponent } from "../../../src/core/domain/components/alive";
 import { createRoleComponent } from "../../../src/core/domain/components/role";
 import { World } from "../../../src/core/domain/world";
-import { getKnightState, type KnightState } from "../../../src/game/mechanisms/roles/knight/ports";
+import { getKnightState } from "../../../src/game/mechanisms/roles/knight/ports";
 import { setKnightState } from "../../../src/game/mechanisms/roles/knight/state";
 import { commitKnightDuel } from "../../../src/game/mechanisms/roles/knight/commit";
 function compilerExamples(state: KnightState) {

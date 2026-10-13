@@ -6,6 +6,8 @@
  * Test-owned mocks/components exercise this boundary without a model or physical
  * transport. Support files, fixture bytes, policy and state behavior are retained.
  */
+import type { MechanicalSkill } from "@ai-werewolf-arena/game-contract";
+
 import { expect, test } from "bun:test";
 import { createRoleComponent } from "../../../../src/core/domain/components/role";
 import { Camp, Role } from "../../../../src/core/domain/model";
@@ -25,7 +27,6 @@ import {
   recordMechanicalInheritance,
   selectMechanicalMode,
   setMechanicalState,
-  type MechanicalSkill,
 } from "../../../../src/game/mechanisms/roles/mechanical_wolf/state";
 
 test("native mechanical owners deep-copy resources/history and contain serializable facts only", () => {
@@ -40,7 +41,16 @@ test("native mechanical owners deep-copy resources/history and contain serializa
   expect(a.learned).not.toBe(b.learned);
   if (a.learned?.skill.kind !== "inspection" || b.learned?.skill.kind !== "inspection")
     throw new Error("wrong fixture");
-  a.learned.skill.history.push({ day: 2, targetId: 4, result: { kind: "role", role: "witch" } });
+  (
+    a.learned.skill.history as {
+      day: number;
+      targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+      result: Extract<
+        import("@ai-werewolf-arena/game-contract").InspectionResult,
+        { kind: "role" }
+      >;
+    }[]
+  ).push({ day: 2, targetId: 4, result: { kind: "role", role: "witch" } });
   expect(b.learned.skill.history).toEqual([]);
   expect(JSON.parse(JSON.stringify(a))).toEqual(a);
   expect(JSON.stringify(a)).not.toContain("casterId");

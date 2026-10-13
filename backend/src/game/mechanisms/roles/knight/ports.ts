@@ -6,4 +6,3 @@
  * stock. Replacement and terminal window failures remain the window owner's checks.
  */
 export { getKnightState } from "./state";
-export type { KnightState } from "./state";

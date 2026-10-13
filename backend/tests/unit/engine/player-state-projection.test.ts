@@ -131,7 +131,7 @@ for (const locale of ["zh-CN", "en"] as const)
         },
       });
       const observation = game.policy.buildObservation(game.request);
-      expect(observation.ownState[key]).toEqual(expected);
+      expect<unknown>(observation.ownState[key]).toEqual(expected);
       expect(JSON.stringify(observation)).not.toContain("PRIVATE_REFEREE_FACT");
       expect(JSON.stringify(observation)).not.toContain("futureGetter");
       expect(reads).toBe(0);

@@ -4,6 +4,11 @@
  * night-commit bookkeeping. It never lets a new state, source or body inherit the old captured
  * permission.
  */
+import type {
+  AwakenedReadState as AwakenedState,
+  AwakenedReadActiveSkill as AwakenedActiveSkill,
+} from "@ai-werewolf-arena/game-contract";
+
 import { aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -14,12 +19,7 @@ import {
   type NightLifeScope,
 } from "../../../../core/domain/night_effects";
 import type { World } from "../../../../core/domain/world";
-import {
-  awakenedSkillForNight,
-  getAwakenedState,
-  type AwakenedState,
-  type AwakenedActiveSkill,
-} from "./state";
+import { awakenedSkillForNight, getAwakenedState } from "./state";
 import { findNightAbility, type NightAbilityReadView } from "../abilities";
 
 export interface AwakenedOwnerScope {

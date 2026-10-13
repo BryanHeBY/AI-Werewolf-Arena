@@ -92,10 +92,14 @@ test("policy changes revoke captured dream scope and established charm binding; 
     }
   ).protectionPolicy = "netease_2026_night_immunity_v1";
   expect(scope.isEligible()).toBe(false);
-  getWolfBeautyState(beautyRole)!.targetId = 6;
+  (getWolfBeautyState(beautyRole)! as { targetId: number | null }).targetId = 6;
   bindCharm(game.world, 2, 6);
   expect(activeCharm(game.world, 2)).not.toBeNull();
-  getWolfBeautyState(beautyRole)!.deathLinkPolicy = "heroes_s7_2017_exile_hunter_v1";
+  (
+    getWolfBeautyState(beautyRole)! as {
+      deathLinkPolicy: "awa_exile_poison_v1" | "heroes_s7_2017_exile_hunter_v1" | undefined;
+    }
+  ).deathLinkPolicy = "heroes_s7_2017_exile_hunter_v1";
   expect(activeCharm(game.world, 2)).toBeNull();
   expect(
     projectDreamerState({ protectionPolicy: "arbitrary", history: [], secret: 1 }),

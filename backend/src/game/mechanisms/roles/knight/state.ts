@@ -5,23 +5,23 @@
  * view of that same object. Lifecycle validation, player projection and checkpoint
  * encoding retain their current responsibilities. There is no mirror state or lease
  * check here, and failed later event publication does not refund this resource.
+ * Pure payload/read data structures belong to the neutral role-state data owner;
+ * this leaf retains original live references and concrete installation/commit operations.
  */
+import type { KnightState, KnightReadState } from "@ai-werewolf-arena/game-contract";
+
 import type { RoleComponent } from "../../../../core/domain/components/role";
 
-export interface KnightState {
-  readonly canDuel: boolean;
-}
-
-export function setKnightState(roleComp: RoleComponent, state: KnightState): KnightState {
+export function setKnightState(roleComp: RoleComponent, state: KnightState): KnightReadState {
   (roleComp.privateState as { knight: KnightState })["knight"] = state;
   return state;
 }
 
-export function getKnightState(roleComp: RoleComponent): KnightState | undefined {
-  return roleComp.privateState["knight"] as KnightState | undefined;
+export function getKnightState(roleComp: RoleComponent): KnightReadState | undefined {
+  return roleComp.privateState["knight"] as KnightReadState | undefined;
 }
 
 /** The caller has completed the original duel preflight; no second state read or check. */
-export function consumeKnightDuel(state: KnightState): void {
+export function consumeKnightDuel(state: KnightReadState): void {
   (state as { canDuel: boolean }).canDuel = false;
 }

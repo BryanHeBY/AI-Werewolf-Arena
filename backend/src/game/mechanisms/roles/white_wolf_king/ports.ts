@@ -6,4 +6,3 @@
  * Invalid or expired windows remain their owner's terminal checks, not this port.
  */
 export { getWhiteWolfKingState, consumeWhiteWolfDetonation } from "./state";
-export type { WhiteWolfKingState } from "./state";

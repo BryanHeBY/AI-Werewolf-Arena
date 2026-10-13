@@ -3,6 +3,10 @@
  * and the sampled roar; outputs are history and dawn events only for the still-matching frame.
  * It does not publish the same captured night twice or substitute revived neighbor bodies.
  */
+import { recordBearRoar } from "./state";
+
+import type { BearReadState as BearState } from "@ai-werewolf-arena/game-contract";
+
 import { types } from "node:util";
 import {
   AliveComponent,
@@ -15,7 +19,7 @@ import type { IdentityComponent } from "../../../../core/domain/entities/player"
 import { Camp, Role, type GameEvent, type EntityId } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
 import { RoleCatalog, getDefaultRoleCatalog } from "../catalog";
-import { getBearState, type BearState } from "../private_state";
+import { getBearState } from "../private_state";
 import { BEAR_SIGNAL_POLICIES, type BearSignalPolicy } from "@ai-werewolf-arena/game-text";
 import {
   captureOriginalPlayer,
@@ -170,7 +174,7 @@ export class BearNightFrame {
     )
       return;
     const report = { day: this.day, roared: this.life.alive && this.wasAlive && this.sampledRoar };
-    this.state.history.push(report);
+    recordBearRoar(this.state, report);
     events.push({ timestamp: Date.now(), type: "bear_roared", payload: { ...report } });
   }
   private dawnBodyCurrent(world: World): boolean {

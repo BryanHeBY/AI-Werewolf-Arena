@@ -4,6 +4,10 @@
  * skip/commit evidence. Paid claims keep their original-life validity and never transfer to a
  * replacement giver.
  */
+import { closeMerchantTrade, recordMerchantTrade } from "./state";
+
+import type { MiracleSkill } from "@ai-werewolf-arena/game-contract";
+
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, Phase, WitchSelfHealRule } from "../../../../core/domain/model";
@@ -11,7 +15,7 @@ import { captureNightLife, livingNightLife } from "../../../../core/domain/night
 import type { World } from "../../../../core/domain/world";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { grantNightAbility } from "../ability_changes";
-import { canMerchantTrade, getMerchantState, type MiracleSkill } from "./state";
+import { canMerchantTrade, getMerchantState } from "./state";
 
 const committed = new WeakMap<World, Set<number>>();
 export function hasMerchantNightCommit(world: World, day: number): boolean {
@@ -76,7 +80,7 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
           : null;
         if (!current()) break;
         if (action === null) {
-          state.closedDay = day;
+          closeMerchantTrade(state, day);
           recordCommit(ctx.world, day);
           ctx.events.push({
             timestamp: Date.now(),
@@ -150,9 +154,7 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
               ctx.events,
             );
         }
-        state.remaining = 0;
-        state.closedDay = day;
-        state.choice = { day, targetId, skill: skill as MiracleSkill };
+        recordMerchantTrade(state, day, targetId, skill as MiracleSkill);
         recordCommit(ctx.world, day);
         if (failure)
           (ctx.state.merchantBacklashes ??= []).push({ target: life, isCurrent: ownerCurrent });

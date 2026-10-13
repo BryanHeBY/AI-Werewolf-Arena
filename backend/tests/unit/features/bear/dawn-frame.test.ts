@@ -25,7 +25,9 @@ test("explicit dawn-live resamples the actual living ring while omitted policy k
   f.life(12).alive = false;
   old.publish(f.world, events, () => true);
   expect(events.map((e) => e.payload)).toEqual([{ day: 1, roared: false }]);
-  getBearState(f.role(11))!.history = [];
+  (
+    getBearState(f.role(11))! as unknown as { history: { day: number; roared: boolean }[] }
+  ).history = [];
   events.length = 0;
   next.publish(f.world, events, () => true);
   expect(events.map((e) => e.payload)).toEqual([{ day: 1, roared: true }]);
@@ -176,7 +178,9 @@ test("successful dawn is single-use even across new frames after mutable history
   const f = animalRosterFixture(),
     events: GameEvent[] = [];
   frame(f).publish(f.world, events, () => true);
-  getBearState(f.role(11))!.history = [];
+  (
+    getBearState(f.role(11))! as unknown as { history: { day: number; roared: boolean }[] }
+  ).history = [];
   frame(f).publish(f.world, events, () => true);
   expect(events.map((e) => e.payload)).toEqual([{ day: 1, roared: false }]);
 });

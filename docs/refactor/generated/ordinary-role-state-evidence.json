@@ -1,0 +1,1159 @@
+{
+  "schema": "awa-ordinary-role-state-evidence-v1",
+  "sourceBaseline": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+  "testOrigins": "Actual Git c65cc255 for existing paths; fa811708 for three newly committed mixed8k targets. Working diagnostic captures and Root draft unit are not originals.",
+  "scope": {
+    "paths": 55,
+    "source": 31,
+    "oldTests": 23,
+    "newTests": 1
+  },
+  "files": [
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/death_hook.ts",
+      "sha256": "edfa499a060cab73f8b879ba5653fbb27aadaa194051cc50241a129f6e14747d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts",
+      "sha256": "21b9c80ed75728f5a8495bcf189645f7b48eb1bd7cf51959e2ba8ea69a7e4393"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+      "sha256": "95a91067ba171497cb38f6a7350e56ac5e83e45094b87f144cd4d2b31b5080f9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "sha256": "dbe9bdae5283ec46938ec33683aceb15598aa4d103b29a82ae277950bc06ff18"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "sha256": "9c34285048eb07298f04818549654c359165ca32f84ca5de76f5a43a8ffa08b6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "sha256": "738db0d1202f47cefae69ffce47e7a6b451e1781c889853206b8c0f85428165a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+      "sha256": "23a689d15b3b8ac4d32ee5d0af58bbe448176bb567e294a1455e17e0a05f95f3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_shot.ts",
+      "sha256": "a5f127e3654172371ad2fcdbec8a7b2e62eb12a9ad2b37852237b201c758ee10"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/state.ts",
+      "sha256": "f55720f43e29bf998e677534b2360ffed0d80a87f585f539391894f48c5e9280"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+      "sha256": "1aaffe1ccd42aced5e5e666548f54c6264075738727c59d1ae38676bac85ae03"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hidden_wolf/state.ts",
+      "sha256": "4bbebeecde1d3e9cb6390c5b7a77cc39f3d9fa03157673c325b91c09b52ccb70"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/state.ts",
+      "sha256": "24d88b727af747a3cfc1e4a9f6d23be472e880659177c64513aae153794d370e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/idiot/state.ts",
+      "sha256": "b9c5726a75214dcb5ddc762b54cf5d4066cef297885561239a15be219cc1c1a6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "sha256": "a74086b5a0778aeee09279345505d3a7cc907d68751dee7c55c1ec859f468134"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/death_hook.ts",
+      "sha256": "4cb20e7e67d062f9f315dfe3d2c557f5227cb2b386df188827926e3b79c2e9c4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts",
+      "sha256": "2ae8ac77b6a1e139e8b5043166ba9c95560848bee9937edc83686e2fa27c65e9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+      "sha256": "9eb19a4f847743e22ce19efe8d57c214bfb381d0396c6616282f15ac1fc64f6f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "sha256": "d666d7a7715b258c29ff8c8679aaf49b6c111a851af54e7de39b33f268a04a4d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+      "sha256": "d02e49c82660761ae8718404714856388c2ec3f448c4f81ca420b43f7489207b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/player_extended_state.ts",
+      "sha256": "1f4d3ed8593fb6163044810d8e600e59c3da76ed13728be2a4e01e9a6c5f6632"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+      "sha256": "800f2f5e5b0e7dc795407176f405ada7923c6e5224ab1fd9ea460d4b13f64358"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+      "sha256": "d6a70fdaea189e1406c87975d955156e63b84c25f53e459f1451bc874d8144f9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "sha256": "f9dac59c13f940bcac668675cd390a2bc58b76f68a8dfd141fabf4ebd7bb288d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/state.ts",
+      "sha256": "7065cfb16aa7c6f9a25b5bf8ab84d7640ab8ef0d9babfaa3ef63f517f02f4200"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_king/state.ts",
+      "sha256": "bf246834b773620080d96430b3deaf0a5e3c64ce0c525050bdd18a2a22764ce5"
+    },
+    {
+      "path": "packages/game-contract/src/index.ts",
+      "sha256": "5195a7d216bf070faeb203902ba2cf7572b27c72bae5b75fb369f4e11ce38a29"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/private_state.ts",
+      "sha256": "7bf39373a97ec6b6ccc0fc6d45aa38a5985ba2d5e9c6476e187b1300ff7d7074"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "sha256": "888a3f06fb52a87037ac2d56b8e43c40171168e9a4d516ea8e18a5e9f9b115b2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+      "sha256": "8816fc1600e5a3f02d204b8b3d51e5ae6e1deee7f0a690991b69ae4d3aee7e99"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+      "sha256": "88f85ec399b2f1af6a11cb1a75798e9e51ab9c0cab56e5f6cb5eb9fcbd098773"
+    },
+    {
+      "path": "backend/tests/engine/rules/awakened_runtime.test.ts",
+      "sha256": "4b3fcc26138b14e8b55d7b3e8a532aeb20ce5f69868d400bdeda89a7a5d9ac8a"
+    },
+    {
+      "path": "backend/tests/engine/rules/cupid.test.ts",
+      "sha256": "db6e0a9fe27a959d09531677d6aff915b1e1cf542da8ddfeb8ceb1e494e87019"
+    },
+    {
+      "path": "backend/tests/engine/rules/mechanical_wolf.test.ts",
+      "sha256": "f6ef57218e18eda9fdb19db1910f0f347d632512ca52c4fdb816e05af460fcd2"
+    },
+    {
+      "path": "backend/tests/engine/rules/wolf_beauty.test.ts",
+      "sha256": "5c330ae634f8935ee6aae938f810aad5823b66a5743efe5236d7eeb9283b2944"
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/configured-death-policy-permits-and-copied-guns.test.ts",
+      "sha256": "93babff64cd896f78089c9e7c8333f91a57df2dc7b431e9eff7ae8990e84e1d7"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/demon-hunter/native-stock-and-failed-checkpoints.test.ts",
+      "sha256": "1d57091b2cace06419ba1c7bd089ba0c5617cd0be7552487e4528cd11881b09e"
+    },
+    {
+      "path": "backend/tests/unit/agents/protocol/rejection-messages.test.ts",
+      "sha256": "ad49603af8de6b5eebb25aa54852a66e5b5380f28a6edba743e2ed77fe5ff4ac"
+    },
+    {
+      "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+      "sha256": "f8105c8e819fbd5a914a6c07aa417a96853a55ae8fdd59f98a04de39598a56ed"
+    },
+    {
+      "path": "backend/tests/unit/features/animal-dream/authority.test.ts",
+      "sha256": "723542a9282f274a333e45e756bd9dc9d7bb082408e4c57e6c6cf4f32fd73968"
+    },
+    {
+      "path": "backend/tests/unit/features/animal-dream/request-envelope.test.ts",
+      "sha256": "0c1a88d36e0ad1f032305d2fac7a5ac1ebc397e1622ef145332fc19ff4d385ae"
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/state.test.ts",
+      "sha256": "124cbb300168a70fcdf4bca96095d03fc8a60a6bc573058b8674a41f7381f684"
+    },
+    {
+      "path": "backend/tests/unit/features/bear/captured-public-sample.test.ts",
+      "sha256": "b2d9a23bc0b11a85b8c90b2e4f33dbc8ed1239d0657db268df6e94f479ee3478"
+    },
+    {
+      "path": "backend/tests/unit/features/bear/dawn-frame.test.ts",
+      "sha256": "399e3cfb1f732a52cd1c145dc51a76e7851221668af9a128653992dcbacf4ed1"
+    },
+    {
+      "path": "backend/tests/unit/features/knife-inheritance-ownership.test.ts",
+      "sha256": "da508e4da28d90e64a127cc02646587319e48fe227300e2821253487cd6e5dce"
+    },
+    {
+      "path": "backend/tests/unit/features/knight-state-ownership.test.ts",
+      "sha256": "48a8c14858cef857e40dc183b0d9bcd373cc640159f2ed783f131016817d9e4c"
+    },
+    {
+      "path": "backend/tests/unit/features/mechanical-wolf/scope.test.ts",
+      "sha256": "b061e4efa865a58fdf8150dda00ca085a269b67c371a5fcce4b04e4e27b11a6e"
+    },
+    {
+      "path": "backend/tests/unit/features/mechanical-wolf/state.test.ts",
+      "sha256": "0a9534bc0e55bc3f0bb4323f5982dd4f9ddeaacccb29f0d7c89e4a3ac34b0911"
+    },
+    {
+      "path": "backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts",
+      "sha256": "1e4ec12335d1ec05527b1a3eed7d451c67ab38ba84e8738203e6b6c7d813e4bf"
+    },
+    {
+      "path": "backend/tests/unit/features/white-wolf-king-consumption.test.ts",
+      "sha256": "6ffe1ddacbe18631e82b1879e7de1ae67b6a2590acffe2064eeea9cb5b8df641"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-king/day-origin-policy.test.ts",
+      "sha256": "c9d14faf73b6e24bbf62b5948ce36d21b2215152a6b23adbab09a91103ef1d62"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+      "sha256": "0e8868c991e02245638ef14a3620ab7792dc29ee68b7ea3a391cfac21e3694fb"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+      "sha256": "743b0dd92689716e3428a34e6d70c2680251bd4fd1f251009c7edc7a1e9196a8"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/hunter-death-causes.test.ts",
+      "sha256": "a9045c4140f0d148776a6094d653a5b340db2f641cbe0d6873da1e2cf746ab92"
+    },
+    {
+      "path": "packages/game-contract/src/role-state-data.ts",
+      "sha256": "a4b12e9d696baa4de0c50aa9e286889fe923a2cfff9b719555482d3c49fbbee0"
+    },
+    {
+      "path": "backend/tests/unit/domain/role-state-read-boundary.test.ts",
+      "sha256": "422014e18ab41608fe1bf28dca7909500031e50b829a848975fdccac53ad1de8"
+    }
+  ],
+  "families": [
+    "hunter",
+    "wolf_king",
+    "white_wolf_king",
+    "knight",
+    "idiot",
+    "bear",
+    "gravekeeper",
+    "wolf_beauty",
+    "hidden_wolf",
+    "gargoyle",
+    "mechanical_wolf",
+    "awakened_hidden_wolf",
+    "miracle_merchant",
+    "black_market_merchant"
+  ],
+  "declarations": {
+    "original": 24,
+    "finiteReadAliases": 20,
+    "wholeMembersEquivalent": true,
+    "policy": "Whole member order, optional/readonly modifiers, literals, nulls and unions retained; only same-symbol neutral type qualification normalized."
+  },
+  "runtime": {
+    "originalSourcePrograms": 64,
+    "originalTestPrograms": 23,
+    "concreteCommandBodies": [
+      {
+        "name": "recordBearRoar",
+        "originalStatementPresent": true,
+        "bodySame": true,
+        "receiverBoundary": "Caller passes original this.state once, owner uses that captured reference; original state.history method receiver stays the same"
+      },
+      {
+        "name": "recordMechanicalInspection",
+        "originalStatementPresent": true,
+        "bodySame": true,
+        "receiverBoundary": "Original identifiers passed with no early foreign-property evaluation"
+      },
+      {
+        "name": "consumeMechanicalPoison",
+        "originalStatementPresent": true,
+        "bodySame": true,
+        "receiverBoundary": "Original identifiers passed with no early foreign-property evaluation"
+      },
+      {
+        "name": "closeMechanicalExtraKnife",
+        "originalStatementPresent": true,
+        "bodySame": true,
+        "receiverBoundary": "Original identifiers passed with no early foreign-property evaluation"
+      },
+      {
+        "name": "closeMerchantTrade",
+        "originalStatementPresent": true,
+        "bodySame": true,
+        "receiverBoundary": "Original identifiers passed with no early foreign-property evaluation"
+      },
+      {
+        "name": "recordMerchantTrade",
+        "originalStatementPresent": true,
+        "bodySame": true,
+        "receiverBoundary": "Original identifiers passed with no early foreign-property evaluation"
+      },
+      {
+        "name": "closeBlackMarketTrade",
+        "originalStatementPresent": true,
+        "bodySame": true,
+        "receiverBoundary": "Original identifiers passed with no early foreign-property evaluation"
+      },
+      {
+        "name": "recordBlackMarketTrade",
+        "originalStatementPresent": true,
+        "bodySame": true,
+        "receiverBoundary": "Original identifiers passed with no early foreign-property evaluation"
+      }
+    ],
+    "policy": "Entire original emitted programs incl imports/callbacks/arrays compared; exact inverse solely expands actual eight concrete writer calls and removes their own helper declarations/imports. New command bodies require independent original-statement proof; type changes/assertions erase. Only existing ObjectLiteral/NamedImports optional final separators normalize.",
+    "fixturePolicy": "Actual Git originals compared with complete ESNext+CJS emitted programs including callbacks, fixtures, arrays/holes and runtime imports; only optional final ObjectLiteral/NamedImports separators normalize."
+  },
+  "fixtures": {
+    "fieldOrHistoryAdapters": 45,
+    "installationInputAssertion": 1,
+    "expectVarianceAnnotation": 1,
+    "inputAndAssertionsChanged": false,
+    "newUnitTests": 4
+  },
+  "receipts": [
+    {
+      "kind": "backend-source-types",
+      "session": 51571,
+      "actualExit": 0
+    },
+    {
+      "kind": "complete-backend-source-and-test-types",
+      "session": 22972,
+      "actualExit": 0,
+      "observation": "Actual terminal write_stdin exit_code0; empty log alone is not proof."
+    },
+    {
+      "kind": "package-browser-source-types",
+      "actualExit": 0
+    },
+    {
+      "kind": "new-targeted-unit",
+      "actualExit": 0,
+      "passed": 4,
+      "failed": 0,
+      "assertions": 15
+    },
+    {
+      "kind": "declaration-source-and-test-program-proofs",
+      "actualExit": 0
+    },
+    {
+      "kind": "scoped-head-and-dependencies",
+      "session": 80862,
+      "actualExit": 0,
+      "heads": 0,
+      "newDependencyFailures": 0,
+      "existingDependencyFailures": 0
+    }
+  ],
+  "reviews": {
+    "author": "Complete boundary closure and true Git fixtures.",
+    "root": "Read actual neutral DTO/read aliases, current concrete call sites, death-shot fallback, Idiot replacement and new four prefix/identity tests; final55SHA matched.",
+    "architecture": "Independent actual64 Git origins/full modules,24 declarations,8 bodies,62 consumer signatures,23 Git test programs,14 initializer and9 codec/strong controls; final55SHA and4 candidate cold imports green. Compiler receipts attributed to author terminal polling, not an independent restart.",
+    "codecAndFixtures": "Third direction independently read actual Git24 declarations/69 state functions/14 getter-setters/8 commands/17 controls and23 complete original fixture programs,45 field/history spans, installation/expect annotations; final55SHA green. Exact final call comma exception scoped to original setMechanicalState(f.role,f.state), no array/token ignore."
+  },
+  "initialRedsRetained": [
+    "Source compiler readonly writers and nullable BlackMarket choice diagnostics; only concrete original writes/type assertions repaired.",
+    "Complete tests diagnostics before original field-specific fixture adapters, with unrelated Root draft unit separately fixed in its own commit.",
+    "Scoped hook timing/terminal responsibility heads corrected solely with accurate comments.",
+    "Independent command grammar formatter final separators handled by exact object/call spans; first red retained."
+  ],
+  "unchanged": [
+    "Runtime role storage and object identity",
+    "Custom profile initialization",
+    "Sealed Demon and strong Bear acceptance",
+    "Original scalar/stock/error prefixes",
+    "SchemaVersion2 snapshot writer/reader and independent verifier controls",
+    "Role and phase rules"
+  ],
+  "notRun": [
+    "Full runtime suites",
+    "Complete games",
+    "Discovery",
+    "Browser suite",
+    "Model calls",
+    "Dependency installation"
+  ],
+  "remaining": [
+    "All remaining private state consumer and opaque core boundary closure",
+    "Full schema/codec ownership and custom contribution policy",
+    "Complete lifecycle/effect/observation migration",
+    "Old facade exit and final same-source zero-debt gates"
+  ],
+  "independentReviewResults": {
+    "architecture": {
+      "result": "green",
+      "sourceBaseline": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "counts": {
+        "paths": 55,
+        "source": 31,
+        "oldTests": 23,
+        "newTests": 1
+      },
+      "proofs": {
+        "actualGitOriginals": 64,
+        "fullModulePrograms": 64,
+        "concreteNewCommands": 8,
+        "dataDeclarations": 24,
+        "finiteConsumerModules": 62,
+        "actualGitExistingFixturePrograms": 23,
+        "unchangedProfileInitializers": 14,
+        "unchangedCodecStrongControls": 9
+      },
+      "sourcePassed": true,
+      "fixturePassed": true,
+      "controlsPassed": true,
+      "coldPassed": true,
+      "scopePassed": true,
+      "pendingHeaderHashPaths": [],
+      "blockers": [],
+      "limitations": [
+        "Actual source/captured read signatures statically inspected; TypeScript readonly is not a runtime ACL or nominal prohibition on intentional structural recasting.",
+        "Installed/copy DTOs and detached player/archive data keep their mutable contracts; strong sealed writers retain separate authority.",
+        "Author compiler and runtime receipts are not independently rerun. Complete role codec/schema/lifecycle/container-object migration is not claimed."
+      ],
+      "scopeRows": [
+        {
+          "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/death_hook.ts",
+          "sha256": "edfa499a060cab73f8b879ba5653fbb27aadaa194051cc50241a129f6e14747d",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts",
+          "sha256": "21b9c80ed75728f5a8495bcf189645f7b48eb1bd7cf51959e2ba8ea69a7e4393",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+          "sha256": "95a91067ba171497cb38f6a7350e56ac5e83e45094b87f144cd4d2b31b5080f9",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+          "sha256": "dbe9bdae5283ec46938ec33683aceb15598aa4d103b29a82ae277950bc06ff18",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "sha256": "9c34285048eb07298f04818549654c359165ca32f84ca5de76f5a43a8ffa08b6",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+          "sha256": "738db0d1202f47cefae69ffce47e7a6b451e1781c889853206b8c0f85428165a",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+          "sha256": "23a689d15b3b8ac4d32ee5d0af58bbe448176bb567e294a1455e17e0a05f95f3",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/death_shot.ts",
+          "sha256": "a5f127e3654172371ad2fcdbec8a7b2e62eb12a9ad2b37852237b201c758ee10",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/gargoyle/state.ts",
+          "sha256": "f55720f43e29bf998e677534b2360ffed0d80a87f585f539391894f48c5e9280",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "sha256": "1aaffe1ccd42aced5e5e666548f54c6264075738727c59d1ae38676bac85ae03",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/hidden_wolf/state.ts",
+          "sha256": "4bbebeecde1d3e9cb6390c5b7a77cc39f3d9fa03157673c325b91c09b52ccb70",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/hunter/state.ts",
+          "sha256": "24d88b727af747a3cfc1e4a9f6d23be472e880659177c64513aae153794d370e",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "sha256": "b9c5726a75214dcb5ddc762b54cf5d4066cef297885561239a15be219cc1c1a6",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "sha256": "a74086b5a0778aeee09279345505d3a7cc907d68751dee7c55c1ec859f468134",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mechanical_wolf/death_hook.ts",
+          "sha256": "4cb20e7e67d062f9f315dfe3d2c557f5227cb2b386df188827926e3b79c2e9c4",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts",
+          "sha256": "2ae8ac77b6a1e139e8b5043166ba9c95560848bee9937edc83686e2fa27c65e9",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+          "sha256": "9eb19a4f847743e22ce19efe8d57c214bfb381d0396c6616282f15ac1fc64f6f",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+          "sha256": "d666d7a7715b258c29ff8c8679aaf49b6c111a851af54e7de39b33f268a04a4d",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+          "sha256": "d02e49c82660761ae8718404714856388c2ec3f448c4f81ca420b43f7489207b",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/player_extended_state.ts",
+          "sha256": "1f4d3ed8593fb6163044810d8e600e59c3da76ed13728be2a4e01e9a6c5f6632",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+          "sha256": "800f2f5e5b0e7dc795407176f405ada7923c6e5224ab1fd9ea460d4b13f64358",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "sha256": "d6a70fdaea189e1406c87975d955156e63b84c25f53e459f1451bc874d8144f9",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+          "sha256": "f9dac59c13f940bcac668675cd390a2bc58b76f68a8dfd141fabf4ebd7bb288d",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_beauty/state.ts",
+          "sha256": "7065cfb16aa7c6f9a25b5bf8ab84d7640ab8ef0d9babfaa3ef63f517f02f4200",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_king/state.ts",
+          "sha256": "bf246834b773620080d96430b3deaf0a5e3c64ce0c525050bdd18a2a22764ce5",
+          "same": true
+        },
+        {
+          "path": "packages/game-contract/src/index.ts",
+          "sha256": "5195a7d216bf070faeb203902ba2cf7572b27c72bae5b75fb369f4e11ce38a29",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/private_state.ts",
+          "sha256": "7bf39373a97ec6b6ccc0fc6d45aa38a5985ba2d5e9c6476e187b1300ff7d7074",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+          "sha256": "888a3f06fb52a87037ac2d56b8e43c40171168e9a4d516ea8e18a5e9f9b115b2",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+          "sha256": "8816fc1600e5a3f02d204b8b3d51e5ae6e1deee7f0a690991b69ae4d3aee7e99",
+          "same": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+          "sha256": "88f85ec399b2f1af6a11cb1a75798e9e51ab9c0cab56e5f6cb5eb9fcbd098773",
+          "same": true
+        },
+        {
+          "path": "backend/tests/engine/rules/awakened_runtime.test.ts",
+          "sha256": "4b3fcc26138b14e8b55d7b3e8a532aeb20ce5f69868d400bdeda89a7a5d9ac8a",
+          "same": true
+        },
+        {
+          "path": "backend/tests/engine/rules/cupid.test.ts",
+          "sha256": "db6e0a9fe27a959d09531677d6aff915b1e1cf542da8ddfeb8ceb1e494e87019",
+          "same": true
+        },
+        {
+          "path": "backend/tests/engine/rules/mechanical_wolf.test.ts",
+          "sha256": "f6ef57218e18eda9fdb19db1910f0f347d632512ca52c4fdb816e05af460fcd2",
+          "same": true
+        },
+        {
+          "path": "backend/tests/engine/rules/wolf_beauty.test.ts",
+          "sha256": "5c330ae634f8935ee6aae938f810aad5823b66a5743efe5236d7eeb9283b2944",
+          "same": true
+        },
+        {
+          "path": "backend/tests/scenarios/mechanisms/configured-death-policy-permits-and-copied-guns.test.ts",
+          "sha256": "93babff64cd896f78089c9e7c8333f91a57df2dc7b431e9eff7ae8990e84e1d7",
+          "same": true
+        },
+        {
+          "path": "backend/tests/scenarios/reproduction/demon-hunter/native-stock-and-failed-checkpoints.test.ts",
+          "sha256": "1d57091b2cace06419ba1c7bd089ba0c5617cd0be7552487e4528cd11881b09e",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/agents/protocol/rejection-messages.test.ts",
+          "sha256": "ad49603af8de6b5eebb25aa54852a66e5b5380f28a6edba743e2ed77fe5ff4ac",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+          "sha256": "f8105c8e819fbd5a914a6c07aa417a96853a55ae8fdd59f98a04de39598a56ed",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/animal-dream/authority.test.ts",
+          "sha256": "723542a9282f274a333e45e756bd9dc9d7bb082408e4c57e6c6cf4f32fd73968",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/animal-dream/request-envelope.test.ts",
+          "sha256": "0c1a88d36e0ad1f032305d2fac7a5ac1ebc397e1622ef145332fc19ff4d385ae",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/awakened-hidden-wolf/state.test.ts",
+          "sha256": "124cbb300168a70fcdf4bca96095d03fc8a60a6bc573058b8674a41f7381f684",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/bear/captured-public-sample.test.ts",
+          "sha256": "b2d9a23bc0b11a85b8c90b2e4f33dbc8ed1239d0657db268df6e94f479ee3478",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/bear/dawn-frame.test.ts",
+          "sha256": "399e3cfb1f732a52cd1c145dc51a76e7851221668af9a128653992dcbacf4ed1",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/knife-inheritance-ownership.test.ts",
+          "sha256": "da508e4da28d90e64a127cc02646587319e48fe227300e2821253487cd6e5dce",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/knight-state-ownership.test.ts",
+          "sha256": "48a8c14858cef857e40dc183b0d9bcd373cc640159f2ed783f131016817d9e4c",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/mechanical-wolf/scope.test.ts",
+          "sha256": "b061e4efa865a58fdf8150dda00ca085a269b67c371a5fcce4b04e4e27b11a6e",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/mechanical-wolf/state.test.ts",
+          "sha256": "0a9534bc0e55bc3f0bb4323f5982dd4f9ddeaacccb29f0d7c89e4a3ac34b0911",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts",
+          "sha256": "1e4ec12335d1ec05527b1a3eed7d451c67ab38ba84e8738203e6b6c7d813e4bf",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/white-wolf-king-consumption.test.ts",
+          "sha256": "6ffe1ddacbe18631e82b1879e7de1ae67b6a2590acffe2064eeea9cb5b8df641",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/features/wolf-king/day-origin-policy.test.ts",
+          "sha256": "c9d14faf73b6e24bbf62b5948ce36d21b2215152a6b23adbab09a91103ef1d62",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+          "sha256": "0e8868c991e02245638ef14a3620ab7792dc29ee68b7ea3a391cfac21e3694fb",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+          "sha256": "743b0dd92689716e3428a34e6d70c2680251bd4fd1f251009c7edc7a1e9196a8",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/hunter-death-causes.test.ts",
+          "sha256": "a9045c4140f0d148776a6094d653a5b340db2f641cbe0d6873da1e2cf746ab92",
+          "same": true
+        },
+        {
+          "path": "packages/game-contract/src/role-state-data.ts",
+          "sha256": "a4b12e9d696baa4de0c50aa9e286889fe923a2cfff9b719555482d3c49fbbee0",
+          "same": true
+        },
+        {
+          "path": "backend/tests/unit/domain/role-state-read-boundary.test.ts",
+          "sha256": "422014e18ab41608fe1bf28dca7909500031e50b829a848975fdccac53ad1de8",
+          "same": true
+        }
+      ],
+      "authorClosedCompilerReceipts": {
+        "completeSourceTests": {
+          "session": 22972,
+          "exitCode": 0,
+          "closed": true
+        },
+        "source": "Author actual terminal receipt and handoff, read by Root; Root did not independently poll the already-closed session. No independent restart/typecheck.",
+        "scopedHeadsDependencies": {
+          "session": 80862,
+          "exitCode": 0,
+          "closed": true
+        }
+      }
+    },
+    "codecAndFixtures": {
+      "conclusion": "green / no blocking findings in final55 snapshot",
+      "sourceBase": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "scopeCounts": {
+        "paths": 55,
+        "source": 31,
+        "oldTests": 23,
+        "newTests": 1
+      },
+      "finalScope": [
+        {
+          "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/death_hook.ts",
+          "authorSha256": "edfa499a060cab73f8b879ba5653fbb27aadaa194051cc50241a129f6e14747d",
+          "currentSha256": "edfa499a060cab73f8b879ba5653fbb27aadaa194051cc50241a129f6e14747d",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts",
+          "authorSha256": "21b9c80ed75728f5a8495bcf189645f7b48eb1bd7cf51959e2ba8ea69a7e4393",
+          "currentSha256": "21b9c80ed75728f5a8495bcf189645f7b48eb1bd7cf51959e2ba8ea69a7e4393",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+          "authorSha256": "95a91067ba171497cb38f6a7350e56ac5e83e45094b87f144cd4d2b31b5080f9",
+          "currentSha256": "95a91067ba171497cb38f6a7350e56ac5e83e45094b87f144cd4d2b31b5080f9",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+          "authorSha256": "dbe9bdae5283ec46938ec33683aceb15598aa4d103b29a82ae277950bc06ff18",
+          "currentSha256": "dbe9bdae5283ec46938ec33683aceb15598aa4d103b29a82ae277950bc06ff18",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "authorSha256": "9c34285048eb07298f04818549654c359165ca32f84ca5de76f5a43a8ffa08b6",
+          "currentSha256": "9c34285048eb07298f04818549654c359165ca32f84ca5de76f5a43a8ffa08b6",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+          "authorSha256": "738db0d1202f47cefae69ffce47e7a6b451e1781c889853206b8c0f85428165a",
+          "currentSha256": "738db0d1202f47cefae69ffce47e7a6b451e1781c889853206b8c0f85428165a",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+          "authorSha256": "23a689d15b3b8ac4d32ee5d0af58bbe448176bb567e294a1455e17e0a05f95f3",
+          "currentSha256": "23a689d15b3b8ac4d32ee5d0af58bbe448176bb567e294a1455e17e0a05f95f3",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/death_shot.ts",
+          "authorSha256": "a5f127e3654172371ad2fcdbec8a7b2e62eb12a9ad2b37852237b201c758ee10",
+          "currentSha256": "a5f127e3654172371ad2fcdbec8a7b2e62eb12a9ad2b37852237b201c758ee10",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/gargoyle/state.ts",
+          "authorSha256": "f55720f43e29bf998e677534b2360ffed0d80a87f585f539391894f48c5e9280",
+          "currentSha256": "f55720f43e29bf998e677534b2360ffed0d80a87f585f539391894f48c5e9280",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "authorSha256": "1aaffe1ccd42aced5e5e666548f54c6264075738727c59d1ae38676bac85ae03",
+          "currentSha256": "1aaffe1ccd42aced5e5e666548f54c6264075738727c59d1ae38676bac85ae03",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/hidden_wolf/state.ts",
+          "authorSha256": "4bbebeecde1d3e9cb6390c5b7a77cc39f3d9fa03157673c325b91c09b52ccb70",
+          "currentSha256": "4bbebeecde1d3e9cb6390c5b7a77cc39f3d9fa03157673c325b91c09b52ccb70",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/hunter/state.ts",
+          "authorSha256": "24d88b727af747a3cfc1e4a9f6d23be472e880659177c64513aae153794d370e",
+          "currentSha256": "24d88b727af747a3cfc1e4a9f6d23be472e880659177c64513aae153794d370e",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "authorSha256": "b9c5726a75214dcb5ddc762b54cf5d4066cef297885561239a15be219cc1c1a6",
+          "currentSha256": "b9c5726a75214dcb5ddc762b54cf5d4066cef297885561239a15be219cc1c1a6",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "authorSha256": "a74086b5a0778aeee09279345505d3a7cc907d68751dee7c55c1ec859f468134",
+          "currentSha256": "a74086b5a0778aeee09279345505d3a7cc907d68751dee7c55c1ec859f468134",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mechanical_wolf/death_hook.ts",
+          "authorSha256": "4cb20e7e67d062f9f315dfe3d2c557f5227cb2b386df188827926e3b79c2e9c4",
+          "currentSha256": "4cb20e7e67d062f9f315dfe3d2c557f5227cb2b386df188827926e3b79c2e9c4",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts",
+          "authorSha256": "2ae8ac77b6a1e139e8b5043166ba9c95560848bee9937edc83686e2fa27c65e9",
+          "currentSha256": "2ae8ac77b6a1e139e8b5043166ba9c95560848bee9937edc83686e2fa27c65e9",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+          "authorSha256": "9eb19a4f847743e22ce19efe8d57c214bfb381d0396c6616282f15ac1fc64f6f",
+          "currentSha256": "9eb19a4f847743e22ce19efe8d57c214bfb381d0396c6616282f15ac1fc64f6f",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+          "authorSha256": "d666d7a7715b258c29ff8c8679aaf49b6c111a851af54e7de39b33f268a04a4d",
+          "currentSha256": "d666d7a7715b258c29ff8c8679aaf49b6c111a851af54e7de39b33f268a04a4d",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+          "authorSha256": "d02e49c82660761ae8718404714856388c2ec3f448c4f81ca420b43f7489207b",
+          "currentSha256": "d02e49c82660761ae8718404714856388c2ec3f448c4f81ca420b43f7489207b",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/player_extended_state.ts",
+          "authorSha256": "1f4d3ed8593fb6163044810d8e600e59c3da76ed13728be2a4e01e9a6c5f6632",
+          "currentSha256": "1f4d3ed8593fb6163044810d8e600e59c3da76ed13728be2a4e01e9a6c5f6632",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+          "authorSha256": "800f2f5e5b0e7dc795407176f405ada7923c6e5224ab1fd9ea460d4b13f64358",
+          "currentSha256": "800f2f5e5b0e7dc795407176f405ada7923c6e5224ab1fd9ea460d4b13f64358",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "authorSha256": "d6a70fdaea189e1406c87975d955156e63b84c25f53e459f1451bc874d8144f9",
+          "currentSha256": "d6a70fdaea189e1406c87975d955156e63b84c25f53e459f1451bc874d8144f9",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+          "authorSha256": "f9dac59c13f940bcac668675cd390a2bc58b76f68a8dfd141fabf4ebd7bb288d",
+          "currentSha256": "f9dac59c13f940bcac668675cd390a2bc58b76f68a8dfd141fabf4ebd7bb288d",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_beauty/state.ts",
+          "authorSha256": "7065cfb16aa7c6f9a25b5bf8ab84d7640ab8ef0d9babfaa3ef63f517f02f4200",
+          "currentSha256": "7065cfb16aa7c6f9a25b5bf8ab84d7640ab8ef0d9babfaa3ef63f517f02f4200",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/wolf_king/state.ts",
+          "authorSha256": "bf246834b773620080d96430b3deaf0a5e3c64ce0c525050bdd18a2a22764ce5",
+          "currentSha256": "bf246834b773620080d96430b3deaf0a5e3c64ce0c525050bdd18a2a22764ce5",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "packages/game-contract/src/index.ts",
+          "authorSha256": "5195a7d216bf070faeb203902ba2cf7572b27c72bae5b75fb369f4e11ce38a29",
+          "currentSha256": "5195a7d216bf070faeb203902ba2cf7572b27c72bae5b75fb369f4e11ce38a29",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/private_state.ts",
+          "authorSha256": "7bf39373a97ec6b6ccc0fc6d45aa38a5985ba2d5e9c6476e187b1300ff7d7074",
+          "currentSha256": "7bf39373a97ec6b6ccc0fc6d45aa38a5985ba2d5e9c6476e187b1300ff7d7074",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+          "authorSha256": "888a3f06fb52a87037ac2d56b8e43c40171168e9a4d516ea8e18a5e9f9b115b2",
+          "currentSha256": "888a3f06fb52a87037ac2d56b8e43c40171168e9a4d516ea8e18a5e9f9b115b2",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+          "authorSha256": "8816fc1600e5a3f02d204b8b3d51e5ae6e1deee7f0a690991b69ae4d3aee7e99",
+          "currentSha256": "8816fc1600e5a3f02d204b8b3d51e5ae6e1deee7f0a690991b69ae4d3aee7e99",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+          "authorSha256": "88f85ec399b2f1af6a11cb1a75798e9e51ab9c0cab56e5f6cb5eb9fcbd098773",
+          "currentSha256": "88f85ec399b2f1af6a11cb1a75798e9e51ab9c0cab56e5f6cb5eb9fcbd098773",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/engine/rules/awakened_runtime.test.ts",
+          "authorSha256": "4b3fcc26138b14e8b55d7b3e8a532aeb20ce5f69868d400bdeda89a7a5d9ac8a",
+          "currentSha256": "4b3fcc26138b14e8b55d7b3e8a532aeb20ce5f69868d400bdeda89a7a5d9ac8a",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/engine/rules/cupid.test.ts",
+          "authorSha256": "db6e0a9fe27a959d09531677d6aff915b1e1cf542da8ddfeb8ceb1e494e87019",
+          "currentSha256": "db6e0a9fe27a959d09531677d6aff915b1e1cf542da8ddfeb8ceb1e494e87019",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/engine/rules/mechanical_wolf.test.ts",
+          "authorSha256": "f6ef57218e18eda9fdb19db1910f0f347d632512ca52c4fdb816e05af460fcd2",
+          "currentSha256": "f6ef57218e18eda9fdb19db1910f0f347d632512ca52c4fdb816e05af460fcd2",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/engine/rules/wolf_beauty.test.ts",
+          "authorSha256": "5c330ae634f8935ee6aae938f810aad5823b66a5743efe5236d7eeb9283b2944",
+          "currentSha256": "5c330ae634f8935ee6aae938f810aad5823b66a5743efe5236d7eeb9283b2944",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/scenarios/mechanisms/configured-death-policy-permits-and-copied-guns.test.ts",
+          "authorSha256": "93babff64cd896f78089c9e7c8333f91a57df2dc7b431e9eff7ae8990e84e1d7",
+          "currentSha256": "93babff64cd896f78089c9e7c8333f91a57df2dc7b431e9eff7ae8990e84e1d7",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/scenarios/reproduction/demon-hunter/native-stock-and-failed-checkpoints.test.ts",
+          "authorSha256": "1d57091b2cace06419ba1c7bd089ba0c5617cd0be7552487e4528cd11881b09e",
+          "currentSha256": "1d57091b2cace06419ba1c7bd089ba0c5617cd0be7552487e4528cd11881b09e",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/agents/protocol/rejection-messages.test.ts",
+          "authorSha256": "ad49603af8de6b5eebb25aa54852a66e5b5380f28a6edba743e2ed77fe5ff4ac",
+          "currentSha256": "ad49603af8de6b5eebb25aa54852a66e5b5380f28a6edba743e2ed77fe5ff4ac",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/engine/player-state-projection.test.ts",
+          "authorSha256": "f8105c8e819fbd5a914a6c07aa417a96853a55ae8fdd59f98a04de39598a56ed",
+          "currentSha256": "f8105c8e819fbd5a914a6c07aa417a96853a55ae8fdd59f98a04de39598a56ed",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/features/animal-dream/authority.test.ts",
+          "authorSha256": "723542a9282f274a333e45e756bd9dc9d7bb082408e4c57e6c6cf4f32fd73968",
+          "currentSha256": "723542a9282f274a333e45e756bd9dc9d7bb082408e4c57e6c6cf4f32fd73968",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/features/animal-dream/request-envelope.test.ts",
+          "authorSha256": "0c1a88d36e0ad1f032305d2fac7a5ac1ebc397e1622ef145332fc19ff4d385ae",
+          "currentSha256": "0c1a88d36e0ad1f032305d2fac7a5ac1ebc397e1622ef145332fc19ff4d385ae",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/features/awakened-hidden-wolf/state.test.ts",
+          "authorSha256": "124cbb300168a70fcdf4bca96095d03fc8a60a6bc573058b8674a41f7381f684",
+          "currentSha256": "124cbb300168a70fcdf4bca96095d03fc8a60a6bc573058b8674a41f7381f684",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/features/bear/captured-public-sample.test.ts",
+          "authorSha256": "b2d9a23bc0b11a85b8c90b2e4f33dbc8ed1239d0657db268df6e94f479ee3478",
+          "currentSha256": "b2d9a23bc0b11a85b8c90b2e4f33dbc8ed1239d0657db268df6e94f479ee3478",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/features/bear/dawn-frame.test.ts",
+          "authorSha256": "399e3cfb1f732a52cd1c145dc51a76e7851221668af9a128653992dcbacf4ed1",
+          "currentSha256": "399e3cfb1f732a52cd1c145dc51a76e7851221668af9a128653992dcbacf4ed1",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/features/knife-inheritance-ownership.test.ts",
+          "authorSha256": "da508e4da28d90e64a127cc02646587319e48fe227300e2821253487cd6e5dce",
+          "currentSha256": "da508e4da28d90e64a127cc02646587319e48fe227300e2821253487cd6e5dce",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/features/knight-state-ownership.test.ts",
+          "authorSha256": "48a8c14858cef857e40dc183b0d9bcd373cc640159f2ed783f131016817d9e4c",
+          "currentSha256": "48a8c14858cef857e40dc183b0d9bcd373cc640159f2ed783f131016817d9e4c",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/features/mechanical-wolf/scope.test.ts",
+          "authorSha256": "b061e4efa865a58fdf8150dda00ca085a269b67c371a5fcce4b04e4e27b11a6e",
+          "currentSha256": "b061e4efa865a58fdf8150dda00ca085a269b67c371a5fcce4b04e4e27b11a6e",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/features/mechanical-wolf/state.test.ts",
+          "authorSha256": "0a9534bc0e55bc3f0bb4323f5982dd4f9ddeaacccb29f0d7c89e4a3ac34b0911",
+          "currentSha256": "0a9534bc0e55bc3f0bb4323f5982dd4f9ddeaacccb29f0d7c89e4a3ac34b0911",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts",
+          "authorSha256": "1e4ec12335d1ec05527b1a3eed7d451c67ab38ba84e8738203e6b6c7d813e4bf",
+          "currentSha256": "1e4ec12335d1ec05527b1a3eed7d451c67ab38ba84e8738203e6b6c7d813e4bf",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/features/white-wolf-king-consumption.test.ts",
+          "authorSha256": "6ffe1ddacbe18631e82b1879e7de1ae67b6a2590acffe2064eeea9cb5b8df641",
+          "currentSha256": "6ffe1ddacbe18631e82b1879e7de1ae67b6a2590acffe2064eeea9cb5b8df641",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/features/wolf-king/day-origin-policy.test.ts",
+          "authorSha256": "c9d14faf73b6e24bbf62b5948ce36d21b2215152a6b23adbab09a91103ef1d62",
+          "currentSha256": "c9d14faf73b6e24bbf62b5948ce36d21b2215152a6b23adbab09a91103ef1d62",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+          "authorSha256": "0e8868c991e02245638ef14a3620ab7792dc29ee68b7ea3a391cfac21e3694fb",
+          "currentSha256": "0e8868c991e02245638ef14a3620ab7792dc29ee68b7ea3a391cfac21e3694fb",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+          "authorSha256": "743b0dd92689716e3428a34e6d70c2680251bd4fd1f251009c7edc7a1e9196a8",
+          "currentSha256": "743b0dd92689716e3428a34e6d70c2680251bd4fd1f251009c7edc7a1e9196a8",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/hunter-death-causes.test.ts",
+          "authorSha256": "a9045c4140f0d148776a6094d653a5b340db2f641cbe0d6873da1e2cf746ab92",
+          "currentSha256": "a9045c4140f0d148776a6094d653a5b340db2f641cbe0d6873da1e2cf746ab92",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "packages/game-contract/src/role-state-data.ts",
+          "authorSha256": "a4b12e9d696baa4de0c50aa9e286889fe923a2cfff9b719555482d3c49fbbee0",
+          "currentSha256": "a4b12e9d696baa4de0c50aa9e286889fe923a2cfff9b719555482d3c49fbbee0",
+          "authorFinalScopeMatches": true
+        },
+        {
+          "path": "backend/tests/unit/domain/role-state-read-boundary.test.ts",
+          "authorSha256": "422014e18ab41608fe1bf28dca7909500031e50b829a848975fdccac53ad1de8",
+          "currentSha256": "422014e18ab41608fe1bf28dca7909500031e50b829a848975fdccac53ad1de8",
+          "authorFinalScopeMatches": true
+        }
+      ],
+      "independentStaticEvidence": "/tmp/awa-p3-role-state-third-static.json",
+      "fixtureEvidence": "/tmp/awa-p3-role-state-third-fixtures.json",
+      "staticCounts": {
+        "exactDataDeclarations": 24,
+        "originalStateFunctions": 69,
+        "directStateGetters": 14,
+        "originalSetters": 14,
+        "newCommands": 8,
+        "unchangedStrongDawnMethods": 2,
+        "unchangedControlFiles": 17
+      },
+      "fixtureCounts": {
+        "oldFiles": 23,
+        "currentFilesFromC65": 20,
+        "currentFilesFromFa811": 3,
+        "fieldOrHistoryTypeCastSpans": 45,
+        "deferred": [],
+        "additionalTypeOnly": [
+          "expect<unknown> on original expected read array union",
+          "original f.state install argument cast to MechanicalState"
+        ]
+      },
+      "recentGitAdapters": [
+        {
+          "path": "backend/tests/scenarios/mechanisms/configured-death-policy-permits-and-copied-guns.test.ts",
+          "baseline": "fa811708",
+          "baseSha256": "b3ca0872b1fdad503064e5d8ecc4814778c4e52dbea4d26cc9723669f048c212",
+          "authorBaselineSameActualGit": true,
+          "currentSha256": "93babff64cd896f78089c9e7c8333f91a57df2dc7b431e9eff7ae8990e84e1d7",
+          "completeRuntimeASTSame": true
+        },
+        {
+          "path": "backend/tests/scenarios/reproduction/demon-hunter/native-stock-and-failed-checkpoints.test.ts",
+          "baseline": "fa811708",
+          "baseSha256": "febb2fd486081125439fc7cad7c92f442922a9051adb3baedecc180540cf7fd8",
+          "authorBaselineSameActualGit": true,
+          "currentSha256": "1d57091b2cace06419ba1c7bd089ba0c5617cd0be7552487e4528cd11881b09e",
+          "completeRuntimeASTSame": true
+        },
+        {
+          "path": "backend/tests/unit/mechanisms/configured-inspection-and-death-policy-instances.test.ts",
+          "baseline": "fa811708",
+          "baseSha256": "1896319b8120ba8cba7f3bff065ad76e01cd967ada009df0b2ad3b890768ee49",
+          "authorBaselineSameActualGit": true,
+          "currentSha256": "0e8868c991e02245638ef14a3620ab7792dc29ee68b7ea3a391cfac21e3694fb",
+          "completeRuntimeASTSame": true
+        }
+      ],
+      "reviewedSemantics": [
+        "All24 data declarations retain actual original ordered members, readonly/optional markers, nullable alternatives, union literals and Extract constraints. Only exact board ImportType qualification maps to same-symbol neutral imports.",
+        "20 named Read aliases preserve finite per-kind data shape; Mechanical inspection and Gravekeeper rows/results, histories, learned metadata, nullable modes/choices are readonly below the root; input/fresh/copy/player data remain their original mutable DTO contracts.",
+        "14 setter/getter bodies retain original property access and pointer identity after type-wrapper erasure. Ten direct slot setters store and return exact input. Mechanical/Awakened keep copyAbilityData then original literal key assignment and copied return; two Merchant setters keep original copy and void result.",
+        "Idiot ordinary reveal still replaces its original slot via setIdiotState({revealed:true}), then original voting/badge/event prefix. Core privateState stays Readonly<Record<string,unknown>>; custom RoleProfile init contract and Catalog actual optional-call inputs are unchanged, not a RoleID mapped closed-key schema.",
+        "Eight new concrete payload commands retain original statement bodies. Mechanical inspection gets history then push, then target.id then result spread; poison claims/marks precede stock, extra-knife effects precede stock. Merchant successful payment keeps remaining then closedDay then choice; wait changes only closedDay, and setter failure retains partial prefix without rollback.",
+        "Bear normal push extraction keeps receiver. dawnBodyCurrent and publishDawn whole method bytes are unchanged; original descriptor/Proxy/inert append checks, guarded two Object.defineProperty writes and independent publication lease remain separate.",
+        "PlayerGravekeeperState report acceptance/write contract remains structurally identical to original replay GravekeeperReport: exileDay/receivedDay/targetId and camp-only mutable InspectionResult. Existing player DTO projections do not inherit the installed readonly storage shape or broaden disclosed fields.",
+        "Schema2/capture/replay, RoleComponent/Catalog/init contract, player_state, ability copier and eight archive verifier/native-stock controls remain exact actual Git bytes; no state live-reference is serialized or promoted into permission.",
+        "All23 old fixture programs retain every runtime expression and literal after exact TS wrapper/type erasure; all arrays, control hierarchy, getters, callbacks, same-slot writes and expectations preserved. Three just-migrated files use actual fa811708 blobs, not a future draft: original policy write inside shoot request, original Hunter stock restoration hostile probe, and original pending-shot policy revocation. The other20 use actual c65 blobs."
+      ],
+      "redEvidencePreserved": [
+        "/tmp/awa-p3-role-state-third-static-first-red.log",
+        "/tmp/awa-p3-role-state-third-static-command-first-red.json",
+        "/tmp/awa-p3-role-state-third-fixtures-first-red.json"
+      ],
+      "redResolution": "Initial Node nested git spawn harness EPERM and nonexistent profile.ts owner fixed only in read-only harness. Two command-body red rows were precise optional final comma formatting in ObjectLiteral/CallExpression lists. Fixture first red was setMechanicalState two-argument final comma; two then-drifting hook header SHAs refreshed by author. No business source/input fix required by these harness findings. Final comparisons preserve all other tokens, including array values and punctuation.",
+      "findings": [],
+      "limits": [
+        "No compiler/types/runtime tests/gates/cold/discovery/games repeated.",
+        "AST erasure proves runtime input/body preservation; it does not imply unchanged sourceHash. All55 current source hashes are explicitly recorded.",
+        "Readonly is a compile-time ownership surface, not runtime authorization or freezing. Mutable install/fresh/player DTOs intentionally remain accepted and feature command functions retain their current permission responsibility.",
+        "This closes only the ordinary14 source/data/read/fixture migration slice, not all P3/P4/P9 or full RulePlan coverage."
+      ],
+      "scopeHeaderRefresh": [
+        {
+          "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/death_hook.ts",
+          "previousOwnerScopeSha256": "106524c74a5404f84dfc7919be4bf7f4f041ebeb652877ed14f0a8a294c8ede3",
+          "refreshedSha256": "edfa499a060cab73f8b879ba5653fbb27aadaa194051cc50241a129f6e14747d",
+          "change": "Author final timing/terminal comments and leading-space alignment; interim review SHA retained. Final actual scope is latest frozen 55. No runtime claim inferred from mtime or header hash.",
+          "intermediateReviewedSha256": "fd12cdf46cc5cdd035c296b3a60b41cd5967ebc7ab6473d8399ee2f36d81cd58"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/mechanical_wolf/death_hook.ts",
+          "previousOwnerScopeSha256": "7046f17ce971d060d365f17fe28bd60cab16eea846fa51d6577a091868ba97e3",
+          "refreshedSha256": "4cb20e7e67d062f9f315dfe3d2c557f5227cb2b386df188827926e3b79c2e9c4",
+          "change": "Author final timing/terminal comments and leading-space alignment; interim review SHA retained. Final actual scope is latest frozen 55. No runtime claim inferred from mtime or header hash.",
+          "intermediateReviewedSha256": "366cebd4933017d6a0d8f86fd2cc9865a4f80776a4f5d6adb4b7402c4979ad4c"
+        }
+      ],
+      "exactFixtureFormatException": [
+        {
+          "path": "backend/tests/unit/features/mechanical-wolf/scope.test.ts",
+          "kind": "formatter-optional-last-call-argument-comma",
+          "start": 3170,
+          "end": 3171,
+          "line": 82,
+          "currentCall": "setMechanicalState(\n        f.role,\n        f.state as import(\"@ai-werewolf-arena/game-contract\").MechanicalState,\n      )",
+          "originalCall": "setMechanicalState(f.role, f.state)",
+          "runtimeArgumentSame": "f.state; original install copy call remains at same branch, no early property read",
+          "arrayNormalization": false
+        }
+      ],
+      "finalRecheck": {
+        "paths": 55,
+        "drift": []
+      }
+    }
+  }
+}

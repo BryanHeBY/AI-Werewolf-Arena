@@ -7,7 +7,10 @@
  * transport. Support files, fixture bytes, policy and state behavior are retained.
  */
 import { expect, test } from "bun:test";
-import { animalRosterFixture, animalInternalConfig } from "../../../support/features/animal-dream/builders/roster";
+import {
+  animalRosterFixture,
+  animalInternalConfig,
+} from "../../../support/features/animal-dream/builders/roster";
 import {
   installAnimalAuthority,
   beginAnimalNight,
@@ -117,9 +120,14 @@ test("Fox clears old Beauty binding without fabricating a Night pass", () => {
   const f = fixture(),
     state = getWolfBeautyState(f.role(1))!;
   beginAnimalNight(f.world, 1, () => true);
-  state.targetId = 5;
-  state.lastActedDay = 1;
-  state.history.push({ day: 1, targetId: 5 });
+  (state as { targetId: number | null }).targetId = 5;
+  (state as { lastActedDay: number | null }).lastActedDay = 1;
+  (
+    state.history as {
+      day: number;
+      targetId: import("@ai-werewolf-arena/game-contract").EntityId | null;
+    }[]
+  ).push({ day: 1, targetId: 5 });
   bindCharm(f.world, 1, 5);
   closeAnimalNight(f.world, 1, "normal");
   beginAnimalNight(f.world, 2, () => true);

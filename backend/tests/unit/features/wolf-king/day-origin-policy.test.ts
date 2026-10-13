@@ -5,7 +5,17 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, DeathCause, Phase, Role, permitsDeathShot, type BoardConfig, type DeathActionPolicy, type RoleComponent, type GameEvent } from "../../../../src/core";
+import {
+  COMPONENT,
+  DeathCause,
+  Phase,
+  Role,
+  permitsDeathShot,
+  type BoardConfig,
+  type DeathActionPolicy,
+  type RoleComponent,
+  type GameEvent,
+} from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { magicianTwelveConfig } from "../../../../src/runtime/scenarios/magician_twelve";
 import {
@@ -317,7 +327,16 @@ for (const timing of ["await", "deferred"] as const)
                 world.getComponent<RoleComponent>(3, COMPONENT.Role)!,
               )!;
               mutate = () => {
-                if (field === "policy") state.deathActionPolicy = "awa_knife_or_exile_v1";
+                if (field === "policy")
+                  (
+                    state as {
+                      deathActionPolicy:
+                        | "awa_qualified_sources_v1"
+                        | "awa_knife_or_exile_v1"
+                        | "awa_day_deaths_v1"
+                        | undefined;
+                    }
+                  ).deathActionPolicy = "awa_knife_or_exile_v1";
                 if (field === "cause") sources[3] = [DeathCause.Poison];
               };
               const result = await WOLF_KING_ROLE_PROFILE.deathHook!(...args);

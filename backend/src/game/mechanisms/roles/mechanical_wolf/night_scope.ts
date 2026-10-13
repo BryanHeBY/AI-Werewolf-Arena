@@ -3,6 +3,12 @@
  * life, state and source identities; outputs are current mode checks and real-night commitment
  * records. It never lets replacement mode/state reuse the old mimic or knife permission.
  */
+import type {
+  MechanicalMode,
+  MechanicalReadState as MechanicalState,
+  MechanicalReadSkill as MechanicalSkill,
+} from "@ai-werewolf-arena/game-contract";
+
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, type EntityId } from "../../../../core/domain/model";
@@ -12,12 +18,7 @@ import {
   type NightLifeScope,
 } from "../../../../core/domain/night_effects";
 import type { World } from "../../../../core/domain/world";
-import {
-  getMechanicalState,
-  type MechanicalMode,
-  type MechanicalState,
-  type MechanicalSkill,
-} from "./state";
+import { getMechanicalState } from "./state";
 
 export interface MechanicalOwnerScope {
   readonly world: World;

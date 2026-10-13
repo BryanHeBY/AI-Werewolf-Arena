@@ -4,6 +4,8 @@
  * and skip/commit facts. Paid-effect lifetime remains tied to the original life, not a
  * replacement merchant.
  */
+import { closeBlackMarketTrade, recordBlackMarketTrade } from "./state";
+
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Role, Phase, WitchSelfHealRule } from "../../../../core/domain/model";
@@ -52,7 +54,7 @@ export const BLACK_MARKET_TRADE_STAGE: NightStageHandler = {
       const current = () => ownerCurrent() && canBlackMarketTrade(state, day);
       if (!current()) continue;
       const skip = () => {
-        state.closedDay = day;
+        closeBlackMarketTrade(state, day);
         recordCommit(ctx.world, day);
         ctx.events.push({
           timestamp: Date.now(),
@@ -161,11 +163,9 @@ export const BLACK_MARKET_TRADE_STAGE: NightStageHandler = {
               );
           }
         }
-        state.remaining = 0;
-        state.closedDay = day;
-        state.choice = { day, targetId, skill };
+        recordBlackMarketTrade(state, day, targetId, skill);
         recordCommit(ctx.world, day);
-        const choice = state.choice;
+        const choice = state.choice!;
         if (failed)
           (ctx.state.blackMarketBacklashes ??= []).push({
             target: life,

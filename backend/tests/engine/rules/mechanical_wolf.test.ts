@@ -404,7 +404,15 @@ for (const forge of ["serialized", "revive", "switch_mode"] as const)
       name: "mechanical_guard",
       args: { target_id: 3 },
     }));
-    if (forge === "serialized") game.state.mode = { day: 2, kind: "skill" };
+    if (forge === "serialized")
+      (
+        game.state as {
+          mode: {
+            day: number;
+            kind: import("@ai-werewolf-arena/game-contract").MechanicalMode;
+          } | null;
+        }
+      ).mode = { day: 2, kind: "skill" };
     else {
       ctx.actionProvider = {
         async getAction() {
@@ -415,7 +423,10 @@ for (const forge of ["serialized", "revive", "switch_mode"] as const)
         },
       };
       await mechanicalStage("mechanical_mode").execute(ctx);
-      if (forge === "switch_mode") game.state.mode!.kind = "skill";
+      if (forge === "switch_mode")
+        (
+          game.state.mode! as { kind: import("@ai-werewolf-arena/game-contract").MechanicalMode }
+        ).kind = "skill";
       else {
         const life = game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!;
         life.alive = false;
@@ -475,7 +486,7 @@ for (const revoke of [
     if (revoke === "gateway_spent")
       gateway.validateAndSanitize = (world, actorId, call, validationContext) => {
         const result = validate(world, actorId, call, validationContext);
-        if (original.kind === "poison") original.remaining = 0;
+        if (original.kind === "poison") (original as { remaining: 0 | 1 }).remaining = 0;
         return result;
       };
     ctx.actionProvider = {
@@ -488,10 +499,24 @@ for (const revoke of [
           (game.role.privateState as Record<string, unknown>).mechanical_wolf = structuredClone(
             game.state,
           );
-        if (revoke === "learning") game.state.learned = { ...game.state.learned! };
-        if (revoke === "mode") game.state.mode = { ...game.state.mode! };
+        if (revoke === "learning")
+          (
+            game.state as {
+              learned: import("@ai-werewolf-arena/game-contract").MechanicalReadLearning | null;
+            }
+          ).learned = { ...game.state.learned! };
+        if (revoke === "mode")
+          (
+            game.state as {
+              mode: {
+                day: number;
+                kind: import("@ai-werewolf-arena/game-contract").MechanicalMode;
+              } | null;
+            }
+          ).mode = { ...game.state.mode! };
         if (revoke === "target_life") replaceTarget();
-        if (revoke === "await_spent" && original.kind === "poison") original.remaining = 0;
+        if (revoke === "await_spent" && original.kind === "poison")
+          (original as { remaining: 0 | 1 }).remaining = 0;
         return { name: "mechanical_poison", args: { target_id: 3 } };
       },
     };
@@ -577,7 +602,12 @@ for (const revoke of ["camp", "private_state", "owner_state", "learning"] as con
             };
           if (revoke === "owner_state")
             (game.role.privateState as Record<string, unknown>).mechanical_wolf = { ...game.state };
-          if (revoke === "learning") game.state.learned = { ...game.state.learned! };
+          if (revoke === "learning")
+            (
+              game.state as {
+                learned: import("@ai-werewolf-arena/game-contract").MechanicalReadLearning | null;
+              }
+            ).learned = { ...game.state.learned! };
           return { kind: "shot", targetId: 4, deathActionId: permit.id };
         },
         events,

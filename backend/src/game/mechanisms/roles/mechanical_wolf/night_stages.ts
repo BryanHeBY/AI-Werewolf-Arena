@@ -4,6 +4,12 @@
  * facts in existing stage order. The stages do not merge distinct skill resource or failure
  * semantics.
  */
+import {
+  recordMechanicalInspection,
+  consumeMechanicalPoison,
+  closeMechanicalExtraKnife,
+} from "./state";
+
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, StatusMark, type EntityId, type ToolName } from "../../../../core/domain/model";
@@ -240,7 +246,7 @@ const skillStage: NightStageHandler = {
         if (call.name === "mechanical_inspect" && skill.kind === "inspection" && target) {
           const result = resolveInspection(ctx.world, target.id, "role", ctx.roleCatalog);
           if (!result || !current() || !livingNightLife(ctx.world, target)) continue;
-          skill.history.push({ day, targetId: target.id, result: { ...result } });
+          recordMechanicalInspection(skill, day, target, result);
           ctx.events.push({
             timestamp: Date.now(),
             type: "role_inspected",
@@ -249,7 +255,7 @@ const skillStage: NightStageHandler = {
         } else if (call.name === "mechanical_poison" && skill.kind === "poison" && target) {
           (ctx.state.poisonClaims ??= []).push({ source: owner.life, target });
           ctx.ensureMarks(target.id).add(StatusMark.PoisonMark);
-          skill.remaining = 0;
+          consumeMechanicalPoison(skill);
           ctx.events.push({
             timestamp: Date.now(),
             type: "mechanical_poison_used",
@@ -333,7 +339,7 @@ const attackStage: NightStageHandler = {
         if (targetId !== null && (!target || !livingNightLife(ctx.world, target))) continue;
         if (target)
           effects(ctx).attacks.push({ actorId: owner.actorId, target, isCurrent: effectCurrent });
-        skill.extraKnife = target ? "spent" : "expired";
+        closeMechanicalExtraKnife(skill, target);
         recordMechanicalNightCommit(ctx.world, day);
         ctx.events.push({
           timestamp: Date.now(),

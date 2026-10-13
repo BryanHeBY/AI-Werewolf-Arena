@@ -3,7 +3,17 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, DeathCause, Phase, Role, type BoardConfig, type GameEvent, type RoleComponent, type DeathActionPolicy, type InspectionPolicy } from "../../../src/core";
+import {
+  COMPONENT,
+  DeathCause,
+  Phase,
+  Role,
+  type BoardConfig,
+  type GameEvent,
+  type RoleComponent,
+  type DeathActionPolicy,
+  type InspectionPolicy,
+} from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   boardDefinitionFromConfig,
@@ -62,7 +72,15 @@ for (const kind of [Role.Hunter, Role.WolfKing] as const)
         async getAction(request) {
           if (request.allowedTools.includes("shoot")) {
             asks++;
-            state.deathActionPolicy = "awa_knife_or_exile_v1";
+            (
+              state as {
+                deathActionPolicy:
+                  | "awa_qualified_sources_v1"
+                  | "awa_knife_or_exile_v1"
+                  | "awa_day_deaths_v1"
+                  | undefined;
+              }
+            ).deathActionPolicy = "awa_knife_or_exile_v1";
             expect(
               new ToolGateway().validateAndSanitize(
                 game.world,

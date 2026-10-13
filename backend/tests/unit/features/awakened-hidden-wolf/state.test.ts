@@ -6,6 +6,8 @@
  * Test-owned mocks/components exercise this boundary without a model or physical
  * transport. Support files, fixture bytes, policy and state behavior are retained.
  */
+import type { AwakenedTemplateRole } from "@ai-werewolf-arena/game-contract";
+
 import { expect, test } from "bun:test";
 import { createRoleComponent } from "../../../../src/core/domain/components/role";
 import { Camp, Role } from "../../../../src/core";
@@ -28,7 +30,6 @@ import {
   setAwakenedState,
   skipAwakenedSkill,
   useAwakenedPoison,
-  type AwakenedTemplateRole,
 } from "../../../../src/game/mechanisms/roles/awakened_hidden_wolf/state";
 
 const initialSkills = {

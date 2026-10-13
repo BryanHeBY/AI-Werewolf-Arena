@@ -563,7 +563,11 @@ test("a native death proposal is revoked by a policy edit before central commit"
     );
     expect(result.pendingShots).toHaveLength(1);
     expect(result.pendingShots![0].isCurrent?.()).toBe(true);
-    state.deathActionPolicy = "awa_knife_or_exile_v1";
+    (
+      state as {
+        deathActionPolicy: "awa_qualified_sources_v1" | "awa_knife_or_exile_v1" | undefined;
+      }
+    ).deathActionPolicy = "awa_knife_or_exile_v1";
     expect(result.pendingShots![0].isCurrent?.()).toBe(false);
   } finally {
     permit.close();

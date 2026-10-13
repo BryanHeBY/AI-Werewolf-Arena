@@ -159,8 +159,11 @@ test("gateway refusals have language-neutral codes and never change private reso
       tool: { name: "shoot", args: { target_id: 9 } },
       code: "shoot_unavailable",
       prepare: (game) => {
-        getHunterState(game.world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!.canShoot =
-          false;
+        (
+          getHunterState(game.world.getComponent<RoleComponent>(7, COMPONENT.Role)!)! as {
+            canShoot: boolean;
+          }
+        ).canShoot = false;
       },
     },
     {

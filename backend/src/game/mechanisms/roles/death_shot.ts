@@ -69,10 +69,10 @@ interface DeathShotRules {
   role: Role;
   state: (
     role: RoleComponent,
-  ) => { canShoot: boolean; deathActionPolicy?: DeathActionPolicy } | undefined;
+  ) => { readonly canShoot: boolean; readonly deathActionPolicy?: DeathActionPolicy } | undefined;
   policy?: (state: {
-    canShoot: boolean;
-    deathActionPolicy?: DeathActionPolicy;
+    readonly canShoot: boolean;
+    readonly deathActionPolicy?: DeathActionPolicy;
   }) => DeathActionPolicy;
   permits: (sources: readonly DeathCause[]) => boolean;
   shotEvent: (actorId: EntityId, targetId: EntityId) => GameEvent;
@@ -104,7 +104,7 @@ export async function resolveDeathShots(
     const stock = rules.role === "hunter" ? openDemonHunterStockFrame(world, actorId, state) : null;
     const consume = () => {
       if (stock) stock.consume();
-      else state.canShoot = false;
+      else (state as { canShoot: boolean }).canShoot = false;
     };
     const sources = deathSources[actorId] ?? [];
     if (sources.includes(DeathCause.Poison)) {

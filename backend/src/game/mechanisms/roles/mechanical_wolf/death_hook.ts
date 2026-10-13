@@ -1,13 +1,23 @@
+/**
+ * Owns Mechanical Wolf's captured learned-gun contribution to ordered death shots.
+ * Inputs are original state/learning/gun references and death contexts; outputs
+ * preserve identity rechecks, cause eligibility and existing shot events.
+ * Stored resources are read-only here; the shared death-shot owner consumes the
+ * original gun, and this hook never clones state, refunds stock or grants a new lease.
+ * After an actual death wave, the resolver rechecks currentness before and after
+ * selecting a shot; stale or terminal windows never reopen a consumed learned gun.
+ */
+
+import type {
+  MechanicalReadState as MechanicalState,
+  MechanicalReadLearning as MechanicalLearning,
+  MechanicalReadSkill as MechanicalSkill,
+} from "@ai-werewolf-arena/game-contract";
 import { Camp, Role, permitsDeathShot } from "../../../../core/domain/model";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { DeathHook } from "../../hooks/hook_registry";
 import { resolveDeathShots } from "../death_shot";
-import {
-  getMechanicalState,
-  type MechanicalState,
-  type MechanicalLearning,
-  type MechanicalSkill,
-} from "./state";
+import { getMechanicalState } from "./state";
 
 export const mechanicalDeathHook: DeathHook = (world, ids, sources, choose, events, context) => {
   const owners = new Map<

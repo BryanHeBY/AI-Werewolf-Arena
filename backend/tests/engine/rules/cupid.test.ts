@@ -488,8 +488,12 @@ for (const policy of ["awa_exile_poison_v1", "heroes_s7_2017_exile_hunter_v1"] a
       events: GameEvent[] = [];
     await connect(game, 1, 2);
     const beauty = getWolfBeautyState(role(game, 2))!;
-    beauty.deathLinkPolicy = policy;
-    beauty.targetId = 4;
+    (
+      beauty as {
+        deathLinkPolicy: "awa_exile_poison_v1" | "heroes_s7_2017_exile_hunter_v1" | undefined;
+      }
+    ).deathLinkPolicy = policy;
+    (beauty as { targetId: number | null }).targetId = 4;
     bindCharm(game.world, 2, 4);
     await resolver(game, events).resolve(
       [1, 2],

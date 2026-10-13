@@ -1,6 +1,14 @@
+/**
+ * Defines detached player data structures for advanced role projections.
+ * Inputs are explicitly disclosed journal/skill fields; outputs preserve existing
+ * copied histories, nullable choices and player-visible stock metadata.
+ * These DTOs keep their original write contracts and never expose live role,
+ * lease or private slot authority; projection/validation stays at its owner.
+ */
+
+import type { GravekeeperReport } from "@ai-werewolf-arena/game-contract";
 import type { HiddenWolfCampInspectionPolicy } from "../../../core/domain/board";
 import type { InspectionResult, RoleId } from "@ai-werewolf-arena/game-catalog";
-import type { GravekeeperReport } from "@ai-werewolf-arena/replay-contract";
 
 /** Public player-state contracts are independent of mutable engine storage types. */
 export interface PlayerGravekeeperState {

@@ -4,18 +4,18 @@
  * Existing mutation commands, lifecycle validation, player projection and checkpoint
  * encoding keep their current responsibilities. This leaf creates no mirror state,
  * consumes no resource and does not decide whether a request is authorized.
+ * Pure payload/read data structures belong to the neutral role-state data owner;
+ * this leaf retains original live references and concrete installation/commit operations.
  */
+import type { IdiotState, IdiotReadState } from "@ai-werewolf-arena/game-contract";
+
 import type { RoleComponent } from "../../../../core/domain/components/role";
 
-export interface IdiotState {
-  revealed: boolean;
-}
-
-export function setIdiotState(roleComp: RoleComponent, state: IdiotState): IdiotState {
+export function setIdiotState(roleComp: RoleComponent, state: IdiotState): IdiotReadState {
   (roleComp.privateState as { idiot: IdiotState })["idiot"] = state;
   return state;
 }
 
-export function getIdiotState(roleComp: RoleComponent): IdiotState | undefined {
-  return roleComp.privateState["idiot"] as IdiotState | undefined;
+export function getIdiotState(roleComp: RoleComponent): IdiotReadState | undefined {
+  return roleComp.privateState["idiot"] as IdiotReadState | undefined;
 }

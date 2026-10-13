@@ -4,43 +4,25 @@
  * learning/mode/knife fields and selected stored reference. The installer alone
  * restores the mechanical_wolf slot at its original write; inherited resource,
  * phase and receipt checks remain separate. No container copy or parser is added.
+ * Pure payload/read data structures belong to the neutral role-state data owner;
+ * this leaf retains original live references and concrete installation/commit operations.
  */
+import type {
+  MechanicalMode,
+  MechanicalSkill,
+  MechanicalLearning,
+  MechanicalState,
+  MechanicalReadSkill,
+  MechanicalReadLearning,
+  MechanicalReadState,
+} from "@ai-werewolf-arena/game-contract";
+
 import type { PlayerMechanicalState } from "../player_extended_state";
 import type { InspectionResult, RoleId } from "@ai-werewolf-arena/game-catalog";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { EntityId } from "../../../../core/domain/identity";
 import { copyAbilityData } from "../abilities";
 
-export type MechanicalMode = "kill" | "skill";
-export type MechanicalSkill =
-  | { kind: "villager" }
-  | {
-      kind: "inspection";
-      history: Array<{
-        day: number;
-        targetId: EntityId;
-        result: Extract<InspectionResult, { kind: "role" }>;
-      }>;
-    }
-  | { kind: "poison"; remaining: 0 | 1 }
-  | { kind: "guard"; lastTarget: EntityId | null; lastGuardDay: number | null }
-  | { kind: "hunter"; canShoot: boolean; armed: boolean }
-  | { kind: "wolf"; extraKnife: "available" | "spent" | "expired" };
-export interface MechanicalLearning {
-  readonly targetId: EntityId;
-  readonly role: RoleId;
-  readonly day: number;
-  readonly readyOnNight: number;
-  readonly skill: MechanicalSkill;
-}
-export interface MechanicalState {
-  learned: MechanicalLearning | null;
-  mimicClosedDay: number | null;
-  mode: { day: number; kind: MechanicalMode } | null;
-  hasInheritedKnife: boolean;
-  firstKnifeNight: number | null;
-  skillClosedDay: number | null;
-}
 export function freshMechanicalState(): MechanicalState {
   return {
     learned: null,
@@ -52,10 +34,15 @@ export function freshMechanicalState(): MechanicalState {
   };
 }
 /** One owner for all native mechanical facts and consumable resources. */
-export function getMechanicalState(role: RoleComponent | undefined): MechanicalState | undefined {
-  return role?.privateState.mechanical_wolf as MechanicalState | undefined;
+export function getMechanicalState(
+  role: RoleComponent | undefined,
+): MechanicalReadState | undefined {
+  return role?.privateState.mechanical_wolf as MechanicalReadState | undefined;
 }
-export function setMechanicalState(role: RoleComponent, state: MechanicalState): MechanicalState {
+export function setMechanicalState(
+  role: RoleComponent,
+  state: MechanicalState,
+): MechanicalReadState {
   const owned = copyAbilityData(state);
   (role.privateState as { mechanical_wolf: MechanicalState }).mechanical_wolf = owned;
   return owned;
@@ -92,14 +79,14 @@ export function mechanicalLearning(
 }
 
 /** Only the assembly/death owner calls this after a full actual death proposal. */
-export function recordMechanicalInheritance(state: MechanicalState, day: number): boolean {
+export function recordMechanicalInheritance(state: MechanicalReadState, day: number): boolean {
   if (state.hasInheritedKnife) return false;
-  state.hasInheritedKnife = true;
-  state.firstKnifeNight = Math.max(2, day + 1);
+  (state as { hasInheritedKnife: boolean }).hasInheritedKnife = true;
+  (state as { firstKnifeNight: number | null }).firstKnifeNight = Math.max(2, day + 1);
   return true;
 }
 
-export function canMechanicalMimic(state: MechanicalState, day: number): boolean {
+export function canMechanicalMimic(state: MechanicalReadState, day: number): boolean {
   return (
     day >= 1 &&
     state.learned === null &&
@@ -108,14 +95,14 @@ export function canMechanicalMimic(state: MechanicalState, day: number): boolean
 }
 
 /** A legal wait closes this night's opportunity without spending the once-per-game learning. */
-export function closeMechanicalMimic(state: MechanicalState, day: number): boolean {
+export function closeMechanicalMimic(state: MechanicalReadState, day: number): boolean {
   if (!canMechanicalMimic(state, day)) return false;
-  state.mimicClosedDay = day;
+  (state as { mimicClosedDay: number | null }).mimicClosedDay = day;
   return true;
 }
 
 export function learnMechanicalRole(
-  state: MechanicalState,
+  state: MechanicalReadState,
   targetId: EntityId,
   role: RoleId,
   day: number,
@@ -127,40 +114,41 @@ export function learnMechanicalRole(
     state.firstKnifeNight !== null &&
     day >= state.firstKnifeNight
   ) {
-    learned.skill.extraKnife = "expired";
+    (learned.skill as { extraKnife: "available" | "spent" | "expired" }).extraKnife = "expired";
   }
-  state.learned = learned;
-  state.mimicClosedDay = day;
+  (state as { learned: MechanicalReadState["learned"] }).learned = learned;
+  (state as { mimicClosedDay: number | null }).mimicClosedDay = day;
   return true;
 }
 
 /** Entering an actual night arms passive guns and expires an elapsed first-knife window. */
-export function advanceMechanicalNight(state: MechanicalState, day: number): void {
+export function advanceMechanicalNight(state: MechanicalReadState, day: number): void {
   const learned = state.learned;
   if (!learned) return;
-  if (learned.skill.kind === "hunter" && day >= learned.readyOnNight) learned.skill.armed = true;
+  if (learned.skill.kind === "hunter" && day >= learned.readyOnNight)
+    (learned.skill as { armed: boolean }).armed = true;
   if (
     learned.skill.kind === "wolf" &&
     learned.skill.extraKnife === "available" &&
     state.firstKnifeNight !== null &&
     day > state.firstKnifeNight
   ) {
-    learned.skill.extraKnife = "expired";
+    (learned.skill as { extraKnife: "available" | "spent" | "expired" }).extraKnife = "expired";
   }
 }
 
-export function canSelectMechanicalMode(state: MechanicalState, day: number): boolean {
+export function canSelectMechanicalMode(state: MechanicalReadState, day: number): boolean {
   return day >= 2 && (state.mode === null || state.mode.day < day);
 }
 
 /** Passing uses the same skill-mode choice; accepting a second choice never changes it. */
 export function selectMechanicalMode(
-  state: MechanicalState,
+  state: MechanicalReadState,
   day: number,
   mode: MechanicalMode,
 ): boolean {
   if (!canSelectMechanicalMode(state, day)) return false;
-  state.mode = { day, kind: mode };
+  (state as { mode: MechanicalReadState["mode"] }).mode = { day, kind: mode };
   const learned = state.learned;
   if (
     mode === "skill" &&
@@ -168,15 +156,15 @@ export function selectMechanicalMode(
     learned?.skill.kind === "wolf" &&
     learned.skill.extraKnife === "available"
   ) {
-    learned.skill.extraKnife = "expired";
+    (learned.skill as { extraKnife: "available" | "spent" | "expired" }).extraKnife = "expired";
   }
   return true;
 }
 
 export function mechanicalSkillForNight(
-  state: MechanicalState,
+  state: MechanicalReadState,
   day: number,
-): MechanicalSkill | undefined {
+): MechanicalReadSkill | undefined {
   if (
     day < 2 ||
     state.mode?.day !== day ||
@@ -189,14 +177,14 @@ export function mechanicalSkillForNight(
   return state.learned.skill;
 }
 
-export function closeMechanicalSkill(state: MechanicalState, day: number): boolean {
+export function closeMechanicalSkill(state: MechanicalReadState, day: number): boolean {
   if (!mechanicalSkillForNight(state, day)) return false;
-  state.skillClosedDay = day;
+  (state as { skillClosedDay: number | null }).skillClosedDay = day;
   return true;
 }
 
 /** Caller additionally verifies live sole-Wolf ownership and the scoped mode choice. */
-export function mechanicalKnifeSelected(state: MechanicalState, day: number): boolean {
+export function mechanicalKnifeSelected(state: MechanicalReadState, day: number): boolean {
   return (
     day >= 2 &&
     state.hasInheritedKnife &&
@@ -207,7 +195,7 @@ export function mechanicalKnifeSelected(state: MechanicalState, day: number): bo
   );
 }
 
-export function canMechanicalExtraKnife(state: MechanicalState, day: number): boolean {
+export function canMechanicalExtraKnife(state: MechanicalReadState, day: number): boolean {
   const learned = state.learned;
   return (
     mechanicalKnifeSelected(state, day) &&
@@ -221,19 +209,19 @@ export function canMechanicalExtraKnife(state: MechanicalState, day: number): bo
 
 /** Consecutive IDs are compared across actual night numbers, even if a target has revived. */
 export function chooseMechanicalGuard(
-  skill: Extract<MechanicalSkill, { kind: "guard" }>,
+  skill: Extract<MechanicalReadSkill, { kind: "guard" }>,
   targetId: EntityId | null,
   day: number,
 ): { failed: boolean } {
   const failed =
     targetId !== null && skill.lastTarget === targetId && skill.lastGuardDay === day - 1;
-  skill.lastTarget = targetId;
-  skill.lastGuardDay = day;
+  (skill as { lastTarget: EntityId | null }).lastTarget = targetId;
+  (skill as { lastGuardDay: number | null }).lastGuardDay = day;
   return { failed };
 }
 
 /** Explicit player projection: future God-only debug fields must not become player input. */
-export function projectMechanicalState(state: MechanicalState): PlayerMechanicalState {
+export function projectMechanicalState(state: MechanicalReadState): PlayerMechanicalState {
   const learned = state.learned;
   let skill: MechanicalSkill | undefined;
   if (learned)
@@ -285,4 +273,33 @@ export function projectMechanicalState(state: MechanicalState): PlayerMechanical
     firstKnifeNight: state.firstKnifeNight,
     skillClosedDay: state.skillClosedDay,
   };
+}
+
+/** Caller retains inspection/currentness checks; history lookup precedes target.id. */
+export function recordMechanicalInspection(
+  skill: Extract<MechanicalReadSkill, { kind: "inspection" }>,
+  day: number,
+  target: { readonly id: EntityId },
+  result: Extract<InspectionResult, { kind: "role" }>,
+): void {
+  (skill.history as Extract<MechanicalSkill, { kind: "inspection" }>["history"]).push({
+    day,
+    targetId: target.id,
+    result: { ...result },
+  });
+}
+/** Payment follows the original poison claims and marks, without an extra check. */
+export function consumeMechanicalPoison(
+  skill: Extract<MechanicalReadSkill, { kind: "poison" }>,
+): void {
+  (skill as { remaining: 0 | 1 }).remaining = 0;
+}
+/** Caller retains the original attack's nullable target and completion ordering. */
+export function closeMechanicalExtraKnife(
+  skill: Extract<MechanicalReadSkill, { kind: "wolf" }>,
+  target: unknown,
+): void {
+  (skill as { extraKnife: "available" | "spent" | "expired" }).extraKnife = target
+    ? "spent"
+    : "expired";
 }

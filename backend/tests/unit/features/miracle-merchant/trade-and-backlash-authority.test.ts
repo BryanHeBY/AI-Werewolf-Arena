@@ -299,7 +299,7 @@ for (const revoke of [
         if (revoke === "target_life") changeTarget();
         if (revoke === "target_role")
           game.world.addComponent(6, COMPONENT.Role, { ...role(game, 6) });
-        if (revoke === "resource") state.remaining = 0;
+        if (revoke === "resource") (state as { remaining: 0 | 1 }).remaining = 0;
         return { name: "bestow_ability", args: { target_id: 6, skill: "poison" } };
       },
       1,

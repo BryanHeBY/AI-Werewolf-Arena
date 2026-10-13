@@ -112,7 +112,9 @@ test("Bear sensing requires true Wolf faction, ignores Seer disguise, and respec
         ),
       ),
       events: GameEvent[] = [];
-    getBearState(role(game, 1))!.history = [];
+    (
+      getBearState(role(game, 1))! as unknown as { history: { day: number; roared: boolean }[] }
+    ).history = [];
     BearNightFrame.capture(game.world, 1, catalog)!.publish(game.world, events, () => true);
     expect(events[0].payload).toEqual({ day: 1, roared: expected });
   }

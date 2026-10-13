@@ -1,13 +1,23 @@
+/**
+ * Owns Awakened Hidden Wolf's captured activated-gun death-shot contribution.
+ * Inputs are original learned state, activation metadata and death contexts;
+ * outputs preserve the original pointer/metadata rechecks and shot publication.
+ * Read views carry no write permission; consumption stays in the existing shared
+ * death-shot owner and this hook never reactivates or refunds a learned template.
+ * After an actual death wave, the resolver rechecks currentness before and after
+ * selecting a shot; stale or terminal windows never reopen a consumed learned gun.
+ */
+
+import type {
+  AwakenedReadState as AwakenedState,
+  AwakenedReadLearning as AwakenedLearning,
+  AwakenedReadSkill as AwakenedSkill,
+} from "@ai-werewolf-arena/game-contract";
 import { Camp, Role, permitsDeathShot } from "../../../../core/domain/model";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { DeathHook } from "../../hooks/hook_registry";
 import { resolveDeathShots } from "../death_shot";
-import {
-  getAwakenedState,
-  type AwakenedState,
-  type AwakenedLearning,
-  type AwakenedSkill,
-} from "./state";
+import { getAwakenedState } from "./state";
 
 export const awakenedDeathHook: DeathHook = (world, ids, sources, choose, events, context) => {
   const owners = new Map<

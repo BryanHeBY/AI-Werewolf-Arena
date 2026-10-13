@@ -4,6 +4,8 @@
  * claims and configured linked-victory decisions. It does not apply unrelated damage or carry a
  * claim across a replaced life.
  */
+import type { WolfBeautyReadState as WolfBeautyState } from "@ai-werewolf-arena/game-contract";
+
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -15,7 +17,7 @@ import {
   type WinDecision,
 } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
-import { getWolfBeautyState, type WolfBeautyState } from "../private_state";
+import { getWolfBeautyState } from "../private_state";
 import { getDefaultRoleCatalog } from "../catalog";
 import { victoryDecision } from "../../win_conditions/results";
 

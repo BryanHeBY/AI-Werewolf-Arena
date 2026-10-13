@@ -5,6 +5,8 @@
  * Controlled contexts bind read-only actor queries at the original World read
  * position. No billed agent, fixture rewrite or production-generated oracle runs.
  */
+import type { AwakenedTemplateRole } from "@ai-werewolf-arena/game-contract";
+
 import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/night-ability-actors";
 import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
@@ -55,7 +57,6 @@ import {
   getAwakenedState,
   learnAwakenedRole,
   setAwakenedState,
-  type AwakenedTemplateRole,
 } from "../../../src/game/mechanisms/roles/awakened_hidden_wolf/state";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 
@@ -238,14 +239,21 @@ for (const boundary of ["await", "gateway", "label"] as const)
         ability = findNightAbility(role(game), "role_check")!;
       const mutate = () => {
         if (mutation === "state") setAwakenedState(role(game), freshAwakenedState());
-        if (mutation === "learning") original.learned = structuredClone(learned);
+        if (mutation === "learning")
+          (
+            original as {
+              learned: import("@ai-werewolf-arena/game-contract").AwakenedReadLearning | null;
+            }
+          ).learned = structuredClone(learned);
         if (mutation === "skill") Object.assign(learned, { skill: structuredClone(skill) });
         if (mutation === "ability_id") Object.assign(skill, { abilityId: "unrelated-id" });
         if (mutation === "role") Object.assign(learned, { role: "witch" });
         if (mutation === "target") Object.assign(learned, { targetId: 5 });
         if (mutation === "day") Object.assign(learned, { day: 9 });
-        if (mutation === "activation") learned.activationNight = 9;
-        if (mutation === "active_from") learned.activeFromNight = 9;
+        if (mutation === "activation")
+          (learned as { activationNight: number | null }).activationNight = 9;
+        if (mutation === "active_from")
+          (learned as { activeFromNight: number | null }).activeFromNight = 9;
       };
       const next = context(game, 2, async (request) => {
         if (request.actorId !== 1) return null;
@@ -448,17 +456,17 @@ for (const boundary of ["spent", "await", "gateway"] as const)
     const skill = state(game).learned!.skill;
     if (skill.kind !== "poison") throw new Error("wrong fixture");
     let requests = 0;
-    if (boundary === "spent") skill.remaining = 0;
+    if (boundary === "spent") (skill as { remaining: 0 | 1 }).remaining = 0;
     const ctx = context(game, 2, async () => {
       requests++;
-      if (boundary === "await") skill.remaining = 0;
+      if (boundary === "await") (skill as { remaining: 0 | 1 }).remaining = 0;
       return { name: "awakened_poison", args: { target_id: 6 } };
     });
     if (boundary === "gateway") {
       const validate = ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway);
       ctx.toolGateway.validateAndSanitize = (world, actorId, call, validationContext) => {
         const result = validate(world, actorId, call, validationContext);
-        skill.remaining = 0;
+        (skill as { remaining: 0 | 1 }).remaining = 0;
         return result;
       };
     }
