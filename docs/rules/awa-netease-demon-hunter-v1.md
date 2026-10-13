@@ -2,7 +2,7 @@
 
 来源为[网易官网公开卡表](https://langrensha.res.netease.com/pc/gw/20190509150909/js/kapaiData_02806e2.js)的 `num:23/type:2`；2026-10-10直接下载并Unicode解码读取。文件未标条目发布日期，URL数字不是出版日期。官网条款支持第二夜起逐夜可猎、真狼目标次日出局/好人目标导致猎魔人次日出局、女巫毒无效；未写每夜必须、一次总库存、全部特殊伤害免疫或所有扩展交互。
 
-唯一 `awa_netease_demon_hunter_v1`，Role `demon_hunter`，真实Good/神边，普通Good胜利归属。首批仅两份精确牌组各配单独City或Side，共四板：6人=2Wolf+1Villager+1Seer+1Witch+1Demon；12人=3Wolf+4Villager+1Seer+1Witch+1Hunter+1Guard+1Demon。Demon必须且仅1；其余牌数精确匹配，不含Idiot。无排序限制但总数及各角色计数固定，不接受其它“基础七”数量变体。City/Side只能且仅一个；归并完整死亡链后既有Wolf=0优先Good，两方同时全灭也是Good；Side在仍有狼时神=0或民=0则Wolf，Demon计入神，不增加胜方活人门槛。其它P5–P9、活动、额外初始牌池、复制/赠予/转移与其它目标组合尚未支持，必须拒绝。是否扩大组合依后续独立验收。
+唯一 `awa_netease_demon_hunter_v1`，Role `demon_hunter`，真实Good/神边，普通Good胜利归属。首批仅两份精确牌组各配单独City或Side，共四板：6人=2Wolf+1Villager+1Seer+1Witch+1Demon；12人=3Wolf+4Villager+1Seer+1Witch+1Hunter+1Guard+1Demon。Demon必须且仅1；其余牌数精确匹配，不含Idiot。无排序限制但总数及各角色计数固定，不接受其它“基础七”数量变体。City/Side只能且仅一个；归并完整死亡链后既有Wolf=0优先Good，两方同时全灭也是Good；Side在仍有狼时神=0或民=0则Wolf，Demon计入神，不增加胜方活人门槛。以上为原四份基础猎魔板。后来另有[赤月猎魔](awa-red-moon-demon-v1.md)与[觉醒之夜](awa-noble-secret-body-twelve-v1.md)各自已交付的具名有限例外，具体规则与边界以对应卡为准；除此之外的其它P5–P9、活动、额外初始牌池、复制/赠予/转移与其它目标组合仍拒绝。不得从这些例外推导任意猎魔人混板支持。
 
 ## 明确AWA补全（不冒称官方）
 
@@ -68,4 +68,4 @@ source/Replay同一engine边界都真正以World操作新建Alive组件，记录
 
 ## 2026-10-10 完整实现状态
 
-上文 planned 与候选阶段说明保留对应历史时点。四个有限板子的公开装配、严格录制和 Tape、双语展示及完整门禁现已闭合，角色为 implemented；详见[完整验收](../expansion/reviews/p9-demon-hunter.md)。当前目录 23 verified、9 implemented、32 planned，不表示其它组合、P9/P10 或最终用户验收完成。
+上文 planned 与候选阶段说明保留对应历史时点。四个有限板子的公开装配、严格录制和 Tape、双语展示及完整门禁现已闭合，角色为 implemented；详见[完整验收](../expansion/reviews/p9-demon-hunter.md)。本批交付时目录为 23 verified、9 implemented、32 planned；该验收对应当时冻结输入，不代表当前重构源码全量通过，不表示其它组合、P9/P10 或最终用户验收完成。

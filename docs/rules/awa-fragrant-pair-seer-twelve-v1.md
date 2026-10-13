@@ -1,6 +1,6 @@
 # AWA 寻香识命十二人板
 
-状态：implemented；[完整技术验收](../expansion/reviews/p9-fragrant-pair-stage-acceptance.md)及三路复核通过，正式52/64。`fragrant_phantom` 与从 P9f 前置的 `awakened_seer` 使用联合政策 `awa_fragrant_pair_seer_v1`。只开放本卡的原生有限组合。
+状态：implemented；[完整技术验收](../expansion/reviews/p9-fragrant-pair-stage-acceptance.md)及三路复核通过；交付时目录快照与门禁冻结输入见该记录，不代表当前重构源码全量通过。`fragrant_phantom` 与从 P9f 前置的 `awakened_seer` 使用联合政策 `awa_fragrant_pair_seer_v1`。只开放本卡的原生有限组合。
 
 ## 来源与配置
 

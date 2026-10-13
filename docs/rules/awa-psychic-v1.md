@@ -17,13 +17,13 @@ awa_classic 1.0.0 角色扩展，核验2026-10-08，ID `psychic`，通灵师／S
 
 每个实例拥有完整policy/history/lastTarget/lastDay与uses/lastUsedDay/disabled/时效。gift/copy由角色规则明确初态和资源，不能用来源角色或查验label自动推定；transfer保完整语义state/policy、资源与本夜关闭，明确授权新持有者旧typed知识且不重发旧报告。旧缺省policy只兼容P6gargoyle；未知policy拒绝，不配置任意阶段priority或规则布尔拼接。
 
-本卡描述兼容默认；`roles.psychic.inspectionPolicy`现可显式选有限AWA目标/行动策略，见[配置契约](../expansion/contracts/role-policy-configuration.md)，未知self/真身份穿透/夜序等参数拒绝。公开六人与十二人用已实现角色的AWA改编（十二人为4普通狼／通灵女巫猎人守卫／4民），机械狼仍planned，不冒充来源完整机械板。角色不写死亡或判胜；DeathResolution与PM保持完整遗言/警徽/技能/追加死亡后最后judge。
+本卡描述兼容默认；`roles.psychic.inspectionPolicy`现可显式选有限AWA目标/行动策略，见[配置契约](../expansion/contracts/role-policy-configuration.md)，未知self/真身份穿透/夜序等参数拒绝。公开六人与十二人用已实现角色的AWA改编（十二人为4普通狼／通灵女巫猎人守卫／4民），这两份普通狼示例不含机械狼；另有已交付的[机械狼有限板](awa-mechanical-wolf-v1.md)，采用该卡明确的 AWA 版本，不据此开放其它同名来源变体或任意组合。角色不写死亡或判胜；DeathResolution与PM保持完整遗言/警徽/技能/追加死亡后最后judge。
 
 ## 来源与AWA细则
 
 [组织者通灵师](https://melbournemasters.org/setups/roles/通灵师)与[机械狼通灵师板](https://melbournemasters.org/setups/ji-xie-lang-tong-ling-shi)明确神职、每夜具体角色以及机械未学习时显示机械狼；实际通灵查验在模仿后、机械技能前，登记举手不产生查验。
 
-[狼人杀经典版角色说明（2026-03-04）](https://www.langrensha.net/strategy/spirit.html)确认Good与已学习机械狼的学习身份标签；[经典版流程（2024-09-05）](https://langrensha.net/news/20240905-3.html)同样给出学习后查验、机械技能前的相对流程。经典版自身站点langrensha.net与网易langrensha.com分开归属；机械当夜/次夜和技能/刀夜差异留其自身后续冻结，本卡不统一这些版本。
+[狼人杀经典版角色说明（2026-03-04）](https://www.langrensha.net/strategy/spirit.html)确认Good与已学习机械狼的学习身份标签；[经典版流程（2024-09-05）](https://langrensha.net/news/20240905-3.html)同样给出学习后查验、机械技能前的相对流程。经典版自身站点langrensha.net与网易langrensha.com分开归属；机械狼的次夜生效、学习／技能夜序和刀权采用[机械狼卡](awa-mechanical-wolf-v1.md)已冻结的 AWA 版本；本卡不统一这些来源差异。
 
 self/repeat/实际alive、max1、可skip关闭机会、三次非法失败、600优先级、原生命/policy终验、G02转移/旧policy兼容/World重入是AWA明确细则，来源简介不足以证明。网易[镜隐迷踪发布稿（页署2023-10-26）](https://langrensha.com/news/official/20231113/26904_1119726.html)的魔镜禁重复属于另一角色，不套普通通灵。
 

@@ -32,7 +32,7 @@ NightPipeline统一生成夜间基础死亡与连续/关系梦亡提案。DeathR
 
 本世界本日已有梦提交后，取消/跳转或重复低层执行不支持同夜重跑，明确抛dream_night_reentry_after_commit，不能消耗资源却丢已提交保护；正常次夜可执行。失败世界终止并保存前缀，可从完整录制/新世界重建，不允许在未恢复关系快照的旧世界伪装继续。未施梦的P5低层取消重入保持原能力。
 
-低层grant/copy必须显式提供状态政策；同一新能力实例独立连续计数。transfer保lastTarget/lastDay、使用次数与本夜标记，不能清空连续记录换取保护；已经生效本夜关系归原提交者且不会因transfer改成新持有者的关系。真实商人/机械狼等复制角色及对应参数仍随各自阶段交付。
+低层grant/copy必须显式提供状态政策；同一新能力实例独立连续计数。transfer保lastTarget/lastDay、使用次数与本夜标记，不能清空连续记录换取保护；已经生效本夜关系归原提交者且不会因transfer改成新持有者的关系。赠予、复制或借用的具体来源与组合分别遵守[奇迹商人](awa-miracle-merchant-v1.md)、[机械狼](awa-mechanical-wolf-v1.md)、[猎日逐光](awa-radiant-eclipse-twelve-v1.md)等独立卡；商人不赠梦，机械狼仍不与摄梦人同板或获得梦技能，侍女借梦只在其精确有限板内。低层grant/copy/transfer不声明产品组合支持。
 
 当前增加有限 `roles.dreamer.protectionPolicy`，默认 awa_night_damage_v1，网易具名 netease_2026_night_immunity_v1；见[历史策略契约](../expansion/contracts/historical-night-role-policies.md)。本卡上文描述兼容 AWA 默认；不得填写“免毒关闭/全天牵连”等未声明字段。支持的6/12示例与每项组合验收在接入契约登记；其它尚未注册角色不得据目录名先行组合。
 

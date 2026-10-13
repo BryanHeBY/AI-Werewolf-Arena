@@ -53,4 +53,4 @@
 
 至少手写成功check/毒/gun、skip后晚赠、赠Wolf/Hidden失败不泄露、原Hunter双枪（含首枪null及首枪命中末Wolf/末神后仍完成另一枪）、原生与礼物同kind去重/跨actor独立、首夜knife/poison/compound、Dream保护/死亡、死亡与owner撤换、原12改编警徽/遗言/临界胜利的整局预期。角色正常及失败Tape、SDK/ACP（实际MCP）/混合×两语完整局、每板20受限seed、资源与私有信息、前端God档与玩家中立枪、实际browser/PNG全部过；R规则/人工oracle、A实例/授权/时序/清理、L/D双语/投影/呈现分别审查复查后启用。
 
-本卡规则及完整实现已验证，当前目录23 verified/41 planned。按2026-10-09最新指令，P7验收后收尾交接，P8–P10、64/22组合矩阵、定时大样本、发布长局与T6留给后续agent。
+本卡规则及完整实现已验证，P7交付与当时交接见[历史阶段验收](../expansion/reviews/p7-activation.md)；该验收只证明其冻结输入，不代表当前源码全量通过。当前交付状态由[角色资料目录](../../packages/game-catalog/src/index.ts)维护，未完成的总体要求见[重构进度](../refactor/progress.md)，不以本角色登记关闭其它阶段、组合矩阵、长局或T6。

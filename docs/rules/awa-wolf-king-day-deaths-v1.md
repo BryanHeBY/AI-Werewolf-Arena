@@ -1,6 +1,6 @@
 # 原生狼王白天死因开枪策略
 
-状态：implemented；限定原生狼王及已验证的魔术师有限板。功能与兼容性证据见[验收记录](../expansion/reviews/p9-wolf-king-day-policy.md)，P9c 阶段全量及 P10 仍开放。
+状态：implemented；限定原生狼王及已验证的魔术师有限板。功能与兼容性证据见[验收记录](../expansion/reviews/p9-wolf-king-day-policy.md)，P9c 同源阶段门禁已在当时冻结输入上完成，见[历史阶段验收](../expansion/reviews/p9c-stage-acceptance.md)；不表示当前重构源码全量通过，其余未验组合、P9 剩余／P10 与用户总体验收继续。
 
 ## 来源与命名
 

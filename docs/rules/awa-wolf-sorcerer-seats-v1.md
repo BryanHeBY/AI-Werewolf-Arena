@@ -26,7 +26,7 @@ Melbourne Masters 的 [角色页](https://melbournemasters.org/setups/roles/狼�
 ## 工程门禁
 
 纯映射穷举必须与独立的座位占用者交换模型一致，覆盖相同、重叠、分离与空交换。之后再接双重夜帧、严格输入、私有观测、精确板型、Tape 审计/重放/篡改拒绝、双语 World、SDK/ACP 和前端回放。
-本有限范围已登记 implemented；P9c 阶段全量、P10 和用户总体验收仍开放，不据本批结果宣称所有混合板受支持。
+本有限范围已登记 implemented；P9c 同源阶段门禁已在当时冻结输入上完成，见[历史阶段验收](../expansion/reviews/p9c-stage-acceptance.md)；不表示当前重构源码全量通过，其余未验组合、P9 剩余／P10 和用户总体验收继续，不据本批结果宣称所有混合板受支持。
 
 ## 狼队知识与逐夜资格
 

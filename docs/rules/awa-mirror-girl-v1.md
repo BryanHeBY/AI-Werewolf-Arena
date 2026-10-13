@@ -24,8 +24,8 @@
 8. 每实例拥有完整policy/history、lastTarget/lastDay、uses/lastUsedDay/disabled/时效。本版原生与明确 G02新copy/gift 初态为 `policy:"mirror"`、history[]、lastTarget/lastDay/lastUsedDay为null、uses0、disabled:false，生效夜/总次数由具体来源卡授权，不能暗带原持有者报告；其它复制语义必须由来源卡另冻。transfer保持全语义历史/库存/当夜关闭且不重复发旧报告；历史随能力实例，不拿其他实例或其他玩家的操作当禁查条件。角色学习/赠予来源组合仍由该来源角色的规则卡单独授权，低层API通过不代表联合板已开放。
 9. 原actor role-kind/camp/privateState/ability **原ID、policy与来源归属**/state/生命与phase在 await/gateway/实际应用点复验。来源原生/赠予/复制/转移的分类及owner不能在等待期间改成另一归属而获得权限或省略abilityId。目标绑定原生命，报告按合法应用点的规则标签生成；撤权/转移/改ID/policy/来源/换状态/复活/取消后不向新实例报告、消费或关闭机会。gateway后及最终报告提交前再次检查目标仍未在该实例历史内，防同引用下新增记录绕过禁重查。
 10. 真实查验、合法skip及无目标结束都登记本World/day提交；完整夜流水线拒绝已提交重入，保已消费/报告前缀。查验阶段不标死亡、不判胜；PM在死亡连锁、遗言、警徽等全部处理后判胜。
-11. 初始有限联合白名单：MirrorGirl/Wolf/WolfKing/HiddenWolf/Gargoyle/Psychic/Seer/Witch/Guard/Hunter/Idiot/Villager。双方角色白名单与数量在parse/direct bootstrap都验证。奇迹商人、机械狼、混血儿及其它角色联合板另核验后扩展；不能只改其中一方列表宣布支持。
-12. 六/十二 AWA 示例使用已交付角色。觉醒隐狼尚未交付时，不把四普通狼的十二人示例称为原版完整镜隐迷踪；后续觉醒隐狼启用笔必须交付原组合的独立场景。两语提示、工具/拒绝、私有报告与God复盘/前端/视频使用稳定机器字段，原话/昵称/人格不翻译。
+11. 当前有限联合白名单：MirrorGirl/Wolf/WolfKing/HiddenWolf/Gargoyle/Psychic/Seer/Witch/Guard/Hunter/Idiot/Villager/CursedFox/AwakenedHiddenWolf。双方角色白名单与数量在parse/direct bootstrap都验证。含咒狐须遵守[咒狐卡](netease-cursed-fox-v1.md)的单屠城等约束；含觉醒隐狼须遵守[觉醒隐狼卡](awa-awakened-hidden-wolf-v1.md)的七角色范围。列表不是笛卡尔积，不允许据此把咒狐与觉醒隐狼混在同板。奇迹商人、机械狼、混血儿及其它角色联合板另核验后扩展；不能只改其中一方列表宣布支持。
+12. 六/十二 AWA 示例使用已交付角色。魔镜首次交付时尚未启用觉醒隐狼，四普通狼的十二人示例仍保留为 AWA 范围，不称原版完整镜隐迷踪。觉醒隐狼后来已独立交付，有限联合板及原组合独立场景见[觉醒隐狼卡](awa-awakened-hidden-wolf-v1.md)和[P7交付验收](../expansion/reviews/p7-awakened-hidden-wolf.md)；该验收证明其当时冻结输入，不扩大这两份原示例的范围。两语提示、工具/拒绝、私有报告与God复盘/前端/视频使用稳定机器字段，原话/昵称/人格不翻译。
 
 ## 验收要求
 
