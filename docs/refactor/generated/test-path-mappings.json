@@ -89883,13 +89883,190 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/i18n_source_scan.test.ts",
+      "to": "backend/tests/unit/presentation/i18n-literal-scanner.test.ts",
+      "sourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "reason": "Actual selected unit module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "18cf6aacac052f3aa3b39d69a726bb15c0064e71a8ebc8b27a11ebcb45a47ae8",
+      "candidateSha256": "5988cbbf2423951cdd47e6f6fcb2821db5524a5ecb9c5754bea9d88a7361ce39",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 106,
+          "end": 143,
+          "original": "../../scripts/check_i18n_literals.mjs",
+          "value": "../../../scripts/check_i18n_literals.mjs",
+          "originalResolved": "backend/scripts/check_i18n_literals.mjs",
+          "expectedResolved": "backend/scripts/check_i18n_literals.mjs"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "ff27988e24ae7fc5f821b41407a07a10d169ce6b6a41b3b24a7446305a059319",
+          "title": "controlled source scan covers literals, all template segments and JSX while ignoring comments",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [
+        "\"translation owner exemption covers direct zhCN values and no adjacent code\""
+      ],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { mkdtemp, mkdir, readFile, rm, symlink, writeFile } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "mkdtemp",
+              "imported": "mkdtemp",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "mkdir",
+              "imported": "mkdir",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "readFile",
+              "imported": "readFile",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "rm",
+              "imported": "rm",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "symlink",
+              "imported": "symlink",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "writeFile",
+              "imported": "writeFile",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:path",
+          "originalImport": "import path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:os",
+          "originalImport": "import { tmpdir } from \"node:os\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "tmpdir",
+              "imported": "tmpdir",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../scripts/check_i18n_literals.mjs",
+          "originalImport": "import {\n  collectChineseLiterals,\n  scanRepository,\n  verifyLiteralExceptions,\n} from \"../../scripts/check_i18n_literals.mjs\";",
+          "currentImportBeforeRebase": "import { collectChineseLiterals, verifyLiteralExceptions } from \"../../scripts/check_i18n_literals.mjs\";",
+          "droppedBindings": [
+            {
+              "name": "scanRepository",
+              "imported": "scanRepository",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/i18n_source_scan.test.ts",
+      "to": "backend/tests/integration/tooling/i18n-source-discovery.test.ts",
+      "sourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "reason": "Actual selected integration module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "18cf6aacac052f3aa3b39d69a726bb15c0064e71a8ebc8b27a11ebcb45a47ae8",
+      "candidateSha256": "729361a981c06cba843b8cf3bfb87dab3e2e1da8ac873eef04db3b602875bfd1",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 247,
+          "end": 284,
+          "original": "../../scripts/check_i18n_literals.mjs",
+          "value": "../../../scripts/check_i18n_literals.mjs",
+          "originalResolved": "backend/scripts/check_i18n_literals.mjs",
+          "expectedResolved": "backend/scripts/check_i18n_literals.mjs"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "62c5fa0c497816af40603db88369f5b2bda022d24dcf997d2a5f176ca5dacec6",
+          "title": "repository Chinese literals have exact reviewed compatibility exceptions without broad directory skips",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [
+        "\"source discovery covers present shared code and only skips absent optional roots\"",
+        "\"source discovery rejects a shared root symlink before reading its private target\"",
+        "\"source discovery rejects a shared ancestor symlink before traversing its private source\"",
+        "\"source discovery rejects a present dangling shared root instead of treating it as absent\""
+      ],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../scripts/check_i18n_literals.mjs",
+          "originalImport": "import {\n  collectChineseLiterals,\n  scanRepository,\n  verifyLiteralExceptions,\n} from \"../../scripts/check_i18n_literals.mjs\";",
+          "currentImportBeforeRebase": "import { scanRepository, verifyLiteralExceptions } from \"../../scripts/check_i18n_literals.mjs\";",
+          "droppedBindings": [
+            {
+              "name": "collectChineseLiterals",
+              "imported": "collectChineseLiterals",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 562,
-    "targetFiles": 628,
-    "mappingEntries": 628,
-    "baselineCases": 7269,
+    "sourceFiles": 563,
+    "targetFiles": 630,
+    "mappingEntries": 630,
+    "baselineCases": 7271,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
