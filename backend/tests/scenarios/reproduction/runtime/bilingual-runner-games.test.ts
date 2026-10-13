@@ -3,6 +3,7 @@
  * 输入为原六人／十二人角色计划、传输路由、语言、并发局和自爆窗口矩阵；输出由手写终局／技能、私有 prompt 与逐局精确复现断言核对。
  * 原进程清理、配置和 fixture 不变；新封装经实际 canonical reader 消费，不改预期。
  */
+import { readReplayManifest, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { acpAdapterEntry } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
@@ -328,9 +329,9 @@ async function runFixture(
             : "day_interrupted",
       },
     });
-    const manifest = JSON.parse(await fs.readFile(path.join(directory, "manifest.json"), "utf8"));
+    const manifest = readReplayManifest(JSON.parse(await fs.readFile(path.join(directory, "manifest.json"), "utf8")));
     expect(manifest.locale).toBe(locale);
-    expect(manifest.players.map((row: any) => row.role)).toEqual(roles);
+    expect(manifest.players.map((row: any) => row.role) as unknown).toEqual(roles);
     expect(manifest.players.map((row: any) => row.name)).toEqual(
       roles.map((_, index) => `Seat ${index + 1}`),
     );
@@ -349,7 +350,7 @@ async function runFixture(
     assertReplayDocument(replay);
     expect(replay.meta.locale).toBe(locale);
     expect(replay.result.decision).toEqual(result.snapshot.result ?? undefined);
-    expect(manifest.game_result).toEqual(result.snapshot.result);
+    expect(manifest.game_result as unknown).toEqual(result.snapshot.result);
     if (window) {
       expect(
         replay.events
@@ -385,9 +386,9 @@ async function runFixture(
     ).toEqual([]);
     const views = await Promise.all(
       roles.map(async (_, index) =>
-        JSON.parse(
+        readReplayPlayerView(JSON.parse(
           await fs.readFile(path.join(directory, `players/player_${index + 1}.json`), "utf8"),
-        ),
+        )),
       ),
     );
     for (const view of views) {

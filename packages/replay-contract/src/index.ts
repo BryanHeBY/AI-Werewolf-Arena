@@ -229,3 +229,5 @@ export function readReplayArchive(value: unknown): { replay: ReplayDocument; ide
   const archive = unwrapRecordingEnvelope(value, "public_replay");
   return { replay: readReplayDocument(archive.payload), identities: archive.identities };
 }
+
+export * from "./manifest";

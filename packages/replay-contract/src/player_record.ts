@@ -1,3 +1,9 @@
+/**
+ * 负责玩家私有时间线的原 schema 2 验证、历史别名转换和新 player envelope 准入。
+ * 输入为旧无声明／v1／v2 或显式新封装；输出保留原 prompt、工具、模型原文及 player 局部序号。
+ * 新声明必须符合当前请求／展示数据协议；不把纯声明当真实来源签名或行动许可，不导入 renderer。
+ */
+import { unwrapRecordingEnvelope, assertCurrentRecordingContracts } from "./archive-envelope";
 import { assertErrorDiagnostic, type ErrorDiagnostic } from "./error_diagnostic";
 import { assertField, isRecord, ReplayDocumentValidationError } from "./validation";
 import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
@@ -77,7 +83,7 @@ export interface ReplayPlayerView {
 
 export type CanonicalReplayPlayerView = ReplayPlayerView & { schemaVersion: 2 };
 
-/** Validate the stored wire shape without rewriting original model or player content. */
+/** 校验原内层 wire 字段，不改写模型或玩家原文；缺席身份不被补造成当前来源。 */
 function assertPlayerShape(value: unknown): asserts value is ReplayPlayerView {
   assertField(isRecord(value), "player.document");
   assertField(
@@ -210,6 +216,9 @@ export function assertReplayPlayerView(value: unknown): asserts value is Canonic
 }
 
 export function readReplayPlayerView(value: unknown): CanonicalReplayPlayerView {
+  const archive = unwrapRecordingEnvelope(value, "player_view");
+  if (archive.identities) assertCurrentRecordingContracts(archive.identities);
+  value = archive.payload;
   if (!isRecord(value))
     throw new ReplayDocumentValidationError("invalid_document", "player.document");
   if (value.schemaVersion !== undefined && value.schemaVersion !== 1 && value.schemaVersion !== 2)

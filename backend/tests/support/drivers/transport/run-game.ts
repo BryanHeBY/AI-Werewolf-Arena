@@ -3,6 +3,7 @@
  * 输出保留原驱动回调、轨迹、缓存和清理；新封装只在实际磁盘入口解包，预期由既有手写 oracle 持有。
  * 原传输／复盘／脚本行动生命周期不变，不引入计费模型或生产状态写入器。
  */
+import { readReplayManifest, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 import { assertSdkTransportEnvelope, assertRuntimeClosure, assertArchiveDecisionEnvelope, assertFailedCheckpoint, assertFailedAcpTrace, assertFailureTiming, assertCompletedAcpTrace, assertPlannedDecisionTape } from "../../oracles/transport/outcomes";
@@ -401,17 +402,17 @@ export async function runTransportGame(
       await fs.readFile(path.join(directory, "replay.json"), "utf8"),
     ));
     assertReplayDocument(replay);
-    const manifest: ReplayManifest = JSON.parse(
+    const manifest: ReplayManifest = readReplayManifest(JSON.parse(
       await fs.readFile(path.join(directory, "manifest.json"), "utf8"),
-    );
+    )) as ReplayManifest;
     assertArchiveDecisionEnvelope(scenario, replay, manifest, result);
     const views: ReplayPlayerView[] = [];
     if (scenario.expectedFailure) {
       const record = await readReproduction(path.join(directory, "reproduction.json"));
       for (const actor of plans.keys()) {
-        const view: ReplayPlayerView = JSON.parse(
+        const view: ReplayPlayerView = readReplayPlayerView(JSON.parse(
           await fs.readFile(path.join(directory, `players/player_${actor}.json`), "utf8"),
-        );
+        ));
         assertReplayPlayerView(view);
         views.push(view);
         const events = view.timeline.flatMap((row) =>
@@ -487,9 +488,9 @@ export async function runTransportGame(
       };
     }
     for (const [actor, plan] of plans) {
-      const view: ReplayPlayerView = JSON.parse(
+      const view: ReplayPlayerView = readReplayPlayerView(JSON.parse(
         await fs.readFile(path.join(directory, `players/player_${actor}.json`), "utf8"),
-      );
+      ));
       assertReplayPlayerView(view);
       views.push(view);
       const events = view.timeline

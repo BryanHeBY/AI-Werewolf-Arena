@@ -1,9 +1,14 @@
 /**
  * 负责显式录制封装的版本、纯数据身份与 payload 边界；输入为未知封装或历史裸档，输出为解包结果。
- * 本契约唯一拥有 envelope v1 结构；内层公开 ReplayDocument 和严格 Tape 各自仍为 schema 2。
+ * 本契约唯一拥有 envelope v1 结构；公开 ReplayDocument、严格 Tape 与玩家视角内层各自仍为 schema 2。
+ * manifest 使用独立的内联 schema 1，仅共用身份字段校验，不由本 envelope 包裹。
  * 不解释游戏规则、执行请求或验证真实构建；声明相同不是签名，执行方仍核对实际 source／lock／RNG。
  * 未声明历史数据保持原输入并标记 identity 缺席，不补造来源、语义版本或展示版本。
  */
+import {
+  ACTION_REQUEST_CONTRACT,
+  GAME_PRESENTATION_CONTRACT,
+} from "@ai-werewolf-arena/game-contract";
 import {
   assertField,
   assertSerializedData,
@@ -13,7 +18,7 @@ import {
 
 export const RECORDING_ENVELOPE_FORMAT = "awa-recording" as const;
 export const RECORDING_ENVELOPE_VERSION = 1 as const;
-export type RecordingArchiveKind = "public_replay" | "strict_reproduction";
+export type RecordingArchiveKind = "public_replay" | "strict_reproduction" | "player_view";
 export interface SemanticIdentity {
   id: string;
   version: string;
@@ -103,16 +108,14 @@ export function unwrapRecordingEnvelope(
     throw new ReplayDocumentValidationError("unsupported_version", "archive.version");
   assertField(isRecord(value.identities), "identities");
   const identities = value.identities;
-  assertIdentity(identities.request, "identities.request");
-  assertIdentity(identities.presentation, "identities.presentation");
-  if (identities.ruleset !== null) assertIdentity(identities.ruleset, "identities.ruleset");
-  if (identities.build !== null) assertBuild(identities.build);
+  assertRecordingIdentityFields(identities);
   assertField(
     isRecord(value.payload) && value.payload.schemaVersion === 2,
     "archive.payload.schemaVersion",
   );
   return {
     payload: value.payload,
+    // 保原失败前缀：内层 schema 校验成功之后才复制身份，非法 payload 不触发 clone。
     identities: structuredClone(identities) as unknown as RecordingIdentities,
   };
 }
@@ -132,4 +135,34 @@ export function createRecordingEnvelope<T>(
   };
   unwrapRecordingEnvelope(result, kind);
   return structuredClone(result);
+}
+
+/** 身份字段的唯一校验内核；调用方先执行纯数据／对象准入，本内核不复制或读取 payload。 */
+function assertRecordingIdentityFields(
+  value: Record<string, unknown>,
+): asserts value is Record<string, unknown> & RecordingIdentities {
+  assertIdentity(value.request, "identities.request");
+  assertIdentity(value.presentation, "identities.presentation");
+  if (value.ruleset !== null) assertIdentity(value.ruleset, "identities.ruleset");
+  if (value.build !== null) assertBuild(value.build);
+}
+/** 内联 manifest 的公开 reader 校验并复制；envelope 使用同一内核，保其 payload-before-clone 原顺序。 */
+export function readRecordingIdentities(value: unknown): RecordingIdentities {
+  if (value !== null && typeof value === "object") assertSerializedData(value, "identities");
+  assertField(isRecord(value), "identities");
+  assertRecordingIdentityFields(value);
+  return structuredClone(value) as RecordingIdentities;
+}
+/** player／manifest 解读只支持已声明的当前协议；此检查不宣称任何 renderer 或构建相容。 */
+export function assertCurrentRecordingContracts(identities: RecordingIdentities): void {
+  if (
+    identities.request.id !== ACTION_REQUEST_CONTRACT.id ||
+    identities.request.version !== ACTION_REQUEST_CONTRACT.version
+  )
+    throw new ReplayDocumentValidationError("unsupported_version", "identities.request");
+  if (
+    identities.presentation.id !== GAME_PRESENTATION_CONTRACT.id ||
+    identities.presentation.version !== GAME_PRESENTATION_CONTRACT.version
+  )
+    throw new ReplayDocumentValidationError("unsupported_version", "identities.presentation");
 }

@@ -3,6 +3,7 @@
  * 输入为实际 runner、注入的 baseline 玩家／根 RNG 与原临时 manifest／replay 存储；输出由字面种子、路径、隐私及初始牌断言核对。
  * 不把这些持久化断言当作独立 RNG 或全部规则证明；来源 fixture 与原预期不变，新封装经 canonical reader 解包。
  */
+import { readReplayManifest } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { expect, spyOn, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
@@ -53,18 +54,18 @@ for (const seed of ["recorded-seed", undefined]) {
       expect(result.snapshot.gameOver).toBe(true);
       expect(closed).toBe(1);
       const [session] = await readdir(root);
-      const manifest = JSON.parse(
+      const manifest = readReplayManifest(JSON.parse(
         await readFile(path.join(root, session, "manifest.json"), "utf8"),
-      );
-      expect(manifest.random.algorithm).toBe(RANDOM_ALGORITHM);
-      expect(manifest.random.streamPolicy).toBe(RANDOM_STREAM_POLICY);
-      expect(manifest.random.path).toEqual([]);
-      if (seed) expect(manifest.random.seed).toBe(seed);
-      else expect(manifest.random.seed).toMatch(/^[a-f0-9-]{36}$/);
+      ));
+      expect(manifest.random!.algorithm).toBe(RANDOM_ALGORITHM);
+      expect(manifest.random!.streamPolicy).toBe(RANDOM_STREAM_POLICY);
+      expect(manifest.random!.path).toEqual([]);
+      if (seed) expect(manifest.random!.seed).toBe(seed);
+      else expect(manifest.random!.seed).toMatch(/^[a-f0-9-]{36}$/);
       expect(manifest.players[0].name).toBe("Player One");
       const replay = readReplayDocument(JSON.parse(await readFile(path.join(root, session, "replay.json"), "utf8")));
       const recreated = bootstrapGame(setup.boardConfig, {
-        random: createRandom(manifest.random.seed),
+        random: createRandom(manifest.random!.seed),
         playerNames: { "1": "Player One" },
       });
       expect(replay.events[0].payload as unknown).toEqual(recreated.phaseManager.getEvents()[0].payload);

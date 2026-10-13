@@ -1,6 +1,7 @@
 /**
  * 集成测试验证 optional-turn-recording 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
+import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { ActionWindow } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
@@ -70,10 +71,10 @@ for (const required of [false, true])
     });
     expect(fallbacks).toBe(required ? 1 : 0);
     expect(closes).toBe(1);
-    const view = JSON.parse(
+    const view = readReplayPlayerView(JSON.parse(
       await fs.readFile(path.join(root, "optional/players/player_1.json"), "utf8"),
-    );
+    ));
     expect(
-      view.timeline[0].delta_messages.some((message: any) => message.kind === "fallback"),
+      (view.timeline[0] as import("@ai-werewolf-arena/replay-contract").ReplayPlayerTurnEntry).delta_messages.some((message: any) => message.kind === "fallback"),
     ).toBe(required);
   });

@@ -1,6 +1,8 @@
 /**
  * 故障场景测试：验证实际脚本对局 driver 保留请求、最终 flush 和持久化失败。输入为原动作、录制 scope 和注入错误；原失败身份及部分输出为字面预期，不重新生成 fixture 或调用模型。
  */
+import { mapPlayerArchive } from "../../../support/drivers/recording/player-archive-handler";
+import { readReplayManifest, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
@@ -122,11 +124,11 @@ async function runRecorded(
   });
   const replay = readReplayDocument(JSON.parse(await readFile(path.join(root, "scripted/replay.json"), "utf8")));
   assertReplayDocument(replay);
-  const manifest = JSON.parse(await readFile(path.join(root, "scripted/manifest.json"), "utf8"));
+  const manifest = readReplayManifest(JSON.parse(await readFile(path.join(root, "scripted/manifest.json"), "utf8")));
   expect(replay.result.winner).toBe(Camp.Good);
   expect(manifest.winner).toBe(Camp.Good);
   expect(
-    manifest.players.map((player: { role: Role; camp: Camp }) => ({
+    (manifest.players as Array<{ role: Role; camp: Camp }>).map((player: { role: Role; camp: Camp }) => ({
       role: player.role,
       camp: player.camp,
     })),
@@ -137,7 +139,7 @@ async function runRecorded(
   const playerViews: ReplayPlayerView[] = await Promise.all(
     fixedRoles.map((_, index) =>
       readFile(path.join(root, "scripted/players", `player_${index + 1}.json`), "utf8").then(
-        JSON.parse,
+        mapPlayerArchive(JSON.parse),
       ),
     ),
   );

@@ -1,6 +1,7 @@
 /**
  * 录制集成测试验证狼队访问。输入为原方向性狼聊／刀权、在途回复和事实时点受众；字面回执、引用／getter／错误、事实和状态为预期。真实临时 Recorder 写读逐席 JSON，事实发生时冻结的受众不随后续身份变化；不读私有配置／认证或调用计费模型。
  */
+import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { expect, test } from "bun:test";
 import path from "node:path";
@@ -199,9 +200,9 @@ for (const locale of ["zh-CN", "en"] as const) {
       expect(projected.map((item) => item.type)).toEqual([...types]);
       expect(projected.map((item) => item.seq)).toEqual(types.map((_, index) => index + 1));
       expect(JSON.stringify(projected)).not.toContain('"audience"');
-      const saved = JSON.parse(
+      const saved = readReplayPlayerView(JSON.parse(
         await readFile(path.join(record.sessionDir, `players/player_${actor}.json`), "utf8"),
-      );
+      ));
       expect(
         saved.timeline.filter((item: any) => item.kind === "event").map((item: any) => item.event),
       ).toEqual(projected);

@@ -1,6 +1,7 @@
 /**
  * 场景测试验证 strict-failure-replay 的原请求、已付行动与失败记录链。输入保留原固定角色、动作脚本、故障与归档矩阵；原字面结果及检查点作为预期。显式特权回退仅服务该控制驱动，不将生产对局输出称作独立玩法 oracle。
  */
+import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
 import { readFile, readdir } from "node:fs/promises";
@@ -149,9 +150,9 @@ for (const transport of ["sdk", "acp"] as const)
         await expect(replayReproduction(altered, output)).rejects.toThrow(
           "reproduction_observation_mismatch",
         );
-        const view = JSON.parse(
+        const view = readReplayPlayerView(JSON.parse(
           await readFile(path.join(directory, "players/player_1.json"), "utf8"),
-        );
+        ));
         expect(
           view.timeline.some(
             (entry: any) =>

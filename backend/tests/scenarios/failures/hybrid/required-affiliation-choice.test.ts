@@ -1,6 +1,7 @@
 /**
  * 场景测试验证 required-affiliation-choice 的原请求、已付行动与失败记录链。输入保留原固定角色、动作脚本、故障与归档矩阵；原字面结果及检查点作为预期。显式特权回退仅服务该控制驱动，不将生产对局输出称作独立玩法 oracle。
  */
+import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Role, WinCondition, type RoleComponent } from "../../../../src/core";
@@ -189,9 +190,9 @@ for (const locale of ["zh-CN", "en"] as const)
               players: [],
             });
           });
-          const view = JSON.parse(
+          const view = readReplayPlayerView(JSON.parse(
             await readFile(path.join(manager.sessionDir, "players/player_1.json"), "utf8"),
-          );
+          ));
           expect(view.timeline).toHaveLength(3);
           expect(view.timeline.every((row: any) => row.kind === "turn")).toBe(true);
           const messages = view.timeline.flatMap((row: any) => row.delta_messages);

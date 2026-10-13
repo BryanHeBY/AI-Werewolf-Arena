@@ -3,6 +3,7 @@
  * 输入为观察／脚本记录、并行／checkpoint／provider 注入失败及非法版本；输出由原事件、决定、操作、checkpoint 相等与精确首失败核对。
  * 不调用计费模型，不改写预期 fixture 或 Tape。
  */
+import { readReplayManifest } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { Role, WitchSelfHealRule } from "../../../src/core";
 import { expect, spyOn, test } from "bun:test";
@@ -42,9 +43,9 @@ for (const boardId of ["six_player_mvp", "twelve_player_standard"]) {
       expect(replayed.snapshot.result).toEqual(game.result);
       expect(replayed.eventCount).toBe(record.events.length);
       expect(replayed.decisionCount).toBe(record.decisions.length);
-      const manifest = JSON.parse(
+      const manifest = readReplayManifest(JSON.parse(
         await readFile(path.join(game.recordDir, "manifest.json"), "utf8"),
-      );
+      ));
       expect(manifest.files.reproduction).toBe("reproduction.json");
       const publicReplay = readReplayDocument(JSON.parse(
         await readFile(path.join(game.recordDir, "replay.json"), "utf8"),

@@ -18,7 +18,7 @@ import type {
   ReplayRecordPublicEventInput,
   ReplaySessionMeta,
 } from "./contracts";
-import { currentRecordingIdentities, createPublicReplayArchive, createReproductionArchive } from "./archive_identity";
+import { currentRecordingIdentities, createPublicReplayArchive, createReproductionArchive, createManifestArchive, createPlayerViewArchive } from "./archive_identity";
 import { createReplayDocument } from "./replay_document";
 import { ReplayFileStore } from "./file_store";
 import { ReplaySessionAggregate } from "./session_aggregate";
@@ -194,7 +194,7 @@ export class SessionRecordManager {
       });
     };
     const required = await Promise.allSettled([
-      this.store.writeJsonStrict("manifest.json", manifest),
+      this.store.writeJsonStrict("manifest.json", createManifestArchive(manifest, this.recordingIdentities)),
       this.store.writeJsonStrict("replay.json", replayDocument),
       ...(this.reproduction
         ? [
@@ -214,7 +214,7 @@ export class SessionRecordManager {
     const playerViews = this.aggregate.normalizedPlayerViews();
     await Promise.all(
       playerViews.map((view) =>
-        this.store.writeJson(`players/player_${view.player_id}.json`, view),
+        this.store.writeJson(`players/player_${view.player_id}.json`, createPlayerViewArchive(view, this.recordingIdentities)),
       ),
     );
 
@@ -237,7 +237,7 @@ export class SessionRecordManager {
 
   private async writeInitialFiles(): Promise<void> {
     const results = await Promise.allSettled([
-      this.store.writeJsonStrict("manifest.json", this.aggregate.buildManifest()),
+      this.store.writeJsonStrict("manifest.json", createManifestArchive(this.aggregate.buildManifest(), this.recordingIdentities)),
       this.store.writeJsonStrict("replay.json", this.buildReplayArchive()),
       this.store.writeJson("phase_windows.json", this.aggregate.phaseWindowsPayload()),
       this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
@@ -289,13 +289,13 @@ export class SessionRecordManager {
       await Promise.all(
         playerIds.map(async (playerId) => {
           const view = this.aggregate.normalizedPlayerView(playerId);
-          if (view) await this.store.writeJson(`players/player_${playerId}.json`, view);
+          if (view) await this.store.writeJson(`players/player_${playerId}.json`, createPlayerViewArchive(view, this.recordingIdentities));
         }),
       );
       await Promise.all([
         this.store.writeJson(
           "manifest.json",
-          this.aggregate.buildManifest(this.lifecycle.finalMetadata ?? undefined),
+          createManifestArchive(this.aggregate.buildManifest(this.lifecycle.finalMetadata ?? undefined), this.recordingIdentities),
         ),
         this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
       ]);

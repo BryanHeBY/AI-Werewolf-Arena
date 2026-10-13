@@ -1,8 +1,9 @@
 /**
- * Filesystem integration test verifies ACP turn/thought/tool and rate-limited report_bug data persist in the common replay schema.
- * Input: Original inert ACP session callbacks, actual SessionRecordManager scope and temporary player/report files.
- * Output and oracle: Literal action, receipt/rate-limit, timeline and stored report fields preserve recorded behavior; no live ACP server or model is invoked.
+ * 负责文件系统集成测试，核对 ACP 回合／思考／工具及限频 report_bug 在共用复盘内层格式持久化。
+ * 输入为原 ACP 会话回调、实际录制 scope 及临时玩家／报告文件；输出由字面行动、回执／限频、时间线与报告字段核对。
+ * 新外层封装不改内层记录和预期，不启动真实 ACP 服务或模型。
  */
+import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { describe, expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import * as path from "node:path";
@@ -84,13 +85,13 @@ describe("AcpActionProvider", () => {
         args: { text: "审计动作已提交。" },
       });
       await recorder.flushNow();
-      const player = JSON.parse(
+      const player = readReplayPlayerView(JSON.parse(
         await fs.readFile(
           path.join(recordRoot, "session_acp_audit", "players", "player_1.json"),
           "utf-8",
         ),
-      );
-      const turn = player.timeline.find((entry: any) => entry.kind === "turn");
+      ));
+      const turn = player.timeline.find((entry: any) => entry.kind === "turn") as import("@ai-werewolf-arena/replay-contract").ReplayPlayerTurnEntry;
       expect(turn).toBeDefined();
       expect(
         turn.delta_messages.some(
@@ -104,7 +105,7 @@ describe("AcpActionProvider", () => {
             item.kind === "tool_call" && item.name === "speak" && item.accepted === true,
         ),
       ).toBe(true);
-      expect(player.initial_prompt.prompt_user[0]).toContain("transport=acp_mcp");
+      expect(player.initial_prompt!.prompt_user![0]).toContain("transport=acp_mcp");
 
       const reports = JSON.parse(
         await fs.readFile(

@@ -1,4 +1,9 @@
-import { assertReplayPlayerView, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
+/**
+ * 负责单会话事件、玩家回合与诊断的原内存聚合；输入为录制数据，输出为原公开／玩家 schema 2 快照与清单。
+ * 本 owner 保留局部序号、原文、初始prompt和操作计数；写盘格式声明由 manager／档案 codec 拥有。
+ * 玩家规范化已在原返回前调用完整断言，故返回类型明确为 canonical2；不改变字段、IO或资源／游戏状态。
+ */
+import { assertReplayPlayerView, readVictoryResult, type CanonicalReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { PlayerVisibleEvent } from "../core/domain/model";
 import {
   ReplayDebugReport,
@@ -198,11 +203,11 @@ export class ReplaySessionAggregate {
   playerFiles(): string[] {
     return this.playerIds().map((id) => `players/player_${id}.json`);
   }
-  normalizedPlayerView(playerId: number): ReplayPlayerView | undefined {
+  normalizedPlayerView(playerId: number): CanonicalReplayPlayerView | undefined {
     const view = this.playerViews.get(playerId);
     return view ? this.normalizePlayerView(view) : undefined;
   }
-  normalizedPlayerViews(): ReplayPlayerView[] {
+  normalizedPlayerViews(): CanonicalReplayPlayerView[] {
     return this.playerIds().map((id) => this.normalizedPlayerView(id)!);
   }
   get reproductionOperationCount(): number {
@@ -313,7 +318,7 @@ export class ReplaySessionAggregate {
     return view;
   }
 
-  private normalizePlayerView(view: ReplayPlayerView): ReplayPlayerView {
+  private normalizePlayerView(view: ReplayPlayerView): CanonicalReplayPlayerView {
     const initialPrompt = view.initial_prompt ?? this.deriveInitialPrompt(view);
     const result: ReplayPlayerView = {
       schemaVersion: 2,

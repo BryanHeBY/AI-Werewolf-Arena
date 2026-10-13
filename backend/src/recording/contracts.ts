@@ -1,44 +1,23 @@
+/**
+ * 负责录制输入、时间线与调试快照的数据契约；输入为原事件／行动和会话元数据，输出为记录器消费的结构。
+ * manifest 的档案形状由共享契约唯一维护，本叶保留原领域 enum／RNG 收窄，不创造第二份结构。
+ * 私有 seed 只属于 manifest／Tape，协议身份或玩家内容不授予资源写权；此处不执行 IO、规则或阶段。
+ */
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
-/** 文件说明：对局复盘记录结构类型定义。 */
 import { Camp, PlayerVisibleEvent, ToolCall, type GameResult } from "../core/domain/model";
 import type { RandomMetadata } from "../core/domain/random";
 
 /** 玩家回合行动模式。 */
 export type ReplayActionMode = "tool_call" | "text_action" | "none";
 
-/** manifest 中的玩家摘要。 */
-export interface ReplayManifestPlayer {
-  player_id: number;
-  role: string;
-  camp: string;
-  alive: boolean;
-  name?: string;
-}
-
-/** 对局复盘主清单。 */
-export interface ReplayManifest {
-  locale?: Locale;
-  session_id: string;
-  board: string;
-  started_at: string;
-  ended_at: string;
+/** manifest 结构由纯归档契约单独维护；领域枚举、判胜与 RNG 类型在本入口保持原收窄。 */
+export type ReplayManifestPlayer = import("@ai-werewolf-arena/replay-contract").ReplayManifestPlayerData;
+export type ReplayManifest = Omit<import("@ai-werewolf-arena/replay-contract").ReplayManifestData, "winner" | "game_result" | "random"> & {
   winner: Camp | null;
-  finish_reason: string;
   game_result?: GameResult;
-  players: ReplayManifestPlayer[];
   random?: RandomMetadata;
-  files: {
-    replay: string;
-    reproduction?: string;
-    phase_windows?: string;
-    timeline_index?: string;
-    logic_ops: string;
-    debug_reports: string;
-    debug_summary: string;
-    player_views: string[];
-  };
-}
+};
 
 /** 公共时间线事件记录。 */
 export interface ReplayPublicEvent {

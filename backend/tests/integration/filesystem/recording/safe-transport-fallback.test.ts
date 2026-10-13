@@ -1,6 +1,7 @@
 /**
  * 集成测试验证 safe-transport-fallback 的原权限和记录边界。输入为原 fixture、请求及显式故障／特权回调；原字面量、引用身份与错误／状态断言为预期。测试注入保留原请求，领域合法性与付款仍由原被测 owner 执行。
  */
+import { readReplayManifest, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { expect, test } from "bun:test";
 import { RetryError } from "ai";
 import { promises as fs } from "node:fs";
@@ -139,7 +140,7 @@ for (const locale of ["zh-CN", "en"] as const)
       const raw = await fs.readFile(path.join(root, "failure/players/player_1.json"), "utf8");
       expect(raw).not.toContain(secret);
       expect(lines.join("\n")).not.toContain(secret);
-      const view = JSON.parse(raw);
+      const view = readReplayPlayerView(JSON.parse(raw));
       assertReplayPlayerView(view);
       expect(view.locale).toBe(locale);
       const turn = view.timeline.find((entry) => entry.kind === "turn");
@@ -204,6 +205,6 @@ test("recording and inspection warning language is transient display context, no
     console.warn = previous;
   }
   expect(
-    JSON.parse(await fs.readFile(path.join(root, "display/manifest.json"), "utf8")).locale,
+    readReplayManifest(JSON.parse(await fs.readFile(path.join(root, "display/manifest.json"), "utf8"))).locale,
   ).toBe("zh-CN");
 });

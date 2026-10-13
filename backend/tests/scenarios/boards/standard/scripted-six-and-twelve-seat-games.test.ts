@@ -1,6 +1,8 @@
 /**
  * 完整脚本场景测试：验证六人／十二人标准对局、资源使用及录制视角。输入为原固定角色和受控动作；原字面预期与不可变 fixture 检查真实周期，不替换动作或内层归档预期。
  */
+import { mapPlayerArchive } from "../../../support/drivers/recording/player-archive-handler";
+import { readReplayManifest, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { ActionWindow } from "../../../../src/core";
 import type { Locale } from "@ai-werewolf-arena/game-text";
@@ -181,11 +183,11 @@ async function runRecorded(
   });
   const replay = readReplayDocument(JSON.parse(await readFile(path.join(root, "scripted/replay.json"), "utf8")));
   assertReplayDocument(replay);
-  const manifest = JSON.parse(await readFile(path.join(root, "scripted/manifest.json"), "utf8"));
+  const manifest = readReplayManifest(JSON.parse(await readFile(path.join(root, "scripted/manifest.json"), "utf8")));
   expect(replay.result.winner).toBe(Camp.Good);
   expect(manifest.winner).toBe(Camp.Good);
   expect(
-    manifest.players.map((player: { role: Role; camp: Camp }) => ({
+    (manifest.players as Array<{ role: Role; camp: Camp }>).map((player: { role: Role; camp: Camp }) => ({
       role: player.role,
       camp: player.camp,
     })),
@@ -196,7 +198,7 @@ async function runRecorded(
   const playerViews: ReplayPlayerView[] = await Promise.all(
     fixedRoles.map((_, index) =>
       readFile(path.join(root, "scripted/players", `player_${index + 1}.json`), "utf8").then(
-        JSON.parse,
+        mapPlayerArchive(JSON.parse),
       ),
     ),
   );

@@ -1,10 +1,9 @@
 /**
- * Filesystem integration tests own actual PlayerRoundRecorder, recording scope and
- * session-file output for both locales. Literal bounded requests and original
- * prompt/thought text supply input; exact v2 phase/stage/schema and saved-string
- * assertions remain the oracle. Temporary directory ownership and finalize order stay
- * inside each case.
+ * 负责双语文件系统集成测试，消费实际 PlayerRoundRecorder、录制 scope 与玩家文件。
+ * 输入为字面有界请求和原 prompt／thought，输出由原内层 v2 阶段／schema 及保存原文断言核对。
+ * 临时目录与终结顺序由每例拥有，新外层封装仅在实际读取处解包，不改变预期。
  */
+import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -71,9 +70,9 @@ for (const locale of ["zh-CN", "en"] as const)
         players: [],
       });
     });
-    const view = JSON.parse(
+    const view = readReplayPlayerView(JSON.parse(
       await readFile(path.join(root, "private-v2/players/player_1.json"), "utf8"),
-    );
+    ));
     assertReplayPlayerView(view);
     expect(view.schemaVersion).toBe(2);
     expect(view.locale).toBe(locale);

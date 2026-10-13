@@ -1,6 +1,7 @@
 /**
  * 文件系统集成测试验证已封盘胜利的清单、公开复盘与清理失败发布。输入为两语结果字面量和临时会话；预期来自序列化成员及脱离副本，不运行模型或完整对局。
  */
+import { readReplayManifest } from "@ai-werewolf-arena/replay-contract";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -94,9 +95,9 @@ for (const locale of ["zh-CN", "en"] as const)
         gameResult: result,
         players,
       });
-      const manifest = JSON.parse(
+      const manifest = readReplayManifest(JSON.parse(
           await readFile(path.join(manager.sessionDir, "manifest.json"), "utf8"),
-        ),
+        )),
         replay = readReplayDocument(
           JSON.parse(await readFile(path.join(manager.sessionDir, "replay.json"), "utf8")),
         );

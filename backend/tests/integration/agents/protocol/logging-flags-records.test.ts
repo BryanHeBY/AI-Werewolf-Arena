@@ -1,8 +1,9 @@
 /**
- * Agent transport integration tests verify real SDK HTTP and ACP subprocess logging flags preserve accepted recorded actions.
- * Input: Original locale/IO/thinking matrix, local synthetic HTTP server, native adapter fixture and temporary player record files.
- * Output and oracle: Literal output flags, secret exclusion and stored round/action equality retain the original transport boundary; fixtures and expected data are not regenerated.
+ * 负责 Agent 传输集成测试，核对真实本地 SDK HTTP／ACP 子进程的日志标记与接受行动记录。
+ * 输入为原语言／IO／思考矩阵、本地合成服务、原生 adapter fixture 和临时玩家文件；输出由字面日志标记、秘密排除及回合／行动相等核对。
+ * 实际新玩家封装经 canonical reader 读取，原传输边界、fixture 和预期不重新生成。
  */
+import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { acpAdapterEntry } from "../../../support/fixtures/manifest";
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
@@ -156,17 +157,17 @@ for (const locale of ["zh-CN", "en"] as const)
               expect(outputs[kind]).not.toContain("synthetic-private-auth");
               expect(outputs[kind]).not.toContain("synthetic-private-env");
               await record.flushNow();
-              const stored = JSON.parse(
+              const stored = readReplayPlayerView(JSON.parse(
                 await readFile(path.join(record.sessionDir, "players/player_1.json"), "utf8"),
-              );
-              const round = stored.timeline.find((item: any) => item.kind === "turn");
+              ));
+              const round = stored.timeline.find((item: any) => item.kind === "turn") as import("@ai-werewolf-arena/replay-contract").ReplayPlayerTurnEntry;
               expect(round.delta_messages.some((message: any) => message.kind === "prompt")).toBe(
                 true,
               );
               const summary = round.delta_messages.find(
                 (message: any) => message.kind === "action_summary",
               );
-              expect(JSON.parse(summary.content).final_action).toEqual({
+              expect(JSON.parse(summary!.content!).final_action).toEqual({
                 name: "speak",
                 args: { text: kind === "llm" ? "selected" : "actor-1" },
               });

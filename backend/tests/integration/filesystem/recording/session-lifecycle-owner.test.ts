@@ -3,6 +3,7 @@
  * 输入为手写录制操作、临时目录及可暂停或失败的严格写入；预期为明确文件内容和原错误身份。
  * 不运行完整对局、不使用模型，不从生产规则或旧档重生成测试预期；所有 spy 在 finally 恢复。
  */
+import { readReplayManifest } from "@ai-werewolf-arena/replay-contract";
 import { expect, spyOn, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -53,9 +54,9 @@ test("closing joins the prefix while final files are held and reuses the first f
     manager.recordLogicOp({ scope: "gateway", op: "after_closed", status: "ok" });
     held.resolve();
     await finalization;
-    const manifest = JSON.parse(
+    const manifest = readReplayManifest(JSON.parse(
       await readFile(path.join(manager.sessionDir, "manifest.json"), "utf8"),
-    );
+    ));
     const logic = JSON.parse(
       await readFile(path.join(manager.sessionDir, "logic_ops.json"), "utf8"),
     );
