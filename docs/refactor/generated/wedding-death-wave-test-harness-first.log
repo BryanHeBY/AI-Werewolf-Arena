@@ -1,0 +1,9 @@
+bun test v1.4.3 (c6da4a4d3)
+The following filters did not match any test files:
+ tests/unit/features/ghost-bride/death-wave-publication.test.ts
+4733 files were searched [5.00ms]
+
+note: Tests need ".test", "_test_", ".spec" or "_spec_" in the filename (ex: "MyApp.test.ts")
+note: To treat the "tests/unit/features/ghost-bride/death-wave-publication.test.ts" filter as a path, run "bun test ./tests/unit/features/ghost-bride/death-wave-publication.test.ts"
+
+Learn more about bun test: https://bun.com/docs/cli/test

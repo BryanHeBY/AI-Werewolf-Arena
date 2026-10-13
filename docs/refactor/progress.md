@@ -580,3 +580,5 @@
 - O4 M2观察与提示构造分离：应用适配器直接同capture owner／原晚Role和Wolf查询，退出PromptPolicy/四无用registry／配比初始化、24consumer27旧board第三参，API及初始化读／失败差异明确非整类等价。24完整程序只恢复第三参同、26CN职责0，new2＋原5一次7/0/31，最终26roots80924→c25f3a actual0；首临时typeRoot与自身ActionProvider入口真红保，修准确type后不重行为绿。Root实际捕获／策略先行／DTO权限审与独立26finalSHA批准，应用持有范围头finding只comment修闭；M1已01a69物理独立，不World进入策略、不新缓存或玩法改。见 observed-provider-prompt-separation.md。
 
 - 夜能力共同载荷随O3补中文说明：1source只注释，七kind结构／元数据区别、来源非权限、深readonly非freeze、内部女巫结束日次不公开及Pair深层边界就地解释。真实c4a Git645完整nodes＋两whole原始输出同、职责0、Root实读与独立finalSHA/各语义来源批准，不重types/test/gate，不冒全仓中文完成；见 night-ability-data-chinese-comments.md。
+
+- C28幽灵新娘死亡波发布owner：4source，原expandWeddingWave完整归具体feature/publicports，原两初始／枪追加caller先婚约后Cupid位置保；authority原完整byte不改、同ids/死因/nightOrigin/去重及late group→pushcallee→clock/groupId/day/phase/spread/冻结audience前缀保。完整owner195＋DR9337／两wholeprinter精确逆输出同，新3distinct20＋old1/10共4/30；首新board-ref/policy fixture与types红只修新输入，failed-only重2项，有限4roots52400→e38adc actual0、4CN头443doc0。119有限三指定反向path空，不冒全仓图；新instance/私有方法/receiver差异明列。Root完整职责/顺序/权限源审及独立4finalSHA/doc批准，末group注释仅96leaf/2outputs桥不重绿，全C28/关系矩阵继续，见 wedding-death-wave-publication.md。

@@ -1,0 +1,75 @@
+{
+  "baseCommit": "c4a8d5a1e7e86060235e80e356fb93ad93172390",
+  "scope": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "11be5648fc3affe7a2c1ccd979f529734c564cb84ab387770b04d8bc74f28247"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "sha256": "67b4cf2181526c818fd24f387676380c17439a74abe37989d44461955b2b3c2f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/death-wave-publication.ts",
+      "sha256": "c8169cc5498402a6e51386d1e95b64570fffb6ce419980ea00b0445c44686446"
+    },
+    {
+      "path": "backend/tests/unit/features/ghost-bride/death-wave-publication.test.ts",
+      "sha256": "c9fe91adf33edfa62bbdfffe487343ae02cad3f09b0955a90b7fe6c86a9d7ce4"
+    }
+  ],
+  "originalOwnerWholeBody": {
+    "originalNodes": 195,
+    "fullNonCommentNodesAndTokensSameAfterOnlyFourRuntimeQueriesInverse": true,
+    "ownerBody": "{\n    const before = new Set(ids);\n    for (const edge of expandWeddingDeaths(this.runtime.world, ids, sources, seen, nightOrigin)) {\n      // 不复用上一条边的婚约快照；分组读取失败发生在这条事实构造之前。\n      const group = weddingGroup(this.runtime.world)!;\n      this.runtime.events.push({\n        timestamp: Date.now(),\n        type: \"ghost_bride_partner_death\",\n        payload: {\n          policy: GHOST_BRIDE_POLICY,\n          groupId: group.groupId,\n          day: this.runtime.day,\n          phase: this.runtime.phase,\n          ...edge,\n        },\n        audience: Object.freeze([]),\n      });\n    }\n    return ids.filter((id) => !before.has(id));\n  }",
+    "inverseBody": "{\n    const before = new Set(ids);\n    for (const edge of expandWeddingDeaths(this.world, ids, sources, seen, nightOrigin)) {\n      // 不复用上一条边的婚约快照；分组读取失败发生在这条事实构造之前。\n      const group = weddingGroup(this.world)!;\n      this.events.push({\n        timestamp: Date.now(),\n        type: \"ghost_bride_partner_death\",\n        payload: {\n          policy: GHOST_BRIDE_POLICY,\n          groupId: group.groupId,\n          day: this.state.day,\n          phase: this.state.phase,\n          ...edge,\n        },\n        audience: Object.freeze([]),\n      });\n    }\n    return ids.filter((id) => !before.has(id));\n  }"
+  },
+  "initializer": {
+    "completeActualPrintedField": "private readonly weddingDeathWave = (() => {\n    const resolution = this;\n    return new WeddingDeathWavePublication({\n        get world() {\n            return resolution.world;\n        },\n        get events() {\n            return resolution.events;\n        },\n        get day() {\n            return resolution.state.day;\n        },\n        get phase() {\n            return resolution.state.phase;\n        },\n    });\n})();",
+    "equalsExplicitFourLazyGetterContract": true,
+    "newAllocationIsIntentional": true
+  },
+  "entireDeathResolution": {
+    "twoActualCallSites": 2,
+    "completePrintedTypedProgramSame": true,
+    "completeNonCommentTreeSame": true,
+    "wholeNodeCount": 9337,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA256": "3fbe5160ce9d3b1c2ae09bdbf1189c50dad216fb2b85fbe822909b7ee1ee4e55",
+        "inverseSHA256": "3fbe5160ce9d3b1c2ae09bdbf1189c50dad216fb2b85fbe822909b7ee1ee4e55"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA256": "9e32a507b75452e61a7aea0ff9f99a6701a52fb3d70ffaac621d396bf1f1ed92",
+        "inverseSHA256": "9e32a507b75452e61a7aea0ff9f99a6701a52fb3d70ffaac621d396bf1f1ed92"
+      }
+    ],
+    "inverseDescription": "只恢复两个原caller，精确四getter新字段替原完整私有方法，原两imports在原语句位置恢复；不屏蔽任何其它方法、callback、数组或条件。"
+  },
+  "ports": {
+    "canonicalNamedBinding": "WeddingDeathWavePublication",
+    "owner": "backend/src/game/mechanisms/roles/ghost_bride/death-wave-publication.ts"
+  },
+  "newTestTypeOnlyView": {
+    "path": "backend/tests/unit/features/ghost-bride/death-wave-publication.test.ts",
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true
+      }
+    ]
+  },
+  "limits": [
+    "新实例字段分配、私有method退休、模块与调用栈变化真实存在；不是直接新binary/任意构造或private monkeypatch环境全等价。",
+    "comparison emits属于全程序printer原文/精确inverse，未把直接新委托程序称原binary同。",
+    "关系资格/边去重/原体与World仍原authority，publication不标死、授予权限或决定phase/victory。"
+  ]
+}

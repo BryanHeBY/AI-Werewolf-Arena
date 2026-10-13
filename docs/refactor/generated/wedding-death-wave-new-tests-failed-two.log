@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/features/ghost-bride/death-wave-publication.test.ts:
+(pass) real relation expands in place and reads publication queries in the original order [53.75ms]
+(pass) publication failure keeps relation mutation and consumed edge deduplication [10.60ms]
+
+ 2 pass
+ 1 filtered out
+ 0 fail
+ 17 expect() calls
+Ran 2 tests across 1 file. [172.00ms]

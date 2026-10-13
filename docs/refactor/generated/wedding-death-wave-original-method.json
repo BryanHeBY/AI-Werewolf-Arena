@@ -1,0 +1,4 @@
+{
+  "path": "backend/src/game/engine/death_resolution.ts",
+  "method": "  private expandWeddingWave(\n    ids: number[],\n    sources: DeathSources,\n    seen: ReadonlySet<number>,\n    nightOrigin: Set<number>,\n  ): number[] {\n    const before = new Set(ids);\n    for (const edge of expandWeddingDeaths(this.world, ids, sources, seen, nightOrigin)) {\n      const group = weddingGroup(this.world)!;\n      this.events.push({\n        timestamp: Date.now(),\n        type: \"ghost_bride_partner_death\",\n        payload: {\n          policy: GHOST_BRIDE_POLICY,\n          groupId: group.groupId,\n          day: this.state.day,\n          phase: this.state.phase,\n          ...edge,\n        },\n        audience: Object.freeze([]),\n      });\n    }\n    return ids.filter((id) => !before.has(id));\n  }\n"
+}

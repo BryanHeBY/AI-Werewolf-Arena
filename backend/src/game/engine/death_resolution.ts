@@ -1,7 +1,7 @@
 /**
  * 负责有序死亡波、角色死亡钩子、枪击选择、遗言与警徽交接。输入是待处理的死亡名单、
  * 原死因与原生命行动权限；输出是按原顺序提交的死亡、事件和内部关联凭证。实际生命修改和唯一已结算
- * 账本委托 DeathCommitter，双生与动物事实归具体贡献；已提交整波在梦／遗言前交角色扩展，
+ * 账本委托 DeathCommitter，双生、动物及婚约关系事实归具体贡献；已提交整波在梦／遗言前交角色扩展，
  * 野孩子贡献自行核对榜样原生命。参数仍使用同一深只读规则视图，不建立第二份角色状态。
  * 本模块不切换阶段或确定最终胜负；关系扩展、遗言、警徽和枪的最终过期保留原执行顺序。
  */
@@ -39,8 +39,7 @@ import {
 } from "../mechanisms/roles/magician/night_frame";
 import { nightmareFearBlocks } from "../mechanisms/roles/nightmare_shadow/night_frame";
 import { demonHunterNativeGunCurrent } from "../mechanisms/roles/demon_hunter/authority";
-import { expandWeddingDeaths, weddingGroup } from "../mechanisms/roles/ghost_bride/authority";
-import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
+import { WeddingDeathWavePublication } from "../mechanisms/roles/ghost_bride/ports";
 import { expandLoversWave } from "../mechanisms/roles/cupid/relation";
 import type { BoardConfig, LastWordsPolicy } from "../../core/domain/board";
 import { captureNightLife, livingNightLife } from "../../core/domain/night_effects";
@@ -91,30 +90,24 @@ interface DeathWaveActions {
 
 /** 连续结算死亡波，动作阶段仍由 PhaseManager 推进。 */
 export class DeathResolution {
-  private expandWeddingWave(
-    ids: number[],
-    sources: DeathSources,
-    seen: ReadonlySet<number>,
-    nightOrigin: Set<number>,
-  ): number[] {
-    const before = new Set(ids);
-    for (const edge of expandWeddingDeaths(this.world, ids, sources, seen, nightOrigin)) {
-      const group = weddingGroup(this.world)!;
-      this.events.push({
-        timestamp: Date.now(),
-        type: "ghost_bride_partner_death",
-        payload: {
-          policy: GHOST_BRIDE_POLICY,
-          groupId: group.groupId,
-          day: this.state.day,
-          phase: this.state.phase,
-          ...edge,
-        },
-        audience: Object.freeze([]),
-      });
-    }
-    return ids.filter((id) => !before.has(id));
-  }
+  // 只捕获原结算器；每条关系边在原表达式处晚读 World、事件、日期及阶段。
+  private readonly weddingDeathWave = (() => {
+    const resolution = this;
+    return new WeddingDeathWavePublication({
+      get world() {
+        return resolution.world;
+      },
+      get events() {
+        return resolution.events;
+      },
+      get day() {
+        return resolution.state.day;
+      },
+      get phase() {
+        return resolution.state.phase;
+      },
+    });
+  })();
   private readonly lastWordsMechanism = getDefaultLastWordsMechanism();
   // 只捕获结算器本身；每次 World、事件和运行状态读取仍发生在原命令表达式处。
   private readonly deathCommitter = (() => {
@@ -239,7 +232,7 @@ export class DeathResolution {
     const nightOrigin = new Set(nightEffects?.nightOriginIds ?? []);
     if (!isCurrent()) return;
     // 关系闭包先于标死、遗言和枪权判断；恋人／婚约追加的抑制死因不能等死亡 hook 后再补。
-    const weddingInitial = this.expandWeddingWave(pending, allSources, seen, nightOrigin);
+    const weddingInitial = this.weddingDeathWave.expand(pending, allSources, seen, nightOrigin);
     const linkedInitial = expandLoversWave(
       this.world,
       pending,
@@ -551,7 +544,7 @@ export class DeathResolution {
                     ];
                     nightOrigin.add(id);
                   }
-                this.expandWeddingWave(proposed, proposedSources, seen, nightOrigin);
+                this.weddingDeathWave.expand(proposed, proposedSources, seen, nightOrigin);
                 expandLoversWave(
                   this.world,
                   proposed,

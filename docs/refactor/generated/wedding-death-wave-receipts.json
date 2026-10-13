@@ -1,0 +1,101 @@
+{
+  "schema": "awa-wedding-death-wave-receipts-v1",
+  "tests": [
+    {
+      "阶段": "首次测试启动器错误",
+      "chunk": "348543",
+      "exitCode": 1,
+      "log": "wedding-death-wave-test-harness-first.log",
+      "事实": "在backend cwd错误使用repo-relative写入路径，文件未生成；随后filter零匹配，没有任何case运行，不算通过。"
+    },
+    {
+      "阶段": "首实际新增3项",
+      "chunk": "8f7b27",
+      "exitCode": 1,
+      "pass": 1,
+      "fail": 2,
+      "assertions": 3,
+      "log": "wedding-death-wave-new-tests-first.log",
+      "原因": "新fixture传原input config，而婚约authority持有bootstrap编译boardConfig同引用；两个新case尚未进入断言。"
+    },
+    {
+      "阶段": "唯一必要旧场景case",
+      "chunk": "942588",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "filtered": 10,
+      "assertions": 10,
+      "log": "wedding-death-wave-existing-case.log",
+      "scope": "actual first-night factory order keeps Guard before ordinary chat and native skills; relation settles inside Night"
+    },
+    {
+      "阶段": "仅重试失败两新项",
+      "chunk": "bed732",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "filtered": 1,
+      "assertions": 17,
+      "log": "wedding-death-wave-new-tests-failed-two.log",
+      "更正": "只改新fixture为实际boardConfig、正确手写机器policy字面；精确audience类型视图擦除后两whole输出相同。"
+    }
+  ],
+  "最终独立case计数": {
+    "new": 3,
+    "newAssertions": 20,
+    "existing": 1,
+    "existingAssertions": 10,
+    "distinctTotal": 4,
+    "assertionsTotal": 30
+  },
+  "types": [
+    {
+      "阶段": "首实际有限4根",
+      "launchChunk": "80fcee",
+      "session": 22545,
+      "terminalChunk": "0aff3b",
+      "exitCode": 2,
+      "log": "wedding-death-wave-types-first.log",
+      "诊断": "新期待policy机器字面错误，以及GameEvent union audience需精确已断言事件类型视图；无生产源码诊断。"
+    },
+    {
+      "阶段": "必要最终有限4根",
+      "launchChunk": "758888",
+      "session": 52400,
+      "terminalChunk": "e38adc",
+      "exitCode": 0,
+      "log": "wedding-death-wave-types-final.log",
+      "日志字节": 0,
+      "退出来源": "真实write_stdin工具终态，不以空log推断"
+    }
+  ],
+  "proofHarnessHistory": [
+    "首次initializer按printer排版比较误报多行布局；改核完整typed field含全部标点及四getter，不改源码。",
+    "随后把oldSource AST node插入newSource使printer按错误原span读取字符串，完整DR比较真实红；诊断差分后仅改工具为精确文本恢复并重新parse整程序，不改产品。",
+    "最终工具406a5d exit0：完整原方法195节点/DR9337完整节点与2whole输出、2caller准确保持。"
+  ],
+  "comments": {
+    "chunk": "11d13c",
+    "exitCode": 0,
+    "sourceFiles": 4,
+    "documentationPaths": 443,
+    "actualDiagnostics": 0
+  },
+  "boundedGraph": {
+    "chunk": "9e18b8",
+    "exitCode": 0,
+    "potentialStaticRuntimeClosureNodes": 119,
+    "specifiedReversePaths": 3,
+    "emptyPaths": 3,
+    "notWholeRepositoryGate": true
+  },
+  "未执行": [
+    "全量门禁",
+    "全suite",
+    "完整多局矩阵",
+    "模型",
+    "网络",
+    "历史golden重生成"
+  ]
+}

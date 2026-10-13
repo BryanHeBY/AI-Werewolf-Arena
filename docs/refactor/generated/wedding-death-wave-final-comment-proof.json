@@ -1,0 +1,23 @@
+{
+  "path": "backend/src/game/mechanisms/roles/ghost_bride/death-wave-publication.ts",
+  "beforeSHA256": "c8169cc5498402a6e51386d1e95b64570fffb6ce419980ea00b0445c44686446",
+  "afterSHA256": "0b4223b8abff36f1db40211ef102cee5fef54eb06b0a352f4d919db00af2ba7a",
+  "completeNonCommentLeafSame": true,
+  "leafCount": 96,
+  "outputs": [
+    {
+      "module": "ESNext",
+      "wholeRawSame": true,
+      "beforeSHA256": "3556f3c4accf911b3d6840b0f88f92c700e4c26479464f3e7232c688535ad208",
+      "afterSHA256": "3556f3c4accf911b3d6840b0f88f92c700e4c26479464f3e7232c688535ad208"
+    },
+    {
+      "module": "CommonJS",
+      "wholeRawSame": true,
+      "beforeSHA256": "7a5e6ebeebfdafd7a239aced6bf8c5d1b95961f23728a697c2e6f386c59155b0",
+      "afterSHA256": "7a5e6ebeebfdafd7a239aced6bf8c5d1b95961f23728a697c2e6f386c59155b0"
+    }
+  ],
+  "meaning": "把分组读取失败的概括收窄为实际逐边查询及groupId不提前读取，避免把后续groupId dereference与查询失败时点混称。",
+  "noTypeRuntimeHeadsGateRepeated": true
+}

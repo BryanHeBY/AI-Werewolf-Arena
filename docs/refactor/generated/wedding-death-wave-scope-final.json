@@ -1,0 +1,24 @@
+{
+  "baseCommit": "c4a8d5a1e7e86060235e80e356fb93ad93172390",
+  "sourcePaths": 4,
+  "source": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "11be5648fc3affe7a2c1ccd979f529734c564cb84ab387770b04d8bc74f28247"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "sha256": "67b4cf2181526c818fd24f387676380c17439a74abe37989d44461955b2b3c2f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/death-wave-publication.ts",
+      "sha256": "0b4223b8abff36f1db40211ef102cee5fef54eb06b0a352f4d919db00af2ba7a"
+    },
+    {
+      "path": "backend/tests/unit/features/ghost-bride/death-wave-publication.test.ts",
+      "sha256": "c9fe91adf33edfa62bbdfffe487343ae02cad3f09b0955a90b7fe6c86a9d7ce4"
+    }
+  ],
+  "frozen": true,
+  "finalCommentDelta": "docs/refactor/generated/wedding-death-wave-final-comment-proof.json"
+}
