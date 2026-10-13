@@ -1,12 +1,9 @@
 /**
- * Engine scenario tests verify Animal Dream actual cycles, death-unit expiry and Fox/Beauty interactions.
- * Input: Fixed Animal rosters, explicit actions, policy variants and original-life replacements.
- * Output and independent oracle: Handwritten life/badge/death order, cancelled knife/Beauty state and one-time expiry assertions.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Scenario tests drive actual Animal Dream phase/death units, Cat expiry and Fox/Puffer/Beauty interactions. Inputs are fixed original rosters, literal choices and foreign original-life replacements; handwritten death/badge/stock ordering and rejection are the oracle. No model or replacement expected fixture is generated.
  */
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import { animalInternalConfig } from "../../support/features/animal-dream/builders/roster";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { animalInternalConfig } from "../../../support/features/animal-dream/builders/roster";
 import {
   Role,
   Camp,
@@ -18,18 +15,14 @@ import {
   type ToolCall,
   type ActionProvider,
   type AliveComponent,
-} from "../../../src/core";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import {
-  boardDefinitionFromConfig,
-  parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
-import { WinCondition } from "../../../src/core/domain/model";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { aliveLifeVersion } from "../../../src/core/domain/components/alive";
-import { animalAuthoritySnapshot } from "../../../src/game/mechanisms/roles/animal_dream/authority";
-import { getWolfBeautyState } from "../../../src/game/mechanisms/roles/private_state";
-import { activeCharm } from "../../../src/game/mechanisms/roles/wolf_beauty/relation";
+} from "../../../../src/core";
+import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { aliveLifeVersion } from "../../../../src/core/domain/components/alive";
+import { animalAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/animal_dream/authority";
+import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/private_state";
+import { activeCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
+
 const fixed = [
   Role.WolfBeauty,
   Role.Wolf,
@@ -44,6 +37,7 @@ const fixed = [
   Role.Bear,
   Role.Pufferfish,
 ];
+
 const game = (skip = false) =>
   bootstrapGame(
     {
@@ -54,6 +48,7 @@ const game = (skip = false) =>
     } as unknown as BoardConfig,
     { fixedRoles: fixed },
   );
+
 function actor(plan: (r: ActionRequest) => ToolCall | null | undefined) {
   const requests: ActionRequest[] = [],
     provider: ActionProvider = {
@@ -86,6 +81,7 @@ function actor(plan: (r: ActionRequest) => ToolCall | null | undefined) {
     };
   return { provider, requests };
 }
+
 test("real first-night Cat knife stays alive through election, announces no night death, then expires after all-abstain exile", async () => {
   const g = game(),
     life = g.world.getComponent<AliveComponent>(9, COMPONENT.Alive)!,
@@ -113,6 +109,7 @@ test("real first-night Cat knife stays alive through election, announces no nigh
   ).toBe(true);
   expect(animalAuthoritySnapshot(g.world)!.cat.form.kind).toBe("expired");
 });
+
 test("real current-unit Cat exile preserves life and badge until next unit Exile plus expiry settles once", async () => {
   const g = game(),
     life = g.world.getComponent<AliveComponent>(9, COMPONENT.Alive)!,
@@ -144,6 +141,7 @@ test("real current-unit Cat exile preserves life and badge until next unit Exile
     a.requests.filter((r) => r.actorId === 9 && r.allowedTools.includes("choose_badge_successor")),
   ).toHaveLength(1);
 });
+
 test("real Fox N2 Beauty hit skips pack knife and Beauty action, clears old relation, and breaks consecutive restriction", async () => {
   const g = game(),
     a = actor((r) => {
@@ -176,6 +174,7 @@ test("real Fox N2 Beauty hit skips pack knife and Beauty action, clears old rela
     a.requests.filter((r) => r.context.day === 3 && r.allowedTools.includes("kill_vote")),
   ).toHaveLength(4);
 });
+
 test("real Puffer exile and full retaliation drain all targets including Cat deferral before wolf-priority judgment", async () => {
   const g = game(),
     a = actor((r) => {
@@ -199,6 +198,7 @@ test("real Puffer exile and full retaliation drain all targets including Cat def
     12,
   ]);
 });
+
 for (const skip of [false, true])
   test(`real N1 combined pre-election blast follows ${skip ? "expire" : "wait"} Cat skip policy without false night death`, async () => {
     const g = game(skip),
@@ -239,46 +239,6 @@ test("A original phase cancellation closes already acquired actual exile unit", 
   expect(snapshot.stopped).toBe(true);
   expect(snapshot.unit?.status).toBe("aborted");
 });
-test("A public old Bear board cannot enable Animal-only dawn strategy", () => {
-  const c = {
-    boardSize: 6,
-    roleSetups: [
-      { role: Role.Wolf, count: 2 },
-      { role: Role.Villager, count: 3 },
-      { role: Role.Bear, count: 1 },
-    ],
-    winConditions: [WinCondition.SlaughterCity],
-    enableSheriff: false,
-    hooks: { onDaybreak: false, onPreElection: false, onPreVote: false, onPerSpeechGap: false },
-    selfDestruct: { enabledWindows: [] },
-    tieBreaker: { exileVote: "no_elimination", wolfKillVote: "min_id" },
-  } as BoardConfig;
-  const d = boardDefinitionFromConfig("old_bear_a", c);
-  d.roles.bear = { signalPolicy: "netease_dawn_live_v1" };
-  expect(() => parseBoardDefinition(d)).toThrow();
-});
-test("A four public presets retain choices regardless explicit role parameter order", () => {
-  for (const skip of ["awa_wait_for_actual_exile_v1", "awa_expire_on_skipped_day_v1"] as const)
-    for (const ballot of ["awa_final_ballot_v1", "awa_first_ballot_v1"] as const) {
-      const c = {
-        ...animalInternalConfig(),
-        whiteCat: { skippedVotePolicy: skip },
-        pufferfish: { ballotPolicy: ballot },
-      } as unknown as BoardConfig;
-      const d = boardDefinitionFromConfig("animal_a", c);
-      for (const rev of [false, true]) {
-        const entries = Object.entries(d.roles);
-        if (rev) entries.reverse();
-        const parsed = parseBoardDefinition({ ...d, roles: Object.fromEntries(entries) }).config;
-        expect(parsed.whiteCat?.skippedVotePolicy).toBe(skip);
-        expect(parsed.pufferfish?.ballotPolicy).toBe(ballot);
-        expect(parsed.bear?.signalPolicy).toBe("netease_dawn_live_v1");
-        expect(bootstrapGame(parsed, { fixedRoles: fixed }).world.getAliveEntityIds()).toHaveLength(
-          12,
-        );
-      }
-    }
-});
 
 test("A native night stops before any successor request after original Fox body is replaced", async () => {
   const g = game();
@@ -296,6 +256,7 @@ test("A native night stops before any successor request after original Fox body 
   expect(changed).toBe(true);
   expect(after).toBe(0);
 });
+
 for (const kind of ["fox", "puffer"] as const)
   test(`A ${kind} postgateway target replacement cannot pay resource`, async () => {
     const g = game();
@@ -353,6 +314,7 @@ for (const skip of [false, true])
       [],
     );
   });
+
 test("Beauty exile linked Cat is deferred in added wave, no false charm death, expires next unit", async () => {
   const g = game();
   const a = actor((r) => {
@@ -368,6 +330,7 @@ test("Beauty exile linked Cat is deferred in added wave, no false charm death, e
   expect(g.world.getComponent<AliveComponent>(9, COMPONENT.Alive)!.alive).toBe(false);
   expect(a.requests.filter((r) => r.actorId === 9 && r.context.stage === "last_words")).toEqual([]);
 });
+
 for (const policy of ["awa_first_ballot_v1", "awa_final_ballot_v1"])
   test(`PK all abstain keeps ${policy} targets`, async () => {
     const g = bootstrapGame(
@@ -395,6 +358,7 @@ for (const policy of ["awa_first_ballot_v1", "awa_final_ballot_v1"])
     );
     expect(a.requests.filter((r) => r.context.stage === "last_words")).toEqual([]);
   });
+
 test("paid Puffer later real knife still blocks Beauty exile link that day", async () => {
   const g = game();
   const a = actor((r) => {
@@ -421,6 +385,7 @@ test("paid Puffer later real knife still blocks Beauty exile link that day", asy
     a.requests.filter((r) => r.context.day === 2 && r.allowedTools.includes("puffer_retaliate")),
   ).toEqual([]);
 });
+
 test("last Wolf initial death and last god linked added death settle completely before unique Wolf victory", async () => {
   const g = game();
   const a = actor((r) => {

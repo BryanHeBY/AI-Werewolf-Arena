@@ -6,7 +6,7 @@
 | ---------------------- | ------ | ------------------------------------------------------------------------------------ |
 | P0 基线与契约          | 已完成 | C01 `144f48b` 已提交；C02 `aba9347`；C03 `b56d282`；七样例、89行静态台账与三方向审查 |
 | P1 依赖与共享契约      | 已完成 | C04–C09 数据/支持职责与 public consumer 闭合；零基础包循环，兼容桥按 C44 退出        |
-| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；当前映射568来源、642目标、7343旧IDs；余mixed tests/support继续 |
+| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；当前映射569来源、644目标、7362旧IDs；余mixed tests/support继续 |
 | P3 状态与请求授权      | 进行中 | C16生产读取/C18传播/F02/C19完成；容器读取边界及实际写者闭合，能力查询/schema继续      |
 | P4 规则计划与生命周期  | 进行中 | C21阶段成员快照与opaque lazy完成；完整RulePlan/C22–C24继续                           |
 | P5 效果、死亡与判胜    | 待执行 | C25–C29                                                                              |
@@ -355,3 +355,5 @@
 - C12 mixed4j badge-choice-authority-and-deaths：1原file→2targets/38旧IDs实际分层；overall4→10/68IDs15unit2integration51scene，31注册全保。RootactualGit/full selectedprogram/原ID singleowner0，31callback及15helper全部raw、原数组/父loop保，100bindings85relative/10heads0；独立真实分类/setup/473unique omitted0add/55prune=46whole9partial闭合。原runRecorded是latent函数，不增加eager factoryread；初工具text分类误报cache留存，修AST仅查真实顶层initializer。Badge直接hook不因constructor升scenario，Radiantunit明确原publicboard读取支持input，完整录制另scene；actual346b source/support/pkg/scripts/tooling+10finite34932实际exit0。没有mutation输入/cast/断言改动或tests/discovery/game重复，不称wholefile/import initorder等价。mapping现567source/640target/7339IDs。
 
 - C12 mixed4j radiant-wire-oracles：1原file→2targets/4旧IDs实际分层；overall4→10/68IDs15unit2integration51scene，31注册全保。RootactualGit/full selectedprogram/原ID singleowner0，31callback及15helper全部raw、原数组/父loop保，100bindings85relative/10heads0；独立真实分类/setup/473unique omitted0add/55prune=46whole9partial闭合。原runRecorded是latent函数，不增加eager factoryread；初工具text分类误报cache留存，修AST仅查真实顶层initializer。Badge直接hook不因constructor升scenario，Radiantunit明确原publicboard读取支持input，完整录制另scene；actual346b source/support/pkg/scripts/tooling+10finite34932实际exit0。没有mutation输入/cast/断言改动或tests/discovery/game重复，不称wholefile/import initorder等价。mapping现568source/642target/7343IDs。
+
+- C12 mixed8k animal-dream-runtime：1原file→2targets/19旧IDs实际分层；overall8→14/205IDs55unit150scene，77注册保。RootactualGit/full selectedprogram/原ID singleowner0，72callbackraw+5仅11runtimeDynamic/4inlineType精确同module路径，21helper及所有数组/父loop原raw，102top bindings及103actualrelative identities/14heads0；独立实际qualification/unit vs fullPhase/setup/checkpoint/失败scene与452unique omitted0add/63prune=46whole17partial审闭合，2原BoardParameters自身freeze不属必需hook或IO。原eager声明/实际factory无新增读取，未称完整external initorder。exactc65源码/support/pkg/scripts/tooling/原enginebuilders+14候选finite85684actualexit0，role14API旧造数cast归后续一致批；没input/断言/cast改或重复types/tests/discovery/game。mapping现569source/644target/7362IDs。

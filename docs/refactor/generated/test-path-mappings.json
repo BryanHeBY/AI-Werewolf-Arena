@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "346b1f0020a03d220b7af3971853d0ae202614a8",
+  "observedSourceCommit": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -92578,13 +92578,447 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Copied runRecorded/fixture helpers are latent function declarations; original case-local Worlds, scripts, recorders and cleanup stay one allocation per original call. No extra eager cached catalog read was introduced.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 473 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/animal_dream_runtime.test.ts",
+      "to": "backend/tests/unit/configuration/animal-dream-public-presets.test.ts",
+      "sourceCommit": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "reason": "Actual selected unit module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "8f40aa3d662593d758cc4818f6455d5a0ede5b9abd96a14c196fadf39edd9faf",
+      "candidateSha256": "683a26e96901d86b4fad5d85e51d5e0d7744ab0de0406bffffb691acab51aad8",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 400,
+          "end": 430,
+          "original": "../../../src/core/domain/model",
+          "value": "../../../src/core/domain/model",
+          "originalResolved": "backend/src/core/domain/model.ts",
+          "expectedResolved": "backend/src/core/domain/model.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 323,
+          "end": 367,
+          "original": "../../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 233,
+          "end": 250,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 139,
+          "end": 190,
+          "original": "../../support/features/animal-dream/builders/roster",
+          "value": "../../support/features/animal-dream/builders/roster",
+          "originalResolved": "backend/tests/support/features/animal-dream/builders/roster.ts",
+          "expectedResolved": "backend/tests/support/features/animal-dream/builders/roster.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "303d6f9b74b18376e3214549d2fdcf991b4a5076937c4e29cbca54cecd168327",
+          "title": "A public old Bear board cannot enable Animal-only dawn strategy",
+          "occurrence": 1
+        },
+        {
+          "id": "1c36e5f0e6417523c4e03f9cfb2e5ee6706ee40ca21039c0c38b27a8b7c7622a",
+          "title": "A four public presets retain choices regardless explicit role parameter order",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Role,\n  Camp,\n  Phase,\n  ActionWindow,\n  COMPONENT,\n  type BoardConfig,\n  type ActionRequest,\n  type ToolCall,\n  type ActionProvider,\n  type AliveComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Role, type BoardConfig } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "Camp",
+              "imported": "Camp",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionWindow",
+              "imported": "ActionWindow",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ActionProvider",
+              "imported": "ActionProvider",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "AliveComponent",
+              "imported": "AliveComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import { createAliveComponent } from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createAliveComponent",
+              "imported": "createAliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/components/alive",
+          "originalImport": "import { aliveLifeVersion } from \"../../../src/core/domain/components/alive\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "aliveLifeVersion",
+              "imported": "aliveLifeVersion",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/animal_dream/authority",
+          "originalImport": "import { animalAuthoritySnapshot } from \"../../../src/game/mechanisms/roles/animal_dream/authority\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "animalAuthoritySnapshot",
+              "imported": "animalAuthoritySnapshot",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import { getWolfBeautyState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getWolfBeautyState",
+              "imported": "getWolfBeautyState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/wolf_beauty/relation",
+          "originalImport": "import { activeCharm } from \"../../../src/game/mechanisms/roles/wolf_beauty/relation\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "activeCharm",
+              "imported": "activeCharm",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/animal_dream_runtime.test.ts",
+      "to": "backend/tests/scenarios/features/animal-dream/native-phase-and-death-unit-chains.test.ts",
+      "sourceCommit": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "8f40aa3d662593d758cc4818f6455d5a0ede5b9abd96a14c196fadf39edd9faf",
+      "candidateSha256": "a329e39003b23baf70e44f851a01941cc8af005b76c22765b919a153d7ac7022",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 836,
+          "end": 891,
+          "original": "../../../src/game/mechanisms/roles/wolf_beauty/relation",
+          "value": "../../../../src/game/mechanisms/roles/wolf_beauty/relation",
+          "originalResolved": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 756,
+          "end": 804,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 660,
+          "end": 717,
+          "original": "../../../src/game/mechanisms/roles/animal_dream/authority",
+          "value": "../../../../src/game/mechanisms/roles/animal_dream/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/animal_dream/authority.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 575,
+          "end": 616,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 500,
+          "end": 538,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 427,
+          "end": 468,
+          "original": "../../../src/core/domain/components/alive",
+          "value": "../../../../src/core/domain/components/alive",
+          "originalResolved": "backend/src/core/domain/components/alive.ts",
+          "expectedResolved": "backend/src/core/domain/components/alive.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 369,
+          "end": 386,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 139,
+          "end": 190,
+          "original": "../../support/features/animal-dream/builders/roster",
+          "value": "../../../support/features/animal-dream/builders/roster",
+          "originalResolved": "backend/tests/support/features/animal-dream/builders/roster.ts",
+          "expectedResolved": "backend/tests/support/features/animal-dream/builders/roster.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "31f71df01b28871305b7a6445903ffaf30c8ddecf6de3522eaba7d37a04f966e",
+          "title": "real first-night Cat knife stays alive through election, announces no night death, then expires after all-abstain exile",
+          "occurrence": 1
+        },
+        {
+          "id": "28735654423d6b7d355ff7a4fe03ee1aa79b0d84982fdddfbac6f8fa18f2744e",
+          "title": "real current-unit Cat exile preserves life and badge until next unit Exile plus expiry settles once",
+          "occurrence": 1
+        },
+        {
+          "id": "c5a0c613aa5a41202dfe8146a01f1637553c4277dfa123889f3c0ebe607d84ae",
+          "title": "real Fox N2 Beauty hit skips pack knife and Beauty action, clears old relation, and breaks consecutive restriction",
+          "occurrence": 1
+        },
+        {
+          "id": "ab6b58dc388a43d1b96f69ce947d92e000588b8ad1def55c3f0ad6f70bed98f1",
+          "title": "real Puffer exile and full retaliation drain all targets including Cat deferral before wolf-priority judgment",
+          "occurrence": 1
+        },
+        {
+          "id": "e62e57250c4e8bf6f2ea416b5f05223af33e4d24d16fac4b9963e123238b6194",
+          "title": "real N1 combined pre-election blast follows wait Cat skip policy without false night death",
+          "occurrence": 1
+        },
+        {
+          "id": "ee48f92726dc1bfb41aa92b2611af013ebfade33a9ff37243dc5c38a3457acc0",
+          "title": "real N1 combined pre-election blast follows expire Cat skip policy without false night death",
+          "occurrence": 1
+        },
+        {
+          "id": "0a90da7cd07d863dbcbfa0808b1d70ce0f717cf22c4d2f3acd8b6cf34cb45b9f",
+          "title": "A original phase cancellation closes already acquired actual exile unit",
+          "occurrence": 1
+        },
+        {
+          "id": "79f959e4f6b2aec4bff343c0f799e2535f02f4ebb8c68fab3bb83639c9a5b7c2",
+          "title": "A native night stops before any successor request after original Fox body is replaced",
+          "occurrence": 1
+        },
+        {
+          "id": "1de90346539b4c5239da400535d41632acd25b8474da6a3c0848cc2a24511fbe",
+          "title": "A fox postgateway target replacement cannot pay resource",
+          "occurrence": 1
+        },
+        {
+          "id": "9d8ccdc20f18341a2849d08a1b4f48d02e349aaa3eb9e5e3c1a58650c68ebf26",
+          "title": "A puffer postgateway target replacement cannot pay resource",
+          "occurrence": 1
+        },
+        {
+          "id": "91deac2963cb673fc02985edfcbc061faaf14df8230449e06759574b566a77b7",
+          "title": "preVote Cat skip actual PM skip=false",
+          "occurrence": 1
+        },
+        {
+          "id": "c2be1223ee07268a681e12e29af893774c4bc939cf0a68be2f9067a1c7b697df",
+          "title": "preVote Cat skip actual PM skip=true",
+          "occurrence": 1
+        },
+        {
+          "id": "262e76b695c01dad5129272671f44c1601fa10a60baa3d42f35391cce297e0ae",
+          "title": "Beauty exile linked Cat is deferred in added wave, no false charm death, expires next unit",
+          "occurrence": 1
+        },
+        {
+          "id": "5147936a7c1305e485a9861c217957ce9dfdb8f6832fadf5ddf0a0735fa707d4",
+          "title": "PK all abstain keeps awa_first_ballot_v1 targets",
+          "occurrence": 1
+        },
+        {
+          "id": "51b0223a93405ddacfc4b9dba1fc5d0b3da2767c9f7f095a31ad5d6704241185",
+          "title": "PK all abstain keeps awa_final_ballot_v1 targets",
+          "occurrence": 1
+        },
+        {
+          "id": "0c2a1ff34789769f0479d1d1b8ac8994efe8d5613af0c63f17bddfbbe3c8374b",
+          "title": "paid Puffer later real knife still blocks Beauty exile link that day",
+          "occurrence": 1
+        },
+        {
+          "id": "95d3fe8a7513d40c14a41719226741323e66ec6144b0d6712b8c576f4f2189a3",
+          "title": "last Wolf initial death and last god linked added death settle completely before unique Wolf victory",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/runtime/config/board_definition",
+          "originalImport": "import {\n  boardDefinitionFromConfig,\n  parseBoardDefinition,\n} from \"../../../src/runtime/config/board_definition\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "boardDefinitionFromConfig",
+              "imported": "boardDefinitionFromConfig",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "parseBoardDefinition",
+              "imported": "parseBoardDefinition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/model",
+          "originalImport": "import { WinCondition } from \"../../../src/core/domain/model\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "WinCondition",
+              "imported": "WinCondition",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 568,
-    "targetFiles": 642,
-    "mappingEntries": 642,
-    "baselineCases": 7343,
+    "sourceFiles": 569,
+    "targetFiles": 644,
+    "mappingEntries": 644,
+    "baselineCases": 7362,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
