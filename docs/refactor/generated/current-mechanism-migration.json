@@ -1,6 +1,6 @@
 {
   "schema": "awa-current-mechanism-migration-v1",
-  "observedCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+  "observedCommit": "82fc02318a7448b7182acedb3224838dcfb33719",
   "baseline": {
     "path": "docs/refactor/generated/mechanism-matrix.json",
     "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
@@ -716,6 +716,17 @@
               "evidence": [
                 "docs/refactor/role-state-owners.md"
               ]
+            },
+            {
+              "part": "Native getter/install output and existing selection command expose readonly scalar/history data over the same stored reference",
+              "commit": "82fc02318a7448b7182acedb3224838dcfb33719",
+              "owners": [
+                "backend/src/game/mechanisms/roles/dreamer/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-read-boundary.md",
+                "docs/refactor/generated/night-ability-read-evidence.json"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -1313,6 +1324,17 @@
               ],
               "evidence": [
                 "docs/refactor/role-state-owners.md"
+              ]
+            },
+            {
+              "part": "Native getter/install output and ordinary policy/coordinator arguments preserve readonly target and repeat policy with existing payload commands",
+              "commit": "82fc02318a7448b7182acedb3224838dcfb33719",
+              "owners": [
+                "backend/src/game/mechanisms/roles/guard/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-read-boundary.md",
+                "docs/refactor/generated/night-ability-read-evidence.json"
               ]
             }
           ],
@@ -3136,6 +3158,18 @@
               "evidence": [
                 "docs/refactor/role-state-owners.md"
               ]
+            },
+            {
+              "part": "Native getter/install and policy/scope queries expose readonly history/result; concrete PureWhite command retains three state reads and one append",
+              "commit": "82fc02318a7448b7182acedb3224838dcfb33719",
+              "owners": [
+                "backend/src/game/mechanisms/roles/role_inspection/state.ts",
+                "backend/src/game/mechanisms/roles/pure_white/night_stages.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-read-boundary.md",
+                "docs/refactor/generated/night-ability-read-evidence.json"
+              ]
             }
           ],
           "remainingRequirements": [
@@ -3350,6 +3384,18 @@
               ],
               "evidence": [
                 "docs/refactor/seer-state-owner.md"
+              ]
+            },
+            {
+              "part": "Generic ability query/install path now also preserves the existing Seer deep read view without a mutable-instance bypass",
+              "commit": "82fc02318a7448b7182acedb3224838dcfb33719",
+              "owners": [
+                "backend/src/game/mechanisms/roles/abilities.ts",
+                "backend/src/game/mechanisms/roles/seer/state-contracts.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-read-boundary.md",
+                "docs/refactor/generated/night-ability-read-evidence.json"
               ]
             }
           ],
@@ -4074,6 +4120,18 @@
               ],
               "evidence": [
                 "docs/refactor/role-state-owners.md"
+              ]
+            },
+            {
+              "part": "Native getter/install output and actual scalar coordinator signature expose readonly bottles/policy; repeated owner reads and payment operations preserved",
+              "commit": "82fc02318a7448b7182acedb3224838dcfb33719",
+              "owners": [
+                "backend/src/game/mechanisms/roles/witch/state.ts",
+                "backend/src/game/mechanisms/roles/witch/night_stages.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-read-boundary.md",
+                "docs/refactor/generated/night-ability-read-evidence.json"
               ]
             }
           ],
@@ -6756,10 +6814,23 @@
       "baselineOwner": "feature:ability-changes",
       "cells": {
         "state": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Grant returns original live read view; enable/death expiry/transfer retain concrete stored-instance write ownership and detached copy policy",
+              "commit": "82fc02318a7448b7182acedb3224838dcfb33719",
+              "owners": [
+                "backend/src/game/mechanisms/roles/ability_changes.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-read-boundary.md",
+                "docs/refactor/generated/night-ability-read-evidence.json"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Complete all actual state/schema/codec and common lifecycle/permission consumers; static ordinary read views do not close the whole mechanism.",
+            "Finish canonical pure data ownership, obsolete exports and final zero-debt same-source acceptance."
           ]
         },
         "lease": {
@@ -7536,10 +7607,23 @@
       "baselineOwner": "feature:abilities",
       "cells": {
         "state": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Seven-kind all/find/active and native installation expose original live read views; specific metadata commands retain original writes",
+              "commit": "82fc02318a7448b7182acedb3224838dcfb33719",
+              "owners": [
+                "backend/src/game/mechanisms/roles/abilities.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-read-boundary.md",
+                "docs/refactor/generated/night-ability-read-evidence.json"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Complete all actual state/schema/codec and common lifecycle/permission consumers; static ordinary read views do not close the whole mechanism.",
+            "Finish canonical pure data ownership, obsolete exports and final zero-debt same-source acceptance."
           ]
         },
         "lease": {
@@ -7693,10 +7777,23 @@
       "owner": "night actor query and concrete eligibility assembly",
       "cells": {
         "state": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Actual actor output no longer restores mutable payload/metadata rights while retaining original instance identity",
+              "commit": "82fc02318a7448b7182acedb3224838dcfb33719",
+              "owners": [
+                "backend/src/game/mechanisms/roles/night-ability-actors.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-read-boundary.md",
+                "docs/refactor/generated/night-ability-read-evidence.json"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Classify this current-only owner requirement by actual implementation/consumers; no automatic N/A."
+            "Complete all actual state/schema/codec and common lifecycle/permission consumers; static ordinary read views do not close the whole mechanism.",
+            "Finish canonical pure data ownership, obsolete exports and final zero-debt same-source acceptance."
           ]
         },
         "lease": {
@@ -7878,8 +7975,8 @@
     "currentOnlyRows": 2,
     "rows": 91,
     "cells": 910,
-    "pending": 858,
-    "partial": 52,
+    "pending": 855,
+    "partial": 55,
     "complete": 0,
     "not-applicable": 0
   },
