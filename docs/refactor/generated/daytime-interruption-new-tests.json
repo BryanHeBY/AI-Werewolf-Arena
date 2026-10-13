@@ -1,0 +1,16 @@
+{
+  "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/engine/daytime-interruption-composition.test.ts",
+  "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+  "toolChunkId": "33a4ce",
+  "exitCode": 0,
+  "pass": 4,
+  "fail": 0,
+  "assertions": 22,
+  "cases": [
+    "constructs original windows in W/R/G, W/G, W/G/E order without snapshotting",
+    "second window gateway failure stops before Debater reads and preserves original error",
+    "entry reads the late World while original windows retain their construction World",
+    "pipeline rejects reentry before reading day or currentness and before provider work"
+  ],
+  "scope": "首次唯一新增4例；根据真实tool收据登记，不声称这是redirect原log。"
+}

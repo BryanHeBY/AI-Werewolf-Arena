@@ -1,0 +1,1466 @@
+{
+  "base": "54644228947ec4684b24605aca5e0b9146812cfb",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+      "sha256": "2c11aec3917c79309cb0334483a8f4ba627f3fed73486e089edbcc3e4101742e"
+    },
+    {
+      "path": "backend/src/game/engine/daytime-interruption-contracts.ts",
+      "sha256": "be9244566f11848729d50ca0ea6382c228c955a72af384d95d89f7371d728979"
+    },
+    {
+      "path": "backend/src/rulesets/daytime-interruption-composition.ts",
+      "sha256": "9c7a1c02ebf558bd4746934792a8dffea118dd6101f7e1c3c5118264a3ffb6d6"
+    },
+    {
+      "path": "backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+      "sha256": "7b3c3e0296a7b221272119b6667ca1509dda043fe29a4c604c065080a6d3f424"
+    }
+  ],
+  "ownership": "规则组合完整构造三个原窗口并持有重入政策；Pipeline保推进与真实调用时点；机制状态／资源／许可／关闭保持原owner。",
+  "programProof": {
+    "base": "54644228947ec4684b24605aca5e0b9146812cfb",
+    "baseline": {
+      "base": "54644228947ec4684b24605aca5e0b9146812cfb",
+      "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+      "sha256": "8135bbc866e1a7c6e1b6e5c16a504ab00a8e1a35f9d980120dbf5b817361fd14",
+      "gitEqualsWorking": true,
+      "controls": [
+        {
+          "path": "backend/src/game/engine/self_destruct_window.ts",
+          "sha256": "c71b4c61381d41a85f7379d02a7daa5af877c7987966fbb41a7cc8586725499a"
+        },
+        {
+          "path": "backend/src/game/engine/knight_duel_window.ts",
+          "sha256": "72c55dff09921a7a8570541a9aecdd31c8d89ba05edd961ceafe4b5f86064bca"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+          "sha256": "e9db3fa19b83adf47df98f1d0d58eacc5a10f205d5c67dad97143bfa7ffbdba2"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/debater/authority.ts",
+          "sha256": "d9f998d20271f8e3641795c432990f756a203936bb9c062dbba51100a07d0349"
+        }
+      ]
+    },
+    "scope": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+        "sha256": "2c11aec3917c79309cb0334483a8f4ba627f3fed73486e089edbcc3e4101742e"
+      },
+      {
+        "path": "backend/src/game/engine/daytime-interruption-contracts.ts",
+        "sha256": "be9244566f11848729d50ca0ea6382c228c955a72af384d95d89f7371d728979"
+      },
+      {
+        "path": "backend/src/rulesets/daytime-interruption-composition.ts",
+        "sha256": "9c7a1c02ebf558bd4746934792a8dffea118dd6101f7e1c3c5118264a3ffb6d6"
+      },
+      {
+        "path": "backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+        "sha256": "7b3c3e0296a7b221272119b6667ca1509dda043fe29a4c604c065080a6d3f424"
+      }
+    ],
+    "routeCounts": {
+      "this.interruptions.selfDestruct": 3,
+      "this.interruptions.duel": 3,
+      "this.interruptions.debate": 1
+    },
+    "wholeProgram": {
+      "oldNodes": 2456,
+      "inverseNodes": 2456,
+      "identical": true,
+      "oldNodeSha256": "ad4d987a1bfef243bf6aedd923d30fb03e4c199acb3fe6f7a82e7d536882daa5",
+      "inverseNodeSha256": "ad4d987a1bfef243bf6aedd923d30fb03e4c199acb3fe6f7a82e7d536882daa5"
+    },
+    "emissions": [
+      {
+        "module": "ESNext",
+        "rawIdentical": true,
+        "oldSha256": "d0f0ae98f975e7b4eb71a73d35a36a446aea4b7dacd59a44d4cb53117749fc8b",
+        "inverseSha256": "d0f0ae98f975e7b4eb71a73d35a36a446aea4b7dacd59a44d4cb53117749fc8b"
+      },
+      {
+        "module": "CommonJS",
+        "rawIdentical": true,
+        "oldSha256": "283cbc6e4d73ce1c225292b5d6d6912320392df5cc8af01a5faa8e013ee6b3b9",
+        "inverseSha256": "283cbc6e4d73ce1c225292b5d6d6912320392df5cc8af01a5faa8e013ee6b3b9"
+      }
+    ],
+    "constructorChecks": [
+      {
+        "constructor": "SelfDestructWindow",
+        "wholeNodesIdentical": true,
+        "currentArguments": [
+          "runtime.world()",
+          "runtime.roleRegistry()",
+          "runtime.toolGateway()"
+        ],
+        "oldArguments": [
+          "this.world",
+          "this.roleRegistry",
+          "this.toolGateway"
+        ]
+      },
+      {
+        "constructor": "KnightDuelWindow",
+        "wholeNodesIdentical": true,
+        "currentArguments": [
+          "runtime.world()",
+          "runtime.toolGateway()"
+        ],
+        "oldArguments": [
+          "this.world",
+          "this.toolGateway"
+        ]
+      },
+      {
+        "constructor": "DebaterWindow",
+        "wholeNodesIdentical": true,
+        "currentArguments": [
+          "runtime.world()",
+          "runtime.toolGateway()",
+          "runtime.events()"
+        ],
+        "oldArguments": [
+          "this.world",
+          "this.toolGateway",
+          "this.events"
+        ]
+      }
+    ],
+    "admissionSame": true,
+    "canary": {
+      "description": "最后return的selfDestructBy null→999，首个程序child/import未改",
+      "detected": true
+    },
+    "controls": [
+      {
+        "path": "backend/src/game/engine/self_destruct_window.ts",
+        "sha256": "c71b4c61381d41a85f7379d02a7daa5af877c7987966fbb41a7cc8586725499a",
+        "actualSha256": "c71b4c61381d41a85f7379d02a7daa5af877c7987966fbb41a7cc8586725499a",
+        "identical": true
+      },
+      {
+        "path": "backend/src/game/engine/knight_duel_window.ts",
+        "sha256": "72c55dff09921a7a8570541a9aecdd31c8d89ba05edd961ceafe4b5f86064bca",
+        "actualSha256": "72c55dff09921a7a8570541a9aecdd31c8d89ba05edd961ceafe4b5f86064bca",
+        "identical": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+        "sha256": "e9db3fa19b83adf47df98f1d0d58eacc5a10f205d5c67dad97143bfa7ffbdba2",
+        "actualSha256": "e9db3fa19b83adf47df98f1d0d58eacc5a10f205d5c67dad97143bfa7ffbdba2",
+        "identical": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/debater/authority.ts",
+        "sha256": "d9f998d20271f8e3641795c432990f756a203936bb9c062dbba51100a07d0349",
+        "actualSha256": "d9f998d20271f8e3641795c432990f756a203936bb9c062dbba51100a07d0349",
+        "identical": true
+      }
+    ],
+    "allowedApiDifferences": [
+      "Pipeline三反射私有字段退休，改由单interruptions聚合字段保存窄实例视图；不承诺旧反射布局／替换字段继续影响调度。",
+      "factory新增聚合对象与assertEntry方法；原execute接收者仍原窗口实例，非bind/clone。",
+      "原具体Debater直导退出；新的factory静态加载各窗口顺序不同，不宣称模块初始化图完全相同。"
+    ],
+    "limitations": [
+      "逆向证明仅覆盖明确字段／装配／准入／7调用点迁移，不能证明新增组合任意外部使用均旧API兼容。",
+      "没有宣称迁移全部白天机制、状态、付款或死亡／终局owner。"
+    ],
+    "approved": true
+  },
+  "heads": {
+    "source": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+        "sha256": "2c11aec3917c79309cb0334483a8f4ba627f3fed73486e089edbcc3e4101742e"
+      },
+      {
+        "path": "backend/src/game/engine/daytime-interruption-contracts.ts",
+        "sha256": "be9244566f11848729d50ca0ea6382c228c955a72af384d95d89f7371d728979"
+      },
+      {
+        "path": "backend/src/rulesets/daytime-interruption-composition.ts",
+        "sha256": "9c7a1c02ebf558bd4746934792a8dffea118dd6101f7e1c3c5118264a3ffb6d6"
+      },
+      {
+        "path": "backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+        "sha256": "7b3c3e0296a7b221272119b6667ca1509dda043fe29a4c604c065080a6d3f424"
+      }
+    ],
+    "documentationPathCount": 427,
+    "diagnostics": [],
+    "chinesePresence": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+        "chinesePresent": true
+      },
+      {
+        "path": "backend/src/game/engine/daytime-interruption-contracts.ts",
+        "chinesePresent": true
+      },
+      {
+        "path": "backend/src/rulesets/daytime-interruption-composition.ts",
+        "chinesePresent": true
+      },
+      {
+        "path": "backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+        "chinesePresent": true
+      }
+    ],
+    "approved": true
+  },
+  "bindings": {
+    "source": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+        "sha256": "2c11aec3917c79309cb0334483a8f4ba627f3fed73486e089edbcc3e4101742e"
+      },
+      {
+        "path": "backend/src/game/engine/daytime-interruption-contracts.ts",
+        "sha256": "be9244566f11848729d50ca0ea6382c228c955a72af384d95d89f7371d728979"
+      },
+      {
+        "path": "backend/src/rulesets/daytime-interruption-composition.ts",
+        "sha256": "9c7a1c02ebf558bd4746934792a8dffea118dd6101f7e1c3c5118264a3ffb6d6"
+      },
+      {
+        "path": "backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+        "sha256": "7b3c3e0296a7b221272119b6667ca1509dda043fe29a4c604c065080a6d3f424"
+      }
+    ],
+    "bindings": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+        "imports": [
+          {
+            "specifier": "@ai-werewolf-arena/game-contract",
+            "typeOnly": true,
+            "bindings": [
+              {
+                "exported": "ReadonlyBoardConfig",
+                "local": "ReadonlyBoardConfig",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/packages/game-contract/src/index.ts"
+          },
+          {
+            "specifier": "../../../rulesets/daytime-interruption-composition",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "createDaytimeInterruptionComposition",
+                "local": "createDaytimeInterruptionComposition",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/rulesets/daytime-interruption-composition.ts"
+          },
+          {
+            "specifier": "../daytime-interruption-contracts",
+            "typeOnly": true,
+            "bindings": [
+              {
+                "exported": "DaytimeInterruptionComposition",
+                "local": "DaytimeInterruptionComposition",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/daytime-interruption-contracts.ts"
+          },
+          {
+            "specifier": "../../../core/domain/components/alive",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "AliveComponent",
+                "local": "AliveComponent",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/core/domain/components/alive.ts"
+          },
+          {
+            "specifier": "../../../core/domain/components/names",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "COMPONENT",
+                "local": "COMPONENT",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/core/domain/components/names.ts"
+          },
+          {
+            "specifier": "../../../core/domain/model",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "ActionProvider",
+                "local": "ActionProvider",
+                "typeOnly": false
+              },
+              {
+                "exported": "ActionWindow",
+                "local": "ActionWindow",
+                "typeOnly": false
+              },
+              {
+                "exported": "DaySummary",
+                "local": "DaySummary",
+                "typeOnly": false
+              },
+              {
+                "exported": "EntityId",
+                "local": "EntityId",
+                "typeOnly": false
+              },
+              {
+                "exported": "GameEvent",
+                "local": "GameEvent",
+                "typeOnly": false
+              },
+              {
+                "exported": "Phase",
+                "local": "Phase",
+                "typeOnly": false
+              },
+              {
+                "exported": "KnightDuelWindow",
+                "local": "DuelWindow",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/core/domain/model.ts"
+          },
+          {
+            "specifier": "../../../core/domain/registries/role_registry",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "RoleRegistry",
+                "local": "RoleRegistry",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/core/domain/registries/role_registry.ts"
+          },
+          {
+            "specifier": "../../gateway/tool_gateway",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "ToolGateway",
+                "local": "ToolGateway",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/gateway/tool_gateway.ts"
+          },
+          {
+            "specifier": "../../mechanisms/sheriff/election",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "electSheriffIfNeeded",
+                "local": "electSheriffIfNeeded",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/sheriff/election.ts"
+          },
+          {
+            "specifier": "../../mechanisms/sheriff/speaking_order",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "buildSpeakerOrder",
+                "local": "buildSpeakerOrder",
+                "typeOnly": false
+              },
+              {
+                "exported": "chooseSpeakerDirection",
+                "local": "chooseSpeakerDirection",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/sheriff/speaking_order.ts"
+          },
+          {
+            "specifier": "../../mechanisms/sheriff/badge",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "findSheriffId",
+                "local": "findSheriffId",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/sheriff/badge.ts"
+          },
+          {
+            "specifier": "../../../core/domain/world",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "World",
+                "local": "World",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/core/domain/world.ts"
+          },
+          {
+            "specifier": "../action_request_factory",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "GameActionRequestFactory",
+                "local": "GameActionRequestFactory",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/action_request_factory.ts"
+          },
+          {
+            "specifier": "../self_destruct_window",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "isSelfDestructWindowEnabled",
+                "local": "isSelfDestructWindowEnabled",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/self_destruct_window.ts"
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/engine/daytime-interruption-contracts.ts",
+        "imports": [
+          {
+            "specifier": "@ai-werewolf-arena/game-contract",
+            "typeOnly": true,
+            "bindings": [
+              {
+                "exported": "ReadonlyBoardConfig",
+                "local": "ReadonlyBoardConfig",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/packages/game-contract/src/index.ts"
+          },
+          {
+            "specifier": "../../core/domain/model",
+            "typeOnly": true,
+            "bindings": [
+              {
+                "exported": "ActionProvider",
+                "local": "ActionProvider",
+                "typeOnly": false
+              },
+              {
+                "exported": "ActionWindow",
+                "local": "ActionWindow",
+                "typeOnly": false
+              },
+              {
+                "exported": "EntityId",
+                "local": "EntityId",
+                "typeOnly": false
+              },
+              {
+                "exported": "KnightDuelCommit",
+                "local": "KnightDuelCommit",
+                "typeOnly": false
+              },
+              {
+                "exported": "KnightDuelSelection",
+                "local": "KnightDuelSelection",
+                "typeOnly": false
+              },
+              {
+                "exported": "KnightDuelWindow",
+                "local": "KnightDuelWindow",
+                "typeOnly": false
+              },
+              {
+                "exported": "Phase",
+                "local": "Phase",
+                "typeOnly": false
+              },
+              {
+                "exported": "SelfDestructSelection",
+                "local": "SelfDestructSelection",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/core/domain/model.ts"
+          },
+          {
+            "specifier": "./action_request_factory",
+            "typeOnly": true,
+            "bindings": [
+              {
+                "exported": "GameActionRequestFactory",
+                "local": "GameActionRequestFactory",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/action_request_factory.ts"
+          }
+        ]
+      },
+      {
+        "path": "backend/src/rulesets/daytime-interruption-composition.ts",
+        "imports": [
+          {
+            "specifier": "@ai-werewolf-arena/game-contract",
+            "typeOnly": true,
+            "bindings": [
+              {
+                "exported": "GameEvent",
+                "local": "GameEvent",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/packages/game-contract/src/index.ts"
+          },
+          {
+            "specifier": "../core/domain/world",
+            "typeOnly": true,
+            "bindings": [
+              {
+                "exported": "World",
+                "local": "World",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/core/domain/world.ts"
+          },
+          {
+            "specifier": "../core/domain/registries/role_registry",
+            "typeOnly": true,
+            "bindings": [
+              {
+                "exported": "RoleRegistry",
+                "local": "RoleRegistry",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/core/domain/registries/role_registry.ts"
+          },
+          {
+            "specifier": "../game/gateway/tool_gateway",
+            "typeOnly": true,
+            "bindings": [
+              {
+                "exported": "ToolGateway",
+                "local": "ToolGateway",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/gateway/tool_gateway.ts"
+          },
+          {
+            "specifier": "../game/engine/daytime-interruption-contracts",
+            "typeOnly": true,
+            "bindings": [
+              {
+                "exported": "DaytimeInterruptionComposition",
+                "local": "DaytimeInterruptionComposition",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/daytime-interruption-contracts.ts"
+          },
+          {
+            "specifier": "../game/engine/self_destruct_window",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "SelfDestructWindow",
+                "local": "SelfDestructWindow",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/self_destruct_window.ts"
+          },
+          {
+            "specifier": "../game/engine/knight_duel_window",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "KnightDuelWindow",
+                "local": "KnightDuelWindow",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/knight_duel_window.ts"
+          },
+          {
+            "specifier": "../game/mechanisms/roles/debater/window",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "DebaterWindow",
+                "local": "DebaterWindow",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/debater/window.ts"
+          },
+          {
+            "specifier": "../game/mechanisms/roles/debater/authority",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "hasActiveDebate",
+                "local": "hasActiveDebate",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/debater/authority.ts"
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+        "imports": [
+          {
+            "specifier": "bun:test",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "expect",
+                "local": "expect",
+                "typeOnly": false
+              },
+              {
+                "exported": "test",
+                "local": "test",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "bun:test (ambient runtime builtin)",
+            "declarationPath": "backend/node_modules/bun-types/test.d.ts"
+          },
+          {
+            "specifier": "../../../src/core/domain/world",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "World",
+                "local": "World",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/core/domain/world.ts"
+          },
+          {
+            "specifier": "../../../src/core/domain/registries/role_registry",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "RoleRegistry",
+                "local": "RoleRegistry",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/core/domain/registries/role_registry.ts"
+          },
+          {
+            "specifier": "../../../src/core/domain/model",
+            "typeOnly": true,
+            "bindings": [
+              {
+                "exported": "GameEvent",
+                "local": "GameEvent",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/core/domain/model.ts"
+          },
+          {
+            "specifier": "../../../src/game/gateway/tool_gateway",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "ToolGateway",
+                "local": "ToolGateway",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/gateway/tool_gateway.ts"
+          },
+          {
+            "specifier": "../../../src/game/engine/self_destruct_window",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "SelfDestructWindow",
+                "local": "SelfDestructWindow",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/self_destruct_window.ts"
+          },
+          {
+            "specifier": "../../../src/game/engine/knight_duel_window",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "KnightDuelWindow",
+                "local": "KnightDuelWindow",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/knight_duel_window.ts"
+          },
+          {
+            "specifier": "../../../src/game/engine/phase_pipeline/day_pipeline",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "DayPipeline",
+                "local": "DayPipeline",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/phase_pipeline/day_pipeline.ts"
+          },
+          {
+            "specifier": "../../../src/game/mechanisms/roles/debater/window",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "DebaterWindow",
+                "local": "DebaterWindow",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/debater/window.ts"
+          },
+          {
+            "specifier": "../../../src/game/mechanisms/roles/debater/authority",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "closeDebate",
+                "local": "closeDebate",
+                "typeOnly": false
+              },
+              {
+                "exported": "openDebate",
+                "local": "openDebate",
+                "typeOnly": false
+              },
+              {
+                "exported": "DebateAuthority",
+                "local": "DebateAuthority",
+                "typeOnly": true
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/debater/authority.ts"
+          },
+          {
+            "specifier": "../../../src/rulesets/daytime-interruption-composition",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "createDaytimeInterruptionComposition",
+                "local": "createDaytimeInterruptionComposition",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/rulesets/daytime-interruption-composition.ts"
+          },
+          {
+            "specifier": "../../../src/runtime/scenarios/six_player_mvp",
+            "typeOnly": false,
+            "bindings": [
+              {
+                "exported": "sixPlayerMvpConfig",
+                "local": "sixPlayerMvpConfig",
+                "typeOnly": false
+              }
+            ],
+            "resolved": "/home/hby/dev/AI-Werewolf-Arena/backend/src/runtime/scenarios/six_player_mvp.ts"
+          }
+        ]
+      }
+    ],
+    "allEndpointsResolved": true,
+    "newCompositionRuntimeGraph": {
+      "moduleCount": 86,
+      "edges": [
+        {
+          "path": "backend/src/rulesets/daytime-interruption-composition.ts",
+          "imports": [
+            "backend/src/game/engine/self_destruct_window.ts",
+            "backend/src/game/engine/knight_duel_window.ts",
+            "backend/src/game/mechanisms/roles/debater/window.ts",
+            "backend/src/game/mechanisms/roles/debater/authority.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/engine/self_destruct_window.ts",
+          "imports": [
+            "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+            "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+            "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+            "backend/src/game/mechanisms/roles/role-catalog-assembly.ts",
+            "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+            "backend/src/core/domain/components/alive.ts",
+            "backend/src/core/domain/components/names.ts",
+            "backend/src/core/domain/model.ts",
+            "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/engine/knight_duel_window.ts",
+          "imports": [
+            "backend/src/core/domain/components/names.ts",
+            "backend/src/core/domain/components/alive.ts",
+            "backend/src/core/domain/model.ts",
+            "backend/src/game/mechanisms/roles/knight/ports.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+          "imports": [
+            "backend/src/core/domain/index.ts",
+            "backend/src/game/mechanisms/sheriff/badge.ts",
+            "backend/src/game/mechanisms/roles/debater/state.ts",
+            "backend/src/game/mechanisms/roles/debater/authority.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/debater/authority.ts",
+          "imports": [
+            "backend/src/core/domain/index.ts",
+            "backend/src/core/domain/night_effects.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+          "imports": [
+            "backend/src/core/domain/identity.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "imports": [
+            "backend/src/core/domain/request_delivery.ts",
+            "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+            "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+            "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+            "backend/src/core/index.ts",
+            "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+            "backend/src/core/domain/components/status_marks.ts",
+            "backend/src/game/mechanisms/roles/demon_hunter/preset.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/role-catalog-assembly.ts",
+          "imports": [
+            "backend/src/game/mechanisms/roles/catalog.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "imports": [
+            "backend/src/core/domain/request_delivery.ts",
+            "backend/src/core/domain/index.ts",
+            "backend/src/core/domain/components/alive.ts",
+            "backend/src/game/mechanisms/roles/ghost_bride/preset.ts"
+          ]
+        },
+        {
+          "path": "backend/src/core/domain/components/alive.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/components/names.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/model.ts",
+          "imports": [
+            "backend/src/core/domain/identity.ts",
+            "backend/src/core/domain/board.ts",
+            "backend/src/core/domain/actions.ts",
+            "backend/src/core/domain/events.ts",
+            "backend/src/core/domain/results.ts",
+            "backend/src/core/domain/deaths.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+          "imports": [
+            "backend/src/game/mechanisms/roles/white_wolf_king/state.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+          "imports": [
+            "backend/src/game/mechanisms/roles/knight/state.ts"
+          ]
+        },
+        {
+          "path": "backend/src/core/domain/index.ts",
+          "imports": [
+            "backend/src/core/domain/model.ts",
+            "backend/src/core/domain/action_request_context.ts",
+            "backend/src/core/domain/random.ts",
+            "backend/src/core/domain/world.ts",
+            "backend/src/core/domain/components/alive.ts",
+            "backend/src/core/domain/components/badge.ts",
+            "backend/src/core/domain/components/camp.ts",
+            "backend/src/core/domain/components/names.ts",
+            "backend/src/core/domain/components/role.ts",
+            "backend/src/core/domain/components/status_marks.ts",
+            "backend/src/core/domain/components/voting_right.ts",
+            "backend/src/core/domain/entities/player.ts",
+            "backend/src/core/domain/registries/condition_registry.ts",
+            "backend/src/core/domain/registries/phase_registry.ts",
+            "backend/src/core/domain/registries/role_registry.ts",
+            "backend/src/core/domain/systems/damage_resolution_system.ts",
+            "backend/src/core/domain/systems/win_condition_system.ts",
+            "backend/src/core/domain/components/victory.ts",
+            "backend/src/core/domain/components/lovers.ts",
+            "backend/src/core/domain/components/debate_penalty.ts",
+            "backend/src/core/domain/components/wall_note.ts",
+            "backend/src/core/domain/request_delivery.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/sheriff/badge.ts",
+          "imports": [
+            "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+            "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+            "backend/src/core/domain/components/names.ts",
+            "backend/src/game/mechanisms/common/participation.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+          "imports": [
+            "backend/src/game/mechanisms/roles/player_state.ts"
+          ]
+        },
+        {
+          "path": "backend/src/core/domain/night_effects.ts",
+          "imports": [
+            "backend/src/core/domain/components/names.ts",
+            "backend/src/core/domain/components/alive.ts"
+          ]
+        },
+        {
+          "path": "backend/src/core/domain/identity.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/request_delivery.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+          "imports": [
+            "backend/src/recording/recording_context.ts",
+            "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+            "backend/src/game/mechanisms/roles/noble_secret_body/state.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "imports": [
+            "backend/src/core/domain/night-unit.ts",
+            "backend/src/core/domain/components/names.ts",
+            "backend/src/core/domain/identity.ts",
+            "backend/src/core/domain/components/alive.ts",
+            "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+            "backend/src/game/mechanisms/roles/noble_secret_body/damage.ts",
+            "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts"
+          ]
+        },
+        {
+          "path": "backend/src/core/index.ts",
+          "imports": [
+            "backend/src/core/domain/index.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+          "imports": [
+            "backend/src/core/domain/plain_data.ts"
+          ]
+        },
+        {
+          "path": "backend/src/core/domain/components/status_marks.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/preset.ts",
+          "imports": [
+            "backend/src/rulesets/index.ts",
+            "backend/src/rulesets/index.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/catalog.ts",
+          "imports": [
+            "backend/src/game/observation/role-presentation.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/preset.ts",
+          "imports": [
+            "backend/src/rulesets/index.ts"
+          ]
+        },
+        {
+          "path": "backend/src/core/domain/board.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/actions.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/events.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/results.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/deaths.ts",
+          "imports": [
+            "backend/src/core/domain/identity.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/action_request_context.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/random.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/world.ts",
+          "imports": [
+            "backend/src/core/domain/model.ts",
+            "backend/src/core/domain/components/names.ts",
+            "backend/src/core/domain/components/alive.ts"
+          ]
+        },
+        {
+          "path": "backend/src/core/domain/components/badge.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/components/camp.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/components/role.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/components/voting_right.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/entities/player.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/registries/condition_registry.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/registries/phase_registry.ts",
+          "imports": [
+            "backend/src/core/domain/model.ts"
+          ]
+        },
+        {
+          "path": "backend/src/core/domain/registries/role_registry.ts",
+          "imports": [
+            "backend/src/core/domain/model.ts"
+          ]
+        },
+        {
+          "path": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "imports": [
+            "backend/src/core/domain/components/names.ts",
+            "backend/src/core/domain/model.ts",
+            "backend/src/core/domain/damage-evidence.ts",
+            "backend/src/core/domain/night-damage-target.ts",
+            "backend/src/core/domain/night-damage-plan.ts"
+          ]
+        },
+        {
+          "path": "backend/src/core/domain/systems/win_condition_system.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/components/victory.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/components/lovers.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/components/debate_penalty.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/components/wall_note.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/common/participation.ts",
+          "imports": [
+            "backend/src/core/domain/index.ts",
+            "backend/src/game/mechanisms/roles/role-catalog-assembly.ts",
+            "backend/src/game/mechanisms/roles/debater/authority.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/player_state.ts",
+          "imports": [
+            "backend/src/core/domain/model.ts"
+          ]
+        },
+        {
+          "path": "backend/src/recording/recording_context.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/night-unit.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/noble_secret_body/damage.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/noble_secret_body/player_projection.ts",
+          "imports": [
+            "backend/src/core/domain/identity.ts"
+          ]
+        },
+        {
+          "path": "backend/src/core/domain/plain_data.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/rulesets/index.ts",
+          "imports": [
+            "backend/src/rulesets/support/index.ts",
+            "backend/src/rulesets/board-support.ts",
+            "backend/src/rulesets/node-board-support.ts"
+          ]
+        },
+        {
+          "path": "backend/src/game/observation/role-presentation.ts",
+          "imports": [
+            "backend/src/core/domain/components/role.ts"
+          ]
+        },
+        {
+          "path": "backend/src/core/domain/damage-evidence.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/core/domain/night-damage-target.ts",
+          "imports": [
+            "backend/src/core/domain/deaths.ts",
+            "backend/src/core/domain/identity.ts",
+            "backend/src/core/domain/night_effects.ts"
+          ]
+        },
+        {
+          "path": "backend/src/core/domain/night-damage-plan.ts",
+          "imports": [
+            "backend/src/core/domain/components/names.ts",
+            "backend/src/core/domain/deaths.ts",
+            "backend/src/core/domain/night_effects.ts"
+          ]
+        },
+        {
+          "path": "backend/src/rulesets/support/index.ts",
+          "imports": [
+            "backend/src/rulesets/support/animal-dream.ts",
+            "backend/src/rulesets/support/demon-hunter.ts",
+            "backend/src/rulesets/support/evil-knight.ts",
+            "backend/src/rulesets/support/fragrant-pair-seer.ts",
+            "backend/src/rulesets/support/ghost-bride.ts",
+            "backend/src/rulesets/support/magician.ts",
+            "backend/src/rulesets/support/mist-raven.ts",
+            "backend/src/rulesets/support/nightmare.ts",
+            "backend/src/rulesets/support/noble-secret-body.ts",
+            "backend/src/rulesets/support/order-prince.ts",
+            "backend/src/rulesets/support/pure-white.ts",
+            "backend/src/rulesets/support/radiant-eclipse.ts",
+            "backend/src/rulesets/support/red-moon.ts",
+            "backend/src/rulesets/support/scholar-mentor.ts",
+            "backend/src/rulesets/support/time-consort.ts",
+            "backend/src/rulesets/support/trickster.ts",
+            "backend/src/rulesets/support/wolf-sorcerer.ts"
+          ]
+        },
+        {
+          "path": "backend/src/rulesets/board-support.ts",
+          "imports": [
+            "backend/src/rulesets/support/index.ts",
+            "backend/src/rulesets/node-board-support.ts"
+          ]
+        },
+        {
+          "path": "backend/src/rulesets/node-board-support.ts",
+          "imports": [
+            "backend/src/core/domain/plain_data.ts",
+            "backend/src/rulesets/support/index.ts"
+          ]
+        },
+        {
+          "path": "backend/src/rulesets/support/animal-dream.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/rulesets/support/demon-hunter.ts",
+          "imports": [
+            "backend/src/rulesets/support/noble-secret-body.ts",
+            "backend/src/rulesets/support/red-moon.ts"
+          ]
+        },
+        {
+          "path": "backend/src/rulesets/support/evil-knight.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/rulesets/support/fragrant-pair-seer.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/rulesets/support/ghost-bride.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/rulesets/support/magician.ts",
+          "imports": [
+            "backend/src/rulesets/support/wolf-sorcerer.ts",
+            "backend/src/rulesets/support/trickster.ts"
+          ]
+        },
+        {
+          "path": "backend/src/rulesets/support/mist-raven.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/rulesets/support/nightmare.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/rulesets/support/noble-secret-body.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/rulesets/support/order-prince.ts",
+          "imports": [
+            "backend/src/rulesets/support/trickster.ts",
+            "backend/src/rulesets/support/time-consort.ts"
+          ]
+        },
+        {
+          "path": "backend/src/rulesets/support/pure-white.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/rulesets/support/radiant-eclipse.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/rulesets/support/red-moon.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/rulesets/support/scholar-mentor.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/rulesets/support/time-consort.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/rulesets/support/trickster.ts",
+          "imports": []
+        },
+        {
+          "path": "backend/src/rulesets/support/wolf-sorcerer.ts",
+          "imports": []
+        }
+      ],
+      "reachesDayPipeline": false,
+      "note": "ESNext实际擦除type后的静态backend边；不把动态外部导入或模块初始化副作用称全图证明。"
+    },
+    "oldDirectDebaterImportsRetired": true,
+    "allowedLoadDifference": "新的静态根按SelfDestruct、Knight、Debater导入；原Pipeline先Debater再其它模块。物理窗口模块原byte不变，但加载先后有意改变，不宣称初始化时序等价。",
+    "ambientEndpointNote": "bun:test由Bun运行时与bun-types/test.d.ts声明，非磁盘JS模块；首次TS resolveModuleName只核物理模块因此误报该唯一内建入口。"
+  },
+  "newTests": {
+    "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/engine/daytime-interruption-composition.test.ts",
+    "cwd": "/home/hby/dev/AI-Werewolf-Arena/backend",
+    "toolChunkId": "33a4ce",
+    "exitCode": 0,
+    "pass": 4,
+    "fail": 0,
+    "assertions": 22,
+    "cases": [
+      "constructs original windows in W/R/G, W/G, W/G/E order without snapshotting",
+      "second window gateway failure stops before Debater reads and preserves original error",
+      "entry reads the late World while original windows retain their construction World",
+      "pipeline rejects reentry before reading day or currentness and before provider work"
+    ],
+    "scope": "首次唯一新增4例；根据真实tool收据登记，不声称这是redirect原log。"
+  },
+  "existingTests": [
+    {
+      "path": "docs/refactor/generated/daytime-interruption-debater-tests.log",
+      "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/features/debater/debater.test.ts -t 'canceling a dead target|successful skipped target|recursive DayPipeline'",
+      "pass": 4,
+      "fail": 0,
+      "assertions": 14,
+      "filtered": 58,
+      "exitCode": 0,
+      "toolChunkId": "4116ed",
+      "logSha256": "497560facf1a8e34a5896766af8caa7229ca7045f7cb7cffb74fcae2eae80b84"
+    },
+    {
+      "path": "docs/refactor/generated/daytime-interruption-hook-tests.log",
+      "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/engine/day-interrupt-hooks.test.ts -t 'hook requests are dispatched in deterministic order'",
+      "pass": 1,
+      "fail": 0,
+      "assertions": 4,
+      "filtered": 5,
+      "exitCode": 0,
+      "toolChunkId": "526ebc",
+      "logSha256": "23d634dc3b06916042b8f2902a50718d571e7ce3a58eca841debdabc8d6ae159"
+    }
+  ],
+  "types": {
+    "roots": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+        "sha256": "2c11aec3917c79309cb0334483a8f4ba627f3fed73486e089edbcc3e4101742e"
+      },
+      {
+        "path": "backend/src/game/engine/daytime-interruption-contracts.ts",
+        "sha256": "be9244566f11848729d50ca0ea6382c228c955a72af384d95d89f7371d728979"
+      },
+      {
+        "path": "backend/src/rulesets/daytime-interruption-composition.ts",
+        "sha256": "9c7a1c02ebf558bd4746934792a8dffea118dd6101f7e1c3c5118264a3ffb6d6"
+      },
+      {
+        "path": "backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+        "sha256": "7b3c3e0296a7b221272119b6667ca1509dda043fe29a4c604c065080a6d3f424"
+      }
+    ],
+    "config": {
+      "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+      "compilerOptions": {
+        "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+        "typeRoots": [
+          "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+          "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules",
+          "/home/hby/dev/AI-Werewolf-Arena/node_modules/@types",
+          "/home/hby/dev/AI-Werewolf-Arena/node_modules"
+        ]
+      },
+      "include": [
+        "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/phase_pipeline/day_pipeline.ts",
+        "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/daytime-interruption-contracts.ts",
+        "/home/hby/dev/AI-Werewolf-Arena/backend/src/rulesets/daytime-interruption-composition.ts",
+        "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/engine/daytime-interruption-composition.test.ts"
+      ],
+      "exclude": []
+    },
+    "first": {
+      "exitCode": 2,
+      "toolChunkId": "78ae81",
+      "sourceChanged": false,
+      "logPath": "docs/refactor/generated/daytime-interruption-types.log",
+      "logSha256": "760269d0a2a26a300dce82b5786ddf07b4ad07c6fa612d16a74f6007fa21d51d",
+      "reason": "配置在/tmp导致typeRoots缺省相对目录无法找到node/bun-types/bun-types/test-globals；真实3条TS2688。"
+    },
+    "corrected": {
+      "sessionId": 17281,
+      "launchToolChunkId": "5542cb",
+      "completedToolChunkId": "2b21ea",
+      "exitCode": 0,
+      "logPath": "docs/refactor/generated/daytime-interruption-types-corrected.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reason": "仅显式设置实际backend typeRoots，不改source，实际终进程0。"
+    }
+  },
+  "proofHarnessHistory": {
+    "first": {
+      "toolChunkId": "2c42e4",
+      "exitCode": 1,
+      "scriptSha256": "3086ba5e4e0357cd9f7ed8b56d62bfb57eba8ceccd7cacf87b8186c4a4329e4d",
+      "reason": "错误将new Error也计成第四个窗口构造，缺原第四项导致parse undefined；不是源码回归。"
+    },
+    "corrected": {
+      "toolChunkId": "adc53d",
+      "exitCode": 0,
+      "scriptSha256": "4d588010914d7b3ffafcb847e36d939dda86bb3dd0672ac6cda3e8cfa1f0752d",
+      "reason": "限定三真实类binding的NewExpression，不修改源码。"
+    },
+    "wholeTraversal": "getChildren完整循环，不使用返回数组长度的forEachChild回调；排除完整JSDoc节点范围和EOF。",
+    "harnessSource": "const fs = require('node:fs'), crypto = require('node:crypto'), cp = require('node:child_process');\nconst ts = require('/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/typescript');\nconst root = '/home/hby/dev/AI-Werewolf-Arena';\nprocess.chdir(root);\nconst dir = '/tmp/awa-daytime-interruption-composition';\nconst before = JSON.parse(fs.readFileSync(dir+'/before.json','utf8'));\nconst old = cp.execFileSync('git',['show',before.base+':'+before.path],{encoding:'utf8'});\nconst current = fs.readFileSync(before.path,'utf8');\nconst sha = s => crypto.createHash('sha256').update(s).digest('hex');\nif(sha(old)!==before.sha256) throw new Error('baseline_git_sha_mismatch');\nconst parse = text => ts.createSourceFile('same.ts',text,ts.ScriptTarget.Latest,true);\nconst isDoc = k => k >= ts.SyntaxKind.FirstJSDocNode && k <= ts.SyntaxKind.LastJSDocNode;\nfunction nodes(sf) { const out=[]; function visit(n) { if(isDoc(n.kind)||n.kind===ts.SyntaxKind.EndOfFileToken) return; const children=n.getChildren(sf).filter(c=>!isDoc(c.kind)&&c.kind!==ts.SyntaxKind.EndOfFileToken); out.push([n.kind,children.length?null:n.getText(sf)]); for(const c of children) { visit(c); } } visit(sf); return out; }\nfunction replaceOnce(s,a,b) { if(s.split(a).length!==2) throw new Error('nonunique_delta:'+a); return s.replace(a,b); }\nlet inverse=current;\ninverse=replaceOnce(inverse,'import { createDaytimeInterruptionComposition } from \"../../../rulesets/daytime-interruption-composition\";\\nimport type { DaytimeInterruptionComposition } from \"../daytime-interruption-contracts\";', 'import { hasActiveDebate } from \"../../mechanisms/roles/debater/authority\";\\nimport { DebaterWindow } from \"../../mechanisms/roles/debater/window\";');\ninverse=replaceOnce(inverse,'import { isSelfDestructWindowEnabled } from \"../self_destruct_window\";', 'import { SelfDestructWindow, isSelfDestructWindowEnabled } from \"../self_destruct_window\";\\nimport { KnightDuelWindow } from \"../knight_duel_window\";');\ninverse=replaceOnce(inverse,'  private readonly interruptions: DaytimeInterruptionComposition;', '  private readonly selfDestructWindow: SelfDestructWindow;\\n  private readonly knightDuelWindow: KnightDuelWindow;\\n  private readonly debaterWindow: DebaterWindow;');\nconst newConstructor='    this.interruptions = createDaytimeInterruptionComposition({\\n      world: () => this.world,\\n      roleRegistry: () => this.roleRegistry,\\n      toolGateway: () => this.toolGateway,\\n      events: () => this.events,\\n    });';\nconst oldConstructor='    this.selfDestructWindow = new SelfDestructWindow(\\n      this.world,\\n      this.roleRegistry,\\n      this.toolGateway,\\n    );\\n    this.knightDuelWindow = new KnightDuelWindow(this.world, this.toolGateway);\\n    this.debaterWindow = new DebaterWindow(this.world, this.toolGateway, this.events);';\ninverse=replaceOnce(inverse,newConstructor,oldConstructor);\ninverse=replaceOnce(inverse,'    this.interruptions.assertEntry();','    if (hasActiveDebate(this.world)) throw new Error(\"debate_window_reentry\");');\nconst routeCounts={};\nfor(const [now,prior] of [['this.interruptions.selfDestruct','this.selfDestructWindow'],['this.interruptions.duel','this.knightDuelWindow'],['this.interruptions.debate','this.debaterWindow']]) { routeCounts[now]=inverse.split(now).length-1; inverse=inverse.split(now).join(prior); }\nif(JSON.stringify(routeCounts)!==JSON.stringify({'this.interruptions.selfDestruct':3,'this.interruptions.duel':3,'this.interruptions.debate':1})) throw new Error('route_count_mismatch');\nconst oldTree=nodes(parse(old)), newTree=nodes(parse(inverse));\nconst wholeProgram={oldNodes:oldTree.length,inverseNodes:newTree.length,identical:JSON.stringify(oldTree)===JSON.stringify(newTree),oldNodeSha256:sha(JSON.stringify(oldTree)),inverseNodeSha256:sha(JSON.stringify(newTree))};\nconst emissions=[];\nfor(const [name,module] of [['ESNext',ts.ModuleKind.ESNext],['CommonJS',ts.ModuleKind.CommonJS]]) { const compile=s=>ts.transpileModule(s,{compilerOptions:{target:ts.ScriptTarget.ES2022,module,removeComments:true}}).outputText; const a=compile(old),b=compile(inverse);emissions.push({module:name,rawIdentical:a===b,oldSha256:sha(a),inverseSha256:sha(b)}); }\n// 真实的非首子节点反例：首个summary未动，只改最后day摘要自爆编号，强遍历必须发现。\nconst mutant=inverse.replace('        selfDestructBy: null,\\n      },\\n      interrupted: false,','        selfDestructBy: 999,\\n      },\\n      interrupted: false,');\nif(mutant===inverse) throw new Error('canary_not_applied');\nconst canary={description:'最后return的selfDestructBy null→999，首个程序child/import未改',detected:JSON.stringify(nodes(parse(mutant)))!==JSON.stringify(oldTree)};\nconst composition=fs.readFileSync('backend/src/rulesets/daytime-interruption-composition.ts','utf8'), sf=parse(composition);\nlet movedConstructors=[];function collect(n){if(ts.isNewExpression(n)&&['SelfDestructWindow','KnightDuelWindow','DebaterWindow'].includes(n.expression.getText(sf))) movedConstructors.push(n);ts.forEachChild(n,c=>{collect(c);});} collect(sf);\nconst oldSf=parse(old), oldConstructors=[]; function collectOld(n) {if(ts.isNewExpression(n)&&['SelfDestructWindow','KnightDuelWindow','DebaterWindow'].includes(n.expression.getText(oldSf))) oldConstructors.push(n);ts.forEachChild(n,c=>{collectOld(c);});}collectOld(oldSf);\nconst constructorChecks=movedConstructors.map((n,i)=>{const mapped=n.getText(sf).replace(/runtime\\.(world|roleRegistry|toolGateway|events)\\(\\)/g,'this.$1');const expected=oldConstructors[i]?.getText(oldSf);return {constructor:n.expression.getText(sf),wholeNodesIdentical:JSON.stringify(nodes(parse(mapped)))===JSON.stringify(nodes(parse(expected))),currentArguments:n.arguments.map(x=>x.getText(sf)),oldArguments:oldConstructors[i].arguments.map(x=>x.getText(oldSf))};});\nconst admission=sf.statements.find(ts.isFunctionDeclaration).body.statements.at(-1).expression.properties.find(x=>x.name.getText(sf)==='assertEntry').body.statements[0];\nconst admissionMapped=admission.getText(sf).replace('runtime.world()','this.world');\nconst oldClass=oldSf.statements.find(ts.isClassDeclaration), oldExecute=oldClass.members.find(n=>n.name?.getText(oldSf)==='execute');\nconst admissionSame=JSON.stringify(nodes(parse(admissionMapped)))===JSON.stringify(nodes(parse(oldExecute.body.statements[0].getText(oldSf))));\nconst controls=before.controls.map(x=>({...x,actualSha256:sha(fs.readFileSync(x.path)),identical:x.sha256===sha(fs.readFileSync(x.path))}));\nconst paths=JSON.parse(fs.readFileSync(dir+'/paths.json'));const scope=paths.map(path=>({path,sha256:sha(fs.readFileSync(path))}));\nconst result={base:before.base,baseline:before,scope,routeCounts,wholeProgram,emissions,constructorChecks,admissionSame,canary,controls,allowedApiDifferences:['Pipeline三反射私有字段退休，改由单interruptions聚合字段保存窄实例视图；不承诺旧反射布局／替换字段继续影响调度。','factory新增聚合对象与assertEntry方法；原execute接收者仍原窗口实例，非bind/clone。','原具体Debater直导退出；新的factory静态加载各窗口顺序不同，不宣称模块初始化图完全相同。'],limitations:['逆向证明仅覆盖明确字段／装配／准入／7调用点迁移，不能证明新增组合任意外部使用均旧API兼容。','没有宣称迁移全部白天机制、状态、付款或死亡／终局owner。'],approved:wholeProgram.identical&&emissions.every(x=>x.rawIdentical)&&constructorChecks.length===3&&constructorChecks.every(x=>x.wholeNodesIdentical)&&admissionSame&&canary.detected&&controls.every(x=>x.identical)};\nfs.writeFileSync('docs/refactor/generated/daytime-interruption-program-proof.json',JSON.stringify(result,null,2)+'\\n');\nconsole.log(JSON.stringify({approved:result.approved,wholeProgram,constructorChecks,emissions,admissionSame,canary,controlsMatch:controls.every(x=>x.identical)}));\n"
+  },
+  "endpointHarnessHistory": {
+    "firstArtifact": "docs/refactor/generated/daytime-interruption-bindings-first.json",
+    "firstArtifactSha256": "58c2bf1114c06457a7046f7ce4cf0b502e7a9a346a0da8d0eb74d38eb0bbd59f",
+    "reason": "唯一bun:test是运行时内建及ambient声明；非磁盘runtime模块。"
+  },
+  "limitations": [
+    "未重全量门禁、全类型、完整测试、整局或付费模型。",
+    "没有迁移VotingPipeline或三个机制状态／付款／关闭、死亡链／判胜owner。",
+    "私有反射字段与静态加载根差异明确，不冒全部旧运行API等价。"
+  ],
+  "independentReview": {
+    "status": "awaiting_root_peer",
+    "implementationAuthor": "native_presentation_finish"
+  }
+}

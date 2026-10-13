@@ -552,3 +552,5 @@
 - 固定694a结构检查收口：真实3107Git公共blob／424doc、不混未提交policy/矩阵候选，0new/426debt/1353clear，原1779债SHA297b保持。后台session92629实际closed0；独立全路径/字节SHA/5工具source/sourceDigest/426exactlegacy+1353分区核准，不重门禁。首临时harness读大JSON默认buffer失败只修工具，历史原stderr缺席限定如实保；仅依赖/命名/职责检查，不替代最终same-source验收，见 architecture-checkpoint-694a2593.md。
 
 - 镜女测试元数据入口修正：只改requireRuntime→requireMetadata一个调用并补中文权属，原test标题/两语言矩阵/god/max1与全部后续断言同；真实546Git全文件经该callee+comment精准逆raw同，生产catalog/profile全bytes不改。只重前次两红现2/0/47、16filtered，不重36greens/类型或全gate，旧红不回写。Root真实facet读审与独立源码／doc最终SHA批准，见 mirror-metadata-query.md。
+
+- C24白天中断完整组合：4source，规则组合拥有自爆→决斗→辩论三原实例构造与执行首项重入准入，窄运行契约不导具体辩论；Pipeline保全部警长/发言/3自爆3决斗1辩论位置、2存活复查、config短路、death/phase/victory仍PM。真实546before/4原controls全byte同、完整Pipeline2456强nodes和两whole运行输出经明确delta逆同，callee/late字段读/receiver/失败前缀保；私有3field退休及cold import差异明列。new4/0/22+oldDeb4/0/14+oldhook1/0/4＝9unique40assert分3次；finite17281实际closed0、首typeRoots工具红保，4CN heads职责0。Root实读3生产源及独立4SHA/source/doc终审批准，MD窄数据误词已修运行契约，不重全gate，见 daytime-interruption-composition.md。

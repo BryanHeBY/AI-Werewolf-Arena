@@ -1,0 +1,13 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/features/debater/debater.test.ts:
+(pass) canceling a dead target sends no ordinary speech but preserves other gaps [38.72ms]
+(pass) successful skipped target speech still runs wolf gap and ends day [4.51ms]
+(pass) successful skipped target speech still runs knight gap and ends day [3.07ms]
+(pass) recursive DayPipeline during accepted debate rejects before sheriff or opening Knight requests [2.37ms]
+
+ 4 pass
+ 58 filtered out
+ 0 fail
+ 14 expect() calls
+Ran 4 tests across 1 file. [170.00ms]

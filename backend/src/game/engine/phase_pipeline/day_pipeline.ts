@@ -1,11 +1,11 @@
 /**
- * Runs the daytime speaking pipeline from the current alive seats and provider. Outputs preserve
- * speech, duel/self-destruct interruptions and the returned day result. Inputs use the assembled
- * gateway and role mechanisms; it does not own final phase changes or victory sealing.
+ * 负责从当前存活席位和 Provider 推进白天警长、普通发言与中断检查点。输入为已装配
+ * World、网关和配置，输出为原发言摘要及中断结果；具体窗口构造与重入政策归规则组合。
+ * 发言前后仍按原位置复查当前性与存活，窗口结果不代替死亡提交、最终阶段变化或判胜。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { hasActiveDebate } from "../../mechanisms/roles/debater/authority";
-import { DebaterWindow } from "../../mechanisms/roles/debater/window";
+import { createDaytimeInterruptionComposition } from "../../../rulesets/daytime-interruption-composition";
+import type { DaytimeInterruptionComposition } from "../daytime-interruption-contracts";
 import { AliveComponent } from "../../../core/domain/components/alive";
 import { COMPONENT } from "../../../core/domain/components/names";
 import {
@@ -24,8 +24,7 @@ import { buildSpeakerOrder, chooseSpeakerDirection } from "../../mechanisms/sher
 import { findSheriffId } from "../../mechanisms/sheriff/badge";
 import { World } from "../../../core/domain/world";
 import { GameActionRequestFactory } from "../action_request_factory";
-import { SelfDestructWindow, isSelfDestructWindowEnabled } from "../self_destruct_window";
-import { KnightDuelWindow } from "../knight_duel_window";
+import { isSelfDestructWindowEnabled } from "../self_destruct_window";
 
 /**
  * 白天流水线执行结果。
@@ -70,21 +69,18 @@ export class DayPipeline {
   private readonly roleRegistry: RoleRegistry;
   private readonly toolGateway: ToolGateway;
   private readonly events: GameEvent[];
-  private readonly selfDestructWindow: SelfDestructWindow;
-  private readonly knightDuelWindow: KnightDuelWindow;
-  private readonly debaterWindow: DebaterWindow;
+  private readonly interruptions: DaytimeInterruptionComposition;
   constructor(dependencies: DayPipelineDependencies) {
     this.world = dependencies.world;
     this.roleRegistry = dependencies.roleRegistry;
     this.toolGateway = dependencies.toolGateway;
     this.events = dependencies.events;
-    this.selfDestructWindow = new SelfDestructWindow(
-      this.world,
-      this.roleRegistry,
-      this.toolGateway,
-    );
-    this.knightDuelWindow = new KnightDuelWindow(this.world, this.toolGateway);
-    this.debaterWindow = new DebaterWindow(this.world, this.toolGateway, this.events);
+    this.interruptions = createDaytimeInterruptionComposition({
+      world: () => this.world,
+      roleRegistry: () => this.roleRegistry,
+      toolGateway: () => this.toolGateway,
+      events: () => this.events,
+    });
   }
 
   async execute(
@@ -92,7 +88,7 @@ export class DayPipeline {
     actionProvider: ActionProvider,
     options: DayPipelineOptions,
   ): Promise<DayPipelineResult> {
-    if (hasActiveDebate(this.world)) throw new Error("debate_window_reentry");
+    this.interruptions.assertEntry();
     const speeches: DaySummary["speeches"] = [];
     const requests = new GameActionRequestFactory(this.world, this.events, options.day);
     const isCurrent = options.isCurrent ?? (() => true);
@@ -104,7 +100,7 @@ export class DayPipeline {
       config.hooks.onPreElection &&
       isSelfDestructWindowEnabled(config, ActionWindow.OnPreElection)
     ) {
-      const exploded = await this.selfDestructWindow.execute(
+      const exploded = await this.interruptions.selfDestruct.execute(
         requests,
         actionProvider,
         ActionWindow.OnPreElection,
@@ -139,7 +135,7 @@ export class DayPipeline {
     }
 
     if (config.hooks.onDaybreak && isSelfDestructWindowEnabled(config, ActionWindow.OnDaybreak)) {
-      const exploded = await this.selfDestructWindow.execute(
+      const exploded = await this.interruptions.selfDestruct.execute(
         requests,
         actionProvider,
         ActionWindow.OnDaybreak,
@@ -160,7 +156,7 @@ export class DayPipeline {
     }
 
     if (!isCurrent()) return { summary: { speeches, selfDestructBy: null }, interrupted: false };
-    const openingDuel = await this.knightDuelWindow.execute(
+    const openingDuel = await this.interruptions.duel.execute(
       config,
       requests,
       actionProvider,
@@ -197,7 +193,8 @@ export class DayPipeline {
         continue;
       }
 
-      const debate = await this.debaterWindow.execute(
+      // 辩论可能令原演员出局或跳过发言；返回后仍复查，不跳过该席位的后续间隙。
+      const debate = await this.interruptions.debate.execute(
         config,
         requests,
         actionProvider,
@@ -243,7 +240,7 @@ export class DayPipeline {
         config.hooks.onPerSpeechGap &&
         isSelfDestructWindowEnabled(config, ActionWindow.OnPerSpeechGap)
       ) {
-        const exploded = await this.selfDestructWindow.execute(
+        const exploded = await this.interruptions.selfDestruct.execute(
           requests,
           actionProvider,
           ActionWindow.OnPerSpeechGap,
@@ -263,7 +260,7 @@ export class DayPipeline {
           };
         }
       }
-      const gapDuel = await this.knightDuelWindow.execute(
+      const gapDuel = await this.interruptions.duel.execute(
         config,
         requests,
         actionProvider,
@@ -279,7 +276,7 @@ export class DayPipeline {
         };
     }
 
-    const closingDuel = await this.knightDuelWindow.execute(
+    const closingDuel = await this.interruptions.duel.execute(
       config,
       requests,
       actionProvider,
