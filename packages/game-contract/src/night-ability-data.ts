@@ -1,10 +1,8 @@
 /**
- * Defines pure data structures for the seven existing night ability payloads.
- * Inputs are installation data or finite read aliases; outputs preserve their
- * original metadata, nullable fields, optional policies and nested readonly views.
- * These types never store live resources, validate data, apply defaults or grant
- * World, lease, receipt or action authority. Feature state commands and player
- * redaction remain their runtime owners; custom profile private keys stay open.
+ * 负责七种既有夜能力载荷的纯数据结构。输入为安装数据或明确只读类型；输出保留
+ * 原元数据、可空字段、可选政策和嵌套只读视图，各结构由本契约唯一声明。
+ * 类型不保存实际库存、不校验未知数据、不补默认值，也不授予 World、租约、回执或行动权限。
+ * 状态写入和玩家字段裁剪仍归原运行所有者；自定义 profile 的私有扩展键不受本结构约束。
  */
 import type { EntityId, Role, WitchSelfHealRule } from "./identity";
 import type { InspectionResult } from "./inspection";
@@ -19,7 +17,7 @@ import type {
 } from "./boards";
 import type { FRAGRANT_PAIR_POLICY, FragrantPair } from "./facts/fragrant-pair-seer";
 
-/** The runtime policy constant remains at its feature owner. */
+/** 这里只声明同一政策的字面类型，运行常量仍归具体机制所有者。 */
 type RadiantEclipsePolicy = "awa_radiant_eclipse_v1";
 
 export interface SeerState {
@@ -35,6 +33,7 @@ export interface SeerState {
   }>;
 }
 
+/** 只读视图显式覆盖历史行及结果；类型限定不生成副本，也不冻结实际对象。 */
 export type SeerReadState = Readonly<Omit<SeerState, "lastResult" | "history">> & {
   readonly lastResult?: Readonly<NonNullable<SeerState["lastResult"]>> | null;
   readonly history: readonly (Readonly<Omit<SeerState["history"][number], "result">> & {
@@ -70,7 +69,7 @@ export type GuardReadState = Readonly<GuardState>;
 export interface WitchState {
   knifeVisibility?: WitchKnifeVisibilityPolicy;
   potionPolicy?: WitchPotionPolicy;
-  /** Terminal pass or completed second turn, never exposed through the player DTO. */
+  /** 不用药终止或第二次行动完成的内部日次，不通过玩家 DTO 公开。 */
   potionTurnClosedDay?: number;
   heal: number;
   poison: number;
@@ -117,6 +116,7 @@ export interface ShelterState {
   lastDay: number | null;
 }
 
+/** kind 与实际载荷一一对应；资源身份、次数和生命周期元数据在共同能力结构中表达。 */
 export interface NightAbilityStates {
   pair_check: PairSeerState;
   shelter: ShelterState;
@@ -131,12 +131,14 @@ export type RoleInspectionPolicy = "gargoyle" | "psychic" | "mirror" | "pure_whi
 
 export type NightAbilityKind = keyof NightAbilityStates;
 
+/** 来源字段描述实例来历；玩家是否可知由投影裁剪，来源数据本身不能授权复制或转移。 */
 export type AbilitySource =
   | { kind: "native"; role: Role }
   | { kind: "gift"; actorId: EntityId }
   | { kind: "copy"; actorId: EntityId; abilityId: string }
   | { kind: "transfer"; actorId: EntityId; abilityId: string };
 
+/** 保留原深只读边界，包括 Pair 的历史行和目标对；读取类型不替代所属实例或当前请求复验。 */
 export interface NightAbilityReadStates {
   pair_check: Readonly<Omit<PairSeerState, "history">> & {
     readonly history: readonly (Readonly<Omit<PairSeerState["history"][number], "targetIds">> & {

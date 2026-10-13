@@ -1,0 +1,48 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_final_architecture_review",
+  "scope": [
+    {
+      "path": "packages/game-contract/src/night-ability-data.ts",
+      "sha256": "aa70034faed1fb480b144a61ec2e455c9d4b003290417ac7858c753da6469797"
+    }
+  ],
+  "actualGitBefore": {
+    "commit": "c4a8d5a1e7e86060235e80e356fb93ad93172390",
+    "sha256": "6efdef5705b77303a7806384568f94a6e3ad6a7300e7583aa47d3df45b1e6190",
+    "verified": true
+  },
+  "findings": [],
+  "commentAccuracy": [
+    "实际完整diff仅首头、Radiant政策字面说明、女巫内部结束日次及四处关键结构JSDoc；没有字段、literal、union、readonly/nullable/optional或import/export变动。",
+    "Witch potionTurnClosedDay是不用药终止/第二次行动完成日次；PlayerWitchState与projectWitchState不带此字段，内部setter仍witch state-slot。",
+    "Seer历史行/result与Pair深只读aliases确实显式覆盖各嵌套成员；声明不clone/freeze实际对象，也不是行权或原体复验。",
+    "七kind/state关联精确原样，资源id/计数/lifecycle共同metadata确实归night-ability-views，而非在本payload重复定义。",
+    "AbilitySource描来历与披露字段，投影仍决定玩家知识，类型本身不授予copy/transfer/World/life/request库存许可。",
+    "RadiantEclipsePolicy这里只声明相同literal；运行RADIANT_ECLIPSE_POLICY确实由backend radiant_eclipse/state-data拥有。自定义profile私有键仍由原Role/运行owner开放。"
+  ],
+  "completeDiff": "diff --git a/packages/game-contract/src/night-ability-data.ts b/packages/game-contract/src/night-ability-data.ts\nindex e8d61c6b..e5eeaab9 100644\n--- a/packages/game-contract/src/night-ability-data.ts\n+++ b/packages/game-contract/src/night-ability-data.ts\n@@ -1,10 +1,8 @@\n /**\n- * Defines pure data structures for the seven existing night ability payloads.\n- * Inputs are installation data or finite read aliases; outputs preserve their\n- * original metadata, nullable fields, optional policies and nested readonly views.\n- * These types never store live resources, validate data, apply defaults or grant\n- * World, lease, receipt or action authority. Feature state commands and player\n- * redaction remain their runtime owners; custom profile private keys stay open.\n+ * 负责七种既有夜能力载荷的纯数据结构。输入为安装数据或明确只读类型；输出保留\n+ * 原元数据、可空字段、可选政策和嵌套只读视图，各结构由本契约唯一声明。\n+ * 类型不保存实际库存、不校验未知数据、不补默认值，也不授予 World、租约、回执或行动权限。\n+ * 状态写入和玩家字段裁剪仍归原运行所有者；自定义 profile 的私有扩展键不受本结构约束。\n  */\n import type { EntityId, Role, WitchSelfHealRule } from \"./identity\";\n import type { InspectionResult } from \"./inspection\";\n@@ -19,7 +17,7 @@ import type {\n } from \"./boards\";\n import type { FRAGRANT_PAIR_POLICY, FragrantPair } from \"./facts/fragrant-pair-seer\";\n \n-/** The runtime policy constant remains at its feature owner. */\n+/** 这里只声明同一政策的字面类型，运行常量仍归具体机制所有者。 */\n type RadiantEclipsePolicy = \"awa_radiant_eclipse_v1\";\n \n export interface SeerState {\n@@ -35,6 +33,7 @@ export interface SeerState {\n   }>;\n }\n \n+/** 只读视图显式覆盖历史行及结果；类型限定不生成副本，也不冻结实际对象。 */\n export type SeerReadState = Readonly<Omit<SeerState, \"lastResult\" | \"history\">> & {\n   readonly lastResult?: Readonly<NonNullable<SeerState[\"lastResult\"]>> | null;\n   readonly history: readonly (Readonly<Omit<SeerState[\"history\"][number], \"result\">> & {\n@@ -70,7 +69,7 @@ export type GuardReadState = Readonly<GuardState>;\n export interface WitchState {\n   knifeVisibility?: WitchKnifeVisibilityPolicy;\n   potionPolicy?: WitchPotionPolicy;\n-  /** Terminal pass or completed second turn, never exposed through the player DTO. */\n+  /** 不用药终止或第二次行动完成的内部日次，不通过玩家 DTO 公开。 */\n   potionTurnClosedDay?: number;\n   heal: number;\n   poison: number;\n@@ -117,6 +116,7 @@ export interface ShelterState {\n   lastDay: number | null;\n }\n \n+/** kind 与实际载荷一一对应；资源身份、次数和生命周期元数据在共同能力结构中表达。 */\n export interface NightAbilityStates {\n   pair_check: PairSeerState;\n   shelter: ShelterState;\n@@ -131,12 +131,14 @@ export type RoleInspectionPolicy = \"gargoyle\" | \"psychic\" | \"mirror\" | \"pure_whi\n \n export type NightAbilityKind = keyof NightAbilityStates;\n \n+/** 来源字段描述实例来历；玩家是否可知由投影裁剪，来源数据本身不能授权复制或转移。 */\n export type AbilitySource =\n   | { kind: \"native\"; role: Role }\n   | { kind: \"gift\"; actorId: EntityId }\n   | { kind: \"copy\"; actorId: EntityId; abilityId: string }\n   | { kind: \"transfer\"; actorId: EntityId; abilityId: string };\n \n+/** 保留原深只读边界，包括 Pair 的历史行和目标对；读取类型不替代所属实例或当前请求复验。 */\n export interface NightAbilityReadStates {\n   pair_check: Readonly<Omit<PairSeerState, \"history\">> & {\n     readonly history: readonly (Readonly<Omit<PairSeerState[\"history\"][number], \"targetIds\">> & {\n",
+  "verificationAttribution": {
+    "rootActualReceipt": {
+      "chunkId": "ad41bc",
+      "exitCode": 0,
+      "output": "{\"files\":1,\"nodes\":645,\"programSame\":true,\"wholeOutput\":2,\"commentViolations\":0}"
+    },
+    "wholeNodes": 645,
+    "wholeRawOutputs": 2,
+    "actualCommentDiagnostics": 0,
+    "note": "审读真实来源及完整diff/说明；未重执行RootAST/emit/checkComments/types/tests/gates。短c4a8读diff首次遇同前缀blob歧义，仅读工具错误；改用证据完整commit实际核真。"
+  },
+  "provenanceLimit": "独立中文注释一源，不是O3算法source scope；保持原有限类型绿收据原source时点，不冒comment后所有传递source同SHA。注释改变严格sourceHash，历史身份原样；不声称所有中文说明/能力机制完成。",
+  "documents": [
+    {
+      "path": "docs/refactor/night-ability-data-chinese-comments.md",
+      "sha256": "f275d59b369158b54e7796928f028752ef7d05d81cb15598585a8a1c37afbee3"
+    },
+    {
+      "path": "docs/refactor/generated/night-ability-data-chinese-comments-evidence.json",
+      "sha256": "f77a58fabd5c675a1439ba89955f972808e909bfac204c937bfa4dcd847b62fe"
+    }
+  ],
+  "docApproved": true
+}
