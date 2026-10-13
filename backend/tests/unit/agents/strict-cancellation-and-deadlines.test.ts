@@ -1,8 +1,5 @@
 /**
- * Provider lifecycle integration verify strict cancellation, protocol errors and deadline delivery.
- * Input: Controlled SDK/ACP completion callbacks, parse failures, absolute deadlines and recorder spies.
- * Output and independent oracle: Literal error IDs, fallback/attempt counts, unchanged guard stock and late-record refusal; cleanup errors remain distinct.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * Unit tests check strict/default provider cancellation, absolute deadline delivery and cleanup propagation using controlled SDK/ACP callbacks and recorder spies. Inputs are literal guard requests and held completions; literal error IDs, unchanged stock and recording outcomes are the oracle. No network server, file persistence or complete game is run.
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -10,14 +7,11 @@ import { COMPONENT, Phase, Role, type ActionRequest, type RoleComponent } from "
 import { getGuardState } from "../../../src/game/mechanisms/roles/private_state";
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
 import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
-import { AiSdkClient } from "../../../src/ai/integrations/llm/ai_sdk_client";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { describeError } from "../../../src/utils/error_diagnostic";
-import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { runWithSessionRecorder } from "../../../src/recording/recording_context";
-import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
 const roles = [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager];
+
 const request = (strict: boolean): ActionRequest => ({
   actorId: 5,
   phase: Phase.Night,
@@ -30,6 +24,7 @@ const request = (strict: boolean): ActionRequest => ({
     ...(strict ? { action_failure_policy: "error" } : {}),
   },
 });
+
 for (const transport of ["sdk", "acp"] as const)
   for (const strict of [false, true])
     test(`${transport}/${strict}: owned provider cancellation preserves default behavior and never fakes strict waiting`, async () => {
@@ -96,201 +91,6 @@ for (const transport of ["sdk", "acp"] as const)
       ).toBeNull();
       expect(provider.runtimeState.turns).toBe(0);
       if (transport === "acp") expect(closes).toBe(1);
-    });
-
-for (const locale of ["zh-CN", "en"] as const)
-  for (const malformed of ["json", "wrong_turn"] as const)
-    test(`${locale}/${malformed}: production AiSdkClient parse/protocol failure cannot become a clean optional wait`, async () => {
-      const { world } = bootstrapGame(sixPlayerMvpConfig, { fixedRoles: roles, locale });
-      let requests = 0,
-        fallbacks = 0;
-      const syntheticFetch = Object.assign(
-        async () => {
-          requests++;
-          const bad = requests <= 3,
-            args =
-              malformed === "json"
-                ? "{bad_json"
-                : JSON.stringify({
-                    turn_id: "wrong-turn",
-                    action: "guard",
-                    arguments: { target_id: 6, abstain: false },
-                  });
-          return Response.json({
-            id: "synthetic",
-            object: "chat.completion",
-            created: 1,
-            model: "synthetic",
-            choices: [
-              {
-                index: 0,
-                finish_reason: bad ? "tool_calls" : "stop",
-                message: bad
-                  ? {
-                      role: "assistant",
-                      content: null,
-                      tool_calls: [
-                        {
-                          id: `invalid-${requests}`,
-                          type: "function",
-                          function: { name: "submit_action", arguments: args },
-                        },
-                      ],
-                    }
-                  : { role: "assistant", content: "End" },
-              },
-            ],
-            usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
-          });
-        },
-        { preconnect: fetch.preconnect },
-      );
-      const provider = new LlmActionProvider(
-        world,
-        new AiSdkClient({
-          apiKey: "synthetic",
-          baseURL: "https://synthetic.invalid/v1",
-          model: "synthetic",
-          fetch: syntheticFetch,
-        }),
-        {
-          llmTimeoutMs: 1500,
-          fallbackProvider: {
-            async getAction() {
-              fallbacks++;
-              return null;
-            },
-          },
-        },
-      );
-      try {
-        await expect(provider.getAction(request(true))).rejects.toThrow("action_turn_failed");
-        expect(requests).toBe(4);
-        expect(fallbacks).toBe(0);
-        expect(describeError(new Error("action_turn_failed"))).toEqual({ code: "action_failed" });
-        expect(
-          getGuardState(world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget,
-        ).toBeNull();
-      } finally {
-        await provider.close();
-      }
-    });
-
-for (const locale of ["zh-CN", "en"] as const)
-  test(`${locale}: required-turn retry domain rejection retains a no_valid_action reason instead of transport diagnostics`, async () => {
-    const { world } = bootstrapGame(sixPlayerMvpConfig, { fixedRoles: roles, locale });
-    let attempts = 0;
-    const client: any = {
-      async chat() {
-        throw new Error("unexpected_chat");
-      },
-      async runToolLoop(_m: any, _t: any, callbacks: any) {
-        attempts++;
-        if (attempts > 1)
-          for (let i = 0; i < 3; i++)
-            await callbacks.onToolCall({
-              name: "submit_action",
-              args: {
-                turn_id: "t1",
-                action: "guard",
-                arguments: { target_id: 999, abstain: false },
-              },
-            });
-        return { finalAction: null, assistantText: "End" };
-      },
-    };
-    const provider = new LlmActionProvider(world, client, { llmTimeoutMs: 1500 });
-    const input = request(true);
-    input.context.turn_constraints.min_valid_actions = 1;
-    const manager = await SessionRecordManager.create(
-      {
-        sessionId: `strict-retry-${locale}`,
-        board: "synthetic",
-        locale,
-        startedAtIso: new Date(0).toISOString(),
-      },
-      await createTestTempDirectory("awa-strict-retry-"),
-    );
-    await runWithSessionRecorder(manager, async () => {
-      await expect(provider.getAction(input)).rejects.toThrow("action_turn_failed");
-      await provider.close();
-    });
-    expect(attempts).toBe(2);
-    const summary = await manager.finalize({
-      endedAtIso: new Date(1).toISOString(),
-      winner: null,
-      finishReason: "test",
-      players: [],
-    });
-    const view = summary.playerViews.find((player) => player.player_id === 5)!;
-    expect(JSON.stringify(view)).toContain("turn_invalid_action_limit");
-    expect(JSON.stringify(view)).not.toContain("transport_error");
-    expect(
-      view.timeline.some(
-        (entry) =>
-          entry.kind === "turn" &&
-          entry.delta_messages.some((message) => message.kind === "constraint_warning"),
-      ),
-    ).toBe(true);
-  });
-
-for (const locale of ["zh-CN", "en"] as const)
-  for (const helper of ["report_bug", "get_game_schema"] as const)
-    test(`${locale}/${helper}: SDK helper parse errors do not become action attempts or forbid optional waiting`, async () => {
-      const { world } = bootstrapGame(sixPlayerMvpConfig, { fixedRoles: roles, locale });
-      let requests = 0;
-      const syntheticFetch = Object.assign(
-        async () => {
-          requests++;
-          const bad = requests <= 3;
-          return Response.json({
-            id: "synthetic",
-            object: "chat.completion",
-            created: 1,
-            model: "synthetic",
-            choices: [
-              {
-                index: 0,
-                finish_reason: bad ? "tool_calls" : "stop",
-                message: bad
-                  ? {
-                      role: "assistant",
-                      content: null,
-                      tool_calls: [
-                        {
-                          id: `helper-${requests}`,
-                          type: "function",
-                          function: { name: helper, arguments: "{bad_json" },
-                        },
-                      ],
-                    }
-                  : { role: "assistant", content: "Wait" },
-              },
-            ],
-            usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
-          });
-        },
-        { preconnect: fetch.preconnect },
-      );
-      const provider = new LlmActionProvider(
-        world,
-        new AiSdkClient({
-          apiKey: "synthetic",
-          baseURL: "https://synthetic.invalid/v1",
-          model: "synthetic",
-          fetch: syntheticFetch,
-        }),
-        { llmTimeoutMs: 1500 },
-      );
-      try {
-        expect(await provider.getAction(request(true))).toBeNull();
-        expect(requests).toBe(4);
-        expect(
-          getGuardState(world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget,
-        ).toBeNull();
-      } finally {
-        await provider.close();
-      }
     });
 
 for (const transport of ["sdk", "acp"] as const)

@@ -2,7 +2,7 @@
   "schema": "awa-test-path-mappings-v2",
   "generatedBy": "Authorized purpose-based test relocations with per-slice source hashes, precise path edits and frozen original case identities",
   "baselineCommit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
-  "observedSourceCommit": "9695d888c13a780583c3f2aea7e06540373f93af",
+  "observedSourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
   "policy": "Mappings retain frozen original case identities across approved responsibility/path changes. Each row records its own allowed source edits and evidence; this is not an architecture-debt waiver, fixture acceptance or a claim that every current file still equals its historical candidate hash.",
   "mappings": [
     {
@@ -86849,13 +86849,564 @@
       "sharedSetupPolicy": "Case-local state; retained selected helpers only. All case-local mutable resources remain single allocations. Only necessary original pure helper declarations are copied; no expectation or runtime helper replaces an original input.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 19 unique removed modules independently reviewed, no required test setup deleted. Full import evaluation order is not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/strict_turn_policy.test.ts",
+      "to": "backend/tests/unit/agents/strict-cancellation-and-deadlines.test.ts",
+      "sourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "reason": "Actual selected unit module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "3f9f8b0db8448d1de8669815476eec70a2571244c88702fc6ac14e64b8fd9075",
+      "candidateSha256": "02cf8cdc349ba8e216873dde963b21b83363a72a2742f9c37057b87ee44664d3",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 566,
+          "end": 601,
+          "original": "../../../src/utils/error_diagnostic",
+          "value": "../../../src/utils/error_diagnostic",
+          "originalResolved": "backend/src/utils/error_diagnostic.ts",
+          "expectedResolved": "backend/src/utils/error_diagnostic.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 487,
+          "end": 532,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 402,
+          "end": 448,
+          "original": "../../../src/ai/agents/acp/acp_action_provider",
+          "value": "../../../src/ai/agents/acp/acp_action_provider",
+          "originalResolved": "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/acp/acp_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 318,
+          "end": 364,
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 232,
+          "end": 280,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 181,
+          "end": 198,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "4ca6a893e62c9a1270f14b1605f9780e6ee32a19d6ea4e366806748757ad89e6",
+          "title": "sdk/false: owned provider cancellation preserves default behavior and never fakes strict waiting",
+          "occurrence": 1
+        },
+        {
+          "id": "d8c41accd93098a4bf67deb56a72e620975f747be6dc81a1571ba0b613b7c822",
+          "title": "sdk/true: owned provider cancellation preserves default behavior and never fakes strict waiting",
+          "occurrence": 1
+        },
+        {
+          "id": "ffb7d21700292741c412e0157cef5f16432d533996d98687c4f3e8b69280905d",
+          "title": "acp/false: owned provider cancellation preserves default behavior and never fakes strict waiting",
+          "occurrence": 1
+        },
+        {
+          "id": "368b3a29a988348961c37c3ddc94dfad0ae25692801e6411bf34bd3f6f9cb989",
+          "title": "acp/true: owned provider cancellation preserves default behavior and never fakes strict waiting",
+          "occurrence": 1
+        },
+        {
+          "id": "a13b6f8177b7be7d3530e2b8725a8dbfeca97fec1925d7cca381124d39139819",
+          "title": "sdk: a strict deadline cannot be returned as a wait or spend a resource",
+          "occurrence": 1
+        },
+        {
+          "id": "9f151b1eb2ecbec7e7309dedfc6c4bb1ece0a1758b9348ae84a217f3eb8ebd95",
+          "title": "acp: a strict deadline cannot be returned as a wait or spend a resource",
+          "occurrence": 1
+        },
+        {
+          "id": "73c5e5950740f3a2331ce489ee596b49f5182b66cd00abd61c55bde569a112e3",
+          "title": "strict cancellation does not swallow a real ACP cleanup error",
+          "occurrence": 1
+        },
+        {
+          "id": "07e2c0ca05e2de80350804590ea1b3630d349eb803ae8dec6e6087ef19f8e466",
+          "title": "false: synchronous SDK completion cannot hide an elapsed strict absolute deadline",
+          "occurrence": 1
+        },
+        {
+          "id": "f72094f63e3388c674a0192c04c354a4836f61d365aac100c06910b1e007e6fb",
+          "title": "true: synchronous SDK completion cannot hide an elapsed strict absolute deadline",
+          "occurrence": 1
+        },
+        {
+          "id": "786f9b8e3f5790db7ecfc351bc4eee9600bf73c4f40a3d9dc69ab3b752526f57",
+          "title": "sdk/false: synchronous recording after a timely model result cannot deliver a late strict result",
+          "occurrence": 1
+        },
+        {
+          "id": "f8940b87fa9a64007f0d6b41b7956c590e11d29102b284104af434f30ffab2ad",
+          "title": "sdk/true: synchronous recording after a timely model result cannot deliver a late strict result",
+          "occurrence": 1
+        },
+        {
+          "id": "d9afe2498dc426d692daebf6ce91f8de01a7a19d3c2cc0549eb1d9c5722f6bd2",
+          "title": "acp/false: synchronous recording after a timely model result cannot deliver a late strict result",
+          "occurrence": 1
+        },
+        {
+          "id": "0a5a95616272b89d512ba4d18dfe5690c7e6922b12c3baeb7ba4a1e353e04e95",
+          "title": "acp/true: synchronous recording after a timely model result cannot deliver a late strict result",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalImport": "import { AiSdkClient } from \"../../../src/ai/integrations/llm/ai_sdk_client\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AiSdkClient",
+              "imported": "AiSdkClient",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/session_recorder",
+          "originalImport": "import { SessionRecordManager } from \"../../../src/recording/session_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SessionRecordManager",
+              "imported": "SessionRecordManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/recording_context",
+          "originalImport": "import { runWithSessionRecorder } from \"../../../src/recording/recording_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "runWithSessionRecorder",
+              "imported": "runWithSessionRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/strict_turn_policy.test.ts",
+      "to": "backend/tests/integration/agents/sdk/strict-protocol-errors.test.ts",
+      "sourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "reason": "Actual selected integration module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "3f9f8b0db8448d1de8669815476eec70a2571244c88702fc6ac14e64b8fd9075",
+      "candidateSha256": "0c4f234436c5b036f5a4288e18c09645eb98a5be994019c91e5c14d632b984d9",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 560,
+          "end": 595,
+          "original": "../../../src/utils/error_diagnostic",
+          "value": "../../../../src/utils/error_diagnostic",
+          "originalResolved": "backend/src/utils/error_diagnostic.ts",
+          "expectedResolved": "backend/src/utils/error_diagnostic.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 481,
+          "end": 526,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 396,
+          "end": 442,
+          "original": "../../../src/ai/integrations/llm/ai_sdk_client",
+          "value": "../../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts",
+          "expectedResolved": "backend/src/ai/integrations/llm/ai_sdk_client.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 318,
+          "end": 364,
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 232,
+          "end": 280,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 181,
+          "end": 198,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "b3e513253ec150725065039f50f11ba5a67ea00c16b3b44b05c1159c700cbc4a",
+          "title": "zh-CN/json: production AiSdkClient parse/protocol failure cannot become a clean optional wait",
+          "occurrence": 1
+        },
+        {
+          "id": "a1b998faaae5584d8c87da754a0dd6e7312b3ff46f429429a2306e9104dcd6f8",
+          "title": "zh-CN/wrong_turn: production AiSdkClient parse/protocol failure cannot become a clean optional wait",
+          "occurrence": 1
+        },
+        {
+          "id": "a5ae727d0413298ae3f2ef2317adb8ad32a92d967726c368e7e80762c1894ae7",
+          "title": "en/json: production AiSdkClient parse/protocol failure cannot become a clean optional wait",
+          "occurrence": 1
+        },
+        {
+          "id": "b22a2b0a1ebc77ccfa5825a64c8fb398892e391b32dac4ff22706600ee82f322",
+          "title": "en/wrong_turn: production AiSdkClient parse/protocol failure cannot become a clean optional wait",
+          "occurrence": 1
+        },
+        {
+          "id": "886ee6bb14cdf1cecab169fd67db75467b81ad1268333e1af2e8ab4a0b2cb4c5",
+          "title": "zh-CN/report_bug: SDK helper parse errors do not become action attempts or forbid optional waiting",
+          "occurrence": 1
+        },
+        {
+          "id": "6a7a6f86bb422bb87213bfde761fcb4417a0e4309bd26a3e90ad6df21f942197",
+          "title": "zh-CN/get_game_schema: SDK helper parse errors do not become action attempts or forbid optional waiting",
+          "occurrence": 1
+        },
+        {
+          "id": "265b4be94edc41bab357f7bb7c574a16c8f5e4d04c6f9528eba6fc37264d82d0",
+          "title": "en/report_bug: SDK helper parse errors do not become action attempts or forbid optional waiting",
+          "occurrence": 1
+        },
+        {
+          "id": "150589de5e4e94f206d309f09aa6bddbf5d50c7ee546f069bbe5855d02015204",
+          "title": "en/get_game_schema: SDK helper parse errors do not become action attempts or forbid optional waiting",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/ai/agents/acp/acp_action_provider",
+          "originalImport": "import { AcpActionProvider } from \"../../../src/ai/agents/acp/acp_action_provider\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AcpActionProvider",
+              "imported": "AcpActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/session_recorder",
+          "originalImport": "import { SessionRecordManager } from \"../../../src/recording/session_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SessionRecordManager",
+              "imported": "SessionRecordManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/recording/recording_context",
+          "originalImport": "import { runWithSessionRecorder } from \"../../../src/recording/recording_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "runWithSessionRecorder",
+              "imported": "runWithSessionRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/ai/agents/strict_turn_policy.test.ts",
+      "to": "backend/tests/integration/agents/strict-retry-recording.test.ts",
+      "sourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "reason": "Actual selected integration module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "3f9f8b0db8448d1de8669815476eec70a2571244c88702fc6ac14e64b8fd9075",
+      "candidateSha256": "b9842b83c2c86f615107e6358ec62b11d2d9fc2a92aabf89676923443e1bed01",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 542,
+          "end": 580,
+          "original": "../../support/drivers/temp-directories",
+          "value": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 458,
+          "end": 498,
+          "original": "../../../src/recording/recording_context",
+          "value": "../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 376,
+          "end": 415,
+          "original": "../../../src/recording/session_recorder",
+          "value": "../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 290,
+          "end": 335,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 205,
+          "end": 251,
+          "original": "../../../src/ai/agents/llm/llm_action_provider",
+          "value": "../../../src/ai/agents/llm/llm_action_provider",
+          "originalResolved": "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "expectedResolved": "backend/src/ai/agents/llm/llm_action_provider.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 150,
+          "end": 167,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "79ed521740c4d6abec6a2a183e780b50109636c79d9309238e7391cf8a7b4977",
+          "title": "zh-CN: required-turn retry domain rejection retains a no_valid_action reason instead of transport diagnostics",
+          "occurrence": 1
+        },
+        {
+          "id": "d38c0d4d2e5d4e799fac985aa5a5ef3c6ccd6ecfb7cf51e69c97e1d00dc586b0",
+          "title": "en: required-turn retry domain rejection retains a no_valid_action reason instead of transport diagnostics",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { COMPONENT, Phase, Role, type ActionRequest, type RoleComponent } from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Phase, Role, type ActionRequest } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import { getGuardState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getGuardState",
+              "imported": "getGuardState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/acp/acp_action_provider",
+          "originalImport": "import { AcpActionProvider } from \"../../../src/ai/agents/acp/acp_action_provider\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AcpActionProvider",
+              "imported": "AcpActionProvider",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/integrations/llm/ai_sdk_client",
+          "originalImport": "import { AiSdkClient } from \"../../../src/ai/integrations/llm/ai_sdk_client\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "AiSdkClient",
+              "imported": "AiSdkClient",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/utils/error_diagnostic",
+          "originalImport": "import { describeError } from \"../../../src/utils/error_diagnostic\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "describeError",
+              "imported": "describeError",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 556,
-    "targetFiles": 615,
-    "mappingEntries": 615,
-    "baselineCases": 7159,
+    "sourceFiles": 557,
+    "targetFiles": 618,
+    "mappingEntries": 618,
+    "baselineCases": 7182,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
