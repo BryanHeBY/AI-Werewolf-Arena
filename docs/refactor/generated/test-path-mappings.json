@@ -88075,13 +88075,382 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/hidden_wolf_camp_policy.test.ts",
+      "to": "backend/tests/unit/features/hidden-wolf/camp-policy-configuration-and-projection.test.ts",
+      "sourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "reason": "Actual selected unit module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "6de77922343de4edd038ad51331f5728bb3e1d90aab45c3c8ac1a893bceb7400",
+      "candidateSha256": "44ed1ac1983e208c15419863b2accf7c288213ca4b44d06232e8e0c7a5144e33",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 932,
+          "end": 977,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 849,
+          "end": 893,
+          "original": "../../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 718,
+          "end": 776,
+          "original": "../../../src/game/mechanisms/prompt/config_render_registry",
+          "value": "../../../../src/game/mechanisms/prompt/config_render_registry",
+          "originalResolved": "backend/src/game/mechanisms/prompt/config_render_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/prompt/config_render_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 617,
+          "end": 667,
+          "original": "../../../src/ai/agents/player/player_prompt_policy",
+          "value": "../../../../src/ai/agents/player/player_prompt_policy",
+          "originalResolved": "backend/src/ai/agents/player/player_prompt_policy.ts",
+          "expectedResolved": "backend/src/ai/agents/player/player_prompt_policy.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 536,
+          "end": 578,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 446,
+          "end": 494,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 390,
+          "end": 407,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 226,
+          "end": 252,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 123,
+          "end": 151,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "f1d192a7eac72aededc5f31db21125ecb69abb3dbfa1d2ee753b0665deee7c10",
+          "title": "awa_inheritance_v1/zh-CN: configuration, role prompt and own DTO agree without exposing another player's state",
+          "occurrence": 1
+        },
+        {
+          "id": "a3f76d7382bb66d795444e9f53c70ae1284e8d011799bc7c9b680c7ad9bb90d2",
+          "title": "awa_inheritance_v1/en: configuration, role prompt and own DTO agree without exposing another player's state",
+          "occurrence": 1
+        },
+        {
+          "id": "7a57cb2c3d6a1575f3ba4bcefce80ac0c1f95fbccbbe04145d34420c3d999261",
+          "title": "netease_2020_good_v1/zh-CN: configuration, role prompt and own DTO agree without exposing another player's state",
+          "occurrence": 1
+        },
+        {
+          "id": "7589c2b7438b11286d0f7bef4a50817c7a633697b0e844ebe25228f4c702d1a9",
+          "title": "netease_2020_good_v1/en: configuration, role prompt and own DTO agree without exposing another player's state",
+          "occurrence": 1
+        },
+        {
+          "id": "8e8d1a1cc46720854f16c97d6cfeb3887ee2ac55b76335daff396db6bee3238e",
+          "title": "omission preserves the legacy raw state and unknown policies fail closed",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Camp,\n  COMPONENT,\n  Phase,\n  Role,\n  type ActionRequest,\n  type BoardConfig,\n  type HiddenWolfCampInspectionPolicy,\n  type RoleComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, Phase, Role, type ActionRequest, type BoardConfig, type HiddenWolfCampInspectionPolicy, type RoleComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "Camp",
+              "imported": "Camp",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import { getHiddenWolfState, getSeerState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": "import { getHiddenWolfState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "droppedBindings": [
+            {
+              "name": "getSeerState",
+              "imported": "getSeerState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/inspection",
+          "originalImport": "import { resolveInspection } from \"../../../src/game/mechanisms/roles/inspection\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "resolveInspection",
+              "imported": "resolveInspection",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/wolf_team",
+          "originalImport": "import {\n  knownWolfTeammates,\n  wolfChatParticipants,\n  wolfKnifeHolders,\n} from \"../../../src/game/mechanisms/roles/wolf_team\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "knownWolfTeammates",
+              "imported": "knownWolfTeammates",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "wolfChatParticipants",
+              "imported": "wolfChatParticipants",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "wolfKnifeHolders",
+              "imported": "wolfKnifeHolders",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/hidden_wolf_camp_policy.test.ts",
+      "to": "backend/tests/scenarios/features/hidden-wolf/camp-policy-inheritance-and-duel.test.ts",
+      "sourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "6de77922343de4edd038ad51331f5728bb3e1d90aab45c3c8ac1a893bceb7400",
+      "candidateSha256": "b07a79e87b0b77f751e86c7f6089ab10efb77105c2e036abc870c292aab1fa34",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 806,
+          "end": 851,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 723,
+          "end": 767,
+          "original": "../../../src/runtime/config/board_definition",
+          "value": "../../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 606,
+          "end": 650,
+          "original": "../../../src/game/mechanisms/roles/wolf_team",
+          "value": "../../../../src/game/mechanisms/roles/wolf_team",
+          "originalResolved": "backend/src/game/mechanisms/roles/wolf_team.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/wolf_team.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 478,
+          "end": 520,
+          "original": "../../../src/game/mechanisms/roles/catalog",
+          "value": "../../../../src/game/mechanisms/roles/catalog",
+          "originalResolved": "backend/src/game/mechanisms/roles/catalog.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/catalog.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 391,
+          "end": 436,
+          "original": "../../../src/game/mechanisms/roles/inspection",
+          "value": "../../../../src/game/mechanisms/roles/inspection",
+          "originalResolved": "backend/src/game/mechanisms/roles/inspection.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/inspection.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 305,
+          "end": 353,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 235,
+          "end": 252,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "85d655a55e4e1a9d127227658493037d7b8ca207759deb4a078295b7526b43eb",
+          "title": "awa_inheritance_v1: actual pack self-knife changes inheritance while Seer results follow the named camp policy",
+          "occurrence": 1
+        },
+        {
+          "id": "b4828bb43980918f6dd3552dfda449afc6b8b12bbaf5b03933260df1b077d255",
+          "title": "netease_2020_good_v1: actual pack self-knife changes inheritance while Seer results follow the named camp policy",
+          "occurrence": 1
+        },
+        {
+          "id": "f0f23cf21110bcb1d43ff85fbcf8b39120d2261000c7c4423edefbdf9f84d89b",
+          "title": "Good inspection never changes true faction for a real Knight duel",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import {\n  getDefaultToolSpecRegistry,\n  getDefaultTargetHintRegistry,\n  getDefaultPhaseStageLocalizationRegistry,\n} from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultToolSpecRegistry",
+              "imported": "getDefaultToolSpecRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultTargetHintRegistry",
+              "imported": "getDefaultTargetHintRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultPhaseStageLocalizationRegistry",
+              "imported": "getDefaultPhaseStageLocalizationRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  Camp,\n  COMPONENT,\n  Phase,\n  Role,\n  type ActionRequest,\n  type BoardConfig,\n  type HiddenWolfCampInspectionPolicy,\n  type RoleComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Camp, COMPONENT, Role, type ActionRequest, type BoardConfig, type HiddenWolfCampInspectionPolicy, type RoleComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/ai/agents/player/player_prompt_policy",
+          "originalImport": "import { PlayerPromptPolicy } from \"../../../src/ai/agents/player/player_prompt_policy\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PlayerPromptPolicy",
+              "imported": "PlayerPromptPolicy",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/prompt/config_render_registry",
+          "originalImport": "import { getDefaultConfigRenderRegistry } from \"../../../src/game/mechanisms/prompt/config_render_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 558,
-    "targetFiles": 620,
-    "mappingEntries": 620,
-    "baselineCases": 7214,
+    "sourceFiles": 559,
+    "targetFiles": 622,
+    "mappingEntries": 622,
+    "baselineCases": 7222,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

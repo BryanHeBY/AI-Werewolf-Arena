@@ -6,7 +6,7 @@
 | ---------------------- | ------ | ------------------------------------------------------------------------------------ |
 | P0 基线与契约          | 已完成 | C01 `144f48b` 已提交；C02 `aba9347`；C03 `b56d282`；七样例、89行静态台账与三方向审查 |
 | P1 依赖与共享契约      | 已完成 | C04–C09 数据/支持职责与 public consumer 闭合；零基础包循环，兼容桥按 C44 退出        |
-| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；当前映射558来源、620目标、7214旧IDs；余mixed tests/support继续 |
+| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；当前映射559来源、622目标、7222旧IDs；余mixed tests/support继续 |
 | P3 状态与请求授权      | 进行中 | C16生产读取/C18传播/F02/C19完成；容器读取边界及实际写者闭合，能力查询/schema继续      |
 | P4 规则计划与生命周期  | 进行中 | C21阶段成员快照与opaque lazy完成；完整RulePlan/C22–C24继续                           |
 | P5 效果、死亡与判胜    | 待执行 | C25–C29                                                                              |
@@ -329,3 +329,5 @@
 - C12 mixed8i strict-provider-policy：1原file→3targets/23旧IDs实际分层；overall8→17/116IDs54unit26integration36scene，56注册保含5postbaseline无P0ID。RootactualGit/full selectedprogram/原ID singleowner0，52callbackraw+4仅精确publicdoc/dynamic/inline type路径，28helper及数组/父loop原raw、167bindings137relative/17heads0；独立真实分类/setup/483unique omitted0add/77prune=61whole16partial闭合，两catalog额外warmread明示不称初始化计数等价。原62668因并行P3source/7fixture诊断exit2保留；exact46c source/support/packages/scripts/tooling+17原候选的finite10834实际exit0（初缺原night-stage-fixture的snapshot红保，补原Git输入）。没有改mutation输入/加cast或重tests/discovery/game，后续只读API自有一致fixture切片。mapping现557source/618target/7182IDs。
 
 - C12 mixed8i gargoyle-inspection-and-inheritance：1原file→2targets/32旧IDs实际分层；overall8→17/116IDs54unit26integration36scene，56注册保含5postbaseline无P0ID。RootactualGit/full selectedprogram/原ID singleowner0，52callbackraw+4仅精确publicdoc/dynamic/inline type路径，28helper及数组/父loop原raw、167bindings137relative/17heads0；独立真实分类/setup/483unique omitted0add/77prune=61whole16partial闭合，两catalog额外warmread明示不称初始化计数等价。原62668因并行P3source/7fixture诊断exit2保留；exact46c source/support/packages/scripts/tooling+17原候选的finite10834实际exit0（初缺原night-stage-fixture的snapshot红保，补原Git输入）。没有改mutation输入/加cast或重tests/discovery/game，后续只读API自有一致fixture切片。mapping现558source/620target/7214IDs。
+
+- C12 mixed8i hidden-wolf-camp-policy：1原file→2targets/8旧IDs实际分层；overall8→17/116IDs54unit26integration36scene，56注册保含5postbaseline无P0ID。RootactualGit/full selectedprogram/原ID singleowner0，52callbackraw+4仅精确publicdoc/dynamic/inline type路径，28helper及数组/父loop原raw、167bindings137relative/17heads0；独立真实分类/setup/483unique omitted0add/77prune=61whole16partial闭合，两catalog额外warmread明示不称初始化计数等价。原62668因并行P3source/7fixture诊断exit2保留；exact46c source/support/packages/scripts/tooling+17原候选的finite10834实际exit0（初缺原night-stage-fixture的snapshot红保，补原Git输入）。没有改mutation输入/加cast或重tests/discovery/game，后续只读API自有一致fixture切片。mapping现559source/622target/7222IDs。
