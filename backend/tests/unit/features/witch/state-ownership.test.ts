@@ -5,12 +5,13 @@
  * metadata are the oracle. Claims, marks, lease validation and independent audit
  * inference are not executed or replaced by these concrete payload commands.
  */
+import type { WitchState } from "@ai-werewolf-arena/game-contract";
+
 import { expect, test } from "bun:test";
 import { Role, Camp, WitchSelfHealRule } from "@ai-werewolf-arena/game-contract";
 import { createRoleComponent } from "../../../../src/core/domain/components/role";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import {
-  type WitchState,
   resetWitchNightState,
   refreshWitchSelfHeal,
   consumeWitchHeal,

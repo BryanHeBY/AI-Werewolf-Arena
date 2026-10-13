@@ -5,13 +5,14 @@
  * oracle. Ability use, marks, lease rechecks and Demon sealed commits are separate.
  * Reader compiler examples cannot overwrite native lastTarget directly.
  */
+import type { GuardState } from "@ai-werewolf-arena/game-contract";
+
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
 import { createRoleComponent } from "../../../../src/core/domain/components/role";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import {
   getGuardState,
-  type GuardState,
   recordGuardTarget,
   recordRecipientGuardTarget,
 } from "../../../../src/game/mechanisms/roles/guard/ports";

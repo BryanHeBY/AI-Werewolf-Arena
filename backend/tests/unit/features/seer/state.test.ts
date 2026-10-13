@@ -5,6 +5,8 @@
  * and an explicit access-order log form the independent oracle; no model, game
  * driver, recording fixture or production-derived expected value is used.
  */
+import type { SeerState, SeerReadState } from "@ai-werewolf-arena/game-contract";
+
 import { expect, test } from "bun:test";
 import { Camp, Role, type InspectionResult } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
@@ -23,10 +25,6 @@ import {
   getSeerState as legacyGetSeerState,
   setSeerState as legacySetSeerState,
 } from "../../../../src/game/mechanisms/roles/private_state";
-import type {
-  SeerState,
-  SeerReadState,
-} from "../../../../src/game/mechanisms/roles/seer/state-contracts";
 
 const emptyState = (): SeerState => ({ lastTarget: null, lastIsWerewolf: null, history: [] });
 

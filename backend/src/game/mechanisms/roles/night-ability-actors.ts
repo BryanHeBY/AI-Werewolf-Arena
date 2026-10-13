@@ -7,15 +7,12 @@
  * is read in the original order. Binding never reads World, actor state or clocks;
  * query implementations never write resources, commit effects or choose random targets.
  */
+import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
+
 import type { EntityId } from "../../../core/domain/model";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { World } from "../../../core/domain/world";
-import {
-  abilityStatus,
-  allNightAbilities,
-  type NightAbilityReadView,
-  type NightAbilityKind,
-} from "./abilities";
+import { abilityStatus, allNightAbilities, type NightAbilityReadView } from "./abilities";
 import {
   bindNightmareNightEligibility,
   type NightmareNightEligibility,

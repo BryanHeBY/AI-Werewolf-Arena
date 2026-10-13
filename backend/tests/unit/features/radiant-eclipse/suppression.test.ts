@@ -80,9 +80,7 @@ test("a replacement blocker with equal values belongs to another owner", () => {
   const foreign = { ...scope.marker };
   (
     f.ability as {
-      nightSuppression:
-        | import("../../../../src/game/mechanisms/roles/radiant_eclipse/state").EclipseSuppression
-        | undefined;
+      nightSuppression: import("@ai-werewolf-arena/game-contract").EclipseSuppression | undefined;
     }
   ).nightSuppression = foreign;
   expect(scope.isCurrent()).toBe(false);
@@ -173,13 +171,13 @@ for (const mode of [
     if (mode === "state_ref")
       (
         f.ability as {
-          state: import("../../../../src/game/mechanisms/roles/seer/state-contracts").SeerReadState;
+          state: import("@ai-werewolf-arena/game-contract").SeerReadState;
         }
       ).state = { ...f.ability.state };
     if (mode === "source_ref")
       (
         f.ability as {
-          source: import("../../../../src/game/mechanisms/roles/abilities").AbilitySource;
+          source: import("@ai-werewolf-arena/game-contract").AbilitySource;
         }
       ).source = { ...f.ability.source };
     if (mode === "source_role" && f.ability.source.kind === "native")

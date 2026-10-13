@@ -7,6 +7,8 @@
  * Ordinary payload history writes delegate to the local state owner at the original
  * commit position; all checks, use accounting and publication remain in this flow.
  */
+import type { RoleInspectionPolicy } from "@ai-werewolf-arena/game-contract";
+
 import { recordRoleInspection } from "./state";
 import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
@@ -16,7 +18,6 @@ import type { NightStageContext, NightStageHandler } from "../../stages/night/co
 import {
   recordNightAbilityUse,
   roleInspectionPolicy,
-  type RoleInspectionPolicy,
   type NightAbilityReadView,
 } from "../abilities";
 import { getGargoyleState } from "../private_state";

@@ -348,15 +348,13 @@ for (const change of [
         if (change === "state")
           (
             ability as {
-              state: import("../../../../src/game/mechanisms/roles/role_inspection/state").RoleInspectionReadState;
+              state: import("@ai-werewolf-arena/game-contract").RoleInspectionReadState;
             }
           ).state = structuredClone(ability.state);
         if (change === "policy")
           (
             ability.state as {
-              policy:
-                | import("../../../../src/game/mechanisms/roles/abilities").RoleInspectionPolicy
-                | undefined;
+              policy: import("@ai-werewolf-arena/game-contract").RoleInspectionPolicy | undefined;
             }
           ).policy = "gargoyle";
         if (change === "disabled") (ability as { disabled: boolean }).disabled = true;
@@ -440,9 +438,7 @@ for (const mutation of ["disabled", "policy", "transfer", "clock"] as const)
       if (mutation === "policy")
         (
           ability.state as {
-            policy:
-              | import("../../../../src/game/mechanisms/roles/abilities").RoleInspectionPolicy
-              | undefined;
+            policy: import("@ai-werewolf-arena/game-contract").RoleInspectionPolicy | undefined;
           }
         ).policy = "gargoyle";
       if (mutation === "transfer")

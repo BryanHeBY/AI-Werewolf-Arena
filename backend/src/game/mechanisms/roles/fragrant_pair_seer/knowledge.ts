@@ -1,5 +1,13 @@
+/**
+ * Owns Fragrant's player-known journal and pure knowledge updates.
+ * Inputs are recorded visible notices, known wolf/choice/death facts and pair IDs;
+ * outputs are checked copied knowledge and updated journal data in original order.
+ * This journal never derives hidden trigger receipts or grants roster/action
+ * authority; its shared pair type is neutral data, not a live state handle.
+ */
+
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
-import { normalizePair, type Pair } from "./state";
+import { normalizePair } from "./state";
 /** This journal stores only owner-authorized knowledge, never actual trigger receipts. */
 export type { FragrantKnowledge } from "@ai-werewolf-arena/game-text";
 import { readFragrantKnownState, type FragrantKnowledge } from "@ai-werewolf-arena/game-text";

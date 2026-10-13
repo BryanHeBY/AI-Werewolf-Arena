@@ -154,7 +154,7 @@ for (const point of ["await", "gateway"] as const)
         if (change === "source")
           (
             ability as {
-              source: import("../../../../src/game/mechanisms/roles/abilities").AbilitySource;
+              source: import("@ai-werewolf-arena/game-contract").AbilitySource;
             }
           ).source = { kind: "gift", actorId: 3 };
         if (change === "source_owner" && ability.source.kind === "native")

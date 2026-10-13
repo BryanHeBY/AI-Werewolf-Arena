@@ -8,13 +8,15 @@
  * refunds a resource or subscribes to request completion.
  * Its pairSeer slot write alone restores container access; the LHS still precedes ability installation and shares its returned state.
  */
+import type { PairSeerState } from "@ai-werewolf-arena/game-contract";
+
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import {
   installNativeAbility,
   recordNightAbilityUse,
   type NightAbilityReadView,
 } from "../abilities";
-import { freshPairSeerState, type PairSeerState } from "./state";
+import { freshPairSeerState } from "./state";
 import { assertWritable, plainJson, write } from "./owned-state-data";
 
 /** Captured references and audit snapshots stay on the original Fragrant owner object. */

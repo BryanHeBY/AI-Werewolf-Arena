@@ -5,6 +5,8 @@
  * themselves on a later death.
  * Only deathAbilities and retiredDeathAbilityIds are writable here, at their original nested install/retire expressions.
  */
+import type { AbilitySource } from "@ai-werewolf-arena/game-contract";
+
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import { Camp, type EntityId, type GameEvent } from "../../../core/domain/model";
@@ -12,7 +14,6 @@ import { aliveLifeVersion, type AliveComponent } from "../../../core/domain/comp
 import type { World } from "../../../core/domain/world";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import type { ValidationRuleContext } from "../validation/contracts";
-import type { AbilitySource } from "./abilities";
 import { validateDeathShot } from "./death_shot";
 
 /** A passive single-use resource. Night abilities and native role stocks stay separate. */

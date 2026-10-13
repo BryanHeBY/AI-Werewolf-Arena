@@ -4,13 +4,15 @@
  * active-eligibility checks. Replacing a captured slot or policy invalidates the scope without
  * writing state or spending a use.
  */
+import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
+
 import { captureRadiantTurn } from "./radiant_eclipse/night_frame";
 import { COMPONENT } from "../../../core/domain/components/names";
-import type { RoleComponent } from "../../../core/domain/components/role";
+
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 import type { World } from "../../../core/domain/world";
 import type { EntityId } from "../../../core/domain/model";
-import { activeNightAbility, type NightAbilityReadView, type NightAbilityKind } from "./abilities";
+import { activeNightAbility, type NightAbilityReadView } from "./abilities";
 import { aliveLifeVersion } from "../../../core/domain/components/alive";
 
 /** A policy edit is an authorization edit, even if the resource object survives. */

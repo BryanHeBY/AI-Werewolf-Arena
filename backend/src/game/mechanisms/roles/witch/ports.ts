@@ -14,4 +14,3 @@ export {
   consumeWitchPoison,
   consumeRecipientPoison,
 } from "./state";
-export type { WitchState, WitchReadState } from "./state";

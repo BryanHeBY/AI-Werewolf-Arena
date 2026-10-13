@@ -117,7 +117,7 @@ for (const change of [
         if (change === "state")
           (
             ability as {
-              state: import("../../../../src/game/mechanisms/roles/witch/state").WitchReadState;
+              state: import("@ai-werewolf-arena/game-contract").WitchReadState;
             }
           ).state = structuredClone(ability.state);
         if (change === "clock") current = false;
@@ -255,7 +255,7 @@ for (const change of [
           case "source":
             (
               ability as {
-                source: import("../../../../src/game/mechanisms/roles/abilities").AbilitySource;
+                source: import("@ai-werewolf-arena/game-contract").AbilitySource;
               }
             ).source = { kind: "native", role: Role.Witch };
             break;

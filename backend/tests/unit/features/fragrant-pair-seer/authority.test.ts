@@ -13,10 +13,7 @@ import {
   createAliveComponent,
   type AliveComponent,
 } from "../../../../src/core/domain/components/alive";
-import {
-  createRoleComponent,
-  type RoleComponent,
-} from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/core/domain/components/role";
 import { createCampComponent } from "../../../../src/core/domain/components/camp";
 import { createIdentityComponent } from "../../../../src/core/domain/entities/player";
 import { createVictoryComponent } from "../../../../src/core/domain/components/victory";
@@ -133,9 +130,9 @@ test("same-value common source replacement revokes owner and retains empty histo
   f.open();
   const lease = openPairCheckChoice(f.world, 1),
     ability = findNightAbility(f.role(5), "pair_check")!;
-  (
-    ability as { source: import("../../../../src/game/mechanisms/roles/abilities").AbilitySource }
-  ).source = { ...ability.source };
+  (ability as { source: import("@ai-werewolf-arena/game-contract").AbilitySource }).source = {
+    ...ability.source,
+  };
   expect(lease.isCurrent()).toBe(false);
   expect(() => lease.commit([5, 6])).toThrow();
   expect(f.role(5).privateState.pairSeer).toEqual(freshPairSeerState());

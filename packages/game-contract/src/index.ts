@@ -104,3 +104,27 @@ export * from "./facts/merchant";
 export * from "./facts/death-ability";
 
 export * from "./facts/black-market";
+
+export type {
+  SeerState,
+  SeerReadState,
+  RoleInspectionState,
+  RoleInspectionReadState,
+  GuardState,
+  GuardReadState,
+  WitchState,
+  WitchReadState,
+  DreamerState,
+  DreamerReadState,
+  Pair,
+  PairCheck,
+  PairSeerState,
+  EclipseSuppression,
+  ShelterState,
+  NightAbilityStates,
+  RoleInspectionPolicy,
+  NightAbilityKind,
+  AbilitySource,
+  NightAbilityReadStates,
+  NightAbilityReadState,
+} from "./night-ability-data";

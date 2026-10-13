@@ -4,17 +4,15 @@
  * completed target knowledge. This ledger never manufactures an active ability or a second
  * inspection resource.
  */
+import type { RoleInspectionReadState } from "@ai-werewolf-arena/game-contract";
+
 import { aliveLifeVersion, type AliveComponent } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Role } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
 import { findNightAbility, roleInspectionPolicy, type NightAbilityReadView } from "../abilities";
-import {
-  getGargoyleState,
-  type GargoyleState,
-  type RoleInspectionReadState,
-} from "../private_state";
+import { getGargoyleState, type GargoyleState } from "../private_state";
 
 interface Completion {
   actorId: number;

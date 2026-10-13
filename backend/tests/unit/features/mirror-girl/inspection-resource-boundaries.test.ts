@@ -361,7 +361,7 @@ test("fresh Mirror copy/gift reject inherited or private state, while transfer p
         {
           ...common,
           state:
-            state as import("../../../../src/game/mechanisms/roles/abilities").NightAbilityStates["role_check"],
+            state as import("@ai-werewolf-arena/game-contract").NightAbilityStates["role_check"],
         },
         events,
       ),
@@ -672,15 +672,13 @@ for (const change of ["cancel_null", "actor_revive", "target_revive", "state", "
         if (change === "state")
           (
             ability as {
-              state: import("../../../../src/game/mechanisms/roles/role_inspection/state").RoleInspectionReadState;
+              state: import("@ai-werewolf-arena/game-contract").RoleInspectionReadState;
             }
           ).state = structuredClone(ability.state);
         if (change === "policy")
           (
             ability.state as {
-              policy:
-                | import("../../../../src/game/mechanisms/roles/abilities").RoleInspectionPolicy
-                | undefined;
+              policy: import("@ai-werewolf-arena/game-contract").RoleInspectionPolicy | undefined;
             }
           ).policy = "psychic";
         return { name: "inspect_role", args: { target_id: 2 } };

@@ -1,9 +1,18 @@
+/**
+ * Defines Mirror Girl configuration, native initialization and stage/tool metadata.
+ * Inputs are the original initialization component, board policy and locale;
+ * outputs preserve the existing native instance/history, prompt and contributions.
+ * Neutral inspection DTOs supply data only; validation, accepted inspection
+ * writes and transfer retirement remain their existing owners and never reset here.
+ */
+
+import type { RoleInspectionState } from "@ai-werewolf-arena/game-contract";
 import { inspectionConfiguration, renderInspectionPolicy } from "../role_inspection/policies";
 import { roleName, text, inspectionLabel } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
 import type { RoleComponent } from "../../../../core/domain/components/role";
-import { setRoleInspectionState, type RoleInspectionState } from "../private_state";
+import { setRoleInspectionState } from "../private_state";
 import { allNightAbilities, findNightAbility, roleInspectionPolicy } from "../abilities";
 import { numberOrNull } from "../../llm/helpers";
 import { MIRROR_INSPECTION_STAGE } from "../role_inspection/night_stages";

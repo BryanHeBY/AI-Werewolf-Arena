@@ -5,6 +5,8 @@
  * pre-write snapshots are independent oracles; no model, full-game driver or production
  * command generates expected results. Domain leases remain outside these owner tests.
  */
+import type { PairSeerState } from "@ai-werewolf-arena/game-contract";
+
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
 import { createRoleComponent } from "../../../../src/core/domain/components/role";
@@ -18,7 +20,6 @@ import {
   commitPairStateSlot,
   type PairStateSlot,
 } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot";
-import type { PairSeerState } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
 
 function fixture() {
   const role = createRoleComponent(Role.AwakenedSeer, Camp.Good, "en");

@@ -184,7 +184,7 @@ for (const kind of ["copy", "transfer", "gift"] as const)
     const game = setup("awa_always_v1", "awa_both_native_experimental_v1");
     (
       game.ability as {
-        source: import("../../../../src/game/mechanisms/roles/abilities").AbilitySource;
+        source: import("@ai-werewolf-arena/game-contract").AbilitySource;
       }
     ).source =
       kind === "gift" ? { kind, actorId: 1 } : { kind, actorId: 1, abilityId: "foreign-potion" };
@@ -204,7 +204,7 @@ for (const revoked of ["disabled", "source", "day"] as const)
       if (revoked === "source")
         (
           game.ability as {
-            source: import("../../../../src/game/mechanisms/roles/abilities").AbilitySource;
+            source: import("@ai-werewolf-arena/game-contract").AbilitySource;
           }
         ).source = { kind: "gift", actorId: 1 };
       if (revoked === "day") (game.ability as { startsOnDay: number }).startsOnDay = 2;

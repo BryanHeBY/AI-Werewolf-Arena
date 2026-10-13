@@ -1,17 +1,16 @@
+/**
+ * Owns Fragrant pair/state strict reads and pure accepted-choice transformations.
+ * Inputs are unknown data or declared pair/history data; outputs are copied
+ * checked state and newly selected rows with the original rejection/limit policy.
+ * Pair payload declarations come from the neutral contract; roster authority,
+ * live alias installation and resource/receipt writes remain separate owners.
+ */
+
+import type { Pair, PairSeerState } from "@ai-werewolf-arena/game-contract";
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
 
-import { FRAGRANT_PAIR_POLICY, type FragrantPair } from "@ai-werewolf-arena/game-text";
+import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
 export { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
-export type Pair = FragrantPair;
-export interface PairCheck {
-  day: number;
-  targetIds: Pair;
-  containsWerewolf: boolean;
-}
-export interface PairSeerState {
-  policy: typeof FRAGRANT_PAIR_POLICY;
-  history: readonly PairCheck[];
-}
 export interface Binding {
   id: string;
   createdNight: number;

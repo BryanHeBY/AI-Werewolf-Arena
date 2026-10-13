@@ -5,15 +5,11 @@
  * Existing commands, lease checks, inventory, projection and checkpoint encoding remain
  * their current owners until those separate migrations; this facade exits in C44.
  */
-export type { SeerState, SeerReadState } from "./seer/state-contracts";
+
 export { getSeerState, setSeerState } from "./seer/state";
-export type { WitchState, WitchReadState } from "./witch/state";
 export { getWitchState, setWitchState } from "./witch/state";
-export type { GuardState, GuardReadState } from "./guard/state";
 export { getGuardState, setGuardState } from "./guard/state";
-export type { DreamerState, DreamerReadState } from "./dreamer/state";
 export { getDreamerState, setDreamerState } from "./dreamer/state";
-export type { RoleInspectionState, RoleInspectionReadState } from "./role_inspection/state";
 export { getRoleInspectionState, setRoleInspectionState } from "./role_inspection/state";
 export type { HunterState } from "./hunter/state";
 export { getHunterState, setHunterState } from "./hunter/state";

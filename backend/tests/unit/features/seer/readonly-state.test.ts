@@ -5,6 +5,8 @@
  * the installed slot unfrozen while only the explicit owner command writes it.
  * No World, role stage, transport, game cycle or historical fixture is executed.
  */
+import type { SeerReadState } from "@ai-werewolf-arena/game-contract";
+
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
 import { createRoleComponent } from "../../../../src/core/domain/components/role";
@@ -14,7 +16,6 @@ import {
   setSeerState,
   recordSeerInspection,
 } from "../../../../src/game/mechanisms/roles/seer/state";
-import type { SeerReadState } from "../../../../src/game/mechanisms/roles/seer/state-contracts";
 
 function rejectedWrites(state: SeerReadState): void {
   // @ts-expect-error A read view grants no scalar write.

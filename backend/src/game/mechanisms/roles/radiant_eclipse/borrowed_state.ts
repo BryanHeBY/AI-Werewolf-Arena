@@ -1,7 +1,20 @@
+/**
+ * Owns checked detached installation data for Eclipse's existing borrowed kinds.
+ * Inputs are unknown source payload, kind and day; outputs preserve fresh copied
+ * stock/policy/history data with the original own-field and Proxy rejection rules.
+ * Shared payload declarations remain pure data; this reader never mutates a live
+ * ability, transfers authority or refunds the source resource.
+ */
+
+import type {
+  SeerState,
+  WitchState,
+  DreamerState,
+  ShelterState,
+} from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import { WitchSelfHealRule } from "../../../../core/domain/identity";
-import type { SeerState, WitchState, DreamerState } from "../private_state";
-import { readShelterState, type ShelterState } from "./state";
+import { readShelterState } from "./state";
 
 interface BorrowedStates {
   seer_check: SeerState;

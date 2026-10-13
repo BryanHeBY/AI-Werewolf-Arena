@@ -6,6 +6,12 @@
  * Grant/transfer inputs and detached state-policy copies retain writable installation data.
  * Installation/retirement restore only abilities and retiredAbilityIds in this owner; original reference and delete/push order remain.
  */
+import type {
+  AbilitySource,
+  NightAbilityKind,
+  NightAbilityStates,
+} from "@ai-werewolf-arena/game-contract";
+
 import { isDeepStrictEqual } from "node:util";
 import { DREAM_PROTECTION_POLICIES } from "../../../core/domain/board";
 import { COMPONENT } from "../../../core/domain/components/names";
@@ -17,11 +23,8 @@ import {
   copyAbilityData,
   roleInspectionPolicy,
   projectNightState,
-  type AbilitySource,
   type NightAbility,
   type NightAbilityReadView,
-  type NightAbilityKind,
-  type NightAbilityStates,
 } from "./abilities";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 

@@ -6,7 +6,6 @@
  * these commands; no leased protection or checkpoint is created here.
  */
 export { getGuardState, recordGuardTarget, recordRecipientGuardTarget } from "./state";
-export type { GuardState, GuardReadState } from "./state";
 
 import type { NightAbilityReadView } from "../abilities";
 

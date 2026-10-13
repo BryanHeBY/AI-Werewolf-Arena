@@ -81,7 +81,7 @@ for (const item of cases)
           if (mutation === "source")
             (
               ability as {
-                source: import("../../../src/game/mechanisms/roles/abilities").AbilitySource;
+                source: import("@ai-werewolf-arena/game-contract").AbilitySource;
               }
             ).source = { kind: "gift", actorId: 2 };
           if (mutation === "day") day = 2;

@@ -12,4 +12,3 @@ export {
   setRoleInspectionState,
   recordAbilityRoleInspection,
 } from "./state";
-export type { RoleInspectionState, RoleInspectionReadState } from "./state";

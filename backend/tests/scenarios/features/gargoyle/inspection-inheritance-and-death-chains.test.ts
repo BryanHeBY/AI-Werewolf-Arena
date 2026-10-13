@@ -498,7 +498,7 @@ for (const mutation of [
           if (mutation === "state")
             (
               ability as {
-                state: import("../../../../src/game/mechanisms/roles/role_inspection/state").RoleInspectionReadState;
+                state: import("@ai-werewolf-arena/game-contract").RoleInspectionReadState;
               }
             ).state = structuredClone(ability.state);
           if (mutation === "native_state")

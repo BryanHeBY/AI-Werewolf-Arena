@@ -227,7 +227,7 @@ for (const change of ["id", "source", "private_owner", "activation", "actor_tran
     if (change === "source")
       (
         game.ability as {
-          source: import("../../../src/game/mechanisms/roles/abilities").AbilitySource;
+          source: import("@ai-werewolf-arena/game-contract").AbilitySource;
         }
       ).source = { kind: "gift", actorId: 3 };
     if (change === "private_owner")
@@ -274,9 +274,10 @@ for (const point of ["await", "gateway", "label"] as const)
       [],
     );
     const promote = () => {
-      (
-        gift as { source: import("../../../src/game/mechanisms/roles/abilities").AbilitySource }
-      ).source = { kind: "native", role: Role.Gargoyle };
+      (gift as { source: import("@ai-werewolf-arena/game-contract").AbilitySource }).source = {
+        kind: "native",
+        role: Role.Gargoyle,
+      };
     };
     let calls = 0;
     const ctx = context(game, events, async () => {

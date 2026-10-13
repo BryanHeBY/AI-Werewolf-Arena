@@ -4,6 +4,8 @@
  * tool action; outputs are legal IDs or the existing validation error code.
  * This leaf does not mutate history, spend stock or commit an inspection effect.
  */
+import type { RoleInspectionReadState } from "@ai-werewolf-arena/game-contract";
+
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { Phase, type EntityId } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
@@ -12,7 +14,6 @@ import { isAliveTarget } from "../../validation/contracts";
 import type { RoleProfile } from "../contracts";
 import { activeNightAbility } from "../abilities";
 import { inspectionRepeats } from "./policies";
-import type { RoleInspectionReadState } from "../private_state";
 
 export function roleInspectionTargets(
   world: World,

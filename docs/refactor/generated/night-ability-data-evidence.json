@@ -1,0 +1,360 @@
+{
+  "schema": "awa-night-ability-data-evidence-v1",
+  "baseline": "82fc0231",
+  "scope": {
+    "paths": 54,
+    "backendSource": 30,
+    "backendTests": 21,
+    "packageSource": 2,
+    "packageTests": 1
+  },
+  "files": [
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/state-contracts.ts",
+      "deleted": true,
+      "sha256": null
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/state.ts",
+      "deleted": false,
+      "sha256": "b6cb40358dc0f1efbe85de9a36c2a8eb3ed6c43bd4df8613f8a172785fb71d19"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/state.ts",
+      "deleted": false,
+      "sha256": "ca863479b19dad95fe8ece3c626d9e751ddd717bcfc8a4170b368ea5ed37ed8f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/state.ts",
+      "deleted": false,
+      "sha256": "1c9d1b4d3dd1733695178d3fbe50f9e5000946a17beec6772ef6edff6646ba96"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/state.ts",
+      "deleted": false,
+      "sha256": "797a23e8b3167bb6f5d10037b30bbe0c5553b6573817b2ea6112ea95d187389f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/state.ts",
+      "deleted": false,
+      "sha256": "4ec94e5381fcdd1a237bdb8f02471775c127041878a7afd7f439b35932351e78"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+      "deleted": false,
+      "sha256": "6aa6696a79eaece49e603fec8e25b671b300cf715658ccb251e6c86677a67bb9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "deleted": false,
+      "sha256": "00d3272ef2bb820dd66fd401d363b395dc9d711144f15254502f959c958c6495"
+    },
+    {
+      "path": "backend/tests/engine/rules/night_abilities.test.ts",
+      "deleted": false,
+      "sha256": "8a261080bd75fde71f45fdda6d182391d138ff9f670898955a9baa8d5fe1a511"
+    },
+    {
+      "path": "backend/tests/unit/agents/llm-action-provider-prompts.test.ts",
+      "deleted": false,
+      "sha256": "288cb34a4663de592ab43e25fd07431ecaa7598a8515027f1c88668afbdbf6b2"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/await.test.ts",
+      "deleted": false,
+      "sha256": "389de6d375d58e45ff6d92a59c3acda573a803ad7d30bb1787a02904b891e849"
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/suppression.test.ts",
+      "deleted": false,
+      "sha256": "1c8b7789c82cae382547c8a8a9301b61cf27f8809d7c8588a0bdcdccf374cf17"
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "deleted": false,
+      "sha256": "de80444c63cacfb259583b8fcc254a3b4fdaea1cf7353a0f3558e9b9840bd833"
+    },
+    {
+      "path": "backend/tests/unit/features/guard/state-ownership.test.ts",
+      "deleted": false,
+      "sha256": "c7cf682f842a6fdb27394d519ef7deabfcad61cc5a6d84a227eefc6fc937f965"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/authority.test.ts",
+      "deleted": false,
+      "sha256": "e1b7a96e67b89d0f0a4f22373ffa7e565d0bdf793a043d1a10ffe3229d166048"
+    },
+    {
+      "path": "backend/tests/unit/features/fragrant-pair-seer/pair-state-slot.test.ts",
+      "deleted": false,
+      "sha256": "5baa60b6b5c068e87b6208fe7d9a0339fa7d7e2839bee9e169020adf7925cda1"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "deleted": false,
+      "sha256": "62b9b2db603989c3f71add396628652161e2cb6d27ab7b5032b9670274e201c5"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "deleted": false,
+      "sha256": "5c523e09d341382c4dbbadaeacebef8a81fa46dd9eb263b2e846dc374f3f437a"
+    },
+    {
+      "path": "backend/tests/unit/features/witch/native-policy-resource-boundaries.test.ts",
+      "deleted": false,
+      "sha256": "7c999c04b716523b593f789d546fde273544b7bb18bc52cb5de0d77e55bd5c1b"
+    },
+    {
+      "path": "backend/tests/unit/features/witch/poison-life-scope.test.ts",
+      "deleted": false,
+      "sha256": "26aeecb770712b2d3eaadb9f92fcf2e23550514032b6b9b797fd8e67363a2c5c"
+    },
+    {
+      "path": "backend/tests/unit/features/witch/state-ownership.test.ts",
+      "deleted": false,
+      "sha256": "913d3f5d052756bf1857585997b8a067251b3ad56d066eed57c41e50ba8e11dc"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "deleted": false,
+      "sha256": "a14cebee0d644c608a8430451dc025592e8d67f633fdd52bca313c33b8a17857"
+    },
+    {
+      "path": "backend/tests/unit/features/seer/state.test.ts",
+      "deleted": false,
+      "sha256": "85f7a250b56ebf5f3bfcc318f3000c12a93fb5814f5a77cd554e15c0fce0cfb4"
+    },
+    {
+      "path": "backend/tests/unit/features/seer/readonly-state.test.ts",
+      "deleted": false,
+      "sha256": "468b9a82a8f2d8a264d1f365de37cbb55314bca087fe0f479fe6471a05cb593c"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/night-ability-read-boundary.test.ts",
+      "deleted": false,
+      "sha256": "7a5a783ec51e963c7c41b53eb19d71f2202585a1feedad3b611e6623dabb5fd0"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "deleted": false,
+      "sha256": "b69485de6197f296105fc17b71dffda3e20ab2f59606a482b62182651d7bb200"
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-plan.ts",
+      "deleted": false,
+      "sha256": "2203e419279d50ebec1074445bc709a5f5a99439545493be41851bf67ce49377"
+    },
+    {
+      "path": "backend/tests/unit/features/night-request-preflight.test.ts",
+      "deleted": false,
+      "sha256": "2cd5eff295f7906934666b4172f2e5281afde3a14602211b84712be9a7f71d05"
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "deleted": false,
+      "sha256": "6ef6552eec693db04b37ec8e7da0e20bb66dc7e95acef5b9e868c111d154a71a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/contracts.ts",
+      "deleted": false,
+      "sha256": "0957ff078c54614ac30b0325a2b992bddbea5914c80495bc8ab4f14baebcd6af"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-actors.ts",
+      "deleted": false,
+      "sha256": "4aefaf6c4e2021dc5b3ae3448f30a8771b44c36295efc3d5240b3f7ebb9c7e35"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "deleted": false,
+      "sha256": "d0ffe35a8d1a8f8d935ef04236a88f143a74c1e2958062755326fcfc823892b2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/ports.ts",
+      "deleted": false,
+      "sha256": "2da5c9d0518b7afe80dc4d1e9be15fee1ed83a29ca1e0e21aeea51d6f54a9440"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "deleted": false,
+      "sha256": "b5d625d88ee92b0db28a4f778430533e9e73e1e8ad8d210988ed1291b03a4c80"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+      "deleted": false,
+      "sha256": "e4929e5085f28e0bc17c45a341e834eada29719376bba3a280e092d9f4ad5608"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "deleted": false,
+      "sha256": "49c0b40d84da7126b0345c31e1ff89da9594d6461898b0a8e012fc8e09164e0a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+      "deleted": false,
+      "sha256": "ae95e15eb83fc35d9222ff91c5d0497764b69468b426a53b1ea70390d0b988a5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "deleted": false,
+      "sha256": "0e8cfa1d7edde7f54128860354aad21dab6218da0cbf9664dc106b06a5529c74"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_abilities.ts",
+      "deleted": false,
+      "sha256": "d5289d9e4f9dc16cd656613aa7914e0274914ebbead37567ef0a2b1afa1b5d72"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/ports.ts",
+      "deleted": false,
+      "sha256": "b10c649a65a32811dde7df4f2132588f8bf6d85c21796f98487faede8416cb51"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/pair-state-slot.ts",
+      "deleted": false,
+      "sha256": "4eb638b612fb73f234bb05406e4cb34edc8eb622843ccac3d61456d3a2493a7f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/knowledge.ts",
+      "deleted": false,
+      "sha256": "710add51fde4da8bdd59c3057f586f61ed635377bfbf25c6e9e5a452c6cdeb7e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+      "deleted": false,
+      "sha256": "cb3f60fa77d945fa9a31a6733ef5264c30771805b5ad6d7eea3cd2b53558f367"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/private_state.ts",
+      "deleted": false,
+      "sha256": "6954c42fd98aaeb27138ec3af7f5fa9885eecf533a40f78edcf1f145f6bf4fdd"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "deleted": false,
+      "sha256": "f49f92a5e8c72f497cd0898263c4d093ce6bf7186528b540245426494289bc0f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "deleted": false,
+      "sha256": "ca9acd18a0da8a1b4fd9080b58b0d32b10b96f25d86bf0987127a3de1a6ed4a1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/state.ts",
+      "deleted": false,
+      "sha256": "d6e231b3ea5b41a313e61532dd84de41caa8af512e488186ff38d3bf45a3d467"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/ports.ts",
+      "deleted": false,
+      "sha256": "4381f7234c7ea967a8183609bffc9fda423c0b1ead5363395a41d2f9d499ff55"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+      "deleted": false,
+      "sha256": "0d025e4f93b954751fa746276b7a737fee42612f381a6a4e11e09bb92adb6126"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/suppression.ts",
+      "deleted": false,
+      "sha256": "94855dec2f132f0c0021f2297526b1bb1061c9181fb79db6b60703663621e1d3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/borrowed_state.ts",
+      "deleted": false,
+      "sha256": "ed40afa6a884bf7ab93311c23afdf7168d6be1ff6c0aeb056fdde684709fc5e4"
+    },
+    {
+      "path": "packages/game-contract/src/index.ts",
+      "deleted": false,
+      "sha256": "d2d9f355286d7f7e5eada96525dcdd05e6e58f0b5f9c44f350fcb7cd7fdc83b2"
+    },
+    {
+      "path": "packages/game-contract/src/night-ability-data.ts",
+      "deleted": false,
+      "sha256": "6efdef5705b77303a7806384568f94a6e3ad6a7300e7583aa47d3df45b1e6190"
+    },
+    {
+      "path": "packages/game-contract/tests/unit/night-ability-data.types.ts",
+      "deleted": false,
+      "sha256": "8e9437f1d057a097b737eca32e553a9d6485271b4e643e4989095ea8fc00bd19"
+    }
+  ],
+  "declarations": {
+    "count": 21,
+    "bidirectionalAssignments": 42,
+    "policy": "Entire declaration syntax tree includes member order, readonly/optional modifiers, union literals, nullable/undefined alternatives and indexed access; only declared same-symbol qualification/import normalization is allowed, no hidden field ignore."
+  },
+  "runtimePrograms": {
+    "retainedExisting": 51,
+    "deletedTypeLeaf": "backend/src/game/mechanisms/roles/seer/state-contracts.ts",
+    "newTypeLeaf": "packages/game-contract/src/night-ability-data.ts",
+    "policy": "Complete ESNext+CJS emitted program and runtime imports compared. Declaration/type-only import changes disappear; only existing optional final ObjectLiteral/NamedImports separators normalize. Deleted Seer leaf must have no runtime export or non-directive executable statement; new neutral type-only leaf is proven inert separately."
+  },
+  "controls": {
+    "authorByteUnchanged": 23,
+    "independentByteUnchanged": 23,
+    "schemaVersion": 2,
+    "playerProjectionDistinct": true
+  },
+  "receipts": [
+    {
+      "kind": "complete-backend-source-tests-types",
+      "session": 14063,
+      "exit": 0,
+      "scope": "Complete strict inherited project before unrelated four Root test migrations; none of those are in this54 scope."
+    },
+    {
+      "kind": "existing-package-browser-source-types",
+      "exit": 0
+    },
+    {
+      "kind": "existing-package-tests-types",
+      "session": 20978,
+      "exit": 0
+    },
+    {
+      "kind": "bidirectional-types",
+      "assignments": 42,
+      "exit": 0
+    },
+    {
+      "kind": "complete-runtime-program-proof",
+      "session": 1557,
+      "exit": 0
+    },
+    {
+      "kind": "scoped-head-dependencies",
+      "session": 33430,
+      "exit": 0,
+      "heads": 0,
+      "newDependencyFailures": 0,
+      "historicalDependencies": 5
+    }
+  ],
+  "reviews": {
+    "author": "refactor_characterization",
+    "root": "Actual public DTO file, index exports, removed facade paths and type-only checks read;54 current SHA/deletion lock matches.",
+    "architecture": "Actual52Git origins,21 declaration ASTs,54SHA, neutral type dependency and consumer exits independently green.",
+    "codecDeclarations": "Final actual54SHA lock; independent21declarations,45canonical typed consumer routes,51runtime programs and23codec/verifier/player/sealed controls green. Existing21test runtime inputs and assertions unchanged."
+  },
+  "initialRedsRetained": [
+    "Declaration comparator initially included newly public export SyntaxList; normalize only ownership export modifier after checking members unchanged",
+    "Guard/Witch responsibility heads corrected solely to explicitly describe neutral data structure consumption"
+  ],
+  "notRun": [
+    "Runtime test suites",
+    "Complete games",
+    "Models or network",
+    "Discovery",
+    "Fixture regeneration",
+    "Dependency installation"
+  ],
+  "remaining": [
+    "All remaining role state declarations and schema/codec ownership",
+    "Custom profile complete serialization contributions",
+    "Core opaque private-state boundary",
+    "Ability lifecycle and all observation ownership",
+    "Old nondata exports and final zero-debt same-input acceptance"
+  ]
+}

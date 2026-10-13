@@ -9,10 +9,11 @@
  * commands alone restore mutable access locally, preserving each original getter
  * and partial-write prefix; the view itself never grants action authorization.
  */
+import type { SeerState, SeerReadState } from "@ai-werewolf-arena/game-contract";
+
 import type { EntityId, InspectionResult } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { findNightAbility, installNativeAbility, type NightAbilityReadView } from "../abilities";
-import type { SeerState, SeerReadState } from "./state-contracts";
 
 /** Installation retains the ability owner's input copy and returned owned reference. */
 export function setSeerState(roleComp: RoleComponent, state: SeerState): SeerReadState {

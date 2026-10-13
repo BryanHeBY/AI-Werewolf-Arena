@@ -4,9 +4,11 @@
  * owned state changes. It never reauthorizes a changed slot or policy by restoring an unrelated
  * component.
  */
+import type { EclipseSuppression } from "@ai-werewolf-arena/game-contract";
+
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
-import type { RoleComponent } from "../../../../core/domain/components/role";
+
 import {
   aliveLifeDescriptor,
   type AliveComponent,
@@ -15,7 +17,7 @@ import {
 import { captureNightLife } from "../../../../core/domain/night_effects";
 import type { World } from "../../../../core/domain/world";
 import type { NightAbilityReadView } from "../abilities";
-import { RADIANT_ECLIPSE_POLICY, type EclipseSuppression } from "./state";
+import { RADIANT_ECLIPSE_POLICY } from "./state";
 
 export type SuppressibleAbility = NightAbilityReadView;
 const invalid = Symbol("invalid_eclipse_binding");

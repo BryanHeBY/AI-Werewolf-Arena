@@ -1,22 +1,15 @@
 /**
- * Owns Radiant/Eclipse state data structures, strict readers and pure selections.
+ * Owns Radiant/Eclipse strict readers, pure selections and its separate Eclipse history data structure.
  * Inputs are unknown data or read-only shelter state, day and legal target IDs;
  * outputs are checked detached data and newly selected shelter/eclipse state.
  * This leaf never changes a live ability slot, consumes stock or commits a lease;
  * ability installation and authority publication remain with their actual owners.
  */
+import type { ShelterState } from "@ai-werewolf-arena/game-contract";
+
 import { types } from "node:util";
 
 export const RADIANT_ECLIPSE_POLICY = "awa_radiant_eclipse_v1" as const;
-export interface EclipseSuppression {
-  policy: typeof RADIANT_ECLIPSE_POLICY;
-  day: number;
-}
-export interface ShelterState {
-  policy: typeof RADIANT_ECLIPSE_POLICY;
-  lastTarget: number | null;
-  lastDay: number | null;
-}
 const goodRoles = ["villager", "seer", "witch", "dreamer", "radiant_count"] as const;
 export type EclipseSwallowedRole = (typeof goodRoles)[number];
 export interface EclipseState {

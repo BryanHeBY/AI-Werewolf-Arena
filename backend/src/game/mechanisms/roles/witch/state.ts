@@ -1,30 +1,17 @@
 /**
- * Owns Witch state data structure and access to its existing ability instance slot.
+ * Owns Witch native slot access and ordinary bottle/flag writes.
  * Inputs are the role component and native state; outputs retain the ability owner's installation copy and selected read-only stored reference.
+ * Its neutral data structure contains bottle counts, night flags and optional policies.
  * This feature owns ordinary reset, terminal-pass and bottle payload writes.
  * Callers retain lease, marks, claims, use counts and publication order; independent
  * verifier ledgers and Demon sealed stock remain their separate owners. No state
  * mirror, extra eligibility check, refund or checkpoint shape change is introduced.
  */
+import type { WitchState, WitchReadState } from "@ai-werewolf-arena/game-contract";
+
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { WitchSelfHealRule } from "@ai-werewolf-arena/game-contract";
 import { findNightAbility, installNativeAbility } from "../abilities";
-
-export interface WitchState {
-  knifeVisibility?: import("../../../../core/domain/board").WitchKnifeVisibilityPolicy;
-  potionPolicy?: import("../../../../core/domain/board").WitchPotionPolicy;
-  /** Terminal pass or completed second turn, never exposed through the player DTO. */
-  potionTurnClosedDay?: number;
-  heal: number;
-  poison: number;
-  selfHealRule: WitchSelfHealRule;
-  canSelfHeal: boolean;
-  healUsedThisNight: boolean;
-  poisonUsedThisNight: boolean;
-}
-
-/** All current payload fields are scalar; the stored reference stays live. */
-export type WitchReadState = Readonly<WitchState>;
 
 export function setWitchState(roleComp: RoleComponent, state: WitchState): WitchReadState {
   return installNativeAbility(roleComp, "potion", state);

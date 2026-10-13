@@ -7,6 +7,8 @@
  * Only the initialization callback receives explicit container write rights;
  * custom profiles retain arbitrary extension keys on the original role object.
  */
+import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
+
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
 import type { VictoryAffiliation } from "@ai-werewolf-arena/game-catalog";
@@ -20,7 +22,6 @@ import type { NightStageHandler } from "../stages/night/contracts";
 import type { ToolRuleMap } from "../validation/contracts";
 import type { DeathHook, VotedOutHook } from "../hooks/hook_registry";
 import type { z } from "zod";
-import type { NightAbilityKind } from "./abilities";
 import type { World } from "../../../core/domain/world";
 
 /** 角色初始化上下文。 */

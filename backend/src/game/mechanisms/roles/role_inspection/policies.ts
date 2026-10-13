@@ -4,6 +4,8 @@
  * outputs are repeat/required decisions, parsed configuration and translated labels.
  * These queries never write the live inspection payload or authorize an action.
  */
+import type { RoleInspectionReadState } from "@ai-werewolf-arena/game-contract";
+
 import { z } from "zod";
 import {
   INSPECTION_POLICIES,
@@ -11,7 +13,6 @@ import {
   type InspectionPolicy,
 } from "../../../../core/domain/board";
 import { roleInspectionPolicy } from "../abilities";
-import type { RoleInspectionReadState } from "../private_state";
 import type { RoleProfile } from "../contracts";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 

@@ -5,6 +5,8 @@
  * Compile-only valid-shape assignments must fail through query/native outputs.
  * No game, transport, model or production-generated expected result runs here.
  */
+import type { NightAbilityStates } from "@ai-werewolf-arena/game-contract";
+
 import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";
 import { Camp, Role, WitchSelfHealRule } from "@ai-werewolf-arena/game-contract";
@@ -17,7 +19,6 @@ import {
   recordNightAbilityUse,
   setNightAbilityStartDay,
   type NightAbilityReadView,
-  type NightAbilityStates,
 } from "../../../src/game/mechanisms/roles/abilities";
 import {
   createNightAbilityActorQuery,

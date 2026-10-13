@@ -8,9 +8,10 @@
  * The public state accessor exposes only the same deeply readonly live slot;
  * installation and inspection writes remain in the feature state owner.
  */
-import type { SeerReadState } from "./state-contracts";
+
+import type { SeerReadState } from "@ai-werewolf-arena/game-contract";
+
 export { getSeerState } from "./state";
-export type { SeerReadState } from "./state-contracts";
 
 export function seerTargetAllowed(
   state: SeerReadState | undefined,

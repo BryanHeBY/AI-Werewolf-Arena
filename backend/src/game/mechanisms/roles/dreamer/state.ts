@@ -2,25 +2,15 @@
  * Owns Dreamer native state access and its ordered target/day/history writes.
  * Inputs are the original role/ability or captured state and accepted selection;
  * outputs preserve installation copying, selected slot identity and partial writes.
- * The read-only state data structure retains optional protection policy, nullable last target/day and history.
+ * Neutral payload/read structures come from the contract package; this leaf retains the live slot and ordered selection writes.
  * Consecutive-target calculation, leases, use counts, dream effects and publication
  * remain at their original caller positions; this owner creates no mirror or refund.
  */
+import type { DreamerState, DreamerReadState } from "@ai-werewolf-arena/game-contract";
+
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { EntityId } from "@ai-werewolf-arena/game-contract";
 import { findNightAbility, installNativeAbility } from "../abilities";
-
-export interface DreamerState {
-  protectionPolicy?: import("../../../../core/domain/board").DreamProtectionPolicy;
-  lastTarget: EntityId | null;
-  lastDay: number | null;
-  history: Array<{ day: number; targetId: EntityId }>;
-}
-
-/** Same live payload with immutable history collection and rows. */
-export type DreamerReadState = Readonly<Omit<DreamerState, "history">> & {
-  readonly history: readonly Readonly<DreamerState["history"][number]>[];
-};
 
 export function setDreamerState(roleComp: RoleComponent, state: DreamerState): DreamerReadState {
   return installNativeAbility(roleComp, "dream", state);

@@ -385,8 +385,8 @@ for (const kind of ["seer_check", "guard"] as const)
           (
             ability as {
               state:
-                | import("../../../src/game/mechanisms/roles/seer/state-contracts").SeerReadState
-                | import("../../../src/game/mechanisms/roles/guard/state").GuardReadState;
+                | import("@ai-werewolf-arena/game-contract").SeerReadState
+                | import("@ai-werewolf-arena/game-contract").GuardReadState;
             }
           ).state = structuredClone(ability.state);
         if (revoke === "activation")

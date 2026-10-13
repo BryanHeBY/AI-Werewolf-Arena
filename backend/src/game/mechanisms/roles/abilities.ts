@@ -1,5 +1,5 @@
 /**
- * Owns ability instances, their copied state slots and lifecycle metadata.
+ * Owns live ability instances, their copied state slots and lifecycle metadata. Pure payload data types come from the neutral contract owner.
  * Inputs are role-owned instances, installation data and day eligibility queries;
  * outputs are live read-only stored references, status and detached player projections. Seer
  * payload writes belong to its feature owner; this store never infers player
@@ -7,17 +7,24 @@
  * Installation DTOs retain their existing write contracts; query and installation outputs expose finite deeply read-only payloads.
  * Native installation restores only the abilities slot at its original expression; no general private-container setter is exposed.
  */
-import { readPairSeerState, type PairSeerState } from "./fragrant_pair_seer/state";
+
+import type {
+  PairSeerState,
+  RoleInspectionState,
+  RoleInspectionReadState,
+  NightAbilityStates,
+  RoleInspectionPolicy,
+  NightAbilityKind,
+  AbilitySource,
+  NightAbilityReadStates,
+  NightAbilityReadState,
+} from "@ai-werewolf-arena/game-contract";
+import { readPairSeerState } from "./fragrant_pair_seer/state";
 import { readShelterState } from "./radiant_eclipse/state";
 import { INSPECTION_POLICIES } from "../../../core/domain/board";
 import { nativePotionSecondTurn } from "./witch/policies";
-import { Role, type EntityId, type EventPayloadMap } from "../../../core/domain/model";
+import { Role, type EventPayloadMap } from "../../../core/domain/model";
 import type { RoleComponent } from "../../../core/domain/components/role";
-import type { GuardState, GuardReadState } from "./guard/state";
-import type { WitchState, WitchReadState } from "./witch/state";
-import type { DreamerState, DreamerReadState } from "./dreamer/state";
-import type { RoleInspectionState, RoleInspectionReadState } from "./role_inspection/state";
-import type { SeerState, SeerReadState } from "./seer/state-contracts";
 import { COMPONENT } from "../../../core/domain/components/names";
 import {
   projectDreamerState,
@@ -32,18 +39,7 @@ import {
   type PlayerWitchState,
 } from "./player_state";
 export { projectRoleInspectionState, projectSeerState, projectWitchState } from "./player_state";
-import type { World } from "../../../core/domain/world";
 
-export interface NightAbilityStates {
-  pair_check: PairSeerState;
-  shelter: import("./radiant_eclipse/state").ShelterState;
-  seer_check: SeerState;
-  role_check: RoleInspectionState;
-  guard: GuardState;
-  potion: WitchState;
-  dream: DreamerState;
-}
-export type RoleInspectionPolicy = "gargoyle" | "psychic" | "mirror" | "pure_white" | "wolf_witch";
 export const ROLE_INSPECTION_POLICY_ROLES: Readonly<Record<RoleInspectionPolicy, Role>> = {
   gargoyle: Role.Gargoyle,
   psychic: Role.Psychic,
@@ -65,8 +61,6 @@ export function roleInspectionPolicy(state: RoleInspectionReadState): RoleInspec
     throw new Error("role_inspection_policy_invalid");
   return policy;
 }
-
-export type NightAbilityKind = keyof NightAbilityStates;
 function projectShelterState(value: unknown) {
   const state = readShelterState(value);
   if (!state) throw new Error("radiant_shelter_state_invalid");
@@ -77,11 +71,6 @@ function projectPairState(value: unknown): PairSeerState {
   if (!state) throw Error("fragrant_pair_state_invalid");
   return state;
 }
-export type AbilitySource =
-  | { kind: "native"; role: Role }
-  | { kind: "gift"; actorId: EntityId }
-  | { kind: "copy"; actorId: EntityId; abilityId: string }
-  | { kind: "transfer"; actorId: EntityId; abilityId: string };
 /** Reveal only the fields authorized by this source's declared kind. */
 export function projectAbilitySource(
   origin: EventPayloadMap["ability_changed"]["source"],
@@ -109,7 +98,7 @@ type NightAbilityUnion = {
     lastUsedDay: number | null;
     disabled: boolean;
     /** A finite night lease owns this blocker independently of persistent disablement. */
-    nightSuppression?: import("./radiant_eclipse/state").EclipseSuppression;
+    nightSuppression?: import("@ai-werewolf-arena/game-contract").EclipseSuppression;
     /** Miracle gifts act in their own late slot; ordinary instances omit this policy. */
     activation?: "lucky" | "black_market";
     /** An actual death permanently expires a lucky gift, including after transfer/revival. */
@@ -120,31 +109,15 @@ export type NightAbility<K extends NightAbilityKind = NightAbilityKind> = Extrac
   NightAbilityUnion,
   { kind: K }
 >;
-
-/** Finite read views for the seven existing state shapes, never copied runtime state. */
-interface NightAbilityReadStates {
-  pair_check: Readonly<Omit<PairSeerState, "history">> & {
-    readonly history: readonly (Readonly<Omit<PairSeerState["history"][number], "targetIds">> & {
-      readonly targetIds: Readonly<PairSeerState["history"][number]["targetIds"]>;
-    })[];
-  };
-  shelter: Readonly<NightAbilityStates["shelter"]>;
-  seer_check: SeerReadState;
-  role_check: RoleInspectionReadState;
-  guard: GuardReadState;
-  potion: WitchReadState;
-  dream: DreamerReadState;
-}
-/** Finite stored payload read contract; installation data remains NightAbilityStates. */
-export type NightAbilityReadState<K extends NightAbilityKind = NightAbilityKind> =
-  NightAbilityReadStates[K];
 type NightAbilityReadUnion = {
   [K in NightAbilityKind]: Readonly<
     Omit<NightAbility<K>, "state" | "source" | "nightSuppression">
   > & {
     readonly state: NightAbilityReadStates[K];
     readonly source: Readonly<AbilitySource>;
-    readonly nightSuppression?: Readonly<import("./radiant_eclipse/state").EclipseSuppression>;
+    readonly nightSuppression?: Readonly<
+      import("@ai-werewolf-arena/game-contract").EclipseSuppression
+    >;
   };
 }[NightAbilityKind];
 export type NightAbilityReadView<K extends NightAbilityKind = NightAbilityKind> = Extract<
@@ -156,7 +129,7 @@ export type AbilityStatus =
 
 export interface PlayerNightAbilityStates {
   pair_check: PairSeerState;
-  shelter: import("./radiant_eclipse/state").ShelterState;
+  shelter: import("@ai-werewolf-arena/game-contract").ShelterState;
   seer_check: PlayerSeerState;
   role_check: PlayerRoleInspectionState;
   guard: PlayerGuardState;

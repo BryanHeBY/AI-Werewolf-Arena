@@ -6,6 +6,8 @@
  * checks; lease commitment and later request settlement retain their old order.
  * Closed or aborted nights never redraw knowledge or refund a paid relation.
  */
+import type { PairSeerState, Pair } from "@ai-werewolf-arena/game-contract";
+
 import { types } from "node:util";
 import type { FragrantPlayerState } from "@ai-werewolf-arena/game-text";
 import type { World } from "../../../../core/domain/world";
@@ -34,8 +36,6 @@ import {
   triggerFragrantPair,
   normalizePair,
   type FragrantState,
-  type PairSeerState,
-  type Pair,
 } from "./state";
 import {
   freshFragrantKnowledge,

@@ -616,9 +616,10 @@ test("native installation and replacement detach repeated templates and return t
     template = freshSeer();
   const first = setSeerState(role(world, 3), template),
     second = setSeerState(role(world, 4), template);
-  (
-    first as import("../../../src/game/mechanisms/roles/seer/state-contracts").SeerState
-  ).history.push({ targetId: 1, isWerewolf: true });
+  (first as import("@ai-werewolf-arena/game-contract").SeerState).history.push({
+    targetId: 1,
+    isWerewolf: true,
+  });
   expect(second.history).toEqual([]);
   expect(template.history).toEqual([]);
   expect(getSeerState(role(world, 3))).toBe(first);

@@ -12,6 +12,8 @@
  * Executed entries attach sources observed during collection; unknown overrides
  * remain explicit. Sources never reread foreign packs, handler IDs or priorities.
  */
+import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
+
 /**
  * Collects, deduplicates and orders registered night stages for present and declared abilities.
  * Inputs are catalog profiles, current roles and possible ability roles; output is the assembled
@@ -31,8 +33,7 @@ import { RoleCatalog, getDefaultRoleCatalog } from "../game/mechanisms/roles/cat
 import { NightStageHandler } from "../game/mechanisms/stages/night/contracts";
 import type { World } from "../core/domain/world";
 import { COMPONENT } from "../core/domain/components/names";
-import type { RoleComponent } from "../core/domain/components/role";
-import { allNightAbilities, type NightAbilityKind } from "../game/mechanisms/roles/abilities";
+import { allNightAbilities } from "../game/mechanisms/roles/abilities";
 
 import {
   ROLE_INSPECTION_STAGE,

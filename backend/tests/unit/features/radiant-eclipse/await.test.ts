@@ -113,9 +113,7 @@ for (const mode of ["heal", "poison", "uses", "lastUsedDay"] as const)
       current = captureRadiantTurn(f.world, 1, f.borrowed, 2);
     expect(current()).toBe(true);
     if (mode === "heal" || mode === "poison")
-      (f.native.state as import("../../../../src/game/mechanisms/roles/witch/state").WitchState)[
-        mode
-      ] = 0;
+      (f.native.state as import("@ai-werewolf-arena/game-contract").WitchState)[mode] = 0;
     else if (mode === "uses") (f.native as { uses: number }).uses++;
     else (f.native as { lastUsedDay: number | null }).lastUsedDay = 2;
     expect(current()).toBe(false);
