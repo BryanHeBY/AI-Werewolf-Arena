@@ -1,0 +1,630 @@
+{
+  "source": {
+    "phase": "C34 preparation; live feed byte unchanged; new prepared API peer fixes incorporated",
+    "files": [
+      {
+        "path": "backend/src/game/observation/agent-event-facts.ts",
+        "sha256": "be326c37b9cac0477049ecb91b5a966c92199eae110e39b7aea27f80308b5c41"
+      },
+      {
+        "path": "backend/src/game/observation/agent-event-projection.ts",
+        "sha256": "da9fad5f85c92b945ec8bdd547760d74ca7e165d69bb570768be7813b20ed2e9"
+      },
+      {
+        "path": "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts",
+        "sha256": "08fd0ad7af82ce0f78b277399ca143b86a4caa501cea813fa7cb066f0d6afe3b"
+      },
+      {
+        "path": "backend/tests/unit/engine/prepared-agent-event.test.ts",
+        "sha256": "287da0488a536cca0d8fca10a5eb397a876706ae1f11e0f5e7afdecb9721b068"
+      }
+    ]
+  },
+  "programProof": {
+    "baseline": "e1aec71c528530a5e165c85a1d137ab908e0a3db",
+    "rows": [
+      {
+        "path": "backend/src/game/observation/agent-event-projection.ts",
+        "beforeSha": "bc81b20773953c1a6e07de801948346f0d664565fae92a3bad9aad0c1ad2f0d7",
+        "sha256": "da9fad5f85c92b945ec8bdd547760d74ca7e165d69bb570768be7813b20ed2e9",
+        "originalReadCallsReplaced": 47,
+        "completeEmits": [
+          {
+            "mode": "ESNext",
+            "rawEqual": false,
+            "completeTokenEqual": true,
+            "beforeSha": "5fd15f2a202d215b4584f15df807f7b42dd1945714a553ce51b73b7cc540ff19",
+            "inverseSha": "716c74b3e3a4d001a2d7c8cd1011c9798aa87a5f451537f4a1f92667e09a7bfe"
+          },
+          {
+            "mode": "CommonJS",
+            "rawEqual": false,
+            "completeTokenEqual": true,
+            "beforeSha": "8ad5a42061e2922ab599de8861f4d9992f3260acb2b4144fccb784442fe80c57",
+            "inverseSha": "4c0960f10b4eaae5ac2cb2cfd67bd84522eca73d44970f6ccc34afc3e8e322eb"
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/engine/agent_visible_event_feed.ts",
+        "beforeSha": "d2d327a98acbb650785b8626d234238a9cde4de02d002093016db3c3bfd16cd2",
+        "sha256": "d2d327a98acbb650785b8626d234238a9cde4de02d002093016db3c3bfd16cd2",
+        "originalReadCallsReplaced": 0,
+        "completeEmits": [
+          {
+            "mode": "ESNext",
+            "rawEqual": true,
+            "completeTokenEqual": true,
+            "beforeSha": "14471e27971070b82e4aab821f3778a11755fe83da04b976fe69854ff2070518",
+            "inverseSha": "14471e27971070b82e4aab821f3778a11755fe83da04b976fe69854ff2070518"
+          },
+          {
+            "mode": "CommonJS",
+            "rawEqual": true,
+            "completeTokenEqual": true,
+            "beforeSha": "53c3d34e23ce2bfbea3719a934d2996c445b395f6057866e710ae90577c7e748",
+            "inverseSha": "53c3d34e23ce2bfbea3719a934d2996c445b395f6057866e710ae90577c7e748"
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts",
+        "beforeSha": "5f0557108c5ccdcaf1522397fa3ff8912016a5fa2ffe37861c54dd18c0653d65",
+        "sha256": "08fd0ad7af82ce0f78b277399ca143b86a4caa501cea813fa7cb066f0d6afe3b",
+        "originalReadCallsReplaced": 0,
+        "completeEmits": [
+          {
+            "mode": "ESNext",
+            "rawEqual": true,
+            "completeTokenEqual": true,
+            "beforeSha": "5b2758cd82d154e816b7090d544726aa4ab46680660091b7d9da374fa95d87c1",
+            "inverseSha": "5b2758cd82d154e816b7090d544726aa4ab46680660091b7d9da374fa95d87c1"
+          },
+          {
+            "mode": "CommonJS",
+            "rawEqual": true,
+            "completeTokenEqual": true,
+            "beforeSha": "a9ddf9064bfeee4141ea3062bbf30068296f75e3a0fc188f13494656376424b1",
+            "inverseSha": "a9ddf9064bfeee4141ea3062bbf30068296f75e3a0fc188f13494656376424b1"
+          }
+        ]
+      }
+    ],
+    "failures": [],
+    "legacyCharacterizationByteSame": true,
+    "proofScope": "Whole original projection, visibility registry and Node feed programs. Inverse only restores named shared reader calls, exact old function signatures/exports and imports, removes the explicit new prepared entry points and future canonical-field branch. All original statements/literals/array elements including legacy privacy and callback order retained."
+  },
+  "independentSourceReview": {
+    "status": "approved_source_pending_shared_finite_type",
+    "baseline": "e1aec71c528530a5e165c85a1d137ab908e0a3db",
+    "files": [
+      {
+        "path": "backend/src/game/observation/agent-event-facts.ts",
+        "sha256": "be326c37b9cac0477049ecb91b5a966c92199eae110e39b7aea27f80308b5c41",
+        "matchesAuthorFreeze": true
+      },
+      {
+        "path": "backend/src/game/observation/agent-event-projection.ts",
+        "sha256": "da9fad5f85c92b945ec8bdd547760d74ca7e165d69bb570768be7813b20ed2e9",
+        "matchesAuthorFreeze": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts",
+        "sha256": "08fd0ad7af82ce0f78b277399ca143b86a4caa501cea813fa7cb066f0d6afe3b",
+        "matchesAuthorFreeze": true
+      },
+      {
+        "path": "backend/tests/unit/engine/prepared-agent-event.test.ts",
+        "sha256": "906b76f0fd38e1008dec23c3eee88ac98d88e08d26244904389368267b792da2",
+        "matchesAuthorFreeze": true
+      }
+    ],
+    "checks": {
+      "wholePrograms": true,
+      "fourSourceSha": true,
+      "dispatch98": true,
+      "canonicalSourceCall": true,
+      "canonicalRuleKey": true,
+      "originalCallback": true,
+      "independentMetadata": true,
+      "noSchemaSameRef": true
+    },
+    "totalOriginalNodes": 4139,
+    "sourceReview": {
+      "independentFinding": "Strictproject formerly dispatched prepared.sourceEvent after trusted mutation; lateractors could see changedtype/payloadgetter instead of fixedfact.",
+      "resolution": "Strictproject dispatches canonical projectionEvent; preparedregistry customkey canonicaltype while same sourceevent/plaincallback retained. New metadata is structuredClone excluding sourcepayload, so audience detached; original31reader payloaddeepcopy reused. Non-schema remains same reference andlatebehavior.",
+      "boundedEvidence": "Author13/0/199 old7+new6; new3/0/21 andnew1/0/62 receipts=17differentcase/282 across3runs, not one17execution. Reviewedliteral inputs/asserts/callbacks; no replay of oldgreen cases.",
+      "typeLimit": "Finaldelta finite acceptance delegatedRoot coordinatedarchiveowner. Earlier95780green precedesfinalpreparedfix;53147exit2 concurrencyarchiveonly perauthor. No claim finalcompile green from emptylog.",
+      "legacy": "Old2typed/trusted publicAPIs exactinversewholebody4139typednodes,47readcalls,31actualpackagebindings; sixwholeES/CJS parserleaf equal,4rawsame. Nodefeedactualbytes untouched and legacycharacterization JSONsame.",
+      "dispatch": "Static actualconstarray endpoints andswitchselect31reader/98eventtypes with no duplicate/missing;31fixtures cover31reader not98everyeventtype/permissioncombination. UnderlyingRecord<string,unknown>/any returns of someoriginalreaders preserved, not falselyclaimed strongerpayloadtypes.",
+      "receivers": "Oldcustomlookup→plaincallback undefinedthis, sourceevent andWorld originalrefs. Newcustomrulekey iscanonical onlypreparedAPI; demonidentity remains deferredoriginalbranch. Non-schema abilitysource stilllookupcallee→source/disclosed aftervisibility."
+    },
+    "newPreparedApiChanges": [
+      "canonicaltype/key fixed acrossactorqueries",
+      "historicalaudience detachedonce",
+      "schemafactnesteddata retained originalreader-ownedclone;no secondpayloadclone"
+    ],
+    "notExecuted": [
+      "runtime tests",
+      "types",
+      "fullgate",
+      "models"
+    ],
+    "findings": [
+      {
+        "severity": "newcanonicalAPIcorrectness",
+        "status": "closed",
+        "originalFinding": "Strictproject formerly dispatched prepared.sourceEvent after trusted mutation; lateractors could see changedtype/payloadgetter instead of fixedfact.",
+        "actualResolution": "Strictproject dispatches canonical projectionEvent; preparedregistry customkey canonicaltype while same sourceevent/plaincallback retained. New metadata is structuredClone excluding sourcepayload, so audience detached; original31reader payloaddeepcopy reused. Non-schema remains same reference andlatebehavior."
+      }
+    ],
+    "provenance": "Independent source/proof/read-only review. Legacy program inverse and canonicalnewAPI behavior are distinct; newAPI constraints not labeled oldmechanicalbyteequivalence."
+  },
+  "dispatchProof": {
+    "rows": [
+      {
+        "mode": "family",
+        "owner": "packages/game-contract/src/facts/animal-dream.ts",
+        "constant": "ANIMAL_DREAM_EVENT_TYPES",
+        "reader": "readAnimalDreamFact",
+        "types": [
+          "animal_night_opened",
+          "animal_fox_chosen",
+          "animal_fox_effect",
+          "animal_knife_notified",
+          "animal_beauty_notified",
+          "animal_cat_revealed",
+          "animal_puffer_revealed",
+          "animal_puffer_decided",
+          "animal_puffer_targets",
+          "animal_wave_prepared",
+          "animal_wave_committed",
+          "animal_cat_expiry_prepared",
+          "animal_unit_completed"
+        ]
+      },
+      {
+        "mode": "family",
+        "owner": "packages/game-contract/src/facts/fragrant-pair-seer.ts",
+        "constant": "FRAGRANT_PAIR_EVENT_TYPES",
+        "reader": "readFragrantPairFact",
+        "types": [
+          "fragrant_wave_committed",
+          "fragrant_night_opened",
+          "fragrant_pair_chosen",
+          "fragrant_pair_inspected",
+          "fragrant_night_notified",
+          "fragrant_binding_expired",
+          "fragrant_link_triggered"
+        ]
+      },
+      {
+        "mode": "family",
+        "owner": "packages/game-contract/src/facts/noble-secret-body.ts",
+        "constant": "NOBLE_SECRET_BODY_EVENT_TYPES",
+        "reader": "readNobleSecretBodyFact",
+        "types": [
+          "noble_body_knife_committed",
+          "noble_body_native_damage_committed",
+          "noble_body_night_opened",
+          "noble_body_death_committed",
+          "noble_body_sources_committed",
+          "noble_servant_chosen",
+          "secret_body_chosen",
+          "noble_contract_closed",
+          "secret_body_blocked",
+          "noble_night_notified",
+          "secret_body_night_notified",
+          "secret_body_revealed",
+          "secret_body_reveal_speech"
+        ]
+      },
+      {
+        "mode": "family",
+        "owner": "packages/game-contract/src/facts/radiant-eclipse.ts",
+        "constant": "RADIANT_ECLIPSE_EVENT_TYPES",
+        "reader": "readRadiantEclipseFact",
+        "types": [
+          "eclipse_swallowed",
+          "eclipse_native_suppressed",
+          "eclipse_native_restored",
+          "eclipse_lease_closed",
+          "radiant_shelter_chosen"
+        ]
+      },
+      {
+        "mode": "family",
+        "owner": "packages/game-contract/src/facts/mist-raven.ts",
+        "constant": "MIST_RAVEN_EVENT_TYPES",
+        "reader": "readMistRavenFact",
+        "types": [
+          "alchemist_mist_chosen",
+          "alchemist_mist_skipped",
+          "alchemist_snake_chosen",
+          "raven_unsealed",
+          "raven_knife_chosen",
+          "raven_knife_skipped",
+          "mist_knife_drawn"
+        ]
+      },
+      {
+        "mode": "family",
+        "owner": "packages/game-contract/src/facts/cupid.ts",
+        "constant": "CUPID_EVENT_TYPES",
+        "reader": "readCupidEventFact",
+        "types": [
+          "cupid_lovers_chosen",
+          "lover_recognized",
+          "cupid_relation_resolved",
+          "lovers_death"
+        ]
+      },
+      {
+        "mode": "family",
+        "owner": "packages/game-contract/src/facts/debate.ts",
+        "constant": "DEBATE_EVENT_TYPES",
+        "reader": "readDebateEventFact",
+        "types": [
+          "debater_revealed",
+          "debate_started",
+          "debate_speech",
+          "debate_resolved",
+          "debate_canceled",
+          "debate_ballots_recorded"
+        ]
+      },
+      {
+        "mode": "family",
+        "owner": "packages/game-contract/src/facts/wall-notes.ts",
+        "constant": "WALL_EVENT_TYPES",
+        "reader": "readWallEventFact",
+        "types": [
+          "wall_notes_started",
+          "wall_notes_published",
+          "wall_notes_canceled",
+          "wall_note_changed",
+          "wall_note_order_recorded"
+        ]
+      },
+      {
+        "mode": "family",
+        "owner": "packages/game-contract/src/facts/thief.ts",
+        "constant": "THIEF_EVENT_TYPES",
+        "reader": "readThiefEventFact",
+        "types": [
+          "thief_initial_deal",
+          "thief_identity_chosen"
+        ]
+      },
+      {
+        "mode": "family",
+        "owner": "packages/game-contract/src/facts/wild-child.ts",
+        "constant": "WILD_CHILD_EVENT_TYPES",
+        "reader": "readWildChildEventFact",
+        "types": [
+          "wild_child_model_chosen",
+          "wild_child_model_eliminated",
+          "wild_child_transformed",
+          "wild_child_pack_activated"
+        ]
+      },
+      {
+        "mode": "family",
+        "owner": "packages/game-contract/src/facts/shapeshifter.ts",
+        "constant": "SHAPESHIFTER_EVENT_TYPES",
+        "reader": "readShapeshifterEventFact",
+        "types": [
+          "shapeshifter_initial_deal",
+          "shapeshifter_identity_chosen"
+        ]
+      },
+      {
+        "mode": "family",
+        "owner": "packages/game-contract/src/facts/ghost-bride.ts",
+        "constant": "GHOST_BRIDE_EVENT_TYPES",
+        "reader": "readGhostBrideEventFact",
+        "types": [
+          "ghost_bride_pair_chosen",
+          "ghost_bride_witness_vote",
+          "ghost_bride_group_chosen",
+          "ghost_bride_partner_chat",
+          "ghost_bride_knife_captured",
+          "ghost_bride_knife_vote",
+          "ghost_bride_knife_resolved",
+          "ghost_bride_partner_death"
+        ]
+      },
+      {
+        "mode": "family",
+        "owner": "packages/game-contract/src/facts/demon-hunter.ts",
+        "constant": "DEMON_HUNTER_EVENT_TYPES",
+        "reader": "readDemonHunterEventFact",
+        "types": [
+          "demon_hunter_chosen",
+          "demon_hunter_cancelled",
+          "demon_hunter_poison_immune"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readLonelyGirlEventFact",
+        "types": [
+          "lonely_girl_admired_chosen"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readNightmareFearFact",
+        "types": [
+          "nightmare_fear_committed"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readRedMoonNextNightFact",
+        "types": [
+          "red_moon_night_sealed"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readRedMoonNextNightFact",
+        "types": [
+          "red_moon_exile_delayed"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readRedMoonExpiryFact",
+        "types": [
+          "red_moon_delay_expired"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readMagicianExchangeFact",
+        "types": [
+          "magician_exchange_committed"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readDeathShotMissFact",
+        "types": [
+          "death_shot_missed"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readOrderPrinceRevoteFact",
+        "types": [
+          "order_prince_revote_started"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readOrderPrinceChoiceFact",
+        "types": [
+          "order_prince_choice_committed"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readTricksterExchangeFact",
+        "types": [
+          "trickster_exchange_committed"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readTricksterSkipFact",
+        "types": [
+          "trickster_exchange_skipped"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readExileMappingFact",
+        "types": [
+          "exile_target_mapped"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readWolfSorcererExchangeFact",
+        "types": [
+          "wolf_sorcerer_exchange_committed"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readWolfSorcererSkipFact",
+        "types": [
+          "wolf_sorcerer_exchange_skipped"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readModifierChoiceFact",
+        "types": [
+          "modifier_choice_committed"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readModifierSkipFact",
+        "types": [
+          "modifier_choice_skipped"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readModifierBonusFact",
+        "types": [
+          "modifier_bonus_resolved"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readTimeConsortChoiceFact",
+        "types": [
+          "time_consort_lock_committed"
+        ]
+      },
+      {
+        "mode": "exact-type",
+        "reader": "readTimeConsortSkipFact",
+        "types": [
+          "time_consort_lock_skipped"
+        ]
+      }
+    ],
+    "readerTableCount": 31,
+    "selectedReaderCount": 31,
+    "eventTypeCount": 98,
+    "duplicateTypes": [],
+    "missingReaders": [],
+    "extraReaders": [],
+    "newTestRepresentativeCases": 31,
+    "testReaderCoverageMissing": [],
+    "notes": [
+      "Independent static source-only dispatch interpretation, literal arrays read from actual package source through real import-binding endpoints; no parser functions or runtime tests invoked.",
+      "31representative fixtures cover31readers, not every eventtype or allvalidpayload/visibility combinations; eventTypeCount is source dispatch proof only.",
+      "All47legacyreadcalls and31moved packagebindings separately completeproof; switch defaultnull handles no-schema data and defaultvisibilitystilldeniesunknownunlessexplicittrustedcustom."
+    ]
+  },
+  "preparedCorrections": {
+    "status": "fixed",
+    "phase": "new prepared API only; both legacy APIs and production feed unchanged",
+    "findingsClosed": [
+      "Project prepared source became canonical projectionEvent, preventing cross-player original source type/payload reparse",
+      "Prepared registry selects rule at original custom branch using canonical type, callback retains original source argument/plain receiver and lookup timing",
+      "Schema metadata including audience deep copied without recopying already-deep family fact; no-schema original same reference retained"
+    ],
+    "familyReaderReview": {
+      "readers": 31,
+      "sourceModules": 22,
+      "strategy": "All31 use copyEventData through direct invocation or family-local copied-record helper, including nested array/object data. Explicit 31-fixture mutation test overwrites all source payload leaves and mutates every source nested array; every canonical payload and actor audience remains literal expected. No production family readers changed."
+    },
+    "receipts": [
+      {
+        "path": "tests-stage1-final.log",
+        "cases": 13,
+        "assertions": 199,
+        "exit": 0,
+        "stage": "before new prepared peer fixes; includes original unchanged7/26 and new6/173"
+      },
+      {
+        "path": "tests-prepared-delta.log",
+        "cases": 3,
+        "assertions": 21,
+        "exit": 0,
+        "stage": "new cross-player canonical key/type/payload, historical audience, nested callback mutations"
+      },
+      {
+        "path": "tests-all-family-delta.log",
+        "cases": 1,
+        "assertions": 62,
+        "exit": 0,
+        "stage": "all31 detached reader payloads after deep source mutation"
+      }
+    ],
+    "distinctTestSummary": {
+      "cases": 17,
+      "assertions": 282,
+      "note": "Distinct cases across the three actual runs, not claimed as one execution."
+    },
+    "typeReceipt": "Root coordinated archive owner owns next combined finite type; last own53147 exit2 only concurrent archive_identity readonly random.path diagnosis. Earlier95780 finite4root actual0 predates final prepared delta. No new independent type/fullgate run.",
+    "concurrentIntermediateFailure": {
+      "owner": "/root/native_final_architecture_review",
+      "actualReceipt": "/tmp/awa-explicit-archive-identities/backend-tests-first.log",
+      "source": "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts old canView custom branch, transient line30",
+      "failure": "ReferenceError: prepared is not defined; an imprecise patch briefly targeted old canView rather than new canViewPrepared",
+      "cases": "Archive owner first8cases:6green and writer/zero-cycle2red during transient source; their true failed receipt not rewritten or reclassified",
+      "resolution": "Next precise patch restored original old this.rules[event.type], moved canonical key only to new canViewPrepared. Current scope-stage1 binds final corrected bytes; final full legacy inverse verified after correction. No assertion of equality for all intermediate worktree states."
+    },
+    "audienceFixtureTypeFix": {
+      "proof": "audience-type-only-proof.json",
+      "scope": "Only deliberate mutable-source fixture declaration, preserves all original literals/writes/assertions; production GameEvent unchanged",
+      "wholeESAndCJSRawEqual": true,
+      "typeReceipt": "Root coordinated archive finite types only; no own repeated type run"
+    },
+    "commentGate": {
+      "proof": "heads-stage1.json",
+      "actualOwnedPaths": 4,
+      "failures": 0
+    },
+    "fixtureBrandTypeFix": {
+      "proof": "brand-type-only-proof.json",
+      "scope": "Only same deliberate mutable-source memory fixture as unknown as InertAgentEvent with Chinese safety-boundary comment; no production type change",
+      "wholeESAndCJSRawEqual": true,
+      "typeReceipt": "Root coordinated combined C44/C39/C34/builder finite types only; no own repeated type run"
+    }
+  },
+  "testOnlyTypeCorrections": [
+    {
+      "path": "backend/tests/unit/engine/prepared-agent-event.test.ts",
+      "sourceBefore": "906b76f0fd38e1008dec23c3eee88ac98d88e08d26244904389368267b792da2",
+      "sourceAfter": "85dfe6c335873a8ca7942d39289e75c7995a4c8e101b5ece285ed0fc13a83d27",
+      "change": "Only this one deliberate trusted-source audience mutation fixture declaration changed from GameEvent to GameEvent & {audience:number[]}; no production type, input literal, assertion, call, mutation or guard changed.",
+      "emits": [
+        {
+          "mode": "ESNext",
+          "wholeRawEmitEqual": true,
+          "beforeSha": "cddf3e088ff5324131b3f06553c5e4f840aa8206f272a75d3f0703ae1df3405d",
+          "afterSha": "cddf3e088ff5324131b3f06553c5e4f840aa8206f272a75d3f0703ae1df3405d"
+        },
+        {
+          "mode": "CommonJS",
+          "wholeRawEmitEqual": true,
+          "beforeSha": "c72896cb5b7399ccd6164912706930c923afbac300baac55d127200255822b4b",
+          "afterSha": "c72896cb5b7399ccd6164912706930c923afbac300baac55d127200255822b4b"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/engine/prepared-agent-event.test.ts",
+      "sourceBefore": "85dfe6c335873a8ca7942d39289e75c7995a4c8e101b5ece285ed0fc13a83d27",
+      "sourceAfter": "287da0488a536cca0d8fca10a5eb397a876706ae1f11e0f5e7afdecb9721b068",
+      "change": "Only this one hand-written mutable-source fixture assertion gained unknown in as unknown as InertAgentEvent plus precise Chinese explanation; no runtime input/assert/mutation/guard changed and no production safety or action authority conferred.",
+      "emits": [
+        {
+          "mode": "ESNext",
+          "wholeRawEmitEqual": true,
+          "beforeSha": "cddf3e088ff5324131b3f06553c5e4f840aa8206f272a75d3f0703ae1df3405d",
+          "afterSha": "cddf3e088ff5324131b3f06553c5e4f840aa8206f272a75d3f0703ae1df3405d"
+        },
+        {
+          "mode": "CommonJS",
+          "wholeRawEmitEqual": true,
+          "beforeSha": "c72896cb5b7399ccd6164912706930c923afbac300baac55d127200255822b4b",
+          "afterSha": "c72896cb5b7399ccd6164912706930c923afbac300baac55d127200255822b4b"
+        }
+      ]
+    }
+  ],
+  "heads": {
+    "checked": 4,
+    "sourceHash": "8b0d305341a28f29a7e789c2a49d647125afae26fa9d4dc4dedf66177811ec13",
+    "failures": []
+  },
+  "finalFiniteTypes": {
+    "actualSession": 40086,
+    "exitCode": 0,
+    "roots": 105,
+    "ownedRootsCovered": [
+      "backend/src/game/observation/agent-event-facts.ts",
+      "backend/src/game/observation/agent-event-projection.ts",
+      "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts",
+      "backend/tests/unit/engine/prepared-agent-event.test.ts"
+    ],
+    "compilerOptions": "backend实际配置；没有附加frontend noUnused策略",
+    "diagnostics": "",
+    "scope": "C44／C39／C34／Root测试构造器汇合有限输入，不是全量类型／测试门禁"
+  },
+  "rootReview": {
+    "status": "approved",
+    "read": "完整factowner、原布尔与投影差分及prepared最终实现、Registry、Node副本边界、字面样本和跨玩家／深数组增量。",
+    "bounds": "新API固定类型／规则键／受众与事实；原trustedAPI、Nodefeed字节保持。新入口不授予行动权限。"
+  }
+}

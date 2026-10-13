@@ -8,92 +8,29 @@
  */
 import {
   ANIMAL_DREAM_EVENT_TYPES,
-  readAnimalDreamFact,
   animalDreamFactAudience,
 } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
 import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
-  readNobleSecretBodyFact,
   nobleSecretBodyVisibility,
 } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import {
   FRAGRANT_PAIR_EVENT_TYPES,
-  readFragrantPairFact,
   fragrantPairVisibility,
 } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import {
   RADIANT_ECLIPSE_EVENT_TYPES,
-  readRadiantEclipseFact,
   radiantEclipseAudience,
 } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
-import {
-  MIST_RAVEN_EVENT_TYPES,
-  readMistRavenFact,
-} from "@ai-werewolf-arena/game-contract/facts/mist-raven";
-import {
-  readWolfSorcererExchangeFact,
-  readWolfSorcererSkipFact,
-} from "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer";
-import {
-  readTricksterExchangeFact,
-  readTricksterSkipFact,
-  readExileMappingFact,
-} from "@ai-werewolf-arena/game-contract/facts/trickster";
-import {
-  readOrderPrinceChoiceFact,
-  readOrderPrinceRevoteFact,
-} from "@ai-werewolf-arena/game-contract/facts/order-prince";
-import {
-  readMagicianExchangeFact,
-  readDeathShotMissFact,
-} from "@ai-werewolf-arena/game-contract/facts/magician";
-import {
-  readRedMoonNextNightFact,
-  readRedMoonExpiryFact,
-} from "@ai-werewolf-arena/game-contract/facts/red-moon";
-import { readNightmareFearFact } from "@ai-werewolf-arena/game-contract/facts/nightmare";
-import {
-  DEMON_HUNTER_EVENT_TYPES,
-  readDemonHunterEventFact,
-} from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
-import {
-  GHOST_BRIDE_EVENT_TYPES,
-  readGhostBrideEventFact,
-} from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
-import { readLonelyGirlEventFact } from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
-import {
-  WILD_CHILD_EVENT_TYPES,
-  readWildChildEventFact,
-} from "@ai-werewolf-arena/game-contract/facts/wild-child";
-import {
-  SHAPESHIFTER_EVENT_TYPES,
-  readShapeshifterEventFact,
-} from "@ai-werewolf-arena/game-contract/facts/shapeshifter";
-import {
-  THIEF_EVENT_TYPES,
-  readThiefEventFact,
-} from "@ai-werewolf-arena/game-contract/facts/thief";
-import {
-  WALL_EVENT_TYPES,
-  readWallEventFact,
-} from "@ai-werewolf-arena/game-contract/facts/wall-notes";
-import {
-  readCupidEventFact,
-  CUPID_EVENT_TYPES,
-} from "@ai-werewolf-arena/game-contract/facts/cupid";
-import {
-  readDebateEventFact,
-  DEBATE_EVENT_TYPES,
-} from "@ai-werewolf-arena/game-contract/facts/debate";
-import {
-  readModifierChoiceFact,
-  readModifierSkipFact,
-  readModifierBonusFact,
-} from "@ai-werewolf-arena/game-contract/facts/scholar-mentor";
-import {
-  readTimeConsortChoiceFact,
-  readTimeConsortSkipFact,
-} from "@ai-werewolf-arena/game-contract/facts/time-consort";
+import { MIST_RAVEN_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/mist-raven";
+import { DEMON_HUNTER_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
+import { GHOST_BRIDE_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
+import { WILD_CHILD_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/wild-child";
+import { SHAPESHIFTER_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/shapeshifter";
+import { THIEF_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/thief";
+import { WALL_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
+import { CUPID_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/cupid";
+import { DEBATE_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/debate";
 import {
   WOLF_TEAM_EVENT_TYPES,
   type EntityId,
@@ -102,6 +39,8 @@ import {
   type EventPayloadMap,
   type AbilitySource,
 } from "@ai-werewolf-arena/game-contract";
+
+import { readAgentEventFact, type PreparedAgentEvent } from "./agent-event-facts";
 
 /** 仅在命中原分支时执行的身份查询和显式自定义规则；不是行动许可或 World 通道。 */
 export interface AgentEventVisibilityQueries {
@@ -214,13 +153,14 @@ const ACTOR_ONLY_EVENT_TYPES = new Set([
 ]);
 
 /** 既有独立布尔 API：保留其读取顺序与模式，不替代事件流额外校验。 */
-export function canViewAgentEvent(
+function canViewAgentEventWithFacts(
   event: GameEvent,
   actorId: EntityId,
   queries: AgentEventVisibilityQueries,
+  prepared?: PreparedAgentEvent,
 ): boolean {
   if ((ANIMAL_DREAM_EVENT_TYPES as readonly string[]).includes(event.type)) {
-    const f = readAnimalDreamFact(event.type, event.payload),
+    const f = readAgentEventFact("readAnimalDreamFact", event.type, event.payload, prepared),
       v = f && animalDreamFactAudience(f.type);
     return (
       !!f &&
@@ -236,7 +176,7 @@ export function canViewAgentEvent(
     );
   }
   if ((FRAGRANT_PAIR_EVENT_TYPES as readonly string[]).includes(event.type)) {
-    const fact = readFragrantPairFact(event.type, event.payload);
+    const fact = readAgentEventFact("readFragrantPairFact", event.type, event.payload, prepared);
     return (
       !!fact &&
       fragrantPairVisibility(event.type) === "actor" &&
@@ -248,7 +188,7 @@ export function canViewAgentEvent(
     );
   }
   if ((NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(event.type)) {
-    const fact = readNobleSecretBodyFact(event.type, event.payload),
+    const fact = readAgentEventFact("readNobleSecretBodyFact", event.type, event.payload, prepared),
       visibility = nobleSecretBodyVisibility(event.type);
     if (!fact || visibility === "god") return false;
     if (visibility === "public") return !("audience" in event);
@@ -261,7 +201,7 @@ export function canViewAgentEvent(
     );
   }
   if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(event.type)) {
-    const fact = readRadiantEclipseFact(event.type, event.payload);
+    const fact = readAgentEventFact("readRadiantEclipseFact", event.type, event.payload, prepared);
     if (!fact) return false;
     const expected = radiantEclipseAudience(event.type, fact);
     return (
@@ -277,7 +217,7 @@ export function canViewAgentEvent(
     (MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(event.type) &&
     event.type !== "mist_knife_drawn"
   ) {
-    const fact = readMistRavenFact(event.type, event.payload);
+    const fact = readAgentEventFact("readMistRavenFact", event.type, event.payload, prepared);
     return (
       !!fact &&
       "actorId" in fact &&
@@ -287,7 +227,10 @@ export function canViewAgentEvent(
       event.audience[0] === actorId
     );
   }
-  if (event.type === "mist_knife_drawn" && !readMistRavenFact(event.type, event.payload))
+  if (
+    event.type === "mist_knife_drawn" &&
+    !readAgentEventFact("readMistRavenFact", event.type, event.payload, prepared)
+  )
     return false;
   if (event.type === "modifier_conflict_resolved") return false;
   if (
@@ -296,9 +239,9 @@ export function canViewAgentEvent(
     event.type === "modifier_bonus_resolved"
   ) {
     const fact =
-      readModifierChoiceFact(event.type, event.payload) ??
-      readModifierSkipFact(event.type, event.payload) ??
-      readModifierBonusFact(event.type, event.payload);
+      readAgentEventFact("readModifierChoiceFact", event.type, event.payload, prepared) ??
+      readAgentEventFact("readModifierSkipFact", event.type, event.payload, prepared) ??
+      readAgentEventFact("readModifierBonusFact", event.type, event.payload, prepared);
     return (
       !!fact &&
       Array.isArray(event.audience) &&
@@ -310,8 +253,8 @@ export function canViewAgentEvent(
   if (event.type === "time_consort_reflected") return false;
   if (event.type === "time_consort_lock_committed" || event.type === "time_consort_lock_skipped") {
     const f =
-      readTimeConsortChoiceFact(event.type, event.payload) ??
-      readTimeConsortSkipFact(event.type, event.payload);
+      readAgentEventFact("readTimeConsortChoiceFact", event.type, event.payload, prepared) ??
+      readAgentEventFact("readTimeConsortSkipFact", event.type, event.payload, prepared);
     return (
       !!f &&
       Array.isArray(event.audience) &&
@@ -325,8 +268,8 @@ export function canViewAgentEvent(
     event.type === "wolf_sorcerer_exchange_skipped"
   ) {
     const f =
-      readWolfSorcererExchangeFact(event.type, event.payload) ??
-      readWolfSorcererSkipFact(event.type, event.payload);
+      readAgentEventFact("readWolfSorcererExchangeFact", event.type, event.payload, prepared) ??
+      readAgentEventFact("readWolfSorcererSkipFact", event.type, event.payload, prepared);
     return (
       !!f &&
       Array.isArray(event.audience) &&
@@ -340,8 +283,8 @@ export function canViewAgentEvent(
     event.type === "trickster_exchange_skipped"
   ) {
     const f =
-      readTricksterExchangeFact(event.type, event.payload) ??
-      readTricksterSkipFact(event.type, event.payload);
+      readAgentEventFact("readTricksterExchangeFact", event.type, event.payload, prepared) ??
+      readAgentEventFact("readTricksterSkipFact", event.type, event.payload, prepared);
     return (
       !!f &&
       Array.isArray(event.audience) &&
@@ -351,9 +294,14 @@ export function canViewAgentEvent(
     );
   }
   if (event.type === "exile_target_mapped")
-    return !!readExileMappingFact(event.type, event.payload);
+    return !!readAgentEventFact("readExileMappingFact", event.type, event.payload, prepared);
   if (event.type === "order_prince_choice_committed") {
-    const fact = readOrderPrinceChoiceFact(event.type, event.payload);
+    const fact = readAgentEventFact(
+      "readOrderPrinceChoiceFact",
+      event.type,
+      event.payload,
+      prepared,
+    );
     return (
       !!fact &&
       Array.isArray(event.audience) &&
@@ -362,9 +310,15 @@ export function canViewAgentEvent(
       fact.actorId === actorId
     );
   }
-  if (event.type === "death_shot_missed") return !!readDeathShotMissFact(event.type, event.payload);
+  if (event.type === "death_shot_missed")
+    return !!readAgentEventFact("readDeathShotMissFact", event.type, event.payload, prepared);
   if (event.type === "magician_exchange_committed") {
-    const fact = readMagicianExchangeFact(event.type, event.payload);
+    const fact = readAgentEventFact(
+      "readMagicianExchangeFact",
+      event.type,
+      event.payload,
+      prepared,
+    );
     return (
       !!fact &&
       Array.isArray(event.audience) &&
@@ -375,7 +329,7 @@ export function canViewAgentEvent(
   }
   if (event.type === "nightmare_fear_committed")
     return (
-      !!readNightmareFearFact(event.type, event.payload) &&
+      !!readAgentEventFact("readNightmareFearFact", event.type, event.payload, prepared) &&
       Array.isArray(event.audience) &&
       event.audience.length === 1 &&
       event.audience[0] === actorId &&
@@ -413,14 +367,15 @@ export function canViewAgentEvent(
 }
 
 /** 事件流模式：读取、授权和裁剪只使用 Node 已取得的同一 inert 副本。 */
-export function projectAgentEvent(
+function projectAgentEventWithFacts(
   event: GameEvent,
   actorId: EntityId,
   visibleSeq: number,
   queries: AgentEventProjectionQueries,
+  prepared?: PreparedAgentEvent,
 ): PlayerVisibleEvent | null {
   if ((ANIMAL_DREAM_EVENT_TYPES as readonly string[]).includes(event.type)) {
-    const f = readAnimalDreamFact(event.type, event.payload),
+    const f = readAgentEventFact("readAnimalDreamFact", event.type, event.payload, prepared),
       visibility = f && animalDreamFactAudience(f.type);
     if (!f || visibility === "god") return null;
     if (
@@ -437,7 +392,7 @@ export function projectAgentEvent(
     return { seq: visibleSeq, type: f.type, payload: { ...f.payload } };
   }
   if ((FRAGRANT_PAIR_EVENT_TYPES as readonly string[]).includes(event.type)) {
-    const fact = readFragrantPairFact(event.type, event.payload);
+    const fact = readAgentEventFact("readFragrantPairFact", event.type, event.payload, prepared);
     if (
       !fact ||
       fragrantPairVisibility(event.type) !== "actor" ||
@@ -451,7 +406,7 @@ export function projectAgentEvent(
     return { seq: visibleSeq, type: event.type, payload: { ...fact } };
   }
   if ((NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(event.type)) {
-    const fact = readNobleSecretBodyFact(event.type, event.payload),
+    const fact = readAgentEventFact("readNobleSecretBodyFact", event.type, event.payload, prepared),
       visibility = nobleSecretBodyVisibility(event.type);
     if (!fact || visibility === "god") return null;
     if (
@@ -467,7 +422,7 @@ export function projectAgentEvent(
     return { seq: visibleSeq, type: event.type, payload: { ...fact } };
   }
   if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(event.type)) {
-    const fact = readRadiantEclipseFact(event.type, event.payload);
+    const fact = readAgentEventFact("readRadiantEclipseFact", event.type, event.payload, prepared);
     if (!fact) return null;
     const expected = radiantEclipseAudience(event.type, fact);
     if (
@@ -493,7 +448,7 @@ export function projectAgentEvent(
         new Set(audience).size !== audience.length
       )
         return null;
-      const fact = readMistRavenFact(mistType, event.payload);
+      const fact = readAgentEventFact("readMistRavenFact", mistType, event.payload, prepared);
       if (
         !fact ||
         !audience.includes(actorId) ||
@@ -507,103 +462,113 @@ export function projectAgentEvent(
   }
   if (
     event.type === "lonely_girl_admired_chosen" &&
-    !readLonelyGirlEventFact(event.type, event.payload)
+    !readAgentEventFact("readLonelyGirlEventFact", event.type, event.payload, prepared)
   )
     return null;
   if (
     (CUPID_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readCupidEventFact(event.type, event.payload)
+    !readAgentEventFact("readCupidEventFact", event.type, event.payload, prepared)
   )
     return null;
   if (
     (DEBATE_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readDebateEventFact(event.type, event.payload)
+    !readAgentEventFact("readDebateEventFact", event.type, event.payload, prepared)
   )
     return null;
   if (
     (WALL_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readWallEventFact(event.type, event.payload)
+    !readAgentEventFact("readWallEventFact", event.type, event.payload, prepared)
   )
     return null;
   if (
     (THIEF_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readThiefEventFact(event.type, event.payload)
+    !readAgentEventFact("readThiefEventFact", event.type, event.payload, prepared)
   )
     return null;
   if (
     (WILD_CHILD_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readWildChildEventFact(event.type, event.payload)
+    !readAgentEventFact("readWildChildEventFact", event.type, event.payload, prepared)
   )
     return null;
   if (
     (SHAPESHIFTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readShapeshifterEventFact(event.type, event.payload)
+    !readAgentEventFact("readShapeshifterEventFact", event.type, event.payload, prepared)
   )
     return null;
   if (
     (GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readGhostBrideEventFact(event.type, event.payload)
+    !readAgentEventFact("readGhostBrideEventFact", event.type, event.payload, prepared)
   )
     return null;
   if (
     (DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readDemonHunterEventFact(event.type, event.payload)
+    !readAgentEventFact("readDemonHunterEventFact", event.type, event.payload, prepared)
   )
     return null;
   if (
     event.type === "nightmare_fear_committed" &&
-    !readNightmareFearFact(event.type, event.payload)
+    !readAgentEventFact("readNightmareFearFact", event.type, event.payload, prepared)
   )
     return null;
   if (
     (event.type === "red_moon_night_sealed" || event.type === "red_moon_exile_delayed") &&
-    !readRedMoonNextNightFact(event.type, event.payload)
+    !readAgentEventFact("readRedMoonNextNightFact", event.type, event.payload, prepared)
   )
     return null;
-  if (event.type === "red_moon_delay_expired" && !readRedMoonExpiryFact(event.type, event.payload))
+  if (
+    event.type === "red_moon_delay_expired" &&
+    !readAgentEventFact("readRedMoonExpiryFact", event.type, event.payload, prepared)
+  )
     return null;
   if (
     event.type === "magician_exchange_committed" &&
-    !readMagicianExchangeFact(event.type, event.payload)
+    !readAgentEventFact("readMagicianExchangeFact", event.type, event.payload, prepared)
   )
     return null;
-  if (event.type === "death_shot_missed" && !readDeathShotMissFact(event.type, event.payload))
+  if (
+    event.type === "death_shot_missed" &&
+    !readAgentEventFact("readDeathShotMissFact", event.type, event.payload, prepared)
+  )
     return null;
   if (
     event.type === "order_prince_revote_started" &&
-    !readOrderPrinceRevoteFact(event.type, event.payload)
+    !readAgentEventFact("readOrderPrinceRevoteFact", event.type, event.payload, prepared)
   )
     return null;
   if (
     event.type === "order_prince_choice_committed" &&
-    !readOrderPrinceChoiceFact(event.type, event.payload)
+    !readAgentEventFact("readOrderPrinceChoiceFact", event.type, event.payload, prepared)
   )
     return null;
   if (
     event.type === "trickster_exchange_committed" &&
-    !readTricksterExchangeFact(event.type, event.payload)
+    !readAgentEventFact("readTricksterExchangeFact", event.type, event.payload, prepared)
   )
     return null;
   if (
     event.type === "trickster_exchange_skipped" &&
-    !readTricksterSkipFact(event.type, event.payload)
+    !readAgentEventFact("readTricksterSkipFact", event.type, event.payload, prepared)
   )
     return null;
-  if (event.type === "exile_target_mapped" && !readExileMappingFact(event.type, event.payload))
+  if (
+    event.type === "exile_target_mapped" &&
+    !readAgentEventFact("readExileMappingFact", event.type, event.payload, prepared)
+  )
     return null;
   if (
     event.type === "wolf_sorcerer_exchange_committed" &&
-    !readWolfSorcererExchangeFact(event.type, event.payload)
+    !readAgentEventFact("readWolfSorcererExchangeFact", event.type, event.payload, prepared)
   )
     return null;
   if (
     event.type === "wolf_sorcerer_exchange_skipped" &&
-    !readWolfSorcererSkipFact(event.type, event.payload)
+    !readAgentEventFact("readWolfSorcererSkipFact", event.type, event.payload, prepared)
   )
     return null;
   if (!queries.canView(event, actorId)) {
     return null;
   }
+  if (prepared) event = prepared.projectionEvent;
   if (event.type === "hunter_shot" || event.type === "player_shot") {
     return {
       seq: visibleSeq,
@@ -617,7 +582,7 @@ export function projectAgentEvent(
   return {
     seq: visibleSeq,
     type: event.type,
-    payload: projectPayload(event, queries),
+    payload: projectPayload(event, queries, prepared),
   };
 }
 
@@ -625,6 +590,7 @@ export function projectAgentEvent(
 function projectPayload(
   event: GameEvent,
   queries: AgentEventProjectionQueries,
+  prepared?: PreparedAgentEvent,
 ): Record<string, unknown> {
   switch (event.type) {
     case "red_moon_night_sealed":
@@ -633,7 +599,12 @@ function projectPayload(
     case "red_moon_delay_expired":
       return { actorId: event.payload.actorId, day: event.payload.day };
     case "magician_exchange_committed": {
-      const fact = readMagicianExchangeFact(event.type, event.payload);
+      const fact = readAgentEventFact(
+        "readMagicianExchangeFact",
+        event.type,
+        event.payload,
+        prepared,
+      );
       return fact ? { day: fact.day, pair: fact.pair } : {};
     }
     case "nightmare_fear_committed":
@@ -737,4 +708,87 @@ function projectPayload(
     return structuredClone(payload);
   }
   return structuredClone({ ...event.payload });
+}
+
+/** 支持既有 typed/trusted 布尔入口；不对未知对象承诺 hostile ingress 安全。 */
+export function canViewAgentEvent(
+  event: GameEvent,
+  actorId: EntityId,
+  queries: AgentEventVisibilityQueries,
+): boolean {
+  return canViewAgentEventWithFacts(event, actorId, queries);
+}
+
+/** 迁移准备阶段保留旧投影入口；生产 feed 切换后退出此无独立业务消费者的 API。 */
+export function projectAgentEvent(
+  event: GameEvent,
+  actorId: EntityId,
+  visibleSeq: number,
+  queries: AgentEventProjectionQueries,
+): PlayerVisibleEvent | null {
+  return projectAgentEventWithFacts(event, actorId, visibleSeq, queries);
+}
+
+/** 授权取一次解析的事实；World 身份和自定义规则仍只在原分支按原时点查询。 */
+export function canViewPreparedAgentEvent(
+  prepared: PreparedAgentEvent,
+  actorId: EntityId,
+  queries: AgentEventVisibilityQueries,
+): boolean {
+  // 新入口的家族事实必须有效；旧 typed 布尔入口仍保留其原先较弱的校验范围。
+  if (prepared.fact === null) return false;
+  if (prepared.fact?.reader === "readMistRavenFact") {
+    const event = prepared.projectionEvent;
+    const audience = "audience" in event ? event.audience : null;
+    if (
+      !Array.isArray(audience) ||
+      !audience.every((id) => Number.isSafeInteger(id) && id > 0) ||
+      new Set(audience).size !== audience.length
+    )
+      return false;
+  }
+  return canViewAgentEventWithFacts(
+    prepared.projectionEvent,
+    actorId,
+    {
+      demonHunterActorId() {
+        return queries.demonHunterActorId();
+      },
+      custom(_event, actorId) {
+        return queries.custom(prepared.sourceEvent, actorId);
+      },
+    },
+    prepared,
+  );
+}
+
+export interface PreparedAgentEventProjectionQueries {
+  canView(prepared: PreparedAgentEvent, actorId: EntityId): boolean;
+  projectAbilitySource: AgentEventProjectionQueries["projectAbilitySource"];
+}
+
+/**
+ * 事件流的唯一 canonical 投影入口。家族解析只在 prepare 执行一次，授权及字段裁剪复用该事实；
+ * schema 回调修改原副本不改变已解析输出，无 schema 的可信来源回调仍在授权后按原顺序读取。
+ */
+export function projectPreparedAgentEvent(
+  prepared: PreparedAgentEvent,
+  actorId: EntityId,
+  visibleSeq: number,
+  queries: PreparedAgentEventProjectionQueries,
+): PlayerVisibleEvent | null {
+  return projectAgentEventWithFacts(
+    prepared.projectionEvent,
+    actorId,
+    visibleSeq,
+    {
+      canView(_event, actorId) {
+        return queries.canView(prepared, actorId);
+      },
+      projectAbilitySource(origin, disclosed) {
+        return queries.projectAbilitySource(origin, disclosed);
+      },
+    },
+    prepared,
+  );
 }

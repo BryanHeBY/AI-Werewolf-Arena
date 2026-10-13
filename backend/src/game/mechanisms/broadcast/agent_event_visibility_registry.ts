@@ -7,7 +7,11 @@
 import type { EntityId, GameEvent } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../../../core/domain/world";
 import { demonHunterActorId } from "../roles/demon_hunter/authority";
-import { canViewAgentEvent } from "../../observation/agent-event-projection";
+import {
+  canViewAgentEvent,
+  canViewPreparedAgentEvent,
+} from "../../observation/agent-event-projection";
+import type { PreparedAgentEvent } from "../../observation/agent-event-facts";
 
 type AgentEventVisibilityRule = (world: World, event: GameEvent, actorId: EntityId) => boolean;
 const DEFAULT_RULES: Record<string, AgentEventVisibilityRule> = {};
@@ -23,6 +27,21 @@ export class AgentEventVisibilityRegistry {
       },
       custom: (event, actorId) => {
         const custom = this.rules[event.type];
+        if (custom) return { handled: true, visible: custom(world, event, actorId) };
+        return { handled: false };
+      },
+    });
+  }
+
+  /** 只消费已经解析的 Node 副本；自定义规则仍收到原副本而不是另一个字段对象。 */
+  canViewPrepared(world: World, prepared: PreparedAgentEvent, actorId: EntityId): boolean {
+    return canViewPreparedAgentEvent(prepared, actorId, {
+      demonHunterActorId() {
+        return demonHunterActorId(world);
+      },
+      custom: (event, actorId) => {
+        // schema 规则按同一次快照的类型查找；可信回调仍收到原 source 副本。
+        const custom = this.rules[prepared.projectionEvent.type];
         if (custom) return { handled: true, visible: custom(world, event, actorId) };
         return { handled: false };
       },
