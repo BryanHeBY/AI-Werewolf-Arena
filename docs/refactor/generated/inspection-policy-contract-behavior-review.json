@@ -1,0 +1,162 @@
+{
+  "scope": "纯身份查验政策19源的只读对抗性语义审查；不重复作者程序证明、类型或测试。",
+  "base": "694a2593a53758e3ae9999311b37de9b45c923ad",
+  "source": [
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/native.ts",
+      "expectedSha256": "1bf4368a5cb26ba4196090aed6c25624140d2772d4641e9ae382d0b8945d04f7",
+      "actualSha256": "1bf4368a5cb26ba4196090aed6c25624140d2772d4641e9ae382d0b8945d04f7",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/drivers/privileged-baseline.ts",
+      "expectedSha256": "9a7d789cc2483eca439446952fff0a36fba1bb6088a09fa673b36b68d9f2444b",
+      "actualSha256": "9a7d789cc2483eca439446952fff0a36fba1bb6088a09fa673b36b68d9f2444b",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+      "expectedSha256": "6c3625b62e1326511e6a4b8018b56520742067439dc7ec0af0537572428a906d",
+      "actualSha256": "6c3625b62e1326511e6a4b8018b56520742067439dc7ec0af0537572428a906d",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "expectedSha256": "b7425a2e0ee4c83802a91c6c2b004f61580e7a5860bc7d45d50ac786ba682ca7",
+      "actualSha256": "b7425a2e0ee4c83802a91c6c2b004f61580e7a5860bc7d45d50ac786ba682ca7",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "expectedSha256": "818d71a88d452376babb8cd288105dcfad3eac5670668894c52a4a9e950d5a99",
+      "actualSha256": "818d71a88d452376babb8cd288105dcfad3eac5670668894c52a4a9e950d5a99",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "expectedSha256": "c60bfa43d908ed759149c1fd51cab322e1490c835e25e3871e3dacdb9247d10d",
+      "actualSha256": "c60bfa43d908ed759149c1fd51cab322e1490c835e25e3871e3dacdb9247d10d",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+      "expectedSha256": "cfddef3f2d3d1bc79f2ec6f2432fe387d3dfd5b35f8ec39cc7a12793e7095c9d",
+      "actualSha256": "cfddef3f2d3d1bc79f2ec6f2432fe387d3dfd5b35f8ec39cc7a12793e7095c9d",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+      "expectedSha256": "efdc80e2ffe066c8ef9280a04dceb689ca1f84cafb0ed6141ffb53318e74876c",
+      "actualSha256": "efdc80e2ffe066c8ef9280a04dceb689ca1f84cafb0ed6141ffb53318e74876c",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "expectedSha256": "fb4661925dae77b7c1f8ede37bcdce763001a5cf05e95cc7a43e71d2656e9820",
+      "actualSha256": "fb4661925dae77b7c1f8ede37bcdce763001a5cf05e95cc7a43e71d2656e9820",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "expectedSha256": "e3831f6a2508aff2e1cadd45bee9dd19f262dfa66c7712c2c58188a6f4ce735b",
+      "actualSha256": "e3831f6a2508aff2e1cadd45bee9dd19f262dfa66c7712c2c58188a6f4ce735b",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+      "expectedSha256": "21192292e699a7ebf9f71e130ca99aa48c7624f19f57b30fe366359aa93ff5c6",
+      "actualSha256": "21192292e699a7ebf9f71e130ca99aa48c7624f19f57b30fe366359aa93ff5c6",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "expectedSha256": "e450ec18616dc471e38669e3fede1882da01f561b259a8fad84f5b91a3ac7b21",
+      "actualSha256": "e450ec18616dc471e38669e3fede1882da01f561b259a8fad84f5b91a3ac7b21",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "expectedSha256": "d68d317bef9934aa1970f3f5a8a2871af12ee3d4c1b83f22c8c28aa437f0d5e9",
+      "actualSha256": "d68d317bef9934aa1970f3f5a8a2871af12ee3d4c1b83f22c8c28aa437f0d5e9",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "expectedSha256": "76df1d7165c9a7008f4a2c1a22730bd89795f35dba73cc608c8bb78845aadca8",
+      "actualSha256": "76df1d7165c9a7008f4a2c1a22730bd89795f35dba73cc608c8bb78845aadca8",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "expectedSha256": "7fe7b369147b7042ea443ad281fe21383b5d8ecf83eee079523ed95fdc491a82",
+      "actualSha256": "7fe7b369147b7042ea443ad281fe21383b5d8ecf83eee079523ed95fdc491a82",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "expectedSha256": "b78068b92703a970655c5fe7930beacc37abdb733956140a1ae593586f9a0c43",
+      "actualSha256": "b78068b92703a970655c5fe7930beacc37abdb733956140a1ae593586f9a0c43",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "expectedSha256": "b4242f282c9775c326d6e914b50bbad1d94926429af392bbe2c075538ffa7693",
+      "actualSha256": "b4242f282c9775c326d6e914b50bbad1d94926429af392bbe2c075538ffa7693",
+      "matches": true
+    },
+    {
+      "path": "packages/game-contract/package.json",
+      "expectedSha256": "a2e2fd58e7dd0b3281940ef2ce4b82d535e5e10ec63c3bb76ab696cfbc5bf59f",
+      "actualSha256": "a2e2fd58e7dd0b3281940ef2ce4b82d535e5e10ec63c3bb76ab696cfbc5bf59f",
+      "matches": true
+    },
+    {
+      "path": "packages/game-contract/src/role-inspection-policy.ts",
+      "expectedSha256": "44f6be5c97496fc3cbd06229ea0f35404d46059b5ba90f78c49f94d93ee71d95",
+      "actualSha256": "44f6be5c97496fc3cbd06229ea0f35404d46059b5ba90f78c49f94d93ee71d95",
+      "matches": true
+    }
+  ],
+  "findings": [],
+  "behaviorReview": [
+    {
+      "aspect": "显式 configured 短路",
+      "result": "inspectionPolicy先只读inspectionPolicy一次；非nullish值不读取role policy，之后仍校验INSPECTION_POLICIES。roleInspectionPolicy单独调用保留配置先校验、再角色政策默认与错误码。"
+    },
+    {
+      "aspect": "getter次数和时点",
+      "result": "roleInspectionPolicy的配置判断保留1/2次inspectionPolicy读取；policy undefined保留1次、非undefined保留2次policy读取。缺省inspectionPolicy分支经该函数重新读配置；renderInspectionPolicy第二分支仍再次调用，不缓存。"
+    },
+    {
+      "aspect": "状态写权",
+      "result": "create仍copyAbilityData后原政策校验，再交prepared-native写owner；两个append分别原state引用写lastTarget/lastDay/history，或三次ability.state读，不增加拒绝集合、库存付款或回滚。"
+    },
+    {
+      "aspect": "原生与赠予资源",
+      "result": "generic安装与gift/copy/transfer的原调用位置和source短路保留；政策函数只解释payload，不替代原ability/life/currentness授权。"
+    },
+    {
+      "aspect": "默认表",
+      "result": "as const只为编译类型；新owner无Object.freeze，原对象可变性质保留；仅模块初始化/公开导出位置有意变化。"
+    },
+    {
+      "aspect": "中文说明",
+      "result": "新纯owner明确不读World/库存/历史、不授予许可；slot明确既有政策schema非完整payload形状校验，ports区分初始化写库存与只读展示，描述与代码一致。"
+    },
+    {
+      "aspect": "API与加载图",
+      "result": "旧backend policy出口退休，consumer改canonical公共subpath；函数定义首次初始化与包导入依赖变化不宣称整旧模块初始化等价。"
+    }
+  ],
+  "authorReceiptsRead": [
+    "5迁出声明完整token/all-child证明",
+    "其余consumer非import程序与bindings证明",
+    "有限类型和targeted测试收据仅作者归属"
+  ],
+  "limitations": [
+    "未执行任何测试、类型或全量门禁。",
+    "这是政策语义和19源最终SHA核对，不重新生成作者完整程序证明。",
+    "配置值合法不等于行动许可、目标合法或资源已提交。"
+  ],
+  "approved": true
+}

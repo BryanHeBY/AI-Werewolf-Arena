@@ -4,7 +4,7 @@
  * 三个状态读取与历史追加委托 RoleInspection 具体 writer，use 委托实例 owner，仍在原位置。
  * 不合并阵营／角色查验、失败语义或阶段顺序，不引入最终目标复检。
  */
-import { roleInspectionPolicy } from "../role_inspection/ports";
+import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, Phase, Role } from "../../../../core/domain/model";

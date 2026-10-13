@@ -17,7 +17,7 @@ import { formatNativeRolePart } from "@ai-werewolf-arena/game-presentation";
 import type { RoleComponent } from "../../core/domain/components/role";
 import type { World } from "../../core/domain/world";
 import { COMPONENT } from "../../core/domain/components/names";
-import { inspectionPolicy } from "../mechanisms/roles/role_inspection/ports";
+import { inspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { nativeMirror, freshMirrorInspectionState } from "../mechanisms/roles/mirror_girl/ports";
 import { getTimeConsortState } from "../mechanisms/roles/time_wolf_consort/ports";
 import { getWolfSorcererState } from "../mechanisms/roles/wolf_sorcerer/ports";

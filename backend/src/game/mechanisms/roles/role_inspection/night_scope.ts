@@ -4,7 +4,7 @@
  * 引用和政策；此 owner 仍在原顺序检查角色、生命版本、id、来源、激活、禁用及阶段当前性，
  * 替换或过期后不借合法 payload 恢复原回执。
  */
-import { roleInspectionPolicy } from "./state-slot";
+import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import type { GargoyleReadState as GargoyleState } from "@ai-werewolf-arena/game-contract";
 
 import type { RoleInspectionReadState } from "@ai-werewolf-arena/game-contract";

@@ -1,0 +1,404 @@
+{
+  "reviewer": "/root/native_final_architecture_review",
+  "status": "approved",
+  "base": "694a2593a53758e3ae9999311b37de9b45c923ad",
+  "scope": {
+    "sourceAndPackagePaths": 19,
+    "originalActualGitPaths": 18,
+    "existingTypeScriptFiles": 17,
+    "newPureContractTypeScriptFiles": 1,
+    "packageManifests": 1,
+    "source": [
+      {
+        "path": "backend/src/ai/agents/providers/observed_bot/native.ts",
+        "sha256": "1bf4368a5cb26ba4196090aed6c25624140d2772d4641e9ae382d0b8945d04f7",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/src/game/drivers/privileged-baseline.ts",
+        "sha256": "9a7d789cc2483eca439446952fff0a36fba1bb6088a09fa673b36b68d9f2444b",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+        "sha256": "6c3625b62e1326511e6a4b8018b56520742067439dc7ec0af0537572428a906d",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "sha256": "b7425a2e0ee4c83802a91c6c2b004f61580e7a5860bc7d45d50ac786ba682ca7",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+        "sha256": "818d71a88d452376babb8cd288105dcfad3eac5670668894c52a4a9e950d5a99",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+        "sha256": "c60bfa43d908ed759149c1fd51cab322e1490c835e25e3871e3dacdb9247d10d",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+        "sha256": "cfddef3f2d3d1bc79f2ec6f2432fe387d3dfd5b35f8ec39cc7a12793e7095c9d",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+        "sha256": "efdc80e2ffe066c8ef9280a04dceb689ca1f84cafb0ed6141ffb53318e74876c",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+        "sha256": "fb4661925dae77b7c1f8ede37bcdce763001a5cf05e95cc7a43e71d2656e9820",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+        "sha256": "e3831f6a2508aff2e1cadd45bee9dd19f262dfa66c7712c2c58188a6f4ce735b",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+        "sha256": "21192292e699a7ebf9f71e130ca99aa48c7624f19f57b30fe366359aa93ff5c6",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+        "sha256": "e450ec18616dc471e38669e3fede1882da01f561b259a8fad84f5b91a3ac7b21",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+        "sha256": "d68d317bef9934aa1970f3f5a8a2871af12ee3d4c1b83f22c8c28aa437f0d5e9",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+        "sha256": "76df1d7165c9a7008f4a2c1a22730bd89795f35dba73cc608c8bb78845aadca8",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/src/game/observation/player-prompt-directives.ts",
+        "sha256": "7fe7b369147b7042ea443ad281fe21383b5d8ecf83eee079523ed95fdc491a82",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+        "sha256": "b78068b92703a970655c5fe7930beacc37abdb733956140a1ae593586f9a0c43",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+        "sha256": "b4242f282c9775c326d6e914b50bbad1d94926429af392bbe2c075538ffa7693",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "packages/game-contract/package.json",
+        "sha256": "a2e2fd58e7dd0b3281940ef2ce4b82d535e5e10ec63c3bb76ab696cfbc5bf59f",
+        "matchesFrozenEvidence": true
+      },
+      {
+        "path": "packages/game-contract/src/role-inspection-policy.ts",
+        "sha256": "44f6be5c97496fc3cbd06229ea0f35404d46059b5ba90f78c49f94d93ee71d95",
+        "matchesFrozenEvidence": true
+      }
+    ],
+    "actualBaseline": [
+      {
+        "path": "backend/src/ai/agents/providers/observed_bot/native.ts",
+        "actualGitSHA256": "fb6f493a9936aa06f68a9a35a5ba0502e6acf01ba3564d722765cb77290c2efb",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/src/game/drivers/privileged-baseline.ts",
+        "actualGitSHA256": "ba66da448dd93795e9df45f5e37e01c01390e5582ce8f92eede686231e1f3ca1",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+        "actualGitSHA256": "9d0f3a58ca994957e159ca3fdaa44fe04ecd62308790c04cb3605e386cabcf78",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+        "actualGitSHA256": "5a2f6f988f07b5eb15a8411ba680fe5e61db175f733dcae8aa5b69724005276e",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+        "actualGitSHA256": "83c6e16b74be5f900f2c5ab105fa69014841a702100fabdf88eca465d79f7f28",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+        "actualGitSHA256": "36d3847374ba718e432d7a2793ac58f5cfdef6fdf993dec2279692c9ddc03d87",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+        "actualGitSHA256": "f26770fa71fc259f21f9f5a66d5c95f37e7efed1fd5c3ea036e9add0d876d3fe",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+        "actualGitSHA256": "88f926e8d11088968e2aa4b3ac17f4d90e5a3bea159462e9a735d7a06e7c118a",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+        "actualGitSHA256": "843da0a51e45d208150cc7757dfe1efc8e5ba7a5aa08da4a272d04fbff89c8dc",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+        "actualGitSHA256": "810e0dafec2a4764b30fcf1a16f7215b47965af819e03d0185be0ca8ceac9eb6",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+        "actualGitSHA256": "5f8bf4f33e33152d3bdae1dd53c573a9d5ff4246d3fac39b11611f0848199958",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+        "actualGitSHA256": "33c5d3f938f21eb55389fb2ddf447f6c3e412de31a9a6285e96c9951bec31aa7",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+        "actualGitSHA256": "f3e43fd039b0ad7c51cac5e57cc95ef45560169cbdff6120116e99d4fdcf4a26",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+        "actualGitSHA256": "445502b1ebedb4e576928265c80619e9326954824a181d0e7858c8e940b71626",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/src/game/observation/player-prompt-directives.ts",
+        "actualGitSHA256": "3bed8e034436c1ec938702f074b86f284aa76c0bc65c3f8e59551385ff6b4538",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+        "actualGitSHA256": "0c4299ee4428c8f2382dde70164c9b6f96e025e6669078d20e35338993e0b41b",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+        "actualGitSHA256": "ca9ae7a00e03615607b682d37b26a3e7d1634abca2740225b001fc8c81198fde",
+        "matchesRecordedBaseline": true
+      },
+      {
+        "path": "packages/game-contract/package.json",
+        "actualGitSHA256": "23c22005c7cba5ce9baf7fe67396e6b320f21439f917e3acc1366d22d01dc9ed",
+        "matchesRecordedBaseline": true
+      }
+    ],
+    "finalSourceMismatch": []
+  },
+  "independentChecks": {
+    "fiveCompleteOriginalDeclarations": {
+      "declarations": [
+        {
+          "name": "roleInspectionPolicy",
+          "from": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+          "wholeDeclarationNoCommentPrintedBytesSame": true
+        },
+        {
+          "name": "DEFAULT_INSPECTION_POLICIES",
+          "from": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+          "wholeDeclarationNoCommentPrintedBytesSame": true
+        },
+        {
+          "name": "inspectionPolicy",
+          "from": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+          "wholeDeclarationNoCommentPrintedBytesSame": true
+        },
+        {
+          "name": "inspectionRepeats",
+          "from": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+          "wholeDeclarationNoCommentPrintedBytesSame": true
+        },
+        {
+          "name": "inspectionRequired",
+          "from": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+          "wholeDeclarationNoCommentPrintedBytesSame": true
+        }
+      ],
+      "imports": [
+        {
+          "module": "./boards",
+          "runtimeBindings": [
+            "INSPECTION_POLICIES"
+          ],
+          "typeOnly": false
+        },
+        {
+          "module": "./night-ability-data",
+          "runtimeBindings": [],
+          "typeOnly": true
+        }
+      ],
+      "nonImportActualStatementCount": 5
+    },
+    "packageOnlyPublicSubpathExportsAndTypesVersions": true,
+    "sameActualCanonicalDependencyAndNativeInstallControls": [
+      {
+        "path": "packages/game-contract/src/boards.ts",
+        "wholeSourceBytesEqualsActualBaseGit": true,
+        "sha256": "0536faf1937ca7865c4dc324adcd4b1510b680cb1d6f9aa6457a64cd98d5af77"
+      },
+      {
+        "path": "packages/game-contract/src/index.ts",
+        "wholeSourceBytesEqualsActualBaseGit": true,
+        "sha256": "64afffcd8c1ffe2415fc7d58114572f6864381525ff7e6e12ba13619707941ce"
+      },
+      {
+        "path": "backend/src/core/domain/board.ts",
+        "wholeSourceBytesEqualsActualBaseGit": true,
+        "sha256": "daf6da87696de329575ae424e37aa975568aeb634ca80d81c6e23d4ca88fef75"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+        "wholeSourceBytesEqualsActualBaseGit": true,
+        "sha256": "7b1b2e611e030d2a5353faec14c54fe2b7c67eef84d15718ff604babf6db85af"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/catalog.ts",
+        "wholeSourceBytesEqualsActualBaseGit": true,
+        "sha256": "6a1fd6b06edb63d05a0d26ae06a62f834d62b29cea6dfc86ef2cd9d23ec9ac72"
+      }
+    ],
+    "stateSlot": "Actual source still evaluates commitPreparedNativeAbility callee/arguments in original order, role/kind then SLOT.create; create copies by original JSON data copier, validates that copy by original role policy function, then returns same owned copy to original install. No new validation of history/targets, no extra stock/store; get returns original findNightAbility.state. appendState retains lastTarget→lastDay→history.push/copied result; appendAbility retains three reads of ability.state. Existing payload currentness calls same policy after original reference/config check.",
+    "policyReadOrder": "roleInspectionPolicy first reads inspectionPolicy for !==undefined, if defined evaluates INSPECTION_POLICIES.includes callee then reads field again; only then policy is read (once if undefined, twice if present). inspectionPolicy first reads explicit field, non-nullish value short-circuits role validator/default lookup; fallback reuses original validator and original default mapping. Invalid explicit values keep configuration error, role-kind error remains distinct. inspectionRepeats/Required preserve direct inspectionPolicy calls. No getter capture, new freeze, added unknown guard or broad failure policy.",
+    "defaultMap": "Same five literal property/value definitions and order; as const is erased and object remains runtime mutable, one actual owner. No Object.freeze added.",
+    "realSingleDependency": "New owner has only INSPECTION_POLICIES from ./boards as runtime dependency; ./night-ability-data imports erased. Original board facade and GC root point to same boards declaration; all inspected dependency/control whole bytes match actual base. No backend/World/clock/locale/lease/store or presentation renderer imported.",
+    "nativeAndPolicyContributions": "state-slot retains create/schema/install/get/writes/checkpoint/currentness contribution. policies retains exact renderInspectionPolicy (including second policy call in ternary) and exact Zod config adapter; ports retains only real slot/get/install/appendAbility exports and retires pure query forwarders.",
+    "chineseCommentSemantics": "Actual new owner head correctly separates policy explanation from authorization/payment. Config short-circuit and mutable as-const map comments match code. AI observer reads DTO/request/pick/style only; target hints remain hints rather than authority. Existing slot write/JSON-prepare head does not claim strict full-history schema."
+  },
+  "reviewedRootPersistentProof": {
+    "artifact": "docs/refactor/generated/inspection-policy-contract-evidence.json",
+    "rootApproved": true,
+    "declarations": 5,
+    "retainedPrograms": 17,
+    "allRetainedProgramTokenAndFullChildShapeSame": true,
+    "allNamedBindingsExpectedActualSame": true,
+    "allFiveRootDeclarationProofsSame": true,
+    "currentNamedReferenceSites": 17,
+    "onlyFiveDeclaredOwners": [
+      {
+        "path": "packages/game-contract/src/role-inspection-policy.ts",
+        "name": "roleInspectionPolicy"
+      },
+      {
+        "path": "packages/game-contract/src/role-inspection-policy.ts",
+        "name": "DEFAULT_INSPECTION_POLICIES"
+      },
+      {
+        "path": "packages/game-contract/src/role-inspection-policy.ts",
+        "name": "inspectionPolicy"
+      },
+      {
+        "path": "packages/game-contract/src/role-inspection-policy.ts",
+        "name": "inspectionRepeats"
+      },
+      {
+        "path": "packages/game-contract/src/role-inspection-policy.ts",
+        "name": "inspectionRequired"
+      }
+    ],
+    "oldPrivateNamespaceOrStarConsumers": [],
+    "scopeLimit": "Complete retained non-import/export statements and explicitly moved declarations separately; imports/exports checked individually, not a claim unchanged cold module graph or every static legacy export. No heavy gate or program proof rerun by this reviewer."
+  },
+  "referenceAccounting": {
+    "originalNamedSites": 18,
+    "originalImports": 16,
+    "originalPortsForwardExports": 2,
+    "currentDirectImportSites": 17,
+    "delta": "Retire two old ports query exports, add one state-slot imported consumer; retained policies import now binds inspectionPolicy used by unchanged renderer, rather than its moved validator."
+  },
+  "publicAndInitializationDifferences": [
+    "Five pure value declarations now owned solely by new public subpath; old state-slot/policies/ports query exits intentionally retired, not permanent compatibility bridges.",
+    "Metadata package only adds subpath exports/typesVersions. No GC root reexport, dependency install/lock change, Node module or reverse backend edge introduced.",
+    "Module initialization timing/topology changes: old policies reached state-slot/abilities/backend cycle, now pure owner reaches boards/event IDs only. No all-cold-load-equivalence or static old-entry compatibility promise.",
+    "Role policy data only interprets supplied typed fields; it is not unknown/inert ingress validation or an action authorization brand. Trusted getter side effects/errors remain original behavior.",
+    "Real source fingerprints change; no archive/Tape/golden expectations rewritten."
+  ],
+  "validationAttribution": {
+    "typesEarlierActualRootToolReceipts": {
+      "backend": {
+        "session": 64498,
+        "chunk": "1b0f45",
+        "actualReportedExitCode": 0
+      },
+      "gameContractSourceAndTest": {
+        "session": 28939,
+        "chunk": "af44e9",
+        "actualReportedExitCode": 0
+      }
+    },
+    "typesLimitation": "Tool-history closure supplied by Root; temporary logs disappeared with environment switch and are not fabricated or offered as currently readable evidence. Later changes were unused type removal/Chinese comments, not new runtime policy. No type rerun by reviewer.",
+    "commentCheck": {
+      "sourceInputCount": 19,
+      "sourceInputsMatchFrozen19": true,
+      "actualDocumentationPathCount": 424,
+      "failures": [],
+      "timing": "424 actual documentation paths captured before new handoff MD; no fabricated current-path count or repeat gate."
+    },
+    "targetedOldSuites": {
+      "exitCode": 1,
+      "pass": 36,
+      "fail": 2,
+      "assertions": 254,
+      "rawLogExactEmbeddedAndHashVerified": true,
+      "rawLogSha256": "738bf66ceea4909ef79c3f896fc6a5f1bb210976abdaa6a3e0d430e694afb3bd",
+      "failureLocation": "mirror-girl/inspection-resource-boundaries.test.ts:136 two zh-CN/en cases",
+      "independentCause": "Actual base Git contains same requireRuntime().toMatchObject({goodSide:\"god\",maxCount:1}); current unchanged Catalog.requireRuntime returns runtime facet. Unchanged Mirror metadata facet owns both literal values. No source regression inferred from this unchanged legacy assertion; keep real red and fix test query separately."
+    },
+    "noAdditionalBoundedRuntimeTestNeeded": "All five full declarations and the direct binding/array owner are identical after comments; no concrete remaining behavior risk justified another mirror test. Existing targeted tests already exercise new public path.",
+    "notRunByReviewer": [
+      "types",
+      "runtime tests",
+      "whole architecture/comment gate",
+      "models/network/game loops"
+    ]
+  },
+  "documentReview": {
+    "documents": [
+      {
+        "path": "docs/refactor/inspection-policy-contract.md",
+        "sha256": "621cb01312d74cade7eb89054d716b540ed394a04264ad247bca9320e703e997"
+      },
+      {
+        "path": "docs/refactor/generated/inspection-policy-contract-evidence.json",
+        "sha256": "00cd262c335570b5b48666dfdbd32f6b590ab94ed6b07ffc62704a7e9553db57"
+      },
+      {
+        "path": "docs/refactor/generated/inspection-policy-comments-evidence.json",
+        "sha256": "651c98be4f788bb08858cb324325d20b86f91229da8062c290c97c59afa8b9aa"
+      },
+      {
+        "path": "docs/refactor/generated/inspection-policy-targeted-tests.json",
+        "sha256": "58ff99d9e454a56d920b74a0bbdc58df65e58546af2b036489e0cd8837f49d4c"
+      },
+      {
+        "path": "docs/refactor/generated/inspection-policy-targeted-tests.log",
+        "sha256": "738bf66ceea4909ef79c3f896fc6a5f1bb210976abdaa6a3e0d430e694afb3bd"
+      }
+    ],
+    "approved": true,
+    "claimsAccurate": "MD declares 19/17 existing TS/new owner scope, five algorithms, true explicit short-circuit/getter/default semantics, slot/config ownership, intentional API/cold graph changes, missing temporary type logs and actual 36/2/254 red. Evidence and comments scope match current source; source proof is rebuilt from true actual Git, not missing temporary snapshots.",
+    "finalMarkdownClarification": "Final MD reread includes the Root-notified real runtime source/comment/package sourceHash impact, preserves historical fingerprints and offers no cross-build action-replay exemption. Current MD SHA equals the hash captured in this review; source19 unchanged. No source/proof/type/test rerun."
+  },
+  "findings": [],
+  "followupsOutsideThisSourceBatch": [
+    {
+      "kind": "known-old-test-query-debt",
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "action": "Root planned separate requireRuntime→requireMetadata test correction preserving original literal expected metadata; not included or masked in this policy migration approval."
+    }
+  ]
+}

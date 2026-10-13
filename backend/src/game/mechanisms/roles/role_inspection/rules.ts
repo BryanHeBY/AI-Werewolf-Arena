@@ -11,7 +11,7 @@ import type { ToolRule } from "../../validation/contracts";
 import { isAliveTarget } from "../../validation/contracts";
 import type { RoleProfile } from "../contracts";
 import { activeNightAbility } from "../abilities";
-import { inspectionRepeats } from "./policies";
+import { inspectionRepeats } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 
 export function roleInspectionTargets(
   world: World,

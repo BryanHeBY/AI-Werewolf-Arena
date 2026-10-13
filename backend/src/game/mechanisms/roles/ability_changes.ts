@@ -5,7 +5,7 @@
  * 保留原 clone、回调、World／getter 重检、安装／delete／push／发布顺序；不更换私有容器、
  * 恢复已付资源或用新 Store／通用事务遮蔽部分失败。
  */
-import { roleInspectionPolicy } from "./role_inspection/ports";
+import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import type {
   AbilitySource,
   NightAbilityKind,

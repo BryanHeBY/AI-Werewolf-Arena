@@ -2,7 +2,7 @@
  * 定义纯白查验目标与对应工具校验。输入为当前 World 角色和请求目标；输出为政策允许
  * 的编号或结构化拒绝。目标枚举不提交查验或发表私密结果，原目标／来源及失败顺序不变。
  */
-import { roleInspectionPolicy } from "../role_inspection/ports";
+import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Camp, Phase, Role, type EntityId } from "../../../../core/domain/model";
 import { COMPONENT } from "../../../../core/domain/components/names";

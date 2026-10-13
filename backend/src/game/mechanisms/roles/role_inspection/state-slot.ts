@@ -14,8 +14,7 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { EntityId } from "@ai-werewolf-arena/game-contract";
 import type { InspectionResult } from "@ai-werewolf-arena/game-contract";
 import { copyAbilityData, findNightAbility, type NightAbilityReadView } from "../abilities";
-import type { RoleInspectionPolicy } from "@ai-werewolf-arena/game-contract";
-import { INSPECTION_POLICIES } from "../../../../core/domain/board";
+import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { commitPreparedNativeAbility } from "../prepared-native-install";
 
 export function setRoleInspectionState(
@@ -56,20 +55,6 @@ export function recordAbilityRoleInspection(
   (ability.state as RoleInspectionState).history.push({ day, targetId, result: { ...result } });
 }
 
-export function roleInspectionPolicy(state: RoleInspectionReadState): RoleInspectionPolicy {
-  if (state.inspectionPolicy !== undefined && !INSPECTION_POLICIES.includes(state.inspectionPolicy))
-    throw new Error("role_inspection_configuration_policy_invalid");
-  const policy = state.policy === undefined ? "gargoyle" : state.policy;
-  if (
-    policy !== "gargoyle" &&
-    policy !== "psychic" &&
-    policy !== "mirror" &&
-    policy !== "pure_white" &&
-    policy !== "wolf_witch"
-  )
-    throw new Error("role_inspection_policy_invalid");
-  return policy;
-}
 /** 原生安装先按原 JSON 规则复制，再校验原 policy；不增加 history／目标形状拒绝政策。 */
 function createRoleInspectionState(state: RoleInspectionState): RoleInspectionState {
   const ownedState = copyAbilityData(state);

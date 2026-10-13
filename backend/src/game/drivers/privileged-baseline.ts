@@ -4,7 +4,7 @@
  * 本模块拥有启发式选择，行动许可、付款、事实发布和最终规则结算仍由引擎及具体机制重检。
  * 无模型、网络或独立随机源；候选按原查询时点读取，异常保留已完成的读取与脚本前缀。
  */
-import { roleInspectionPolicy } from "../mechanisms/roles/role_inspection/ports";
+import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { scholarMentorBonusTargets } from "../mechanisms/roles/scholar_mentor/night_frame";
 import { prohibitsLoversVote } from "../mechanisms/roles/cupid/relation";
 import { text } from "@ai-werewolf-arena/game-text";

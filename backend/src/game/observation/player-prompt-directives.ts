@@ -5,7 +5,7 @@
  * 每次 World／语言／Catalog／板子读取保留位置，不建立新状态镜像；角色 renderer 晚调用，
  * 失败保留原回调和读取前缀。模板、人设、传输提示及实际行动提交由各自所有者负责。
  */
-import { roleInspectionPolicy } from "../mechanisms/roles/role_inspection/ports";
+import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { rolePresentationRenderer } from "./role-presentation";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { isAnimalDreamBoard } from "../mechanisms/roles/animal_dream/authority";

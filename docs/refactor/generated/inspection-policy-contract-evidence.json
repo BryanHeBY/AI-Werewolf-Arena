@@ -1,0 +1,6171 @@
+{
+  "base": "694a2593a53758e3ae9999311b37de9b45c923ad",
+  "source": [
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/native.ts",
+      "sha256": "1bf4368a5cb26ba4196090aed6c25624140d2772d4641e9ae382d0b8945d04f7"
+    },
+    {
+      "path": "backend/src/game/drivers/privileged-baseline.ts",
+      "sha256": "9a7d789cc2483eca439446952fff0a36fba1bb6088a09fa673b36b68d9f2444b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+      "sha256": "6c3625b62e1326511e6a4b8018b56520742067439dc7ec0af0537572428a906d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "b7425a2e0ee4c83802a91c6c2b004f61580e7a5860bc7d45d50ac786ba682ca7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "sha256": "818d71a88d452376babb8cd288105dcfad3eac5670668894c52a4a9e950d5a99"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "sha256": "c60bfa43d908ed759149c1fd51cab322e1490c835e25e3871e3dacdb9247d10d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+      "sha256": "cfddef3f2d3d1bc79f2ec6f2432fe387d3dfd5b35f8ec39cc7a12793e7095c9d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+      "sha256": "efdc80e2ffe066c8ef9280a04dceb689ca1f84cafb0ed6141ffb53318e74876c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "sha256": "fb4661925dae77b7c1f8ede37bcdce763001a5cf05e95cc7a43e71d2656e9820"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "sha256": "e3831f6a2508aff2e1cadd45bee9dd19f262dfa66c7712c2c58188a6f4ce735b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+      "sha256": "21192292e699a7ebf9f71e130ca99aa48c7624f19f57b30fe366359aa93ff5c6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "sha256": "e450ec18616dc471e38669e3fede1882da01f561b259a8fad84f5b91a3ac7b21"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "sha256": "d68d317bef9934aa1970f3f5a8a2871af12ee3d4c1b83f22c8c28aa437f0d5e9"
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "sha256": "76df1d7165c9a7008f4a2c1a22730bd89795f35dba73cc608c8bb78845aadca8"
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "sha256": "7fe7b369147b7042ea443ad281fe21383b5d8ecf83eee079523ed95fdc491a82"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "b78068b92703a970655c5fe7930beacc37abdb733956140a1ae593586f9a0c43"
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "b4242f282c9775c326d6e914b50bbad1d94926429af392bbe2c075538ffa7693"
+    },
+    {
+      "path": "packages/game-contract/package.json",
+      "sha256": "a2e2fd58e7dd0b3281940ef2ce4b82d535e5e10ec63c3bb76ab696cfbc5bf59f"
+    },
+    {
+      "path": "packages/game-contract/src/role-inspection-policy.ts",
+      "sha256": "44f6be5c97496fc3cbd06229ea0f35404d46059b5ba90f78c49f94d93ee71d95"
+    }
+  ],
+  "baseline": [
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/native.ts",
+      "sha256": "fb6f493a9936aa06f68a9a35a5ba0502e6acf01ba3564d722765cb77290c2efb"
+    },
+    {
+      "path": "backend/src/game/drivers/privileged-baseline.ts",
+      "sha256": "ba66da448dd93795e9df45f5e37e01c01390e5582ce8f92eede686231e1f3ca1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+      "sha256": "9d0f3a58ca994957e159ca3fdaa44fe04ecd62308790c04cb3605e386cabcf78"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "sha256": "5a2f6f988f07b5eb15a8411ba680fe5e61db175f733dcae8aa5b69724005276e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "sha256": "83c6e16b74be5f900f2c5ab105fa69014841a702100fabdf88eca465d79f7f28"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "sha256": "36d3847374ba718e432d7a2793ac58f5cfdef6fdf993dec2279692c9ddc03d87"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+      "sha256": "f26770fa71fc259f21f9f5a66d5c95f37e7efed1fd5c3ea036e9add0d876d3fe"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+      "sha256": "88f926e8d11088968e2aa4b3ac17f4d90e5a3bea159462e9a735d7a06e7c118a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "sha256": "843da0a51e45d208150cc7757dfe1efc8e5ba7a5aa08da4a272d04fbff89c8dc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "sha256": "810e0dafec2a4764b30fcf1a16f7215b47965af819e03d0185be0ca8ceac9eb6"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+      "sha256": "5f8bf4f33e33152d3bdae1dd53c573a9d5ff4246d3fac39b11611f0848199958"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "sha256": "33c5d3f938f21eb55389fb2ddf447f6c3e412de31a9a6285e96c9951bec31aa7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "sha256": "f3e43fd039b0ad7c51cac5e57cc95ef45560169cbdff6120116e99d4fdcf4a26"
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "sha256": "445502b1ebedb4e576928265c80619e9326954824a181d0e7858c8e940b71626"
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "sha256": "3bed8e034436c1ec938702f074b86f284aa76c0bc65c3f8e59551385ff6b4538"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "0c4299ee4428c8f2382dde70164c9b6f96e025e6669078d20e35338993e0b41b"
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "ca9ae7a00e03615607b682d37b26a3e7d1634abca2740225b001fc8c81198fde"
+    },
+    {
+      "path": "packages/game-contract/package.json",
+      "sha256": "23c22005c7cba5ce9baf7fe67396e6b320f21439f917e3acc1366d22d01dc9ed"
+    }
+  ],
+  "declarations": [
+    {
+      "name": "DEFAULT_INSPECTION_POLICIES",
+      "from": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "to": "packages/game-contract/src/role-inspection-policy.ts",
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true,
+      "previousTokenHash": "ba5f3e95e5c7925ccb687ddf5d783409959ef025c3830bd9240dc61ba0c95d81",
+      "currentTokenHash": "ba5f3e95e5c7925ccb687ddf5d783409959ef025c3830bd9240dc61ba0c95d81"
+    },
+    {
+      "name": "inspectionPolicy",
+      "from": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "to": "packages/game-contract/src/role-inspection-policy.ts",
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true,
+      "previousTokenHash": "b3d27c38648662deaed37e23212e99b81faa72bdcc91708e6d2e8ca8a344c477",
+      "currentTokenHash": "b3d27c38648662deaed37e23212e99b81faa72bdcc91708e6d2e8ca8a344c477"
+    },
+    {
+      "name": "inspectionRepeats",
+      "from": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "to": "packages/game-contract/src/role-inspection-policy.ts",
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true,
+      "previousTokenHash": "4274ddea719e296215a9e66aebc440bab71cbc8d58f1b6a2e837b3d1cb060deb",
+      "currentTokenHash": "4274ddea719e296215a9e66aebc440bab71cbc8d58f1b6a2e837b3d1cb060deb"
+    },
+    {
+      "name": "inspectionRequired",
+      "from": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "to": "packages/game-contract/src/role-inspection-policy.ts",
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true,
+      "previousTokenHash": "f6796fb90d88374f16e2c640bcf0fea1cf0da1dd044df9396d2740bf32c18139",
+      "currentTokenHash": "f6796fb90d88374f16e2c640bcf0fea1cf0da1dd044df9396d2740bf32c18139"
+    },
+    {
+      "name": "roleInspectionPolicy",
+      "from": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "to": "packages/game-contract/src/role-inspection-policy.ts",
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true,
+      "previousTokenHash": "b8d061433c4302a24e0b6fc3d94cd0929852927d607e8512768e65b245f0c287",
+      "currentTokenHash": "b8d061433c4302a24e0b6fc3d94cd0929852927d607e8512768e65b245f0c287"
+    }
+  ],
+  "consumers": [
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/native.ts",
+      "retainedStatements": 26,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/src/game/drivers/privileged-baseline.ts",
+      "retainedStatements": 1,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+      "retainedStatements": 4,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "retainedStatements": 12,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "retainedStatements": 1,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "retainedStatements": 3,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+      "retainedStatements": 3,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+      "retainedStatements": 8,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "retainedStatements": 5,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "retainedStatements": 2,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+      "retainedStatements": 0,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "retainedStatements": 3,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "retainedStatements": 9,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "retainedStatements": 64,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "retainedStatements": 6,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "retainedStatements": 18,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "retainedStatements": 13,
+      "tokensIdentical": true,
+      "allChildShapeIdentical": true
+    }
+  ],
+  "imports": [
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/native.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "./context",
+          "symbol": "ObservedToolHandler",
+          "local": "ObservedToolHandler",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core",
+          "symbol": "PotionType",
+          "local": "PotionType",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionRepeats",
+          "local": "inspectionRepeats",
+          "typeOnly": false
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "./context",
+          "symbol": "ObservedToolHandler",
+          "local": "ObservedToolHandler",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core",
+          "symbol": "PotionType",
+          "local": "PotionType",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionRepeats",
+          "local": "inspectionRepeats",
+          "typeOnly": false
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/src/game/drivers/privileged-baseline.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/scholar_mentor/night_frame",
+          "symbol": "scholarMentorBonusTargets",
+          "local": "scholarMentorBonusTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/cupid/relation",
+          "symbol": "prohibitsLoversVote",
+          "local": "prohibitsLoversVote",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "text",
+          "local": "text",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "ActionProvider",
+          "local": "ActionProvider",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "ActionRequest",
+          "local": "ActionRequest",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "Camp",
+          "local": "Camp",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "EntityId",
+          "local": "EntityId",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "Phase",
+          "local": "Phase",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "ToolCall",
+          "local": "ToolCall",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/world",
+          "symbol": "World",
+          "local": "World",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "RoleCatalog",
+          "local": "RoleCatalog",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "getDefaultRoleCatalog",
+          "local": "getDefaultRoleCatalog",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "wolfTeamPermissions",
+          "local": "wolfTeamPermissions",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "allNightAbilities",
+          "local": "allNightAbilities",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "activeNightAbility",
+          "local": "activeNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "ROLE_INSPECTION_POLICY_ROLES",
+          "local": "ROLE_INSPECTION_POLICY_ROLES",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/common/participation",
+          "symbol": "canBeExiled",
+          "local": "canBeExiled",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/common/participation",
+          "symbol": "canBeSheriff",
+          "local": "canBeSheriff",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/common/participation",
+          "symbol": "canVote",
+          "local": "canVote",
+          "typeOnly": false
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/scholar_mentor/night_frame",
+          "symbol": "scholarMentorBonusTargets",
+          "local": "scholarMentorBonusTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/cupid/relation",
+          "symbol": "prohibitsLoversVote",
+          "local": "prohibitsLoversVote",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "text",
+          "local": "text",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "ActionProvider",
+          "local": "ActionProvider",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "ActionRequest",
+          "local": "ActionRequest",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "Camp",
+          "local": "Camp",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "EntityId",
+          "local": "EntityId",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "Phase",
+          "local": "Phase",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "ToolCall",
+          "local": "ToolCall",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/world",
+          "symbol": "World",
+          "local": "World",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "RoleCatalog",
+          "local": "RoleCatalog",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "getDefaultRoleCatalog",
+          "local": "getDefaultRoleCatalog",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "wolfTeamPermissions",
+          "local": "wolfTeamPermissions",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "allNightAbilities",
+          "local": "allNightAbilities",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "activeNightAbility",
+          "local": "activeNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "ROLE_INSPECTION_POLICY_ROLES",
+          "local": "ROLE_INSPECTION_POLICY_ROLES",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/common/participation",
+          "symbol": "canBeExiled",
+          "local": "canBeExiled",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/common/participation",
+          "symbol": "canBeSheriff",
+          "local": "canBeSheriff",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/common/participation",
+          "symbol": "canVote",
+          "local": "canVote",
+          "typeOnly": false
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "../roles/noble_secret_body/authority",
+          "symbol": "nobleBodyChoiceTargets",
+          "local": "nobleBodyChoiceTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/radiant_eclipse/night_frame",
+          "symbol": "shelterTargets",
+          "local": "shelterTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/radiant_eclipse/night_frame",
+          "symbol": "eclipseSwallowTargets",
+          "local": "eclipseSwallowTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/radiant_eclipse/night_frame",
+          "symbol": "isRadiantEclipseBoard",
+          "local": "isRadiantEclipseBoard",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/nightmare_shadow/state",
+          "symbol": "nightmareFearTargets",
+          "local": "nightmareFearTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/magician/night_frame",
+          "symbol": "magicianChoiceTargets",
+          "local": "magicianChoiceTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/wolf/ports",
+          "symbol": "bindWolfKnifeTargetQuery",
+          "local": "bindWolfKnifeTargetQuery",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/cupid/relation",
+          "symbol": "prohibitsLoversVote",
+          "local": "prohibitsLoversVote",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/seer/ports",
+          "symbol": "seerTargetAllowed",
+          "local": "seerTargetAllowed",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/guard/ports",
+          "symbol": "guardTargetRepeated",
+          "local": "guardTargetRepeated",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "text",
+          "local": "text",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/model",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/model",
+          "symbol": "ToolName",
+          "local": "ToolName",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./contracts",
+          "symbol": "TargetHintContext",
+          "local": "TargetHintContext",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./contracts",
+          "symbol": "TargetHintRegistry",
+          "local": "TargetHintRegistry",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../common/participation",
+          "symbol": "canBeExiled",
+          "local": "canBeExiled",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../common/participation",
+          "symbol": "canBeSheriff",
+          "local": "canBeSheriff",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionRepeats",
+          "local": "inspectionRepeats",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/role_inspection/ports",
+          "symbol": "getRoleInspectionState",
+          "local": "getRoleInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../roles/abilities",
+          "symbol": "findNightAbility",
+          "local": "findNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/night_action_history",
+          "symbol": "luckyTargetAllowed",
+          "local": "luckyTargetAllowed",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/awakened_hidden_wolf/state",
+          "symbol": "getAwakenedState",
+          "local": "getAwakenedState",
+          "typeOnly": false
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "../roles/noble_secret_body/authority",
+          "symbol": "nobleBodyChoiceTargets",
+          "local": "nobleBodyChoiceTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/radiant_eclipse/night_frame",
+          "symbol": "shelterTargets",
+          "local": "shelterTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/radiant_eclipse/night_frame",
+          "symbol": "eclipseSwallowTargets",
+          "local": "eclipseSwallowTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/radiant_eclipse/night_frame",
+          "symbol": "isRadiantEclipseBoard",
+          "local": "isRadiantEclipseBoard",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/nightmare_shadow/state",
+          "symbol": "nightmareFearTargets",
+          "local": "nightmareFearTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/magician/night_frame",
+          "symbol": "magicianChoiceTargets",
+          "local": "magicianChoiceTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/wolf/ports",
+          "symbol": "bindWolfKnifeTargetQuery",
+          "local": "bindWolfKnifeTargetQuery",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/cupid/relation",
+          "symbol": "prohibitsLoversVote",
+          "local": "prohibitsLoversVote",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/seer/ports",
+          "symbol": "seerTargetAllowed",
+          "local": "seerTargetAllowed",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/guard/ports",
+          "symbol": "guardTargetRepeated",
+          "local": "guardTargetRepeated",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "text",
+          "local": "text",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/model",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/model",
+          "symbol": "ToolName",
+          "local": "ToolName",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./contracts",
+          "symbol": "TargetHintContext",
+          "local": "TargetHintContext",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./contracts",
+          "symbol": "TargetHintRegistry",
+          "local": "TargetHintRegistry",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../common/participation",
+          "symbol": "canBeExiled",
+          "local": "canBeExiled",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../common/participation",
+          "symbol": "canBeSheriff",
+          "local": "canBeSheriff",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionRepeats",
+          "local": "inspectionRepeats",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/role_inspection/ports",
+          "symbol": "getRoleInspectionState",
+          "local": "getRoleInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../roles/abilities",
+          "symbol": "findNightAbility",
+          "local": "findNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/night_action_history",
+          "symbol": "luckyTargetAllowed",
+          "local": "luckyTargetAllowed",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../roles/awakened_hidden_wolf/state",
+          "symbol": "getAwakenedState",
+          "local": "getAwakenedState",
+          "typeOnly": false
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "AbilitySource",
+          "local": "AbilitySource",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "NightAbilityKind",
+          "local": "NightAbilityKind",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "NightAbilityStates",
+          "local": "NightAbilityStates",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "NightAbilityReadState",
+          "local": "NightAbilityReadState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionState",
+          "local": "RoleInspectionState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "node:util",
+          "symbol": "isDeepStrictEqual",
+          "local": "isDeepStrictEqual",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/board",
+          "symbol": "DREAM_PROTECTION_POLICIES",
+          "local": "DREAM_PROTECTION_POLICIES",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/model",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/model",
+          "symbol": "EntityId",
+          "local": "EntityId",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/model",
+          "symbol": "GameEvent",
+          "local": "GameEvent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/world",
+          "symbol": "World",
+          "local": "World",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "./abilities",
+          "symbol": "allNightAbilities",
+          "local": "allNightAbilities",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./abilities",
+          "symbol": "abilityStatus",
+          "local": "abilityStatus",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./abilities",
+          "symbol": "projectPairState",
+          "local": "projectPairState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./abilities",
+          "symbol": "copyAbilityData",
+          "local": "copyAbilityData",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./abilities",
+          "symbol": "projectNightState",
+          "local": "projectNightState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./abilities",
+          "symbol": "NightAbility",
+          "local": "NightAbility",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "./abilities",
+          "symbol": "NightAbilityReadView",
+          "local": "NightAbilityReadView",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/night_effects",
+          "symbol": "captureNightLife",
+          "local": "captureNightLife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/night_effects",
+          "symbol": "livingNightLife",
+          "local": "livingNightLife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./prepared-native-install",
+          "symbol": "commitPreparedNativeAbility",
+          "local": "commitPreparedNativeAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./dreamer/ports",
+          "symbol": "DREAMER_STATE_SLOT",
+          "local": "DREAMER_STATE_SLOT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./radiant_eclipse/shelter-state-slot",
+          "symbol": "SHELTER_STATE_SLOT",
+          "local": "SHELTER_STATE_SLOT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./seer/ports",
+          "symbol": "SEER_STATE_SLOT",
+          "local": "SEER_STATE_SLOT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./guard/ports",
+          "symbol": "GUARD_STATE_SLOT",
+          "local": "GUARD_STATE_SLOT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./witch/ports",
+          "symbol": "WITCH_STATE_SLOT",
+          "local": "WITCH_STATE_SLOT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./role_inspection/ports",
+          "symbol": "ROLE_INSPECTION_STATE_SLOT",
+          "local": "ROLE_INSPECTION_STATE_SLOT",
+          "typeOnly": false
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "AbilitySource",
+          "local": "AbilitySource",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "NightAbilityKind",
+          "local": "NightAbilityKind",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "NightAbilityStates",
+          "local": "NightAbilityStates",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "NightAbilityReadState",
+          "local": "NightAbilityReadState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionState",
+          "local": "RoleInspectionState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "node:util",
+          "symbol": "isDeepStrictEqual",
+          "local": "isDeepStrictEqual",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/board",
+          "symbol": "DREAM_PROTECTION_POLICIES",
+          "local": "DREAM_PROTECTION_POLICIES",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/model",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/model",
+          "symbol": "EntityId",
+          "local": "EntityId",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/model",
+          "symbol": "GameEvent",
+          "local": "GameEvent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/world",
+          "symbol": "World",
+          "local": "World",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "./abilities",
+          "symbol": "allNightAbilities",
+          "local": "allNightAbilities",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./abilities",
+          "symbol": "abilityStatus",
+          "local": "abilityStatus",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./abilities",
+          "symbol": "projectPairState",
+          "local": "projectPairState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./abilities",
+          "symbol": "copyAbilityData",
+          "local": "copyAbilityData",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./abilities",
+          "symbol": "projectNightState",
+          "local": "projectNightState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./abilities",
+          "symbol": "NightAbility",
+          "local": "NightAbility",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "./abilities",
+          "symbol": "NightAbilityReadView",
+          "local": "NightAbilityReadView",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/night_effects",
+          "symbol": "captureNightLife",
+          "local": "captureNightLife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../core/domain/night_effects",
+          "symbol": "livingNightLife",
+          "local": "livingNightLife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./prepared-native-install",
+          "symbol": "commitPreparedNativeAbility",
+          "local": "commitPreparedNativeAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./dreamer/ports",
+          "symbol": "DREAMER_STATE_SLOT",
+          "local": "DREAMER_STATE_SLOT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./radiant_eclipse/shelter-state-slot",
+          "symbol": "SHELTER_STATE_SLOT",
+          "local": "SHELTER_STATE_SLOT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./seer/ports",
+          "symbol": "SEER_STATE_SLOT",
+          "local": "SEER_STATE_SLOT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./guard/ports",
+          "symbol": "GUARD_STATE_SLOT",
+          "local": "GUARD_STATE_SLOT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./witch/ports",
+          "symbol": "WITCH_STATE_SLOT",
+          "local": "WITCH_STATE_SLOT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./role_inspection/ports",
+          "symbol": "ROLE_INSPECTION_STATE_SLOT",
+          "local": "ROLE_INSPECTION_STATE_SLOT",
+          "typeOnly": false
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../presentation-contribution",
+          "symbol": "nativeRolePresentation",
+          "local": "nativeRolePresentation",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionState",
+          "local": "RoleInspectionState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/policies",
+          "symbol": "inspectionConfiguration",
+          "local": "inspectionConfiguration",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/policies",
+          "symbol": "renderInspectionPolicy",
+          "local": "renderInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "roleName",
+          "local": "roleName",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "text",
+          "local": "text",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-presentation",
+          "symbol": "inspectionLabel",
+          "local": "inspectionLabel",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Camp",
+          "local": "Camp",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../contracts",
+          "symbol": "NativeRoleContributions",
+          "local": "NativeRoleContributions",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/ports",
+          "symbol": "setRoleInspectionState",
+          "local": "setRoleInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "allNightAbilities",
+          "local": "allNightAbilities",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "findNightAbility",
+          "local": "findNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "retiredNightAbilityIds",
+          "local": "retiredNightAbilityIds",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../llm/helpers",
+          "symbol": "numberOrNull",
+          "local": "numberOrNull",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/night_stages",
+          "symbol": "MIRROR_INSPECTION_STAGE",
+          "local": "MIRROR_INSPECTION_STAGE",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/rules",
+          "symbol": "ROLE_INSPECTION_TOOL",
+          "local": "ROLE_INSPECTION_TOOL",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/rules",
+          "symbol": "validateRoleInspection",
+          "local": "validateRoleInspection",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/rules",
+          "symbol": "roleInspectionTargets",
+          "local": "roleInspectionTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./native-inspection",
+          "symbol": "nativeMirror",
+          "local": "nativeMirror",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./native-inspection",
+          "symbol": "freshMirrorInspectionState",
+          "local": "freshMirrorInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "export",
+          "module": "./native-inspection",
+          "symbol": "freshMirrorInspectionState",
+          "local": "freshMirrorInspectionState",
+          "typeOnly": false
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../presentation-contribution",
+          "symbol": "nativeRolePresentation",
+          "local": "nativeRolePresentation",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionState",
+          "local": "RoleInspectionState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/policies",
+          "symbol": "inspectionConfiguration",
+          "local": "inspectionConfiguration",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/policies",
+          "symbol": "renderInspectionPolicy",
+          "local": "renderInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "roleName",
+          "local": "roleName",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "text",
+          "local": "text",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-presentation",
+          "symbol": "inspectionLabel",
+          "local": "inspectionLabel",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Camp",
+          "local": "Camp",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../contracts",
+          "symbol": "NativeRoleContributions",
+          "local": "NativeRoleContributions",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/ports",
+          "symbol": "setRoleInspectionState",
+          "local": "setRoleInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "allNightAbilities",
+          "local": "allNightAbilities",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "findNightAbility",
+          "local": "findNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "retiredNightAbilityIds",
+          "local": "retiredNightAbilityIds",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../llm/helpers",
+          "symbol": "numberOrNull",
+          "local": "numberOrNull",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/night_stages",
+          "symbol": "MIRROR_INSPECTION_STAGE",
+          "local": "MIRROR_INSPECTION_STAGE",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/rules",
+          "symbol": "ROLE_INSPECTION_TOOL",
+          "local": "ROLE_INSPECTION_TOOL",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/rules",
+          "symbol": "validateRoleInspection",
+          "local": "validateRoleInspection",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/rules",
+          "symbol": "roleInspectionTargets",
+          "local": "roleInspectionTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./native-inspection",
+          "symbol": "nativeMirror",
+          "local": "nativeMirror",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./native-inspection",
+          "symbol": "freshMirrorInspectionState",
+          "local": "freshMirrorInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "export",
+          "module": "./native-inspection",
+          "symbol": "freshMirrorInspectionState",
+          "local": "freshMirrorInspectionState",
+          "typeOnly": false
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Camp",
+          "local": "Camp",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Phase",
+          "local": "Phase",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/deaths",
+          "symbol": "DeathCause",
+          "local": "DeathCause",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/night_effects",
+          "symbol": "captureNightLife",
+          "local": "captureNightLife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/night_effects",
+          "symbol": "livingNightLife",
+          "local": "livingNightLife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../stages/night/contracts",
+          "symbol": "NightStageContext",
+          "local": "NightStageContext",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../stages/night/contracts",
+          "symbol": "NightStageHandler",
+          "local": "NightStageHandler",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../ability_changes",
+          "symbol": "recordNightAbilityUse",
+          "local": "recordNightAbilityUse",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../ability_scope",
+          "symbol": "captureNightAbilityScope",
+          "local": "captureNightAbilityScope",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../inspection",
+          "symbol": "resolveInspection",
+          "local": "resolveInspection",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/ports",
+          "symbol": "ROLE_INSPECTION_STATE_SLOT",
+          "local": "ROLE_INSPECTION_STATE_SLOT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/night_scope",
+          "symbol": "recordRoleInspectionNightCommit",
+          "local": "recordRoleInspectionNightCommit",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./rules",
+          "symbol": "pureWhiteInspectionTargets",
+          "local": "pureWhiteInspectionTargets",
+          "typeOnly": false
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Camp",
+          "local": "Camp",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Phase",
+          "local": "Phase",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/deaths",
+          "symbol": "DeathCause",
+          "local": "DeathCause",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/night_effects",
+          "symbol": "captureNightLife",
+          "local": "captureNightLife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/night_effects",
+          "symbol": "livingNightLife",
+          "local": "livingNightLife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../stages/night/contracts",
+          "symbol": "NightStageContext",
+          "local": "NightStageContext",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../stages/night/contracts",
+          "symbol": "NightStageHandler",
+          "local": "NightStageHandler",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../ability_changes",
+          "symbol": "recordNightAbilityUse",
+          "local": "recordNightAbilityUse",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../ability_scope",
+          "symbol": "captureNightAbilityScope",
+          "local": "captureNightAbilityScope",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../inspection",
+          "symbol": "resolveInspection",
+          "local": "resolveInspection",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/ports",
+          "symbol": "ROLE_INSPECTION_STATE_SLOT",
+          "local": "ROLE_INSPECTION_STATE_SLOT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../role_inspection/night_scope",
+          "symbol": "recordRoleInspectionNightCommit",
+          "local": "recordRoleInspectionNightCommit",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./rules",
+          "symbol": "pureWhiteInspectionTargets",
+          "local": "pureWhiteInspectionTargets",
+          "typeOnly": false
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RuleError",
+          "local": "RuleError",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Camp",
+          "local": "Camp",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Phase",
+          "local": "Phase",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "EntityId",
+          "local": "EntityId",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/world",
+          "symbol": "World",
+          "local": "World",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../validation/contracts",
+          "symbol": "ToolRule",
+          "local": "ToolRule",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../contracts",
+          "symbol": "RoleProfile",
+          "local": "RoleProfile",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "activeNightAbility",
+          "local": "activeNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RuleError",
+          "local": "RuleError",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Camp",
+          "local": "Camp",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Phase",
+          "local": "Phase",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "EntityId",
+          "local": "EntityId",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/world",
+          "symbol": "World",
+          "local": "World",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../validation/contracts",
+          "symbol": "ToolRule",
+          "local": "ToolRule",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../contracts",
+          "symbol": "RoleProfile",
+          "local": "RoleProfile",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "activeNightAbility",
+          "local": "activeNightAbility",
+          "typeOnly": false
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "GargoyleReadState",
+          "local": "GargoyleState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionReadState",
+          "local": "RoleInspectionReadState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/alive",
+          "symbol": "aliveLifeVersion",
+          "local": "aliveLifeVersion",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/alive",
+          "symbol": "AliveComponent",
+          "local": "AliveComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/world",
+          "symbol": "World",
+          "local": "World",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "findNightAbility",
+          "local": "findNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "NightAbilityReadView",
+          "local": "NightAbilityReadView",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../gargoyle/ports",
+          "symbol": "getGargoyleState",
+          "local": "getGargoyleState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./state-slot",
+          "symbol": "ROLE_INSPECTION_STATE_SLOT",
+          "local": "ROLE_INSPECTION_STATE_SLOT",
+          "typeOnly": false
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "GargoyleReadState",
+          "local": "GargoyleState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionReadState",
+          "local": "RoleInspectionReadState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/alive",
+          "symbol": "aliveLifeVersion",
+          "local": "aliveLifeVersion",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/alive",
+          "symbol": "AliveComponent",
+          "local": "AliveComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/world",
+          "symbol": "World",
+          "local": "World",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "findNightAbility",
+          "local": "findNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "NightAbilityReadView",
+          "local": "NightAbilityReadView",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../gargoyle/ports",
+          "symbol": "getGargoyleState",
+          "local": "getGargoyleState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./state-slot",
+          "symbol": "ROLE_INSPECTION_STATE_SLOT",
+          "local": "ROLE_INSPECTION_STATE_SLOT",
+          "typeOnly": false
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionPolicy",
+          "local": "RoleInspectionPolicy",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "./state-slot",
+          "symbol": "ROLE_INSPECTION_STATE_SLOT",
+          "local": "ROLE_INSPECTION_STATE_SLOT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/alive",
+          "symbol": "AliveComponent",
+          "local": "AliveComponent",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/alive",
+          "symbol": "aliveLifeVersion",
+          "local": "aliveLifeVersion",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Phase",
+          "local": "Phase",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../stages/night/contracts",
+          "symbol": "NightStageContext",
+          "local": "NightStageContext",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../stages/night/contracts",
+          "symbol": "NightStageHandler",
+          "local": "NightStageHandler",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "NightAbilityReadView",
+          "local": "NightAbilityReadView",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../ability_changes",
+          "symbol": "recordNightAbilityUse",
+          "local": "recordNightAbilityUse",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../gargoyle/ports",
+          "symbol": "getGargoyleState",
+          "local": "getGargoyleState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../inspection",
+          "symbol": "resolveInspection",
+          "local": "resolveInspection",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./night_scope",
+          "symbol": "beginRoleInspectionNight",
+          "local": "beginRoleInspectionNight",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./night_scope",
+          "symbol": "recordRoleInspectionCompletion",
+          "local": "recordRoleInspectionCompletion",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./night_scope",
+          "symbol": "recordRoleInspectionNightCommit",
+          "local": "recordRoleInspectionNightCommit",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionRequired",
+          "local": "inspectionRequired",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./rules",
+          "symbol": "roleInspectionTargets",
+          "local": "roleInspectionTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../ability_scope",
+          "symbol": "captureNightAbilityScope",
+          "local": "captureNightAbilityScope",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../awakened_hidden_wolf/night_scope",
+          "symbol": "captureAwakenedMirrorScope",
+          "local": "captureAwakenedMirrorScope",
+          "typeOnly": false
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionPolicy",
+          "local": "RoleInspectionPolicy",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "./state-slot",
+          "symbol": "ROLE_INSPECTION_STATE_SLOT",
+          "local": "ROLE_INSPECTION_STATE_SLOT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/alive",
+          "symbol": "AliveComponent",
+          "local": "AliveComponent",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/alive",
+          "symbol": "aliveLifeVersion",
+          "local": "aliveLifeVersion",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Phase",
+          "local": "Phase",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../stages/night/contracts",
+          "symbol": "NightStageContext",
+          "local": "NightStageContext",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../stages/night/contracts",
+          "symbol": "NightStageHandler",
+          "local": "NightStageHandler",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "NightAbilityReadView",
+          "local": "NightAbilityReadView",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../ability_changes",
+          "symbol": "recordNightAbilityUse",
+          "local": "recordNightAbilityUse",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../gargoyle/ports",
+          "symbol": "getGargoyleState",
+          "local": "getGargoyleState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../inspection",
+          "symbol": "resolveInspection",
+          "local": "resolveInspection",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./night_scope",
+          "symbol": "beginRoleInspectionNight",
+          "local": "beginRoleInspectionNight",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./night_scope",
+          "symbol": "recordRoleInspectionCompletion",
+          "local": "recordRoleInspectionCompletion",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./night_scope",
+          "symbol": "recordRoleInspectionNightCommit",
+          "local": "recordRoleInspectionNightCommit",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionRequired",
+          "local": "inspectionRequired",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./rules",
+          "symbol": "roleInspectionTargets",
+          "local": "roleInspectionTargets",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../ability_scope",
+          "symbol": "captureNightAbilityScope",
+          "local": "captureNightAbilityScope",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../awakened_hidden_wolf/night_scope",
+          "symbol": "captureAwakenedMirrorScope",
+          "local": "captureAwakenedMirrorScope",
+          "typeOnly": false
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionPolicy",
+          "local": "inspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionReadState",
+          "local": "RoleInspectionReadState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "zod",
+          "symbol": "z",
+          "local": "z",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/board",
+          "symbol": "INSPECTION_POLICIES",
+          "local": "INSPECTION_POLICIES",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/board",
+          "symbol": "BoardConfig",
+          "local": "BoardConfig",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/board",
+          "symbol": "InspectionPolicy",
+          "local": "InspectionPolicy",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../contracts",
+          "symbol": "RoleProfile",
+          "local": "RoleProfile",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "text",
+          "local": "text",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "Locale",
+          "local": "Locale",
+          "typeOnly": true
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionPolicy",
+          "local": "inspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionReadState",
+          "local": "RoleInspectionReadState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "zod",
+          "symbol": "z",
+          "local": "z",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/board",
+          "symbol": "INSPECTION_POLICIES",
+          "local": "INSPECTION_POLICIES",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/board",
+          "symbol": "BoardConfig",
+          "local": "BoardConfig",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/board",
+          "symbol": "InspectionPolicy",
+          "local": "InspectionPolicy",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../contracts",
+          "symbol": "RoleProfile",
+          "local": "RoleProfile",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "text",
+          "local": "text",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "Locale",
+          "local": "Locale",
+          "typeOnly": true
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+      "expected": [
+        {
+          "kind": "export",
+          "module": "./state-slot",
+          "symbol": "getRoleInspectionState",
+          "local": "getRoleInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "export",
+          "module": "./state-slot",
+          "symbol": "setRoleInspectionState",
+          "local": "setRoleInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "export",
+          "module": "./state-slot",
+          "symbol": "recordAbilityRoleInspection",
+          "local": "recordAbilityRoleInspection",
+          "typeOnly": false
+        },
+        {
+          "kind": "export",
+          "module": "./state-slot",
+          "symbol": "ROLE_INSPECTION_STATE_SLOT",
+          "local": "ROLE_INSPECTION_STATE_SLOT",
+          "typeOnly": false
+        }
+      ],
+      "actual": [
+        {
+          "kind": "export",
+          "module": "./state-slot",
+          "symbol": "getRoleInspectionState",
+          "local": "getRoleInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "export",
+          "module": "./state-slot",
+          "symbol": "setRoleInspectionState",
+          "local": "setRoleInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "export",
+          "module": "./state-slot",
+          "symbol": "recordAbilityRoleInspection",
+          "local": "recordAbilityRoleInspection",
+          "typeOnly": false
+        },
+        {
+          "kind": "export",
+          "module": "./state-slot",
+          "symbol": "ROLE_INSPECTION_STATE_SLOT",
+          "local": "ROLE_INSPECTION_STATE_SLOT",
+          "typeOnly": false
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionReadState",
+          "local": "RoleInspectionReadState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RuleError",
+          "local": "RuleError",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Phase",
+          "local": "Phase",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "EntityId",
+          "local": "EntityId",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/world",
+          "symbol": "World",
+          "local": "World",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../validation/contracts",
+          "symbol": "ToolRule",
+          "local": "ToolRule",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../validation/contracts",
+          "symbol": "isAliveTarget",
+          "local": "isAliveTarget",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../contracts",
+          "symbol": "RoleProfile",
+          "local": "RoleProfile",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "activeNightAbility",
+          "local": "activeNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionRepeats",
+          "local": "inspectionRepeats",
+          "typeOnly": false
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionReadState",
+          "local": "RoleInspectionReadState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RuleError",
+          "local": "RuleError",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "Phase",
+          "local": "Phase",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/model",
+          "symbol": "EntityId",
+          "local": "EntityId",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/world",
+          "symbol": "World",
+          "local": "World",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../validation/contracts",
+          "symbol": "ToolRule",
+          "local": "ToolRule",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../validation/contracts",
+          "symbol": "isAliveTarget",
+          "local": "isAliveTarget",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../contracts",
+          "symbol": "RoleProfile",
+          "local": "RoleProfile",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "activeNightAbility",
+          "local": "activeNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionRepeats",
+          "local": "inspectionRepeats",
+          "typeOnly": false
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionState",
+          "local": "RoleInspectionState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionReadState",
+          "local": "RoleInspectionReadState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "EntityId",
+          "local": "EntityId",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "InspectionResult",
+          "local": "InspectionResult",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "copyAbilityData",
+          "local": "copyAbilityData",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "findNightAbility",
+          "local": "findNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "NightAbilityReadView",
+          "local": "NightAbilityReadView",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../prepared-native-install",
+          "symbol": "commitPreparedNativeAbility",
+          "local": "commitPreparedNativeAbility",
+          "typeOnly": false
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionState",
+          "local": "RoleInspectionState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionReadState",
+          "local": "RoleInspectionReadState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "EntityId",
+          "local": "EntityId",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "InspectionResult",
+          "local": "InspectionResult",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "copyAbilityData",
+          "local": "copyAbilityData",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "findNightAbility",
+          "local": "findNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../abilities",
+          "symbol": "NightAbilityReadView",
+          "local": "NightAbilityReadView",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../prepared-native-install",
+          "symbol": "commitPreparedNativeAbility",
+          "local": "commitPreparedNativeAbility",
+          "typeOnly": false
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "Locale",
+          "local": "Locale",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "InspectionResult",
+          "local": "InspectionResult",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "NativeRolePresentationId",
+          "local": "NativeRolePresentationId",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "NativeRoleMessageKey",
+          "local": "NativeRoleMessageKey",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "NativeRoleMessageParameters",
+          "local": "NativeRoleMessageParameters",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "NativeRoleMessagePart",
+          "local": "NativeRoleMessagePart",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionReadState",
+          "local": "RoleInspectionReadState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-presentation",
+          "symbol": "formatNativeRolePart",
+          "local": "formatNativeRolePart",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/world",
+          "symbol": "World",
+          "local": "World",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionPolicy",
+          "local": "inspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/mirror_girl/ports",
+          "symbol": "nativeMirror",
+          "local": "nativeMirror",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/mirror_girl/ports",
+          "symbol": "freshMirrorInspectionState",
+          "local": "freshMirrorInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/time_wolf_consort/ports",
+          "symbol": "getTimeConsortState",
+          "local": "getTimeConsortState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/wolf_sorcerer/ports",
+          "symbol": "getWolfSorcererState",
+          "local": "getWolfSorcererState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/magician/ports",
+          "symbol": "getMagicianState",
+          "local": "getMagicianState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/red_moon_apostle/ports",
+          "symbol": "getRedMoonState",
+          "local": "getRedMoonState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/nightmare_shadow/ports",
+          "symbol": "getNightmareShadowState",
+          "local": "getNightmareShadowState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/evil_knight/ports",
+          "symbol": "getEvilKnightState",
+          "local": "getEvilKnightState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/demon_hunter/ports",
+          "symbol": "projectDemonHunter",
+          "local": "projectDemonHunter",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/ghost_bride/ports",
+          "symbol": "weddingBrideState",
+          "local": "weddingBrideState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/wild_child/ports",
+          "symbol": "projectWildChild",
+          "local": "projectWildChild",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/lonely_girl/ports",
+          "symbol": "projectLonelyGirl",
+          "local": "projectLonelyGirl",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/thief/ports",
+          "symbol": "projectThiefState",
+          "local": "projectThiefState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/shapeshifter/ports",
+          "symbol": "projectShapeshifterState",
+          "local": "projectShapeshifterState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/wolf_king/ports",
+          "symbol": "getWolfKingState",
+          "local": "getWolfKingState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/white_wolf_king/ports",
+          "symbol": "getWhiteWolfKingState",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/knight/ports",
+          "symbol": "getKnightState",
+          "local": "getKnightState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/gravekeeper/ports",
+          "symbol": "getGravekeeperState",
+          "local": "getGravekeeperState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/replay-contract",
+          "symbol": "readGravekeeperReport",
+          "local": "readGravekeeperReport",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/dreamer/ports",
+          "symbol": "getDreamerState",
+          "local": "getDreamerState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/animal_dream/ports",
+          "symbol": "isAnimalDreamBoard",
+          "local": "isAnimalDreamBoard",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/animal_dream/ports",
+          "symbol": "animalBeautyKnowledge",
+          "local": "animalBeautyKnowledge",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/wolf_beauty/ports",
+          "symbol": "getWolfBeautyState",
+          "local": "getWolfBeautyState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/animal_dream/ports",
+          "symbol": "animalBearKnowledge",
+          "local": "animalBearKnowledge",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/bear/ports",
+          "symbol": "getBearState",
+          "local": "getBearState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/cupid/ports",
+          "symbol": "getCupidState",
+          "local": "getCupidState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/cupid/ports",
+          "symbol": "projectCupidState",
+          "local": "projectCupidState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/debater/ports",
+          "symbol": "projectDebaterState",
+          "local": "projectDebaterState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/debater/ports",
+          "symbol": "getDebaterState",
+          "local": "getDebaterState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/debater/ports",
+          "symbol": "hasDebateCommit",
+          "local": "hasDebateCommit",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/hidden_wolf/ports",
+          "symbol": "getHiddenWolfState",
+          "local": "getHiddenWolfState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/hidden_wolf/ports",
+          "symbol": "canHiddenWolfKnife",
+          "local": "canHiddenWolfKnife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/role_inspection/ports",
+          "symbol": "getRoleInspectionState",
+          "local": "getRoleInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/gargoyle/ports",
+          "symbol": "getGargoyleState",
+          "local": "getGargoyleState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/gargoyle/ports",
+          "symbol": "canGargoyleKnife",
+          "local": "canGargoyleKnife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/mechanical_wolf/ports",
+          "symbol": "getMechanicalState",
+          "local": "getMechanicalState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/mechanical_wolf/ports",
+          "symbol": "projectMechanicalState",
+          "local": "projectMechanicalState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/miracle_merchant/ports",
+          "symbol": "projectMerchantState",
+          "local": "projectMerchantState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/miracle_merchant/ports",
+          "symbol": "getMerchantState",
+          "local": "getMerchantState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/black_market_merchant/ports",
+          "symbol": "projectBlackMarketState",
+          "local": "projectBlackMarketState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/black_market_merchant/ports",
+          "symbol": "getBlackMarketState",
+          "local": "getBlackMarketState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/hybrid/ports",
+          "symbol": "projectHybridState",
+          "local": "projectHybridState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/hybrid/ports",
+          "symbol": "getHybridState",
+          "local": "getHybridState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/awakened_hidden_wolf/ports",
+          "symbol": "getAwakenedState",
+          "local": "getAwakenedState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/awakened_hidden_wolf/ports",
+          "symbol": "projectAwakenedState",
+          "local": "projectAwakenedState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/seer/ports",
+          "symbol": "getSeerState",
+          "local": "getSeerState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/guard/ports",
+          "symbol": "getGuardState",
+          "local": "getGuardState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/witch/ports",
+          "symbol": "getWitchState",
+          "local": "getWitchState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/hunter/ports",
+          "symbol": "getHunterState",
+          "local": "getHunterState",
+          "typeOnly": false
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "Locale",
+          "local": "Locale",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "InspectionResult",
+          "local": "InspectionResult",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "NativeRolePresentationId",
+          "local": "NativeRolePresentationId",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "NativeRoleMessageKey",
+          "local": "NativeRoleMessageKey",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "NativeRoleMessageParameters",
+          "local": "NativeRoleMessageParameters",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "NativeRoleMessagePart",
+          "local": "NativeRoleMessagePart",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "RoleInspectionReadState",
+          "local": "RoleInspectionReadState",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-presentation",
+          "symbol": "formatNativeRolePart",
+          "local": "formatNativeRolePart",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/world",
+          "symbol": "World",
+          "local": "World",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/components/names",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionPolicy",
+          "local": "inspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/mirror_girl/ports",
+          "symbol": "nativeMirror",
+          "local": "nativeMirror",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/mirror_girl/ports",
+          "symbol": "freshMirrorInspectionState",
+          "local": "freshMirrorInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/time_wolf_consort/ports",
+          "symbol": "getTimeConsortState",
+          "local": "getTimeConsortState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/wolf_sorcerer/ports",
+          "symbol": "getWolfSorcererState",
+          "local": "getWolfSorcererState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/magician/ports",
+          "symbol": "getMagicianState",
+          "local": "getMagicianState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/red_moon_apostle/ports",
+          "symbol": "getRedMoonState",
+          "local": "getRedMoonState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/nightmare_shadow/ports",
+          "symbol": "getNightmareShadowState",
+          "local": "getNightmareShadowState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/evil_knight/ports",
+          "symbol": "getEvilKnightState",
+          "local": "getEvilKnightState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/demon_hunter/ports",
+          "symbol": "projectDemonHunter",
+          "local": "projectDemonHunter",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/ghost_bride/ports",
+          "symbol": "weddingBrideState",
+          "local": "weddingBrideState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/wild_child/ports",
+          "symbol": "projectWildChild",
+          "local": "projectWildChild",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/lonely_girl/ports",
+          "symbol": "projectLonelyGirl",
+          "local": "projectLonelyGirl",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/thief/ports",
+          "symbol": "projectThiefState",
+          "local": "projectThiefState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/shapeshifter/ports",
+          "symbol": "projectShapeshifterState",
+          "local": "projectShapeshifterState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/wolf_king/ports",
+          "symbol": "getWolfKingState",
+          "local": "getWolfKingState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/white_wolf_king/ports",
+          "symbol": "getWhiteWolfKingState",
+          "local": "getWhiteWolfKingState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/knight/ports",
+          "symbol": "getKnightState",
+          "local": "getKnightState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/gravekeeper/ports",
+          "symbol": "getGravekeeperState",
+          "local": "getGravekeeperState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/replay-contract",
+          "symbol": "readGravekeeperReport",
+          "local": "readGravekeeperReport",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/dreamer/ports",
+          "symbol": "getDreamerState",
+          "local": "getDreamerState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/animal_dream/ports",
+          "symbol": "isAnimalDreamBoard",
+          "local": "isAnimalDreamBoard",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/animal_dream/ports",
+          "symbol": "animalBeautyKnowledge",
+          "local": "animalBeautyKnowledge",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/wolf_beauty/ports",
+          "symbol": "getWolfBeautyState",
+          "local": "getWolfBeautyState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/animal_dream/ports",
+          "symbol": "animalBearKnowledge",
+          "local": "animalBearKnowledge",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/bear/ports",
+          "symbol": "getBearState",
+          "local": "getBearState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/cupid/ports",
+          "symbol": "getCupidState",
+          "local": "getCupidState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/cupid/ports",
+          "symbol": "projectCupidState",
+          "local": "projectCupidState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/debater/ports",
+          "symbol": "projectDebaterState",
+          "local": "projectDebaterState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/debater/ports",
+          "symbol": "getDebaterState",
+          "local": "getDebaterState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/debater/ports",
+          "symbol": "hasDebateCommit",
+          "local": "hasDebateCommit",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/hidden_wolf/ports",
+          "symbol": "getHiddenWolfState",
+          "local": "getHiddenWolfState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/hidden_wolf/ports",
+          "symbol": "canHiddenWolfKnife",
+          "local": "canHiddenWolfKnife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/role_inspection/ports",
+          "symbol": "getRoleInspectionState",
+          "local": "getRoleInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/gargoyle/ports",
+          "symbol": "getGargoyleState",
+          "local": "getGargoyleState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/gargoyle/ports",
+          "symbol": "canGargoyleKnife",
+          "local": "canGargoyleKnife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/mechanical_wolf/ports",
+          "symbol": "getMechanicalState",
+          "local": "getMechanicalState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/mechanical_wolf/ports",
+          "symbol": "projectMechanicalState",
+          "local": "projectMechanicalState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/miracle_merchant/ports",
+          "symbol": "projectMerchantState",
+          "local": "projectMerchantState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/miracle_merchant/ports",
+          "symbol": "getMerchantState",
+          "local": "getMerchantState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/black_market_merchant/ports",
+          "symbol": "projectBlackMarketState",
+          "local": "projectBlackMarketState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/black_market_merchant/ports",
+          "symbol": "getBlackMarketState",
+          "local": "getBlackMarketState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/hybrid/ports",
+          "symbol": "projectHybridState",
+          "local": "projectHybridState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/hybrid/ports",
+          "symbol": "getHybridState",
+          "local": "getHybridState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/awakened_hidden_wolf/ports",
+          "symbol": "getAwakenedState",
+          "local": "getAwakenedState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/awakened_hidden_wolf/ports",
+          "symbol": "projectAwakenedState",
+          "local": "projectAwakenedState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/seer/ports",
+          "symbol": "getSeerState",
+          "local": "getSeerState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/guard/ports",
+          "symbol": "getGuardState",
+          "local": "getGuardState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/witch/ports",
+          "symbol": "getWitchState",
+          "local": "getWitchState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/hunter/ports",
+          "symbol": "getHunterState",
+          "local": "getHunterState",
+          "typeOnly": false
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./role-presentation",
+          "symbol": "rolePresentationRenderer",
+          "local": "rolePresentationRenderer",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "ReadonlyBoardConfig",
+          "local": "ReadonlyBoardConfig",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/animal_dream/authority",
+          "symbol": "isAnimalDreamBoard",
+          "local": "isAnimalDreamBoard",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/animal_dream/facts",
+          "symbol": "animalFoxKnowledge",
+          "local": "animalFoxKnowledge",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/animal_dream/facts",
+          "symbol": "animalPufferKnowledge",
+          "local": "animalPufferKnowledge",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/animal_dream/facts",
+          "symbol": "animalCatKnowledge",
+          "local": "animalCatKnowledge",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/noble_secret_body/authority",
+          "symbol": "isNobleBodyBoard",
+          "local": "isNobleBodyBoard",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/noble_secret_body/authority",
+          "symbol": "getNobleBodyPlayerState",
+          "local": "getNobleBodyPlayerState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/fragrant_pair_seer/authority",
+          "symbol": "isFragrantPairBoard",
+          "local": "isFragrantPairBoard",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/fragrant_pair_seer/authority",
+          "symbol": "fragrantPlayerKnowledge",
+          "local": "fragrantPlayerKnowledge",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/night_death_timing",
+          "symbol": "settlesNightBeforeDay",
+          "local": "settlesNightBeforeDay",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/mist_raven/player_projection",
+          "symbol": "projectAlchemist",
+          "local": "projectAlchemist",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/mist_raven/player_projection",
+          "symbol": "projectRaven",
+          "local": "projectRaven",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/ghost_bride/authority",
+          "symbol": "weddingActorView",
+          "local": "weddingActorView",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/lonely_girl/lifecycle",
+          "symbol": "projectLonelyGirl",
+          "local": "projectLonelyGirl",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/wild_child/lifecycle",
+          "symbol": "projectWildChild",
+          "local": "projectWildChild",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/initial_identity/deal",
+          "symbol": "initialIdentityCandidateCounts",
+          "local": "initialIdentityCandidateCounts",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/shapeshifter/state",
+          "symbol": "projectShapeshifterState",
+          "local": "projectShapeshifterState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/shapeshifter/setup",
+          "symbol": "projectShapeshifterChoices",
+          "local": "projectShapeshifterChoices",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/initial_identity/deal",
+          "symbol": "initialIdentityKind",
+          "local": "initialIdentityKind",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/thief/state",
+          "symbol": "projectThiefState",
+          "local": "projectThiefState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/thief/setup",
+          "symbol": "projectThiefChoices",
+          "local": "projectThiefChoices",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/events/wall_notes/authority",
+          "symbol": "projectWallNote",
+          "local": "projectWallNote",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/role_inspection/policies",
+          "symbol": "renderInspectionPolicy",
+          "local": "renderInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "text",
+          "local": "text",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "term",
+          "local": "term",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "Locale",
+          "local": "Locale",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/abilities",
+          "symbol": "ROLE_INSPECTION_POLICY_ROLES",
+          "local": "ROLE_INSPECTION_POLICY_ROLES",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/abilities",
+          "symbol": "projectNightState",
+          "local": "projectNightState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/death_abilities",
+          "symbol": "allDeathGuns",
+          "local": "allDeathGuns",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/death_abilities",
+          "symbol": "projectDeathGun",
+          "local": "projectDeathGun",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/role_inspection/ports",
+          "symbol": "getRoleInspectionState",
+          "local": "getRoleInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/night_action_history",
+          "symbol": "ownNightActions",
+          "local": "ownNightActions",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/debater/authority",
+          "symbol": "debateVoteBlocked",
+          "local": "debateVoteBlocked",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/cupid/relation",
+          "symbol": "projectLover",
+          "local": "projectLover",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/radiant_eclipse/ports",
+          "symbol": "projectEclipseState",
+          "local": "projectEclipseState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "ActionRequest",
+          "local": "ActionRequest",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "ActionWindow",
+          "local": "ActionWindow",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "EntityId",
+          "local": "EntityId",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/action_request_context",
+          "symbol": "getActionRequestDay",
+          "local": "getActionRequestDay",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/action_request_context",
+          "symbol": "getActionRequestStage",
+          "local": "getActionRequestStage",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/world",
+          "symbol": "World",
+          "local": "World",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "RoleCatalog",
+          "local": "RoleCatalog",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "allNightAbilities",
+          "local": "allNightAbilities",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "abilityStatus",
+          "local": "abilityStatus",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/dreamer/ports",
+          "symbol": "getDreamerState",
+          "local": "getDreamerState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/idiot/ports",
+          "symbol": "getIdiotState",
+          "local": "getIdiotState",
+          "typeOnly": false
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "./role-presentation",
+          "symbol": "rolePresentationRenderer",
+          "local": "rolePresentationRenderer",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract",
+          "symbol": "ReadonlyBoardConfig",
+          "local": "ReadonlyBoardConfig",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/animal_dream/authority",
+          "symbol": "isAnimalDreamBoard",
+          "local": "isAnimalDreamBoard",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/animal_dream/facts",
+          "symbol": "animalFoxKnowledge",
+          "local": "animalFoxKnowledge",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/animal_dream/facts",
+          "symbol": "animalPufferKnowledge",
+          "local": "animalPufferKnowledge",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/animal_dream/facts",
+          "symbol": "animalCatKnowledge",
+          "local": "animalCatKnowledge",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/noble_secret_body/authority",
+          "symbol": "isNobleBodyBoard",
+          "local": "isNobleBodyBoard",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/noble_secret_body/authority",
+          "symbol": "getNobleBodyPlayerState",
+          "local": "getNobleBodyPlayerState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/fragrant_pair_seer/authority",
+          "symbol": "isFragrantPairBoard",
+          "local": "isFragrantPairBoard",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/fragrant_pair_seer/authority",
+          "symbol": "fragrantPlayerKnowledge",
+          "local": "fragrantPlayerKnowledge",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/night_death_timing",
+          "symbol": "settlesNightBeforeDay",
+          "local": "settlesNightBeforeDay",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/mist_raven/player_projection",
+          "symbol": "projectAlchemist",
+          "local": "projectAlchemist",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/mist_raven/player_projection",
+          "symbol": "projectRaven",
+          "local": "projectRaven",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/ghost_bride/authority",
+          "symbol": "weddingActorView",
+          "local": "weddingActorView",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/lonely_girl/lifecycle",
+          "symbol": "projectLonelyGirl",
+          "local": "projectLonelyGirl",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/wild_child/lifecycle",
+          "symbol": "projectWildChild",
+          "local": "projectWildChild",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/initial_identity/deal",
+          "symbol": "initialIdentityCandidateCounts",
+          "local": "initialIdentityCandidateCounts",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/shapeshifter/state",
+          "symbol": "projectShapeshifterState",
+          "local": "projectShapeshifterState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/shapeshifter/setup",
+          "symbol": "projectShapeshifterChoices",
+          "local": "projectShapeshifterChoices",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/initial_identity/deal",
+          "symbol": "initialIdentityKind",
+          "local": "initialIdentityKind",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/thief/state",
+          "symbol": "projectThiefState",
+          "local": "projectThiefState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/thief/setup",
+          "symbol": "projectThiefChoices",
+          "local": "projectThiefChoices",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/events/wall_notes/authority",
+          "symbol": "projectWallNote",
+          "local": "projectWallNote",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/role_inspection/policies",
+          "symbol": "renderInspectionPolicy",
+          "local": "renderInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "text",
+          "local": "text",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "term",
+          "local": "term",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-text",
+          "symbol": "Locale",
+          "local": "Locale",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/abilities",
+          "symbol": "ROLE_INSPECTION_POLICY_ROLES",
+          "local": "ROLE_INSPECTION_POLICY_ROLES",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/abilities",
+          "symbol": "projectNightState",
+          "local": "projectNightState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/death_abilities",
+          "symbol": "allDeathGuns",
+          "local": "allDeathGuns",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/death_abilities",
+          "symbol": "projectDeathGun",
+          "local": "projectDeathGun",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/role_inspection/ports",
+          "symbol": "getRoleInspectionState",
+          "local": "getRoleInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/night_action_history",
+          "symbol": "ownNightActions",
+          "local": "ownNightActions",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/debater/authority",
+          "symbol": "debateVoteBlocked",
+          "local": "debateVoteBlocked",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/cupid/relation",
+          "symbol": "projectLover",
+          "local": "projectLover",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/radiant_eclipse/ports",
+          "symbol": "projectEclipseState",
+          "local": "projectEclipseState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/components/role",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "ActionRequest",
+          "local": "ActionRequest",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "ActionWindow",
+          "local": "ActionWindow",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "EntityId",
+          "local": "EntityId",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/action_request_context",
+          "symbol": "getActionRequestDay",
+          "local": "getActionRequestDay",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/action_request_context",
+          "symbol": "getActionRequestStage",
+          "local": "getActionRequestStage",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../core/domain/world",
+          "symbol": "World",
+          "local": "World",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "RoleCatalog",
+          "local": "RoleCatalog",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "allNightAbilities",
+          "local": "allNightAbilities",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms",
+          "symbol": "abilityStatus",
+          "local": "abilityStatus",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/dreamer/ports",
+          "symbol": "getDreamerState",
+          "local": "getDreamerState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../mechanisms/roles/idiot/ports",
+          "symbol": "getIdiotState",
+          "local": "getIdiotState",
+          "typeOnly": false
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/observation/role-presentation",
+          "symbol": "renderRolePrompt",
+          "local": "renderRolePrompt",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../support/builders/night-stage-context",
+          "symbol": "nightStageContext",
+          "local": "nightStageContext",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "bun:test",
+          "symbol": "expect",
+          "local": "expect",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "bun:test",
+          "symbol": "test",
+          "local": "test",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/app/bootstrap",
+          "symbol": "bootstrapGame",
+          "local": "bootstrapGame",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "Camp",
+          "local": "Camp",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "Phase",
+          "local": "Phase",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "WinCondition",
+          "local": "WinCondition",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "ActionRequest",
+          "local": "ActionRequest",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "BoardConfig",
+          "local": "BoardConfig",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "GameEvent",
+          "local": "GameEvent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/runtime/scenarios/six_player_mvp",
+          "symbol": "sixPlayerMvpConfig",
+          "local": "sixPlayerMvpConfig",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/abilities",
+          "symbol": "findNightAbility",
+          "local": "findNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/abilities",
+          "symbol": "allNightAbilities",
+          "local": "allNightAbilities",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/abilities",
+          "symbol": "projectNightAbility",
+          "local": "projectNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/ability_changes",
+          "symbol": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/ability_changes",
+          "symbol": "transferNightAbility",
+          "local": "transferNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/ability_changes",
+          "symbol": "setNightAbilityEnabled",
+          "local": "setNightAbilityEnabled",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/mirror_girl/profile",
+          "symbol": "freshMirrorInspectionState",
+          "local": "freshMirrorInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role_inspection/night_stages",
+          "symbol": "MIRROR_INSPECTION_STAGE",
+          "local": "MIRROR_INSPECTION_STAGE",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role-catalog-assembly",
+          "symbol": "getDefaultRoleCatalog",
+          "local": "getDefaultRoleCatalog",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role-catalog-assembly",
+          "symbol": "getDefaultRoleContributions",
+          "local": "getDefaultRoleContributions",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role-catalog-assembly",
+          "symbol": "createRoleCatalog",
+          "local": "createRoleCatalog",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/inspection",
+          "symbol": "resolveInspection",
+          "local": "resolveInspection",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/gargoyle/inheritance",
+          "symbol": "canGargoyleKnife",
+          "local": "canGargoyleKnife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/gargoyle/inheritance",
+          "symbol": "refreshGargoyleInheritance",
+          "local": "refreshGargoyleInheritance",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/hidden_wolf/inheritance",
+          "symbol": "refreshHiddenWolfInheritance",
+          "local": "refreshHiddenWolfInheritance",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "symbol": "NightStageRegistry",
+          "local": "NightStageRegistry",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/stages/night/contracts",
+          "symbol": "NightStageContext",
+          "local": "NightStageContext",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/engine/action_request_factory",
+          "symbol": "GameActionRequestFactory",
+          "local": "GameActionRequestFactory",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/gateway/tool_gateway",
+          "symbol": "ToolGateway",
+          "local": "ToolGateway",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/gateway/action-reception",
+          "symbol": "ActionReception",
+          "local": "ActionReception",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/engine/agent_visible_event_feed",
+          "symbol": "buildAgentVisibleEventFeed",
+          "local": "buildAgentVisibleEventFeed",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/ai/agents/player/player_prompt_policy",
+          "symbol": "PlayerPromptPolicy",
+          "local": "PlayerPromptPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/drivers/privileged-baseline",
+          "symbol": "BaselineBotActionProvider",
+          "local": "BaselineBotActionProvider",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms",
+          "symbol": "getDefaultConfigRenderRegistry",
+          "local": "getDefaultConfigRenderRegistry",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms",
+          "symbol": "getDefaultPhaseStageLocalizationRegistry",
+          "local": "getDefaultPhaseStageLocalizationRegistry",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms",
+          "symbol": "getDefaultTargetHintRegistry",
+          "local": "getDefaultTargetHintRegistry",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms",
+          "symbol": "getDefaultToolSpecRegistry",
+          "local": "getDefaultToolSpecRegistry",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role_inspection/night_scope",
+          "symbol": "hasRoleInspectionNightCommit",
+          "local": "hasRoleInspectionNightCommit",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/engine/phase_pipeline/night_pipeline",
+          "symbol": "NightPipeline",
+          "local": "NightPipeline",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core/domain/systems/damage_resolution_system",
+          "symbol": "DamageResolutionSystem",
+          "local": "DamageResolutionSystem",
+          "typeOnly": false
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/observation/role-presentation",
+          "symbol": "renderRolePrompt",
+          "local": "renderRolePrompt",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../support/builders/night-stage-context",
+          "symbol": "nightStageContext",
+          "local": "nightStageContext",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "bun:test",
+          "symbol": "expect",
+          "local": "expect",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "bun:test",
+          "symbol": "test",
+          "local": "test",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/app/bootstrap",
+          "symbol": "bootstrapGame",
+          "local": "bootstrapGame",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "Camp",
+          "local": "Camp",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "Phase",
+          "local": "Phase",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "WinCondition",
+          "local": "WinCondition",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "ActionRequest",
+          "local": "ActionRequest",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "BoardConfig",
+          "local": "BoardConfig",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "GameEvent",
+          "local": "GameEvent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/runtime/scenarios/six_player_mvp",
+          "symbol": "sixPlayerMvpConfig",
+          "local": "sixPlayerMvpConfig",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/abilities",
+          "symbol": "findNightAbility",
+          "local": "findNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/abilities",
+          "symbol": "allNightAbilities",
+          "local": "allNightAbilities",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/abilities",
+          "symbol": "projectNightAbility",
+          "local": "projectNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/ability_changes",
+          "symbol": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/ability_changes",
+          "symbol": "transferNightAbility",
+          "local": "transferNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/ability_changes",
+          "symbol": "setNightAbilityEnabled",
+          "local": "setNightAbilityEnabled",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/mirror_girl/profile",
+          "symbol": "freshMirrorInspectionState",
+          "local": "freshMirrorInspectionState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role_inspection/night_stages",
+          "symbol": "MIRROR_INSPECTION_STAGE",
+          "local": "MIRROR_INSPECTION_STAGE",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role-catalog-assembly",
+          "symbol": "getDefaultRoleCatalog",
+          "local": "getDefaultRoleCatalog",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role-catalog-assembly",
+          "symbol": "getDefaultRoleContributions",
+          "local": "getDefaultRoleContributions",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role-catalog-assembly",
+          "symbol": "createRoleCatalog",
+          "local": "createRoleCatalog",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/inspection",
+          "symbol": "resolveInspection",
+          "local": "resolveInspection",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/gargoyle/inheritance",
+          "symbol": "canGargoyleKnife",
+          "local": "canGargoyleKnife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/gargoyle/inheritance",
+          "symbol": "refreshGargoyleInheritance",
+          "local": "refreshGargoyleInheritance",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/hidden_wolf/inheritance",
+          "symbol": "refreshHiddenWolfInheritance",
+          "local": "refreshHiddenWolfInheritance",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "symbol": "NightStageRegistry",
+          "local": "NightStageRegistry",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/stages/night/contracts",
+          "symbol": "NightStageContext",
+          "local": "NightStageContext",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/engine/action_request_factory",
+          "symbol": "GameActionRequestFactory",
+          "local": "GameActionRequestFactory",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/gateway/tool_gateway",
+          "symbol": "ToolGateway",
+          "local": "ToolGateway",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/gateway/action-reception",
+          "symbol": "ActionReception",
+          "local": "ActionReception",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/engine/agent_visible_event_feed",
+          "symbol": "buildAgentVisibleEventFeed",
+          "local": "buildAgentVisibleEventFeed",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/ai/agents/player/player_prompt_policy",
+          "symbol": "PlayerPromptPolicy",
+          "local": "PlayerPromptPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/drivers/privileged-baseline",
+          "symbol": "BaselineBotActionProvider",
+          "local": "BaselineBotActionProvider",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms",
+          "symbol": "getDefaultConfigRenderRegistry",
+          "local": "getDefaultConfigRenderRegistry",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms",
+          "symbol": "getDefaultPhaseStageLocalizationRegistry",
+          "local": "getDefaultPhaseStageLocalizationRegistry",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms",
+          "symbol": "getDefaultTargetHintRegistry",
+          "local": "getDefaultTargetHintRegistry",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms",
+          "symbol": "getDefaultToolSpecRegistry",
+          "local": "getDefaultToolSpecRegistry",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role_inspection/night_scope",
+          "symbol": "hasRoleInspectionNightCommit",
+          "local": "hasRoleInspectionNightCommit",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/engine/phase_pipeline/night_pipeline",
+          "symbol": "NightPipeline",
+          "local": "NightPipeline",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core/domain/systems/damage_resolution_system",
+          "symbol": "DamageResolutionSystem",
+          "local": "DamageResolutionSystem",
+          "typeOnly": false
+        }
+      ],
+      "identical": true
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "expected": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/observation/component-presentation",
+          "symbol": "createAliveComponent",
+          "local": "createAliveComponent",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../support/builders/night-stage-context",
+          "symbol": "nightStageContext",
+          "local": "nightStageContext",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "bun:test",
+          "symbol": "expect",
+          "local": "expect",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "bun:test",
+          "symbol": "test",
+          "local": "test",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/app/bootstrap",
+          "symbol": "bootstrapGame",
+          "local": "bootstrapGame",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "Camp",
+          "local": "Camp",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "Phase",
+          "local": "Phase",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "WinCondition",
+          "local": "WinCondition",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "BoardConfig",
+          "local": "BoardConfig",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "GameEvent",
+          "local": "GameEvent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "ActionRequest",
+          "local": "ActionRequest",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/runtime/scenarios/six_player_mvp",
+          "symbol": "sixPlayerMvpConfig",
+          "local": "sixPlayerMvpConfig",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/gargoyle/ports",
+          "symbol": "getGargoyleState",
+          "local": "getGargoyleState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/abilities",
+          "symbol": "allNightAbilities",
+          "local": "allNightAbilities",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/abilities",
+          "symbol": "findNightAbility",
+          "local": "findNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/ability_changes",
+          "symbol": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/ability_changes",
+          "symbol": "transferNightAbility",
+          "local": "transferNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role_inspection/night_stages",
+          "symbol": "ROLE_INSPECTION_STAGE",
+          "local": "ROLE_INSPECTION_STAGE",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role_inspection/night_stages",
+          "symbol": "PSYCHIC_INSPECTION_STAGE",
+          "local": "PSYCHIC_INSPECTION_STAGE",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role_inspection/night_scope",
+          "symbol": "hasRoleInspectionNightCommit",
+          "local": "hasRoleInspectionNightCommit",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/gargoyle/inheritance",
+          "symbol": "canGargoyleKnife",
+          "local": "canGargoyleKnife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "symbol": "NightStageRegistry",
+          "local": "NightStageRegistry",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role-catalog-assembly",
+          "symbol": "getDefaultRoleCatalog",
+          "local": "getDefaultRoleCatalog",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/engine/action_request_factory",
+          "symbol": "GameActionRequestFactory",
+          "local": "GameActionRequestFactory",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/gateway/tool_gateway",
+          "symbol": "ToolGateway",
+          "local": "ToolGateway",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/gateway/action-reception",
+          "symbol": "ActionReception",
+          "local": "ActionReception",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/engine/agent_visible_event_feed",
+          "symbol": "buildAgentVisibleEventFeed",
+          "local": "buildAgentVisibleEventFeed",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/stages/night/contracts",
+          "symbol": "NightStageContext",
+          "local": "NightStageContext",
+          "typeOnly": true
+        }
+      ],
+      "actual": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/observation/component-presentation",
+          "symbol": "createAliveComponent",
+          "local": "createAliveComponent",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../support/builders/night-stage-context",
+          "symbol": "nightStageContext",
+          "local": "nightStageContext",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "bun:test",
+          "symbol": "expect",
+          "local": "expect",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "bun:test",
+          "symbol": "test",
+          "local": "test",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/app/bootstrap",
+          "symbol": "bootstrapGame",
+          "local": "bootstrapGame",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "Camp",
+          "local": "Camp",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "Role",
+          "local": "Role",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "Phase",
+          "local": "Phase",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "WinCondition",
+          "local": "WinCondition",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "COMPONENT",
+          "local": "COMPONENT",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "BoardConfig",
+          "local": "BoardConfig",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "RoleComponent",
+          "local": "RoleComponent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "GameEvent",
+          "local": "GameEvent",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/core",
+          "symbol": "ActionRequest",
+          "local": "ActionRequest",
+          "typeOnly": true
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/runtime/scenarios/six_player_mvp",
+          "symbol": "sixPlayerMvpConfig",
+          "local": "sixPlayerMvpConfig",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/gargoyle/ports",
+          "symbol": "getGargoyleState",
+          "local": "getGargoyleState",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/abilities",
+          "symbol": "allNightAbilities",
+          "local": "allNightAbilities",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/abilities",
+          "symbol": "findNightAbility",
+          "local": "findNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/ability_changes",
+          "symbol": "grantNightAbility",
+          "local": "grantNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/ability_changes",
+          "symbol": "transferNightAbility",
+          "local": "transferNightAbility",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role_inspection/night_stages",
+          "symbol": "ROLE_INSPECTION_STAGE",
+          "local": "ROLE_INSPECTION_STAGE",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role_inspection/night_stages",
+          "symbol": "PSYCHIC_INSPECTION_STAGE",
+          "local": "PSYCHIC_INSPECTION_STAGE",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role_inspection/night_scope",
+          "symbol": "hasRoleInspectionNightCommit",
+          "local": "hasRoleInspectionNightCommit",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/gargoyle/inheritance",
+          "symbol": "canGargoyleKnife",
+          "local": "canGargoyleKnife",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/stages/night/night_stage_registry",
+          "symbol": "NightStageRegistry",
+          "local": "NightStageRegistry",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/roles/role-catalog-assembly",
+          "symbol": "getDefaultRoleCatalog",
+          "local": "getDefaultRoleCatalog",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/engine/action_request_factory",
+          "symbol": "GameActionRequestFactory",
+          "local": "GameActionRequestFactory",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/gateway/tool_gateway",
+          "symbol": "ToolGateway",
+          "local": "ToolGateway",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/gateway/action-reception",
+          "symbol": "ActionReception",
+          "local": "ActionReception",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/engine/agent_visible_event_feed",
+          "symbol": "buildAgentVisibleEventFeed",
+          "local": "buildAgentVisibleEventFeed",
+          "typeOnly": false
+        },
+        {
+          "kind": "import",
+          "module": "../../../../src/game/mechanisms/stages/night/contracts",
+          "symbol": "NightStageContext",
+          "local": "NightStageContext",
+          "typeOnly": true
+        }
+      ],
+      "identical": true
+    }
+  ],
+  "packageOnlyNewSubpath": true,
+  "pureImports": [
+    {
+      "kind": "import",
+      "module": "./boards",
+      "symbol": "INSPECTION_POLICIES",
+      "local": "INSPECTION_POLICIES",
+      "typeOnly": false
+    },
+    {
+      "kind": "import",
+      "module": "./boards",
+      "symbol": "InspectionPolicy",
+      "local": "InspectionPolicy",
+      "typeOnly": true
+    },
+    {
+      "kind": "import",
+      "module": "./night-ability-data",
+      "symbol": "RoleInspectionReadState",
+      "local": "RoleInspectionReadState",
+      "typeOnly": true
+    },
+    {
+      "kind": "import",
+      "module": "./night-ability-data",
+      "symbol": "RoleInspectionPolicy",
+      "local": "RoleInspectionPolicy",
+      "typeOnly": true
+    }
+  ],
+  "references": [
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/native.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionRepeats",
+          "local": "inspectionRepeats",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/drivers/privileged-baseline.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionPolicy",
+          "local": "inspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionRepeats",
+          "local": "inspectionRepeats",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/night_stages.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/rules.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_changes.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_stages.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionRequired",
+          "local": "inspectionRequired",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/night_scope.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "roleInspectionPolicy",
+          "local": "roleInspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/policies.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionPolicy",
+          "local": "inspectionPolicy",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/role_inspection/rules.ts",
+      "bindings": [
+        {
+          "kind": "import",
+          "module": "@ai-werewolf-arena/game-contract/role-inspection-policy",
+          "symbol": "inspectionRepeats",
+          "local": "inspectionRepeats",
+          "typeOnly": false
+        }
+      ]
+    }
+  ],
+  "owners": [
+    {
+      "path": "packages/game-contract/src/role-inspection-policy.ts",
+      "name": "roleInspectionPolicy"
+    },
+    {
+      "path": "packages/game-contract/src/role-inspection-policy.ts",
+      "name": "DEFAULT_INSPECTION_POLICIES"
+    },
+    {
+      "path": "packages/game-contract/src/role-inspection-policy.ts",
+      "name": "inspectionPolicy"
+    },
+    {
+      "path": "packages/game-contract/src/role-inspection-policy.ts",
+      "name": "inspectionRepeats"
+    },
+    {
+      "path": "packages/game-contract/src/role-inspection-policy.ts",
+      "name": "inspectionRequired"
+    }
+  ],
+  "oldModuleNonNamed": [],
+  "chineseHeadFailures": [],
+  "limitations": [
+    "公开API和模块加载图有意改变，不宣称旧导出兼容。",
+    "逐声明和保留程序比较排除注释与空白；全部命名导入/导出单独核对。",
+    "没有运行完整最终门禁或付费模型。"
+  ],
+  "approved": true
+}

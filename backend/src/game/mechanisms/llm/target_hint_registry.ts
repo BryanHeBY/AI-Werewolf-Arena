@@ -1,9 +1,7 @@
 /**
- * Builds actionable target hints from the request, role and registered target rules. Inputs
- * include current component state and candidate context; outputs are localized prompt hints. A
- * hint is not a capability, and actual validation and commitment still belong to the gateway and
- * mechanism. Wolf candidates consume the public target query without acquiring
- * role state or knife-commit rights.
+ * 根据请求、角色和已注册目标规则生成可行动编号提示。输入为当前组件状态与候选上下文，
+ * 输出为本地化提示；提示不授予行动权限，实际校验与提交仍由网关和具体机制负责。
+ * 狼刀候选只消费公开目标查询，不取得狼人私有状态或狼刀提交权。
  */
 import { nobleBodyChoiceTargets } from "../roles/noble_secret_body/authority";
 import {
@@ -18,11 +16,10 @@ import { prohibitsLoversVote } from "../roles/cupid/relation";
 import { seerTargetAllowed } from "../roles/seer/ports";
 import { guardTargetRepeated } from "../roles/guard/ports";
 import { text } from "@ai-werewolf-arena/game-text";
-/** 文件说明：按工具与角色策略生成 target_id 可行动编号提示。 */
 import { Role, ToolName } from "../../../core/domain/model";
 import { TargetHintContext, TargetHintRegistry } from "./contracts";
 import { canBeExiled, canBeSheriff } from "../common/participation";
-import { inspectionRepeats } from "../roles/role_inspection/policies";
+import { inspectionRepeats } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { getRoleInspectionState } from "../roles/role_inspection/ports";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
@@ -31,6 +28,7 @@ import { luckyTargetAllowed } from "../roles/night_action_history";
 import { getAwakenedState } from "../roles/awakened_hidden_wolf/state";
 
 interface TargetRule {
+  /** 只决定提示是否保留自身编号；当前板子的实际目标限制仍由机制复验。 */
   allowSelf: boolean;
 }
 
@@ -179,7 +177,7 @@ export class DefaultTargetHintRegistry implements TargetHintRegistry {
       if (!kind) return true;
       const ability = findNightAbility(ownRole, kind, ctx.abilityId);
       if (!ability) return true;
-      // An ordinary Witch may still heal a target whose poison is blocked by this actor's history.
+      // 普通女巫仍可救这个目标，即使其毒药目标因该行动者的历史记录而被限制。
       if (
         ability.kind === "potion" &&
         ability.activation !== "lucky" &&

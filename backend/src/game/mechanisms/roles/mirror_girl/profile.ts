@@ -4,7 +4,7 @@
  * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
-import { roleInspectionPolicy } from "../role_inspection/ports";
+import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 
 import { nativeRolePresentation } from "../presentation-contribution";
 import type { RoleInspectionState } from "@ai-werewolf-arena/game-contract";

@@ -39,7 +39,8 @@
     "./facts/merchant": "./src/facts/merchant.ts",
     "./facts/death-ability": "./src/facts/death-ability.ts",
     "./facts/black-market": "./src/facts/black-market.ts",
-    "./player-state-views": "./src/player-state-views.ts"
+    "./player-state-views": "./src/player-state-views.ts",
+    "./role-inspection-policy": "./src/role-inspection-policy.ts"
   },
   "scripts": {
     "check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.tests.json --noEmit",
@@ -155,6 +156,9 @@
       ],
       "player-state-views": [
         "src/player-state-views.ts"
+      ],
+      "role-inspection-policy": [
+        "src/role-inspection-policy.ts"
       ]
     }
   }

@@ -1,3 +1,9 @@
+/**
+ * 负责受限观察机器人的角色工具选择。输入为已投影的自身知识、请求候选、策略风格与原随机选择器；
+ * 输出为原工具动作或无行动，不能从真实 World 补造未告知身份、库存或对手存活信息。
+ * 历史去重与公开政策只影响候选偏好；生命、请求许可、目标有效性和付款仍由提交入口复验。
+ * 选择顺序与随机抽取保持，返回动作不等于领域已提交；具体工具的空行动与失败语义分别保留。
+ */
 export const demon_hunt: ObservedToolHandler = ({ ownState, request, others, pick, style }) => {
   if (!ownState.demonHunter || request.context.day < 2) return null;
   const target = style === "conservative" ? undefined : pick(others);
@@ -94,7 +100,7 @@ export const check_identity: ObservedToolHandler = (context) => {
   if (seer?.targetPolicy === "awa_fresh_others_v1") return null;
 };
 
-import { inspectionRepeats } from "../../../../game/mechanisms/roles/role_inspection/policies";
+import { inspectionRepeats } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 
 export const inspect_night_identity: ObservedToolHandler = ({
   ownState,

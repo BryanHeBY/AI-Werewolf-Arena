@@ -4,7 +4,7 @@
  * 共享资格查询先行，历史委托具体状态 owner，use metadata 委托实例 owner。
  * 各族失败、目标、学习、作用资格和事实发布顺序保持，不合并其不同规则。
  */
-import { roleInspectionPolicy } from "./state-slot";
+import { roleInspectionPolicy } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import type { RoleInspectionPolicy } from "@ai-werewolf-arena/game-contract";
 
 import { ROLE_INSPECTION_STATE_SLOT } from "./state-slot";
@@ -21,7 +21,7 @@ import {
   recordRoleInspectionCompletion,
   recordRoleInspectionNightCommit,
 } from "./night_scope";
-import { inspectionRequired } from "./policies";
+import { inspectionRequired } from "@ai-werewolf-arena/game-contract/role-inspection-policy";
 import { roleInspectionTargets } from "./rules";
 import { captureNightAbilityScope } from "../ability_scope";
 import { captureAwakenedMirrorScope } from "../awakened_hidden_wolf/night_scope";
