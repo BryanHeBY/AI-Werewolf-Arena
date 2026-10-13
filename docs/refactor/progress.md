@@ -6,11 +6,11 @@
 | ---------------------- | ------ | -------------------------------------------------------------------------------------- |
 | P0 基线与契约          | 已完成 | C01 `144f48b` 已提交；C02 `aba9347`；C03 `b56d282`；七样例、89行静态台账与三方向审查   |
 | P1 依赖与共享契约      | 已完成 | C04–C09 数据/支持职责与 public consumer 闭合；零基础包循环，兼容桥按 C44 退出          |
-| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；当前映射593来源、693目标、8112旧IDs；余mixed tests/support继续 |
-| P3 状态与请求授权      | 进行中 | C16生产读取/C18传播/F02/C19完成；容器读取边界及实际写者闭合，能力查询/schema继续       |
-| P4 规则计划与生命周期  | 进行中 | C21阶段成员快照与opaque lazy完成；完整RulePlan/C22–C24继续                             |
-| P5 效果、死亡与判胜    | 进行中 | C25 原效果折叠接实际只读计划；完整来源链及 C26–C29 继续                                |
-| P6 能力、观察与展示    | 待执行 | C30–C36、C33a                                                                          |
+| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15及mixed/support职责已落；593来源、693目标、8112旧IDs；阶段验收待汇合 |
+| P3 状态与请求授权      | 进行中 | C16读取/C18/F02/C19与opaque／旧状态门面退出已落；完整能力schema／codec继续             |
+| P4 规则计划与生命周期  | 进行中 | RulePlan实际同引用消费、late计划与周期单位已落；C22–C24完整机制矩阵继续                |
+| P5 效果、死亡与判胜    | 进行中 | C25/26折叠与目标政策、C27提交owner、C28馥郁发布已落；完整来源／死亡链继续              |
+| P6 能力、观察与展示    | 进行中 | C35第五包及两端实际消费已落；C30–C34、C33a、C36与其余展示贡献继续                      |
 | P7 记录与独立复现      | 待执行 | C37–C40                                                                                |
 | P8 目录、命名与文档    | 待执行 | C41–C44                                                                                |
 | P9 全仓收敛与验收      | 待执行 | C45–C48；同源固定输入、门禁零债务                                                      |
@@ -407,3 +407,12 @@
 - C28 馥郁死亡波发布：4paths，完整原record/publish归具体窄owner、5caller保；仅actorquery/late day-phase-events/publish命令，无World/库存/阶段写权。9原classmembers/ESNext+CJS inverse、4SHA/两method与params/实际publicRoot查询和facts→pub→requiredrecord顺序独立审0；中文heads/newdeps0，finite62003及scope70178 actual0。首new3green+1traceexpect红/旧2cancelgreen，补原phase读取后仅失败case1/0/10，不虚报重整套。结构receipt仅data/spy，真authorityprepare/commit/cancel保；TypedWave/Receipt/其他C28及13旧resolver依赖继续。见fragrant-wave-publication.md。
 
 - C35 第五共享包实际消费：33原display函/918lines归4businessowner，40真实consumer110binding接canonical，旧text函数删无新桥；9texthelper/全部消息/原reader输出不改。54paths的完整typedfn(两Demon inline type精确route)/40nonimport程序及两精确fixture读取format尾逗号规则同，两个独立54SHA/110bound/puregraph/458oldlock/heads审0。pkg18322/后端23roots38017/wholeFE1447 actual0，包3/0/11+原FE6/0/28+原BE6/0/21；47中文head及20生产i18n0，scope37144新债0旧12。新FEcompiler定位自declareddep不放宽strict，初metadata/type/format harness红保，不install/model/fullgame/globaltest重复。更多presentation/profile/观察及C39/44/P9继续。见shared-presentation.md。
+
+## 本轮提交收口
+
+- `9a8337a8`：原生命死亡提交与唯一结算账本。
+- `a483c416`：同一 RulePlan 的实际引擎／记录消费链。
+- `d4c4ffcf`：馥郁双生死亡波事实、披露与记录所有权。
+- `95ee2b56`：第五共享包 game-presentation 与全部现有展示函数双端消费。
+
+四批均有精确源摘要、局部类型／必要用例和独立审查；中文职责与关键逻辑说明随各批落实。当前仍有并行 sourcedEffect 和动物死亡波准备候选，尚未列为交付。上述局部证据不替代 P9 同源固定输入全量验收，也不将仍待完成的机制格标为完成。
