@@ -735,7 +735,7 @@ export function validateScholarMentorRecord(record: ReproductionRecord): void {
         context.modifier_poison_blocked ===
           r.goodEffects.some((effect) => effect.targetId === d.actorId && effect.mode === "weaken"),
       );
-      // The request precedes this night's use; only earlier nights can have spent the heal.
+      // 请求先于本夜用药；解药只能已在更早的夜间消耗。
       const hasHeal = ![...nights].some(
         ([day, prior]) => day < d.day && prior.healActor === d.actorId,
       );
@@ -848,7 +848,7 @@ interface ModifierResolution {
   bonusKnifeActorId: number | null;
   blockWolfKnife: boolean;
 }
-/** Tape-local ledger: deliberately does not call the live game's role implementation. */
+/** 只基于 Tape 的局部账本，不调用实际对局的角色实现。 */
 function createModifierState(caster: ModifierCaster): ModifierState {
   return {
     policy: "awa_scholar_mentor_twelve_v1",

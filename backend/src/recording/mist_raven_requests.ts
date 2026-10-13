@@ -45,7 +45,7 @@ const stageTools: Record<string, string[]> = {
 export function check(value: unknown): asserts value {
   if (!value) throw new Error("reproduction_mist_raven_invalid");
 }
-/** Archive-only selection: intents share a batch; only its lowest ID is applied. */
+/** 只按归档选择：同一批 intent 中仅应用最低 ID 的那一项。 */
 export function selectedMistBlast(
   decisions: readonly RecordedDecision[],
   receiverOpenedAfter?: number,
@@ -355,8 +355,8 @@ export function validateMistRavenRequests(input: {
                 n.start.includes(args.target_id)));
       }
       valid.set(d, accepted && d.settleOrder !== undefined);
-      // Invalid raw replies are evidence only in an explicit terminal failed CP;
-      // they cannot become a committed fact or authorize any successor request.
+      // 非法原始回复仅能作为显式终态失败 checkpoint 中的证据；
+      // 它们不能成为已提交事实，也不能授权后续请求。
       if (d.outcome.kind === "action" && !accepted)
         check(d === last && failure?.complete === false && failure.snapshot.day === day);
     }

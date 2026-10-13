@@ -36,7 +36,7 @@ function assert(value: unknown): asserts value {
 function equal(a: unknown, b: unknown): boolean {
   return JSON.stringify(a) === JSON.stringify(b);
 }
-/** Rebuild the finite board's public transitions without trusting checkpoint stock. */
+/** 重建有限板子的公开状态迁移，不直接信任 checkpoint 中的库存。 */
 export function validateRedMoonRecord(record: ReproductionRecord): RedMoonRecordAudit | null {
   const board = record.metadata.normalizedBoard;
   const owns = board.roleSetups.some((r) => String(r.role) === roleId && r.count > 0);

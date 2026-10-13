@@ -18,7 +18,7 @@ function top(votes: ReadonlyMap<number, number>): number[] {
     .sort((a, b) => a - b);
 }
 
-/** Independent action evidence for finite native guns; no request-local event is authoritative. */
+/** 独立审核有限原生枪的行动证据；请求局部事件本身不是权威依据。 */
 export function inferMagicianGunSources(
   record: ReproductionRecord,
   request: RecordedDecision,
@@ -204,7 +204,7 @@ export function inferMagicianGunSources(
         record.metadata.normalizedBoard.magician!.deathShotTargetPolicy === "exchanged"
           ? nightTarget(raw)
           : raw;
-      if (!living.delete(target)) continue; // Valid exchanged shot may hit an already dead player.
+      if (!living.delete(target)) continue; // 合法的映射枪击可以命中已死亡玩家。
       sources.set(target, [DeathCause.Shot]);
     }
   };
@@ -273,7 +273,7 @@ export function inferMagicianGunSources(
       if (call?.name !== "vote" || call.args.abstain === true || call.args.target_id === null)
         continue;
       const target = call.args.target_id;
-      // Ordinary exhausted retries are repaired to an abstention by the voting pipeline.
+      // 普通投票重试全部耗尽后，由投票流水线修复为弃票。
       if (
         call.args.abstain !== false ||
         typeof target !== "number" ||

@@ -54,8 +54,8 @@ export interface NobleRecordAudit {
   at: (cp: RecordedCheckpoint) => RecordedNobleBodyState;
   nights: Map<number, NobleNightAudit>;
 }
-/** Independent archive arithmetic. No runtime owner, state transition, damage reducer,
- * World permission selector or production visibility implementation is an oracle. */
+/** 对归档独立推导；不用运行时 owner、状态迁移、伤害折叠器、
+ * World 权限选择器或生产可见性实现生成校验预期。 */
 export function validateNobleSecretBodyRecord(record: ReproductionRecord): NobleRecordAudit | null {
   const board = record.metadata.normalizedBoard,
     owns = !!board.nobleSecretBody;

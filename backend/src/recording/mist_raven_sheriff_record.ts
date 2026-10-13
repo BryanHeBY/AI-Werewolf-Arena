@@ -8,7 +8,7 @@ import { Phase } from "@ai-werewolf-arena/game-contract";
 import type { RecordedGameEvent, ReproductionRecord } from "./reproduction";
 import { check, equal } from "./mist_raven_requests";
 
-/** This finite board's election evidence; it never shares the exile/knife tally. */
+/** 此有限板子的警长选举证据，不复用放逐票或狼刀票的计票过程。 */
 export function createMistSheriffEvidence(record: ReproductionRecord) {
   let nominated = false,
     withdrawn = false,

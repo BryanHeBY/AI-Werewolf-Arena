@@ -127,13 +127,13 @@ export function recordedErrorName(error: unknown): RecordedErrorName {
       : "Error";
   try {
     if (!error || typeof error !== "object" || types.isProxy(error)) return "Error";
-    // Native DOMException has a branded intrinsic accessor. Never call a
-    // foreign name getter or trust a value merely because a prior read passed.
+    // 原生 DOMException 的内建访问器会校验对象身份；不能调用
+    // 外来 name getter，也不能因为之前一次读取成功就信任当前值。
     try {
       const name = nativeDomName?.call(error);
       if (name !== undefined) return accepted(name);
     } catch {
-      /* Not a DOMException. */
+      /* 此对象不是 DOMException。 */
     }
     if (!types.isNativeError(error)) return "Error";
     let current: object | null = error;
@@ -144,7 +144,7 @@ export function recordedErrorName(error: unknown): RecordedErrorName {
       current = Object.getPrototypeOf(current);
     }
   } catch {
-    /* An exotic error cannot replace the original failure. */
+    /* 特殊错误对象不能覆盖原始失败。 */
   }
   return "Error";
 }
@@ -242,7 +242,7 @@ export interface RecordedDecision {
     | { kind: "action"; action: ToolCall | null }
     | { kind: "error"; code: "decision_failed"; name: RecordedErrorName };
 }
-/** Serialized evidence envelope, including legacy events without authorization. */
+/** 序列化事件证据；历史 audience 可缺省，不代表运行时行动许可。 */
 export interface RecordedGameEvent {
   timestamp: number;
   type: string;
@@ -872,7 +872,7 @@ export function normalizedRequest(request: ActionRequest): Omit<ActionRequest, "
   return structuredClone(facts);
 }
 
-/** Copy provider data without invoking getters, proxies, or custom serialization. */
+/** 复制 provider 数据时，不触发 getter、Proxy trap 或自定义序列化。 */
 function copyDecisionData(value: unknown, depth = 0): unknown {
   if (
     value === null ||
@@ -975,7 +975,7 @@ export class ReproductionTrace {
       if (!deferRequestDelivery(request, settle)) settle(true);
       return recordedAction;
     } catch (error) {
-      // Transport error strings may contain credentials. Preserve a reproducible failure, not its raw message.
+      // 传输错误文本可能含认证凭证；只保留可复现的失败信息，原始消息不入档。
       entry.outcome = { kind: "error", code: "decision_failed", name: recordedErrorName(error) };
       entry.settleOrder = ++this.settled;
       this.onChange();

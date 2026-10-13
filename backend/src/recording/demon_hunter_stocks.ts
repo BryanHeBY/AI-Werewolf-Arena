@@ -39,7 +39,7 @@ function native(role: Role, kind: string, state: Record<string, unknown>) {
     disabled: false,
   };
 }
-/** Computes each finite original inventory from accepted decisions; CP values never refresh this ledger. */
+/** 按已接受的决定独立计算有限原生库存；CP 值不能回填或刷新此账本。 */
 export function validateDemonNativeStocks(
   record: ReproductionRecord,
   redMoon: RedMoonRecordAudit | null = null,
@@ -111,9 +111,9 @@ function validateCheckpoint(
     }
     if (initial.role === Role.Hunter) {
       const events = record.events.slice(0, cp.eventCount);
-      // Death alone never spends a gun: three invalid/missing choices retain stock.
-      // This finite board has one native Hunter; only a valid pass, committed shot,
-      // or the actual poison-suppression event proves consumption.
+      // 仅死亡不会消耗枪权：三次无效或缺失的选择仍保留库存。
+      // 此有限板子只有一名原生猎人；只有合法弃枪、已提交枪击，
+      // 或真实的中毒抑制事件才能证明枪权消耗。
       const passed = record.decisions.some(
         (d) =>
           d.actorId === p.id &&

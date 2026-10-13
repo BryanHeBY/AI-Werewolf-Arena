@@ -34,7 +34,7 @@ function equal(a: unknown, b: unknown): boolean {
         : v;
   return JSON.stringify(sort(a)) === JSON.stringify(sort(b));
 }
-/** One specified FNV / Mulberry draw, independent of the runtime RNG implementation. */
+/** 按既定 FNV／Mulberry 规则独立推导一次抽样，不使用运行时 RNG 实现。 */
 function knownIndex(seed: string, path: readonly string[]): number {
   const s = JSON.stringify([seed, ...path, "night", "fragrant-known-wolf"]);
   let h = 2166136261;
@@ -57,8 +57,8 @@ function pair(value: unknown, alive: ReadonlySet<number>): [number, number] {
   return value[0] < value[1] ? [value[0], value[1]] : [value[1], value[0]];
 }
 type Sources = Record<string, string[]>;
-/** Arithmetic archive audit. Production owners, target scopes, state transitions,
- * damage reducers and RNG factories are never used as the expected-value oracle. */
+/** 对归档独立推导数值与状态；不用生产 owner、目标作用域、状态迁移、
+ * 伤害折叠器或 RNG 工厂生成校验预期。 */
 export function validateFragrantPairRecord(r: ReproductionRecord): void {
   const board = r.metadata.normalizedBoard,
     owns = !!board.fragrantPairSeer;
@@ -1090,7 +1090,7 @@ export function validateFragrantPairRecord(r: ReproductionRecord): void {
         last.operationCount === r.operations.length,
     );
   }
-  // Cursors and domain operations must agree at successful finalized boundaries.
+  // 归档成功完成 finalize 时，游标须与领域操作一致。
   if (r.finalized) {
     let previous = 0;
     for (const o of r.operations) {

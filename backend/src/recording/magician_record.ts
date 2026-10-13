@@ -52,7 +52,7 @@ function pairFromDecision(d: RecordedDecision): [number, number] | null {
   );
   return [a.first_id, a.second_id].sort((x, y) => x - y) as [number, number];
 }
-/** Audit the finite original roster, exchanges, private facts and mapped misses independently of replay. */
+/** 独立审核有限原名单、换位、私有事实与映射后未命中的枪击，不依赖实际重放。 */
 export function validateMagicianRecord(record: ReproductionRecord): void {
   const board = record.metadata.normalizedBoard,
     owns = board.roleSetups.some((r) => r.role === Role.Magician && r.count > 0);
@@ -138,7 +138,7 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
   const nightAlive = new Map<number, number[]>(),
     nightOrigins = new Set<number>(),
     gunEvents = new Set<number>();
-  // Independent evidence ledger: never reuse the engine's eligibility predicate.
+  // 独立证据账本不能复用引擎的资格判断。
   const deathFacts = new Map<number, { day: number; phase: Phase; sources: DeathCause[] }>();
   const gunPolicy = (id: number) =>
     original.get(id)?.role === Role.WolfKing
@@ -210,7 +210,7 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
       );
       day = e.payload.day;
       phase = e.payload.phase as Phase;
-      // First-day sheriff actions precede night_resolved, but follow every night action.
+      // 首日警长行动先于 night_resolved，但晚于所有夜间行动。
       if (phase === Phase.Day) completedNightActions.add(day);
       if (phase === Phase.Night) {
         nightAlive.set(day, [...alive]);
@@ -587,7 +587,7 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
         assert(d.request.context.death_origin_phase === origin);
       else if (d.request.context.death_origin_phase !== undefined)
         assert(d.request.context.death_origin_phase === origin);
-      // The factory still supplies its visible death announcement; actions prove its content.
+      // 原请求工厂仍提供该角色可见的死亡公告；公告内容必须由行动证据证明。
       assert(
         d.request.context.visible_events.some(
           (e) =>
@@ -650,8 +650,8 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
           d.request.context.stage === d.stage &&
           d.request.phase === Phase.Night,
       );
-      // A trace can publish the next request before publishing that night's facts.
-      // The previous complete checkpoint still proves its starting live roster.
+      // 轨迹可能先发布下一次请求，再发布对应夜间事实。
+      // 上一个完整 checkpoint 仍证明该夜开始时的存活名单。
       const previous = record.checkpoints.find((cp) => cp.cycle === d.day - 1 && cp.complete);
       const living =
         nightAlive.get(d.day) ??
@@ -688,7 +688,7 @@ export function validateMagicianRecord(record: ReproductionRecord): void {
       if (record.checkpoints.some((cp) => cp.complete && cp.cycle >= d.day))
         assert(nativeTurns.has(d.day + ":" + d.actorId + ":" + d.stage));
     }
-    // Event-dependent exchange checks wait for this cycle's actual event prefix.
+    // 依赖事件的换位检查须等待本周期实际发表的事件前缀。
     if (unpublished) continue;
     if (d.stage === "magician_exchange") {
       assert(

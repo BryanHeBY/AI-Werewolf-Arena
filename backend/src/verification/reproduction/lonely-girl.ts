@@ -127,9 +127,8 @@ export function validateLonelyGirlRecord(record: ReproductionRecord): void {
     )
   )
     fail();
-  // In-flight flushes carry current decisions but only the last completed cycle's events.
-  // The initial pending checkpoint may therefore precede the first choice fact.
-  // Finalized records and every post-setup checkpoint must contain that fact.
+  // checkpoint 事件前缀可落后于当前决定。仅在已有后续非选择决定，且归档
+  // 已终结或存在 cycle > 0 的检查点时，要求首次选择事实；失败开局不据此强制该事实。
   if (
     !facts.length &&
     record.decisions.some((d) => !decisions.includes(d)) &&

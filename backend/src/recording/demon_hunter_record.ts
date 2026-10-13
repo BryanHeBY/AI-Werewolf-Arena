@@ -68,7 +68,7 @@ function assert(value: unknown): asserts value {
   if (!value) throw new Error("reproduction_demon_hunter_state_invalid");
 }
 const isFact = (type: string) => (DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(type);
-/** Independent serialized causal audit. Cancellation labels never authorize an effect override. */
+/** 独立审核序列化因果；取消标签本身不能授权覆盖效果。 */
 export function validateDemonHunterRecord(
   record: ReproductionRecord,
   noble: NobleRecordAudit | null = null,
@@ -150,7 +150,7 @@ export function validateDemonHunterRecord(
         );
     }
   }
-  // Incremental snapshots intentionally omit domain operations and can precede the next checkpoint.
+  // 增量快照刻意省略领域操作，且可能先于下一份 checkpoint 发布。
   if (!record.finalized) return;
   const decisions = record.decisions.filter((d) => d.stage === "demon_hunter"),
     committed = decisions.filter((d) => d.outcome.kind === "action"),

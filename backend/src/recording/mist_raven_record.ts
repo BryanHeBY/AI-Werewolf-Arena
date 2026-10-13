@@ -116,7 +116,7 @@ const nativeEvents = new Set<string>([
   "sheriff_badge_transferred",
   "sheriff_badge_destroyed",
 ]);
-/** Independent archive ledger. It never queries the production frame, selectors or damage system. */
+/** 独立归档账本不查询生产 frame、目标选择器或伤害系统。 */
 export function validateMistRavenRecord(record: ReproductionRecord): void {
   const board = record.metadata.normalizedBoard;
   const owns = board.roleSetups.some(
@@ -399,14 +399,14 @@ export function validateMistRavenRecord(record: ReproductionRecord): void {
     };
     if (n.knife !== null && n.knife !== n.dream) add(n.knife, "wolf_kill");
     if (n.dream !== null && n.consecutive) add(n.dream, "dream");
-    // Ordinary independent damage is enumerated by original seats. The extra knife
-    // is appended afterward, and linked dream damage is confirmed only after Snake.
+    // 普通伤害先按原席位顺序独立枚举，再追加额外狼刀；
+    // 梦境牵连伤害须等法老之蛇结算后才能确认。
     const ordered = new Map([...causes].sort(([a], [b]) => a - b));
     causes.clear();
     for (const [id, list] of ordered) causes.set(id, list);
     if (n.extra !== null) add(n.extra, "raven_claw_knife");
-    // Remove only the paid ordinary source after freezing direct order. A Raven
-    // source on the same body keeps its original position among dream deaths.
+    // 固定直接伤害顺序后，仅移除已付款的普通狼刀来源；同一原体的
+    // 鸦爪刀来源仍保留其在梦境死亡列表中的原位置。
     if (n.healed !== null) {
       const retained = (causes.get(n.healed) ?? []).filter((cause) => cause !== "wolf_kill");
       if (retained.length) causes.set(n.healed, retained);

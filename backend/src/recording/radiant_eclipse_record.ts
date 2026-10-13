@@ -15,7 +15,7 @@ import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from ".
 import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
 import { sanitizeSpeechText } from "../utils/speech_text";
 
-/** Independent finite-board evidence: no production ability/frame/target/damage imports. */
+/** 独立审核有限板子的证据，不导入生产能力、夜间 frame、目标或伤害实现。 */
 export function radiantCheck(value: unknown): asserts value {
   if (!value) throw Error("reproduction_radiant_eclipse_invalid");
 }
@@ -403,7 +403,7 @@ export function validateRadiantEclipseRecord(record: ReproductionRecord): void {
           sources[d.targetId] = [...new Set([...(sources[d.targetId] ?? []), "dream"])];
         }
     }
-    // Internal consecutive flags are not part of a published death explanation.
+    // 内部连续命中标志不进入公开的死亡说明。
     n.reasons = deaths.flatMap((id) =>
       reasons.filter((r) => r.targetId === id).map(({ consecutive: _flag, ...r }) => r),
     );
@@ -1159,7 +1159,7 @@ export function validateRadiantEclipseRecord(record: ReproductionRecord): void {
     for (let i = 0; i < complete.length; i++)
       check(equal(complete[i]!.damage, nightOperations[i]!.output));
   }
-  // Request eligibility and observer evidence are checked separately from event/state reconstruction.
+  // 请求资格及观察者证据，与事件／状态重建分别核验。
   validateRadiantRequests(record, { roster, alive, nights, maid, count, seer, witch, dreamer });
 }
 import { validateRadiantRequests } from "./radiant_eclipse_requests";

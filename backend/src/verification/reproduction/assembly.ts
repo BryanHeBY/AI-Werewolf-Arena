@@ -30,6 +30,7 @@ export function verifyReproductionMechanisms(result: ReproductionRecord): void {
   validateGhostBrideRecord(result);
   validateAnimalDreamRecord(result);
   validateFragrantPairRecord(result);
+  // 传递的是由归档重建的审计数据，不是运行时 owner、原体或死亡提交回执。
   const noble = validateNobleSecretBodyRecord(result);
   validateDemonHunterRecord(result, noble);
   validateScholarMentorRecord(result);

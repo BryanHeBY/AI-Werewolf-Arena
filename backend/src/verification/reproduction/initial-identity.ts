@@ -53,6 +53,7 @@ export function validateInitialIdentityRecord(record: ReproductionRecord): void 
   }
   const initial = m.initialDeal,
     n = m.normalizedBoard.boardSize;
+  // 完整发牌含 n 个实际座位和两张备用牌；席位元数据只对应入座的 n 人。
   if (!initial || initial.length !== n + 2 || m.players.length !== n) return fail();
   const deck = m.normalizedBoard.roleSetups.flatMap((row) => Array<Role>(row.count).fill(row.role));
   deck.push(Role.Villager, Role.Villager);

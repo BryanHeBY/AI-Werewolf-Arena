@@ -72,7 +72,7 @@ function blank(): Prefix {
     resolved: new Set(),
   };
 }
-/** Semantic validation uses only strict serialized facts; it never imports the live engine. */
+/** 语义审核只消费严格序列化事实，不导入正在执行的引擎。 */
 export function validateGhostBrideRecord(record: ReproductionRecord): void {
   const board = record.metadata.normalizedBoard;
   const owns = board.roleSetups.some((r) => r.role === Role.GhostBride && r.count > 0);
@@ -593,7 +593,7 @@ const nativeStates = {
     repeatPolicy: z.literal("netease_consecutive_nights_v1"),
   }),
 };
-/** Exact native inventory envelope: this preset never copies, grants or transfers a resource. */
+/** 精确核对原生库存封装：本板子不会复制、赠予或转移资源。 */
 function nativeInventory(
   role: Role,
   value: Record<string, unknown>,
@@ -601,7 +601,7 @@ function nativeInventory(
   initial: boolean,
   day: number,
 ): boolean {
-  if (role === Role.GhostBride) return true; // Three-key owned state is validated with setup facts above.
+  if (role === Role.GhostBride) return true; // 含三个键的角色状态已结合上文开局事实校验。
   if (role === Role.Wolf || role === Role.Villager) return Object.keys(value).length === 0;
   if (role === Role.Hunter) {
     const p = z

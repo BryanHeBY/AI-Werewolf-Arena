@@ -22,7 +22,7 @@ import {
 import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
 import { sanitizeSpeechText } from "../utils/speech_text";
 
-// An archive oracle, deliberately independent of the live visibility registry and projector.
+// 归档校验预期与实际可见性 registry、玩家投影实现相互独立。
 const publicTypes = new Set([
   "phase_changed",
   "day_speech",
@@ -318,7 +318,7 @@ export function validateMistRavenFeeds(
           visible(t.event, d.actorId) && t.day <= d.day && t.release <= d.openedAfterSettlement,
       )
       .map(({ event }, i) => ({ seq: i + 1, type: event.type, payload: payload(event) }));
-    // Checkpoints publish only an event prefix. A live request may have a later, unarchived tail.
+    // checkpoint 只发表事件前缀；当前请求可能已经包含尚未归档的后续事件。
     check(feed.length >= expected.length && equal(feed.slice(0, expected.length), expected));
     if (record.finalized || record.checkpoints.some((c) => c.complete && c.cycle >= d.day))
       check(feed.length === expected.length);
@@ -642,7 +642,7 @@ export function validateMistRavenFeeds(
       check(exact(p, ["actorId", "text"]) && sources.length >= seen);
       return;
     }
-    if (e.type === "sheriff_vote_summary" || e.type === "sheriff_pk_started") return; // Election ledger above.
+    if (e.type === "sheriff_vote_summary" || e.type === "sheriff_pk_started") return; // 此选举事实已由上文的选举账本校验。
     if (e.type === "sheriff_direction_chosen") {
       const a = source(["sheriff_choose_direction"], Number(p.sheriffId), () => true);
       check(
@@ -827,7 +827,7 @@ export function validateMistRavenFeeds(
       );
       return;
     }
-    // Public publication facts need the full state ledger; never trust a request's own claim.
+    // 公开发表的事实须结合完整状态账本验证，不能信任请求自报的信息。
     check(false);
   }
 
