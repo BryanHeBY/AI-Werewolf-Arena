@@ -1,0 +1,124 @@
+{
+  "schema": "awa-demon-wedding-night-lifecycle-evidence-v1",
+  "base": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+  "scope": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "6ef63802ba70415d5aa7ec025351c248347250ae367c31faf15488523b9e4436"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "88420088c9b3e4e5359d8403c249a600e7d3573ad5f47ce6f66fdc7368c5bb79"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/night-lifecycle.ts",
+      "sha256": "9705a62d80c772d4b7d78b803a99a347582f428ba50d11a706205e02fe9e7695"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "7734d250be8f32b2b106e25da97117909a081bc620e0a3d30333af8ca59d9d18"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/night-lifecycle.ts",
+      "sha256": "7dacdf3e649b39bc90cb7b2feab07591b7c9bd561f80ad448ada434aad93adce"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "sha256": "7fcbbe98e724ea3d59f74707e1c8786aecaf04fc82b24d08714c6f82795463d1"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/native-night-cleanup-ownership.test.ts",
+      "sha256": "c5f68d7b560d961bafa261166610b40a6a1d4be3ad85699f23b88c849b055c66"
+    }
+  ],
+  "enginePrograms": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "oldSHA": "2c31d6d149377017c016f7ac5f35ea69b13811b52ed0c6f7d02541014887fad2",
+      "currentSHA": "6ef63802ba70415d5aa7ec025351c248347250ae367c31faf15488523b9e4436",
+      "entireProgramExactAfterRegisteredEdits": true
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "oldSHA": "bf9b38a0c13bc6152ddbc1eb7208f0111642ac6111e65de9b7a9acceb1d90806",
+      "currentSHA": "88420088c9b3e4e5359d8403c249a600e7d3573ad5f47ce6f66fdc7368c5bb79",
+      "entireProgramExactAfterRegisteredEdits": true
+    }
+  ],
+  "openingBodies": {
+    "demon": true,
+    "wedding": true
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/setup.ts",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/night_stages.ts",
+      "same": true
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "same": true
+    },
+    {
+      "path": "backend/src/runtime/simulation/reproduction_context.ts",
+      "same": true
+    }
+  ],
+  "proofPolicy": "Direct actual Git originals, complete engine text forward application of exact recorded edits, and actual new opening statements vs original two if blocks. Opening body token equality ignores only whitespace and comments; no unknown AST normalization or extra runtime tests; authority originals must be independently read around concurrent type-only changes.",
+  "receipts": [
+    {
+      "kind": "fixed-source-seven-file-types",
+      "session": 90120,
+      "exit": 0
+    },
+    {
+      "kind": "scoped-head-dependency",
+      "session": 7478,
+      "exit": 0,
+      "heads": 0,
+      "newDependencyFailures": 0,
+      "historicalDependencyRows": 47
+    },
+    {
+      "kind": "Demon-unit-cases",
+      "uniquePassed": 3,
+      "scope": "Original focused log passes three Demon cases; no claim the then failing Wedding fixtures passed."
+    },
+    {
+      "kind": "Wedding-related-only-unit",
+      "pass": 3,
+      "fail": 0,
+      "assertions": 32
+    }
+  ],
+  "firstRedsRetained": [
+    "New fixture missing request binding",
+    "New fixture input configuration differs from installed board reference",
+    "New fixture pending chat delivery omitted",
+    "Test-only excess context/event union typing",
+    "Responsibility head timing/permission/terminal wording",
+    "First proof empty inverse/deletion and duplicate import-span ambiguity corrected to exact complete forward mapping"
+  ],
+  "reviews": {
+    "root": "Actual original2engine text and exact opening tokens/proof,7SHA match, valid live authority scopes and their cleanup behavior.",
+    "architecture": "Final actualGit2engine exact registered edits, two opening prefixes,7SHA,17 authority function identities and8 isolated cold entry comparisons green.",
+    "codec": "Third direction actual7SHA and16 original authority/native/setup/recording/schema/replay/verifier controls raw unchanged; paid history, stock and chat delivery retain original scope/close ordering. New fixture valid original authority requests independently read."
+  },
+  "limits": [
+    "No new store or authority guard",
+    "No refund/rollback/lifecycle policy strengthening",
+    "No phase advance or paid-effect movement",
+    "No full suite,discovery,model or game rerun",
+    "Complete mechanism/schema/old exports and P9 gate still open"
+  ],
+  "independentControls": 16,
+  "publicBindingIdentities": 17,
+  "isolatedColdComparisons": 8
+}

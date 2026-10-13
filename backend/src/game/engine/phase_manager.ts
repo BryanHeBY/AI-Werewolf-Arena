@@ -14,6 +14,8 @@
  * finish keeps the Day exile mapping open and has no new outer-cycle abort.
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
+import { demonNightTerminal } from "../mechanisms/roles/demon_hunter/ports";
+import { weddingNightTerminal } from "../mechanisms/roles/ghost_bride/ports";
 import { bindBoardParameters } from "../../rulesets/board-parameters";
 import {
   nobleNightReceiver,
@@ -35,7 +37,7 @@ import { magicianNightTerminal } from "../mechanisms/roles/magician/ports";
 import {
   demonRedMoonExpiry,
   commitDemonRedMoonTransition,
-} from "../mechanisms/roles/demon_hunter/authority";
+} from "../mechanisms/roles/demon_hunter/ports";
 import { StatusMark } from "../../core";
 import { statusMarkSnapshot } from "../../core/domain/components/status_marks";
 import {
@@ -44,8 +46,7 @@ import {
   assertDemonOriginalRoster,
   assertDemonNightReadable,
   hasDemonNightStarted,
-  closeDemonHunterNight,
-} from "../mechanisms/roles/demon_hunter/authority";
+} from "../mechanisms/roles/demon_hunter/ports";
 import { demonWitchMarksSafe } from "../mechanisms/roles/demon_hunter/native_potion_requests";
 import { freezeDeliveredDemonNightSources } from "../mechanisms/roles/demon_hunter/native_potion_controller";
 import { GhostBrideSetupWindow } from "../mechanisms/roles/ghost_bride/setup";
@@ -55,9 +56,8 @@ import {
   hasActiveGhostBride,
   hasGhostBrideNightCommit,
   weddingAssignment,
-  closeWeddingNight,
   weddingKnifeCurrent,
-} from "../mechanisms/roles/ghost_bride/authority";
+} from "../mechanisms/roles/ghost_bride/ports";
 import { LonelyGirlSetupWindow } from "../mechanisms/roles/lonely_girl/setup";
 import {
   lonelyGirlReady,
@@ -516,8 +516,8 @@ export class PhaseManager {
     });
     if (night.interrupted || !nightIsCurrent()) {
       if (this.config.nobleSecretBody) nobleNightReceiver(night).abort(this.world, nightDay);
-      closeDemonHunterNight(this.world);
-      closeWeddingNight(this.world);
+      demonNightTerminal.close(this.world);
+      weddingNightTerminal.close(this.world);
       return this.getSnapshot();
     }
     const ownsWedding = weddingSetup(this.world) !== null;
@@ -821,8 +821,8 @@ export class PhaseManager {
         if (this.checkAndSealResult("night_settled")) return this.getSnapshot();
       } finally {
         if (this.config.nobleSecretBody) nobleNightReceiver(night).abort(this.world, nightDay);
-        closeDemonHunterNight(this.world);
-        closeWeddingNight(this.world);
+        demonNightTerminal.close(this.world);
+        weddingNightTerminal.close(this.world);
       }
     }
     const firstDaySheriffBeforeNightInfo =

@@ -17,8 +17,12 @@
  * concrete units only own the original late cleanup transfer and failure abort.
  * The three exchange families keep one Magician-configured transfer value; their
  * original configured cleanup branches read its shared ownership before World.
+ * Demon acquisition and the two native cleanup transfers now belong to their
+ * concrete units; the original handoff point and finally ordering stay here.
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
+import { DemonNightUnit } from "../../mechanisms/roles/demon_hunter/ports";
+import { WeddingNightUnit } from "../../mechanisms/roles/ghost_bride/ports";
 import { bindBoardParameters } from "../../../rulesets/board-parameters";
 import { bindNightAbilityActorQuery } from "../../mechanisms/roles/night-ability-actors";
 import {
@@ -75,7 +79,7 @@ import {
   isMagicianBoard,
   MagicianNightUnit,
 } from "../../mechanisms/roles/magician/ports";
-import { isRedMoonBoard } from "../../mechanisms/roles/demon_hunter/authority";
+import { isRedMoonBoard } from "../../mechanisms/roles/demon_hunter/ports";
 import {
   assertNightmareRosterCurrent,
   isNightmareBoard,
@@ -91,21 +95,17 @@ import {
 import {
   demonHunterActorId,
   assertDemonNightReadable,
-  beginDemonHunterNight,
-  closeDemonHunterNight,
   originalDemonNightLives,
   demonOriginalWolfSourceCurrent,
   demonOriginalWolfTargetCurrent,
-} from "../../mechanisms/roles/demon_hunter/authority";
+} from "../../mechanisms/roles/demon_hunter/ports";
 import { demonWitchMarksSafe } from "../../mechanisms/roles/demon_hunter/native_potion_requests";
 import { sealDeliveredDemonWitchSources } from "../../mechanisms/roles/demon_hunter/native_potion_controller";
 import {
-  captureWeddingKnife,
-  closeWeddingNight,
   weddingSetup,
   ghostBrideReady,
   hasActiveGhostBride,
-} from "../../mechanisms/roles/ghost_bride/authority";
+} from "../../mechanisms/roles/ghost_bride/ports";
 import { discardStaleWeddingKnife } from "../../mechanisms/roles/ghost_bride/night_stages";
 import {
   lonelyGirlReady,
@@ -392,18 +392,28 @@ export class NightPipeline {
       },
       day,
     );
-    let weddingHandedOff = false,
-      demonHandedOff = false,
-      demonAcquired = false;
+    const demonNight = new DemonNightUnit({
+      get world() {
+        return pipeline.world;
+      },
+    });
+    const weddingNight = new WeddingNightUnit(
+      {
+        get world() {
+          return pipeline.world;
+        },
+        get events() {
+          return pipeline.events;
+        },
+      },
+      ownsWedding,
+    );
     try {
       if (ownsAnimal) animalNight.open(isCurrent);
       if (ownsFragrant) fragrantNight.open(isCurrent);
       if (ownsNoble) nobleNight.open(isCurrent);
       if (ownsRadiant) radiantNight.open();
-      if (ownsDemon) {
-        beginDemonHunterNight(this.world, day, isCurrent);
-        demonAcquired = true;
-      }
+      if (ownsDemon) demonNight.open(day, isCurrent);
       if (ownsMist) mistNight.open();
       const assertReadable = () => {
         if (ownsAnimal && !animalAuthoritySnapshot(this.world))
@@ -443,15 +453,7 @@ export class NightPipeline {
               },
             }
           : actionProvider;
-      if (ownsWedding) {
-        const capture = captureWeddingKnife(this.world, day, isCurrent);
-        this.events.push({
-          timestamp: Date.now(),
-          type: "ghost_bride_knife_captured",
-          payload: { ...capture, actorIds: [...capture.actorIds] },
-          audience: Object.freeze([]),
-        });
-      }
+      if (ownsWedding) weddingNight.open(day, isCurrent);
       if (hasFoxInspectionNightCommit(this.world, day))
         throw new Error("fox_inspection_night_reentry_after_commit");
       if (hasDreamNightCommit(this.world, day)) throw new Error("dream_night_reentry_after_commit");
@@ -701,8 +703,8 @@ export class NightPipeline {
       if (ownsAnimal) animalNight.closeNormally();
       if (ownsFragrant) fragrantNight.closeNormally();
       if (ownsNoble) nobleNight.transferToManager();
-      weddingHandedOff = ownsWedding;
-      demonHandedOff = ownsDemon;
+      weddingNight.transferToManager(ownsWedding);
+      demonNight.transferToManager(ownsDemon);
       magicianNight.transferToManager(config.magician !== undefined);
       timeConsortNight.transferToManager(config.timeConsort !== undefined);
       scholarMentorNight.transferToManager(config.scholarMentor !== undefined);
@@ -734,8 +736,8 @@ export class NightPipeline {
       if (config.magician) magicianNight.abortIfOwned();
       if (config.timeConsort) timeConsortNight.abortIfOwned();
       if (config.scholarMentor) scholarMentorNight.abortIfOwned();
-      if (demonAcquired && !demonHandedOff) closeDemonHunterNight(this.world);
-      if (ownsWedding && !weddingHandedOff) closeWeddingNight(this.world);
+      demonNight.abortIfOwned();
+      weddingNight.abortIfOwned();
       closeThiefNight();
       closeWildChildNight();
       closeLonelyGirlNight();
