@@ -39,7 +39,7 @@ import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { ActionValidator } from "../../../src/game/gateway/action_validator";
 import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
 import { ActionReception } from "../../../src/game/gateway/action-reception";
-import { BaselineBotActionProvider } from "../../../src/ai/agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
 
 const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 

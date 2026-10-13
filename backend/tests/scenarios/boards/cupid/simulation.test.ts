@@ -11,7 +11,7 @@ import {
   type RoleComponent,
   type VictoryComponent,
 } from "../../../../src/core";
-import { BaselineBotActionProvider } from "../../../../src/ai/agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
 import { CUPID_CASES, cupidScenario, cupidBoard } from "../../../support/features/cupid/builders/scenario";
 import { loversRecord } from "../../../../src/game/mechanisms/roles/cupid/relation";
 const boards = [

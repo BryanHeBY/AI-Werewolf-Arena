@@ -12,7 +12,7 @@ import { parseRuntimeConfig } from "../../../../src/runtime/config/parse_config"
 import { resolveGameSetup } from "../../../../src/runtime/config/resolve_game_setup";
 import { loadBoardDefinition } from "../../../../src/runtime/config/load_board_definition";
 import { runGame } from "../../../../src/runtime/game_runner";
-import { BaselineBotActionProvider } from "../../../../src/ai/agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
 import {
   readReproduction,
   replayReproduction,

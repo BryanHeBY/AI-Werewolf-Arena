@@ -20,7 +20,7 @@ import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelv
 import { ActionReception } from "../../../src/game/gateway/action-reception";
 import { ActionTurn } from "../../../src/ai/agents/player/action-turn";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-import { BaselineBotActionProvider } from "../../../src/ai/agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import {

@@ -44,7 +44,7 @@ import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { BaselineBotActionProvider } from "../../../../src/ai/agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,

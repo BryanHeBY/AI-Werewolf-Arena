@@ -16,7 +16,7 @@ import { SEER_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/seer/ni
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { BaselineBotActionProvider } from "../../../../src/ai/agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
 
 const deck = [Role.CursedFox, Role.Seer, Role.Wolf, Role.Witch, Role.Guard, Role.Villager];
 

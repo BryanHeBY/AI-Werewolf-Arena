@@ -1,5 +1,7 @@
 /**
- * Scenario test records and strictly replays a complete fixed-deal game using an injected named random stream. Inputs are the original fixed deck and baseline action driver with temporary output; fixed deal mode, stream path and original snapshot comparison are the existing oracle. This migration adds no independent new outcome oracle or golden.
+ * 场景测试用注入的具名随机流录制并严格重放完整固定发牌对局。输入为原固定牌序、
+ * 特权基线动作和临时输出；固定发牌模式、随机流路径及原快照比较提供既有预期。
+ * 目录归属迁移不增加独立胜负预期或生成新 golden，也不调用模型。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";
@@ -14,7 +16,7 @@ import {
 } from "../../../src/runtime/simulation/reproduction_context";
 import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
-import { BaselineBotActionProvider } from "../../../src/ai/agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
 import { runWithSessionRecorder } from "../../../src/recording/recording_context";
 import {
   readReproduction,

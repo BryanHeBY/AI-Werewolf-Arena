@@ -440,7 +440,7 @@ for (const locale of ["zh-CN", "en"] as const)
       const { AcpActionProvider } =
         await import("../../../../src/ai/agents/acp/acp_action_provider");
       const { BaselineBotActionProvider } =
-        await import("../../../../src/ai/agents/providers/action_providers");
+        await import("../../../../src/game/drivers/privileged-baseline");
       const catalog = createRoleCatalog({
         contributions: getDefaultRoleContributions().map((profile) =>
           profile.metadata.role !== Role.Wolf

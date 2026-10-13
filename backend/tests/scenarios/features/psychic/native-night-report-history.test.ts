@@ -89,7 +89,7 @@ for (const pass of [false, true])
       { DamageResolutionSystem } =
         await import("../../../../src/core/domain/systems/damage_resolution_system"),
       { BaselineBotActionProvider } =
-        await import("../../../../src/ai/agents/providers/action_providers");
+        await import("../../../../src/game/drivers/privileged-baseline");
     const game = bootstrapGame(board(), { fixedRoles: deck }),
       events: GameEvent[] = [],
       bot = new BaselineBotActionProvider(game.world),

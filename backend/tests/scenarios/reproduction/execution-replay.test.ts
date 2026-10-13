@@ -19,7 +19,7 @@ import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
 import { resolveGameSetup } from "../../../src/runtime/config/resolve_game_setup";
 import { runGame } from "../../../src/runtime/game_runner";
 import * as factory from "../../../src/runtime/player_agent_factory";
-import { BaselineBotActionProvider } from "../../../src/ai/agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
 import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
 import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";

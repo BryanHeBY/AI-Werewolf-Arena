@@ -10,7 +10,7 @@ import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { createRandom, RANDOM_ALGORITHM, RANDOM_STREAM_POLICY } from "../../../src/core";
-import { BaselineBotActionProvider } from "../../../src/ai/agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
 import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
 import { resolveGameSetup } from "../../../src/runtime/config/resolve_game_setup";
 import { runGame } from "../../../src/runtime/game_runner";

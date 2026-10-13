@@ -21,7 +21,7 @@ import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
-import { BaselineBotActionProvider } from "../../../../src/ai/agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
 import { grantNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
 import { hunterDeathHook } from "../../../../src/game/mechanisms/roles/hunter/death_hook";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";

@@ -11,7 +11,7 @@ import { getHybridState } from "../../../../src/game/mechanisms/roles/hybrid/sta
 import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
 import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
 import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
-import { BaselineBotActionProvider } from "../../../../src/ai/agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";

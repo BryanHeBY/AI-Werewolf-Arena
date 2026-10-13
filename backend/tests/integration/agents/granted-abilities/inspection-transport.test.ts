@@ -14,7 +14,7 @@ import { allNightAbilities } from "../../../../src/game/mechanisms/roles/abiliti
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
-import { BaselineBotActionProvider } from "../../../../src/ai/agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../../../../src/game/drivers/privileged-baseline";
 import { createPlayerAgentRuntime } from "../../../../src/runtime/player_agent_factory";
 import type { ResolvedAgentRuntimeProfile } from "../../../../src/runtime/config/contracts";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";

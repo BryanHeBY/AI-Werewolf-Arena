@@ -1,14 +1,14 @@
 /**
- * Unit tests verify invocation-local display selection, safe error labels, observer text and builtin strategy locale behavior.
- * Input: Original literal request/speech, local output capture and fixed-role bilingual bootstrap comparisons.
- * Output and oracle: Handwritten role/tool labels and action/text equality preserve source content; no CLI child, record file or complete game is executed.
+ * 单元测试验证每次调用独立的显示语言、安全错误标签、观察输出及内置策略语言行为。
+ * 输入为原字面请求／发言、本地输出捕获和固定角色的双语开局；手写角色／工具标签与
+ * 动作／文本比较是预期，原文保持，不运行 CLI 子进程、录制文件或完整对局。
  */
 import { expect, test } from "bun:test";
 import { type Locale } from "@ai-werewolf-arena/game-text";
 import { cliFailure, takeDisplayArguments } from "../../../src/runtime/cli/display";
 import { LlmObserver } from "../../../src/ai/agents/player/player_observer";
 import { createAcpConsoleLogger } from "../../../src/runtime/console_presenter";
-import { BaselineBotActionProvider } from "../../../src/ai/agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { Phase, Role, type ActionRequest } from "../../../src/core";

@@ -1,8 +1,13 @@
+/**
+ * 负责本地六人 mock 对局入口。输入为显示语言，输出为最多八天推进后的快照和事件摘要。
+ * 对局使用固定板子配置和显式特权基线驱动，不调用模型；发牌仍由原开局流程执行。
+ * CLI 只校验显示参数，规则结算归引擎；本入口不生成独立验收预期或写入录制档案。
+ */
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { runCli, takeDisplayArguments, type CliDisplayContext } from "./cli/display";
 import { bootstrapGame } from "../app/bootstrap";
 import { sixPlayerMvpConfig } from "./scenarios/six_player_mvp";
-import { BaselineBotActionProvider } from "../ai/agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../game/drivers/privileged-baseline";
 
 /**
  * 本地 mock 快速回归入口：

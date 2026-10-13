@@ -13,7 +13,7 @@ import {
   replayReproduction,
 } from "../../../src/runtime/simulation/replay_reproduction";
 import * as factory from "../../../src/runtime/player_agent_factory";
-import { BaselineBotActionProvider } from "../../../src/ai/agents/providers/action_providers";
+import { BaselineBotActionProvider } from "../../../src/game/drivers/privileged-baseline";
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
 import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
 import { awakenedScenario } from "../../support/features/awakened-hidden-wolf/builders/scenario";
