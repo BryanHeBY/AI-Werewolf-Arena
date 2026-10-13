@@ -1,6 +1,10 @@
 /**
- * 负责装配纯白之女／狼巫配置与查验贡献。输入为原板子参数、初始化组件、请求上下文与语言；输出保持既有 RoleProfile、提示和目标政策。状态引用和接受后的写入仍归具体机制 owner，本模块不创建第二仓库、授权 lease、执行伤害或编码归档。
+ * 负责 纯白之女／狼巫 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
+ * 输入为原板子参数、角色组件与请求上下文；输出为原 RoleProfile 与具名内建展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
+ * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
+ * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { roleName, text, PURE_WHITE_POLICY } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
@@ -47,23 +51,7 @@ const inspectionBaseline: NonNullable<RoleProfile["baselineAction"]> = (
     : null;
   return { name: "inspect_night_identity", args: { target_id: target, abstain: target === null } };
 };
-function inspectionPrompt(
-  role: Parameters<NonNullable<RoleProfile["renderPrompt"]>>[0],
-  locale: Parameters<typeof text>[0],
-  wolf: boolean,
-): string {
-  const report = getRoleInspectionState(role)?.history.at(-1);
-  return (
-    text(locale, wolf ? "role.wolf_witch.state" : "role.pure_white_girl.state") +
-    (report
-      ? " " +
-        text(locale, "inspection.latest", {
-          target: report.targetId,
-          result: inspectionLabel(report.result, locale),
-        })
-      : "")
-  );
-}
+
 export const PURE_WHITE_ROLE_PROFILE: RoleProfile = {
   role: Role.PureWhiteGirl,
   camp: Camp.Good,
@@ -81,7 +69,7 @@ export const PURE_WHITE_ROLE_PROFILE: RoleProfile = {
       lastDay: null,
       history: [],
     }),
-  renderPrompt: (role, locale = "zh-CN") => inspectionPrompt(role, locale, false),
+  ...nativeRolePresentation("pure_white_girl"),
   configuration: {
     schema: pureParameters,
     defaults: pureParameters.parse({}),
@@ -109,7 +97,7 @@ export const WOLF_WITCH_ROLE_PROFILE: RoleProfile = {
       lastDay: null,
       history: [],
     }),
-  renderPrompt: (role, locale = "zh-CN") => inspectionPrompt(role, locale, true),
+  ...nativeRolePresentation("wolf_witch"),
   configuration: {
     schema: wolfParameters,
     defaults: wolfParameters.parse({}),

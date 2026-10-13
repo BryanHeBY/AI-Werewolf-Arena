@@ -1,7 +1,5 @@
 /**
- * Unit tests verify bounded death-action permits bind the original actor, tool, clock and generation across reception and resolver cleanup.
- * Input: Fresh in-memory worlds, literal death requests and injected errors, revivals, phase changes and microtask revocation.
- * Output and oracle: Explicit permission errors, gun/death counters and hidden-generation observation equality preserve the original scope; no full game or provider transport is executed.
+ * 单元测试验证有界死亡许可在接收和清理间绑定原 actor、工具、时钟及 generation。输入为新内存 World、字面死亡请求，以及注入错误、复活、阶段变化和微任务撤权；预期保留明确许可错误、枪／死亡计数及隐藏 generation 观察相等，不执行完整对局或 provider 传输。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -15,7 +13,8 @@ import {
   type RoleComponent,
 } from "../../../../src/core";
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
-import { ActionReception, ActionTurn } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
+import { ActionTurn } from "../../../../src/ai/agents/player/action-turn";
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";

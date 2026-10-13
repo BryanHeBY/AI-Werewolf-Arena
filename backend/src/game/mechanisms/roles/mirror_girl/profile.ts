@@ -1,7 +1,11 @@
 /**
- * 负责装配镜女的配置、原生初始化与查验／工具贡献。输入为原板子参数、初始化组件、请求上下文与语言；输出保持既有 RoleProfile、提示和目标政策。状态引用和接受后的写入仍归具体机制 owner，本模块不创建第二仓库、授权 lease、执行伤害或编码归档。
+ * 负责 魔镜少女 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
+ * 输入为原板子参数、角色组件与请求上下文；输出为原 RoleProfile 与具名内建展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
+ * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
+ * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
 
+import { nativeRolePresentation } from "../presentation-contribution";
 import type { RoleInspectionState } from "@ai-werewolf-arena/game-contract";
 import { inspectionConfiguration, renderInspectionPolicy } from "../role_inspection/policies";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
@@ -24,19 +28,8 @@ import {
   roleInspectionTargets,
 } from "../role_inspection/rules";
 
-export const freshMirrorInspectionState = (): RoleInspectionState => ({
-  policy: "mirror",
-  lastTarget: null,
-  lastDay: null,
-  history: [],
-});
-const nativeMirror = (role: RoleComponent) =>
-  allNightAbilities(role).find(
-    (ability) =>
-      ability.kind === "role_check" &&
-      ability.source.kind === "native" &&
-      ability.source.role === Role.MirrorGirl,
-  );
+import { nativeMirror, freshMirrorInspectionState } from "./native-inspection";
+export { freshMirrorInspectionState } from "./native-inspection";
 
 export const MIRROR_GIRL_ROLE_PROFILE: RoleProfile = {
   role: Role.MirrorGirl,
@@ -65,7 +58,7 @@ export const MIRROR_GIRL_ROLE_PROFILE: RoleProfile = {
     const native = nativeMirror(role);
     if (native?.kind === "role_check" && roleInspectionPolicy(native.state) !== "mirror")
       throw new Error("mirror_native_policy_invalid");
-    // Reapplication/revival must neither reset a live native history nor replenish a transferred one.
+    // 重复装配或复活不能重置仍存续的原生历史，也不能补充已经转移的查验资源。
     if (!native && !retiredNightAbilityIds(role).some((id) => id.startsWith("native:role_check")))
       setRoleInspectionState(role, {
         ...freshMirrorInspectionState(),
@@ -75,30 +68,7 @@ export const MIRROR_GIRL_ROLE_PROFILE: RoleProfile = {
           : {}),
       });
   },
-  renderPrompt: (role, locale = "zh-CN") => {
-    const native = nativeMirror(role),
-      report = native?.kind === "role_check" ? native.state.history.at(-1) : undefined;
-    return (
-      text(
-        locale,
-        native?.kind === "role_check" && native.state.inspectionPolicy
-          ? "role.mirror_girl.configured_identity"
-          : "role.mirror_girl.state",
-      ) +
-      " " +
-      renderInspectionPolicy(
-        native?.kind === "role_check" ? native.state : freshMirrorInspectionState(),
-        locale,
-      ) +
-      (report
-        ? " " +
-          text(locale, "inspection.latest", {
-            target: report.targetId,
-            result: inspectionLabel(report.result, locale),
-          })
-        : "")
-    );
-  },
+  ...nativeRolePresentation("mirror_girl"),
   configuration: inspectionConfiguration("mirrorGirl", "awa_unique_optional_v1"),
   toolSpecs: [ROLE_INSPECTION_TOOL],
   validationRules: { inspect_role: validateRoleInspection },

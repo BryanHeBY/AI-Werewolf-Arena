@@ -1,15 +1,11 @@
 /**
- * Unit tests for ordinary Guard payload write ownership.
- * Inputs are literal original/captured state references and adversarial target
- * getters; exact access order, stale alias identity and original errors are the
- * oracle. Ability use, marks, lease rechecks and Demon sealed commits are separate.
- * Reader compiler examples cannot overwrite native lastTarget directly.
+ * 单元测试：验证普通守卫 payload 写所有权。输入为原／捕获状态引用及对抗性目标 getter；读取顺序、过期别名身份和原错误为预期。use、标记、租约重检与 Demon 封存提交另属各 owner，编译期拒绝直接改 native lastTarget。
  */
 import type { GuardState } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import {
   getGuardState,

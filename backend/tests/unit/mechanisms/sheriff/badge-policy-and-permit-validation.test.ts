@@ -1,5 +1,5 @@
 /**
- * Unit tests check badge policy configuration, direct Idiot badge handling and bounded dead-action permit validation. Inputs are original literal boards, holder data and malformed contexts; exact request rejection, roundtrip and badge-hook assertions are the oracle. No death-resolution chain, native transport or model executes.
+ * 单元测试验证警徽政策配置、直接白痴警徽处理及有界死亡许可校验。输入保留字面板、持徽状态和畸形 context；精确请求拒绝、roundtrip 与徽 hook 断言是预期，不执行死亡结算链、原生传输或模型。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -18,7 +18,7 @@ import type { AliveComponent } from "../../../../src/core/domain/components/aliv
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import {
   boardDefinitionFromConfig,

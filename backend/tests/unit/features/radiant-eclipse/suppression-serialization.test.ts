@@ -8,7 +8,7 @@ import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { Role, Camp } from "../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { installNativeAbility } from "../../../../src/game/mechanisms/roles/ability_changes";

@@ -1,8 +1,10 @@
 /**
- * 负责装配守墓人的初始化、报告历史展示和放逐反馈阶段贡献。
- * 输入为初始化组件、原报告历史与语言；输出为既有 RoleProfile、反馈提示和阶段贡献。
- * 状态写入委托原 state，反馈产生委托 feedback，不建立第二仓库、授权 lease 或编码归档。
+ * 负责 守墓人 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
+ * 输入为原板子参数、角色组件与请求上下文；输出为原 RoleProfile 与具名内建展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
+ * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
+ * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
@@ -21,28 +23,7 @@ export const GRAVEKEEPER_ROLE_PROFILE: RoleProfile = {
   init: (role) => {
     setGravekeeperState(role, { history: [] });
   },
-  renderPrompt: (role, locale = "zh-CN") => {
-    const history = getGravekeeperState(role)?.history,
-      raw = Array.isArray(history) ? history.at(-1) : undefined;
-    const report = readGravekeeperReport(raw);
-    return (
-      text(locale, "role.gravekeeper.state") +
-      " " +
-      (report
-        ? text(locale, "role.gravekeeper.latest", {
-            exileDay: report.exileDay,
-            receivedDay: report.receivedDay,
-            target: report.targetId,
-            result: inspectionLabel(report.result, locale),
-          })
-        : text(
-            locale,
-            raw === undefined && Array.isArray(history)
-              ? "role.gravekeeper.no_report"
-              : "replay.unknown",
-          ))
-    );
-  },
+  ...nativeRolePresentation("gravekeeper"),
   configuration: {
     schema: z.strictObject({}),
     defaults: {},

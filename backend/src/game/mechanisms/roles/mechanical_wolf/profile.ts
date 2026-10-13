@@ -1,3 +1,10 @@
+/**
+ * 负责 机械狼 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
+ * 输入为原板子参数、角色组件与请求上下文；输出为原 RoleProfile 与具名内建展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
+ * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
+ * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
+ */
+import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../../../core/domain/model";
@@ -53,26 +60,7 @@ export const MECHANICAL_WOLF_ROLE_PROFILE: RoleProfile = {
     apply: (config) => config,
     serialize: () => ({}),
   },
-  renderPrompt: (role, locale = "zh-CN") => {
-    const raw = getMechanicalState(role),
-      state = raw && projectMechanicalState(raw),
-      learned = state?.learned,
-      none = text(locale, "common.none");
-    return (
-      text(locale, "role.mechanical_wolf.state") +
-      " " +
-      text(locale, "role.mechanical_wolf.status", {
-        learned: learned ? roleName(learned.role, locale) : none,
-        ready: learned?.readyOnNight ?? none,
-        inherited: text(locale, state?.hasInheritedKnife ? "common.yes" : "common.no"),
-        first: state?.firstKnifeNight ?? none,
-        mode: state?.mode
-          ? `${state.mode.day}: ${text(locale, state.mode.kind === "kill" ? "mechanical.mode.kill" : "mechanical.mode.skill")}`
-          : none,
-        resources: JSON.stringify(learned?.skill ?? null),
-      })
-    );
-  },
+  ...nativeRolePresentation("mechanical_wolf"),
   toolSpecs: [
     ...WOLF_ROLE_PROFILE.toolSpecs!.filter((spec) => spec.name === "kill_vote"),
     ...MECHANICAL_TOOL_SPECS,

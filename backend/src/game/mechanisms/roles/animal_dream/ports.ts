@@ -4,6 +4,7 @@
  * 死亡提交之后的河豚效果仍由具体权威所有者验证权限并写入，失败不退还已付出的狐狸选择。
  * 白猫过滤与到期准备保留事实、原因修改和失败前缀的原顺序。
  * 本入口仅具名公开本角色的函数与具体机制，不另设状态、跳过当前性检查或合并猫与河豚的死亡规则。
+ * 展示与预检新增查询仍返回原玩家知识或请求 scope 绑定，不把知识转换为提交权限。
  */
 export { AnimalNightUnit } from "./night-lifecycle";
 export {
@@ -21,3 +22,9 @@ export { isAnimalDreamBoard, commitAnimalPufferKnifeDeath } from "./authority";
 /** 贡献在原准备／实际标死边界消费；装配与事实归同一 owner，失败保留已发表和已提交前缀。 */
 export { AnimalDeathWavePreparation } from "./death-wave";
 export type { AnimalDeathWaveRuntime } from "./death-wave";
+
+export { animalBeautyKnowledge } from "./facts";
+
+export { animalBearKnowledge } from "./facts";
+
+export { animalRequestScope } from "./requests";

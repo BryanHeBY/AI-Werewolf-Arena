@@ -1,9 +1,5 @@
 /**
- * Unit tests for separate Hidden Wolf and Gargoyle inheritance write owners.
- * Inputs are literal wolf-camp worlds and throwing publication/resource ports;
- * exact access logs, stored identity and unchanged live bodies are the oracle.
- * These tests cover the original last-wolf transition and paid-fact prefix;
- * actual knife permissions, role inspection and death-wave expansion stay separate.
+ * 单元测试：验证隐狼与石像鬼各自的继承写 owner。输入为字面狼阵营 World 与抛错公布／资源端口；访问日志、存储引用及原生命为预期。覆盖末狼转移和已付费事实前缀，不替代刀权、身份查验或死亡波扩张。
  */
 import type { HiddenWolfState, GargoyleState } from "@ai-werewolf-arena/game-contract";
 
@@ -11,7 +7,7 @@ import { expect, test } from "bun:test";
 import { Role, Camp, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { World } from "../../../src/core/domain/world";
 import {
   getHiddenWolfState,

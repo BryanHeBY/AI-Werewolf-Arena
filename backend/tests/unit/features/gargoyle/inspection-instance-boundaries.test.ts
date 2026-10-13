@@ -1,5 +1,5 @@
 /**
- * Unit tests check Gargoyle inspection permissions, captured stage scopes and separate native/gift/copy instance histories. Inputs are literal decks, controlled single-stage callbacks and revocation mutations; literal reports, use counts and original references are the oracle. Complete phase cycles and death-resolution interaction chains belong to the scenario file.
+ * 单元测试验证石像鬼查验许可、阶段捕获作用域与独立原生／gift／copy 历史。输入为字面角色组、受控单阶段回调及撤权修改；字面报告、次数和原引用是预期。完整阶段及死亡交互链由场景测试拥有。
  */
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
@@ -32,7 +32,7 @@ import {
   wolfKnifeHolders,
 } from "../../../../src/game/mechanisms/roles/wolf_team";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";

@@ -1,6 +1,10 @@
 /**
- * 负责装配预言家的原生查验政策、初始化、工具与阶段贡献。输入为原板子参数、初始化组件、请求上下文与语言；输出保持既有 RoleProfile、提示和目标政策。状态引用和接受后的写入仍归具体机制 owner，本模块不创建第二仓库、授权 lease、执行伤害或编码归档。 原 baselineAction 仅用于明确特权的 mock／规则测试；生产回退只消费玩家观察。
+ * 负责 预言家 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
+ * 输入为原板子参数、角色组件与请求上下文；输出为原 RoleProfile 与具名内建展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
+ * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
+ * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { nativeRolePresentation } from "../presentation-contribution";
 import { scholarMentorBlocks } from "../scholar_mentor/night_frame";
 import { z } from "zod";
 import {
@@ -54,31 +58,7 @@ export const SEER_ROLE_PROFILE: RoleProfile = {
         : {}),
     });
   },
-  renderPrompt: (roleComp, locale = "zh-CN") => {
-    const state = getSeerState(roleComp);
-    const latest =
-      state && state.lastTarget !== null && (state.lastResult || state.lastIsWerewolf !== null)
-        ? ` ${state.lastResult ? text(locale, "inspection.latest", { target: state.lastTarget, result: inspectionLabel(state.lastResult, locale) }) : text(locale, "role.seer.latest", { target: state.lastTarget, camp: term("camp", state.lastIsWerewolf ? "wolf" : "good", locale) })}`
-        : "";
-    return (
-      text(locale, "role.seer.state") +
-      latest +
-      " " +
-      text(
-        locale,
-        state?.targetPolicy === "awa_fresh_others_v1"
-          ? "role.seer.targets_fresh"
-          : "role.seer.targets_alive",
-      ) +
-      " " +
-      text(
-        locale,
-        state?.actionPolicy !== "awa_optional_v1"
-          ? "role.seer.action_required"
-          : "role.seer.action_optional",
-      )
-    );
-  },
+  ...nativeRolePresentation("seer"),
   toolSpecs: SEER_TOOL_SPECS,
   validationRules: {
     check_identity: ({ world, actorId, role, toolCall, day, abilityId, phase }) => {

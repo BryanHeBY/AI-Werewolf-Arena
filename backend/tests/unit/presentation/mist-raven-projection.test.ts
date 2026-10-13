@@ -1,19 +1,9 @@
 /**
- * Unit tests: Mist Raven owner projection uses literal nested private histories and
- * hostile descriptors; exact whitelists, detached copies and zero foreign-code assertions
- * check DTO privacy. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证雾鸦玩家投影的精确白名单与隐私。输入为字面嵌套私密历史和畸形 descriptor；脱离副本及零外来代码访问是原独立预期。不运行模型或完整对局驱动，不从生产输出再生成 oracle。
  */
 import { expect, test } from "bun:test";
-import {
-  createRoleComponent,
-  Role,
-  Camp,
-  World,
-  type RoleComponent,
-  type GameEvent,
-} from "../../../src/core";
+import { Role, Camp, World, type RoleComponent, type GameEvent } from "../../../src/core";
+import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import {
   createAlchemistState,
   createRavenState,

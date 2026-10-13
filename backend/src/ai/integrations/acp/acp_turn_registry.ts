@@ -1,9 +1,8 @@
 /**
- * Adapts ACP session submissions to the shared agent-facing ActionTurn owner.
- * Inputs are session-bound engine requests, turn IDs and protocol submissions;
- * outputs retain pending action promises, preflight receipts and bug reports.
- * Session deadlines are read by the turn owner; registry close cancels only its
- * selection windows. No ACP receipt commits inventory or settles domain completion.
+ * 负责把 ACP 会话提交适配到共同 ActionTurn 窗口；输入为会话绑定原请求、turnId 和协议参数。
+ * 输出保留待选行动 Promise、预检回执与问题报告；规则接收消费游戏 Gateway 的同一 owner。
+ * 期限由选择窗口在原时点读取，registry close 只关闭自己的窗口；ACP 接受不提交库存或 settle 领域完成。
+ * 错会话／turnId 只拒绝本次输入，不消耗别的有效窗口，成功选择后按原次序移除登记与 resolve。
  */
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { ActionRequest, ToolCall } from "../../../core/domain";
@@ -13,7 +12,7 @@ import {
   getDefaultRoleCatalog,
   ToolValidationRuleRegistry,
 } from "../../../game/mechanisms";
-import { ActionReception } from "../../agents/player/action_reception";
+import { ActionReception } from "../../../game/gateway/action-reception";
 import { ActionTurn, type ActionReceipt } from "../../agents/player/action-turn";
 import {
   GameReportBugInput as McpReportBugParams,
@@ -98,9 +97,7 @@ export class AcpTurnRegistry {
     if (this.pendingBySession.has(sessionId)) {
       throw new Error("acp_turn_already_open_for_session");
     }
-    // The model must echo this value into submit_action. A short monotonic
-    // token keeps stale-turn protection without asking an agent to reproduce
-    // a UUID exactly (which caused otherwise valid actions to be rejected).
+    // 模型在 submit_action 回传此短递增 token；保留陈旧回合拒绝，同时避免要求逐字复制长 UUID。
     const turnNumber = (this.nextTurnNumberBySession.get(sessionId) ?? 0) + 1;
     this.nextTurnNumberBySession.set(sessionId, turnNumber);
     const turnId = `t${turnNumber}`;

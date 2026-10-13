@@ -1,7 +1,5 @@
 /**
- * Unit tests verify Wolf King native shot causes, independent resources, bounded chained resolution and fail-closed late choices.
- * Input: Original locale/cause/change tables, explicit death permits and local role/life/resource state.
- * Output and oracle: Exact consumption, reception, visibility, death-wave and stale-selection assertions remain unchanged; no PM cycle or recorder executes.
+ * 单元测试验证狼王原生枪死因、独立库存、有界连锁结算和迟到选择关闭。输入保留原 locale／死因／变化表、明确死亡许可及本地角色／生命／资源；精确消费、接收、可见性、死亡波与陈旧选择断言是预期，不推进 PhaseManager 周期或记录器。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -34,7 +32,7 @@ import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/por
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import { AgentEventVisibilityRegistry } from "../../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
 

@@ -1,8 +1,7 @@
 /**
- * Noble prompt scenarios verify actual spent/intact and pending/cleared histories preserve the same legal-day information and errors.
- * Input: Original locale, resource-history and scripted action matrices plus later-world God-fact audience probes.
- * Output and oracle: Literal hidden stock/status checks, exact sample equality and forbidden visibility preserve causal assertions; no golden or profile is rewritten.
+ * 场景验证夜贵族已消耗／完整与待结算／已清除历史的合法白天信息及错误。输入为原语言、资源历史、脚本动作矩阵和 God 事实 audience 探针；字面隐藏库存、状态、相等样本和越权拒绝保持，不改 profile 或 golden。
  */
+import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -23,7 +22,7 @@ import {
   getDefaultTargetHintRegistry,
   getDefaultToolSpecRegistry,
 } from "../../../../src/game/mechanisms";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { gameToolProtocol } from "../../../../src/ai/agents/game_tool_protocol";
 import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
 import {
@@ -92,13 +91,13 @@ async function run(locale: "zh-CN" | "en", kind: "body" | "noble", changed: bool
         expect(unqualified.ok).toBe(false);
         if (locale === "en")
           expect(
-            system.systemPrompt + user + role.renderPrompt() + JSON.stringify(schema),
+            system.systemPrompt + user + renderRolePrompt(role) + JSON.stringify(schema),
           ).not.toMatch(/[\u4e00-\u9fff]/);
         samples.push({
           observation,
           user,
           system,
-          brief: role.renderPrompt(),
+          brief: renderRolePrompt(role),
           disallowed,
           unqualified,
           schema,

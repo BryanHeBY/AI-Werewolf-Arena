@@ -1,15 +1,12 @@
 /**
- * Unit tests for public ordinary wolf target contributions and fixed live query order.
- * Inputs are literal restrictions, instrumented Role reads, malformed candidates
- * and a finite Mist board. Independent boolean/trace expectations verify short
- * circuit failure prefixes, original repeated reads and zero binding queries.
- * No model, complete-game driver, fixture rewrite or generated rule oracle runs.
+ * 单元测试：验证普通狼公开目标贡献和固定 live 查询顺序。输入为字面限制、记录 Role 读取、畸形候选及有限雾鸦板子；独立布尔／trace 预期验证短路失败前缀、重复读与零绑定查询，不运行模型、完整对局或生成规则 oracle。
  */
 import { expect, test } from "bun:test";
 import { Camp, Role, type EntityId } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT, type ComponentName } from "../../../src/core/domain/components/names";
-import { createRoleComponent, type RoleComponent } from "../../../src/core/domain/components/role";
+import { type RoleComponent } from "../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { createAliveComponent } from "../../../src/core/domain/components/alive";
 import { createNobleState } from "../../../src/game/mechanisms/roles/noble_secret_body/state";
 import { freshNightmareShadowState } from "../../../src/game/mechanisms/roles/nightmare_shadow/state";
@@ -286,7 +283,7 @@ function rejectedTargetCapabilities(
   query.commit();
   // @ts-expect-error Target query exposes no mutable World.
   query.world;
-  // @ts-expect-error Read-only alive membership cannot be edited by a query consumer.
+  // @ts-expect-error 查询消费者不能修改只读存活成员集合。
   roster.aliveIds().push(2);
   // @ts-expect-error Mist circle membership is read-only.
   mist.targets()?.push(2);

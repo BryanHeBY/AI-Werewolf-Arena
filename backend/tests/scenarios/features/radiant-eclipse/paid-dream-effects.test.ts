@@ -8,10 +8,8 @@ import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { Role, Camp, WitchSelfHealRule } from "../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
-import {
-  createRoleComponent,
-  type RoleComponent,
-} from "../../../../src/core/domain/components/role";
+import { type RoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import { createCampComponent } from "../../../../src/core/domain/components/camp";
 import { createVictoryComponent } from "../../../../src/core/domain/components/victory";

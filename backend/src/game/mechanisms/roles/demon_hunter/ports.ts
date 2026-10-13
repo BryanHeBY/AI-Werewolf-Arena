@@ -1,17 +1,13 @@
 /**
- * Exposes Demon Hunter's concrete night lifecycle boundary to the engine.
- * Opening runs during the original night stage; late handoff precedes pipeline cleanup.
- * Original request/currentness checks retain authority; this boundary authorizes no new scope.
- * Original read/write permissions stay with the concrete authority and resource owners.
- * Terminal close and abort keep the original manager and pipeline order.
- * Inputs and outputs keep the original World, opening and terminal references;
- * the actual unit owns acquisition/transfer, while sealed authority owns rules.
- * Named exports add no wrapper state, inventory, runtime permit or codec policy.
- * Native controller loaders return the original dynamic import Promise only when used; exporting them does not eagerly initialize either controller.
+ * 提供猎魔人具体夜间生命周期、玩家投影及请求预检的公开入口；输入保留原 World、开启与终结引用。
+ * 输出为实际夜间单元、原查询结果与原工具读取绑定。开启仍在原阶段，晚移交先于 pipeline 清理，
+ * close／abort 保持经理与 pipeline 的原顺序；请求当前性、资源读写权限仍由具体权威所有者验证。
+ * 单元拥有获取与移交，权威拥有规则；公开入口不新增作用域、包装状态、库存或编码政策。
+ * 原生控制器 loader 仅在实际调用时返回原动态 import Promise，公开它们不提前初始化控制器。
  */
 export { DemonNightUnit, demonNightTerminal } from "./night-lifecycle";
 
-/** Original engine queries retain their exact authority binding and arguments. */
+/** 原引擎查询保持同一权威函数绑定与参数。 */
 export {
   isRedMoonBoard,
   demonHunterActorId,
@@ -27,7 +23,7 @@ export {
   demonWitchRequiredThisNight,
 } from "./authority";
 
-/** Native controllers keep the original lazy import Promise and initialize only on use. */
+/** 原生控制器保持原懒加载 import Promise，仅在实际使用时初始化。 */
 export function loadDemonNativeNightController() {
   return import("./native_night_controller");
 }
@@ -35,3 +31,19 @@ export function loadDemonNativeNightController() {
 export function loadDemonNativePotionController() {
   return import("./native_potion_controller");
 }
+
+export { projectDemonHunter } from "./authority";
+
+export { demonWitchRequestTargetCurrent } from "./native_potion_requests";
+
+export { demonWitchRequestCurrent } from "./native_potion_requests";
+
+export { readDemonNativeNightTool } from "./native_potion_requests";
+
+export { readDemonPotionTool } from "./native_potion_requests";
+
+export { demonHunterRequestScope } from "./authority";
+
+export { canSubmitDemonHunt } from "./authority";
+
+export { readDemonHuntTool } from "./state";

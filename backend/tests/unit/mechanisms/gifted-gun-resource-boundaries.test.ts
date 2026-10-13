@@ -1,7 +1,5 @@
 /**
- * Unit tests verify gifted gun original-World authorization, independent native/gift stock and bounded death/transfer/late-reply rules.
- * Input: Original locale/native/cause/change matrices, explicit life scopes and direct hook/death-resolver operations.
- * Output and oracle: Exact request freshness, consumed/expired stock, source-private facts and stale ownership refusals remain unchanged; no complete night or native file recorder executes.
+ * 单元测试验证赠枪原 World 授权、独立原生／gift 库存及有界死亡／转移／迟到回复。输入保留 locale／原生／死因／变化矩阵、明确生命 scope 和直接 hook／死亡结算；精确请求新鲜性、消费／到期库存、来源私有事实及陈旧 owner 拒绝是预期，不运行完整夜晚或原生文件记录器。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -33,7 +31,7 @@ import {
 import { DeathResolution } from "../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../src/game/gateway/action-reception";
 import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
 import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
 import { World } from "../../../src/core/domain/world";

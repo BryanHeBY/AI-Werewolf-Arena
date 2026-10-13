@@ -1,9 +1,9 @@
 /**
- * Unit tests: Seer policies use explicit target/action combinations and changed history;
- * exact schema, gateway, DTO and stock assertions check shared policy and exhausted-target
- * behavior. Inputs and expected outcomes remain the original literal or immutable-fixture
- * oracle; these module assertions invoke no model or complete-game driver.
+ * 单元测试用明确目标／行动组合及历史变化验证预言家的共享政策。原 schema、gateway、
+ * DTO 和库存断言验证配置语义；输入及字面／不可变 fixture 预期保持原样，不运行模型
+ * 或完整对局驱动。
  */
+import { captureNativeRolePresentation } from "../../../../src/game/observation/native-role-presentation-capture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -184,7 +184,8 @@ for (const locale of ["zh-CN", "en"] as const)
       { targetPolicy: "awa_fresh_others_v1", actionPolicy: "awa_required_when_legal_v1" },
       locale,
     );
-    const prompt = SEER_ROLE_PROFILE.renderPrompt!(
+    const prompt = captureNativeRolePresentation(
+      SEER_ROLE_PROFILE.nativePresentation!.id,
       game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!,
       locale,
     );

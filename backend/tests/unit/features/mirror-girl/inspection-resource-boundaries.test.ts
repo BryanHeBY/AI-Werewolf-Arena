@@ -1,8 +1,7 @@
 /**
- * Unit tests verify Mirror Girl direct inspection preserves identity, unique-target knowledge and independent copied/gifted/transferred resources.
- * Input: All original locale/change/point matrices, local role/life edits and bounded inspection/reception contexts.
- * Output and oracle: Exact report/counter/privacy/closure and committed-prefix early reentry refusals remain unchanged; no complete NightPipeline or PM cycle runs.
+ * 单元测试验证镜女直接查验的身份、唯一目标知识与独立复制／赠予／转移资源。输入为原语言、变化点矩阵及局部角色／生命修改；报告、计数、隐私、关闭和已提交前缀重入拒绝为预期，不执行完整 NightPipeline 或 PhaseManager 周期。
  */
+import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -42,7 +41,7 @@ import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import { BaselineBotActionProvider } from "../../../../src/ai/agents/providers/action_providers";
@@ -189,7 +188,8 @@ for (const locale of ["zh-CN", "en"] as const)
           (e) => e.type === "role_inspected",
         ),
       ).toHaveLength(id === 1 ? 2 : 0);
-    if (locale === "en") expect(role(game).renderPrompt(locale)).not.toMatch(/[\u4e00-\u9fff]/);
+    if (locale === "en")
+      expect(renderRolePrompt(role(game), locale)).not.toMatch(/[\u4e00-\u9fff]/);
   });
 
 test("Hidden role labels change after inheritance but a previous Mirror report is immutable and its stable ID cannot be rechecked", async () => {

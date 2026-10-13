@@ -9,7 +9,6 @@ import {
   Phase,
   COMPONENT,
   WinCondition,
-  createRoleComponent,
   createCampComponent,
   createVictoryComponent,
   createAliveComponent,
@@ -21,6 +20,7 @@ import {
   type AliveComponent,
   type VictoryComponent,
 } from "../../../../src/core";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { LonelyGirlSetupWindow } from "../../../../src/game/mechanisms/roles/lonely_girl/setup";
 import {
@@ -38,7 +38,7 @@ import {
   openLonelyGirlNight,
 } from "../../../../src/game/mechanisms/roles/lonely_girl/lifecycle";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";

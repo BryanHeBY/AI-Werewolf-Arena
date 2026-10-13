@@ -11,7 +11,7 @@ import {
   createAliveComponent,
   type AliveComponent,
 } from "../../../../src/core/domain/components/alive";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { createCampComponent } from "../../../../src/core/domain/components/camp";
 import { createIdentityComponent } from "../../../../src/core/domain/entities/player";
 import { createVictoryComponent } from "../../../../src/core/domain/components/victory";

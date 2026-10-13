@@ -1,8 +1,7 @@
 /**
- * Unit tests verify Gravekeeper strict private feedback fields and direct preceding-exile delivery without pending or exact-role leakage.
- * Input: Original locale matrix, literal malformed feedback and controlled direct feedback stage contexts.
- * Output and oracle: Exact null/acceptance, zero accessor reads and native keeper eligibility/history remain unchanged; no complete night or PM cycle runs.
+ * 单元测试：验证守墓人私密反馈字段及前次放逐的直接交付，不泄漏待结算或精确角色。输入为语言矩阵、字面畸形反馈与直接阶段上下文；原 null／接受、零 accessor 读及资格／历史为预期，不运行完整夜或 PhaseManager 周期。
  */
+import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -108,7 +107,7 @@ for (const locale of ["zh-CN", "en"] as const)
     for (const item of bad) {
       expect(readGravekeeperReport(item)).toBeNull();
       setGravekeeperState(role(world, 3), { history: [item as never] });
-      const prompt = role(world, 3).renderPrompt(locale);
+      const prompt = renderRolePrompt(role(world, 3), locale);
       expect(prompt).toContain(locale === "en" ? "Unknown" : "未知");
       expect(prompt).not.toContain("Wolf King");
       expect(policy(world).buildObservation(request(3, 2, [])).ownState.gravekeeper).toEqual({

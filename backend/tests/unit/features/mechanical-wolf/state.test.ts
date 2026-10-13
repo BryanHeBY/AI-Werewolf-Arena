@@ -1,15 +1,10 @@
 /**
- * Unit tests for mechanical-wolf; Isolated mechanical-wolf state contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试：验证机械狼的独立状态契约及原 owner／frame／reader。输入为内存 fixture、受控回调与畸形修改；原字段、引用和拒绝断言为预期，不执行装配周期、模型或实体传输。
  */
 import type { MechanicalSkill } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { Camp, Role } from "../../../../src/core/domain/model";
 import {
   advanceMechanicalNight,

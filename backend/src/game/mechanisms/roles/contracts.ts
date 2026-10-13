@@ -1,11 +1,7 @@
 /**
- * Owns role profile metadata, initialization callbacks and declared contributions.
- * Inputs are role IDs, schemas and concrete feature callbacks; output describes
- * catalog assembly without granting runtime authority. Initialization sees deeply
- * readonly board parameters; configuration builders retain mutable serialization
- * DTOs and return their own data. Role owners alone mutate resources and state.
- * Only the initialization callback receives explicit container write rights;
- * custom profiles retain arbitrary extension keys on the original role object.
+ * 负责定义角色资料、初始化、运行贡献与展示贡献契约的数据结构。输入为原 profile 及其
+ * 原角色／上下文；Catalog 保持同一贡献对象和实际读取顺序。初始化可写原扩展键与容器，
+ * 普通读方不取得写权。内建展示只声明中立标识，自定义原文回调仍受信任，不授予租约或动作权限。
  */
 import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
 
@@ -31,12 +27,12 @@ export interface RoleInitContext {
   world?: World;
 }
 
-/** Profile initialization only: preserves custom keys without a runtime mutable-role API. */
+/** 仅初始化可写原扩展键和替换容器；不向普通读方公开可写角色 API。 */
 export type RoleInitializationComponent = Omit<RoleComponent, "privateState"> & {
   privateState: Record<string, unknown>;
 };
 
-/** Faction membership alone never grants knowledge, chat access or a knife. */
+/** 阵营归属本身不授予知识、狼聊或刀权。 */
 export interface WolfTeamPermissions {
   readonly recognizedByPack: boolean;
   readonly recognizes: "pack" | "all" | "none" | readonly Role[];
@@ -51,25 +47,25 @@ export interface RoleProfile {
   label: string;
   skillBrief: string;
   goodSide?: "god" | "villager";
-  /** Declared composition limit; omitted roles retain their existing multiplicity. */
+  /** 声明角色数量限制；未声明的角色保持原数量政策。 */
   maxCount?: number;
-  /** Composition whitelist contributed by a role whose learning rules are deliberately finite. */
+  /** 具备有限学习规则的角色贡献组合白名单。 */
   supportedBoardRoles?: readonly Role[];
-  /** Finite sourced goals; both public parsing and internal bootstrap reject incompatible goals. */
+  /** 有限来源目标；公开解析与内部初始化均拒绝不兼容目标。 */
   supportedWinConditions?: readonly import("../../../core/domain/identity").WinCondition[];
-  /** Passive Bear sensing is independent of active inspection labels/knife permission. */
+  /** 熊的被动感知独立于主动查验标签和刀权。 */
   detectableByBear?: (world: World, role: RoleComponent) => boolean;
   initialVictoryAffiliations?:
     | readonly VictoryAffiliation[]
     | ((role: RoleComponent, ctx: RoleInitContext) => readonly VictoryAffiliation[]);
-  /** Public participation restrictions; secret immunity belongs to resolution hooks. */
+  /** 公开参与限制；秘密免疫仍属于结算 hook。 */
   participation?:
     | { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean }
     | ((role: RoleComponent) => { canVote: boolean; canBeExiled: boolean; canBeSheriff: boolean });
   wolfTeam?: WolfTeamPermissions | ((role: RoleComponent, world?: World) => WolfTeamPermissions);
-  /** Explicit retained knowledge for sourced roles whose team is learned only at a particular time. */
+  /** 特定时点获知队友的角色，显式保留其已有知识。 */
   knownTeammates?: (role: RoleComponent, world: World) => readonly number[];
-  /** Explicit public self-destruct capability, independent of faction/knife access. */
+  /** 显式公开自爆资格，独立于阵营及刀权。 */
   canSelfDestruct?: boolean | ((role: RoleComponent) => boolean);
   inspectionLabels?:
     | { camp?: InspectionCamp; role?: RoleId }
@@ -78,10 +74,13 @@ export interface RoleProfile {
     schema: z.ZodType;
     defaults: Readonly<Record<string, unknown>>;
     apply: (config: BoardConfig, value: unknown) => BoardConfig;
-    /** Serialize only this role's public parameters from a resolved internal board. */
+    /** 仅从已解析板子序列化本角色的公开参数。 */
     serialize: (config: BoardConfig) => unknown;
   };
   init?: (roleComp: RoleInitializationComponent, ctx: RoleInitContext) => void;
+  /** 内建展示的语言中立标识；不绑定当前请求能力或传出运行状态。 */
+  nativePresentation?: import("./presentation-contribution").NativeRolePresentationContribution;
+  /** 旧 profile 展示 API 的临时兼容入口；内建与受信任自定义回调均保留原 receiver 和晚 World 读取，待 C44 消费者切换后退出。 */
   renderPrompt?: (roleComp: RoleComponent, locale?: Locale, world?: World) => string;
   toolSpecs?: ToolSpec[];
   stageDirectives?: StageDirectiveRule[];

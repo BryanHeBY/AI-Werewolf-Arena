@@ -24,7 +24,8 @@ import { createAliveComponent } from "../../../../src/core/domain/components/ali
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception, ActionTurn } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
+import { ActionTurn } from "../../../../src/ai/agents/player/action-turn";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { getDefaultConfigRenderRegistry } from "../../../../src/game/mechanisms";
 

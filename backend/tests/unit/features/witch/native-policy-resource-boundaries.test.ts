@@ -1,8 +1,9 @@
 /**
- * Unit tests verify direct Witch native knife disclosure/two-potion policy, foreign stock isolation and terminal second-turn closure.
- * Input: Original knife/stock/order/revocation/locale matrices through the bounded native stage helper.
- * Output and oracle: Handwritten requests, bottle/use counters and configured prompt/DTO boundaries remain unchanged; no complete NightPipeline or recorder runs.
+ * 单元测试验证女巫原生狼刀披露、双药政策、外来库存隔离与终结后的第二次行动关闭。
+ * 输入保留原狼刀／库存／顺序／撤销／语言矩阵，只调用有界原生阶段 helper；手写请求、
+ * 药瓶／使用计数和配置提示／DTO 边界是预期，不运行完整 NightPipeline 或 recorder。
  */
+import { captureNativeRolePresentation } from "../../../../src/game/observation/native-role-presentation-capture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -221,7 +222,7 @@ for (const locale of ["zh-CN", "en"] as const)
     const game = setup("awa_always_v1", "awa_both_native_experimental_v1", locale);
     const role = game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!;
     for (const prompt of [
-      WITCH_ROLE_PROFILE.renderPrompt!(role, locale),
+      captureNativeRolePresentation(WITCH_ROLE_PROFILE.nativePresentation!.id, role, locale),
       getDefaultConfigRenderRegistry().renderBoardConfigPrompt(game.config, locale),
     ]) {
       expect(prompt).toContain(locale === "en" ? "even after heal is spent" : "解药耗尽");

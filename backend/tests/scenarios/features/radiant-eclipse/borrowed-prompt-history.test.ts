@@ -1,12 +1,8 @@
 /**
- * Scenario tests for radiant prompt history. Inputs are original locale/borrowed-kind matrix and shared
- * SDK/ACP in-memory turn receivers. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Helper run executes full original NightPipeline with ActionTurn/ACP
- * registry and player feeds. These are in-memory control adapters, not HTTP/stdio processes. Engine
- * sequencing remains real and models remain controlled providers; production output is not a newly
- * generated golden.
+ * 场景测试验证曜蚀借用能力的原提示历史。输入保留 locale／借用类别矩阵及内存 SDK／ACP 回合接收器；字面回执、引用／getter／错误轨迹、事实和状态是原预期。原 helper 实际推进完整 NightPipeline，并连接 ActionTurn／ACP 和玩家 feed；这些控制适配器不启动 HTTP／stdio，受控 provider 不调用模型，生产输出不生成新 golden。
  */
-import { ActionReception, ActionTurn } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
+import { ActionTurn } from "../../../../src/ai/agents/player/action-turn";
 import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";

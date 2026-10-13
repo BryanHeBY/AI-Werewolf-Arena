@@ -1,6 +1,7 @@
 /**
- * Unit tests check named Hidden Wolf camp policy configuration, prompts and own-state projection. Inputs are literal policy/locale matrices and malformed parameters; literal normalized fields, prompt fragments and absent foreign state are the oracle. No complete phase cycle runs here; inheritance and Knight interaction stay in scenarios.
+ * 单元测试：验证隐狼具名阵营政策、提示与玩家状态投影。输入为原政策／语言矩阵及畸形参数；归一化字段、字面提示片段和外来状态缺省为预期。继承及骑士交互在场景测试中，此处不运行完整阶段。
  */
+import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import {
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
@@ -54,7 +55,7 @@ for (const campInspection of ["awa_inheritance_v1", "netease_2020_good_v1"] as c
         getDefaultConfigRenderRegistry().renderBoardConfigPrompt(game.config, locale),
       ).toContain(campInspection);
       const hidden = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
-      const prompt = hidden.renderPrompt(locale);
+      const prompt = renderRolePrompt(hidden, locale);
       expect(prompt).toContain(
         campInspection === "netease_2020_good_v1"
           ? campInspection

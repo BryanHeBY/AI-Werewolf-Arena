@@ -1,17 +1,11 @@
 /**
- * Owns test builder support: Raw Animal Dream World, original role objects and initial roster; no phase pipeline, transport, recording or oracle calculation.
- * Inputs are original configs, raw component objects and caller-supplied fields;
- * outputs are the original explicit fixture values. Unit and scenario tests use
- * unchanged handwritten literals and identity snapshots as the independent oracle.
- * This builder never runs a whole game, transport or production rule verifier.
+ * 构造动物梦境测试的原 World、角色对象与初始座位。输入为原配置、组件和调用方字段，输出为显式 fixture 值；玩家身份和手写断言由测试提供。这里只造输入，不运行阶段、完整对局、传输、归档或规则验证器。
  */
 import { World } from "../../../../../src/core/domain/world";
 import { Role, Camp } from "../../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../../src/core/domain/components/names";
-import {
-  createRoleComponent,
-  type RoleComponent,
-} from "../../../../../src/core/domain/components/role";
+import { type RoleComponent } from "../../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
 import {
   createAliveComponent,
   type AliveComponent,

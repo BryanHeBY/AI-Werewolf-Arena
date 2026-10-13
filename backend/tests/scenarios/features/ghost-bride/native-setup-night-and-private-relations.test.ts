@@ -1,5 +1,5 @@
 /**
- * Scenario tests drive original Ghost Bride setup and full phase/partner-death interactions. Inputs are fixed groom/witness rosters, actual request factories and controlled choices; literal role/stock identity, goals, death IDs and private-prompt exclusion are the oracle. Native stocks remain their actual owners and no model is called.
+ * 场景测试驱动鬼新娘原择婚、完整阶段与伴侣死亡交互。输入为固定新郎／证婚人阵容、实际请求工厂和受控选择；预期来自原字面角色／库存引用、目标、死亡名单和私密提示排除。原生库存仍由实际 owner 持有，不调用模型。
  */
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -15,7 +15,7 @@ import {
   weddingSetup,
 } from "../../../../src/game/mechanisms/roles/ghost_bride/authority";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { knownWolfTeammates, wolfKnifeHolders } from "../../../../src/game/mechanisms/roles/wolf_team";
 import { getDefaultRoleCatalog, getDefaultTargetHintRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultConfigRenderRegistry, getDefaultToolSpecRegistry } from "../../../../src/game/mechanisms";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";

@@ -1,7 +1,5 @@
 /**
- * Unit tests verify Spirit Seer direct repeat policy, read-only preflight, optional closure and copied resource privacy.
- * Input: Original locale/change/gateway/legacy-policy matrices with bounded direct inspection handlers and the original cached catalog reference.
- * Output and oracle: Exact role/history/stock, cancellation and foreign native-knife refusal remain unchanged; no complete night, PM or model executes.
+ * 单元测试验证通灵师重复查验政策、只读预检、可选关闭及复制资源隐私。输入保留原 locale／变化／gateway／旧政策矩阵、有界直接查验与原缓存 catalog 引用；精确角色／历史／库存、取消及外来原生刀拒绝是预期，不运行完整夜晚、PhaseManager 或模型。
  */
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
@@ -38,7 +36,7 @@ import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";

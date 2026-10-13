@@ -1,10 +1,10 @@
 /**
- * Owns Noble/Secret Body role contributions and their configured action policies.
- * Inputs are initialization state, board parameters and original request context;
- * outputs preserve native defaults, prompts, stage metadata and legal-tool checks.
- * Concrete slots belong to this feature's initialization/read owners; this module
- * never creates a body contract, settles damage or closes a night authority.
+ * 负责 夜之贵族／觉醒愚者 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
+ * 输入为原板子参数、角色组件与请求上下文；输出为原 RoleProfile 与具名内建展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
+ * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
+ * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
@@ -53,7 +53,7 @@ export const NIGHT_NOBLE_ROLE_PROFILE: RoleProfile = {
       noble.parse(ctx.boardConfig?.nightNoble ?? {}).wolfActionPolicy,
     );
   },
-  renderPrompt: (_role, locale = "zh-CN") => text(locale, "role.night_noble.brief"),
+  ...nativeRolePresentation("night_noble"),
   canSelfDestruct: (role) =>
     readNobleState((role.privateState as { readonly noble?: unknown }).noble)?.wolfActionPolicy ===
     "standard",
@@ -110,7 +110,7 @@ export const AWAKENED_IDIOT_ROLE_PROFILE: RoleProfile = {
       body.parse(ctx.boardConfig?.awakenedIdiot ?? {}).protectionRepeatPolicy,
     );
   },
-  renderPrompt: (_role, locale = "zh-CN") => text(locale, "role.awakened_idiot.brief"),
+  ...nativeRolePresentation("awakened_idiot"),
   configuration: {
     schema: body,
     defaults: body.parse({}),

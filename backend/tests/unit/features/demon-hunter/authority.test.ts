@@ -14,7 +14,6 @@ import {
   PotionType,
   StatusMark,
   StatusMarksComponent,
-  createRoleComponent,
   createCampComponent,
   createVictoryComponent,
   createAliveComponent,
@@ -28,6 +27,7 @@ import {
   type RoleComponent,
   type AliveComponent,
 } from "../../../../src/core";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import {
   installDemonHunter,
   beginDemonHunterNight,
@@ -1076,7 +1076,7 @@ for (const mode of ["original", "clone", "copied", "string", "extra", "getter", 
       { ToolValidationRuleRegistry },
       { DEMON_HUNTER_TOOL_RULE },
     ] = await Promise.all([
-      import("../../../../src/ai/agents/player/action_reception"),
+      import("../../../../src/game/gateway/action-reception"),
       import("../../../../src/game/mechanisms/registries/tool_spec_registry"),
       import("../../../../src/game/mechanisms/validation/tool_validation_rule_registry"),
       import("../../../../src/game/mechanisms/roles/demon_hunter/validation_rules"),
@@ -1560,7 +1560,7 @@ for (const kind of [
   test(`actual Witch precommit ${kind}: preflight and controller refuse before first native write`, async () => {
     const f = fixture(),
       { executeDemonWitchTurn, gateway, recorder } = await nativeControllerDependencies(),
-      { ActionReception } = await import("../../../../src/ai/agents/player/action_reception"),
+      { ActionReception } = await import("../../../../src/game/gateway/action-reception"),
       receipts: boolean[] = [],
       before = demonHunterAuditPlayer(f.world, 5),
       spy = spyOn(recorder, "safeRecordLogicOp").mockImplementation(() => {});
@@ -1659,7 +1659,7 @@ for (const field of ["phase", "actorId", "allowedTools", "context", "deadlineAtM
   test(`actual Witch clone invalidates with original ${field} edit`, async () => {
     const f = fixture(),
       { executeDemonWitchTurn, gateway, requests } = await nativeControllerDependencies(),
-      { ActionReception } = await import("../../../../src/ai/agents/player/action_reception"),
+      { ActionReception } = await import("../../../../src/game/gateway/action-reception"),
       receipts: boolean[] = [];
     beginDemonHunterNight(f.world, 1, () => true);
     await expect(

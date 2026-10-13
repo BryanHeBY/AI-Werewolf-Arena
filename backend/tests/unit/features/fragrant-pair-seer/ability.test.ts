@@ -9,7 +9,7 @@ import { World } from "../../../../src/core/domain/world";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { Role, Camp } from "../../../../src/core/domain/identity";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import type { GameEvent } from "../../../../src/core/domain/events";
 import { freshPairSeerState } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/state";
 import {

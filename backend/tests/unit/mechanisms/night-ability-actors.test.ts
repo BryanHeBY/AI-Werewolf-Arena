@@ -1,16 +1,12 @@
 /**
- * Unit tests for narrow night eligibility ports and eager actor enumeration.
- * Inputs are literal live instances, instrumented read ports and owned contexts
- * with replaced World getters; independent traces assert complete filter order,
- * failure prefixes, reference identity and zero binding reads. No full-game
- * driver, model or production-generated expected result is used.
+ * 单元测试：验证窄夜间资格端口及 eager 演员枚举。输入为字面 live 实例、记录读端口与可替换 World getter 的原上下文；完整 filter 顺序、失败前缀、引用和零绑定读取为预期，不运行完整对局或模型，也不生成 oracle。
  */
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import type { NightAbility } from "../../../src/game/mechanisms/roles/abilities";
 import {
   bindNightAbilityActorQuery,
@@ -241,12 +237,12 @@ function rejectedQueryCapabilities(
   roster.abilitiesFor(1)[0]!.uses++;
   const potion = roster.abilitiesFor(1).find((ability) => ability.kind === "potion");
   if (potion?.kind === "potion") {
-    // @ts-expect-error Read-port potion state is read-only below the instance level.
+    // @ts-expect-error 读出口的药瓶状态在能力实例内部也保持只读。
     potion.state.poison = 0;
   }
   const check = roster.abilitiesFor(1).find((ability) => ability.kind === "seer_check");
   if (check?.kind === "seer_check") {
-    // @ts-expect-error Read-port history cannot be appended or used as a mutation route.
+    // @ts-expect-error 读出口的历史不能追加或作为写入路径。
     check.state.history.push({ targetId: 1, isWerewolf: false });
   }
   const pair = roster.abilitiesFor(1).find((ability) => ability.kind === "pair_check");

@@ -1,10 +1,8 @@
 /**
- * Exposes Nightmare's bound fear eligibility and ordinary knife target queries.
- * Inputs are an actor/day or candidate target ID; outputs retain the original
- * fear predicate and wolf-action policy allowance. Binding only captures the original World reference;
- * consumers receive no World, state writer, night opener or effect-commit method.
- * When queried, original revoked-roster and target-life failures propagate.
- * The board predicate is the original readonly binding, preserving feature-specific rejection and repeated caller argument reads.
+ * 提供梦魇绑定的恐惧资格、普通狼刀目标及原状态读取查询。
+ * 输入是玩家／日期、候选序号或原角色；输出保留原恐惧谓词、狼行动政策及同一可读状态绑定。
+ * 绑定只捕获原 World 引用，不提前读组件或返回 World、状态写者、夜间开启或效果提交方法。
+ * 查询时仍传播原名单撤销与目标生命失败；板子谓词保持原只读绑定及调用方重复参数的读取顺序。
  */
 import type { EntityId } from "../../../../core/domain/model";
 import { Role } from "../../../../core/domain/identity";
@@ -36,3 +34,5 @@ export function bindNightmareKnifeTargetQuery(world: World): NightmareKnifeTarge
         "standard",
   });
 }
+
+export { getNightmareShadowState } from "./state";

@@ -1,14 +1,9 @@
 /**
- * Unit tests for fragrant-pair-seer; Isolated fragrant-pair-seer target-scope contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试：验证幽香幻影双人查验的独立 target scope、原生 frame 与 reader。输入为原内存 fixture、回调控制和畸形修改；原字面值、引用和拒绝断言为预期，不运行装配周期、模型或实体传输。
  */
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { createCampComponent } from "../../../../src/core/domain/components/camp";
 import {
   createAliveComponent,

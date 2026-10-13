@@ -9,7 +9,8 @@ import type { NightAbilityStates } from "@ai-werewolf-arena/game-contract";
 import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";
 import { Camp, Role, WitchSelfHealRule } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent, type RoleComponent } from "../../../src/core/domain/components/role";
+import { type RoleComponent } from "../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import {
   activeNightAbility,
   allNightAbilities,
@@ -44,7 +45,7 @@ function rejectedLiveWrites(
 ) {
   // @ts-expect-error Fresh query membership does not grant live metadata writes.
   allNightAbilities(role)[0]!.uses++;
-  // @ts-expect-error Native-first selection exposes only live read permissions.
+  // @ts-expect-error 原生优先选择仅公开实时只读权限。
   findNightAbility(role, "guard")!.disabled = true;
   // @ts-expect-error Active selection also grants no start-day mutation.
   activeNightAbility(role, "potion", 1)!.startsOnDay = 2;
@@ -88,9 +89,9 @@ function rejectedLiveWrites(
   dream.state.history[0]!.targetId = 2;
   // @ts-expect-error Dreamer history membership is read-only.
   dream.state.history.push({ day: 1, targetId: 2 });
-  // @ts-expect-error Native getter returns the same read view rather than a writable escape.
+  // @ts-expect-error 原生 getter 返回同一只读视图，不提供可写出口。
   getWitchState(role)!.poison = 0;
-  // @ts-expect-error Native role-inspection getter also keeps nested result read-only.
+  // @ts-expect-error 原生角色查验 getter 也保持嵌套结果只读。
   getRoleInspectionState(role)!.history[0]!.result.role = Role.Wolf;
   const data: NightAbilityStates["potion"] = {
     heal: 1,

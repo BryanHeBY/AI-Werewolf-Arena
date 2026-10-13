@@ -1,7 +1,5 @@
 /**
- * Unit tests verify Knight true-camp duels, read-only reception and bounded provider/actor/target authority checks.
- * Input: Original locale matrix, literal rule/target mutations and controlled direct duel collector/commit operations.
- * Output and oracle: Exact stock, no identity leak, failure identity and stale-choice refusal remain unchanged; no complete PM cycle or record file runs.
+ * 单元测试验证骑士真实阵营决斗、只读接收及有界 provider／actor／target 权限。输入保留原 locale、字面规则／目标修改及受控直接决斗收集／提交；精确库存、无身份泄露、错误身份和陈旧选择拒绝是预期，不推进完整 PhaseManager 周期或记录文件。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -23,7 +21,7 @@ import { commitKnightDuel } from "../../../../src/game/mechanisms/roles/knight/c
 import { KnightDuelWindow as DuelCollector } from "../../../../src/game/engine/knight_duel_window";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { RoleCatalog, getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import { setIdiotState } from "../../../../src/game/mechanisms/roles/idiot/ports";

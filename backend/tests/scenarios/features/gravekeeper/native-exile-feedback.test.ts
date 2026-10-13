@@ -1,8 +1,7 @@
 /**
- * Gravekeeper scenarios verify actual cycle revision, exile timing, shared granted skills and complete-night private feedback order.
- * Input: Original mode/locale/target matrices and controlled PM or complete NightPipeline actions.
- * Output and oracle: Handwritten camp histories, order, no premature/terminal feedback and resumed delivery remain unchanged; existing production-derived checks are not new independent expectations.
+ * 场景验证守墓人真实周期修订、放逐时点、共享赠予技能和完整夜的私密反馈顺序。输入为原模式／语言／目标矩阵及受控 PhaseManager 或 NightPipeline 动作；原阵营历史、顺序、终结反馈和恢复交付断言保持，不从生产输出新增期望。
  */
+import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -342,7 +341,7 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(render.toLiveRender(report, false, locale)).toEqual([]);
     expect(render.toLiveRender(report, true, locale)[0].kind).toBe("private");
     expect(render.toReplayStage(report)).toBe("gravekeeper_feedback");
-    expect(role(world, 3).renderPrompt(locale)).toContain(
+    expect(renderRolePrompt(role(world, 3), locale)).toContain(
       locale === "en"
         ? "night 2 reports player 1, exiled on day 1, as Good"
         : "第2夜收到第1日放逐1号的结果：好人",

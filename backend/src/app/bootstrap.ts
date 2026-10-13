@@ -37,7 +37,7 @@ import { createBadgeComponent } from "../core/domain/components/badge";
 import { createCampComponent } from "../core/domain/components/camp";
 import { COMPONENT } from "../core/domain/components/names";
 import type { RoleComponent } from "../core/domain/components/role";
-import { createRoleComponent } from "../core/domain/components/role";
+import { createRoleComponent } from "../game/observation/role-presentation";
 import { createStatusMarksComponent } from "../core/domain/components/status_marks";
 import { createVotingRightComponent } from "../core/domain/components/voting_right";
 import { createVictoryComponent } from "../core/domain/components/victory";

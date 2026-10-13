@@ -3,7 +3,7 @@
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { inheritRequestAlias } from "../../../core/domain/request_delivery";
-import { allowsActionFallback, resolveTurnConstraints } from "../player/turn_constraints";
+import { allowsActionFallback, resolveTurnConstraints } from "../../../game/gateway/turn-constraints";
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
 import { describeError, formatErrorDiagnostic } from "../../../utils/error_diagnostic";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
@@ -228,14 +228,12 @@ export class AcpActionProvider implements ActionProvider {
       return await this.runTurn(request, startedAt, signal);
     } catch (error) {
       if (error === this.closeController.signal.reason) return this.closedResult(request);
-      // No model/session starts after a queue deadline. The existing local
-      // baseline branch still owns the immediate final choice.
+      // 排队期限已耗尽后不新启模型／会话；原 runTurn 失败／回退分支仍在原时点处理该到期请求。
       if (!release && describeError(error).code === "request_timeout")
         return this.runTurn(request, startedAt, signal);
       throw error;
     } finally {
-      // An unknown/failed reclamation cannot become a fresh model slot. Stop
-      // this provider's waiters until a new runtime is explicitly constructed.
+      // 未知或失败的回收不能变成新模型空位；关闭本 provider 等待者，只有显式新 runtime 才能重新装配。
       if (this.sessions.hasUnreclaimedResources)
         this.scheduler.close(new Error("acp_resource_reclamation_failed"));
       release?.();
@@ -301,8 +299,7 @@ export class AcpActionProvider implements ActionProvider {
         } catch (error) {
           if (error === this.closeController.signal.reason) return this.closedResult(request);
           cancelled = false;
-          // A bounded cancellation timeout triggers force reclamation. A real
-          // RPC/adapter failure remains owned and is reported by final close.
+          // 有界取消超时触发强制回收；真实 RPC／adapter 失败仍归本 owner，最终 close 按原规则报告。
           if (!(error instanceof TurnDeadlineElapsed)) this.sessions.noteCleanupFailure(error);
         }
         if (
@@ -443,9 +440,8 @@ export class AcpActionProvider implements ActionProvider {
     try {
       return await Promise.race([
         action.then((value) => ({ action: value })),
-        // A completed Agent turn that did not invoke submit_action cannot still
-        // produce a valid action. Fall back now instead of waiting for the full
-        // LLM timeout (often minutes for ACP agents).
+        // 原竞速在 Agent 回合完成而未提交时进入回退，不继续等待整段 LLM 超时；
+        // action／prompt 的原 Promise 顺序和拒绝原因保持，不把完成文本当领域提交。
         promptTask.then(
           (): AcpTurnOutcome => ({ action: null, reason: "model_declined_required_action" }),
           (error): AcpTurnOutcome => ({

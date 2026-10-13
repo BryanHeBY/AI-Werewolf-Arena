@@ -1,11 +1,7 @@
 /**
- * Scenario tests for mechanical native runtime. Inputs are original learning/mode/stock and original-body
- * revocation inputs. Original literal receipts, reference/getter/error traces, facts and expected state
- * remain the oracle. Every callback completes at least one actual PM night (including prerequisites before
- * later direct-stage validation); callbacks stay intact rather than peeling assertions into unit tests.
- * Engine sequencing remains real and models remain controlled providers; production output is not a newly
- * generated golden.
+ * 场景验证机械狼的学习、模式、库存及原身体撤权。每个用例至少完成一次真实 PhaseManager 夜；原资源回执、引用／getter／错误轨迹和事实为预期，不拆去前置夜后假称单元测试。受控 provider 保留原引擎时序，不生成新 golden。
  */
+import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
@@ -35,7 +31,7 @@ import { canMechanicalKnife } from "../../../../src/game/mechanisms/roles/mechan
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { MECHANICAL_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/mechanical_wolf/night_stages";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
@@ -245,7 +241,7 @@ for (const locale of ["zh-CN", "en"] as const)
           false,
         );
     }
-    if (locale === "en") expect(game.role.renderPrompt(locale)).not.toMatch(/[\u4e00-\u9fff]/);
+    if (locale === "en") expect(renderRolePrompt(game.role, locale)).not.toMatch(/[\u4e00-\u9fff]/);
   });
 
 test("default skill mode has no knife, while late learning in kill mode remains independent and waits until next night", async () => {
@@ -578,7 +574,7 @@ test("player state and prompt discard injected God causal fields at all native r
   learning.reflectTargetId = 90002;
   skill.casterId = 90003;
   const projected = JSON.stringify(projectMechanicalState(game.state)),
-    prompt = game.role.renderPrompt("en");
+    prompt = renderRolePrompt(game.role, "en");
   for (const value of ["casterId", "reflectTargetId", "90001", "90002", "90003"]) {
     expect(projected).not.toContain(value);
     expect(prompt).not.toContain(value);
@@ -668,7 +664,7 @@ test("external ordinary G02 guard follows its own instance while mechanical nigh
   expect(game.state.learned?.skill).toEqual({ kind: "inspection", history: [] });
   expect(game.world.getAliveEntityIds()).toEqual([1, 3, 4, 5]);
   expect(game.role.role).toBe(Role.MechanicalWolf);
-  expect(game.role.renderPrompt("en")).toContain(
+  expect(renderRolePrompt(game.role, "en")).toContain(
     "External ordinary G02 abilities follow this turn's bound instance rules independently",
   );
 });

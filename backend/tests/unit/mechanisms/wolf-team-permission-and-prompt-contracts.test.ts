@@ -1,9 +1,5 @@
 /**
- * Unit tests for wolf team access. Inputs are original directional chat/knife policies, in-flight replies
- * and event-time audiences. Original literal receipts, reference/getter/error traces, facts and expected
- * state remain the oracle. Bounded directional knowledge/reception/gateway/prompt and SDK/ACP fallback
- * clients are inert; no spawned MCP or HTTP. No complete game phase or paid model runs; existing local
- * windows and denied entry probes remain bounded.
+ * 单元测试验证狼队访问、方向性聊天／刀政策、在途回复与事件时点受众。原字面回执、引用／getter／错误轨迹、事实和状态是预期；有界知识／接收／gateway／提示与 SDK／ACP 回退客户端是 inert 控制，不启动 MCP／HTTP，不推进完整阶段或调用付费模型。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -28,7 +24,7 @@ import {
 import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
 import { ActionValidator } from "../../../src/game/gateway/action_validator";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../src/game/gateway/action-reception";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
 import {
   getDefaultConfigRenderRegistry,

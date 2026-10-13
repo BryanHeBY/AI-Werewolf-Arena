@@ -1,7 +1,5 @@
 /**
- * Unit tests verify Dreamer effect reception, gifted-role observation and bounded last-word scope revocation without early consumption.
- * Input: Original locale matrix, local original role states, explicit granted ability and controlled death-resolver currentness.
- * Output and oracle: Exact validation/privacy/state and no-late-words assertions remain unchanged; no whole NightPipeline or PM cycle executes.
+ * 单元测试验证摄梦接收、赠予角色观察及有界遗言作用域撤销，不提前消费资源。输入保留原 locale 矩阵、本地角色状态、明确赠予实例与受控死亡结算当前性；精确校验／隐私／状态和无迟到遗言断言是预期，不推进完整 NightPipeline 或 PhaseManager 周期。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -16,7 +14,7 @@ import {
 } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/state";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import {
   getDefaultRoleCatalog,

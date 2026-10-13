@@ -1,7 +1,5 @@
 /**
- * Witch scenarios verify complete nights hide exhausted knife information and preserve compound Guard/heal/poison death sources.
- * Input: Original locale plans, controlled NightPipeline actions and current marks/resources.
- * Output and oracle: Exact request/prompt past knowledge, hidden events and poisoned Hunter gun refusal remain unchanged; no new expected output is computed.
+ * 女巫场景测试通过完整夜晚验证耗尽狼刀信息的隐私及守／救／毒复合死因。输入保留原 locale 计划、受控 NightPipeline 行动和当前标记／库存；原请求与提示知识、隐藏事件和被毒猎人禁枪是明确预期，不重新计算预期结果。
  */
 import { completedNight } from "../../../engine/night_stage_fixture";
 import { PotionType } from "../../../../src/core";
@@ -19,7 +17,7 @@ import {
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
 import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";

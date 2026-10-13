@@ -8,7 +8,7 @@ import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { Role, Camp, WitchSelfHealRule } from "../../../../src/core/domain/identity";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import {
   createAliveComponent,
   type AliveComponent,

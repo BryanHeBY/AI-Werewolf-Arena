@@ -1,6 +1,7 @@
 /**
  * 单元测试验证 bilingual-player-prompt 的既有传输、回合与显式特权回退边界。输入为原假客户端、请求、取消／期限和回调控制；预期来自原手写动作、引用、记录与拒绝断言。特权 provider 保留原请求及测试状态控制，不进入默认生产观察策略。
  */
+import { renderRolePrompt } from "../../../src/game/observation/role-presentation";
 import {
   WOLF_STAGE_DIRECTIVES,
   WOLF_TOOL_SPECS,
@@ -22,10 +23,8 @@ import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_
 import { PlayerPromptSession } from "../../../src/ai/agents/llm/player_prompt_session";
 import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
 import { buildConstraintRetryPrompt } from "../../../src/ai/agents/player/prompt_templates";
-import {
-  evaluateTurnConstraints,
-  renderTurnConstraintSystemRule,
-} from "../../../src/ai/agents/player/turn_constraints";
+import { evaluateTurnConstraints } from "../../../src/game/gateway/turn-constraints";
+import { renderTurnConstraintSystemRule } from "../../../src/ai/agents/player/turn_constraints";
 import {
   getDefaultConfigRenderRegistry,
   getDefaultPhaseStageLocalizationRegistry,
@@ -127,7 +126,7 @@ test("all base role identities, rules, private state and stages are bilingual an
     expect(en).not.toMatch(/[\u4e00-\u9fff]/);
     expect(chinese.policy.buildObservation(req)).toEqual(english.policy.buildObservation(req));
     const role = english.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!;
-    expect(role.renderPrompt()).not.toMatch(/[\u4e00-\u9fff]/);
+    expect(renderRolePrompt(role)).not.toMatch(/[\u4e00-\u9fff]/);
   }
   for (const [stage, tools] of stages) {
     const req = request(stage === "witch" ? 5 : 1, stage, tools);
@@ -227,7 +226,7 @@ test("player original text and explicit injected profile/directive text survive 
     expect(catalog.skillBrief(Role.Wolf, locale)).toBe("原文说明");
     const role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
     catalog.applyRuntime(role, { locale });
-    expect(role.renderPrompt(locale)).toBe("原文私有状态");
+    expect(renderRolePrompt(role, locale)).toBe("原文私有状态");
     const tools = new ToolSpecRegistry([], [{ match: () => true, text: "定制阶段 {actor}" }]);
     expect(tools.getStageDirective(["speak"], locale)).toBe("定制阶段 {actor}");
     const inherited = new ToolSpecRegistry(

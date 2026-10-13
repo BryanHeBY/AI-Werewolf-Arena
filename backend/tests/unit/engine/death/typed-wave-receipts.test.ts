@@ -10,7 +10,7 @@ import {
   createAliveComponent,
   aliveLifeVersion,
 } from "../../../../src/core/domain/components/alive";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import type { ComponentName } from "../../../../src/core/domain/components/names";
 import type { DeathHookResult } from "../../../../src/game/mechanisms/hooks/hook_registry";
 import { COMPONENT } from "../../../../src/core/domain/components/names";

@@ -1,9 +1,5 @@
 /**
- * Scenario tests for wolf beauty relations. Inputs are original charm/cause/locale/victory inputs and
- * controlled late proposals. Original literal receipts, reference/getter/error traces, facts and expected
- * state remain the oracle. Actual central DeathResolution (including asynchronously revoked hook) and PM
- * cycles settle compound causes, guns, charm links, badges and ordered victory. Engine sequencing remains
- * real and models remain controlled providers; production output is not a newly generated golden.
+ * 场景测试验证狼美人关系链与判胜。输入保留魅惑／死因／locale／胜利参数及受控迟到提案；原字面回执、引用／getter／错误轨迹、事实和状态是预期。实际中心 DeathResolution（含异步撤销 hook）及 PhaseManager 周期结算复合死因、枪、魅惑、警徽与有序胜利；模型由受控 provider 替代，生产输出不生成新 golden。
  */
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
@@ -21,7 +17,7 @@ import {
 } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { bindCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
 import { DeathCause, type GameEvent } from "../../../../src/core";

@@ -1,8 +1,5 @@
 /**
- * Owns initial Thief/Shapeshifter selection scopes and request bindings. Receives original
- * World participants and first-night requests; writes choices and accepted aliases only while
- * the setup scope is current. Failed selection and closed setup remain local terminal
- * decisions; metadata carries no permission.
+ * 负责盗贼／变形者的初始选择 scope 与请求绑定。输入为原 World 参与者和首夜请求；输出保留原选择结果与请求绑定，仅在 setup 仍当前时写选择及接受的别名。失败选择与已关闭 setup 保留原终结决定；元数据不携带行动许可。
  */
 import type {
   ReadonlyBoardConfig,
@@ -16,7 +13,6 @@ import {
   Camp,
   Phase,
   Role,
-  createRoleComponent,
   createCampComponent,
   createVictoryComponent,
   type ActionProvider,
@@ -27,6 +23,7 @@ import {
   type VictoryComponent,
   type World,
 } from "../../../../core/domain";
+import { createRoleComponent } from "../../../observation/role-presentation";
 import { GameActionRequestFactory } from "../../../engine/action_request_factory";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import { getDefaultRoleCatalog } from "../catalog";

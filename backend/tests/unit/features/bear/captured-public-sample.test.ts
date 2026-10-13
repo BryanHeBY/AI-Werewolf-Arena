@@ -1,8 +1,7 @@
 /**
- * Unit tests verify Bear original-life seat sampling publishes only a public boolean with exact freshness and player-history boundaries.
- * Input: Original adjacency, mutation, life/seat/faction and locale matrices in bounded capture/publish/projection operations.
- * Output and oracle: Handwritten roar/history/privacy and unchanged original sample assertions retain source behavior; no real night cycle or model executes.
+ * 单元测试验证熊按原生命／座位采样只公布公开布尔值，并保持新鲜度和玩家历史边界。输入为原相邻位置、生命／阵营、语言及修改矩阵；有界 capture／publish／projection 的吼声、历史、隐私和原样本断言为预期，不运行完整夜或模型。
  */
+import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -21,7 +20,7 @@ import { BearNightFrame } from "../../../../src/game/mechanisms/roles/bear/night
 import { getBearState } from "../../../../src/game/mechanisms/roles/bear/state";
 import { getDefaultRoleCatalog, RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import type { IdentityComponent } from "../../../../src/core/domain/entities/player";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import {
@@ -31,7 +30,7 @@ import {
   getDefaultConfigRenderRegistry,
 } from "../../../../src/game/mechanisms";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 
 const deck = [Role.Bear, Role.Wolf, Role.Witch, Role.Hunter, Role.Villager, Role.Villager];
 
@@ -235,7 +234,7 @@ for (const locale of ["zh-CN", "en"] as const)
       },
       frame = BearNightFrame.capture(game.world, 1)!;
     expect(policy.buildObservation(request).ownState.bear).toEqual({ history: [] });
-    expect(role(game, 1).renderPrompt(locale)).toContain(
+    expect(renderRolePrompt(role(game, 1), locale)).toContain(
       locale === "en" ? "No Bear announcement has been published" : "尚无已公布的熊公告",
     );
     expect(getDefaultRoleCatalog().require(Role.Bear).toolSpecs ?? []).toEqual([]);
@@ -252,7 +251,7 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(policy.buildObservation(request).ownState.bear).toEqual({
       history: [{ day: 1, roared: true }],
     });
-    expect(role(game, 1).renderPrompt(locale)).toContain(
+    expect(renderRolePrompt(role(game, 1), locale)).toContain(
       locale === "en"
         ? "Latest public announcement: day 1, Bear roared."
         : "最近公开公告：第1天，熊咆哮了。",

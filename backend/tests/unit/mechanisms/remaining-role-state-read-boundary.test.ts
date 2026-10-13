@@ -1,9 +1,5 @@
 /**
- * Unit tests for remaining ordinary role-slot read outputs and detached modifier data.
- * Inputs are hand-written Cupid, Magician and Scholar records; original references,
- * descriptor getter traces and independently written normalized values are the oracle.
- * Compile-only writes target valid stock, choice, history and nested tuple fields.
- * This boundary does not run a game, mutate authority through a reader or call a model.
+ * 单元测试：验证剩余普通角色槽的只读输出与脱离 modifier 数据。输入为手写丘比特、魔术师、学者记录；原引用、descriptor getter 轨迹及独立归一化字面值为预期。库存、选择、历史及嵌套 tuple 的编译反例不执行，不经 reader 改权限或调用模型。
  */
 import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";
@@ -14,7 +10,7 @@ import {
   type MagicianState,
   type ModifierState,
 } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import type { RoleInitializationComponent } from "../../../src/game/mechanisms/roles/contracts";
 import { getCupidState } from "../../../src/game/mechanisms/roles/cupid/state";
 import { getHybridState } from "../../../src/game/mechanisms/roles/hybrid/state";

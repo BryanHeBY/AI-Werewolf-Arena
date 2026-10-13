@@ -1,10 +1,10 @@
 /**
- * Owns Alchemist/Raven role contributions, configuration and original tool policies.
- * Inputs are initialization state, board parameters and projected action context;
- * outputs preserve native defaults, prompts, legal hints and choice validation.
- * Profile initialization installs its concrete slots; this module never opens a
- * night frame, commits a paid choice or transfers lifecycle cleanup ownership.
+ * 负责 炼金魔女／狼鸦之爪 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
+ * 输入为原板子参数、角色组件与请求上下文；输出为原 RoleProfile 与具名内建展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
+ * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
+ * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
@@ -65,7 +65,7 @@ export const ALCHEMIST_ROLE_PROFILE: RoleProfile = {
   label: roleName("alchemist"),
   skillBrief: text("zh-CN", "role.alchemist.brief"),
   configuration,
-  renderPrompt: (_role, locale = "zh-CN") => text(locale, "role.alchemist.brief"),
+  ...nativeRolePresentation("alchemist"),
   init: (role, ctx) => {
     parameters.parse(ctx.boardConfig?.mistRaven ?? {});
     role.privateState.alchemist = createAlchemistState();
@@ -175,7 +175,7 @@ export const RAVEN_CLAW_ROLE_PROFILE: RoleProfile = {
   configuration,
   label: roleName("raven_claw_wolf"),
   skillBrief: text("zh-CN", "role.raven_claw_wolf.brief"),
-  renderPrompt: (_role, locale = "zh-CN") => text(locale, "role.raven_claw_wolf.brief"),
+  ...nativeRolePresentation("raven_claw_wolf"),
   init: (role, ctx) => {
     parameters.parse(ctx.boardConfig?.mistRaven ?? {});
     role.privateState.ravenClaw = createRavenState();

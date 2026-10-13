@@ -1,9 +1,5 @@
 /**
- * Unit tests for wild child model. Inputs are original model choices, life replacements and real
- * initial/additional death causes. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Bounded model-choice window and literal data/config readers test
- * original resource/request/getter behavior without central death execution. No complete game phase or paid
- * model runs; existing local windows and denied entry probes remain bounded.
+ * 单元测试：验证野孩子榜样选择、生命替换及真实首波／追加死因。输入为原选择与修改，字面回执、引用、getter、错误、事实及状态为预期；有界选择窗口与数据／配置 reader 不执行中央死亡结算、完整阶段或付费模型。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -12,7 +8,6 @@ import {
   Camp,
   COMPONENT,
   createAliveComponent,
-  createRoleComponent,
   createCampComponent,
   createVictoryComponent,
   type BoardConfig,
@@ -22,6 +17,7 @@ import {
   type ToolCall,
   type ActionRequest,
 } from "../../../../src/core";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";
 import {

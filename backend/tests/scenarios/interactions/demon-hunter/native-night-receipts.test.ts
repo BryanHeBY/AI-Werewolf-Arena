@@ -52,7 +52,7 @@ for (const name of ["guard", "check_identity"] as const)
               const clone = { ...r, deadlineAtMs: Date.now() + 1000 };
               if (variant === "clone") inheritDemonWitchDeadlineRequest(r, clone);
               const { ActionReception } =
-                await import("../../../../src/ai/agents/player/action_reception");
+                await import("../../../../src/game/gateway/action-reception");
               const reception = new ActionReception(f.world);
               const result = reception.validate(
                 clone,

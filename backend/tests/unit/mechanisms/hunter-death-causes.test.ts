@@ -1,7 +1,5 @@
 /**
- * Unit tests verify Hunter cause eligibility, bounded death resolution and real death-action receipt consumption.
- * Input: Original cause/win-condition/locale tables, local original lives and controlled hook/provider decisions.
- * Output and oracle: Exact permit, shot/pass/revocation, phase and extra-cause assertions remain unchanged; no PM cycle, recorder or model executes.
+ * 单元测试验证猎人死因资格、有界死亡结算及真实死亡回执消费。输入保留原死因／胜利条件／locale 表、本地原生命及受控 hook／provider 决策；精确许可、开枪／pass／撤权、阶段和追加原因断言是预期，不运行 PhaseManager 周期、记录器或模型。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -23,7 +21,8 @@ import { hunterDeathHook } from "../../../src/game/mechanisms/roles/hunter/death
 import { DeathResolution } from "../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { ActionReception, ActionTurn } from "../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../src/game/gateway/action-reception";
+import { ActionTurn } from "../../../src/ai/agents/player/action-turn";
 
 const roles = [
   Role.Wolf,

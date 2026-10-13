@@ -1,9 +1,5 @@
 /**
- * Scenario tests for night ability shared contracts. Inputs are original grant/copy/transfer/expiry
- * instances and configured native state. Original literal receipts, reference/getter/error traces, facts
- * and expected state remain the oracle. Actual NightPipeline executes independent granted instances,
- * permission invalidation, expiry and per-instance resources. Engine sequencing remains real and models
- * remain controlled providers; production output is not a newly generated golden.
+ * 场景测试验证夜能力共用契约。输入保留原 grant／copy／transfer／expiry 实例与原生配置；原字面回执、引用／getter／错误轨迹、事实和状态是预期。实际 NightPipeline 执行独立赠予实例、许可失效、到期与逐实例库存；模型由受控 provider 替代，生产输出不生成新 golden。
  */
 import { completedNight } from "../../engine/night_stage_fixture";
 import { PotionType } from "../../../src/core";
@@ -37,7 +33,7 @@ import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { ActionValidator } from "../../../src/game/gateway/action_validator";
 import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
-import { ActionReception } from "../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../src/game/gateway/action-reception";
 import { BaselineBotActionProvider } from "../../../src/ai/agents/providers/action_providers";
 
 const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];

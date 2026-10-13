@@ -1,14 +1,15 @@
 /**
- * Owns one agent-facing preflight selection window and its submission receipts.
- * Inputs are an existing ActionReception, the bound request and submitted turn ID;
- * outputs preserve detached selected actions, rejection counts and applied:false.
- * Closing seals only this selection window. This owner never commits domain
- * resources, subscribes to request settlement or waits for an engine commit;
- * those completion responsibilities remain in reproduction and mechanism owners.
+ * 负责单个 Agent 行动选择窗口及接收回执；输入为游戏预检窄端口、原请求和提交的 turnId。
+ * 输出保留脱离后的 selected、拒绝计数和 applied:false；截止／关闭只封住本选择窗口。
+ * 本 owner 不持有 World 写权限、不消耗资源、不订阅领域 settlement，也不等待实际 commit。
+ * 规则预检属于游戏 Gateway，领域完成责任仍由 reproduction 与各机制所有者持有。
  */
 import { text, toolFailure } from "@ai-werewolf-arena/game-text";
 import type { ActionRequest, ToolCall, ToolName } from "../../../core/domain";
-import type { ActionReception } from "./action_reception";
+import type {
+  ActionPreflightPort,
+  GameActionValidation,
+} from "../../../game/gateway/action-reception";
 
 export type ActionReceipt =
   | { ok: true; accepted: true; applied: false; action: ToolName }
@@ -20,16 +21,15 @@ export type ActionReceipt =
       expected_turn_id?: string;
       received_turn_id?: unknown;
     };
-export type ActionValidation =
-  { ok: true; action: ToolCall } | Extract<ActionReceipt, { ok: false }>;
+export type ActionValidation = GameActionValidation;
 
-/** One owner per open turn. Rejection keeps it open; selection seals it once. */
+/** 每个开放回合只有一个选择 owner；可恢复拒绝保留窗口，成功选择只封住一次。 */
 export class ActionTurn {
   private selected: ToolCall | null = null;
   private closed = false;
   private rejectedActions = 0;
   constructor(
-    private readonly reception: ActionReception,
+    private readonly reception: ActionPreflightPort,
     readonly request: ActionRequest,
     readonly turnId: string,
   ) {}
@@ -86,7 +86,7 @@ export class ActionTurn {
     this.selected = result.action;
     return { ok: true, accepted: true, applied: false, action: result.action.name };
   }
-  /** Schema rejection may happen before tool execution, but only the addressed live turn owns it. */
+  /** schema 拒绝可先于工具执行，但只由 turnId 对应的有效窗口计数；外来回合不污染当前窗口。 */
   rejectSubmissionInput(turnId: unknown): ActionReceipt {
     const refusal = this.authorize(turnId);
     if (refusal) return refusal;

@@ -31,7 +31,7 @@ import {
 } from "../../../src/game/mechanisms/roles/ability_changes";
 import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import { ActionReception } from "../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../src/game/gateway/action-reception";
 import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
 import {

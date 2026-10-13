@@ -1,6 +1,7 @@
 /**
- * Unit tests check configured inspection/death policies through bounded stages, hooks, validation, hints and projections. Inputs are literal role/policy/locale matrices and original live-slot edits; handwritten permissions, resource/history counts and error IDs are the oracle. DeathResolution interaction chains stay in scenarios; no complete phase or model executes here.
+ * 单元测试：验证配置的查验／死亡政策在有界阶段、hook、校验、提示与投影中的实际使用。输入为角色／政策／语言矩阵和原 live 槽修改；手写许可、库存／历史计数和错误为预期。死亡链在场景中，此处不运行完整阶段或模型。
  */
+import { rolePresentationRenderer } from "../../../src/game/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -240,7 +241,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
         expect(
           getDefaultConfigRenderRegistry().renderBoardConfigPrompt(game.config, locale),
         ).toContain(locale === "en" ? "Configured AWA inspection" : "配置的AWA查验");
-        expect(role.renderPrompt?.(locale)).toContain(
+        expect(rolePresentationRenderer(role)?.(locale)).toContain(
           locale === "en" ? "Configured AWA inspection" : "配置的AWA查验",
         );
         expect(role.role).toBe(kind);

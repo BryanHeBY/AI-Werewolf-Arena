@@ -1,15 +1,10 @@
 /**
- * Unit tests: Action reception uses literal schemas and in-memory game requests;
- * handwritten argument, permission, resource and receipt assertions check
- * reject-before-seal and detached accepted actions. Inputs and expected outcomes remain
- * the original literal or immutable-fixture oracle; these module assertions invoke no
- * model or complete-game driver.
- * An explicit test-owned mutable view seeds Guard history on the same stored
- * state; production readers retain their readonly view and original checks.
+ * 单元测试用字面 schema 和内存请求验证完整行动接收预检与共同选择窗口。手写参数、许可、库存和回执断言检查先拒绝后封窗及脱离的候选，不运行模型或完整对局。测试自己的窄可写视图仍在同一 Guard 状态播种历史；生产读取保持只读和原校验。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { ActionReception, ActionTurn } from "../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../src/game/gateway/action-reception";
+import { ActionTurn } from "../../../src/ai/agents/player/action-turn";
 import { AcpTurnRegistry } from "../../../src/ai/integrations/acp/acp_turn_registry";
 import {
   COMPONENT,

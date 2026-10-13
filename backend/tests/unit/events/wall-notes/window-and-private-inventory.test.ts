@@ -3,7 +3,7 @@
  */
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
 import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {

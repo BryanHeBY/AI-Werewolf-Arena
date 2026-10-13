@@ -1,8 +1,7 @@
 /**
- * Orchestrates one native SDK turn from an engine request and prompt session. Produces
- * validated tools, retry/fallback outcomes and player records; owns controllers, deadline
- * timers and pending tasks. Request alias owners retain their authority checks; cancellation
- * and close drain only this provider’s resources.
+ * 负责编排单个原生 SDK 回合；输入为原引擎请求、提示会话与模型客户端，输出为候选工具、重试／回退和玩家记录。
+ * 本 owner 持有控制器、截止计时器与待结束任务；期限派生与请求原体由各机制保持原权限检查。
+ * 取消／关闭仅收走本 provider 资源，不代替规则预检或领域 commit，不扩大 fallback 的原预算。
  */
 import { inheritRequestAlias } from "../../../core/domain/request_delivery";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -25,7 +24,7 @@ import { PlayerRoundRecorder } from "../player/player_round_recorder";
 import { buildConstraintRetryPrompt } from "../player/prompt_templates";
 import { ScopedRequestScheduler } from "../../runtime/request_scheduler";
 import { SdkGameToolLoop } from "./sdk_game_tool_loop";
-import { allowsActionFallback, resolveTurnConstraints } from "../player/turn_constraints";
+import { allowsActionFallback, resolveTurnConstraints } from "../../../game/gateway/turn-constraints";
 
 interface LlmTurnOrchestratorOptions {
   world: World;
@@ -49,7 +48,7 @@ interface NativeAttempt {
   refusalReason?: string;
 }
 
-/** Application service coordinating one native-tool LLM turn. */
+/** 以原尝试顺序编排原生工具回合，已付／已记录前缀不由本服务回滚。 */
 export class LlmTurnOrchestrator {
   constructor(private readonly options: LlmTurnOrchestratorOptions) {}
 
@@ -168,8 +167,7 @@ export class LlmTurnOrchestrator {
       const diagnostic = describeError(error);
       if (this.closed && (error === this.closeController.signal.reason || error === signal.reason))
         return this.closedResult(request);
-      // Native transport failures are already handled in runNative. A fallback
-      // or recording failure must propagate once, never invoke fallback twice.
+      // 原生传输失败已由 runNative 处理；回退或记录失败只传播一次，不能再次调用回退。
       if (release) throw error;
       this.options.observer.trace(
         `${diagnostic.code === "request_timeout" ? "request_timeout" : "request_transport_fail"} player=${request.actorId} phase=${request.phase} elapsed_ms=${Date.now() - startedAt} err=${formatErrorDiagnostic(error, this.options.observer.locale)}`,

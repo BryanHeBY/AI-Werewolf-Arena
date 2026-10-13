@@ -4,6 +4,7 @@
  * 自定义人设／角色展示仍在原时点调用，不因结构观察迁移而提前捕获；这里不提交行动或更改角色状态。
  * 已知存活与当前目标许可分别由原捕获和提示查询负责，不把提示候选当作行动授权。
  */
+import { rolePresentationRenderer } from "../../../game/observation/role-presentation";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { getWhiteWolfKingState } from "../../../game/mechanisms/roles/white_wolf_king/ports";
 import { isAnimalDreamBoard } from "../../../game/mechanisms/roles/animal_dream/authority";
@@ -139,7 +140,8 @@ import { getSeerState } from "../../../game/mechanisms/roles/seer/ports";
 import type { PlayerObservation } from "../../../game/observation/player-observation";
 import { capturePlayerObservation } from "../../../game/observation/player-observation-projector";
 import { buildBoardInfoPrompt, buildSystemPrompt, buildUserPrompt } from "./prompt_templates";
-import { renderTurnConstraintUserHint, resolveTurnConstraints } from "./turn_constraints";
+import { renderTurnConstraintUserHint } from "./turn_constraints";
+import { resolveTurnConstraints } from "../../../game/gateway/turn-constraints";
 
 export interface PlayerPromptPolicyOptions {
   personalityPromptResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
@@ -527,7 +529,7 @@ export class PlayerPromptPolicy {
       lines.push(text(this.locale, "prompt.status.lover", { partner: lover.partnerId }));
       if (lover.mayNotVotePartner) lines.push(text(this.locale, "prompt.status.lovers_vote"));
     }
-    const privateState = role?.renderPrompt?.(this.locale).trim();
+    const privateState = rolePresentationRenderer(role)?.(this.locale).trim();
     if (privateState)
       lines.push(text(this.locale, "prompt.status.private", { state: privateState }));
     if (role?.role === Role.Idiot && getIdiotState(role)?.revealed) {

@@ -1,6 +1,7 @@
 /**
  * 交互场景验证真实夜间流水线只发布预言家已获许可的阵营标签与脱离私有历史。输入为两语／阵营矩阵、角色 fixture 和确定性狼刀、守护、查验响应；预期为手写字段和私有信息隔离。展示预期仍使用既有 text helper，不能称为独立文案 golden。
  */
+import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { completedNight } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
 import { text } from "@ai-werewolf-arena/game-text";
@@ -115,8 +116,8 @@ for (const locale of ["zh-CN", "en"] as const) {
       expect(getDefaultScriptEventRenderRegistry().toLiveRender(inspection, false, locale)).toEqual(
         [],
       );
-      expect(world.getComponent<RoleComponent>(3, COMPONENT.Role)!.renderPrompt(locale)).toContain(
-        text(locale, "inspection.latest", { target: 1, result: expectedLabel }),
-      );
+      expect(
+        renderRolePrompt(world.getComponent<RoleComponent>(3, COMPONENT.Role)!, locale),
+      ).toContain(text(locale, "inspection.latest", { target: 1, result: expectedLabel }));
     });
 }

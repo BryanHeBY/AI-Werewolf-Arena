@@ -8,7 +8,7 @@
 import { expect, test } from "bun:test";
 import type { PairSeerState } from "@ai-werewolf-arena/game-contract";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import {
   freshPairSeerState,

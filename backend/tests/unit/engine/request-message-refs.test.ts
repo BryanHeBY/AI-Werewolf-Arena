@@ -1,9 +1,5 @@
 /**
- * Unit tests: Request message references use locale variants and explicit custom
- * summaries; exact machine fields and preserved raw retry notices check
- * display-independent request data. Inputs and expected outcomes remain the original
- * literal or immutable-fixture oracle; these module assertions invoke no model or
- * complete-game driver.
+ * 单元测试以 locale 变体与明确自定义摘要验证请求消息引用。原精确机器字段和未经改写的重试通知检查数据独立于展示语言；原字面或冻结 fixture 是预期，不运行模型或完整对局驱动。
  */
 import type { MessageRef } from "@ai-werewolf-arena/game-text";
 import { expect, test } from "bun:test";
@@ -11,10 +7,8 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
 import { Phase } from "../../../src/core";
-import {
-  resolveTurnConstraints,
-  renderTurnConstraintUserHint,
-} from "../../../src/ai/agents/player/turn_constraints";
+import { resolveTurnConstraints } from "../../../src/game/gateway/turn-constraints";
+import { renderTurnConstraintUserHint } from "../../../src/ai/agents/player/turn_constraints";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
 import {
   getDefaultRoleCatalog,

@@ -10,7 +10,7 @@ import { Role, Camp } from "../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { Phase } from "../../../../src/core/domain/identity";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import {
   findNightAbility,

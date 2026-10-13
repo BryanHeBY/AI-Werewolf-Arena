@@ -7,7 +7,7 @@
 import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import { Camp, Role, Phase, DeathCause, type GameEvent } from "../../../../src/core/domain/model";
 import {

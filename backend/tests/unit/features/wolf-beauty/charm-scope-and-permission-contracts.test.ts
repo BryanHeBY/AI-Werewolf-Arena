@@ -1,9 +1,5 @@
 /**
- * Unit tests for wolf beauty relations. Inputs are original charm/cause/locale/victory inputs and
- * controlled late proposals. Original literal receipts, reference/getter/error traces, facts and expected
- * state remain the oracle. Bounded permitsCharm, single charm stage/scope and read-only pack receipts; no
- * complete central death/cycle. No complete game phase or paid model runs; existing local windows and
- * denied entry probes remain bounded.
+ * 单元测试验证狼美人关系作用域和许可。输入保留魅惑／死因／locale／胜利条件及受控迟到提案；原字面回执、引用／getter／错误轨迹、事实和状态是预期。有界 permitsCharm、单魅惑阶段／scope 与只读狼队回执不推进完整中心死亡链或完整阶段，不调用付费模型。
  */
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
@@ -20,7 +16,7 @@ import {
 } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/state";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { knownWolfTeammates, getDefaultRoleCatalog } from "../../../../src/game/mechanisms";
 import { WOLF_BEAUTY_CHARM_STAGE } from "../../../../src/game/mechanisms/roles/wolf_beauty/night_stages";
 import {

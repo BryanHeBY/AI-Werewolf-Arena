@@ -1,10 +1,8 @@
 /**
- * Owns assembly of built-in and injected role profiles and their original runtime callbacks.
- * Inputs are profile contributions, the original role object and initialization context;
- * outputs retain catalog queries, custom text and the same configured component.
- * The initializer receives explicit private-container write rights at this call
- * only, preserving custom keys, two arguments and the profile receiver. This
- * catalog never copies state, introduces a runtime setter or authorizes a turn.
+ * 负责角色贡献的实际有序注册、运行初始化和展示装配。输入为原 profile、角色对象与
+ * 上下文；输出保持 Catalog 查询及同一组件。初始化仍先于默认语言捕获，展示时才按
+ * 当前 role 查贡献；自定义回调保留原 this、两次方法读取与晚 World 参数读取。
+ * 内建展示消费具体捕获与纯格式化所有者，不复制状态、不授予租约；失败保留原前缀。
  */
 import { NIGHT_NOBLE_ROLE_PROFILE, AWAKENED_IDIOT_ROLE_PROFILE } from "./noble_secret_body/profile";
 import {
@@ -70,6 +68,8 @@ import { DEBATER_ROLE_PROFILE } from "./debater/profile";
 import { CUPID_ROLE_PROFILE } from "./cupid/profile";
 
 import { RADIANT_COUNT_ROLE_PROFILE, ECLIPSE_MAID_ROLE_PROFILE } from "./radiant_eclipse/profile";
+import { bindRolePresentation } from "../../observation/role-presentation";
+
 const DEFAULT_ROLE_PROFILES: RoleProfile[] = [
   WHITE_CAT_ROLE_PROFILE,
   FOX_CUB_ROLE_PROFILE,
@@ -168,7 +168,7 @@ export class RoleCatalog {
   label(role: Role, locale: Locale = "zh-CN"): string {
     const profile = this.get(role);
     const builtIn = DEFAULT_ROLE_PROFILES.find((entry) => entry.role === role);
-    // Explicit injected text is user content, not a built-in translation key.
+    // 注入的原文属于用户内容；仅与内建字节一致的资料走原翻译路径。
     if (profile && (!builtIn || profile.label !== builtIn.label)) return profile.label;
     return roleName(role, locale);
   }
@@ -185,12 +185,12 @@ export class RoleCatalog {
     const profile = this.require(roleComp.role);
     profile.init?.(roleComp as RoleInitializationComponent, ctx);
     const defaultLocale = ctx.locale ?? "zh-CN";
-    roleComp.renderPrompt = (locale = defaultLocale) => {
+    bindRolePresentation(roleComp, (locale = defaultLocale) => {
       const active = this.require(roleComp.role);
       return active.renderPrompt
         ? active.renderPrompt(roleComp, locale, ctx.world)
         : text(locale, "role.generic.state", { role: this.label(active.role, locale) });
-    };
+    });
   }
 
   require(role: Role): RoleProfile {

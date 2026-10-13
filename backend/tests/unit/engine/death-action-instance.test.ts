@@ -1,15 +1,12 @@
 /**
- * Unit tests: Death action permits use literal native/gifted ability instances and invalid
- * IDs; exact permission and rejection assertions check that reception and application
- * cannot borrow another gun instance. Inputs and expected outcomes remain the original
- * literal or immutable-fixture oracle; these module assertions invoke no model or
- * complete-game driver.
+ * 单元测试用字面原生／赠予能力实例与畸形 ID 验证死亡行动许可。明确许可与拒绝断言检查接收和应用不能借用另一枪实例；预期保留原字面或冻结 fixture，不运行模型或完整游戏驱动。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type ActionRequest, type RoleComponent } from "../../../src/core";
 import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { ActionReception, ActionTurn } from "../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../src/game/gateway/action-reception";
+import { ActionTurn } from "../../../src/ai/agents/player/action-turn";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";

@@ -1,15 +1,10 @@
 /**
- * Unit tests for awakened-hidden-wolf; Isolated awakened-hidden-wolf state contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试：验证觉醒隐狼的独立状态、原生 owner／frame 与读取契约。输入为原内存 fixture、受控回调和畸形修改；字面值、身份快照和拒绝断言为预期。仅测试有界机制，不执行装配周期、模型或实体传输。
  */
 import type { AwakenedTemplateRole } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { Camp, Role } from "../../../../src/core";
 import {
   activateAwakenedLearning,

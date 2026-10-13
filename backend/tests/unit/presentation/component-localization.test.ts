@@ -1,11 +1,8 @@
 /**
- * Unit tests: Component localization uses in-memory public prompt APIs and explicit
- * locales; exact role/status/policy text checks default game language and independent
- * display selection. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证内存组件公开提示 API 的默认语言和独立展示语言。输入为原组件、显式语言与局部状态修改；精确角色／状态／政策文案是原字面预期。Role 展示通过游戏侧绑定，其余组件保原方法；不调用模型或完整对局驱动。
  */
-import { createRoleComponent } from "../../../src/core/domain/components/role";
+import { renderRolePrompt } from "../../../src/game/observation/role-presentation";
+import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
@@ -42,8 +39,8 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(camp.renderPrompt()).toContain(locale === "en" ? "Werewolf team" : "狼人阵营");
     camp.camp = Camp.ThirdParty;
     expect(camp.renderPrompt()).toContain(locale === "en" ? "Third party team" : "第三方阵营");
-    expect(role.renderPrompt()).toContain(locale === "en" ? "Your role is Werewolf." : "狼人");
-    expect(createRoleComponent(Role.Wolf, Camp.Wolf, locale).renderPrompt()).toBe(
+    expect(renderRolePrompt(role)).toContain(locale === "en" ? "Your role is Werewolf." : "狼人");
+    expect(renderRolePrompt(createRoleComponent(Role.Wolf, Camp.Wolf, locale))).toBe(
       locale === "en" ? "Your role is Werewolf." : "你的底牌是【狼人】。",
     );
     expect(badge.renderPrompt()).toBe(

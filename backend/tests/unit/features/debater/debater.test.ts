@@ -1,6 +1,7 @@
 /**
  * 单元测试验证杠精的存活投票分母、阈值、翻牌、拒绝与原生库存。输入为有限板子、显式票和受控请求 scope；预期为字面量或不变 fixture，不请求模型或完整对局。
  */
+import { rolePresentationRenderer } from "../../../../src/game/observation/role-presentation";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import {
   getDefaultConfigRenderRegistry,
@@ -700,7 +701,7 @@ test("Debater state slot getter does not run before prompt projection", () => {
     },
   });
   expect(getDebaterState(role(g, 1))).toBeUndefined();
-  expect(role(g, 1).renderPrompt?.("en")).toContain('"remaining":0');
+  expect(rolePresentationRenderer(role(g, 1))?.("en")).toContain('"remaining":0');
   expect(reads).toBe(0);
 });
 

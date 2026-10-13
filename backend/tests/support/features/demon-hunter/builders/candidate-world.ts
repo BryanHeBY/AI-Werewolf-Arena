@@ -1,8 +1,5 @@
 /**
- * Builds original demon-hunter test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 负责构造猎魔人测试的候选、固定板子及显式玩家／标记数据。输入为变体、语言和种子选择；输出保留原数组、库存参数与配置身份。发牌可构造输入身份，期望结果仍为外部手写数据，不运行对局／模型或改变 oracle 算法。
  */
 import "../../../../../src/app/bootstrap";
 import { Role } from "../../../../../src/core";
@@ -15,7 +12,7 @@ import { DEMON_HUNTER_POLICY } from "../../../../../src/game/mechanisms/roles/de
 import { World } from "../../../../../src/core";
 import { Camp } from "../../../../../src/core";
 import { COMPONENT } from "../../../../../src/core";
-import { createRoleComponent } from "../../../../../src/core";
+import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
 import { createCampComponent } from "../../../../../src/core";
 import { createVictoryComponent } from "../../../../../src/core";
 import { createAliveComponent } from "../../../../../src/core";

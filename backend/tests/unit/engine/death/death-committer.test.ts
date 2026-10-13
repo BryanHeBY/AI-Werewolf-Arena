@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { DeathCommitter } from "../../../../src/game/engine/death-committer";
 import { World } from "../../../../src/core/domain/world";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import {
   Camp,

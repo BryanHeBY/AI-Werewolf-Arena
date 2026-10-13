@@ -1,7 +1,5 @@
 /**
- * Unit tests verify Witch healing reception and the original sixteen-condition damage table retain independent source facts.
- * Input: Original locale matrix, literal mark/cause table and bounded world/reception/damage operations.
- * Output and oracle: Exact rejected receipts, unchanged stock and hand-authored lethal causes/mark cleanup remain unchanged; no complete night or model runs.
+ * 单元测试验证女巫救药接收与原十六条件伤害表的独立死因事实。输入保留原 locale、字面标记／死因表及有界 World／接收／伤害操作；精确拒绝、未消费库存、手写致死来源和标记清理是预期，不运行完整夜晚或模型。
  */
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
@@ -18,7 +16,8 @@ import {
 } from "../../../../src/core";
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
 import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/state";
-import { ActionReception, ActionTurn } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
+import { ActionTurn } from "../../../../src/ai/agents/player/action-turn";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 

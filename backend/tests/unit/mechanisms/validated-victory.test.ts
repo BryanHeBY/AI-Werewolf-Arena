@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { Camp, Phase, Role, type WinDecision } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { createVictoryComponent } from "../../../src/core/domain/components/victory";
 import { validateVictoryDecision } from "../../../src/game/mechanisms/win_conditions/validated-victory";
 

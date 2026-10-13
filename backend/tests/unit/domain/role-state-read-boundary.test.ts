@@ -1,9 +1,5 @@
 /**
- * Unit tests for ordinary private-slot read references and concrete write prefixes.
- * Inputs are literal installed role data, accessor-backed skills and trade stock;
- * independent identity and getter/setter traces assert original copying and paid
- * partial writes. Compile-only valid-shape mutations must fail through read views.
- * No full game, transport, model or generated fixture oracle executes here.
+ * 单元测试：验证普通私有槽的同引用读取与具体写入前缀。输入为字面安装数据、带 accessor 的技能及交易库存；复制／引用和 getter／setter 轨迹验证已付费的部分写。编译期拒绝读视图修改，不运行完整对局、传输或模型。
  */
 import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";
@@ -17,7 +13,7 @@ import type {
   BearReadState,
   HiddenWolfReadState,
 } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { getHunterState, setHunterState } from "../../../src/game/mechanisms/roles/hunter/state";
 import {
   freshMechanicalState,

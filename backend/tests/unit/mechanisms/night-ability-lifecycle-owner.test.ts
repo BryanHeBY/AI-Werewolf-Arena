@@ -6,7 +6,7 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Role, type PairSeerState } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import * as queries from "../../../src/game/mechanisms/roles/abilities";
 import {
   installNativeAbility,

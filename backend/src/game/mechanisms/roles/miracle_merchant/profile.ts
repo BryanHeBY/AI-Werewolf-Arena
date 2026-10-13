@@ -1,3 +1,10 @@
+/**
+ * 负责 奇迹商人 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
+ * 输入为原板子参数、角色组件与请求上下文；输出为原 RoleProfile 与具名内建展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
+ * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
+ * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
+ */
+import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
@@ -38,12 +45,7 @@ export const MIRACLE_MERCHANT_ROLE_PROFILE: RoleProfile = {
   init: (role) => {
     if (!getMerchantState(role)) setMerchantState(role, freshMerchantState());
   },
-  renderPrompt: (role, locale = "zh-CN") =>
-    text(locale, "role.miracle_merchant.state") +
-    " " +
-    text(locale, "role.miracle_merchant.status", {
-      state: JSON.stringify(projectMerchantState(getMerchantState(role)!)),
-    }),
+  ...nativeRolePresentation("miracle_merchant"),
   configuration: {
     schema: z.strictObject({}),
     defaults: {},

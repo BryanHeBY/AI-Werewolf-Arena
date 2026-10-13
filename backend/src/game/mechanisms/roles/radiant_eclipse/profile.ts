@@ -1,9 +1,10 @@
 /**
- * 负责明辉／黯月 RoleProfile 贡献、配置和原生初始化。
- * 输入为原初始化组件、配置和 locale；输出为安装状态、提示和既有工具／阶段贡献。
- * 起效日和原生实例安装委托共享 owner，具体借用效果与夜租约仍归 frame。
- * 不在 profile 或第二状态仓库中持有借用资格，不提前查询 World 或推进业务时钟。
+ * 负责 流光伯爵／蚀日侍女 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
+ * 输入为原板子参数、角色组件与请求上下文；输出为原 RoleProfile 与具名内建展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
+ * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
+ * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
@@ -60,7 +61,7 @@ export const RADIANT_COUNT_ROLE_PROFILE: RoleProfile = {
   goodSide: "god",
   label: roleName("radiant_count"),
   skillBrief: text("zh-CN", "role.radiant_count.brief"),
-  renderPrompt: (_role, locale = "zh-CN") => text(locale, "role.radiant_count.brief"),
+  ...nativeRolePresentation("radiant_count"),
   init: (role) => {
     installNativeAbility(role, "shelter", createShelterState());
     setNightAbilityStartDay(activeNightAbility(role, "shelter", 1)!, 2);
@@ -116,7 +117,7 @@ export const ECLIPSE_MAID_ROLE_PROFILE: RoleProfile = {
   camp: Camp.Wolf,
   label: roleName("eclipse_maid"),
   skillBrief: text("zh-CN", "role.eclipse_maid.brief"),
-  renderPrompt: (_role, locale = "zh-CN") => text(locale, "role.eclipse_maid.brief"),
+  ...nativeRolePresentation("eclipse_maid"),
   init: (role) => {
     role.privateState.eclipse = createEclipseState();
     role.privateState.abilities = {};

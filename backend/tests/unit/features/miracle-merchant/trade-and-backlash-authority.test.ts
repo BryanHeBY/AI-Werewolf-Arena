@@ -1,8 +1,7 @@
 /**
- * Unit tests verify Miracle Merchant direct trade creates one opaque Lucky instance and rejects changed owner/target authority.
- * Input: Original locale/skill/Dream/revocation matrices with bounded stage and damage operations.
- * Output and oracle: Exact stock, order, true-camp and backlash/privacy assertions remain unchanged; no full night or recorder executes.
+ * 单元测试：验证奇迹商人直接交易创建一个不透明幸运实例，拒绝变化的 owner／target 权限。输入为语言、技能、梦境与撤权矩阵；有界阶段和伤害的库存、顺序、真实阵营、反噬及隐私断言保持，不运行完整夜或录制器。
  */
+import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
@@ -161,7 +160,8 @@ for (const locale of ["zh-CN", "en"] as const)
           expect(JSON.stringify(feed)).not.toContain('"outcome"');
         }
       }
-      if (locale === "en") expect(role(game).renderPrompt(locale)).not.toMatch(/[\u4e00-\u9fff]/);
+      if (locale === "en")
+        expect(renderRolePrompt(role(game), locale)).not.toMatch(/[\u4e00-\u9fff]/);
       const stages = new NightStageRegistry().getStages(game.config, game.world);
       expect(stages.find((s) => s.id === "miracle_merchant")!.priority).toBe(125);
       expect(stages.find((s) => s.id === "lucky_ability")!.priority).toBe(700);

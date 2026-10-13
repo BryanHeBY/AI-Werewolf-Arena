@@ -1,6 +1,9 @@
 /**
- * Scenario tests check historical Beauty/Dream policy variants through actual requests, death chains, filesystem recording and strict Tape replay. Inputs are original locale/policy/action matrices; handwritten causal outcomes and policy tamper rejection are the oracle. Original replay-to-World comparison is retained without claiming independent full-game verification.
+ * 场景测试通过实际请求、死亡连锁、文件记录与严格 Tape 复现验证狼美人／摄梦人的历史政策。
+ * 输入保留原语言／政策／行动矩阵；手写因果结果和篡改拒绝是预期，原 replay 与 World 对照
+ * 仍保留，但不能把该对照称为独立完整对局验证。
  */
+import { captureNativeRolePresentation } from "../../../src/game/observation/native-role-presentation-capture";
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -105,7 +108,11 @@ for (const kind of ["poison", "hunter", "wolf_king", "black_backlash"] as const)
         const holder = 1,
           role = game.world.getComponent<RoleComponent>(holder, COMPONENT.Role)!;
         expect(
-          getDefaultRoleCatalog().require(roles[holder - 1]).renderPrompt!(role, locale),
+          captureNativeRolePresentation(
+            getDefaultRoleCatalog().require(roles[holder - 1]).nativePresentation!.id,
+            role,
+            locale,
+          ),
         ).toContain(policy);
         expect(
           getDefaultConfigRenderRegistry().renderBoardConfigPrompt(normalized, locale),

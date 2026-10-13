@@ -1,6 +1,10 @@
 /**
- * 负责装配石像鬼的身份查验、刀权继承与原生状态贡献。输入为原板子参数、初始化组件、请求上下文与语言；输出保持既有 RoleProfile、提示和目标政策。状态引用和接受后的写入仍归具体机制 owner，本模块不创建第二仓库、授权 lease、执行伤害或编码归档。
+ * 负责 石像鬼 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。
+ * 输入为原板子参数、角色组件与请求上下文；输出为原 RoleProfile 与具名内建展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。
+ * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。
+ * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
+import { nativeRolePresentation } from "../presentation-contribution";
 import { inspectionConfiguration, renderInspectionPolicy } from "../role_inspection/policies";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
@@ -44,34 +48,7 @@ export const GARGOYLE_ROLE_PROFILE: RoleProfile = {
     canChat: false,
     canVoteForKill: canGargoyleKnife(role, world),
   }),
-  renderPrompt: (role, locale = "zh-CN", world) => {
-    const report = getRoleInspectionState(role)?.history.at(-1);
-    return (
-      text(
-        locale,
-        getRoleInspectionState(role)?.inspectionPolicy
-          ? "role.gargoyle.configured_identity"
-          : "role.gargoyle.state",
-      ) +
-      " " +
-      renderInspectionPolicy(getRoleInspectionState(role)!, locale) +
-      " " +
-      text(locale, "role.gargoyle.status", {
-        inherited: text(
-          locale,
-          getGargoyleState(role)?.hasInheritedKnife === true ? "common.yes" : "common.no",
-        ),
-        active: text(locale, canGargoyleKnife(role, world) ? "common.yes" : "common.no"),
-      }) +
-      (report
-        ? " " +
-          text(locale, "inspection.latest", {
-            target: report.targetId,
-            result: inspectionLabel(report.result, locale),
-          })
-        : "")
-    );
-  },
+  ...nativeRolePresentation("gargoyle"),
   configuration: inspectionConfiguration("gargoyle", "awa_unique_required_v1"),
   nightStages: [ROLE_INSPECTION_STAGE, ...WOLF_ROLE_PROFILE.nightStages!],
   possibleNightAbilities: ["role_check"],

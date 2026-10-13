@@ -1,8 +1,7 @@
 /**
- * Responsibility: expose pure protocol data for backend, catalog and browser consumers.
- * Outputs include machine identities, messages, results, errors and inert payload readers.
- * This package never grants runtime authority, executes rules, owns catalog
- * metadata or renders presentation. Its interfaces and readers describe inert data.
+ * 向后端、Catalog 与浏览器消费者公开纯协议数据。输出包括机器身份、消息、结果、错误、
+ * inert payload reader 和纯展示片段；部分展示参数可含已格式化文字，但不携带运行句柄。
+ * 本包不授予运行权限、不执行规则、不拥有角色资料或渲染展示；接口与 reader 保留各自数据边界。
  */
 export {
   Camp,
@@ -229,3 +228,11 @@ export type {
   LonelyGirlReadState,
   RedMoonReadState,
 } from "./role-state-data";
+
+export type {
+  NativeRolePresentationId,
+  NativeRoleMessageParameters,
+  NativeRoleMessageKey,
+  NativeRoleMessagePart,
+  NativeRolePresentationPart,
+} from "./role-presentation-data";

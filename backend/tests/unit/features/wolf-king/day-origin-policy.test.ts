@@ -1,8 +1,9 @@
 /**
- * Unit tests verify Wolf King day-origin eligibility, exact policy DTOs and bounded source/protection/authority behavior.
- * Input: Original policy/origin/cause/locale/timing matrices and direct hook/death-resolver operations.
- * Output and oracle: Handwritten cause eligibility, protected target, gifted gun and readonly-origin rejection remain unchanged; no complete PM cycle or recording runs.
+ * 单元测试验证狼王白天来源开枪资格、精确政策 DTO 与有界来源／保护／权限行为。
+ * 输入保留原政策／来源／死因／语言／时点矩阵及直接 hook／死亡结算调用；手写开枪资格、
+ * 受保护目标、赠予枪及只读来源拒绝是预期，不运行完整 PhaseManager 周期或记录流程。
  */
+import { captureNativeRolePresentation } from "../../../../src/game/observation/native-role-presentation-capture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -143,7 +144,7 @@ for (const locale of ["zh-CN", "en"] as const)
   test(`configured personal and public rules explain the AWA day policy/${locale}`, () => {
     const f = fixture();
     for (const prose of [
-      WOLF_KING_ROLE_PROFILE.renderPrompt!(f.king, locale),
+      captureNativeRolePresentation(WOLF_KING_ROLE_PROFILE.nativePresentation!.id, f.king, locale),
       getDefaultConfigRenderRegistry().renderBoardConfigPrompt(f.config, locale),
     ]) {
       expect(prose).toContain(

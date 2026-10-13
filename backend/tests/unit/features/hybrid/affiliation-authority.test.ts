@@ -1,6 +1,7 @@
 /**
  * 单元测试验证混血儿直接归属阶段、中立目标接收与同步选择所有权。输入为语言／目标／变化矩阵和局部夜间上下文；预期为阵营、身份、胜利、隐私与陈旧选择断言，已提交前缀的重入在阶段运行前被拒绝，不执行完整周期。
  */
+import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
 import { bindNativeNightEffects } from "../../../../src/rulesets/native-night-effects";
@@ -233,7 +234,8 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(order.findIndex((s) => s.id === "hybrid")).toBeLessThan(
         order.findIndex((s) => s.id === "wolf_kill_vote"),
       );
-      if (locale === "en") expect(role(game).renderPrompt(locale)).not.toMatch(/[\u4e00-\u9fff]/);
+      if (locale === "en")
+        expect(renderRolePrompt(role(game), locale)).not.toMatch(/[\u4e00-\u9fff]/);
       role(game, target).camp = faction === "wolf" ? Camp.Good : Camp.Wolf;
       game.world.getComponent<{ alive: boolean }>(target, COMPONENT.Alive)!.alive = false;
       game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive = false;

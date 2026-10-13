@@ -8,7 +8,7 @@ import { expect, test } from "bun:test";
 import { Camp, Role, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../../src/core/domain/world";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import * as publicGun from "../../../../src/game/mechanisms/roles/death_abilities";
 import * as owner from "../../../../src/game/mechanisms/roles/death-gun-lifecycle";

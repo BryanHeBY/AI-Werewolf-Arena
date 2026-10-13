@@ -7,7 +7,10 @@ import { expect, test } from "bun:test";
 import { Camp, Phase, Role, type ActionRequest } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
+import {
+  bindRolePresentation,
+  createRoleComponent,
+} from "../../../src/game/observation/role-presentation";
 import { createAliveComponent } from "../../../src/core/domain/components/alive";
 import { createIdentityComponent } from "../../../src/core/domain/entities/player";
 import { capturePlayerObservation } from "../../../src/game/observation/player-observation-projector";
@@ -89,10 +92,10 @@ test("policy methods are looked up before actor getters and capture does not inv
   const trace: string[] = [];
   let roleText = 0,
     personaText = 0;
-  f.role.renderPrompt = () => {
+  bindRolePresentation(f.role, () => {
     roleText++;
     return "custom raw text";
-  };
+  });
   const policy = new PlayerPromptPolicy(f.world, {
     personalityPromptResolver: () => {
       personaText++;

@@ -1,15 +1,11 @@
 /**
- * Unit tests for ordinary Witch payload mutation ownership.
- * Inputs are literal native state and adversarial setters/day/state getters;
- * handwritten read/write logs, original error identities and unchanged ability
- * metadata are the oracle. Claims, marks, lease validation and independent audit
- * inference are not executed or replaced by these concrete payload commands.
+ * 单元测试：验证普通女巫 payload 写所有权。输入为字面原生状态与对抗性 setter／day／state getter；手写读写日志、原错误身份及未改能力元数据为预期。具体 payload 命令不替代 claim、标记、租约校验或独立审计推断。
  */
 import type { WitchState } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
 import { Role, Camp, WitchSelfHealRule } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import {
   resetWitchNightState,

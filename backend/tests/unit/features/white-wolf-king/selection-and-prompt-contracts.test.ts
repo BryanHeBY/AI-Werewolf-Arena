@@ -1,9 +1,5 @@
 /**
- * Unit tests for white wolf king selection. Inputs are original locale/window/cause matrix and controlled
- * target/stock revocations. Original literal receipts, reference/getter/error traces, facts and expected
- * state remain the oracle. Strict reception/commit/prompt and bounded SelfDestructWindow late-body
- * revocation preserve selected resource and denied effects without PM cycles. No complete game phase or
- * paid model runs; existing local windows and denied entry probes remain bounded.
+ * 单元测试验证白狼王选择与提示契约。输入保留 locale／窗口／死因矩阵及受控目标／库存撤权；原字面回执、引用／getter／错误轨迹、事实和状态是预期。严格接收／提交／提示及有界 SelfDestructWindow 迟到原体撤权保留已选库存和拒绝效果，不推进 PhaseManager 周期、完整阶段或付费模型。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -19,7 +15,7 @@ import {
   type GameEvent,
 } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import {
   getWhiteWolfKingState,
   setWhiteWolfKingState,

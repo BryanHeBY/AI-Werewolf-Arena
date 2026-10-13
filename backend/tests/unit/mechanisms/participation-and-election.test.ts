@@ -1,7 +1,5 @@
 /**
- * Unit tests verify Idiot participation and the bounded sheriff election API use original eligibility, candidate and tie rules.
- * Input: All original locale/mode matrices, controlled local role profiles and direct election/badge/death operations.
- * Output and oracle: Exact reception, nomination/vote/candidate/lifecycle and late eligibility assertions remain unchanged; no whole Day/PM pipeline or recorder runs.
+ * 单元测试验证白痴参与和有界警长选举 API 的原资格、候选及平票规则。输入保留全部 locale／模式矩阵、受控本地角色 profile 及直接选举／警徽／死亡操作；精确接收、提名／投票／候选／生命周期和晚资格断言是预期，不推进完整白天／PhaseManager 或记录器。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -14,7 +12,8 @@ import {
   type RoleComponent,
 } from "../../../src/core";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
-import { ActionReception, ActionTurn } from "../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../src/game/gateway/action-reception";
+import { ActionTurn } from "../../../src/ai/agents/player/action-turn";
 import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
 import { BaselineBotActionProvider } from "../../../src/ai/agents/providers/action_providers";
 import { EventRegistry } from "../../../src/game/engine/event_registry";

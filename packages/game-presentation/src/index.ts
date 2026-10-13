@@ -44,3 +44,5 @@ export {
   fragrantPairEventLabel,
   animalDreamEventLabel,
 } from "./events/night-mechanisms";
+
+export { formatNativeRolePart } from "./native-role-state";

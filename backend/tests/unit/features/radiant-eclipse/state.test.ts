@@ -1,10 +1,5 @@
 /**
- * Unit tests for radiant-eclipse; Isolated radiant-eclipse state contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试：验证辉夜状态的独立契约与原 owner／frame／reader。输入为内存 fixture、受控回调和畸形修改；原字段、身份快照和拒绝断言为预期，不执行装配周期、模型或实体传输。
  */
 import type { RoleInitializationComponent } from "../../../../src/game/mechanisms/roles/contracts";
 import { expect, test } from "bun:test";
@@ -21,7 +16,7 @@ import { DREAMER_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/drea
 import { WITCH_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/witch/profile";
 import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
 import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { Camp, Role, WitchSelfHealRule } from "../../../../src/core/domain/identity";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 

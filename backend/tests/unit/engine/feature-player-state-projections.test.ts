@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { Camp, Phase, Role, type ActionRequest } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../src/core/domain/world";
 import { COMPONENT } from "../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { projectRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state";
 import { projectNightmareShadowState } from "../../../src/game/mechanisms/roles/nightmare_shadow/state";
 import { projectEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/state";
@@ -59,21 +59,27 @@ test("nightmare copies ordered nullable history without array helpers or extra-e
   const entry = { day: 1, targetId: null };
   const history = [entry, { day: 2, targetId: 4 }];
   Object.defineProperty(history, "map", {
-    get() { throw new Error("array_map_must_not_run"); },
+    get() {
+      throw new Error("array_map_must_not_run");
+    },
   });
   Object.defineProperty(entry, "secret", {
     enumerable: true,
-    get() { throw new Error("extra_entry_getter_must_not_run"); },
+    get() {
+      throw new Error("extra_entry_getter_must_not_run");
+    },
   });
-  Object.assign(role.privateState, { nightmareShadow: {
-    policy: "awa_nightmare_dreamer_v1",
-    fearActionPolicy: "required_when_legal",
-    wolfActionPolicy: "no_blast_no_self_knife",
-    packReady: true,
-    lastDay: 2,
-    lastTarget: 4,
-    history,
-  } });
+  Object.assign(role.privateState, {
+    nightmareShadow: {
+      policy: "awa_nightmare_dreamer_v1",
+      fearActionPolicy: "required_when_legal",
+      wolfActionPolicy: "no_blast_no_self_knife",
+      packReady: true,
+      lastDay: 2,
+      lastTarget: 4,
+      history,
+    },
+  });
   const view = projectNightmareShadowState(role)!;
   expect(view).toEqual({
     policy: "awa_nightmare_dreamer_v1",
@@ -82,7 +88,10 @@ test("nightmare copies ordered nullable history without array helpers or extra-e
     packReady: true,
     lastDay: 2,
     lastTarget: 4,
-    history: [{ day: 1, targetId: null }, { day: 2, targetId: 4 }],
+    history: [
+      { day: 1, targetId: null },
+      { day: 2, targetId: 4 },
+    ],
   });
   expect(view.history).not.toBe(history);
   expect(view.history[0]).not.toBe(entry);
@@ -90,7 +99,9 @@ test("nightmare copies ordered nullable history without array helpers or extra-e
   expect(entry.targetId).toBeNull();
   // 投影不是新的授权检查：既有槽位校验拒绝访问器时，不执行它或制造默认状态。
   Object.defineProperty(history[1]!, "targetId", {
-    get() { throw new Error("malformed_target_getter_must_not_run"); },
+    get() {
+      throw new Error("malformed_target_getter_must_not_run");
+    },
   });
   expect(projectNightmareShadowState(role)).toBeUndefined();
 });

@@ -1,9 +1,8 @@
 /**
- * Adapts SDK tool callbacks to the shared agent-facing ActionTurn selection owner.
- * Inputs are model messages, an engine request and SDK invocations; outputs retain
- * preflight receipts, the selected action and existing model/refusal evidence.
- * Deadline timers, abort and finally-close remain local to this loop; accepted
- * means selected with applied:false, never a domain commit or settlement subscription.
+ * 负责把 SDK 工具调用适配到共同 ActionTurn 选择窗口；输入为模型消息、原引擎请求与 SDK 调用。
+ * 输出保留预检回执、已选候选及拒绝／模型证据，规则与 schema 接收由游戏 Gateway 拥有。
+ * 计时器、abort 与 finally-close 仍属于本 loop；accepted 仅表示 selected 且 applied:false，
+ * 不消耗库存、提交领域动作或订阅 settlement，失败保留原读取与记录顺序。
  */
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { ActionRequest, ToolCall } from "../../../core/domain";
@@ -15,7 +14,7 @@ import { World } from "../../../core/domain/world";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { AgentBugReportService } from "../reporting/bug_report_service";
 import { gameToolProtocol } from "../game_tool_protocol";
-import { ActionReception } from "../player/action_reception";
+import { ActionReception } from "../../../game/gateway/action-reception";
 import { ActionTurn } from "../player/action-turn";
 import {
   ToolCallRepairRegistry,
@@ -27,7 +26,7 @@ import {
 import { LlmObserver } from "../player/player_observer";
 import { ChatMessage, ChatModelClient } from "../../integrations/llm/transport";
 import { PlayerPromptSession } from "./player_prompt_session";
-import { resolveTurnConstraints } from "../player/turn_constraints";
+import { resolveTurnConstraints } from "../../../game/gateway/turn-constraints";
 import { awaitWithAbort } from "../../runtime/turn_deadline";
 
 interface ToolLoopActionResult {
@@ -36,7 +35,7 @@ interface ToolLoopActionResult {
   failureCode?: "turn_invalid_action_limit" | "action_turn_failed";
 }
 
-/** Native SDK implementation of the shared werewolf game tool protocol. */
+/** 原生 SDK 游戏协议适配，所有候选通过同一选择与预检 owner。 */
 export class SdkGameToolLoop {
   private readonly reception: ActionReception;
   private readonly bugReports: AgentBugReportService;

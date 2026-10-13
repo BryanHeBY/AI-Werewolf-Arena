@@ -1,16 +1,12 @@
 /**
- * Unit tests for the concrete native pair-state owner using original role/ability factories.
- * Inputs are handwritten pair-history data, a controlled privateState accessor and
- * non-writable owned fields. Literal archived shapes, reference identity and unchanged
- * pre-write snapshots are independent oracles; no model, full-game driver or production
- * command generates expected results. Domain leases remain outside these owner tests.
+ * 单元测试：验证原生双人查验槽的实际 owner。输入为手写双人历史、受控 privateState accessor 与不可写字段；字面归档形状、同引用和写前快照为预期。原角色／能力 factory 只造输入，不由生产命令生成预期；租约与完整对局留在外部。
  */
 import type { RoleInitializationComponent } from "../../../../src/game/mechanisms/roles/contracts";
 import type { PairSeerState } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import {
   findNightAbility,
   type NightAbility,

@@ -1,11 +1,12 @@
 /**
- * Unit tests check registered/planned role catalog entries, duplicate/missing profiles and Evil Knight tool declarations. Inputs are literal role IDs and injected catalog profiles; exact supported ID sets, original lookup errors and declared tools are the oracle. No filesystem rule card, game or model is loaded.
+ * 单元测试：验证注册／计划角色区分、重复／缺失 profile 拒绝与恶灵骑士工具声明。输入为字面角色 ID 和注入 profile；精确支持集合、原查找错误和具名工具为预期，不加载规则卡文件、对局或模型。
  */
+import { renderRolePrompt } from "../../../src/game/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { ROLE_DEFINITIONS, ROLE_IDS, isRoleId, roleName } from "@ai-werewolf-arena/game-catalog";
 import { Role } from "../../../src/core/domain/identity";
 import { RoleCatalog, getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import { createRoleComponent } from "../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import { Camp } from "../../../src/core/domain/identity";
 import { createDefaultRoleRegistry } from "../../../src/game/mechanisms/roles/permissions";
 
@@ -47,7 +48,7 @@ test("runtime catalog rejects duplicate or missing profiles", () => {
   const component = createRoleComponent(Role.Wolf, Camp.Wolf);
   getDefaultRoleCatalog().applyRuntime(component);
   component.role = "awakened_knight" as Role;
-  expect(() => component.renderPrompt()).toThrow("role_profile_not_registered");
+  expect(() => renderRolePrompt(component)).toThrow("role_profile_not_registered");
 });
 
 test("evil knight keeps wolf night tools without inheriting self-destruct requests", () => {

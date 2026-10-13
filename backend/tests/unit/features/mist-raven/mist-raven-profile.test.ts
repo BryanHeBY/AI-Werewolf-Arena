@@ -1,10 +1,7 @@
 /**
- * Unit tests: Mist Raven profiles use declared defaults, locales and pack policies;
- * literal bilingual rules, separate knowledge capabilities and historical audience fields
- * check profile contributions. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证雾鸦 profile 的默认配置、语言与狼群政策。原双语文案、分离的知识能力和历史 audience 为字面预期；只调用有界模块，不运行模型或完整对局驱动。
  */
+import { captureNativeRolePresentation } from "../../../../src/game/observation/native-role-presentation-capture";
 import { expect, test } from "bun:test";
 import {
   World,
@@ -13,13 +10,13 @@ import {
   WinCondition,
   Phase,
   COMPONENT,
-  createRoleComponent,
   createAliveComponent,
   createCampComponent,
   createIdentityComponent,
   type RoleComponent,
   type ToolCall,
 } from "../../../../src/core";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
 import { RoleCatalog, getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import {
@@ -121,12 +118,22 @@ test("original profiles contribute exact defaults and bilingual mechanism meanin
   const { world } = fixture(),
     alchemist = world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
     raven = world.getComponent<RoleComponent>(9, COMPONENT.Role)!;
-  expect(ALCHEMIST_ROLE_PROFILE.renderPrompt?.(alchemist, "zh-CN")).toContain("发言结束");
-  expect(ALCHEMIST_ROLE_PROFILE.renderPrompt?.(alchemist, "en")).toContain(
-    "after daytime speeches",
-  );
-  expect(RAVEN_CLAW_ROLE_PROFILE.renderPrompt?.(raven, "zh-CN")).toContain("不补发");
-  expect(RAVEN_CLAW_ROLE_PROFILE.renderPrompt?.(raven, "en")).toContain("fewer than three");
+  expect(
+    captureNativeRolePresentation(
+      ALCHEMIST_ROLE_PROFILE.nativePresentation!.id,
+      alchemist,
+      "zh-CN",
+    ),
+  ).toContain("发言结束");
+  expect(
+    captureNativeRolePresentation(ALCHEMIST_ROLE_PROFILE.nativePresentation!.id, alchemist, "en"),
+  ).toContain("after daytime speeches");
+  expect(
+    captureNativeRolePresentation(RAVEN_CLAW_ROLE_PROFILE.nativePresentation!.id, raven, "zh-CN"),
+  ).toContain("不补发");
+  expect(
+    captureNativeRolePresentation(RAVEN_CLAW_ROLE_PROFILE.nativePresentation!.id, raven, "en"),
+  ).toContain("fewer than three");
 });
 test("pack recognition, sealed exclusion, permanent snapshot and historical audience are separate", () => {
   const { world, catalog, kill } = fixture();

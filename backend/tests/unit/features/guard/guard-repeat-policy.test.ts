@@ -1,10 +1,7 @@
 /**
- * Unit tests: Guard repeat policies use explicit night adjacency, prior accepted actions
- * and empty guards; literal history and rejection assertions distinguish the configured
- * repeat semantics. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证守卫配置的重复目标语义。输入为相邻夜、前次合法行动和明确空守；原字面历史与拒绝断言区分政策。只调用有界机制与提示，不运行模型或完整对局驱动。
  */
+import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -132,7 +129,7 @@ for (const policy of ["awa_last_action_v1", "netease_consecutive_nights_v1"] as 
         getDefaultConfigRenderRegistry().renderBoardConfigPrompt(game.config, locale),
       ).toContain(policy);
       expect(
-        game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!.renderPrompt(locale),
+        renderRolePrompt(game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!, locale),
       ).toContain(policy);
       expect(projectNightAbility(game.ability, 1).state).toEqual(
         policy === "netease_consecutive_nights_v1"

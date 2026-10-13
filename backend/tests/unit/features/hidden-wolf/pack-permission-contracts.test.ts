@@ -1,10 +1,7 @@
 /**
- * Unit tests for hidden wolf inheritance. Inputs are original directional knowledge, life/permission
- * changes and ordered death proposals. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Single feature chat stage, read-only reception/inspection/prompt and
- * opening inheritance queries check literal independent rights. No complete game phase or paid model runs;
- * existing local windows and denied entry probes remain bounded.
+ * 单元测试验证隐狼方向性知识、生命／许可变化和有序死亡提议。单个狼聊阶段、只读交付／查验／提示及继承查询检查独立权利；原回执、引用、getter、错误、事实和状态为预期，不运行完整阶段或付费模型。
  */
+import { renderRolePrompt } from "../../../../src/game/observation/role-presentation";
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -31,7 +28,7 @@ import {
 import { getDefaultRoleCatalog, RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import {
   getDefaultToolSpecRegistry,
@@ -180,7 +177,7 @@ for (const locale of ["zh-CN", "en"] as const)
       canVoteForKill: false,
     });
     expect(policy.buildObservation({ ...request, actorId: 2 }).ownState.hiddenWolf).toBeUndefined();
-    expect(role(game, 1).renderPrompt(locale)).toContain(
+    expect(renderRolePrompt(role(game, 1), locale)).toContain(
       locale === "en"
         ? "Personally inherited the knife: No; currently able to attack: No."
         : "本人曾获得刀权：否；当前可出刀：否。",

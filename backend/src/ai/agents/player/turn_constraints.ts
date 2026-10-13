@@ -1,81 +1,12 @@
-import { renderMessage, text, type MessageRef, type Locale } from "@ai-werewolf-arena/game-text";
-import { ActionRequest, ToolCall, ToolName } from "../../../core/domain";
-
-export interface ResolvedTurnConstraints {
-  minValidActions: number;
-  maxValidActions: number;
-  requiredAnyTools: ToolName[];
-  summary?: string;
-  summaryMessage?: MessageRef;
-}
-
-export interface TurnConstraintState {
-  validActions: ToolCall[];
-}
-
-export interface TurnConstraintEvaluation {
-  ok: boolean;
-  errors: string[];
-}
-
-/** Transport retries may continue, but a failed mandatory choice cannot be supplied by a fallback. */
-export function allowsActionFallback(request: ActionRequest): boolean {
-  return (
-    request.context.action_failure_policy !== "error" && request.context.allow_fallback !== false
-  );
-}
-
-/** Projects typed engine constraints into player prompt and tool-loop rules. */
-export function resolveTurnConstraints(request: ActionRequest): ResolvedTurnConstraints {
-  const constraints = request.context.turn_constraints;
-  const minValidActions = Math.max(0, Math.floor(constraints?.min_valid_actions ?? 0));
-  const maxValidActions = Math.max(
-    minValidActions,
-    Math.floor(constraints?.max_valid_actions ?? 1),
-  );
-  const summary = constraints?.summary;
-  return {
-    minValidActions,
-    maxValidActions,
-    requiredAnyTools: constraints?.required_any_tools ?? [],
-    ...(summary !== undefined ? { summary } : {}),
-    ...(constraints?.summary_message
-      ? { summaryMessage: structuredClone(constraints.summary_message) }
-      : {}),
-  };
-}
-
 /**
- * 校验当前回合是否满足结束条件。
+ * 负责把已解析的回合约束组织为玩家系统规则和用户提示；输入为原约束数据与固定 locale。
+ * 输出保留原多语言文本、摘要优先级和连接顺序；不解析许可、校验候选、接收动作或写入 World。
+ * 游戏侧独立持有约束解析／评估，此模块只在原提示构造时点渲染字符串。
  */
-export function evaluateTurnConstraints(
-  state: TurnConstraintState,
-  constraints: ResolvedTurnConstraints,
-  locale: Locale = "zh-CN",
-): TurnConstraintEvaluation {
-  const errors: string[] = [];
-  if (state.validActions.length < constraints.minValidActions) {
-    errors.push(text(locale, "turn.minimum", { count: constraints.minValidActions }));
-  }
-  if (state.validActions.length > constraints.maxValidActions) {
-    errors.push(text(locale, "turn.maximum", { count: constraints.maxValidActions }));
-  }
-  if (constraints.requiredAnyTools.length > 0) {
-    const used = new Set(state.validActions.map((action) => action.name));
-    const hit = constraints.requiredAnyTools.some((tool) => used.has(tool));
-    if (!hit) {
-      errors.push(
-        text(locale, "turn.required_tools", { tools: constraints.requiredAnyTools.join(", ") }),
-      );
-    }
-  }
-  return {
-    ok: errors.length === 0,
-    errors,
-  };
-}
+import { renderMessage, text, type Locale } from "@ai-werewolf-arena/game-text";
+import type { ResolvedTurnConstraints } from "../../../game/gateway/turn-constraints";
 
-/** Human text uses the same immutable locale as this player's prompt. */
+/** 文案使用与本玩家提示相同的固定 locale；已有 summary 即便空串也优先于消息引用。 */
 export function renderTurnConstraintSystemRule(
   constraints: ResolvedTurnConstraints,
   locale: Locale = "zh-CN",

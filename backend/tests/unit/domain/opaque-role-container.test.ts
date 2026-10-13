@@ -1,14 +1,11 @@
 /**
- * Unit tests for opaque core role state and its two concrete read-owner boundaries.
- * Inputs are hand-written role objects, slot getters and retired-ID arrays; literal
- * getter order, source identity, detached output and thrown-error identity are the
- * independent oracle. Compile-only core indexing is rejected while initialization
- * preserves arbitrary extension keys. No game, archive, transport or model runs.
+ * 单元测试：验证领域不透明角色容器及两个具体读所有者。输入为手写角色、槽 getter 和退休 ID 数组；getter 顺序、源身份、脱离输出和原错误为预期。编译期拒绝 core 索引，初始化仍允许扩展键；不运行对局、归档、传输或模型。
  */
 import "../../../src/app/bootstrap";
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent, type RoleComponent } from "../../../src/core/domain/components/role";
+import { type RoleComponent } from "../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import type { RoleInitializationComponent } from "../../../src/game/mechanisms/roles/contracts";
 import { projectEclipseState } from "../../../src/game/mechanisms/roles/radiant_eclipse/ports";
 import { retiredNightAbilityIds } from "../../../src/game/mechanisms/roles/abilities";

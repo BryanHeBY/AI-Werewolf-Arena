@@ -1,15 +1,11 @@
 /**
- * Owns test builder support: Explicit Red Moon candidate World, components, catalog and initial roster for bounded mechanism tests.
- * Inputs are original configs, raw component objects and caller-supplied fields;
- * outputs are the original explicit fixture values. Unit and scenario tests use
- * unchanged handwritten literals and identity snapshots as the independent oracle.
- * This builder never runs a whole game, transport or production rule verifier.
+ * 构造蚀日者有界机制测试的显式 World、组件、Catalog 与初始座位。输入为原配置、组件及调用方字段，输出为原 fixture；手写断言和身份快照由测试持有，不运行完整对局、传输或生产规则验证器。
  */
 import type { LastWolfBlastPolicy } from "@ai-werewolf-arena/game-contract";
 import { World } from "../../../../../src/core/domain/world";
 import { Role } from "../../../../../src/core/domain/identity";
 import { COMPONENT } from "../../../../../src/core/domain/components/names";
-import { createRoleComponent } from "../../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../../src/game/observation/role-presentation";
 import { createAliveComponent } from "../../../../../src/core/domain/components/alive";
 import { createBadgeComponent } from "../../../../../src/core/domain/components/badge";
 import { createCampComponent } from "../../../../../src/core/domain/components/camp";

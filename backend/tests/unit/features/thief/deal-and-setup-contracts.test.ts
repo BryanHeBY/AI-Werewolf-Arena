@@ -1,9 +1,5 @@
 /**
- * Unit tests for thief setup. Inputs are original N+2 deals, reserve card/lease mutations and strict
- * provider failure tapes. Original literal receipts, reference/getter/error traces, facts and expected
- * state remain the oracle. Original deal/config/multiset and bounded setup window/capability/stock
- * projections. Case11 only invokes blocked PM entry inside active setup; no completed cycle occurs. No
- * complete game phase or paid model runs; existing local windows and denied entry probes remain bounded.
+ * 单元测试验证盗贼原 N+2 发牌、备用牌／租约修改和严格 provider 失败 Tape。原字面回执、引用／getter／错误轨迹、事实和状态是预期，覆盖发牌／配置／多重集及有界设置窗口／capability／库存投影。原 case11 只在设置期间探测被拒 PhaseManager 入口，不完成周期；不运行完整阶段或付费模型，原本地窗口及被拒探针保持有界。
  */
 import { expect, test } from "bun:test";
 import { shuffled } from "../../../../src/core";
@@ -39,7 +35,7 @@ import {
 } from "../../../../src/game/mechanisms/roles/thief/deal";
 import { readThiefTool, getThiefState } from "../../../../src/game/mechanisms/roles/thief/state";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import { knownWolfTeammates } from "../../../../src/game/mechanisms/roles/wolf_team";
 import {

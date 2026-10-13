@@ -1,15 +1,11 @@
 /**
- * Unit tests verify Seer's public deep-read contract and live reference identity.
- * Compiler-negative assignments cover nested result/history and installation
- * outputs; they are never executed. The literal runtime oracle proves reads keep
- * the installed slot unfrozen while only the explicit owner command writes it.
- * No World, role stage, transport, game cycle or historical fixture is executed.
+ * 单元测试：验证预言家公开深只读契约与 live 引用身份。合法形状的 result／history／安装返回写操作仅作编译反例，不执行；字面运行预期证明安装槽不冻结，唯具体 owner 命令写入。不运行 World 阶段、传输、对局或历史 fixture。
  */
 import type { SeerReadState } from "@ai-werewolf-arena/game-contract";
 
 import { expect, test } from "bun:test";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
-import { createRoleComponent } from "../../../../src/core/domain/components/role";
+import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { getSeerState as publicRead } from "../../../../src/game/mechanisms/roles/seer/ports";
 import {
   getSeerState,

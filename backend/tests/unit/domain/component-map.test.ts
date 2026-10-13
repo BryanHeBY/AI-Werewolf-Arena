@@ -1,9 +1,5 @@
 /**
- * Unit contract for World's typed component slots and unchanged reference/life
- * ownership. Literal eleven-name order, original object identity and explicit
- * death-permission revisions are independent runtime oracles. Compiler positive
- * and @ts-expect-error examples cover default slot inference and the temporary
- * explicit legacy escape; no role rules, transport or serialized handles change.
+ * 单元测试：验证 World 类型槽与原引用／生命所有权。输入为十一种组件名、原对象和死亡许可修订，字面顺序、对象身份及版本为预期；编译正反例检查默认槽推断与暂存 legacy 特权，不更改角色规则、传输或序列化句柄。
  */
 import { expect, test } from "bun:test";
 import {
@@ -16,13 +12,13 @@ import {
   createAliveComponent,
   createCampComponent,
   createIdentityComponent,
-  createRoleComponent,
   type AliveComponent,
   type CampComponent,
   type ComponentMap,
   type ComponentName,
   type RoleComponent,
 } from "../../../src/core";
+import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 
 function compilerExamples(world: World, actorId: number) {
   const alive = createAliveComponent(),
