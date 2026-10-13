@@ -1,7 +1,6 @@
 /**
- * Provides the English compatibility entry for the shared text formatter.
- * Input is the assembled translation catalog; output is its same ordinary,
- * shallow-frozen dictionary with the historical English key/value order.
- * This entry never declares machine IDs or validates game/user parameters.
+ * 提供格式化调用方使用的英文词典出口，来源是 catalog 唯一聚合后的 en 对象。
+ * 输出保留同一普通原型、浅冻结对象及历史英文 key 顺序，不再次拼装或复制词典。
+ * 此公开入口不声明机器 ID、校验玩家参数或选择游戏规则。
  */
 export { en } from "./messages/catalog";

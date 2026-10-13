@@ -1,13 +1,12 @@
 /**
- * Owns the audit translations and their neutral key/placeholder definitions.
- * Inputs are existing contract MessageKeys and literal bilingual templates;
- * outputs are matching Chinese/English fragments and named parameter arrays.
- * Empty arrays explicitly mean no interpolation parameters. These definitions
- * never parse facts, execute rules, or validate user-supplied parameters; the
- * shared formatter retains that runtime boundary and preserves raw user text.
+ * 负责 AI 审计工具错误说明、提示、报告标题／字段、发现类别与确定性检查文案。
+ * 输入为已有消息 ID、占位参数与两语 literal 模板；输出为 audit 家族片段供审计任务和摘要渲染消费。
+ * 这些文本不读取证据、执行检查或认定问题严重性，证据资格与报告提交归原审计 owner。
+ * 用户／模型原文由格式化器作为参数保留，不用翻译表替换成新结论。
  */
 import type { MessageDefinition } from "./definition";
 
+// parameters 定义本家族拥有的 key 及排序后的唯一参数名；空数组是明确无插值，不是遗漏声明。
 export const definition = {
   owner: "audit",
   parameters: {
@@ -273,4 +272,5 @@ export const en = {
     "This summary uses deterministic checks and supplied player reports; no model audit result is included.",
 } satisfies Record<keyof typeof definition.parameters, string>;
 
+// 三份原数据一起交 catalog；satisfies 只作编译期 key 对齐，最终公开字典的冻结由 catalog 负责。
 export const messages = { definition, zhCN, en };

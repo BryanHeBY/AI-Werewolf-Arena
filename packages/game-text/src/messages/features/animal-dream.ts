@@ -1,13 +1,12 @@
 /**
- * Owns the animal dream translations and their neutral key/placeholder definitions.
- * Inputs are existing contract MessageKeys and literal bilingual templates;
- * outputs are matching Chinese/English fragments and named parameter arrays.
- * Empty arrays explicitly mean no interpolation parameters. These definitions
- * never parse facts, execute rules, or validate user-supplied parameters; the
- * shared formatter retains that runtime boundary and preserves raw user text.
+ * 负责白猫、子狐、河豚与熊的两语规则、知识／资源提示和动物梦境事件文案。
+ * 输入为本家族消息 key、占位名单及 literal 模板；输出为 animal-dream 家族的行动、票型、夜／单元标签。
+ * 文案仅描述已发表事实和已知知识，不消费子狐资源、触发河豚死亡波或计算熊咆哮，
+ * 实际时间／票源由领域 owner 提供；模板占位在 catalog 核对，用户参数在格式化器校验。
  */
 import type { MessageDefinition } from "../definition";
 
+// parameters 定义本家族拥有的 key 及排序后的唯一参数名；空数组是明确无插值，不是遗漏声明。
 export const definition = {
   owner: "features/animal-dream",
   parameters: {
@@ -204,4 +203,5 @@ export const en = {
   "replay.stage.bear_roared": "Bear announcement",
 } satisfies Record<keyof typeof definition.parameters, string>;
 
+// 三份原数据一起交 catalog；satisfies 只作编译期 key 对齐，最终公开字典的冻结由 catalog 负责。
 export const messages = { definition, zhCN, en };

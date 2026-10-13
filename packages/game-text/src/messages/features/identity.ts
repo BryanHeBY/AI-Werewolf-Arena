@@ -1,13 +1,12 @@
 /**
- * Owns the identity translations and their neutral key/placeholder definitions.
- * Inputs are existing contract MessageKeys and literal bilingual templates;
- * outputs are matching Chinese/English fragments and named parameter arrays.
- * Empty arrays explicitly mean no interpolation parameters. These definitions
- * never parse facts, execute rules, or validate user-supplied parameters; the
- * shared formatter retains that runtime boundary and preserves raw user text.
+ * 负责阵营归属、混血／隐狼、机械／觉醒技能及特殊查验身份配置的两语文案。
+ * 输入为既有消息 ID、参数名与身份模板；输出为 identity 家族的状态／提示／复盘片段。
+ * 这些字段描述引擎已提供的身份知识，不读取隐藏阵营、变更角色或授予继承技能，
+ * 实际身份所有权与启用时点仍由领域机制持有，参数插值由共享格式化器执行。
  */
 import type { MessageDefinition } from "../definition";
 
+// parameters 定义本家族拥有的 key 及排序后的唯一参数名；空数组是明确无插值，不是遗漏声明。
 export const definition = {
   owner: "features/identity",
   parameters: {
@@ -410,4 +409,5 @@ export const en = {
   "replay.stage.mechanical_skill_skipped": "Mechanical wolf skips a skill",
 } satisfies Record<keyof typeof definition.parameters, string>;
 
+// 三份原数据一起交 catalog；satisfies 只作编译期 key 对齐，最终公开字典的冻结由 catalog 负责。
 export const messages = { definition, zhCN, en };

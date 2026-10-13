@@ -1,13 +1,12 @@
 /**
- * Owns the night modifiers translations and their neutral key/placeholder definitions.
- * Inputs are existing contract MessageKeys and literal bilingual templates;
- * outputs are matching Chinese/English fragments and named parameter arrays.
- * Empty arrays explicitly mean no interpolation parameters. These definitions
- * never parse facts, execute rules, or validate user-supplied parameters; the
- * shared formatter retains that runtime boundary and preserves raw user text.
+ * 负责恶魔／红月、目标交换、恐惧、锁时、技能增减及特殊查验反噬的两语说明。
+ * 输入为已有消息 ID、参数数组和模板；输出为 night-modifiers 家族的技能状态、请求、事件与政策文案。
+ * 这里说明已配置规则，不执行次序交换、冻结伤害来源、增减库存或推导真实查验结果；
+ * 阶段与失败政策归原机制，文字 key／占位一致性仅在文案聚合层检查。
  */
 import type { MessageDefinition } from "../definition";
 
+// parameters 定义本家族拥有的 key 及排序后的唯一参数名；空数组是明确无插值，不是遗漏声明。
 export const definition = {
   owner: "features/night-modifiers",
   parameters: {
@@ -778,4 +777,5 @@ export const en = {
     "Dark Knight is immune to Hunter shots in night death chains; shots following daytime exile can kill Dark Knight.",
 } satisfies Record<keyof typeof definition.parameters, string>;
 
+// 三份原数据一起交 catalog；satisfies 只作编译期 key 对齐，最终公开字典的冻结由 catalog 负责。
 export const messages = { definition, zhCN, en };

@@ -1,13 +1,12 @@
 /**
- * Owns the runtime translations and their neutral key/placeholder definitions.
- * Inputs are existing contract MessageKeys and literal bilingual templates;
- * outputs are matching Chinese/English fragments and named parameter arrays.
- * Empty arrays explicitly mean no interpolation parameters. These definitions
- * never parse facts, execute rules, or validate user-supplied parameters; the
- * shared formatter retains that runtime boundary and preserves raw user text.
+ * 负责终端裁判／角色事件、CLI／配置提示、工具协议说明及传输诊断的两语文案。
+ * 输入为已有 MessageKey、参数名及 literal 模板；输出为 runtime 家族片段，供日志／命令入口消费。
+ * 工具名、错误码与 schema 字段的机器含义归原协议所有者；此数据模块不发送请求、汇总错误
+ * 或判定行动接受，运行时参数拒绝仍由格式化器执行。
  */
 import type { MessageDefinition } from "./definition";
 
+// parameters 定义本家族拥有的 key 及排序后的唯一参数名；空数组是明确无插值，不是遗漏声明。
 export const definition = {
   owner: "runtime",
   parameters: {
@@ -695,4 +694,5 @@ export const en = {
   "cli.offline_failed": "Offline replay command failed ({code}).",
 } satisfies Record<keyof typeof definition.parameters, string>;
 
+// 三份原数据一起交 catalog；satisfies 只作编译期 key 对齐，最终公开字典的冻结由 catalog 负责。
 export const messages = { definition, zhCN, en };

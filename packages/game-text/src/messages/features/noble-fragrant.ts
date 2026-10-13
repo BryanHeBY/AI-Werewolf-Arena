@@ -1,13 +1,12 @@
 /**
- * Owns the noble fragrant translations and their neutral key/placeholder definitions.
- * Inputs are existing contract MessageKeys and literal bilingual templates;
- * outputs are matching Chinese/English fragments and named parameter arrays.
- * Empty arrays explicitly mean no interpolation parameters. These definitions
- * never parse facts, execute rules, or validate user-supplied parameters; the
- * shared formatter retains that runtime boundary and preserves raw user text.
+ * 负责寻香魅影、觉醒预言家、夜之贵族和觉醒愚者（秘密之身机制）的两语知识、通知和契约说明。
+ * 输入为原消息 key、参数名单及 literal 模板；输出为 noble-fragrant 家族的规则、阶段与事件文案。
+ * 模板只展示已给定的 known 状态，不从真实资源推导隐藏触发或未发表死亡；知识更新和
+ * 通知资格归原机制所有者，缺失／额外参数拒绝由共享格式化器在调用时执行。
  */
 import type { MessageDefinition } from "../definition";
 
+// parameters 定义本家族拥有的 key 及排序后的唯一参数名；空数组是明确无插值，不是遗漏声明。
 export const definition = {
   owner: "features/noble-fragrant",
   parameters: {
@@ -282,4 +281,5 @@ export const en = {
   "replay.stage.secret_body_reveal_speech": "Reveal speech",
 } satisfies Record<keyof typeof definition.parameters, string>;
 
+// 三份原数据一起交 catalog；satisfies 只作编译期 key 对齐，最终公开字典的冻结由 catalog 负责。
 export const messages = { definition, zhCN, en };

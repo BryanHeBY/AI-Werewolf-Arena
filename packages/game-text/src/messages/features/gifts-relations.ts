@@ -1,13 +1,12 @@
 /**
- * Owns the gifts relations translations and their neutral key/placeholder definitions.
- * Inputs are existing contract MessageKeys and literal bilingual templates;
- * outputs are matching Chinese/English fragments and named parameter arrays.
- * Empty arrays explicitly mean no interpolation parameters. These definitions
- * never parse facts, execute rules, or validate user-supplied parameters; the
- * shared formatter retains that runtime boundary and preserves raw user text.
+ * 负责鬼新娘、孤独少女、野孩子、情侣、赠予技能及匿名墙／辩论／首夜选牌的两语文案。
+ * 输入为本家族既有 key、占位名单及 literal 模板；输出为关系、库存说明、行动／窗口提示和复盘标签。
+ * 本模块不复制能力、关闭关系或消费匿名便笺，文案中的目标／数量来自原调用方事实；
+ * 参数接受与用户聊天原文保留归格式化器，关系权限和资源提交仍由原 owner 执行。
  */
 import type { MessageDefinition } from "../definition";
 
+// parameters 定义本家族拥有的 key 及排序后的唯一参数名；空数组是明确无插值，不是遗漏声明。
 export const definition = {
   owner: "features/gifts-relations",
   parameters: {
@@ -804,4 +803,5 @@ export const en = {
     "Player {actor} holds gifted ability {ability} on night {day}; this night’s opportunity is closed.",
 } satisfies Record<keyof typeof definition.parameters, string>;
 
+// 三份原数据一起交 catalog；satisfies 只作编译期 key 对齐，最终公开字典的冻结由 catalog 负责。
 export const messages = { definition, zhCN, en };

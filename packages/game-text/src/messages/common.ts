@@ -1,13 +1,11 @@
 /**
- * Owns the common translations and their neutral key/placeholder definitions.
- * Inputs are existing contract MessageKeys and literal bilingual templates;
- * outputs are matching Chinese/English fragments and named parameter arrays.
- * Empty arrays explicitly mean no interpolation parameters. These definitions
- * never parse facts, execute rules, or validate user-supplied parameters; the
- * shared formatter retains that runtime boundary and preserves raw user text.
+ * 负责通用玩家／阵营／阶段、平票、死因／结束理由、胜利与结算检查点的两语文案。
+ * 输入为契约 MessageKey 和本模块参数表；输出为 common 家族模板，供裁判、复盘和角色说明复用。
+ * 这些字段仅命名已给定的结果，不判胜或选择平票规则；参数值校验与原文插值归共享格式化器。
  */
 import type { MessageDefinition } from "./definition";
 
+// parameters 定义本家族拥有的 key 及排序后的唯一参数名；空数组是明确无插值，不是遗漏声明。
 export const definition = {
   owner: "common",
   parameters: {
@@ -183,4 +181,5 @@ export const en = {
   "checkpoint.max_days_reached": "Day limit reached",
 } satisfies Record<keyof typeof definition.parameters, string>;
 
+// 三份原数据一起交 catalog；satisfies 只作编译期 key 对齐，最终公开字典的冻结由 catalog 负责。
 export const messages = { definition, zhCN, en };

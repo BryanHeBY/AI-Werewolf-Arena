@@ -1,13 +1,12 @@
 /**
- * Owns the replay translations and their neutral key/placeholder definitions.
- * Inputs are existing contract MessageKeys and literal bilingual templates;
- * outputs are matching Chinese/English fragments and named parameter arrays.
- * Empty arrays explicitly mean no interpolation parameters. These definitions
- * never parse facts, execute rules, or validate user-supplied parameters; the
- * shared formatter retains that runtime boundary and preserves raw user text.
+ * 负责复盘工作台、播放控制、座位／时间线及历史游戏事件的两语显示模板。
+ * 输入为已有消息 ID、参数数组与 literal 文案；输出为 replay 家族字典片段，供播放器／标签映射消费。
+ * 本数据所有者不读取档案、推进 frame 或决定事件可见性，角色底牌与事件字段仍由原投影提供。
+ * 格式化器验证调用参数；空参数名单仅表示标签无需插值，不表示缺少对应游戏数据。
  */
 import type { MessageDefinition } from "./definition";
 
+// parameters 定义本家族拥有的 key 及排序后的唯一参数名；空数组是明确无插值，不是遗漏声明。
 export const definition = {
   owner: "replay",
   parameters: {
@@ -491,4 +490,5 @@ export const en = {
   "replay.stage.exile_pk_started": "Exile PK",
 } satisfies Record<keyof typeof definition.parameters, string>;
 
+// 三份原数据一起交 catalog；satisfies 只作编译期 key 对齐，最终公开字典的冻结由 catalog 负责。
 export const messages = { definition, zhCN, en };

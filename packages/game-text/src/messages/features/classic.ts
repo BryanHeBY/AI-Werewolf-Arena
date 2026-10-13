@@ -1,13 +1,12 @@
 /**
- * Owns the classic translations and their neutral key/placeholder definitions.
- * Inputs are existing contract MessageKeys and literal bilingual templates;
- * outputs are matching Chinese/English fragments and named parameter arrays.
- * Empty arrays explicitly mean no interpolation parameters. These definitions
- * never parse facts, execute rules, or validate user-supplied parameters; the
- * shared formatter retains that runtime boundary and preserves raw user text.
+ * 负责狼人／村民、普通神职、守护／用药／查验及警长／放逐／死亡技能的既有说明文案。
+ * 输入为契约消息 key 与本家族的中性参数表，输出为角色状态、行动指引、阶段标签及错误说明。
+ * classic 片段只描述调用方给出的资源／政策，不拥有库存、重复目标规则或警徽写权；
+ * 两语模板的 key 集编译校验及 catalog 占位核对不替代引擎资格检查。
  */
 import type { MessageDefinition } from "../definition";
 
+// parameters 定义本家族拥有的 key 及排序后的唯一参数名；空数组是明确无插值，不是遗漏声明。
 export const definition = {
   owner: "features/classic",
   parameters: {
@@ -794,4 +793,5 @@ export const en = {
   "stage.sheriff_badge_choice": "Badge successor choice",
 } satisfies Record<keyof typeof definition.parameters, string>;
 
+// 三份原数据一起交 catalog；satisfies 只作编译期 key 对齐，最终公开字典的冻结由 catalog 负责。
 export const messages = { definition, zhCN, en };

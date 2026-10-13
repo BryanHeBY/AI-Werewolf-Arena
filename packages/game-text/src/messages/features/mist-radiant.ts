@@ -1,13 +1,12 @@
 /**
- * Owns the mist radiant translations and their neutral key/placeholder definitions.
- * Inputs are existing contract MessageKeys and literal bilingual templates;
- * outputs are matching Chinese/English fragments and named parameter arrays.
- * Empty arrays explicitly mean no interpolation parameters. These definitions
- * never parse facts, execute rules, or validate user-supplied parameters; the
- * shared formatter retains that runtime boundary and preserves raw user text.
+ * 负责流光伯爵／蚀日侍女与炼金魔女／渡鸦技能的两语状态、行动提示和事件标签。
+ * 输入为既有 key、占位名单及 literal 模板；输出为 mist-radiant 家族片段供提示／终端／复盘消费。
+ * 庇护、借用、浓雾与附加刀的资源／生命资格归领域 owner；本数据模块不生成效果或重算历史受众。
+ * [] 只表示文本没有插值参数，不能据其推断行动是否可用或模型是否需要提交。
  */
 import type { MessageDefinition } from "../definition";
 
+// parameters 定义本家族拥有的 key 及排序后的唯一参数名；空数组是明确无插值，不是遗漏声明。
 export const definition = {
   owner: "features/mist-radiant",
   parameters: {
@@ -275,4 +274,5 @@ export const en = {
   "error.raven_knife_target": "Choose another legal living player, or explicitly keep the charge.",
 } satisfies Record<keyof typeof definition.parameters, string>;
 
+// 三份原数据一起交 catalog；satisfies 只作编译期 key 对齐，最终公开字典的冻结由 catalog 负责。
 export const messages = { definition, zhCN, en };
