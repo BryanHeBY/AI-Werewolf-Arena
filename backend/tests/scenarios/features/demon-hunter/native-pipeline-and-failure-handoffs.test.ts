@@ -1,10 +1,5 @@
 /**
- * Scenario/unit ownership tests for demon hunter runtime.
- * Input: original fixed game actions and deliberate malformed or foreign
- * component replacements; output: unchanged state, rejection and life/lease
- * assertions. Literal expected prefixes and guard failures are independent
- * oracles. Explicit unknown writes are privileged negative-test injection;
- * production's typed default slot relation is never relaxed for these inputs.
+ * Scenario tests drive actual Demon Hunter NightPipeline/PhaseManager and committed-stock failure handoffs. Inputs are original six/twelve rosters, guarded heal/poison/hunt choices and foreign component replacements; handwritten causes, payment prefixes, no-getter reads and terminal ordering are the oracle. No model or changed source fixture supplies expected outcomes.
  */
 import { expect, test, spyOn } from "bun:test";
 import {
@@ -20,16 +15,16 @@ import {
   type ActionRequest,
   type RoleComponent,
   type StatusMarksComponent,
-} from "../../../src/core";
-import type { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
+} from "../../../../src/core";
+import type { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import {
   demonHunterFixture,
   demonNightChoice,
   type DemonNightChoices,
-} from "../../support/demon_hunter_scenarios";
-import { getWitchState } from "../../../src/game/mechanisms/roles/private_state";
-import { projectDemonHunter } from "../../../src/game/mechanisms/roles/demon_hunter/authority";
+} from "../../../support/demon_hunter_scenarios";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/private_state";
+import { projectDemonHunter } from "../../../../src/game/mechanisms/roles/demon_hunter/authority";
+
 function provider(
   f: ReturnType<typeof demonHunterFixture>,
   choices: DemonNightChoices = {},
@@ -42,18 +37,21 @@ function provider(
     },
   };
 }
+
 function nightDeaths(f: ReturnType<typeof demonHunterFixture>) {
   return f.phaseManager
     .getEvents()
     .filter((e) => e.type === "night_resolved")
     .at(-1)!.payload.deaths;
 }
+
 function history(f: ReturnType<typeof demonHunterFixture>) {
   return projectDemonHunter(
     f.world,
     f.world.getComponent<RoleComponent>(f.demonId, COMPONENT.Role)!,
   )!.history;
 }
+
 for (const size of [6, 12] as const)
   for (const goal of [WinCondition.SlaughterCity, WinCondition.SlaughterSide])
     for (const locale of ["zh-CN", "en"] as const)
@@ -73,6 +71,7 @@ for (const size of [6, 12] as const)
         expect(history(f)).toEqual([]);
         expect(f.phaseManager.getSnapshot().day).toBe(2);
       });
+
 for (const [title, choices, deaths] of [
   ["true Wolf and doomed hunter still acts", { knife: 6, hunt: 1 }, [1, 6]],
   ["Good target causes backlash plus ordinary knife", { knife: 6, hunt: 3 }, [6]],
@@ -100,13 +99,6 @@ for (const [title, choices, deaths] of [
     );
     damage.mockRestore();
   });
-test("new causes deny Hunter gun, including compound causes", async () => {
-  const { permitsDeathShot } = await import("../../../src/core/domain/deaths");
-  expect(permitsDeathShot([DeathCause.DemonHunt], "awa_knife_or_exile_v1")).toBe(false);
-  expect(
-    permitsDeathShot([DeathCause.WolfKill, DeathCause.DemonHuntBacklash], "awa_knife_or_exile_v1"),
-  ).toBe(false);
-});
 
 for (const [title, choices, deaths, demonCauses] of [
   ["Guard cannot stop backlash", { guard: 12, hunt: 4 }, [12], [DeathCause.DemonHuntBacklash]],
@@ -147,6 +139,7 @@ for (const [title, choices, deaths, demonCauses] of [
       calls.mockRestore();
     }
   });
+
 for (const position of ["before_native", "after_native", "after_ordinary_damage"] as const)
   test(`actual pipeline native immunity retains independent generic poison ${position}`, async () => {
     const f = demonHunterFixture(),
@@ -186,6 +179,7 @@ for (const position of ["before_native", "after_native", "after_ordinary_damage"
       calls.mockRestore();
     }
   });
+
 for (const goal of [WinCondition.SlaughterCity, WinCondition.SlaughterSide])
   test(`actual ${goal} terminal Night publishes complete roots including dead winner before game_over`, async () => {
     const f = demonHunterFixture(6, goal),
@@ -209,6 +203,7 @@ for (const goal of [WinCondition.SlaughterCity, WinCondition.SlaughterSide])
     expect(over).toBeGreaterThan(resolved);
     expect(f.world.getAliveEntityIds()).toEqual([3, 4, 5]);
   });
+
 for (const goal of [WinCondition.SlaughterCity, WinCondition.SlaughterSide])
   test(`actual ${goal} Hunter additional wave eliminates last Wolf before victory and public complete deaths`, async () => {
     const f = demonHunterFixture(12, goal),
@@ -233,6 +228,7 @@ for (const goal of [WinCondition.SlaughterCity, WinCondition.SlaughterSide])
     );
     expect(f.world.getAliveEntityIds()).toEqual([4, 5, 6, 7, 8, 9, 11, 12]);
   });
+
 test("actual knife plus poison Hunter is dead without gun despite another independent hunt", async () => {
   const f = demonHunterFixture(12),
     seen: ActionRequest[] = [];
@@ -299,6 +295,7 @@ for (const phase of [
       calls.mockRestore();
     }
   });
+
 for (const target of [1, 6])
   test(`actual postcommit replacement ${target} cancels hunt without erasing history or poisoning new body`, async () => {
     const f = demonHunterFixture(),
@@ -324,6 +321,7 @@ for (const target of [1, 6])
       calls.mockRestore();
     }
   });
+
 test("actual recursive cycle and jump reject while the original hunt window is open", async () => {
   const f = demonHunterFixture();
   await f.phaseManager.runSingleCycle(provider(f), 10);
@@ -344,6 +342,7 @@ test("actual recursive cycle and jump reject while the original hunt window is o
   expect(history(f)).toEqual([{ day: 2, targetId: 1 }]);
   expect(nightDeaths(f)).toEqual([1]);
 });
+
 test("actual missing hunt preserves native Witch consumption prefix and denies retry of the same night", async () => {
   const f = demonHunterFixture();
   await f.phaseManager.runSingleCycle(provider(f), 10);
@@ -412,6 +411,7 @@ for (const size of [6, 12] as const)
           calls.mockRestore();
         }
       });
+
 test("actual Night→PM microtask handoff rejects external getter before read and retains committed choice", async () => {
   const f = demonHunterFixture();
   await f.phaseManager.runSingleCycle(provider(f), 10);
@@ -440,12 +440,13 @@ test("actual Night→PM microtask handoff rejects external getter before read an
     expect(reads).toBe(0);
     expect(history(f)).toEqual([{ day: 2, targetId: 1 }]);
     const { demonHunterFreezeDay } =
-      await import("../../../src/game/mechanisms/roles/demon_hunter/authority");
+      await import("../../../../src/game/mechanisms/roles/demon_hunter/authority");
     expect(() => demonHunterFreezeDay(f.world)).toThrow("demon_hunter_freeze_unavailable");
   } finally {
     calls.mockRestore();
   }
 });
+
 test("actual selected knife never authorizes a generic WolfKill mark on another target", async () => {
   const f = demonHunterFixture();
   await f.phaseManager.runSingleCycle(provider(f), 10);
@@ -464,15 +465,16 @@ test("actual selected knife never authorizes a generic WolfKill mark on another 
   expect(nightDeaths(f)).toEqual([6]);
   expect(f.world.getAliveEntityIds()).toEqual([1, 2, 3, 4, 5]);
 });
+
 test("direct actual NightPipeline reentry cannot close the already waiting original Witch request", async () => {
   const f = demonHunterFixture();
   await f.phaseManager.runSingleCycle(provider(f), 10);
   const pipeline = (
     f.phaseManager as unknown as {
-      nightPipeline: import("../../../src/game/engine/phase_pipeline/night_pipeline").NightPipeline;
+      nightPipeline: import("../../../../src/game/engine/phase_pipeline/night_pipeline").NightPipeline;
     }
   ).nightPipeline;
-  const { assertRequestDelivery } = await import("../../../src/core");
+  const { assertRequestDelivery } = await import("../../../../src/core");
   await f.phaseManager.runSingleCycle(
     {
       getAction: async (request) => {
@@ -532,6 +534,7 @@ for (const position of ["before_native", "after_native", "after_ordinary_damage"
       calls.mockRestore();
     }
   });
+
 test("actual pure-data Heal refund cannot renew the consumed source or protect the original knife target", async () => {
   const f = demonHunterFixture();
   await f.phaseManager.runSingleCycle(provider(f), 10);
@@ -555,7 +558,7 @@ test("actual pure-data Heal refund cannot renew the consumed source or protect t
   );
   expect(nightDeaths(f)).toEqual([6]);
   const { demonHunterAuditPlayer } =
-    await import("../../../src/game/mechanisms/roles/demon_hunter/authority");
+    await import("../../../../src/game/mechanisms/roles/demon_hunter/authority");
   expect((demonHunterAuditPlayer(f.world, 5)!.abilities as any)["native:potion"].state.heal).toBe(
     0,
   );
@@ -598,6 +601,7 @@ for (const trigger of ["last_words", "hunter_shot"] as const)
     );
     expect(history(f)).toEqual(trigger === "last_words" ? [] : [{ day: 2, targetId: 1 }]);
   });
+
 test("actual completed death-chain handoff rejects microtask getter before public death scan or victory", async () => {
   const f = demonHunterFixture();
   await f.phaseManager.runSingleCycle(provider(f), 10);
@@ -630,7 +634,7 @@ test("actual completed death-chain handoff rejects microtask getter before publi
     expect(f.phaseManager.getEvents().filter((e) => e.type === "night_resolved")).toHaveLength(1);
     expect(f.phaseManager.getSnapshot().gameOver).toBe(false);
     const { demonHunterFreezeDay } =
-      await import("../../../src/game/mechanisms/roles/demon_hunter/authority");
+      await import("../../../../src/game/mechanisms/roles/demon_hunter/authority");
     expect(() => demonHunterFreezeDay(f.world)).toThrow("demon_hunter_freeze_unavailable");
   } finally {
     calls.mockRestore();

@@ -93904,13 +93904,641 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/demon_hunter_runtime.test.ts",
+      "to": "backend/tests/unit/mechanisms/demon-hunt-death-shot-causes.test.ts",
+      "sourceCommit": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "reason": "Actual selected unit module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "8927d55d53e7870b8328e00d4d3e3cb36a7640e1c92142a2cb0b26c540d0cb51",
+      "candidateSha256": "8fe6842cbe355f436a7c77e47dc93e13f218708e4c13d37cc70af4fcc4795d5e",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 211,
+          "end": 242,
+          "original": "../../../src/core/domain/deaths",
+          "value": "../../../src/core/domain/deaths",
+          "originalResolved": "backend/src/core/domain/deaths.ts",
+          "expectedResolved": "backend/src/core/domain/deaths.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 69,
+          "end": 86,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/core/domain/deaths.ts",
+          "originalExpression": "import(\"../../../src/core/domain/deaths\")",
+          "currentExpression": "import(\"../../../src/core/domain/deaths\")",
+          "currentHead": "../../../src/core/domain/deaths",
+          "kind": "dynamic-module-path"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "358f9fca59eb01f929455d4e2090151daccf7b4aebc1eb746c079047e39ce121",
+          "title": "new causes deny Hunter gun, including compound causes",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "bun:test",
+          "originalImport": "import { expect, test, spyOn } from \"bun:test\";",
+          "currentImportBeforeRebase": "import { expect, test } from \"bun:test\";",
+          "droppedBindings": [
+            {
+              "name": "spyOn",
+              "imported": "spyOn",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Camp,\n  Phase,\n  PotionType,\n  WinCondition,\n  DeathCause,\n  StatusMark,\n  createAliveComponent,\n  type AliveComponent,\n  type ActionRequest,\n  type RoleComponent,\n  type StatusMarksComponent,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { DeathCause } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Camp",
+              "imported": "Camp",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "WinCondition",
+              "imported": "WinCondition",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "StatusMark",
+              "imported": "StatusMark",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "createAliveComponent",
+              "imported": "createAliveComponent",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "AliveComponent",
+              "imported": "AliveComponent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "StatusMarksComponent",
+              "imported": "StatusMarksComponent",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/death_resolution",
+          "originalImport": "import type { DeathResolution } from \"../../../src/game/engine/death_resolution\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DeathResolution",
+              "imported": "DeathResolution",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalImport": "import { DamageResolutionSystem } from \"../../../src/core/domain/systems/damage_resolution_system\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DamageResolutionSystem",
+              "imported": "DamageResolutionSystem",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../support/demon_hunter_scenarios",
+          "originalImport": "import {\n  demonHunterFixture,\n  demonNightChoice,\n  type DemonNightChoices,\n} from \"../../support/demon_hunter_scenarios\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "demonHunterFixture",
+              "imported": "demonHunterFixture",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "demonNightChoice",
+              "imported": "demonNightChoice",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "DemonNightChoices",
+              "imported": "DemonNightChoices",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/private_state",
+          "originalImport": "import { getWitchState } from \"../../../src/game/mechanisms/roles/private_state\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getWitchState",
+              "imported": "getWitchState",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "originalImport": "import { projectDemonHunter } from \"../../../src/game/mechanisms/roles/demon_hunter/authority\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "projectDemonHunter",
+              "imported": "projectDemonHunter",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/demon_hunter_runtime.test.ts",
+      "to": "backend/tests/scenarios/features/demon-hunter/native-pipeline-and-failure-handoffs.test.ts",
+      "sourceCommit": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "8927d55d53e7870b8328e00d4d3e3cb36a7640e1c92142a2cb0b26c540d0cb51",
+      "candidateSha256": "8729da73cdd97a27032aeb5c49292657e2303e6d2f9774a0ac0ac3caf96c898e",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 24386,
+          "end": 24443,
+          "original": "../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "value": "../../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 21427,
+          "end": 21484,
+          "original": "../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "value": "../../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 18404,
+          "end": 18421,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "import-type-module-specifier",
+          "start": 18257,
+          "end": 18311,
+          "original": "../../../src/game/engine/phase_pipeline/night_pipeline",
+          "value": "../../../../src/game/engine/phase_pipeline/night_pipeline",
+          "originalResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "expectedResolved": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "typeOnly": true
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 17093,
+          "end": 17150,
+          "original": "../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "value": "../../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 617,
+          "end": 674,
+          "original": "../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "value": "../../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "originalResolved": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 530,
+          "end": 578,
+          "original": "../../../src/game/mechanisms/roles/private_state",
+          "value": "../../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 460,
+          "end": 496,
+          "original": "../../support/demon_hunter_scenarios",
+          "value": "../../../support/demon_hunter_scenarios",
+          "originalResolved": "backend/tests/support/demon_hunter_scenarios.ts",
+          "expectedResolved": "backend/tests/support/demon_hunter_scenarios.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 331,
+          "end": 372,
+          "original": "../../../src/game/engine/death_resolution",
+          "value": "../../../../src/game/engine/death_resolution",
+          "originalResolved": "backend/src/game/engine/death_resolution.ts",
+          "expectedResolved": "backend/src/game/engine/death_resolution.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 273,
+          "end": 290,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "originalExpression": "import(\"../../../src/game/mechanisms/roles/demon_hunter/authority\")",
+          "currentExpression": "import(\"../../../../src/game/mechanisms/roles/demon_hunter/authority\")",
+          "currentHead": "../../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+          "originalExpression": "import(\"../../../src/game/engine/phase_pipeline/night_pipeline\").NightPipeline",
+          "currentExpression": "import(\"../../../../src/game/engine/phase_pipeline/night_pipeline\").NightPipeline",
+          "currentHead": "../../../../src/game/engine/phase_pipeline/night_pipeline",
+          "kind": "type-module-path",
+          "typeOnly": true
+        },
+        {
+          "anchor": "backend/src/core/index.ts",
+          "originalExpression": "import(\"../../../src/core\")",
+          "currentExpression": "import(\"../../../../src/core\")",
+          "currentHead": "../../../../src/core",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "originalExpression": "import(\"../../../src/game/mechanisms/roles/demon_hunter/authority\")",
+          "currentExpression": "import(\"../../../../src/game/mechanisms/roles/demon_hunter/authority\")",
+          "currentHead": "../../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "originalExpression": "import(\"../../../src/game/mechanisms/roles/demon_hunter/authority\")",
+          "currentExpression": "import(\"../../../../src/game/mechanisms/roles/demon_hunter/authority\")",
+          "currentHead": "../../../../src/game/mechanisms/roles/demon_hunter/authority",
+          "kind": "dynamic-module-path"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "fceb92a180b59254723972f61dc585011beec2ead20e6fa253e9e1e798252dc4",
+          "title": "actual private candidate 6/slaughter_city/zh-CN: first-night poison immunity, no hunt, native stock spent",
+          "occurrence": 1
+        },
+        {
+          "id": "f0ef3708c954bdcbc19a4fa29f59a97f245fa261fa7231d893be47bcc65bb870",
+          "title": "actual private candidate 6/slaughter_city/en: first-night poison immunity, no hunt, native stock spent",
+          "occurrence": 1
+        },
+        {
+          "id": "e9c2efebce99e76e0d93d44e8bc39d12dc8c4fb99d3f05f4e0b8a7d920b5dee1",
+          "title": "actual private candidate 6/slaughter_side/zh-CN: first-night poison immunity, no hunt, native stock spent",
+          "occurrence": 1
+        },
+        {
+          "id": "68ea1495e7564366ee60b53c2b4eb9554f870126058536c1682274c7b735f196",
+          "title": "actual private candidate 6/slaughter_side/en: first-night poison immunity, no hunt, native stock spent",
+          "occurrence": 1
+        },
+        {
+          "id": "3ae52032e0c66586d68bf4b6ac479009a2323836b2889f4353eba4719cd3fe39",
+          "title": "actual private candidate 12/slaughter_city/zh-CN: first-night poison immunity, no hunt, native stock spent",
+          "occurrence": 1
+        },
+        {
+          "id": "bba8002cabc0a76abc7968e114157dc9858bd669731662b81d9e9fe28b168fc5",
+          "title": "actual private candidate 12/slaughter_city/en: first-night poison immunity, no hunt, native stock spent",
+          "occurrence": 1
+        },
+        {
+          "id": "cb0f20d5874e75a6e3d4e22abcbfe61076df5e19d7b6d253bb9c6e5325c80226",
+          "title": "actual private candidate 12/slaughter_side/zh-CN: first-night poison immunity, no hunt, native stock spent",
+          "occurrence": 1
+        },
+        {
+          "id": "cd2f5710bf952f518593f307a4cea1de40c2e458a413a4a0b4b346fdc66759c4",
+          "title": "actual private candidate 12/slaughter_side/en: first-night poison immunity, no hunt, native stock spent",
+          "occurrence": 1
+        },
+        {
+          "id": "db35322b501d2a703caa2434d9e912818553a8989bd3ca32870dcc5a51aac6b9",
+          "title": "actual NightPipeline → PhaseManager: true Wolf and doomed hunter still acts",
+          "occurrence": 1
+        },
+        {
+          "id": "8f134a2189129bce5d5d46b3e7e95d72497017b42722699262ca87219f445693",
+          "title": "actual NightPipeline → PhaseManager: Good target causes backlash plus ordinary knife",
+          "occurrence": 1
+        },
+        {
+          "id": "103908e323c2666d232a39923b38913edfdf7905e74bd9535757d83d98875c42",
+          "title": "actual NightPipeline → PhaseManager: explicit abstention retains the response",
+          "occurrence": 1
+        },
+        {
+          "id": "3e4531ed989298d76b7441e9112a9e4b9a1ee77a775d207f5e8405e237f941ec",
+          "title": "actual NightPipeline → PhaseManager: native poison and knife remain distinct",
+          "occurrence": 1
+        },
+        {
+          "id": "886fd3175bc9de69532b55abc6e5bf3f3e888a8f7d9ec17e3b13dacff2b3f99e",
+          "title": "actual twelve-seat protection/source matrix: Guard cannot stop backlash",
+          "occurrence": 1
+        },
+        {
+          "id": "26558c6869fa4cf4faf1d75a5429fd460c53cf5e347c7d2af33183026a7f74e4",
+          "title": "actual twelve-seat protection/source matrix: Heal stops knife but cannot stop backlash",
+          "occurrence": 1
+        },
+        {
+          "id": "6105a73d6a23559783723c50f521ed54fa21d20686dfd76670360813c5d03c47",
+          "title": "actual twelve-seat protection/source matrix: ordinary Guard prevents knife while hunt survives",
+          "occurrence": 1
+        },
+        {
+          "id": "c4b362d6063ec39b67b0e502d0230ee09451a3f13a7a24bb23ff40c995e8d062",
+          "title": "actual twelve-seat protection/source matrix: ordinary Guard plus Heal collision remains lethal",
+          "occurrence": 1
+        },
+        {
+          "id": "24cf8029ede86c78f147460ea2258a0e58fa2e075f81da1c405038da9dce24a9",
+          "title": "actual twelve-seat protection/source matrix: doomed Witch still contributes original poison immunity",
+          "occurrence": 1
+        },
+        {
+          "id": "fe78c2285c4d40358a2b344e2e2182abc76faaba03477a79105cc3864d41016d",
+          "title": "actual pipeline native immunity retains independent generic poison before_native",
+          "occurrence": 1
+        },
+        {
+          "id": "c7715d5213b295b97d900c574a2c2504ed272e7f5419ff8c9ba3bd66d57ebec9",
+          "title": "actual pipeline native immunity retains independent generic poison after_native",
+          "occurrence": 1
+        },
+        {
+          "id": "abad108078a14c37d9a538b9d206912ec9515b395fac45a89322e27e7de0f7cd",
+          "title": "actual pipeline native immunity retains independent generic poison after_ordinary_damage",
+          "occurrence": 1
+        },
+        {
+          "id": "07ca587f38832549757cae570e523415f3cc2e7e2b921c36fd08978cebe11c12",
+          "title": "actual slaughter_city terminal Night publishes complete roots including dead winner before game_over",
+          "occurrence": 1
+        },
+        {
+          "id": "e3a1c5aa1870c1c67b909f94f04ce80bba03b7d896822ff96b792c1db8e9d37e",
+          "title": "actual slaughter_side terminal Night publishes complete roots including dead winner before game_over",
+          "occurrence": 1
+        },
+        {
+          "id": "2e042f292ff13df1d2f730e3fa27a26c4bed5644f9883974dbe209902d3c8eed",
+          "title": "actual slaughter_city Hunter additional wave eliminates last Wolf before victory and public complete deaths",
+          "occurrence": 1
+        },
+        {
+          "id": "f3e223fff196d324e1cd4fb1c091870694a5a3cfd028b019a6b4d1e81c3c33eb",
+          "title": "actual slaughter_side Hunter additional wave eliminates last Wolf before victory and public complete deaths",
+          "occurrence": 1
+        },
+        {
+          "id": "17cc1408275fbf8840c5938f68f158ce6ae735eae0c3a2c527b8345d69456ffb",
+          "title": "actual knife plus poison Hunter is dead without gun despite another independent hunt",
+          "occurrence": 1
+        },
+        {
+          "id": "31702768e85db10bc014bd6c4b0b77f5775f24df3ca648081cc1c31fc63a390f",
+          "title": "actual engine rejects foreign Alive getter without execution before_night",
+          "occurrence": 1
+        },
+        {
+          "id": "1dc1f8b2cba6f70e9745f5054a22a2498fc3bebbaccf5a969361bb621b97b3f2",
+          "title": "actual engine rejects foreign Alive getter without execution after_seer_request",
+          "occurrence": 1
+        },
+        {
+          "id": "7aab3cfbd02555c59c2f14c6f244ffdddac6f8a75a3b509d251641b73bd6ce12",
+          "title": "actual engine rejects foreign Alive getter without execution after_hunt_request",
+          "occurrence": 1
+        },
+        {
+          "id": "025dab3def9a91d54f36fac1bd57d5fb51bce7ec7601e7ad5595c85dfa8ed6a7",
+          "title": "actual engine rejects foreign Alive getter without execution after_damage",
+          "occurrence": 1
+        },
+        {
+          "id": "4bce428a236b37838e1811dc38cd246c0b75ac35df88c40915cbff519d47c860",
+          "title": "actual postcommit replacement 1 cancels hunt without erasing history or poisoning new body",
+          "occurrence": 1
+        },
+        {
+          "id": "5f2fead30d97efaf76f5ddc400e2f357dfa893157d87dae1055607be8385d80c",
+          "title": "actual postcommit replacement 6 cancels hunt without erasing history or poisoning new body",
+          "occurrence": 1
+        },
+        {
+          "id": "9c5af094e7f8dc35cc84bd2020d3bcd0992194c6559073a5cb8fc38a02aed9db",
+          "title": "actual recursive cycle and jump reject while the original hunt window is open",
+          "occurrence": 1
+        },
+        {
+          "id": "d37b4fbab5c7d5cfa31d0084a4827eb0d6b5830d225fc999986377fa6da89585",
+          "title": "actual missing hunt preserves native Witch consumption prefix and denies retry of the same night",
+          "occurrence": 1
+        },
+        {
+          "id": "b95205d9ed6e9be1595e3422fc399f78705a411067631ad95c4053e83ace4275",
+          "title": "actual Heal source revoked 6/false/seer: real stock stays spent and ordinary matrix recomputes",
+          "occurrence": 1
+        },
+        {
+          "id": "9a9e1321fece1e683f4b98dc120d5227a40f4de8a02ba4690df9cb020f9ff8eb",
+          "title": "actual Heal source revoked 6/false/after_damage: real stock stays spent and ordinary matrix recomputes",
+          "occurrence": 1
+        },
+        {
+          "id": "f508c4347675398a6ab63da36f23a1bdbd353daf082a148e0eb606baafce0415",
+          "title": "actual Heal source revoked 12/false/seer: real stock stays spent and ordinary matrix recomputes",
+          "occurrence": 1
+        },
+        {
+          "id": "1f7771f6e1ca6db3efaf209305ec9816123bde072df45ecc23f61b52d53645b6",
+          "title": "actual Heal source revoked 12/false/after_damage: real stock stays spent and ordinary matrix recomputes",
+          "occurrence": 1
+        },
+        {
+          "id": "5a403e9f0d0ca9f7cf713f2ebea7112a2564e5baf1a4c4323cef8d1e49757c72",
+          "title": "actual Heal source revoked 12/true/seer: real stock stays spent and ordinary matrix recomputes",
+          "occurrence": 1
+        },
+        {
+          "id": "390f37d10e3482cb8db3366becddaa4fa4aad0af5d0df74e514fc10220fff92a",
+          "title": "actual Heal source revoked 12/true/after_damage: real stock stays spent and ordinary matrix recomputes",
+          "occurrence": 1
+        },
+        {
+          "id": "fde4341d818cee1169dea022f7d2489abf00719dcaf4cc9fd758a1c01309ff6e",
+          "title": "actual Night→PM microtask handoff rejects external getter before read and retains committed choice",
+          "occurrence": 1
+        },
+        {
+          "id": "111c0be964b171b71d02eece86440f1a9bf862541642b78c7d2e5c1405122aa2",
+          "title": "actual selected knife never authorizes a generic WolfKill mark on another target",
+          "occurrence": 1
+        },
+        {
+          "id": "642aae75b708f5ad81b8c91ba62d37b838560cdc9dd9d92d0838fee0133fd96e",
+          "title": "direct actual NightPipeline reentry cannot close the already waiting original Witch request",
+          "occurrence": 1
+        },
+        {
+          "id": "88dc5ac54ca9303937813dc42572f19439925b2ee341611772fae05b727ba06e",
+          "title": "actual Heal source revocation retains independent generic Heal before_native",
+          "occurrence": 1
+        },
+        {
+          "id": "6a327578a706464deaaa5924edde4958f5d3ce988f69a06f66b1a5ba50ca8f60",
+          "title": "actual Heal source revocation retains independent generic Heal after_native",
+          "occurrence": 1
+        },
+        {
+          "id": "bc72833fab1ce052e1ca999630051a6cb213f781934bfbefb8dbd3670ca96e47",
+          "title": "actual Heal source revocation retains independent generic Heal after_ordinary_damage",
+          "occurrence": 1
+        },
+        {
+          "id": "ffb719a4a4db7115316799d6ac9f2110bee7fbd83d7dfdd275d1f0881e72da53",
+          "title": "actual pure-data Heal refund cannot renew the consumed source or protect the original knife target",
+          "occurrence": 1
+        },
+        {
+          "id": "7450f7a7faf8084681117132ebb0e2e479d335780079819f646c21ba6c140b40",
+          "title": "actual death-chain provider last_words rejects unrelated foreign Alive without reads or public completion",
+          "occurrence": 1
+        },
+        {
+          "id": "f168cdc44e4ea9ea9c95de5b04b703cb8e4014decf9804cb94973a91b3f376d7",
+          "title": "actual death-chain provider hunter_shot rejects unrelated foreign Alive without reads or public completion",
+          "occurrence": 1
+        },
+        {
+          "id": "cda62f511546b45d166fb340817bb2b68304d4b70df6f0f5fcd8692eb4f01604",
+          "title": "actual completed death-chain handoff rejects microtask getter before public death scan or victory",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalImport": "import { DamageResolutionSystem } from \"../../../src/core/domain/systems/damage_resolution_system\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DamageResolutionSystem",
+              "imported": "DamageResolutionSystem",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 570,
-    "targetFiles": 646,
-    "mappingEntries": 646,
-    "baselineCases": 7417,
+    "sourceFiles": 571,
+    "targetFiles": 648,
+    "mappingEntries": 648,
+    "baselineCases": 7467,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
