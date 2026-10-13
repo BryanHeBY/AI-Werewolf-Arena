@@ -1,9 +1,8 @@
 /**
- * Architecture tests for complete frontend compiler input coverage.
- * Input: existing public source/config declarations and the actual test tree;
- * output: original complete-set and no-missing-entry assertions. Literal required
- * fields and enumerated current files are the independent oracle; these tests
- * neither run gameplay nor rewrite fixture or compiler inputs to hide omissions.
+ * 架构测试核对前端编译入口是否覆盖所有源码、脚本、测试和工具配置。
+ * 输入为真实公开 tsconfig 与当前文件树；本应用声明的 TypeScript 解析出编译输入，
+ * 输出为完整目录集合的无遗漏断言。实际文件集合是独立预期，不改配置来缩小检查范围，
+ * 不运行对局、模型或浏览器，也不修改源码和 fixture。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";

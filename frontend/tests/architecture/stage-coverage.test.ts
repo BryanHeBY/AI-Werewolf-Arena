@@ -1,16 +1,8 @@
 /**
- * Architecture tests for public stage/event and bilingual message coverage.
- * Input: existing public source/config declarations and the actual test tree;
- * output: original complete-set and no-missing-entry assertions. Literal required
- * fields and enumerated current files are the independent oracle; these tests
- * neither run gameplay nor rewrite fixture or compiler inputs to hide omissions.
- */
-/**
- * Responsibility: verify replay integration coverage of public stage identifiers
- * and the current producer event contract across Chinese and English fixtures.
- * Input: public identity enums, existing source contributions and fixture bytes;
- * output: coverage assertions. Literal expected stages and complete set equality
- * are the oracle; no backend game or rule settlement is executed by this test.
+ * 架构测试负责核对复盘阶段、生产事件契约及中英消息的完整覆盖。
+ * 输入为公开枚举、源码声明与原 fixture 字节；输出为完整集合和无缺项断言。
+ * 手写必需阶段、字段及实际声明集合是独立预期；仅用本前端声明的 TypeScript 静态读源，
+ * 不执行后端对局或规则结算，不重写 fixture、编译配置或测试发现输入来掩盖遗漏。
  */
 import { frontendFixtureURL, frontendFixtureArtifacts } from "../support/fixtures/manifest";
 import {
@@ -26,7 +18,7 @@ import { dictionaries } from "@ai-werewolf-arena/game-text";
 import { stageName } from "../../src/replay/replay-localization";
 import { KNOWN_REPLAY_EVENT_TYPES } from "../../src/replay/replay-event-reader";
 
-// Read producer contracts without importing the backend into any frontend bundle or executing it.
+// 只读生产契约源码，不把后端运行模块导入前端 bundle，也不执行其规则。
 const root = new URL("../../../", import.meta.url);
 function source(path: string) {
   return ts.createSourceFile(

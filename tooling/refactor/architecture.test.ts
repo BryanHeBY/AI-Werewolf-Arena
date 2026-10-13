@@ -1,9 +1,7 @@
 /**
- * Unit architecture gate tests use synthetic source graphs and literal violations
- * as independent oracles. They verify import/export/alias boundaries, AST header
- * placement and vocabulary, immutable debt handling, new/modified file strictness
- * and mechanical path mappings. No production module, role resolver, private
- * configuration or model adapter is executed to derive these expectations.
+ * 单元架构测试用手写源码图和字面错误作为独立预期，核对导入、导出与别名边界。
+ * 输入为合成源码、公开包配置及临时目录；输出验证职责头位置、冻结债务、新增／修改文件和机械路径映射。
+ * 不执行生产模块、角色 resolver、私有配置或模型来生成预期，不用安装目录内容推断公开权限。
  */
 import { expect, test } from "bun:test";
 import { execFileSync } from "node:child_process";
@@ -122,6 +120,72 @@ test("configured browser alias resolves before applying backend and runtime boun
   expect(rules(input({ "packages/a/src/index.ts": "import x from 'node:crypto';" }))).toEqual([
     "dependency.browser-runtime",
   ]);
+});
+
+test("an exact own installed alias retains the declared external package boundary", () => {
+  const graph = input({
+    "frontend/package.json": pkg("frontend", undefined, { typescript: "5.9.3" }),
+    "frontend/tsconfig.json": JSON.stringify({
+      compilerOptions: { baseUrl: ".", paths: { typescript: ["./node_modules/typescript"] } },
+    }),
+    "frontend/tests/architecture/check.test.ts":
+      "import ts from 'typescript'; import * as compiler from 'typescript'; type T=import('typescript').Node;",
+  });
+  // 只凭消费应用自己的已声明包根路径识别 external，不提供任何安装字节给虚拟 host。
+  expect(rules(graph)).toEqual([]);
+});
+
+test("installed aliases reject undeclared packages, foreign roots and widened paths", () => {
+  const aliases = [
+    { paths: { typescript: ["./node_modules/typescript"] }, declared: false },
+    { paths: { typescript: ["../backend/node_modules/typescript"] }, declared: true },
+    { paths: { typescript: ["./node_modules/typescript/.codex/auth.json"] }, declared: true },
+    { paths: { typescript: ["./node_modules/typescript", "./missing.ts"] }, declared: true },
+    { paths: { "type*": ["./node_modules/type*"] }, declared: true },
+  ];
+  for (const { paths, declared } of aliases) {
+    const graph = input({
+      "frontend/package.json": pkg("frontend", undefined, declared ? { typescript: "5.9.3" } : {}),
+      "frontend/tsconfig.json": JSON.stringify({ compilerOptions: { baseUrl: ".", paths } }),
+      "frontend/tests/architecture/check.test.ts": "import ts from 'typescript';",
+    });
+    expect(rules(graph)).toEqual(["dependency.unresolved-alias"]);
+  }
+});
+
+test("installed alias recognition cannot hide a workspace owner or real public source", () => {
+  const workspace = input({
+    "frontend/package.json": pkg("frontend", undefined, { typescript: "workspace:*" }),
+    "frontend/tsconfig.json": JSON.stringify({
+      compilerOptions: { baseUrl: ".", paths: { typescript: ["./node_modules/typescript"] } },
+    }),
+    "backend/package.json": pkg("typescript"),
+    "backend/src/index.ts": "export const x=1;",
+    "frontend/src/app.ts": "import ts from 'typescript';",
+  });
+  expect(rules(workspace)).toEqual(["dependency.unresolved-alias"]);
+  const unknownWorkspace = input({
+    "frontend/package.json": pkg("frontend", undefined, { "@ai-werewolf-arena/nope": "1" }),
+    "frontend/tsconfig.json": JSON.stringify({
+      compilerOptions: {
+        baseUrl: ".",
+        paths: { "@ai-werewolf-arena/nope": ["./node_modules/@ai-werewolf-arena/nope"] },
+      },
+    }),
+    "frontend/src/app.ts": "import {x} from '@ai-werewolf-arena/nope';",
+  });
+  // 保留命名空间不因同名 dependencies 声明而变成未登记的外部包。
+  expect(rules(unknownWorkspace)).toEqual(["dependency.unresolved-alias"]);
+  const source = input({
+    "frontend/package.json": pkg("frontend", undefined, { typescript: "5.9.3" }),
+    "frontend/tsconfig.json": JSON.stringify({
+      compilerOptions: { baseUrl: ".", paths: { typescript: ["../backend/src/compiler"] } },
+    }),
+    "backend/src/compiler.ts": "export const x=1;",
+    "frontend/src/app.ts": "import {x} from 'typescript';",
+  });
+  // 同名 npm 声明不能遮住先解析出的真实后端源码目标。
+  expect(rules(source)).toEqual(["dependency.frontend-backend"]);
 });
 
 test("type imports, require and dynamic imports cannot conceal implementation access", () => {
@@ -324,7 +388,7 @@ test("public ancestor symlink is rejected before reading the external source byt
   }
 });
 
-// Maintained literal counterexamples from independent C04/C05 review.
+// 独立 C04/C05 审查留下的原字面反例：不把旧 debt 放宽成新的导入权限。
 const reviewInput = input;
 const reviewDependencies = (rows: Record<string, string>) => checkDependencies(ts, input(rows));
 const reviewDebt = debt;

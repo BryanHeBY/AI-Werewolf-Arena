@@ -1,11 +1,9 @@
 /**
- * Checks exact dependency bindings against module owners and public exits.
- * Inputs are detached public bytes and TypeScript configuration ASTs; outputs
- * identify import kind, type/value mode, symbols and the resolved owner. No
- * source, tsconfig or installed package is executed or read through a real FS.
- * Config inheritance and source aliases resolve before external dependencies.
- * Historical debt cannot expand a binding; package exits stay inside their
- * owner, and independent verification cannot call production rule algorithms.
+ * 负责按真实模块所有者与公开出口核对精确依赖 binding。
+ * 输入为脱离的公开源码及 TypeScript 配置数据；输出保留导入种类、类型／值模式、符号与解析目标。
+ * 仅在虚拟公开输入中解析配置继承和别名，先确认源码目标再处理声明的外部依赖，
+ * 不经真实文件系统读取或执行源码、tsconfig、安装包或私有内容。
+ * 旧债务不能扩大导入符号，包出口不能越过所属目录，独立 verifier 不得调用生产规则算法。
  */
 import { builtinModules } from "node:module";
 import path from "node:path";
@@ -446,8 +444,23 @@ export function checkDependencies(
               .map(resolveFile)
               .find(Boolean) ??
             null;
-          // Only this type-only compiler locator describes an installed tool;
-          // it never authorizes reading installed/private bytes through the host.
+          // 精确指向消费应用自己声明的外部包根目录，与普通 bare import 是同一边界。
+          // 仍优先解析公开源码；跨应用、额外后缀、多候选或 workspace 冒充均不适用。
+          // 仓库保留包命名空间必须有真实 workspace 登记，不能借依赖声明或安装别名冒充。
+          // 这里只识别公开配置与依赖元数据，不让虚拟 host 读取安装目录或私有字节。
+          const externalName = packageName(spec);
+          const ownDeclaredExternal =
+            key === spec &&
+            spec === externalName &&
+            !externalName.startsWith("@ai-werewolf-arena/") &&
+            !!currentPackage &&
+            currentPackage.dependencies.has(externalName) &&
+            !packages.some((pkg) => pkg.name === externalName) &&
+            requested.length === 1 &&
+            requested[0] ===
+              path.posix.join(virtualRoot, currentPackage.root, "node_modules", externalName);
+          if (!target && ownDeclaredExternal) continue;
+          // 已有 tooling 类型定位允许使用后端编译器；不扩大为任意值导入或安装路径。
           const compilerLocator =
             file.path.startsWith("tooling/") &&
             ref.typeOnly &&

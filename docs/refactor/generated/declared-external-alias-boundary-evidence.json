@@ -1,0 +1,206 @@
+{
+  "passed": true,
+  "baseline": "d94b482c",
+  "scope": [
+    {
+      "path": "frontend/tests/architecture/stage-coverage.test.ts",
+      "sha256": "890d5964cc9a26652e720cd310599c7ee8521499156387bce3b1f5c73575910d"
+    },
+    {
+      "path": "frontend/tests/architecture/typecheck-coverage.test.ts",
+      "sha256": "51547c7c1ae8e8eb869675f62e21c97043ae84d687e5bbba8aef04bbef140f3b"
+    },
+    {
+      "path": "tooling/refactor/fixture-source-relocations.test.ts",
+      "sha256": "9c9c9b7f99b383fbd7ec87e87f827aec9a797bae507654e322d776383f3bd48c"
+    },
+    {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "sha256": "23fbf95b29bb8187bd9f5ff2cead59d50e898247591091720666680fb2c6ad47"
+    },
+    {
+      "path": "tooling/refactor/architecture.test.ts",
+      "sha256": "222338f441ff5f51059bd5a585f0227638a8f3a445a11aebc37b10de0c1bacf4"
+    }
+  ],
+  "heads": [],
+  "actualTwoAliasGraph": {
+    "violations": [],
+    "inputKind": "Actual consuming package/tsconfig metadata and exact two TypeScript import declarations only; not a full-repository gate"
+  },
+  "commentOnly": [
+    {
+      "path": "frontend/tests/architecture/stage-coverage.test.ts",
+      "wholeTokensSame": true
+    },
+    {
+      "path": "frontend/tests/architecture/typecheck-coverage.test.ts",
+      "wholeTokensSame": true
+    },
+    {
+      "path": "tooling/refactor/fixture-source-relocations.test.ts",
+      "wholeTokensSame": true
+    }
+  ],
+  "policy": "Resolve public input first. Installed alias only equals single same-name external package root in its own consuming workspace, with actual dependency declaration and neither known nor reserved unknown workspace name. No installed/private bytes are read.",
+  "closedFinding": {
+    "namespace": "@ai-werewolf-arena/nope",
+    "newNegative": "Installed unknown reserved workspace alias rejects even when declared",
+    "note": "Initial 39-tests receipt predates this one new assertion. Final increment ran only this maintained test; original broader results retained separately."
+  },
+  "receipts": {
+    "toolingInitial": {
+      "tests": 39,
+      "failed": 0,
+      "assertions": 74,
+      "exit": 0
+    },
+    "reservedNamespaceIncrement": {
+      "tests": 1,
+      "filtered": 35,
+      "failed": 0,
+      "assertions": 3,
+      "exit": 0
+    },
+    "frontendTwoActualFiles": {
+      "tests": 4,
+      "failed": 0,
+      "assertions": 549,
+      "exit": 0
+    },
+    "toolingFiniteTypes": {
+      "session": 49441,
+      "exit": 0,
+      "files": 2
+    },
+    "frontendFiniteTypes": {
+      "session": 20736,
+      "exit": 0,
+      "files": 2,
+      "ambientNote": "Original strict frontend options retained; tmp project explicitly locates same original frontend installed type roots."
+    }
+  },
+  "limits": [
+    "No full architecture gate rerun or global debt mutation",
+    "Original d94 checkpoint had six new failures; this slice closes only three tool/test findings. Remaining three engine imports belong to root/source owners.",
+    "Frontend test bodies and original fixture test matrices remain token-identical; only exact descriptive Chinese comments changed.",
+    "Alias logic is functional gate policy change with maintained positive/negative cases, not claimed comment-only."
+  ],
+  "rootSecondReview": {
+    "proof": {
+      "baseline": "d94b482c5568601cf50ac0e1ae8fdf1cf7e88cbf",
+      "rows": [
+        {
+          "path": "tooling/refactor/architecture/dependency-check.ts",
+          "sha256": "23fbf95b29bb8187bd9f5ff2cead59d50e898247591091720666680fb2c6ad47",
+          "wholeOldRuntimeUnchangedAfterExactNewBranchOrTestRemoval": true
+        },
+        {
+          "path": "tooling/refactor/architecture.test.ts",
+          "sha256": "222338f441ff5f51059bd5a585f0227638a8f3a445a11aebc37b10de0c1bacf4",
+          "wholeOldRuntimeUnchangedAfterExactNewBranchOrTestRemoval": true
+        },
+        {
+          "path": "frontend/tests/architecture/stage-coverage.test.ts",
+          "sha256": "890d5964cc9a26652e720cd310599c7ee8521499156387bce3b1f5c73575910d",
+          "wholeOldRuntimeUnchangedAfterExactNewBranchOrTestRemoval": true
+        },
+        {
+          "path": "frontend/tests/architecture/typecheck-coverage.test.ts",
+          "sha256": "51547c7c1ae8e8eb869675f62e21c97043ae84d687e5bbba8aef04bbef140f3b",
+          "wholeOldRuntimeUnchangedAfterExactNewBranchOrTestRemoval": true
+        },
+        {
+          "path": "tooling/refactor/fixture-source-relocations.test.ts",
+          "sha256": "9c9c9b7f99b383fbd7ec87e87f827aec9a797bae507654e322d776383f3bd48c",
+          "wholeOldRuntimeUnchangedAfterExactNewBranchOrTestRemoval": true
+        }
+      ],
+      "passed": true,
+      "limits": [
+        "ESNext full emitted runtime comparison only; not a compiler/test or all-source gate.",
+        "Only one added concrete external alias branch and exactly3 actual new tests removed; all old declarations/literals/bodies remain.",
+        "Source SHA must be rechecked against author frozen scope before commit."
+      ]
+    },
+    "sourceReview": [
+      "Actual source branch and all three added cases read completely; exact own external alias only after public resolution.",
+      "Found reserved unknown AWA workspace namespace bypass, fixed explicit exclusion and literal negative; not an expanded baseline exemption.",
+      "Original test bodies, metadata discovery and private input rules unchanged.",
+      "Chinese heads and actual boundary comments read; compiler locator remains original type-only tooling exception."
+    ],
+    "findings": []
+  },
+  "architectureThirdReview": {
+    "baseline": "d94b482c5568601cf50ac0e1ae8fdf1cf7e88cbf",
+    "scope": [
+      {
+        "path": "frontend/tests/architecture/stage-coverage.test.ts",
+        "sha256": "890d5964cc9a26652e720cd310599c7ee8521499156387bce3b1f5c73575910d",
+        "actualSHA": "890d5964cc9a26652e720cd310599c7ee8521499156387bce3b1f5c73575910d"
+      },
+      {
+        "path": "frontend/tests/architecture/typecheck-coverage.test.ts",
+        "sha256": "51547c7c1ae8e8eb869675f62e21c97043ae84d687e5bbba8aef04bbef140f3b",
+        "actualSHA": "51547c7c1ae8e8eb869675f62e21c97043ae84d687e5bbba8aef04bbef140f3b"
+      },
+      {
+        "path": "tooling/refactor/fixture-source-relocations.test.ts",
+        "sha256": "9c9c9b7f99b383fbd7ec87e87f827aec9a797bae507654e322d776383f3bd48c",
+        "actualSHA": "9c9c9b7f99b383fbd7ec87e87f827aec9a797bae507654e322d776383f3bd48c"
+      },
+      {
+        "path": "tooling/refactor/architecture/dependency-check.ts",
+        "sha256": "23fbf95b29bb8187bd9f5ff2cead59d50e898247591091720666680fb2c6ad47",
+        "actualSHA": "23fbf95b29bb8187bd9f5ff2cead59d50e898247591091720666680fb2c6ad47"
+      },
+      {
+        "path": "tooling/refactor/architecture.test.ts",
+        "sha256": "222338f441ff5f51059bd5a585f0227638a8f3a445a11aebc37b10de0c1bacf4",
+        "actualSHA": "222338f441ff5f51059bd5a585f0227638a8f3a445a11aebc37b10de0c1bacf4"
+      }
+    ],
+    "actualGitOrigins": [
+      {
+        "path": "frontend/tests/architecture/stage-coverage.test.ts",
+        "actualGitSourceSha": "5a30cbb7ce0c7dfb77fffdafaedbf17c3dfff12bd606711225fc13160d80bd2f",
+        "sourceRead": true
+      },
+      {
+        "path": "frontend/tests/architecture/typecheck-coverage.test.ts",
+        "actualGitSourceSha": "05283be99c273d53618f8e80f54d46ae3cbbe61d9be9dd8d7ac42a1e9190caba",
+        "sourceRead": true
+      },
+      {
+        "path": "tooling/refactor/fixture-source-relocations.test.ts",
+        "actualGitSourceSha": "9fea7c4be73d54d3e0298387bd004135b2d04c4be919e4be433c33e7ed330c6e",
+        "sourceRead": true
+      },
+      {
+        "path": "tooling/refactor/architecture/dependency-check.ts",
+        "actualGitSourceSha": "ef3a5f77092b5c78b6726343d2f71e44bb0926d02e2f35c21cb0401ead68dad3",
+        "sourceRead": true
+      },
+      {
+        "path": "tooling/refactor/architecture.test.ts",
+        "actualGitSourceSha": "2a70b76848b31d6319d3b73216c6c832685b2154867b24e8697de4efd29c84e5",
+        "sourceRead": true
+      }
+    ],
+    "passed": true,
+    "findings": [],
+    "review": [
+      "完整actual Git diff及alias控制块已手读；先resolve公开源码，再允许精确同名、单候选、自有node_modules包根、当前工作区实际dependencies声明的external。",
+      "已知workspace名称和保留@ai-werewolf-arena/命名空间都拒绝通过installed alias冒充；真实公开目标仍继续原frontend/backend/publicexport等规则检查。",
+      "路径是虚拟metadata比较，不调用FS读取安装或私有路径；没有新增读取／执行安装内容代码，既有host readFile仅virtualFiles Map取值。",
+      "新3维护测试覆盖value/default/namespace/typequery同一external、5非法宽化与跨workspace路径、真实workspace+保留未知namespace+公开源码优先。手写errors不调用生产规则生成期望。",
+      "其它3旧test仅Chinese职责头／注释，无fixtures/cases/tsconfig/index/discovery修改；中文头与实际静态读源／清单层级相符。",
+      "namespace finding实际!externalName.startsWith修闭，未改debtbaseline或豁免人工违规。"
+    ],
+    "receiptAttribution": "仅读取作者/Root实际报告收据：tooling39/0/74，namespace增量1/0/3，frontend4/0/549，finite49441/20736 terminal0。本审未重复运行或poll。",
+    "limits": [
+      "只独立read-only source/policy/SHA方向，不把有限metadata字符串检查冒充完整equivalence或全仓gate。"
+    ],
+    "artifactNote": "初探本目录originals.json不存在；实际基线通过直接Git show取得，与源码问题无关，未制造虚假immutablebefore。"
+  }
+}

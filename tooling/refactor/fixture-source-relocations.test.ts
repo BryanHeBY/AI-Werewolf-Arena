@@ -1,8 +1,8 @@
 /**
- * Checks exact source-fixture import relocations and declaration evidence.
- * Inputs are literal source programs and malformed manifest records; independent
- * binding sets and changed function bodies are the oracle. No adapter, archive
- * scan, transport, game or generated expected result executes here.
+ * 单元测试核对源码 fixture 的精确导入迁移及声明证据。
+ * 输入为手写源码和畸形清单记录；独立 binding 集合、字面字段与明确改动的函数体是预期。
+ * 输出验证同源路径迁移和拒绝边界，不执行适配器、归档扫描、传输或对局，
+ * 不调用生产规则生成预期，也不改写 fixture 字节或冻结的声明摘要。
  */
 import { expect, test } from "bun:test";
 import { compiler } from "./architecture/contracts";
