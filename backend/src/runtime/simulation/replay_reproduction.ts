@@ -3,6 +3,8 @@
  * 输出为原生执行的事件／操作／checkpoint 与精确差异；真实 source、lock 和 RNG 身份必须先匹配。
  * 记录请求规范化由轨迹模块提供；本执行器保留自己的消费、等待、游标与清理，不创建兼容来源或改写原归档。
  */
+import { unwrapRecordingEnvelope } from "@ai-werewolf-arena/replay-contract";
+import { reproductionIdentitiesMatch } from "../../recording/archive_identity";
 import { initialPlayerIdentity } from "../../core/domain/initial_roster";
 import { initialIdentityDeal } from "../../game/mechanisms/roles/initial_identity/deal";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
@@ -151,8 +153,8 @@ class RecordedActions implements ActionProvider {
           for (const waiter of this.settlementWaiters.splice(0)) waiter.resolve();
       }
       if ((this.pending.size || this.settlementWaiters.length) && !this.deadlockTimer) {
-        // The offline engine performs local decision work. Exhausting its microtasks
-        // with no causal next request means an altered recording cannot progress.
+        // 离线引擎只推进本地决定工作；微任务耗尽后仍没有因果上的下一请求，
+        // 表示被改动的录制无法继续，按原定时边界检查死锁。
         this.deadlockTimer = setTimeout(() => {
           this.deadlockTimer = undefined;
           if (
@@ -196,7 +198,8 @@ function normalizedEvents(events: readonly (GameEvent | RecordedGameEvent)[]) {
   return events.map(({ timestamp: _timestamp, ...event }) => event);
 }
 
-export async function readReproduction(file: string) {
+/** 文件入口同时保留真实声明和原 payload；CLI 不在读文件后丢弃 header 再执行。 */
+export async function readReproductionArchive(file: string) {
   const raw = await readFile(file, "utf8");
   let value: unknown;
   try {
@@ -204,16 +207,23 @@ export async function readReproduction(file: string) {
   } catch {
     throw new Error("reproduction_json_invalid");
   }
-  return parseReproductionRecord(value);
+  const archive = unwrapRecordingEnvelope(value, "strict_reproduction");
+  return { record: parseReproductionRecord(archive.payload), identities: archive.identities, input: value };
 }
 
-/** Replays recorded decisions through the real engine, without model transports or auth. */
+/** 旧数据消费 API 只返回 canonical Tape；执行文件需使用 readReproductionArchive 保留声明。 */
+export async function readReproduction(file: string): Promise<ReproductionRecord> {
+  return (await readReproductionArchive(file)).record;
+}
+
+/** 按真实引擎复现记录行动；不加载模型传输或认证，显式身份不能放宽精确构建检查。 */
 export async function replayReproduction(
   input: unknown,
   recordRoot: string,
   displayLocale?: Locale,
 ) {
-  const record = parseReproductionRecord(input);
+  const archive = unwrapRecordingEnvelope(input, "strict_reproduction");
+  const record = parseReproductionRecord(archive.payload);
   requireMatch(
     record.finalized &&
       record.termination !== null &&
@@ -237,8 +247,10 @@ export async function replayReproduction(
       record.metadata.ruleset.version === RULESET.version,
     "reproduction_ruleset_incompatible",
   );
-  // Tape has already passed the strict internal board schema. Rebuilding it through
-  // the narrower public config would drop legacy optional fields and change defaults.
+  // 语义声明在原精确来源／RNG／规则检查之后验证；不能用手写版本打开旧构建。
+  requireMatch(reproductionIdentitiesMatch(archive.identities, record), "reproduction_contract_identity_incompatible");
+  // 内层 Tape 已通过原严格板子 schema；不要再次用更窄的公开配置重建，
+  // 否则会丢失历史可选字段并更改默认值。
   const board = record.metadata.normalizedBoard;
   requireMatch(
     record.metadata.players.length === board.boardSize &&
@@ -355,7 +367,7 @@ export async function replayReproduction(
         let cycleFailure: unknown;
         try {
           await context.phaseManager.runSingleCycle(provider, record.metadata.maxDays);
-          // Success must validate the original roster and lawful inventories too.
+          // 周期成功也须核对原角色名册与合法库存，再标记 complete；不跳过成功路径的 checkpoint 校验。
           captureCheckpoint(
             context.world,
             context.phaseManager.getSnapshot(),
@@ -440,7 +452,7 @@ export async function replayReproduction(
     if (failures.length === 1) throw failures[0];
     if (failures.length) throw new AggregateError(failures, "reproduction_replay_failed");
   });
-  // Concurrent validation completion can reorder operations; compare the complete domain multiset.
+  // 并行预检完成可能重排操作；仍比较完整领域操作多重集，不丢失重复项或字段。
   const actualOps = (summary!.logicOps ?? [])
     .filter((op) => op.scope !== "llm_action_provider")
     .map(({ seq: _seq, timestamp: _timestamp, ...op }) => stableJson(op))

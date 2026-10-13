@@ -1,9 +1,9 @@
 /**
- * Observed-game scenarios verify Mist/Raven policy timing and published knowledge.
- * Input: Explicit policy boards, restricted DTO robots and fixed seed archives.
- * Output and independent oracle: Independent resource/knowledge/terminal checks and strict replay of untouched original records.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 负责雾鸦政策时点与已发表知识的观察对局场景测试。
+ * 输入为显式政策板子、受 DTO 限制机器人及固定种子归档；输出由独立资源、知识、终局核对与原记录的严格 replay 检查。
+ * 不调用计费模型、不改预期 fixture／Tape，新封装只在真实文件入口解包。
  */
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -69,9 +69,9 @@ for (const policy of ["mixed", "conservative"] as const)
         expect(record.metadata.locale).toBe(locale);
         expect(record.checkpoints.every((c) => c.complete)).toBe(true);
         expect(record.decisions.every((d) => d.outcome.kind === "action")).toBe(true);
-        const replay: ReplayDocument = JSON.parse(
+        const replay: ReplayDocument = readReplayDocument(JSON.parse(
           await readFile(path.join(game.recordDir, "replay.json"), "utf8"),
-        );
+        ));
         assertReplayDocument(replay);
         expect(replay.result.decision).toEqual(game.result ?? undefined);
         const cp = record.checkpoints.at(-1)!;

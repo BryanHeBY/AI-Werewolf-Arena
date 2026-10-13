@@ -1,8 +1,9 @@
 /**
- * Reproduction scenarios verify complete bilingual runner games across local SDK, ACP and mixed routes preserve outcomes and recording isolation.
- * Input: Original six/twelve-player role plans, transport routing, language, concurrent-game and self-destruct-window matrices.
- * Output and oracle: Handwritten terminal/skill assertions, private prompt checks and exact per-game reproduction retain original process cleanup; source configs and archive fixtures are unchanged.
+ * 负责双语完整 runner 复现场景测试，核对本地 SDK、ACP 与混合路由的结果及录制隔离。
+ * 输入为原六人／十二人角色计划、传输路由、语言、并发局和自爆窗口矩阵；输出由手写终局／技能、私有 prompt 与逐局精确复现断言核对。
+ * 原进程清理、配置和 fixture 不变；新封装经实际 canonical reader 消费，不改预期。
  */
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { acpAdapterEntry } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
@@ -344,7 +345,7 @@ async function runFixture(
     expect(
       manifest.players.filter((row: any) => row.alive).map((row: any) => row.player_id),
     ).toEqual(alive);
-    const replay = JSON.parse(await fs.readFile(path.join(directory, "replay.json"), "utf8"));
+    const replay = readReplayDocument(JSON.parse(await fs.readFile(path.join(directory, "replay.json"), "utf8")));
     assertReplayDocument(replay);
     expect(replay.meta.locale).toBe(locale);
     expect(replay.result.decision).toEqual(result.snapshot.result ?? undefined);

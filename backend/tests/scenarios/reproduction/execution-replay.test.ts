@@ -3,6 +3,7 @@
  * 输入为观察／脚本记录、并行／checkpoint／provider 注入失败及非法版本；输出由原事件、决定、操作、checkpoint 相等与精确首失败核对。
  * 不调用计费模型，不改写预期 fixture 或 Tape。
  */
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { Role, WitchSelfHealRule } from "../../../src/core";
 import { expect, spyOn, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
@@ -45,13 +46,13 @@ for (const boardId of ["six_player_mvp", "twelve_player_standard"]) {
         await readFile(path.join(game.recordDir, "manifest.json"), "utf8"),
       );
       expect(manifest.files.reproduction).toBe("reproduction.json");
-      const publicReplay = JSON.parse(
+      const publicReplay = readReplayDocument(JSON.parse(
         await readFile(path.join(game.recordDir, "replay.json"), "utf8"),
-      );
+      ));
       expect(publicReplay.schemaVersion).toBe(2);
       expect(publicReplay.meta.locale).toBe(record.metadata.locale);
-      expect(publicReplay.reproduction).toBeUndefined();
-      expect(publicReplay.metadata?.engine).toBeUndefined();
+      expect((publicReplay as { reproduction?: unknown }).reproduction).toBeUndefined();
+      expect((publicReplay as { metadata?: { engine?: unknown } }).metadata?.engine).toBeUndefined();
     }
   });
 }
@@ -339,7 +340,7 @@ test("a game and checkpoint failure keep both errors and cannot seal an incomple
     const [session] = await readdir(root);
     const record = await readReproduction(path.join(root, session, "reproduction.json"));
     expect(record.finalized).toBe(false);
-    const replay = JSON.parse(await readFile(path.join(root, session, "replay.json"), "utf8"));
+    const replay = readReplayDocument(JSON.parse(await readFile(path.join(root, session, "replay.json"), "utf8")));
     expect(replay.result.reason).toBe("runtime_error");
   } finally {
     create.mockRestore();
@@ -488,7 +489,7 @@ test("offline reconstruction carries the explicit recorded language into the new
   expect(reconstructed.snapshot.result).toEqual(simulated.games[0].result);
   const dirs = await readdir(output);
   expect(dirs.length).toBe(1);
-  const replay = JSON.parse(await readFile(path.join(output, dirs[0], "replay.json"), "utf8"));
+  const replay = readReplayDocument(JSON.parse(await readFile(path.join(output, dirs[0], "replay.json"), "utf8")));
   expect(replay.schemaVersion).toBe(2);
   expect(replay.meta.locale).toBe(record.metadata.locale);
 });

@@ -1,9 +1,9 @@
 /**
  * 负责从已读复盘和显示选项构建当前帧的纯画面数据。输入为复盘、帧进度与时间／语言设置；输出为原阶段、玩家和结果展示信息。保留原校验和投影顺序，不依赖工作台交互状态，也不写入归档。
  */
-import { readReplayDocument, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import { readReplayArchive, ReplayDocumentValidationError, type ReplayDocument, type RecordingEnvelope } from "@ai-werewolf-arena/replay-contract";
 import { text } from "@ai-werewolf-arena/game-text";
-import { victoryPointLabel } from "@ai-werewolf-arena/game-presentation";
+import { victoryPointLabel, supportsGamePresentation } from "@ai-werewolf-arena/game-presentation";
 import {
   formatReplayTime,
   validateReplayDisplay,
@@ -17,12 +17,15 @@ import { phaseName, roleName, eventStageName } from "./replay-localization";
 
 export const FRAMES_PER_EVENT = 90;
 export type ReplayRenderInput = ReplayDisplayOptions & { replay: PresentationReplay };
-/** Offline rendering input: no workspace focus, playback state, clock, or host time zone. */
+/** 离线画面输入不依赖工作台焦点、播放状态、运行时钟或宿主时区；直接新封装也必须核对展示声明。 */
 export function createReplayRenderInput(
-  replay: ReplayDocument,
+  replay: ReplayDocument | RecordingEnvelope<ReplayDocument>,
   display?: ReplayDisplayOptions,
 ): ReplayRenderInput {
-  const canonical = readReplayDocument(replay);
+  const archive = readReplayArchive(replay);
+  if (archive.identities && !supportsGamePresentation(archive.identities.presentation))
+    throw new ReplayDocumentValidationError("unsupported_version", "identities.presentation");
+  const canonical = archive.replay;
   const options = display ?? {
     locale: canonical.meta.locale ?? "zh-CN",
     timeZone: DEFAULT_REPLAY_TIME_ZONE,

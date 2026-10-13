@@ -48,3 +48,5 @@ export {
 export { formatNativeRolePart } from "./native-role-state";
 
 export { formatComponentPart } from "./component-state";
+
+export { GAME_PRESENTATION_CONTRACT, supportsGamePresentation } from "./version";

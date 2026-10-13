@@ -1,6 +1,7 @@
 /**
  * 文件集成测试：验证 SessionRecordManager 落盘公开／玩家时间线、manifest、调试摘要及隔离录制 scope。输入为原临时目录、会话与事件；既有字面文件预期保留真实 I/O 边界，不重新生成 fixture。
  */
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { promises as fs } from "fs";
 import path from "path";
 import { Camp, Phase } from "../../../src/core/domain/model";
@@ -84,7 +85,7 @@ describe("SessionRecordManager", () => {
     await manager.flushNow();
 
     const sessionDir = path.join(root, "session_realtime_1");
-    const replay = JSON.parse(await fs.readFile(path.join(sessionDir, "replay.json"), "utf-8"));
+    const replay = readReplayDocument(JSON.parse(await fs.readFile(path.join(sessionDir, "replay.json"), "utf-8")));
     const logic = JSON.parse(await fs.readFile(path.join(sessionDir, "logic_ops.json"), "utf-8"));
     const player1 = JSON.parse(
       await fs.readFile(path.join(sessionDir, "players", "player_1.json"), "utf-8"),
@@ -253,7 +254,7 @@ describe("SessionRecordManager", () => {
     expect(manifest.files.debug_reports).toBe("debug_reports.json");
     expect(manifest.files.debug_summary).toBe("debug_summary.md");
 
-    const replay = JSON.parse(await fs.readFile(path.join(sessionDir, "replay.json"), "utf-8"));
+    const replay = readReplayDocument(JSON.parse(await fs.readFile(path.join(sessionDir, "replay.json"), "utf-8")));
     expect(replay.sessionId).toBe("session_test_1");
     expect(Array.isArray(replay.events)).toBe(true);
     expect(replay.events[0].type).toBe("phase_changed");

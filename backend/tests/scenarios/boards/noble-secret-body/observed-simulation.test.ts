@@ -1,9 +1,9 @@
 /**
- * Observed-game scenarios verify Noble wolf/body policies and declared learned state.
- * Input: Restricted DTO robots, fixed seeds, policy/style/locale variants and captured records.
- * Output and independent oracle: Independent policy/resource/death membership checks and exact strict Tape replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 负责贵族狼／秘密身体政策与明确学习状态的观察对局场景测试。
+ * 输入为受 DTO 限制机器人、固定种子、政策／风格／语言变体及捕获记录；输出由独立政策、资源、死亡成员核对与精确严格复盘检查。
+ * 不调用计费模型、不重生 fixture／Tape，实际归档入口解包新封装。
  */
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -64,9 +64,9 @@ for (const wolf of ["standard", "no_blast_no_self_knife"] as const)
             expect(record.metadata.locale).toBe(locale);
             expect(record.checkpoints.every((c) => c.complete)).toBe(true);
             expect(record.decisions.every((d) => d.outcome.kind === "action")).toBe(true);
-            const replay = JSON.parse(
+            const replay = readReplayDocument(JSON.parse(
               await readFile(path.join(game.recordDir, "replay.json"), "utf8"),
-            );
+            ));
             assertReplayDocument(replay);
             expect((await replayReproduction(record, replayRoot)).snapshot).toEqual(
               record.checkpoints.at(-1)!.snapshot,

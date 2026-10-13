@@ -1,9 +1,9 @@
 /**
- * Observed-game scenarios verify Radiant shelter/borrow policies and restricted player state.
- * Input: Fixed seeds, public policy variants and recorded observation-limited robot games.
- * Output and independent oracle: Independent inventory/decision/terminal checkpoints and exact strict reproduction.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 负责辉蚀庇护／借用政策与受限制玩家状态的观察对局场景测试。
+ * 输入为固定种子、公开政策变体及观察受限机器人对局；输出由独立库存、决定、终局 checkpoint 核对与精确严格复现检查。
+ * 不调用计费模型、不重生 fixture／Tape；磁盘入口消费实际新封装而保留原预期。
  */
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -76,9 +76,9 @@ for (const policy of ["mixed", "conservative"] as const)
         expect(record.metadata.locale).toBe(locale);
         expect(record.checkpoints.every((c) => c.complete)).toBe(true);
         expect(record.decisions.every((d) => d.outcome.kind === "action")).toBe(true);
-        const replay: ReplayDocument = JSON.parse(
+        const replay: ReplayDocument = readReplayDocument(JSON.parse(
           await readFile(path.join(game.recordDir, "replay.json"), "utf8"),
-        );
+        ));
         assertReplayDocument(replay);
         expect(replay.result.decision).toEqual(game.result ?? undefined);
         expect((await replayReproduction(record, replayRoot)).snapshot).toEqual(

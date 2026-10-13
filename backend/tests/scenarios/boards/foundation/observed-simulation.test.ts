@@ -1,9 +1,9 @@
 /**
- * Observed-game scenarios verify foundation boards finish from player-limited DTO decisions.
- * Input: Twenty-five fixed seeds per board and original per-game session archives.
- * Output and independent oracle: Actual skill coverage, no repairs, validated public documents and exact complete replay.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 负责基础板子的观察对局场景测试，核对受玩家 DTO 限制的决定完成对局。
+ * 输入为每板二十五个固定种子及原逐局归档；输出由实际技能覆盖、无修复、公开文档校验与精确完整复盘核对。
+ * 不调用计费模型、不重生预期 fixture／Tape；磁盘新封装经 canonical reader 解包。
  */
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -45,7 +45,7 @@ for (const boardId of ["six_player_mvp", "twelve_player_standard"]) {
         expect(report.branches[branch]).toBeGreaterThan(0);
     }
     for (const game of report.games) {
-      const replay = JSON.parse(await readFile(path.join(game.recordDir, "replay.json"), "utf8"));
+      const replay = readReplayDocument(JSON.parse(await readFile(path.join(game.recordDir, "replay.json"), "utf8")));
       assertReplayDocument(replay);
       expect(replay.result).toEqual({
         winner: game.result!.winner,

@@ -94,6 +94,11 @@ export class ReproductionTrace {
     this.metadata = structuredClone(metadata);
   }
 
+  /** 录制协作只复制本实例首次捕获的来源；不重读 caller getter、liveEvents 或返回可写原体。 */
+  recordedMetadataIdentity(): Pick<ReproductionMetadata, "engine" | "random" | "ruleset"> {
+    return structuredClone({ engine: this.metadata.engine, random: this.metadata.random, ruleset: this.metadata.ruleset });
+  }
+
   get settlementCount(): number {
     return this.settled;
   }

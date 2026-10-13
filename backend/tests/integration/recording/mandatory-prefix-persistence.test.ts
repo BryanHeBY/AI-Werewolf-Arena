@@ -1,6 +1,11 @@
 /**
- * Filesystem recording integration tests check mandatory final writes, pending decisions and slow/failed prefix persistence. Inputs are temporary session files, held decisions and strict-write spies; exact error identities and final JSON state are the oracle. No complete game is executed; original restore/finally ordering is retained.
+ * 负责文件系统录制集成测试，核对必需终档、pending 决定及慢／失败前缀持久化。
+ * 输入为临时会话文件、受控决定与严格写入 spy；输出由精确错误身份及原最终 JSON 状态核对。
+ * spy 和磁盘入口解包实际新封装后查看原字段，不改预期、restore／finally 顺序，不执行完整对局。
  */
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import { parseReproductionRecord } from "../../../src/recording/reproduction";
+import { unwrapRecordingEnvelope } from "@ai-werewolf-arena/replay-contract";
 import { expect, spyOn, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -65,7 +70,7 @@ test("mandatory manifest, public replay and reproduction failures are all awaite
       const index = files.indexOf(file);
       if (
         index !== -1 &&
-        (file !== "reproduction.json" || (data as { finalized?: boolean }).finalized)
+        (file !== "reproduction.json" || (unwrapRecordingEnvelope(data, "strict_reproduction").payload as { finalized?: boolean }).finalized)
       )
         throw errors[index];
       return realWrite.call(this, file, data);
@@ -100,11 +105,11 @@ test("pending decisions cannot produce a finalized recording while the public pa
   const pending = trace.decide(request, { getAction: () => response });
   try {
     await expect(manager.finalize(meta)).rejects.toThrow("reproduction_decisions_pending");
-    const replay = JSON.parse(await readFile(path.join(root, "mandatory/replay.json"), "utf8"));
+    const replay = readReplayDocument(JSON.parse(await readFile(path.join(root, "mandatory/replay.json"), "utf8")));
     expect(replay.result.reason).toBe("runtime_error");
-    const partial = JSON.parse(
+    const partial = parseReproductionRecord(JSON.parse(
       await readFile(path.join(root, "mandatory/reproduction.json"), "utf8"),
-    );
+    ));
     expect(partial.finalized).toBe(false);
   } finally {
     resolve(null);
@@ -137,7 +142,7 @@ test("settling a decision during a slow prefix write cannot schedule a later ove
   let paused = false;
   const write = spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(
     async function (this: ReplayFileStore, file, data) {
-      if (!paused && file === "reproduction.json" && !(data as { finalized: boolean }).finalized) {
+      if (!paused && file === "reproduction.json" && !(unwrapRecordingEnvelope(data, "strict_reproduction").payload as { finalized: boolean }).finalized) {
         paused = true;
         notify();
         await blocked;
@@ -153,10 +158,10 @@ test("settling a decision during a slow prefix write cannot schedule a later ove
     resume();
     await finalization;
     const file = path.join(root, "mandatory/reproduction.json");
-    expect(JSON.parse(await readFile(file, "utf8")).finalized).toBe(true);
+    expect(parseReproductionRecord(JSON.parse(await readFile(file, "utf8"))).finalized).toBe(true);
     await new Promise((done) => setTimeout(done, 160));
     await manager.flushNow();
-    expect(JSON.parse(await readFile(file, "utf8")).finalized).toBe(true);
+    expect(parseReproductionRecord(JSON.parse(await readFile(file, "utf8"))).finalized).toBe(true);
   } finally {
     resolve(null);
     resume();
@@ -172,7 +177,7 @@ test("a failed strict prefix write remains visible even when the final publicati
   let failed = false;
   const write = spyOn(ReplayFileStore.prototype, "writeJsonStrict").mockImplementation(
     async function (this: ReplayFileStore, file, data) {
-      if (!failed && file === "reproduction.json" && !(data as { finalized: boolean }).finalized) {
+      if (!failed && file === "reproduction.json" && !(unwrapRecordingEnvelope(data, "strict_reproduction").payload as { finalized: boolean }).finalized) {
         failed = true;
         throw error;
       }
@@ -183,7 +188,7 @@ test("a failed strict prefix write remains visible even when the final publicati
     await manager.flushNow();
     await expect(manager.finalize(meta)).rejects.toBe(error);
     expect(
-      JSON.parse(await readFile(path.join(root, "mandatory/reproduction.json"), "utf8")).finalized,
+      parseReproductionRecord(JSON.parse(await readFile(path.join(root, "mandatory/reproduction.json"), "utf8"))).finalized,
     ).toBe(true);
   } finally {
     write.mockRestore();

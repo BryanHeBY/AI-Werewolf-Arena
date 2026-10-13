@@ -1,6 +1,7 @@
 /**
- * 完整脚本场景测试：验证六人／十二人标准对局、资源使用及录制视角。输入为原固定角色和受控动作；原字面预期与不可变 fixture 检查真实周期，不替换动作或归档格式。
+ * 完整脚本场景测试：验证六人／十二人标准对局、资源使用及录制视角。输入为原固定角色和受控动作；原字面预期与不可变 fixture 检查真实周期，不替换动作或内层归档预期。
  */
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { ActionWindow } from "../../../../src/core";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
@@ -178,7 +179,7 @@ async function runRecorded(
     if (failures.length === 1) throw failures[0];
     if (failures.length) throw new AggregateError(failures, "scripted_game_failed");
   });
-  const replay = JSON.parse(await readFile(path.join(root, "scripted/replay.json"), "utf8"));
+  const replay = readReplayDocument(JSON.parse(await readFile(path.join(root, "scripted/replay.json"), "utf8")));
   assertReplayDocument(replay);
   const manifest = JSON.parse(await readFile(path.join(root, "scripted/manifest.json"), "utf8"));
   expect(replay.result.winner).toBe(Camp.Good);

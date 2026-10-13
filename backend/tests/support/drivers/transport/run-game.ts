@@ -1,9 +1,10 @@
 /**
- * Owns original test driver shared test controlled execution and recording support. Inputs are literal action plans and
- * original fixture handles; outputs preserve driver callbacks, traces, caches and cleanup. Concrete
- * transport/replay or scripted actions retain their original lifetimes; supplied handwritten oracles own
- * expected outcomes, and no billed model or production state writer is introduced.
+ * 负责共享传输测试驱动的受控执行与录制支持；输入为字面行动计划、原 fixture 句柄与本地传输。
+ * 输出保留原驱动回调、轨迹、缓存和清理；新封装只在实际磁盘入口解包，预期由既有手写 oracle 持有。
+ * 原传输／复盘／脚本行动生命周期不变，不引入计费模型或生产状态写入器。
  */
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 import { assertSdkTransportEnvelope, assertRuntimeClosure, assertArchiveDecisionEnvelope, assertFailedCheckpoint, assertFailedAcpTrace, assertFailureTiming, assertCompletedAcpTrace, assertPlannedDecisionTape } from "../../oracles/transport/outcomes";
 import type { TransportGameScenario } from "../../transport/contracts";
 import { acpAdapterEntry } from "../../fixtures/manifest";
@@ -348,9 +349,9 @@ export async function runTransportGame(
         try {
           const name = (await fs.readdir(root)).find((name) => name.startsWith("session_"));
           if (name) {
-            const prefix = JSON.parse(
+            const prefix = parseReproductionRecord(JSON.parse(
               await fs.readFile(path.join(root, name, "reproduction.json"), "utf8"),
-            );
+            ));
             transportDiagnostic(
               "[transport_failure_prefix]",
               JSON.stringify({
@@ -396,9 +397,9 @@ export async function runTransportGame(
     assertRuntimeClosure(scenario, failureThrown, closedState, failures);
     const session = (await fs.readdir(root)).find((name) => name.startsWith("session_"))!,
       directory = path.join(root, session);
-    const replay: ReplayDocument = JSON.parse(
+    const replay: ReplayDocument = readReplayDocument(JSON.parse(
       await fs.readFile(path.join(directory, "replay.json"), "utf8"),
-    );
+    ));
     assertReplayDocument(replay);
     const manifest: ReplayManifest = JSON.parse(
       await fs.readFile(path.join(directory, "manifest.json"), "utf8"),

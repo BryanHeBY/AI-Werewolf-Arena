@@ -1,6 +1,12 @@
+/**
+ * 负责离线文件与本地 API 的复盘读取；输入为用户原文件或响应，输出为原规范 ReplayDocument 与结构化错误。
+ * 显式新封装必须由真实展示 owner 支持；历史未声明／v1／v2继续原转换，不补造版本或改写用户原文。
+ * 本模块不执行游戏、验证真实源码或授予严格复现兼容；视频入口也消费同一 reader。
+ */
+import { supportsGamePresentation } from "@ai-werewolf-arena/game-presentation";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import {
-  readReplayDocument,
+  readReplayArchive,
   ReplayDocumentValidationError,
 } from "@ai-werewolf-arena/replay-contract";
 import { renderMessage, type Locale, type MessageRef } from "@ai-werewolf-arena/game-text";
@@ -28,7 +34,11 @@ export function parseOfflineReplayJson(raw: string): ReplayDocument {
     throw new ReplayLoadError({ key: "replay.invalid_file" });
   }
   try {
-    return readReplayDocument(value);
+    const archive = readReplayArchive(value);
+    // 只检查当前 renderer 实际拥有的格式；没有声明的旧档不被伪装成当前发布版本。
+    if (archive.identities && !supportsGamePresentation(archive.identities.presentation))
+      throw new ReplayDocumentValidationError("unsupported_version", "identities.presentation");
+    return archive.replay;
   } catch (error) {
     const key =
       error instanceof ReplayDocumentValidationError && error.kind === "missing_fields"

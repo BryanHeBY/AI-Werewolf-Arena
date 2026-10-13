@@ -1,6 +1,7 @@
 /**
  * 故障场景测试：验证实际脚本对局 driver 保留请求、最终 flush 和持久化失败。输入为原动作、录制 scope 和注入错误；原失败身份及部分输出为字面预期，不重新生成 fixture 或调用模型。
  */
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import { PlayerPromptSession } from "../../../../src/ai/agents/llm/player_prompt_session";
@@ -119,7 +120,7 @@ async function runRecorded(
     if (failures.length === 1) throw failures[0];
     if (failures.length) throw new AggregateError(failures, "scripted_game_failed");
   });
-  const replay = JSON.parse(await readFile(path.join(root, "scripted/replay.json"), "utf8"));
+  const replay = readReplayDocument(JSON.parse(await readFile(path.join(root, "scripted/replay.json"), "utf8")));
   assertReplayDocument(replay);
   const manifest = JSON.parse(await readFile(path.join(root, "scripted/manifest.json"), "utf8"));
   expect(replay.result.winner).toBe(Camp.Good);

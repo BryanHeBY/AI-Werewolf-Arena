@@ -18,6 +18,7 @@ import type {
   ReplayRecordPublicEventInput,
   ReplaySessionMeta,
 } from "./contracts";
+import { currentRecordingIdentities, createPublicReplayArchive, createReproductionArchive } from "./archive_identity";
 import { createReplayDocument } from "./replay_document";
 import { ReplayFileStore } from "./file_store";
 import { ReplaySessionAggregate } from "./session_aggregate";
@@ -42,6 +43,8 @@ export class SessionRecordManager {
   private readonly dirtyPlayers = new Set<number>();
   private reproduction?: ReproductionTrace;
   private dirtyReproduction = false;
+  // 公开初始化档尚无严格来源；beginReproduction 后只捕获实际元数据，不向历史档补写当前身份。
+  private recordingIdentities = currentRecordingIdentities();
   private replayEventCursor?: () => number;
   setReplayEventCursor(cursor: () => number): void {
     if (this.replayEventCursor || this.reproduction)
@@ -108,6 +111,8 @@ export class SessionRecordManager {
       },
       liveEvents,
     );
+    // 不以来源声明驱动新刷盘；下次原公开发布或最终发布自然携带已捕获身份。
+    this.recordingIdentities = currentRecordingIdentities(this.reproduction.recordedMetadataIdentity());
     return this.reproduction;
   }
 
@@ -177,7 +182,7 @@ export class SessionRecordManager {
     this.lifecycle.markClosed();
 
     const manifest = this.aggregate.buildManifest(meta);
-    const replayDocument = this.buildReplayDocument(meta);
+    const replayDocument = this.buildReplayArchive(meta);
     const reproducible = () => {
       const input = this.aggregate.debugSummaryInput();
       const operations = (input.logicOps ?? [])
@@ -194,7 +199,7 @@ export class SessionRecordManager {
       ...(this.reproduction
         ? [
             Promise.resolve().then(() =>
-              this.store.writeJsonStrict("reproduction.json", reproducible()),
+              this.store.writeJsonStrict("reproduction.json", createReproductionArchive(reproducible())),
             ),
           ]
         : []),
@@ -233,7 +238,7 @@ export class SessionRecordManager {
   private async writeInitialFiles(): Promise<void> {
     const results = await Promise.allSettled([
       this.store.writeJsonStrict("manifest.json", this.aggregate.buildManifest()),
-      this.store.writeJsonStrict("replay.json", this.buildReplayDocument()),
+      this.store.writeJsonStrict("replay.json", this.buildReplayArchive()),
       this.store.writeJson("phase_windows.json", this.aggregate.phaseWindowsPayload()),
       this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
       this.store.writeJson("logic_ops.json", this.aggregate.logicOpsPayload()),
@@ -252,7 +257,7 @@ export class SessionRecordManager {
       // 先消费本次脏位；严格失败登记在账本，后续仍可发布终档并报告此前失败。
       this.dirtyReproduction = false;
       try {
-        await this.store.writeJsonStrict("reproduction.json", this.reproduction.build());
+        await this.store.writeJsonStrict("reproduction.json", createReproductionArchive(this.reproduction.build()));
       } catch (error) {
         this.mandatoryFlushFailures.push(error);
         this.reproduction.noteFailure("recording", error);
@@ -264,7 +269,7 @@ export class SessionRecordManager {
       await Promise.all([
         this.store.writeJson(
           "replay.json",
-          this.buildReplayDocument(this.lifecycle.finalMetadata ?? undefined),
+          this.buildReplayArchive(this.lifecycle.finalMetadata ?? undefined),
         ),
         this.store.writeJson("phase_windows.json", this.aggregate.phaseWindowsPayload()),
         this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
@@ -297,11 +302,11 @@ export class SessionRecordManager {
     }
   }
 
-  private buildReplayDocument(meta?: ReplayFinalizeMeta) {
-    return createReplayDocument({
+  private buildReplayArchive(meta?: ReplayFinalizeMeta) {
+    return createPublicReplayArchive(createReplayDocument({
       manifest: this.aggregate.buildManifest(meta),
       events: this.aggregate.publicTimelinePayload().events,
-    });
+    }), this.recordingIdentities);
   }
 }
 

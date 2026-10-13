@@ -1,8 +1,9 @@
 /**
- * Filesystem integration tests verify a failed runner seals its partial archive and releases the active recording scope.
- * Input: The real runner, mocked phase/finalization failures, original restoration hooks and temporary output directories.
- * Output and oracle: Literal partial replay contents and original primary/persistence error identities retain finalization order; no successful model-driven game is required.
+ * 负责文件系统集成测试，核对失败 runner 封存部分归档并释放活动录制 scope。
+ * 输入为真实 runner、阶段／终结注入失败、原恢复钩子与临时目录；输出由原部分复盘字面内容及首要／持久化错误身份核对。
+ * 保留终结顺序，无须成功模型对局；新文件封装只在原读取点解包，不生成预期。
  */
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { afterEach, expect, spyOn, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import path from "node:path";
@@ -52,7 +53,7 @@ async function options(): Promise<{ setup: ResolvedGameSetup }> {
 
 async function replay(root: string) {
   const [session] = await fs.readdir(root);
-  return JSON.parse(await fs.readFile(path.join(root, session, "replay.json"), "utf8"));
+  return readReplayDocument(JSON.parse(await fs.readFile(path.join(root, session, "replay.json"), "utf8")));
 }
 
 test("a failed game seals its partial replay and releases the active recorder", async () => {

@@ -1,6 +1,12 @@
-import { isRecord, assertField, ReplayDocumentValidationError } from "./validation";
+/**
+ * 向后端和浏览器公开原 schema 2 复盘、历史转换与显式封装 reader；输入为纯数据归档。
+ * 输出保留原规范化 document，旧未声明／v1／v2 reader 规则与原文不变；新封装身份不表示可执行授权。
+ * 游戏结算与严格来源兼容仍由后端实际执行器负责，本出口不导入 Node、World 或 renderer。
+ */
+import { isRecord, assertField, assertSerializedData, ReplayDocumentValidationError } from "./validation";
 export { ReplayDocumentValidationError } from "./validation";
 import { isLocale, type Locale, type SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
+import { unwrapRecordingEnvelope, type RecordingIdentities } from "./archive-envelope";
 import { readVictoryResult } from "./outcomes";
 import {
   legacyPhaseId,
@@ -16,10 +22,10 @@ export * from "./gravekeeper";
 export * from "./outcomes";
 
 /**
- * The replay data shape consumed by browser and video clients.
+ * 浏览器与视频消费的公开复盘数据形状；展示视图不充当已持久化完整归档。
  *
- * `god` means the complete referee view: it contains every role and public
- * event needed to reconstruct a game, including one still in progress.
+ * `god` 为完整裁判视角，包含每个角色和所有公开事件，
+ * 也支持仍进行中的对局；执行来源与版本声明由新 envelope 独立记录。
  */
 export type ReplayPerspective = "god";
 
@@ -46,7 +52,7 @@ export interface ReplayDocument {
   result: {
     winner: string | null;
     reason: string | null;
-    /** Explicit engine decision, distinct from execution finish reason. */
+    /** 明确的引擎判胜，与执行结束原因分别记录。 */
     decision?: SealedVictoryResult;
   };
   players: Array<{
@@ -58,36 +64,7 @@ export interface ReplayDocument {
   events: ReplayEvent[];
 }
 
-/** Reject non-data descriptors before any shape read or structuredClone can execute a getter. */
-function assertSerializedData(value: object, path: string): void {
-  const pending: object[] = [value],
-    seen = new Set<object>();
-  while (pending.length) {
-    const current = pending.pop()!;
-    if (seen.has(current)) continue;
-    seen.add(current);
-    const prototype = Object.getPrototypeOf(current);
-    assertField(
-      Array.isArray(current)
-        ? prototype === Array.prototype
-        : prototype === Object.prototype || prototype === null,
-      path,
-    );
-    for (const key of Reflect.ownKeys(current)) {
-      const descriptor = Object.getOwnPropertyDescriptor(current, key)!;
-      assertField(
-        typeof key === "string" &&
-          "value" in descriptor &&
-          (descriptor.enumerable === true || (Array.isArray(current) && key === "length")),
-        path,
-      );
-      if (descriptor.value !== null && typeof descriptor.value === "object")
-        pending.push(descriptor.value);
-    }
-  }
-}
-
-/** Validates the canonical, unfiltered document; event sequence numbers start at one. */
+/** 校验未筛选的原规范 document，事件序号从一开始；不推导游戏规则。 */
 function assertReplayShape(
   value: unknown,
 ): asserts value is Omit<ReplayDocument, "schemaVersion"> & { schemaVersion?: unknown } {
@@ -169,7 +146,7 @@ function assertReplayShape(
     try {
       explicit.push(readVictoryResult(event.payload, [...playerIds]));
     } catch {
-      /* Isolated malformed terminal facts remain raw unknown events. */
+      /* 独立非法终局事实继续保留为未知原事件，不生成替代判胜。 */
     }
   }
   if (explicit.length > 1)
@@ -179,7 +156,7 @@ function assertReplayShape(
     );
 }
 
-/** Canonical v2 writer contract. Use readReplayDocument for archived documents. */
+/** 原 canonical v2 writer 契约；历史文件及显式新封装由 reader 单独判版本。 */
 export function assertReplayDocument(value: unknown): asserts value is ReplayDocument {
   if (value !== null && typeof value === "object") assertSerializedData(value, "document");
   assertReplayShape(value);
@@ -187,9 +164,10 @@ export function assertReplayDocument(value: unknown): asserts value is ReplayDoc
     throw new ReplayDocumentValidationError("unsupported_version", "schemaVersion");
 }
 
-/** Read-only conversion; version negotiation occurs before any legacy interpretation. */
+/** 只读转换，先判封装和内层版本再解释历史别名；昵称、发言等用户原文不改写。 */
 export function readReplayDocument(value: unknown): ReplayDocument {
   if (value !== null && typeof value === "object") assertSerializedData(value, "document");
+  value = unwrapRecordingEnvelope(value, "public_replay").payload;
   if (!isRecord(value)) throw new ReplayDocumentValidationError("invalid_document", "document");
   const version = value.schemaVersion;
   if (version !== undefined && version !== 1 && version !== REPLAY_SCHEMA_VERSION)
@@ -242,3 +220,12 @@ export function readReplayDocument(value: unknown): ReplayDocument {
 export * from "./player_record";
 
 export * from "./error_diagnostic";
+
+export * from "./archive-envelope";
+
+/** 前端 canonical 入口保留声明供真实展示支持检查；旧裸档返回 null，不猜造历史身份。 */
+export function readReplayArchive(value: unknown): { replay: ReplayDocument; identities: RecordingIdentities | null } {
+  if (value !== null && typeof value === "object") assertSerializedData(value, "document");
+  const archive = unwrapRecordingEnvelope(value, "public_replay");
+  return { replay: readReplayDocument(archive.payload), identities: archive.identities };
+}

@@ -1,8 +1,9 @@
 /**
- * Failure scenarios verify the runner drains parallel actions and closes owners while retaining concurrent original errors.
- * Input: Held action responses, the original optional file failure and actual runner/recording cleanup.
- * Output and oracle: Literal close-once counts, aggregate error identities and replayable-prefix checks remain causal; accepted actions are not regenerated from a production oracle.
+ * 负责故障场景测试，核对 runner 清空并行行动、关闭 owner 并保留原并发错误。
+ * 输入为受控行动回复、原可选文件失败与真实录制清理；输出由字面单次关闭计数、聚合错误身份和可复盘前缀核对。
+ * 不用生产 oracle 重生接受行动，实际文件新封装仅在原输入读取位置解包。
  */
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { expect, spyOn, test } from "bun:test";
 import path from "node:path";
 import { readFile, readdir } from "node:fs/promises";
@@ -150,9 +151,9 @@ for (const diskFailure of [false, true])
           const after = await readFile(path.join(directory, "reproduction.json"), "utf8");
           await Bun.sleep(0);
           expect(await readFile(path.join(directory, "reproduction.json"), "utf8")).toBe(after);
-          const publicReplay = JSON.parse(
+          const publicReplay = readReplayDocument(JSON.parse(
             await readFile(path.join(directory, "replay.json"), "utf8"),
-          );
+          ));
           expect(publicReplay.result.reason).toBe("runtime_error");
         }
       } finally {

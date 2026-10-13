@@ -4,6 +4,7 @@
  * 请求轨迹及其可变游标由 reproduction-trace 单独拥有；此模块不创建 Trace、不执行行动或修改游戏。
  * 精确 source／lock 检查仍由实际 replay 执行；用户原文不经过展示翻译改写。
  */
+import { unwrapRecordingEnvelope } from "@ai-werewolf-arena/replay-contract";
 import { verifyReproductionMechanisms } from "../verification/reproduction/assembly";
 import { animalCheckpointSchema } from "./animal_dream_checkpoint";
 import {
@@ -851,6 +852,8 @@ const schema = z.strictObject({
 
 /** 先保原版本／严格 envelope 准入，再按固定独立装配审核角色与板子；审核不执行游戏规则。 */
 export function parseReproductionRecord(value: unknown): ReproductionRecord {
+  // 新封装先按显式格式解包，历史裸 Tape 仍走下面原 schema 2／第一失败顺序。
+  value = unwrapRecordingEnvelope(value, "strict_reproduction").payload;
   if (
     value &&
     typeof value === "object" &&

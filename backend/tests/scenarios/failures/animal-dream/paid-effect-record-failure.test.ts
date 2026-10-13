@@ -1,7 +1,7 @@
 /**
- * Failure scenarios verify Animal Dream Fox and Puffer paid effects remain committed when required recording fails.
- * Input: Original controlled PhaseManager cycles, real session stores and injected post-payment record faults.
- * Output and oracle: Explicit paid stock/effect, failure-prefix and persisted-finalization assertions retain original commit order; no refund, new golden or repaired action is introduced.
+ * 负责故障场景测试，核对动物梦境子狐／河豚付款后的效果在必需录制失败时仍已提交。
+ * 输入为原受控 PhaseManager 周期、真实 session store 与付款后注入故障；输出由明确库存、效果、失败前缀及终档状态断言核对。
+ * 保留原提交顺序，不退款、不修复行动、不重生 golden；实际磁盘数据按新封装解包。
  */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
@@ -196,7 +196,7 @@ for (const skill of ["fox", "puffer"] as const)
         ).players.map((p) => ({ player_id: p.id, role: p.role, camp: p.camp, alive: p.alive })),
       });
       expect(
-        JSON.parse(await readFile(manager.sessionDir + "/reproduction.json", "utf8")).finalized,
+        parseReproductionRecord(JSON.parse(await readFile(manager.sessionDir + "/reproduction.json", "utf8"))).finalized,
       ).toBe(true);
     });
   });

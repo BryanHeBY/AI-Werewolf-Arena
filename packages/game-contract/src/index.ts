@@ -1,7 +1,6 @@
 /**
- * 向后端、Catalog 与浏览器消费者公开纯协议数据。输出包括机器身份、消息、结果、错误、
- * inert payload reader 和纯展示片段；部分展示参数可含已格式化文字，但不携带运行句柄。
- * 本包不授予运行权限、不执行规则、不拥有角色资料或渲染展示；接口与 reader 保留各自数据边界。
+ * 向引擎、协议和共享包公开纯游戏数据契约及行动请求版本声明；输出为原事件、请求、板子与状态类型。
+ * 具体数据由各业务叶唯一维护；此出口不导出 World、运行句柄、传输或资源写权限，不执行规则或解析未知归档。
  */
 export {
   Camp,
@@ -238,3 +237,5 @@ export type {
 } from "./role-presentation-data";
 
 export type { ComponentPresentationPart } from "./component-presentation-data";
+
+export { ACTION_REQUEST_CONTRACT } from "./request-version";

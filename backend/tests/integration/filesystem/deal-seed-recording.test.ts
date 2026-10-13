@@ -1,8 +1,9 @@
 /**
- * Filesystem integration tests verify configured or generated deal seeds persist privately and reproduce the recorded initial deal.
- * Input: The actual runner with injected baseline players/root RNG and original temporary manifest/replay stores.
- * Output and oracle: Literal seed/path/privacy metadata and same-seed deal reconstruction assert persistence, not independently validated RNG or all game rules; source fixtures are unchanged.
+ * 负责文件系统集成测试，核对配置／生成的发牌种子私有持久化与同种子初始牌重建。
+ * 输入为实际 runner、注入的 baseline 玩家／根 RNG 与原临时 manifest／replay 存储；输出由字面种子、路径、隐私及初始牌断言核对。
+ * 不把这些持久化断言当作独立 RNG 或全部规则证明；来源 fixture 与原预期不变，新封装经 canonical reader 解包。
  */
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { expect, spyOn, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
@@ -61,18 +62,18 @@ for (const seed of ["recorded-seed", undefined]) {
       if (seed) expect(manifest.random.seed).toBe(seed);
       else expect(manifest.random.seed).toMatch(/^[a-f0-9-]{36}$/);
       expect(manifest.players[0].name).toBe("Player One");
-      const replay = JSON.parse(await readFile(path.join(root, session, "replay.json"), "utf8"));
+      const replay = readReplayDocument(JSON.parse(await readFile(path.join(root, session, "replay.json"), "utf8")));
       const recreated = bootstrapGame(setup.boardConfig, {
         random: createRandom(manifest.random.seed),
         playerNames: { "1": "Player One" },
       });
-      expect(replay.events[0].payload).toEqual(recreated.phaseManager.getEvents()[0].payload);
+      expect(replay.events[0].payload as unknown).toEqual(recreated.phaseManager.getEvents()[0].payload);
       expect(replay.players[0].name).toBe("Player One");
       expect(manifest.locale).toBe("zh-CN");
       expect(replay.meta.locale).toBe("zh-CN");
       expect(replay.schemaVersion).toBe(2);
-      expect(replay.random).toBeUndefined();
-      expect(replay.meta.random).toBeUndefined();
+      expect((replay as { random?: unknown }).random).toBeUndefined();
+      expect((replay.meta as { random?: unknown }).random).toBeUndefined();
       expect(JSON.stringify(manifest)).not.toContain("PRIVATE_AUTH_VALUE");
       expect(JSON.stringify(replay)).not.toContain("PRIVATE_AUTH_VALUE");
     } finally {

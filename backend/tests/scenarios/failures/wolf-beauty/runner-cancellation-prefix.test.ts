@@ -1,6 +1,8 @@
 /**
  * 故障场景测试：验证 held 回复期间录制失败，runner 取消仍保留已付款狼美人魅惑。输入为原工厂／录制注入及晚到或 null 回复；关系、没有消费式跳过及部分复盘相等为字面预期，不把取消改成花资源行动。
  */
+import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
 import { PotionType } from "../../../../src/core/domain/identity";
 import { expect, spyOn, test } from "bun:test";
 import { readFile, readdir } from "node:fs/promises";
@@ -153,14 +155,14 @@ for (const late of [null, { name: "charm", args: { target_id: null } }] as const
       });
       expect(activeCharm(world, actor)).not.toBeNull();
       const [session] = await readdir(root),
-        record = JSON.parse(await readFile(path.join(root, session, "reproduction.json"), "utf8"));
+        record = parseReproductionRecord(JSON.parse(await readFile(path.join(root, session, "reproduction.json"), "utf8")));
       expect(
         record.decisions.find(
           (decision: any) =>
             decision.actorId === actor && decision.day === 2 && decision.stage === "wolf_beauty",
-        ).outcome,
+        )!.outcome,
       ).toEqual({ kind: "error", code: "decision_failed", name: "AbortError" });
-      const replay = JSON.parse(await readFile(path.join(root, session, "replay.json"), "utf8"));
+      const replay = readReplayDocument(JSON.parse(await readFile(path.join(root, session, "replay.json"), "utf8")));
       expect(replay.events.filter((event: any) => event.type === "charm_applied")).toHaveLength(1);
       const tape = await readReproduction(path.join(root, session, "reproduction.json"));
       expect(

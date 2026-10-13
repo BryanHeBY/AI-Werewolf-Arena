@@ -147,7 +147,7 @@ for (const point of ["deferred", "actually_dead"] as const)
         })),
       });
       expect(
-        JSON.parse(await readFile(manager.sessionDir + "/reproduction.json", "utf8")).finalized,
+        parseReproductionRecord(JSON.parse(await readFile(manager.sessionDir + "/reproduction.json", "utf8"))).finalized,
       ).toBe(true);
     });
   });
