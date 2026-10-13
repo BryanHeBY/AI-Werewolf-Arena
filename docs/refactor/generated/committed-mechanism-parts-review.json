@@ -1,0 +1,88 @@
+{
+  "status": "approved",
+  "reviewer": "/root/preflight_final_review",
+  "baselineCommit": "694a2593a53758e3ae9999311b37de9b45c923ad",
+  "actualGitBeforeSHA": "3b7d7257d4b1434f46053e1c241fdd0cfa8c4f7d8be7ddde733d3e81364e79ff",
+  "scope": [
+    {
+      "path": "docs/refactor/generated/current-mechanism-migration.json",
+      "sha256": "fb38f85e5c478f5ba33f2e88c8e528d6948d7b256f89feeb5ec03f4838766896"
+    },
+    {
+      "path": "docs/refactor/committed-mechanism-parts.md",
+      "sha256": "9bab33a30fc3a10014aeda400a3bd06a07e8a29318765b9c7dc9c7b054e909d7"
+    },
+    {
+      "path": "docs/refactor/generated/committed-mechanism-parts-evidence.json",
+      "sha256": "b2c3ca8e38380e8787c86f129454c7ae5003e4f4e52c0f708d0317705798ffd6"
+    }
+  ],
+  "counts": {
+    "rows": 91,
+    "columns": 10,
+    "cells": 910,
+    "oldParts": 249,
+    "newParts": 43,
+    "allParts": 292,
+    "oldRemaining": 1071,
+    "oldCommits": 40,
+    "newCommits": 13,
+    "allPartCommits": 53,
+    "newCells": 41,
+    "newRows": 25,
+    "pendingToPartial": 18,
+    "pending": 711,
+    "partial": 199,
+    "complete": 0,
+    "not-applicable": 0
+  },
+  "rawPrefixAudit": {
+    "duplicateJSONFieldsRejected": true,
+    "all249PartObjectsAnd1071RemainingStringsExactRawBytes": true,
+    "completeCandidateFromApprovedAdditionsExactDataAndBytes": true,
+    "completeOriginalJSONBytesRestoredByKnownMetadataAndExactTailsInverse": true,
+    "rawMismatches": []
+  },
+  "actualCommitAudit": {
+    "range": {
+      "exclusiveStart": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+      "inclusiveEnd": "040b7713f9513ee40d1a466cb956ddb5c2b830ad"
+    },
+    "commits": 30,
+    "matrixCommits": [
+      "3a67ef309043738d6e86b9e3938d2a01c7fdd316",
+      "3c5a28ac18a8dbbd2025c575bc78a0ea198900bd",
+      "4f57ecc5ba1c39dc42268996149ed4b7e5e0f608",
+      "6d069243a9ec8f0ea14d53f44c1df6933006425a",
+      "72f5bdc57f2c48dbefb5f734de4c37be38332c02",
+      "8a099c3b92077a4cca713ae1c51fc0398a0a5643",
+      "9265335a5d9e005eef8f59ca7cfea5c41495f084",
+      "bcee29c12712a21585dae5c8574afc1d6a590869",
+      "c810611893b19cc9eca3325d8e050510b62047da",
+      "caef2e1345f4994019ce005e85251305e175503f",
+      "e1aec71c528530a5e165c85a1d137ab908e0a3db",
+      "ef67f1c35f98e3c5d8f8fbc86f66139faaf17dbd",
+      "f3147fe2c2044e4a0ba1cb8d471ebb18f18e6289"
+    ],
+    "ownerAndDocumentPairsChecked": 61,
+    "missing": [],
+    "outOfMatrixStructural": 5,
+    "nonStructural": 12,
+    "laterExcludedCommitsKeptOut": true
+  },
+  "immutableBaseline": {
+    "path": "docs/refactor/generated/mechanism-matrix.json",
+    "rows": 89,
+    "sha256": "60f1eb79143813b944abbc5f6ce7b0e6a22f4debf92a9f4e428b2d887cbb72c9",
+    "actualHEADBytesSame": true
+  },
+  "semanticReview": [
+    "All 28 mapped descriptions and 43 actual cell records read. New entries describe the specific committed owner and retain the original incomplete requirements; no cell becomes complete or N/A.",
+    "Night admission lifecycle entry is specifically committed reentry wiring, not complete open/close/abort migration. State policyIdentity codecs do not become new archive/checkpoint achievements. Public DTO ownership does not imply runtime inventory or all observation authorization.",
+    "C34 preparation and later Node feed are separate commits. Text package bridge exit is one package boundary part and does not retire every role export. Global World, Trace, archive formats and privileged drivers remain out-of-matrix audits.",
+    "MD accurately describes 30 bounded commits, 13 matrix contributions plus 5 external structural and 12 test/comment/doc entries. The observed commit is a bounded audit cutoff, not a claim that every later delivery is registered.",
+    "Actual commit subjects and real Git owner/doc blobs support provenance; path existence is not treated as whole-cell gameplay or source-program acceptance."
+  ],
+  "findings": [],
+  "limitations": "Prior /tmp artifacts are unavailable after environment continuation. This review reconstructs before from actual Git HEAD, reads three persistent candidates and their embedded mapping/proof, and independently checks full JSON prefixes/inverse, real bounded Git metadata and owner/doc paths. No source edits, product code execution, types, gameplay, models, gate or commit."
+}

@@ -1,6 +1,6 @@
 {
   "schema": "awa-current-mechanism-migration-v1",
-  "observedCommit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+  "observedCommit": "040b7713f9513ee40d1a466cb956ddb5c2b830ad",
   "baseline": {
     "path": "docs/refactor/generated/mechanism-matrix.json",
     "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
@@ -275,11 +275,25 @@
               "evidence": [
                 "docs/refactor/death-commit-owner.md"
               ]
+            },
+            {
+              "part": "原生刀继承贡献在PM原初装配与DR原追加波标死/必需关系贡献后、公开追加死亡前，经具名四贡献组合按原参数顺序调用；机制本体仍原owner，每次名单不缓存，首错保前缀。",
+              "commit": "e1aec71c528530a5e165c85a1d137ab908e0a3db",
+              "owners": [
+                "backend/src/rulesets/wolf-knife-inheritance-plan.ts",
+                "backend/src/rulesets/rule-plan.ts",
+                "backend/src/game/engine/phase_manager.ts",
+                "backend/src/game/engine/death_resolution.ts"
+              ],
+              "evidence": [
+                "docs/refactor/wolf-knife-inheritance-checkpoint.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。"
+            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。",
+            "仅本族真实继承检查点装配已统一；角色完整继承算法/条件、所有生命周期及复合死亡矩阵尚不因该part完成。"
           ]
         },
         "effect": {
@@ -1183,10 +1197,23 @@
               "evidence": [
                 "docs/refactor/night-ability-data.md"
               ]
+            },
+            {
+              "part": "摄梦完整创建/读取、目标日期历史allowedWrites、运行身份与局部payload失效归state-slot，旧内部state叶退出；真实native/普通night/Scope均接线，历史失败保前序写。",
+              "commit": "ef67f1c35f98e3c5d8f8fbc86f66139faaf17dbd",
+              "owners": [
+                "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+                "backend/src/game/mechanisms/roles/dreamer/ports.ts",
+                "backend/src/game/mechanisms/roles/dreamer/night_stages.ts"
+              ],
+              "evidence": [
+                "docs/refactor/dream-shelter-state-slots.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Close actual mutation, lifecycle invalidation, schema/codec and remaining facade consumers; preserve original state identity."
+            "Close actual mutation, lifecycle invalidation, schema/codec and remaining facade consumers; preserve original state identity.",
+            "不合并借梦、首次死亡和已付关系；原JSONprepare与完整归档/机制规则验收分开，其他frame/租约/效应矩阵继续。 运行policyIdentity未迁完整归档clone/reader，不能据此登记新的checkpoint所有权成果。"
           ]
         },
         "lease": {
@@ -1284,11 +1311,24 @@
               "evidence": [
                 "docs/refactor/role-contributions-and-components.md"
               ]
+            },
+            {
+              "part": "摄梦完整创建/读取、目标日期历史allowedWrites、运行身份与局部payload失效归state-slot，旧内部state叶退出；真实native/普通night/Scope均接线，历史失败保前序写。",
+              "commit": "ef67f1c35f98e3c5d8f8fbc86f66139faaf17dbd",
+              "owners": [
+                "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+                "backend/src/game/mechanisms/roles/dreamer/ports.ts",
+                "backend/src/game/mechanisms/roles/dreamer/night_stages.ts"
+              ],
+              "evidence": [
+                "docs/refactor/dream-shelter-state-slots.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。",
+            "不合并借梦、首次死亡和已付关系；原JSONprepare与完整归档/机制规则验收分开，其他frame/租约/效应矩阵继续。 运行policyIdentity未迁完整归档clone/reader，不能据此登记新的checkpoint所有权成果。"
           ]
         }
       }
@@ -1668,11 +1708,25 @@
               "evidence": [
                 "docs/refactor/death-commit-owner.md"
               ]
+            },
+            {
+              "part": "原生刀继承贡献在PM原初装配与DR原追加波标死/必需关系贡献后、公开追加死亡前，经具名四贡献组合按原参数顺序调用；机制本体仍原owner，每次名单不缓存，首错保前缀。",
+              "commit": "e1aec71c528530a5e165c85a1d137ab908e0a3db",
+              "owners": [
+                "backend/src/rulesets/wolf-knife-inheritance-plan.ts",
+                "backend/src/rulesets/rule-plan.ts",
+                "backend/src/game/engine/phase_manager.ts",
+                "backend/src/game/engine/death_resolution.ts"
+              ],
+              "evidence": [
+                "docs/refactor/wolf-knife-inheritance-checkpoint.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。"
+            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。",
+            "仅本族真实继承检查点装配已统一；角色完整继承算法/条件、所有生命周期及复合死亡矩阵尚不因该part完成。"
           ]
         },
         "effect": {
@@ -1772,10 +1826,22 @@
               "evidence": [
                 "docs/refactor/request-alias-propagation.md"
               ]
+            },
+            {
+              "part": "已构造原请求在原factory checkpoint经rulesets五分支有序组合直达本机制bind；原阶段重复读/初始身份短路/命中才取World、request/context引用和前序绑定失败前缀保持。",
+              "commit": "8a099c3b92077a4cca713ae1c51fc0398a0a5643",
+              "owners": [
+                "backend/src/rulesets/action-request-bindings.ts",
+                "backend/src/game/engine/action_request_factory.ts"
+              ],
+              "evidence": [
+                "docs/refactor/action-request-bindings.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Complete all concrete lease ownership/currentness/close/settlement contracts; routing registration is not whole-mechanism migration."
+            "Complete all concrete lease ownership/currentness/close/settlement contracts; routing registration is not whole-mechanism migration.",
+            "仅原绑定调用装配归属；本机制WeakMap/权限/期限alias/完整撤权仍具体owner，原循环未消除，不新造通用lease registry或授新许可。"
           ]
         },
         "eligibility": {
@@ -2075,10 +2141,23 @@
               "evidence": [
                 "docs/refactor/night-ability-data.md"
               ]
+            },
+            {
+              "part": "guard完整payload getter、原JSONcreate/schema、普通与受赠allowedWrites、运行policyIdentity和局部currentness归同族state-slot，原内部state叶删除且原生/夜间/recipient消费者直接接线。",
+              "commit": "bcee29c12712a21585dae5c8574afc1d6a590869",
+              "owners": [
+                "backend/src/game/mechanisms/roles/guard/state-slot.ts",
+                "backend/src/game/mechanisms/roles/guard/ports.ts",
+                "backend/src/game/mechanisms/roles/recipient_ability_stage.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-night-state-slots.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Close actual mutation, lifecycle invalidation, schema/codec and remaining facade consumers; preserve original state identity."
+            "Close actual mutation, lifecycle invalidation, schema/codec and remaining facade consumers; preserve original state identity.",
+            "仅本族payload与运行身份职责已迁；JSON复制不等于新增严格shape schema，完整lease/life/资源权限及归档验证仍原owner，Demon封存/库存不合并，整格验收继续。 运行policyIdentity未迁完整归档clone/reader，不能据此登记新的checkpoint所有权成果。"
           ]
         },
         "lease": {
@@ -2186,11 +2265,24 @@
               "evidence": [
                 "docs/refactor/role-contributions-and-components.md"
               ]
+            },
+            {
+              "part": "guard完整payload getter、原JSONcreate/schema、普通与受赠allowedWrites、运行policyIdentity和局部currentness归同族state-slot，原内部state叶删除且原生/夜间/recipient消费者直接接线。",
+              "commit": "bcee29c12712a21585dae5c8574afc1d6a590869",
+              "owners": [
+                "backend/src/game/mechanisms/roles/guard/state-slot.ts",
+                "backend/src/game/mechanisms/roles/guard/ports.ts",
+                "backend/src/game/mechanisms/roles/recipient_ability_stage.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-night-state-slots.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。",
+            "仅本族payload与运行身份职责已迁；JSON复制不等于新增严格shape schema，完整lease/life/资源权限及归档验证仍原owner，Demon封存/库存不合并，整格验收继续。 运行policyIdentity未迁完整归档clone/reader，不能据此登记新的checkpoint所有权成果。"
           ]
         }
       }
@@ -2267,11 +2359,25 @@
               "evidence": [
                 "docs/refactor/death-commit-owner.md"
               ]
+            },
+            {
+              "part": "原生刀继承贡献在PM原初装配与DR原追加波标死/必需关系贡献后、公开追加死亡前，经具名四贡献组合按原参数顺序调用；机制本体仍原owner，每次名单不缓存，首错保前缀。",
+              "commit": "e1aec71c528530a5e165c85a1d137ab908e0a3db",
+              "owners": [
+                "backend/src/rulesets/wolf-knife-inheritance-plan.ts",
+                "backend/src/rulesets/rule-plan.ts",
+                "backend/src/game/engine/phase_manager.ts",
+                "backend/src/game/engine/death_resolution.ts"
+              ],
+              "evidence": [
+                "docs/refactor/wolf-knife-inheritance-checkpoint.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。"
+            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。",
+            "仅本族真实继承检查点装配已统一；角色完整继承算法/条件、所有生命周期及复合死亡矩阵尚不因该part完成。"
           ]
         },
         "effect": {
@@ -2745,10 +2851,22 @@
               "evidence": [
                 "docs/refactor/request-alias-propagation.md"
               ]
+            },
+            {
+              "part": "已构造原请求在原factory checkpoint经rulesets五分支有序组合直达本机制bind；原阶段重复读/初始身份短路/命中才取World、request/context引用和前序绑定失败前缀保持。",
+              "commit": "8a099c3b92077a4cca713ae1c51fc0398a0a5643",
+              "owners": [
+                "backend/src/rulesets/action-request-bindings.ts",
+                "backend/src/game/engine/action_request_factory.ts"
+              ],
+              "evidence": [
+                "docs/refactor/action-request-bindings.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Complete all concrete lease ownership/currentness/close/settlement contracts; routing registration is not whole-mechanism migration."
+            "Complete all concrete lease ownership/currentness/close/settlement contracts; routing registration is not whole-mechanism migration.",
+            "仅原绑定调用装配归属；本机制WeakMap/权限/期限alias/完整撤权仍具体owner，原循环未消除，不新造通用lease registry或授新许可。"
           ]
         },
         "eligibility": {
@@ -2773,10 +2891,23 @@
           ]
         },
         "observation": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "初始牌池候选公开配比真实消费者迁game/observation的完整三分支收集者，候选来自initialIdentityCandidateCounts并优先于board统计；不泄底牌/选择或生成新RNG。",
+              "commit": "3c5a28ac18a8dbbd2025c575bc78a0ea198900bd",
+              "owners": [
+                "backend/src/game/observation/player-initial-public-counts.ts",
+                "backend/src/game/mechanisms/roles/initial_identity/deal.ts"
+              ],
+              "evidence": [
+                "docs/refactor/player-initial-public-counts.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "仅候选配比消费及原失败/缓存时点；身份选择setup/期限别名/保密和完整N+2机制矩阵仍待各格验收。"
           ]
         },
         "checkpoint": {
@@ -2972,10 +3103,22 @@
               "evidence": [
                 "docs/refactor/request-alias-propagation.md"
               ]
+            },
+            {
+              "part": "已构造原请求在原factory checkpoint经rulesets五分支有序组合直达本机制bind；原阶段重复读/初始身份短路/命中才取World、request/context引用和前序绑定失败前缀保持。",
+              "commit": "8a099c3b92077a4cca713ae1c51fc0398a0a5643",
+              "owners": [
+                "backend/src/rulesets/action-request-bindings.ts",
+                "backend/src/game/engine/action_request_factory.ts"
+              ],
+              "evidence": [
+                "docs/refactor/action-request-bindings.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Complete all concrete lease ownership/currentness/close/settlement contracts; routing registration is not whole-mechanism migration."
+            "Complete all concrete lease ownership/currentness/close/settlement contracts; routing registration is not whole-mechanism migration.",
+            "仅原绑定调用装配归属；本机制WeakMap/权限/期限alias/完整撤权仍具体owner，原循环未消除，不新造通用lease registry或授新许可。"
           ]
         },
         "eligibility": {
@@ -3259,11 +3402,25 @@
               "evidence": [
                 "docs/refactor/death-commit-owner.md"
               ]
+            },
+            {
+              "part": "原生刀继承贡献在PM原初装配与DR原追加波标死/必需关系贡献后、公开追加死亡前，经具名四贡献组合按原参数顺序调用；机制本体仍原owner，每次名单不缓存，首错保前缀。",
+              "commit": "e1aec71c528530a5e165c85a1d137ab908e0a3db",
+              "owners": [
+                "backend/src/rulesets/wolf-knife-inheritance-plan.ts",
+                "backend/src/rulesets/rule-plan.ts",
+                "backend/src/game/engine/phase_manager.ts",
+                "backend/src/game/engine/death_resolution.ts"
+              ],
+              "evidence": [
+                "docs/refactor/wolf-knife-inheritance-checkpoint.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。"
+            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。",
+            "仅本族真实继承检查点装配已统一；角色完整继承算法/条件、所有生命周期及复合死亡矩阵尚不因该part完成。"
           ]
         },
         "effect": {
@@ -4424,10 +4581,24 @@
               "evidence": [
                 "docs/refactor/night-ability-data.md"
               ]
+            },
+            {
+              "part": "仅庇护payload slot完整get/install/prepare原JSON/strict原reader/选择project与allowedWrites及policyIdentity迁新owner；state-data完整scalar primitives服务Shelter和Eclipse，旧混合state叶的庇护实现退出。",
+              "commit": "ef67f1c35f98e3c5d8f8fbc86f66139faaf17dbd",
+              "owners": [
+                "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+                "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts",
+                "backend/src/game/mechanisms/roles/radiant_eclipse/state-data.ts",
+                "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/dream-shelter-state-slots.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "此part只收庇护payload和共享纯primitive；Eclipse借用/首死/付费效果/normal-abort生命周期仍原owner，strictreader不得提前用于native安装新增拒绝，wholecell继续。 运行policyIdentity未迁完整归档clone/reader，不能据此登记新的checkpoint所有权成果。"
           ]
         },
         "lease": {
@@ -4548,11 +4719,25 @@
               "evidence": [
                 "docs/refactor/role-contributions-and-components.md"
               ]
+            },
+            {
+              "part": "仅庇护payload slot完整get/install/prepare原JSON/strict原reader/选择project与allowedWrites及policyIdentity迁新owner；state-data完整scalar primitives服务Shelter和Eclipse，旧混合state叶的庇护实现退出。",
+              "commit": "ef67f1c35f98e3c5d8f8fbc86f66139faaf17dbd",
+              "owners": [
+                "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state-slot.ts",
+                "backend/src/game/mechanisms/roles/radiant_eclipse/shelter-state.ts",
+                "backend/src/game/mechanisms/roles/radiant_eclipse/state-data.ts",
+                "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/dream-shelter-state-slots.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。",
+            "此part只收庇护payload和共享纯primitive；Eclipse借用/首死/付费效果/normal-abort生命周期仍原owner，strictreader不得提前用于native安装新增拒绝，wholecell继续。 运行policyIdentity未迁完整归档clone/reader，不能据此登记新的checkpoint所有权成果。"
           ]
         }
       }
@@ -4725,10 +4910,23 @@
               "evidence": [
                 "docs/refactor/night-ability-data.md"
               ]
+            },
+            {
+              "part": "六实际角色／五查验政策的完整payload getter/create原JSON与policy校验、两历史写、运行身份codec和局部payload失效归state-slot；旧state叶与abilities policy重导出退出，lease/life仍原owner。",
+              "commit": "9265335a5d9e005eef8f59ca7cfea5c41495f084",
+              "owners": [
+                "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+                "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+                "backend/src/game/mechanisms/roles/ability_scope.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-inspection-state-slot.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Close actual mutation, lifecycle invalidation, schema/codec and remaining facade consumers; preserve original state identity."
+            "Close actual mutation, lifecycle invalidation, schema/codec and remaining facade consumers; preserve original state identity.",
+            "运行身份codec不是完整归档schema；其余角色/能力生命周期、全部消费者/失效及checkpoint与机制整格验收继续。 运行policyIdentity未迁完整归档clone/reader，不能据此登记新的checkpoint所有权成果。"
           ]
         },
         "lease": {
@@ -4799,10 +4997,24 @@
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "六实际角色／五查验政策的完整payload getter/create原JSON与policy校验、两历史写、运行身份codec和局部payload失效归state-slot；旧state叶与abilities policy重导出退出，lease/life仍原owner。",
+              "commit": "9265335a5d9e005eef8f59ca7cfea5c41495f084",
+              "owners": [
+                "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+                "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+                "backend/src/game/mechanisms/roles/ability_scope.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-inspection-state-slot.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "运行身份codec不是完整归档schema；其余角色/能力生命周期、全部消费者/失效及checkpoint与机制整格验收继续。 运行policyIdentity未迁完整归档clone/reader，不能据此登记新的checkpoint所有权成果。"
           ]
         }
       }
@@ -5015,10 +5227,23 @@
               "evidence": [
                 "docs/refactor/night-ability-data.md"
               ]
+            },
+            {
+              "part": "seer完整payload getter、原JSONcreate/schema、普通与受赠allowedWrites、运行policyIdentity和局部currentness归同族state-slot，原内部state叶删除且原生/夜间/recipient消费者直接接线。",
+              "commit": "bcee29c12712a21585dae5c8574afc1d6a590869",
+              "owners": [
+                "backend/src/game/mechanisms/roles/seer/state-slot.ts",
+                "backend/src/game/mechanisms/roles/seer/ports.ts",
+                "backend/src/game/mechanisms/roles/recipient_ability_stage.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-night-state-slots.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Sealed Demon native write, copy/borrow/reset, schema/codec and all public consumers still need explicit closure."
+            "Sealed Demon native write, copy/borrow/reset, schema/codec and all public consumers still need explicit closure.",
+            "仅本族payload与运行身份职责已迁；JSON复制不等于新增严格shape schema，完整lease/life/资源权限及归档验证仍原owner，Demon封存/库存不合并，整格验收继续。 运行policyIdentity未迁完整归档clone/reader，不能据此登记新的checkpoint所有权成果。"
           ]
         },
         "lease": {
@@ -5126,11 +5351,24 @@
               "evidence": [
                 "docs/refactor/role-contributions-and-components.md"
               ]
+            },
+            {
+              "part": "seer完整payload getter、原JSONcreate/schema、普通与受赠allowedWrites、运行policyIdentity和局部currentness归同族state-slot，原内部state叶删除且原生/夜间/recipient消费者直接接线。",
+              "commit": "bcee29c12712a21585dae5c8574afc1d6a590869",
+              "owners": [
+                "backend/src/game/mechanisms/roles/seer/state-slot.ts",
+                "backend/src/game/mechanisms/roles/seer/ports.ts",
+                "backend/src/game/mechanisms/roles/recipient_ability_stage.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-night-state-slots.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。",
+            "仅本族payload与运行身份职责已迁；JSON复制不等于新增严格shape schema，完整lease/life/资源权限及归档验证仍原owner，Demon封存/库存不合并，整格验收继续。 运行policyIdentity未迁完整归档clone/reader，不能据此登记新的checkpoint所有权成果。"
           ]
         }
       }
@@ -5902,10 +6140,22 @@
               "evidence": [
                 "docs/refactor/request-alias-propagation.md"
               ]
+            },
+            {
+              "part": "已构造原请求在原factory checkpoint经rulesets五分支有序组合直达本机制bind；原阶段重复读/初始身份短路/命中才取World、request/context引用和前序绑定失败前缀保持。",
+              "commit": "8a099c3b92077a4cca713ae1c51fc0398a0a5643",
+              "owners": [
+                "backend/src/rulesets/action-request-bindings.ts",
+                "backend/src/game/engine/action_request_factory.ts"
+              ],
+              "evidence": [
+                "docs/refactor/action-request-bindings.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Complete all concrete lease ownership/currentness/close/settlement contracts; routing registration is not whole-mechanism migration."
+            "Complete all concrete lease ownership/currentness/close/settlement contracts; routing registration is not whole-mechanism migration.",
+            "仅原绑定调用装配归属；本机制WeakMap/权限/期限alias/完整撤权仍具体owner，原循环未消除，不新造通用lease registry或授新许可。"
           ]
         },
         "eligibility": {
@@ -6069,10 +6319,23 @@
               "evidence": [
                 "docs/refactor/night-ability-data.md"
               ]
+            },
+            {
+              "part": "witch完整payload getter、原JSONcreate/schema、普通与受赠allowedWrites、运行policyIdentity和局部currentness归同族state-slot，原内部state叶删除且原生/夜间/recipient消费者直接接线。",
+              "commit": "bcee29c12712a21585dae5c8574afc1d6a590869",
+              "owners": [
+                "backend/src/game/mechanisms/roles/witch/state-slot.ts",
+                "backend/src/game/mechanisms/roles/witch/ports.ts",
+                "backend/src/game/mechanisms/roles/recipient_ability_stage.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-night-state-slots.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Close actual mutation, lifecycle invalidation, schema/codec and remaining facade consumers; preserve original state identity."
+            "Close actual mutation, lifecycle invalidation, schema/codec and remaining facade consumers; preserve original state identity.",
+            "仅本族payload与运行身份职责已迁；JSON复制不等于新增严格shape schema，完整lease/life/资源权限及归档验证仍原owner，Demon封存/库存不合并，整格验收继续。 运行policyIdentity未迁完整归档clone/reader，不能据此登记新的checkpoint所有权成果。"
           ]
         },
         "lease": {
@@ -6184,11 +6447,24 @@
               "evidence": [
                 "docs/refactor/role-contributions-and-components.md"
               ]
+            },
+            {
+              "part": "witch完整payload getter、原JSONcreate/schema、普通与受赠allowedWrites、运行policyIdentity和局部currentness归同族state-slot，原内部state叶删除且原生/夜间/recipient消费者直接接线。",
+              "commit": "bcee29c12712a21585dae5c8574afc1d6a590869",
+              "owners": [
+                "backend/src/game/mechanisms/roles/witch/state-slot.ts",
+                "backend/src/game/mechanisms/roles/witch/ports.ts",
+                "backend/src/game/mechanisms/roles/recipient_ability_stage.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-night-state-slots.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。",
+            "仅本族payload与运行身份职责已迁；JSON复制不等于新增严格shape schema，完整lease/life/资源权限及归档验证仍原owner，Demon封存/库存不合并，整格验收继续。 运行policyIdentity未迁完整归档clone/reader，不能据此登记新的checkpoint所有权成果。"
           ]
         }
       }
@@ -6733,10 +7009,22 @@
               "evidence": [
                 "docs/refactor/request-alias-propagation.md"
               ]
+            },
+            {
+              "part": "已构造原请求在原factory checkpoint经rulesets五分支有序组合直达本机制bind；原阶段重复读/初始身份短路/命中才取World、request/context引用和前序绑定失败前缀保持。",
+              "commit": "8a099c3b92077a4cca713ae1c51fc0398a0a5643",
+              "owners": [
+                "backend/src/rulesets/action-request-bindings.ts",
+                "backend/src/game/engine/action_request_factory.ts"
+              ],
+              "evidence": [
+                "docs/refactor/action-request-bindings.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Close all Wall stock/currentness/completion, lifecycle/encoding and remaining public-consumer requirements; propagation alone does not complete its lease cell."
+            "Close all Wall stock/currentness/completion, lifecycle/encoding and remaining public-consumer requirements; propagation alone does not complete its lease cell.",
+            "仅原绑定调用装配归属；本机制WeakMap/权限/期限alias/完整撤权仍具体owner，原循环未消除，不新造通用lease registry或授新许可。"
           ]
         },
         "eligibility": {
@@ -7156,10 +7444,24 @@
           ]
         },
         "eligibility": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "实际Node玩家feed反射前Proxy拒绝后，统一单次family prepare→单次受众授权→field投影，坏fact先拒、局部seq保连续；DTO脱离canonical data，旧projectAgentEvent直接API退出。",
+              "commit": "3a67ef309043738d6e86b9e3938d2a01c7fdd316",
+              "owners": [
+                "backend/src/game/engine/agent_visible_event_feed.ts",
+                "backend/src/game/observation/agent-event-projection.ts",
+                "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts"
+              ],
+              "evidence": [
+                "docs/refactor/player-event-feed-unification.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "新的前五registry装配时点/深DTO引用prototype与直接API退休差异明确；旧boolAPI保原信任，未完成所有角色/event/回调受众与whole-cell同源验收。"
           ]
         },
         "lifecycle": {
@@ -7177,10 +7479,37 @@
           ]
         },
         "observation": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "新增家族fact producer覆盖98个实际事件type/31reader，schema事实及规则key/audience固定、原family深副本供新prepared projection；品牌不授授权，原较弱bool入口保原语义。",
+              "commit": "c810611893b19cc9eca3325d8e050510b62047da",
+              "owners": [
+                "backend/src/game/observation/agent-event-facts.ts",
+                "backend/src/game/observation/agent-event-projection.ts",
+                "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts"
+              ],
+              "evidence": [
+                "docs/refactor/agent-event-fact-preparation.md"
+              ]
+            },
+            {
+              "part": "实际Node玩家feed反射前Proxy拒绝后，统一单次family prepare→单次受众授权→field投影，坏fact先拒、局部seq保连续；DTO脱离canonical data，旧projectAgentEvent直接API退出。",
+              "commit": "3a67ef309043738d6e86b9e3938d2a01c7fdd316",
+              "owners": [
+                "backend/src/game/engine/agent_visible_event_feed.ts",
+                "backend/src/game/observation/agent-event-projection.ts",
+                "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts"
+              ],
+              "evidence": [
+                "docs/refactor/player-event-feed-unification.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "此part是新prepare/projection事实边界，后继feed接线另由3a67登记；31reader样本不代表98事件/所有受众组合，完整观察矩阵继续。",
+            "新的前五registry装配时点/深DTO引用prototype与直接API退休差异明确；旧boolAPI保原信任，未完成所有角色/event/回调受众与whole-cell同源验收。"
           ]
         },
         "checkpoint": {
@@ -7205,10 +7534,24 @@
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "实际Node玩家feed反射前Proxy拒绝后，统一单次family prepare→单次受众授权→field投影，坏fact先拒、局部seq保连续；DTO脱离canonical data，旧projectAgentEvent直接API退出。",
+              "commit": "3a67ef309043738d6e86b9e3938d2a01c7fdd316",
+              "owners": [
+                "backend/src/game/engine/agent_visible_event_feed.ts",
+                "backend/src/game/observation/agent-event-projection.ts",
+                "backend/src/game/mechanisms/broadcast/agent_event_visibility_registry.ts"
+              ],
+              "evidence": [
+                "docs/refactor/player-event-feed-unification.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "新的前五registry装配时点/深DTO引用prototype与直接API退休差异明确；旧boolAPI保原信任，未完成所有角色/event/回调受众与whole-cell同源验收。"
           ]
         }
       }
@@ -7258,11 +7601,23 @@
               "evidence": [
                 "docs/refactor/execution-rule-plan.md"
               ]
+            },
+            {
+              "part": "实际NightPipeline开夜握手后、起始记录/phase前，把十一有序已提交重入判断（12直接谓词）归rulesets完整准入组合，逐查询World/day、黑市交易/recipient短路与首错保原。",
+              "commit": "4f57ecc5ba1c39dc42268996149ed4b7e5e0f608",
+              "owners": [
+                "backend/src/rulesets/night-commit-admission.ts",
+                "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-commit-admission.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Complete supported RulePlan parameters/checkpoints/provenance/tool-schema/actor consistency; remove old registry bridge.",
-            "完整阶段／角色贡献、actor 与能力当前资格仍须具体机制证明；固定成员不授予任何实例资源或行动许可。"
+            "完整阶段／角色贡献、actor 与能力当前资格仍须具体机制证明；固定成员不授予任何实例资源或行动许可。",
+            "只移十一项准入装配，具体commit证据/库存/lease仍机制owner，不撤已付效果或重开窗，阶段整个生命周期、循环加载与全矩阵继续。"
           ]
         },
         "lifecycle": {
@@ -7280,11 +7635,23 @@
               "evidence": [
                 "docs/refactor/execution-rule-plan.md"
               ]
+            },
+            {
+              "part": "仅已提交重入准入接线：实际NightPipeline开夜握手后、起始记录/phase前，把十一有序已提交重入判断（12直接谓词）归rulesets完整准入组合，逐查询World/day、黑市交易/recipient短路与首错保原。",
+              "commit": "4f57ecc5ba1c39dc42268996149ed4b7e5e0f608",
+              "owners": [
+                "backend/src/rulesets/night-commit-admission.ts",
+                "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-commit-admission.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。"
+            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。",
+            "只移十一项准入装配，具体commit证据/库存/lease仍机制owner，不撤已付效果或重开窗，阶段整个生命周期、循环加载与全矩阵继续。"
           ]
         },
         "effect": {
@@ -7558,10 +7925,35 @@
           ]
         },
         "observation": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整status/stage、bound-target规则角色、动物板熊简介和N+2身份附注五业务归game/observation，四实际query thunks保late World/locale/catalog/board及callback receiver，原AI private status/stage退休。",
+              "commit": "72f5bdc57f2c48dbefb5f734de4c37be38332c02",
+              "owners": [
+                "backend/src/game/observation/player-prompt-directives.ts",
+                "backend/src/ai/agents/player/player_prompt_policy.ts"
+              ],
+              "evidence": [
+                "docs/refactor/player-prompt-directives.md"
+              ]
+            },
+            {
+              "part": "完整开局公开配比三来源由game观察owner收集：N+2初牌候选优先、configured role aggregation、旧无board特权开局统计；直接填原AI Map且人数先赋，getter/set-get/失败前缀保持。",
+              "commit": "3c5a28ac18a8dbbd2025c575bc78a0ea198900bd",
+              "owners": [
+                "backend/src/game/observation/player-initial-public-counts.ts",
+                "backend/src/ai/agents/player/player_prompt_policy.ts"
+              ],
+              "evidence": [
+                "docs/refactor/player-initial-public-counts.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "只迁机制说明与实际读取；AI模板/人格/协议及原Map缓存仍owner，未知反射API/模块初始化差异单列，完整prompt/观察边界与whole-cell验收继续。",
+            "仅构造来源收集职责退出AI；AI仍唯一size/Map持有，旧privileged无board路线不代表观察权限全部收敛，候选不授许可/后续角色变化不刷新。"
           ]
         },
         "checkpoint": {
@@ -7579,17 +7971,43 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整status/stage、bound-target规则角色、动物板熊简介和N+2身份附注五业务归game/observation，四实际query thunks保late World/locale/catalog/board及callback receiver，原AI private status/stage退休。",
+              "commit": "72f5bdc57f2c48dbefb5f734de4c37be38332c02",
+              "owners": [
+                "backend/src/game/observation/player-prompt-directives.ts",
+                "backend/src/ai/agents/player/player_prompt_policy.ts"
+              ],
+              "evidence": [
+                "docs/refactor/player-prompt-directives.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "只迁机制说明与实际读取；AI模板/人格/协议及原Map缓存仍owner，未知反射API/模块初始化差异单列，完整prompt/观察边界与whole-cell验收继续。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整status/stage、bound-target规则角色、动物板熊简介和N+2身份附注五业务归game/observation，四实际query thunks保late World/locale/catalog/board及callback receiver，原AI private status/stage退休。",
+              "commit": "72f5bdc57f2c48dbefb5f734de4c37be38332c02",
+              "owners": [
+                "backend/src/game/observation/player-prompt-directives.ts",
+                "backend/src/ai/agents/player/player_prompt_policy.ts"
+              ],
+              "evidence": [
+                "docs/refactor/player-prompt-directives.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "只迁机制说明与实际读取；AI模板/人格/协议及原Map缓存仍owner，未知反射API/模块初始化差异单列，完整prompt/观察边界与whole-cell验收继续。"
           ]
         }
       }
@@ -8083,10 +8501,23 @@
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "game-text根30fact/policy转发声明和23纯转发叶退休，全部实际named/reexport/inline type消费者直canonical game-contract；文案词典/11runtime rendering exports保持，无反向新桥。",
+              "commit": "6d069243a9ec8f0ea14d53f44c1df6933006425a",
+              "owners": [
+                "packages/game-text/src/index.ts",
+                "packages/game-contract/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/text-fact-bridge-exit.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "仅文案事实转发桥退出；其余聚合/primitive分层/私有字段或型别公开口及同源验收继续，包namespace/loading变化不称机械API等价。"
           ]
         }
       }
@@ -8424,10 +8855,24 @@
           ]
         },
         "eligibility": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "F01新增自己的currentWolfActions资格快照并在生产观察fallback按原工具顺序要求对应literal true；队友知识不恢复狼聊／刀权，提交仍由原引擎重验。",
+              "commit": "f3147fe2c2044e4a0ba1cb8d471ebb18f18e6289",
+              "owners": [
+                "backend/src/game/observation/player-observation-projector.ts",
+                "backend/src/game/observation/player-observation.ts",
+                "backend/src/ai/agents/providers/observation-fallback.ts"
+              ],
+              "evidence": [
+                "docs/refactor/fallback-current-wolf-actions.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "仅当前自身两资格及生产fallback已修；所有角色信息权限、窗口／目标／库存和最终整格验收继续。"
           ]
         },
         "lifecycle": {
@@ -8445,10 +8890,24 @@
           ]
         },
         "observation": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "F01新增自己的currentWolfActions资格快照并在生产观察fallback按原工具顺序要求对应literal true；队友知识不恢复狼聊／刀权，提交仍由原引擎重验。",
+              "commit": "f3147fe2c2044e4a0ba1cb8d471ebb18f18e6289",
+              "owners": [
+                "backend/src/game/observation/player-observation-projector.ts",
+                "backend/src/game/observation/player-observation.ts",
+                "backend/src/ai/agents/providers/observation-fallback.ts"
+              ],
+              "evidence": [
+                "docs/refactor/fallback-current-wolf-actions.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "仅当前自身两资格及生产fallback已修；所有角色信息权限、窗口／目标／库存和最终整格验收继续。"
           ]
         },
         "checkpoint": {
@@ -8523,10 +8982,24 @@
           ]
         },
         "observation": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "PlayerDeathGun数据结构归GC公共DTO叶，原death_abilities间接type桥退出、真实Observation漏1消费者补直canonical；原枪source裁剪/status顺序、库存与生命/许可算法不变。",
+              "commit": "caef2e1345f4994019ce005e85251305e175503f",
+              "owners": [
+                "packages/game-contract/src/player-state-views.ts",
+                "backend/src/game/mechanisms/roles/death_abilities.ts",
+                "backend/src/game/observation/player-observation.ts"
+              ],
+              "evidence": [
+                "docs/refactor/player-state-contracts.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "只收赠枪玩家摘要type与旧转发出口；真实gun授权/库存/付款/激活/死亡与完整矩阵继续，字段并非许可或付款证明。"
           ]
         },
         "checkpoint": {
@@ -8564,10 +9037,24 @@
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "PlayerDeathGun数据结构归GC公共DTO叶，原death_abilities间接type桥退出、真实Observation漏1消费者补直canonical；原枪source裁剪/status顺序、库存与生命/许可算法不变。",
+              "commit": "caef2e1345f4994019ce005e85251305e175503f",
+              "owners": [
+                "packages/game-contract/src/player-state-views.ts",
+                "backend/src/game/mechanisms/roles/death_abilities.ts",
+                "backend/src/game/observation/player-observation.ts"
+              ],
+              "evidence": [
+                "docs/refactor/player-state-contracts.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "只收赠枪玩家摘要type与旧转发出口；真实gun授权/库存/付款/激活/死亡与完整矩阵继续，字段并非许可或付款证明。"
           ]
         }
       }
@@ -8783,10 +9270,24 @@
           ]
         },
         "observation": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "原玩家字段契约实际归game-contract/player-state-views，23完整Player*结构原optional/null/readonly/writable/union保，实际named/inline及间接DeathGun消费者直公共subpath；投影和资源函数留机制。",
+              "commit": "caef2e1345f4994019ce005e85251305e175503f",
+              "owners": [
+                "packages/game-contract/src/player-state-views.ts",
+                "backend/src/game/mechanisms/roles/player_state.ts",
+                "backend/src/game/observation/player-observation.ts"
+              ],
+              "evidence": [
+                "docs/refactor/player-state-contracts.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "此part只迁本模块原玩家数据类型和旧type出口；PlayerObservation/PlayerNightAbility元数据及专属inline/运行projection和机制state-schema仍各自后续，不等于wholecell。"
           ]
         },
         "checkpoint": {
@@ -8811,10 +9312,24 @@
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "原玩家字段契约实际归game-contract/player-state-views，23完整Player*结构原optional/null/readonly/writable/union保，实际named/inline及间接DeathGun消费者直公共subpath；投影和资源函数留机制。",
+              "commit": "caef2e1345f4994019ce005e85251305e175503f",
+              "owners": [
+                "packages/game-contract/src/player-state-views.ts",
+                "backend/src/game/mechanisms/roles/player_state.ts",
+                "backend/src/game/observation/player-observation.ts"
+              ],
+              "evidence": [
+                "docs/refactor/player-state-contracts.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "此part只迁本模块原玩家数据类型和旧type出口；PlayerObservation/PlayerNightAbility元数据及专属inline/运行projection和机制state-schema仍各自后续，不等于wholecell。"
           ]
         }
       }
@@ -9100,11 +9615,24 @@
                 "docs/refactor/night-ability-read-boundary.md",
                 "docs/refactor/generated/night-ability-read-evidence.json"
               ]
+            },
+            {
+              "part": "完整prepared-native-install拥有原35行native库存／退休ID／冲突／state-source-metadata写与返回，由通用安装器和查验slot两真实callers消费；单一原库存及失败前缀保持。",
+              "commit": "9265335a5d9e005eef8f59ca7cfea5c41495f084",
+              "owners": [
+                "backend/src/game/mechanisms/roles/prepared-native-install.ts",
+                "backend/src/game/mechanisms/roles/ability_changes.ts",
+                "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-inspection-state-slot.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Complete all actual state/schema/codec and common lifecycle/permission consumers; static ordinary read views do not close the whole mechanism.",
-            "Finish canonical pure data ownership, obsolete exports and final zero-debt same-source acceptance."
+            "Finish canonical pure data ownership, obsolete exports and final zero-debt same-source acceptance.",
+            "只交付prepared原生安装写owner；通用能力其它grant/copy/transfer/失效和整格矩阵仍待验，不创建第二store或新lease。"
           ]
         },
         "lease": {
@@ -9461,10 +9989,24 @@
           ]
         },
         "observation": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "原玩家字段契约实际归game-contract/player-state-views，23完整Player*结构原optional/null/readonly/writable/union保，实际named/inline及间接DeathGun消费者直公共subpath；投影和资源函数留机制。",
+              "commit": "caef2e1345f4994019ce005e85251305e175503f",
+              "owners": [
+                "packages/game-contract/src/player-state-views.ts",
+                "backend/src/game/mechanisms/roles/player_state.ts",
+                "backend/src/game/observation/player-observation.ts"
+              ],
+              "evidence": [
+                "docs/refactor/player-state-contracts.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "此part只迁本模块原玩家数据类型和旧type出口；PlayerObservation/PlayerNightAbility元数据及专属inline/运行projection和机制state-schema仍各自后续，不等于wholecell。"
           ]
         },
         "checkpoint": {
@@ -9489,10 +10031,24 @@
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "原玩家字段契约实际归game-contract/player-state-views，23完整Player*结构原optional/null/readonly/writable/union保，实际named/inline及间接DeathGun消费者直公共subpath；投影和资源函数留机制。",
+              "commit": "caef2e1345f4994019ce005e85251305e175503f",
+              "owners": [
+                "packages/game-contract/src/player-state-views.ts",
+                "backend/src/game/mechanisms/roles/player_state.ts",
+                "backend/src/game/observation/player-observation.ts"
+              ],
+              "evidence": [
+                "docs/refactor/player-state-contracts.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "此part只迁本模块原玩家数据类型和旧type出口；PlayerObservation/PlayerNightAbility元数据及专属inline/运行projection和机制state-schema仍各自后续，不等于wholecell。"
           ]
         }
       }
@@ -9660,10 +10216,25 @@
       "baselineOwner": "feature:ability-scope",
       "cells": {
         "state": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Seer/Guard/Potion三个实际case的运行payload身份调用同族slot codec，原JSON.stringify callee查找与重复state getter时点保持，不重造完整lease。",
+              "commit": "bcee29c12712a21585dae5c8574afc1d6a590869",
+              "owners": [
+                "backend/src/game/mechanisms/roles/ability_scope.ts",
+                "backend/src/game/mechanisms/roles/seer/state-slot.ts",
+                "backend/src/game/mechanisms/roles/guard/state-slot.ts",
+                "backend/src/game/mechanisms/roles/witch/state-slot.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-night-state-slots.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "只接三个payload identity case；来源/id/生命/role/期限和完整request currentness仍有独立owner，不完成整个Scope格。"
           ]
         },
         "lease": {
@@ -10262,10 +10833,10 @@
     "currentOnlyRows": 2,
     "rows": 91,
     "cells": 910,
-    "pending": 729,
-    "partial": 181,
+    "pending": 711,
+    "partial": 199,
     "complete": 0,
     "not-applicable": 0
   },
-  "scope": "保留所有历史parts和剩余要求，仅追加1313149e角色三贡献／对应内建展示旧API退出及bccbc17c动物三族完整状态贡献。47实际profile各登记text／oldExports；Catalog两格及Animal state/checkpoint两格。其余较早后继提交尚未全面补登记，observedCommit不等于完整交付截止盘点；所有格仍partial或pending，最终全矩阵继续。"
+  "scope": "保留原91行／910格和全部249历史parts／40历史commit、每格剩余要求原前缀。只补1313149e之后至040b7713含尾30真实提交中的13结构／行为切片，追加43具体part到41格／25行；18pending仅升partial，全部仍711pending／199partial、无complete或N/A。World全局、Trace及归档身份、特权driver等5结构成果与12测试／注释／文档提交在独立交付证据格外审计，不硬塞状态／checkpoint。运行policyIdentity不是归档schema，公共DTO不代表库存行为，夜准入lifecycle仅已提交重入接线。后继1c477398／0276fac仅说明待登记，不混本bounded30；observedCommit只表示本次已核提交范围，完整机制矩阵验收继续。"
 }
