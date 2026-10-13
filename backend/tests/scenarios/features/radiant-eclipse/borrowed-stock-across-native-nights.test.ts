@@ -1,15 +1,12 @@
 /**
- * Tests Eclipse borrowed resources across controlled successive night stages.
- * Inputs are literal native bottle counts, swallow choices and scripted replies;
- * outputs are original use/expiry facts, bottle counts and current-owner failures.
- * Explicit test-only stock casts retain the same seeds without granting ordinary
- * readers writes; no model, network or generated expected result is used.
+ * Scenario tests drive complete controlled NightPipeline and PhaseManager cycles across borrowed/native stock. Inputs are original literal bottle/shelter/dream matrices from a public board fixture; handwritten unchanged native histories, expiry and resource outcomes are the oracle. The supporting board file/URL and test-only original stock mutations are retained; no model or generated expected result runs.
  */
-import { PotionType } from "../../../src/core";
+import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
-import { Phase, COMPONENT, type AliveComponent, type ToolCall } from "../../../src/core";
-import { findNightAbility } from "../../../src/game/mechanisms/roles/abilities";
-import { radiantFixture, radiantProvider } from "../../support/radiant_eclipse";
+import { Phase } from "../../../../src/core";
+import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { radiantFixture, radiantProvider } from "../../../support/radiant_eclipse";
+
 const stockCases = [
   {
     name: "single heal, source keeps stock",
@@ -40,6 +37,7 @@ const stockCases = [
     borrowedAt4: [1, 0],
   },
 ] as const;
+
 for (const row of stockCases)
   test(`literal original stock across N2/N3/N4: ${row.name}`, async () => {
     const f = await radiantFixture(),
@@ -79,6 +77,7 @@ for (const row of stockCases)
         .map((r) => r.actorId),
     ).toEqual(row.borrowedAt4.some(Boolean) ? [1] : []);
   });
+
 test("card16: N3 borrowed shelter never writes the original Counts last target", async () => {
   const f = await radiantFixture();
   await f.pipeline.execute(
@@ -110,6 +109,7 @@ test("card16: N3 borrowed shelter never writes the original Counts last target",
       .map((r) => r.actorId),
   ).toEqual([1]);
 });
+
 test("cards8 and15: borrowed dream inherits N1 but does not write N2 back to original history", async () => {
   const f = await radiantFixture();
   await f.pipeline.execute(f.board.config, radiantProvider(f.requests, { dream: 6 }), 1);
@@ -152,6 +152,7 @@ test("cards8 and15: borrowed dream inherits N1 but does not write N2 back to ori
     { day: 3, targetId: 6 },
   ]);
 });
+
 test("three complete actual PM cycles settle borrowed stock and card17 without virtual death", async () => {
   const f = await radiantFixture();
   const provider = radiantProvider(f.requests, {}, (r) => {

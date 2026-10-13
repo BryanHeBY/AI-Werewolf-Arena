@@ -95499,13 +95499,133 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/radiant_eclipse_cross_night.test.ts",
+      "to": "backend/tests/scenarios/features/radiant-eclipse/borrowed-stock-across-native-nights.test.ts",
+      "sourceCommit": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "eb944203d93a45b5ae04d18d2aaddeeadf8dc39eec4081f3d50ff3da27da8c3c",
+      "candidateSha256": "60e32731ca9ac9edd8aeb53f42c1960b70ec360a6fc48c3cd8772fbd6826c221",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 262,
+          "end": 291,
+          "original": "../../support/radiant_eclipse",
+          "value": "../../../support/radiant_eclipse",
+          "originalResolved": "backend/tests/support/radiant_eclipse.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 166,
+          "end": 210,
+          "original": "../../../src/game/mechanisms/roles/abilities",
+          "value": "../../../../src/game/mechanisms/roles/abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 112,
+          "end": 129,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 28,
+          "end": 45,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "b432e20e0c1d364ac563005defde3495cdded5ba79c6504f71dc93842f4e9426",
+          "title": "literal original stock across N2/N3/N4: single heal, source keeps stock",
+          "occurrence": 1
+        },
+        {
+          "id": "c49b1de36e888aa237872efa1d0c0492df6cd674cdf03ef0e018e8bbe982019b",
+          "title": "literal original stock across N2/N3/N4: single heal, source spent stock",
+          "occurrence": 1
+        },
+        {
+          "id": "100a97655b204415e98fb65b7a496d81680e4e43292c38fd668ecbc6b46e0f67",
+          "title": "literal original stock across N2/N3/N4: double stock, source keeps poison",
+          "occurrence": 1
+        },
+        {
+          "id": "b1cc796b50dba8123cc5ba7bcb63143d566f7e07c01c1a8d2c371cb5d3e14601",
+          "title": "literal original stock across N2/N3/N4: double stock, source spent poison",
+          "occurrence": 1
+        },
+        {
+          "id": "5bf6ea4296da4e74a646be39f95022ff43103f045878e376c794a6b87e200835",
+          "title": "card16: N3 borrowed shelter never writes the original Counts last target",
+          "occurrence": 1
+        },
+        {
+          "id": "42e2df174c6f88581b69678491f7d491c827d89c172a0f8e984b2bb531579895",
+          "title": "cards8 and15: borrowed dream inherits N1 but does not write N2 back to original history",
+          "occurrence": 1
+        },
+        {
+          "id": "32ecf3524a3bde8d4fab6c0499c24830793b3fbf6283dd23cc0cadf821a699f2",
+          "title": "three complete actual PM cycles settle borrowed stock and card17 without virtual death",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import { Phase, COMPONENT, type AliveComponent, type ToolCall } from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { Phase } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "COMPONENT",
+              "imported": "COMPONENT",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "AliveComponent",
+              "imported": "AliveComponent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ToolCall",
+              "imported": "ToolCall",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 573,
-    "targetFiles": 652,
-    "mappingEntries": 652,
-    "baselineCases": 7502,
+    "sourceFiles": 574,
+    "targetFiles": 653,
+    "mappingEntries": 653,
+    "baselineCases": 7509,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
