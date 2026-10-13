@@ -1,15 +1,12 @@
 /**
- * Responsibility: assemble privileged native reproduction metadata and checkpoints.
- * Input: original World, engine phase snapshot, exact board/RNG and recorder;
- * output: archival God-state snapshots and a decision trace, never player knowledge.
- * The recorder owns persistence; domain authorities retain original-state write
- * ownership. Snapshotting neither authorizes actions nor reruns settlement rules.
- * Exact source/lock fingerprinting delegates to recording/engine-fingerprint;
- * failure checkpoints preserve committed prefixes and causal cursor boundaries.
- * Board metadata and cursor policy resolve from the existing World owner; foreign
- * context aliases refuse before snapshots or recording and never replace that owner.
+ * 负责：从实际执行上下文编码原 reproduction 元数据和 checkpoint。
+ * 输入：真实 World/经理、同一参数与 RulePlan owner、记录与运行选项；
+ * 输出：原 schema2 归档数据与轨迹，不写入计划对象或新 revision 字段。
+ * 编码前校验参数、开局上下文与经理的计划引用；伪造别名在记录前拒绝。
+ * 参数 DTO 从同一 owner 脱离克隆，来源指纹和当前状态仍沿原读序获取。
  */
 import { requireBoardParameters } from "../../rulesets/board-parameters";
+import { RulePlan } from "../../rulesets/rule-plan";
 import { fingerprintEngine } from "../../recording/engine-fingerprint";
 import { animalCheckpointSchema } from "../../recording/animal_dream_checkpoint";
 import {
@@ -262,6 +259,8 @@ export function beginGameReproduction(
   const parameters = requireBoardParameters(context.world);
   if (context.parameters !== parameters || context.boardConfig !== parameters.board)
     throw new Error("rule_parameters_context_mismatch");
+  if (!RulePlan.isOwned(context.rulePlan) || context.rulePlan !== context.phaseManager.getRulePlan() || context.rulePlan.parameters !== parameters)
+    throw new Error("rule_plan_context_mismatch");
   const initial = captureCheckpoint(
     context.world,
     context.phaseManager.getSnapshot(),
@@ -273,7 +272,7 @@ export function beginGameReproduction(
     {
       engine: options.engine,
       boardId: options.boardId,
-      normalizedBoard: parameters.encode(),
+      normalizedBoard: context.rulePlan.encodeParameters(),
       locale: options.locale,
       maxDays: options.maxDays,
       dealMode: context.dealMode,

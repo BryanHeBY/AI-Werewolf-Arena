@@ -1,37 +1,18 @@
 /**
- * Runs the ordered night stages, collects sourced effects and prepares dawn damage. Inputs are
- * current World components, stage registrations and the action provider; outputs are night
- * summaries, death proposals and pipeline events. It does not replace an ability owner or
- * collapse paid effects into unsourced marks.
- * Safe native stage arrays use frozen plan membership; opaque custom sources keep
- * their original lazy iteration. Handlers retain their receiver and query actors live.
- * The loop consumes execution entries with observed source metadata; no source label
- * grants actor eligibility or moves the original stage commitment boundaries.
- * The context query getter captures its current World before the stage's day argument;
- * actor qualification remains read-only and never moves into pipeline lifecycle commits.
- * Board binding occurs at the original first acquisition World argument, after
- * cancellation checks; changed subsequent parameters refuse before any acquisition.
- * Mist's concrete unit owns opening facts and the late cleanup transfer; damage
- * handoff remains earlier, and configured failure cleanup does not require acquisition.
- * Time Consort and Scholar/Mentor retain stage-owned priority-50 opening; their
- * concrete units only own the original late cleanup transfer and failure abort.
- * The three exchange families keep one Magician-configured transfer value; their
- * original configured cleanup branches read its shared ownership before World.
- * Demon acquisition and the two native cleanup transfers now belong to their
- * concrete units; the original handoff point and finally ordering stay here.
- * Ruleset lifecycle composition now owns pre-try openings, unit construction,
- * ordered opening/cleanup and incremental transfer to the caller's cycle sink.
- * Result and damage preparation remain here, after the original committed prefix.
+ * 负责：顺序执行夜间阶段、收集有来源的效果并准备黎明伤害。
+ * 输入：当前 World、真实 RulePlan、阶段贡献和行动提供者；输出：原夜间摘要与死亡提案。
+ * 原生策略和具体生命周期单位由同一计划装配；actor、目标、库存和原体资格仍现场查询。
+ * 默认阶段固定成员及顺序，注入惰性来源在前一阶段提交后才拉取下一项。
+ * 取消检查后，参数仍在首次 acquired 的原 World 参数位置绑定；改变参数不隐式重编译。
+ * 来源元数据不授予资格；原 handler receiver 与 execute getter 保持晚读取。
+ * 晚交接保留真实单位的 owned 状态和原失败前缀，result 与最终伤害仍在原已付效果之后准备。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { prepareNightPipelineLifecycle, type NightLifecycleHandoff } from "../../../rulesets/night-lifecycle-plan";
 
 
-import { bindBoardParameters } from "../../../rulesets/board-parameters";
+import { RulePlan } from "../../../rulesets/rule-plan";
 import { bindNightAbilityActorQuery } from "../../mechanisms/roles/night-ability-actors";
-import { bindNativeNightFailurePolicy } from "../../../rulesets/native-night-failure-policy";
-import { bindNativeNightTargetPolicy } from "../../../rulesets/native-night-target-policy";
-import { bindNativeNightEffects } from "../../../rulesets/native-night-effects";
 import { isFragrantPairBoard, fragrantAuthoritySnapshot } from "../../mechanisms/roles/fragrant_pair_seer/ports";
 import { createNobleNightAbortReceiver, attachNobleNightReceiver, checkpointNobleBodyAuthority, assertNobleBodyRosterCurrent, isNobleBodyBoard } from "../../mechanisms/roles/noble_secret_body/ports";
 import { animalAuthoritySnapshot } from "../../mechanisms/roles/animal_dream/ports";
@@ -131,6 +112,7 @@ import { hasDeathAbilityActivationCommit } from "../../mechanisms/roles/death_ab
 import { hasFoxInspectionNightCommit } from "../../mechanisms/roles/cursed_fox/inspection_effect";
 
 export interface NightPipelineDependencies {
+  readonly rulePlan?: RulePlan;
   world: World;
   toolGateway: ToolGateway;
   damageResolutionSystem: DamageResolutionSystem;
@@ -181,6 +163,7 @@ export class NightPipeline {
   private readonly events: GameEvent[];
   private readonly stageRegistry: NightStageRegistry;
   private readonly random: RandomSource;
+  #rulePlan?: RulePlan;
 
   constructor(dependencies: NightPipelineDependencies) {
     this.world = dependencies.world;
@@ -189,6 +172,7 @@ export class NightPipeline {
     this.events = dependencies.events;
     this.stageRegistry = dependencies.stageRegistry ?? getDefaultNightStageRegistry();
     this.random = dependencies.random ?? createRandom();
+    this.#rulePlan = dependencies.rulePlan;
   }
 
   /**
@@ -212,7 +196,10 @@ export class NightPipeline {
     if (!isCurrent())
       return attachNobleNightReceiver({ interrupted: true }, createNobleNightAbortReceiver());
     const pipeline = this;
-    const lifecycle = prepareNightPipelineLifecycle(
+    const prepare = this.#rulePlan
+      ? this.#rulePlan.prepareNightPipelineLifecycle.bind(this.#rulePlan)
+      : prepareNightPipelineLifecycle;
+    const lifecycle = prepare(
       {
         get world() { return pipeline.world; },
         get events() { return pipeline.events; },
@@ -223,6 +210,7 @@ export class NightPipeline {
       () => options.lifecycleHandoff,
     );
     config = lifecycle.config;
+    const rulePlan = this.#rulePlan ??= RulePlan.compile(lifecycle.parameters);
     const {
       ownsWedding, ownsDemon, ownsNoble, ownsFragrant, ownsAnimal, ownsRadiant, ownsMist,
       animalNight, fragrantNight, nobleNight, radiantNight, mistNight,
@@ -325,13 +313,13 @@ export class NightPipeline {
           return bindNightAbilityActorQuery(this.world);
         },
         get nativeNightFailure() {
-          return bindNativeNightFailurePolicy(() => this.world);
+          return rulePlan.nativeNightFailure(() => this.world);
         },
         get nativeNightTargets() {
-          return bindNativeNightTargetPolicy(() => this);
+          return rulePlan.nativeNightTargets(() => this);
         },
         get nativeNightEffects() {
-          return bindNativeNightEffects(() => this);
+          return rulePlan.nativeNightEffects(() => this);
         },
         roleCatalog: this.stageRegistry.roleCatalog,
         toolGateway: this.toolGateway,
@@ -356,7 +344,7 @@ export class NightPipeline {
         state: stageState,
       };
 
-      for (const entry of this.stageRegistry.getPlan(config, this.world).entries) {
+      for (const entry of rulePlan.nightPlan(this.stageRegistry, () => this.world).entries) {
         const stage = entry.handler;
         assertEvilKnightRosterCurrent(this.world);
         if (!isCurrent())

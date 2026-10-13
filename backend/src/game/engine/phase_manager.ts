@@ -1,26 +1,16 @@
 /**
- * Owns game phase progression, cycle execution, result sealing and phase snapshots. Inputs are
- * the assembled World, pipelines and configured limits; outputs are ordered game events and the
- * final result. It still prepares night death proposals before delegating wave commits to
- * DeathResolution. Mechanism lifetimes retain their concrete owners; sealed games accept no
- * further cycle work.
- * Runtime policy reads reuse the World-bound immutable board; direct construction
- * cannot replace that binding, while original actor and phase ownership remains.
- * Mist's terminal port receives current manager World/day at each original site;
- * normal completion retains both inner and outer abort and pending-object order.
- * Time Consort and Scholar/Mentor keep separate currentness checks and repeated
- * terminal reads; frame authority alone decides whether a closed night may restart.
- * Exchange-family terminal ports retain separate normal/finally sites. Trickster
- * finish keeps the Day exile mapping open and has no new outer-cycle abort.
- * Each cycle owns its lifecycle receivers. The pipeline publishes its original
- * units before result construction; configured terminal ordering belongs to the
- * ruleset lifecycle composition and reads this manager's World at every call.
+ * 负责：拥有对局阶段时钟、真实死亡/胜负提交与一次执行的 RulePlan。
+ * 输入：World、只读配置、原 gateway/registry/RNG；输出：原阶段快照、事件和封盘结果。
+ * 与流水线、开局上下文及记录入口共享同一 BoardParameters/RulePlan 引用；
+ * 每夜仍创建独立生命周期 receiver，沿原 current 检查和重复 finally 消费同一已交接单位。
+ * 计划中的具名 checkpoint 只提供原值，最终死亡链和判胜时点仍由本经理拥有。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { NightManagerLifecycle } from "../../rulesets/night-lifecycle-plan";
 
 
 import { bindBoardParameters } from "../../rulesets/board-parameters";
+import { RulePlan } from "../../rulesets/rule-plan";
 import { expireServantAtNightEnd, resolveSecretBodyDamage, checkpointNobleBodyAuthority, appendNobleContractClosure } from "../mechanisms/roles/noble_secret_body/ports";
 import type { SecretBodySources } from "../mechanisms/roles/noble_secret_body/damage";
 import { hasRadiantNight } from "../mechanisms/roles/radiant_eclipse/night_frame";
@@ -152,6 +142,7 @@ import { victoryDecision } from "../mechanisms/win_conditions/results";
  * 负责串行驱动夜晚/白天/投票，并在每个阶段后执行死亡钩子与胜负裁决。
  */
 export class PhaseManager {
+  readonly #rulePlan: RulePlan;
   private readonly config: ReadonlyBoardConfig;
   private readonly events: GameEvent[] = [];
   private readonly eventRegistry: EventRegistry;
@@ -181,7 +172,9 @@ export class PhaseManager {
     private readonly random: RandomSource = createRandom(),
     options: { faultPlan?: unknown } = {},
   ) {
-    config = bindBoardParameters(world, config).board;
+    const parameters = bindBoardParameters(world, config);
+    config = parameters.board;
+    this.#rulePlan = RulePlan.compile(parameters);
     this.config = config;
     if (config.fragrantPairSeer)
       installFragrantPairAuthority(
@@ -204,6 +197,7 @@ export class PhaseManager {
       config,
     );
     this.nightPipeline = new NightPipeline({
+      rulePlan: this.#rulePlan,
       world,
       toolGateway,
       damageResolutionSystem,
@@ -374,7 +368,7 @@ export class PhaseManager {
     }
     const startedDay = this.state.day;
     const manager = this;
-    const lifecycle = new NightManagerLifecycle({
+    const lifecycle = this.#rulePlan.createNightManagerLifecycle({
       get world() { return manager.world; },
       get config() { return manager.config; },
       abortMistPending() { manager.mistPending?.abort(); },
@@ -442,7 +436,7 @@ export class PhaseManager {
     if (this.state.day > maxDays) {
       this.sealResult(
         { winner: null, reason: "max_days_reached", outcome: { kind: "no_winner" } },
-        "max_days_reached",
+        this.#rulePlan.checkpoints.maxDays,
         Phase.Night,
       );
       return this.getSnapshot();
@@ -754,7 +748,7 @@ export class PhaseManager {
             : this.conditionRegistry.evaluateMany(
                 this.world,
                 this.resolveWinConditions(),
-                "night_settled",
+                this.#rulePlan.checkpoints.nightSettled,
               );
         if (expiryActor !== null && !beforeExpiryResult) {
           await this.deathResolution.resolve(
@@ -802,12 +796,12 @@ export class PhaseManager {
         if (beforeExpiryResult) {
           this.sealResult(
             replaceWithFoxVictory(this.world, beforeExpiryResult),
-            "night_settled",
+            this.#rulePlan.checkpoints.nightSettled,
             this.state.phase,
           );
           return this.getSnapshot();
         }
-        if (this.checkAndSealResult("night_settled")) return this.getSnapshot();
+        if (this.checkAndSealResult(this.#rulePlan.checkpoints.nightSettled)) return this.getSnapshot();
       } finally {
         lifecycle.abortSpecialNight(night, nightDay);
       }
@@ -884,7 +878,7 @@ export class PhaseManager {
       pending.finish(current);
       lifecycle.closeMistNormally(cycleDay);
       nightSettled = true;
-      return this.checkAndSealResult(interrupted ? "day_interrupted" : "night_settled");
+      return this.checkAndSealResult(interrupted ? this.#rulePlan.checkpoints.dayInterrupted : this.#rulePlan.checkpoints.nightSettled);
     };
     const settleNight = async (
       blast?: { deaths: number[]; sources: DeathSources },
@@ -984,7 +978,7 @@ export class PhaseManager {
         noteAnimalBearPublication(this.world, this.events, bearStart);
         appendAnimalBeautyNotice(this.world, this.events, cycleDay);
       }
-      return this.checkAndSealResult(blast !== undefined ? "day_interrupted" : "night_settled");
+      return this.checkAndSealResult(blast !== undefined ? this.#rulePlan.checkpoints.dayInterrupted : this.#rulePlan.checkpoints.nightSettled);
     };
     if (!night.mistDelay && !firstDaySheriffBeforeNightInfo && (await settleNight()))
       return this.getSnapshot();
@@ -1063,7 +1057,7 @@ export class PhaseManager {
           Phase.Day,
         );
         if (!dayIsCurrent()) return "terminal";
-        if (this.checkAndSealResult("day_interrupted")) return "terminal";
+        if (this.checkAndSealResult(this.#rulePlan.checkpoints.dayInterrupted)) return "terminal";
         return duel.endsDay ? "night" : "continue";
       },
     });
@@ -1073,7 +1067,7 @@ export class PhaseManager {
     if (this.state.gameOver || !dayIsCurrent()) return this.getSnapshot();
     if (dayResult.interrupted) {
       // 白天被自爆中断时直接结束当日并切到下一夜。
-      if (this.state.gameOver || this.checkAndSealResult("day_interrupted")) {
+      if (this.state.gameOver || this.checkAndSealResult(this.#rulePlan.checkpoints.dayInterrupted)) {
         return this.getSnapshot();
       }
       this.state.day += 1;
@@ -1130,7 +1124,7 @@ export class PhaseManager {
     if (!votingIsCurrent()) return this.getSnapshot();
     if (votingResult.interrupted) {
       // 投票前窗口发生自爆，同样跳过当日剩余流程。
-      if (this.checkAndSealResult("day_interrupted")) {
+      if (this.checkAndSealResult(this.#rulePlan.checkpoints.dayInterrupted)) {
         return this.getSnapshot();
       }
       this.state.day += 1;
@@ -1201,7 +1195,7 @@ export class PhaseManager {
     const beautyResult = resolveBeautyExileVictory(this.world, beautyCandidate);
     if (
       this.checkAndSealResult(
-        "exile_settled",
+        this.#rulePlan.checkpoints.exileSettled,
         beautyResult ? { [WinCondition.SlaughterSide]: beautyResult } : {},
       )
     ) {
@@ -1229,6 +1223,11 @@ export class PhaseManager {
       await this.runSingleCycle(actionProvider, maxDays);
     }
     return this.getSnapshot();
+  }
+
+  /** 流水线、开局上下文及归档编码共享的唯一执行计划。 */
+  getRulePlan(): RulePlan {
+    return this.#rulePlan;
   }
 
   /**

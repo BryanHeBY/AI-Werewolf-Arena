@@ -1,11 +1,10 @@
 /**
- * Composes cycle-owned night cleanup receivers at the existing manager positions.
- * Inputs are deferred manager World/config reads and the concrete pipeline units;
- * outputs retain ordered normal, interrupted, inner-finally and outer cleanup.
- * Each handoff stores the original unit, including its cleanup ownership state.
- * Before handoff the native terminal retains the original early-failure behavior.
- * Argument reads remain late; no close is deduplicated and no acquired guard,
- * resource refund, phase advancement or serialized runtime handle is introduced.
+ * 负责：在原夜间位置装配具体单位并交接同一实例的清理所有权。
+ * 输入：延迟的经理 World/配置读取、已绑定参数和流水线真实单位；
+ * 输出：保序的开启、晚交接、正常关闭及内外 finally 终止入口。
+ * 参数仍在首次开夜的原 World 参数位置绑定；交接前保留原早失败 terminal。
+ * 所有 World/day/events 求值仍发生在原时点，不去重重复 close，不增加 acquired 守卫，
+ * 不返还已付库存、不推进阶段、不序列化运行时 receiver。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../core/domain/world";
@@ -44,7 +43,7 @@ import {
 import { nobleNightReceiver } from "../game/mechanisms/roles/noble_secret_body/ports";
 import { abortAnimalGame } from "../game/mechanisms/roles/animal_dream/ports";
 
-import { bindBoardParameters } from "./board-parameters";
+import { bindBoardParameters, type BoardParameters } from "./board-parameters";
 import { Phase } from "@ai-werewolf-arena/game-contract";
 import { getSessionRecorder } from "../recording/recording_context";
 import { randomDraws, type RandomSource } from "../core/domain/random";
@@ -70,7 +69,7 @@ export interface NightManagerLifecycleRuntime {
   abortMistPending(): void;
 }
 
-/** Only the pipeline can publish its concrete late ownership transfers. */
+/** 只有流水线可在原晚交接位置发布这些具体单位的所有权。 */
 export interface NightLifecycleHandoff {
   receiveDemon(unit: DemonNightUnit): void;
   receiveWedding(unit: WeddingNightUnit): void;
@@ -185,17 +184,23 @@ export interface NightPipelineLifecycleRuntime {
   readonly random: RandomSource;
 }
 
-/** Preserve pre-try opening and each concrete constructor's original position. */
+/** 保持 try 之前的开夜和每个具体构造函数的原位置，失败不回滚已发生前缀。 */
 export function prepareNightPipelineLifecycle(
   runtime: NightPipelineLifecycleRuntime,
   config: ReadonlyBoardConfig,
   day: number,
   handoff?: () => NightLifecycleHandoff | undefined,
+  expectedParameters?: BoardParameters,
 ) {
+    // 先在原参数位置捕获 World，再绑定参数；身份检查不会增加一次 World getter 读取。
     let parameterWorld: World;
+    let parameters: BoardParameters;
     const closeLonelyGirlNight = openLonelyGirlNight(
       ((parameterWorld = runtime.world),
-      (config = bindBoardParameters(parameterWorld, config).board),
+      (config = (parameters = bindBoardParameters(parameterWorld, config)).board),
+      (expectedParameters && parameters !== expectedParameters
+        ? (() => { throw new Error("rule_plan_parameter_mismatch"); })()
+        : undefined),
       parameterWorld),
       day,
     );
@@ -338,7 +343,7 @@ export function prepareNightPipelineLifecycle(
       ownsWedding,
     );
   return {
-    config, ownsWedding, ownsDemon, ownsNoble, ownsFragrant, ownsAnimal, ownsRadiant, ownsMist,
+    config, parameters, ownsWedding, ownsDemon, ownsNoble, ownsFragrant, ownsAnimal, ownsRadiant, ownsMist,
     animalNight, fragrantNight, nobleNight, radiantNight, mistNight,
     demonNight, weddingNight, magicianNight, wolfSorcererNight, tricksterNight,
     timeConsortNight, scholarMentorNight,

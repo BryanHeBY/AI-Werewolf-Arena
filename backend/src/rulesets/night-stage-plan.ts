@@ -1,16 +1,10 @@
 /**
- * Owns the existing finite night-stage closure, collection and ordering algorithm.
- * Inputs are the configured role set, role catalog and optional current World;
- * outputs are the same stage handlers with explicit snapshot or opaque source mode.
- * Compilation delegates through getStages so injected overrides retain control.
- * Metadata only inspects ordinary own data descriptors; Proxy, inherited and
- * accessor fields remain opaque without extra getter calls. Only ordinary native
- * dense arrays become frozen membership; custom/lazy sources keep original iteration
- * and failure prefixes. Original handlers, World and ability instances remain mutable;
- * this is not a complete RulePlan or immutable callback policy. Registration explicitly
- * shares the same original handler and rejects distinct-handler ID conflicts.
- * Executed entries attach sources observed during collection; unknown overrides
- * remain explicit. Sources never reread foreign packs, handler IDs or priorities.
+ * 负责：按原算法收集、去重和排序有限夜间阶段，并标记观察到的来源。
+ * 输入：只读板子、角色目录与可选当前 World；输出：原 handler 和快照或不透明模式。
+ * 默认贡献的成员及潜在能力元数据交给 RulePlan 固定；collector 本身不拥有整局规则。
+ * 普通原生密集数组可冻结成员，虚方法、Proxy、访问器或惰性来源保留原晚拉取及失败前缀。
+ * 描述器检查不额外执行 getter，原 handler、World 和能力实例均不冻结。
+ * 共享注册与鬼新娘替换保留原对象及先后次序，来源信息不授予行动资格。
  */
 import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
 
@@ -61,6 +55,7 @@ import type {
   NightStagePlan,
   NightStageExecutionEntry,
   NightStageContributionSource,
+  SupportedNightDefinition,
 } from "./night-stage-plan-contracts";
 export type { NightStageMetadata, NightStagePlan } from "./night-stage-plan-contracts";
 
@@ -71,7 +66,7 @@ const unknownReferenceSources: readonly NightStageContributionSource[] = Object.
   Object.freeze({ kind: "unknown", reason: "unobserved-reference" } as const),
 ]);
 
-/** Wrap only a just-pulled handler; the next foreign pull stays after its execution. */
+/** 只包装刚拉取的 handler，外部下一次拉取仍在其执行之后发生。 */
 function opaqueExecutionEntries(
   source: Iterable<NightStageHandler>,
 ): Iterable<NightStageExecutionEntry> {
@@ -83,7 +78,7 @@ function opaqueExecutionEntries(
   });
 }
 
-/** Sources are attached after the unchanged spread, using only owned numeric slots. */
+/** 原 spread 完成后才用自有数字槽附加来源，不重读外部贡献字段。 */
 function rememberAppendedSources(
   collected: readonly NightStageHandler[],
   start: number,
@@ -98,8 +93,8 @@ function rememberAppendedSources(
   }
 }
 
-/** Inspect plain numeric data without pulling a foreign iterator or index accessor. */
-function snapshotMembers(source: NightStageHandler[]): NightStageHandler[] | null {
+/** 只查看普通数组的数字槽描述器，不拉取外部 iterator 或调用 index getter。 */
+function snapshotMembers<T>(source: T[]): T[] | null {
   if (
     types.isProxy(source) ||
     !Array.isArray(source) ||
@@ -120,7 +115,7 @@ function snapshotMembers(source: NightStageHandler[]): NightStageHandler[] | nul
     return null;
   const length = Object.getOwnPropertyDescriptor(source, "length");
   if (!length || !("value" in length)) return null;
-  const members: NightStageHandler[] = [];
+  const members: T[] = [];
   for (let index = 0; index < length.value; index++) {
     const entry = Object.getOwnPropertyDescriptor(source, String(index));
     if (!entry || !("value" in entry)) return null;
@@ -150,19 +145,52 @@ function describeStage(stage: NightStageHandler, ordinal: number): NightStageMet
   return Object.freeze({ ordinal, kind: "opaque" });
 }
 
+/** 只复制自有数据描述器；不调用额外 getter，自定义贡献协议明确保持不透明。 */
+function supportedProfile(
+  profile: unknown,
+  role: unknown,
+  pack: NightStageHandler[],
+): SupportedNightDefinition["roles"][number] | null {
+  if (!profile || typeof profile !== "object" || types.isProxy(profile) || typeof role !== "string")
+    return null;
+  const prototype = Object.getPrototypeOf(profile);
+  if (prototype !== Object.prototype && prototype !== null) return null;
+  const descriptors = Object.getOwnPropertyDescriptors(profile);
+  for (const name of ["nightStages", "possibleNightAbilities", "possibleDeathAbilities"])
+    if (descriptors[name] && !("value" in descriptors[name]!)) return null;
+  const handlers = snapshotMembers(pack);
+  const night = descriptors.possibleNightAbilities?.value ?? [];
+  const death = descriptors.possibleDeathAbilities?.value ?? [];
+  if (!Array.isArray(night) || !Array.isArray(death)) return null;
+  const nightMembers = snapshotMembers(night), deathMembers = snapshotMembers(death);
+  if (!handlers || !nightMembers || !deathMembers) return null;
+  if (!nightMembers.every((kind) => typeof kind === "string") || !deathMembers.every((kind) => kind === "gun"))
+    return null;
+  return Object.freeze({
+    role,
+    handlers: Object.freeze(handlers),
+    night: Object.freeze(nightMembers as unknown as NightAbilityKind[]),
+    death: Object.freeze(deathMembers as unknown as "gun"[]),
+  });
+}
+
 /** 夜间阶段注册表。 */
 export class NightStageRegistry {
   readonly roleCatalog: RoleCatalog;
   private readonly sourceByCollection = new WeakMap<
     object,
-    ReadonlyMap<NightStageHandler, readonly NightStageContributionSource[]>
+    Readonly<{
+      sources: ReadonlyMap<NightStageHandler, readonly NightStageContributionSource[]>;
+      definition: SupportedNightDefinition | null;
+      builtIn: boolean;
+    }>
   >();
 
   constructor(roleProfileRegistry: RoleCatalog = getDefaultRoleCatalog()) {
     this.roleCatalog = roleProfileRegistry;
   }
 
-  /** Snapshot safe native membership; preserve virtual overrides and opaque lazy sources. */
+  /** 快照仅用于安全原生成员；虚方法覆盖和不透明惰性来源保留原时点。 */
   getPlan(config: ReadonlyBoardConfig, world?: World): NightStagePlan {
     const source = this.getStages(config, world),
       members = snapshotMembers(source);
@@ -172,10 +200,13 @@ export class NightStageRegistry {
         stages: source,
         entries: opaqueExecutionEntries(source),
         metadata: Object.freeze([]),
+        definition: null,
+        definitionScope: "injected",
       });
     const stages = Object.freeze(members);
     const metadata = Object.freeze(stages.map(describeStage));
-    const sources = this.sourceByCollection.get(source);
+    const collection = this.sourceByCollection.get(source);
+    const sources = collection?.sources;
     const entries = Object.freeze(
       stages.map((handler) =>
         Object.freeze({
@@ -185,7 +216,11 @@ export class NightStageRegistry {
         }),
       ),
     );
-    return Object.freeze({ mode: "snapshot", stages, entries, metadata });
+    return Object.freeze({
+      mode: "snapshot", stages, entries, metadata,
+      definition: metadata.every((row) => row.kind === "data") ? collection?.definition ?? null : null,
+      definitionScope: collection?.builtIn ? "built-in" : "injected",
+    });
   }
 
   getStages(config: ReadonlyBoardConfig, world?: World): NightStageHandler[] {
@@ -203,6 +238,9 @@ export class NightStageRegistry {
       }
     const collected: NightStageHandler[] = [];
     const sources = new Map<NightStageHandler, NightStageContributionSource[]>();
+    // 在原 pack 读取及 spread 之后记录声明，不能为固定计划提前读取目录或玩家状态。
+    const declarations: SupportedNightDefinition["roles"][number][] = [];
+    let standardDefinition = this === defaultRegistry;
     if (world && demonHunterActorId(world) !== null) {
       const start = collected.length;
       collected.push(DEMON_HUNTER_NIGHT_STAGE);
@@ -235,9 +273,15 @@ export class NightStageRegistry {
       );
     }
     for (const role of roleSet.values()) {
-      const pack = this.roleCatalog.get(role)?.nightStages ?? [];
+      const profile = this.roleCatalog.get(role);
+      const pack = profile?.nightStages ?? [];
       const start = collected.length;
       collected.push(...pack);
+      if (standardDefinition) {
+        const declaration = supportedProfile(profile, role, pack);
+        if (declaration) declarations.push(declaration);
+        else standardDefinition = false;
+      }
       rememberAppendedSources(
         collected,
         start,
@@ -320,7 +364,19 @@ export class NightStageRegistry {
     const frozenSources = new Map<NightStageHandler, readonly NightStageContributionSource[]>();
     for (const [handler, contributions] of sources)
       frozenSources.set(handler, Object.freeze(contributions));
-    this.sourceByCollection.set(stages, frozenSources);
+    this.sourceByCollection.set(stages, Object.freeze({
+      sources: frozenSources,
+      builtIn: this === defaultRegistry,
+      definition: standardDefinition ? Object.freeze({
+        roles: Object.freeze(declarations),
+        // 预约仅补齐未来合法赠予/复制所需的定义，不增添当夜执行条目。
+        reservations: Object.freeze([
+          DEMON_HUNTER_NIGHT_STAGE, DEATH_ABILITY_ACTIVATION_STAGE,
+          ROLE_INSPECTION_STAGE, PSYCHIC_INSPECTION_STAGE, MIRROR_INSPECTION_STAGE,
+          LUCKY_ABILITY_STAGE, BLACK_MARKET_RECIPIENT_STAGE,
+        ]),
+      }) : null,
+    }));
     return stages;
   }
 }

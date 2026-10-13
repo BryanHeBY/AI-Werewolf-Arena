@@ -1,19 +1,15 @@
 /**
- * Responsibility: assemble the existing World, role mechanisms and game runtime.
- * Input: original BoardConfig and explicit setup options; output: the original
- * initialized game with its installed components, stage and tool contributions.
- * Bootstrap owns initial assembly, never transport authentication or player
- * decisions. Rulesets reject unsupported combinations before setup continues;
- * role owners retain runtime resources and original component identities. The support
- * owner consumes original catalog/event-query bindings after the existing deal fork;
- * bootstrap alone shuffles the accepted deck at the original draw position.
- * The checked board clone freezes before role initialization; the new context wrapper
- * fixes its owner aliases without freezing callers, World, actors or RNG.
+ * 负责：从原配置与显式选项装配 World、角色组件、机制和真实游戏运行时。
+ * 输入：BoardConfig、角色与随机源选项；输出：原初始化对象及同一参数和 RulePlan owner。
+ * 先在原 deal fork 后验证支持范围并洗牌，再初始化实体；不读取模型认证或选择玩家动作。
+ * 校验后的配置克隆在角色初始化前冻结，原 World、actor、RNG 和调用方均不冻结。
+ * PhaseManager 创建规则计划，流水线、开局上下文和记录入口消费同一引用。
  */
 import { installNobleBodyAuthority } from "../game/mechanisms/roles/noble_secret_body/authority";
 import { installAnimalAuthority } from "../game/mechanisms/roles/animal_dream/authority";
 import { buildSupportedRoleDeck } from "../rulesets/supported-role-deck";
 import { BoardParameters, bindBoardParameters } from "../rulesets/board-parameters";
+import type { RulePlan } from "../rulesets/rule-plan";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { installRadiantEclipseBoard } from "../game/mechanisms/roles/radiant_eclipse/night_frame";
 import { installMistRavenBoard } from "../game/mechanisms/roles/mist_raven/night_frame";
@@ -69,6 +65,7 @@ export interface BootstrapResult {
   world: World;
   readonly boardConfig: ReadonlyBoardConfig;
   readonly parameters: BoardParameters;
+  readonly rulePlan: RulePlan;
   phaseManager: PhaseManager;
   playerIds: EntityId[];
   random: RandomSource;
@@ -129,6 +126,7 @@ export function bootstrapGame(
     world,
     boardConfig,
     parameters,
+    rulePlan: phaseManager.getRulePlan(),
     phaseManager,
     playerIds,
     random,
