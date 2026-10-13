@@ -1,0 +1,220 @@
+{
+  "schema": "awa-fragrant-wave-publication-evidence-v1",
+  "scope": {
+    "baseline": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+    "paths": 4,
+    "rows": [
+      {
+        "path": "backend/src/game/engine/death_resolution.ts",
+        "sha256": "fb30a76f9ac97f2a09fb0462f69f49257fa6553fe4b04ee91f7dd3e4022a99a3"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/death-wave.ts",
+        "sha256": "5749e400f2599b9b311371e90ee2bec6b888a9b4b017d24fe2f5e002ed63c62c"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/ports.ts",
+        "sha256": "572bdb9842522d901de84c3032de0392f78a6fa2b4155ee33923e0c2e536609e"
+      },
+      {
+        "path": "backend/tests/unit/features/fragrant-pair-seer/death-wave-publication.test.ts",
+        "sha256": "d7c2cc4f437349995150371e004ae3ba73eb76913637dda22138af265827a1a5"
+      }
+    ],
+    "receipts": {
+      "initialTypes": {
+        "session": 66810,
+        "exit": 2,
+        "diagnostics": "two new-test GameEvent.audience accesses require event discriminator narrowing"
+      },
+      "finalTypes": {
+        "session": 62003,
+        "exit": 0
+      },
+      "firstRuntime": {
+        "exit": 1,
+        "newCasesPass": 3,
+        "newCasesFail": 1,
+        "existingCasesPass": 2
+      },
+      "fixedOneRuntime": {
+        "exit": 0,
+        "pass": 1,
+        "filtered": 3,
+        "expect": 10
+      },
+      "scopedGate": {
+        "session": 70178,
+        "exit": 0,
+        "comments": 0,
+        "newFeatureDependencies": 0,
+        "remainingResolverRawDebt": 13
+      }
+    },
+    "pendingHandles": []
+  },
+  "programProof": {
+    "baseline": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+    "actualGitOrigins": 2,
+    "rows": [
+      {
+        "name": "recordFragrantWave",
+        "equal": true
+      },
+      {
+        "name": "publishFragrantWave",
+        "equal": true
+      },
+      {
+        "name": "expandWeddingWave",
+        "equal": true
+      },
+      {
+        "name": "lastWordsMechanism",
+        "equal": true
+      },
+      {
+        "name": "deathCommitter",
+        "equal": true
+      },
+      {
+        "name": "constructor",
+        "equal": true
+      },
+      {
+        "name": "resolve",
+        "equal": true
+      },
+      {
+        "name": "collectDeathShot",
+        "equal": true
+      },
+      {
+        "name": "collectLastWords",
+        "equal": true
+      }
+    ],
+    "emitted": [
+      {
+        "kind": "ESNext",
+        "wholeInverseSame": true
+      },
+      {
+        "kind": "CommonJS",
+        "wholeInverseSame": true
+      }
+    ],
+    "existingPortDeclarationsSame": true,
+    "oldPortCount": 4,
+    "newPortCount": 6,
+    "addedFieldOnly": "fragrantDeathWave",
+    "sha": {
+      "backend/src/game/engine/death_resolution.ts": "fb30a76f9ac97f2a09fb0462f69f49257fa6553fe4b04ee91f7dd3e4022a99a3",
+      "backend/src/game/mechanisms/roles/fragrant_pair_seer/death-wave.ts": "5749e400f2599b9b311371e90ee2bec6b888a9b4b017d24fe2f5e002ed63c62c",
+      "backend/src/game/mechanisms/roles/fragrant_pair_seer/ports.ts": "572bdb9842522d901de84c3032de0392f78a6fa2b4155ee33923e0c2e536609e",
+      "backend/tests/unit/features/fragrant-pair-seer/death-wave-publication.test.ts": "d7c2cc4f437349995150371e004ae3ba73eb76913637dda22138af265827a1a5"
+    }
+  },
+  "reviews": {
+    "root": "实际完整两发布方法与新窄端口源审通过。原 actor 查询与 day/phase/events 读取在原表达式位置，先追加隐藏事实，再查原最新公开根并发布，必须记录的失败前缀保留。五处实际委托，prepare/commit/cancel 仍原 authority。",
+    "independentInventory": {
+      "baseline": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+      "files": [
+        {
+          "path": "backend/src/game/engine/death_resolution.ts",
+          "sha256": "fb30a76f9ac97f2a09fb0462f69f49257fa6553fe4b04ee91f7dd3e4022a99a3",
+          "sameSHA": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/death-wave.ts",
+          "sha256": "5749e400f2599b9b311371e90ee2bec6b888a9b4b017d24fe2f5e002ed63c62c",
+          "sameSHA": true
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/ports.ts",
+          "sha256": "572bdb9842522d901de84c3032de0392f78a6fa2b4155ee33923e0c2e536609e",
+          "sameSHA": true
+        },
+        {
+          "path": "backend/tests/unit/features/fragrant-pair-seer/death-wave-publication.test.ts",
+          "sha256": "d7c2cc4f437349995150371e004ae3ba73eb76913637dda22138af265827a1a5",
+          "sameSHA": true
+        }
+      ],
+      "methods": [
+        {
+          "oldName": "recordFragrantWave",
+          "newName": "recordCommittedWave",
+          "bodySame": true,
+          "parametersSame": true
+        },
+        {
+          "oldName": "publishFragrantWave",
+          "newName": "publishVisibleWave",
+          "bodySame": true,
+          "parametersSame": true
+        }
+      ],
+      "checks": {
+        "twoExactBodiesAndParams": true,
+        "assemblyDeferredWorldActorQuery": true,
+        "assemblyDeferredDayPhaseEvents": true,
+        "runtimeNoWorldOrStockExposure": true
+      },
+      "heads": [],
+      "findings": [],
+      "prefixReview": [
+        "Both hidden facts append before publicRoot reverse search/publisher and optional required records",
+        "Receipt.pairIds is original array reference; deathIds/sources are original explicit copies at old points",
+        "PublicRoot match keeps wolf_self_destruct/voted_out/hunter_shot only and original latest-event search",
+        "Publisher and mandatory record exceptions retain committed facts; second record remains skipped after first failure",
+        "No binding prepare/commit/cancel,Alive write,relationship expansion,lastwords/badge/gun expiry moved into publication"
+      ],
+      "newTestValidity": "Structured receipt in four literal payload/publication tests is explicitly nonauthoritative spy input, not claimed to grant authority. Actual publisher bridge calls original authority. Invalid terminal phase fails before facts; two fake recorder callbacks check original failure prefix only.",
+      "limits": [
+        "No compiler/runtime/World/game/full gate or cold import rerun",
+        "Only actual four-path publication owner extraction; full death-wave/authority/receipt migration not claimed"
+      ]
+    }
+  },
+  "validation": {
+    "initialTypes": {
+      "session": 66810,
+      "exit": 2,
+      "diagnostics": "two new-test GameEvent.audience accesses require event discriminator narrowing"
+    },
+    "finalTypes": {
+      "session": 62003,
+      "exit": 0
+    },
+    "firstRuntime": {
+      "exit": 1,
+      "newCasesPass": 3,
+      "newCasesFail": 1,
+      "existingCasesPass": 2
+    },
+    "fixedOneRuntime": {
+      "exit": 0,
+      "pass": 1,
+      "filtered": 3,
+      "expect": 10
+    },
+    "scopedGate": {
+      "session": 70178,
+      "exit": 0,
+      "comments": 0,
+      "newFeatureDependencies": 0,
+      "remainingResolverRawDebt": 13
+    }
+  },
+  "firstFailures": [
+    "两处新测试 audience 访问未先收窄事件 type，仅修测试类型，未扩大生产契约",
+    "新手写轨迹缺原第二次记录前 phase getter，原生产未改；补全原轨迹后只重跑失败案例"
+  ],
+  "remaining": [
+    "完整关系触发／回执生命周期",
+    "Typed DeathWavePlan / CommitReceipt 链",
+    "其余角色死亡贡献与最终判胜",
+    "结算器十三项既有内部依赖"
+  ]
+}

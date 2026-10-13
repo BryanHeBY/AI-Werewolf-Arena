@@ -1,12 +1,11 @@
 /**
  * 负责有序死亡波、角色死亡钩子、枪击选择、遗言与警徽交接。输入是待处理的死亡名单、
  * 原死因与原生命行动权限；输出是按原顺序提交的死亡和事件。实际生命修改和唯一已结算
- * 账本委托 DeathCommitter，参数仍使用阶段管理器同一深只读规则视图。
+ * 账本委托 DeathCommitter，双生事实发布委托本角色 publication；参数仍使用同一深只读规则视图。
  * 本模块不切换阶段或确定最终胜负；关系扩展、遗言、警徽和枪的最终过期保留原执行顺序。
  */
 import { DeathCommitter } from "./death-committer";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { getSessionRecorder } from "../../recording/recording_context";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
 import {
   isAnimalDreamBoard,
@@ -16,14 +15,14 @@ import {
 } from "../mechanisms/roles/animal_dream/authority";
 import { appendAnimalFact } from "../mechanisms/roles/animal_dream/facts";
 import {
+  FragrantDeathWavePublication,
   isFragrantPairBoard,
   prepareFragrantDeathWave,
   commitFragrantDeathWave,
   publishFragrantDeathWave,
   cancelFragrantDeathWave,
   fragrantAuthoritySnapshot,
-  type FragrantWaveReceipt,
-} from "../mechanisms/roles/fragrant_pair_seer/authority";
+} from "../mechanisms/roles/fragrant_pair_seer/ports";
 import { isNobleBodyBoard } from "../mechanisms/roles/noble_secret_body/authority";
 import { assertMagicianRosterCurrent } from "../mechanisms/roles/magician/night_frame";
 import {
@@ -88,91 +87,6 @@ interface DeathWaveActions {
 
 /** Resolves successive death waves without advancing the current action phase. */
 export class DeathResolution {
-  /** All inert actual facts precede fallible recording, so a failed prefix remains auditable. */
-  private recordFragrantWave(
-    receipt: FragrantWaveReceipt | null,
-    ids: readonly number[],
-    sources: DeathSources,
-    origins: ReadonlyMap<number, Phase>,
-    initialWave: boolean,
-  ): void {
-    const actorId = this.world.getEntityIdsByRole(Role.FragrantPhantom)[0]!,
-      phases: Record<string, "night" | "day" | "voting"> = {};
-    for (const id of ids) {
-      const origin = origins.get(id) ?? this.state.phase;
-      if (origin === Phase.GameOver) throw Error("fragrant_death_origin_invalid");
-      phases[String(id)] = origin;
-    }
-    const wave = {
-      policy: FRAGRANT_PAIR_POLICY,
-      actorId,
-      day: this.state.day,
-      deaths: [...ids],
-      deathSources: Object.fromEntries(ids.map((id) => [String(id), [...(sources[id] ?? [])]])),
-      deathPhases: phases,
-      initialWave,
-    };
-    this.events.push({
-      timestamp: Date.now(),
-      type: "fragrant_wave_committed",
-      payload: wave,
-      audience: Object.freeze([]),
-    });
-    const rootPhase = receipt ? phases[String(receipt.rootId)]! : null,
-      link = receipt && {
-        policy: FRAGRANT_PAIR_POLICY,
-        actorId,
-        day: receipt.day,
-        bindingId: `fragrant:night:${receipt.day}`,
-        pairIds: receipt.pairIds,
-        rootId: receipt.rootId,
-        addedTargetId: receipt.addedTargetId,
-        rootPhase: rootPhase!,
-        initialWave,
-      };
-    if (link)
-      this.events.push({
-        timestamp: Date.now(),
-        type: "fragrant_link_triggered",
-        payload: link,
-        audience: Object.freeze([]),
-      });
-    // A public root may precede this wave (exile) or its recording (gun).
-    if (receipt) {
-      const publicRoot = [...this.events]
-        .reverse()
-        .find(
-          (e) =>
-            (e.type === "wolf_self_destruct" && e.payload.wolfId === receipt.rootId) ||
-            (e.type === "voted_out" && e.payload.target === receipt.rootId) ||
-            (e.type === "hunter_shot" && e.payload.targetId === receipt.rootId),
-        );
-      if (publicRoot) publishFragrantDeathWave(this.world, receipt, publicRoot);
-    }
-    getSessionRecorder()?.recordRequiredLogicOp({
-      scope: "resolution",
-      op: "fragrant_wave_committed",
-      phase: this.state.phase,
-      status: "ok",
-      output: wave,
-    });
-    if (link)
-      getSessionRecorder()?.recordRequiredLogicOp({
-        scope: "resolution",
-        op: "fragrant_link_triggered",
-        phase: this.state.phase,
-        status: "ok",
-        output: link,
-      });
-  }
-  private publishFragrantWave(receipt: FragrantWaveReceipt | null, event: GameEvent): void {
-    if (
-      receipt &&
-      (event.type === "night_resolved" || event.type === "additional_deaths") &&
-      event.payload.deaths.some((id) => receipt.pairIds.includes(id))
-    )
-      publishFragrantDeathWave(this.world, receipt, event);
-  }
   private expandWeddingWave(
     ids: number[],
     sources: DeathSources,
@@ -210,6 +124,25 @@ export class DeathResolution {
       },
       get state() {
         return resolution.state;
+      },
+    });
+  })();
+  // 只捕获原结算器；每次窄查询/读取/发布仍在原表达式处使用当前 World 与状态。
+  private readonly fragrantDeathWave = (() => {
+    const resolution = this;
+    return new FragrantDeathWavePublication({
+      actorId: () => resolution.world.getEntityIdsByRole(Role.FragrantPhantom)[0]!,
+      get phase() {
+        return resolution.state.phase;
+      },
+      get day() {
+        return resolution.state.day;
+      },
+      get events() {
+        return resolution.events;
+      },
+      publish(receipt, event) {
+        publishFragrantDeathWave(resolution.world, receipt, event);
       },
     });
   })();
@@ -398,7 +331,7 @@ export class DeathResolution {
         }
         // Later gun waves were already marked and recorded in the gun callback.
         if (ownsFragrant && firstBatch)
-          this.recordFragrantWave(
+          this.fragrantDeathWave.recordCommittedWave(
             firstBatch ? fragrantInitial : null,
             pending,
             allSources,
@@ -407,7 +340,7 @@ export class DeathResolution {
           );
         if (firstBatch && nightEffects?.onInitialWaveCommitted) {
           const event = nightEffects.onInitialWaveCommitted(pending, allSources);
-          this.publishFragrantWave(fragrantInitial, event);
+          this.fragrantDeathWave.publishVisibleWave(fragrantInitial, event);
         }
         if (ownsAnimal && firstBatch) {
           for (const id of pending)
@@ -442,7 +375,7 @@ export class DeathResolution {
             payload: { deaths: [fragrantInitial.addedTargetId] },
           };
           this.events.push(event);
-          this.publishFragrantWave(fragrantInitial, event);
+          this.fragrantDeathWave.publishVisibleWave(fragrantInitial, event);
         }
         resolveWildChildDeathWave(
           this.world,
@@ -730,7 +663,13 @@ export class DeathResolution {
                       fragrantGunCommitted = true;
                     }
                     if (ownsFragrant)
-                      this.recordFragrantWave(fragrantGun, marked, allSources, originPhases, false);
+                      this.fragrantDeathWave.recordCommittedWave(
+                        fragrantGun,
+                        marked,
+                        allSources,
+                        originPhases,
+                        false,
+                      );
                     refreshHiddenWolfInheritance(this.world, this.events, this.state.day);
                     refreshGargoyleInheritance(this.world, this.events, this.state.day);
                     refreshMechanicalInheritance(this.world, this.state.day, this.events);
@@ -743,7 +682,7 @@ export class DeathResolution {
                       payload: { deaths: publicLinked },
                     };
                     this.events.push(event);
-                    this.publishFragrantWave(fragrantGun, event);
+                    this.fragrantDeathWave.publishVisibleWave(fragrantGun, event);
                   }
                   for (const binding of charmBindings)
                     if (commitCharmDeath(this.world, binding))
