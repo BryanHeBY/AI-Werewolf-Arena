@@ -11,7 +11,7 @@
 | P4 规则计划与生命周期  | 进行中 | RulePlan实际同引用消费、late计划与周期单位已落；C22–C24完整机制矩阵继续                |
 | P5 效果、死亡与判胜    | 进行中 | C25/26真实毒来源、C27实际Wave/Receipt与提交、C28馥郁／动物边界已落；全效果/关系继续              |
 | P6 能力、观察与展示    | 进行中 | C35第五包、F01默认生产观察回退已落；C30–C34完整投影、C36与其余展示贡献继续                      |
-| P7 记录与独立复现      | 进行中 | C37完整checkpoint形成链归实际贡献owner；verifier/记录生命周期与C38–C40继续                                                                                |
+| P7 记录与独立复现      | 进行中 | C37完整checkpoint与16verifier装配、C38生命周期唯一owner已落；记录/版本完整验收继续                                                                                |
 | P8 目录、命名与文档    | 待执行 | C41–C44                                                                                |
 | P9 全仓收敛与验收      | 待执行 | C45–C48；同源固定输入、门禁零债务                                                      |
 
@@ -452,3 +452,5 @@
 - C37 独立verifier完整装配：24paths，原版本/schema先准入后16显式调用，3完整算法归独立owner，贵族audit同引用/恶魔RedMoon子链和第一拒绝保；18枚举helper真正退出重barrel，Magician传递依赖审查finding修闭。19真Git/3声明raw/完整main ES+CJS逆和24SHA中文头0，运行图136模块313边禁层/unknown0；新4/0/9+原Animal有界3/0/3，有限2829与helper28711作者actualclosed0，Root实际源及第三向两阶段审0。metadata只观察首次读取，非完整entrytrace，第三向未重图/type/runtime。全55语义/目录迁移/C39/P7仍续，内部英文注释下一批翻译，见verifier-contributions.md。
 
 - 已触及审计逻辑中文注释：d0d2基线24checked/18changed，52原英文片段译中文并补2具体数据契约说明；RecordedEvent audience及Lonely后续决定条件两原过强说明审修闭。完整tokens/AST/ES+CJS原输出同、6未改wholebytes/18实际SHA与独立完整源码措辞审0；作者SourceFile.text与第三向scope字段两harness初红保，仅修证明不源改，不重types/runtime。技术字段保持，全仓随重构继续，注释不算结构交付，见verifier-chinese-comments.md。
+
+- C38 录制生命周期唯一owner：5paths/3source+2newtest，6真实状态、timer/queue/firstMemoMeta移具体life并actual消费者接线，manager保dirty/store/mandatory账本和完整发布；原一个persist async/首failedPromise/closing只joinqueue/前缀完成后closed先finalIO保。新4+原mandatory4实际8/0/29、finite12471Rootactualclosed0，环境换清空/tmp日志如实记toolhistory不重、不造；另原ALS有界1/0/2，完整mgr ES+CJS精确逆/6正文/context/5CN头0。Root及两独立5SHA/2真Git/actual时序失败正文审0，markClosed打印/第三向原表读取两harness首红保而不源改。原closing可开trace/后段optional短路范围保，不据owner提取称全C38/P7完成，见session-recording-lifecycle.md。

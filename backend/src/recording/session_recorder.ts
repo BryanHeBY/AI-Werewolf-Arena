@@ -1,6 +1,12 @@
+/**
+ * 负责一个会话的复盘聚合、增量文件内容和终结发布；输入为事件、行动记录与结束元数据。
+ * 输出为公开复盘、玩家视角和严格复现归档；聚合和存储仍由各自具体模块持有。
+ * 生命周期模块唯一拥有定时器、队列、关闭与首次终结 Promise；本管理器保留必需失败账本。
+ * 严格前缀写失败即登记，最终发布仍尝试完成；单个失败原样传播，多失败保持原顺序聚合。
+ * 此处不控制游戏阶段或资源提交，不把可选诊断写入失败改成游戏错误。
+ */
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { formatErrorDiagnostic } from "../utils/error_diagnostic";
-/** Session replay recording orchestration and incremental file persistence. */
 import path from "path";
 import type {
   DebugSummaryInput,
@@ -21,24 +27,22 @@ import {
   type ReproductionFailureScope,
   type ReproductionMetadata,
 } from "./reproduction";
+import { SessionRecordingLifecycle } from "./session-recording-lifecycle";
 
-const FLUSH_DEBOUNCE_MS = 100;
-
-/**
- * Application service coordinating an in-memory replay aggregate with a file store.
- * Replay semantics live in ReplaySessionAggregate; storage semantics live in ReplayFileStore.
- */
+/** 文件内容、严格失败及归档发布的唯一编排者；刷盘排程由具体生命周期实例持有。 */
 export class SessionRecordManager {
-  private closed = false;
-  private closing = false;
+  private readonly lifecycle = new SessionRecordingLifecycle(
+    () => this.flushDirtyFiles(),
+    (error) => {
+      console.warn(
+        `[observability] replay_flush_failed err=${formatErrorDiagnostic(error, this.displayLocale)}`,
+      );
+    },
+  );
   private dirtyPublicTimeline = false;
   private dirtyLogicOps = false;
   private dirtyDebugReports = false;
   private readonly dirtyPlayers = new Set<number>();
-  private flushTimer: NodeJS.Timeout | null = null;
-  private flushChain: Promise<void> = Promise.resolve();
-  private finalMeta: ReplayFinalizeMeta | null = null;
-  private finalization: Promise<DebugSummaryInput> | null = null;
   private reproduction?: ReproductionTrace;
   private dirtyReproduction = false;
   private replayEventCursor?: () => number;
@@ -83,7 +87,7 @@ export class SessionRecordManager {
   get sessionId(): string {
     return this.aggregate.sessionMeta.sessionId;
   }
-  /** Exactly the operation stream serialized into a reproduction, excluding AI diagnostics. */
+  /** 严格复现实际序列化的领域操作数，不包含 AI 诊断操作。 */
   get reproductionOperationCount(): number {
     return this.aggregate.reproductionOperationCount;
   }
@@ -95,15 +99,15 @@ export class SessionRecordManager {
     metadata: ReproductionMetadata,
     liveEvents?: () => readonly import("../core").GameEvent[],
   ): ReproductionTrace {
-    if (this.closed || this.reproduction)
+    if (this.lifecycle.isClosed || this.reproduction)
       throw new Error("reproduction_scope_already_started_or_closed");
     this.aggregate.enableReproduction();
     this.reproduction = new ReproductionTrace(
       metadata,
       () => {
-        if (this.closed) return;
+        if (this.lifecycle.isClosed) return;
         this.dirtyReproduction = true;
-        this.scheduleFlush();
+        this.lifecycle.scheduleFlush();
       },
       liveEvents,
     );
@@ -115,64 +119,55 @@ export class SessionRecordManager {
   }
 
   recordPublicEvent(input: ReplayRecordPublicEventInput): void {
-    if (this.closed) return;
+    if (this.lifecycle.isClosed) return;
     this.aggregate.recordPublicEvent(input);
     this.dirtyPublicTimeline = true;
-    this.scheduleFlush();
+    this.lifecycle.scheduleFlush();
   }
 
-  /** Required causal input cannot be appended to a closing or finalized recording. */
+  /** 必需因果输入在 closing 起即拒绝；普通诊断仍保留原有的关闭前追加语义。 */
   recordRequiredLogicOp(input: ReplayRecordLogicOpInput): void {
-    if (this.closed || this.closing) throw new Error("mandatory_logic_op_recording_closed");
+    if (this.lifecycle.isClosed || this.lifecycle.isClosing)
+      throw new Error("mandatory_logic_op_recording_closed");
     this.recordLogicOp(input);
   }
 
   recordLogicOp(input: ReplayRecordLogicOpInput): void {
-    if (this.closed) return;
+    if (this.lifecycle.isClosed) return;
     const eventCount = this.reproduction?.ownedEventCursor ?? this.replayEventCursor?.();
     this.aggregate.recordLogicOp(eventCount === undefined ? input : { ...input, eventCount });
     this.dirtyLogicOps = true;
-    this.scheduleFlush();
+    this.lifecycle.scheduleFlush();
   }
 
   recordPlayerRound(input: ReplayRecordPlayerRoundInput): void {
-    if (this.closed) return;
+    if (this.lifecycle.isClosed) return;
     this.aggregate.recordPlayerRound(input);
     this.dirtyPlayers.add(input.playerId);
-    this.scheduleFlush();
+    this.lifecycle.scheduleFlush();
   }
 
   recordPlayerEvent(input: ReplayRecordPlayerEventInput): void {
-    if (this.closed) return;
+    if (this.lifecycle.isClosed) return;
     this.aggregate.recordPlayerEvent(input);
     this.dirtyPlayers.add(input.playerId);
-    this.scheduleFlush();
+    this.lifecycle.scheduleFlush();
   }
 
   recordDebugReport(input: ReplayRecordDebugReportInput): string {
-    if (this.closed) return "rb-closed";
+    if (this.lifecycle.isClosed) return "rb-closed";
     const reportId = this.aggregate.recordDebugReport(input);
     this.dirtyDebugReports = true;
-    this.scheduleFlush();
+    this.lifecycle.scheduleFlush();
     return reportId;
   }
 
-  async flushNow(): Promise<void> {
-    if (this.closed) return;
-    if (this.closing) {
-      await this.flushChain;
-      return;
-    }
-    if (this.flushTimer) {
-      clearTimeout(this.flushTimer);
-      this.flushTimer = null;
-    }
-    await this.enqueueFlush();
+  flushNow(): Promise<void> {
+    return this.lifecycle.flushNow();
   }
 
   finalize(meta: ReplayFinalizeMeta): Promise<DebugSummaryInput> {
-    this.finalization ??= this.persistFinalRecord(meta);
-    return this.finalization;
+    return this.lifecycle.finalize(() => this.persistFinalRecord(meta));
   }
 
   writeDebugSummary(markdown: string): Promise<void> {
@@ -180,14 +175,9 @@ export class SessionRecordManager {
   }
 
   private async persistFinalRecord(meta: ReplayFinalizeMeta): Promise<DebugSummaryInput> {
-    this.closing = true; // Prevent new timers before the first await.
-    this.finalMeta = meta;
-    if (this.flushTimer) {
-      clearTimeout(this.flushTimer);
-      this.flushTimer = null;
-    }
-    await this.enqueueFlush();
-    this.closed = true;
+    // closing 在首个 await 前生效；前缀完成后关闭追加，再发布最终文件。
+    await this.lifecycle.beginClosing(meta);
+    this.lifecycle.markClosed();
 
     const manifest = this.aggregate.buildManifest(meta);
     const replayDocument = this.buildReplayDocument(meta);
@@ -226,6 +216,7 @@ export class SessionRecordManager {
       ),
     );
 
+    // 已失败的严格前缀先列出，再列本次必需终档失败；成功发布不撤销旧失败。
     const failures = [
       ...this.mandatoryFlushFailures,
       ...required
@@ -258,29 +249,10 @@ export class SessionRecordManager {
     if (failures.length) throw new AggregateError(failures, "session_record_initialization_failed");
   }
 
-  private scheduleFlush(): void {
-    if (this.closing || this.closed || this.flushTimer) return;
-    this.flushTimer = setTimeout(() => {
-      this.flushTimer = null;
-      if (this.closing || this.closed) return;
-      void this.enqueueFlush();
-    }, FLUSH_DEBOUNCE_MS);
-  }
-
-  private enqueueFlush(): Promise<void> {
-    this.flushChain = this.flushChain
-      .then(() => this.flushDirtyFiles())
-      .catch((error) => {
-        console.warn(
-          `[observability] replay_flush_failed err=${formatErrorDiagnostic(error, this.displayLocale)}`,
-        );
-      });
-    return this.flushChain;
-  }
-
   private async flushDirtyFiles(): Promise<void> {
-    if (this.closed) return;
+    if (this.lifecycle.isClosed) return;
     if (this.dirtyReproduction && this.reproduction) {
+      // 先消费本次脏位；严格失败登记在账本，后续仍可发布终档并报告此前失败。
       this.dirtyReproduction = false;
       try {
         await this.store.writeJsonStrict("reproduction.json", this.reproduction.build());
@@ -293,7 +265,10 @@ export class SessionRecordManager {
     if (this.dirtyPublicTimeline) {
       this.dirtyPublicTimeline = false;
       await Promise.all([
-        this.store.writeJson("replay.json", this.buildReplayDocument(this.finalMeta ?? undefined)),
+        this.store.writeJson(
+          "replay.json",
+          this.buildReplayDocument(this.lifecycle.finalMetadata ?? undefined),
+        ),
         this.store.writeJson("phase_windows.json", this.aggregate.phaseWindowsPayload()),
         this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
       ]);
@@ -318,7 +293,7 @@ export class SessionRecordManager {
       await Promise.all([
         this.store.writeJson(
           "manifest.json",
-          this.aggregate.buildManifest(this.finalMeta ?? undefined),
+          this.aggregate.buildManifest(this.lifecycle.finalMetadata ?? undefined),
         ),
         this.store.writeJson("timeline_index.json", this.aggregate.timelineIndexPayload()),
       ]);
