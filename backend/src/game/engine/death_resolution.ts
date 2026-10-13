@@ -4,6 +4,7 @@
  * 账本委托 DeathCommitter，双生事实发布委托本角色 publication；参数仍使用同一深只读规则视图。
  * 本模块不切换阶段或确定最终胜负；关系扩展、遗言、警徽和枪的最终过期保留原执行顺序。
  */
+import { AnimalDeathWavePreparation } from "../mechanisms/roles/animal_dream/ports";
 import { DeathCommitter } from "./death-committer";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
@@ -189,68 +190,21 @@ export class DeathResolution {
     const lastWordsCurrent = () =>
       isCurrent() && (this.config?.lastWords?.policy ?? "awa_initial_wave_v1") === lastWordsPolicy;
     const ownsAnimal = isAnimalDreamBoard(this.world);
-    const prepareAnimal = (
-      ids: EntityId[],
-      waveSources: DeathSources,
-      sourcePhase: Phase,
-    ): EntityId[] => {
-      if (!ownsAnimal) return ids;
-      const proposed = [...ids],
-        filtered = filterAnimalLethalWave(
-          this.world,
-          resolutionDay,
-          sourcePhase as "night" | "day" | "voting",
-          ids,
-          waveSources,
-          nightEffects?.animalUnit ?? isCurrent,
-        );
-      appendAnimalFact(this.world, this.events, "animal_wave_prepared", {
-        policy: "awa_animal_dream_v1",
-        day: resolutionDay,
-        phase: sourcePhase as "night" | "day" | "voting",
-        proposedIds: proposed,
-        blockedCatId: filtered.blockedCatId,
-      });
-      if (filtered.revealedCatId !== null)
-        appendAnimalFact(this.world, this.events, "animal_cat_revealed", {
-          policy: "awa_animal_dream_v1",
-          day: resolutionDay,
-          actorId: filtered.revealedCatId,
-        });
-      const actual = [...filtered.deaths],
-        cat = filtered.blockedCatId,
-        currentCatSources =
-          cat === null
-            ? []
-            : (waveSources[cat] ?? []).filter(
-                (c) => c === DeathCause.Exile || c === DeathCause.PufferRetaliation,
-              );
-      if (cat !== null) delete waveSources[cat];
-      if (nightEffects?.animalUnit && !animalAuthoritySnapshot(this.world)!.unit!.expiryPrepared) {
-        const expiry = prepareAnimalCatExpiry(this.world, nightEffects.animalUnit);
-        if (expiry !== null) {
-          const u = animalAuthoritySnapshot(this.world)!.unit!;
-          appendAnimalFact(this.world, this.events, "animal_cat_expiry_prepared", {
-            policy: "awa_animal_dream_v1",
-            day: resolutionDay,
-            actorId: expiry,
-            unit: u.number,
-            unitKind: u.kind,
-          });
-          if (!actual.includes(expiry)) actual.push(expiry);
-          waveSources[expiry] = [
-            ...new Set([
-              ...(waveSources[expiry] ?? []),
-              ...currentCatSources,
-              DeathCause.WhiteCatExpiry,
-            ]),
-          ];
-        }
-      }
-      return actual;
-    };
+    const animalDeathWave = new AnimalDeathWavePreparation(
+      ownsAnimal,
+      resolutionDay,
+      nightEffects,
+      isCurrent,
+      {
+        filter: (day, phase, ids, sources, scope) =>
+          filterAnimalLethalWave(this.world, day, phase, ids, sources, scope()),
+        authority: () => animalAuthoritySnapshot(this.world),
+        prepareExpiry: (unit) => prepareAnimalCatExpiry(this.world, unit()),
+        appendFact: (type, payload) => appendAnimalFact(this.world, this.events, type, payload()),
+      },
+    );
     const preparedSources: DeathSources = structuredClone(sources);
-    deadIds = prepareAnimal(deadIds, preparedSources, phase);
+    deadIds = animalDeathWave.prepare(deadIds, preparedSources, phase);
     const seen = new Set<EntityId>(
       deadIds.filter((id) => {
         return (
@@ -608,7 +562,7 @@ export class DeathResolution {
                     if (!this.world.getComponent(id, COMPONENT.Alive)) continue;
                     if (
                       ownsAnimal &&
-                      !prepareAnimal([id], proposedSources, sourcePhase).includes(id)
+                      !animalDeathWave.prepare([id], proposedSources, sourcePhase).includes(id)
                     )
                       continue;
                     let shot = shots.get(id);

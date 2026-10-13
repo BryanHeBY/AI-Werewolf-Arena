@@ -416,3 +416,5 @@
 - `95ee2b56`：第五共享包 game-presentation 与全部现有展示函数双端消费。
 
 四批均有精确源摘要、局部类型／必要用例和独立审查；中文职责与关键逻辑说明随各批落实。当前仍有并行 sourcedEffect 和动物死亡波准备候选，尚未列为交付。上述局部证据不替代 P9 同源固定输入全量验收，也不将仍待完成的机制格标为完成。
+
+- C28 动物死亡波准备：4paths，完整prepareAnimal→feature窄owner/2realcaller，原World→unit与World→events→payload、cat过滤/事实/删源/到期/cause顺序保。wholetyped/ESNext+CJS inverse0、4SHA/source/权威/中文heads独立0；finite19277/scope52301 actual0，新4/0/21+原BeautyCat追加1/0/5(two boundedcycles)。首nullable/thunk/mock types红保，原位!无cache/default/契约放宽，不world写/rollback/全suite重复。TypedWave/Receipt/其他C28及13rawdeps继续。见animal-wave-preparation.md。
