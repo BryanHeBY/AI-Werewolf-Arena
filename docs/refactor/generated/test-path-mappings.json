@@ -88776,13 +88776,380 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/victory_record.test.ts",
+      "to": "backend/tests/unit/recording/victory-result-reader-and-cloning.test.ts",
+      "sourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "reason": "Actual selected unit module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "011bd33dc8d38e07b6775b86ffdfe0789dcd132260d588a5156148a4f2b3f260",
+      "candidateSha256": "d474385c2aa620878fce561aa7f58d86a6942ed303b68032574c573998d0b2c0",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "import-type-module-specifier",
+          "start": 4386,
+          "end": 4400,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "typeOnly": true
+        },
+        {
+          "kind": "module-specifier",
+          "start": 430,
+          "end": 444,
+          "original": "../../src/game",
+          "value": "../../../src/game",
+          "originalResolved": "backend/src/game/index.ts",
+          "expectedResolved": "backend/src/game/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 360,
+          "end": 374,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 159,
+          "end": 194,
+          "original": "../../src/recording/replay_document",
+          "value": "../../../src/recording/replay_document",
+          "originalResolved": "backend/src/recording/replay_document.ts",
+          "expectedResolved": "backend/src/recording/replay_document.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 81,
+          "end": 118,
+          "original": "../../src/recording/session_aggregate",
+          "value": "../../../src/recording/session_aggregate",
+          "originalResolved": "backend/src/recording/session_aggregate.ts",
+          "expectedResolved": "backend/src/recording/session_aggregate.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/core/index.ts",
+          "originalExpression": "import(\"../../src/core\").GameEvent",
+          "currentExpression": "import(\"../../../src/core\").GameEvent",
+          "currentHead": "../../../src/core",
+          "kind": "type-module-path",
+          "typeOnly": true
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "73dcc7c61d206507874bf19740807ef0e10f551358cb7bdb4c5306328f676e1b",
+          "title": "public result validation rejects projections, unknown winners, malformed explicit decisions and accessors; old archives stay without inferred members",
+          "occurrence": 1
+        },
+        {
+          "id": "100b673056c029a551d7afe62cae2f88272b1702ba034dd78f7cae9ae3a98d39",
+          "title": "zh-CN: a decidedAt-only malformed explicit terminal fact stays unknown in console rather than becoming a faction win",
+          "occurrence": 1
+        },
+        {
+          "id": "502cc5b6d39c0202521f5353542c7ae8eef862e161b693272cfc61925d173582",
+          "title": "en: a decidedAt-only malformed explicit terminal fact stays unknown in console rather than becoming a faction win",
+          "occurrence": 1
+        },
+        {
+          "id": "c451162e8e0ab1877dd12185e5b3649f63d98eb3cbb2bfdac1e944b3c9e6361a",
+          "title": "the returned replay snapshot is revalidated against getter-time mutation and explicit terminal conflicts",
+          "occurrence": 1
+        },
+        {
+          "id": "27a2579c9312c073e3dfdb3d129e43e90b251df6ee94a9494b4d4f524339417b",
+          "title": "nonserialized explicit decisions cannot disappear or lose fields during replay cloning",
+          "occurrence": 1
+        },
+        {
+          "id": "695d504fea2c6add209f0713d0e6c64cbc2082c000f4bee22757f17734c0d29a",
+          "title": "explicit terminal getters cannot become sealed victories during cloning, while bad JSON facts stay unknown",
+          "occurrence": 1
+        },
+        {
+          "id": "d7a4537ee2345bc7dab125413a13cfebde6fa258dd88aa46f690b08e5833ecd5",
+          "title": "settled Night victory accepts the completed Night phase and legacy Day phase, retaining other phase constraints",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:fs/promises",
+          "originalImport": "import { readFile } from \"node:fs/promises\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readFile",
+              "imported": "readFile",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "node:path",
+          "originalImport": "import path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/session_recorder",
+          "originalImport": "import { SessionRecordManager } from \"../../src/recording/session_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SessionRecordManager",
+              "imported": "SessionRecordManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "originalImport": "import { outcomeLabel, outcomeWinnersLabel, victoryPointLabel } from \"@ai-werewolf-arena/game-text\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "outcomeLabel",
+              "imported": "outcomeLabel",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "outcomeWinnersLabel",
+              "imported": "outcomeWinnersLabel",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "victoryPointLabel",
+              "imported": "victoryPointLabel",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/audit/summary_format",
+          "originalImport": "import { auditSummaryHeader } from \"../../src/audit/summary_format\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "auditSummaryHeader",
+              "imported": "auditSummaryHeader",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/recording/victory_record.test.ts",
+      "to": "backend/tests/integration/recording/sealed-victory-publication.test.ts",
+      "sourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "reason": "Actual selected integration module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "011bd33dc8d38e07b6775b86ffdfe0789dcd132260d588a5156148a4f2b3f260",
+      "candidateSha256": "63061d47b5d879b5d2e69347865aef49169b07dfe658ac674ac2bbb3a4f54f61",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 610,
+          "end": 645,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 536,
+          "end": 566,
+          "original": "../../src/audit/summary_format",
+          "value": "../../../src/audit/summary_format",
+          "originalResolved": "backend/src/audit/summary_format.ts",
+          "expectedResolved": "backend/src/audit/summary_format.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 483,
+          "end": 497,
+          "original": "../../src/game",
+          "value": "../../../src/game",
+          "originalResolved": "backend/src/game/index.ts",
+          "expectedResolved": "backend/src/game/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 312,
+          "end": 326,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 154,
+          "end": 190,
+          "original": "../../src/recording/session_recorder",
+          "value": "../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "7b63ba24708f9fabf9c0ea83c29ba92409f6049a066b9fdbd4f51ffbfb3cd88e",
+          "title": "zh-CN/faction: actual manifest and public replay preserve a sealed decision independently of cleanup failure",
+          "occurrence": 1
+        },
+        {
+          "id": "018ea0a6c5a04bfed738773f05cac881da6222ad9f4d14a092b16edbab9d0cb9",
+          "title": "zh-CN/individual: actual manifest and public replay preserve a sealed decision independently of cleanup failure",
+          "occurrence": 1
+        },
+        {
+          "id": "bf087b507cd7d3ff504784af171cde9be58a7d5621bda72b209c7e3468d9944e",
+          "title": "zh-CN/relationship: actual manifest and public replay preserve a sealed decision independently of cleanup failure",
+          "occurrence": 1
+        },
+        {
+          "id": "a745168190c144ad5850adfecde9b836916dcfb7cd3db8a91bc267c98806a43b",
+          "title": "zh-CN/multiple: actual manifest and public replay preserve a sealed decision independently of cleanup failure",
+          "occurrence": 1
+        },
+        {
+          "id": "45ff3a5133d9cd673498cbe0eebd5e68e067facb93b27956e56bc0334a512c87",
+          "title": "zh-CN/no_winner: actual manifest and public replay preserve a sealed decision independently of cleanup failure",
+          "occurrence": 1
+        },
+        {
+          "id": "396d5210eba42c9cf535cb7130b7d27a694bbca8d2433002adec4fc9722310b9",
+          "title": "en/faction: actual manifest and public replay preserve a sealed decision independently of cleanup failure",
+          "occurrence": 1
+        },
+        {
+          "id": "1fab3101a91869efa461657f1b219bcfddfe2d44da565fb4cbfbea82ac503791",
+          "title": "en/individual: actual manifest and public replay preserve a sealed decision independently of cleanup failure",
+          "occurrence": 1
+        },
+        {
+          "id": "c46fea47b74f1b95143ca97995695d8672389a9953df192886f59728f7b94296",
+          "title": "en/relationship: actual manifest and public replay preserve a sealed decision independently of cleanup failure",
+          "occurrence": 1
+        },
+        {
+          "id": "527159d102210b230340ab6fade99ab46b1fb28bca444d57a21354cefa5d4e57",
+          "title": "en/multiple: actual manifest and public replay preserve a sealed decision independently of cleanup failure",
+          "occurrence": 1
+        },
+        {
+          "id": "65e1d1911c358c381b4017277e7d18b3416ec598f79bb942fd5a69c7e5693ed6",
+          "title": "en/no_winner: actual manifest and public replay preserve a sealed decision independently of cleanup failure",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../src/recording/session_aggregate",
+          "originalImport": "import { ReplaySessionAggregate } from \"../../src/recording/session_aggregate\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ReplaySessionAggregate",
+              "imported": "ReplaySessionAggregate",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/replay_document",
+          "originalImport": "import { createReplayDocument } from \"../../src/recording/replay_document\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createReplayDocument",
+              "imported": "createReplayDocument",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "originalImport": "import {\n  readReplayDocument,\n  readVictoryResult,\n  readVictoryPoint,\n} from \"@ai-werewolf-arena/replay-contract\";",
+          "currentImportBeforeRebase": "import { readReplayDocument } from \"@ai-werewolf-arena/replay-contract\";",
+          "droppedBindings": [
+            {
+              "name": "readVictoryResult",
+              "imported": "readVictoryResult",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "readVictoryPoint",
+              "imported": "readVictoryPoint",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 560,
-    "targetFiles": 624,
-    "mappingEntries": 624,
-    "baselineCases": 7227,
+    "sourceFiles": 561,
+    "targetFiles": 626,
+    "mappingEntries": 626,
+    "baselineCases": 7244,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
