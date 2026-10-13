@@ -1,8 +1,7 @@
 /**
- * Owns Evil Knight private state data and captured inspection-reflection rights. Inputs are
- * original role state and inspection context; outputs preserve immunity checks and committed
- * reflection claims. These runtime state references are not player DTOs, and a replaced state
- * cannot reuse the captured right.
+ * 负责恶灵骑士私有状态、查验反射权利及玩家字段投影；输入是原角色与查验上下文。
+ * 保留免疫检查、反射付款与原体绑定；运行状态引用不是玩家 DTO，替换状态不能复用旧权利。
+ * 玩家投影只复制政策、枪政策与反射余量，不交出 isCurrent 或写句柄。
  */
 import type {
   EvilKnightShotPolicy,
@@ -46,7 +45,7 @@ export function getEvilKnightState(
     ? (state as EvilKnightReadState)
     : undefined;
 }
-/** Capture the original identity before awaiting another player's submission. */
+/** 在等待其他玩家提交前绑定原体；每次提交仍校验生命、组件、私有容器与政策未被替换。 */
 export function captureEvilKnight(world: World, target: NightLifeScope) {
   const role = world.getComponent(target.id, COMPONENT.Role);
   const state = getEvilKnightState(role);
@@ -66,7 +65,7 @@ export function evilKnightNightShotImmune(world: World, targetId: EntityId): boo
   const binding = life && captureEvilKnight(world, life);
   return !!binding && binding.state.shotPolicy === "night_shot_immune" && binding.isCurrent();
 }
-/** Call only after an accepted native Seer check or Witch poison has consumed its action. */
+/** 仅在原生预言家查验或女巫毒药已被接受并付款后调用；反射本身不重复消耗原行动。 */
 export function commitEvilKnightReflection(
   world: World,
   binding: ReturnType<typeof captureEvilKnight>,
@@ -101,4 +100,17 @@ export function commitEvilKnightReflection(
       casterRole.camp === Camp.Good &&
       casterRole.privateState === privateState,
   };
+}
+
+/** 字段裁剪由机制拥有；只返回纯数据副本，不把反射运行绑定带进玩家观察。 */
+export function projectEvilKnightState(
+  role: RoleComponent | undefined,
+): EvilKnightState | undefined {
+  const evilKnight = getEvilKnightState(role);
+  if (evilKnight)
+    return {
+      policy: evilKnight.policy,
+      shotPolicy: evilKnight.shotPolicy,
+      reflectionRemaining: evilKnight.reflectionRemaining,
+    };
 }

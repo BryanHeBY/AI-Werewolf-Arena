@@ -30,9 +30,9 @@ import { projectWolfSorcererState } from "../mechanisms/roles/wolf_sorcerer/stat
 import { projectTricksterState } from "../mechanisms/roles/trickster/state";
 import { projectOrderPrinceState } from "../mechanisms/roles/order_prince/state";
 import { projectMagicianState } from "../mechanisms/roles/magician/state";
-import { getRedMoonState } from "../mechanisms/roles/red_moon_apostle/state";
-import { getNightmareShadowState } from "../mechanisms/roles/nightmare_shadow/state";
-import { getEvilKnightState } from "../mechanisms/roles/evil_knight/state";
+import { projectRedMoonState } from "../mechanisms/roles/red_moon_apostle/state";
+import { projectNightmareShadowState } from "../mechanisms/roles/nightmare_shadow/state";
+import { projectEvilKnightState } from "../mechanisms/roles/evil_knight/state";
 import { projectDemonHunter } from "../mechanisms/roles/demon_hunter/authority";
 import { weddingActorView, weddingBrideState } from "../mechanisms/roles/ghost_bride/authority";
 import { projectLonelyGirl } from "../mechanisms/roles/lonely_girl/lifecycle";
@@ -176,40 +176,13 @@ export function capturePlayerObservation(
   if (prince) ownState.orderPrince = prince;
   const magician = projectMagicianState(role);
   if (magician) ownState.magician = magician;
-  const redMoon = getRedMoonState(role);
-  if (redMoon)
-    ownState.redMoon = {
-      policy: redMoon.policy,
-      lastWolfBlastPolicy: redMoon.lastWolfBlastPolicy,
-      blastDay: redMoon.blastDay,
-      exileDay: redMoon.exileDay,
-      expirySettled: redMoon.expirySettled,
-    };
-
-  const nightmare = getNightmareShadowState(role);
-  if (nightmare) {
-    const history: Array<{ day: number; targetId: number | null }> = [];
-    for (let i = 0; i < nightmare.history.length; i++) {
-      const entry = nightmare.history[i]!;
-      history.push({ day: entry.day, targetId: entry.targetId });
-    }
-    ownState.nightmare = {
-      policy: nightmare.policy,
-      fearActionPolicy: nightmare.fearActionPolicy,
-      wolfActionPolicy: nightmare.wolfActionPolicy,
-      packReady: nightmare.packReady,
-      lastDay: nightmare.lastDay,
-      lastTarget: nightmare.lastTarget,
-      history,
-    };
-  }
-  const evilKnight = getEvilKnightState(role);
-  if (evilKnight)
-    ownState.evilKnight = {
-      policy: evilKnight.policy,
-      shotPolicy: evilKnight.shotPolicy,
-      reflectionRemaining: evilKnight.reflectionRemaining,
-    };
+  // 各机制拥有字段裁剪；此处只按原顺序组装，末尾统一脱离并冻结整个观察。
+  const redMoon = projectRedMoonState(role);
+  if (redMoon) ownState.redMoon = redMoon;
+  const nightmare = projectNightmareShadowState(role);
+  if (nightmare) ownState.nightmare = nightmare;
+  const evilKnight = projectEvilKnightState(role);
+  if (evilKnight) ownState.evilKnight = evilKnight;
   const thief = projectThiefState(role, queries.world()),
     choices = projectThiefChoices(queries.world(), request.actorId);
   if (thief) ownState.thief = { ...thief, ...(choices ?? {}) };

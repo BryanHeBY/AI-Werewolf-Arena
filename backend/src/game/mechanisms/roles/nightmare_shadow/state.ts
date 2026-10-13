@@ -1,8 +1,7 @@
 /**
- * Owns Nightmare Shadow private-state data and its existing field checks. Inputs are the
- * original role state and candidate context; outputs are fresh state, current fear targets and
- * readable state references. This state helper does not execute a fear stage or serialize
- * runtime authority.
+ * 负责梦魇私有状态、既有字段校验、目标政策与玩家投影；输入是原角色和候选上下文。
+ * 输出为新状态、合法目标或原可读状态引用；玩家投影另复制历史中的 day／targetId。
+ * 不执行恐惧阶段或序列化运行授权；历史顺序、已付款状态与当前许可分别保留。
  */
 import type {
   FearActionPolicy,
@@ -89,7 +88,7 @@ export function getNightmareShadowState(
   }
   return state as NightmareShadowReadState;
 }
-/** The same target policy must feed requests, validation, baselines and hints. */
+/** 请求、校验、基线策略与目标提示使用同一目标政策，避免相邻两夜的禁选规则漂移。 */
 export function nightmareFearTargets(world: World, actorId: EntityId, day: number): EntityId[] {
   const state = getNightmareShadowState(world.getComponent(actorId, COMPONENT.Role));
   if (
@@ -105,4 +104,27 @@ export function nightmareFearTargets(world: World, actorId: EntityId, day: numbe
     const target = world.getComponent(id, COMPONENT.Role);
     return !!target && (!state.packReady || target.camp !== Camp.Wolf);
   });
+}
+
+/** 按原顺序复制玩家字段及每条历史；不返回运行状态或复用 history／entry 对象。 */
+export function projectNightmareShadowState(
+  role: RoleComponent | undefined,
+): NightmareShadowState | undefined {
+  const nightmare = getNightmareShadowState(role);
+  if (nightmare) {
+    const history: Array<{ day: number; targetId: number | null }> = [];
+    for (let i = 0; i < nightmare.history.length; i++) {
+      const entry = nightmare.history[i]!;
+      history.push({ day: entry.day, targetId: entry.targetId });
+    }
+    return {
+      policy: nightmare.policy,
+      fearActionPolicy: nightmare.fearActionPolicy,
+      wolfActionPolicy: nightmare.wolfActionPolicy,
+      packReady: nightmare.packReady,
+      lastDay: nightmare.lastDay,
+      lastTarget: nightmare.lastTarget,
+      history,
+    };
+  }
 }

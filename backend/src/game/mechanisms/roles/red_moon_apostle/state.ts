@@ -1,7 +1,7 @@
 /**
- * Owns Red Moon state construction and exact live slot reads. Inputs are original role
- * and settlement data; outputs preserve descriptor checks, policy and stored identity.
- * This boundary never consumes blast stock, closes expiry or authorizes a death effect.
+ * 负责血月使徒状态创建、原体槽位校验和玩家可读字段投影；输入是原角色与既有政策。
+ * 校验成功时仍返回原状态引用，投影则只复制原玩家可见的五个字段，不暴露写句柄。
+ * 保留数据属性检查与政策、身份约束；不消耗自爆、关闭到期流程或授予死亡效果权限。
  */
 import type {
   LastWolfBlastPolicy,
@@ -64,4 +64,17 @@ export function getRedMoonState(role: RoleComponent | undefined): RedMoonReadSta
   )
     return undefined;
   return state as RedMoonReadState;
+}
+
+/** 机制自己决定玩家字段；校验失败仍为 undefined，不补默认政策或猜测到期结果。 */
+export function projectRedMoonState(role: RoleComponent | undefined): RedMoonState | undefined {
+  const redMoon = getRedMoonState(role);
+  if (redMoon)
+    return {
+      policy: redMoon.policy,
+      lastWolfBlastPolicy: redMoon.lastWolfBlastPolicy,
+      blastDay: redMoon.blastDay,
+      exileDay: redMoon.exileDay,
+      expirySettled: redMoon.expirySettled,
+    };
 }

@@ -1,0 +1,246 @@
+{
+  "baseline": "d94b482c5568601cf50ac0e1ae8fdf1cf7e88cbf",
+  "scope": [
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+      "sha256": "be172d7100c142c4e95196ffc082261136f6af3908b43d11fe6d0f62458330b9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+      "sha256": "a6293977aa3300e0cdb65e8898343638cdc7381bba7c9222ca8632e85b7c92bc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+      "sha256": "0a324c252e162cf50ef0adb642509b64c689b4e565eec60a9de95c9f6796e18a"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "6dd93aba07eb3d8005b99c27932f6f4407a4c083b57f8782a518fd4d50dfa2e9"
+    },
+    {
+      "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+      "sha256": "58cdec8486fddddb798832da65c0c6b60825efcc0559fcf9a611098b42ab547f"
+    }
+  ],
+  "programProof": {
+    "baseline": "d94b482c5568601cf50ac0e1ae8fdf1cf7e88cbf",
+    "rows": [
+      {
+        "name": "Full observation consumer after restoring only three concrete projections",
+        "same": true
+      },
+      {
+        "name": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts entire old runtime",
+        "same": true
+      },
+      {
+        "name": "projectRedMoonState complete original projection algorithm",
+        "same": true
+      },
+      {
+        "name": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts entire old runtime",
+        "same": true
+      },
+      {
+        "name": "projectNightmareShadowState complete original projection algorithm",
+        "same": true
+      },
+      {
+        "name": "backend/src/game/mechanisms/roles/evil_knight/state.ts entire old runtime",
+        "same": true
+      },
+      {
+        "name": "projectEvilKnightState complete original projection algorithm",
+        "same": true
+      }
+    ],
+    "passed": true,
+    "normalizations": [
+      "Import declarations erased for complete runtime comparisons; each consumer query now calls the same mechanism getter inside its concrete projection at the original position.",
+      "Only new projection declaration removed from each state module; all prior functions and runtime expressions retained.",
+      "Only return-object vs original ownState assignment normalization for the three full moved algorithm blocks."
+    ]
+  },
+  "headerCheck": {
+    "files": 5,
+    "failures": []
+  },
+  "receipts": {
+    "firstRuntime": {
+      "exit": 0,
+      "passed": 11,
+      "failed": 0,
+      "assertions": 96,
+      "newCases": 3,
+      "existingCases": 8,
+      "log": "bun test v1.4.2 (744846f84)\n\ntests/unit/engine/feature-player-state-projections.test.ts:\n(pass) red moon and evil knight return selected detached data and retain invalid-slot rejection [0.44ms]\n(pass) nightmare copies ordered nullable history without array helpers or extra-entry accessors [0.24ms]\n(pass) the observation consumer freezes the mechanism projection without changing live stock [1.66ms]\n\ntests/unit/agents/red-moon-apostle/red-moon-observation.test.ts:\n(pass) Red Moon ownState is private detached frozen and rejects accessors ends_game/zh-CN [17.11ms]\n(pass) Red Moon ownState is private detached frozen and rejects accessors ends_game/en [2.65ms]\n(pass) Red Moon ownState is private detached frozen and rejects accessors forbidden/zh-CN [2.80ms]\n(pass) Red Moon ownState is private detached frozen and rejects accessors forbidden/en [2.03ms]\n\ntests/unit/agents/nightmare-shadow/nightmare-observation.test.ts:\n(pass) nightmare first-fear observation is private, detached, and satisfies optional with own constructor [5.02ms]\n(pass) nightmare first-fear observation is private, detached, and satisfies optional with inherited constructor [4.95ms]\n(pass) nightmare first-fear observation is private, detached, and satisfies required_when_legal with own constructor [1.66ms]\n(pass) nightmare first-fear observation is private, detached, and satisfies required_when_legal with inherited constructor [1.77ms]\n\n 11 pass\n 0 fail\n 96 expect() calls\nRan 11 tests across 3 files. [428.00ms]\n"
+    },
+    "correctedNewFixtureOnly": {
+      "exit": 0,
+      "passed": 3,
+      "failed": 0,
+      "assertions": 16,
+      "log": "bun test v1.4.2 (744846f84)\n\ntests/unit/engine/feature-player-state-projections.test.ts:\n(pass) red moon and evil knight return selected detached data and retain invalid-slot rejection [0.48ms]\n(pass) nightmare copies ordered nullable history without array helpers or extra-entry accessors [0.29ms]\n(pass) the observation consumer freezes the mechanism projection without changing live stock [1.85ms]\n\n 3 pass\n 0 fail\n 16 expect() calls\nRan 3 tests across 1 file. [141.00ms]\n"
+    },
+    "firstFiniteTypes": {
+      "session": 4980,
+      "exit": 2,
+      "log": "backend/tests/unit/engine/feature-player-state-projections.test.ts(18,20): error TS2339: Property 'redMoon' does not exist on type 'object'.\nbackend/tests/unit/engine/feature-player-state-projections.test.ts(33,45): error TS2339: Property 'redMoon' does not exist on type 'object'.\nbackend/tests/unit/engine/feature-player-state-projections.test.ts(35,27): error TS2339: Property 'redMoon' does not exist on type 'object'.\nbackend/tests/unit/engine/feature-player-state-projections.test.ts(36,42): error TS2339: Property 'redMoon' does not exist on type 'object'.\nbackend/tests/unit/engine/feature-player-state-projections.test.ts(40,21): error TS2339: Property 'evilKnight' does not exist on type 'object'.\nbackend/tests/unit/engine/feature-player-state-projections.test.ts(50,67): error TS2339: Property 'evilKnight' does not exist on type 'object'.\nbackend/tests/unit/engine/feature-player-state-projections.test.ts(51,21): error TS2339: Property 'evilKnight' does not exist on type 'object'.\nbackend/tests/unit/engine/feature-player-state-projections.test.ts(66,21): error TS2339: Property 'nightmareShadow' does not exist on type 'object'.\nbackend/tests/unit/engine/feature-player-state-projections.test.ts(100,21): error TS2339: Property 'evilKnight' does not exist on type 'object'.\nbackend/tests/unit/engine/feature-player-state-projections.test.ts(123,44): error TS2339: Property 'evilKnight' does not exist on type 'object'.\nbackend/tests/unit/engine/feature-player-state-projections.test.ts(124,21): error TS2339: Property 'evilKnight' does not exist on type 'object'.\n",
+      "correction": "Only new fixture indexing of opaque privateState; named original data variables with Object.assign replace that indexing, preserving the same literal inputs. No production type relaxation."
+    },
+    "finalFiniteTypes": {
+      "session": 29276,
+      "pollChunk": "30f1a7",
+      "actualTerminalExit": 0,
+      "diagnostics": ""
+    }
+  },
+  "limits": [
+    "Only three complete private-field projection algorithms transferred; not all 55 public player queries or C33/C36 complete.",
+    "No whole-suite, whole-game, live model, network or repeated architecture baseline gate.",
+    "Full runtime proof erases imports; actual new public state exports retain internal getter calls at the original three consumer positions.",
+    "Projection helpers do not freeze; whole observation remains clone/freeze owner at original end."
+  ],
+  "commentDelta": "RedMoon head narrows original published fields to original player-visible fields; comment-only, final program proof refreshed, no repeat compiler/runtime.",
+  "architectureIndependentReview": {
+    "baseline": "d94b482c5568601cf50ac0e1ae8fdf1cf7e88cbf",
+    "scope": [
+      {
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+        "sha256": "be172d7100c142c4e95196ffc082261136f6af3908b43d11fe6d0f62458330b9",
+        "actualSha": "be172d7100c142c4e95196ffc082261136f6af3908b43d11fe6d0f62458330b9"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+        "sha256": "a6293977aa3300e0cdb65e8898343638cdc7381bba7c9222ca8632e85b7c92bc",
+        "actualSha": "a6293977aa3300e0cdb65e8898343638cdc7381bba7c9222ca8632e85b7c92bc"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+        "sha256": "0a324c252e162cf50ef0adb642509b64c689b4e565eec60a9de95c9f6796e18a",
+        "actualSha": "0a324c252e162cf50ef0adb642509b64c689b4e565eec60a9de95c9f6796e18a"
+      },
+      {
+        "path": "backend/src/game/observation/player-observation-projector.ts",
+        "sha256": "6dd93aba07eb3d8005b99c27932f6f4407a4c083b57f8782a518fd4d50dfa2e9",
+        "actualSha": "6dd93aba07eb3d8005b99c27932f6f4407a4c083b57f8782a518fd4d50dfa2e9"
+      },
+      {
+        "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+        "sha256": "58cdec8486fddddb798832da65c0c6b60825efcc0559fcf9a611098b42ab547f",
+        "actualSha": "58cdec8486fddddb798832da65c0c6b60825efcc0559fcf9a611098b42ab547f"
+      }
+    ],
+    "baselineSources": [
+      {
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+        "baselineSourceActualGitSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+        "baselineSourceActualGitSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+        "baselineSourceActualGitSame": true
+      },
+      {
+        "path": "backend/src/game/observation/player-observation-projector.ts",
+        "baselineSourceActualGitSame": true
+      }
+    ],
+    "passed": true,
+    "findings": [],
+    "sourceReview": [
+      "实际完整diff已手读：RedMoon五字段、EvilKnight三字段和Nightmare显式历史循环在原捕获位置用新feature函数替换。",
+      "各新函数先调用原getter，拒绝仍undefined；不增加默认、getter/Proxy反射策略、状态写入或付款检查。",
+      "所有既有state模块正文除新增fn与中文注释不改；历史day/targetId单条复制，数组helper与extra-entry getters仍不调用。",
+      "新函数输出可写DTO并脱离内部ref；真正cap/freeze仍统一观察尾部，不将DTO当authority。",
+      "新3case使用合法原槽字段、字面reject、copy/history/stock/assertions；未用newprojection生成oracle。",
+      "中文RedMoon头已准确称原玩家可见字段，未把私密知识说成公开事实。",
+      "公共ports规范与全55贡献尚未完整，当前仍state直接import；本片仅trueprojectionowner，不认C36完成。"
+    ],
+    "receiptAttribution": "读取Root实际收据：strict29276终态0、新+旧11/0/96、correctednew3/0/16；本审未编译、运行或poll。"
+  },
+  "sourceIndependentReview": {
+    "passed": true,
+    "baseline": "d94b482c5568601cf50ac0e1ae8fdf1cf7e88cbf",
+    "findings": [],
+    "paths": [
+      {
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+        "sha256": "be172d7100c142c4e95196ffc082261136f6af3908b43d11fe6d0f62458330b9",
+        "scopeSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+        "sha256": "a6293977aa3300e0cdb65e8898343638cdc7381bba7c9222ca8632e85b7c92bc",
+        "scopeSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+        "sha256": "0a324c252e162cf50ef0adb642509b64c689b4e565eec60a9de95c9f6796e18a",
+        "scopeSame": true
+      },
+      {
+        "path": "backend/src/game/observation/player-observation-projector.ts",
+        "sha256": "6dd93aba07eb3d8005b99c27932f6f4407a4c083b57f8782a518fd4d50dfa2e9",
+        "scopeSame": true
+      },
+      {
+        "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+        "sha256": "58cdec8486fddddb798832da65c0c6b60825efcc0559fcf9a611098b42ab547f",
+        "scopeSame": true
+      }
+    ],
+    "checks": [
+      {
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+        "check": "all prior non-import statement tokens unchanged",
+        "same": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state.ts",
+        "check": "projectRedMoonState exact original algorithm (only return versus ownState assignment)",
+        "same": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+        "check": "all prior non-import statement tokens unchanged",
+        "same": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+        "check": "projectNightmareShadowState exact original algorithm (only return versus ownState assignment)",
+        "same": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+        "check": "all prior non-import statement tokens unchanged",
+        "same": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+        "check": "projectEvilKnightState exact original algorithm (only return versus ownState assignment)",
+        "same": true
+      },
+      {
+        "path": "backend/src/game/observation/player-observation-projector.ts",
+        "check": "whole consumer non-import tokens after only concrete 3-block reverse",
+        "same": true
+      }
+    ],
+    "staticReview": {
+      "readOrder": "RedMoon -> Nightmare -> EvilKnight remain at original position; same getters/callee, same property order and late Nightmare indexed history loop. All existing slot reader/authority functions retained exactly by token comparison.",
+      "acceptedInputs": "RedMoon exact own-data keys and Node Proxy rejection retained. Nightmare extra history/entry fields accepted but not projected; malformed targetId accessor rejected without execution. EvilKnight original range/shot policy checks retained.",
+      "isolation": "Three return objects are detached selected data; Nightmare array/entries copied at old loop positions. No live isCurrent/state handles exported and final observation clone/freeze unchanged.",
+      "newTests": "Three literal independent expectation cases: RedMoon/EvilKnight detach+bad slot, nullable ordered Nightmare history+unread extras, actual World observer freezing stock copy. Object.assign seeds same original variable into opaque container; no replacement of test input.",
+      "comments": "Concrete owner heads accurately describe player-visible fields, no global public disclosure claim."
+    },
+    "limits": [
+      "Read-only static source review, no runtime/compiler/global gate rerun.",
+      "Not a claim that every player projection or public feature boundary has moved.",
+      "Algorithm check treats return versus original ownState assignment as the only new-function normalization; retains every literal/type/operator/index/order."
+    ]
+  }
+}
