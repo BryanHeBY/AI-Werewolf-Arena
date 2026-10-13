@@ -1,6 +1,6 @@
 {
   "schema": "awa-current-mechanism-migration-v1",
-  "observedCommit": "99fac061ac8842dde89abe02c2a33648ea10859b",
+  "observedCommit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
   "baseline": {
     "path": "docs/refactor/generated/mechanism-matrix.json",
     "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
@@ -27,10 +27,24 @@
       "baselineOwner": "feature:animal-dream",
       "cells": {
         "state": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "子狐／河豚／白猫完整状态槽拥有原factory／schema／允许纯转换、实际捕获／唯一替换、JSONcodec和同原状态失效；authority真实安装、付款、死亡／到期与快照均接线，租约和生命版本仍authority／roster。",
+              "commit": "bccbc17cc8b418b6412ce3ddaecd3c3f021e5772",
+              "owners": [
+                "backend/src/game/mechanisms/roles/animal_dream/state-slot.ts",
+                "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+                "backend/src/game/mechanisms/roles/animal_dream/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/animal-state-slot.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "三族真实owner／codec已交付，机制跨生命周期、失败归档与最终矩阵验收继续；不替代whole-cell acceptance。"
           ]
         },
         "lease": {
@@ -126,10 +140,24 @@
           ]
         },
         "checkpoint": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "子狐／河豚／白猫完整状态槽拥有原factory／schema／允许纯转换、实际捕获／唯一替换、JSONcodec和同原状态失效；authority真实安装、付款、死亡／到期与快照均接线，租约和生命版本仍authority／roster。",
+              "commit": "bccbc17cc8b418b6412ce3ddaecd3c3f021e5772",
+              "owners": [
+                "backend/src/game/mechanisms/roles/animal_dream/state-slot.ts",
+                "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+                "backend/src/game/mechanisms/roles/animal_dream/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/animal-state-slot.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "三族真实owner／codec已交付，机制跨生命周期、失败归档与最终矩阵验收继续；不替代whole-cell acceptance。"
           ]
         },
         "verifier": {
@@ -152,18 +180,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/animal_dream/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/animal_dream/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -282,18 +337,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/awakened_hidden_wolf/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/awakened_hidden_wolf/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -383,17 +465,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/bear/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/bear/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -485,18 +595,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -576,18 +713,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/cupid/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/cupid/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -655,17 +819,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/cursed_fox/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/cursed_fox/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -745,18 +937,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/debater/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/debater/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -872,18 +1091,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/demon_hunter/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/demon_hunter/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -1004,17 +1250,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/dreamer/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/dreamer/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -1093,17 +1367,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/evil_knight/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/evil_knight/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -1251,18 +1553,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/fragrant_pair_seer/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/fragrant_pair_seer/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -1375,17 +1704,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -1487,18 +1844,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/ghost_bride/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/ghost_bride/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -1598,17 +1982,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/gravekeeper/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/gravekeeper/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -1740,17 +2152,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/guard/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/guard/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -1863,17 +2303,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/hidden_wolf/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/hidden_wolf/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -1963,17 +2431,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/hunter/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/hunter/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -2053,18 +2549,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -2154,17 +2677,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/idiot/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/idiot/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -2353,17 +2904,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/knight/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/knight/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -2454,18 +3033,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/lonely_girl/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/lonely_girl/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -2558,18 +3164,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/magician/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/magician/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -2699,18 +3332,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/mechanical_wolf/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/mechanical_wolf/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -2802,18 +3462,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -2881,17 +3568,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/mirror_girl/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -2995,18 +3710,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/mist_raven/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/mist_raven/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -3107,18 +3849,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -3253,18 +4022,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/noble_secret_body/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/noble_secret_body/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -3344,18 +4140,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/order_prince/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/order_prince/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -3423,17 +4246,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/psychic/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/psychic/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -3512,17 +4363,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/pure_white/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/pure_white/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -3635,18 +4514,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -3726,18 +4632,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -3986,18 +4919,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/scholar_mentor/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/scholar_mentor/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -4132,17 +5092,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/seer/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/seer/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -4222,18 +5210,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/shapeshifter/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/shapeshifter/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -4313,18 +5328,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/thief/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/thief/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -4417,18 +5459,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/time_wolf_consort/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/time_wolf_consort/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -4521,18 +5590,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/trickster/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/trickster/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -4600,17 +5696,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/villager/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/villager/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -4710,17 +5834,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -4824,18 +5976,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -4971,17 +6150,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/witch/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/witch/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -5060,17 +6267,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/wolf/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/wolf/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -5170,17 +6405,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -5270,17 +6533,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/wolf_king/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/wolf_king/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -5373,18 +6664,45 @@
               "evidence": [
                 "docs/refactor/shared-presentation.md"
               ]
+            },
+            {
+              "part": "本族实际profile已分metadata／runtime／presentation，内建展示只声明原生ID；完整原生读取与纯片段格式化由game capture及公共presentation拥有，真实Catalog显示按当前角色查询。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/wolf_sorcerer/profile.ts",
+                "backend/src/game/observation/native-role-presentation-capture.ts",
+                "packages/game-presentation/src/native-role-state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。",
+            "本族事件文案、观察许可、其他旧出口及最终同输入双语矩阵仍需汇合；三贡献成立不完成整个展示格。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "本族内建flat PROFILE的展示转发已退出，公开常量实际是三贡献对象；所有原调用方已迁显式facet／实际装配，不保内建renderPrompt桥。用户customflat输入按独立API保留原文。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/wolf_sorcerer/profile.ts",
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
           ]
         }
       }
@@ -7642,17 +8960,45 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "唯一Catalog Map按资料／运行／展示独立查询；实际组合根供builtinMetadata与native capture，get/require/all及隐式默认构造入口退休。全部55登记、真实consumer/getter／receiver／lateWorld及冷图已审；不建立flatten query门面。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts",
+                "backend/src/game/mechanisms/roles/builtin-contributions.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "目录／命名、其余公开聚合、所有配置策略和最终同输入矩阵仍需全仓收口。"
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "唯一Catalog Map按资料／运行／展示独立查询；实际组合根供builtinMetadata与native capture，get/require/all及隐式默认构造入口退休。全部55登记、真实consumer/getter／receiver／lateWorld及冷图已审；不建立flatten query门面。",
+              "commit": "1313149ec69a440a28d99830ab7c82f8a0a6da50",
+              "owners": [
+                "backend/src/game/mechanisms/roles/catalog.ts",
+                "backend/src/game/mechanisms/roles/role-catalog-assembly.ts",
+                "backend/src/game/mechanisms/roles/builtin-contributions.ts"
+              ],
+              "evidence": [
+                "docs/refactor/role-contributions-and-components.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "目录／命名、其余公开聚合、所有配置策略和最终同输入矩阵仍需全仓收口。"
           ]
         }
       }
@@ -8916,10 +10262,10 @@
     "currentOnlyRows": 2,
     "rows": 91,
     "cells": 910,
-    "pending": 801,
-    "partial": 109,
+    "pending": 729,
+    "partial": 181,
     "complete": 0,
     "not-applicable": 0
   },
-  "scope": "保留原 C17–C24／状态与查询所有子项，本次只追加 9a8337a8、a483c416、d4c4ffcf、95ee2b56、157e0b0e、7d63a4e9、dfd7f6fa、1099f2b1 八笔已提交功能的具体死亡／计划／来源／默认观察／展示 parts。observedCommit 只是整理时的提交上下文，并不表示全部后继交付已登记：d323e2df DamageEvidence 和 99fac061 赠枪 owner 本批未登记，下一台账继续；当前 Wave／普通夜 metadata 任务不在本次范围。所有格继续 partial 或 pending，完整 C08／C09／P3–P9 等未登记与剩余义务不能从这些 parts 推定完成。"
+  "scope": "保留所有历史parts和剩余要求，仅追加1313149e角色三贡献／对应内建展示旧API退出及bccbc17c动物三族完整状态贡献。47实际profile各登记text／oldExports；Catalog两格及Animal state/checkpoint两格。其余较早后继提交尚未全面补登记，observedCommit不等于完整交付截止盘点；所有格仍partial或pending，最终全矩阵继续。"
 }
