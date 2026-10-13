@@ -22,7 +22,7 @@ import { DeathCause } from "../../../../src/core/domain/deaths";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
-import { getRoleInspectionState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getRoleInspectionState } from "../../../../src/game/mechanisms/roles/role_inspection/ports";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
 import {

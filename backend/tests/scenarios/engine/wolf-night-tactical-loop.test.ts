@@ -22,7 +22,7 @@ import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_
 import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
 import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { getSeerState } from "../../../src/game/mechanisms/roles/private_state";
+import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 
 class TacticalOrderProvider implements ActionProvider {

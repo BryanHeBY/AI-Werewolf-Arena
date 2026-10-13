@@ -20,7 +20,7 @@ import type { DeathResolution } from "../../../../src/game/engine/death_resoluti
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { type DemonNightChoices } from "../../../support/features/demon-hunter/contracts";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import { projectDemonHunter } from "../../../../src/game/mechanisms/roles/demon_hunter/authority";
 
 function provider(

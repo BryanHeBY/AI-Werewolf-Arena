@@ -9,7 +9,7 @@
 import { expect, test } from "bun:test";
 import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
 import { bindCharm, activeCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
-import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
 import {
   captureAnimalRequestEnvelope,
   animalRequestEnvelopeCurrent,

@@ -23,7 +23,7 @@ import { Role, ToolName } from "../../../core/domain/model";
 import { TargetHintContext, TargetHintRegistry } from "./contracts";
 import { canBeExiled, canBeSheriff } from "../common/participation";
 import { inspectionRepeats } from "../roles/role_inspection/policies";
-import { getRoleInspectionState } from "../roles/private_state";
+import { getRoleInspectionState } from "../roles/role_inspection/ports";
 import { COMPONENT } from "../../../core/domain/components/names";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import { findNightAbility } from "../roles/abilities";

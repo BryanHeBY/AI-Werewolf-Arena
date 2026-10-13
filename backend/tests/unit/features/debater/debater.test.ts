@@ -61,7 +61,7 @@ import {
   parseBoardDefinition,
 } from "../../../../src/runtime/config/board_definition";
 import { DefaultTargetHintRegistry } from "../../../../src/game/mechanisms/llm/target_hint_registry";
-import { setIdiotState } from "../../../../src/game/mechanisms/roles/private_state";
+import { setIdiotState } from "../../../../src/game/mechanisms/roles/idiot/ports";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
 import { readDebateEventFact, debateEventLabel, text } from "@ai-werewolf-arena/game-text";
 const deck = [Role.Debater, Role.Wolf, Role.Hunter, Role.Idiot, Role.Villager, Role.Villager];

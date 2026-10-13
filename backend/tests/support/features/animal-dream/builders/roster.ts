@@ -26,10 +26,8 @@ import {
   freshWhiteCatState,
 } from "../../../../../src/game/mechanisms/roles/animal_dream/state";
 import { installAnimalRoster } from "../../../../../src/game/mechanisms/roles/animal_dream/roster";
-import {
-  setWolfBeautyState,
-  setBearState,
-} from "../../../../../src/game/mechanisms/roles/private_state";
+import { setWolfBeautyState } from "../../../../../src/game/mechanisms/roles/wolf_beauty/ports";
+import { setBearState } from "../../../../../src/game/mechanisms/roles/bear/ports";
 
 export const animalInternalConfig = () => ({
   boardSize: 12,

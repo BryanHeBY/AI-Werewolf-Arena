@@ -6,9 +6,19 @@
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Camp, WinCondition, COMPONENT, ActionWindow, type BoardConfig, type RoleComponent, type ActionRequest, type ToolCall } from "../../../../src/core";
+import {
+  Role,
+  Camp,
+  WinCondition,
+  COMPONENT,
+  ActionWindow,
+  type BoardConfig,
+  type RoleComponent,
+  type ActionRequest,
+  type ToolCall,
+} from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getBearState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getBearState } from "../../../../src/game/mechanisms/roles/bear/ports";
 
 const deck = [Role.Bear, Role.Wolf, Role.Witch, Role.Hunter, Role.Villager, Role.Villager];
 

@@ -9,11 +9,27 @@ import { completedNight } from "../../engine/night_stage_fixture";
 import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Phase, Role, WitchSelfHealRule, type ActionRequest, type GameEvent, type RoleComponent } from "../../../src/core";
+import {
+  COMPONENT,
+  Phase,
+  Role,
+  WitchSelfHealRule,
+  type ActionRequest,
+  type GameEvent,
+  type RoleComponent,
+} from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { allNightAbilities, activeNightAbility, abilityStatus } from "../../../src/game/mechanisms/roles/abilities";
-import { grantNightAbility, setNightAbilityEnabled } from "../../../src/game/mechanisms/roles/ability_changes";
-import { getSeerState, getWitchState } from "../../../src/game/mechanisms/roles/private_state";
+import {
+  allNightAbilities,
+  activeNightAbility,
+  abilityStatus,
+} from "../../../src/game/mechanisms/roles/abilities";
+import {
+  grantNightAbility,
+  setNightAbilityEnabled,
+} from "../../../src/game/mechanisms/roles/ability_changes";
+import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
+import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
 import { RoleCatalog, getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import { NightStageRegistry } from "../../../src/game/mechanisms/stages/night/night_stage_registry";
 import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";

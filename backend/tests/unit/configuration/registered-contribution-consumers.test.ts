@@ -26,7 +26,7 @@ import { KnightDuelWindow as DuelExecutor } from "../../../src/game/engine/knigh
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms/prompt/config_render_registry";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import { getWitchState } from "../../../src/game/mechanisms/roles/private_state";
+import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,

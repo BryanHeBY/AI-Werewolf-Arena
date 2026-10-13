@@ -23,7 +23,7 @@ import { hunterDeathHook } from "../../../../src/game/mechanisms/roles/hunter/de
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import { captureNightLife } from "../../../../src/core/domain/night_effects";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
 const roles = [Role.Wolf, Role.Hunter, Role.Seer, Role.Guard, Role.Villager, Role.Villager],
   config: BoardConfig = {
     ...sixPlayerMvpConfig,

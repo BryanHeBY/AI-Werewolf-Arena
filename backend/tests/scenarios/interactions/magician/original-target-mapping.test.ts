@@ -15,7 +15,7 @@ import {
 } from "../../../../src/core";
 import type { AliveComponent } from "../../../../src/core/domain/components/alive";
 import { magicianTwelveConfig } from "../../../../src/runtime/scenarios/magician_twelve";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import {
   isMagicianBoard,
   resolveMagicianNightTarget,

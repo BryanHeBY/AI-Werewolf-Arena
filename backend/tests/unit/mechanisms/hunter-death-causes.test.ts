@@ -18,7 +18,7 @@ import {
 } from "../../../src/core";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
-import { getHunterState, setHunterState } from "../../../src/game/mechanisms/roles/private_state";
+import { getHunterState, setHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
 import { hunterDeathHook } from "../../../src/game/mechanisms/roles/hunter/death_hook";
 import { DeathResolution } from "../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../src/game/engine/event_registry";

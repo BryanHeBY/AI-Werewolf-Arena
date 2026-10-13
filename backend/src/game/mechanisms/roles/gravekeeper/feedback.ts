@@ -12,7 +12,7 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Role, type EntityId, type ExileFeedback } from "../../../../core/domain/model";
 import { RoleCatalog, getDefaultRoleCatalog } from "../catalog";
 import { resolveInspection } from "../inspection";
-import { getGravekeeperState } from "../private_state";
+import { getGravekeeperState } from "./state";
 import type { NightStageHandler } from "../../stages/night/contracts";
 
 /** The manager calls this only after the voting hook confirms the main target's actual exile. */

@@ -64,8 +64,8 @@ import {
 import { renderInspectionPolicy } from "../../../game/mechanisms/roles/role_inspection/policies";
 import { renderMessage, text, term, type Locale } from "@ai-werewolf-arena/game-text";
 import { readGravekeeperReport } from "@ai-werewolf-arena/replay-contract";
-import { getBearState } from "../../../game/mechanisms/roles/private_state";
-import { getHiddenWolfState } from "../../../game/mechanisms/roles/private_state";
+import { getBearState } from "../../../game/mechanisms/roles/bear/ports";
+import { getHiddenWolfState } from "../../../game/mechanisms/roles/hidden_wolf/ports";
 import { canHiddenWolfKnife } from "../../../game/mechanisms/roles/hidden_wolf/inheritance";
 import {
   roleInspectionPolicy,
@@ -80,10 +80,8 @@ import {
   projectBlackMarketState,
 } from "../../../game/mechanisms/roles/black_market_merchant/state";
 import { allDeathGuns, projectDeathGun } from "../../../game/mechanisms/roles/death_abilities";
-import {
-  getGargoyleState,
-  getRoleInspectionState,
-} from "../../../game/mechanisms/roles/private_state";
+import { getGargoyleState } from "../../../game/mechanisms/roles/gargoyle/ports";
+import { getRoleInspectionState } from "../../../game/mechanisms/roles/role_inspection/ports";
 import { canGargoyleKnife } from "../../../game/mechanisms/roles/gargoyle/inheritance";
 import {
   getMechanicalState,
@@ -127,17 +125,15 @@ import {
   abilityStatus,
   projectNightAbility,
 } from "../../../game/mechanisms";
-import {
-  getGuardState,
-  getHunterState,
-  getWolfKingState,
-  getKnightState,
-  getGravekeeperState,
-  getDreamerState,
-  getWolfBeautyState,
-  getIdiotState,
-  getWitchState,
-} from "../../../game/mechanisms/roles/private_state";
+import { getGuardState } from "../../../game/mechanisms/roles/guard/ports";
+import { getHunterState } from "../../../game/mechanisms/roles/hunter/ports";
+import { getWolfKingState } from "../../../game/mechanisms/roles/wolf_king/ports";
+import { getKnightState } from "../../../game/mechanisms/roles/knight/ports";
+import { getGravekeeperState } from "../../../game/mechanisms/roles/gravekeeper/ports";
+import { getDreamerState } from "../../../game/mechanisms/roles/dreamer/ports";
+import { getWolfBeautyState } from "../../../game/mechanisms/roles/wolf_beauty/ports";
+import { getIdiotState } from "../../../game/mechanisms/roles/idiot/ports";
+import { getWitchState } from "../../../game/mechanisms/roles/witch/ports";
 import { getSeerState } from "../../../game/mechanisms/roles/seer/ports";
 import { freezeObservation, type PlayerObservation } from "./observation";
 import { buildBoardInfoPrompt, buildSystemPrompt, buildUserPrompt } from "./prompt_templates";

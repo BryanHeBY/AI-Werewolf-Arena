@@ -28,17 +28,15 @@ import {
   findNightAbility,
   projectNightAbility,
 } from "../../../src/game/mechanisms/roles/abilities";
-import {
-  getBearState,
-  getDreamerState,
-  getGuardState,
-  getHunterState,
-  getIdiotState,
-  getKnightState,
-  getWhiteWolfKingState,
-  getWolfBeautyState,
-  getWolfKingState,
-} from "../../../src/game/mechanisms/roles/private_state";
+import { getBearState } from "../../../src/game/mechanisms/roles/bear/ports";
+import { getDreamerState } from "../../../src/game/mechanisms/roles/dreamer/ports";
+import { getGuardState } from "../../../src/game/mechanisms/roles/guard/ports";
+import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
+import { getIdiotState } from "../../../src/game/mechanisms/roles/idiot/ports";
+import { getKnightState } from "../../../src/game/mechanisms/roles/knight/ports";
+import { getWhiteWolfKingState } from "../../../src/game/mechanisms/roles/white_wolf_king/ports";
+import { getWolfBeautyState } from "../../../src/game/mechanisms/roles/wolf_beauty/ports";
+import { getWolfKingState } from "../../../src/game/mechanisms/roles/wolf_king/ports";
 import {
   projectBearState,
   projectDreamerState,

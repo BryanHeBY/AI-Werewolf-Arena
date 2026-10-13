@@ -39,7 +39,8 @@ import {
   type ActionRequest,
   type RoleComponent,
 } from "../../../../src/core";
-import { getHunterState, getWitchState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import type { ToolLoopStepTrace } from "../../../../src/ai/integrations/llm/transport";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";

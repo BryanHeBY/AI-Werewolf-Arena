@@ -18,7 +18,7 @@ import {
 } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { BearNightFrame } from "../../../../src/game/mechanisms/roles/bear/night_frame";
-import { getBearState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getBearState } from "../../../../src/game/mechanisms/roles/bear/state";
 import { getDefaultRoleCatalog, RoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import { createRoleComponent } from "../../../../src/core/domain/components/role";

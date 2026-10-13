@@ -18,7 +18,7 @@ import {
   type ActionRequest,
 } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getGargoyleState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getGargoyleState } from "../../../../src/game/mechanisms/roles/gargoyle/ports";
 import {
   allNightAbilities,
   findNightAbility,

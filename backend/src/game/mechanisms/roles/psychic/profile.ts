@@ -1,8 +1,15 @@
+/**
+ * Owns Psychic configuration, native initialization and inspection contributions.
+ * Inputs are original role parameters, initialization data and request context;
+ * outputs preserve native history, localized prompts and existing target checks.
+ * Role-inspection owns stored state and accepted writes; this profile never
+ * creates a lease, commits an inspection result or closes a night frame.
+ */
 import { inspectionConfiguration, renderInspectionPolicy } from "../role_inspection/policies";
 import { roleName, text, inspectionLabel } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
-import { getRoleInspectionState, setRoleInspectionState } from "../private_state";
+import { getRoleInspectionState, setRoleInspectionState } from "../role_inspection/ports";
 import { numberOrNull } from "../../llm/helpers";
 import { PSYCHIC_INSPECTION_STAGE } from "../role_inspection/night_stages";
 import {

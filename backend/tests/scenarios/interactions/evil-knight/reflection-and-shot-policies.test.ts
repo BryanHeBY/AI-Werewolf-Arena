@@ -17,7 +17,8 @@ import {
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import type { RoleComponent } from "../../../../src/core/domain/components/role";
 import type { AliveComponent } from "../../../../src/core/domain/components/alive";
-import { getHunterState, getSeerState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
+import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
 function fixture(
   locale: "zh-CN" | "en",
   shotPolicy: "night_shot_immune" | "hunter_shot_bypasses" = "night_shot_immune",

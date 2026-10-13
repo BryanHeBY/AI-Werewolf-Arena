@@ -15,7 +15,7 @@ import { EntityId, GameEvent, Role } from "../../../../core/domain/model";
 import { World } from "../../../../core/domain/world";
 import { VotedOutResult } from "../../hooks/hook_registry";
 import { transferOrDestroySheriffBadge } from "../../sheriff/badge";
-import { getIdiotState, setIdiotState } from "../private_state";
+import { getIdiotState, setIdiotState } from "./state";
 
 /** 白痴放逐钩子实现。 */
 export function idiotVotedOutHook(

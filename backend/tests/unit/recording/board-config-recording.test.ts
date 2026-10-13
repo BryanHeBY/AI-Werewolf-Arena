@@ -17,7 +17,7 @@ import {
   type BoardConfig,
 } from "../../../src/core";
 import type { RoleComponent } from "../../../src/core/domain/components/role";
-import { getWitchState } from "../../../src/game/mechanisms/roles/private_state";
+import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
 import { boardConfigSchema } from "../../../src/core/domain/board_schema";
 import {
   boardDefinitionFromConfig,

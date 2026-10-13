@@ -14,7 +14,7 @@ import { GameActionRequestFactory } from "../../../src/game/engine/action_reques
 import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../src/ai/agents/providers/observed_players";
 import type { PlayerObservation } from "../../../src/ai/agents/player/observation";
-import { getGuardState } from "../../../src/game/mechanisms/roles/private_state";
+import { getGuardState } from "../../../src/game/mechanisms/roles/guard/ports";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 
 const fixedRoles = [Role.Villager, Role.Wolf, Role.Guard, Role.Wolf, Role.Seer, Role.Villager];

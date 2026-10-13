@@ -23,7 +23,7 @@ import { SessionRecordManager } from "../../recording/session_recorder";
 import { runWithSessionRecorder } from "../../recording/recording_context";
 import { GameEventRecorder } from "../game_event_recorder";
 import { COMPONENT, type RoleComponent } from "../../core";
-import { getWitchState } from "../../game/mechanisms/roles/private_state";
+import { getWitchState } from "../../game/mechanisms/roles/witch/ports";
 import {
   beginGameReproduction,
   captureCheckpoint,

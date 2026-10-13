@@ -30,7 +30,7 @@ import {
   setNightAbilityEnabled,
   transferNightAbility,
 } from "../../../src/game/mechanisms/roles/ability_changes";
-import { getSeerState } from "../../../src/game/mechanisms/roles/private_state";
+import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import { ActionReception } from "../../../src/ai/agents/player/action_reception";
 import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
@@ -264,8 +264,10 @@ test("direct transfer provenance cannot clone or refresh a used source instance 
 });
 
 test("native installation and replacement detach repeated templates and return the actual owned state", async () => {
-  const { setSeerState, setWitchState } =
-    await import("../../../src/game/mechanisms/roles/private_state");
+  const [{ setSeerState }, { setWitchState }] = await Promise.all([
+    import("../../../src/game/mechanisms/roles/seer/ports"),
+    import("../../../src/game/mechanisms/roles/witch/ports"),
+  ]);
   const { world } = fixture(),
     template = freshSeer();
   const first = setSeerState(role(world, 3), template),
@@ -321,7 +323,7 @@ test("transfer requires an explicit knowledge policy and preserves generic count
 });
 
 test("sparse or undefined state arrays reject before native replacement or grant writes", async () => {
-  const { setSeerState } = await import("../../../src/game/mechanisms/roles/private_state");
+  const { setSeerState } = await import("../../../src/game/mechanisms/roles/seer/ports");
   const { world } = fixture(),
     events: GameEvent[] = [],
     before = structuredClone(role(world, 3).privateState);

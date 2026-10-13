@@ -10,7 +10,7 @@ import { expect, test } from "bun:test";
 import { World } from "../../../../src/core/domain/world";
 import { Camp, Role, WinCondition } from "../../../../src/core/domain/identity";
 import type { BoardConfig } from "../../../../src/core/domain/board";
-import { getDreamerState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import {
   createRoleComponent,

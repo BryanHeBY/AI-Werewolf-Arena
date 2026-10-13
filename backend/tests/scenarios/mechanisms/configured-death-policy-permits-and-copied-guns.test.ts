@@ -19,7 +19,8 @@ import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../src/runtime/config/board_definition";
-import { getHunterState, getWolfKingState } from "../../../src/game/mechanisms/roles/private_state";
+import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
+import { getWolfKingState } from "../../../src/game/mechanisms/roles/wolf_king/ports";
 import { DeathResolution } from "../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";

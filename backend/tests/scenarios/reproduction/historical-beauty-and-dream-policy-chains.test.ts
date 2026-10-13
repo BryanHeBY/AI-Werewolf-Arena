@@ -4,7 +4,18 @@
 import { expect, test } from "bun:test";
 import path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { createRandom, Phase, PotionType, Role, WinCondition, COMPONENT, type BoardConfig, type ActionProvider, type ActionRequest, type RoleComponent } from "../../../src/core";
+import {
+  createRandom,
+  Phase,
+  PotionType,
+  Role,
+  WinCondition,
+  COMPONENT,
+  type BoardConfig,
+  type ActionProvider,
+  type ActionRequest,
+  type RoleComponent,
+} from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   boardDefinitionFromConfig,
@@ -23,8 +34,12 @@ import {
   replayReproduction,
 } from "../../../src/runtime/simulation/replay_reproduction";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
-import { getDreamerState, getWolfBeautyState } from "../../../src/game/mechanisms/roles/private_state";
-import { getDefaultConfigRenderRegistry, getDefaultRoleCatalog } from "../../../src/game/mechanisms";
+import { getDreamerState } from "../../../src/game/mechanisms/roles/dreamer/ports";
+import { getWolfBeautyState } from "../../../src/game/mechanisms/roles/wolf_beauty/ports";
+import {
+  getDefaultConfigRenderRegistry,
+  getDefaultRoleCatalog,
+} from "../../../src/game/mechanisms";
 import {
   projectDreamerState,
   projectWolfBeautyState,

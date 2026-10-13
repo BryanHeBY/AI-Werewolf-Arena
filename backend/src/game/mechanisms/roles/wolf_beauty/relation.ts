@@ -17,7 +17,7 @@ import {
   type WinDecision,
 } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
-import { getWolfBeautyState } from "../private_state";
+import { getWolfBeautyState } from "./state";
 import { getDefaultRoleCatalog } from "../catalog";
 import { victoryDecision } from "../../win_conditions/results";
 

@@ -26,11 +26,9 @@ import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/tw
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { ActionValidator } from "../../../../src/game/gateway/action_validator";
 import { ToolValidationRuleRegistry } from "../../../../src/game/mechanisms/validation/tool_validation_rule_registry";
-import {
-  getGuardState,
-  getHunterState,
-  getWitchState,
-} from "../../../../src/game/mechanisms/roles/private_state";
+import { getGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
+import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { AcpTurnRegistry } from "../../../../src/ai/integrations/acp/acp_turn_registry";
 

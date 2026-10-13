@@ -39,7 +39,8 @@ import {
   RoleCatalog,
   ToolSpecRegistry,
 } from "../../../src/game/mechanisms";
-import { getWitchState, setSeerState } from "../../../src/game/mechanisms/roles/private_state";
+import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
+import { setSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
 import { COMPONENT } from "../../../src/core/domain/components/names";
 import type { RoleComponent } from "../../../src/core/domain/components/role";
 import type { Locale } from "@ai-werewolf-arena/game-text";

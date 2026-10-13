@@ -39,7 +39,7 @@ import {
   getDefaultConfigRenderRegistry,
 } from "../../../src/game/mechanisms";
 import { ToolValidationRuleRegistry } from "../../../src/game/mechanisms/validation/tool_validation_rule_registry";
-import { getIdiotState } from "../../../src/game/mechanisms/roles/private_state";
+import { getIdiotState } from "../../../src/game/mechanisms/roles/idiot/ports";
 import { DeathResolution } from "../../../src/game/engine/death_resolution";
 import { DeathCause } from "../../../src/core/domain/deaths";
 

@@ -5,9 +5,17 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Phase, WinCondition, COMPONENT, type BoardConfig, type RoleComponent, type ActionRequest } from "../../../../src/core";
+import {
+  Role,
+  Phase,
+  WinCondition,
+  COMPONENT,
+  type BoardConfig,
+  type RoleComponent,
+  type ActionRequest,
+} from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getDreamerState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/state";
 import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import {

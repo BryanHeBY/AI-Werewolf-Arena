@@ -10,11 +10,17 @@ import path from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Phase, Role, type ActionRequest, type RoleComponent } from "../../../../src/core";
+import {
+  COMPONENT,
+  Phase,
+  Role,
+  type ActionRequest,
+  type RoleComponent,
+} from "../../../../src/core";
 import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";
 import { WerewolfMcpControlServer } from "../../../../src/ai/integrations/acp/werewolf_mcp_control";
 import { gameToolProtocol } from "../../../../src/ai/agents/game_tool_protocol";
-import { getGuardState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";

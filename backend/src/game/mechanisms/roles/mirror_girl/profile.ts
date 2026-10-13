@@ -12,7 +12,7 @@ import { roleName, text, inspectionLabel } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
 import type { RoleComponent } from "../../../../core/domain/components/role";
-import { setRoleInspectionState } from "../private_state";
+import { setRoleInspectionState } from "../role_inspection/ports";
 import {
   allNightAbilities,
   findNightAbility,

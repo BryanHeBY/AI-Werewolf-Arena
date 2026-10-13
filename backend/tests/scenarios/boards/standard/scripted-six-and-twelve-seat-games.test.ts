@@ -31,12 +31,10 @@ import {
   type VotingRightComponent,
 } from "../../../../src/core";
 import { createRandom } from "../../../../src/core/domain/random";
-import {
-  getGuardState,
-  getHunterState,
-  getSeerState,
-  getWitchState,
-} from "../../../../src/game/mechanisms/roles/private_state";
+import { getGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
+import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
+import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
 import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";

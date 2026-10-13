@@ -11,7 +11,7 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import { Role, Camp, Phase } from "../../../../core/domain/model";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { getWolfBeautyState } from "../private_state";
+import { getWolfBeautyState } from "./state";
 import { bindCharm } from "./relation";
 import { animalBeautyCharmAllowed, isAnimalDreamBoard } from "../animal_dream/authority";
 import { appendAnimalBeautyNotice } from "../animal_dream/facts";

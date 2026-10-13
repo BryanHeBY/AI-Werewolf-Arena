@@ -52,12 +52,10 @@ import {
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
 } from "../../../../src/game/mechanisms";
-import {
-  getWitchState,
-  getHunterState,
-  getGuardState,
-  getSeerState,
-} from "../../../../src/game/mechanisms/roles/private_state";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
+import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
+import { getGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
+import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,

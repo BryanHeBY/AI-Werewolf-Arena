@@ -7,10 +7,26 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, DeathCause, Phase, Role, createAliveComponent, type RoleComponent, type AliveComponent, type GameEvent, type ActionRequest, type ToolCall, type RuntimeSnapshot } from "../../../../src/core";
+import {
+  COMPONENT,
+  DeathCause,
+  Phase,
+  Role,
+  createAliveComponent,
+  type RoleComponent,
+  type AliveComponent,
+  type GameEvent,
+  type ActionRequest,
+  type ToolCall,
+  type RuntimeSnapshot,
+} from "../../../../src/core";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { CUPID_STAGE } from "../../../../src/game/mechanisms/roles/cupid/night_stage";
-import { loversRecord, projectLover, livingOriginalLovers } from "../../../../src/game/mechanisms/roles/cupid/relation";
+import {
+  loversRecord,
+  projectLover,
+  livingOriginalLovers,
+} from "../../../../src/game/mechanisms/roles/cupid/relation";
 import { cupidCityDecision } from "../../../../src/game/mechanisms/roles/cupid/victory";
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
@@ -19,8 +35,11 @@ import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { DreamNightFrame } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
 import { aliveLifeVersion } from "../../../../src/core/domain/components/alive";
-import { permitsCharm, bindCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
-import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/private_state";
+import {
+  permitsCharm,
+  bindCharm,
+} from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
+import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
 
 const deck = [Role.Cupid, Role.Hunter, Role.Wolf, Role.Villager, Role.Wolf, Role.Villager];
 

@@ -1,9 +1,16 @@
+/**
+ * Owns Pure White/Wolf Witch configured profiles and inspection contributions.
+ * Inputs are original board parameters, initialization state and request context;
+ * outputs preserve supported roles, prompt knowledge and existing tool policies.
+ * Role-inspection keeps its stored references and writes; these profiles never
+ * perform simultaneous effects, resolve a death chain or close a night frame.
+ */
 import { z } from "zod";
 import { roleName, text, inspectionLabel, PURE_WHITE_POLICY } from "@ai-werewolf-arena/game-text";
 import { Camp, Role, WinCondition } from "../../../../core/domain/model";
 import { ELIMINATION_PRIORITIES } from "../../../../core/domain/board";
 import type { RoleProfile } from "../contracts";
-import { getRoleInspectionState, setRoleInspectionState } from "../private_state";
+import { getRoleInspectionState, setRoleInspectionState } from "../role_inspection/ports";
 import { WOLF_ROLE_PROFILE } from "../wolf/profile";
 import { PURE_WHITE_INSPECTION_STAGE, WOLF_WITCH_INSPECTION_STAGE } from "./night_stages";
 import {

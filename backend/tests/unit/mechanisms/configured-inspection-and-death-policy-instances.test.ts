@@ -37,7 +37,8 @@ import {
   MIRROR_INSPECTION_STAGE,
 } from "../../../src/game/mechanisms/roles/role_inspection/night_stages";
 import { roleInspectionTargets } from "../../../src/game/mechanisms/roles/role_inspection/rules";
-import { getHunterState, getWolfKingState } from "../../../src/game/mechanisms/roles/private_state";
+import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
+import { getWolfKingState } from "../../../src/game/mechanisms/roles/wolf_king/ports";
 import { hunterDeathHook } from "../../../src/game/mechanisms/roles/hunter/death_hook";
 import { WOLF_KING_ROLE_PROFILE } from "../../../src/game/mechanisms/roles/wolf_king/profile";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";

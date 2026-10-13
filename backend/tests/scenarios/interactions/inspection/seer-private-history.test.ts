@@ -9,7 +9,7 @@ import { inspectionLabel, text } from "@ai-werewolf-arena/game-text";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Camp, Role, type GameEvent, type RoleComponent } from "../../../../src/core";
 import { RoleCatalog, getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
-import { getSeerState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
 import { NightStageRegistry } from "../../../../src/game/mechanisms/stages/night/night_stage_registry";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
@@ -22,7 +22,6 @@ import { getDefaultScriptEventRenderRegistry } from "../../../../src/game/mechan
 
 const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 for (const locale of ["zh-CN", "en"] as const) {
-
   for (const inspectedCamp of [Camp.Good, Camp.Wolf, Camp.ThirdParty])
     test(`${locale}: actual seer stage records only its authorized ${inspectedCamp} label and detached private history`, async () => {
       const { world } = bootstrapGame(sixPlayerMvpConfig, { fixedRoles, locale }),

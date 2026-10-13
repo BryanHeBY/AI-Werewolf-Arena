@@ -219,7 +219,7 @@ for (const locale of ["zh-CN", "en"] as const)
 for (const locale of ["zh-CN", "en"] as const)
   for (const kind of ["llm", "acp"] as const)
     test(`${locale}/${kind}: the actual Witch agent receives an unknown current knife after its antidote is exhausted`, async () => {
-      const { getWitchState } = await import("../../../../src/game/mechanisms/roles/private_state");
+      const { getWitchState } = await import("../../../../src/game/mechanisms/roles/witch/ports");
       const { text } = await import("@ai-werewolf-arena/game-text");
       const { twelvePlayerStandardConfig } =
         await import("../../../../src/runtime/scenarios/twelve_player_standard");

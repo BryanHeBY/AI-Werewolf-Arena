@@ -17,7 +17,7 @@ import {
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import type { RoleComponent } from "../../../../src/core/domain/components/role";
 import type { AliveComponent } from "../../../../src/core/domain/components/alive";
-import { getRoleInspectionState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getRoleInspectionState } from "../../../../src/game/mechanisms/roles/role_inspection/ports";
 
 function fixture(
   locale: "zh-CN" | "en",

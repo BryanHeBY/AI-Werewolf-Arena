@@ -9,7 +9,7 @@
 import { expect, test } from "bun:test";
 import { animalRosterFixture } from "../../../support/features/animal-dream/builders/roster";
 import { BearNightFrame } from "../../../../src/game/mechanisms/roles/bear/night_frame";
-import { getBearState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getBearState } from "../../../../src/game/mechanisms/roles/bear/state";
 import { RoleCatalog, getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";

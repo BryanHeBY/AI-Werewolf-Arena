@@ -5,9 +5,18 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Camp, Phase, KnightDuelWindow, ActionWindow, WinCondition, COMPONENT, type RoleComponent } from "../../../../src/core";
+import {
+  Role,
+  Camp,
+  Phase,
+  KnightDuelWindow,
+  ActionWindow,
+  WinCondition,
+  COMPONENT,
+  type RoleComponent,
+} from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getKnightState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getKnightState } from "../../../../src/game/mechanisms/roles/knight/ports";
 
 const deck = [Role.Knight, Role.Wolf, Role.WolfKing, Role.Hunter, Role.Villager, Role.Villager];
 

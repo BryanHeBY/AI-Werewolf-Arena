@@ -19,7 +19,7 @@ import type { IdentityComponent } from "../../../../core/domain/entities/player"
 import { Camp, Role, type GameEvent, type EntityId } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
 import { RoleCatalog, getDefaultRoleCatalog } from "../catalog";
-import { getBearState } from "../private_state";
+import { getBearState } from "./state";
 import { BEAR_SIGNAL_POLICIES, type BearSignalPolicy } from "@ai-werewolf-arena/game-text";
 import {
   captureOriginalPlayer,

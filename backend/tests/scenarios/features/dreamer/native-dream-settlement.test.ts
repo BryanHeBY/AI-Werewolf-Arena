@@ -18,12 +18,10 @@ import {
   type ActionRequest,
 } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import {
-  getDreamerState,
-  getHunterState,
-  getWolfKingState,
-  getWitchState,
-} from "../../../../src/game/mechanisms/roles/private_state";
+import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
+import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
+import { getWolfKingState } from "../../../../src/game/mechanisms/roles/wolf_king/ports";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";

@@ -19,7 +19,7 @@ import { ActionReception, ActionTurn } from "../../../../src/ai/agents/player/ac
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
 import { createAliveComponent } from "../../../../src/core/domain/components/alive";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import {

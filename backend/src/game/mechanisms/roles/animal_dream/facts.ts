@@ -1,3 +1,10 @@
+/**
+ * Owns Animal Dream validated fact publication and event-time player knowledge.
+ * Inputs are original authoritative facts, actor IDs and existing event storage;
+ * outputs are immutable appended facts and retained knowledge for player views.
+ * Only a successfully appended fact advances this journal; resource queries and
+ * copied state views never spend stock or reveal uncommitted mechanism results.
+ */
 import {
   readAnimalDreamFact,
   animalDreamFactAudience,
@@ -11,7 +18,7 @@ import { types } from "node:util";
 import type { GameEvent } from "../../../../core/domain/events";
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
 import { Camp } from "../../../../core/domain/identity";
-import { getWolfBeautyState } from "../private_state";
+import { getWolfBeautyState } from "../wolf_beauty/ports";
 import { animalOriginalRolePlayer, animalOriginalPlayer } from "./roster";
 import {
   animalBeautyCharmAllowed,

@@ -34,7 +34,7 @@ import { DeathResolution } from "../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { ActionReception } from "../../../src/ai/agents/player/action_reception";
-import { getHunterState } from "../../../src/game/mechanisms/roles/private_state";
+import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
 import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
 import { World } from "../../../src/core/domain/world";
 import { HookRegistry } from "../../../src/game/mechanisms/hooks/hook_registry";

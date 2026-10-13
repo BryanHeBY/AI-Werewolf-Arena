@@ -19,7 +19,7 @@ import {
   roleInspectionPolicy,
   type NightAbilityReadView,
 } from "../abilities";
-import { getGargoyleState } from "../private_state";
+import { getGargoyleState } from "../gargoyle/ports";
 import { resolveInspection } from "../inspection";
 import {
   beginRoleInspectionNight,

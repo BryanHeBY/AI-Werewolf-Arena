@@ -4,7 +4,7 @@
  * Only a current relation may write a link into the returned proposal list; revoked relations
  * fail without committing charm stock, unrelated damage or the remaining death wave.
  */
-import { getWolfBeautyState } from "../private_state";
+import { getWolfBeautyState } from "./state";
 import { Role, DeathCause } from "../../../../core/domain/model";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";

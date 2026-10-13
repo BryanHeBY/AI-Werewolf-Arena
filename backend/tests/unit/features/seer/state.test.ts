@@ -24,7 +24,7 @@ import {
 import {
   getSeerState as legacyGetSeerState,
   setSeerState as legacySetSeerState,
-} from "../../../../src/game/mechanisms/roles/private_state";
+} from "../../../../src/game/mechanisms/roles/seer/state";
 
 const emptyState = (): SeerState => ({ lastTarget: null, lastIsWerewolf: null, history: [] });
 

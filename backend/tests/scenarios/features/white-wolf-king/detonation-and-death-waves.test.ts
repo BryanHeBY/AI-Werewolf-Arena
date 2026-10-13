@@ -9,10 +9,19 @@ import { Camp } from "../../../../src/core";
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Role, Phase, ActionWindow, DeathCause, WinCondition, type RoleComponent } from "../../../../src/core";
+import {
+  COMPONENT,
+  Role,
+  Phase,
+  ActionWindow,
+  DeathCause,
+  WinCondition,
+  type RoleComponent,
+} from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
-import { getWhiteWolfKingState, getHunterState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getWhiteWolfKingState } from "../../../../src/game/mechanisms/roles/white_wolf_king/ports";
+import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
 
 const deck = [Role.WhiteWolfKing, Role.Wolf, Role.Seer, Role.Hunter, Role.Villager, Role.Villager];
 

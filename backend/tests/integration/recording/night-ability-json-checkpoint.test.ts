@@ -10,7 +10,7 @@ import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT, Role, type GameEvent, type RoleComponent } from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { grantNightAbility } from "../../../src/game/mechanisms/roles/ability_changes";
-import { getSeerState } from "../../../src/game/mechanisms/roles/private_state";
+import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
 
 const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 
@@ -26,7 +26,7 @@ test("explicit undefined optional fields normalize into a serializable CP/Tape w
     await import("../../../src/runtime/simulation/reproduction_context");
   const { parseReproductionRecord } = await import("../../../src/recording/reproduction");
   const { createTestTempDirectory } = await import("../../support/drivers/temp-directories");
-  const { setSeerState } = await import("../../../src/game/mechanisms/roles/private_state");
+  const { setSeerState } = await import("../../../src/game/mechanisms/roles/seer/ports");
   const context = fixture(),
     events: GameEvent[] = [];
   setSeerState(role(context.world, 3), {

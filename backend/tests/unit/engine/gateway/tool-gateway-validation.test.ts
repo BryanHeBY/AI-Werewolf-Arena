@@ -11,7 +11,8 @@ import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { RoleComponent } from "../../../../src/core/domain/components/role";
 import { Phase, PotionType, Role } from "../../../../src/core/domain/model";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
-import { getGuardState, getWitchState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getGuardState } from "../../../../src/game/mechanisms/roles/guard/ports";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
 

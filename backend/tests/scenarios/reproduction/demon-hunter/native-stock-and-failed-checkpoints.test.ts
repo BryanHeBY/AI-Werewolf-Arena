@@ -13,7 +13,7 @@ import { demonHunterFixture } from "../../../support/features/demon-hunter/build
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { demonHunterAuditPlayer } from "../../../../src/game/mechanisms/roles/demon_hunter/authority";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
-import { getHunterState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
 
 function stock(f: ReturnType<typeof demonHunterFixture>, id: number, key: string) {
   return (

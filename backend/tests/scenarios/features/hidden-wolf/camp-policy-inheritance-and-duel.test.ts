@@ -3,8 +3,17 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Camp, COMPONENT, Role, type ActionRequest, type BoardConfig, type HiddenWolfCampInspectionPolicy, type RoleComponent } from "../../../../src/core";
-import { getHiddenWolfState, getSeerState } from "../../../../src/game/mechanisms/roles/private_state";
+import {
+  Camp,
+  COMPONENT,
+  Role,
+  type ActionRequest,
+  type BoardConfig,
+  type HiddenWolfCampInspectionPolicy,
+  type RoleComponent,
+} from "../../../../src/core";
+import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden_wolf/ports";
+import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import {

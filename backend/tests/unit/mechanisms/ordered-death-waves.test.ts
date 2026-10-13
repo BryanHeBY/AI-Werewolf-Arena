@@ -5,7 +5,15 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, DeathCause, Phase, Role, type ActionRequest, type GameEvent, type RoleComponent } from "../../../src/core";
+import {
+  COMPONENT,
+  DeathCause,
+  Phase,
+  Role,
+  type ActionRequest,
+  type GameEvent,
+  type RoleComponent,
+} from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { DeathResolution } from "../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../src/game/engine/event_registry";
@@ -185,7 +193,7 @@ test("multiple hooks retain compound causes without aliasing their returned sour
 
 test("a later hook failure keeps a completed gun death, original error and closed action windows", async () => {
   const { hunterDeathHook } = await import("../../../src/game/mechanisms/roles/hunter/death_hook");
-  const { getHunterState } = await import("../../../src/game/mechanisms/roles/private_state");
+  const { getHunterState } = await import("../../../src/game/mechanisms/roles/hunter/ports");
   const { world } = scene("en"),
     events: GameEvent[] = [],
     error = new Error("synthetic-later-hook-error");

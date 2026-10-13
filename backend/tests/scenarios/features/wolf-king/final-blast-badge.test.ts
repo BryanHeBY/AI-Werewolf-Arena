@@ -5,9 +5,17 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Camp, Role, Phase, WinCondition, ActionWindow, type RoleComponent } from "../../../../src/core";
+import {
+  COMPONENT,
+  Camp,
+  Role,
+  Phase,
+  WinCondition,
+  ActionWindow,
+  type RoleComponent,
+} from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getWolfKingState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getWolfKingState } from "../../../../src/game/mechanisms/roles/wolf_king/ports";
 
 const config = {
   ...sixPlayerMvpConfig,

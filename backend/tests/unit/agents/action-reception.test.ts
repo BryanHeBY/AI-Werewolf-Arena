@@ -20,11 +20,9 @@ import {
   type AliveComponent,
   type RoleComponent,
 } from "../../../src/core";
-import {
-  getGuardState,
-  getHunterState,
-  getWitchState,
-} from "../../../src/game/mechanisms/roles/private_state";
+import { getGuardState } from "../../../src/game/mechanisms/roles/guard/ports";
+import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
+import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { ToolSpecRegistry, getDefaultToolSpecRegistry } from "../../../src/game/mechanisms";

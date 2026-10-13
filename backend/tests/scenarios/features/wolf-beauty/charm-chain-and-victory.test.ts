@@ -20,7 +20,7 @@ import {
   type RoleComponent,
 } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
 import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { bindCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";

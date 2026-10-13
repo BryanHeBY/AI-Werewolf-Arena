@@ -393,3 +393,7 @@
 - C17 核心opaque容器：68路径，核心readonly object原对象/factory/descriptor不动，33源与34oldfixture完整程序证明0、39owner视图/3Mist读取/93fixture具体typeadapter，原init/指针/值/权限guard/cloneprecedence保。原29Git+4C13working+1A12明源，C13已6cff独立冻提交，opaque只加入已有新imports上typeviews。source99781 actual0、新3/0/11、68heads0；81183仅新RootB literalhooks诊断由B修，多批whole-src/tests/scripts35862 actualclosed0，Root实际API/retired/copyboundary及第二向真68SHA/13schema录制controls审green。不runtimeModel/globalgate重复；legacyfacade/全codec/后续phase继续。见opaque-role-container.md。
 
 - C25 首效果折叠：原13条折叠语句归night-damage-plan，resolve真实一次消费12个只读字段；原结果分配/实体循环/mark清理及后续getter失败前缀保持。查询仅Alive只读/印记身份，6负例99692实际0；原72/0/169+新3/0/12，有限类型90660 actual0，四heads0。Root与独立真实Git源码/receiver/原四函数/三个边界审green；初类型root与inspection-forOf定位harness红保留，只修harness。完整EffectIntent因果时钟、deathwave/receipt/C26–29仍pending，不重复全gate。见night-damage-plan.md。
+
+- C17/C44 状态门面退出：100真实consumer/102静态import+5dynamic/175binding直达原15owner，113paths含9实际port/3既有port+旧facade删除。100非importtyped程序0；beforedelete惰性175funcidentity0、完整src/tests/scripts2781实际closed0。Root实际源审+独立175准确站/27publicbinding/113SHA/112heads终审0；仅一preloaded mixed Promise.all微任务不同明确，四single仅route。13新／触及职责头中文化非头byte同，不重复compiler；Hunter缺项真红及重复dynamicmatcher红保留修正。全schema/codec/能力观察及其他C44继续。见role-state-facade-exit.md。
+
+- 用户补充维护要求：重构不中断，新增与修改注释使用中文；触及文件顺带翻译职责头，在重要逻辑、数据结构、授权、排序和失败边界补准确说明，审查检查真实性。规范进入plan.md第16节，注释增量以程序保持／职责门禁验证，不重复行为测试。

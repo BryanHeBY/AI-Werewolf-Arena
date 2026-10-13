@@ -20,7 +20,7 @@ import {
   type RoleComponent,
   type ToolCall,
 } from "../../../../src/core";
-import { getDreamerState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
 import { RoleCatalog, getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import {
   ALCHEMIST_ROLE_PROFILE,

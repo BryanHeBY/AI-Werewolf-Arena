@@ -20,7 +20,7 @@ import { createAliveComponent } from "../../../../src/core/domain/components/ali
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { aliveLifeVersion } from "../../../../src/core/domain/components/alive";
 import { animalAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/animal_dream/authority";
-import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
 import { activeCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
 
 const fixed = [

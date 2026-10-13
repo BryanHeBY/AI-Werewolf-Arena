@@ -6,7 +6,10 @@
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
-import { animalGame, animalBoard } from "../../../support/features/animal-dream/builders/runtime-game";
+import {
+  animalGame,
+  animalBoard,
+} from "../../../support/features/animal-dream/builders/runtime-game";
 import { animalAction } from "../../../support/features/animal-dream/drivers/actions";
 import { SessionRecordManager } from "../../../../src/recording/session_recorder";
 import { runWithSessionRecorder } from "../../../../src/recording/recording_context";
@@ -23,7 +26,7 @@ import {
   animalPufferKnowledge,
 } from "../../../../src/game/mechanisms/roles/animal_dream/facts";
 import { COMPONENT, type ActionRequest, type ToolCall } from "../../../../src/core";
-import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
 
 for (const skill of ["fox", "puffer"] as const)
   test(`R actual PM+Trace ${skill}: settlement recording failure preserves paid resource without publication`, async () => {

@@ -7,7 +7,7 @@ import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Phase, PotionType, Role, type RoleComponent } from "../../../../src/core";
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
 import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";

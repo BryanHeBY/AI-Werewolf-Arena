@@ -14,7 +14,7 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Role } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
 import { findNightAbility, roleInspectionPolicy, type NightAbilityReadView } from "../abilities";
-import { getGargoyleState } from "../private_state";
+import { getGargoyleState } from "../gargoyle/ports";
 
 interface Completion {
   actorId: number;

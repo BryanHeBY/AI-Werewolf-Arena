@@ -15,7 +15,8 @@ import { ActionWindow, Phase } from "../../../src/core/domain/model";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { twelvePlayerStandardConfig } from "../../../src/runtime/scenarios/twelve_player_standard";
 import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
-import { getSeerState, getWitchState } from "../../../src/game/mechanisms/roles/private_state";
+import { getSeerState } from "../../../src/game/mechanisms/roles/seer/ports";
+import { getWitchState } from "../../../src/game/mechanisms/roles/witch/ports";
 import {
   REQUIRED_ACTION_CONSTRAINTS,
   AssertClient,

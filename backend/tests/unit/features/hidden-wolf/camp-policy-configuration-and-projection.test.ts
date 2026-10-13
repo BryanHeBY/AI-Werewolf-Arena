@@ -8,8 +8,16 @@ import {
 } from "../../../../src/game/mechanisms";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Phase, Role, type ActionRequest, type BoardConfig, type HiddenWolfCampInspectionPolicy, type RoleComponent } from "../../../../src/core";
-import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/private_state";
+import {
+  COMPONENT,
+  Phase,
+  Role,
+  type ActionRequest,
+  type BoardConfig,
+  type HiddenWolfCampInspectionPolicy,
+  type RoleComponent,
+} from "../../../../src/core";
+import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden_wolf/state";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import { getDefaultConfigRenderRegistry } from "../../../../src/game/mechanisms/prompt/config_render_registry";

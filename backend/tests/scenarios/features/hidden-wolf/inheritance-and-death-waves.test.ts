@@ -23,11 +23,9 @@ import {
   type GameEvent,
 } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import {
-  getHiddenWolfState,
-  getBearState,
-  getSeerState,
-} from "../../../../src/game/mechanisms/roles/private_state";
+import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden_wolf/ports";
+import { getBearState } from "../../../../src/game/mechanisms/roles/bear/ports";
+import { getSeerState } from "../../../../src/game/mechanisms/roles/seer/ports";
 import { canHiddenWolfKnife } from "../../../../src/game/mechanisms/roles/hidden_wolf/inheritance";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";

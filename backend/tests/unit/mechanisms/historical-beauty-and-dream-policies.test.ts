@@ -25,10 +25,8 @@ import {
   DREAM_PROTECTION_POLICIES,
   BEAUTY_DEATH_LINK_POLICIES,
 } from "../../../src/core/domain/board";
-import {
-  getDreamerState,
-  getWolfBeautyState,
-} from "../../../src/game/mechanisms/roles/private_state";
+import { getDreamerState } from "../../../src/game/mechanisms/roles/dreamer/ports";
+import { getWolfBeautyState } from "../../../src/game/mechanisms/roles/wolf_beauty/ports";
 import {
   projectDreamerState,
   projectWolfBeautyState,

@@ -11,7 +11,7 @@ import { COMPONENT, Phase, Role, type ActionRequest, type RoleComponent } from "
 import { createAliveComponent } from "../../../src/core/domain/components/alive";
 import { ActionReception, ActionTurn } from "../../../src/ai/agents/player/action_reception";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { getHunterState } from "../../../src/game/mechanisms/roles/private_state";
+import { getHunterState } from "../../../src/game/mechanisms/roles/hunter/ports";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 
 function fixture(locale: "zh-CN" | "en" = "en") {

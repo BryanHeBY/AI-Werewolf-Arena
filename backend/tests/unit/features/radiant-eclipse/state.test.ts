@@ -19,10 +19,8 @@ import {
 import { snapshotBorrowedState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/borrowed_state";
 import { DREAMER_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/dreamer/profile";
 import { WITCH_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/witch/profile";
-import {
-  getDreamerState,
-  getWitchState,
-} from "../../../../src/game/mechanisms/roles/private_state";
+import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import { createRoleComponent } from "../../../../src/core/domain/components/role";
 import { Camp, Role, WitchSelfHealRule } from "../../../../src/core/domain/identity";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";

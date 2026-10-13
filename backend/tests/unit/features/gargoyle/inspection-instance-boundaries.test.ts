@@ -19,7 +19,7 @@ import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player
 import {
   getGargoyleState,
   setGargoyleState,
-} from "../../../../src/game/mechanisms/roles/private_state";
+} from "../../../../src/game/mechanisms/roles/gargoyle/state";
 import {
   findNightAbility,
   allNightAbilities,

@@ -13,7 +13,7 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import type { StatusMarksComponent } from "../../../../core/domain/components/status_marks";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { ToolRuleMap, isAliveTarget } from "../../validation/contracts";
-import { getWitchState } from "../private_state";
+import { getWitchState } from "./state";
 import { activeNightAbility } from "../abilities";
 import { luckyTargetAllowed } from "../night_action_history";
 

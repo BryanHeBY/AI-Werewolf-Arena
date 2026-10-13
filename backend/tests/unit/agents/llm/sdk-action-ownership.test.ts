@@ -21,8 +21,14 @@ import {
   getDefaultConfigRenderRegistry,
 } from "../../../../src/game/mechanisms";
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
-import { COMPONENT, Phase, Role, type ActionRequest, type RoleComponent } from "../../../../src/core";
-import { getWitchState } from "../../../../src/game/mechanisms/roles/private_state";
+import {
+  COMPONENT,
+  Phase,
+  Role,
+  type ActionRequest,
+  type RoleComponent,
+} from "../../../../src/core";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
 import type {
   ChatModelClient,
   ToolLoopCallbacks,

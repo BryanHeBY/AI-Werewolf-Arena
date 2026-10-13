@@ -8,9 +8,19 @@
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Camp, Phase, WinCondition, COMPONENT, type BoardConfig, type RoleComponent, type ActionRequest, type GameEvent } from "../../../../src/core";
+import {
+  Role,
+  Camp,
+  Phase,
+  WinCondition,
+  COMPONENT,
+  type BoardConfig,
+  type RoleComponent,
+  type ActionRequest,
+  type GameEvent,
+} from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getHiddenWolfState } from "../../../../src/game/mechanisms/roles/hidden_wolf/state";
 import { refreshHiddenWolfInheritance } from "../../../../src/game/mechanisms/roles/hidden_wolf/inheritance";
 import {
   knownWolfTeammates,

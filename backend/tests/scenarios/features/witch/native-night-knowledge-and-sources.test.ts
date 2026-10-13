@@ -7,9 +7,18 @@ import { completedNight } from "../../../engine/night_stage_fixture";
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Role, DeathCause, WitchSelfHealRule, type ActionRequest, type GameEvent, type RoleComponent } from "../../../../src/core";
+import {
+  COMPONENT,
+  Role,
+  DeathCause,
+  WitchSelfHealRule,
+  type ActionRequest,
+  type GameEvent,
+  type RoleComponent,
+} from "../../../../src/core";
 import { twelvePlayerStandardConfig } from "../../../../src/runtime/scenarios/twelve_player_standard";
-import { getWitchState, getHunterState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";
+import { getHunterState } from "../../../../src/game/mechanisms/roles/hunter/ports";
 import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";

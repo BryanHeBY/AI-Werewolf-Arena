@@ -17,8 +17,14 @@ import {
 } from "../../../../src/runtime/config/board_definition";
 import { runGame } from "../../../../src/runtime/game_runner";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { COMPONENT, Role, type ToolCall, type World, type RoleComponent } from "../../../../src/core";
-import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/private_state";
+import {
+  COMPONENT,
+  Role,
+  type ToolCall,
+  type World,
+  type RoleComponent,
+} from "../../../../src/core";
+import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/ports";
 import { activeCharm } from "../../../../src/game/mechanisms/roles/wolf_beauty/relation";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import {

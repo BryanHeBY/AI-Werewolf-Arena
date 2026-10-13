@@ -24,7 +24,7 @@ import {
   captureExileFeedback,
   GRAVEKEEPER_FEEDBACK_STAGE,
 } from "../../../../src/game/mechanisms/roles/gravekeeper/feedback";
-import { getGravekeeperState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getGravekeeperState } from "../../../../src/game/mechanisms/roles/gravekeeper/ports";
 import {
   RoleCatalog,
   getDefaultRoleCatalog,

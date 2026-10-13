@@ -6,15 +6,31 @@
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Camp, Role, Phase, COMPONENT, WinCondition, type RoleComponent, type GameEvent, type BoardConfig, type ActionRequest } from "../../../../src/core";
+import {
+  Camp,
+  Role,
+  Phase,
+  COMPONENT,
+  WinCondition,
+  type RoleComponent,
+  type GameEvent,
+  type BoardConfig,
+  type ActionRequest,
+} from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { GRAVEKEEPER_FEEDBACK_STAGE } from "../../../../src/game/mechanisms/roles/gravekeeper/feedback";
 import {
   getGravekeeperState,
   setGravekeeperState,
-} from "../../../../src/game/mechanisms/roles/private_state";
+} from "../../../../src/game/mechanisms/roles/gravekeeper/state";
 import { readGravekeeperReport, readGravekeeperFeedback } from "@ai-werewolf-arena/replay-contract";
-import { getDefaultRoleCatalog, getDefaultToolSpecRegistry, getDefaultTargetHintRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultConfigRenderRegistry } from "../../../../src/game/mechanisms";
+import {
+  getDefaultRoleCatalog,
+  getDefaultToolSpecRegistry,
+  getDefaultTargetHintRegistry,
+  getDefaultPhaseStageLocalizationRegistry,
+  getDefaultConfigRenderRegistry,
+} from "../../../../src/game/mechanisms";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import { getDefaultScriptEventRenderRegistry } from "../../../../src/game/mechanisms/script/event_render_registry";
 

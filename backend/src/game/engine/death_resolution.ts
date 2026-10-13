@@ -88,7 +88,8 @@ import {
   finishDeathGuns,
 } from "../mechanisms/roles/death_abilities";
 
-import { getHunterState, getWolfKingState } from "../mechanisms/roles/private_state";
+import { getHunterState } from "../mechanisms/roles/hunter/ports";
+import { getWolfKingState } from "../mechanisms/roles/wolf_king/ports";
 
 interface DeathWaveActions {
   phase: Phase;

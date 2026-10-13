@@ -3,7 +3,7 @@
  * Input: Original locale/target/policy matrices and controlled multi-night fear, pass, knife, dream and Hunter replies.
  * Output and oracle: Literal request absence, consecutive-target rules, resource/history and night-versus-day shot assertions retain actual cycles; no World execution manufactures the expected state.
  */
-import { getDreamerState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { nightmareTwelveConfig } from "../../../../src/runtime/scenarios/nightmare_twelve";

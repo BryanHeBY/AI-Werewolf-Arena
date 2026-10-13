@@ -8,9 +8,18 @@
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Phase, COMPONENT, WinCondition, KnightDuelWindow, type BoardConfig, type ActionRequest, type RoleComponent } from "../../../../src/core";
+import {
+  Role,
+  Phase,
+  COMPONENT,
+  WinCondition,
+  KnightDuelWindow,
+  type BoardConfig,
+  type ActionRequest,
+  type RoleComponent,
+} from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getWolfBeautyState } from "../../../../src/game/mechanisms/roles/wolf_beauty/state";
 import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
 import { knownWolfTeammates, getDefaultRoleCatalog } from "../../../../src/game/mechanisms";
 import { WOLF_BEAUTY_CHARM_STAGE } from "../../../../src/game/mechanisms/roles/wolf_beauty/night_stages";

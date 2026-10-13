@@ -19,7 +19,7 @@ import {
   type ActionRequest,
 } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getRoleInspectionState } from "../../../../src/game/mechanisms/roles/private_state";
+import { getRoleInspectionState } from "../../../../src/game/mechanisms/roles/role_inspection/ports";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { PSYCHIC_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/night_stages";
 import { hasRoleInspectionNightCommit } from "../../../../src/game/mechanisms/roles/role_inspection/night_scope";

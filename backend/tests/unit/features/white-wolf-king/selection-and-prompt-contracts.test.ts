@@ -20,7 +20,10 @@ import {
 } from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
-import { getWhiteWolfKingState, setWhiteWolfKingState } from "../../../../src/game/mechanisms/roles/private_state";
+import {
+  getWhiteWolfKingState,
+  setWhiteWolfKingState,
+} from "../../../../src/game/mechanisms/roles/white_wolf_king/state";
 import { SelfDestructWindow } from "../../../../src/game/engine/self_destruct_window";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { createDefaultRoleRegistry, getDefaultRoleCatalog } from "../../../../src/game/mechanisms";
