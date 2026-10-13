@@ -3,6 +3,7 @@
  * 输入为原名单、可写原因表和来源阶段，以及限定的过滤、权威查询、到期提交、事实端口；
  * 输出为原有效死亡名单和原因表修改。公开接口不暴露 World、角色、库存、时钟或阶段控制。
  * 已公布猫事实与已删原因属于原失败前缀，后续到期或记录失败不回滚，也不修改 Alive 或扩展其他关系。
+ * 规则依据：docs/expansion/rules/awa-animal-dream-twelve-v1.md。
  */
 import { Phase, DeathCause, type EntityId, type DeathSources } from "../../../../core/domain/model";
 import type { filterAnimalLethalWave, animalAuthoritySnapshot } from "./authority";
@@ -57,6 +58,7 @@ export class AnimalDeathWavePreparation {
         day: resolutionDay,
         actorId: filtered.revealedCatId!,
       }));
+    // 白猫首次挡死只留历史；到期仅沿用本单位新的放逐／河豚来源，不恢复首次死因枪权。
     const actual = [...filtered.deaths],
       cat = filtered.blockedCatId,
       currentCatSources =
@@ -80,6 +82,7 @@ export class AnimalDeathWavePreparation {
           unitKind: u.kind,
         }));
         if (!actual.includes(expiry)) actual.push(expiry);
+        // 按旧原因→本单位原因→到期原因合并，Set 只去重，不重新排序。
         waveSources[expiry] = [
           ...new Set([
             ...(waveSources[expiry] ?? []),

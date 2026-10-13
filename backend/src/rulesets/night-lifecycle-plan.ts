@@ -84,6 +84,7 @@ export interface NightLifecycleHandoff {
 }
 
 export class NightManagerLifecycle implements NightLifecycleHandoff {
+  // 交接前保留原早失败终止入口；不是 acquired 回执，不给原无条件关闭增加守卫。
   private demon: Pick<DemonNightUnit, "close"> = demonNightTerminal;
   private wedding: Pick<WeddingNightUnit, "close"> = weddingNightTerminal;
   private magician: Pick<MagicianNightUnit, "closeNormally" | "abort"> = magicianNightTerminal;
@@ -139,6 +140,7 @@ export class NightManagerLifecycle implements NightLifecycleHandoff {
     this.wedding.close(this.runtime.world);
   }
 
+  /** 原顺序逐角色读取 config／current；前一关闭可能改变后一个资格，不能批量预算或并行。 */
   finishDay(day: number, isCurrent: () => boolean): void {
     if (this.runtime.config.trickster && isCurrent()) this.trickster.finishNormally(this.runtime.world, day);
     if (this.runtime.config.wolfSorcerer && isCurrent()) this.sorcerer.closeNormally(this.runtime.world, day);
@@ -355,6 +357,7 @@ export function prepareNightPipelineLifecycle(
       if (ownsDemon) demonNight.open(day, isCurrent);
       if (ownsMist) mistNight.open();
     },
+    // 正常关闭后逐项 transfer，handoff 仍晚读取；中途失败不撤销已发生的所有权交接。
     finishPipeline() {
       if (ownsRadiant) radiantNight.closeNormally();
       if (ownsAnimal) animalNight.closeNormally();
@@ -373,6 +376,7 @@ export function prepareNightPipelineLifecycle(
       mistNight.transferToManager(ownsMist);
       handoff?.()?.receiveMist(mistNight);
     },
+    // 各具体单位按自身 acquired／owned 规则清理；Demon 失败 open 与 Wedding 失败 capture 语义不同。
     abortPipeline() {
       animalNight.abortIfOwned();
       fragrantNight.abortIfOwned();

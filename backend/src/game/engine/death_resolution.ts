@@ -79,6 +79,7 @@ import {
 import { getHunterState } from "../mechanisms/roles/hunter/ports";
 import { getWolfKingState } from "../mechanisms/roles/wolf_king/ports";
 
+/** 一次角色死亡动作的窗口；所有 permit 在退出该回调时关闭，不跨波复用。 */
 interface DeathWaveActions {
   phase: Phase;
   day: number;
@@ -86,7 +87,7 @@ interface DeathWaveActions {
   isCurrent: () => boolean;
 }
 
-/** Resolves successive death waves without advancing the current action phase. */
+/** 连续结算死亡波，动作阶段仍由 PhaseManager 推进。 */
 export class DeathResolution {
   private expandWeddingWave(
     ids: number[],
@@ -205,6 +206,7 @@ export class DeathResolution {
     );
     const preparedSources: DeathSources = structuredClone(sources);
     deadIds = animalDeathWave.prepare(deadIds, preparedSources, phase);
+    // seen 追踪本次结算已纳入的席位；DeathCommitter 的账本另按原体及版本判断已结算生命。
     const seen = new Set<EntityId>(
       deadIds.filter((id) => {
         return (
@@ -219,6 +221,7 @@ export class DeathResolution {
     const initialPhases: Record<EntityId, Phase> = structuredClone(deathPhases);
     const nightOrigin = new Set(nightEffects?.nightOriginIds ?? []);
     if (!isCurrent()) return;
+    // 关系闭包先于标死、遗言和枪权判断；恋人／婚约追加的抑制死因不能等死亡 hook 后再补。
     const weddingInitial = this.expandWeddingWave(pending, allSources, seen, nightOrigin);
     const linkedInitial = expandLoversWave(
       this.world,
@@ -263,6 +266,8 @@ export class DeathResolution {
       });
     let firstBatch = true;
     let fragrantInitialCommitted = false;
+    // 只收集原实例，在原 finally 位置尝试过期；先取消未提交双生波凭据，取消失败时过期尚未执行。
+    // 已付款和死亡不回滚，不为统一清理吞掉原取消异常。
     const gunsToExpire: ReturnType<typeof firstDeathGuns> = [];
 
     try {
@@ -283,7 +288,7 @@ export class DeathResolution {
           commitFragrantDeathWave(this.world, fragrantInitial);
           fragrantInitialCommitted = true;
         }
-        // Later gun waves were already marked and recorded in the gun callback.
+        // 后续枪波已在枪回调逐目标标死并记录；这里不再重复双生发布。
         if (ownsFragrant && firstBatch)
           this.fragrantDeathWave.recordCommittedWave(
             firstBatch ? fragrantInitial : null,
@@ -404,7 +409,7 @@ export class DeathResolution {
         const next = new Set<EntityId>();
         for (const deadId of pending) {
           if (!isCurrent()) return;
-          // Origin belongs to this death, independently of the current action phase.
+          // 来源阶段属于这次死亡；黎明后处理夜间死亡仍必须保留夜间枪权／关系保护规则。
           const sourcePhase =
             originPhases.get(deadId) ?? (nightOrigin.has(deadId) ? Phase.Night : deathPhase);
           const actions: DeathWaveActions = {
@@ -537,6 +542,7 @@ export class DeathResolution {
                 }
                 let fragrantGunCommitted = false;
                 try {
+                  // 枪造成的追加波逐目标提交：后一个失败时，前一个的死亡、事实和库存仍有效。
                   for (const id of proposed) {
                     if (next.has(id)) {
                       allSources[id] = [

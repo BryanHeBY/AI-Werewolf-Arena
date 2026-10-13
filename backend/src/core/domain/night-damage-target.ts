@@ -47,11 +47,13 @@ export function resolveNightDamageTarget(
     foxInspections,
     inspectionSources,
   } = plan;
+  // 原追加顺序保留：查验／反击在前，随后子狐、毒、各刀及反噬；不能统一排序。
   const sources: DeathCause[] = [...(inspectionSources.get(entityId) ?? [])];
   const hasGuard =
     marks?.has(StatusMark.GuardMark) === true &&
     (!claimedGuardTargets.has(entityId) || guarded.has(entityId));
   const hasHeal = marks?.has(StatusMark.HealMark) === true;
+  // 保存进入此分支时的守／救读值；取消之后不重读印记，机械与觉醒刀仍用各自保护政策。
   const effectiveHeal = hasHeal && !hasGuard;
   const hasWolfKill =
     marks?.has(StatusMark.WolfKillMark) === true && !effects.wolfImmuneTargets?.includes(entityId);

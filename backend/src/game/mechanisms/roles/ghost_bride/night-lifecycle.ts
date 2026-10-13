@@ -1,10 +1,8 @@
 /**
- * Owns Ghost Bride's per-execution opening fact and late cleanup transfer.
- * Inputs are delegated original World/events, day and the already observed setup
- * ownership; outputs retain captured knife facts and the original closing calls.
- * Owned failed capture still closes: no new acquisition guard is introduced.
- * Manager termination stays unconditional at its original two sites. Paid bonds,
- * setup, source validation, victim rules and phase advancement remain elsewhere.
+ * 负责鬼新娘本次夜间开夜事实与晚交接；输入为延迟 World／事件、日期和原 setup ownership，
+ * 输出保持原刀源捕获与关闭。owned 的捕获失败仍须关闭，不增加取得成功的前置守卫。
+ * 经理原两个终止调用保持；已付婚约、setup、源验证、死亡规则及阶段推进由各原 owner 负责。
+ * 规则依据：docs/expansion/rules/awa-melbourne-ghost-bride-v1.md。
  */
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../../../../core/domain/world";
@@ -22,7 +20,7 @@ export const weddingNightTerminal = Object.freeze({
 });
 
 export class WeddingNightUnit {
-  /** Manager receives this same ownership instance; terminal functions keep fresh arguments. */
+  /** 经理接收同一所有权实例，原终止函数仍使用调用时的参数。 */
   readonly close = weddingNightTerminal.close;
 
   private transferred = false;

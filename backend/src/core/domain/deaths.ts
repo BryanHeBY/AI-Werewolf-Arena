@@ -1,10 +1,8 @@
 /**
- * Defines runtime death-shot selection and source eligibility for domain callers.
- * Inputs are original-life handles, cause lists, policy and source phase; outputs
- * are selection types and the existing permitsDeathShot/permitsHunterShot result.
- * This module owns the eligibility algorithm and retains its exact order and
- * rejection policy. Serialized causes come from the contract owner; callbacks
- * and component references never become archive data or transferable authority.
+ * 负责运行时死亡枪选择与死因资格政策。输入为原生命句柄、死因、政策和来源阶段；
+ * 输出为选择类型及原 permitsDeathShot／permitsHunterShot 结果，保持原拒绝顺序。
+ * 序列化死因来自公共契约，回调、组件引用与行动权限仅留在领域内部。
+ * 混合死因必须全部合格，不能用其中一项狼刀／放逐掩盖毒或关系牵连的抑制。
  */
 import { Phase } from "./identity";
 import type { DeathActionPolicy } from "./board";
@@ -13,6 +11,7 @@ import { DeathCause } from "@ai-werewolf-arena/game-contract";
 export { DeathCause } from "@ai-werewolf-arena/game-contract";
 export type { DeathSources } from "@ai-werewolf-arena/game-contract";
 
+/** shot／pass 带原行动窗口 ID；invalid 未授权，不能被当作已付款的弃枪。 */
 export type DeathShotSelection =
   | {
       kind: "shot";
@@ -30,6 +29,7 @@ export function permitsDeathShot(
   policy: DeathActionPolicy = "awa_qualified_sources_v1",
   deathPhase?: Phase,
 ): boolean {
+  // day 政策先限制死亡来源为白天／放逐；knife-or-exile 不接受枪击和白狼爆炸。
   if (policy === "awa_day_deaths_v1" && deathPhase !== Phase.Day && deathPhase !== Phase.Voting)
     return false;
   if (
@@ -38,6 +38,7 @@ export function permitsDeathShot(
     policy !== "awa_day_deaths_v1"
   )
     return false;
+  // 先拒绝未知政策，再逐项校验；混合来源不以“存在一项合格”放宽枪权。
   return (
     sources.length > 0 &&
     sources.every(
@@ -51,5 +52,5 @@ export function permitsDeathShot(
     )
   );
 }
-/** Existing Hunter API retains the same cause policy. */
+/** 猎人兼容入口直接复用同一资格政策，不能维护第二套死因规则。 */
 export const permitsHunterShot = permitsDeathShot;

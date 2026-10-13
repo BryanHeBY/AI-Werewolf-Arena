@@ -424,3 +424,5 @@
 - C33a/F01 默认生产观察回退：43源/test，SDK/ACP及factory退出Baseline，可信投影后仅detached/frozen DTO，64行动handler+report_bug明确null；fixednext0不推进RNG，六席隐camp控制新2/2旧3/2为独立策略变化。35旧test仅接口名逆+中文说明，34非ctor与strict/deadline/close控制保；新7/0/19+原19/0/59、有限66544/3API负例44967实际closed0，43heads/两独立43SHA审0。初fixture/stage新test红保无golden改，完整C33/34/C36/C44/P9仍待。见production-observation-fallback.md。
 
 - C25 受赠/学者原毒与实际因果路由：6paths/5source+1test，最后两内建legacy producer退出、六内建push均factory；direct/reflected接受时保Symbolcause/原body/独立目标，target真实消费，同一plan hiddenroutes、legacy集合OR兼容保。新5/0/28+Proxy新增1/0/2；原Lucky/Black/Scholar3/0/29；finite75396与最终42403实际closed0，6中文heads/实际Git精确逆/独立6SHA和2SHA增量审0。legacyProxy额外Symbol读取由自审发现修为identity品牌，旧绿保留未重；无schema/board/RNG变更，全Wave/Receipt继续。见recipient-scholar-poison-routes.md。
+
+- 当前死亡/夜间生命周期中文说明：12既有源，只改注释，补原体版本/死因资格、波次seen与账本区别、关系前置闭包、枪逐目标前缀、specificterminal/晚交接、两目标/因果Symbol、route OR及4实际规则卡链接。真实审查发现版本数字归档、取消抛错等过宽说明已收窄；完整AST12/0、职责头12/0、独立最终12SHA/4措辞delta审0，不重types/runtime/full。见generated/death-lifecycle-chinese-comment-evidence.json；不据注释称结构收口。

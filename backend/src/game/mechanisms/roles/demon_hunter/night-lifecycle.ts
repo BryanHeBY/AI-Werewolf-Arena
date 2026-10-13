@@ -1,10 +1,8 @@
 /**
- * Owns Demon Hunter's per-execution acquisition and late cleanup transfer.
- * Inputs are delegated original World reads, the day and existing currentness;
- * outputs retain native opening and the original conditional pipeline close.
- * Acquisition follows a successful begin only; a failed begin receives no new
- * close. Manager terminal calls remain unconditional at their original sites.
- * This unit never changes sealed stock, native lives, paid effects or phases.
+ * 负责恶魔猎手本次夜间的取得与晚交接；输入为延迟 World 查询、日期和有效性回调，
+ * 输出保持原生开夜及原 pipeline 条件关闭。成功 begin 后才 acquired，失败 begin 不新增 close。
+ * 经理的原终止入口保持无条件调用；不修改封存库存、原生生命、已付效果或阶段。
+ * 规则依据：docs/expansion/rules/awa-netease-demon-hunter-v1.md。
  */
 import type { World } from "../../../../core/domain/world";
 import { beginDemonHunterNight, closeDemonHunterNight } from "./authority";
@@ -20,7 +18,7 @@ export const demonNightTerminal = Object.freeze({
 });
 
 export class DemonNightUnit {
-  /** Manager receives this same ownership instance; terminal functions keep fresh arguments. */
+  /** 经理接收同一所有权实例，原终止函数仍使用调用时的参数。 */
   readonly close = demonNightTerminal.close;
 
   private acquired = false;

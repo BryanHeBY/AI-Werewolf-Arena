@@ -35,7 +35,8 @@ export interface NightPoisonClaim {
 
 /**
  * 单次已付效果的运行时来源。源原体及目标句柄仅属于本夜，不进入事件或 schema2。
- * 因果 ID 由原捕获局部值生成，不读 World、时钟或 RNG，也不授予行动资格。
+ * 每份效果的因果 ID 是独立 Symbol；捕获局部值只用于诊断描述，不是去重或稳定归档 ID。
+ * 创建身份不读 World、时钟或 RNG，也不授予行动资格。
  */
 export interface NightIntentOrigin {
   readonly family: "mechanical" | "awakened" | "witch" | "demon-witch" | "lucky" | "black-market" | "scholar-mentor";
@@ -43,7 +44,9 @@ export interface NightIntentOrigin {
   readonly stage: "mechanical_skill" | "mechanical_attack" | "awakened_skill" | "awakened_attack" | "witch" | "lucky" | "black_market_recipient" | "scholar_mentor_bonus";
   readonly actorId: EntityId;
   readonly actorLife: NightLifeReadScope;
+  /** 原行动目标；反射不改写它，实际反射落点另存 NightPoisonRoute。 */
   readonly requestedTargetId: EntityId | null;
+  /** 创建时绑定的 effect.target.id，与 requestedTargetId 或反射落点分别表达。 */
   readonly effectiveTargetId: EntityId;
   readonly abilityId: string;
   readonly sourceVersion: number;
@@ -244,7 +247,7 @@ export interface MechanicalDamagePlan {
 export function nightPoisonRoutes(plan: MechanicalDamagePlan): readonly NightPoisonRoute[] {
   return ownedDamagePlans.has(plan) ? plan[POISON_ROUTES] ?? NO_POISON_ROUTES : NO_POISON_ROUTES;
 }
-/** owned 路由实际决定毒的接受分支；旧集合仍为外部 legacy 原毒提供兼容路径。 */
+/** owned 路由参与毒的接受；旧集合仍含 owned 目标并作 OR 后备，尚未被路由完全替代。 */
 export function nightPoisonRouteTargets(
   plan: MechanicalDamagePlan, targetId: EntityId, route: NightPoisonRoute["route"],
 ): boolean {
@@ -266,6 +269,7 @@ export function planMechanicalDamage(
   absorbedPoisonTargets: ReadonlySet<EntityId> = new Set(),
   intentNight?: () => number | undefined,
 ): MechanicalDamagePlan {
+  // 有效盾按贡献顺序覆盖同一目标，反射事实使用最终选中盾的行动者。
   const shields = new Map<EntityId, NightMechanicalEffect>();
   for (const shield of effects?.shields ?? []) {
     if (shield.isCurrent() && livingNightLife(world, nightIntentTarget(shield, "mechanical-shield", intentNight))) {
@@ -276,6 +280,7 @@ export function planMechanicalDamage(
   const reflectedPoisonTargets = new Set<EntityId>();
   const reflections: NightPoisonReflection[] = [];
   const poisonRoutes: NightPoisonRoute[] = [];
+  // current 回调仅显式 false 撤销已付毒；直接毒不新增源存活门禁，反射才在原位置重检源生命。
   for (const poison of poisons) {
     if (
       poison.isCurrent?.() === false ||

@@ -1,0 +1,175 @@
+{
+  "baseline": "1099f2b1",
+  "programProof": {
+    "rows": [
+      {
+        "path": "backend/src/core/domain/components/alive.ts",
+        "sha256": "4cd02da4dbfdbcec15c4086b75e2a80f949bdc390fe341efacf9e36b378c882f",
+        "sameExecutableTokens": true
+      },
+      {
+        "path": "backend/src/core/domain/deaths.ts",
+        "sha256": "84a2fdd78f949e4823fb07fd58c40c4b29f8b6f6f1b09062ca56e197129a377c",
+        "sameExecutableTokens": true
+      },
+      {
+        "path": "backend/src/game/engine/death_resolution.ts",
+        "sha256": "2d2f2df7a71b2e8426171d4ae917d6820946281b08661331367c1c65763d2a68",
+        "sameExecutableTokens": true
+      },
+      {
+        "path": "backend/src/game/engine/death-committer.ts",
+        "sha256": "b818d0754ee7a5aea9422e3ea1fa73d85941dd1b954ad2a294331551f5c00e09",
+        "sameExecutableTokens": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/animal_dream/death-wave.ts",
+        "sha256": "681796d7b907e92251c5a7448c1d9a17f6fbebf94f7b95db951e1459c8512ff7",
+        "sameExecutableTokens": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/death-wave.ts",
+        "sha256": "22c54c20b4eda2d25b409d3c97fe71fab326dfa42bcc303095405175e36dd6ab",
+        "sameExecutableTokens": true
+      },
+      {
+        "path": "backend/src/rulesets/rule-plan.ts",
+        "sha256": "0f012e250b828b1d2add53fcf3b8e1dde7f837ad3315f2028bdc57b1d50c3983",
+        "sameExecutableTokens": true
+      },
+      {
+        "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+        "sha256": "8341d54da1b03f286d11c7f333f7f69ef320ec1540e4ea781674fd3f1a83c9a8",
+        "sameExecutableTokens": true
+      },
+      {
+        "path": "backend/src/core/domain/night_effects.ts",
+        "sha256": "0f7c0734ba2585213dbeb11509845efeba4e4afd2c61f27de5cdc84812dcdd97",
+        "sameExecutableTokens": true
+      },
+      {
+        "path": "backend/src/core/domain/night-damage-target.ts",
+        "sha256": "ee9d85f0838a59c560598ba4eb5437633d692a90d0f640c7cd81100d58136944",
+        "sameExecutableTokens": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/night-lifecycle.ts",
+        "sha256": "fa7e20db55f1ebf68a716b0c9c89c98adfd376979e3933428988ec36537776b2",
+        "sameExecutableTokens": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/night-lifecycle.ts",
+        "sha256": "dbb7cb89c58b1887426aa818a96a3716aea9db3e653e997214895612dfbd4cdf",
+        "sameExecutableTokens": true
+      }
+    ],
+    "findings": []
+  },
+  "heads": {
+    "files": 12,
+    "documentationPaths": [
+      "docs/expansion/rules/awa-animal-dream-twelve-v1.md",
+      "docs/expansion/rules/awa-fragrant-pair-seer-twelve-v1.md",
+      "docs/expansion/rules/awa-netease-demon-hunter-v1.md",
+      "docs/expansion/rules/awa-melbourne-ghost-bride-v1.md"
+    ],
+    "findings": []
+  },
+  "independentReview": {
+    "initialReview": "/tmp/awa-recent-owner-comment-final-first-review.json",
+    "files": [
+      {
+        "path": "backend/src/core/domain/components/alive.ts",
+        "sha256": "4cd02da4dbfdbcec15c4086b75e2a80f949bdc390fe341efacf9e36b378c882f",
+        "sameFrozenSHA": true,
+        "changedSinceFirstReview": false
+      },
+      {
+        "path": "backend/src/core/domain/deaths.ts",
+        "sha256": "84a2fdd78f949e4823fb07fd58c40c4b29f8b6f6f1b09062ca56e197129a377c",
+        "sameFrozenSHA": true,
+        "changedSinceFirstReview": false
+      },
+      {
+        "path": "backend/src/game/engine/death_resolution.ts",
+        "sha256": "2d2f2df7a71b2e8426171d4ae917d6820946281b08661331367c1c65763d2a68",
+        "sameFrozenSHA": true,
+        "changedSinceFirstReview": true
+      },
+      {
+        "path": "backend/src/game/engine/death-committer.ts",
+        "sha256": "b818d0754ee7a5aea9422e3ea1fa73d85941dd1b954ad2a294331551f5c00e09",
+        "sameFrozenSHA": true,
+        "changedSinceFirstReview": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/animal_dream/death-wave.ts",
+        "sha256": "681796d7b907e92251c5a7448c1d9a17f6fbebf94f7b95db951e1459c8512ff7",
+        "sameFrozenSHA": true,
+        "changedSinceFirstReview": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/death-wave.ts",
+        "sha256": "22c54c20b4eda2d25b409d3c97fe71fab326dfa42bcc303095405175e36dd6ab",
+        "sameFrozenSHA": true,
+        "changedSinceFirstReview": false
+      },
+      {
+        "path": "backend/src/rulesets/rule-plan.ts",
+        "sha256": "0f012e250b828b1d2add53fcf3b8e1dde7f837ad3315f2028bdc57b1d50c3983",
+        "sameFrozenSHA": true,
+        "changedSinceFirstReview": true
+      },
+      {
+        "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+        "sha256": "8341d54da1b03f286d11c7f333f7f69ef320ec1540e4ea781674fd3f1a83c9a8",
+        "sameFrozenSHA": true,
+        "changedSinceFirstReview": false
+      },
+      {
+        "path": "backend/src/core/domain/night_effects.ts",
+        "sha256": "0f7c0734ba2585213dbeb11509845efeba4e4afd2c61f27de5cdc84812dcdd97",
+        "sameFrozenSHA": true,
+        "changedSinceFirstReview": true
+      },
+      {
+        "path": "backend/src/core/domain/night-damage-target.ts",
+        "sha256": "ee9d85f0838a59c560598ba4eb5437633d692a90d0f640c7cd81100d58136944",
+        "sameFrozenSHA": true,
+        "changedSinceFirstReview": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/night-lifecycle.ts",
+        "sha256": "fa7e20db55f1ebf68a716b0c9c89c98adfd376979e3933428988ec36537776b2",
+        "sameFrozenSHA": true,
+        "changedSinceFirstReview": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/night-lifecycle.ts",
+        "sha256": "dbb7cb89c58b1887426aa818a96a3716aea9db3e653e997214895612dfbd4cdf",
+        "sameFrozenSHA": true,
+        "changedSinceFirstReview": false
+      }
+    ],
+    "finalNarrowWordings": "四具体措辞精确收窄；其他8源SHA不变。首次死亡相关写、取消波凭据不撤pair、仅默认编译定义冻结、current false与target/absorption分开说明准确。",
+    "findings": [],
+    "positiveAccuracy": [
+      "Alive runtime maps/descriptors vs recorded version number correctly separated.",
+      "Fragrant cancellation throw means gun expiry not yet attempted accurately preserved.",
+      "Animal cause history vs Exile/Puffer current causes and stable Set order accurately stated.",
+      "lifeCycle acquired/owned distinctions, repeated independent current and late transfer/handoff prefixes accurately stated.",
+      "cause Symbol identity, original/requested vs reflected target and routes OR still owned sets accurately clarified.",
+      "Four unique role cards exist under docs/expansion/rules and match Animal/Fragrant/Demon/Wedding scope."
+    ],
+    "limits": "Owner AST-only proof supplied separately, not rerun; this review read actual modified comment sites plus bounded source guard/authority context and SHA. No source writes, runtime/type/tests/gates."
+  },
+  "scope": "随当前死亡/夜间生命周期职责批落实中文说明；仅注释，不运行重复类型或行为门禁",
+  "initialFindings": [
+    "版本数字可能归档，不能声称所有版本不入归档",
+    "前置双生取消可抛错，不能声称枪在所有退出时都过期",
+    "首次分支覆盖被动/关系提交，非仅事实与揭示",
+    "默认自有贡献才固定，opaque保原惰性",
+    "current回调false只是一项筛除；原体/吸收规则继续"
+  ],
+  "verificationNote": "裸scanner无法处理含模板插值的完整程序上下文；保留首次假红，最终AST只排除JSDoc节点，不屏蔽任何执行节点。"
+}

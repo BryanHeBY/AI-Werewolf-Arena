@@ -60,6 +60,11 @@ export class DeathCommitter {
     );
   }
 
+  /**
+   * 按原名单顺序提交；账本控制首次死亡分支（事实、被动／关系提交与揭示），不替调用方过滤重复 ID。
+   * 重入仍写 Alive、收集枪并检查能力到期；gunsToExpire 由外层累积，这里仅追加。
+   * 追加枪波关闭继承刷新，由外层在原位置执行；异常保留已提交的玩家和事实前缀。
+   */
   markPlayersDead(
     playerIds: EntityId[],
     refreshInheritance = true,

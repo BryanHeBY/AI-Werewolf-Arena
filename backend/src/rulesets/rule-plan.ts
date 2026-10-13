@@ -30,6 +30,7 @@ const checkpoints = Object.freeze({
   maxDays: "max_days_reached",
 } as const);
 
+// 比较贡献序列和原 handler 身份，不读取或缓存 execute；角色实例仍在现场查询。
 function sameDefinition(left: SupportedNightDefinition, right: SupportedNightDefinition): boolean {
   if (left.roles.length !== right.roles.length) return false;
   return left.roles.every((row, index) => {
@@ -64,6 +65,7 @@ export class RulePlan {
     Object.freeze(this);
   }
 
+  /** 仅绑定同一参数 owner；不查询 World／registry，默认自有贡献在第一次 nightPlan 的原晚时点固定。 */
   static compile(parameters: BoardParameters): RulePlan {
     return new RulePlan(constructionToken, parameters);
   }
