@@ -1,6 +1,6 @@
 {
   "schema": "awa-current-mechanism-migration-v1",
-  "observedCommit": "23511ef7aa0d8d052f913f64f22712c2e3a7ba06",
+  "observedCommit": "99fac061ac8842dde89abe02c2a33648ea10859b",
   "baseline": {
     "path": "docs/refactor/generated/mechanism-matrix.json",
     "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
@@ -70,17 +70,52 @@
               "evidence": [
                 "docs/refactor/animal-night-lifecycle.md"
               ]
+            },
+            {
+              "part": "DeathCommitter 在首次原生命死亡分支经实际端口提交河豚原狼刀被动，随后追加原动物死亡事实；生命账本仍在事实／枪列表／能力到期之后发布。",
+              "commit": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+              "owners": [
+                "backend/src/game/engine/death-committer.ts",
+                "backend/src/game/mechanisms/roles/animal_dream/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/death-commit-owner.md"
+              ]
+            },
+            {
+              "part": "AnimalDeathWavePreparation.prepare 拥有原过滤→准备／揭示事实→保留本单位原因→删白猫来源→到期提交／事实→保序原因合并；初始波与追加提案两个真实消费者接线，失败不回滚事实或删除前缀。",
+              "commit": "157e0b0e1a26eaef673cfb1639f15de6fc7e3980",
+              "owners": [
+                "backend/src/game/mechanisms/roles/animal_dream/death-wave.ts",
+                "backend/src/game/engine/death_resolution.ts"
+              ],
+              "evidence": [
+                "docs/refactor/animal-wave-preparation.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Close remaining action/death/exile/relationship lifecycle boundaries and complete all mechanism-specific matrix requirements."
+            "Close remaining action/death/exile/relationship lifecycle boundaries and complete all mechanism-specific matrix requirements.",
+            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。"
           ]
         },
         "effect": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "白猫死亡提案过滤与到期原因表修改委托具体准备 owner：历史首次挡死来源不恢复，当前 Exile／PufferRetaliation 与 WhiteCatExpiry 按原 Set 顺序合并，不提前标死 Alive。",
+              "commit": "157e0b0e1a26eaef673cfb1639f15de6fc7e3980",
+              "owners": [
+                "backend/src/game/mechanisms/roles/animal_dream/death-wave.ts"
+              ],
+              "evidence": [
+                "docs/refactor/animal-wave-preparation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格仍须核对其它具体效果类别及实际 Damage→Wave→Commit 消费、原体／当前性、失败前缀和独立交互验收；本子项不能完成整个效果格。"
           ]
         },
         "observation": {
@@ -105,10 +140,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 animalDreamEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/night-mechanisms.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -160,17 +208,44 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "有序生命提交完成后，DeathCommitter 通过原具名端口刷新觉醒隐狼继承；原资格与库存 owner 不变，继承失败保留已提交死亡。",
+              "commit": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+              "owners": [
+                "backend/src/game/engine/death-committer.ts",
+                "backend/src/game/mechanisms/roles/awakened_hidden_wolf/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/death-commit-owner.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。"
           ]
         },
         "effect": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "觉醒盾／刀和觉醒毒在原生产处附加来源，保留原已付效果与首次死亡 callback 规则；折叠在原字段读点消费类别／夜时点／原体，旧注入不读新增 getter。",
+              "commit": "7d63a4e938c80c74e93e3b14a15b296743e9822a",
+              "owners": [
+                "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+                "backend/src/core/domain/night_effects.ts",
+                "backend/src/core/domain/night-damage-plan.ts"
+              ],
+              "evidence": [
+                "docs/refactor/sourced-night-intents.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格仍须核对其它具体效果类别及实际 Damage→Wave→Commit 消费、原体／当前性、失败前缀和独立交互验收；本子项不能完成整个效果格。"
           ]
         },
         "observation": {
@@ -195,10 +270,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 awakenedEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/abilities.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -385,10 +473,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 blackMarketEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/abilities.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -463,10 +564,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 cupidEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/relationships.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -619,10 +733,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 debateEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/relationships.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -691,10 +818,24 @@
           ]
         },
         "effect": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "Demon 原生女巫的免疫证明与普通原毒分支均保留原瓶账与资格，原生产点附加 owned 来源并由伤害折叠实际消费；新身份不变成原生库存授权。",
+              "commit": "7d63a4e938c80c74e93e3b14a15b296743e9822a",
+              "owners": [
+                "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+                "backend/src/core/domain/night_effects.ts",
+                "backend/src/core/domain/night-damage-plan.ts"
+              ],
+              "evidence": [
+                "docs/refactor/sourced-night-intents.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格仍须核对其它具体效果类别及实际 Damage→Wave→Commit 消费、原体／当前性、失败前缀和独立交互验收；本子项不能完成整个效果格。"
           ]
         },
         "observation": {
@@ -719,10 +860,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 demonHunterEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/night-mechanisms.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -1025,10 +1179,22 @@
               "evidence": [
                 "docs/refactor/fragrant-night-lifecycle.md"
               ]
+            },
+            {
+              "part": "FragrantDeathWavePublication 真实拥有已提交 wave/link 事实、原公开根匹配和必要记录，五结算器消费者直接委托；先事实再发布／记录的失败前缀保留，准备／提交／取消仍归原 authority。",
+              "commit": "d4c4ffcffb3c714c1f230e2d54f5b719128d0fae",
+              "owners": [
+                "backend/src/game/mechanisms/roles/fragrant_pair_seer/death-wave.ts",
+                "backend/src/game/engine/death_resolution.ts"
+              ],
+              "evidence": [
+                "docs/refactor/fragrant-wave-publication.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Close remaining action/death/exile/relationship lifecycle boundaries and complete all mechanism-specific matrix requirements."
+            "Close remaining action/death/exile/relationship lifecycle boundaries and complete all mechanism-specific matrix requirements.",
+            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。"
           ]
         },
         "effect": {
@@ -1039,10 +1205,23 @@
           ]
         },
         "observation": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "已提交双生波仅在原事件流找到自爆／放逐／枪击公开根，或收到原 night_resolved／additional_deaths 相交事件后委托 authority 披露；receipt 不作为普通归档 DTO 或新许可。",
+              "commit": "d4c4ffcffb3c714c1f230e2d54f5b719128d0fae",
+              "owners": [
+                "backend/src/game/mechanisms/roles/fragrant_pair_seer/death-wave.ts",
+                "backend/src/game/mechanisms/roles/fragrant_pair_seer/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/fragrant-wave-publication.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "全玩家历史知识／当前许可／事件投影与其它披露规则仍待统一验证；本子项只交付死亡波实际发布 consumer。"
           ]
         },
         "checkpoint": {
@@ -1060,10 +1239,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 fragrantPairEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/night-mechanisms.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -1135,10 +1327,23 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "有序生命提交完成后，DeathCommitter 通过原具名端口刷新石像鬼继承，保持四继承调用原次序及已提交失败前缀。",
+              "commit": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+              "owners": [
+                "backend/src/game/engine/death-committer.ts",
+                "backend/src/game/mechanisms/roles/gargoyle/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/death-commit-owner.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。"
           ]
         },
         "effect": {
@@ -1270,10 +1475,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 ghostBrideEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/relationships.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -1597,10 +1815,23 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "有序生命提交完成后，DeathCommitter 通过原具名端口刷新隐狼继承；刷新异常不撤销已经写入的生命账本。",
+              "commit": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+              "owners": [
+                "backend/src/game/engine/death-committer.ts",
+                "backend/src/game/mechanisms/roles/hidden_wolf/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/death-commit-owner.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。"
           ]
         },
         "effect": {
@@ -1810,10 +2041,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 hybridEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/relationships.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -2198,10 +2442,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 lonelyGirlEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/relationships.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -2289,10 +2546,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 magicianEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/night-mechanisms.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -2344,17 +2614,55 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "有序生命提交完成后，DeathCommitter 通过原具名端口刷新机械狼继承；原状态／库存权威仍在本族，不建立第二继承仓库。",
+              "commit": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+              "owners": [
+                "backend/src/game/engine/death-committer.ts",
+                "backend/src/game/mechanisms/roles/mechanical_wolf/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/death-commit-owner.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。"
           ]
         },
         "effect": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "机械盾／额外刀／重复守失败和机械毒在原新建对象处构造 owned intent；原 target／source／反射 actor 接受读点验证 kind/day/原生命链，每份 cause Symbol 独立，具体付款 callback 保持。",
+              "commit": "7d63a4e938c80c74e93e3b14a15b296743e9822a",
+              "owners": [
+                "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+                "backend/src/core/domain/night_effects.ts",
+                "backend/src/core/domain/night-damage-plan.ts"
+              ],
+              "evidence": [
+                "docs/refactor/sourced-night-intents.md"
+              ]
+            },
+            {
+              "part": "真实毒折叠保存每份原因果的 direct／reflected 去向，单目标接受分支实际消费；反射只改变结算原体，owned route 与仍含 owned 目标的原集合 OR 后备并存，外部 legacy plan Proxy 不读新增 Symbol。",
+              "commit": "1099f2b156489b0a0d3212331e77b0da7bb2c66e",
+              "owners": [
+                "backend/src/core/domain/night_effects.ts",
+                "backend/src/core/domain/night-damage-target.ts"
+              ],
+              "evidence": [
+                "docs/refactor/recipient-scholar-poison-routes.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格仍须核对其它具体效果类别及实际 Damage→Wave→Commit 消费、原体／当前性、失败前缀和独立交互验收；本子项不能完成整个效果格。"
           ]
         },
         "observation": {
@@ -2379,10 +2687,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 mechanicalEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/abilities.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -2469,10 +2790,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 merchantEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/abilities.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -2649,10 +2983,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 mistRavenEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/night-mechanisms.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -2748,10 +3095,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 nightmareEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/night-mechanisms.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -2834,10 +3194,22 @@
               "evidence": [
                 "docs/refactor/noble-night-handoff.md"
               ]
+            },
+            {
+              "part": "DeathCommitter 在原首次死亡位置关闭仆从关系、追加贵族死亡及关闭事实与必须记录；后续失败保留 Alive 与事实前缀，不预发生命账本。",
+              "commit": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+              "owners": [
+                "backend/src/game/engine/death-committer.ts",
+                "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/death-commit-owner.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Close remaining request/action, expiry/damage/death/exile and original-owner invalidation boundaries with complete mechanism-specific acceptance; the concrete handoff alone does not close this cell."
+            "Close remaining request/action, expiry/damage/death/exile and original-owner invalidation boundaries with complete mechanism-specific acceptance; the concrete handoff alone does not close this cell.",
+            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。"
           ]
         },
         "effect": {
@@ -2869,10 +3241,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 nobleSecretBodyEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/night-mechanisms.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -2947,10 +3332,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 orderPrinceEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/night-mechanisms.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -3225,10 +3623,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 radiantEclipseEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/night-mechanisms.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -3303,10 +3714,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 redMoonEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/night-mechanisms.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -3509,10 +3933,23 @@
           ]
         },
         "effect": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "学者加成原毒在 receipt.commit→印记→source／target／effectCurrent→claim 的原付款次序构造独立 bonus 来源，不消耗原生或受赠瓶数。",
+              "commit": "1099f2b156489b0a0d3212331e77b0da7bb2c66e",
+              "owners": [
+                "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+                "backend/src/core/domain/night_effects.ts"
+              ],
+              "evidence": [
+                "docs/refactor/recipient-scholar-poison-routes.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格仍须核对其它具体效果类别及实际 Damage→Wave→Commit 消费、原体／当前性、失败前缀和独立交互验收；本子项不能完成整个效果格。"
           ]
         },
         "observation": {
@@ -3537,10 +3974,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 scholarMentorEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/night-mechanisms.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -3760,10 +4210,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 shapeshifterEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/relationships.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -3838,10 +4301,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 thiefEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/relationships.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -3929,10 +4405,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 timeConsortEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/night-mechanisms.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -4020,10 +4509,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 tricksterEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/night-mechanisms.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -4262,10 +4764,23 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "DeathCommitter 先于 Alive 修改经实际端口登记野孩子模型的首次原生命死亡；原对象／版本账本归共同提交 owner，不把席位去重当生命权威。",
+              "commit": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+              "owners": [
+                "backend/src/game/engine/death-committer.ts",
+                "backend/src/game/mechanisms/roles/wild_child/ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/death-commit-owner.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。"
           ]
         },
         "effect": {
@@ -4297,10 +4812,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 wildChildEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/relationships.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -4401,10 +4929,24 @@
           ]
         },
         "effect": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "原生女巫毒在原 source／target 与 request ability_id 读取位置构造 owned 原毒，付款和事件先后保持，错类别／夜／原体拒绝不回滚已付瓶数。",
+              "commit": "7d63a4e938c80c74e93e3b14a15b296743e9822a",
+              "owners": [
+                "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+                "backend/src/core/domain/night_effects.ts",
+                "backend/src/core/domain/night-damage-plan.ts"
+              ],
+              "evidence": [
+                "docs/refactor/sourced-night-intents.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格仍须核对其它具体效果类别及实际 Damage→Wave→Commit 消费、原体／当前性、失败前缀和独立交互验收；本子项不能完成整个效果格。"
           ]
         },
         "observation": {
@@ -4819,10 +5361,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 wolfSorcererEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/night-mechanisms.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -4909,10 +5464,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 wallEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/relationships.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -5221,10 +5789,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "victoryClaimLabel／outcomeLabel／outcomeWinnersLabel／victoryPointLabel 四原结果展示函数归 presentation/results；只展示既有结果，不迁移胜负算法或原四封盘名的规则。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/results.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它结果／规则提示与同输入双语展示验收仍待完成；本记录没有交付统一判胜／封盘算法。"
           ]
         },
         "oldExports": {
@@ -5347,17 +5928,45 @@
               "evidence": [
                 "docs/refactor/night-stage-compiler-owner.md"
               ]
+            },
+            {
+              "part": "真实引擎消费同一 RulePlan／BoardParameters；默认自有阶段定义在首次晚采集固定，后续隐式 revision 拒绝，初始 opaque 仍惰性拉取且 execute 晚读取。",
+              "commit": "a483c416d8346016d29f3e88e3be5b258e66f5f2",
+              "owners": [
+                "backend/src/rulesets/rule-plan.ts",
+                "backend/src/rulesets/night-stage-plan.ts",
+                "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+              ],
+              "evidence": [
+                "docs/refactor/execution-rule-plan.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Complete supported RulePlan parameters/checkpoints/provenance/tool-schema/actor consistency; remove old registry bridge."
+            "Complete supported RulePlan parameters/checkpoints/provenance/tool-schema/actor consistency; remove old registry bridge.",
+            "完整阶段／角色贡献、actor 与能力当前资格仍须具体机制证明；固定成员不授予任何实例资源或行动许可。"
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "经理与 Pipeline 实际通过同一 RulePlan 装配 NightManagerLifecycle 和延迟运行端口；具体单位及晚交接保持原正常／finally 顺序，未改各族 acquire 失败政策。",
+              "commit": "a483c416d8346016d29f3e88e3be5b258e66f5f2",
+              "owners": [
+                "backend/src/rulesets/rule-plan.ts",
+                "backend/src/rulesets/night-lifecycle-plan.ts",
+                "backend/src/game/engine/phase_manager.ts",
+                "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+              ],
+              "evidence": [
+                "docs/refactor/execution-rule-plan.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它开夜、到期、死亡、关系和退出边界继续待逐项收口；已迁委托／发布步骤不代表整个机制生命周期完成。"
           ]
         },
         "effect": {
@@ -5547,10 +6156,23 @@
           ]
         },
         "checkpoint": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "记录入口先核经理真实 RulePlan 品牌与同一参数 owner，再捕获 checkpoint；encodeParameters 只编码 BoardParameters 脱离克隆，未增加计划／handler／revision 归档字段。",
+              "commit": "a483c416d8346016d29f3e88e3be5b258e66f5f2",
+              "owners": [
+                "backend/src/rulesets/rule-plan.ts",
+                "backend/src/runtime/simulation/reproduction_context.ts"
+              ],
+              "evidence": [
+                "docs/refactor/execution-rule-plan.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "继续核对全部配置／checkpoint 消费与独立复现要求；本子项不证明统一封盘／判胜算法或新增归档 revision。"
           ]
         },
         "verifier": {
@@ -5717,10 +6339,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "真实 EventRenderRegistry 具名导入 presentation 展示函数；原脚本事件路由继续调用同 parser／label 程序，不引入服务、event bus 或新的展示状态。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "backend/src/game/mechanisms/script/event_render_registry.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -6008,10 +6643,26 @@
           ]
         },
         "observation": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "默认 SDK／ACP 与真实 player factory 退出 Baseline World 决策，可信投影脱离冻结 PlayerObservation 后交 decide；自定义生产策略同接口，privilegedFallbackProvider 明列测试接口且 factory 不注入，strict gate 位于投影前。",
+              "commit": "dfd7f6fa20aed37dd1872058a9a38d40e56cdfa2",
+              "owners": [
+                "backend/src/ai/agents/providers/observation-fallback.ts",
+                "backend/src/ai/agents/llm/llm_action_provider.ts",
+                "backend/src/ai/agents/acp/acp_action_provider.ts",
+                "backend/src/runtime/player_agent_factory.ts"
+              ],
+              "evidence": [
+                "docs/refactor/fallback-observation-policy.md",
+                "docs/refactor/production-observation-fallback.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "C33／C34 全观察／知识／当前许可统一与 C36／C44 其它旧入口继续待验；本子项关闭默认 fallback World 选择漏洞，不证明所有 Agent consumer 已收敛。"
           ]
         },
         "checkpoint": {
@@ -6575,10 +7226,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "具名 deathAbilityEventLabel 的原展示程序由 game-presentation 唯一拥有，真实两端消费者直用公共出口；原字段／文案／locale／canonical reader 保持，旧 game-text 函数实现删除，不新增反向桥。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/events/abilities.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -6653,10 +7317,23 @@
           ]
         },
         "text": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "inspectionLabel 原展示程序归独立 presentation/results owner，角色提示与两端既有标签直接消费同公共函数；角色名称仍复用 text locale 校验，未改变查验数据或权限。",
+              "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+              "owners": [
+                "packages/game-presentation/src/results.ts",
+                "packages/game-presentation/src/index.ts"
+              ],
+              "evidence": [
+                "docs/refactor/shared-presentation.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格其它规则／状态提示、剩余 text 出口、观察可见性及同输入双语验收仍待收口；一个具名 formatter 不完成全展示格。"
           ]
         },
         "oldExports": {
@@ -7184,10 +7861,23 @@
           ]
         },
         "effect": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "幸运与黑市受赠毒复用原 ability.id、第二次目标 lookup 和 source 读点构造来源；claim→印记→本实例毒消耗→事件→历史／recipient commit 原前缀不合并瓶账。",
+              "commit": "1099f2b156489b0a0d3212331e77b0da7bb2c66e",
+              "owners": [
+                "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+                "backend/src/core/domain/night_effects.ts"
+              ],
+              "evidence": [
+                "docs/refactor/recipient-scholar-poison-routes.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本格仍须核对其它具体效果类别及实际 Damage→Wave→Commit 消费、原体／当前性、失败前缀和独立交互验收；本子项不能完成整个效果格。"
           ]
         },
         "observation": {
@@ -8226,10 +8916,10 @@
     "currentOnlyRows": 2,
     "rows": 91,
     "cells": 910,
-    "pending": 848,
-    "partial": 62,
+    "pending": 801,
+    "partial": 109,
     "complete": 0,
     "not-applicable": 0
   },
-  "scope": "First current ledger records delivered C17–C24 ownership/request/query/lifecycle parts. Every other baseline cell remains pending; C08 fact contracts, C09 support and other phase deliveries require their own narrow parts before this can claim all current migration coverage."
+  "scope": "保留原 C17–C24／状态与查询所有子项，本次只追加 9a8337a8、a483c416、d4c4ffcf、95ee2b56、157e0b0e、7d63a4e9、dfd7f6fa、1099f2b1 八笔已提交功能的具体死亡／计划／来源／默认观察／展示 parts。observedCommit 只是整理时的提交上下文，并不表示全部后继交付已登记：d323e2df DamageEvidence 和 99fac061 赠枪 owner 本批未登记，下一台账继续；当前 Wave／普通夜 metadata 任务不在本次范围。所有格继续 partial 或 pending，完整 C08／C09／P3–P9 等未登记与剩余义务不能从这些 parts 推定完成。"
 }

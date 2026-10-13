@@ -1,0 +1,722 @@
+{
+  "author": {
+    "scope": [
+      "docs/refactor/generated/current-mechanism-migration.json",
+      "docs/refactor/current-delivery-ledger.md"
+    ],
+    "countsBefore": {
+      "baselineRows": 89,
+      "currentOnlyRows": 2,
+      "rows": 91,
+      "cells": 910,
+      "pending": 848,
+      "partial": 62,
+      "complete": 0,
+      "not-applicable": 0
+    },
+    "countsAfter": {
+      "baselineRows": 89,
+      "currentOnlyRows": 2,
+      "rows": 91,
+      "cells": 910,
+      "pending": 801,
+      "partial": 109,
+      "complete": 0,
+      "not-applicable": 0
+    },
+    "addedParts": 53,
+    "changedCells": 51,
+    "sourceCommits": [
+      "1099f2b156489b0a0d3212331e77b0da7bb2c66e",
+      "157e0b0e1a26eaef673cfb1639f15de6fc7e3980",
+      "7d63a4e938c80c74e93e3b14a15b296743e9822a",
+      "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+      "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+      "a483c416d8346016d29f3e88e3be5b258e66f5f2",
+      "d4c4ffcffb3c714c1f230e2d54f5b719128d0fae",
+      "dfd7f6fa20aed37dd1872058a9a38d40e56cdfa2"
+    ],
+    "oldPartsByteDataPreserved": true,
+    "oldRemainingPreserved": true,
+    "allRowIdentitiesPreserved": true,
+    "baselineSHA": "60f1eb79143813b944abbc5f6ce7b0e6a22f4debf92a9f4e428b2d887cbb72c9",
+    "newParts": [
+      {
+        "row": "animal_dream",
+        "column": "lifecycle",
+        "commit": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+        "owners": [
+          "backend/src/game/engine/death-committer.ts",
+          "backend/src/game/mechanisms/roles/animal_dream/ports.ts"
+        ],
+        "evidence": [
+          "docs/refactor/death-commit-owner.md"
+        ]
+      },
+      {
+        "row": "noble_secret_body",
+        "column": "lifecycle",
+        "commit": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+        "owners": [
+          "backend/src/game/engine/death-committer.ts",
+          "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts"
+        ],
+        "evidence": [
+          "docs/refactor/death-commit-owner.md"
+        ]
+      },
+      {
+        "row": "wild_child",
+        "column": "lifecycle",
+        "commit": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+        "owners": [
+          "backend/src/game/engine/death-committer.ts",
+          "backend/src/game/mechanisms/roles/wild_child/ports.ts"
+        ],
+        "evidence": [
+          "docs/refactor/death-commit-owner.md"
+        ]
+      },
+      {
+        "row": "hidden_wolf",
+        "column": "lifecycle",
+        "commit": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+        "owners": [
+          "backend/src/game/engine/death-committer.ts",
+          "backend/src/game/mechanisms/roles/hidden_wolf/ports.ts"
+        ],
+        "evidence": [
+          "docs/refactor/death-commit-owner.md"
+        ]
+      },
+      {
+        "row": "gargoyle",
+        "column": "lifecycle",
+        "commit": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+        "owners": [
+          "backend/src/game/engine/death-committer.ts",
+          "backend/src/game/mechanisms/roles/gargoyle/ports.ts"
+        ],
+        "evidence": [
+          "docs/refactor/death-commit-owner.md"
+        ]
+      },
+      {
+        "row": "mechanical_wolf",
+        "column": "lifecycle",
+        "commit": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+        "owners": [
+          "backend/src/game/engine/death-committer.ts",
+          "backend/src/game/mechanisms/roles/mechanical_wolf/ports.ts"
+        ],
+        "evidence": [
+          "docs/refactor/death-commit-owner.md"
+        ]
+      },
+      {
+        "row": "awakened_hidden_wolf",
+        "column": "lifecycle",
+        "commit": "9a8337a878aa54776563148f4ccab28a7fe4c64c",
+        "owners": [
+          "backend/src/game/engine/death-committer.ts",
+          "backend/src/game/mechanisms/roles/awakened_hidden_wolf/ports.ts"
+        ],
+        "evidence": [
+          "docs/refactor/death-commit-owner.md"
+        ]
+      },
+      {
+        "row": "stages/night",
+        "column": "eligibility",
+        "commit": "a483c416d8346016d29f3e88e3be5b258e66f5f2",
+        "owners": [
+          "backend/src/rulesets/rule-plan.ts",
+          "backend/src/rulesets/night-stage-plan.ts",
+          "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+        ],
+        "evidence": [
+          "docs/refactor/execution-rule-plan.md"
+        ]
+      },
+      {
+        "row": "stages/night",
+        "column": "lifecycle",
+        "commit": "a483c416d8346016d29f3e88e3be5b258e66f5f2",
+        "owners": [
+          "backend/src/rulesets/rule-plan.ts",
+          "backend/src/rulesets/night-lifecycle-plan.ts",
+          "backend/src/game/engine/phase_manager.ts",
+          "backend/src/game/engine/phase_pipeline/night_pipeline.ts"
+        ],
+        "evidence": [
+          "docs/refactor/execution-rule-plan.md"
+        ]
+      },
+      {
+        "row": "config",
+        "column": "checkpoint",
+        "commit": "a483c416d8346016d29f3e88e3be5b258e66f5f2",
+        "owners": [
+          "backend/src/rulesets/rule-plan.ts",
+          "backend/src/runtime/simulation/reproduction_context.ts"
+        ],
+        "evidence": [
+          "docs/refactor/execution-rule-plan.md"
+        ]
+      },
+      {
+        "row": "fragrant_pair_seer",
+        "column": "lifecycle",
+        "commit": "d4c4ffcffb3c714c1f230e2d54f5b719128d0fae",
+        "owners": [
+          "backend/src/game/mechanisms/roles/fragrant_pair_seer/death-wave.ts",
+          "backend/src/game/engine/death_resolution.ts"
+        ],
+        "evidence": [
+          "docs/refactor/fragrant-wave-publication.md"
+        ]
+      },
+      {
+        "row": "fragrant_pair_seer",
+        "column": "observation",
+        "commit": "d4c4ffcffb3c714c1f230e2d54f5b719128d0fae",
+        "owners": [
+          "backend/src/game/mechanisms/roles/fragrant_pair_seer/death-wave.ts",
+          "backend/src/game/mechanisms/roles/fragrant_pair_seer/ports.ts"
+        ],
+        "evidence": [
+          "docs/refactor/fragrant-wave-publication.md"
+        ]
+      },
+      {
+        "row": "animal_dream",
+        "column": "lifecycle",
+        "commit": "157e0b0e1a26eaef673cfb1639f15de6fc7e3980",
+        "owners": [
+          "backend/src/game/mechanisms/roles/animal_dream/death-wave.ts",
+          "backend/src/game/engine/death_resolution.ts"
+        ],
+        "evidence": [
+          "docs/refactor/animal-wave-preparation.md"
+        ]
+      },
+      {
+        "row": "animal_dream",
+        "column": "effect",
+        "commit": "157e0b0e1a26eaef673cfb1639f15de6fc7e3980",
+        "owners": [
+          "backend/src/game/mechanisms/roles/animal_dream/death-wave.ts"
+        ],
+        "evidence": [
+          "docs/refactor/animal-wave-preparation.md"
+        ]
+      },
+      {
+        "row": "mechanical_wolf",
+        "column": "effect",
+        "commit": "7d63a4e938c80c74e93e3b14a15b296743e9822a",
+        "owners": [
+          "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+          "backend/src/core/domain/night_effects.ts",
+          "backend/src/core/domain/night-damage-plan.ts"
+        ],
+        "evidence": [
+          "docs/refactor/sourced-night-intents.md"
+        ]
+      },
+      {
+        "row": "awakened_hidden_wolf",
+        "column": "effect",
+        "commit": "7d63a4e938c80c74e93e3b14a15b296743e9822a",
+        "owners": [
+          "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+          "backend/src/core/domain/night_effects.ts",
+          "backend/src/core/domain/night-damage-plan.ts"
+        ],
+        "evidence": [
+          "docs/refactor/sourced-night-intents.md"
+        ]
+      },
+      {
+        "row": "witch",
+        "column": "effect",
+        "commit": "7d63a4e938c80c74e93e3b14a15b296743e9822a",
+        "owners": [
+          "backend/src/game/mechanisms/roles/witch/night_stages.ts",
+          "backend/src/core/domain/night_effects.ts",
+          "backend/src/core/domain/night-damage-plan.ts"
+        ],
+        "evidence": [
+          "docs/refactor/sourced-night-intents.md"
+        ]
+      },
+      {
+        "row": "demon_hunter",
+        "column": "effect",
+        "commit": "7d63a4e938c80c74e93e3b14a15b296743e9822a",
+        "owners": [
+          "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+          "backend/src/core/domain/night_effects.ts",
+          "backend/src/core/domain/night-damage-plan.ts"
+        ],
+        "evidence": [
+          "docs/refactor/sourced-night-intents.md"
+        ]
+      },
+      {
+        "row": "recipient_ability_stage",
+        "column": "effect",
+        "commit": "1099f2b156489b0a0d3212331e77b0da7bb2c66e",
+        "owners": [
+          "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+          "backend/src/core/domain/night_effects.ts"
+        ],
+        "evidence": [
+          "docs/refactor/recipient-scholar-poison-routes.md"
+        ]
+      },
+      {
+        "row": "scholar_mentor",
+        "column": "effect",
+        "commit": "1099f2b156489b0a0d3212331e77b0da7bb2c66e",
+        "owners": [
+          "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+          "backend/src/core/domain/night_effects.ts"
+        ],
+        "evidence": [
+          "docs/refactor/recipient-scholar-poison-routes.md"
+        ]
+      },
+      {
+        "row": "mechanical_wolf",
+        "column": "effect",
+        "commit": "1099f2b156489b0a0d3212331e77b0da7bb2c66e",
+        "owners": [
+          "backend/src/core/domain/night_effects.ts",
+          "backend/src/core/domain/night-damage-target.ts"
+        ],
+        "evidence": [
+          "docs/refactor/recipient-scholar-poison-routes.md"
+        ]
+      },
+      {
+        "row": "llm",
+        "column": "observation",
+        "commit": "dfd7f6fa20aed37dd1872058a9a38d40e56cdfa2",
+        "owners": [
+          "backend/src/ai/agents/providers/observation-fallback.ts",
+          "backend/src/ai/agents/llm/llm_action_provider.ts",
+          "backend/src/ai/agents/acp/acp_action_provider.ts",
+          "backend/src/runtime/player_agent_factory.ts"
+        ],
+        "evidence": [
+          "docs/refactor/fallback-observation-policy.md",
+          "docs/refactor/production-observation-fallback.md"
+        ]
+      },
+      {
+        "row": "hybrid",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/relationships.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "cupid",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/relationships.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "debater",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/relationships.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "awakened_hidden_wolf",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/abilities.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "mechanical_wolf",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/abilities.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "miracle_merchant",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/abilities.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "death_abilities",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/abilities.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "black_market_merchant",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/abilities.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "events/wall_notes",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/relationships.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "thief",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/relationships.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "wild_child",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/relationships.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "shapeshifter",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/relationships.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "lonely_girl",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/relationships.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "ghost_bride",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/relationships.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "demon_hunter",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/night-mechanisms.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "nightmare_shadow",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/night-mechanisms.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "red_moon_apostle",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/night-mechanisms.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "magician",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/night-mechanisms.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "order_prince",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/night-mechanisms.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "trickster",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/night-mechanisms.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "wolf_sorcerer",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/night-mechanisms.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "time_wolf_consort",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/night-mechanisms.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "scholar_mentor",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/night-mechanisms.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "mist_raven",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/night-mechanisms.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "radiant_eclipse",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/night-mechanisms.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "noble_secret_body",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/night-mechanisms.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "fragrant_pair_seer",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/night-mechanisms.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "animal_dream",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/events/night-mechanisms.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "inspection",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/results.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "win_conditions",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "packages/game-presentation/src/results.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      },
+      {
+        "row": "script",
+        "column": "text",
+        "commit": "95ee2b56eaad735cb16d5dc7567e1d4e1a447462",
+        "owners": [
+          "backend/src/game/mechanisms/script/event_render_registry.ts",
+          "packages/game-presentation/src/index.ts"
+        ],
+        "evidence": [
+          "docs/refactor/shared-presentation.md"
+        ]
+      }
+    ],
+    "currentDocLinks": 12,
+    "findings": [],
+    "files": [
+      {
+        "path": "docs/refactor/generated/current-mechanism-migration.json",
+        "sha256": "96021d68343521193b1defb00faf4447619f7292155a3a6a9d8e792c35497a32"
+      },
+      {
+        "path": "docs/refactor/current-delivery-ledger.md",
+        "sha256": "36b7539e59a8689627b7661a2875c437f4da696fb25429fdf3c298fee4238edf"
+      }
+    ],
+    "limits": "Only eight approved functional commits. No DamageEvidence/C30/Wave parts, source writes or repeated test/type/discovery/game/gates. Part and generic remaining entries cannot grant complete cell acceptance."
+  },
+  "independentRoot": {
+    "baseline": "99fac061",
+    "rows": 91,
+    "cells": 910,
+    "addedParts": 53,
+    "changedCells": 51,
+    "counts": {
+      "pending": 801,
+      "partial": 109
+    },
+    "oldPartsRemainingAndBaselinePreserved": true,
+    "appendedRemainingNotes": 51,
+    "sourceCommitPathsPresent": true,
+    "docLinks": 12,
+    "findings": [],
+    "initialCheck": "首检查错误要求remaining完全相等；实际仅追加51条具体未完成范围，原条目均字节同/同序保，按明确prefix规则复核，无源/doc修改"
+  },
+  "scopeLimit": "只有八个已提交功能来源的53具体parts；无complete/N/A新增，不替代全机制验收或P9门禁"
+}

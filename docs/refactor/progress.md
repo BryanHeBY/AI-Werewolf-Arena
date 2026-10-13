@@ -430,3 +430,5 @@
 - C25/C27 真实毒接受证据：5paths，callback仅原Poison接受点，direct原旗标/反射cause独立，系统同结果hidden证据及Mist原freshcopy按最终死因过滤；无extraWorld/RNG/legacySymbolget/可枚举字段变更。新5/0/25+原Mist/plan25/0/117、finite12174实际closed0、3完整程序registered metadata逆/5中文heads/两独立5SHA审0。metadata非权限，fullWave/Receipt消费者后续闭合，未重复fullgate。见damage-poison-evidence.md。
 
 - C30 赠枪生命周期owner：4paths，原owners/counters唯一迁life叶及16真实声明、原投影/type归playerState、entry保2真实copy/gateway政策和sameFn出口；无newloop/二store/genericgun。20声明/原player whole runtime同、15publicnames、new3/0/27+原bounded3/0/25、finite55450由实现者实际closed0，4中文heads/Root实际源审/独立4SHA与player两comment单SHA审0。原体、安装/武装/transfer/firstdeath/expiry重要逻辑就地中文；C30普通metadata/C31/C32继续。见death-gun-lifecycle-owner.md。
+
+- 八已提交功能台账汇合：只登记9a8337/a483/d4c/95ee/157/7d63/dfd7/1099的53具体parts/51格；91rows910cells及freeze89 SHA、旧parts/remaining全文同序保，追加51条具体未完说明，现109partial801pending/0complete/N/A。Root独立真commit/owner/doc/12links与前缀/计数审0，首remaining完全相等的过强检查已改明确append规则，未改候选。中文注释不算结构交付，新d323/99fac已提交但本次未登记，fullWave/普通夜metadata真WIP不登记；不重tests/types/games。见current-delivery-ledger.md及generated/current-delivery-ledger-evidence.json。
