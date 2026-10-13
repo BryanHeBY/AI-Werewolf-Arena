@@ -89143,13 +89143,753 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/historical_role_policies.test.ts",
+      "to": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+      "sourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "reason": "Actual selected unit module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "062a6dbf6ff6231e9c2646d1e56aa5c8d740a2757bfc0c88978bf554a1cea36e",
+      "candidateSha256": "d3ab09e37b563e8382153a8f855ccf435b0f148255b185d05c7160901408157d",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "import-type-module-specifier",
+          "start": 7677,
+          "end": 7691,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts",
+          "typeOnly": true
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1325,
+          "end": 1372,
+          "original": "../../src/game/mechanisms/roles/ability_changes",
+          "value": "../../../src/game/mechanisms/roles/ability_changes",
+          "originalResolved": "backend/src/game/mechanisms/roles/ability_changes.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/ability_changes.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1219,
+          "end": 1260,
+          "original": "../../src/game/mechanisms/roles/abilities",
+          "value": "../../../src/game/mechanisms/roles/abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/abilities.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1136,
+          "end": 1181,
+          "original": "../../src/game/mechanisms/roles/ability_scope",
+          "value": "../../../src/game/mechanisms/roles/ability_scope",
+          "originalResolved": "backend/src/game/mechanisms/roles/ability_scope.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/ability_scope.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1040,
+          "end": 1091,
+          "original": "../../src/game/mechanisms/roles/dreamer/night_frame",
+          "value": "../../../src/game/mechanisms/roles/dreamer/night_frame",
+          "originalResolved": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 969,
+          "end": 1004,
+          "original": "../../src/core/domain/night_effects",
+          "value": "../../../src/core/domain/night_effects",
+          "originalResolved": "backend/src/core/domain/night_effects.ts",
+          "expectedResolved": "backend/src/core/domain/night_effects.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 878,
+          "end": 932,
+          "original": "../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 791,
+          "end": 835,
+          "original": "../../src/game/mechanisms/roles/player_state",
+          "value": "../../../src/game/mechanisms/roles/player_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/player_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/player_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 677,
+          "end": 722,
+          "original": "../../src/game/mechanisms/roles/private_state",
+          "value": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 594,
+          "end": 621,
+          "original": "../../src/core/domain/board",
+          "value": "../../../src/core/domain/board",
+          "originalResolved": "backend/src/core/domain/board.ts",
+          "expectedResolved": "backend/src/core/domain/board.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 468,
+          "end": 520,
+          "original": "../../src/game/mechanisms/roles/wolf_beauty/relation",
+          "value": "../../../src/game/mechanisms/roles/wolf_beauty/relation",
+          "originalResolved": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 363,
+          "end": 404,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 248,
+          "end": 290,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 195,
+          "end": 209,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 95,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/src/core/index.ts",
+          "originalExpression": "import(\"../../src/core\").GameEvent",
+          "currentExpression": "import(\"../../../src/core\").GameEvent",
+          "currentHead": "../../../src/core",
+          "kind": "type-module-path",
+          "typeOnly": true
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "b9b9a0c6d10b8e30963329f6bb369c4f5f2466c9ca7ff480351165be99248688",
+          "title": "awa_exile_poison_v1: all single/pair causes use explicit suppression and native Hunter attribution",
+          "occurrence": 1
+        },
+        {
+          "id": "59f03d021f620b3a2d068a3286ba6fcbf8705a060e9808a861a942147cecf70e",
+          "title": "heroes_s7_2017_exile_hunter_v1: all single/pair causes use explicit suppression and native Hunter attribution",
+          "occurrence": 1
+        },
+        {
+          "id": "cecb5df58f7cd12ad2142a43969e6c0c92d271714d445dee31e3fff5876fc49b",
+          "title": "policy changes revoke captured dream scope and established charm binding; independent DTOs reject unknown values",
+          "occurrence": 1
+        },
+        {
+          "id": "4c56f185429417221f6799f885bd4b08bdd6d6b6273bf3193ca8db6ed8c17d80",
+          "title": "awa_night_damage_v1: actual frame + compound mechanical failure/black backlash; Dream stays lethal",
+          "occurrence": 1
+        },
+        {
+          "id": "2d0ccb394bb49bd2c10b2e7017ec4cc946ef4c572787ad9410a8180eab4115fa",
+          "title": "netease_2026_night_immunity_v1: actual frame + compound mechanical failure/black backlash; Dream stays lethal",
+          "occurrence": 1
+        },
+        {
+          "id": "f77fb3b1faf529a440b1fb9877687cb587fdc53f472f5ede6e6165ab8e3cc9c5",
+          "title": "dreamer: defaults, omitted/empty parameters, finite names, reverse config and rejection paths",
+          "occurrence": 1
+        },
+        {
+          "id": "4aa6b095e692d4cebda36812e3e6080172698b090a1b5f569e6a102afb90a8c0",
+          "title": "wolf_beauty: defaults, omitted/empty parameters, finite names, reverse config and rejection paths",
+          "occurrence": 1
+        },
+        {
+          "id": "f30bd710811b83e25d129e1987cf00ca4136a7eba2a7634e6027de4a81a4ffe7",
+          "title": "awa_night_damage_v1: grant and transfer preserve instance policy/counters; receiver native config does not rewrite it",
+          "occurrence": 1
+        },
+        {
+          "id": "2916e4416e17768a0ef70a449b94420ce466604e48edc5c55b8aad7c709111aa",
+          "title": "netease_2026_night_immunity_v1: grant and transfer preserve instance policy/counters; receiver native config does not rewrite it",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "node:path",
+          "originalImport": "import path from \"node:path\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "path",
+              "kind": "default",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import {\n  createRandom,\n  Phase,\n  PotionType,\n  Role,\n  WinCondition,\n  DeathCause,\n  COMPONENT,\n  type BoardConfig,\n  type ActionProvider,\n  type ActionRequest,\n  type RoleComponent,\n} from \"../../src/core\";",
+          "currentImportBeforeRebase": "import { Role, WinCondition, DeathCause, COMPONENT, type BoardConfig, type RoleComponent } from \"../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "createRandom",
+              "imported": "createRandom",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "Phase",
+              "imported": "Phase",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "PotionType",
+              "imported": "PotionType",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "ActionProvider",
+              "imported": "ActionProvider",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/session_recorder",
+          "originalImport": "import { SessionRecordManager } from \"../../src/recording/session_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "SessionRecordManager",
+              "imported": "SessionRecordManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/recording/recording_context",
+          "originalImport": "import { runWithSessionRecorder } from \"../../src/recording/recording_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "runWithSessionRecorder",
+              "imported": "runWithSessionRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/simulation/reproduction_context",
+          "originalImport": "import {\n  beginGameReproduction,\n  captureCheckpoint,\n  currentEngineVersion,\n} from \"../../src/runtime/simulation/reproduction_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "beginGameReproduction",
+              "imported": "beginGameReproduction",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "captureCheckpoint",
+              "imported": "captureCheckpoint",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "currentEngineVersion",
+              "imported": "currentEngineVersion",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/game_event_recorder",
+          "originalImport": "import { GameEventRecorder } from \"../../src/runtime/game_event_recorder\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "GameEventRecorder",
+              "imported": "GameEventRecorder",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/runtime/simulation/replay_reproduction",
+          "originalImport": "import {\n  readReproduction,\n  replayReproduction,\n} from \"../../src/runtime/simulation/replay_reproduction\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readReproduction",
+              "imported": "readReproduction",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "replayReproduction",
+              "imported": "replayReproduction",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../support/drivers/temp-directories",
+          "originalImport": "import { createTestTempDirectory } from \"../support/drivers/temp-directories\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createTestTempDirectory",
+              "imported": "createTestTempDirectory",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/game/mechanisms",
+          "originalImport": "import { getDefaultConfigRenderRegistry, getDefaultRoleCatalog } from \"../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "getDefaultConfigRenderRegistry",
+              "imported": "getDefaultConfigRenderRegistry",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "getDefaultRoleCatalog",
+              "imported": "getDefaultRoleCatalog",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/runtime/historical_role_policies.test.ts",
+      "to": "backend/tests/scenarios/reproduction/historical-beauty-and-dream-policy-chains.test.ts",
+      "sourceCommit": "03cf07e8c08f8bdce273d7e146a33d5a989d8767",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "062a6dbf6ff6231e9c2646d1e56aa5c8d740a2757bfc0c88978bf554a1cea36e",
+      "candidateSha256": "7f03685f7c2f34f0489990868fb38a7a0c01579671da40f5d38295061bd0017b",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 1325,
+          "end": 1369,
+          "original": "../../src/game/mechanisms/roles/player_state",
+          "value": "../../../src/game/mechanisms/roles/player_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/player_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/player_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1231,
+          "end": 1256,
+          "original": "../../src/game/mechanisms",
+          "value": "../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1112,
+          "end": 1157,
+          "original": "../../src/game/mechanisms/roles/private_state",
+          "value": "../../../src/game/mechanisms/roles/private_state",
+          "originalResolved": "backend/src/game/mechanisms/roles/private_state.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/private_state.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 1021,
+          "end": 1056,
+          "original": "../support/drivers/temp-directories",
+          "value": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 929,
+          "end": 977,
+          "original": "../../src/runtime/simulation/replay_reproduction",
+          "value": "../../../src/runtime/simulation/replay_reproduction",
+          "originalResolved": "backend/src/runtime/simulation/replay_reproduction.ts",
+          "expectedResolved": "backend/src/runtime/simulation/replay_reproduction.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 830,
+          "end": 867,
+          "original": "../../src/runtime/game_event_recorder",
+          "value": "../../../src/runtime/game_event_recorder",
+          "originalResolved": "backend/src/runtime/game_event_recorder.ts",
+          "expectedResolved": "backend/src/runtime/game_event_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 743,
+          "end": 792,
+          "original": "../../src/runtime/simulation/reproduction_context",
+          "value": "../../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 616,
+          "end": 653,
+          "original": "../../src/recording/recording_context",
+          "value": "../../../src/recording/recording_context",
+          "originalResolved": "backend/src/recording/recording_context.ts",
+          "expectedResolved": "backend/src/recording/recording_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 537,
+          "end": 573,
+          "original": "../../src/recording/session_recorder",
+          "value": "../../../src/recording/session_recorder",
+          "originalResolved": "backend/src/recording/session_recorder.ts",
+          "expectedResolved": "backend/src/recording/session_recorder.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 455,
+          "end": 496,
+          "original": "../../src/runtime/config/board_definition",
+          "value": "../../../src/runtime/config/board_definition",
+          "originalResolved": "backend/src/runtime/config/board_definition.ts",
+          "expectedResolved": "backend/src/runtime/config/board_definition.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 340,
+          "end": 382,
+          "original": "../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 287,
+          "end": 301,
+          "original": "../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 102,
+          "end": 125,
+          "original": "../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "5d583865ea3e3339274d08fb5bf3ce10ec1decee111a4514087149f428c87aee",
+          "title": "poison/false/zh-CN: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "c84692df90c3922c7a9111603ccf6e6fe7f138873ceed42e59f0fe51ec7d70b2",
+          "title": "poison/false/en: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "71027387943b7315f32d206cb9bf399c629986f9fe80627dce4fb92622c00c74",
+          "title": "poison/true/zh-CN: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "4550ee6dfaff4b67c24e9aaa6a0bc1f3300193d9331b65aafeb71de34c3cd7a8",
+          "title": "poison/true/en: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "66ef324a65ba0db780e43de2ca5d8e7ce074989f61bda92626f32590f76299a6",
+          "title": "hunter/false/zh-CN: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e616af5e64be43b74abb7ec3c2630dc43e5292c403cf5dfd67f1e82aa54dfc94",
+          "title": "hunter/false/en: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "d60e8c6bbecee0d9a3d195c242b6ff7f93761d7dd8f04eff8fc7e6c94bd6f059",
+          "title": "hunter/true/zh-CN: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "23ec71e874925358fb5513160785f7d034ed444bb2cf5977600762e8001b9e48",
+          "title": "hunter/true/en: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "62957455db928f8e9d41f6297af8277f1a96224922b12894efcd6c6a3598f630",
+          "title": "wolf_king/false/zh-CN: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "e889b2e0f11ba7fa3ee7f520663a0fc49cdae6c0ca1077ae24daa3b636ec6bb8",
+          "title": "wolf_king/false/en: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "1ced93dc46dbf1d358c88317c26acf8ca1e483204e9bbabe4edb0ae745de82a0",
+          "title": "wolf_king/true/zh-CN: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "888cdec20b8b223cf6d43050229e81876b870fec839089f6e5ae97ba0effe3d1",
+          "title": "wolf_king/true/en: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "94bdb507bca95421afe50b00c15acc13bbfcba5436f9d56fae66dab37ae33010",
+          "title": "black_backlash/false/zh-CN: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "21a57a878565ebd0b75c62b4d6a6cb45b232a640ed6fb939f8b33a9a8a5b732d",
+          "title": "black_backlash/false/en: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "62b10ac3ac0cadc26dc7ebb39d1c76b7963cf33339fb41349b3c30abb2d63c7e",
+          "title": "black_backlash/true/zh-CN: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        },
+        {
+          "id": "6353bc7989dce9497b6594bd0f4bac326779f10cd72516414fd6069e7927d257",
+          "title": "black_backlash/true/en: normalized policy, real requests/death chain and recorded strict Tape",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../src/core",
+          "originalImport": "import {\n  createRandom,\n  Phase,\n  PotionType,\n  Role,\n  WinCondition,\n  DeathCause,\n  COMPONENT,\n  type BoardConfig,\n  type ActionProvider,\n  type ActionRequest,\n  type RoleComponent,\n} from \"../../src/core\";",
+          "currentImportBeforeRebase": "import { createRandom, Phase, PotionType, Role, WinCondition, COMPONENT, type BoardConfig, type ActionProvider, type ActionRequest, type RoleComponent } from \"../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "DeathCause",
+              "imported": "DeathCause",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/game/mechanisms/roles/wolf_beauty/relation",
+          "originalImport": "import {\n  permitsCharm,\n  activeCharm,\n  bindCharm,\n} from \"../../src/game/mechanisms/roles/wolf_beauty/relation\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "permitsCharm",
+              "imported": "permitsCharm",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "activeCharm",
+              "imported": "activeCharm",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "bindCharm",
+              "imported": "bindCharm",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core/domain/board",
+          "originalImport": "import { DREAM_PROTECTION_POLICIES, BEAUTY_DEATH_LINK_POLICIES } from \"../../src/core/domain/board\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DREAM_PROTECTION_POLICIES",
+              "imported": "DREAM_PROTECTION_POLICIES",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "BEAUTY_DEATH_LINK_POLICIES",
+              "imported": "BEAUTY_DEATH_LINK_POLICIES",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core/domain/systems/damage_resolution_system",
+          "originalImport": "import { DamageResolutionSystem } from \"../../src/core/domain/systems/damage_resolution_system\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DamageResolutionSystem",
+              "imported": "DamageResolutionSystem",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/core/domain/night_effects",
+          "originalImport": "import { captureNightLife } from \"../../src/core/domain/night_effects\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "captureNightLife",
+              "imported": "captureNightLife",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/game/mechanisms/roles/dreamer/night_frame",
+          "originalImport": "import { DreamNightFrame } from \"../../src/game/mechanisms/roles/dreamer/night_frame\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DreamNightFrame",
+              "imported": "DreamNightFrame",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/game/mechanisms/roles/ability_scope",
+          "originalImport": "import { captureNightAbilityScope } from \"../../src/game/mechanisms/roles/ability_scope\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "captureNightAbilityScope",
+              "imported": "captureNightAbilityScope",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/game/mechanisms/roles/abilities",
+          "originalImport": "import { allNightAbilities } from \"../../src/game/mechanisms/roles/abilities\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "allNightAbilities",
+              "imported": "allNightAbilities",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../src/game/mechanisms/roles/ability_changes",
+          "originalImport": "import {\n  grantNightAbility,\n  transferNightAbility,\n} from \"../../src/game/mechanisms/roles/ability_changes\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "grantNightAbility",
+              "imported": "grantNightAbility",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "transferNightAbility",
+              "imported": "transferNightAbility",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Gargoyle and Hidden Wolf helpers each add one warm read of the same cached catalog; initializer call count equivalence is not asserted.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 483 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 561,
-    "targetFiles": 626,
-    "mappingEntries": 626,
-    "baselineCases": 7244,
+    "sourceFiles": 562,
+    "targetFiles": 628,
+    "mappingEntries": 628,
+    "baselineCases": 7269,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
