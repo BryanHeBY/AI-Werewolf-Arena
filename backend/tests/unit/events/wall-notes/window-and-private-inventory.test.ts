@@ -1,31 +1,19 @@
 /**
- * Tests verify wall-note configuration, request scoping, publication and recording boundaries.
- * Inputs are original hook overrides, optional replies and changed component/private
- * records; literal event/feed/expiry/error assertions remain the oracle. Fixture
- * container writes are explicitly test-only and preserve original actions; runtime
- * initialization, source snapshots and role eligibility are not changed here.
+ * Unit tests for wall notes window. Inputs are original paper/Unicode/RNG/request matrices and
+ * first-voting/terminal inputs. Original literal receipts, reference/getter/error traces, facts and
+ * expected state remain the oracle. Bounded window/opaque note/request/RNG/getter/expiry and checkpoint
+ * contracts. Case14 calls only denied PM reentry; case27 flushes GameEventRecorder to an explicitly inert
+ * in-memory manager, not filesystem. No complete game phase or paid model runs; existing local windows and
+ * denied entry probes remain bounded.
  */
-import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
-import { GameEventRecorder } from "../../../src/runtime/game_event_recorder";
-import { ActionReception } from "../../../src/ai/agents/player/action_reception";
+import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
+import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
+import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import {
-  ActionWindow,
-  COMPONENT,
-  Role,
-  Camp,
-  Phase,
-  createAliveComponent,
-  createRandom,
-  type GameEvent,
-  type ActionRequest,
-  type ToolCall,
-  type WallNoteComponent,
-  type RoleComponent,
-} from "../../../src/core";
-import { foxBoard } from "../../support/cursed_fox_scenarios";
-import { WallNotesWindow } from "../../../src/game/mechanisms/events/wall_notes/window";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { COMPONENT, Role, Camp, Phase, createRandom, type GameEvent, type ActionRequest, type ToolCall, type WallNoteComponent, type RoleComponent } from "../../../../src/core";
+import { foxBoard } from "../../../support/cursed_fox_scenarios";
+import { WallNotesWindow } from "../../../../src/game/mechanisms/events/wall_notes/window";
 import {
   hasWallCommit,
   hasActiveWall,
@@ -36,30 +24,37 @@ import {
   authorizedWallAuthor,
   wallRequestScope,
   inheritWallDeadlineRequest,
-} from "../../../src/game/mechanisms/events/wall_notes/authority";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+} from "../../../../src/game/mechanisms/events/wall_notes/authority";
+import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+} from "../../../../src/runtime/config/board_definition";
 import {
   validWallText,
   readWallTool,
   readWallEventFact,
   wallEventLabel,
 } from "@ai-werewolf-arena/game-text";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+
 const roles = [Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Villager, Role.Villager];
+
 function fixture(deck = roles) {
   const config = { ...foxBoard(deck), events: { pack: "awa_wall_notes_once_v1" as const } };
   return { ...bootstrapGame(config, { fixedRoles: deck }), config, events: [] as GameEvent[] };
 }
+
 type Fixture = ReturnType<typeof fixture>;
+
 const note = (g: Fixture, id: number) =>
   g.world.getComponent<WallNoteComponent>(id, COMPONENT.WallNote)!;
+
 const role = (g: Fixture, id: number) => g.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+
 const text = (body: string): ToolCall => ({ name: "write_note", args: { text: body } });
+
 async function run(
   g: Fixture,
   provider: (r: ActionRequest) => Promise<ToolCall | null>,
@@ -78,8 +73,10 @@ async function run(
     random,
   );
 }
+
 const publicTexts = (g: Fixture) =>
   g.events.find((e) => e.type === "wall_notes_published")?.payload;
+
 test("scenario hook overrides cannot contaminate other games or the shared default", () => {
   const first = foxBoard(roles),
     second = foxBoard(roles);
@@ -112,6 +109,7 @@ test("explicit schema/reverse off and supported seven roles; both entrances reje
     boardDefinitionFromConfig("wall_off", foxBoard(roles)).mechanisms.eventPack,
   ).toBeUndefined();
 });
+
 test("off/day2/not current never commit/fork/grant/request", async () => {
   for (const kind of ["off", "day2", "phase"]) {
     const g = fixture();
@@ -137,6 +135,7 @@ test("off/day2/not current never commit/fork/grant/request", async () => {
     expect(g.world.getComponent(1, COMPONENT.WallNote)).toBeUndefined();
   }
 });
+
 test("all requests constructed first, optional exact constraints, no partial feed, literals retained and expired", async () => {
   const g = fixture(),
     requests: ActionRequest[] = [];
@@ -181,6 +180,7 @@ test("all requests constructed first, optional exact constraints, no partial fee
   });
   expect(g.events.filter((e) => e.type === "wall_notes_started")).toHaveLength(1);
 });
+
 for (const bad of ["", " \n\t", "x".repeat(161), "\ud800", "\udc00", 123])
   test(`invalid note ${JSON.stringify(bad)} zero consumption and empty publish`, async () => {
     const g = fixture();
@@ -191,12 +191,14 @@ for (const bad of ["", " \n\t", "x".repeat(161), "\ud800", "\udc00", 123])
       g.events.filter((e) => e.type === "wall_note_changed" && e.payload.operation === "accepted"),
     ).toEqual([]);
   });
+
 test("codepoint limit, blank and malformed UTF16 distinguish valid prefixes", () => {
   expect(validWallText("💌".repeat(160))).toBe(true);
   expect(validWallText("💌".repeat(161))).toBe(false);
   expect(validWallText("[God] x")).toBe(true);
   expect(validWallText("\ud800a")).toBe(false);
 });
+
 test("getter/extra unsafe text is never executed nor accepted", async () => {
   let reads = 0;
   const args = {
@@ -212,12 +214,14 @@ test("getter/extra unsafe text is never executed nor accepted", async () => {
   expect((publicTexts(g) as any).texts).toEqual([]);
   expect(readWallTool({ name: "write_note", args: { text: "x", extra: 1 } })).toBeNull();
 });
+
 test("null optional grants expire without fabricated notes", async () => {
   const g = fixture();
   await run(g, async () => null);
   expect((publicTexts(g) as any).texts).toEqual([]);
   expect(note(g, 1)).toMatchObject({ remaining: 1, expired: true });
 });
+
 test("canonical anonymous multiset invariant under author and completion permutation", async () => {
   const texts = ["a", "b", "a", "[God] 1", "💌", "  c "];
   const first = fixture(),
@@ -233,6 +237,7 @@ test("canonical anonymous multiset invariant under author and completion permuta
   expect(JSON.stringify(feed)).not.toContain("instanceId");
   expect(JSON.stringify(feed)).not.toContain("actorId");
 });
+
 for (const mutation of [
   "death",
   "revive",
@@ -304,6 +309,7 @@ for (const mutation of [
       ),
     ).toBe(false);
   });
+
 test("accepted then later gateway revocation omits paid author without refund", async () => {
   const g = fixture(),
     gateway = new ToolGateway(),
@@ -318,6 +324,7 @@ test("accepted then later gateway revocation omits paid author without refund", 
   expect((publicTexts(g) as any).texts).not.toContain("1");
   expect((publicTexts(g) as any).texts).toHaveLength(5);
 });
+
 test("real errors settle all, choose first frozen ID exception, zero accepted, finally expired", async () => {
   const g = fixture(),
     first = new Error("first"),
@@ -343,6 +350,7 @@ test("real errors settle all, choose first frozen ID exception, zero accepted, f
   expect(note(g, 1)).toMatchObject({ remaining: 1, expired: true });
   expect(hasActiveWall(g.world)).toBe(false);
 });
+
 test("factory exception also closes and expires all granted paper", async () => {
   const g = fixture(),
     factory = new GameActionRequestFactory(g.world, g.events, 1),
@@ -355,6 +363,7 @@ test("factory exception also closes and expires all granted paper", async () => 
   expect(hasActiveWall(g.world)).toBe(false);
   expect(hasWallCommit(g.world)).toBe(true);
 });
+
 test("phase loss prevents late publish/cancel; config loss cancels current public window", async () => {
   for (const mode of ["phase", "pack"]) {
     const g = fixture();
@@ -377,6 +386,7 @@ test("phase loss prevents late publish/cancel; config loss cancels current publi
     expect(note(g, 1).expired).toBe(true);
   }
 });
+
 test("window and manager reentry cannot alter phase/events or request twice", async () => {
   const g = fixture();
   let count = 0;
@@ -396,6 +406,7 @@ test("window and manager reentry cannot alter phase/events or request twice", as
   });
   expect(count).toBe(6);
 });
+
 test("out of window, wrong instance/token and cross world are unauthorized", async () => {
   const g = fixture(),
     other = fixture(),
@@ -428,6 +439,7 @@ test("out of window, wrong instance/token and cross world are unauthorized", asy
     return null;
   });
 });
+
 test("strict shared fact state matrix and bilingual literal text", () => {
   const valid = { day: 1, eventId: "awa_wall_notes_v1", texts: ["[God] 6 is Wolf"] };
   expect(readWallEventFact("wall_notes_published", valid)).not.toBeNull();
@@ -497,6 +509,7 @@ for (const seam of ["factory", "next"])
         mode === "phase" ? 0 : 1,
       );
     });
+
 test("simultaneously active worlds reject foreign opaque capability and factory request", () => {
   const first = fixture(),
     second = fixture(),
@@ -520,6 +533,7 @@ test("simultaneously active worlds reject foreign opaque capability and factory 
   closeWall(first.world, a);
   closeWall(second.world, b);
 });
+
 test("inventory data getters fail closed without execution and replacement is never projected", async () => {
   const g = fixture();
   let reads = 0;
@@ -608,6 +622,7 @@ for (const mode of ["getter", "readonly", "freeze"])
       g.events.some((e) => e.type === "wall_note_changed" && e.payload.operation === "accepted"),
     ).toBe(false);
   });
+
 test("nonwritable native stock revokes before consumption without throwing", async () => {
   const g = fixture();
   await run(g, async (r) => {
@@ -648,81 +663,6 @@ test("actual Reception rejects tampered author; only otherwise-identical deadlin
   request.context.item_instance_id = "wall:1:2";
   expect(reception.validate(request, "write_note", { text: "forged" }).ok).toBe(false);
   closeWall(g.world, a);
-});
-for (const outcome of ["abstain", "tie", "idiot"] as const)
-  test(`normal first voting ${outcome} triggers wall even without exile`, async () => {
-    const deck = [Role.Wolf, Role.Wolf, Role.Seer, Role.Idiot, Role.Villager, Role.Villager],
-      config = {
-        ...foxBoard(deck),
-        events: { pack: "awa_wall_notes_once_v1" as const },
-        tieBreaker: { exileVote: "no_elimination" as const, wolfKillVote: "no_kill" as const },
-      },
-      g = bootstrapGame(config, { fixedRoles: deck });
-    const requests: ActionRequest[] = [];
-    await g.phaseManager.runSingleCycle(
-      {
-        getAction: async (r) => {
-          requests.push(r);
-          if (r.allowedTools.includes("write_note")) return null;
-          if (r.allowedTools.includes("kill_vote"))
-            return { name: "kill_vote", args: { target_id: null, abstain: true } };
-          if (r.allowedTools.includes("speak_to_wolves"))
-            return { name: "speak_to_wolves", args: { text: "done", end_chat: true } };
-          if (r.allowedTools.includes("check_identity"))
-            return { name: "check_identity", args: { target_id: 1 } };
-          if (r.allowedTools.includes("vote"))
-            return {
-              name: "vote",
-              args: {
-                target_id:
-                  outcome === "abstain" ? null : outcome === "idiot" ? 4 : r.actorId % 2 ? 1 : 2,
-                abstain: outcome === "abstain",
-              },
-            };
-          if (r.allowedTools.includes("speak")) return { name: "speak", args: { text: "speech" } };
-          return null;
-        },
-      },
-      10,
-    );
-    expect(requests.filter((r) => r.context.stage === "wall_notes")).toHaveLength(6);
-    expect(g.phaseManager.getSnapshot()).toMatchObject({ day: 2, gameOver: false });
-    expect(g.phaseManager.getEvents().filter((e) => e.type === "wall_notes_started")).toHaveLength(
-      1,
-    );
-    if (outcome === "idiot")
-      expect(g.world.getComponent<{ canVote: boolean }>(4, COMPONENT.VotingRight)!.canVote).toBe(
-        false,
-      );
-  });
-test("first-day terminal exile has no paper grants or requests", async () => {
-  const deck = [Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Villager, Role.Villager],
-    config = { ...foxBoard(deck), events: { pack: "awa_wall_notes_once_v1" as const } },
-    g = bootstrapGame(config, { fixedRoles: deck });
-  const seen: ActionRequest[] = [];
-  await g.phaseManager.runSingleCycle({
-    getAction: async (r) => {
-      seen.push(r);
-      if (r.allowedTools.includes("kill_vote"))
-        return { name: "kill_vote", args: { target_id: null, abstain: true } };
-      if (r.allowedTools.includes("speak_to_wolves"))
-        return { name: "speak_to_wolves", args: { text: "done", end_chat: true } };
-      if (r.allowedTools.includes("check_identity"))
-        return { name: "check_identity", args: { target_id: 1 } };
-      if (r.allowedTools.includes("use_potion"))
-        return { name: "use_potion", args: { target_id: r.actorId, potion_type: "none" as any } };
-      if (r.allowedTools.includes("vote"))
-        return {
-          name: "vote",
-          args: { target_id: r.actorId === 1 ? null : 1, abstain: r.actorId === 1 },
-        };
-      if (r.allowedTools.includes("speak")) return { name: "speak", args: { text: "speech" } };
-      return null;
-    },
-  });
-  expect(g.phaseManager.getSnapshot().gameOver).toBe(true);
-  expect(seen.some((r) => r.context.stage === "wall_notes")).toBe(false);
-  expect(g.world.getComponent(2, COMPONENT.WallNote)).toBeUndefined();
 });
 
 test("actual Reception raw getter never executes; Unicode limit, exact args and literal preserved", () => {
@@ -801,44 +741,6 @@ test("player archive provenance stays identical when hidden God note counts diff
   expect(first.map((r) => r.requestId)).toEqual(["1-voting-1-event-1", "1-voting-1-event-2"]);
 });
 
-test("first-day self destruction ends day early and never catches up wall on day2", async () => {
-  const g = fixture([Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Villager]);
-  g.config.hooks.onPreVote = true;
-  g.config.selfDestruct = { enabledWindows: [ActionWindow.OnPreVote] };
-  const seen: ActionRequest[] = [];
-  let blasted = false;
-  const provider = {
-    getAction: async (r: ActionRequest): Promise<ToolCall | null> => {
-      seen.push(r);
-      if (r.allowedTools.includes("self_destruct")) {
-        if (!blasted && r.actorId === 1) {
-          blasted = true;
-          return { name: "self_destruct", args: { reason: "early", confirm: true } };
-        }
-        return null;
-      }
-      if (r.allowedTools.includes("kill_vote"))
-        return { name: "kill_vote", args: { target_id: null, abstain: true } };
-      if (r.allowedTools.includes("speak_to_wolves"))
-        return { name: "speak_to_wolves", args: { text: "done", end_chat: true } };
-      if (r.allowedTools.includes("check_identity"))
-        return { name: "check_identity", args: { target_id: 6 } };
-      if (r.allowedTools.includes("use_potion"))
-        return { name: "use_potion", args: { target_id: r.actorId, potion_type: "none" as any } };
-      if (r.allowedTools.includes("vote"))
-        return { name: "vote", args: { target_id: null, abstain: true } };
-      if (r.allowedTools.includes("speak")) return { name: "speak", args: { text: "speech" } };
-      return null;
-    },
-  };
-  await g.phaseManager.runSingleCycle(provider);
-  expect(blasted).toBe(true);
-  expect(g.phaseManager.getSnapshot()).toMatchObject({ day: 2, gameOver: false });
-  await g.phaseManager.runSingleCycle(provider);
-  expect(seen.some((r) => r.context.stage === "wall_notes")).toBe(false);
-  expect(hasWallCommit(g.world)).toBe(false);
-  expect(g.world.getComponent(2, COMPONENT.WallNote)).toBeUndefined();
-});
 test("frozen note expired DTO and checkpoint agree with closed runtime authority", async () => {
   const g = fixture();
   await run(g, async (r) => {
@@ -868,6 +770,7 @@ test("mutated valid remaining/instance/source cannot forge a player inventory or
     ).toBeUndefined();
   }
 });
+
 test("closed immutable original note records effective expired inventory", () => {
   const g = fixture(),
     a = openWall(g.world, () => true);

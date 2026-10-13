@@ -1686,6 +1686,7 @@
     "policy": "Exact23511 source/support/packages/scripts/tooling and candidate37, original strict flags and installed types. Digest is input manifest identity, not Engine sourceHash alias."
   },
   "committedGroups": [
-    "agents-and-native-night-capabilities"
+    "agents-and-native-night-capabilities",
+    "identity-relations-and-public-events"
   ]
 }

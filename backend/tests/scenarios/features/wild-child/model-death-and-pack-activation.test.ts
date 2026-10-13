@@ -1,78 +1,51 @@
 /**
- * Tests verify Wild Child mandatory model binding, retained death knowledge and transformation.
- * Original finite configuration, target/reply/getter matrices and foreign private
- * records supply inputs; literal membership, state, facts and errors are the oracle.
- * Typed fixture writes keep their original pointer/slot replacement, without
- * replacing the guarded camp transition or changing source/schema expectations.
+ * Scenario tests for wild child model. Inputs are original model choices, life replacements and real
+ * initial/additional death causes. Original literal receipts, reference/getter/error traces, facts and
+ * expected state remain the oracle. Actual central DeathResolution and/or complete PM cycles drive faction
+ * changes, true initial/additional death waves and next-night pack activation. Engine sequencing remains
+ * real and models remain controlled providers; production output is not a newly generated golden.
  */
 import { expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import {
-  Role,
-  Camp,
-  Phase,
-  COMPONENT,
-  DeathCause,
-  createAliveComponent,
-  createRoleComponent,
-  createCampComponent,
-  createVictoryComponent,
-  type BoardConfig,
-  type RoleComponent,
-  type AliveComponent,
-  type GameEvent,
-  type ToolCall,
-  type ActionRequest,
-  type VictoryComponent,
-} from "../../../src/core";
-import { foxBoard } from "../../support/cursed_fox_scenarios";
-import { WildChildSetupWindow } from "../../../src/game/mechanisms/roles/wild_child/setup";
-import {
-  getWildChildState,
-  readWildChildTool,
-} from "../../../src/game/mechanisms/roles/wild_child/state";
-import {
-  wildChildBinding,
-  wildChildRequestScope,
-  inheritWildChildDeadlineRequest,
-  hasActiveWildChild,
-  openWildChildNight,
-  projectWildChild,
-  wildChildReady,
-} from "../../../src/game/mechanisms/roles/wild_child/lifecycle";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { Role, Camp, Phase, COMPONENT, DeathCause, createAliveComponent, type BoardConfig, type RoleComponent, type AliveComponent, type GameEvent, type ToolCall, type ActionRequest, type VictoryComponent } from "../../../../src/core";
+import { foxBoard } from "../../../support/cursed_fox_scenarios";
+import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";
+import { getWildChildState } from "../../../../src/game/mechanisms/roles/wild_child/state";
+import { openWildChildNight, projectWildChild } from "../../../../src/game/mechanisms/roles/wild_child/lifecycle";
+import { DeathResolution } from "../../../../src/game/engine/death_resolution";
+import { EventRegistry } from "../../../../src/game/engine/event_registry";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import {
   getDefaultRoleCatalog,
   getDefaultWinConditionRegistry,
-} from "../../../src/game/mechanisms";
+} from "../../../../src/game/mechanisms";
 import {
   knownWolfTeammates,
   wolfKnifeHolders,
   wolfTeamPermissions,
   wolfTeamEvent,
-} from "../../../src/game/mechanisms/roles/wolf_team";
-import { ConditionRegistry } from "../../../src/core/domain/registries/condition_registry";
-import { WinCondition } from "../../../src/core";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/game/mechanisms/roles/wolf_team";
+import { ConditionRegistry } from "../../../../src/core/domain/registries/condition_registry";
+import { WinCondition } from "../../../../src/core";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { readWildChildEventFact } from "@ai-werewolf-arena/game-text";
-import {
-  boardDefinitionFromConfig,
-  parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
+
 const deck = [Role.WildChild, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter];
+
 function fixture(roles = deck, extra: Partial<BoardConfig> = {}) {
   const config = { ...foxBoard(roles), ...extra };
   return { ...bootstrapGame(config, { fixedRoles: roles }), config, events: [] as GameEvent[] };
 }
+
 type Fixture = ReturnType<typeof fixture>;
+
 const role = (g: Fixture, id = 1) => g.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+
 const choose = (target_id: number): ToolCall => ({
   name: "choose_wild_model",
   args: { target_id },
 });
+
 const setup = (
   g: Fixture,
   getAction: (r: ActionRequest) => Promise<ToolCall | null> = async () => choose(2),
@@ -84,6 +57,7 @@ const setup = (
     1,
     isCurrent,
   );
+
 async function deaths(
   g: Fixture,
   ids: number[],
@@ -112,159 +86,7 @@ async function deaths(
     Phase.Day,
   );
 }
-test("finite public schema/default/roundtrip and internal policy agree; unsupported topology is rejected", () => {
-  const g = fixture(),
-    doc = boardDefinitionFromConfig("wild", g.config),
-    board = parseBoardDefinition(doc);
-  expect(board.config.wildChild).toEqual({ policy: "awa_lui_meme_wild_child_v1" });
-  expect(boardDefinitionFromConfig("wild", board.config).roles.wild_child).toEqual({
-    policy: "awa_lui_meme_wild_child_v1",
-  });
-  expect(() =>
-    parseBoardDefinition({ ...doc, roles: { ...doc.roles, wild_child: { policy: "invented" } } }),
-  ).toThrow();
-  expect(() =>
-    fixture([Role.WildChild, Role.Wolf, Role.Cupid, Role.Villager, Role.Villager, Role.Villager]),
-  ).toThrow("role_combination_not_supported");
-  expect(() => fixture(deck, { wildChild: { policy: "invented" as never } })).toThrow(
-    "wild_child_policy_invalid",
-  );
-  expect(() =>
-    fixture([
-      Role.WildChild,
-      Role.WildChild,
-      Role.Wolf,
-      Role.Villager,
-      Role.Villager,
-      Role.Villager,
-    ]),
-  ).toThrow("role_count_exceeds_limit");
-  expect(() => fixture(deck, { events: { pack: "awa_wall_notes_once_v1" } })).toThrow(
-    "event_pack_combination_not_supported",
-  );
-});
-for (const target of [2, 4])
-  test(`model ${target}: mandatory one-time choice learns neither role nor faction`, async () => {
-    const g = fixture();
-    expect(
-      await setup(g, async (r) => {
-        expect(r.context.stage).toBe("wild_child");
-        expect(r.context.turn_constraints.min_valid_actions).toBe(1);
-        expect(r.context.allow_fallback).toBe(false);
-        expect(wildChildRequestScope(g.world, r)).toBe(wildChildBinding(g.world));
-        return choose(target);
-      }),
-    ).toBe(true);
-    expect(getWildChildState(role(g))).toEqual({
-      policy: "awa_lui_meme_wild_child_v1",
-      remaining: 0,
-      status: "chosen",
-      choice: { day: 1, targetId: target },
-      eligibleNight: null,
-      activeFromNight: null,
-    });
-    expect(role(g).camp).toBe(Camp.Good);
-    expect(await setup(g)).toBe(true);
-    expect(g.events).toHaveLength(1);
-    expect(buildAgentVisibleEventFeed(g.world, g.events, 1)).toHaveLength(1);
-    expect(buildAgentVisibleEventFeed(g.world, g.events, target)).toEqual([]);
-  });
-for (const target of [1, 0, 7])
-  test(`invalid model ${target} closes the required window without fallback`, async () => {
-    const g = fixture();
-    await expect(setup(g, async () => choose(target))).rejects.toThrow();
-    expect(wildChildReady(g.world)).toBe(false);
-    expect(hasActiveWildChild(g.world)).toBe(false);
-    expect(g.events).toEqual([]);
-    expect(getWildChildState(role(g))?.status).toBe("closed");
-  });
-test("null required action and original provider error both release authority and preserve the original failure", async () => {
-  const g = fixture();
-  await expect(setup(g, async () => null)).rejects.toThrow("wild_child_required_choice_missing");
-  const h = fixture(),
-    err = new TypeError("original");
-  Object.freeze(getWildChildState(role(h)));
-  let caught: unknown;
-  try {
-    await setup(h, async () => {
-      throw err;
-    });
-  } catch (e) {
-    caught = e;
-  }
-  expect(caught).toBe(err);
-  expect(hasActiveWildChild(h.world)).toBe(false);
-  expect(wildChildReady(h.world)).toBe(false);
-});
-const changes: Record<string, (g: Fixture) => void> = {
-  actorLife: (g) => {
-    g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!.alive = false;
-  },
-  actorRevive: (g) => {
-    const life = g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!;
-    life.alive = false;
-    life.alive = true;
-  },
-  actorBody: (g) => g.world.addComponent(1, COMPONENT.Alive, createAliveComponent()),
-  actorRole: (g) => {
-    role(g).role = Role.Villager;
-  },
-  actorRoleRef: (g) =>
-    g.world.addComponent(1, COMPONENT.Role, createRoleComponent(Role.WildChild, Camp.Good)),
-  actorState: (g) => {
-    (role(g) as { privateState: Readonly<Record<string, unknown>> }).privateState = {
-      ...role(g).privateState,
-    };
-  },
-  actorResource: (g) => {
-    getWildChildState(role(g))!.remaining = 0;
-  },
-  camp: (g) => g.world.addComponent(1, COMPONENT.Camp, createCampComponent(Camp.Good)),
-  victory: (g) =>
-    g.world.addComponent(
-      1,
-      COMPONENT.Victory,
-      createVictoryComponent([{ kind: "faction", faction: Camp.Good }]),
-    ),
-  modelLife: (g) => {
-    g.world.getComponent<AliveComponent>(2, COMPONENT.Alive)!.alive = false;
-  },
-  modelBody: (g) => g.world.addComponent(2, COMPONENT.Alive, createAliveComponent()),
-  modelRole: (g) => {
-    role(g, 2).camp = Camp.Good;
-  },
-  config: (g) => {
-    g.config.hooks.onDaybreak = !g.config.hooks.onDaybreak;
-  },
-};
-for (const [name, mutate] of Object.entries(changes))
-  test(`late ${name} withdrawal performs no choice or faction change`, async () => {
-    const g = fixture();
-    expect(
-      await setup(g, async () => {
-        mutate(g);
-        return choose(2);
-      }),
-    ).toBe(false);
-    expect(g.events).toEqual([]);
-    expect(wildChildReady(g.world)).toBe(false);
-    expect(hasActiveWildChild(g.world)).toBe(false);
-  });
-test("opaque factory request is World-bound and only deadline copies inherit it", async () => {
-  const g = fixture(),
-    other = fixture();
-  await setup(g, async (r) => {
-    const timed = { ...r, deadlineAtMs: 200 };
-    inheritWildChildDeadlineRequest(r, timed);
-    expect(wildChildRequestScope(g.world, timed)).toBeDefined();
-    expect(wildChildRequestScope(other.world, timed)).toBeUndefined();
-    expect(wildChildRequestScope(g.world, { ...r })).toBeUndefined();
-    const altered = { ...r, allowedTools: [] };
-    inheritWildChildDeadlineRequest(r, altered);
-    expect(wildChildRequestScope(g.world, altered)).toBeUndefined();
-    return choose(2);
-  });
-});
+
 for (const source of [
   DeathCause.WolfKill,
   DeathCause.Poison,
@@ -311,6 +133,7 @@ for (const source of [
     const causal = g.events.find((e) => e.type === "wild_child_model_eliminated")!;
     expect(readWildChildEventFact(causal.type, causal.payload)).not.toBeNull();
   });
+
 for (const ids of [
   [1, 2],
   [2, 1],
@@ -322,6 +145,7 @@ for (const ids of [
     expect(role(g).camp).toBe(Camp.Good);
     expect(g.events.some((e) => e.type === "wild_child_transformed")).toBe(false);
   });
+
 for (const ids of [
   [3, 4],
   [4, 3],
@@ -360,6 +184,7 @@ for (const ids of [
     expect(g.world.getAliveEntityIds()).toEqual([5, 6]);
     expect(g.events.some((e) => e.type === "wild_child_transformed")).toBe(false);
   });
+
 test("Hunter model first dies then shoots Child in the next wave: Wolf death, no activation", async () => {
   const g = fixture([Role.WildChild, Role.Hunter, Role.Wolf, Role.Villager, Role.Seer, Role.Witch]);
   await setup(g);
@@ -371,6 +196,7 @@ test("Hunter model first dies then shoots Child in the next wave: Wolf death, no
   close();
   expect(g.events.some((e) => e.type === "wild_child_pack_activated")).toBe(false);
 });
+
 for (const change of ["modelRevive", "modelReplace", "childRevive"] as const)
   test(`${change}: external new life cannot trigger or activate an old relationship`, async () => {
     const g = fixture();
@@ -389,6 +215,7 @@ for (const change of ["modelRevive", "modelReplace", "childRevive"] as const)
     close();
     expect(g.events.some((e) => e.type === "wild_child_pack_activated")).toBe(false);
   });
+
 test("accepted model binding survives later role/camp change without learning or copying it", async () => {
   const g = fixture();
   await setup(g);
@@ -399,6 +226,7 @@ test("accepted model binding survives later role/camp change without learning or
   expect(role(g).privateState).toHaveProperty("wildChild");
   expect(Object.keys(role(g).privateState)).toEqual(["wildChild"]);
 });
+
 test("raw external dead flip does not trigger a model elimination", async () => {
   const g = fixture();
   await setup(g);
@@ -407,6 +235,7 @@ test("raw external dead flip does not trigger a model elimination", async () => 
   expect(role(g).camp).toBe(Camp.Good);
   expect(g.events.some((e) => e.type === "wild_child_model_eliminated")).toBe(false);
 });
+
 test("active dead Child retains pack knowledge while losing chat/knife; revival never restores actions", async () => {
   const g = fixture();
   await setup(g);
@@ -420,6 +249,7 @@ test("active dead Child retains pack knowledge while losing chat/knife; revival 
   g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!.alive = true;
   expect(wolfTeamPermissions(role(g), c, g.world).canChat).toBe(false);
 });
+
 test("private resource accessors revoke death trigger/pack access without executing getters", async () => {
   for (const stage of ["chosen", "active"]) {
     const g = fixture();
@@ -442,6 +272,7 @@ test("private resource accessors revoke death trigger/pack access without execut
     expect(reads).toBe(0);
   }
 });
+
 test("current queries never activate an eligible child or backfill old wolf events", async () => {
   const g = fixture();
   await setup(g);
@@ -457,33 +288,7 @@ test("current queries never activate an eligible child or backfill old wolf even
   expect(getWildChildState(role(g))?.activeFromNight).toBe(5);
   expect(buildAgentVisibleEventFeed(g.world, [old], 1)).toEqual([]);
 });
-test("strict raw facts reject accessors, extras and self-contradictory causal actor/day", () => {
-  let reads = 0;
-  expect(
-    readWildChildTool({
-      name: "choose_wild_model",
-      args: {
-        get target_id() {
-          reads++;
-          return 2;
-        },
-      },
-    }),
-  ).toBeNull();
-  expect(reads).toBe(0);
-  expect(
-    readWildChildTool({ name: "choose_wild_model", args: { target_id: 2, role: "wolf" } }),
-  ).toBeNull();
-  expect(
-    readWildChildEventFact("wild_child_transformed", {
-      actorId: 1,
-      day: 1,
-      eligibleNight: 2,
-      camp: "wolf",
-      deathCommit: "wild-model:7:8:9",
-    }),
-  ).toBeNull();
-});
+
 test("last original Wolf model does not seal Good before Child transformation; PM next night activates once", async () => {
   const g = fixture([Role.WildChild, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Villager]);
   let choices = 0,
@@ -542,27 +347,6 @@ test("last original Wolf model does not seal Good before Child transformation; P
   ).toHaveLength(1);
 });
 
-for (const field of ["role", "camp", "privateState"] as const)
-  test(`late model ${field} accessor rejects without executing target resources`, async () => {
-    const g = fixture();
-    let reads = 0;
-    expect(
-      await setup(g, async () => {
-        const value = role(g, 2)[field];
-        Object.defineProperty(role(g, 2), field, {
-          get() {
-            reads++;
-            return value;
-          },
-          enumerable: true,
-        });
-        return choose(2);
-      }),
-    ).toBe(false);
-    expect(reads).toBe(0);
-    expect(role(g).camp).toBe(Camp.Good);
-    expect(g.events).toEqual([]);
-  });
 for (const mode of ["guard", "heal", "idiot"] as const)
   test(`${mode}: actual survived model is not an elimination or transformation`, async () => {
     const model = mode === "idiot" ? 6 : 2,
@@ -626,29 +410,4 @@ for (const mode of ["guard", "heal", "idiot"] as const)
           (e) => e.type === "wild_child_model_eliminated" || e.type === "wild_child_transformed",
         ),
     ).toEqual([]);
-  });
-
-for (const size of [6, 12])
-  test(`public ${size}-player finite Wild Child example initializes exactly N cards`, () => {
-    const board = parseBoardDefinition(
-      JSON.parse(
-        readFileSync(
-          new URL(
-            `../../../../configs.example/boards/awa_lui_meme_wild_child_${size}_v1.json`,
-            import.meta.url,
-          ),
-          "utf8",
-        ),
-      ),
-    );
-    expect(board.config.wildChild).toEqual({ policy: "awa_lui_meme_wild_child_v1" });
-    const g = bootstrapGame(board.config);
-    expect(g.world.entityIds()).toHaveLength(size);
-    expect(
-      g.world
-        .entityIds()
-        .filter(
-          (id) => g.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.WildChild,
-        ),
-    ).toHaveLength(1);
   });

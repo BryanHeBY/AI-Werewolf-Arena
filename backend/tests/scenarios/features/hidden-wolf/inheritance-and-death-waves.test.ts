@@ -1,14 +1,14 @@
 /**
- * Tests verify Hidden Wolf pack permission and inheritance across real proposal boundaries.
- * Original death-order matrices, controlled gateway replies and replaced role/life
- * slots supply inputs; literal inheritance, chat and death facts supply the oracle.
- * Native stages and complete chains keep their existing scopes. Fixture corruption
- * uses test-only container access, preserving every original callback and action.
+ * Scenario tests for hidden wolf inheritance. Inputs are original directional knowledge, life/permission
+ * changes and ordered death proposals. Original literal receipts, reference/getter/error traces, facts and
+ * expected state remain the oracle. Actual central DeathResolution or complete PM cycles commit inheritance
+ * and subsequent gun/Dream/Bear/Beauty/victory effects. Four previously heuristic unit nodes use real
+ * central waves. Engine sequencing remains real and models remain controlled providers; production output
+ * is not a newly generated golden.
  */
-import { nightStageContext } from "../night_stage_fixture";
-import { PotionType } from "../../../src/core";
+import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   Role,
   Camp,
@@ -21,44 +21,27 @@ import {
   type RoleComponent,
   type ActionRequest,
   type GameEvent,
-} from "../../../src/core";
-import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
+} from "../../../../src/core";
+import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import {
   getHiddenWolfState,
   getBearState,
   getSeerState,
-} from "../../../src/game/mechanisms/roles/private_state";
-import {
-  canHiddenWolfKnife,
-  refreshHiddenWolfInheritance,
-} from "../../../src/game/mechanisms/roles/hidden_wolf/inheritance";
-import {
-  knownWolfTeammates,
-  wolfChatParticipants,
-  wolfKnifeHolders,
-  wolfTeamPermissions,
-} from "../../../src/game/mechanisms/roles/wolf_team";
-import { getDefaultRoleCatalog, RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
-import { resolveInspection } from "../../../src/game/mechanisms/roles/inspection";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
-import { ActionReception } from "../../../src/ai/agents/player/action_reception";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-import {
-  getDefaultToolSpecRegistry,
-  getDefaultTargetHintRegistry,
-  getDefaultPhaseStageLocalizationRegistry,
-  getDefaultConfigRenderRegistry,
-} from "../../../src/game/mechanisms";
-import { DeathResolution } from "../../../src/game/engine/death_resolution";
-import { EventRegistry } from "../../../src/game/engine/event_registry";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { createAliveComponent } from "../../../src/core/domain/components/alive";
-import { captureExileFeedback } from "../../../src/game/mechanisms/roles/gravekeeper/feedback";
-import { HookRegistry } from "../../../src/game/mechanisms/hooks/hook_registry";
-import { grantNightAbility } from "../../../src/game/mechanisms/roles/ability_changes";
-import { WOLF_NIGHT_STAGES } from "../../../src/game/mechanisms/roles/wolf/night_stages";
-import type { NightStageContext } from "../../../src/game/mechanisms/stages/night/contracts";
+} from "../../../../src/game/mechanisms/roles/private_state";
+import { canHiddenWolfKnife } from "../../../../src/game/mechanisms/roles/hidden_wolf/inheritance";
+import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
+import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+import { DeathResolution } from "../../../../src/game/engine/death_resolution";
+import { EventRegistry } from "../../../../src/game/engine/event_registry";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { createAliveComponent } from "../../../../src/core/domain/components/alive";
+import { captureExileFeedback } from "../../../../src/game/mechanisms/roles/gravekeeper/feedback";
+import { HookRegistry } from "../../../../src/game/mechanisms/hooks/hook_registry";
+import { grantNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
+
 const deck = [Role.HiddenWolf, Role.Wolf, Role.Seer, Role.Bear, Role.Villager, Role.Villager];
+
 const config = (roles = deck): BoardConfig => ({
   ...sixPlayerMvpConfig,
   boardSize: roles.length,
@@ -69,8 +52,10 @@ const config = (roles = deck): BoardConfig => ({
   })),
   selfDestruct: { enabledWindows: [] },
 });
+
 const role = (game: ReturnType<typeof bootstrapGame>, id: number) =>
   game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+
 const catalog = getDefaultRoleCatalog();
 
 for (const order of [
@@ -181,160 +166,6 @@ test("real granted Dream plus Hunter shot commits the caster and linked Hidden W
   expect(getHiddenWolfState(role(game, 1))!.hasInheritedKnife).toBe(false);
   expect(game.phaseManager.getEvents().some((e) => e.type === "hidden_wolf_awakened")).toBe(false);
   expect(game.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
-});
-
-for (const change of ["camp", "permission"] as const)
-  test(`${change}: a real successful gateway cannot publish chat after its actor loses current pack permission`, async () => {
-    const game = bootstrapGame(config(), { fixedRoles: deck }),
-      events: GameEvent[] = [],
-      base = new ToolGateway();
-    let chat = true;
-    const custom = new RoleCatalog(
-      catalog.all().map((p) =>
-        p.role === Role.Wolf
-          ? {
-              ...p,
-              wolfTeam: () => ({
-                recognizedByPack: true,
-                recognizes: "pack" as const,
-                canChat: chat,
-                canVoteForKill: true,
-              }),
-            }
-          : p,
-      ),
-    );
-    const gateway = new ToolGateway();
-    gateway.validateAndSanitize = (world, actor, action, context) => {
-      const result = base.validateAndSanitize(world, actor, action, context);
-      if (change === "camp") role(game, actor).camp = Camp.Good;
-      else chat = false;
-      return result;
-    };
-    await WOLF_NIGHT_STAGES[0]!.execute(
-      nightStageContext({
-        world: game.world,
-        roleCatalog: custom,
-        toolGateway: gateway,
-        events,
-        actionProvider: {
-          async getAction() {
-            return { name: "speak_to_wolves", args: { text: "Late", end_chat: true } };
-          },
-        },
-        isCurrent: () => true,
-        currentDay: () => 1,
-        makeRequest: (actorId) => ({
-          actorId,
-          phase: Phase.Night,
-          allowedTools: ["speak_to_wolves"],
-          context: { day: 1, stage: "wolf_discussion", visible_events: [], turn_constraints: {} },
-        }),
-        getAliveByRole: () => [],
-        ensureMarks: () => {
-          throw new Error("unused");
-        },
-        pickMajorityTarget: () => null,
-        shuffleWolves: (ids) => ids,
-        state: {
-          wolfChatOrder: [],
-          endedWolves: new Set(),
-          wolfVotes: {},
-          wolfTarget: null,
-          seerChecks: [],
-          dreamLinks: [],
-        },
-      }),
-    );
-    expect(
-      events.some((e) => e.type === "wolf_discussion" || e.type === "wolf_discussion_ended"),
-    ).toBe(false);
-  });
-
-for (const locale of ["zh-CN", "en"] as const)
-  test(`${locale}: single-direction ID knowledge does not grant chat, knife, blast or other-role state, and all preflights are read-only`, () => {
-    const game = bootstrapGame(config(), { fixedRoles: deck, locale }),
-      before = structuredClone(role(game, 1).privateState),
-      request: ActionRequest = {
-        actorId: 1,
-        phase: Phase.Night,
-        allowedTools: ["kill_vote"],
-        context: { day: 1, stage: "wolf_vote", visible_events: [], turn_constraints: {} },
-      },
-      reception = new ActionReception(game.world),
-      policy = new PlayerPromptPolicy(game.world, {
-        boardConfig: config(),
-        roleCatalog: catalog,
-        toolSpecRegistry: getDefaultToolSpecRegistry(),
-        targetHintRegistry: getDefaultTargetHintRegistry(),
-        phaseStageLocalizationRegistry: getDefaultPhaseStageLocalizationRegistry(),
-        configRenderRegistry: getDefaultConfigRenderRegistry(),
-      });
-    expect(knownWolfTeammates(game.world, 1, catalog)).toEqual([2]);
-    expect(knownWolfTeammates(game.world, 2, catalog)).toEqual([]);
-    expect(wolfChatParticipants(game.world, catalog)).toEqual([2]);
-    expect(wolfKnifeHolders(game.world, catalog)).toEqual([2]);
-    expect(
-      reception.validate(request, "kill_vote", { target_id: 5, abstain: false }),
-    ).toMatchObject({ ok: false, error: "wolf_kill_permission" });
-    expect(
-      reception.validate({ ...request, allowedTools: ["speak_to_wolves"] }, "speak_to_wolves", {
-        text: "Raw",
-        end_chat: true,
-      }),
-    ).toMatchObject({ ok: false, error: "wolf_chat_permission" });
-    expect(
-      reception.validate(
-        { ...request, phase: Phase.Day, allowedTools: ["self_destruct"] },
-        "self_destruct",
-        { confirm: true, reason: "Raw" },
-      ).ok,
-    ).toBe(false);
-    expect(resolveInspection(game.world, 1, "camp", catalog)).toEqual({
-      kind: "camp",
-      camp: Camp.Good,
-    });
-    expect(resolveInspection(game.world, 1, "role", catalog)).toEqual({
-      kind: "role",
-      role: Role.Villager,
-    });
-    expect(policy.buildObservation(request).ownState.hiddenWolf).toEqual({
-      hasInheritedKnife: false,
-      canVoteForKill: false,
-    });
-    expect(policy.buildObservation({ ...request, actorId: 2 }).ownState.hiddenWolf).toBeUndefined();
-    expect(role(game, 1).renderPrompt(locale)).toContain(
-      locale === "en"
-        ? "Personally inherited the knife: No; currently able to attack: No."
-        : "本人曾获得刀权：否；当前可出刀：否。",
-    );
-    expect(role(game, 1).privateState).toEqual(before);
-  });
-
-test("opening sole Hidden Wolf inherits once, has only the basic knife and no chat, with conservative world-less compatibility", () => {
-  const fixed = [Role.HiddenWolf, Role.Seer, Role.Bear, Role.Hunter, Role.Villager, Role.Villager],
-    game = bootstrapGame(config(fixed), { fixedRoles: fixed });
-  expect(getHiddenWolfState(role(game, 1))).toEqual({ hasInheritedKnife: true });
-  expect(wolfKnifeHolders(game.world, catalog)).toEqual([1]);
-  expect(wolfChatParticipants(game.world, catalog)).toEqual([]);
-  expect(wolfTeamPermissions(role(game, 1), catalog).canVoteForKill).toBe(false);
-  expect(resolveInspection(game.world, 1, "role", catalog)).toEqual({
-    kind: "role",
-    role: Role.HiddenWolf,
-  });
-  const events = game.phaseManager.getEvents(),
-    before = events.length;
-  refreshHiddenWolfInheritance(game.world, events, 1);
-  expect(events).toHaveLength(before);
-  expect(events.filter((e) => e.type === "hidden_wolf_awakened").map((e) => e.payload)).toEqual([
-    { actorId: 1, day: 1 },
-  ]);
-  for (const actor of game.world.entityIds())
-    expect(
-      buildAgentVisibleEventFeed(game.world, events, actor).some(
-        (e) => e.type === "hidden_wolf_awakened",
-      ),
-    ).toBe(actor === 1);
 });
 
 test("masked Hidden Wolf exile produces Good grave feedback yet still counts as a true wolf; Knight resolves its real faction", async () => {

@@ -1,51 +1,21 @@
 /**
- * Scenario/unit ownership tests for shapeshifter.
- * Input: original fixed game actions and deliberate malformed or foreign
- * component replacements; output: unchanged state, rejection and life/lease
- * assertions. Literal expected prefixes and guard failures are independent
- * oracles. Explicit unknown writes are privileged negative-test injection;
- * production's typed default slot relation is never relaxed for these inputs.
+ * Unit tests for shapeshifter setup. Inputs are original N+2 deals, reserve card/lease mutations and strict
+ * provider failure tapes. Original literal receipts, reference/getter/error traces, facts and expected
+ * state remain the oracle. Original deal/config/multiset and bounded setup window/capability/stock
+ * projections. Case11 only invokes blocked PM entry inside active setup; no completed cycle occurs. No
+ * complete game phase or paid model runs; existing local windows and denied entry probes remain bounded.
  */
-import path from "node:path";
-import { promises as fs } from "node:fs";
-import * as runtimeFactory from "../../../src/runtime/player_agent_factory";
-import { LlmActionProvider } from "../../../src/ai/agents/llm/llm_action_provider";
-import { AcpActionProvider } from "../../../src/ai/agents/acp/acp_action_provider";
-import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
-import { resolveGameSetup } from "../../../src/runtime/config/resolve_game_setup";
-import { runGame } from "../../../src/runtime/game_runner";
-import {
-  readReproduction,
-  replayReproduction,
-} from "../../../src/runtime/simulation/replay_reproduction";
-import { createTestTempDirectory } from "../../support/drivers/temp-directories";
-import { expect, spyOn, test } from "bun:test";
-import { shuffled } from "../../../src/core";
-import { shapeshifterScenario } from "../../support/shapeshifter_scenarios";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import {
-  Role,
-  Camp,
-  Phase,
-  COMPONENT,
-  PotionType,
-  WitchSelfHealRule,
-  createRandom,
-  type BoardConfig,
-  type RoleComponent,
-  type ActionRequest,
-  type ToolCall,
-  type GameEvent,
-  type VictoryComponent,
-  type AliveComponent,
-} from "../../../src/core";
-import { foxBoard } from "../../support/cursed_fox_scenarios";
+import { expect, test } from "bun:test";
+import { shuffled } from "../../../../src/core";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { Role, Camp, COMPONENT, WitchSelfHealRule, createRandom, type BoardConfig, type RoleComponent, type ActionRequest, type ToolCall, type GameEvent, type VictoryComponent, type AliveComponent } from "../../../../src/core";
+import { foxBoard } from "../../../support/cursed_fox_scenarios";
 import {
   ShapeshifterSetupWindow,
   projectShapeshifterChoices,
   shapeshifterRequestScope,
   inheritShapeshifterDeadlineRequest,
-} from "../../../src/game/mechanisms/roles/shapeshifter/setup";
+} from "../../../../src/game/mechanisms/roles/shapeshifter/setup";
 import {
   shapeshifterDeal,
   shapeshifterSetupStatus,
@@ -53,34 +23,36 @@ import {
   hasActiveShapeshifterSetup,
   projectShapeshifterSetup,
   initialShapeshifterDeal,
-} from "../../../src/game/mechanisms/roles/shapeshifter/deal";
+} from "../../../../src/game/mechanisms/roles/shapeshifter/deal";
 import {
   readShapeshifterTool,
   getShapeshifterState,
-} from "../../../src/game/mechanisms/roles/shapeshifter/state";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../src/ai/agents/player/action_reception";
-import { PlayerPromptPolicy } from "../../../src/ai/agents/player/player_prompt_policy";
-import { knownWolfTeammates } from "../../../src/game/mechanisms/roles/wolf_team";
+} from "../../../../src/game/mechanisms/roles/shapeshifter/state";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
+import { knownWolfTeammates } from "../../../../src/game/mechanisms/roles/wolf_team";
 import {
   getDefaultRoleCatalog,
   getDefaultToolSpecRegistry,
   getDefaultTargetHintRegistry,
   getDefaultPhaseStageLocalizationRegistry,
   getDefaultConfigRenderRegistry,
-} from "../../../src/game/mechanisms";
+} from "../../../../src/game/mechanisms";
 import {
   getWitchState,
   getHunterState,
   getGuardState,
   getSeerState,
-} from "../../../src/game/mechanisms/roles/private_state";
+} from "../../../../src/game/mechanisms/roles/private_state";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/runtime/config/board_definition";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
+
 const original = [Role.Shapeshifter, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter];
+
 const deal = [
   Role.Shapeshifter,
   Role.Wolf,
@@ -91,6 +63,7 @@ const deal = [
   Role.Seer,
   Role.Villager,
 ];
+
 function fixture(cards = deal, extra: Partial<BoardConfig> = {}) {
   const roles = [...cards];
   for (let i = 0; i < 2; i++) {
@@ -101,9 +74,13 @@ function fixture(cards = deal, extra: Partial<BoardConfig> = {}) {
   const config = { ...foxBoard(roles), ...extra };
   return { ...bootstrapGame(config, { fixedRoles: cards }), config, events: [] as GameEvent[] };
 }
+
 type Fixture = ReturnType<typeof fixture>;
+
 const choose = (slot: 0 | 1): ToolCall => ({ name: "choose_shapeshifter_card", args: { slot } });
+
 const actor = (g: Fixture) => g.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+
 const run = (
   g: Fixture,
   body: (r: ActionRequest) => Promise<ToolCall | null>,
@@ -115,6 +92,7 @@ const run = (
     1,
     current,
   );
+
 function policy(g: Fixture, withConfig = true) {
   return new PlayerPromptPolicy(g.world, {
     roleCatalog: getDefaultRoleCatalog(),
@@ -125,6 +103,7 @@ function policy(g: Fixture, withConfig = true) {
     ...(withConfig ? { boardConfig: g.config } : {}),
   });
 }
+
 test("normal configuration remains N, Shapeshifter uses actual N+2, full fixed multiset and default policy roundtrip", () => {
   const g = fixture(),
     def = boardDefinitionFromConfig("shapeshifter_fixture", g.config);
@@ -146,6 +125,7 @@ test("normal configuration remains N, Shapeshifter uses actual N+2, full fixed m
     "fixed_role_deck_mismatch",
   );
 });
+
 test("finite City/basic restriction and engineering faction lower bounds are enforced at both entrances", () => {
   for (const roles of [
     [Role.Shapeshifter, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Villager],
@@ -161,6 +141,7 @@ test("finite City/basic restriction and engineering faction lower bounds are enf
   const config = { ...foxBoard(original), winConditions: ["slaughter_side" as any] };
   expect(() => bootstrapGame(config)).toThrow("role_win_condition_not_supported");
 });
+
 test("seeded N+2 dealing does not ensure Shapeshifter or gods in play, immutable original deal survives swaps", async () => {
   let shapeshifterBottom = 0,
     seerBottom = 0;
@@ -180,6 +161,7 @@ test("seeded N+2 dealing does not ensure Shapeshifter or gods in play, immutable
   expect(initialShapeshifterDeal(g.world)).toEqual(before);
   expect(actor(g).role).toBe(Role.Seer);
 });
+
 test("Shapeshifter in reserve has no actor or request and closes setup before native night", async () => {
   const g = fixture([
     Role.Wolf,
@@ -202,6 +184,7 @@ test("Shapeshifter in reserve has no actor or request and closes setup before na
   expect(shapeshifterSetupReady(g.world)).toBe(true);
   expect(projectShapeshifterSetup(g.world)?.selection).toBeNull();
 });
+
 for (const slot of [0, 1] as const)
   test(`both Wolf requires slot ${slot}, installs a real Wolf and conserves physical cards`, async () => {
     const g = fixture([
@@ -242,6 +225,7 @@ for (const slot of [0, 1] as const)
       Array.from({ length: 8 }, (_, i) => `deal:${i}`),
     );
   });
+
 for (const action of [
   null,
   { name: "choose_shapeshifter_card", args: { slot: null } },
@@ -267,6 +251,7 @@ for (const action of [
     expect(hasActiveShapeshifterSetup(g.world)).toBe(false);
     await expect(run(g, async () => choose(0))).rejects.toThrow("shapeshifter_setup_unavailable");
   });
+
 for (const cards of [
   [
     Role.Shapeshifter,
@@ -465,6 +450,7 @@ for (const [label, mutate] of [
     expect(shapeshifterSetupStatus(g.world)).toBe("cancelled");
     expect(hasActiveShapeshifterSetup(g.world)).toBe(false);
   });
+
 test("pre-request removal of Shapeshifter is revoked rather than mistaken for a bottom-card Shapeshifter", async () => {
   const g = fixture();
   actor(g).role = Role.Villager;
@@ -478,6 +464,7 @@ test("pre-request removal of Shapeshifter is revoked rather than mistaken for a 
   expect(calls).toBe(0);
   expect(shapeshifterSetupStatus(g.world)).toBe("cancelled");
 });
+
 test("phase withdrawal after await produces no change or late private fact", async () => {
   const g = fixture();
   let current = true;
@@ -494,6 +481,7 @@ test("phase withdrawal after await produces no change or late private fact", asy
   expect(actor(g).role).toBe(Role.Shapeshifter);
   expect(g.events).toEqual([]);
 });
+
 test("provider exception survives frozen status cleanup and final authority release", async () => {
   const g = fixture(),
     error = new TypeError("original");
@@ -511,6 +499,7 @@ test("provider exception survives frozen status cleanup and final authority rele
   expect(shapeshifterSetupStatus(g.world)).toBe("failed");
   expect(g.events).toEqual([]);
 });
+
 test("pending NightPipeline and reentrant PhaseManager/Window cannot bypass setup", async () => {
   const g = fixture();
   await run(g, async () => {
@@ -525,6 +514,7 @@ test("pending NightPipeline and reentrant PhaseManager/Window cannot bypass setu
     return choose(0);
   });
 });
+
 test("factory request capability is World-bound and survives only deadline-only derivation", async () => {
   const first = fixture(),
     second = fixture();
@@ -559,6 +549,7 @@ test("factory request capability is World-bound and survives only deadline-only 
     return choose(0);
   });
 });
+
 test("malformed tool/args getters are never invoked by engine or actual reception", async () => {
   const g = fixture();
   let gets = 0;
@@ -585,6 +576,7 @@ test("malformed tool/args getters are never invoked by engine or actual receptio
   });
   expect(gets).toBe(0);
 });
+
 for (const selected of [
   Role.Wolf,
   Role.Seer,
@@ -653,49 +645,6 @@ for (const selected of [
     expect(own.at(-1)?.type).toBe("shapeshifter_identity_chosen");
     expect(other).toEqual([]);
   });
-test("first PM cycle enables chosen Wolf before pack chat, rejects ordinary-night reentry and never judges initial zero wolves", async () => {
-  const g = fixture([
-    Role.Shapeshifter,
-    Role.Seer,
-    Role.Witch,
-    Role.Hunter,
-    Role.Villager,
-    Role.Villager,
-    Role.Wolf,
-    Role.Wolf,
-  ]);
-  const seen: ActionRequest[] = [];
-  const snapshot = await g.phaseManager.runSingleCycle({
-    async getAction(r) {
-      seen.push(r);
-      if (r.context.stage === "shapeshifter") return choose(1);
-      if (r.allowedTools.includes("speak_to_wolves")) {
-        expect(actor(g).role).toBe(Role.Wolf);
-        await expect(
-          g.phaseManager.runSingleCycle({
-            async getAction() {
-              return null;
-            },
-          }),
-        ).rejects.toThrow("shapeshifter_setup_reentry");
-        return { name: "speak_to_wolves", args: { text: "End", end_chat: true } };
-      }
-      if (r.allowedTools.includes("kill_vote"))
-        return { name: "kill_vote", args: { target_id: null, abstain: true } };
-      if (r.allowedTools.includes("check_identity"))
-        return { name: "check_identity", args: { target_id: 1 } };
-      if (r.allowedTools.includes("use_potion"))
-        return { name: "use_potion", args: { target_id: r.actorId, potion_type: PotionType.None } };
-      if (r.allowedTools.includes("speak")) return { name: "speak", args: { text: "Raw" } };
-      if (r.allowedTools.includes("vote"))
-        return { name: "vote", args: { target_id: null, abstain: true } };
-      throw new Error(`unexpected:${r.context.stage}`);
-    },
-  });
-  expect(seen[0]?.context.stage).toBe("shapeshifter");
-  expect(seen.filter((r) => r.context.stage === "shapeshifter")).toHaveLength(1);
-  expect(snapshot).toMatchObject({ day: 2, phase: Phase.Voting, gameOver: false });
-});
 
 test("completed stock projection rejects swapped original owner cards and swapped reserve slots", async () => {
   for (const where of ["hands", "reserve"] as const) {
@@ -713,6 +662,7 @@ test("completed stock projection rejects swapped original owner cards and swappe
     expect(initialShapeshifterDeal(g.world)).toEqual(deal);
   }
 });
+
 test("ordinary N-card deal preserves prior seeded RNG path and has no Shapeshifter stock", () => {
   const config = foxBoard([
       Role.Wolf,
@@ -732,214 +682,4 @@ test("ordinary N-card deal preserves prior seeded RNG path and has no Shapeshift
   ).toEqual(expected);
   expect(initialShapeshifterDeal(g.world)).toBeUndefined();
   expect(projectShapeshifterSetup(g.world)).toBeUndefined();
-});
-test("real Day/Voting recursive PM is rejected before phase/event mutation; later actual night never reopens choice", async () => {
-  const scenario = shapeshifterScenario("seer"),
-    g = bootstrapGame(scenario.board.config, { fixedRoles: scenario.initialDeal }),
-    queues = new Map([...scenario.turns].map(([id, turns]) => [id, [...turns]]));
-  let blocked = 0;
-  const snapshot = await g.phaseManager.runUntilGameOver(
-    {
-      async getAction(r) {
-        const next = queues.get(r.actorId)!.shift()!;
-        expect(next.stage).toBe(r.context.stage);
-        expect(next.day).toBe(r.context.day);
-        if (["day_speech", "voting"].includes(r.context.stage)) {
-          const before = g.phaseManager.getSnapshot(),
-            length = g.phaseManager.getEvents().length;
-          await expect(
-            g.phaseManager.runSingleCycle({
-              async getAction() {
-                throw new Error("unexpected_reentrant_request");
-              },
-            }),
-          ).rejects.toThrow("shapeshifter_cycle_reentry_after_night");
-          expect(g.phaseManager.getSnapshot()).toEqual(before);
-          expect(g.phaseManager.getEvents()).toHaveLength(length);
-          blocked++;
-        }
-        return next.action;
-      },
-    },
-    10,
-  );
-  expect(snapshot.gameOver).toBe(true);
-  expect(blocked).toBeGreaterThan(0);
-  expect([...queues.values()].every((q) => q.length === 0)).toBe(true);
-  expect(
-    g.phaseManager.getEvents().filter((e) => e.type === "shapeshifter_identity_chosen"),
-  ).toHaveLength(1);
-});
-
-for (const transport of ["sdk", "acp"] as const)
-  for (const locale of ["zh-CN", "en"] as const)
-    for (const failure of ["invalid", "missing"] as const)
-      test(`${transport}/${locale}/${failure}: real strict provider failure closes Shapeshifter without fallback or card swap, exact partial Tape`, async () => {
-        const scenario = shapeshifterScenario("both0", 6, locale),
-          root = await createTestTempDirectory("awa-shapeshifter-failure-"),
-          output = await createTestTempDirectory("awa-shapeshifter-failure-replay-");
-        const runtime = parseRuntimeConfig({
-          providers: {
-            default: "synthetic",
-            items: { synthetic: { type: "openai", apiKey: "synthetic-only" } },
-          },
-          agents: {
-            default: "synthetic",
-            items: { synthetic: { kind: "llm", provider: "synthetic", model: "synthetic" } },
-          },
-          game: { board: scenario.board.definition.id, seed: scenario.seed, locale },
-          debugSummary: { agent: { enabled: false } },
-        });
-        const setup = resolveGameSetup(
-          runtime,
-          {
-            recordRootDir: root,
-            maxDays: 8,
-            maxRuntimeMs: 10000,
-            streamEvents: false,
-            printThinking: false,
-            color: false,
-          },
-          scenario.board,
-        );
-        let fallbackCalls = 0,
-          nativeCalls = 0;
-        const create = spyOn(runtimeFactory, "createPlayerAgentRuntime").mockImplementation(
-          async (options) => {
-            const fallbackProvider = {
-                async getAction() {
-                  fallbackCalls++;
-                  return null;
-                },
-              },
-              client: any = {
-                async chat() {
-                  throw new Error("unexpected_chat");
-                },
-                async runToolLoop(_m: any, _t: any, callbacks: any) {
-                  if (failure === "invalid")
-                    for (let i = 0; i < 3; i++)
-                      await callbacks.onToolCall({
-                        name: "submit_action",
-                        args: {
-                          turn_id: "t1",
-                          action: "choose_shapeshifter_card",
-                          arguments: { slot: 2 },
-                        },
-                      });
-                  return { finalAction: null, assistantText: "End" };
-                },
-              };
-            const provider =
-              transport === "sdk"
-                ? new LlmActionProvider(options.world, client, {
-                    boardConfig: options.boardConfig,
-                    fallbackProvider,
-                  })
-                : new AcpActionProvider(options.world, {
-                    boardConfig: options.boardConfig,
-                    fallbackProvider,
-                    sessionFactory: {
-                      async createSession(input) {
-                        return {
-                          sessionId: "shapeshifter-failure",
-                          async prompt() {
-                            if (failure === "invalid")
-                              for (let i = 0; i < 3; i++)
-                                input.registry.submitAction("shapeshifter-failure", {
-                                  turn_id: "t1",
-                                  action: "choose_shapeshifter_card",
-                                  arguments: { slot: 2 },
-                                });
-                          },
-                          async cancel() {},
-                          async close() {},
-                        };
-                      },
-                    },
-                  });
-            let closed = false;
-            return {
-              kind: transport === "sdk" ? "llm" : "acp",
-              provider: {
-                getAction(r) {
-                  if (r.context.stage !== "shapeshifter") {
-                    nativeCalls++;
-                    throw new Error("native_before_failed_setup");
-                  }
-                  return provider.getAction(r);
-                },
-              },
-              get runtimeState() {
-                return { closed };
-              },
-              async close() {
-                closed = true;
-                await provider.close();
-              },
-            };
-          },
-        );
-        try {
-          await expect(runGame(setup)).rejects.toThrow();
-          expect(fallbackCalls).toBe(0);
-          expect(nativeCalls).toBe(0);
-          const directory = path.join(
-              root,
-              (await fs.readdir(root)).find((n) => n.startsWith("session_"))!,
-            ),
-            record = await readReproduction(path.join(directory, "reproduction.json")),
-            decision = record.decisions.find((d) => d.stage === "shapeshifter")!;
-          expect(decision.request.context.turn_constraints.min_valid_actions).toBe(1);
-          expect(decision.request.context.allow_fallback).toBe(false);
-          expect(decision.outcome).toMatchObject({ kind: "error", code: "decision_failed" });
-          expect(record.checkpoints.at(-1)!.complete).toBe(false);
-          expect(record.checkpoints.at(-1)!.shapeshifterSetup).toMatchObject({
-            status: "failed",
-            selection: null,
-          });
-          expect(record.checkpoints.at(-1)!.shapeshifterSetup!.hands).toEqual(
-            record.checkpoints[0]!.shapeshifterSetup!.hands,
-          );
-          expect(record.checkpoints.at(-1)!.shapeshifterSetup!.reserve).toEqual(
-            record.checkpoints[0]!.shapeshifterSetup!.reserve,
-          );
-          expect(record.events.some((e) => e.type === "shapeshifter_identity_chosen")).toBe(false);
-          expect((await replayReproduction(record, output)).snapshot).toEqual(
-            record.checkpoints.at(-1)!.snapshot,
-          );
-          if (failure === "invalid") {
-            const view = await fs.readFile(
-              path.join(directory, `players/player_${scenario.actorId}.json`),
-              "utf8",
-            );
-            expect(view).toContain("turn_invalid_action_limit");
-            expect(view).not.toContain("transport_error");
-          }
-        } finally {
-          create.mockRestore();
-        }
-      }, 10000);
-
-test("public six/twelve Shapeshifter examples roundtrip N role parameters and execute actual N+2 initialization", async () => {
-  for (const size of [6, 12]) {
-    const raw = JSON.parse(
-        await fs.readFile(
-          path.resolve(
-            process.cwd(),
-            `../configs.example/boards/awa_netease_shapeshifter_${size}_v1.json`,
-          ),
-          "utf8",
-        ),
-      ),
-      resolved = parseBoardDefinition(raw),
-      g = bootstrapGame(resolved.config, { random: createRandom(`shapeshifter-example:${size}`) });
-    expect(resolved.config.boardSize).toBe(size);
-    expect(resolved.config.roleSetups.reduce((n, row) => n + row.count, 0)).toBe(size);
-    expect(resolved.config.shapeshifter?.policy).toBe(
-      "awa_netease_shapeshifter_two_extra_villagers_v1",
-    );
-    expect(g.playerIds).toHaveLength(size);
-    expect(initialShapeshifterDeal(g.world)).toHaveLength(size + 2);
-  }
 });

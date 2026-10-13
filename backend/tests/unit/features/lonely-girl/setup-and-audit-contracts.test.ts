@@ -1,37 +1,20 @@
 /**
- * Tests verify Lonely Girl's mandatory model choice, independent membership and late revocation.
- * Inputs are original target/change/getter matrices and private-record replacements;
- * literal stock, notification, faction and error assertions remain the oracle.
- * Test-only container access preserves malformed inputs and ownership checks;
- * no production setter substitutes for the original fixture mutation.
+ * Unit tests for lonely girl setup. Inputs are original required choices, getter/revocation matrices and
+ * public board configuration. Original literal receipts, reference/getter/error traces, facts and expected
+ * state remain the oracle. Bounded setup window/request/late getters/camp ledger and literal checkpoint
+ * projection. Case12 only attempts entry while setup authority blocks NightPipeline/PM before a cycle, so
+ * it stays the same setup-contract owner. No complete game phase or paid model runs; existing local windows
+ * and denied entry probes remain bounded.
  */
 import { expect, test, spyOn } from "bun:test";
-import { bootstrapGame } from "../../../src/app/bootstrap";
-import {
-  Role,
-  Camp,
-  Phase,
-  COMPONENT,
-  WinCondition,
-  PotionType,
-  createRoleComponent,
-  createCampComponent,
-  createVictoryComponent,
-  createAliveComponent,
-  type BoardConfig,
-  type ActionRequest,
-  type ToolCall,
-  type GameEvent,
-  type RoleComponent,
-  type AliveComponent,
-  type VictoryComponent,
-} from "../../../src/core";
-import { foxBoard } from "../../support/cursed_fox_scenarios";
-import { LonelyGirlSetupWindow } from "../../../src/game/mechanisms/roles/lonely_girl/setup";
+import { bootstrapGame } from "../../../../src/app/bootstrap";
+import { Role, Camp, Phase, COMPONENT, WinCondition, createRoleComponent, createCampComponent, createVictoryComponent, createAliveComponent, type BoardConfig, type ActionRequest, type ToolCall, type GameEvent, type RoleComponent, type AliveComponent, type VictoryComponent } from "../../../../src/core";
+import { foxBoard } from "../../../support/cursed_fox_scenarios";
+import { LonelyGirlSetupWindow } from "../../../../src/game/mechanisms/roles/lonely_girl/setup";
 import {
   getLonelyGirlState,
   LONELY_GIRL_POLICY,
-} from "../../../src/game/mechanisms/roles/lonely_girl/state";
+} from "../../../../src/game/mechanisms/roles/lonely_girl/state";
 import {
   lonelyGirlBinding,
   lonelyGirlReady,
@@ -41,13 +24,13 @@ import {
   lonelyGirlRequestScope,
   inheritLonelyGirlDeadlineRequest,
   openLonelyGirlNight,
-} from "../../../src/game/mechanisms/roles/lonely_girl/lifecycle";
-import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
-import { ActionReception } from "../../../src/ai/agents/player/action_reception";
-import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { NightPipeline } from "../../../src/game/engine/phase_pipeline/night_pipeline";
-import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
-import { buildAgentVisibleEventFeed } from "../../../src/game/engine/agent_visible_event_feed";
+} from "../../../../src/game/mechanisms/roles/lonely_girl/lifecycle";
+import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
+import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
+import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
+import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
+import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
+import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import {
   readLonelyGirlEventFact,
   readLonelyGirlChoiceTool,
@@ -56,29 +39,36 @@ import {
 import {
   knownWolfTeammates,
   wolfTeamPermissions,
-} from "../../../src/game/mechanisms/roles/wolf_team";
+} from "../../../../src/game/mechanisms/roles/wolf_team";
 import {
   getDefaultRoleCatalog,
   getDefaultWinConditionRegistry,
-} from "../../../src/game/mechanisms";
-import { ConditionRegistry } from "../../../src/core/domain/registries/condition_registry";
+} from "../../../../src/game/mechanisms";
+import { ConditionRegistry } from "../../../../src/core/domain/registries/condition_registry";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
-} from "../../../src/runtime/config/board_definition";
-import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
+} from "../../../../src/runtime/config/board_definition";
+import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
+
 const deck = [Role.LonelyGirl, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Villager];
+
 function fixture(roles = deck, extra: Partial<BoardConfig> = {}) {
   const config = { ...foxBoard(roles), ...extra };
   return { ...bootstrapGame(config, { fixedRoles: roles }), config, events: [] as GameEvent[] };
 }
+
 type Fixture = ReturnType<typeof fixture>;
+
 const role = (g: Fixture, id = 1) => g.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+
 const victory = (g: Fixture) => g.world.getComponent<VictoryComponent>(1, COMPONENT.Victory)!;
+
 const choose = (target_id = 2): ToolCall => ({
   name: "choose_admired_player",
   args: { target_id },
 });
+
 const setup = (
   g: Fixture,
   body: (r: ActionRequest) => Promise<ToolCall | null> = async () => choose(),
@@ -91,67 +81,7 @@ const setup = (
     1,
     current,
   );
-for (const target of [2, 4, 6])
-  test(`true original target ${target}: own role/camp/stock unchanged and independent membership`, async () => {
-    const g = fixture(),
-      original = role(g),
-      originalLife = g.world.getComponent<AliveComponent>(1, COMPONENT.Alive);
-    expect(victory(g).affiliations).toEqual([]);
-    await setup(g, async (r) => {
-      expect(r.allowedTools).toEqual(["choose_admired_player"]);
-      expect(r.context.turn_constraints.min_valid_actions).toBe(1);
-      expect(r.context.turn_constraints.max_valid_actions).toBe(1);
-      expect(r.context.turn_constraints.required_any_tools).toEqual(["choose_admired_player"]);
-      expect(r.context.allow_fallback).toBe(false);
-      expect(r.context.action_failure_policy).toBe("error");
-      expect(lonelyGirlRequestScope(g.world, r)).toBe(lonelyGirlBinding(g.world));
-      return choose(target);
-    });
-    expect(role(g)).toBe(original);
-    expect(role(g).role).toBe(Role.LonelyGirl);
-    expect(role(g).camp).toBe(Camp.Good);
-    expect(g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)).toBe(originalLife);
-    expect(Object.keys(role(g).privateState)).toEqual(["lonelyGirl"]);
-    expect(getLonelyGirlState(role(g))).toEqual({
-      policy: LONELY_GIRL_POLICY,
-      remaining: 0,
-      choice: { day: 1, targetId: target },
-    });
-    expect(victory(g).affiliations).toEqual([
-      { kind: "faction", faction: target === 2 ? Camp.Wolf : Camp.Good },
-    ]);
-    expect(projectLonelyGirlSetup(g.world)).toEqual({
-      policy: LONELY_GIRL_POLICY,
-      actorId: 1,
-      status: "complete",
-    });
-    expect(lonelyGirlReady(g.world)).toBe(true);
-    expect(knownWolfTeammates(g.world, 1, getDefaultRoleCatalog())).toEqual([]);
-    expect(wolfTeamPermissions(role(g), getDefaultRoleCatalog(), g.world).canVoteForKill).toBe(
-      false,
-    );
-  });
-for (const raw of [
-  null,
-  choose(1),
-  choose(99),
-  { name: "choose_admired_player", args: { target_id: null } },
-  { name: "choose_admired_player", args: { target_id: "2" } },
-  { name: "choose_admired_player", args: { target_id: true } },
-  { name: "choose_admired_player", args: { target_id: 2, extra: 1 } },
-  { name: "choose_exemplar", args: { target_id: 2 } },
-])
-  test(`mandatory invalid choice ${JSON.stringify(raw)} closes no membership/fallback`, async () => {
-    const g = fixture();
-    await expect(setup(g, async () => raw as ToolCall | null)).rejects.toThrow();
-    expect(projectLonelyGirlSetup(g.world)?.status).toBe("failed");
-    expect(getLonelyGirlState(role(g))?.remaining).toBe(0);
-    expect(victory(g).affiliations).toEqual([]);
-    expect(g.events).toEqual([]);
-    expect(hasActiveLonelyGirl(g.world)).toBe(false);
-    expect(lonelyGirlReady(g.world)).toBe(false);
-    await expect(setup(g)).rejects.toThrow();
-  });
+
 const changes: { name: string; apply: (g: Fixture) => void }[] = [
   {
     name: "actor life",
@@ -266,6 +196,70 @@ const changes: { name: string; apply: (g: Fixture) => void }[] = [
     apply: (g) => g.world.addComponent(3, COMPONENT.Camp, createCampComponent(Camp.Wolf)),
   },
 ];
+
+for (const target of [2, 4, 6])
+  test(`true original target ${target}: own role/camp/stock unchanged and independent membership`, async () => {
+    const g = fixture(),
+      original = role(g),
+      originalLife = g.world.getComponent<AliveComponent>(1, COMPONENT.Alive);
+    expect(victory(g).affiliations).toEqual([]);
+    await setup(g, async (r) => {
+      expect(r.allowedTools).toEqual(["choose_admired_player"]);
+      expect(r.context.turn_constraints.min_valid_actions).toBe(1);
+      expect(r.context.turn_constraints.max_valid_actions).toBe(1);
+      expect(r.context.turn_constraints.required_any_tools).toEqual(["choose_admired_player"]);
+      expect(r.context.allow_fallback).toBe(false);
+      expect(r.context.action_failure_policy).toBe("error");
+      expect(lonelyGirlRequestScope(g.world, r)).toBe(lonelyGirlBinding(g.world));
+      return choose(target);
+    });
+    expect(role(g)).toBe(original);
+    expect(role(g).role).toBe(Role.LonelyGirl);
+    expect(role(g).camp).toBe(Camp.Good);
+    expect(g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)).toBe(originalLife);
+    expect(Object.keys(role(g).privateState)).toEqual(["lonelyGirl"]);
+    expect(getLonelyGirlState(role(g))).toEqual({
+      policy: LONELY_GIRL_POLICY,
+      remaining: 0,
+      choice: { day: 1, targetId: target },
+    });
+    expect(victory(g).affiliations).toEqual([
+      { kind: "faction", faction: target === 2 ? Camp.Wolf : Camp.Good },
+    ]);
+    expect(projectLonelyGirlSetup(g.world)).toEqual({
+      policy: LONELY_GIRL_POLICY,
+      actorId: 1,
+      status: "complete",
+    });
+    expect(lonelyGirlReady(g.world)).toBe(true);
+    expect(knownWolfTeammates(g.world, 1, getDefaultRoleCatalog())).toEqual([]);
+    expect(wolfTeamPermissions(role(g), getDefaultRoleCatalog(), g.world).canVoteForKill).toBe(
+      false,
+    );
+  });
+
+for (const raw of [
+  null,
+  choose(1),
+  choose(99),
+  { name: "choose_admired_player", args: { target_id: null } },
+  { name: "choose_admired_player", args: { target_id: "2" } },
+  { name: "choose_admired_player", args: { target_id: true } },
+  { name: "choose_admired_player", args: { target_id: 2, extra: 1 } },
+  { name: "choose_exemplar", args: { target_id: 2 } },
+])
+  test(`mandatory invalid choice ${JSON.stringify(raw)} closes no membership/fallback`, async () => {
+    const g = fixture();
+    await expect(setup(g, async () => raw as ToolCall | null)).rejects.toThrow();
+    expect(projectLonelyGirlSetup(g.world)?.status).toBe("failed");
+    expect(getLonelyGirlState(role(g))?.remaining).toBe(0);
+    expect(victory(g).affiliations).toEqual([]);
+    expect(g.events).toEqual([]);
+    expect(hasActiveLonelyGirl(g.world)).toBe(false);
+    expect(lonelyGirlReady(g.world)).toBe(false);
+    await expect(setup(g)).rejects.toThrow();
+  });
+
 for (const change of changes)
   test(`late ${change.name}: cancel with no fact or new state consumption`, async () => {
     const g = fixture(),
@@ -285,6 +279,7 @@ for (const change of changes)
     if (change.name === "actor replacement state")
       expect(getLonelyGirlState(role(g))?.remaining).toBe(1);
   });
+
 for (const [id, field] of [
   [1, "role"],
   [1, "privateState"],
@@ -310,6 +305,7 @@ for (const [id, field] of [
     expect(reads).toBe(0);
     expect(g.events).toEqual([]);
   });
+
 for (const field of ["policy", "remaining", "choice"] as const)
   test(`late owned state ${field} getter zero with authoritative failure projection`, async () => {
     const g = fixture();
@@ -346,6 +342,7 @@ for (const field of ["policy", "remaining", "choice"] as const)
     expect(cp.players[0]?.victory.affiliations).toEqual([]);
     expect(reads).toBe(0);
   });
+
 test("original target Camp replacement before setup cancels before factory/provider", async () => {
   const g = fixture();
   g.world.addComponent(2, COMPONENT.Camp, createCampComponent(Camp.Wolf));
@@ -359,6 +356,7 @@ test("original target Camp replacement before setup cancels before factory/provi
   expect(calls).toBe(0);
   expect(projectLonelyGirlSetup(g.world)?.status).toBe("cancelled");
 });
+
 test("post-gateway cancellation cannot install affiliation", async () => {
   const g = fixture(),
     gateway = new ToolGateway(),
@@ -383,6 +381,7 @@ test("post-gateway cancellation cannot install affiliation", async () => {
     spy.mockRestore();
   }
 });
+
 test("factory-side revocation is checked before provider", async () => {
   const g = fixture(),
     original = GameActionRequestFactory.prototype.create;
@@ -408,6 +407,7 @@ test("factory-side revocation is checked before provider", async () => {
     spy.mockRestore();
   }
 });
+
 test("opaque request only trusted deadline clone and original context", async () => {
   const g = fixture();
   await setup(g, async (r) => {
@@ -424,6 +424,7 @@ test("opaque request only trusted deadline clone and original context", async ()
     return choose();
   });
 });
+
 test("cross World request does not gain authority", async () => {
   const a = fixture(),
     b = fixture();
@@ -450,6 +451,7 @@ test("cross World request does not gain authority", async () => {
   release();
   await running;
 });
+
 test("Girl state/fact never reveals target camp to actor or other seats", async () => {
   const g = fixture();
   await setup(g);
@@ -471,6 +473,7 @@ test("Girl state/fact never reveals target camp to actor or other seats", async 
   expect(projectLonelyGirl(g.world, role(g))).not.toHaveProperty("camp");
   expect(readLonelyGirlEventFact(g.events[0]!.type, g.events[0]!.payload)?.camp).toBe(Camp.Wolf);
 });
+
 test("Girl membership survives both deaths and target future change; City still counts real Good Girl", async () => {
   const g = fixture();
   await setup(g);
@@ -488,6 +491,7 @@ test("Girl membership survives both deaths and target future change; City still 
   expect(projectLonelyGirl(g.world, role(g))?.choice).toEqual({ day: 1, targetId: 2 });
   expect(victory(g).affiliations).toEqual([{ kind: "faction", faction: Camp.Wolf }]);
 });
+
 test("pending/active/closed setup and ordinary Night cannot be bypassed; reentry leaves PM events untouched", async () => {
   const g = fixture(),
     pipeline = new NightPipeline({
@@ -527,6 +531,7 @@ test("pending/active/closed setup and ordinary Night cannot be bypassed; reentry
   openLonelyGirlNight(g.world, 1)();
   expect(() => openLonelyGirlNight(g.world, 1)).toThrow();
 });
+
 test("provider exception and late phase cancellation close original resources", async () => {
   const a = fixture();
   const error = new Error("strict_failure");
@@ -551,6 +556,7 @@ test("provider exception and late phase cancellation close original resources", 
   expect(projectLonelyGirlSetup(b.world)?.status).toBe("cancelled");
   expect(b.events).toEqual([]);
 });
+
 test("finite config roundtrip requires City/basic/singleton/nonempty factions and normal N", () => {
   const g = fixture(),
     def = boardDefinitionFromConfig("girl", g.config);
@@ -567,6 +573,7 @@ test("finite config roundtrip requires City/basic/singleton/nonempty factions an
   expect(() => fixture(deck, { winConditions: [WinCondition.WolfReachHalf] })).toThrow();
   expect(() => fixture(deck, { events: { pack: "awa_wall_notes_once_v1" } })).toThrow();
 });
+
 test("shared strict full/lean readers reject extra fields/getters and never need live state", () => {
   const full = {
       policy: LONELY_GIRL_POLICY,
@@ -629,6 +636,7 @@ for (const change of ["mutation", "getter"] as const)
     expect(cp.players[0]!.victory.affiliations).toEqual([{ kind: "faction", faction: Camp.Wolf }]);
     expect(reads).toBe(0);
   });
+
 for (const change of ["role_getter", "replaced_state_getter", "target_getter"] as const)
   test(`failed ${change}: safe original audit snapshot invokes no foreign getter`, async () => {
     const g = fixture();
@@ -684,47 +692,6 @@ for (const change of ["role_getter", "replaced_state_getter", "target_getter"] a
     expect(cp.players[1]!.camp).toBe(Camp.Wolf);
     expect(reads).toBe(0);
   });
-test("actual first-night Day/Voting jumpTo and recursive cycles reject before phase/events; later night does not reopen", async () => {
-  const g = fixture();
-  let blocked = 0,
-    choices = 0;
-  const provider = {
-    async getAction(r: ActionRequest): Promise<ToolCall | null> {
-      if (r.context.stage === "lonely_girl") {
-        choices++;
-        return choose();
-      }
-      if (r.context.stage === "wolf_discussion")
-        return { name: "speak_to_wolves", args: { text: "End", end_chat: true } };
-      if (r.context.stage === "wolf_vote")
-        return { name: "kill_vote", args: { target_id: null, abstain: true } };
-      if (r.context.stage === "seer") return { name: "check_identity", args: { target_id: 1 } };
-      if (r.context.stage === "witch")
-        return { name: "use_potion", args: { target_id: r.actorId, potion_type: PotionType.None } };
-      if (["day_speech", "voting"].includes(r.context.stage)) {
-        const before = g.phaseManager.getSnapshot(),
-          count = g.phaseManager.getEvents().length;
-        for (const phase of [Phase.Night, Phase.Day, Phase.Voting])
-          expect(() => g.phaseManager.jumpTo(phase)).toThrow("lonely_girl_phase_reentry");
-        await expect(g.phaseManager.runSingleCycle(provider)).rejects.toThrow(
-          "lonely_girl_cycle_reentry",
-        );
-        expect(g.phaseManager.getSnapshot()).toEqual(before);
-        expect(g.phaseManager.getEvents()).toHaveLength(count);
-        blocked++;
-        return r.context.stage === "day_speech"
-          ? { name: "speak", args: { text: "Raw" } }
-          : { name: "vote", args: { target_id: null, abstain: true } };
-      }
-      return null;
-    },
-  };
-  await g.phaseManager.runSingleCycle(provider);
-  await g.phaseManager.runSingleCycle(provider);
-  expect(choices).toBe(1);
-  expect(blocked).toBe(24);
-  expect(g.phaseManager.getSnapshot().day).toBe(3);
-});
 
 for (const status of ["cancelled", "failed"] as const)
   test(`closed ${status} cannot be rewritten by repeated setup`, async () => {
@@ -748,18 +715,4 @@ for (const status of ["cancelled", "failed"] as const)
     expect(projectLonelyGirlSetup(g.world)?.status).toBe(status);
     expect(captureCheckpoint(g.world, g.phaseManager.getSnapshot(), 0, false, 0)).toEqual(before);
     expect(g.events).toEqual([]);
-  });
-for (const size of [6, 12])
-  test(`public ${size}-seat sample parses and initializes the exact normal-N setup`, async () => {
-    const json = await Bun.file(
-      new URL(
-        `../../../../configs.example/boards/awa_netease_lonely_girl_${size}_v1.json`,
-        import.meta.url,
-      ),
-    ).json();
-    const { config } = parseBoardDefinition(json);
-    expect(config.lonelyGirl?.policy).toBe(LONELY_GIRL_POLICY);
-    const g = bootstrapGame(config);
-    expect(g.world.entityIds()).toHaveLength(size);
-    expect(projectLonelyGirlSetup(g.world)?.status).toBe("pending");
   });
