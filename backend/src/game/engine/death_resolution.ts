@@ -65,7 +65,7 @@ import type { LastWordsGrantContext } from "../mechanisms/last_words/last_words_
 import { resolveSheriffBadge } from "../mechanisms/sheriff/badge_choice";
 import { GameActionRequestFactory } from "./action_request_factory";
 import { EventRegistry } from "./event_registry";
-import type { DreamNightFrame } from "../mechanisms/roles/dreamer/night_frame";
+import type { DreamNightEffects } from "../../core/domain/dream-night-effects";
 import {
   attemptCharmTrigger,
   commitCharmDeath,
@@ -173,7 +173,7 @@ export class DeathResolution {
     lastWordsPhase: Phase,
     deathPhases: Readonly<Record<EntityId, Phase>> = {},
     nightEffects?: {
-      dreams?: DreamNightFrame;
+      dreams?: DreamNightEffects;
       blocksPassiveNightShot?: (targetId: EntityId) => boolean;
       nightOriginIds?: readonly EntityId[];
       isCurrent?: () => boolean;

@@ -1,3 +1,10 @@
+/**
+ * 负责一夜摄梦关系的原生命查询、保护及追加死亡闭包。输入为原 links、已付庇护和当前性回调，
+ * 输出为目标、伤害扩展及事件；同一实例唯一持有 reasons／emitted，不复制关系或重新支付效果。
+ * 运行接口区分查询和更新：连续／关联推导累计原因，expand 写调用方伤害，record 写去重与 events。
+ * 原组件引用、回调和接收方保持，句柄不进入玩家知识或录制；本模块不标死、授予请求或推进阶段。
+ */
+import type { DreamNightEffects } from "../../../../core/domain/dream-night-effects";
 import { AliveComponent, aliveLifeVersion } from "../../../../core/domain/components/alive";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { DeathCause, type EntityId, type GameEvent } from "../../../../core/domain/model";
@@ -29,8 +36,8 @@ export function hasDreamNightCommit(world: World, day: number): boolean {
   return committedNights.get(world)?.has(day) === true;
 }
 
-/** One night's private effects. Component references never enter player state or recordings. */
-export class DreamNightFrame {
+/** 一夜效果保持同一运行实例；接口不把私有原因、去重或原生命结构变成 JSON 数据。 */
+export class DreamNightFrame implements DreamNightEffects {
   private readonly reasons = new Map<EntityId, DreamReason[]>();
   private readonly emitted = new Set<string>();
   private readonly shelters: readonly NightImmunityClaim[];
@@ -38,7 +45,7 @@ export class DreamNightFrame {
     private readonly links: readonly DreamNightLink[],
     shelters: readonly NightImmunityClaim[] = [],
   ) {
-    // Capture target bindings; the original owner can still revoke its paid claim.
+    // 在原构造点捕获庇护目标；回调绑定原 claim 接收方，已付 owner 仍可在后续查询撤权。
     this.shelters = shelters.map((claim) => ({
       target: { id: claim.target.id, life: claim.target.life, version: claim.target.version },
       isCurrent: claim.isCurrent.bind(claim),
@@ -122,6 +129,7 @@ export class DreamNightFrame {
   }
 
   consecutiveDeaths(world: World): EntityId[] {
+    // 累计原因但不标死；后续 record 仍使用这一实例，不能另造 frame 丢失已发生前缀。
     const deaths = new Set<EntityId>();
     for (const link of this.links)
       if (
@@ -160,6 +168,7 @@ export class DreamNightFrame {
     eligibleDead: ReadonlySet<EntityId> = new Set(),
   ): EntityId[] {
     const deaths = new Set(nightDeaths),
+      // 按原有限闭包顺序加入关联原因；允许本波已死亡的原目标，庇护和当前性仍现场查询。
       added = new Set<EntityId>();
     let changed = true;
     while (changed) {
@@ -194,6 +203,7 @@ export class DreamNightFrame {
       for (const fact of this.reasons.get(targetId) ?? []) {
         const key = `${fact.actorId}:${fact.abilityId ?? "native"}:${fact.targetId}:${fact.reason}`;
         if (this.emitted.has(key)) continue;
+        // 去重先于事件写入；push 失败保留原 emitted 前缀，不重发或回滚已记录身份。
         this.emitted.add(key);
         events.push({ timestamp: Date.now(), type: "dream_death", payload: { ...fact } });
       }

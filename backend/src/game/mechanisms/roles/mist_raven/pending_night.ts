@@ -14,7 +14,7 @@ import { DeathCause } from "../../../../core/domain/deaths";
 import type { World } from "../../../../core/domain/world";
 import { attachDamagePoisonEvidence, damagePoisonRoutes } from "../../../../core/domain/damage-evidence";
 import type { DamageResolutionResult } from "../../../../core/domain/systems/damage_resolution_system";
-import type { DreamNightFrame } from "../dreamer/night_frame";
+import type { DreamNightEffects } from "../../../../core/domain/dream-night-effects";
 
 type PendingStatus = "pending" | "committing" | "committed" | "aborted";
 interface OriginalLife {
@@ -63,7 +63,7 @@ export class MistPendingNight {
     readonly day: number,
     readonly wolfTarget: number | null,
     directDamage: DamageResolutionResult,
-    private readonly dreams: DreamNightFrame,
+    private readonly dreams: DreamNightEffects,
   ) {
     if (!Number.isSafeInteger(day) || day < 1 || day >= Number.MAX_SAFE_INTEGER)
       throw new Error("mist_pending_night_invalid");
@@ -110,7 +110,7 @@ export class MistPendingNight {
     );
   }
 
-  /** The original knife remains knowable even when it was protected or publicly died by blast. */
+  /** 原刀口受保护或公开自爆死亡后仍保留原可知范围，不据当前角色重建刀源。 */
   snakeTargets(actorId: number): number[] {
     return this.wolfTarget !== null &&
       this.livingOriginal(this.wolfTarget) &&
@@ -119,7 +119,7 @@ export class MistPendingNight {
       : [];
   }
 
-  /** Claim synchronously before any badge, snake or other await, including the blast path. */
+  /** 包括自爆路径，均在警徽／蛇行动或其他 await 前同步领取这次延期，不能重入。 */
   claim(isCurrent: () => boolean): void {
     if (this.currentStatus !== "pending") throw new Error("mist_pending_night_reentry");
     this.currentStatus = "committing";

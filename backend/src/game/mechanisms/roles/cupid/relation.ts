@@ -1,3 +1,8 @@
+/**
+ * 负责恋人原生命绑定、已授权关系查询及殉情死亡闭包。输入为原 World、关系记录、死因与梦效果句柄；
+ * 输出为仍当前的关系、追加死因和逐关联去重的事件，bindings 唯一持有关系及 emitted 前缀。
+ * 殉情保原独立根／来源规则，梦关系通过运行接口在原时点参与闭包；不复制效果、不标死或判胜。
+ */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { aliveLifeVersion } from "../../../../core/domain/components/alive";
 import type { LoversComponent } from "../../../../core/domain/components/lovers";
@@ -9,7 +14,7 @@ import {
   type EntityId,
   type GameEvent,
 } from "../../../../core/domain/model";
-import type { DreamNightFrame } from "../dreamer/night_frame";
+import type { DreamNightEffects } from "../../../../core/domain/dream-night-effects";
 
 interface Binding {
   record: LoversComponent;
@@ -71,9 +76,8 @@ export function prohibitsLoversVote(world: World, actor: EntityId, target: Entit
     actor !== target
   );
 }
-/** Expand each external cause wave before any gun/last-word/death hook. Cupid-derived
- * heartbreak never becomes an independent seed that suppresses the original root.
- * Paid Dreamer night links may add new independent seeds; closure is finite by IDs/causes. */
+/** 在枪／遗言／死亡钩子前展开外部死因波；殉情不作为独立根去抑制原来源。
+ * 已付摄梦关系可追加独立根，闭包仍以原 ID／死因为界；运行梦接口不复制或重新支付效果。 */
 export function expandLoversWave(
   world: World,
   ids: EntityId[],
@@ -81,7 +85,7 @@ export function expandLoversWave(
   events: GameEvent[],
   nightOrigin: Set<EntityId>,
   eligibleDead: ReadonlySet<EntityId>,
-  dreams?: DreamNightFrame,
+  dreams?: DreamNightEffects,
 ): EntityId[] {
   if (!loversRecord(world)) return [];
   const before = new Set(ids),

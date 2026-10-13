@@ -9,6 +9,7 @@
  * intent 元数据不进入夜间摘要、事件或 schema2，旧注入 claim 保持兼容。
  * 晚交接保留真实单位的 owned 状态和原失败前缀，result 与最终伤害仍在原已付效果之后准备。
  * 已提交重入准入交有限规则组合，在原婚约开夜之后检查；拒绝不撤销原已付效果，原 finally 仍收尾。
+ * 明辉／梦及增益的伤害输入组合归规则集；本流水线保原检查点，运行梦句柄不进入摘要或归档。
  */
 import { attachNightUnit } from "../../../core/domain/night-unit";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
@@ -20,7 +21,7 @@ import { bindNightAbilityActorQuery } from "../../mechanisms/roles/night-ability
 import { isFragrantPairBoard, fragrantAuthoritySnapshot } from "../../mechanisms/roles/fragrant_pair_seer/ports";
 import { createNobleNightAbortReceiver, attachNobleNightReceiver, checkpointNobleBodyAuthority, assertNobleBodyRosterCurrent, isNobleBodyBoard } from "../../mechanisms/roles/noble_secret_body/ports";
 import { animalAuthoritySnapshot } from "../../mechanisms/roles/animal_dream/ports";
-import { isRadiantEclipseBoard, assertRadiantRosterCurrent, sealRadiantNightEffects } from "../../mechanisms/roles/radiant_eclipse/ports";
+import { isRadiantEclipseBoard, assertRadiantRosterCurrent } from "../../mechanisms/roles/radiant_eclipse/ports";
 import { isScholarMentorBoard, assertScholarMentorRosterCurrent } from "../../mechanisms/roles/scholar_mentor/ports";
 import { mistKnifeTargets, isMistRavenBoard, assertMistRosterCurrent } from "../../mechanisms/roles/mist_raven/ports";
 import { assertScholarMentorBonusEffects } from "../../mechanisms/roles/scholar_mentor/night_stages";
@@ -97,7 +98,8 @@ import { getSessionRecorder } from "../../../recording/recording_context";
 import { safeRecordLogicOp } from "../../../recording/session_recorder";
 import { GameActionRequestFactory } from "../action_request_factory";
 import { createRandom, shuffled, type RandomSource } from "../../../core/domain/random";
-import { DreamNightFrame } from "../../mechanisms/roles/dreamer/night_frame";
+import type { DreamNightEffects } from "../../../core/domain/dream-night-effects";
+import { composeNightDamage } from "../../../rulesets/night-damage-composition";
 import { discardStaleWolfKnife } from "../../mechanisms/roles/wolf/knife_scope";
 import { livingNightLife } from "../../../core/domain/night_effects";
 import { AliveComponent, aliveLifeVersion } from "../../../core/domain/components/alive";
@@ -123,7 +125,7 @@ export type NightPipelineResult =
       interrupted: false;
       summary: NightSummary;
       damage: DamageResolutionResult;
-      dreamFrame: DreamNightFrame;
+      dreamFrame: DreamNightEffects;
       mistDelay?: boolean;
       demonSources?: object;
       retaliationAttacks?: readonly import("../../../core/domain/night_effects").NightRetaliationAttack[];
@@ -396,28 +398,15 @@ export class NightPipeline {
               heal: statusMarkSnapshot(knifeScope.marks, StatusMark.HealMark)?.present === true,
             })
           : undefined;
-      const radiantEffects = ownsRadiant ? sealRadiantNightEffects(this.world, day) : undefined;
-      const dreamFrame = new DreamNightFrame(stageState.dreamLinks, radiantEffects?.shelters);
-      if (config.scholarMentor) assertScholarMentorBonusEffects(stageCtx);
-      const damage = this.damageResolutionSystem.resolve(this.world, {
-        intentNight: day,
-        radiantShelters: radiantEffects?.shelters,
-        radiantBacklashes: radiantEffects?.backlashes,
-        modifierDeaths: stageState.modifierDeaths,
-        protectedTargets: dreamFrame.protectedTargets(this.world),
-        immuneNightTargets: dreamFrame.immuneNightTargets(this.world),
-        consecutiveDeaths: dreamFrame.consecutiveDeaths(this.world),
-        poisonClaims: stageState.poisonClaims,
-        retaliationAttacks: stageState.retaliationAttacks,
-        nightImmunities: stageState.nightImmunities,
-        inspectionAttacks: stageState.inspectionAttacks,
-        foxInspections: stageState.foxInspections,
-        wolfImmuneTargets: this.getAliveByRole(Role.CursedFox),
-        guardClaims: stageState.guardClaims,
-        merchantBacklashes: stageState.merchantBacklashes,
-        blackMarketBacklashes: stageState.blackMarketBacklashes,
-        mechanicalEffects: stageState.mechanicalEffects,
-        awakenedEffects: stageState.awakenedEffects,
+      const { dreamFrame, damage } = composeNightDamage({
+        ownsRadiant: () => ownsRadiant,
+        world: () => this.world,
+        day: () => day,
+        claims: () => stageState,
+        config: () => config,
+        stageContext: () => stageCtx,
+        solver: () => this.damageResolutionSystem,
+        aliveByRole: (role) => this.getAliveByRole(role()),
       });
       if (ownsNoble) {
         const payload = {
