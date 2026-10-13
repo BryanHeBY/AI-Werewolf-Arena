@@ -1,10 +1,5 @@
 /**
- * Assembles Seer's native inspection policy, initialization, tools and stage contributions.
- * Inputs are board configuration and original runtime contexts; output is the profile
- * with the same gateway, prompt and production fallback behavior. Freshness reads use
- * the feature's public query owner; this assembly does not commit inspections or encode
- * checkpoints. The registered fallback retains its existing privileged World exception
- * until the separately tracked production-observation migration.
+ * 负责装配预言家的原生查验政策、初始化、工具与阶段贡献。输入为原板子参数、初始化组件、请求上下文与语言；输出保持既有 RoleProfile、提示和目标政策。状态引用和接受后的写入仍归具体机制 owner，本模块不创建第二仓库、授权 lease、执行伤害或编码归档。 注册的生产回退暂保留原特权 World 例外，观察输入迁移由 F01 独立实施。
  */
 import { scholarMentorBlocks } from "../scholar_mentor/night_frame";
 import { z } from "zod";
@@ -15,7 +10,8 @@ import {
 } from "../../../../core/domain/board";
 import { seerTargetAllowed } from "./ports";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
-import { roleName, text, term, inspectionLabel } from "@ai-werewolf-arena/game-text";
+import { roleName, text, term } from "@ai-werewolf-arena/game-text";
+import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 /** 文件说明：预言家角色 profile。 */
 import { Camp, Role, Phase } from "../../../../core/domain/model";
 import { RoleProfile } from "../contracts";

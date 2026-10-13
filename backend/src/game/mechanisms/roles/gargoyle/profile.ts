@@ -1,12 +1,9 @@
 /**
- * Assembles gargoyle wolf profile inheritance, role-inspection state, knife inheritance and inspection contributions.
- * Inputs are role initialization/configuration and existing runtime contexts; output is
- * a RoleProfile contribution. Native state access delegates to its owning feature leaf.
- * Existing validation, lifecycle and effect ordering remain their specific contributions;
- * This module does not own archive encoding or create a second state store.
+ * 负责装配石像鬼的身份查验、刀权继承与原生状态贡献。输入为原板子参数、初始化组件、请求上下文与语言；输出保持既有 RoleProfile、提示和目标政策。状态引用和接受后的写入仍归具体机制 owner，本模块不创建第二仓库、授权 lease、执行伤害或编码归档。
  */
 import { inspectionConfiguration, renderInspectionPolicy } from "../role_inspection/policies";
-import { roleName, text, inspectionLabel } from "@ai-werewolf-arena/game-text";
+import { roleName, text } from "@ai-werewolf-arena/game-text";
+import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { Role } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
 import { getGargoyleState, setGargoyleState } from "./state";

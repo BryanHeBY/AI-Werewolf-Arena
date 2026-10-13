@@ -1,3 +1,6 @@
+/**
+ * 负责复盘的角色、阶段、历史结果 ID 和结束状态展示。输入为事件或结果、语言和原玩家名单；输出保留原历史别名与未知／未结束回退。语言显式传入，事实校验与受众由原 reader 负责；本模块不重新判胜或改写归档。
+ */
 import { readReplayEvent, readReplayEventType } from "./replay-event-reader";
 import { type ReplayEvent, type ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import {
@@ -5,10 +8,10 @@ import {
   term,
   text,
   dictionaries,
-  outcomeLabel,
   type Locale,
   type MessageKey,
 } from "@ai-werewolf-arena/game-text";
+import { outcomeLabel } from "@ai-werewolf-arena/game-presentation";
 
 export { type Locale };
 export function roleName(role: string, locale: Locale = "zh-CN"): string {
@@ -34,7 +37,7 @@ const GIFT_ACTION_EVENTS = new Set([
   "witch_potion_skipped",
   "dream_applied",
 ]);
-/** Explicit gift instances describe an action without attributing the recipient's physical role. */
+/** 赠予实例只描述能力行动，不把受赠者误标成原生能力所属角色。 */
 export function eventStageName(
   event: ReplayEvent,
   locale: Locale = "zh-CN",
@@ -51,7 +54,7 @@ export function eventStageName(
     return text(locale, "replay.stage.gift_ability");
   return stageName(fact.event.stage ?? fact.event.type, locale);
 }
-// These are archived reason IDs; current records already use the canonical IDs.
+// 这些是历史归档原因 ID；当前记录已使用规范 ID，读取旧档时保留别名映射。
 const historicalReasons: Readonly<Record<string, string>> = Object.freeze({
   wolves_eliminated: "all_wolves_eliminated",
   slaughter_side: "slaughter_side_completed",

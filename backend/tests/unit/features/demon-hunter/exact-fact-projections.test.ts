@@ -1,10 +1,13 @@
 /**
- * Unit tests verify Demon Hunter exact God/player fact fields and fail-closed audience/getter projections.
- * Input: Original literal full/own envelopes, field alterations and bounded fixture world for projection only.
- * Output and oracle: Exact accepted data, null rejected facts, safe labels and zero getter reads remain unchanged; no full night or file recorder runs.
+ * 单元测试验证猎魔人的全知／玩家事实精确字段与受众、getter 的失败关闭边界。输入为完整／本人字面量和字段变体，只构造投影所需的局部 World；预期为精确接受数据、null 拒绝、合法标签和零 getter 读取，不执行完整夜间或文件录制。
  */
 import { expect, test } from "bun:test";
-import { DEMON_HUNTER_POLICY, readDemonHunterEventFact, readDemonHunterPlayerFact, demonHunterEventLabel } from "@ai-werewolf-arena/game-text";
+import {
+  DEMON_HUNTER_POLICY,
+  readDemonHunterEventFact,
+  readDemonHunterPlayerFact,
+} from "@ai-werewolf-arena/game-text";
+import { demonHunterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { type GameEvent } from "../../../../src/core";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";

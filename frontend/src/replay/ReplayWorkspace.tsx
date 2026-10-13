@@ -1,6 +1,10 @@
+/**
+ * 负责复盘工作台的文件状态、席位筛选、播放与显示交互。输入为加载的复盘及用户选项；输出为阶段画面、时间线与控制区。实际画面仍由 frame 和纯投影形成，工作台状态不授予游戏行动或更改归档事实。
+ */
 import { replayEventPlayerIds } from "./replay-event-reader";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { text, outcomeWinnersLabel, victoryPointLabel } from "@ai-werewolf-arena/game-text";
+import { text } from "@ai-werewolf-arena/game-text";
+import { outcomeWinnersLabel, victoryPointLabel } from "@ai-werewolf-arena/game-presentation";
 import { formatReplayTime, type ReplayDisplayOptions } from "./replay-display";
 import { ReplayDisplayControls } from "./ReplayDisplayControls";
 import { useMemo, useState } from "react";

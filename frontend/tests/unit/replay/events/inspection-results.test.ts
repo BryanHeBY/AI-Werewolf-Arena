@@ -1,9 +1,5 @@
 /**
- * Unit tests verify inspection results display labels.
- * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
- * Output: the original display labels assertions.
- * Handwritten field, label and effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证查验结果事实接收、对应标签与事件前缀展示。输入为原字面量、畸形 payload、语言和用例表；手写字段、标签与效果预期作为独立 oracle，不执行真实游戏或重生成 golden。
  */
 import { expect, test } from "bun:test";
 import {
@@ -12,7 +8,8 @@ import {
   type ReplayEvent,
 } from "@ai-werewolf-arena/replay-contract";
 import { eventLabel } from "../../../../src/replay/event-labels";
-import { inspectionLabel, text } from "@ai-werewolf-arena/game-text";
+import { text } from "@ai-werewolf-arena/game-text";
+import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 
 const event = (payload: Record<string, unknown>): ReplayEvent => ({
   seq: 1,

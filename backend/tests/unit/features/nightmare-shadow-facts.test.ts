@@ -1,16 +1,9 @@
 /**
- * Unit tests: Nightmare facts use literal full/owner records and invalid actor/day values;
- * disjoint exact-field and descriptor assertions check bounded data readers without
- * granting authority. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试验证梦魇的全知／本人事实、无效玩家和日期。输入为字面量记录；精确字段与描述符断言检验有限 reader，不授予权限，不调用模型或完整游戏驱动。
  */
 import { expect, test } from "bun:test";
-import {
-  readNightmareFearFact,
-  readNightmareOwnFearFact,
-  nightmareEventLabel,
-} from "@ai-werewolf-arena/game-text";
+import { readNightmareFearFact, readNightmareOwnFearFact } from "@ai-werewolf-arena/game-text";
+import { nightmareEventLabel } from "@ai-werewolf-arena/game-presentation";
 const type = "nightmare_fear_committed";
 test("nightmare full and own facts have disjoint exact shapes", () => {
   expect(readNightmareFearFact(type, { actorId: 1, day: 1, targetId: 2 })).toEqual({

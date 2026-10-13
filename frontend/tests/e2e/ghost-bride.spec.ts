@@ -1,15 +1,11 @@
 /**
- * Browser integration tests render actual Ghost Bride God and owner-view
- * fixtures across partner, witness and terminal-night outcomes. Archive and
- * checkpoint facts supply assertions for native identities, private marriage
- * visibility, deaths and three-faction winners in both locales. Rendering
- * consumes those settled records without resolving marriage or victory.
+ * 浏览器集成测试读取鬼新娘全知／本人视角 fixture，覆盖伴侣、见证者与终夜结果。归档和 checkpoint 字段提供原生身份、私有婚姻、死亡和两语三阵营胜者的预期；浏览器只渲染已结算记录，不解析婚姻规则或重新判胜。
  */
 import { frontendFixtureURL } from "../support/fixtures/manifest";
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
-import { ghostBrideEventLabel } from "@ai-werewolf-arena/game-text";
+import { ghostBrideEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { eventLabel } from "../../src/replay/event-labels";
 const read = (name: string) =>
   JSON.parse(readFileSync(frontendFixtureURL(`frontend/tests/fixtures/${name}`), "utf8"));

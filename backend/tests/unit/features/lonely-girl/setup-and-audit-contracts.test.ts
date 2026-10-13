@@ -1,10 +1,5 @@
 /**
- * Unit tests for lonely girl setup. Inputs are original required choices, getter/revocation matrices and
- * public board configuration. Original literal receipts, reference/getter/error traces, facts and expected
- * state remain the oracle. Bounded setup window/request/late getters/camp ledger and literal checkpoint
- * projection. Case12 only attempts entry while setup authority blocks NightPipeline/PM before a cycle, so
- * it stays the same setup-contract owner. No complete game phase or paid model runs; existing local windows
- * and denied entry probes remain bounded.
+ * 单元测试验证孤独少女准备窗口、必须选择、getter／撤权矩阵和公开板子配置。预期来自字面回执、引用／错误轨迹、阵营账本和 checkpoint 字段。阶段入口只在准备权限未完成时被拒绝，不运行完整夜间或模型。
  */
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -48,11 +43,8 @@ import { GameActionRequestFactory } from "../../../../src/game/engine/action_req
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import {
-  readLonelyGirlEventFact,
-  readLonelyGirlChoiceTool,
-  lonelyGirlEventLabel,
-} from "@ai-werewolf-arena/game-text";
+import { readLonelyGirlEventFact, readLonelyGirlChoiceTool } from "@ai-werewolf-arena/game-text";
+import { lonelyGirlEventLabel } from "@ai-werewolf-arena/game-presentation";
 import {
   knownWolfTeammates,
   wolfTeamPermissions,

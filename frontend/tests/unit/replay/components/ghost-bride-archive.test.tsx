@@ -1,16 +1,13 @@
 /**
- * Unit component tests for ghost bride archive replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 组件单元测试验证鬼新娘归档的复盘展示。输入为既有录制／字面量数据、事件游标、语言和帧设置；输出断言席位、时间线与渲染画面。手写可见性、状态及不变归档构成预期，不运行真实游戏或模型传输。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readReplayDocument, readReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
-import { ghostBrideEventLabel, roleName } from "@ai-werewolf-arena/game-text";
+import { roleName } from "@ai-werewolf-arena/game-text";
+import { ghostBrideEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
 import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
 import { createReplayRenderInput, buildReplayFrame } from "../../../../src/replay/replay-frame";
@@ -33,7 +30,9 @@ for (const kind of ["good", "wolf", "pair", "witness"])
             : readReplayPlayerView(
                 JSON.parse(
                   readFileSync(
-                    frontendFixtureURL(`frontend/tests/fixtures/player-views/ghost-bride-${kind}-${actor}.player.json`),
+                    frontendFixtureURL(
+                      `frontend/tests/fixtures/player-views/ghost-bride-${kind}-${actor}.player.json`,
+                    ),
                     "utf8",
                   ),
                 ),

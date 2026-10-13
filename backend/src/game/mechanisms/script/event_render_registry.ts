@@ -1,33 +1,34 @@
-import { nobleSecretBodyEventLabel, nobleSecretBodyVisibility } from "@ai-werewolf-arena/game-text";
-import {
-  animalDreamEventLabel,
-  animalDreamFactAudience,
-  type AnimalDreamEventType,
-} from "@ai-werewolf-arena/game-text";
-import { fragrantPairEventLabel, fragrantPairVisibility } from "@ai-werewolf-arena/game-text";
-import { radiantEclipseEventLabel } from "@ai-werewolf-arena/game-text";
-import { mistRavenEventLabel } from "@ai-werewolf-arena/game-text";
-import { scholarMentorEventLabel } from "@ai-werewolf-arena/game-text";
-import { timeConsortEventLabel } from "@ai-werewolf-arena/game-text";
-import { wolfSorcererEventLabel } from "@ai-werewolf-arena/game-text";
-import { tricksterEventLabel } from "@ai-werewolf-arena/game-text";
-import { orderPrinceEventLabel } from "@ai-werewolf-arena/game-text";
-import { magicianEventLabel } from "@ai-werewolf-arena/game-text";
-import { redMoonEventLabel } from "@ai-werewolf-arena/game-text";
-import { nightmareEventLabel } from "@ai-werewolf-arena/game-text";
-import { demonHunterEventLabel } from "@ai-werewolf-arena/game-text";
-import { ghostBrideEventLabel } from "@ai-werewolf-arena/game-text";
-import { lonelyGirlEventLabel } from "@ai-werewolf-arena/game-text";
-import { wildChildEventLabel } from "@ai-werewolf-arena/game-text";
-import { shapeshifterEventLabel } from "@ai-werewolf-arena/game-text";
-import { thiefEventLabel } from "@ai-werewolf-arena/game-text";
+/**
+ * 负责按事件类型装配脚本和终端的展示贡献。输入为事件、私有输出选项与语言；输出为原聊天行和分类文本。保留各贡献的读取、受众与分派顺序，不提交行动、改写事实或重算历史阵营。事件文案消费共享展示 owner，自定义贡献仍保留原接口。
+ */
+import { nobleSecretBodyVisibility } from "@ai-werewolf-arena/game-text";
+import { nobleSecretBodyEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { animalDreamFactAudience, type AnimalDreamEventType } from "@ai-werewolf-arena/game-text";
+import { animalDreamEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { fragrantPairVisibility } from "@ai-werewolf-arena/game-text";
+import { fragrantPairEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { radiantEclipseEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { mistRavenEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { scholarMentorEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { timeConsortEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { wolfSorcererEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { tricksterEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { orderPrinceEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { magicianEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { redMoonEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { nightmareEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { demonHunterEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { ghostBrideEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { lonelyGirlEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { wildChildEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { shapeshifterEventLabel } from "@ai-werewolf-arena/game-presentation";
+import { thiefEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { readGravekeeperFeedback, readVictoryResult } from "@ai-werewolf-arena/replay-contract";
+import { text, roleName, type Locale } from "@ai-werewolf-arena/game-text";
 import {
   wallEventLabel,
   blackMarketEventLabel,
   deathAbilityEventLabel,
-  text,
-  roleName,
   inspectionLabel,
   outcomeLabel,
   outcomeWinnersLabel,
@@ -38,8 +39,7 @@ import {
   cupidEventLabel,
   debateEventLabel,
   awakenedEventLabel,
-  type Locale,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-presentation";
 /** 文件说明：事件 -> 脚本回放文本/终端文本渲染注册表。 */
 import { GameEvent } from "../../../core/domain/model";
 import {

@@ -1,13 +1,10 @@
 /**
- * Unit component tests for black market merchant replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 组件单元测试验证黑市商人的复盘展示。输入为既有录制／字面量数据、事件游标、语言和帧设置；输出断言席位、时间线与渲染画面。手写可见性、状态及不变归档构成预期，不运行真实游戏或模型传输。
  */
 import { expect, test } from "bun:test";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
-import { blackMarketEventLabel, text } from "@ai-werewolf-arena/game-text";
+import { text } from "@ai-werewolf-arena/game-text";
+import { blackMarketEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { eventLabel } from "../../../../src/replay/event-labels";
 import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
 import { createReplayRenderInput, FRAMES_PER_EVENT } from "../../../../src/replay/replay-frame";

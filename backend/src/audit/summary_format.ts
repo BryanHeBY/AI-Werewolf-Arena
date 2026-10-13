@@ -1,13 +1,12 @@
-/** Shared Markdown presentation for agent summaries and deterministic fallback. */
+/**
+ * 负责 Agent 摘要和确定性回退的共享 Markdown 展示。输入为既有审计报告、清单与语言；输出为统计和原摘要段落，不启动审计任务、修改录制或重新推导游戏结果。
+ */
+import { auditHeadings, term, text, type Locale } from "@ai-werewolf-arena/game-text";
 import {
-  auditHeadings,
-  term,
-  text,
   outcomeLabel,
   outcomeWinnersLabel,
   victoryPointLabel,
-  type Locale,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-presentation";
 import type { ReplayDebugReport, ReplayManifest } from "../recording/contracts";
 
 export function auditReportStats(reports: readonly ReplayDebugReport[]) {

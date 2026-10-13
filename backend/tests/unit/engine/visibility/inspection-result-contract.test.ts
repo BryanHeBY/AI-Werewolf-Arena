@@ -1,11 +1,10 @@
 /**
- * Unit tests verify inspection labels, strict result readers, legacy rendering and detached vote projections preserve their declared data boundary.
- * Input: Fresh in-memory identity fixtures plus literal typed/legacy/malformed results, accessors and Proxy traps in the original locale matrix.
- * Output and oracle: Explicit label/data/privacy assertions reject malformed evidence without guessing Good; localized render expectations retain their existing text-helper coupling and no night pipeline runs.
+ * 单元测试验证查验标签、严格结果 reader、历史展示和脱离投票投影的数据边界。输入为内存身份 fixture、合法／畸形字面量、getter 与 Proxy；原字段及隐私断言拒绝无效证据，不猜测好人阵营。展示预期保留既有 text helper 耦合，不执行夜间流水线。
  */
 import { expect, test } from "bun:test";
 import { readInspectionResult, readSeerInspectionResult } from "@ai-werewolf-arena/replay-contract";
-import { inspectionLabel, text } from "@ai-werewolf-arena/game-text";
+import { text } from "@ai-werewolf-arena/game-text";
+import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Camp, Role, type GameEvent, type RoleComponent } from "../../../../src/core";
 import { RoleCatalog, getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";

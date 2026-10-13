@@ -1,14 +1,11 @@
 /**
- * Defines Mirror Girl configuration, native initialization and stage/tool metadata.
- * Inputs are the original initialization component, board policy and locale;
- * outputs preserve the existing native instance/history, prompt and contributions.
- * Neutral inspection DTOs supply data only; validation, accepted inspection
- * writes and transfer retirement remain their existing owners and never reset here.
+ * 负责装配镜女的配置、原生初始化与查验／工具贡献。输入为原板子参数、初始化组件、请求上下文与语言；输出保持既有 RoleProfile、提示和目标政策。状态引用和接受后的写入仍归具体机制 owner，本模块不创建第二仓库、授权 lease、执行伤害或编码归档。
  */
 
 import type { RoleInspectionState } from "@ai-werewolf-arena/game-contract";
 import { inspectionConfiguration, renderInspectionPolicy } from "../role_inspection/policies";
-import { roleName, text, inspectionLabel } from "@ai-werewolf-arena/game-text";
+import { roleName, text } from "@ai-werewolf-arena/game-text";
+import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
 import type { RoleComponent } from "../../../../core/domain/components/role";

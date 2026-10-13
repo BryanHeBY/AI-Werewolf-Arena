@@ -1,7 +1,5 @@
 /**
- * Fragrant information scenarios verify actual published deaths and inherited knife hints agree with bounded player/gateway projections.
- * Input: Original locale matrix, literal linked-death plans and same production PM requests.
- * Output and oracle: Handwritten own-state/history/privacy/sequence assertions retain the original published-information boundary; no new expected data is generated.
+ * 馥郁双生有界周期场景测试验证已公开死亡、继承刀权提示与玩家／网关投影一致。输入为两语矩阵、关联死亡计划与真实阶段管理器请求；预期为手写已知状态、历史、隐私及序号断言，不额外生成预期对局。
  */
 import { expect, test } from "bun:test";
 import { Phase } from "../../../../src/core/domain/identity";
@@ -12,17 +10,20 @@ import type { AliveComponent } from "../../../../src/core/domain/components/aliv
 import type { ActionRequest } from "../../../../src/core/domain/actions";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
-import { getDefaultConfigRenderRegistry, getDefaultTargetHintRegistry, getDefaultToolSpecRegistry, getDefaultPhaseStageLocalizationRegistry, getDefaultScriptEventRenderRegistry } from "../../../../src/game/mechanisms";
+import {
+  getDefaultConfigRenderRegistry,
+  getDefaultTargetHintRegistry,
+  getDefaultToolSpecRegistry,
+  getDefaultPhaseStageLocalizationRegistry,
+  getDefaultScriptEventRenderRegistry,
+} from "../../../../src/game/mechanisms";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 import { fragrantAuthoritySnapshot } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/authority";
 import { fragrantPairSeerTwelveConfig } from "../../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
 import { fragrantRuntimeGame } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
 import { fragrantRuntimeAction } from "../../../support/features/fragrant-pair-seer/drivers/actions";
-import {
-  fragrantPairEventLabel,
-  FRAGRANT_PAIR_EVENT_TYPES,
-  text,
-} from "@ai-werewolf-arena/game-text";
+import { FRAGRANT_PAIR_EVENT_TYPES, text } from "@ai-werewolf-arena/game-text";
+import { fragrantPairEventLabel } from "@ai-werewolf-arena/game-presentation";
 
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: shared player view follows published deaths and contains no actual trigger or pack roster`, async () => {

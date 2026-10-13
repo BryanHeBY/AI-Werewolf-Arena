@@ -1,13 +1,13 @@
+/**
+ * 负责终端游戏事件、结果与 ACP 增量输出。输入为已投影事件、运行摘要、ACP 更新与输出选项；输出为原文本和着色日志。仅持有文本片段与工具显示状态，不落盘、不推进阶段或提交游戏行动。分段和去重保留原顺序，失败不改游戏事实。
+ */
 import { formatErrorDiagnostic } from "../utils/error_diagnostic";
+import { text, dictionaries, type MessageKey, type Locale } from "@ai-werewolf-arena/game-text";
 import {
-  text,
-  dictionaries,
   outcomeLabel,
   outcomeWinnersLabel,
   victoryPointLabel,
-  type MessageKey,
-  type Locale,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-presentation";
 import { getDefaultScriptEventRenderRegistry } from "../game";
 import type { GameEvent, RuntimeSnapshot } from "../core";
 import { colorize, isAnsiEnabled } from "../utils/ansi";
@@ -148,14 +148,13 @@ export function createAcpConsoleLogger(
       if (pending && (pending.kind !== kind || pending.id !== messageId)) flush();
       if (!pending) pending = { kind, id: messageId, text: "" };
       pending.text += updateText(event.content);
-      // ACP chunks are deltas, not log lines. Bound the buffer without dropping
-      // text, and emit complete lines even while a long prompt is still running.
+      // ACP 片段是增量文本；按原分段边界合并后输出，保留文字并限制缓冲长度。
       while (pending.text.length) {
         const newline = pending.text.search(/[\r\n]/);
         let end = newline >= 0 && newline <= 500 ? newline : 500;
         if (newline < 0 && pending.text.length <= 500) break;
         const hasNewline = end === newline;
-        // Do not split a UTF-16 surrogate pair at the segment boundary.
+        // 分段边界不能切断 UTF-16 代理对，否则中文或 emoji 会损坏。
         if (!hasNewline && /[\uD800-\uDBFF]/.test(pending.text[end - 1])) end--;
         emitText(kind, pending.text.slice(0, end));
         pending.text = pending.text.slice(end + (hasNewline ? 1 : 0));

@@ -1,11 +1,10 @@
 /**
- * Interaction scenarios verify the actual night pipeline publishes only the Seer's authorized camp label and detached private history.
- * Input: Original locale-by-camp matrix, fresh role/catalog fixtures and deterministic wolf, guard and Seer responses.
- * Output and oracle: Literal inspection payload/history and private-feed isolation remain tied to the executed night; existing localized render expectations use text helpers rather than independent presentation goldens.
+ * 交互场景验证真实夜间流水线只发布预言家已获许可的阵营标签与脱离私有历史。输入为两语／阵营矩阵、角色 fixture 和确定性狼刀、守护、查验响应；预期为手写字段和私有信息隔离。展示预期仍使用既有 text helper，不能称为独立文案 golden。
  */
 import { completedNight } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
-import { inspectionLabel, text } from "@ai-werewolf-arena/game-text";
+import { text } from "@ai-werewolf-arena/game-text";
+import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Camp, Role, type GameEvent, type RoleComponent } from "../../../../src/core";
 import { RoleCatalog, getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";

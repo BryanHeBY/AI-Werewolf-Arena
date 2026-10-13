@@ -1,9 +1,5 @@
 /**
- * Unit tests: Debater behavior uses finite boards, explicit votes and controlled request
- * scopes; literal living-denominator, reveal and refusal assertions check the threshold
- * and native stock rules. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试验证杠精的存活投票分母、阈值、翻牌、拒绝与原生库存。输入为有限板子、显式票和受控请求 scope；预期为字面量或不变 fixture，不请求模型或完整对局。
  */
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
 import {
@@ -63,7 +59,8 @@ import {
 import { DefaultTargetHintRegistry } from "../../../../src/game/mechanisms/llm/target_hint_registry";
 import { setIdiotState } from "../../../../src/game/mechanisms/roles/idiot/ports";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
-import { readDebateEventFact, debateEventLabel, text } from "@ai-werewolf-arena/game-text";
+import { readDebateEventFact, text } from "@ai-werewolf-arena/game-text";
+import { debateEventLabel } from "@ai-werewolf-arena/game-presentation";
 const deck = [Role.Debater, Role.Wolf, Role.Hunter, Role.Idiot, Role.Villager, Role.Villager];
 const fixture = (roles = deck) => {
   const config = foxBoard(roles);

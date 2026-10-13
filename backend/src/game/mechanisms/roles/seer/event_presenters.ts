@@ -1,4 +1,8 @@
-import { text, inspectionLabel } from "@ai-werewolf-arena/game-text";
+/**
+ * 负责预言家已授权查验事件的脚本展示贡献。输入为事件、是否允许私有输出与语言；输出为原查验文案，仅在原私有输出许可下渲染。不会查验目标、写历史或扩大事件受众。
+ */
+import { text } from "@ai-werewolf-arena/game-text";
+import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { readSeerInspectionResult } from "@ai-werewolf-arena/replay-contract";
 import type { ScriptLiveRenderHandlers } from "../../script/contracts";
 export const SEER_SCRIPT_LIVE_HANDLERS: ScriptLiveRenderHandlers = {

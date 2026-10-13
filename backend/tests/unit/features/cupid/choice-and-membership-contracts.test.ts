@@ -1,9 +1,5 @@
 /**
- * Unit tests for cupid relations. Inputs are original finite Cupid policies, pair choices, life
- * replacements and death causes. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Original Cupid choice stage, finite policies, literal
- * membership/vote/PK gates and inert archive/player projections. No central death wave or cycle executes.
- * No complete game phase or paid model runs; existing local windows and denied entry probes remain bounded.
+ * 单元测试验证丘比特的有限政策、恋人选择、生命替换及死因。输入为原选择阶段、票／PK 门槛和惰性归档投影；字面回执、引用与错误轨迹构成预期，不运行中央死亡波或完整周期。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -50,7 +46,8 @@ import {
 } from "../../../../src/game/mechanisms/roles/wolf_team";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
-import { cupidEventLabel, readCupidEventFact, text } from "@ai-werewolf-arena/game-text";
+import { readCupidEventFact, text } from "@ai-werewolf-arena/game-text";
+import { cupidEventLabel } from "@ai-werewolf-arena/game-presentation";
 
 const deck = [Role.Cupid, Role.Hunter, Role.Wolf, Role.Villager, Role.Wolf, Role.Villager];
 

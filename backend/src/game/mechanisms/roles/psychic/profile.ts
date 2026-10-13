@@ -1,12 +1,9 @@
 /**
- * Owns Psychic configuration, native initialization and inspection contributions.
- * Inputs are original role parameters, initialization data and request context;
- * outputs preserve native history, localized prompts and existing target checks.
- * Role-inspection owns stored state and accepted writes; this profile never
- * creates a lease, commits an inspection result or closes a night frame.
+ * 负责装配通灵师的配置、原生历史与查验贡献。输入为原板子参数、初始化组件、请求上下文与语言；输出保持既有 RoleProfile、提示和目标政策。状态引用和接受后的写入仍归具体机制 owner，本模块不创建第二仓库、授权 lease、执行伤害或编码归档。
  */
 import { inspectionConfiguration, renderInspectionPolicy } from "../role_inspection/policies";
-import { roleName, text, inspectionLabel } from "@ai-werewolf-arena/game-text";
+import { roleName, text } from "@ai-werewolf-arena/game-text";
+import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { RoleProfile } from "../contracts";
 import { getRoleInspectionState, setRoleInspectionState } from "../role_inspection/ports";

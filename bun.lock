@@ -17,6 +17,7 @@
         "@ai-sdk/openai-compatible": "^3.0.57",
         "@ai-werewolf-arena/game-catalog": "workspace:*",
         "@ai-werewolf-arena/game-contract": "workspace:*",
+        "@ai-werewolf-arena/game-presentation": "workspace:*",
         "@ai-werewolf-arena/game-text": "workspace:*",
         "@ai-werewolf-arena/replay-contract": "workspace:*",
         "@modelcontextprotocol/sdk": "^1.30.1",
@@ -36,6 +37,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@ai-werewolf-arena/game-catalog": "workspace:*",
+        "@ai-werewolf-arena/game-presentation": "workspace:*",
         "@ai-werewolf-arena/game-text": "workspace:*",
         "@ai-werewolf-arena/replay-contract": "workspace:*",
         "@remotion/player": "^4.0.529",
@@ -80,6 +82,19 @@
         "typescript": "^5.9.3",
       },
     },
+    "packages/game-presentation": {
+      "name": "@ai-werewolf-arena/game-presentation",
+      "version": "0.1.0",
+      "dependencies": {
+        "@ai-werewolf-arena/game-catalog": "workspace:*",
+        "@ai-werewolf-arena/game-contract": "workspace:*",
+        "@ai-werewolf-arena/game-text": "workspace:*"
+      },
+      "devDependencies": {
+        "bun-types": "^1.4.2",
+        "typescript": "^5.9.3"
+      }
+    },
     "packages/game-text": {
       "name": "@ai-werewolf-arena/game-text",
       "version": "0.1.0",
@@ -120,6 +135,8 @@
     "@ai-werewolf-arena/game-catalog": ["@ai-werewolf-arena/game-catalog@workspace:packages/game-catalog"],
 
     "@ai-werewolf-arena/game-contract": ["@ai-werewolf-arena/game-contract@workspace:packages/game-contract"],
+
+    "@ai-werewolf-arena/game-presentation": ["@ai-werewolf-arena/game-presentation@workspace:packages/game-presentation"],
 
     "@ai-werewolf-arena/game-text": ["@ai-werewolf-arena/game-text@workspace:packages/game-text"],
 

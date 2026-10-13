@@ -1,16 +1,13 @@
 /**
- * Unit tests: Trickster facts use canonical literal records and hostile descriptors; exact
- * fields, detached copies and getter rejection check the inert public data contract.
- * Inputs and expected outcomes remain the original literal or immutable-fixture oracle;
- * these module assertions invoke no model or complete-game driver.
+ * 单元测试验证诡术师公开事实的精确字段、脱离副本与 getter 拒绝。输入为规范字面量和恶意描述符；预期来自原字面量／不变 fixture，不调用模型或完整对局。
  */
 import { expect, test } from "bun:test";
 import {
   readTricksterExchangeFact,
   readTricksterSkipFact,
   readExileMappingFact,
-  tricksterEventLabel,
 } from "@ai-werewolf-arena/game-text";
+import { tricksterEventLabel } from "@ai-werewolf-arena/game-presentation";
 test("Trickster facts are exact, canonical and detached", () => {
   const source = { actorId: 1, day: 1, pair: [2, 3] as [number, number] };
   const fact = readTricksterExchangeFact("trickster_exchange_committed", source)!;

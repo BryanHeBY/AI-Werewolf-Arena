@@ -1,12 +1,9 @@
 /**
- * Unit tests verify demon hunter fact acceptance, display labels, event-prefix effects.
- * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
- * Output: the original fact acceptance, display labels, event-prefix effects assertions.
- * Handwritten field, label and effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证猎魔人事实接收、对应标签与事件前缀展示。输入为原字面量、畸形 payload、语言和用例表；手写字段、标签与效果预期作为独立 oracle，不执行真实游戏或重生成 golden。
  */
 import { expect, test } from "bun:test";
-import { DEMON_HUNTER_POLICY, demonHunterEventLabel } from "@ai-werewolf-arena/game-text";
+import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-text";
+import { demonHunterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
 import { eventLabel } from "../../../../src/replay/event-labels";
 import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";

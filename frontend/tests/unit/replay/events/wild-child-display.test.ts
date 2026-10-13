@@ -1,17 +1,10 @@
 /**
- * Unit tests verify wild child fact acceptance, display labels.
- * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
- * Output: the original fact acceptance, display labels assertions.
- * Handwritten field, label and effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试验证野孩子事实接收、对应标签与事件前缀展示。输入为原字面量、畸形 payload、语言和用例表；手写字段、标签与效果预期作为独立 oracle，不执行真实游戏或重生成 golden。
  */
 import { expect, test } from "bun:test";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
-import {
-  readWildChildEventFact,
-  readWildChildPlayerFact,
-  wildChildEventLabel,
-} from "@ai-werewolf-arena/game-text";
+import { readWildChildEventFact, readWildChildPlayerFact } from "@ai-werewolf-arena/game-text";
+import { wildChildEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
 const fact = (type: string, payload: Record<string, unknown>): ReplayEvent => ({
   seq: 1,

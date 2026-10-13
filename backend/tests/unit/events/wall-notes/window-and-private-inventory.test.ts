@@ -1,17 +1,23 @@
 /**
- * Unit tests for wall notes window. Inputs are original paper/Unicode/RNG/request matrices and
- * first-voting/terminal inputs. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Bounded window/opaque note/request/RNG/getter/expiry and checkpoint
- * contracts. Case14 calls only denied PM reentry; case27 flushes GameEventRecorder to an explicitly inert
- * in-memory manager, not filesystem. No complete game phase or paid model runs; existing local windows and
- * denied entry probes remain bounded.
+ * 单元测试验证纸条窗口、原纸张／Unicode／随机／请求矩阵及首投票／终态边界。预期来自字面回执、原引用和 getter／错误轨迹。仅尝试被拒绝的阶段重入，记录器 flush 使用内存惰性 manager，不运行完整游戏或文件持久化。
  */
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
 import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
 import { ActionReception } from "../../../../src/ai/agents/player/action_reception";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Role, Camp, Phase, createRandom, type GameEvent, type ActionRequest, type ToolCall, type WallNoteComponent, type RoleComponent } from "../../../../src/core";
+import {
+  COMPONENT,
+  Role,
+  Camp,
+  Phase,
+  createRandom,
+  type GameEvent,
+  type ActionRequest,
+  type ToolCall,
+  type WallNoteComponent,
+  type RoleComponent,
+} from "../../../../src/core";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { WallNotesWindow } from "../../../../src/game/mechanisms/events/wall_notes/window";
 import {
@@ -31,12 +37,8 @@ import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../../src/runtime/config/board_definition";
-import {
-  validWallText,
-  readWallTool,
-  readWallEventFact,
-  wallEventLabel,
-} from "@ai-werewolf-arena/game-text";
+import { validWallText, readWallTool, readWallEventFact } from "@ai-werewolf-arena/game-text";
+import { wallEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 
 const roles = [Role.Wolf, Role.Seer, Role.Witch, Role.Hunter, Role.Villager, Role.Villager];

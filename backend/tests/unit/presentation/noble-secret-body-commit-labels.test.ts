@@ -1,11 +1,8 @@
 /**
- * Unit tests: Noble and Secret Body commit labels use literal target/kind/locale facts;
- * exact captions and hidden terminal fields check authorized message rendering. Inputs and
- * expected outcomes remain the original literal or immutable-fixture oracle; these module
- * assertions invoke no model or complete-game driver.
+ * 单元测试验证贵族与秘体提交标签及不可公开的终态字段。输入为目标、种类和语言的字面量事实；手写标签与隐藏字段预期检验已授权展示，不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
-import { nobleSecretBodyEventLabel } from "@ai-werewolf-arena/game-text";
+import { nobleSecretBodyEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { ScriptEventRenderRegistry } from "../../../src/game/mechanisms/script/event_render_registry";
 const policy = "awa_noble_secret_body_v1";
 const fixtures = [

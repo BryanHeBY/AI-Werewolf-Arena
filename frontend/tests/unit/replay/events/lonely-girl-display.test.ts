@@ -1,14 +1,11 @@
 /**
- * Unit events tests for lonely girl display.
- * Input: existing literal or archived replay facts and their event prefixes;
- * output: original parsing, public/private state and display assertions.
- * Handwritten expectations and immutable fixture bytes are independent oracles.
- * Actual fixture lookup remains an input source; no live game executes here.
+ * 事件单元测试验证孤独少女的解析、公开／私有状态与展示。输入为字面量或归档事实及事件前缀；手写预期和不变 fixture 字节构成 oracle，fixture 查找仅提供输入，不执行真实游戏。
  */
 import { expect, test } from "bun:test";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
-import { lonelyGirlEventLabel, LONELY_GIRL_POLICY } from "@ai-werewolf-arena/game-text";
+import { LONELY_GIRL_POLICY } from "@ai-werewolf-arena/game-text";
+import { lonelyGirlEventLabel } from "@ai-werewolf-arena/game-presentation";
 const payload = { policy: LONELY_GIRL_POLICY, actorId: 1, day: 1, targetId: 2 };
 const fact = (p: Record<string, unknown>, day = 1, phase = "night"): ReplayEvent => ({
   seq: 1,

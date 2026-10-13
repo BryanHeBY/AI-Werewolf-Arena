@@ -1,7 +1,5 @@
 /**
- * Unit tests verify Hybrid direct affiliation stage, target-neutral reception and synchronous ownership/choice invariants.
- * Input: Original locale/target/change matrices, local night contexts and committed-prefix reentry rejection before stages run.
- * Output and oracle: Exact camp/identity/victory/privacy and stale-choice assertions remain unchanged; the reentry refusal is bounded, with no complete PM cycle.
+ * 单元测试验证混血儿直接归属阶段、中立目标接收与同步选择所有权。输入为语言／目标／变化矩阵和局部夜间上下文；预期为阵营、身份、胜利、隐私与陈旧选择断言，已提交前缀的重入在阶段运行前被拒绝，不执行完整周期。
  */
 import { bindNativeNightFailurePolicy } from "../../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../../src/rulesets/native-night-target-policy";
@@ -56,7 +54,8 @@ import {
 } from "../../../../src/game/mechanisms";
 import { WinConditionRegistry } from "../../../../src/game/mechanisms/registries/win_condition_registry";
 import { getDefaultScriptEventRenderRegistry } from "../../../../src/game/mechanisms/script/event_render_registry";
-import { hybridEventLabel, text } from "@ai-werewolf-arena/game-text";
+import { text } from "@ai-werewolf-arena/game-text";
+import { hybridEventLabel } from "@ai-werewolf-arena/game-presentation";
 
 const deck = [Role.Hybrid, Role.Wolf, Role.HiddenWolf, Role.Seer, Role.Witch, Role.Villager];
 

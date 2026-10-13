@@ -1,5 +1,5 @@
 /**
- * Filesystem recording integration tests check sealed explicit victories across actual manifest/public replay publication and cleanup failure. Inputs are literal bilingual result variants and temporary sessions; exact serialized decision membership and detached copies are the oracle. No model or complete game executes.
+ * 文件系统集成测试验证已封盘胜利的清单、公开复盘与清理失败发布。输入为两语结果字面量和临时会话；预期来自序列化成员及脱离副本，不运行模型或完整对局。
  */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
@@ -7,7 +7,11 @@ import path from "node:path";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { Camp, Phase, type GameResult } from "../../../src/core";
-import { outcomeLabel, outcomeWinnersLabel, victoryPointLabel } from "@ai-werewolf-arena/game-text";
+import {
+  outcomeLabel,
+  outcomeWinnersLabel,
+  victoryPointLabel,
+} from "@ai-werewolf-arena/game-presentation";
 import { getDefaultScriptEventRenderRegistry } from "../../../src/game";
 import { auditSummaryHeader } from "../../../src/audit/summary_format";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
