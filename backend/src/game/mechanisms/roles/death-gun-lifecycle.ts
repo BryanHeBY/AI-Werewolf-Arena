@@ -1,0 +1,378 @@
+/**
+ * 负责赠枪实例的授予、武装、转移、首次死亡收尾以及原体授权。
+ * 输入为所属 World、原角色／生命／库存实例和明确业务夜时点；输出为同引用只读实例、
+ * 捕获资格和原资源事实。owners/counters 是原唯一状态，不复制为第二份实例仓库。
+ * 仅写 deathAbilities、retiredDeathAbilityIds 及本枪资源；不执行死亡、枪目标选择或录制 I/O。
+ * 已付前缀和原 getter／提交顺序保持，替身或复活不能重新获得首次死亡枪权。
+ */
+import type { DeathGun, DeathGunReadView } from "@ai-werewolf-arena/game-contract";
+import { COMPONENT } from "../../../core/domain/components/names";
+import type { RoleComponent } from "../../../core/domain/components/role";
+import { Camp, type EntityId, type GameEvent } from "../../../core/domain/model";
+import { aliveLifeVersion, type AliveComponent } from "../../../core/domain/components/alive";
+import type { World } from "../../../core/domain/world";
+import { projectDeathGun } from "./player_state";
+
+// 原体证明捕获原 World、角色、private 容器、生命版本及来源；相同字符串 ID 不构成授权。
+interface GunOwner {
+  world: World;
+  actorId: number;
+  role: RoleComponent;
+  roleKind: RoleComponent["role"];
+  camp: Camp;
+  privateState: RoleComponent["privateState"];
+  life: AliveComponent;
+  version: number;
+  id: string;
+  source: DeathGunReadView["source"];
+  sourceKind: DeathGun["source"]["kind"];
+  sourceActor: number;
+  sourceId?: string;
+  grantedNight: number;
+  armedOnNight: number | null;
+}
+
+// 两个原 WeakMap 随实际 owner 整体迁移；计数只在成功安装后推进，不查询 RNG 或时钟。
+const owners = new WeakMap<DeathGunReadView, GunOwner>(),
+  counters = new WeakMap<World, number>();
+
+export function allDeathGuns(role: RoleComponent | undefined): DeathGunReadView[] {
+  return Object.values(
+    ((role as { readonly privateState: { readonly deathAbilities?: unknown } } | undefined)
+      ?.privateState.deathAbilities ?? {}) as Readonly<Record<string, DeathGunReadView>>,
+  ).sort((a, b) => a.id.localeCompare(b.id));
+}
+
+export function findDeathGun(
+  role: RoleComponent | undefined,
+  id: string,
+): DeathGunReadView | undefined {
+  return allDeathGuns(role).find((gun) => gun.id === id);
+}
+
+function bind(world: World, actorId: number, gun: DeathGun): void {
+  const role = world.getComponent(actorId, COMPONENT.Role),
+    life = world.getComponent(actorId, COMPONENT.Alive),
+    version = life && aliveLifeVersion(life);
+  if (!role || role.camp !== Camp.Good || !life?.alive || version === undefined)
+    throw new Error("death_ability_owner_invalid");
+  owners.set(gun, {
+    world,
+    actorId,
+    role,
+    roleKind: role.role,
+    camp: role.camp,
+    privateState: role.privateState,
+    life,
+    version,
+    id: gun.id,
+    source: gun.source,
+    sourceKind: gun.source.kind,
+    sourceActor: gun.source.actorId,
+    ...(gun.source.kind === "transfer" ? { sourceId: gun.source.abilityId } : {}),
+    grantedNight: gun.grantedNight,
+    armedOnNight: gun.armedOnNight,
+  });
+}
+
+export function deathGunOwnerCurrent(
+  world: World,
+  actorId: number,
+  gun: DeathGunReadView,
+  onDeath = false,
+): boolean {
+  const owner = owners.get(gun);
+  if (!owner || owner.world !== world || owner.actorId !== actorId) return false;
+  const version = aliveLifeVersion(owner.life);
+  return (
+    gun.id === owner.id &&
+    gun.kind === "gun" &&
+    gun.source === owner.source &&
+    gun.source.kind === owner.sourceKind &&
+    gun.source.actorId === owner.sourceActor &&
+    (gun.source.kind === "gift" || gun.source.abilityId === owner.sourceId) &&
+    gun.sourceDisclosed === false &&
+    gun.grantedNight === owner.grantedNight &&
+    gun.armedOnNight === owner.armedOnNight &&
+    world.getComponent(actorId, COMPONENT.Role) === owner.role &&
+    owner.role.role === owner.roleKind &&
+    owner.role.camp === owner.camp &&
+    owner.role.privateState === owner.privateState &&
+    findDeathGun(owner.role, gun.id) === gun &&
+    world.getComponent(actorId, COMPONENT.Alive) === owner.life &&
+    (onDeath
+      ? !owner.life.alive && version === owner.version + 1
+      : owner.life.alive && version === owner.version)
+  );
+}
+
+function emit(
+  events: GameEvent[],
+  actorId: number,
+  gun: Pick<
+    DeathGunReadView,
+    "id" | "grantedNight" | "armedOnNight" | "remaining" | "disabled" | "deathExpired"
+  >,
+  operation: "granted" | "armed" | "disabled" | "enabled" | "transferred_out",
+  abilityId = gun.id,
+): void {
+  events.push({
+    timestamp: Date.now(),
+    type: "death_ability_changed",
+    payload: {
+      actorId,
+      abilityId,
+      operation,
+      grantedNight: gun.grantedNight,
+      armedOnNight: gun.armedOnNight,
+      remaining: gun.remaining,
+      disabled: gun.disabled,
+      deathExpired: gun.deathExpired,
+    },
+  });
+}
+
+export function grantDeathGun(
+  world: World,
+  fromId: EntityId,
+  toId: EntityId,
+  night: number,
+  events: GameEvent[],
+): DeathGunReadView {
+  const from = world.getComponent(fromId, COMPONENT.Role),
+    to = world.getComponent(toId, COMPONENT.Role);
+  if (
+    fromId === toId ||
+    !from ||
+    from.camp !== Camp.Good ||
+    !world.getComponent(fromId, COMPONENT.Alive)?.alive ||
+    !to ||
+    to.camp !== Camp.Good ||
+    !world.getComponent(toId, COMPONENT.Alive)?.alive ||
+    !Number.isSafeInteger(night) ||
+    night < 1
+  )
+    throw new Error("death_ability_grant_invalid");
+  if (allDeathGuns(to).length) throw new Error("death_ability_gun_already_owned");
+  const next = (counters.get(world) ?? 0) + 1,
+    id = `gift-gun:${next}`;
+  if (
+    (
+      (to.privateState as { readonly retiredDeathAbilityIds?: unknown }).retiredDeathAbilityIds as
+        string[] | undefined
+    )?.includes(id)
+  )
+    throw new Error("death_ability_id_retired");
+  const gun: DeathGun = {
+    id,
+    kind: "gun",
+    source: { kind: "gift", actorId: fromId },
+    sourceDisclosed: false,
+    grantedNight: night,
+    armedOnNight: null,
+    remaining: 1,
+    disabled: false,
+    deathExpired: false,
+  };
+  bind(world, toId, gun);
+  const stored = ((
+    to.privateState as { deathAbilities?: Record<string, DeathGun> }
+  ).deathAbilities ??= {}) as Record<string, DeathGun>;
+  stored[id] = gun;
+  counters.set(world, next);
+  emit(events, toId, gun, "granted");
+  return gun;
+}
+
+// 武装先核原 owner 与库存，随后依次写枪的 armedOnNight、证明中的同值，最后发布事实。
+export function armDeathGun(
+  world: World,
+  actorId: number,
+  gun: DeathGunReadView,
+  night: number,
+  events: GameEvent[],
+): void {
+  if (!Number.isSafeInteger(night) || night < gun.grantedNight)
+    throw new Error("death_ability_activation_invalid");
+  if (
+    !deathGunOwnerCurrent(world, actorId, gun) ||
+    gun.armedOnNight !== null ||
+    gun.disabled ||
+    gun.deathExpired ||
+    gun.remaining === 0
+  )
+    return;
+  (gun as { armedOnNight: number | null }).armedOnNight = night;
+  owners.get(gun)!.armedOnNight = night;
+  emit(events, actorId, gun, "armed");
+}
+
+export function activeDeathGun(
+  world: World,
+  actorId: number,
+  id: string,
+  day: number,
+  onDeath = false,
+): DeathGunReadView | undefined {
+  const gun = findDeathGun(world.getComponent(actorId, COMPONENT.Role), id);
+  return gun &&
+    deathGunOwnerCurrent(world, actorId, gun, onDeath) &&
+    gun.armedOnNight !== null &&
+    gun.armedOnNight <= day &&
+    gun.remaining === 1 &&
+    !gun.disabled &&
+    !gun.deathExpired
+    ? gun
+    : undefined;
+}
+
+export function captureDeathGun(
+  world: World,
+  actorId: number,
+  gun: DeathGunReadView,
+  day: number,
+  current: () => boolean,
+) {
+  const id = gun.id,
+    kind = gun.kind,
+    source = gun.source,
+    sourceKind = source.kind,
+    sourceActor = source.actorId,
+    sourceId = source.kind === "transfer" ? source.abilityId : undefined;
+  const disclosed = gun.sourceDisclosed,
+    granted = gun.grantedNight,
+    armed = gun.armedOnNight;
+  const disabled = gun.disabled,
+    expired = gun.deathExpired;
+  const isCurrent = () =>
+    current() &&
+    gun.id === id &&
+    gun.kind === kind &&
+    gun.source === source &&
+    gun.source.kind === sourceKind &&
+    gun.source.actorId === sourceActor &&
+    (gun.source.kind === "gift" || gun.source.abilityId === sourceId) &&
+    gun.sourceDisclosed === disclosed &&
+    gun.grantedNight === granted &&
+    gun.armedOnNight === armed &&
+    gun.disabled === disabled &&
+    gun.deathExpired === expired &&
+    deathGunOwnerCurrent(world, actorId, gun, true);
+  return {
+    isCurrent,
+    isEligible: () => isCurrent() && activeDeathGun(world, actorId, id, day, true) === gun,
+  };
+}
+
+// 死亡回调前捕获原枪及发布字段；首次死亡的 version+1 保持枪权，不能提前永久到期。
+export function firstDeathGuns(
+  world: World,
+  actorId: number,
+): Array<{
+  actorId: number;
+  gun: DeathGunReadView;
+  id: string;
+  grantedNight: number;
+  armedOnNight: number | null;
+}> {
+  return allDeathGuns(world.getComponent(actorId, COMPONENT.Role))
+    .filter((gun) => !gun.deathExpired && deathGunOwnerCurrent(world, actorId, gun, true))
+    .map((gun) => ({
+      actorId,
+      gun,
+      id: gun.id,
+      grantedNight: gun.grantedNight,
+      armedOnNight: gun.armedOnNight,
+    }));
+}
+
+// 回调结束后依原顺序 remaining→disabled→deathExpired；事实只用先前捕获字段，失败不回滚。
+export function finishDeathGuns(
+  rows: ReturnType<typeof firstDeathGuns>,
+  events: GameEvent[],
+): void {
+  for (const { actorId, gun, id, grantedNight, armedOnNight } of rows) {
+    if (gun.deathExpired) continue;
+    (gun as { remaining: 0 | 1 }).remaining = 0;
+    (gun as { disabled: boolean }).disabled = true;
+    (gun as { deathExpired: boolean }).deathExpired = true;
+    emit(
+      events,
+      actorId,
+      { id, grantedNight, armedOnNight, remaining: 0, disabled: true, deathExpired: true },
+      "disabled",
+      id,
+    );
+  }
+}
+
+export function setDeathGunEnabled(
+  world: World,
+  actorId: number,
+  id: string,
+  enabled: boolean,
+  events: GameEvent[],
+): void {
+  const gun = findDeathGun(world.getComponent(actorId, COMPONENT.Role), id);
+  if (!gun || !deathGunOwnerCurrent(world, actorId, gun))
+    throw new Error("death_ability_instance_unavailable");
+  if (enabled && gun.deathExpired) throw new Error("death_ability_expired");
+  if (gun.disabled === !enabled) return;
+  (gun as { disabled: boolean }).disabled = !enabled;
+  emit(events, actorId, gun, enabled ? "enabled" : "disabled");
+}
+
+// 先建立接收者新证明／库存，再删源实例、登记退休 ID，最后源转出→目标授予；不直接搬旧对象。
+export function transferDeathGun(
+  world: World,
+  fromId: number,
+  toId: number,
+  id: string,
+  events: GameEvent[],
+): DeathGunReadView {
+  const source = world.getComponent(fromId, COMPONENT.Role),
+    target = world.getComponent(toId, COMPONENT.Role),
+    gun = findDeathGun(source, id);
+  if (
+    !gun ||
+    fromId === toId ||
+    !deathGunOwnerCurrent(world, fromId, gun) ||
+    !target ||
+    target.camp !== Camp.Good ||
+    !world.getComponent(toId, COMPONENT.Alive)?.alive ||
+    allDeathGuns(target).length ||
+    (
+      (target.privateState as { readonly retiredDeathAbilityIds?: unknown })
+        .retiredDeathAbilityIds as string[] | undefined
+    )?.includes(id)
+  )
+    throw new Error("death_ability_transfer_invalid");
+  const received: DeathGun = {
+    ...projectDeathGun(gun),
+    source: { kind: "transfer", actorId: fromId, abilityId: id },
+  };
+  delete (received as DeathGun & { status?: string }).status;
+  bind(world, toId, received);
+  (
+    ((target.privateState as { deathAbilities?: Record<string, DeathGun> }).deathAbilities ??=
+      {}) as Record<string, DeathGun>
+  )[id] = received;
+  delete (
+    (source!.privateState as { readonly deathAbilities?: unknown }).deathAbilities as Record<
+      string,
+      DeathGun
+    >
+  )[id];
+  (
+    ((source!.privateState as { retiredDeathAbilityIds?: string[] }).retiredDeathAbilityIds ??=
+      []) as string[]
+  ).push(id);
+  emit(events, fromId, gun, "transferred_out");
+  emit(events, toId, received, "granted");
+  return received;
+}
+
+// 枪目标和当前性由原调用者拥有；这里只提交原单字段消耗，不增加复检或事实。
+export function consumeDeathGunShot(gun: DeathGunReadView): void {
+  (gun as { remaining: 0 | 1 }).remaining = 0;
+}

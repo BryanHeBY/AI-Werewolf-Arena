@@ -1,0 +1,728 @@
+{
+  "baseline": "496414bfad89cf0555a8b0a8ebc9fbcee989bdd9",
+  "status": "independently_reviewed_ready_to_commit",
+  "scope": {
+    "baseline": "496414bfad89cf0555a8b0a8ebc9fbcee989bdd9",
+    "counts": {
+      "files": 4,
+      "source": 3,
+      "newTests": 1
+    },
+    "files": [
+      {
+        "path": "backend/src/game/mechanisms/roles/death_abilities.ts",
+        "sha256": "e7628111b779f2045ac7048c7329c7e34b758f434b185b29d3599437466a2610"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+        "sha256": "3f76d9206e9acccc9252690cdb38dcb2880e7876a6fc4c469712bd515deedc18"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/player_state.ts",
+        "sha256": "6c6e8c1551c320ef93d15637998410823490b5e609669b71f6b9e3c582a306ef"
+      },
+      {
+        "path": "backend/tests/unit/features/death-abilities/lifecycle-owner.test.ts",
+        "sha256": "298a2e3888fe79570dd1f0d57305515cda94538fd4e7286b12325c21e1edf45e"
+      }
+    ]
+  },
+  "ownership": {
+    "lifecycle": "death-gun-lifecycle.ts owns the two original WeakMaps and all 16 exact original owner/query/lifecycle declarations; no duplicate state or general ability framework.",
+    "player": "Original PlayerDeathGun/projectDeathGun declarations move as exact data/projection code to existing player_state.ts. Both transfer and public player output use the same function. Existing player module complete runtime remains unchanged.",
+    "publicEntry": "death_abilities.ts keeps actual unsupported-copy and gateway gun-eligibility policy functions; named exports preserve original 15 runtime API names and actual function references. It is not an owner wrapper or copied state manager."
+  },
+  "ordering": [
+    "grant: bind owner -> stored gun assignment -> counter -> event",
+    "arm: gun armed night -> captured owner armed night -> event",
+    "transfer: exact original projection -> source metadata -> delete copied status -> bind/install target -> delete old source -> retire ID -> source transferred_out -> target granted",
+    "first death: version+1 authorized, capture rows before hook, finish remaining -> disabled -> deathExpired -> captured-fact event; revival cannot refresh old proof"
+  ],
+  "programEvidence": {
+    "path": "/tmp/awa-c30-death-gun-owner-source-proof.json",
+    "actualGitOriginalModules": 2,
+    "exactOriginalDeclarationCount": 20,
+    "declarationsTrue": 20,
+    "existingPlayerWholeRuntimeSame": true,
+    "oldPublicRuntimeNamesSame": 15,
+    "heads": 0,
+    "runtimeCycleBoundary": "owner->player_state; player_state never imports entry/owner, owner never imports entry; no new reverse edge."
+  },
+  "receipts": [
+    {
+      "name": "new bounded owner tests",
+      "path": "/tmp/awa-c30-death-gun-owner-new-tests-first.log",
+      "exit": 0,
+      "pass": 3,
+      "assertions": 27
+    },
+    {
+      "name": "original unarmed first death/captured unknown getters/transfer resources tests",
+      "path": "/tmp/awa-c30-death-gun-owner-original-tests.log",
+      "exit": 0,
+      "pass": 3,
+      "assertions": 25
+    },
+    {
+      "name": "strict finite 3 test modules and actual transitive production source",
+      "path": "/tmp/awa-c30-death-gun-owner-types-first.log",
+      "sessionId": 55450,
+      "observedTerminalExit": 0
+    },
+    {
+      "name": "4 owned formatter paths",
+      "path": "/tmp/awa-c30-death-gun-owner-format.log",
+      "exit": 0,
+      "triviaOnly": true
+    }
+  ],
+  "controls": [
+    "No engine/deathWave/night intent/gun policy/stock/schema2/event fields/RNG/clock/recording/checkpoint algorithm changed.",
+    "Actual reflected shot permissions and native guns remain their original owners.",
+    "C30 whole night grant/copy/borrow/gift/transfer metadata closure remains the separate readonly proposed batch; this delivered piece is the granted DeathGun lifecycle only.",
+    "No full suites, games, SDK, network, discovery, heavy gates or repeated compiler checks."
+  ],
+  "commentDelta": {
+    "scopeBefore": "/tmp/awa-c30-death-gun-owner-final-scope-pre-comment.json",
+    "path": "backend/src/game/mechanisms/roles/player_state.ts",
+    "change": "两句既有Player DTO/own-data英文说明改为准确中文，明确未承诺任意Proxy零trap；不改程序",
+    "programAndHeads": "20原声明／player原runtime仍同，4heads0",
+    "noRepeat": "不为注释重跑类型／测试／全formatter"
+  },
+  "finalScope": {
+    "baseline": "496414bfad89cf0555a8b0a8ebc9fbcee989bdd9",
+    "counts": {
+      "files": 4,
+      "source": 3,
+      "newTests": 1
+    },
+    "files": [
+      {
+        "path": "backend/src/game/mechanisms/roles/death_abilities.ts",
+        "sha256": "e7628111b779f2045ac7048c7329c7e34b758f434b185b29d3599437466a2610"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+        "sha256": "3f76d9206e9acccc9252690cdb38dcb2880e7876a6fc4c469712bd515deedc18"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/player_state.ts",
+        "sha256": "6c6e8c1551c320ef93d15637998410823490b5e609669b71f6b9e3c582a306ef"
+      },
+      {
+        "path": "backend/tests/unit/features/death-abilities/lifecycle-owner.test.ts",
+        "sha256": "298a2e3888fe79570dd1f0d57305515cda94538fd4e7286b12325c21e1edf45e"
+      }
+    ]
+  },
+  "sourceProof": {
+    "baseline": "496414bfad89cf0555a8b0a8ebc9fbcee989bdd9",
+    "rawControls": [
+      {
+        "path": "backend/src/game/mechanisms/roles/death_abilities.ts",
+        "actualGitMatches": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/player_state.ts",
+        "actualGitMatches": true
+      }
+    ],
+    "declarations": [
+      {
+        "name": "PlayerDeathGun",
+        "destination": "player.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "GunOwner",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "owners,counters",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "allDeathGuns",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "findDeathGun",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "projectDeathGun",
+        "destination": "player.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "bind",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "deathGunOwnerCurrent",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "emit",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "grantDeathGun",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "armDeathGun",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "activeDeathGun",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "captureDeathGun",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "firstDeathGuns",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "finishDeathGuns",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "setDeathGunEnabled",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "transferDeathGun",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "copyDeathGun",
+        "destination": "entry.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "validateGiftGun",
+        "destination": "entry.ts",
+        "exactDeclaration": true
+      },
+      {
+        "name": "consumeDeathGunShot",
+        "destination": "life.ts",
+        "exactDeclaration": true
+      }
+    ],
+    "unchangedOriginalPlayerRuntime": true,
+    "publicRuntimeExports": [
+      "activeDeathGun",
+      "allDeathGuns",
+      "armDeathGun",
+      "captureDeathGun",
+      "consumeDeathGunShot",
+      "copyDeathGun",
+      "deathGunOwnerCurrent",
+      "findDeathGun",
+      "finishDeathGuns",
+      "firstDeathGuns",
+      "grantDeathGun",
+      "projectDeathGun",
+      "setDeathGunEnabled",
+      "transferDeathGun",
+      "validateGiftGun"
+    ],
+    "oldPublicRuntimeExports": [
+      "activeDeathGun",
+      "allDeathGuns",
+      "armDeathGun",
+      "captureDeathGun",
+      "consumeDeathGunShot",
+      "copyDeathGun",
+      "deathGunOwnerCurrent",
+      "findDeathGun",
+      "finishDeathGuns",
+      "firstDeathGuns",
+      "grantDeathGun",
+      "projectDeathGun",
+      "setDeathGunEnabled",
+      "transferDeathGun",
+      "validateGiftGun"
+    ],
+    "publicExportSetSame": true,
+    "singleActualStore": {
+      "ownersCounterDeclarationCount": 1,
+      "entryHasStore": false
+    },
+    "sourceDirection": {
+      "lifecycleImportsEntry": false,
+      "playerImportsEntry": false,
+      "lifecycleProjectionActualBinding": "./player_state.projectDeathGun; same function is publicly exported"
+    },
+    "heads": [],
+    "scope": [
+      {
+        "path": "backend/src/game/mechanisms/roles/death_abilities.ts",
+        "sha256": "e7628111b779f2045ac7048c7329c7e34b758f434b185b29d3599437466a2610"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+        "sha256": "3f76d9206e9acccc9252690cdb38dcb2880e7876a6fc4c469712bd515deedc18"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/player_state.ts",
+        "sha256": "6c6e8c1551c320ef93d15637998410823490b5e609669b71f6b9e3c582a306ef"
+      },
+      {
+        "path": "backend/tests/unit/features/death-abilities/lifecycle-owner.test.ts",
+        "sha256": "298a2e3888fe79570dd1f0d57305515cda94538fd4e7286b12325c21e1edf45e"
+      }
+    ]
+  },
+  "independentReview": {
+    "baseline": "496414bfad89cf0555a8b0a8ebc9fbcee989bdd9",
+    "files": [
+      {
+        "path": "backend/src/game/mechanisms/roles/death_abilities.ts",
+        "sha256": "e7628111b779f2045ac7048c7329c7e34b758f434b185b29d3599437466a2610",
+        "currentSHA": "e7628111b779f2045ac7048c7329c7e34b758f434b185b29d3599437466a2610",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+        "sha256": "3f76d9206e9acccc9252690cdb38dcb2880e7876a6fc4c469712bd515deedc18",
+        "currentSHA": "3f76d9206e9acccc9252690cdb38dcb2880e7876a6fc4c469712bd515deedc18",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/player_state.ts",
+        "sha256": "d61a02fab546dab05ad0e402cd79b33fe5ec7f988ce284c2ca4a625353c98e57",
+        "currentSHA": "d61a02fab546dab05ad0e402cd79b33fe5ec7f988ce284c2ca4a625353c98e57",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/tests/unit/features/death-abilities/lifecycle-owner.test.ts",
+        "sha256": "298a2e3888fe79570dd1f0d57305515cda94538fd4e7286b12325c21e1edf45e",
+        "currentSHA": "298a2e3888fe79570dd1f0d57305515cda94538fd4e7286b12325c21e1edf45e",
+        "sameSHA": true
+      }
+    ],
+    "origins": [
+      {
+        "path": "backend/src/game/mechanisms/roles/death_abilities.ts",
+        "actualGitSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/player_state.ts",
+        "actualGitSame": true
+      }
+    ],
+    "declarationRows": [
+      {
+        "name": "PlayerDeathGun",
+        "location": "player",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "GunOwner",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "owners,counters",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "allDeathGuns",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "findDeathGun",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "projectDeathGun",
+        "location": "player",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "bind",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "deathGunOwnerCurrent",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "emit",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "grantDeathGun",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "armDeathGun",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "activeDeathGun",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "captureDeathGun",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "firstDeathGuns",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "finishDeathGuns",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "setDeathGunEnabled",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "transferDeathGun",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "copyDeathGun",
+        "location": "entry",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "validateGiftGun",
+        "location": "entry",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      },
+      {
+        "name": "consumeDeathGunShot",
+        "location": "life",
+        "rawDeclarationSame": true,
+        "destinationCount": 1
+      }
+    ],
+    "retainedPlayerDeclarations": [
+      {
+        "name": "PlayerGuardState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "PlayerHunterState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "PlayerWolfKingState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "PlayerWhiteWolfKingState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "PlayerKnightState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "PlayerIdiotState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "PlayerDreamerState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "PlayerWolfBeautyState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "PlayerBearState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "PlayerSeerState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "PlayerWitchState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "PlayerRoleInspectionState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "playerDataField",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "positiveInteger",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "positiveOrNull",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "stock",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "rows",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "nullableTarget",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "inspection",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "projectGuardState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "projectGunState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "projectHunterState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "projectWolfKingState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "projectWhiteWolfKingState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "projectKnightState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "projectIdiotState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "projectDreamerState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "projectWolfBeautyState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "projectBearState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "projectSeerState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "projectWitchState",
+        "rawDeclarationSame": true
+      },
+      {
+        "name": "projectRoleInspectionState",
+        "rawDeclarationSame": true
+      }
+    ],
+    "bindingRows": [
+      {
+        "name": "allDeathGuns",
+        "sourceName": "allDeathGuns",
+        "module": "./death-gun-lifecycle",
+        "sameNamedFunctionNoWrapper": true
+      },
+      {
+        "name": "findDeathGun",
+        "sourceName": "findDeathGun",
+        "module": "./death-gun-lifecycle",
+        "sameNamedFunctionNoWrapper": true
+      },
+      {
+        "name": "deathGunOwnerCurrent",
+        "sourceName": "deathGunOwnerCurrent",
+        "module": "./death-gun-lifecycle",
+        "sameNamedFunctionNoWrapper": true
+      },
+      {
+        "name": "grantDeathGun",
+        "sourceName": "grantDeathGun",
+        "module": "./death-gun-lifecycle",
+        "sameNamedFunctionNoWrapper": true
+      },
+      {
+        "name": "armDeathGun",
+        "sourceName": "armDeathGun",
+        "module": "./death-gun-lifecycle",
+        "sameNamedFunctionNoWrapper": true
+      },
+      {
+        "name": "activeDeathGun",
+        "sourceName": "activeDeathGun",
+        "module": "./death-gun-lifecycle",
+        "sameNamedFunctionNoWrapper": true
+      },
+      {
+        "name": "captureDeathGun",
+        "sourceName": "captureDeathGun",
+        "module": "./death-gun-lifecycle",
+        "sameNamedFunctionNoWrapper": true
+      },
+      {
+        "name": "firstDeathGuns",
+        "sourceName": "firstDeathGuns",
+        "module": "./death-gun-lifecycle",
+        "sameNamedFunctionNoWrapper": true
+      },
+      {
+        "name": "finishDeathGuns",
+        "sourceName": "finishDeathGuns",
+        "module": "./death-gun-lifecycle",
+        "sameNamedFunctionNoWrapper": true
+      },
+      {
+        "name": "setDeathGunEnabled",
+        "sourceName": "setDeathGunEnabled",
+        "module": "./death-gun-lifecycle",
+        "sameNamedFunctionNoWrapper": true
+      },
+      {
+        "name": "transferDeathGun",
+        "sourceName": "transferDeathGun",
+        "module": "./death-gun-lifecycle",
+        "sameNamedFunctionNoWrapper": true
+      },
+      {
+        "name": "consumeDeathGunShot",
+        "sourceName": "consumeDeathGunShot",
+        "module": "./death-gun-lifecycle",
+        "sameNamedFunctionNoWrapper": true
+      },
+      {
+        "name": "projectDeathGun",
+        "sourceName": "projectDeathGun",
+        "module": "./player_state",
+        "sameNamedFunctionNoWrapper": true
+      }
+    ],
+    "checks": {
+      "twentyOriginalDeclarations": true,
+      "singleOwnerStore": true,
+      "allSameEndpointBindings": true,
+      "actualProjectionDependency": true,
+      "noLifecycleBackEntry": true,
+      "noPlayerBackOwner": true,
+      "entryOnlyActualPolicies": true
+    },
+    "heads": [],
+    "findings": [],
+    "semantics": [
+      "Original owners and counters are moved once with actual GunOwner private-container/role/camp/life/version/source proof. Identical string id is not ownership and onDeath retains version+1, not revive permission.",
+      "All twenty original declarations remain raw byte identical inside their owning declaration (sixteen lifecycle, two player data/projection, two actual copy/gateway policies). Old player declarations retain every field/result guard and accepted shape.",
+      "Grant still bind→install→counter→emit; arm resource field→owner field→emit; transfer uses same projectDeathGun→new source→delete status→bind/install new target→delete old→retired id→source event→target event. Failure preserves original prefix, not copy/rollback.",
+      "First-death captures same gun and event display fields before hooks; finish later does remaining→disabled→deathExpired→emit. consumeDeathGunShot is original single write and caller retains all target/current permission checks.",
+      "Entry reexports original named functions, not fresh wrappers. Lifecycle projection import points at actual player_state declaration, not entry; player state has no owner/entry import. New eager module work is only original maps, not World/query/clock/RNG/resource action.",
+      "Three new literal units use actual Good-role and factory life inputs to grant/arm/transfer, failing event push at original transferred_out boundary; they compare hand event order and exact ref/stock prefix. They do not claim complete death-wave integration or use a production rule as expected-value oracle."
+    ],
+    "limits": [
+      "Finite static actualGit/raw declaration/public-binding/read/head/SHA review only. No runtime/type/compiler/game/discovery executed.",
+      "Fifteen public runtime names remain; thirteen named exports are statically tied to actual owner/projection declarations and two local policy functions retain original body. Original external initialization order is not claimed wholly identical; new owner has no back-entry edge or eager action.",
+      "This delivers gifted death-gun owner only. Native role guns, complete C30 ordinary night metadata, C31/C32 time/relations and full Wave/Receipt pipeline remain distinct tasks."
+    ]
+  },
+  "independentCommentDelta": {
+    "previousFinal": "/tmp/awa-c30-death-gun-third-final-review.json",
+    "files": [
+      {
+        "path": "backend/src/game/mechanisms/roles/death_abilities.ts",
+        "sha256": "e7628111b779f2045ac7048c7329c7e34b758f434b185b29d3599437466a2610",
+        "sameFrozenSHA": true,
+        "changedSinceReview": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+        "sha256": "3f76d9206e9acccc9252690cdb38dcb2880e7876a6fc4c469712bd515deedc18",
+        "sameFrozenSHA": true,
+        "changedSinceReview": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/player_state.ts",
+        "sha256": "6c6e8c1551c320ef93d15637998410823490b5e609669b71f6b9e3c582a306ef",
+        "sameFrozenSHA": true,
+        "changedSinceReview": true
+      },
+      {
+        "path": "backend/tests/unit/features/death-abilities/lifecycle-owner.test.ts",
+        "sha256": "298a2e3888fe79570dd1f0d57305515cda94538fd4e7286b12325c21e1edf45e",
+        "sameFrozenSHA": true,
+        "changedSinceReview": false
+      }
+    ],
+    "checks": {
+      "onlyPlayerCommentSHAChanged": true,
+      "exactTwoCommentsRestoreWholePriorSHA": true,
+      "ownDataDescriptorVsProxyReflectionCommentAccurate": true
+    },
+    "findings": [],
+    "limits": "Only current4SHA/two exact comment strings/previous whole source SHA; no source/body/type/runtime/head gates repeated. Earlier raw20/source32 proof remains original lineage, current two comment changes do not alter fields or function bodies."
+  }
+}

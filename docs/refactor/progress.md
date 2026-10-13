@@ -428,3 +428,5 @@
 - 当前死亡/夜间生命周期中文说明：12既有源，只改注释，补原体版本/死因资格、波次seen与账本区别、关系前置闭包、枪逐目标前缀、specificterminal/晚交接、两目标/因果Symbol、route OR及4实际规则卡链接。真实审查发现版本数字归档、取消抛错等过宽说明已收窄；完整AST12/0、职责头12/0、独立最终12SHA/4措辞delta审0，不重types/runtime/full。见generated/death-lifecycle-chinese-comment-evidence.json；不据注释称结构收口。
 
 - C25/C27 真实毒接受证据：5paths，callback仅原Poison接受点，direct原旗标/反射cause独立，系统同结果hidden证据及Mist原freshcopy按最终死因过滤；无extraWorld/RNG/legacySymbolget/可枚举字段变更。新5/0/25+原Mist/plan25/0/117、finite12174实际closed0、3完整程序registered metadata逆/5中文heads/两独立5SHA审0。metadata非权限，fullWave/Receipt消费者后续闭合，未重复fullgate。见damage-poison-evidence.md。
+
+- C30 赠枪生命周期owner：4paths，原owners/counters唯一迁life叶及16真实声明、原投影/type归playerState、entry保2真实copy/gateway政策和sameFn出口；无newloop/二store/genericgun。20声明/原player whole runtime同、15publicnames、new3/0/27+原bounded3/0/25、finite55450由实现者实际closed0，4中文heads/Root实际源审/独立4SHA与player两comment单SHA审0。原体、安装/武装/transfer/firstdeath/expiry重要逻辑就地中文；C30普通metadata/C31/C32继续。见death-gun-lifecycle-owner.md。

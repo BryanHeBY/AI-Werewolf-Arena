@@ -1,8 +1,15 @@
+/**
+ * 负责将角色／能力状态裁剪为已授权玩家可见 DTO，并持有这些投影的纯数据类型。
+ * 输入为现有状态读视图或显式事实字段；输出为独立投影，不泄露内部来源身份、库存写权或授权句柄。
+ * 赠枪投影同时供原 transfer 制作安装数据，字段／status 求值顺序保持；本模块不授枪或转移资源。
+ * 纯字段校验和复制只作用于数据，不读 World、时钟、RNG、文件或模型服务。
+ */
+import type { DeathGun, DeathGunReadView } from "@ai-werewolf-arena/game-contract";
 import { WitchSelfHealRule, type GuardRepeatPolicy } from "../../../core/domain/model";
 import { readInspectionResult } from "@ai-werewolf-arena/replay-contract";
 import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
 
-/** Player DTOs deliberately do not inherit engine-state fields, including report rows. */
+/** 玩家 DTO 显式声明可见字段，不自动继承引擎状态或内部报告行。 */
 export interface PlayerGuardState {
   lastTarget: number | null;
   repeatPolicy?: GuardRepeatPolicy;
@@ -71,7 +78,7 @@ export interface PlayerRoleInspectionState {
   }>;
 }
 
-/** Read declared own data fields without executing accessors from foreign state. */
+/** 只读取声明的自身数据属性，不调用该字段访问器；不承诺对任意 Proxy 零反射 trap。 */
 export function playerDataField(value: unknown, key: string): unknown {
   if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
   const field = Object.getOwnPropertyDescriptor(value, key);
@@ -263,5 +270,32 @@ export function projectRoleInspectionState(state: unknown): PlayerRoleInspection
         ? [{ day, targetId, result }]
         : [];
     }),
+  };
+}
+
+export type PlayerDeathGun = Omit<DeathGun, "source"> & {
+  source: { kind: "gift" | "transfer" };
+  status: "pending" | "active" | "spent" | "disabled";
+};
+
+export function projectDeathGun(gun: DeathGunReadView): PlayerDeathGun {
+  return {
+    id: gun.id,
+    kind: "gun",
+    source: { kind: gun.source.kind },
+    sourceDisclosed: false,
+    grantedNight: gun.grantedNight,
+    armedOnNight: gun.armedOnNight,
+    remaining: gun.remaining,
+    disabled: gun.disabled,
+    deathExpired: gun.deathExpired,
+    status:
+      gun.disabled || gun.deathExpired
+        ? "disabled"
+        : gun.remaining === 0
+          ? "spent"
+          : gun.armedOnNight === null
+            ? "pending"
+            : "active",
   };
 }
