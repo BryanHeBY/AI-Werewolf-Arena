@@ -5,46 +5,10 @@
  * those belong to death resolution.
  */
 import { COMPONENT } from "../components/names";
-import { StatusMarksComponent } from "../components/status_marks";
 import { EntityId, StatusMark, DeathCause, type DeathSources } from "../model";
 import { World } from "../world";
-import {
-  planMechanicalDamage,
-  livingNightLife,
-  type NightPoisonClaim,
-  type NightInspectionAttack,
-  type NightRetaliationAttack,
-  type NightImmunityClaim,
-  type NightFoxInspectionClaim,
-  type NightGuardClaim,
-  type NightMechanicalEffects,
-  type NightPoisonReflection,
-  type NightMerchantBacklash,
-  type NightBlackMarketBacklash,
-  type NightRadiantBacklash,
-  type NightAwakenedEffects,
-} from "../night_effects";
-
-export interface NightDamageEffects {
-  radiantShelters?: readonly NightImmunityClaim[];
-  radiantBacklashes?: readonly NightRadiantBacklash[];
-  modifierDeaths?: readonly import("../night_effects").NightLifeScope[];
-  nightImmunities?: readonly NightImmunityClaim[];
-  retaliationAttacks?: readonly NightRetaliationAttack[];
-  inspectionAttacks?: readonly NightInspectionAttack[];
-  protectedTargets?: readonly EntityId[];
-  wolfImmuneTargets?: readonly EntityId[];
-  foxInspections?: readonly NightFoxInspectionClaim[];
-  /** Sourced night immunity; extension interactions are an explicit AWA completion. */
-  immuneNightTargets?: readonly EntityId[];
-  consecutiveDeaths?: readonly EntityId[];
-  poisonClaims?: readonly NightPoisonClaim[];
-  guardClaims?: readonly NightGuardClaim[];
-  merchantBacklashes?: readonly NightMerchantBacklash[];
-  blackMarketBacklashes?: readonly NightBlackMarketBacklash[];
-  mechanicalEffects?: NightMechanicalEffects;
-  awakenedEffects?: NightAwakenedEffects;
-}
+import { livingNightLife, type NightPoisonReflection } from "../night_effects";
+import { planNightDamage, type NightDamageEffects } from "../night-damage-plan";
 
 /**
  * 黎明伤害结算结果。
@@ -70,74 +34,20 @@ export class DamageResolutionSystem {
   resolve(world: World, effects: NightDamageEffects = {}): DamageResolutionResult {
     const deaths: EntityId[] = [];
     const deathSources: DeathSources = {};
-    const awakenedShields = new Set(
-      effects.awakenedEffects?.shields
-        .filter((effect) => effect.isCurrent() && livingNightLife(world, effect.target))
-        .map((effect) => effect.target.id),
-    );
-    const awakenedAttacks = new Set(
-      effects.awakenedEffects?.attacks
-        .filter((effect) => effect.isCurrent() && livingNightLife(world, effect.target))
-        .map((effect) => effect.target.id),
-    );
-    // Absorbed original toxins never enter mechanical reflection; returning toxins are checked below.
-    const mechanical = planMechanicalDamage(
-      world,
-      effects.mechanicalEffects,
-      effects.poisonClaims,
+    const {
       awakenedShields,
-    );
-    const claimedPoisonTargets = new Set(effects.poisonClaims?.map((claim) => claim.target.id));
-    const claimedGuardTargets = new Set(effects.guardClaims?.map((claim) => claim.target.id));
-    const guarded = new Set(
-      effects.guardClaims
-        ?.filter(
-          (claim) =>
-            livingNightLife(world, claim.target) &&
-            world.getComponent(claim.target.id, COMPONENT.StatusMarks) === claim.marks,
-        )
-        .map((claim) => claim.target.id),
-    );
-    const blackBacklashes = new Set(
-      effects.blackMarketBacklashes
-        ?.filter((effect) => effect.isCurrent() && livingNightLife(world, effect.target))
-        .map((effect) => effect.target.id),
-    );
-    const radiantBacklashes = new Set(
-      effects.radiantBacklashes
-        ?.filter((effect) => effect.isCurrent() && livingNightLife(world, effect.target))
-        .map((effect) => effect.target.id),
-    );
-    const backlashTargets = new Set(
-      effects.merchantBacklashes
-        ?.filter((effect) => effect.isCurrent() && livingNightLife(world, effect.target))
-        .map((effect) => effect.target.id),
-    );
-
-    const foxInspections = new Set(
-      effects.foxInspections
-        ?.filter((claim) => claim.isCurrent() && livingNightLife(world, claim.target))
-        .map((claim) => claim.target.id),
-    );
-    const inspectionSources = new Map<EntityId, Set<DeathCause>>();
-    for (const attack of [
-      ...(effects.inspectionAttacks ?? []),
-      ...(effects.retaliationAttacks ?? []).map((effect) => ({
-        ...effect,
-        cause: DeathCause.EvilKnightReflection,
-      })),
-    ]) {
-      if (!attack.isCurrent() || !livingNightLife(world, attack.target)) continue;
-      const sources = inspectionSources.get(attack.target.id) ?? new Set<DeathCause>();
-      sources.add(attack.cause);
-      inspectionSources.set(attack.target.id, sources);
-    }
-
-    const passiveImmuneTargets = new Set(
-      [...(effects.nightImmunities ?? []), ...(effects.radiantShelters ?? [])]
-        .filter((claim) => claim.isCurrent() && livingNightLife(world, claim.target))
-        .map((claim) => claim.target.id),
-    );
+      awakenedAttacks,
+      mechanical,
+      claimedPoisonTargets,
+      claimedGuardTargets,
+      guarded,
+      blackBacklashes,
+      radiantBacklashes,
+      backlashTargets,
+      foxInspections,
+      inspectionSources,
+      passiveImmuneTargets,
+    } = planNightDamage(world, effects);
     for (const entityId of world.getAliveEntityIds()) {
       const marks = world.getComponent(entityId, COMPONENT.StatusMarks);
       if (passiveImmuneTargets.has(entityId)) {

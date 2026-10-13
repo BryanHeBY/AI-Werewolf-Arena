@@ -1,0 +1,144 @@
+{
+  "schema": "awa-night-damage-plan-evidence-v1",
+  "baseline": "c789227873b6b7901ecad5ccec9f6c5db79fb44b",
+  "slice": "C25 first effect-fold responsibility; complete source/time/causal and wave chain remain pending",
+  "scope": [
+    {
+      "path": "backend/src/core/domain/systems/damage_resolution_system.ts",
+      "sha256": "9fe240c29da1da33cc236b96d0ade06e65e2b8d82adeca5b7c20e4bd11c81096"
+    },
+    {
+      "path": "backend/src/core/domain/night_effects.ts",
+      "sha256": "2fd971d94968fc2a22c46dadb4a72dfdc834bbfc67393e6109bbf0023e26d525"
+    },
+    {
+      "path": "backend/src/core/domain/night-damage-plan.ts",
+      "sha256": "b7d8bb68c37aa2eb6a1067c9c86e02d60b4e99a508274e2c503cb31421e4a1cd"
+    },
+    {
+      "path": "backend/tests/unit/domain/night-damage-plan-boundaries.test.ts",
+      "sha256": "76a11ebdc815d8c13f051de467a667e1ecde4935a2af803a20ebfb40373585e3"
+    }
+  ],
+  "programProof": {
+    "trueGitOrigins": true,
+    "foldStatementsIdentical": true,
+    "initialResultAllocationsIdentical": true,
+    "entityLoopAndReturnIdentical": true,
+    "nightEffectsErasureIdentical": true
+  },
+  "movedStatements": 13,
+  "validation": {
+    "originalFocusedTests": {
+      "files": 3,
+      "pass": 72,
+      "fail": 0,
+      "assertions": 169
+    },
+    "newBoundaryTests": {
+      "files": 1,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 12
+    },
+    "finiteTypes": {
+      "actualSession": 90660,
+      "exitCode": 0,
+      "scope": "new owner + three original suites + new boundary suite, live transitive inputs; not final immutable all-gate",
+      "earlyHarnessFailure": "/tmp config had unresolved bun/node typeRoots; corrected harness only",
+      "parallelCandidateFailure": "RulePlan WIP TS2367 separately fixed by its owner"
+    },
+    "queryAndOutputNegativeTypes": {
+      "actualSession": 99692,
+      "exitCode": 0,
+      "cases": 6
+    },
+    "responsibilityHeads": {
+      "files": 4,
+      "findings": 0
+    },
+    "proofHarnessFirstRed": "Initial matcher selected inspection forOf instead of actual world.getAliveEntityIds loop; exact selector corrected; no source body change."
+  },
+  "review": {
+    "root": "Actual original fold and entity loop read; program proof all true. Same receiver and references; no eager per-entity queries, Alive write or unconsumed compatibility export.",
+    "independentInventory": {
+      "baseline": "c789227873b6b7901ecad5ccec9f6c5db79fb44b",
+      "files": [
+        {
+          "path": "backend/src/core/domain/night-damage-plan.ts",
+          "sha256": "b7d8bb68c37aa2eb6a1067c9c86e02d60b4e99a508274e2c503cb31421e4a1cd"
+        },
+        {
+          "path": "backend/src/core/domain/night_effects.ts",
+          "sha256": "2fd971d94968fc2a22c46dadb4a72dfdc834bbfc67393e6109bbf0023e26d525"
+        },
+        {
+          "path": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "sha256": "9fe240c29da1da33cc236b96d0ade06e65e2b8d82adeca5b7c20e4bd11c81096"
+        }
+      ],
+      "checks": {
+        "initialTwoAllocationsExact": true,
+        "fold13Exact": true,
+        "entityLoopAndFinalReturnExact": true,
+        "internalPlanOwnShorthandFieldsOnly": true,
+        "lifeAndMechanicalBodiesExact": true
+      },
+      "foldStatementCount": 13,
+      "planFields": [
+        "awakenedShields",
+        "awakenedAttacks",
+        "mechanical",
+        "claimedPoisonTargets",
+        "claimedGuardTargets",
+        "guarded",
+        "blackBacklashes",
+        "radiantBacklashes",
+        "backlashTargets",
+        "foxInspections",
+        "inspectionSources",
+        "passiveImmuneTargets"
+      ],
+      "bodyChecks": [
+        {
+          "name": "sameNightLife",
+          "bodyExact": true
+        },
+        {
+          "name": "livingNightLife",
+          "bodyExact": true
+        },
+        {
+          "name": "planMechanicalDamage",
+          "bodyExact": true
+        },
+        {
+          "name": "captureNightLife",
+          "bodyExact": true
+        }
+      ],
+      "portReview": "Two getComponent overloads only: Alive returns Readonly<AliveComponent> (one alive flag+renderPrompt,no setter commands), StatusMarks returns object identity, no has/add/remove/clear. Same supplied World receiver; no adapter object, snapshot, cache or lifetime seal.",
+      "orderingReview": [
+        "Awakened shield/attack filter-map precede mechanical absorption/reflection; claimed IDs still include raw claims in their original later maps",
+        "Guard filtering retains only original life and StatusMarks reference equality, without a new isCurrent invocation",
+        "Retaliation spreading/cause override, inspection insertion order and passive immunity merge keep original locations",
+        "Loop retains per-entity removal/clear and later direct effects reads. A throw on a later entity still follows already-cleared earlier marks; no all-or-nothing commit is introduced",
+        "Original poison source/reflected target scopes, duplicate shield overwrite and once-only reflected toxin fold remain in unchanged planMechanicalDamage"
+      ],
+      "findings": [],
+      "limits": [
+        "Only three production files inspected; no compiler, tests, game or full gate run",
+        "Extra helper frame/internal returned object is a structural refactor; complete module initialization order not claimed",
+        "C25 actual pre-fold closes; sourced stage intent, deferred Wave/CommitReceipt/C26-C29 remain incomplete. Existing callbacks are not promised inert by a readonly World query type"
+      ]
+    },
+    "boundaryTestsSourceReview": "Inventory independently read three new boundary cases and their literal life/marks inputs; callback receiver and earlier cleared-mark prefix are observed, not mirrored expected from production output. No repeated execution."
+  },
+  "remaining": [
+    "Sourced EffectIntent metadata/clock/causal identity",
+    "Protection/attack owner contributions C26",
+    "Typed DeathWavePlan and CommitReceipt C27",
+    "Relation/death action C28",
+    "Victory checkpoints C29"
+  ]
+}

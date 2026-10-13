@@ -2,18 +2,18 @@
 
 当前目标：完成 [计划](plan.md) 的 P0–P9 / C01–C48（包括 C05a、条件 C18a、C33a）。本文件只有实际完成的切片才能标记完成；原玩法扩充的暂停状态保持在历史文档中。
 
-| 阶段                   | 状态   | 当前工作与证据                                                                       |
-| ---------------------- | ------ | ------------------------------------------------------------------------------------ |
-| P0 基线与契约          | 已完成 | C01 `144f48b` 已提交；C02 `aba9347`；C03 `b56d282`；七样例、89行静态台账与三方向审查 |
-| P1 依赖与共享契约      | 已完成 | C04–C09 数据/支持职责与 public consumer 闭合；零基础包循环，兼容桥按 C44 退出        |
+| 阶段                   | 状态   | 当前工作与证据                                                                         |
+| ---------------------- | ------ | -------------------------------------------------------------------------------------- |
+| P0 基线与契约          | 已完成 | C01 `144f48b` 已提交；C02 `aba9347`；C03 `b56d282`；七样例、89行静态台账与三方向审查   |
+| P1 依赖与共享契约      | 已完成 | C04–C09 数据/支持职责与 public consumer 闭合；零基础包循环，兼容桥按 C44 退出          |
 | P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；当前映射593来源、693目标、8112旧IDs；余mixed tests/support继续 |
-| P3 状态与请求授权      | 进行中 | C16生产读取/C18传播/F02/C19完成；容器读取边界及实际写者闭合，能力查询/schema继续      |
-| P4 规则计划与生命周期  | 进行中 | C21阶段成员快照与opaque lazy完成；完整RulePlan/C22–C24继续                           |
-| P5 效果、死亡与判胜    | 待执行 | C25–C29                                                                              |
-| P6 能力、观察与展示    | 待执行 | C30–C36、C33a                                                                        |
-| P7 记录与独立复现      | 待执行 | C37–C40                                                                              |
-| P8 目录、命名与文档    | 待执行 | C41–C44                                                                              |
-| P9 全仓收敛与验收      | 待执行 | C45–C48；同源固定输入、门禁零债务                                                    |
+| P3 状态与请求授权      | 进行中 | C16生产读取/C18传播/F02/C19完成；容器读取边界及实际写者闭合，能力查询/schema继续       |
+| P4 规则计划与生命周期  | 进行中 | C21阶段成员快照与opaque lazy完成；完整RulePlan/C22–C24继续                             |
+| P5 效果、死亡与判胜    | 进行中 | C25 原效果折叠接实际只读计划；完整来源链及 C26–C29 继续                                |
+| P6 能力、观察与展示    | 待执行 | C30–C36、C33a                                                                          |
+| P7 记录与独立复现      | 待执行 | C37–C40                                                                                |
+| P8 目录、命名与文档    | 待执行 | C41–C44                                                                                |
+| P9 全仓收敛与验收      | 待执行 | C45–C48；同源固定输入、门禁零债务                                                      |
 
 每个切片记录 commit、实现者、独立审查、命令 / 输入指纹及剩余风险。编译与发现范围在每笔提交保持有效。阶段跨越不代表跳过未完成的切片。
 
@@ -391,3 +391,5 @@
 - C13 整批support职责：58原文件→79owner+18既有=97TS，159decl单owner/157raw+2driver逆10原assertblocks；201consumer410bindings，97/176edges无cycle，原40initializer单归。fixed049 source280roots43571实际0，Rootcurrentsrc/tests/scripts35862 actual0；两独立真实角色/IO/init/classification审与2sourceassets6binding/C14 named-export反例修闭。RedMoon实际生产排演归driver/消费头准确，不称独立oracle；6准确head+目录/两route的7file后delta仅源码说明/路径，历史compileinput不重写。精确冻结338path+Rootgate/docs提交，工作区4opaque+随后facadeimports保留各批。无整局/发现/globalgate重复，阶段退出仍待验收。见support-responsibility-closure.md。
 
 - C17 核心opaque容器：68路径，核心readonly object原对象/factory/descriptor不动，33源与34oldfixture完整程序证明0、39owner视图/3Mist读取/93fixture具体typeadapter，原init/指针/值/权限guard/cloneprecedence保。原29Git+4C13working+1A12明源，C13已6cff独立冻提交，opaque只加入已有新imports上typeviews。source99781 actual0、新3/0/11、68heads0；81183仅新RootB literalhooks诊断由B修，多批whole-src/tests/scripts35862 actualclosed0，Root实际API/retired/copyboundary及第二向真68SHA/13schema录制controls审green。不runtimeModel/globalgate重复；legacyfacade/全codec/后续phase继续。见opaque-role-container.md。
+
+- C25 首效果折叠：原13条折叠语句归night-damage-plan，resolve真实一次消费12个只读字段；原结果分配/实体循环/mark清理及后续getter失败前缀保持。查询仅Alive只读/印记身份，6负例99692实际0；原72/0/169+新3/0/12，有限类型90660 actual0，四heads0。Root与独立真实Git源码/receiver/原四函数/三个边界审green；初类型root与inspection-forOf定位harness红保留，只修harness。完整EffectIntent因果时钟、deathwave/receipt/C26–29仍pending，不重复全gate。见night-damage-plan.md。
