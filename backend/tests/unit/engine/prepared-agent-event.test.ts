@@ -25,6 +25,10 @@ import {
   projectPreparedAgentEvent,
 } from "../../../src/game/observation/agent-event-projection";
 import { projectAbilitySource } from "../../../src/game/mechanisms/roles/abilities";
+import {
+  buildAgentVisibleEvent,
+  buildAgentVisibleEventFeed,
+} from "../../../src/game/engine/agent_visible_event_feed";
 
 const queries = {
   demonHunterActorId() {
@@ -754,4 +758,122 @@ test("prepared schema detaches every original family reader payload before any l
     expect(prepared.fact?.reader).toBe(row.reader);
     expect(project(prepared)).toEqual({ seq: 4, type: row.event.type, payload: row.expected });
   }
+});
+
+test("single prepared authorization returns detached nested DTO data for all formerly inline families", () => {
+  for (const type of [
+    "animal_fox_chosen",
+    "fragrant_pair_chosen",
+    "secret_body_chosen",
+    "eclipse_native_suppressed",
+    "mist_knife_drawn",
+    "magician_exchange_committed",
+  ] as const) {
+    const row = cases.find((row) => row.event.type === type)!;
+    const prepared = prepareInertAgentEvent(structuredClone(row.event) as InertAgentEvent);
+    let authorizations = 0;
+    const render = () =>
+      projectPreparedAgentEvent(prepared, 1, 7, {
+        canView(prepared, actorId) {
+          authorizations++;
+          return canViewPreparedAgentEvent(prepared, actorId, queries);
+        },
+        projectAbilitySource() {
+          throw Error("source_unused");
+        },
+      });
+    const first = render()!;
+    expect(first).toEqual({ seq: 7, type, payload: row.expected });
+    expect(authorizations).toBe(1);
+    // actor 输出是可修改的 DTO；修改它不能污染下次授权与投影所用的同一 canonical 事实。
+    for (const key of Object.keys(first.payload)) {
+      const value = first.payload[key];
+      if (Array.isArray(value)) value.splice(0, value.length, "changed-output");
+      else first.payload[key] = "changed-output";
+    }
+    expect(render()).toEqual({ seq: 7, type, payload: row.expected });
+    expect(authorizations).toBe(2);
+  }
+});
+
+test("invalid parsed schema cannot be published by a trusted audience override", () => {
+  const prepared = prepareInertAgentEvent({
+    timestamp: 1,
+    type: "red_moon_night_sealed",
+    payload: { actorId: 1, day: 2, night: 2 },
+  } as InertAgentEvent);
+  let calls = 0;
+  expect(
+    projectPreparedAgentEvent(prepared, 1, 1, {
+      canView() {
+        calls++;
+        return true;
+      },
+      projectAbilitySource() {
+        throw Error("source_unused");
+      },
+    }),
+  ).toBeNull();
+  expect(calls).toBe(0);
+});
+
+test("actual prepared feed preserves private facts, local sequence and Node nested Proxy rejection", () => {
+  const world = new World();
+  const events: GameEvent[] = [
+    { timestamp: 1, type: "god_private_game_info", payload: { boardSize: 1, players: [] } },
+    { timestamp: 2, type: "red_moon_night_sealed", payload: { actorId: 1, day: 1, night: 1 } },
+    { timestamp: 3, type: "red_moon_night_sealed", payload: { actorId: 1, day: 1, night: 2 } },
+    { timestamp: 4, type: "hunter_shot", payload: { hunterId: 1, targetId: 2 } },
+    {
+      timestamp: 5,
+      type: "mist_knife_drawn",
+      audience: [1],
+      payload: { day: 1, candidates: [3], targetId: 3 },
+    },
+    {
+      timestamp: 6,
+      type: "nightmare_fear_committed",
+      audience: [1],
+      payload: { actorId: 1, day: 1, targetId: 2 },
+    },
+    {
+      timestamp: 7,
+      type: "wolf_discussion",
+      audience: [1],
+      payload: { actorId: 5, text: "原文\nraw 🐺", endChat: false, round: 1 },
+    },
+  ];
+  expect(buildAgentVisibleEventFeed(world, events, 1)).toEqual([
+    { seq: 1, type: "red_moon_night_sealed", payload: { actorId: 1, day: 1, night: 2 } },
+    { seq: 2, type: "player_shot", payload: { actorId: 1, targetId: 2 } },
+    { seq: 3, type: "mist_knife_drawn", payload: { day: 1, candidates: [3], targetId: 3 } },
+    { seq: 4, type: "nightmare_fear_committed", payload: { day: 1, targetId: 2 } },
+    {
+      seq: 5,
+      type: "wolf_discussion",
+      payload: { actorId: 5, text: "原文\nraw 🐺", endChat: false, round: 1 },
+    },
+  ]);
+  expect(buildAgentVisibleEventFeed(world, events, 4)).toEqual([
+    { seq: 1, type: "red_moon_night_sealed", payload: { actorId: 1, day: 1, night: 2 } },
+    { seq: 2, type: "player_shot", payload: { actorId: 1, targetId: 2 } },
+  ]);
+  const trace: string[] = [];
+  const payload = new Proxy(
+    { actorId: 1, text: "secret" },
+    {
+      getPrototypeOf() {
+        trace.push("prototype");
+        throw Error("must_not_reflect");
+      },
+      ownKeys() {
+        trace.push("keys");
+        throw Error("must_not_reflect");
+      },
+    },
+  );
+  expect(
+    buildAgentVisibleEvent(world, { timestamp: 8, type: "day_speech", payload }, 1, 1),
+  ).toBeNull();
+  expect(trace).toEqual([]);
 });

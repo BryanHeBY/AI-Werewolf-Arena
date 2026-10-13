@@ -1,10 +1,11 @@
 /**
  * 负责 Agent 事件的全家族读取、受众判断和字段投影。输入为事件、玩家编号及窄查询端口；
- * 事件流消费 Node 的同一脱离副本，布尔入口保留原事实引用；输出保持两种旧模式的实际字段与拒绝顺序。
+ * 输出为布尔可见性或脱离 canonical 事实的玩家事件，保留局部 seq、允许字段和来源脱敏。
+ * 事件流仅消费一次解析的 canonical 事实及固定受众；真实独立布尔入口仍保留旧事实引用与读取顺序。
  * 事件流的结构 reader 消费安全副本；布尔入口保留 typed GameEvent 的原读取信任语义，不承诺 unknown 零 trap。
  * 本模块不直接持有 World、角色、原体或资源写权限；显式 trusted 回调仍可具有其原副作用。
  * 历史 audience 不按当前阵营重算，未知事件默认拒绝；已有自定义规则和恶魔身份查询只在原分支调用。
- * 这里不提交行动、付款或更新知识。可见性模式保留旧公开 API；事件流模式保留额外读器与裁剪。
+ * 这里不提交行动、付款或更新知识。旧直接投影 API 已退出；未知受众或无效家族不得进入字段裁剪。
  */
 import {
   ANIMAL_DREAM_EVENT_TYPES,
@@ -23,14 +24,7 @@ import {
   radiantEclipseAudience,
 } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
 import { MIST_RAVEN_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/mist-raven";
-import { DEMON_HUNTER_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { GHOST_BRIDE_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
-import { WILD_CHILD_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/wild-child";
-import { SHAPESHIFTER_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/shapeshifter";
-import { THIEF_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/thief";
-import { WALL_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
-import { CUPID_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/cupid";
-import { DEBATE_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/debate";
 import {
   WOLF_TEAM_EVENT_TYPES,
   type EntityId,
@@ -49,15 +43,6 @@ export interface AgentEventVisibilityQueries {
     event: GameEvent,
     actorId: EntityId,
   ): { handled: false } | { handled: true; visible: boolean };
-}
-
-/** 字段投影只得到原可见性调用和来源裁剪函数，不获取库存、阶段控制或状态写权。 */
-export interface AgentEventProjectionQueries {
-  canView(event: GameEvent, actorId: EntityId): boolean;
-  projectAbilitySource(
-    origin: () => EventPayloadMap["ability_changed"]["source"],
-    disclosed: () => boolean,
-  ): EventPayloadMap["ability_changed"]["source"] | { kind: AbilitySource["kind"] };
 }
 
 const PUBLIC_EVENT_TYPES = new Set([
@@ -366,231 +351,11 @@ function canViewAgentEventWithFacts(
   return false;
 }
 
-/** 事件流模式：读取、授权和裁剪只使用 Node 已取得的同一 inert 副本。 */
-function projectAgentEventWithFacts(
-  event: GameEvent,
-  actorId: EntityId,
-  visibleSeq: number,
-  queries: AgentEventProjectionQueries,
-  prepared?: PreparedAgentEvent,
-): PlayerVisibleEvent | null {
-  if ((ANIMAL_DREAM_EVENT_TYPES as readonly string[]).includes(event.type)) {
-    const f = readAgentEventFact("readAnimalDreamFact", event.type, event.payload, prepared),
-      visibility = f && animalDreamFactAudience(f.type);
-    if (!f || visibility === "god") return null;
-    if (
-      visibility === "actor" &&
-      (!("actorId" in f.payload) ||
-        f.payload.actorId !== actorId ||
-        !("audience" in event) ||
-        !Array.isArray(event.audience) ||
-        event.audience.length !== 1 ||
-        event.audience[0] !== actorId)
-    )
-      return null;
-    if (visibility === "public" && "audience" in event) return null;
-    return { seq: visibleSeq, type: f.type, payload: { ...f.payload } };
-  }
-  if ((FRAGRANT_PAIR_EVENT_TYPES as readonly string[]).includes(event.type)) {
-    const fact = readAgentEventFact("readFragrantPairFact", event.type, event.payload, prepared);
-    if (
-      !fact ||
-      fragrantPairVisibility(event.type) !== "actor" ||
-      fact.actorId !== actorId ||
-      !("audience" in event) ||
-      !Array.isArray(event.audience) ||
-      event.audience.length !== 1 ||
-      event.audience[0] !== actorId
-    )
-      return null;
-    return { seq: visibleSeq, type: event.type, payload: { ...fact } };
-  }
-  if ((NOBLE_SECRET_BODY_EVENT_TYPES as readonly string[]).includes(event.type)) {
-    const fact = readAgentEventFact("readNobleSecretBodyFact", event.type, event.payload, prepared),
-      visibility = nobleSecretBodyVisibility(event.type);
-    if (!fact || visibility === "god") return null;
-    if (
-      visibility === "actor" &&
-      (fact.actorId !== actorId ||
-        !("audience" in event) ||
-        !Array.isArray(event.audience) ||
-        event.audience.length !== 1 ||
-        event.audience[0] !== actorId)
-    )
-      return null;
-    if (visibility === "public" && "audience" in event) return null;
-    return { seq: visibleSeq, type: event.type, payload: { ...fact } };
-  }
-  if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(event.type)) {
-    const fact = readAgentEventFact("readRadiantEclipseFact", event.type, event.payload, prepared);
-    if (!fact) return null;
-    const expected = radiantEclipseAudience(event.type, fact);
-    if (
-      expected.length !== 1 ||
-      expected[0] !== actorId ||
-      !("audience" in event) ||
-      !Array.isArray(event.audience) ||
-      event.audience.length !== 1 ||
-      event.audience[0] !== actorId
-    )
-      return null;
-    return { seq: visibleSeq, type: event.type, payload: { ...fact } };
-  }
-  const mistType = event.type;
-  if ((MIST_RAVEN_EVENT_TYPES as readonly string[]).includes(mistType)) {
-    try {
-      // 授权和输出消费同一脱离副本；不得检查一个对象后，
-      // 再通过外来回调重新读取可变原始对象。
-      const audience = "audience" in event ? structuredClone(event.audience) : null;
-      if (
-        !Array.isArray(audience) ||
-        !audience.every((id) => Number.isSafeInteger(id) && id > 0) ||
-        new Set(audience).size !== audience.length
-      )
-        return null;
-      const fact = readAgentEventFact("readMistRavenFact", mistType, event.payload, prepared);
-      if (
-        !fact ||
-        !audience.includes(actorId) ||
-        ("actorId" in fact && (fact.actorId !== actorId || audience.length !== 1))
-      )
-        return null;
-      return { seq: visibleSeq, type: mistType, payload: { ...fact } };
-    } catch {
-      return null;
-    }
-  }
-  if (
-    event.type === "lonely_girl_admired_chosen" &&
-    !readAgentEventFact("readLonelyGirlEventFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    (CUPID_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readAgentEventFact("readCupidEventFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    (DEBATE_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readAgentEventFact("readDebateEventFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    (WALL_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readAgentEventFact("readWallEventFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    (THIEF_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readAgentEventFact("readThiefEventFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    (WILD_CHILD_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readAgentEventFact("readWildChildEventFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    (SHAPESHIFTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readAgentEventFact("readShapeshifterEventFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    (GHOST_BRIDE_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readAgentEventFact("readGhostBrideEventFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    (DEMON_HUNTER_EVENT_TYPES as readonly string[]).includes(event.type) &&
-    !readAgentEventFact("readDemonHunterEventFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    event.type === "nightmare_fear_committed" &&
-    !readAgentEventFact("readNightmareFearFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    (event.type === "red_moon_night_sealed" || event.type === "red_moon_exile_delayed") &&
-    !readAgentEventFact("readRedMoonNextNightFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    event.type === "red_moon_delay_expired" &&
-    !readAgentEventFact("readRedMoonExpiryFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    event.type === "magician_exchange_committed" &&
-    !readAgentEventFact("readMagicianExchangeFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    event.type === "death_shot_missed" &&
-    !readAgentEventFact("readDeathShotMissFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    event.type === "order_prince_revote_started" &&
-    !readAgentEventFact("readOrderPrinceRevoteFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    event.type === "order_prince_choice_committed" &&
-    !readAgentEventFact("readOrderPrinceChoiceFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    event.type === "trickster_exchange_committed" &&
-    !readAgentEventFact("readTricksterExchangeFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    event.type === "trickster_exchange_skipped" &&
-    !readAgentEventFact("readTricksterSkipFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    event.type === "exile_target_mapped" &&
-    !readAgentEventFact("readExileMappingFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    event.type === "wolf_sorcerer_exchange_committed" &&
-    !readAgentEventFact("readWolfSorcererExchangeFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (
-    event.type === "wolf_sorcerer_exchange_skipped" &&
-    !readAgentEventFact("readWolfSorcererSkipFact", event.type, event.payload, prepared)
-  )
-    return null;
-  if (!queries.canView(event, actorId)) {
-    return null;
-  }
-  if (prepared) event = prepared.projectionEvent;
-  if (event.type === "hunter_shot" || event.type === "player_shot") {
-    return {
-      seq: visibleSeq,
-      type: "player_shot",
-      payload: {
-        actorId: event.type === "hunter_shot" ? event.payload.hunterId : event.payload.actorId,
-        targetId: event.payload.targetId,
-      },
-    };
-  }
-  return {
-    seq: visibleSeq,
-    type: event.type,
-    payload: projectPayload(event, queries, prepared),
-  };
-}
-
 /** 保留既有公开字段及来源披露策略，排除内部元数据；用户原文不翻译、不改写。 */
 function projectPayload(
   event: GameEvent,
-  queries: AgentEventProjectionQueries,
-  prepared?: PreparedAgentEvent,
+  queries: PreparedAgentEventProjectionQueries,
+  prepared: PreparedAgentEvent,
 ): Record<string, unknown> {
   switch (event.type) {
     case "red_moon_night_sealed":
@@ -605,7 +370,7 @@ function projectPayload(
         event.payload,
         prepared,
       );
-      return fact ? { day: fact.day, pair: fact.pair } : {};
+      return fact ? { day: fact.day, pair: structuredClone(fact.pair) } : {};
     }
     case "nightmare_fear_committed":
       return { day: event.payload.day, targetId: event.payload.targetId };
@@ -719,16 +484,6 @@ export function canViewAgentEvent(
   return canViewAgentEventWithFacts(event, actorId, queries);
 }
 
-/** 迁移准备阶段保留旧投影入口；生产 feed 切换后退出此无独立业务消费者的 API。 */
-export function projectAgentEvent(
-  event: GameEvent,
-  actorId: EntityId,
-  visibleSeq: number,
-  queries: AgentEventProjectionQueries,
-): PlayerVisibleEvent | null {
-  return projectAgentEventWithFacts(event, actorId, visibleSeq, queries);
-}
-
 /** 授权取一次解析的事实；World 身份和自定义规则仍只在原分支按原时点查询。 */
 export function canViewPreparedAgentEvent(
   prepared: PreparedAgentEvent,
@@ -764,7 +519,10 @@ export function canViewPreparedAgentEvent(
 
 export interface PreparedAgentEventProjectionQueries {
   canView(prepared: PreparedAgentEvent, actorId: EntityId): boolean;
-  projectAbilitySource: AgentEventProjectionQueries["projectAbilitySource"];
+  projectAbilitySource(
+    origin: () => EventPayloadMap["ability_changed"]["source"],
+    disclosed: () => boolean,
+  ): EventPayloadMap["ability_changed"]["source"] | { kind: AbilitySource["kind"] };
 }
 
 /**
@@ -777,18 +535,25 @@ export function projectPreparedAgentEvent(
   visibleSeq: number,
   queries: PreparedAgentEventProjectionQueries,
 ): PlayerVisibleEvent | null {
-  return projectAgentEventWithFacts(
-    prepared.projectionEvent,
-    actorId,
-    visibleSeq,
-    {
-      canView(_event, actorId) {
-        return queries.canView(prepared, actorId);
+  // 无效 schema 没有可投影事实；可信受众回调也不能把无效数据变成合法事实。
+  if (prepared.fact === null) return null;
+  // 一次授权消费已解析事实与固定受众；任何拒绝都在字段投影与来源披露之前结束。
+  if (!queries.canView(prepared, actorId)) return null;
+  const event = prepared.projectionEvent;
+  if (event.type === "hunter_shot" || event.type === "player_shot") {
+    return {
+      seq: visibleSeq,
+      type: "player_shot",
+      payload: {
+        actorId: event.type === "hunter_shot" ? event.payload.hunterId : event.payload.actorId,
+        targetId: event.payload.targetId,
       },
-      projectAbilitySource(origin, disclosed) {
-        return queries.projectAbilitySource(origin, disclosed);
-      },
-    },
-    prepared,
-  );
+    };
+  }
+  return {
+    seq: visibleSeq,
+    type: event.type,
+    // 返回数据不能反写 canonical 事实。普通家族走原深复制，Magician pair 的特例也独立复制。
+    payload: projectPayload(event, queries, prepared),
+  };
 }

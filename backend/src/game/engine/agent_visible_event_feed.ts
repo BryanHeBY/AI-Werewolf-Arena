@@ -1,8 +1,8 @@
 /**
  * 负责将原事件取得安全的 Node 纯数据副本，并按玩家事件流生成局部连续 seq。
- * 输入为 World 和已提交领域事件；输出为按发表时 audience 授权的脱离事件。
- * 反射前拒绝 Proxy，保留原 descriptor、数组、循环和失败边界；全家族读取与裁剪归共用投影 owner。
- * 窄回调仅在原分支查找原可见性方法或来源函数，不提前读取 World，也不授予状态写权限。
+ * 输入为 World 和已提交领域事件；输出使用一次解析的事实和发表时 audience，数据不反写 canonical 事实。
+ * 反射前拒绝 Proxy，保留原 descriptor、数组、循环和失败边界；家族解析归 facts owner，授权及裁剪归投影 owner。
+ * 每事件只获取一次 prepared 可见性方法；身份和自定义规则仍只在原分支查询，不授予状态写权限。
  * 这里不提交行动或补发旧秘密；隐藏事件不会留下全局序号缺口。
  */
 import { types } from "node:util";
@@ -10,10 +10,11 @@ import type { EntityId, GameEvent, PlayerVisibleEvent } from "@ai-werewolf-arena
 import type { World } from "../../core/domain/world";
 import { getDefaultAgentEventVisibilityRegistry } from "../mechanisms";
 import { projectAbilitySource } from "../mechanisms/roles/abilities";
-import { projectAgentEvent } from "../observation/agent-event-projection";
+import { projectPreparedAgentEvent } from "../observation/agent-event-projection";
+import { prepareInertAgentEvent, type InertAgentEvent } from "../observation/agent-event-facts";
 
 /** 原 Node ingress 程序；不对浏览器 unknown Proxy 承诺零 trap。 */
-function snapshotEvent(event: GameEvent): GameEvent | null {
+function snapshotEvent(event: GameEvent): InertAgentEvent | null {
   const ancestors = new Set<object>();
   const inert = (value: unknown, depth: number): boolean => {
     // 声明中的可选字段在 JSON 编码前仍允许 undefined。
@@ -70,14 +71,14 @@ function snapshotEvent(event: GameEvent): GameEvent | null {
       copy.payload !== null &&
       typeof copy.payload === "object" &&
       !Array.isArray(copy.payload)
-      ? copy
+      ? (copy as InertAgentEvent)
       : null;
   } catch {
     return null;
   }
 }
 
-/** Node 在任何事实读器前取得同一副本；后续授权及输出不会再回读原始事件。 */
+/** Node 在任何事实读器前取得安全副本；解析、授权与输出都不再回读宿主原事件。 */
 export function buildAgentVisibleEvent(
   world: World,
   event: GameEvent,
@@ -86,11 +87,11 @@ export function buildAgentVisibleEvent(
 ): PlayerVisibleEvent | null {
   const detached = snapshotEvent(event);
   if (!detached) return null;
-  event = detached;
-  return projectAgentEvent(event, actorId, visibleSeq, {
-    canView(event, actorId) {
+  const prepared = prepareInertAgentEvent(detached);
+  return projectPreparedAgentEvent(prepared, actorId, visibleSeq, {
+    canView(prepared, actorId) {
       const visibility = getDefaultAgentEventVisibilityRegistry();
-      return visibility.canView(world, event, actorId);
+      return visibility.canViewPrepared(world, prepared, actorId);
     },
     projectAbilitySource(origin, disclosed) {
       return projectAbilitySource(origin(), disclosed());

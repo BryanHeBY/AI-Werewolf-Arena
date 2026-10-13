@@ -14,8 +14,12 @@ import {
 } from "../../../src/game/engine/agent_visible_event_feed";
 import {
   canViewAgentEvent,
-  projectAgentEvent,
+  projectPreparedAgentEvent,
 } from "../../../src/game/observation/agent-event-projection";
+import {
+  prepareInertAgentEvent,
+  type InertAgentEvent,
+} from "../../../src/game/observation/agent-event-facts";
 import { projectAbilitySource } from "../../../src/game/mechanisms/roles/abilities";
 
 test("boolean visibility keeps its historical Mist audience mode while the feed rejects duplicate recipients", () => {
@@ -235,9 +239,9 @@ test("the same event reaches custom visibility before projection and source fiel
       maxUses: null,
     },
   };
-  const actual = projectAgentEvent(event, 1, 1, {
+  const actual = projectPreparedAgentEvent(prepareInertAgentEvent(event as InertAgentEvent), 1, 1, {
     canView(observed) {
-      expect(observed).toBe(event);
+      expect(observed.sourceEvent).toBe(event as InertAgentEvent);
       trace.push("visibility");
       Object.defineProperty(event.payload, "source", {
         enumerable: true,
