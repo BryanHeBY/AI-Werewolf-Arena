@@ -1,10 +1,7 @@
 /**
- * Architecture / filesystem review of exact engine provenance. Literal package
- * exports, module bytes and mock external canaries independently expose missing
- * inputs or symlink traversal. Fixtures live under /tmp and never use real auth.
- * The one reproduction integration constructs a native initial checkpoint only;
- * its oracle is the unchanged archive plus rejection before any replay output.
- * No model, full-game verdict or production resolver supplies an expected result.
+ * 负责精确引擎来源的架构与文件系统检查；输入为字面包导出、模块字节和独立模拟外部 canary。
+ * 输出为遗漏来源及符号链接穿越的拒绝断言；临时目录只在 /tmp，不使用真实认证。
+ * 录制集成只构造原生初始 checkpoint；原归档与 replay 输出前的拒绝为预期，不运行完整对局或模型。
  */
 import { expect, test } from "bun:test";
 import { createHash } from "node:crypto";
@@ -23,7 +20,7 @@ import path from "node:path";
 import { engineFingerprintInputs, fingerprintEngine } from "../../src/recording/engine-fingerprint";
 import { bootstrapGame } from "../../src/app/bootstrap";
 import { Camp, createRandom, type Role } from "../../src/core";
-import { ReproductionTrace } from "../../src/recording/reproduction";
+import { ReproductionTrace } from "../../src/recording/reproduction-trace";
 import { sixPlayerMvpConfig } from "../../src/runtime/scenarios/six_player_mvp";
 import { captureCheckpoint } from "../../src/runtime/simulation/reproduction_context";
 import { replayReproduction } from "../../src/runtime/simulation/replay_reproduction";

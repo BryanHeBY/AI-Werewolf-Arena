@@ -1,7 +1,7 @@
 /**
- * Scenario tests execute Wolf King night/exile deaths and original/exchanged targets through complete bilingual SDK, ACP and mixed games.
- * Inputs are scripted Magician plans and copied reproduction mutations; literal gun-chain order, causes, identities, archive visibility and terminal results are the oracle.
- * The transport driver owns child and record cleanup. Optional explicit archive exports retain their old output scope; no billed model or golden regeneration is performed by default.
+ * 负责狼王夜间／放逐死亡及原目标／交换目标的双语 SDK、ACP 与混合对局场景。
+ * 输入为脚本魔术师计划及复制的复现变体；输出由字面枪链顺序、死因、身份、可见性和终局断言核对。
+ * 传输驱动拥有子进程和记录清理；可选显式归档导出保留原范围，默认不调用计费模型或重生 golden。
  */
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
@@ -9,7 +9,7 @@ import { expect, test } from "bun:test";
 import { Phase, DeathCause, createRandom, type ActionRequest } from "../../../../src/core";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
-import { ReproductionTrace } from "../../../../src/recording/reproduction";
+import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";
 import { magicianScenario } from "../../../support/features/magician/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { validateMagicianRecord } from "../../../../src/recording/magician_record";

@@ -1,8 +1,7 @@
 /**
- * Unit tests: immutable board ownership uses literal configurations, descriptor
- * canaries and one controlled two-handler night. Handwritten freeze, identity,
- * rejection and tie expectations distinguish original live mutation from the
- * explicit fixed-parameter policy. No model, private config or complete game runs.
+ * 负责板子不可变所有权单元测试；输入为字面配置、属性描述符 canary 和受控双处理器夜晚。
+ * 输出由手写冻结、身份、拒绝与平票预期核对，区分原动态更改与显式固定参数策略。
+ * 不调用模型、私有配置或完整对局。
  */
 import { expect, test } from "bun:test";
 import { Role, type ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
@@ -16,7 +15,8 @@ import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { DamageResolutionSystem } from "../../../src/core/domain/systems/damage_resolution_system";
 import { createRandom } from "../../../src/core/domain/random";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { ReproductionTrace, type ReproductionMetadata } from "../../../src/recording/reproduction";
+import { type ReproductionMetadata } from "../../../src/recording/reproduction";
+import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
 import { beginGameReproduction } from "../../../src/runtime/simulation/reproduction_context";
 import { fragrantPairSeerTwelveConfig } from "../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
 

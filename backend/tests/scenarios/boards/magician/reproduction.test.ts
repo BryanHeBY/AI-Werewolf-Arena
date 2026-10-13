@@ -1,8 +1,7 @@
 /**
- * Magician recording/verifier scenarios verify target exchange, night gun and resource chronology.
- * Input: Actual fixed-action game records, explicit policies and independent causal/inventory mutants.
- * Output and independent oracle: Handwritten native outcomes and rejected coherent altered decision/checkpoint tapes.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 负责魔术师目标交换、夜间枪击与资源时序的录制审核场景。
+ * 输入为实际固定行动记录、明确策略和独立因果／库存篡改；输出由手写原生结果与严格 Tape 拒绝断言核对。
+ * 不调用计费模型，不改写预期 fixture 或 Tape。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
@@ -16,12 +15,8 @@ import {
   currentEngineVersion,
 } from "../../../../src/runtime/simulation/reproduction_context";
 import { replayReproduction } from "../../../../src/runtime/simulation/replay_reproduction";
-import {
-  parseReproductionRecord,
-  ReproductionTrace,
-  type ReproductionRecord,
-  type RecordedCheckpoint,
-} from "../../../../src/recording/reproduction";
+import { parseReproductionRecord, type ReproductionRecord, type RecordedCheckpoint } from "../../../../src/recording/reproduction";
+import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";
 import { validateMagicianRecord } from "../../../../src/recording/magician_record";
 import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";

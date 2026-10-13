@@ -1,17 +1,14 @@
 /**
- * Reproduction scenarios verify real Mist/Raven unpublished native, badge, election and spent-skill feeds remain compatible and private.
- * Input: Original cached actual phase prefixes, recording metadata and copied private-canary/feed alterations.
- * Output and oracle: Literal request/event/state expectations and parser rejection preserve original cache and setup evaluation; no pure decoder fixture replaces the played prefix.
+ * 负责场景测试：真实雾鸦未发布原生、警徽、选举及已消耗技能消息的兼容与私密性。
+ * 输入为原缓存阶段前缀、录制元数据及私有 canary／消息变体；输出由原请求、事件、状态字面值与 parser 拒绝核对。
+ * 保留原缓存与装配求值，不用纯 decoder fixture 代替已运行前缀。
  */
 import { mistPrefix } from "../../../support/features/mist-raven/drivers/prefix";
 import { test, expect } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Phase, createRandom, type ActionRequest, type ToolCall } from "../../../../src/core";
-import {
-  ReproductionTrace,
-  parseReproductionRecord,
-  type ReproductionRecord,
-} from "../../../../src/recording/reproduction";
+import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
+import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
 import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";
 import { mistBoard, MIST_ROLES } from "../../../support/features/mist-raven/builders/board";

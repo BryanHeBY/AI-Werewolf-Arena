@@ -1,14 +1,11 @@
 /**
- * Unit tests: Request delivery uses held in-memory decisions, revoked authority and
- * default unbound requests; original decision/error identities check settlement ownership
- * after provider await. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 负责 provider 等待后的请求交付与结算所有权单元测试；输入为受控决定、撤销权限和默认未绑定请求。
+ * 输出由原决定／错误身份与字面或不可变 fixture 断言核对，不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { ReproductionTrace } from "../../../src/recording/reproduction";
+import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
 import {
@@ -99,7 +96,7 @@ test("a pending authority guard is tied to the original object, with no metadata
   bindRequestDeliveryGuard(request, () => false);
   expect(() => assertRequestDelivery(request)).toThrow();
   expect(() => assertRequestDelivery(structuredClone(request))).not.toThrow();
-  // The clone has no authority guard; Ghost Bride's separate opaque scope still rejects it.
+  // 副本没有交付权限绑定；鬼新娘的独立不透明 scope 仍会拒绝它。
 });
 test("provider failures remain their original recorded error even with a revoked delivery guard", async () => {
   const { trace, request } = fixture();

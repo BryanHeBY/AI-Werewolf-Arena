@@ -1,14 +1,15 @@
 /**
- * Reproduction scenarios verify Lonely Girl complete recorded games preserve isolated secret affiliation and private admiration history.
- * Input: Original six/twelve-player scenario, transport and locale matrices plus same-prefix archive alterations.
- * Output and oracle: Literal original identity, affiliation, survivor and winner assertions remain attached to actual reproduction; copied archive inputs are not new independent rule goldens.
+ * 负责孤独少女完整录制对局中秘密胜利归属及私有倾慕历史的隔离。
+ * 输入为原六人／十二人场景、传输与语言矩阵及同前缀归档变体；输出由原身份、归属、生存和胜利字面断言核对。
+ * 复制的归档只作为变体，不充当独立规则 golden。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { Role, Camp, type GameEvent } from "../../../../src/core";
 import { LONELY_GIRL_CASES, lonelyGirlScenario } from "../../../support/features/lonely-girl/builders/scenario";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
-import { ReproductionTrace, parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../../src/recording/reproduction";
+import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";
 for (const size of [6, 12] as const)
   for (const kind of LONELY_GIRL_CASES.filter(
     (k) => size === 6 || ["good_alive", "wolf_alive", "wolf_win"].includes(k),

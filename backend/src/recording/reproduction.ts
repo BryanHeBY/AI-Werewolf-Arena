@@ -1,7 +1,7 @@
 /**
- * 负责 reproduction 原版本／schema 准入、因果请求轨迹和决定记录。输入为纯数据请求、事实、操作和 checkpoint；
- * 输出为原严格 Tape，机制审核交给独立固定 verifier 装配，准入与第一失败顺序保持。
- * Trace 只拥有请求开启／结算证据，不把预检回执当资源提交，不序列化权限或原体句柄。
+ * 负责严格复现归档的版本、schema 与原错误名称准入；输入为未知归档数据，输出为已审核的 schema 2 Tape。
+ * 机制审核交给固定独立 verifier 装配，版本准入、字段形状和第一失败顺序保持。
+ * 请求轨迹及其可变游标由 reproduction-trace 单独拥有；此模块不创建 Trace、不执行行动或修改游戏。
  * 精确 source／lock 检查仍由实际 replay 执行；用户原文不经过展示翻译改写。
  */
 import { verifyReproductionMechanisms } from "../verification/reproduction/assembly";
@@ -85,7 +85,6 @@ import type {
   VictoryAffiliation,
 } from "@ai-werewolf-arena/game-catalog";
 import { types } from "node:util";
-import { assertRequestDelivery, deferRequestDelivery } from "../core/domain/request_delivery";
 import {
   ACTION_STAGES,
   SHERIFF_BADGE_POLICIES,
@@ -102,9 +101,8 @@ import {
   type RuntimeSnapshot,
   type ToolCall,
 } from "@ai-werewolf-arena/game-contract";
-import { WOLF_TEAM_EVENT_TYPES, type GameEvent } from "@ai-werewolf-arena/game-contract/events";
+import { WOLF_TEAM_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/events";
 import type { ActionRequest } from "@ai-werewolf-arena/game-contract/requests";
-import type { ActionProvider } from "../core/domain/actions";
 import type { RandomMetadata } from "../core/domain/random";
 
 export const REPRODUCTION_SCHEMA_VERSION = 2 as const;
@@ -865,174 +863,4 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   const result = parsed.data as unknown as ReproductionRecord;
   verifyReproductionMechanisms(result);
   return result;
-}
-
-export function normalizedRequest(request: ActionRequest): Omit<ActionRequest, "deadlineAtMs"> {
-  const { deadlineAtMs: _deadline, ...facts } = request;
-  return structuredClone(facts);
-}
-
-/** 复制 provider 数据时，不触发 getter、Proxy trap 或自定义序列化。 */
-function copyDecisionData(value: unknown, depth = 0): unknown {
-  if (
-    value === null ||
-    typeof value === "string" ||
-    typeof value === "boolean" ||
-    (typeof value === "number" && Number.isFinite(value))
-  )
-    return value;
-  if (
-    !value ||
-    typeof value !== "object" ||
-    depth > 32 ||
-    types.isProxy(value) ||
-    Object.getOwnPropertySymbols(value).length
-  )
-    throw new Error("reproduction_action_not_data");
-  const array = Array.isArray(value),
-    proto = Object.getPrototypeOf(value);
-  if (array ? proto !== Array.prototype : proto !== Object.prototype && proto !== null)
-    throw new Error("reproduction_action_not_plain");
-  const fields = Object.getOwnPropertyDescriptors(value),
-    copy: Record<string, unknown> = {};
-  for (const [key, field] of Object.entries(fields)) {
-    if (array && key === "length") continue;
-    if (!field.enumerable || !Object.hasOwn(field, "value"))
-      throw new Error("reproduction_action_accessor");
-    Object.defineProperty(copy, key, {
-      value: copyDecisionData(field.value, depth + 1),
-      enumerable: true,
-    });
-  }
-  if (!array) return copy;
-  const length = fields.length?.value;
-  if (
-    !Number.isSafeInteger(length) ||
-    length > 1024 ||
-    Object.keys(copy).length !== length ||
-    !Array.from({ length }, (_, i) => Object.hasOwn(copy, i)).every(Boolean)
-  )
-    throw new Error("reproduction_action_array");
-  return Array.from({ length }, (_, i) => copy[i]);
-}
-
-export class ReproductionTrace {
-  private readonly decisions: RecordedDecision[] = [];
-  private readonly checkpoints: RecordedCheckpoint[] = [];
-  private events: RecordedGameEvent[] = [];
-  private settled = 0;
-  private invalid = false;
-  private readonly errors: Array<{ scope: ReproductionFailureScope; name: RecordedErrorName }> = [];
-  private readonly turns = new Map<string, number>();
-  constructor(
-    private readonly metadata: ReproductionMetadata,
-    private readonly onChange: () => void,
-    private readonly liveEvents?: () => readonly GameEvent[],
-  ) {
-    this.metadata = structuredClone(metadata);
-  }
-
-  get settlementCount(): number {
-    return this.settled;
-  }
-  get decisionCount(): number {
-    return this.decisions.length;
-  }
-  get ownedEventCursor(): number | undefined {
-    return this.metadata.normalizedBoard.nobleSecretBody ||
-      this.metadata.normalizedBoard.fragrantPairSeer ||
-      this.metadata.normalizedBoard.animalDream
-      ? (this.liveEvents?.().length ?? this.events.length)
-      : undefined;
-  }
-  async decide(request: ActionRequest, provider: ActionProvider): Promise<ToolCall | null> {
-    const key = `${request.actorId}/${request.context.day}/${request.context.stage}`;
-    const turn = (this.turns.get(key) ?? 0) + 1;
-    this.turns.set(key, turn);
-    const entry: RecordedDecision = {
-      actorId: request.actorId,
-      day: request.context.day,
-      stage: request.context.stage,
-      turn,
-      request: normalizedRequest(request),
-      openedAfterSettlement: this.settled,
-      ...(this.ownedEventCursor === undefined ? {} : { openedAtEventCount: this.ownedEventCursor }),
-      outcome: { kind: "pending" },
-    };
-    this.decisions.push(entry);
-    this.onChange();
-    try {
-      const action = await provider.getAction(request);
-      const recordedAction = copyDecisionData(action) as ToolCall | null;
-      assertRequestDelivery(request);
-      const settle = (accepted: boolean) => {
-        entry.outcome = accepted
-          ? { kind: "action", action: recordedAction }
-          : { kind: "error", code: "decision_failed", name: "Error" };
-        entry.settleOrder = ++this.settled;
-        this.onChange();
-      };
-      if (!deferRequestDelivery(request, settle)) settle(true);
-      return recordedAction;
-    } catch (error) {
-      // 传输错误文本可能含认证凭证；只保留可复现的失败信息，原始消息不入档。
-      entry.outcome = { kind: "error", code: "decision_failed", name: recordedErrorName(error) };
-      entry.settleOrder = ++this.settled;
-      this.onChange();
-      throw error;
-    }
-  }
-
-  invalidate(): void {
-    this.invalid = true;
-    this.onChange();
-  }
-
-  noteFailure(scope: ReproductionFailureScope, error: unknown): void {
-    this.errors.push({ scope, name: recordedErrorName(error) });
-    this.onChange();
-  }
-
-  checkpoint(checkpoint: RecordedCheckpoint, events: readonly GameEvent[]): void {
-    if (events.length !== checkpoint.eventCount)
-      throw new Error("reproduction_checkpoint_events_mismatch");
-    this.checkpoints.push(
-      structuredClone(
-        checkpoint.animalDream || checkpoint.nobleBody || checkpoint.fragrantPair
-          ? { ...checkpoint, settlementCount: this.settled, decisionCount: this.decisions.length }
-          : checkpoint,
-      ),
-    );
-    this.events = structuredClone(
-      events.map(({ payload, ...event }) => ({ ...event, payload: { ...payload } })),
-    );
-    this.onChange();
-  }
-
-  build(input?: {
-    operations: ReproductionRecord["operations"];
-    termination: { reason: string; winner: Camp | null };
-  }): ReproductionRecord {
-    const currentEvents = this.liveEvents?.();
-    if (currentEvents && currentEvents.length < (this.checkpoints.at(-1)?.eventCount ?? 0))
-      throw new Error("reproduction_live_events_before_checkpoint");
-    const record = {
-      schemaVersion: REPRODUCTION_SCHEMA_VERSION,
-      finalized: Boolean(input),
-      metadata: this.metadata,
-      decisions: this.decisions,
-      checkpoints: this.checkpoints,
-      events: currentEvents
-        ? structuredClone(
-            currentEvents.map(({ payload, ...event }) => ({ ...event, payload: { ...payload } })),
-          )
-        : this.events,
-      operations: input?.operations ?? [],
-      termination: input ? { ...input.termination, errors: this.errors } : null,
-    };
-    if (input && this.invalid) throw new Error("reproduction_trace_incomplete");
-    if (input && this.decisions.some((entry) => entry.outcome.kind === "pending"))
-      throw new Error("reproduction_decisions_pending");
-    return parseReproductionRecord(record);
-  }
 }

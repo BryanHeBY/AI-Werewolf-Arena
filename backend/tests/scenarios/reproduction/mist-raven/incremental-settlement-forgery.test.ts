@@ -1,16 +1,13 @@
 /**
- * Reproduction scenarios verify Mist/Raven incremental request prefixes retain predecessor settlement and private state through publication.
- * Input: Actual phase/prefix drivers, original cached sources and copied action, candidate, stock or co-deletion forgeries.
- * Output and oracle: Explicit legitimate-prefix acceptance and malformed-record rejection retain the original causal source; shared setup, matrices and source archives are not regenerated.
+ * 负责场景测试：雾鸦增量请求前缀在发布前后保留前置结算及私有状态。
+ * 输入为实际阶段／前缀驱动、原缓存来源与行动、候选、库存、共同删除变体；输出由合法前缀准入与非法记录拒绝核对。
+ * 保留原因果来源，不重生共享装配、矩阵或来源归档。
  */
 import { test, expect } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { createRandom, type ActionRequest, type ToolCall } from "../../../../src/core";
-import {
-  ReproductionTrace,
-  parseReproductionRecord,
-  type ReproductionRecord,
-} from "../../../../src/recording/reproduction";
+import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
+import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";
 import { validateMistRavenRecord } from "../../../../src/recording/mist_raven_record";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
 import { mistRecording } from "../../../support/features/mist-raven/drivers/recording";

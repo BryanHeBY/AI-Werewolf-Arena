@@ -1,13 +1,14 @@
 /**
- * Fragrant configuration scenarios verify living and dead Witch night-two stock flags through actual cycles and strict Tape validation.
- * Input: Original literal death/knife/exile plans, controlled role actions and owned recorded metadata from the existing driver.
- * Output and oracle: Handwritten life/stock/reset booleans and forged checkpoint refusal retain original assertions; no expected data is regenerated and source/fixture ownership stays external.
+ * 负责场景测试：馥郁板子中存活／死亡女巫第二夜库存标记的真实周期与严格 Tape 校验。
+ * 输入为原死亡／狼刀／放逐计划、受控角色行动及驱动持有的录制元数据；输出由手写生命、库存、重置布尔值与伪造拒绝核对。
+ * 保留原断言，不重新生成预期；来源和 fixture 仍由外部原驱动拥有。
  */
 import { recordFragrantLiteral } from "../../support/features/fragrant-pair-seer/drivers/recording";
 import { test, expect } from "bun:test";
 import { fragrantRuntimeGame as game } from "../../support/features/fragrant-pair-seer/builders/runtime-game";
 import { fragrantRuntimeAction as act } from "../../support/features/fragrant-pair-seer/drivers/actions";
-import { ReproductionTrace, parseReproductionRecord } from "../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../src/recording/reproduction";
+import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
 import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
 
 for (const dead of [false, true])

@@ -19,7 +19,8 @@ import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../src/runtime/config/board_definition";
-import { ReproductionTrace, parseReproductionRecord } from "../../../src/recording/reproduction";
+import { parseReproductionRecord } from "../../../src/recording/reproduction";
+import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
 import { captureCheckpoint } from "../../../src/runtime/simulation/reproduction_context";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 

@@ -22,11 +22,8 @@ import { createReplayDocument } from "./replay_document";
 import { ReplayFileStore } from "./file_store";
 import { ReplaySessionAggregate } from "./session_aggregate";
 import { getSessionRecorder } from "./recording_context";
-import {
-  ReproductionTrace,
-  type ReproductionFailureScope,
-  type ReproductionMetadata,
-} from "./reproduction";
+import { type ReproductionFailureScope, type ReproductionMetadata } from "./reproduction";
+import { ReproductionTrace } from "./reproduction-trace";
 import { SessionRecordingLifecycle } from "./session-recording-lifecycle";
 
 /** 文件内容、严格失败及归档发布的唯一编排者；刷盘排程由具体生命周期实例持有。 */

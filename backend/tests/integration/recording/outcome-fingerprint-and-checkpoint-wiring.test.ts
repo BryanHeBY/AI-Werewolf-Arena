@@ -1,5 +1,7 @@
 /**
- * Recording integration tests check real source/lock fingerprints and explicit serialized membership wiring. Inputs are isolated source trees, real current build metadata and literal checkpoint declarations; source-hash changes, unchanged locks and original trace validation errors are the oracle. Native file reads and original temp cleanup remain explicit; no complete game or model runs.
+ * 负责胜利成员、精确来源指纹及 checkpoint 的实际录制接线测试。
+ * 输入为受控初始化 World、字面成员与临时模块字节；输出由原成员编码、变化指纹和保存／拒绝断言核对。
+ * 保留原装配和测试体，不运行计费模型或重生预期归档。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -43,7 +45,7 @@ test("an executed shared result decoder change invalidates the engine fingerprin
 });
 
 test("empty membership is explicit and serializable; invalid declarations fail at installation rather than final persistence", async () => {
-  const { ReproductionTrace } = await import("../../../src/recording/reproduction");
+  const { ReproductionTrace } = await import("../../../src/recording/reproduction-trace");
   const { currentEngineVersion } =
     await import("../../../src/runtime/simulation/reproduction_context");
   const { world } = fixture("en");

@@ -1,9 +1,7 @@
 /**
- * Recording boundary tests: one initialized World and literal timeout termination
- * produce a native zero-decision Tape whose parameters come from the bound owner.
- * Handwritten min-id, zero-cycle and old-source refusal assertions are the oracle;
- * native strict replay checks that same encoded data at the actual reader boundary.
- * Temporary files are cleaned, no game cycle, model or historical fixture is run.
+ * 负责单元测试：录制板子所有权边界；输入为一个初始化 World 和字面超时终止，输出为零决定原生 Tape。
+ * 原 min-id、零周期与旧来源拒绝断言为手写预期，原生严格 reader 核对同一编码数据。
+ * 清理临时文件，不执行对局周期、模型或历史 fixture。
  */
 import { expect, test } from "bun:test";
 import { mkdtemp, rm } from "node:fs/promises";
@@ -12,7 +10,8 @@ import path from "node:path";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { createRandom } from "../../../src/core/domain/random";
 import { SessionRecordManager } from "../../../src/recording/session_recorder";
-import { ReproductionTrace, type ReproductionMetadata } from "../../../src/recording/reproduction";
+import { type ReproductionMetadata } from "../../../src/recording/reproduction";
+import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
 import {
   beginGameReproduction,
   currentEngineVersion,

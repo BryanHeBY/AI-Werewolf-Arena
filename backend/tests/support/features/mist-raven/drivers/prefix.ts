@@ -1,8 +1,7 @@
 /**
- * Owns original test driver mist-raven controlled execution and recording support. Inputs are literal action plans and
- * original fixture handles; outputs preserve driver callbacks, traces, caches and cleanup. Concrete
- * transport/replay or scripted actions retain their original lifetimes; supplied handwritten oracles own
- * expected outcomes, and no billed model or production state writer is introduced.
+ * 负责原雾鸦受控执行与录制测试驱动；输入为字面行动计划及原 fixture 句柄。
+ * 输出为原驱动回调、轨迹、缓存与清理；具体传输、复盘或脚本行动保持原生命周期。
+ * 手写 oracle 持有预期结果，不引入计费模型或生产状态写入器。
  */
 import type { ReproductionRecord } from "../../../../../src/recording/reproduction";
 import { expect } from "bun:test";
@@ -10,7 +9,7 @@ import { bootstrapGame } from "../../../../../src/app/bootstrap";
 import { createRandom } from "../../../../../src/core";
 import type { ActionRequest } from "../../../../../src/core";
 import type { ToolCall } from "../../../../../src/core";
-import { ReproductionTrace } from "../../../../../src/recording/reproduction";
+import { ReproductionTrace } from "../../../../../src/recording/reproduction-trace";
 import { captureCheckpoint } from "../../../../../src/runtime/simulation/reproduction_context";
 import { mistRecording } from "./recording";
 import { mistBoard } from "../builders/board";

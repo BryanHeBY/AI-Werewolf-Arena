@@ -1,3 +1,8 @@
+/**
+ * 负责严格 Tape 的原生 replay 装配、请求匹配与结算调度；输入为已记录归档和实际输出目录。
+ * 输出为原生执行的事件／操作／checkpoint 与精确差异；真实 source、lock 和 RNG 身份必须先匹配。
+ * 记录请求规范化由轨迹模块提供；本执行器保留自己的消费、等待、游标与清理，不创建兼容来源或改写原归档。
+ */
 import { initialPlayerIdentity } from "../../core/domain/initial_roster";
 import { initialIdentityDeal } from "../../game/mechanisms/roles/initial_identity/deal";
 import type { Locale } from "@ai-werewolf-arena/game-catalog";
@@ -12,14 +17,8 @@ import {
   type ActionRequest,
   type GameEvent,
 } from "../../core";
-import {
-  parseReproductionRecord,
-  normalizedRequest,
-  recordedErrorName,
-  type RecordedDecision,
-  type RecordedGameEvent,
-  type ReproductionRecord,
-} from "../../recording/reproduction";
+import { parseReproductionRecord, recordedErrorName, type RecordedDecision, type RecordedGameEvent, type ReproductionRecord } from "../../recording/reproduction";
+import { normalizedRequest } from "../../recording/reproduction-trace";
 import { SessionRecordManager } from "../../recording/session_recorder";
 import { runWithSessionRecorder } from "../../recording/recording_context";
 import { GameEventRecorder } from "../game_event_recorder";

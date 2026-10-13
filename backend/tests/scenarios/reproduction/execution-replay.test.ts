@@ -1,8 +1,7 @@
 /**
- * Reproduction scenario integration verify complete and failed games preserve exact causality.
- * Input: Observed/scripted actual records, injected parallel/checkpoint/provider faults and malformed versions.
- * Output and independent oracle: Original event/decision/operation/checkpoint equality, precise first failure and explicit incompatible/mutated archive rejection.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 负责完整与失败对局的复现集成场景，核对原请求因果。
+ * 输入为观察／脚本记录、并行／checkpoint／provider 注入失败及非法版本；输出由原事件、决定、操作、checkpoint 相等与精确首失败核对。
+ * 不调用计费模型，不改写预期 fixture 或 Tape。
  */
 import { Role, WitchSelfHealRule } from "../../../src/core";
 import { expect, spyOn, test } from "bun:test";
@@ -19,7 +18,7 @@ import { resolveGameSetup } from "../../../src/runtime/config/resolve_game_setup
 import { runGame } from "../../../src/runtime/game_runner";
 import * as factory from "../../../src/runtime/player_agent_factory";
 import { BaselineBotActionProvider } from "../../../src/ai/agents/providers/action_providers";
-import { ReproductionTrace } from "../../../src/recording/reproduction";
+import { ReproductionTrace } from "../../../src/recording/reproduction-trace";
 import { ObservedBot } from "../../../src/ai/agents/providers/observed_bot";
 import { createTestTempDirectory } from "../../support/drivers/temp-directories";
 
