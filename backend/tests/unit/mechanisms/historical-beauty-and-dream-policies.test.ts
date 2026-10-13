@@ -3,7 +3,14 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { Role, WinCondition, DeathCause, COMPONENT, type BoardConfig, type RoleComponent } from "../../../src/core";
+import {
+  Role,
+  WinCondition,
+  DeathCause,
+  COMPONENT,
+  type BoardConfig,
+  type RoleComponent,
+} from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   boardDefinitionFromConfig,
@@ -14,8 +21,14 @@ import {
   activeCharm,
   bindCharm,
 } from "../../../src/game/mechanisms/roles/wolf_beauty/relation";
-import { DREAM_PROTECTION_POLICIES, BEAUTY_DEATH_LINK_POLICIES } from "../../../src/core/domain/board";
-import { getDreamerState, getWolfBeautyState } from "../../../src/game/mechanisms/roles/private_state";
+import {
+  DREAM_PROTECTION_POLICIES,
+  BEAUTY_DEATH_LINK_POLICIES,
+} from "../../../src/core/domain/board";
+import {
+  getDreamerState,
+  getWolfBeautyState,
+} from "../../../src/game/mechanisms/roles/private_state";
 import {
   projectDreamerState,
   projectWolfBeautyState,
@@ -73,7 +86,11 @@ test("policy changes revoke captured dream scope and established charm binding; 
   const ability = allNightAbilities(dreamRole).find((a) => a.kind === "dream")!;
   const scope = captureNightAbilityScope(game.world, 1, ability, 1, () => true)!;
   expect(scope.isEligible()).toBe(true);
-  getDreamerState(dreamRole)!.protectionPolicy = "netease_2026_night_immunity_v1";
+  (
+    getDreamerState(dreamRole)! as {
+      protectionPolicy: "awa_night_damage_v1" | "netease_2026_night_immunity_v1" | undefined;
+    }
+  ).protectionPolicy = "netease_2026_night_immunity_v1";
   expect(scope.isEligible()).toBe(false);
   getWolfBeautyState(beautyRole)!.targetId = 6;
   bindCharm(game.world, 2, 6);
@@ -190,8 +207,8 @@ for (const policy of DREAM_PROTECTION_POLICIES)
       },
       events,
     );
-    gift.uses = 1;
-    gift.lastUsedDay = 1;
+    (gift as { uses: number }).uses = 1;
+    (gift as { lastUsedDay: number | null }).lastUsedDay = 1;
     expect(() =>
       transferNightAbility(game.world, 4, 5, gift.id, "transfer:dream", events, {
         kind: "dream",

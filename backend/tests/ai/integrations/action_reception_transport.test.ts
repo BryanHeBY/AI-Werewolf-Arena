@@ -156,8 +156,8 @@ for (const locale of ["zh-CN", "en"] as const)
     const acp = bootstrapGame(twelvePlayerStandardConfig, { fixedRoles: roles, locale });
     const sdkState = getWitchState(sdk.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!;
     const acpState = getWitchState(acp.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!;
-    sdkState.heal = 0;
-    acpState.heal = 0;
+    (sdkState as { heal: number }).heal = 0;
+    (acpState as { heal: number }).heal = 0;
     const before = structuredClone(sdkState);
     let requests = 0;
     const server = Bun.serve({

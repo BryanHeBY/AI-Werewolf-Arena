@@ -9,7 +9,12 @@ import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase, StatusMark, type EntityId, type ToolName } from "../../../../core/domain/model";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import type { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
-import { allNightAbilities, findNightAbility, installNativeAbility } from "../abilities";
+import {
+  allNightAbilities,
+  findNightAbility,
+  setNightAbilityStartDay,
+  installNativeAbility,
+} from "../abilities";
 import { canAwakenedKnife } from "./inheritance";
 import {
   beginAwakenedNight,
@@ -312,7 +317,7 @@ const activationStage: NightStageHandler = {
           history: [],
         });
         const ability = findNightAbility(owner.role, "role_check")!;
-        ability.startsOnDay = day + 1;
+        setNightAbilityStartDay(ability, day + 1);
         abilityId = ability.id;
       }
       if (

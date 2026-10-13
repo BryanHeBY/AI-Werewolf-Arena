@@ -1,6 +1,6 @@
 /**
- * Owns Witch state data and access to its existing ability instance slot.
- * Inputs are the role component and native state; outputs retain the ability owner's installation copy and selected stored reference.
+ * Owns Witch state data structure and access to its existing ability instance slot.
+ * Inputs are the role component and native state; outputs retain the ability owner's installation copy and selected read-only stored reference.
  * This feature owns ordinary reset, terminal-pass and bottle payload writes.
  * Callers retain lease, marks, claims, use counts and publication order; independent
  * verifier ledgers and Demon sealed stock remain their separate owners. No state
@@ -23,56 +23,62 @@ export interface WitchState {
   poisonUsedThisNight: boolean;
 }
 
-export function setWitchState(roleComp: RoleComponent, state: WitchState): WitchState {
+/** All current payload fields are scalar; the stored reference stays live. */
+export type WitchReadState = Readonly<WitchState>;
+
+export function setWitchState(roleComp: RoleComponent, state: WitchState): WitchReadState {
   return installNativeAbility(roleComp, "potion", state);
 }
 
-export function getWitchState(roleComp: RoleComponent, abilityId?: string): WitchState | undefined {
+export function getWitchState(
+  roleComp: RoleComponent,
+  abilityId?: string,
+): WitchReadState | undefined {
   return findNightAbility(roleComp, "potion", abilityId)?.state;
 }
 
 /** Current-day callback is evaluated only after both reset writes and the original rule tests. */
-export function resetWitchNightState(state: WitchState, currentDay: () => number): void {
-  state.healUsedThisNight = false;
-  state.poisonUsedThisNight = false;
-  state.canSelfHeal =
+export function resetWitchNightState(state: WitchReadState, currentDay: () => number): void {
+  (state as WitchState).healUsedThisNight = false;
+  (state as WitchState).poisonUsedThisNight = false;
+  (state as WitchState).canSelfHeal =
     state.selfHealRule === WitchSelfHealRule.Always ||
     (state.selfHealRule === WitchSelfHealRule.FirstNightOnly && currentDay() === 1);
 }
 
 /** Preserve the original LHS state capture and repeated RHS state reads. */
 export function refreshWitchSelfHeal(
-  ability: import("../abilities").NightAbility<"potion">,
+  ability: import("../abilities").NightAbilityReadView<"potion">,
   day: number,
 ): void {
   const state = ability.state;
-  state.canSelfHeal =
+  (state as WitchState).canSelfHeal =
     ability.state.selfHealRule === WitchSelfHealRule.Always ||
     (ability.state.selfHealRule === WitchSelfHealRule.FirstNightOnly && day === 1);
 }
 
 /** Original owner-current/source checks run in the caller before this write. */
 export function closeWitchPotionTurn(
-  ability: import("../abilities").NightAbility<"potion">,
+  ability: import("../abilities").NightAbilityReadView<"potion">,
   day: number,
 ): void {
-  ability.state.potionTurnClosedDay = day;
+  (ability.state as WitchState).potionTurnClosedDay = day;
 }
 
-export function consumeWitchHeal(state: WitchState): void {
-  state.heal -= 1;
-  state.healUsedThisNight = true;
+export function consumeWitchHeal(state: WitchReadState): void {
+  (state as WitchState).heal -= 1;
+  (state as WitchState).healUsedThisNight = true;
 }
 
-export function consumeWitchPoison(state: WitchState): void {
-  state.poison -= 1;
-  state.poisonUsedThisNight = true;
+export function consumeWitchPoison(state: WitchReadState): void {
+  (state as WitchState).poison -= 1;
+  (state as WitchState).poisonUsedThisNight = true;
 }
 
 /** Keep recipient postfix decrement and its second state read distinct from native payment. */
 export function consumeRecipientPoison(
-  ability: import("../abilities").NightAbility<"potion">,
+  ability: import("../abilities").NightAbilityReadView<"potion">,
 ): void {
-  ability.state.poison--;
-  ability.state.poisonUsedThisNight = true;
+  (ability.state as WitchState).poison--;
+  (ability.state as WitchState).poisonUsedThisNight = true;
 }

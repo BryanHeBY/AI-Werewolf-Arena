@@ -129,7 +129,11 @@ test("gateway refusals have language-neutral codes and never change private reso
       tool: { name: "use_potion", args: { target_id: 9, potion_type: PotionType.Heal } },
       code: "heal_unavailable",
       prepare: (game) => {
-        getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!.heal = 0;
+        (
+          getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)! as {
+            heal: number;
+          }
+        ).heal = 0;
       },
     },
     {
@@ -137,9 +141,11 @@ test("gateway refusals have language-neutral codes and never change private reso
       tool: { name: "use_potion", args: { target_id: 9, potion_type: PotionType.Poison } },
       code: "two_potions",
       prepare: (game) => {
-        getWitchState(
-          game.world.getComponent<RoleComponent>(6, COMPONENT.Role)!,
-        )!.healUsedThisNight = true;
+        (
+          getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)! as {
+            healUsedThisNight: boolean;
+          }
+        ).healUsedThisNight = true;
       },
     },
     {
@@ -221,7 +227,11 @@ test("gateway refusals have language-neutral codes and never change private reso
       locale,
       fixedRoles: [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager],
     });
-    (getGuardState(game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)! as { lastTarget: number | null }).lastTarget = 2;
+    (
+      getGuardState(game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)! as {
+        lastTarget: number | null;
+      }
+    ).lastTarget = 2;
     const rejected = new ToolGateway().validateAndSanitize(
       game.world,
       5,

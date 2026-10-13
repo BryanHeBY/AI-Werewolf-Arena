@@ -1,3 +1,10 @@
+/**
+ * Tests Radiant shelter and Eclipse swallowing with scripted night actions.
+ * Inputs are literal board variants, accepted target choices and deliberately
+ * altered bottle/dream slots; outputs are night facts, stock and guarded failures.
+ * Test-only casts preserve each original seed and mutation; this legacy mixed
+ * runtime test file supplies no production authorization or model response.
+ */
 import { expect, test } from "bun:test";
 import {
   Role,
@@ -147,9 +154,14 @@ for (const row of matrix)
     const f = await radiantFixture();
     const dream = findNightAbility(f.role(5), "dream")!;
     if (row.lastDream) {
-      dream.state.lastTarget = row.lastDream[0];
-      dream.state.lastDay = row.lastDream[1];
-      dream.state.history.push({ day: row.lastDream[1], targetId: row.lastDream[0] });
+      (dream.state as { lastTarget: number | null }).lastTarget = row.lastDream[0];
+      (dream.state as { lastDay: number | null }).lastDay = row.lastDream[1];
+      (
+        dream.state.history as {
+          day: number;
+          targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+        }[]
+      ).push({ day: row.lastDream[1], targetId: row.lastDream[0] });
     }
     const result = await f.pipeline.execute(
       f.board.config,
@@ -179,8 +191,8 @@ for (const [heal, poison] of [
   test(`borrowed stock (${heal},${poison}) never refreshes or writes back`, async () => {
     const f = await radiantFixture(),
       a = findNightAbility(f.role(4), "potion")!;
-    a.state.heal = heal;
-    a.state.poison = poison;
+    (a.state as { heal: number }).heal = heal;
+    (a.state as { poison: number }).poison = poison;
     const choice = poison
       ? { target_id: 6, potion_type: "poison" as const }
       : heal

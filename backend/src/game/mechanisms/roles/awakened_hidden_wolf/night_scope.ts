@@ -20,7 +20,7 @@ import {
   type AwakenedState,
   type AwakenedActiveSkill,
 } from "./state";
-import { findNightAbility, type NightAbility } from "../abilities";
+import { findNightAbility, type NightAbilityReadView } from "../abilities";
 
 export interface AwakenedOwnerScope {
   readonly world: World;
@@ -107,7 +107,7 @@ export function bindAwakenedSkill(
 export function captureAwakenedMirrorScope(
   world: World,
   actorId: EntityId,
-  ability: NightAbility<"role_check">,
+  ability: NightAbilityReadView<"role_check">,
   day: number,
   phaseCurrent: () => boolean,
 ): (() => boolean) | null {

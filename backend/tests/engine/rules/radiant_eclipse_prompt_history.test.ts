@@ -74,8 +74,8 @@ async function run(locale: "zh-CN" | "en", spec: (typeof cases)[number], variant
   const original = findNightAbility(owner, spec.kind)!;
   const tag = variant ? "ORIGINAL_HISTORY_B_841327" : "ORIGINAL_HISTORY_A_527841";
   (owner.privateState as Record<string, unknown>).privateNote = tag;
-  original.uses = variant ? 4 : 2;
-  original.lastUsedDay = variant ? 2 : 1;
+  (original as { uses: number }).uses = variant ? 4 : 2;
+  (original as { lastUsedDay: number | null }).lastUsedDay = variant ? 2 : 1;
   if (spec.kind === "seer_check")
     Object.assign(original.state, {
       lastTarget: variant ? 8 : 7,

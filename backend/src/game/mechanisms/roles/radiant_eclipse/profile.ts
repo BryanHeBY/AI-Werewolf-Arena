@@ -1,9 +1,16 @@
+/**
+ * Defines Radiant/Eclipse role profiles, configuration and native initialization.
+ * Inputs are original initialization components, configuration and locale; outputs
+ * are installed ability state, prompts and the existing stage/tool contributions.
+ * Start-day metadata uses its ability owner; borrowed effects and night leases
+ * remain in the feature frame, never in this profile or a second state store.
+ */
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Phase, Role, WinCondition } from "../../../../core/domain/identity";
 import type { RoleProfile } from "../contracts";
-import { activeNightAbility, installNativeAbility } from "../abilities";
+import { activeNightAbility, setNightAbilityStartDay, installNativeAbility } from "../abilities";
 import { WOLF_ROLE_PROFILE } from "../wolf/profile";
 import { RADIANT_SHELTER_STAGE, ECLIPSE_SWALLOW_STAGE } from "./night_stages";
 import { createShelterState, createEclipseState, RADIANT_ECLIPSE_POLICY } from "./state";
@@ -56,7 +63,7 @@ export const RADIANT_COUNT_ROLE_PROFILE: RoleProfile = {
   renderPrompt: (_role, locale = "zh-CN") => text(locale, "role.radiant_count.brief"),
   init: (role) => {
     installNativeAbility(role, "shelter", createShelterState());
-    activeNightAbility(role, "shelter", 1)!.startsOnDay = 2;
+    setNightAbilityStartDay(activeNightAbility(role, "shelter", 1)!, 2);
   },
   nightStages: [RADIANT_SHELTER_STAGE],
   toolSpecs: [

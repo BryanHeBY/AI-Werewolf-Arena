@@ -17,7 +17,7 @@ import {
   recordNightAbilityUse,
   roleInspectionPolicy,
   type RoleInspectionPolicy,
-  type NightAbility,
+  type NightAbilityReadView,
 } from "../abilities";
 import { getGargoyleState } from "../private_state";
 import { resolveInspection } from "../inspection";
@@ -34,7 +34,7 @@ import { captureAwakenedMirrorScope } from "../awakened_hidden_wolf/night_scope"
 function finishOptionalInspection(
   ctx: NightStageContext,
   actorId: number,
-  ability: NightAbility<"role_check">,
+  ability: NightAbilityReadView<"role_check">,
   day: number,
   reason: "passed" | "no_targets",
 ): void {

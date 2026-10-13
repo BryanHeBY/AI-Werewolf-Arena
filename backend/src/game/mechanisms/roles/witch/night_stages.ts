@@ -4,6 +4,8 @@
  * paid heal/poison claims, passes and use history. Existing second-turn and role-specific
  * policies remain distinct, with no stock refresh on replacement. Potion actor
  * queries do not move poison-only restrictions into whole-turn eligibility.
+ * Potion coordination keeps live read-only instances; its concrete payload and
+ * inventory commands retain their original commit and bottle-payment positions.
  */
 import { isRadiantEclipseBoard } from "../radiant_eclipse/night_frame";
 import {
@@ -29,7 +31,7 @@ import {
   StatusMark,
   WitchSelfHealRule,
 } from "../../../../core/domain/model";
-import { type NightAbility } from "../abilities";
+import { type NightAbilityReadView } from "../abilities";
 import { nativePotionsCanCombine, witchKnifeVisible } from "./policies";
 import { NightStageContext, NightStageHandler } from "../../stages/night/contracts";
 import {
@@ -132,7 +134,7 @@ export const WITCH_NIGHT_STAGES: NightStageHandler[] = [resetNightRoleStateStage
 async function executePotionTurn(
   ctx: NightStageContext,
   witchId: number,
-  ability: NightAbility<"potion">,
+  ability: NightAbilityReadView<"potion">,
 ): Promise<boolean> {
   assertEvilKnightNativeActor(ctx.world, witchId, Role.Witch);
   if (

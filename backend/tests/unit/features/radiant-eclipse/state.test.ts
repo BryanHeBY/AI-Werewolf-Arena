@@ -18,7 +18,10 @@ import {
 import { snapshotBorrowedState } from "../../../../src/game/mechanisms/roles/radiant_eclipse/borrowed_state";
 import { DREAMER_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/dreamer/profile";
 import { WITCH_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/witch/profile";
-import { getDreamerState, getWitchState } from "../../../../src/game/mechanisms/roles/private_state";
+import {
+  getDreamerState,
+  getWitchState,
+} from "../../../../src/game/mechanisms/roles/private_state";
 import { createRoleComponent } from "../../../../src/core/domain/components/role";
 import { Camp, Role, WitchSelfHealRule } from "../../../../src/core/domain/identity";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
@@ -202,9 +205,14 @@ test("a real default Dream ability cannot silently gain the finite board's stron
     },
   });
   const supported = getDreamerState(role)!;
-  supported.lastDay = 1;
-  supported.lastTarget = 4;
-  supported.history.push({ day: 1, targetId: 4 });
+  (supported as { lastDay: number | null }).lastDay = 1;
+  (supported as { lastTarget: number | null }).lastTarget = 4;
+  (
+    supported.history as {
+      day: number;
+      targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+    }[]
+  ).push({ day: 1, targetId: 4 });
   const copied = snapshotBorrowedState("dream", supported, 2);
   expect(copied).toEqual({
     lastTarget: 4,
@@ -227,8 +235,8 @@ test("all four native potion stocks are copied exactly without historical or lif
         boardConfig: { ...sixPlayerMvpConfig, witch: { canSelfHeal: WitchSelfHealRule.Disabled } },
       });
       const original = getWitchState(role)!;
-      original.heal = heal;
-      original.poison = poison;
+      (original as { heal: number }).heal = heal;
+      (original as { poison: number }).poison = poison;
       for (const key of [
         "history",
         "uses",

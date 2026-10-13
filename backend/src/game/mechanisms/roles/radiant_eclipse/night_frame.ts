@@ -21,7 +21,7 @@ import {
   type NightImmunityClaim,
   type NightRadiantBacklash,
 } from "../../../../core/domain/night_effects";
-import { allNightAbilities, abilityStatus, type NightAbility } from "../abilities";
+import { allNightAbilities, abilityStatus, type NightAbilityReadView } from "../abilities";
 import { grantNightAbility } from "../ability_changes";
 import { openEclipseSuppression } from "./suppression";
 import { snapshotBorrowedState, type BorrowedKind } from "./borrowed_state";
@@ -59,7 +59,7 @@ interface Original {
   campComponent: unknown;
   victory: unknown;
   container: unknown;
-  native: NightAbility | undefined;
+  native: NightAbilityReadView | undefined;
   nativeId: string | undefined;
   nativeKind: unknown;
   nativeState: unknown;
@@ -69,8 +69,8 @@ interface Original {
 }
 interface BorrowLease {
   target: Original;
-  native: NightAbility | undefined;
-  borrowed: NightAbility | undefined;
+  native: NightAbilityReadView | undefined;
+  borrowed: NightAbilityReadView | undefined;
   borrowedId: string | null;
   suppression: ReturnType<typeof openEclipseSuppression> | undefined;
 }
@@ -99,7 +99,7 @@ interface Board {
   knownWolves: readonly number[];
   maidState: EclipseState;
   expectedMaid: string;
-  allowed: Map<number, Map<string, NightAbility>>;
+  allowed: Map<number, Map<string, NightAbilityReadView>>;
   night: Night | null;
 }
 const boards = new WeakMap<World, Board>();
@@ -207,7 +207,7 @@ function requireNight(world: World, day: number): { b: Board; n: Night } {
   if (!n || n.day !== day || n.closed) throw new Error("radiant_night_unavailable");
   return { b, n };
 }
-function originalAbility(p: Original): NightAbility | undefined {
+function originalAbility(p: Original): NightAbilityReadView | undefined {
   const a = p.native;
   if (!a) return undefined;
   if (
@@ -225,9 +225,9 @@ function originalAbility(p: Original): NightAbility | undefined {
     throw new Error("radiant_original_ability_revoked");
   return a;
 }
-function stateGuard(a: NightAbility): () => boolean {
-  const state = own(a, "state") as NightAbility["state"],
-    source = own(a, "source") as NightAbility["source"];
+function stateGuard(a: NightAbilityReadView): () => boolean {
+  const state = own(a, "state") as NightAbilityReadView["state"],
+    source = own(a, "source") as NightAbilityReadView["source"];
   if (
     !state ||
     !source ||
@@ -394,7 +394,7 @@ export function commitEclipseChoice(
     throw new Error("eclipse_choice_source_revoked");
   const roleId = target?.kind ?? null;
   const next = selectEclipse(b.maidState, day, targetId, eclipseSwallowTargets(world, day), roleId);
-  let suppression: BorrowLease["suppression"], borrowed: NightAbility | undefined;
+  let suppression: BorrowLease["suppression"], borrowed: NightAbilityReadView | undefined;
   if (a && target) {
     const kind = a.kind as BorrowedKind;
     if (!["seer_check", "potion", "dream", "shelter"].includes(kind))
@@ -468,7 +468,7 @@ export function shelterTargets(
 export function captureRadiantTurn(
   world: World,
   actorId: number,
-  ability: NightAbility,
+  ability: NightAbilityReadView,
   day: number,
 ): () => boolean {
   if (!boards.has(world)) return () => true;
@@ -497,7 +497,7 @@ export function captureRadiantPaidEffect(
   world: World,
   day: number,
   actorId: number,
-  ability: NightAbility,
+  ability: NightAbilityReadView,
   targetId: number,
 ): (() => boolean) | undefined {
   if (!boards.has(world)) return undefined;
@@ -526,7 +526,7 @@ export function commitRadiantShelter(
   world: World,
   day: number,
   actorId: number,
-  ability: NightAbility<"shelter">,
+  ability: NightAbilityReadView<"shelter">,
   targetId: number | null,
   events: GameEvent[],
 ) {

@@ -65,7 +65,7 @@ describe("ToolGateway validation", () => {
 
     const witch = world.getComponent<RoleComponent>(witchId!, COMPONENT.Role)!;
     const witchState = getWitchState(witch)!;
-    witchState.healUsedThisNight = true;
+    (witchState as { healUsedThisNight: boolean }).healUsedThisNight = true;
 
     const usePoisonAfterHeal = toolGateway.validateAndSanitize(
       world,

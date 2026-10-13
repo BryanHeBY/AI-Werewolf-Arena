@@ -10,11 +10,11 @@ import type { RoleComponent } from "../../../core/domain/components/role";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
 import type { World } from "../../../core/domain/world";
 import type { EntityId } from "../../../core/domain/model";
-import { activeNightAbility, type NightAbility, type NightAbilityKind } from "./abilities";
+import { activeNightAbility, type NightAbilityReadView, type NightAbilityKind } from "./abilities";
 import { aliveLifeVersion } from "../../../core/domain/components/alive";
 
 /** A policy edit is an authorization edit, even if the resource object survives. */
-function policyIdentity(ability: NightAbility): string {
+function policyIdentity(ability: NightAbilityReadView): string {
   switch (ability.kind) {
     case "pair_check":
       return JSON.stringify([ability.state.policy]);
@@ -41,7 +41,7 @@ function policyIdentity(ability: NightAbility): string {
 export function captureNightAbilityScope<K extends NightAbilityKind>(
   world: World,
   actorId: EntityId,
-  ability: NightAbility<K>,
+  ability: NightAbilityReadView<K>,
   day: number,
   phaseCurrent: () => boolean,
 ) {
@@ -81,7 +81,9 @@ export function captureNightAbilityScope<K extends NightAbilityKind>(
     ability.activation === activation &&
     ability.state === state &&
     policyIdentity(ability) === policy &&
-    (role.privateState.abilities as Record<string, NightAbility> | undefined)?.[id] === ability &&
+    (role.privateState.abilities as Readonly<Record<string, NightAbilityReadView>> | undefined)?.[
+      id
+    ] === ability &&
     ability.source === source &&
     source.kind === sourceKind &&
     (source.kind === "native" ? source.role : source.actorId) === sourceOwner &&

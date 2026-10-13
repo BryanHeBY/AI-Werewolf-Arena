@@ -1,8 +1,9 @@
 /**
  * Owns ability grant, installation, enable/expiry and explicit knowledge transfer changes.
- * Inputs are source instances and copied grant data; outputs are stored instances and lifecycle
+ * Inputs are source instances and copied grant data; outputs are read-only stored instance references and lifecycle
  * events. Transfer requires its own state policy and never silently clones spent resources or
  * changes the recipient role.
+ * Grant/transfer inputs and detached state-policy copies retain writable installation data.
  * Installation/retirement restore only abilities and retiredAbilityIds in this owner; original reference and delete/push order remain.
  */
 import { isDeepStrictEqual } from "node:util";
@@ -18,6 +19,7 @@ import {
   projectNightState,
   type AbilitySource,
   type NightAbility,
+  type NightAbilityReadView,
   type NightAbilityKind,
   type NightAbilityStates,
 } from "./abilities";
@@ -42,7 +44,7 @@ const roleOf = (world: World, actorId: EntityId): RoleComponent => {
 const emit = (
   events: GameEvent[],
   actorId: EntityId,
-  ability: NightAbility,
+  ability: NightAbilityReadView,
   operation: "granted" | "disabled" | "enabled" | "transferred_out",
 ) =>
   events.push({
@@ -69,7 +71,7 @@ export function grantNightAbility<K extends NightAbilityKind>(
   actorId: EntityId,
   input: AbilityGrant<K>,
   events: GameEvent[],
-): NightAbility<K> {
+): NightAbilityReadView<K> {
   if (input.kind === "pair_check") throw Error("ability_pair_native_only");
   if (input.source.kind !== "gift" && input.source.kind !== "copy")
     throw new Error("ability_grant_source_invalid");
@@ -80,7 +82,7 @@ export function grantNightAbility<K extends NightAbilityKind>(
     lastUsedDay: null,
     disabled: false,
   }) as unknown as NightAbility<K>;
-  return installAbility(world, actorId, ability, events) as NightAbility<K>;
+  return installAbility(world, actorId, ability, events) as NightAbilityReadView<K>;
 }
 
 function installAbility(
@@ -189,7 +191,7 @@ export function setNightAbilityEnabled(
   if (!ability) throw new Error("ability_instance_missing");
   if (enabled && ability.deathExpired) throw new Error("ability_lucky_expired_on_death");
   if (ability.disabled === !enabled) return;
-  ability.disabled = !enabled;
+  (ability as { disabled: boolean }).disabled = !enabled;
   emit(events, actorId, ability, enabled ? "enabled" : "disabled");
 }
 
@@ -205,8 +207,8 @@ export function expireLuckyAbilitiesOnDeath(
       ability.deathExpired
     )
       continue;
-    ability.deathExpired = true;
-    ability.disabled = true;
+    (ability as { deathExpired?: boolean }).deathExpired = true;
+    (ability as { disabled: boolean }).disabled = true;
     emit(events, actorId, ability, "disabled");
   }
 }

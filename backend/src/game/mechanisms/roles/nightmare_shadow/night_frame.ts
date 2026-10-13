@@ -18,7 +18,7 @@ import {
   livingNightLife,
   type NightLifeScope,
 } from "../../../../core/domain/night_effects";
-import type { NightAbility } from "../abilities";
+import type { NightAbilityReadView } from "../abilities";
 import { getNightmareShadowState, nightmareFearTargets, type NightmareShadowState } from "./state";
 
 function stateIdentity(state: NightmareShadowState): string {
@@ -37,7 +37,7 @@ function stateIdentity(state: NightmareShadowState): string {
     history,
   ]);
 }
-function authority(ability: NightAbility): string {
+function authority(ability: NightAbilityReadView): string {
   const state = ability.state as unknown as Record<string, unknown>;
   return JSON.stringify([
     ability.id,
@@ -85,7 +85,7 @@ function captureRole(world: World, id: EntityId) {
   const refs = Object.entries(privateState);
   const slots = Object.entries(privateState.abilities ?? {});
   const abilities = Object.values(
-    (privateState.abilities ?? {}) as Record<string, NightAbility>,
+    (privateState.abilities ?? {}) as Record<string, NightAbilityReadView>,
   ).map((ability) => ({
     ability,
     state: ability.state,

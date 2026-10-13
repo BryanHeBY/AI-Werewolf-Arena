@@ -29,7 +29,10 @@ import {
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { canGargoyleKnife } from "../../../../src/game/mechanisms/roles/gargoyle/inheritance";
 import { ROLE_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/night_stages";
-import { knownWolfTeammates, wolfKnifeHolders } from "../../../../src/game/mechanisms/roles/wolf_team";
+import {
+  knownWolfTeammates,
+  wolfKnifeHolders,
+} from "../../../../src/game/mechanisms/roles/wolf_team";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/catalog";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
@@ -486,13 +489,18 @@ for (const mutation of [
           return { name: "inspect_role", args: { target_id: 2 } };
         if (request.allowedTools.includes("guard")) {
           expect(canGargoyleKnife(role(game, 1), game.world)).toBe(true);
-          if (mutation === "disabled") ability.disabled = true;
+          if (mutation === "disabled") (ability as { disabled: boolean }).disabled = true;
           if (mutation === "transfer")
             transferNightAbility(game.world, 1, 4, ability.id, "transfer:completed-check", [], {
               kind: "role_check",
               statePolicy: (s) => structuredClone(s),
             });
-          if (mutation === "state") ability.state = structuredClone(ability.state);
+          if (mutation === "state")
+            (
+              ability as {
+                state: import("../../../../src/game/mechanisms/roles/role_inspection/state").RoleInspectionReadState;
+              }
+            ).state = structuredClone(ability.state);
           if (mutation === "native_state")
             setGargoyleState(role(game, 1), structuredClone(getGargoyleState(role(game, 1))!));
           if (mutation === "actor_revive") {

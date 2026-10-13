@@ -101,7 +101,7 @@ function fixture() {
 test("legitimate borrowed stock consumption does not alter original source inventory", () => {
   const f = fixture();
   expect(f.borrowed.state).not.toBe(f.native.state);
-  f.borrowed.state.heal = 0;
+  (f.borrowed.state as { heal: number }).heal = 0;
   expect(f.native.state.heal).toBe(1);
   closeRadiantNight(f.world, 2, "committed", []);
   expect(f.native.state.heal).toBe(1);
@@ -112,9 +112,12 @@ for (const mode of ["heal", "poison", "uses", "lastUsedDay"] as const)
     const f = fixture(),
       current = captureRadiantTurn(f.world, 1, f.borrowed, 2);
     expect(current()).toBe(true);
-    if (mode === "heal" || mode === "poison") f.native.state[mode] = 0;
-    else if (mode === "uses") f.native.uses++;
-    else f.native.lastUsedDay = 2;
+    if (mode === "heal" || mode === "poison")
+      (f.native.state as import("../../../../src/game/mechanisms/roles/witch/state").WitchState)[
+        mode
+      ] = 0;
+    else if (mode === "uses") (f.native as { uses: number }).uses++;
+    else (f.native as { lastUsedDay: number | null }).lastUsedDay = 2;
     expect(current()).toBe(false);
   });
 for (const mode of ["replacement", "revival"] as const)

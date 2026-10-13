@@ -1,3 +1,10 @@
+/**
+ * Tests Eclipse borrowed resources across controlled successive night stages.
+ * Inputs are literal native bottle counts, swallow choices and scripted replies;
+ * outputs are original use/expiry facts, bottle counts and current-owner failures.
+ * Explicit test-only stock casts retain the same seeds without granting ordinary
+ * readers writes; no model, network or generated expected result is used.
+ */
 import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { Phase, COMPONENT, type AliveComponent, type ToolCall } from "../../../src/core";
@@ -37,8 +44,8 @@ for (const row of stockCases)
   test(`literal original stock across N2/N3/N4: ${row.name}`, async () => {
     const f = await radiantFixture(),
       native = findNightAbility(f.role(4), "potion")!;
-    native.state.heal = row.initial[0];
-    native.state.poison = row.initial[1];
+    (native.state as { heal: number }).heal = row.initial[0];
+    (native.state as { poison: number }).poison = row.initial[1];
     await f.pipeline.execute(
       f.board.config,
       radiantProvider(f.requests, { swallow: 4, dream: 9, knife: 6, potion: row.borrow }),

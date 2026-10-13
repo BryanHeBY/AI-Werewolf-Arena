@@ -268,7 +268,7 @@ test("three policy instances on one Villager use distinct slots, counters and hi
   const game = fixture(),
     events: GameEvent[] = [],
     calls: Array<[number, string]> = [];
-  native(game).disabled = true;
+  (native(game) as { disabled: boolean }).disabled = true;
   const common = {
     source: { kind: "gift" as const, actorId: 1 },
     kind: "role_check" as const,
@@ -354,9 +354,18 @@ test("fresh Mirror copy/gift reject inherited or private state, while transfer p
     { ...freshMirrorInspectionState(), history: { length: 0 } as any },
     { ...freshMirrorInspectionState(), history: decoratedHistory },
   ])
-    expect(() => grantNightAbility(game.world, 6, { ...common, state }, events)).toThrow(
-      "ability_mirror_initial_state_invalid",
-    );
+    expect(() =>
+      grantNightAbility(
+        game.world,
+        6,
+        {
+          ...common,
+          state:
+            state as import("../../../../src/game/mechanisms/roles/abilities").NightAbilityStates["role_check"],
+        },
+        events,
+      ),
+    ).toThrow("ability_mirror_initial_state_invalid");
   const copied = grantNightAbility(
     game.world,
     6,
@@ -428,11 +437,20 @@ for (const locale of ["zh-CN", "en"] as const)
       },
       [],
     );
-    copied.state.history.push({ day: 1, targetId: 2, result: { kind: "role", role: Role.Wolf } });
+    (
+      copied.state.history as {
+        day: number;
+        targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+        result: Extract<
+          import("@ai-werewolf-arena/game-contract").InspectionResult,
+          { kind: "role" }
+        >;
+      }[]
+    ).push({ day: 1, targetId: 2, result: { kind: "role", role: Role.Wolf } });
     (copied.state as any).privateCamp = "hidden-camp-sentinel";
     (copied.state.history[0] as any).causalRole = "hidden-cause-sentinel";
     (copied as any).godOnlyField = "hidden-top-level";
-    copied.sourceDisclosed = true;
+    (copied as { sourceDisclosed: boolean }).sourceDisclosed = true;
     (copied.source as any).privateCamp = "hidden-source-field";
     const request = context(game, events, async () => null, 2).makeRequest(6, ["inspect_role"], {
         stage: "mirror_girl",
@@ -477,8 +495,8 @@ test("a gifted Mirror instance runs without a Mirror entity and cannot replace n
   const roles = [Role.Psychic, Role.Gargoyle, Role.Wolf, Role.Witch, Role.Villager, Role.Villager],
     game = fixture("en", roles),
     events: GameEvent[] = [];
-  findNightAbility(role(game, 1), "role_check")!.disabled = true;
-  findNightAbility(role(game, 2), "role_check")!.disabled = true;
+  (findNightAbility(role(game, 1), "role_check")! as { disabled: boolean }).disabled = true;
+  (findNightAbility(role(game, 2), "role_check")! as { disabled: boolean }).disabled = true;
   game.world.getComponent<{ alive: boolean }>(3, COMPONENT.Alive)!.alive = false;
   refreshGargoyleInheritance(game.world, events, 1);
   const gift = grantNightAbility(
@@ -557,13 +575,31 @@ for (const point of ["gateway", "label"] as const)
       ability = native(game);
     let calls = 0;
     for (const targetId of [3, 4, 5, 6])
-      ability.state.history.push({
+      (
+        ability.state.history as {
+          day: number;
+          targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+          result: Extract<
+            import("@ai-werewolf-arena/game-contract").InspectionResult,
+            { kind: "role" }
+          >;
+        }[]
+      ).push({
         day: 1,
         targetId,
         result: { kind: "role", role: Role.Villager },
       });
     const inject = () =>
-      ability.state.history.push({
+      (
+        ability.state.history as {
+          day: number;
+          targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+          result: Extract<
+            import("@ai-werewolf-arena/game-contract").InspectionResult,
+            { kind: "role" }
+          >;
+        }[]
+      ).push({
         day: 1,
         targetId: 2,
         result: { kind: "role", role: Role.Wolf },
@@ -633,8 +669,20 @@ for (const change of ["cancel_null", "actor_revive", "target_revive", "state", "
           life.alive = false;
           life.alive = true;
         }
-        if (change === "state") ability.state = structuredClone(ability.state);
-        if (change === "policy") ability.state.policy = "psychic";
+        if (change === "state")
+          (
+            ability as {
+              state: import("../../../../src/game/mechanisms/roles/role_inspection/state").RoleInspectionReadState;
+            }
+          ).state = structuredClone(ability.state);
+        if (change === "policy")
+          (
+            ability.state as {
+              policy:
+                | import("../../../../src/game/mechanisms/roles/abilities").RoleInspectionPolicy
+                | undefined;
+            }
+          ).policy = "psychic";
         return { name: "inspect_role", args: { target_id: 2 } };
       },
       1,

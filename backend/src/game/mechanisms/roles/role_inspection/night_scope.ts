@@ -9,19 +9,23 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Role } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
-import { findNightAbility, roleInspectionPolicy, type NightAbility } from "../abilities";
-import { getGargoyleState, type GargoyleState, type RoleInspectionState } from "../private_state";
+import { findNightAbility, roleInspectionPolicy, type NightAbilityReadView } from "../abilities";
+import {
+  getGargoyleState,
+  type GargoyleState,
+  type RoleInspectionReadState,
+} from "../private_state";
 
 interface Completion {
   actorId: number;
   role: RoleComponent;
   privateState: RoleComponent["privateState"];
   state: GargoyleState;
-  ability: NightAbility<"role_check">;
+  ability: NightAbilityReadView<"role_check">;
   abilityId: string;
-  activation: NightAbility["activation"];
-  inspection: RoleInspectionState;
-  inspectionPolicy: RoleInspectionState["inspectionPolicy"];
+  activation: NightAbilityReadView["activation"];
+  inspection: RoleInspectionReadState;
+  inspectionPolicy: RoleInspectionReadState["inspectionPolicy"];
   life: AliveComponent;
   version: number;
   isCurrent: () => boolean;
@@ -48,7 +52,7 @@ export function recordRoleInspectionCompletion(
   world: World,
   actorId: number,
   day: number,
-  ability: NightAbility<"role_check">,
+  ability: NightAbilityReadView<"role_check">,
   isCurrent: () => boolean,
 ): void {
   if (!isCurrent()) return;

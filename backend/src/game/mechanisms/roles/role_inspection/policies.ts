@@ -1,3 +1,9 @@
+/**
+ * Owns configured role-inspection policy defaults, schema and displayed policy text.
+ * Inputs are read-only instance policy fields, board configuration and locale;
+ * outputs are repeat/required decisions, parsed configuration and translated labels.
+ * These queries never write the live inspection payload or authorize an action.
+ */
 import { z } from "zod";
 import {
   INSPECTION_POLICIES,
@@ -5,7 +11,7 @@ import {
   type InspectionPolicy,
 } from "../../../../core/domain/board";
 import { roleInspectionPolicy } from "../abilities";
-import type { RoleInspectionState } from "../private_state";
+import type { RoleInspectionReadState } from "../private_state";
 import type { RoleProfile } from "../contracts";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 
@@ -18,23 +24,23 @@ export const DEFAULT_INSPECTION_POLICIES = {
 } as const;
 /** Instance identity controls scheduling. Configured target/action policy never changes it. */
 export function inspectionPolicy(
-  state: Pick<RoleInspectionState, "policy" | "inspectionPolicy">,
+  state: Pick<RoleInspectionReadState, "policy" | "inspectionPolicy">,
 ): InspectionPolicy {
   const value =
     state.inspectionPolicy ??
-    DEFAULT_INSPECTION_POLICIES[roleInspectionPolicy(state as RoleInspectionState)];
+    DEFAULT_INSPECTION_POLICIES[roleInspectionPolicy(state as RoleInspectionReadState)];
   if (!INSPECTION_POLICIES.includes(value))
     throw new Error("role_inspection_configuration_policy_invalid");
   return value;
 }
 export const inspectionRepeats = (
-  state: Pick<RoleInspectionState, "policy" | "inspectionPolicy">,
+  state: Pick<RoleInspectionReadState, "policy" | "inspectionPolicy">,
 ) => inspectionPolicy(state) === "awa_repeat_optional_v1";
 export const inspectionRequired = (
-  state: Pick<RoleInspectionState, "policy" | "inspectionPolicy">,
+  state: Pick<RoleInspectionReadState, "policy" | "inspectionPolicy">,
 ) => inspectionPolicy(state) === "awa_unique_required_v1";
 export function renderInspectionPolicy(
-  state: Pick<RoleInspectionState, "policy" | "inspectionPolicy">,
+  state: Pick<RoleInspectionReadState, "policy" | "inspectionPolicy">,
   locale: Locale,
 ): string {
   return text(

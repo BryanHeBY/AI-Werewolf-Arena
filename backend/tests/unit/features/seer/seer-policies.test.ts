@@ -108,7 +108,7 @@ for (const targetPolicy of ["awa_alive_v1", "awa_fresh_others_v1"] as const)
       );
       const projected = projectNightAbility(game.ability, 4);
       if (projected.kind !== "seer_check") throw new Error("expected_seer_projection");
-      expect(projected.state.history).toEqual(game.ability.state.history);
+      expect<unknown>(projected.state.history).toEqual(game.ability.state.history);
       if (targetPolicy === "awa_fresh_others_v1")
         expect(projected.state.targetPolicy).toBe(targetPolicy);
       const hint = getDefaultTargetHintRegistry().buildActionableIdsHint({
@@ -128,10 +128,24 @@ test("fresh target policy rechecks history after await and exhausts without an i
     targetPolicy: "awa_fresh_others_v1",
     actionPolicy: "awa_required_when_legal_v1",
   });
-  await game.act(1, 1, () => game.ability.state.history.push({ targetId: 1, isWerewolf: true }));
+  await game.act(1, 1, () =>
+    (
+      game.ability.state.history as {
+        targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+        isWerewolf: boolean;
+        result?: import("@ai-werewolf-arena/game-contract").InspectionResult;
+      }[]
+    ).push({ targetId: 1, isWerewolf: true }),
+  );
   expect(game.events.filter((event) => event.type === "seer_checked")).toHaveLength(0);
   for (const targetId of [3, 4, 5, 6])
-    game.ability.state.history.push({ targetId, isWerewolf: false });
+    (
+      game.ability.state.history as {
+        targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+        isWerewolf: boolean;
+        result?: import("@ai-werewolf-arena/game-contract").InspectionResult;
+      }[]
+    ).push({ targetId, isWerewolf: false });
   await game.act(2, 3);
   expect(game.requests).toHaveLength(1);
   expect(game.ability.lastUsedDay).toBeNull();

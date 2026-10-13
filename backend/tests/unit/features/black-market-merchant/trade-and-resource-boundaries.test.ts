@@ -294,19 +294,20 @@ for (const change of [
       }));
     await BLACK_MARKET_TRADE_STAGE.execute(trade);
     const ability = allNightAbilities(role(game, 6))[0];
-    ability.uses = 1;
-    ability.lastUsedDay = 2;
+    (ability as { uses: number }).uses = 1;
+    (ability as { lastUsedDay: number | null }).lastUsedDay = 2;
     expect(() =>
       transferNightAbility(game.world, 6, 4, ability.id, ability.id, [], {
         kind: "seer_check",
         statePolicy: (state) => {
           if (change === "activation") {
-            ability.activation = undefined;
-            ability.startsOnDay = 1;
+            (ability as { activation: "lucky" | "black_market" | undefined }).activation =
+              undefined;
+            (ability as { startsOnDay: number }).startsOnDay = 1;
           }
           if (change === "resources") {
-            ability.uses = 0;
-            ability.lastUsedDay = null;
+            (ability as { uses: number }).uses = 0;
+            (ability as { lastUsedDay: number | null }).lastUsedDay = null;
           }
           if (change === "source_camp") role(game, 6).camp = Camp.Wolf;
           if (change === "source_life") {
@@ -347,7 +348,13 @@ test("Black seer state and nested reports select declared fields without reading
       return "SECRET_GETTER";
     },
   });
-  ability.state.history.push({
+  (
+    ability.state.history as {
+      targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+      isWerewolf: boolean;
+      result?: import("@ai-werewolf-arena/game-contract").InspectionResult;
+    }[]
+  ).push({
     targetId: 1,
     isWerewolf: true,
     result: { kind: "camp", camp: Camp.Wolf, internal: "SECRET_REPORT" } as any,

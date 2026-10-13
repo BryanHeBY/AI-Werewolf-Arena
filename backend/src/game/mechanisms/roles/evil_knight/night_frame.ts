@@ -10,14 +10,14 @@ import { Camp, Role } from "../../../../core/domain/identity";
 import { captureNightLife } from "../../../../core/domain/night_effects";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { captureEvilKnight } from "./state";
-import type { NightAbility } from "../abilities";
+import type { NightAbilityReadView } from "../abilities";
 type AbilityAuthority = {
-  ability: NightAbility;
-  state: NightAbility["state"];
-  source: NightAbility["source"];
+  ability: NightAbilityReadView;
+  state: NightAbilityReadView["state"];
+  source: NightAbilityReadView["source"];
   identity: string;
 };
-function abilityIdentity(ability: NightAbility): string {
+function abilityIdentity(ability: NightAbilityReadView): string {
   const state = ability.state as unknown as Record<string, unknown>;
   return JSON.stringify([
     ability.id,
@@ -66,7 +66,7 @@ export function installEvilKnightBoard(world: World): void {
         refs: Object.entries(role.privateState),
         abilityRefs: Object.entries(role.privateState.abilities ?? {}),
         authorities: Object.values(
-          (role.privateState.abilities ?? {}) as Record<string, NightAbility>,
+          (role.privateState.abilities ?? {}) as Record<string, NightAbilityReadView>,
         ).map((ability) => ({
           ability,
           state: ability.state,

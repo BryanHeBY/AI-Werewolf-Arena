@@ -4,10 +4,26 @@
 import { nightStageContext } from "../../../engine/night_stage_fixture";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { Role, Camp, Phase, WinCondition, COMPONENT, type BoardConfig, type RoleComponent, type ActionRequest, type GameEvent } from "../../../../src/core";
+import {
+  Role,
+  Camp,
+  Phase,
+  WinCondition,
+  COMPONENT,
+  type BoardConfig,
+  type RoleComponent,
+  type ActionRequest,
+  type GameEvent,
+} from "../../../../src/core";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getGargoyleState, setGargoyleState } from "../../../../src/game/mechanisms/roles/private_state";
-import { findNightAbility, allNightAbilities } from "../../../../src/game/mechanisms/roles/abilities";
+import {
+  getGargoyleState,
+  setGargoyleState,
+} from "../../../../src/game/mechanisms/roles/private_state";
+import {
+  findNightAbility,
+  allNightAbilities,
+} from "../../../../src/game/mechanisms/roles/abilities";
 import { canGargoyleKnife } from "../../../../src/game/mechanisms/roles/gargoyle/inheritance";
 import { ROLE_INSPECTION_STAGE } from "../../../../src/game/mechanisms/roles/role_inspection/night_stages";
 import {
@@ -188,10 +204,15 @@ for (const mutation of [
         if (mutation === "target_replace")
           game.world.addComponent(3, COMPONENT.Alive, createAliveComponent());
         if (mutation === "role") role(game, 1).role = Role.Wolf;
-        if (mutation === "state") ability.state = { lastTarget: null, lastDay: null, history: [] };
+        if (mutation === "state")
+          (
+            ability as {
+              state: import("../../../../src/game/mechanisms/roles/role_inspection/state").RoleInspectionReadState;
+            }
+          ).state = { lastTarget: null, lastDay: null, history: [] };
         if (mutation === "native_state")
           setGargoyleState(role(game, 1), structuredClone(getGargoyleState(role(game, 1))!));
-        if (mutation === "disabled") ability.disabled = true;
+        if (mutation === "disabled") (ability as { disabled: boolean }).disabled = true;
         return { name: "inspect_role", args: { target_id: 3 } };
       },
       () => current,
@@ -229,7 +250,18 @@ test("mandatory exhausted invalid responses throw, preserving no false result/co
   expect(calls).toBe(3);
   expect(canGargoyleKnife(role(game, 1), game.world)).toBe(false);
   const ability = findNightAbility(role(game, 1), "role_check")!;
-  ability.state.history = game.world
+  (
+    ability.state as unknown as {
+      history: {
+        day: number;
+        targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+        result: Extract<
+          import("@ai-werewolf-arena/game-contract").InspectionResult,
+          { kind: "role" }
+        >;
+      }[];
+    }
+  ).history = game.world
     .entityIds()
     .filter((id) => id !== 1)
     .map((targetId) => ({ day: 0, targetId, result: { kind: "role", role: Role.Villager } }));
@@ -304,9 +336,18 @@ for (const exhaustedOn of [2, 3])
       game = bootstrapGame(config(fixed), { fixedRoles: fixed }),
       events: GameEvent[] = [],
       ability = findNightAbility(role(game, 1), "role_check")!;
-    ability.state.history = [
-      { day: 0, targetId: 3, result: { kind: "role", role: Role.Villager } },
-    ];
+    (
+      ability.state as unknown as {
+        history: {
+          day: number;
+          targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+          result: Extract<
+            import("@ai-werewolf-arena/game-contract").InspectionResult,
+            { kind: "role" }
+          >;
+        }[];
+      }
+    ).history = [{ day: 0, targetId: 3, result: { kind: "role", role: Role.Villager } }];
     let calls = 0;
     await ROLE_INSPECTION_STAGE.execute(
       stageContext(game, events, async () => {

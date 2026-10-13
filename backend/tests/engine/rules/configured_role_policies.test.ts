@@ -1,3 +1,11 @@
+/**
+ * Tests configured target/action policies through validators, native/recipient
+ * stages and controlled phase flows. Inputs are literal boards, scripted actions
+ * and deliberate live-slot edits; outputs are request options, inspection history,
+ * effect records and original error codes asserted from handwritten expectations.
+ * Test-only field casts preserve those old mutations; no model or fixture oracle
+ * is regenerated and this mixed legacy file does not define production policy.
+ */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import {
@@ -228,7 +236,8 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
         }
         const dto = projectNightAbility(ability, 3);
         expect(dto.kind).toBe("role_check");
-        if (dto.kind === "role_check") expect(dto.state.history).toEqual(ability.state.history);
+        if (dto.kind === "role_check")
+          expect<unknown>(dto.state.history).toEqual(ability.state.history);
         expect(
           getDefaultConfigRenderRegistry().renderBoardConfigPrompt(game.config, locale),
         ).toContain(locale === "en" ? "Configured AWA inspection" : "配置的AWA查验");
@@ -254,7 +263,15 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
         gateway = new ToolGateway();
       let asks = 0;
       const mutate = () => {
-        ability.state.inspectionPolicy = "awa_repeat_optional_v1";
+        (
+          ability.state as {
+            inspectionPolicy:
+              | "awa_unique_required_v1"
+              | "awa_repeat_optional_v1"
+              | "awa_unique_optional_v1"
+              | undefined;
+          }
+        ).inspectionPolicy = "awa_repeat_optional_v1";
       };
       if (point === "gateway") {
         const original = gateway.validateAndSanitize.bind(gateway);
@@ -430,7 +447,16 @@ test("gift/copy explicit inspection state is independent of holder board; transf
     },
     events,
   );
-  gift.state.history.push({ day: 1, targetId: 2, result: { kind: "role", role: Role.Wolf } });
+  (
+    gift.state.history as {
+      day: number;
+      targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+      result: Extract<
+        import("@ai-werewolf-arena/game-contract").InspectionResult,
+        { kind: "role" }
+      >;
+    }[]
+  ).push({ day: 1, targetId: 2, result: { kind: "role", role: Role.Wolf } });
   expect(roleInspectionTargets(game.world, 5, gift.state)).toContain(2);
   transferNightAbility(game.world, 5, 6, gift.id, "transfer:policy", events, {
     kind: "role_check",
@@ -505,7 +531,16 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
         if (policy === "awa_repeat_optional_v1")
           exhausted.world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive = false;
         else
-          exhaustedAbility.state.history.push({
+          (
+            exhaustedAbility.state.history as {
+              day: number;
+              targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+              result: Extract<
+                import("@ai-werewolf-arena/game-contract").InspectionResult,
+                { kind: "role" }
+              >;
+            }[]
+          ).push({
             day: 1,
             targetId: id,
             result: { kind: "role", role: Role.Villager },
@@ -561,7 +596,12 @@ test("optional Gargoyle pass completes only its native current-policy knife gate
   );
   expect(canGargoyleKnife(role, game.world)).toBe(true);
   expect(ability.uses).toBe(0);
-  ability.state.inspectionPolicy = "awa_unique_required_v1";
+  (
+    ability.state as {
+      inspectionPolicy:
+        "awa_unique_required_v1" | "awa_repeat_optional_v1" | "awa_unique_optional_v1" | undefined;
+    }
+  ).inspectionPolicy = "awa_unique_required_v1";
   expect(canGargoyleKnife(role, game.world)).toBe(false);
 });
 

@@ -1,12 +1,12 @@
 /**
  * Exposes Guard native-state reads and ordinary target-write commands, and owns its repeat query.
  * Inputs are existing roles or captured recipient instances at validated commit;
- * outputs preserve the same slot and original state-before-target read order.
+ * outputs expose the same read-only slot and original state-before-target read order.
  * Caller permissions, stock/use accounting and terminal failures stay outside
  * these commands; no leased protection or checkpoint is created here.
  */
 export { getGuardState, recordGuardTarget, recordRecipientGuardTarget } from "./state";
-export type { GuardState } from "./state";
+export type { GuardState, GuardReadState } from "./state";
 
 import type { NightAbilityReadView } from "../abilities";
 

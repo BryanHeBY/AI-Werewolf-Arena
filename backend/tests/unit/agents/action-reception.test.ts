@@ -138,7 +138,7 @@ for (const locale of ["zh-CN", "en"] as const)
     const { world } = game(locale),
       receive = new ActionReception(world);
     const witch = getWitchState(world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!;
-    witch.heal = 0;
+    (witch as { heal: number }).heal = 0;
     const before = state(world);
     const turn = new ActionTurn(receive, request(6, ["use_potion"], "witch"), "t1");
     expect(

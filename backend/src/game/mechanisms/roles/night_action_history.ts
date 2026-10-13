@@ -8,7 +8,7 @@ import type { EntityId } from "../../../core/domain/model";
 import type { World } from "../../../core/domain/world";
 import type { RoleComponent } from "../../../core/domain/components/role";
 import { COMPONENT } from "../../../core/domain/components/names";
-import { allNightAbilities, type NightAbility } from "./abilities";
+import { allNightAbilities, type NightAbilityReadView } from "./abilities";
 
 export type NightActionKind = "check" | "poison" | "guard";
 export interface OwnNightAction {
@@ -52,7 +52,7 @@ export function ownNightActions(world: World, actorId: EntityId, day: number): O
 export function luckyTargetAllowed(
   world: World,
   actorId: EntityId,
-  ability: NightAbility,
+  ability: NightAbilityReadView,
   day: number,
   kind: NightActionKind,
   targetId: EntityId,

@@ -44,7 +44,7 @@ test("recipient target evaluation cannot redirect the already selected state ref
   const target = {
     get id() {
       accesses.push("target");
-      f.ability.state = replacement;
+      (f.ability as { state: GuardState }).state = replacement;
       return 4;
     },
   };

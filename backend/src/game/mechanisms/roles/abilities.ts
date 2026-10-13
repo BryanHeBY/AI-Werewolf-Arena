@@ -1,9 +1,10 @@
 /**
  * Owns ability instances, their copied state slots and lifecycle metadata.
  * Inputs are role-owned instances, installation data and day eligibility queries;
- * outputs are stored references, status and detached player projections. Seer
+ * outputs are live read-only stored references, status and detached player projections. Seer
  * payload writes belong to its feature owner; this store never infers player
  * knowledge from true camp or executes a Seer inspection command.
+ * Installation DTOs retain their existing write contracts; query and installation outputs expose finite deeply read-only payloads.
  * Native installation restores only the abilities slot at its original expression; no general private-container setter is exposed.
  */
 import { readPairSeerState, type PairSeerState } from "./fragrant_pair_seer/state";
@@ -12,10 +13,10 @@ import { INSPECTION_POLICIES } from "../../../core/domain/board";
 import { nativePotionSecondTurn } from "./witch/policies";
 import { Role, type EntityId, type EventPayloadMap } from "../../../core/domain/model";
 import type { RoleComponent } from "../../../core/domain/components/role";
-import type { GuardState } from "./guard/state";
-import type { WitchState } from "./witch/state";
-import type { DreamerState } from "./dreamer/state";
-import type { RoleInspectionState } from "./role_inspection/state";
+import type { GuardState, GuardReadState } from "./guard/state";
+import type { WitchState, WitchReadState } from "./witch/state";
+import type { DreamerState, DreamerReadState } from "./dreamer/state";
+import type { RoleInspectionState, RoleInspectionReadState } from "./role_inspection/state";
 import type { SeerState, SeerReadState } from "./seer/state-contracts";
 import { COMPONENT } from "../../../core/domain/components/names";
 import {
@@ -50,7 +51,7 @@ export const ROLE_INSPECTION_POLICY_ROLES: Readonly<Record<RoleInspectionPolicy,
   pure_white: Role.PureWhiteGirl,
   wolf_witch: Role.WolfWitch,
 };
-export function roleInspectionPolicy(state: RoleInspectionState): RoleInspectionPolicy {
+export function roleInspectionPolicy(state: RoleInspectionReadState): RoleInspectionPolicy {
   if (state.inspectionPolicy !== undefined && !INSPECTION_POLICIES.includes(state.inspectionPolicy))
     throw new Error("role_inspection_configuration_policy_invalid");
   const policy = state.policy === undefined ? "gargoyle" : state.policy;
@@ -129,17 +130,14 @@ interface NightAbilityReadStates {
   };
   shelter: Readonly<NightAbilityStates["shelter"]>;
   seer_check: SeerReadState;
-  role_check: Readonly<Omit<RoleInspectionState, "history">> & {
-    readonly history: readonly (Readonly<Omit<RoleInspectionState["history"][number], "result">> & {
-      readonly result: Readonly<RoleInspectionState["history"][number]["result"]>;
-    })[];
-  };
-  guard: Readonly<GuardState>;
-  potion: Readonly<WitchState>;
-  dream: Readonly<Omit<DreamerState, "history">> & {
-    readonly history: readonly Readonly<DreamerState["history"][number]>[];
-  };
+  role_check: RoleInspectionReadState;
+  guard: GuardReadState;
+  potion: WitchReadState;
+  dream: DreamerReadState;
 }
+/** Finite stored payload read contract; installation data remains NightAbilityStates. */
+export type NightAbilityReadState<K extends NightAbilityKind = NightAbilityKind> =
+  NightAbilityReadStates[K];
 type NightAbilityReadUnion = {
   [K in NightAbilityKind]: Readonly<
     Omit<NightAbility<K>, "state" | "source" | "nightSuppression">
@@ -167,7 +165,7 @@ export interface PlayerNightAbilityStates {
 }
 /** The DTO contract matches its explicit projection, including already-known dream history. */
 export function projectNightState(
-  ability: NightAbility,
+  ability: NightAbilityReadView,
 ): PlayerNightAbilityStates[NightAbilityKind] {
   switch (ability.kind) {
     case "pair_check":
@@ -218,8 +216,9 @@ export function copyAbilityData<T>(value: T): T {
 }
 
 /** The only resource owner is this player's stored instance; no parallel role state. */
-export function allNightAbilities(role: RoleComponent | undefined): NightAbility[] {
-  const stored = role?.privateState.abilities as Record<string, NightAbility> | undefined;
+export function allNightAbilities(role: RoleComponent | undefined): NightAbilityReadView[] {
+  const stored = role?.privateState.abilities as
+    Readonly<Record<string, NightAbilityReadView>> | undefined;
   return stored
     ? Object.values(stored).sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0))
     : [];
@@ -256,9 +255,9 @@ export function findNightAbility<K extends NightAbilityKind>(
   role: RoleComponent | undefined,
   kind: K,
   id?: string,
-): NightAbility<K> | undefined {
+): NightAbilityReadView<K> | undefined {
   const candidates = allNightAbilities(role).filter(
-    (ability): ability is NightAbility<K> => ability.kind === kind,
+    (ability): ability is NightAbilityReadView<K> => ability.kind === kind,
   );
   if (id !== undefined) return candidates.find((ability) => ability.id === id);
   // Legacy callers select the native instance, or one unambiguous granted one.
@@ -273,7 +272,7 @@ export function activeNightAbility<K extends NightAbilityKind>(
   kind: K,
   day: number,
   id?: string,
-): NightAbility<K> | undefined {
+): NightAbilityReadView<K> | undefined {
   const ability = findNightAbility(role, kind, id);
   return ability && abilityStatus(ability, day) === "active" ? ability : undefined;
 }
@@ -282,7 +281,7 @@ export function installNativeAbility<K extends NightAbilityKind>(
   role: RoleComponent,
   kind: K,
   state: NightAbilityStates[K],
-): NightAbilityStates[K] {
+): NightAbilityReadState<K> {
   if (kind === "pair_check" && role.role !== Role.AwakenedSeer)
     throw Error("ability_pair_native_role_invalid");
   const ownedState = (
@@ -319,13 +318,22 @@ export function installNativeAbility<K extends NightAbilityKind>(
       disabled: false,
     } as NightAbility;
   }
-  return ownedState;
+  return ownedState as NightAbilityReadState<K>;
 }
 
-export function recordNightAbilityUse(ability: NightAbility, day: number, consumed: boolean): void {
+/** Existing initialization/learned-role callers own their original start-day decision. */
+export function setNightAbilityStartDay(ability: NightAbilityReadView, day: number): void {
+  (ability as { startsOnDay: number }).startsOnDay = day;
+}
+
+export function recordNightAbilityUse(
+  ability: NightAbilityReadView,
+  day: number,
+  consumed: boolean,
+): void {
   if (abilityStatus(ability, day) !== "active") throw new Error("ability_not_active");
-  ability.lastUsedDay = day;
-  if (consumed) ability.uses++;
+  (ability as { lastUsedDay: number | null }).lastUsedDay = day;
+  if (consumed) (ability as { uses: number }).uses++;
 }
 
 export type PlayerNightAbility = {
@@ -338,7 +346,10 @@ export type PlayerNightAbility = {
     status: AbilityStatus;
   };
 }[NightAbilityKind];
-export function projectNightAbility(ability: NightAbility, day: number): PlayerNightAbility {
+export function projectNightAbility(
+  ability: NightAbilityReadView,
+  day: number,
+): PlayerNightAbility {
   const metadata = {
     id: ability.id,
     source: projectAbilitySource(ability.source, ability.sourceDisclosed),

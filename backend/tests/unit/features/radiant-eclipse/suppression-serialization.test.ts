@@ -86,7 +86,7 @@ test("capture cannot invoke an inherited marker setter or alter persistent disab
   Object.setPrototypeOf(f.ability, {
     set nightSuppression(_value: unknown) {
       calls++;
-      f.ability.disabled = true;
+      (f.ability as { disabled: boolean }).disabled = true;
     },
   });
   let thrown = false;
@@ -109,8 +109,8 @@ test("a normal blocker remains serializable, owns cleanup after a field edit, an
     policy: "awa_radiant_eclipse_v1",
     day: 2,
   });
-  scope.marker.day = 3;
-  f.ability.disabled = true;
+  (scope.marker as { day: number }).day = 3;
+  (f.ability as { disabled: boolean }).disabled = true;
   expect(scope.isCurrent()).toBe(false);
   expect(scope.close()).toBe(true);
   expect(f.ability.disabled).toBe(true);

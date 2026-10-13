@@ -14,7 +14,7 @@ import type { RandomDraws } from "../../../../core/domain/random";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import { Camp, Role, Phase } from "../../../../core/domain/identity";
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
-import { abilityStatus, type NightAbility } from "../abilities";
+import { abilityStatus, type NightAbilityReadView } from "../abilities";
 import { plainJson, write } from "./owned-state-data";
 import { commitPairStateSlot, type PairStateSlot } from "./pair-state-slot";
 import {
@@ -182,7 +182,7 @@ interface Owner extends PairStateSlot {
   readonly seer: OriginalPlayer;
   readonly wolves: readonly OriginalPlayer[];
   readonly fragrant: FragrantState;
-  readonly pairSource: NightAbility<"pair_check">["source"];
+  readonly pairSource: NightAbilityReadView<"pair_check">["source"];
   readonly abilities: unknown;
   fragrantJson: string;
   knowledge: FragrantKnowledge;
@@ -267,7 +267,7 @@ export function installFragrantPairAuthority(
     s = readPairSeerState(pairState),
     rawPairAbility = seer && own(own(seer.privateState, "abilities"), "native:pair_check"),
     pairAbilityJson = plainJson(rawPairAbility),
-    pairAbility = rawPairAbility as NightAbility<"pair_check"> | undefined,
+    pairAbility = rawPairAbility as NightAbilityReadView<"pair_check"> | undefined,
     wolves = [...players.values()].filter((p) => p.target.roleId === Role.Wolf);
   const counts = new Map<Role, number>([
     [Role.FragrantPhantom, 1],

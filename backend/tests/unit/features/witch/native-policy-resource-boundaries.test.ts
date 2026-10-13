@@ -5,7 +5,19 @@
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
-import { COMPONENT, Phase, Role, PotionType, StatusMark, type BoardConfig, type ActionRequest, type GameEvent, type RoleComponent, type ToolCall, type StatusMarksComponent } from "../../../../src/core";
+import {
+  COMPONENT,
+  Phase,
+  Role,
+  PotionType,
+  StatusMark,
+  type BoardConfig,
+  type ActionRequest,
+  type GameEvent,
+  type RoleComponent,
+  type ToolCall,
+  type StatusMarksComponent,
+} from "../../../../src/core";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { WITCH_NIGHT_STAGES } from "../../../../src/game/mechanisms/roles/witch/night_stages";
 import { WITCH_ROLE_PROFILE } from "../../../../src/game/mechanisms/roles/witch/profile";
@@ -108,7 +120,7 @@ for (const knife of ["awa_with_heal_v1", "awa_always_v1"] as const)
   for (const stock of [0, 1])
     test(`${knife}/heal=${stock}: actual request discloses only the configured knife information`, async () => {
       const game = setup(knife);
-      game.ability.state.heal = stock;
+      (game.ability.state as { heal: number }).heal = stock;
       await game.act([potion(PotionType.None, 2)]);
       expect(Object.hasOwn(game.requests[0].context, "wolf_target")).toBe(
         knife === "awa_always_v1" || (knife === "awa_with_heal_v1" && stock > 0),
@@ -170,9 +182,13 @@ test("passing the second native turn closes it without consuming the other bottl
 for (const kind of ["copy", "transfer", "gift"] as const)
   test(`${kind}: native two-potion and always-disclose policies cannot widen a foreign resource`, async () => {
     const game = setup("awa_always_v1", "awa_both_native_experimental_v1");
-    game.ability.source =
+    (
+      game.ability as {
+        source: import("../../../../src/game/mechanisms/roles/abilities").AbilitySource;
+      }
+    ).source =
       kind === "gift" ? { kind, actorId: 1 } : { kind, actorId: 1, abilityId: "foreign-potion" };
-    game.ability.state.heal = 0;
+    (game.ability.state as { heal: number }).heal = 0;
     await game.act([potion(PotionType.Poison, 4), potion(PotionType.Heal)]);
     expect(game.requests).toHaveLength(1);
     expect(game.requests[0].context).not.toHaveProperty("wolf_target");
@@ -184,9 +200,14 @@ for (const revoked of ["disabled", "source", "day"] as const)
     const game = setup("awa_always_v1", "awa_both_native_experimental_v1");
     await game.act([potion(PotionType.Heal), potion(PotionType.Poison, 4)], (_request, n) => {
       if (n !== 1) return;
-      if (revoked === "disabled") game.ability.disabled = true;
-      if (revoked === "source") game.ability.source = { kind: "gift", actorId: 1 };
-      if (revoked === "day") game.ability.startsOnDay = 2;
+      if (revoked === "disabled") (game.ability as { disabled: boolean }).disabled = true;
+      if (revoked === "source")
+        (
+          game.ability as {
+            source: import("../../../../src/game/mechanisms/roles/abilities").AbilitySource;
+          }
+        ).source = { kind: "gift", actorId: 1 };
+      if (revoked === "day") (game.ability as { startsOnDay: number }).startsOnDay = 2;
     });
     expect(game.requests).toHaveLength(2);
     expect(game.ability.state.poison).toBe(1);

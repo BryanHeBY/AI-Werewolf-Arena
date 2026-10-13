@@ -105,14 +105,14 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
       const ctx = context(game, events, async (request) => {
         calls++;
         expect(request.context.ability_id).toBe("native:role_check");
-        if (point === "await") game.ability.id = "native:renamed";
+        if (point === "await") (game.ability as { id: string }).id = "native:renamed";
         return { name: "inspect_role", args: { target_id: 2 } };
       });
       if (point === "gateway") {
         const validate = ctx.toolGateway.validateAndSanitize.bind(ctx.toolGateway);
         ctx.toolGateway.validateAndSanitize = (world, actorId, call, validationContext) => {
           const result = validate(world, actorId, call, validationContext);
-          game.ability.id = "native:renamed";
+          (game.ability as { id: string }).id = "native:renamed";
           return result;
         };
       }
@@ -140,7 +140,16 @@ test("Gargoyle final application rechecks unique history after gateway, preserve
     const result = validate(world, actorId, call, validationContext);
     if (!injected) {
       injected = true;
-      game.ability.state.history.push(structuredClone(prefix));
+      (
+        game.ability.state.history as {
+          day: number;
+          targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+          result: Extract<
+            import("@ai-werewolf-arena/game-contract").InspectionResult,
+            { kind: "role" }
+          >;
+        }[]
+      ).push(structuredClone(prefix));
     }
     return result;
   };
@@ -171,7 +180,16 @@ test("Gargoyle final report rechecks unique history after an inspection-label ca
         ? {
             ...profile,
             inspectionLabels: () => {
-              game.ability.state.history.push({
+              (
+                game.ability.state.history as {
+                  day: number;
+                  targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+                  result: Extract<
+                    import("@ai-werewolf-arena/game-contract").InspectionResult,
+                    { kind: "role" }
+                  >;
+                }[]
+              ).push({
                 day: 1,
                 targetId: 2,
                 result: { kind: "role" as const, role: Role.Wolf },
@@ -205,13 +223,19 @@ for (const change of ["id", "source", "private_owner", "activation", "actor_tran
     expect(canGargoyleKnife(role, game.world)).toBe(true);
     expect(game.ability.lastUsedDay).toBe(1);
     const prefix = structuredClone(game.ability.state.history);
-    if (change === "id") game.ability.id = "native:renamed";
-    if (change === "source") game.ability.source = { kind: "gift", actorId: 3 };
+    if (change === "id") (game.ability as { id: string }).id = "native:renamed";
+    if (change === "source")
+      (
+        game.ability as {
+          source: import("../../../src/game/mechanisms/roles/abilities").AbilitySource;
+        }
+      ).source = { kind: "gift", actorId: 3 };
     if (change === "private_owner")
       (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
         ...role.privateState,
       };
-    if (change === "activation") game.ability.activation = "lucky";
+    if (change === "activation")
+      (game.ability as { activation: "lucky" | "black_market" | undefined }).activation = "lucky";
     if (change === "actor_transfer") {
       const otherRole = game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!,
         ownLife = game.world.getComponent(1, COMPONENT.Alive)!,
@@ -232,7 +256,7 @@ for (const point of ["await", "gateway", "label"] as const)
     const game = fixture(Role.Gargoyle),
       events: GameEvent[] = [],
       role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
-    game.ability.disabled = true;
+    (game.ability as { disabled: boolean }).disabled = true;
     game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive = false;
     refreshGargoyleInheritance(game.world, events, 1);
     events.length = 0;
@@ -250,7 +274,9 @@ for (const point of ["await", "gateway", "label"] as const)
       [],
     );
     const promote = () => {
-      gift.source = { kind: "native", role: Role.Gargoyle };
+      (
+        gift as { source: import("../../../src/game/mechanisms/roles/abilities").AbilitySource }
+      ).source = { kind: "native", role: Role.Gargoyle };
     };
     let calls = 0;
     const ctx = context(game, events, async () => {
@@ -302,7 +328,8 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
     await game.stage.execute(
       context(game, events, async () => {
         calls++;
-        if (game.ability.source.kind === "native") game.ability.source.role = Role.Wolf;
+        if (game.ability.source.kind === "native")
+          (game.ability.source as { role: Role }).role = Role.Wolf;
         return { name: "inspect_role", args: { target_id: 3 } };
       }),
     );

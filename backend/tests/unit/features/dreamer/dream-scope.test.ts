@@ -100,10 +100,10 @@ for (const change of ["disabled", "spent", "transferred"] as const)
     const ctx = context(game, events, async (request) => {
       calls.push(request.actorId);
       if (request.actorId === 1) {
-        if (change === "disabled") later.disabled = true;
+        if (change === "disabled") (later as { disabled: boolean }).disabled = true;
         if (change === "spent") {
-          later.maxUses = 1;
-          later.uses = 1;
+          (later as { maxUses: number | null }).maxUses = 1;
+          (later as { uses: number }).uses = 1;
         }
         if (change === "transferred")
           transferNightAbility(game.world, 2, 6, later.id, "transfer:dream", [], {
@@ -147,15 +147,21 @@ for (const point of ["await", "gateway"] as const)
         events: GameEvent[] = [],
         ability = game.ability(1),
         originalState = ability.state;
-      game.ability(2).disabled = true;
+      (game.ability(2) as { disabled: boolean }).disabled = true;
       let calls = 0,
         day = 1;
       const revoke = () => {
-        if (change === "source") ability.source = { kind: "gift", actorId: 3 };
+        if (change === "source")
+          (
+            ability as {
+              source: import("../../../../src/game/mechanisms/roles/abilities").AbilitySource;
+            }
+          ).source = { kind: "gift", actorId: 3 };
         if (change === "source_owner" && ability.source.kind === "native")
-          ability.source.role = Role.Wolf;
-        if (change === "id") ability.id = "native:renamed";
-        if (change === "activation") ability.activation = "lucky";
+          (ability.source as { role: Role }).role = Role.Wolf;
+        if (change === "id") (ability as { id: string }).id = "native:renamed";
+        if (change === "activation")
+          (ability as { activation: "lucky" | "black_market" | undefined }).activation = "lucky";
         if (change === "private_owner")
           (game.role(1) as { privateState: Readonly<Record<string, unknown>> }).privateState = {
             ...game.role(1).privateState,
@@ -166,8 +172,8 @@ for (const point of ["await", "gateway"] as const)
           life.alive = true;
         }
         if (change === "day") day = 2;
-        if (change === "starts") ability.startsOnDay = 0;
-        if (change === "max_uses") ability.maxUses = 2;
+        if (change === "starts") (ability as { startsOnDay: number }).startsOnDay = 0;
+        if (change === "max_uses") (ability as { maxUses: number | null }).maxUses = 2;
       };
       const ctx = context(game, events, async () => {
         calls++;

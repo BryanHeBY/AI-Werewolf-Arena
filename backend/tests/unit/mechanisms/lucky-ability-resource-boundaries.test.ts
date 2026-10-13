@@ -7,7 +7,19 @@ import { bindNightAbilityActorQuery } from "../../../src/game/mechanisms/roles/n
 import { PotionType } from "../../../src/core";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { COMPONENT, Role, Camp, Phase, WinCondition, WitchSelfHealRule, StatusMark, DeathCause, type GameEvent, type RoleComponent, type BoardConfig } from "../../../src/core";
+import {
+  COMPONENT,
+  Role,
+  Camp,
+  Phase,
+  WinCondition,
+  WitchSelfHealRule,
+  StatusMark,
+  DeathCause,
+  type GameEvent,
+  type RoleComponent,
+  type BoardConfig,
+} from "../../../src/core";
 import { sixPlayerMvpConfig } from "../../../src/runtime/scenarios/six_player_mvp";
 import {
   grantNightAbility,
@@ -369,9 +381,17 @@ for (const kind of ["seer_check", "guard"] as const)
       const ctx = context(game, 1, events, async () => {
         if (revoke === "actor_life")
           game.world.addComponent(actor, COMPONENT.Alive, createAliveComponent());
-        if (revoke === "state") ability.state = structuredClone(ability.state);
-        if (revoke === "activation") ability.activation = "lucky";
-        if (revoke === "id") ability.id = "renamed:old-request";
+        if (revoke === "state")
+          (
+            ability as {
+              state:
+                | import("../../../src/game/mechanisms/roles/seer/state-contracts").SeerReadState
+                | import("../../../src/game/mechanisms/roles/guard/state").GuardReadState;
+            }
+          ).state = structuredClone(ability.state);
+        if (revoke === "activation")
+          (ability as { activation: "lucky" | "black_market" | undefined }).activation = "lucky";
+        if (revoke === "id") (ability as { id: string }).id = "renamed:old-request";
         if (revoke === "target_life") targetChange();
         return kind === "guard"
           ? { name: "guard", args: { target_id: 1, abstain: false } }

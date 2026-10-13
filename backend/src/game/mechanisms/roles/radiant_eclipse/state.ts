@@ -1,3 +1,10 @@
+/**
+ * Owns Radiant/Eclipse state data structures, strict readers and pure selections.
+ * Inputs are unknown data or read-only shelter state, day and legal target IDs;
+ * outputs are checked detached data and newly selected shelter/eclipse state.
+ * This leaf never changes a live ability slot, consumes stock or commits a lease;
+ * ability installation and authority publication remain with their actual owners.
+ */
 import { types } from "node:util";
 
 export const RADIANT_ECLIPSE_POLICY = "awa_radiant_eclipse_v1" as const;
@@ -90,7 +97,7 @@ export function readShelterState(value: unknown): ShelterState | undefined {
   };
 }
 export function selectShelter(
-  state: ShelterState,
+  state: Readonly<ShelterState>,
   day: number,
   targetId: unknown,
   actorId: number,

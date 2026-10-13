@@ -44,7 +44,7 @@ function fixture(disabled = false) {
     history: [],
   });
   const ability = findNightAbility(role, "seer_check")!;
-  ability.disabled = disabled;
+  (ability as { disabled: boolean }).disabled = disabled;
   return { world, actorId, role, life, ability };
 }
 for (const initial of [false, true])
@@ -61,7 +61,7 @@ for (const initial of [false, true])
 test("another permanent disable is kept while only this blocker is removed", () => {
   const f = fixture(),
     scope = openEclipseSuppression(f.world, f.actorId, f.ability, 2);
-  f.ability.disabled = true;
+  (f.ability as { disabled: boolean }).disabled = true;
   expect(scope.isCurrent()).toBe(false);
   expect(scope.close()).toBe(true);
   expect(f.ability.disabled).toBe(true);
@@ -69,7 +69,7 @@ test("another permanent disable is kept while only this blocker is removed", () 
 test("same blocker with altered fields revokes authorization and remains its owner's cleanup", () => {
   const f = fixture(),
     scope = openEclipseSuppression(f.world, f.actorId, f.ability, 2);
-  scope.marker.day = 3;
+  (scope.marker as { day: number }).day = 3;
   expect(scope.isCurrent()).toBe(false);
   expect(scope.close()).toBe(true);
   expect(f.ability.nightSuppression).toBeUndefined();
@@ -78,7 +78,13 @@ test("a replacement blocker with equal values belongs to another owner", () => {
   const f = fixture(),
     scope = openEclipseSuppression(f.world, f.actorId, f.ability, 2);
   const foreign = { ...scope.marker };
-  f.ability.nightSuppression = foreign;
+  (
+    f.ability as {
+      nightSuppression:
+        | import("../../../../src/game/mechanisms/roles/radiant_eclipse/state").EclipseSuppression
+        | undefined;
+    }
+  ).nightSuppression = foreign;
   expect(scope.isCurrent()).toBe(false);
   expect(scope.close()).toBe(false);
   expect(f.ability.nightSuppression).toBe(foreign);
@@ -164,13 +170,23 @@ for (const mode of [
     if (mode === "identity_ref")
       f.world.addComponent(f.actorId, COMPONENT.Identity, { ...identity });
     if (mode === "camp") f.role.camp = Camp.Wolf;
-    if (mode === "state_ref") f.ability.state = { ...f.ability.state };
-    if (mode === "source_ref") f.ability.source = { ...f.ability.source };
+    if (mode === "state_ref")
+      (
+        f.ability as {
+          state: import("../../../../src/game/mechanisms/roles/seer/state-contracts").SeerReadState;
+        }
+      ).state = { ...f.ability.state };
+    if (mode === "source_ref")
+      (
+        f.ability as {
+          source: import("../../../../src/game/mechanisms/roles/abilities").AbilitySource;
+        }
+      ).source = { ...f.ability.source };
     if (mode === "source_role" && f.ability.source.kind === "native")
-      f.ability.source.role = Role.Witch;
-    if (mode === "ability_id") f.ability.id = "native:seer_check:edited";
+      (f.ability.source as { role: Role }).role = Role.Witch;
+    if (mode === "ability_id") (f.ability as { id: string }).id = "native:seer_check:edited";
     if (mode === "first_death_name") f.life.alive = false;
-    if (mode === "permanent_disabled_name") f.ability.disabled = true;
+    if (mode === "permanent_disabled_name") (f.ability as { disabled: boolean }).disabled = true;
     expect(scope.isCurrent()).toBe(false);
     expect(scope.close()).toBe(true);
     expect(f.ability.nightSuppression).toBeUndefined();

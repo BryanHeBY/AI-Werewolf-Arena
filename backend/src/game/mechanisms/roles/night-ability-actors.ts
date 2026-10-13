@@ -1,7 +1,8 @@
 /**
  * Owns eager night-actor enumeration through restricted roster and eligibility ports.
  * Inputs are live stored ability references, alive IDs, kind and day; outputs keep
- * those same references for the existing captured commit owner, not archive DTOs.
+ * those same references with read-only payloads, not archive DTOs or mutable inventory.
+ * Concrete feature commands retain the original captured commit writes.
  * Fear filters the complete roster before modifier eligibility, then ability status
  * is read in the original order. Binding never reads World, actor state or clocks;
  * query implementations never write resources, commit effects or choose random targets.
@@ -12,7 +13,6 @@ import type { World } from "../../../core/domain/world";
 import {
   abilityStatus,
   allNightAbilities,
-  type NightAbility,
   type NightAbilityReadView,
   type NightAbilityKind,
 } from "./abilities";
@@ -40,7 +40,7 @@ export interface NightAbilityActorQuery {
   actors<K extends NightAbilityKind>(
     kind: K,
     day: number,
-  ): Array<{ actorId: EntityId; ability: NightAbility<K> }>;
+  ): Array<{ actorId: EntityId; ability: NightAbilityReadView<K> }>;
 }
 
 /** Finite explicit fear-then-modifier assembly preserves both complete filter passes. */
@@ -75,11 +75,7 @@ export function createNightAbilityActorQuery(
             (ability): ability is NightAbilityReadView<K> =>
               ability.kind === kind && abilityStatus(ability, day) === "active",
           )
-          // This owner restores the original stored reference for captured commit;
-          // the input read port never exposes state or metadata mutation rights.
-          .map(
-            (ability) => ({ actorId, ability }) as { actorId: EntityId; ability: NightAbility<K> },
-          ),
+          .map((ability) => ({ actorId, ability })),
       );
     },
   });

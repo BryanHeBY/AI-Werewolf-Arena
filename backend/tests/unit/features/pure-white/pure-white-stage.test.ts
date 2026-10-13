@@ -222,7 +222,7 @@ for (const locale of ["zh-CN", "en"] as const) {
       f.world.getComponent<RoleComponent>(f.pure, COMPONENT.Role),
       "role_check",
     )!;
-    ability.disabled = true;
+    (ability as { disabled: boolean }).disabled = true;
     expect(
       new DamageResolutionSystem().resolve(f.world, {
         inspectionAttacks: f.ctx.state.inspectionAttacks,

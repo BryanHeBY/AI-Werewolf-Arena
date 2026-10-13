@@ -243,7 +243,9 @@ for (const locale of ["zh-CN", "en"] as const)
           Role.Villager,
         ],
       });
-      getWitchState(world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!.heal = 0;
+      (
+        getWitchState(world.getComponent<RoleComponent>(6, COMPONENT.Role)!)! as { heal: number }
+      ).heal = 0;
       const planFile = path.join(root, "plan.json");
       await writeFile(
         planFile,

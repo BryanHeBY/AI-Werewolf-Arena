@@ -633,7 +633,7 @@ test("native installation and replacement detach repeated templates and return t
   };
   const p1 = setWitchState(role(world, 5), potion),
     p2 = setWitchState(role(world, 6), potion);
-  p1.poison = 0;
+  (p1 as { poison: number }).poison = 0;
   expect(p2.poison).toBe(1);
   expect(potion.poison).toBe(1);
 });
@@ -642,7 +642,13 @@ test("transfer requires an explicit knowledge policy and preserves generic count
   const { world } = fixture(),
     events: GameEvent[] = [],
     original = activeNightAbility(role(world, 3), "seer_check", 1)!;
-  original.state.history.push({ targetId: 1, isWerewolf: true });
+  (
+    original.state.history as {
+      targetId: import("@ai-werewolf-arena/game-contract").EntityId;
+      isWerewolf: boolean;
+      result?: import("@ai-werewolf-arena/game-contract").InspectionResult;
+    }[]
+  ).push({ targetId: 1, isWerewolf: true });
   recordNightAbilityUse(original, 1, true);
   expect(() =>
     transferNightAbility(world, 3, 5, original.id, "move:vision", events, undefined as never),

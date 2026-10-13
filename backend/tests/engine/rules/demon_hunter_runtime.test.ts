@@ -539,7 +539,11 @@ test("actual pure-data Heal refund cannot renew the consumed source or protect t
     {
       getAction: async (request) => {
         if (request.context.stage === "seer")
-          getWitchState(f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.heal = 1;
+          (
+            getWitchState(f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)! as {
+              heal: number;
+            }
+          ).heal = 1;
         return demonNightChoice(request, f.witchId, {
           knife: 6,
           hunt: null,

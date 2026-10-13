@@ -1,3 +1,9 @@
+/**
+ * Defines role-inspection target queries, its tool schema and validation rules.
+ * Inputs are live read-only inspection history, World membership and a proposed
+ * tool action; outputs are legal IDs or the existing validation error code.
+ * This leaf does not mutate history, spend stock or commit an inspection effect.
+ */
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { Phase, type EntityId } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
@@ -6,12 +12,12 @@ import { isAliveTarget } from "../../validation/contracts";
 import type { RoleProfile } from "../contracts";
 import { activeNightAbility } from "../abilities";
 import { inspectionRepeats } from "./policies";
-import type { RoleInspectionState } from "../private_state";
+import type { RoleInspectionReadState } from "../private_state";
 
 export function roleInspectionTargets(
   world: World,
   actorId: EntityId,
-  state: RoleInspectionState,
+  state: RoleInspectionReadState,
 ): EntityId[] {
   const repeat = inspectionRepeats(state);
   return world

@@ -15,7 +15,7 @@ import {
   allNightAbilities,
   abilityStatus,
   recordNightAbilityUse,
-  type NightAbility,
+  type NightAbilityReadView,
 } from "./abilities";
 import { captureNightAbilityScope } from "./ability_scope";
 import { luckyTargetAllowed, recordOwnNightAction } from "./night_action_history";
@@ -47,8 +47,11 @@ export function recordRecipientNightCommit(
 
 import { captureInspectionIdentity, commitFoxInspection } from "./cursed_fox/inspection_effect";
 
-type LuckyAbility = NightAbility<"seer_check" | "potion" | "guard">;
-function isRecipient(ability: NightAbility, policy: RecipientPolicy): ability is LuckyAbility {
+type LuckyAbility = NightAbilityReadView<"seer_check" | "potion" | "guard">;
+function isRecipient(
+  ability: NightAbilityReadView,
+  policy: RecipientPolicy,
+): ability is LuckyAbility {
   return (
     ability.activation === policy &&
     (policy === "black_market"

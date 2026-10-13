@@ -345,9 +345,21 @@ for (const change of [
         if (change === "target_replace")
           game.world.addComponent(2, COMPONENT.Alive, createAliveComponent());
         if (change === "role") role(game, 1).role = Role.Seer;
-        if (change === "state") ability.state = structuredClone(ability.state);
-        if (change === "policy") ability.state.policy = "gargoyle";
-        if (change === "disabled") ability.disabled = true;
+        if (change === "state")
+          (
+            ability as {
+              state: import("../../../../src/game/mechanisms/roles/role_inspection/state").RoleInspectionReadState;
+            }
+          ).state = structuredClone(ability.state);
+        if (change === "policy")
+          (
+            ability.state as {
+              policy:
+                | import("../../../../src/game/mechanisms/roles/abilities").RoleInspectionPolicy
+                | undefined;
+            }
+          ).policy = "gargoyle";
+        if (change === "disabled") (ability as { disabled: boolean }).disabled = true;
         return { name: "inspect_role", args: { target_id: 2 } };
       },
       1,
@@ -387,7 +399,7 @@ test("invalid policy is rejected before installing an instance, and gifted Psych
   expect(allNightAbilities(role(game, 5))).toEqual([]);
   expect(events).toEqual([]);
   const native = findNightAbility(role(game, 1), "role_check")!;
-  native.disabled = true;
+  (native as { disabled: boolean }).disabled = true;
   grantNightAbility(
     game.world,
     1,
@@ -424,8 +436,15 @@ for (const mutation of ["disabled", "policy", "transfer", "clock"] as const)
     let current = true;
     gateway.validateAndSanitize = (world, actorId, call, validationContext) => {
       const result = validate(world, actorId, call, validationContext);
-      if (mutation === "disabled") ability.disabled = true;
-      if (mutation === "policy") ability.state.policy = "gargoyle";
+      if (mutation === "disabled") (ability as { disabled: boolean }).disabled = true;
+      if (mutation === "policy")
+        (
+          ability.state as {
+            policy:
+              | import("../../../../src/game/mechanisms/roles/abilities").RoleInspectionPolicy
+              | undefined;
+          }
+        ).policy = "gargoyle";
       if (mutation === "transfer")
         transferNightAbility(game.world, 1, 5, ability.id, "transfer:gateway-revoke", events, {
           kind: "role_check",
@@ -499,7 +518,7 @@ test("cancelled null is not a legal pass and copied Psychic policy keeps indepen
   expect(copy.state.history).toEqual(native.state.history);
   expect(copy.state.history).not.toBe(native.state.history);
   expect(role(game, 5).camp).toBe(Camp.Good);
-  copy.state.history[0].targetId = 6;
+  (copy.state.history[0] as { targetId: number }).targetId = 6;
   expect(native.state.history[0].targetId).toBe(2);
 });
 

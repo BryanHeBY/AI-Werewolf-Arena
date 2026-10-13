@@ -254,8 +254,10 @@ function rejectedQueryCapabilities(
     // @ts-expect-error Nested pair tuples in read-port history also have no write rights.
     pair.state.history[0]!.targetIds[0] = 2;
   }
-  // Final actor output deliberately keeps the original mutable reference for its commit owner.
+  // Captured actor output keeps the same reference with no ordinary write permission.
+  // @ts-expect-error Metadata writes belong to the concrete ability owner.
   actors.actors("potion", 1)[0]!.ability.uses++;
+  // @ts-expect-error Potion stock writes belong to the concrete payload owner.
   actors.actors("potion", 1)[0]!.ability.state.poison = 0;
 }
 void rejectedQueryCapabilities;

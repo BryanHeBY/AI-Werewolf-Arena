@@ -112,7 +112,7 @@ test("pair history and its only common resource reject late counter edits atomic
   f.open();
   const lease = openPairCheckChoice(f.world, 1),
     ability = findNightAbility(f.role(5), "pair_check")!;
-  ability.uses = 1;
+  (ability as { uses: number }).uses = 1;
   expect(lease.isCurrent()).toBe(false);
   expect(() => lease.commit([5, 6])).toThrow();
   expect(f.role(5).privateState.pairSeer).toEqual(freshPairSeerState());
@@ -133,7 +133,9 @@ test("same-value common source replacement revokes owner and retains empty histo
   f.open();
   const lease = openPairCheckChoice(f.world, 1),
     ability = findNightAbility(f.role(5), "pair_check")!;
-  ability.source = { ...ability.source };
+  (
+    ability as { source: import("../../../../src/game/mechanisms/roles/abilities").AbilitySource }
+  ).source = { ...ability.source };
   expect(lease.isCurrent()).toBe(false);
   expect(() => lease.commit([5, 6])).toThrow();
   expect(f.role(5).privateState.pairSeer).toEqual(freshPairSeerState());

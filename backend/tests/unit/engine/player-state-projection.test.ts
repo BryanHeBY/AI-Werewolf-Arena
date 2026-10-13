@@ -144,9 +144,13 @@ for (const locale of ["zh-CN", "en"] as const)
 test("dream ownState and selected ability expose the same detached, valid history contract", () => {
   const game = fixture(Role.Dreamer, "en"),
     ability = findNightAbility(game.role, "dream")!;
-  ability.state.lastTarget = 5;
-  ability.state.lastDay = 1;
-  ability.state.history = [{ day: 1, targetId: 5 }];
+  (ability.state as { lastTarget: number | null }).lastTarget = 5;
+  (ability.state as { lastDay: number | null }).lastDay = 1;
+  (
+    ability.state as unknown as {
+      history: { day: number; targetId: import("@ai-werewolf-arena/game-contract").EntityId }[];
+    }
+  ).history = [{ day: 1, targetId: 5 }];
   Object.defineProperty(ability.state.history[0], "godReason", {
     enumerable: true,
     value: "hidden",

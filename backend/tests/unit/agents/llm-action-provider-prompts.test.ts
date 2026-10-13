@@ -357,7 +357,7 @@ describe("LlmActionProvider prompts", () => {
         (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "witch",
       )!;
     const witch = context.world.getComponent<RoleComponent>(witchId, COMPONENT.Role)!;
-    getWitchState(witch)!.heal = 0;
+    (getWitchState(witch)! as { heal: number }).heal = 0;
     const targetId = context.world.entityIds().find((id) => id !== witchId)!;
     const client = new InvalidPotionThenNoneToolLoopClient(targetId);
     const provider = new LlmActionProvider(context.world, client as any, {

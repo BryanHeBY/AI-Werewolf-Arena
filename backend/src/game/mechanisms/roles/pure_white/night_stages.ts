@@ -4,6 +4,8 @@
  * and the configured attack effects. It does not collapse camp inspection into role inspection
  * or alter night-stage order. Shared role-check actor enumeration uses the bound
  * query before this feature checks its native Pure White/Wolf Witch policy.
+ * Its three role-result state reads and history append delegate to the concrete
+ * RoleInspection writer; use accounting and effects remain at their original sites.
  */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -14,6 +16,7 @@ import type { NightStageContext, NightStageHandler } from "../../stages/night/co
 import { recordNightAbilityUse, roleInspectionPolicy } from "../abilities";
 import { captureNightAbilityScope } from "../ability_scope";
 import { resolveInspection } from "../inspection";
+import { recordAbilityRoleInspection } from "../role_inspection/ports";
 import { recordRoleInspectionNightCommit } from "../role_inspection/night_scope";
 import { pureWhiteInspectionTargets } from "./rules";
 
@@ -94,9 +97,7 @@ async function execute(ctx: NightStageContext, policy: "pure_white" | "wolf_witc
     const result = resolveInspection(ctx.world, targetId, "role", ctx.roleCatalog);
     if (!current()) continue;
     if (!result || !targetCurrent()) throw new Error("pure_white_inspection_target_stale");
-    ability.state.lastTarget = targetId;
-    ability.state.lastDay = day;
-    ability.state.history.push({ day, targetId, result: { ...result } });
+    recordAbilityRoleInspection(ability, targetId, day, result);
     recordNightAbilityUse(ability, day, true);
     ctx.events.push({
       timestamp: Date.now(),

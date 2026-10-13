@@ -113,8 +113,13 @@ for (const change of [
         }
         if (change === "target_replace")
           game.world.addComponent(5, COMPONENT.Alive, createAliveComponent());
-        if (change === "disabled") ability.disabled = true;
-        if (change === "state") ability.state = structuredClone(ability.state);
+        if (change === "disabled") (ability as { disabled: boolean }).disabled = true;
+        if (change === "state")
+          (
+            ability as {
+              state: import("../../../../src/game/mechanisms/roles/witch/state").WitchReadState;
+            }
+          ).state = structuredClone(ability.state);
         if (change === "clock") current = false;
         return { name: "use_potion", args: { target_id: 5, potion_type: PotionType.Poison } };
       },
@@ -248,22 +253,27 @@ for (const change of [
       const mutate = () => {
         switch (change) {
           case "source":
-            ability.source = { kind: "native", role: Role.Witch };
+            (
+              ability as {
+                source: import("../../../../src/game/mechanisms/roles/abilities").AbilitySource;
+              }
+            ).source = { kind: "native", role: Role.Witch };
             break;
           case "source_role":
-            if (ability.source.kind === "native") ability.source.role = Role.Villager;
+            if (ability.source.kind === "native")
+              (ability.source as { role: Role }).role = Role.Villager;
             break;
           case "expiry":
-            ability.expiresAfterDay = 10;
+            (ability as { expiresAfterDay: number | undefined }).expiresAfterDay = 10;
             break;
           case "starts":
-            ability.startsOnDay = 0;
+            (ability as { startsOnDay: number }).startsOnDay = 0;
             break;
           case "max_uses":
-            ability.maxUses = 2;
+            (ability as { maxUses: number | null }).maxUses = 2;
             break;
           case "disclosure":
-            ability.sourceDisclosed = !ability.sourceDisclosed;
+            (ability as { sourceDisclosed: boolean }).sourceDisclosed = !ability.sourceDisclosed;
             break;
         }
       };

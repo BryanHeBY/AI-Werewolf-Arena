@@ -114,7 +114,7 @@ test("changing original Witch inventory while a borrowed turn awaits revokes the
     source = findNightAbility(f.role(4), "potion")!,
     valid = captureRadiantTurn(f.world, 1, borrowed, 2);
   expect(valid()).toBe(true);
-  source.state.heal = 0;
+  (source.state as { heal: number }).heal = 0;
   expect(valid()).toBe(false);
 });
 test("closing borrowed authorization owns its captured slot even after the instance id mutates", () => {
@@ -122,7 +122,7 @@ test("closing borrowed authorization owns its captured slot even after the insta
   commitEclipseChoice(f.world, 2, 4, f.events);
   const borrowed = findNightAbility(f.role(1), "potion")!,
     slot = borrowed.id;
-  borrowed.id = "copy:mutated";
+  (borrowed as { id: string }).id = "copy:mutated";
   closeRadiantNight(f.world, 2, "aborted", f.events);
   expect((f.role(1).privateState.abilities as Record<string, NightAbility>)[slot]).toBe(borrowed);
   expect(borrowed.disabled).toBe(true);
@@ -151,10 +151,10 @@ test("valid borrowed potion owns an independent stock, its authority closes and 
   expect([borrowed.state.heal, borrowed.state.poison, borrowed.uses, borrowed.lastUsedDay]).toEqual(
     [1, 0, 0, null],
   );
-  borrowed.state.heal = 0;
-  borrowed.state.healUsedThisNight = true;
-  borrowed.uses = 1;
-  borrowed.lastUsedDay = 2;
+  (borrowed.state as { heal: number }).heal = 0;
+  (borrowed.state as { healUsedThisNight: boolean }).healUsedThisNight = true;
+  (borrowed as { uses: number }).uses = 1;
+  (borrowed as { lastUsedDay: number | null }).lastUsedDay = 2;
   closeRadiantNight(f.world, 2, "committed", f.events);
   expect([source.state.heal, source.state.poison, source.state.healUsedThisNight]).toEqual([
     1,

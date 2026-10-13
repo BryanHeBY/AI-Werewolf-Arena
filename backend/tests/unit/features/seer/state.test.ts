@@ -23,7 +23,10 @@ import {
   getSeerState as legacyGetSeerState,
   setSeerState as legacySetSeerState,
 } from "../../../../src/game/mechanisms/roles/private_state";
-import type { SeerState, SeerReadState } from "../../../../src/game/mechanisms/roles/seer/state-contracts";
+import type {
+  SeerState,
+  SeerReadState,
+} from "../../../../src/game/mechanisms/roles/seer/state-contracts";
 
 const emptyState = (): SeerState => ({ lastTarget: null, lastIsWerewolf: null, history: [] });
 
@@ -57,7 +60,7 @@ test("the original ability slot owns installation copies and repeated reads; rep
   expect(replacement).not.toBe(owned);
   expect(replacement.history).toEqual([]);
   expect(scope.isOwnerCurrent()).toBe(false);
-  ability.disabled = true;
+  (ability as { disabled: boolean }).disabled = true;
   expect(getSeerState(role)).toBe(replacement);
 });
 

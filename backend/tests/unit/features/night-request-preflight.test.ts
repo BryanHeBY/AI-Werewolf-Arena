@@ -77,8 +77,13 @@ for (const item of cases)
             requiresAction: false,
             summary: "Offline preflight regression",
           });
-          if (mutation === "disabled") ability.disabled = true;
-          if (mutation === "source") ability.source = { kind: "gift", actorId: 2 };
+          if (mutation === "disabled") (ability as { disabled: boolean }).disabled = true;
+          if (mutation === "source")
+            (
+              ability as {
+                source: import("../../../src/game/mechanisms/roles/abilities").AbilitySource;
+              }
+            ).source = { kind: "gift", actorId: 2 };
           if (mutation === "day") day = 2;
           return request;
         },
@@ -133,10 +138,20 @@ for (const item of cases.filter((item) => item.kind !== "dream"))
             requiresAction: true,
             summary: "Policy revoke",
           });
-          if (ability.kind === "seer_check") ability.state.targetPolicy = "awa_fresh_others_v1";
+          if (ability.kind === "seer_check")
+            (
+              ability.state as { targetPolicy: "awa_alive_v1" | "awa_fresh_others_v1" | undefined }
+            ).targetPolicy = "awa_fresh_others_v1";
           if (ability.kind === "guard")
-            ability.state.repeatPolicy = "netease_consecutive_nights_v1";
-          if (ability.kind === "potion") ability.state.knifeVisibility = "awa_always_v1";
+            (
+              ability.state as {
+                repeatPolicy: "awa_last_action_v1" | "netease_consecutive_nights_v1" | undefined;
+              }
+            ).repeatPolicy = "netease_consecutive_nights_v1";
+          if (ability.kind === "potion")
+            (
+              ability.state as { knifeVisibility: "awa_with_heal_v1" | "awa_always_v1" | undefined }
+            ).knifeVisibility = "awa_always_v1";
           return request;
         },
         actionProvider: {

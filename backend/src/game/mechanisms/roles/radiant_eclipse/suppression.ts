@@ -1,6 +1,6 @@
 /**
  * Opens Eclipse suppression over the exact original ability slots. Inputs are captured
- * source/target components and suppression kind; outputs are current suppression leases and
+ * source/target components and suppression kind; outputs are current suppression leases with read-only marker/ability references and
  * owned state changes. It never reauthorizes a changed slot or policy by restoring an unrelated
  * component.
  */
@@ -14,10 +14,10 @@ import {
 } from "../../../../core/domain/components/alive";
 import { captureNightLife } from "../../../../core/domain/night_effects";
 import type { World } from "../../../../core/domain/world";
-import type { NightAbility } from "../abilities";
+import type { NightAbilityReadView } from "../abilities";
 import { RADIANT_ECLIPSE_POLICY, type EclipseSuppression } from "./state";
 
-export type SuppressibleAbility = NightAbility;
+export type SuppressibleAbility = NightAbilityReadView;
 const invalid = Symbol("invalid_eclipse_binding");
 function own(value: unknown, key: PropertyKey): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return invalid;
@@ -157,7 +157,7 @@ export function openEclipseSuppression(
     actorId,
     day,
     ability,
-    marker,
+    marker: marker as Readonly<EclipseSuppression>,
     isCurrent: () =>
       !closed &&
       sameInstance() &&
@@ -171,7 +171,7 @@ export function openEclipseSuppression(
       if (closed) return false;
       closed = true;
       if (!sameResource(true) || own(ability, "nightSuppression") !== marker) return false;
-      delete ability.nightSuppression;
+      delete (ability as { nightSuppression?: Readonly<EclipseSuppression> }).nightSuppression;
       return true;
     },
   };
