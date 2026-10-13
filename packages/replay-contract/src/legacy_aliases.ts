@@ -1,4 +1,8 @@
-/** Exact archived display labels. Unknown strings are kept; player prose is never scanned. */
+/**
+ * 负责历史复盘的阶段、角色、阵营与结束原因标签到稳定标识的精确转换。
+ * 输入为单个已归档标签，输出为已知标识或原字符串；本模块拥有这些兼容表，角色表独立维护。
+ * 不扫描玩家或模型正文，不模糊匹配未知标签，也不据旧标签推导真实身份、许可或游戏规则。
+ */
 import { LEGACY_ROLE_ALIASES } from "./legacy_role_aliases";
 
 const phases: Readonly<Record<string, string>> = Object.freeze({
@@ -11,6 +15,7 @@ const phases: Readonly<Record<string, string>> = Object.freeze({
   Voting: "voting",
   "Game over": "game_over",
 });
+// 阶段表继承原阶段名称，再补具体行动标签；同一个旧标签只能按这里的精确拼写转换。
 const stages: Readonly<Record<string, string>> = Object.freeze({
   ...phases,
   放逐投票: "voting",
@@ -91,6 +96,7 @@ const reasons: Readonly<Record<string, string>> = Object.freeze({
   进行中: "in_progress",
   "In progress": "in_progress",
 });
+// 只承认表自身条目，避免把 toString 等原型属性误当历史标识；未知值保持原文。
 const alias = (map: Readonly<Record<string, string>>, value: string): string =>
   Object.hasOwn(map, value) ? map[value] : value;
 export const legacyPhaseId = (value: string): string => alias(phases, value);

@@ -554,3 +554,5 @@
 - 镜女测试元数据入口修正：只改requireRuntime→requireMetadata一个调用并补中文权属，原test标题/两语言矩阵/god/max1与全部后续断言同；真实546Git全文件经该callee+comment精准逆raw同，生产catalog/profile全bytes不改。只重前次两红现2/0/47、16filtered，不重36greens/类型或全gate，旧红不回写。Root真实facet读审与独立源码／doc最终SHA批准，见 mirror-metadata-query.md。
 
 - C24白天中断完整组合：4source，规则组合拥有自爆→决斗→辩论三原实例构造与执行首项重入准入，窄运行契约不导具体辩论；Pipeline保全部警长/发言/3自爆3决斗1辩论位置、2存活复查、config短路、death/phase/victory仍PM。真实546before/4原controls全byte同、完整Pipeline2456强nodes和两whole运行输出经明确delta逆同，callee/late字段读/receiver/失败前缀保；私有3field退休及cold import差异明列。new4/0/22+oldDeb4/0/14+oldhook1/0/4＝9unique40assert分3次；finite17281实际closed0、首typeRoots工具红保，4CN heads职责0。Root实读3生产源及独立4SHA/source/doc终审批准，MD窄数据误词已修运行契约，不重全gate，见 daytime-interruption-composition.md。
+
+- 历史复盘reader中文说明随迁移补齐：4既有叶，仅注释；精确alias/hasOwn、两语历史标签保、diagnostic白名单/建议≠retry、浅isRecord与descriptor遍历/seen≠JSON可编码及Proxy反射限界就地。真实ace6Git四完整typed程序与8whole运行输出同，职责4/0与CN4/0；Root实际4body及独立4SHA/body/前缀/措辞审批准，不重type/runtime/gate，不称全仓中文完成；见 replay-reader-chinese-comments.md。

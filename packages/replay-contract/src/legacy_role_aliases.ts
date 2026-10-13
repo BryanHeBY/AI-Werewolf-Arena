@@ -1,4 +1,8 @@
-/** Published v1 alias snapshot. Append aliases when display names change; never replace old entries. */
+/**
+ * 维护已发布 v1 角色显示名称到稳定角色标识的兼容快照，供历史复盘 reader 精确查询。
+ * 本模块唯一拥有这张冻结表；中英文旧名称都是历史输入，不能翻译或替换已有条目。
+ * 名称变更只能追加兼容条目；表不声明当前角色支持范围，不读取角色状态或授予能力。
+ */
 export const LEGACY_ROLE_ALIASES: Readonly<Record<string, string>> = Object.freeze({
   狼人: "wolf",
   Werewolf: "wolf",
