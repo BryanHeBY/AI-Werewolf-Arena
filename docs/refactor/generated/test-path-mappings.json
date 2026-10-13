@@ -95619,13 +95619,97 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/radiant_eclipse_domain_invalid.test.ts",
+      "to": "backend/tests/scenarios/failures/radiant-eclipse/illegal-domain-arguments.test.ts",
+      "sourceCommit": "c65cc255aa901fb06189ed1fc54828eb7cd0f359",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "f0fb0ed05ee6e9159be504c6643b9b4ec875bc80a51f3a80c5c8a0e588c7a311",
+      "candidateSha256": "2e69e897822d01d7a8227eeb0da1735069e674cf7c643fdfdba0e394ce0f46cb",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 282,
+          "end": 299,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 219,
+          "end": 248,
+          "original": "../../support/radiant_eclipse",
+          "value": "../../../support/radiant_eclipse",
+          "originalResolved": "backend/tests/support/radiant_eclipse.ts",
+          "expectedResolved": "backend/tests/support/radiant_eclipse.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 109,
+          "end": 126,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 34,
+          "end": 78,
+          "original": "../../../src/game/mechanisms/roles/abilities",
+          "value": "../../../../src/game/mechanisms/roles/abilities",
+          "originalResolved": "backend/src/game/mechanisms/roles/abilities.ts",
+          "expectedResolved": "backend/src/game/mechanisms/roles/abilities.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "f7ac69710a28572405a7f37a182803db8f9d931da852f2da7362f325ec89e410",
+          "title": "same permitted tool with illegal domain arguments: eclipse_swallow",
+          "occurrence": 1
+        },
+        {
+          "id": "090e387e1b6d97fcacfa3de9ab72393016e8e6cafc75b4b7cc0cc77b8c29e3d4",
+          "title": "same permitted tool with illegal domain arguments: radiant_shelter",
+          "occurrence": 1
+        },
+        {
+          "id": "9efe574b0ee8241a8163436f4a2d8b0e05297468ced47ece4253caefcd4721a7",
+          "title": "same permitted tool with illegal domain arguments: dreamer",
+          "occurrence": 1
+        },
+        {
+          "id": "c0968609c3d90c9acc9de1eda2a674117cebf361f2c64d2ea8775d0dffefd117",
+          "title": "same permitted tool with illegal domain arguments: witch",
+          "occurrence": 1
+        },
+        {
+          "id": "9d6717663a5157fc3f606be110e0a8d1eab807507b9133e72c0ca0a68cb6e9af",
+          "title": "same permitted tool with illegal domain arguments: seer",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. No duplicated eager factory/cache read; original selected helper declarations and per-callback Worlds/actions/resources stay at their original points.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 452 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 574,
-    "targetFiles": 653,
-    "mappingEntries": 653,
-    "baselineCases": 7509,
+    "sourceFiles": 575,
+    "targetFiles": 654,
+    "mappingEntries": 654,
+    "baselineCases": 7514,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."

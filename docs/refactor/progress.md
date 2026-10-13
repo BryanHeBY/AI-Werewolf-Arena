@@ -6,7 +6,7 @@
 | ---------------------- | ------ | ------------------------------------------------------------------------------------ |
 | P0 基线与契约          | 已完成 | C01 `144f48b` 已提交；C02 `aba9347`；C03 `b56d282`；七样例、89行静态台账与三方向审查 |
 | P1 依赖与共享契约      | 已完成 | C04–C09 数据/支持职责与 public consumer 闭合；零基础包循环，兼容桥按 C44 退出        |
-| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；当前映射574来源、653目标、7509旧IDs；余mixed tests/support继续 |
+| P2 测试、fixture、词典 | 进行中 | C14成套archive/C15完成；当前映射575来源、654目标、7514旧IDs；余mixed tests/support继续 |
 | P3 状态与请求授权      | 进行中 | C16生产读取/C18传播/F02/C19完成；容器读取边界及实际写者闭合，能力查询/schema继续      |
 | P4 规则计划与生命周期  | 进行中 | C21阶段成员快照与opaque lazy完成；完整RulePlan/C22–C24继续                           |
 | P5 效果、死亡与判胜    | 待执行 | C25–C29                                                                              |
@@ -367,3 +367,5 @@
 - C12 mixed8k ghost-bride-runtime：1原file→2targets/12旧IDs实际分层；overall8→14/205IDs55unit150scene，77注册保。RootactualGit/full selectedprogram/原ID singleowner0，72callbackraw+5仅11runtimeDynamic/4inlineType精确同module路径，21helper及所有数组/父loop原raw，102top bindings及103actualrelative identities/14heads0；独立实际qualification/unit vs fullPhase/setup/checkpoint/失败scene与452unique omitted0add/63prune=46whole17partial审闭合，2原BoardParameters自身freeze不属必需hook或IO。原eager声明/实际factory无新增读取，未称完整external initorder。exactc65源码/support/pkg/scripts/tooling/原enginebuilders+14候选finite85684actualexit0，role14API旧造数cast归后续一致批；没input/断言/cast改或重复types/tests/discovery/game。mapping现573source/652target/7502IDs。
 
 - C12 mixed8k radiant-eclipse-cross-night：1原file→1targets/7旧IDs实际分层；overall8→14/205IDs55unit150scene，77注册保。RootactualGit/full selectedprogram/原ID singleowner0，72callbackraw+5仅11runtimeDynamic/4inlineType精确同module路径，21helper及所有数组/父loop原raw，102top bindings及103actualrelative identities/14heads0；独立实际qualification/unit vs fullPhase/setup/checkpoint/失败scene与452unique omitted0add/63prune=46whole17partial审闭合，2原BoardParameters自身freeze不属必需hook或IO。原eager声明/实际factory无新增读取，未称完整external initorder。exactc65源码/support/pkg/scripts/tooling/原enginebuilders+14候选finite85684actualexit0，role14API旧造数cast归后续一致批；没input/断言/cast改或重复types/tests/discovery/game。mapping现574source/653target/7509IDs。
+
+- C12 mixed8k radiant-eclipse-domain-invalid：1原file→1targets/5旧IDs实际分层；overall8→14/205IDs55unit150scene，77注册保。RootactualGit/full selectedprogram/原ID singleowner0，72callbackraw+5仅11runtimeDynamic/4inlineType精确同module路径，21helper及所有数组/父loop原raw，102top bindings及103actualrelative identities/14heads0；独立实际qualification/unit vs fullPhase/setup/checkpoint/失败scene与452unique omitted0add/63prune=46whole17partial审闭合，2原BoardParameters自身freeze不属必需hook或IO。原eager声明/实际factory无新增读取，未称完整external initorder。exactc65源码/support/pkg/scripts/tooling/原enginebuilders+14候选finite85684actualexit0，role14API旧造数cast归后续一致批；没input/断言/cast改或重复types/tests/discovery/game。mapping现575source/654target/7514IDs。

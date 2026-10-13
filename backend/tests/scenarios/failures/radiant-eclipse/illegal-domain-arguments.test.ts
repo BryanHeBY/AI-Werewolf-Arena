@@ -1,8 +1,12 @@
-import { findNightAbility } from "../../../src/game/mechanisms/roles/abilities";
-import { PotionType } from "../../../src/core";
+/**
+ * Failure scenario tests send permitted tools with illegal domain arguments through a full Radiant/Eclipse night pipeline. Inputs are literal stage/borrow/action/error rows and the public board fixture; exact abort, suppression cleanup and preserved native stock are the oracle. Original board input and role state are not normalized to avoid rejection.
+ */
+import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
+import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
-import { radiantFixture, radiantProvider } from "../../support/radiant_eclipse";
-import type { ToolCall } from "../../../src/core";
+import { radiantFixture, radiantProvider } from "../../../support/radiant_eclipse";
+import type { ToolCall } from "../../../../src/core";
+
 const rows: [string, number | null, ToolCall, string][] = [
   [
     "eclipse_swallow",
@@ -30,6 +34,7 @@ const rows: [string, number | null, ToolCall, string][] = [
     "radiant_eclipse_seer_action_invalid",
   ],
 ];
+
 for (const [stage, swallow, call, error] of rows)
   test(`same permitted tool with illegal domain arguments: ${stage}`, async () => {
     const f = await radiantFixture();
