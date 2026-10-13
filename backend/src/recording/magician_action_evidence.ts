@@ -1,4 +1,10 @@
-import { DeathCause, Phase, Role } from "../core/domain";
+/**
+ * 负责独立核对魔术师映射后的行动与死亡证据。输入为归档请求、决定、事件和来源；
+ * 输出为原有工具／目标／死因一致性结果，不采用生产目标映射或死亡资格算法作为预期。
+ * 稳定枚举来自中立契约，本模块不加载 World／结算器，不持有资源或 checkpoint 写权限。
+ * 原封锁、重试、弃枪与已付失败前缀按既有纯数据程序校验，不改变记录接受集合。
+ */
+import { DeathCause, Phase, Role } from "@ai-werewolf-arena/game-contract";
 import type { RecordedDecision, ReproductionRecord } from "./reproduction";
 
 function check(value: unknown): asserts value {

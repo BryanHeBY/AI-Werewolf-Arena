@@ -1,11 +1,8 @@
 /**
- * Responsibility: independently verify recorded order prince execution evidence.
- * Input: immutable reproduction decisions, facts, operations and checkpoints;
- * output: accepted evidence or the existing stable reproduction rejection.
- * This verifier owns its reconstructed arithmetic/state and never authorizes
- * engine actions, pays resources or invokes production settlement as its oracle.
- * Shared readers only establish data shape; historical success and failure
- * prefixes, causal cursors and feature-specific policy checks remain unchanged.
+ * 负责独立审核秩序王子选择与实际重投票。输入为归档配置、决定、事实与 checkpoint；
+ * 输出为原一致性结果或明确拒绝，原纯数据推导、迭代与第一失败顺序保持。
+ * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
+ * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
 import { isTimeConsortPreset } from "../verification/board-support";
 import { isTricksterPreset } from "../verification/board-support";
@@ -15,7 +12,7 @@ import {
   readOrderPrinceChoiceFact,
   readOrderPrinceRevoteFact,
 } from "@ai-werewolf-arena/game-contract/facts/order-prince";
-import { Camp, Role, Phase, WinCondition } from "../core/domain";
+import { Camp, Role, Phase, WinCondition } from "@ai-werewolf-arena/game-contract";
 import type { ReproductionRecord, RecordedDecision } from "./reproduction";
 const choiceType = "order_prince_choice_committed",
   resetType = "order_prince_revote_started";

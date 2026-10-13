@@ -1,4 +1,10 @@
-import { Role, Camp, Phase } from "../core/domain/identity";
+/**
+ * 负责独立审核雾鸦请求阶段、工具和可见历史。输入为归档配置、决定、事实与 checkpoint；
+ * 输出为原一致性结果或明确拒绝，原纯数据推导、迭代与第一失败顺序保持。
+ * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
+ * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
+ */
+import { Role, Camp, Phase } from "@ai-werewolf-arena/game-contract";
 import type { RecordedDecision, ReproductionRecord } from "./reproduction";
 const strictStages = {
   alchemist_mist: "cast_mist",

@@ -1,0 +1,2676 @@
+{
+  "baseline": "d5a71042",
+  "scope": [
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "8ec87306470745564ced1e0c911c32d962f58d2a9759006fb8edce42c357c98c"
+    },
+    {
+      "path": "backend/src/recording/fragrant_pair_seer_record.ts",
+      "sha256": "8f1875c37917d90a03c676ffbc316ba4b75e8106604dd4c25e745646dae61313"
+    },
+    {
+      "path": "backend/src/recording/noble_secret_body_record.ts",
+      "sha256": "003cdebb281cb59e7e580469f05388af687d1d78b9668ea4d2ab6c73791cd007"
+    },
+    {
+      "path": "backend/src/recording/demon_hunter_record.ts",
+      "sha256": "9a8bd7df74b61b91e7418294e0c9bd89abf534111cdf93d235020e350445a3e1"
+    },
+    {
+      "path": "backend/src/recording/demon_hunter_stocks.ts",
+      "sha256": "5a56f55af49a1fe23599a2c8d1c913ea7fac21e2b19ad1d3a126995706c23bf0"
+    },
+    {
+      "path": "backend/src/recording/ghost_bride_record.ts",
+      "sha256": "eb1b31561d49d8eaefad5cf0a59d61c6f46176f7931ead674936948ca2d9abad"
+    },
+    {
+      "path": "backend/src/recording/radiant_eclipse_record.ts",
+      "sha256": "8e7ed6cd1505f37cbc726fcfe583d0d18e490c602e2bde2309ebcb954dd73007"
+    },
+    {
+      "path": "backend/src/recording/time_consort_record.ts",
+      "sha256": "863643e566a80e89dc09fa70b9c4526d0638fdde14d61d58c9571867304e823c"
+    },
+    {
+      "path": "backend/src/recording/wolf_sorcerer_record.ts",
+      "sha256": "6a3d40ec4bd45d9006efbedaf09887f45d976b80dcbde4f2b07b3f5aded2d2d0"
+    },
+    {
+      "path": "backend/src/recording/trickster_record.ts",
+      "sha256": "7e6752ed70f3be2c852bbf059dc3eae9245cb0607d5ffde9227eaa886adc0065"
+    },
+    {
+      "path": "backend/src/recording/magician_record.ts",
+      "sha256": "0f42f2a3aae4772d8493eab0603ea200cebe2cbdf684e870138456a84517d25f"
+    },
+    {
+      "path": "backend/src/recording/order_prince_record.ts",
+      "sha256": "957decee843fcfe79b0deda72b84ace7c61b432a47bbe96269c485a7d21a1641"
+    },
+    {
+      "path": "backend/src/recording/red_moon_record.ts",
+      "sha256": "58fd62dc2db2e35d36ca2b13de55b7ccb6f97521e7fd3e8e24e5380c83b59e9e"
+    },
+    {
+      "path": "backend/src/recording/scholar_mentor_record.ts",
+      "sha256": "c1982679e1c7ca07ba487e125a4dbb70282ca18753b712d55be16acda76b3812"
+    },
+    {
+      "path": "backend/src/recording/mist_raven_record.ts",
+      "sha256": "8a258fe1c497564dbd288238c4a9a86e7d4b926bc1f5354d1890995f7dbd6ece"
+    },
+    {
+      "path": "backend/src/recording/mist_raven_feed_record.ts",
+      "sha256": "c8955b4c4fa7b41e40f3408841e1fd465d55499c664c0b129b4d06282b1a0e96"
+    },
+    {
+      "path": "backend/src/recording/mist_raven_requests.ts",
+      "sha256": "f9b0950e6b59573c492724a0bdb98053275b1b0fbf44db98314e694c9edb290f"
+    },
+    {
+      "path": "backend/src/recording/mist_raven_sheriff_record.ts",
+      "sha256": "d7e99279096f2bdbb122179059089052baea4b8102957769d217d0689fd68f78"
+    },
+    {
+      "path": "backend/src/recording/magician_action_evidence.ts",
+      "sha256": "0d68a9b9fe6d893154059969c54ff22912790e0004061c36d1223a92bfb8246b"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "70ca4d940f0e6310c828a9f674fee0f9011748d478a43cf8e72686dba5510755"
+    },
+    {
+      "path": "backend/src/verification/reproduction/initial-identity.ts",
+      "sha256": "44d08cca834a495294e9540caf8223254793b33f337c48c18954ddafdde6d3de"
+    },
+    {
+      "path": "backend/src/verification/reproduction/lonely-girl.ts",
+      "sha256": "fa02f1382e978a8a0b33c94182da0a90598bac5a6de8603fb73ec0a766362f24"
+    },
+    {
+      "path": "backend/src/verification/reproduction/wild-child.ts",
+      "sha256": "119bb9dccb4dece9b8e207869bd9fcd48c0721d7921cd597c1a1a4ef9d4edfde"
+    },
+    {
+      "path": "backend/tests/unit/verification/reproduction-assembly.test.ts",
+      "sha256": "450a6c1f111f3bcd9ae21b630bdbde9699df986fcc47c1c9455635759cee8a6e"
+    }
+  ],
+  "status": "independently_reviewed_ready_to_commit",
+  "ownership": "固定独立审计装配与3个完整算法owner；原13个外部审计继续实际消费，18个枚举import/helper退出生产层barrel",
+  "programProof": {
+    "baseline": "d5a71042",
+    "sourceOldInputs": 19,
+    "rows": [
+      {
+        "path": "backend/src/recording/reproduction.ts",
+        "actualGitSame": true,
+        "storedShaSame": true
+      },
+      {
+        "path": "backend/src/recording/fragrant_pair_seer_record.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/noble_secret_body_record.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/demon_hunter_record.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/demon_hunter_stocks.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/ghost_bride_record.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/radiant_eclipse_record.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/time_consort_record.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/wolf_sorcerer_record.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/trickster_record.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/magician_record.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/order_prince_record.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/red_moon_record.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/scholar_mentor_record.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/mist_raven_record.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/mist_raven_feed_record.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/mist_raven_requests.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/mist_raven_sheriff_record.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      },
+      {
+        "path": "backend/src/recording/magician_action_evidence.ts",
+        "actualGitSame": true,
+        "storedShaSame": true,
+        "nonimportProgramSame": true
+      }
+    ],
+    "algorithms": [
+      {
+        "file": "initial-identity",
+        "name": "validateInitialIdentityRecord",
+        "rawSameAfterExport": true,
+        "bodySame": true
+      },
+      {
+        "file": "wild-child",
+        "name": "validateWildChildRecord",
+        "rawSameAfterExport": true,
+        "bodySame": true
+      },
+      {
+        "file": "lonely-girl",
+        "name": "validateLonelyGirlRecord",
+        "rawSameAfterExport": true,
+        "bodySame": true
+      }
+    ],
+    "wholeMain": [
+      {
+        "module": "ESNext",
+        "same": true
+      },
+      {
+        "module": "CommonJS",
+        "same": true
+      }
+    ],
+    "full16ActualAssemblyChainSame": true,
+    "nobleAuditStillSameArgument": true,
+    "schemasAndTraceProgramInverseSame": true,
+    "canonicalEnumRouteOnly": "18 standalone independent algorithm/helper files only header/import changes, ordinary core enum/barrel aliases are original neutral objects; main parser neutral fields move same ownership",
+    "passed": true
+  },
+  "headers": {
+    "paths": 24,
+    "violations": []
+  },
+  "runtimeGraph": {
+    "entry": "backend/src/verification/reproduction/assembly.ts",
+    "runtimeMembership": [
+      "backend/src/core/domain/fault_plan.ts",
+      "backend/src/core/domain/identity.ts",
+      "backend/src/recording/animal_dream_feed_record.ts",
+      "backend/src/recording/animal_dream_record.ts",
+      "backend/src/recording/demon_hunter_record.ts",
+      "backend/src/recording/demon_hunter_stocks.ts",
+      "backend/src/recording/fragrant_pair_seer_feed_record.ts",
+      "backend/src/recording/fragrant_pair_seer_record.ts",
+      "backend/src/recording/ghost_bride_record.ts",
+      "backend/src/recording/magician_action_evidence.ts",
+      "backend/src/recording/magician_record.ts",
+      "backend/src/recording/mist_raven_feed_record.ts",
+      "backend/src/recording/mist_raven_record.ts",
+      "backend/src/recording/mist_raven_requests.ts",
+      "backend/src/recording/mist_raven_sheriff_record.ts",
+      "backend/src/recording/noble_secret_body_record.ts",
+      "backend/src/recording/order_prince_record.ts",
+      "backend/src/recording/radiant_eclipse_night_requests.ts",
+      "backend/src/recording/radiant_eclipse_record.ts",
+      "backend/src/recording/radiant_eclipse_requests.ts",
+      "backend/src/recording/red_moon_record.ts",
+      "backend/src/recording/scholar_mentor_record.ts",
+      "backend/src/recording/time_consort_record.ts",
+      "backend/src/recording/trickster_record.ts",
+      "backend/src/recording/wolf_sorcerer_record.ts",
+      "backend/src/utils/speech_text.ts",
+      "backend/src/verification/board-support/animal-dream-preset.ts",
+      "backend/src/verification/board-support/demon-hunter-preset.ts",
+      "backend/src/verification/board-support/evil-knight-preset.ts",
+      "backend/src/verification/board-support/fragrant-pair-seer-preset.ts",
+      "backend/src/verification/board-support/ghost-bride-preset.ts",
+      "backend/src/verification/board-support/index.ts",
+      "backend/src/verification/board-support/magician-preset.ts",
+      "backend/src/verification/board-support/mist-raven-preset.ts",
+      "backend/src/verification/board-support/nightmare-preset.ts",
+      "backend/src/verification/board-support/noble-secret-body-preset.ts",
+      "backend/src/verification/board-support/order-prince-preset.ts",
+      "backend/src/verification/board-support/pure-white-preset.ts",
+      "backend/src/verification/board-support/radiant-eclipse-preset.ts",
+      "backend/src/verification/board-support/red-moon-preset.ts",
+      "backend/src/verification/board-support/scholar-mentor-preset.ts",
+      "backend/src/verification/board-support/time-consort-preset.ts",
+      "backend/src/verification/board-support/trickster-preset.ts",
+      "backend/src/verification/board-support/wolf-sorcerer-preset.ts",
+      "backend/src/verification/reproduction/assembly.ts",
+      "backend/src/verification/reproduction/initial-identity.ts",
+      "backend/src/verification/reproduction/lonely-girl.ts",
+      "backend/src/verification/reproduction/wild-child.ts",
+      "packages/game-catalog/src/errors.ts",
+      "packages/game-catalog/src/index.ts",
+      "packages/game-catalog/src/outcomes.ts",
+      "packages/game-contract/src/actions.ts",
+      "packages/game-contract/src/board-policy-identifiers.ts",
+      "packages/game-contract/src/board-schema.ts",
+      "packages/game-contract/src/boards.ts",
+      "packages/game-contract/src/death-facts.ts",
+      "packages/game-contract/src/errors.ts",
+      "packages/game-contract/src/event-ids.ts",
+      "packages/game-contract/src/events.ts",
+      "packages/game-contract/src/facts/animal-dream.ts",
+      "packages/game-contract/src/facts/awakened.ts",
+      "packages/game-contract/src/facts/black-market.ts",
+      "packages/game-contract/src/facts/cupid.ts",
+      "packages/game-contract/src/facts/death-ability.ts",
+      "packages/game-contract/src/facts/debate.ts",
+      "packages/game-contract/src/facts/demon-hunter.ts",
+      "packages/game-contract/src/facts/fragrant-pair-seer.ts",
+      "packages/game-contract/src/facts/ghost-bride.ts",
+      "packages/game-contract/src/facts/hybrid.ts",
+      "packages/game-contract/src/facts/lonely-girl.ts",
+      "packages/game-contract/src/facts/magician.ts",
+      "packages/game-contract/src/facts/mechanical.ts",
+      "packages/game-contract/src/facts/merchant.ts",
+      "packages/game-contract/src/facts/mist-raven.ts",
+      "packages/game-contract/src/facts/nightmare.ts",
+      "packages/game-contract/src/facts/noble-secret-body.ts",
+      "packages/game-contract/src/facts/order-prince.ts",
+      "packages/game-contract/src/facts/radiant-eclipse.ts",
+      "packages/game-contract/src/facts/red-moon.ts",
+      "packages/game-contract/src/facts/scholar-mentor.ts",
+      "packages/game-contract/src/facts/shapeshifter.ts",
+      "packages/game-contract/src/facts/thief.ts",
+      "packages/game-contract/src/facts/time-consort.ts",
+      "packages/game-contract/src/facts/trickster.ts",
+      "packages/game-contract/src/facts/wall-notes.ts",
+      "packages/game-contract/src/facts/wild-child.ts",
+      "packages/game-contract/src/facts/wolf-sorcerer.ts",
+      "packages/game-contract/src/identity.ts",
+      "packages/game-contract/src/index.ts",
+      "packages/game-contract/src/inert-event-data.ts",
+      "packages/game-contract/src/inspection.ts",
+      "packages/game-contract/src/locale.ts",
+      "packages/game-contract/src/message-ids.ts",
+      "packages/game-contract/src/outcomes.ts",
+      "packages/game-contract/src/requests.ts",
+      "packages/game-contract/src/results.ts",
+      "packages/game-contract/src/role-ids.ts",
+      "packages/game-text/src/animal-dream.ts",
+      "packages/game-text/src/cupid.ts",
+      "packages/game-text/src/debate.ts",
+      "packages/game-text/src/demon-hunter.ts",
+      "packages/game-text/src/en.ts",
+      "packages/game-text/src/event-data.ts",
+      "packages/game-text/src/fragrant-pair-seer.ts",
+      "packages/game-text/src/ghost-bride.ts",
+      "packages/game-text/src/index.ts",
+      "packages/game-text/src/lonely-girl.ts",
+      "packages/game-text/src/magician.ts",
+      "packages/game-text/src/messages/agents.ts",
+      "packages/game-text/src/messages/audit.ts",
+      "packages/game-text/src/messages/catalog.ts",
+      "packages/game-text/src/messages/common.ts",
+      "packages/game-text/src/messages/features/animal-dream.ts",
+      "packages/game-text/src/messages/features/classic.ts",
+      "packages/game-text/src/messages/features/gifts-relations.ts",
+      "packages/game-text/src/messages/features/identity.ts",
+      "packages/game-text/src/messages/features/mist-radiant.ts",
+      "packages/game-text/src/messages/features/night-modifiers.ts",
+      "packages/game-text/src/messages/features/noble-fragrant.ts",
+      "packages/game-text/src/messages/replay.ts",
+      "packages/game-text/src/messages/runtime.ts",
+      "packages/game-text/src/mist-raven.ts",
+      "packages/game-text/src/nightmare.ts",
+      "packages/game-text/src/noble-secret-body.ts",
+      "packages/game-text/src/order-prince.ts",
+      "packages/game-text/src/radiant-eclipse.ts",
+      "packages/game-text/src/red-moon.ts",
+      "packages/game-text/src/scholar-mentor.ts",
+      "packages/game-text/src/shapeshifter.ts",
+      "packages/game-text/src/thief.ts",
+      "packages/game-text/src/time-consort.ts",
+      "packages/game-text/src/trickster.ts",
+      "packages/game-text/src/wall-notes.ts",
+      "packages/game-text/src/wild-child.ts",
+      "packages/game-text/src/wolf-sorcerer.ts",
+      "packages/game-text/src/zh-CN.ts"
+    ],
+    "edges": [
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "./initial-identity",
+        "to": "backend/src/verification/reproduction/initial-identity.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "./wild-child",
+        "to": "backend/src/verification/reproduction/wild-child.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "./lonely-girl",
+        "to": "backend/src/verification/reproduction/lonely-girl.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "../../recording/ghost_bride_record",
+        "to": "backend/src/recording/ghost_bride_record.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "../../recording/animal_dream_record",
+        "to": "backend/src/recording/animal_dream_record.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "../../recording/fragrant_pair_seer_record",
+        "to": "backend/src/recording/fragrant_pair_seer_record.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "../../recording/noble_secret_body_record",
+        "to": "backend/src/recording/noble_secret_body_record.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "../../recording/demon_hunter_record",
+        "to": "backend/src/recording/demon_hunter_record.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "../../recording/scholar_mentor_record",
+        "to": "backend/src/recording/scholar_mentor_record.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "../../recording/mist_raven_record",
+        "to": "backend/src/recording/mist_raven_record.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "../../recording/radiant_eclipse_record",
+        "to": "backend/src/recording/radiant_eclipse_record.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "../../recording/time_consort_record",
+        "to": "backend/src/recording/time_consort_record.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "../../recording/wolf_sorcerer_record",
+        "to": "backend/src/recording/wolf_sorcerer_record.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "../../recording/trickster_record",
+        "to": "backend/src/recording/trickster_record.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "../../recording/magician_record",
+        "to": "backend/src/recording/magician_record.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/assembly.ts",
+        "specifier": "../../recording/order_prince_record",
+        "to": "backend/src/recording/order_prince_record.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/initial-identity.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/initial-identity.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/shapeshifter",
+        "to": "packages/game-contract/src/facts/shapeshifter.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/wild-child.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/wild-child.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/wild-child",
+        "to": "packages/game-contract/src/facts/wild-child.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/lonely-girl.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/reproduction/lonely-girl.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/lonely-girl",
+        "to": "packages/game-contract/src/facts/lonely-girl.ts"
+      },
+      {
+        "from": "backend/src/recording/ghost_bride_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/ghost-bride",
+        "to": "packages/game-contract/src/facts/ghost-bride.ts"
+      },
+      {
+        "from": "backend/src/recording/ghost_bride_record.ts",
+        "specifier": "../verification/board-support",
+        "to": "backend/src/verification/board-support/index.ts"
+      },
+      {
+        "from": "backend/src/recording/ghost_bride_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/animal_dream_record.ts",
+        "specifier": "./animal_dream_feed_record",
+        "to": "backend/src/recording/animal_dream_feed_record.ts"
+      },
+      {
+        "from": "backend/src/recording/animal_dream_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/animal-dream",
+        "to": "packages/game-contract/src/facts/animal-dream.ts"
+      },
+      {
+        "from": "backend/src/recording/animal_dream_record.ts",
+        "specifier": "../verification/board-support",
+        "to": "backend/src/verification/board-support/index.ts"
+      },
+      {
+        "from": "backend/src/recording/animal_dream_record.ts",
+        "specifier": "@ai-werewolf-arena/game-text",
+        "to": "packages/game-text/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/fragrant_pair_seer_record.ts",
+        "specifier": "./fragrant_pair_seer_feed_record",
+        "to": "backend/src/recording/fragrant_pair_seer_feed_record.ts"
+      },
+      {
+        "from": "backend/src/recording/fragrant_pair_seer_record.ts",
+        "specifier": "./mist_raven_sheriff_record",
+        "to": "backend/src/recording/mist_raven_sheriff_record.ts"
+      },
+      {
+        "from": "backend/src/recording/fragrant_pair_seer_record.ts",
+        "specifier": "../utils/speech_text",
+        "to": "backend/src/utils/speech_text.ts"
+      },
+      {
+        "from": "backend/src/recording/fragrant_pair_seer_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer",
+        "to": "packages/game-contract/src/facts/fragrant-pair-seer.ts"
+      },
+      {
+        "from": "backend/src/recording/fragrant_pair_seer_record.ts",
+        "specifier": "../verification/board-support",
+        "to": "backend/src/verification/board-support/index.ts"
+      },
+      {
+        "from": "backend/src/recording/fragrant_pair_seer_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/noble_secret_body_record.ts",
+        "specifier": "./mist_raven_sheriff_record",
+        "to": "backend/src/recording/mist_raven_sheriff_record.ts"
+      },
+      {
+        "from": "backend/src/recording/noble_secret_body_record.ts",
+        "specifier": "../verification/board-support",
+        "to": "backend/src/verification/board-support/index.ts"
+      },
+      {
+        "from": "backend/src/recording/noble_secret_body_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+        "to": "packages/game-contract/src/facts/noble-secret-body.ts"
+      },
+      {
+        "from": "backend/src/recording/noble_secret_body_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/noble_secret_body_record.ts",
+        "specifier": "../utils/speech_text",
+        "to": "backend/src/utils/speech_text.ts"
+      },
+      {
+        "from": "backend/src/recording/demon_hunter_record.ts",
+        "specifier": "./red_moon_record",
+        "to": "backend/src/recording/red_moon_record.ts"
+      },
+      {
+        "from": "backend/src/recording/demon_hunter_record.ts",
+        "specifier": "./demon_hunter_stocks",
+        "to": "backend/src/recording/demon_hunter_stocks.ts"
+      },
+      {
+        "from": "backend/src/recording/demon_hunter_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/demon-hunter",
+        "to": "packages/game-contract/src/facts/demon-hunter.ts"
+      },
+      {
+        "from": "backend/src/recording/demon_hunter_record.ts",
+        "specifier": "../verification/board-support",
+        "to": "backend/src/verification/board-support/index.ts"
+      },
+      {
+        "from": "backend/src/recording/demon_hunter_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/demon_hunter_record.ts",
+        "specifier": "../core/domain/fault_plan",
+        "to": "backend/src/core/domain/fault_plan.ts"
+      },
+      {
+        "from": "backend/src/recording/scholar_mentor_record.ts",
+        "specifier": "../verification/board-support",
+        "to": "backend/src/verification/board-support/index.ts"
+      },
+      {
+        "from": "backend/src/recording/scholar_mentor_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/scholar-mentor",
+        "to": "packages/game-contract/src/facts/scholar-mentor.ts"
+      },
+      {
+        "from": "backend/src/recording/scholar_mentor_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/mist_raven_record.ts",
+        "specifier": "./mist_raven_requests",
+        "to": "backend/src/recording/mist_raven_requests.ts"
+      },
+      {
+        "from": "backend/src/recording/mist_raven_record.ts",
+        "specifier": "./mist_raven_sheriff_record",
+        "to": "backend/src/recording/mist_raven_sheriff_record.ts"
+      },
+      {
+        "from": "backend/src/recording/mist_raven_record.ts",
+        "specifier": "./mist_raven_feed_record",
+        "to": "backend/src/recording/mist_raven_feed_record.ts"
+      },
+      {
+        "from": "backend/src/recording/mist_raven_record.ts",
+        "specifier": "../verification/board-support",
+        "to": "backend/src/verification/board-support/index.ts"
+      },
+      {
+        "from": "backend/src/recording/mist_raven_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+        "to": "packages/game-contract/src/facts/mist-raven.ts"
+      },
+      {
+        "from": "backend/src/recording/mist_raven_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/radiant_eclipse_record.ts",
+        "specifier": "../verification/board-support",
+        "to": "backend/src/verification/board-support/index.ts"
+      },
+      {
+        "from": "backend/src/recording/radiant_eclipse_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/radiant-eclipse",
+        "to": "packages/game-contract/src/facts/radiant-eclipse.ts"
+      },
+      {
+        "from": "backend/src/recording/radiant_eclipse_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/radiant_eclipse_record.ts",
+        "specifier": "./mist_raven_sheriff_record",
+        "to": "backend/src/recording/mist_raven_sheriff_record.ts"
+      },
+      {
+        "from": "backend/src/recording/radiant_eclipse_record.ts",
+        "specifier": "../utils/speech_text",
+        "to": "backend/src/utils/speech_text.ts"
+      },
+      {
+        "from": "backend/src/recording/radiant_eclipse_record.ts",
+        "specifier": "./radiant_eclipse_requests",
+        "to": "backend/src/recording/radiant_eclipse_requests.ts"
+      },
+      {
+        "from": "backend/src/recording/time_consort_record.ts",
+        "specifier": "../verification/board-support",
+        "to": "backend/src/verification/board-support/index.ts"
+      },
+      {
+        "from": "backend/src/recording/time_consort_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/time-consort",
+        "to": "packages/game-contract/src/facts/time-consort.ts"
+      },
+      {
+        "from": "backend/src/recording/time_consort_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/wolf_sorcerer_record.ts",
+        "specifier": "../verification/board-support",
+        "to": "backend/src/verification/board-support/index.ts"
+      },
+      {
+        "from": "backend/src/recording/wolf_sorcerer_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer",
+        "to": "packages/game-contract/src/facts/wolf-sorcerer.ts"
+      },
+      {
+        "from": "backend/src/recording/wolf_sorcerer_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/magician",
+        "to": "packages/game-contract/src/facts/magician.ts"
+      },
+      {
+        "from": "backend/src/recording/wolf_sorcerer_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/trickster_record.ts",
+        "specifier": "../verification/board-support",
+        "to": "backend/src/verification/board-support/index.ts"
+      },
+      {
+        "from": "backend/src/recording/trickster_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/trickster",
+        "to": "packages/game-contract/src/facts/trickster.ts"
+      },
+      {
+        "from": "backend/src/recording/trickster_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/magician",
+        "to": "packages/game-contract/src/facts/magician.ts"
+      },
+      {
+        "from": "backend/src/recording/trickster_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/magician_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer",
+        "to": "packages/game-contract/src/facts/wolf-sorcerer.ts"
+      },
+      {
+        "from": "backend/src/recording/magician_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/trickster",
+        "to": "packages/game-contract/src/facts/trickster.ts"
+      },
+      {
+        "from": "backend/src/recording/magician_record.ts",
+        "specifier": "../verification/board-support",
+        "to": "backend/src/verification/board-support/index.ts"
+      },
+      {
+        "from": "backend/src/recording/magician_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/magician",
+        "to": "packages/game-contract/src/facts/magician.ts"
+      },
+      {
+        "from": "backend/src/recording/magician_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/magician_record.ts",
+        "specifier": "./magician_action_evidence",
+        "to": "backend/src/recording/magician_action_evidence.ts"
+      },
+      {
+        "from": "backend/src/recording/order_prince_record.ts",
+        "specifier": "../verification/board-support",
+        "to": "backend/src/verification/board-support/index.ts"
+      },
+      {
+        "from": "backend/src/recording/order_prince_record.ts",
+        "specifier": "../verification/board-support",
+        "to": "backend/src/verification/board-support/index.ts"
+      },
+      {
+        "from": "backend/src/recording/order_prince_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/trickster",
+        "to": "packages/game-contract/src/facts/trickster.ts"
+      },
+      {
+        "from": "backend/src/recording/order_prince_record.ts",
+        "specifier": "../utils/speech_text",
+        "to": "backend/src/utils/speech_text.ts"
+      },
+      {
+        "from": "backend/src/recording/order_prince_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/order-prince",
+        "to": "packages/game-contract/src/facts/order-prince.ts"
+      },
+      {
+        "from": "backend/src/recording/order_prince_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./identity",
+        "to": "packages/game-contract/src/identity.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./role-ids",
+        "to": "packages/game-contract/src/role-ids.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./locale",
+        "to": "packages/game-contract/src/locale.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./event-ids",
+        "to": "packages/game-contract/src/event-ids.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./outcomes",
+        "to": "packages/game-contract/src/outcomes.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./inspection",
+        "to": "packages/game-contract/src/inspection.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./errors",
+        "to": "packages/game-contract/src/errors.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./death-facts",
+        "to": "packages/game-contract/src/death-facts.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./results",
+        "to": "packages/game-contract/src/results.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./message-ids",
+        "to": "packages/game-contract/src/message-ids.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/scholar-mentor",
+        "to": "packages/game-contract/src/facts/scholar-mentor.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/time-consort",
+        "to": "packages/game-contract/src/facts/time-consort.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/wolf-sorcerer",
+        "to": "packages/game-contract/src/facts/wolf-sorcerer.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/trickster",
+        "to": "packages/game-contract/src/facts/trickster.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/order-prince",
+        "to": "packages/game-contract/src/facts/order-prince.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/magician",
+        "to": "packages/game-contract/src/facts/magician.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./board-policy-identifiers",
+        "to": "packages/game-contract/src/board-policy-identifiers.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./boards",
+        "to": "packages/game-contract/src/boards.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./board-schema",
+        "to": "packages/game-contract/src/board-schema.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./actions",
+        "to": "packages/game-contract/src/actions.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/nightmare",
+        "to": "packages/game-contract/src/facts/nightmare.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/red-moon",
+        "to": "packages/game-contract/src/facts/red-moon.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/demon-hunter",
+        "to": "packages/game-contract/src/facts/demon-hunter.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/radiant-eclipse",
+        "to": "packages/game-contract/src/facts/radiant-eclipse.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/mist-raven",
+        "to": "packages/game-contract/src/facts/mist-raven.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/noble-secret-body",
+        "to": "packages/game-contract/src/facts/noble-secret-body.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/fragrant-pair-seer",
+        "to": "packages/game-contract/src/facts/fragrant-pair-seer.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/animal-dream",
+        "to": "packages/game-contract/src/facts/animal-dream.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/cupid",
+        "to": "packages/game-contract/src/facts/cupid.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/debate",
+        "to": "packages/game-contract/src/facts/debate.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/ghost-bride",
+        "to": "packages/game-contract/src/facts/ghost-bride.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/thief",
+        "to": "packages/game-contract/src/facts/thief.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/shapeshifter",
+        "to": "packages/game-contract/src/facts/shapeshifter.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/wild-child",
+        "to": "packages/game-contract/src/facts/wild-child.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/lonely-girl",
+        "to": "packages/game-contract/src/facts/lonely-girl.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/wall-notes",
+        "to": "packages/game-contract/src/facts/wall-notes.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./events",
+        "to": "packages/game-contract/src/events.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./requests",
+        "to": "packages/game-contract/src/requests.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/hybrid",
+        "to": "packages/game-contract/src/facts/hybrid.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/awakened",
+        "to": "packages/game-contract/src/facts/awakened.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/mechanical",
+        "to": "packages/game-contract/src/facts/mechanical.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/merchant",
+        "to": "packages/game-contract/src/facts/merchant.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/death-ability",
+        "to": "packages/game-contract/src/facts/death-ability.ts"
+      },
+      {
+        "from": "packages/game-contract/src/index.ts",
+        "specifier": "./facts/black-market",
+        "to": "packages/game-contract/src/facts/black-market.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/shapeshifter.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/wild-child.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/lonely-girl.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/ghost-bride.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./animal-dream-preset",
+        "to": "backend/src/verification/board-support/animal-dream-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./demon-hunter-preset",
+        "to": "backend/src/verification/board-support/demon-hunter-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./evil-knight-preset",
+        "to": "backend/src/verification/board-support/evil-knight-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./fragrant-pair-seer-preset",
+        "to": "backend/src/verification/board-support/fragrant-pair-seer-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./ghost-bride-preset",
+        "to": "backend/src/verification/board-support/ghost-bride-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./magician-preset",
+        "to": "backend/src/verification/board-support/magician-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./mist-raven-preset",
+        "to": "backend/src/verification/board-support/mist-raven-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./nightmare-preset",
+        "to": "backend/src/verification/board-support/nightmare-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./noble-secret-body-preset",
+        "to": "backend/src/verification/board-support/noble-secret-body-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./order-prince-preset",
+        "to": "backend/src/verification/board-support/order-prince-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./pure-white-preset",
+        "to": "backend/src/verification/board-support/pure-white-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./radiant-eclipse-preset",
+        "to": "backend/src/verification/board-support/radiant-eclipse-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./red-moon-preset",
+        "to": "backend/src/verification/board-support/red-moon-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./scholar-mentor-preset",
+        "to": "backend/src/verification/board-support/scholar-mentor-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./time-consort-preset",
+        "to": "backend/src/verification/board-support/time-consort-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./trickster-preset",
+        "to": "backend/src/verification/board-support/trickster-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/index.ts",
+        "specifier": "./wolf-sorcerer-preset",
+        "to": "backend/src/verification/board-support/wolf-sorcerer-preset.ts"
+      },
+      {
+        "from": "backend/src/recording/animal_dream_feed_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/animal-dream",
+        "to": "packages/game-contract/src/facts/animal-dream.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/animal-dream.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/animal-dream.ts",
+        "specifier": "../board-policy-identifiers",
+        "to": "packages/game-contract/src/board-policy-identifiers.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/awakened",
+        "to": "packages/game-contract/src/facts/awakened.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/mechanical",
+        "to": "packages/game-contract/src/facts/mechanical.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./animal-dream",
+        "to": "packages/game-text/src/animal-dream.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./wild-child",
+        "to": "packages/game-text/src/wild-child.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./shapeshifter",
+        "to": "packages/game-text/src/shapeshifter.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./thief",
+        "to": "packages/game-text/src/thief.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./event-data",
+        "to": "packages/game-text/src/event-data.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./wall-notes",
+        "to": "packages/game-text/src/wall-notes.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "@ai-werewolf-arena/game-catalog",
+        "to": "packages/game-catalog/src/index.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./debate",
+        "to": "packages/game-text/src/debate.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./cupid",
+        "to": "packages/game-text/src/cupid.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./zh-CN",
+        "to": "packages/game-text/src/zh-CN.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./en",
+        "to": "packages/game-text/src/en.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./lonely-girl",
+        "to": "packages/game-text/src/lonely-girl.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./ghost-bride",
+        "to": "packages/game-text/src/ghost-bride.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./demon-hunter",
+        "to": "packages/game-text/src/demon-hunter.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./nightmare",
+        "to": "packages/game-text/src/nightmare.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./red-moon",
+        "to": "packages/game-text/src/red-moon.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./magician",
+        "to": "packages/game-text/src/magician.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./order-prince",
+        "to": "packages/game-text/src/order-prince.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./trickster",
+        "to": "packages/game-text/src/trickster.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./wolf-sorcerer",
+        "to": "packages/game-text/src/wolf-sorcerer.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./time-consort",
+        "to": "packages/game-text/src/time-consort.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./scholar-mentor",
+        "to": "packages/game-text/src/scholar-mentor.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./mist-raven",
+        "to": "packages/game-text/src/mist-raven.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./radiant-eclipse",
+        "to": "packages/game-text/src/radiant-eclipse.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./noble-secret-body",
+        "to": "packages/game-text/src/noble-secret-body.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "./fragrant-pair-seer",
+        "to": "packages/game-text/src/fragrant-pair-seer.ts"
+      },
+      {
+        "from": "packages/game-text/src/index.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/fragrant_pair_seer_feed_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer",
+        "to": "packages/game-contract/src/facts/fragrant-pair-seer.ts"
+      },
+      {
+        "from": "backend/src/recording/mist_raven_sheriff_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/mist_raven_sheriff_record.ts",
+        "specifier": "./mist_raven_requests",
+        "to": "backend/src/recording/mist_raven_requests.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/fragrant-pair-seer.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/noble-secret-body.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "backend/src/recording/red_moon_record.ts",
+        "specifier": "../verification/board-support",
+        "to": "backend/src/verification/board-support/index.ts"
+      },
+      {
+        "from": "backend/src/recording/red_moon_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/red-moon",
+        "to": "packages/game-contract/src/facts/red-moon.ts"
+      },
+      {
+        "from": "backend/src/recording/red_moon_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/demon_hunter_stocks.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/demon-hunter",
+        "to": "packages/game-contract/src/facts/demon-hunter.ts"
+      },
+      {
+        "from": "backend/src/recording/demon_hunter_stocks.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/demon-hunter.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/scholar-mentor.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "backend/src/recording/mist_raven_requests.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/mist_raven_feed_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+        "to": "packages/game-contract/src/facts/mist-raven.ts"
+      },
+      {
+        "from": "backend/src/recording/mist_raven_feed_record.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/recording/mist_raven_feed_record.ts",
+        "specifier": "./mist_raven_requests",
+        "to": "backend/src/recording/mist_raven_requests.ts"
+      },
+      {
+        "from": "backend/src/recording/mist_raven_feed_record.ts",
+        "specifier": "./mist_raven_sheriff_record",
+        "to": "backend/src/recording/mist_raven_sheriff_record.ts"
+      },
+      {
+        "from": "backend/src/recording/mist_raven_feed_record.ts",
+        "specifier": "../utils/speech_text",
+        "to": "backend/src/utils/speech_text.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/mist-raven.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/radiant-eclipse.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "backend/src/recording/radiant_eclipse_requests.ts",
+        "specifier": "./radiant_eclipse_night_requests",
+        "to": "backend/src/recording/radiant_eclipse_night_requests.ts"
+      },
+      {
+        "from": "backend/src/recording/radiant_eclipse_requests.ts",
+        "specifier": "../core/domain/identity",
+        "to": "backend/src/core/domain/identity.ts"
+      },
+      {
+        "from": "backend/src/recording/radiant_eclipse_requests.ts",
+        "specifier": "./radiant_eclipse_record",
+        "to": "backend/src/recording/radiant_eclipse_record.ts"
+      },
+      {
+        "from": "backend/src/recording/radiant_eclipse_requests.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/radiant-eclipse",
+        "to": "packages/game-contract/src/facts/radiant-eclipse.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/time-consort.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/wolf-sorcerer.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/magician.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/trickster.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "backend/src/recording/magician_action_evidence.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/order-prince.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/role-ids.ts",
+        "specifier": "./identity",
+        "to": "packages/game-contract/src/identity.ts"
+      },
+      {
+        "from": "packages/game-contract/src/boards.ts",
+        "specifier": "./event-ids",
+        "to": "packages/game-contract/src/event-ids.ts"
+      },
+      {
+        "from": "packages/game-contract/src/board-schema.ts",
+        "specifier": "./board-policy-identifiers",
+        "to": "packages/game-contract/src/board-policy-identifiers.ts"
+      },
+      {
+        "from": "packages/game-contract/src/board-schema.ts",
+        "specifier": "./boards",
+        "to": "packages/game-contract/src/boards.ts"
+      },
+      {
+        "from": "packages/game-contract/src/board-schema.ts",
+        "specifier": "./identity",
+        "to": "packages/game-contract/src/identity.ts"
+      },
+      {
+        "from": "packages/game-contract/src/actions.ts",
+        "specifier": "./identity",
+        "to": "packages/game-contract/src/identity.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/nightmare.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/red-moon.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/cupid.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/debate.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/thief.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/wall-notes.ts",
+        "specifier": "../inert-event-data",
+        "to": "packages/game-contract/src/inert-event-data.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/awakened.ts",
+        "specifier": "../role-ids",
+        "to": "packages/game-contract/src/role-ids.ts"
+      },
+      {
+        "from": "packages/game-contract/src/facts/mechanical.ts",
+        "specifier": "../role-ids",
+        "to": "packages/game-contract/src/role-ids.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/animal-dream-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/animal-dream-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/animal-dream-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/demon-hunter-preset.ts",
+        "specifier": "./noble-secret-body-preset",
+        "to": "backend/src/verification/board-support/noble-secret-body-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/demon-hunter-preset.ts",
+        "specifier": "./red-moon-preset",
+        "to": "backend/src/verification/board-support/red-moon-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/demon-hunter-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/demon-hunter-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/demon-hunter",
+        "to": "packages/game-contract/src/facts/demon-hunter.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/evil-knight-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/evil-knight-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/evil-knight-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/fragrant-pair-seer-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/fragrant-pair-seer-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer",
+        "to": "packages/game-contract/src/facts/fragrant-pair-seer.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/ghost-bride-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/ghost-bride",
+        "to": "packages/game-contract/src/facts/ghost-bride.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/ghost-bride-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/magician-preset.ts",
+        "specifier": "./wolf-sorcerer-preset",
+        "to": "backend/src/verification/board-support/wolf-sorcerer-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/magician-preset.ts",
+        "specifier": "./trickster-preset",
+        "to": "backend/src/verification/board-support/trickster-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/magician-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/mist-raven-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/nightmare-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/nightmare-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/nightmare-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/noble-secret-body-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/noble-secret-body-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/demon-hunter",
+        "to": "packages/game-contract/src/facts/demon-hunter.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/order-prince-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/order-prince-preset.ts",
+        "specifier": "./trickster-preset",
+        "to": "backend/src/verification/board-support/trickster-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/order-prince-preset.ts",
+        "specifier": "./time-consort-preset",
+        "to": "backend/src/verification/board-support/time-consort-preset.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/pure-white-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/pure-white-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/pure-white-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/radiant-eclipse-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/red-moon-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/red-moon-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/demon-hunter",
+        "to": "packages/game-contract/src/facts/demon-hunter.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/scholar-mentor-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/time-consort-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/trickster-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "backend/src/verification/board-support/wolf-sorcerer-preset.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "packages/game-text/src/animal-dream.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/animal-dream",
+        "to": "packages/game-contract/src/facts/animal-dream.ts"
+      },
+      {
+        "from": "packages/game-text/src/wild-child.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/wild-child",
+        "to": "packages/game-contract/src/facts/wild-child.ts"
+      },
+      {
+        "from": "packages/game-text/src/shapeshifter.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/shapeshifter",
+        "to": "packages/game-contract/src/facts/shapeshifter.ts"
+      },
+      {
+        "from": "packages/game-text/src/thief.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/thief",
+        "to": "packages/game-contract/src/facts/thief.ts"
+      },
+      {
+        "from": "packages/game-text/src/event-data.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "packages/game-text/src/wall-notes.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/wall-notes",
+        "to": "packages/game-contract/src/facts/wall-notes.ts"
+      },
+      {
+        "from": "packages/game-catalog/src/index.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "packages/game-catalog/src/index.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "packages/game-catalog/src/index.ts",
+        "specifier": "./outcomes",
+        "to": "packages/game-catalog/src/outcomes.ts"
+      },
+      {
+        "from": "packages/game-catalog/src/index.ts",
+        "specifier": "./errors",
+        "to": "packages/game-catalog/src/errors.ts"
+      },
+      {
+        "from": "packages/game-text/src/debate.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/debate",
+        "to": "packages/game-contract/src/facts/debate.ts"
+      },
+      {
+        "from": "packages/game-text/src/cupid.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/cupid",
+        "to": "packages/game-contract/src/facts/cupid.ts"
+      },
+      {
+        "from": "packages/game-text/src/zh-CN.ts",
+        "specifier": "./messages/catalog",
+        "to": "packages/game-text/src/messages/catalog.ts"
+      },
+      {
+        "from": "packages/game-text/src/en.ts",
+        "specifier": "./messages/catalog",
+        "to": "packages/game-text/src/messages/catalog.ts"
+      },
+      {
+        "from": "packages/game-text/src/lonely-girl.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/lonely-girl",
+        "to": "packages/game-contract/src/facts/lonely-girl.ts"
+      },
+      {
+        "from": "packages/game-text/src/ghost-bride.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/ghost-bride",
+        "to": "packages/game-contract/src/facts/ghost-bride.ts"
+      },
+      {
+        "from": "packages/game-text/src/demon-hunter.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/demon-hunter",
+        "to": "packages/game-contract/src/facts/demon-hunter.ts"
+      },
+      {
+        "from": "packages/game-text/src/nightmare.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/nightmare",
+        "to": "packages/game-contract/src/facts/nightmare.ts"
+      },
+      {
+        "from": "packages/game-text/src/red-moon.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/red-moon",
+        "to": "packages/game-contract/src/facts/red-moon.ts"
+      },
+      {
+        "from": "packages/game-text/src/magician.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/magician",
+        "to": "packages/game-contract/src/facts/magician.ts"
+      },
+      {
+        "from": "packages/game-text/src/order-prince.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/order-prince",
+        "to": "packages/game-contract/src/facts/order-prince.ts"
+      },
+      {
+        "from": "packages/game-text/src/trickster.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/trickster",
+        "to": "packages/game-contract/src/facts/trickster.ts"
+      },
+      {
+        "from": "packages/game-text/src/wolf-sorcerer.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer",
+        "to": "packages/game-contract/src/facts/wolf-sorcerer.ts"
+      },
+      {
+        "from": "packages/game-text/src/time-consort.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/time-consort",
+        "to": "packages/game-contract/src/facts/time-consort.ts"
+      },
+      {
+        "from": "packages/game-text/src/scholar-mentor.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/scholar-mentor",
+        "to": "packages/game-contract/src/facts/scholar-mentor.ts"
+      },
+      {
+        "from": "packages/game-text/src/mist-raven.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+        "to": "packages/game-contract/src/facts/mist-raven.ts"
+      },
+      {
+        "from": "packages/game-text/src/radiant-eclipse.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/radiant-eclipse",
+        "to": "packages/game-contract/src/facts/radiant-eclipse.ts"
+      },
+      {
+        "from": "packages/game-text/src/noble-secret-body.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+        "to": "packages/game-contract/src/facts/noble-secret-body.ts"
+      },
+      {
+        "from": "packages/game-text/src/fragrant-pair-seer.ts",
+        "specifier": "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer",
+        "to": "packages/game-contract/src/facts/fragrant-pair-seer.ts"
+      },
+      {
+        "from": "backend/src/recording/radiant_eclipse_night_requests.ts",
+        "specifier": "../core/domain/identity",
+        "to": "backend/src/core/domain/identity.ts"
+      },
+      {
+        "from": "backend/src/recording/radiant_eclipse_night_requests.ts",
+        "specifier": "./radiant_eclipse_record",
+        "to": "backend/src/recording/radiant_eclipse_record.ts"
+      },
+      {
+        "from": "backend/src/recording/radiant_eclipse_night_requests.ts",
+        "specifier": "../utils/speech_text",
+        "to": "backend/src/utils/speech_text.ts"
+      },
+      {
+        "from": "backend/src/core/domain/identity.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "packages/game-catalog/src/outcomes.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "packages/game-catalog/src/errors.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "packages/game-text/src/messages/catalog.ts",
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "to": "packages/game-contract/src/index.ts"
+      },
+      {
+        "from": "packages/game-text/src/messages/catalog.ts",
+        "specifier": "./common",
+        "to": "packages/game-text/src/messages/common.ts"
+      },
+      {
+        "from": "packages/game-text/src/messages/catalog.ts",
+        "specifier": "./runtime",
+        "to": "packages/game-text/src/messages/runtime.ts"
+      },
+      {
+        "from": "packages/game-text/src/messages/catalog.ts",
+        "specifier": "./agents",
+        "to": "packages/game-text/src/messages/agents.ts"
+      },
+      {
+        "from": "packages/game-text/src/messages/catalog.ts",
+        "specifier": "./replay",
+        "to": "packages/game-text/src/messages/replay.ts"
+      },
+      {
+        "from": "packages/game-text/src/messages/catalog.ts",
+        "specifier": "./audit",
+        "to": "packages/game-text/src/messages/audit.ts"
+      },
+      {
+        "from": "packages/game-text/src/messages/catalog.ts",
+        "specifier": "./features/classic",
+        "to": "packages/game-text/src/messages/features/classic.ts"
+      },
+      {
+        "from": "packages/game-text/src/messages/catalog.ts",
+        "specifier": "./features/identity",
+        "to": "packages/game-text/src/messages/features/identity.ts"
+      },
+      {
+        "from": "packages/game-text/src/messages/catalog.ts",
+        "specifier": "./features/gifts-relations",
+        "to": "packages/game-text/src/messages/features/gifts-relations.ts"
+      },
+      {
+        "from": "packages/game-text/src/messages/catalog.ts",
+        "specifier": "./features/night-modifiers",
+        "to": "packages/game-text/src/messages/features/night-modifiers.ts"
+      },
+      {
+        "from": "packages/game-text/src/messages/catalog.ts",
+        "specifier": "./features/mist-radiant",
+        "to": "packages/game-text/src/messages/features/mist-radiant.ts"
+      },
+      {
+        "from": "packages/game-text/src/messages/catalog.ts",
+        "specifier": "./features/noble-fragrant",
+        "to": "packages/game-text/src/messages/features/noble-fragrant.ts"
+      },
+      {
+        "from": "packages/game-text/src/messages/catalog.ts",
+        "specifier": "./features/animal-dream",
+        "to": "packages/game-text/src/messages/features/animal-dream.ts"
+      }
+    ],
+    "externals": [
+      "node:util",
+      "zod"
+    ],
+    "unknown": [],
+    "forbidden": [],
+    "passed": true
+  },
+  "independentPreReview": {
+    "passed": true,
+    "findings": [],
+    "moved": [
+      {
+        "path": "backend/src/verification/reproduction/initial-identity.ts",
+        "name": "validateInitialIdentityRecord",
+        "bodyBytesSame": true,
+        "sha256AtRead": "44d08cca834a495294e9540caf8223254793b33f337c48c18954ddafdde6d3de",
+        "imports": [
+          {
+            "module": "../../recording/reproduction",
+            "typeOnly": true
+          },
+          {
+            "module": "@ai-werewolf-arena/game-contract",
+            "typeOnly": false
+          },
+          {
+            "module": "@ai-werewolf-arena/game-contract/facts/shapeshifter",
+            "typeOnly": false
+          }
+        ]
+      },
+      {
+        "path": "backend/src/verification/reproduction/wild-child.ts",
+        "name": "validateWildChildRecord",
+        "bodyBytesSame": true,
+        "sha256AtRead": "119bb9dccb4dece9b8e207869bd9fcd48c0721d7921cd597c1a1a4ef9d4edfde",
+        "imports": [
+          {
+            "module": "../../recording/reproduction",
+            "typeOnly": true
+          },
+          {
+            "module": "@ai-werewolf-arena/game-contract",
+            "typeOnly": false
+          },
+          {
+            "module": "@ai-werewolf-arena/game-contract/facts/wild-child",
+            "typeOnly": false
+          }
+        ]
+      },
+      {
+        "path": "backend/src/verification/reproduction/lonely-girl.ts",
+        "name": "validateLonelyGirlRecord",
+        "bodyBytesSame": true,
+        "sha256AtRead": "fa02f1382e978a8a0b33c94182da0a90598bac5a6de8603fb73ec0a766362f24",
+        "imports": [
+          {
+            "module": "../../recording/reproduction",
+            "typeOnly": true
+          },
+          {
+            "module": "@ai-werewolf-arena/game-contract",
+            "typeOnly": false
+          },
+          {
+            "module": "@ai-werewolf-arena/game-contract/facts/lonely-girl",
+            "typeOnly": false
+          }
+        ]
+      }
+    ],
+    "enumRows": [
+      {
+        "path": "backend/src/recording/fragrant_pair_seer_record.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "./fragrant_pair_seer_feed_record",
+          "./mist_raven_sheriff_record",
+          "../utils/speech_text",
+          "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer",
+          "../verification/board-support",
+          "../core/domain/identity"
+        ],
+        "currentRuntimeImports": [
+          "./fragrant_pair_seer_feed_record",
+          "./mist_raven_sheriff_record",
+          "../utils/speech_text",
+          "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer",
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract"
+        ]
+      },
+      {
+        "path": "backend/src/recording/noble_secret_body_record.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "./mist_raven_sheriff_record",
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+          "../core/domain/identity",
+          "../utils/speech_text"
+        ],
+        "currentRuntimeImports": [
+          "./mist_raven_sheriff_record",
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+          "@ai-werewolf-arena/game-contract",
+          "../utils/speech_text"
+        ]
+      },
+      {
+        "path": "backend/src/recording/demon_hunter_record.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "./red_moon_record",
+          "./demon_hunter_stocks",
+          "zod",
+          "@ai-werewolf-arena/game-contract/facts/demon-hunter",
+          "../verification/board-support",
+          "../core/domain",
+          "../core/domain/fault_plan"
+        ],
+        "currentRuntimeImports": [
+          "./red_moon_record",
+          "./demon_hunter_stocks",
+          "zod",
+          "@ai-werewolf-arena/game-contract/facts/demon-hunter",
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract",
+          "../core/domain/fault_plan"
+        ]
+      },
+      {
+        "path": "backend/src/recording/demon_hunter_stocks.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "@ai-werewolf-arena/game-contract/facts/demon-hunter",
+          "../core/domain"
+        ],
+        "currentRuntimeImports": [
+          "@ai-werewolf-arena/game-contract/facts/demon-hunter",
+          "@ai-werewolf-arena/game-contract"
+        ]
+      },
+      {
+        "path": "backend/src/recording/ghost_bride_record.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "zod",
+          "@ai-werewolf-arena/game-contract/facts/ghost-bride",
+          "../verification/board-support",
+          "../core/domain"
+        ],
+        "currentRuntimeImports": [
+          "zod",
+          "@ai-werewolf-arena/game-contract/facts/ghost-bride",
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract"
+        ]
+      },
+      {
+        "path": "backend/src/recording/radiant_eclipse_record.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/radiant-eclipse",
+          "../core/domain/identity",
+          "./mist_raven_sheriff_record",
+          "../utils/speech_text",
+          "./radiant_eclipse_requests"
+        ],
+        "currentRuntimeImports": [
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/radiant-eclipse",
+          "@ai-werewolf-arena/game-contract",
+          "./mist_raven_sheriff_record",
+          "../utils/speech_text",
+          "./radiant_eclipse_requests"
+        ]
+      },
+      {
+        "path": "backend/src/recording/time_consort_record.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/time-consort",
+          "../core/domain"
+        ],
+        "currentRuntimeImports": [
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/time-consort",
+          "@ai-werewolf-arena/game-contract"
+        ]
+      },
+      {
+        "path": "backend/src/recording/wolf_sorcerer_record.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer",
+          "@ai-werewolf-arena/game-contract/facts/magician",
+          "../core/domain"
+        ],
+        "currentRuntimeImports": [
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer",
+          "@ai-werewolf-arena/game-contract/facts/magician",
+          "@ai-werewolf-arena/game-contract"
+        ]
+      },
+      {
+        "path": "backend/src/recording/trickster_record.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/trickster",
+          "@ai-werewolf-arena/game-contract/facts/magician",
+          "../core/domain"
+        ],
+        "currentRuntimeImports": [
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/trickster",
+          "@ai-werewolf-arena/game-contract/facts/magician",
+          "@ai-werewolf-arena/game-contract"
+        ]
+      },
+      {
+        "path": "backend/src/recording/magician_record.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer",
+          "@ai-werewolf-arena/game-contract/facts/trickster",
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/magician",
+          "../core/domain",
+          "./magician_action_evidence"
+        ],
+        "currentRuntimeImports": [
+          "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer",
+          "@ai-werewolf-arena/game-contract/facts/trickster",
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/magician",
+          "@ai-werewolf-arena/game-contract",
+          "./magician_action_evidence"
+        ]
+      },
+      {
+        "path": "backend/src/recording/order_prince_record.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "../verification/board-support",
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/trickster",
+          "../utils/speech_text",
+          "@ai-werewolf-arena/game-contract/facts/order-prince",
+          "../core/domain"
+        ],
+        "currentRuntimeImports": [
+          "../verification/board-support",
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/trickster",
+          "../utils/speech_text",
+          "@ai-werewolf-arena/game-contract/facts/order-prince",
+          "@ai-werewolf-arena/game-contract"
+        ]
+      },
+      {
+        "path": "backend/src/recording/red_moon_record.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/red-moon",
+          "../core/domain"
+        ],
+        "currentRuntimeImports": [
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/red-moon",
+          "@ai-werewolf-arena/game-contract"
+        ]
+      },
+      {
+        "path": "backend/src/recording/scholar_mentor_record.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/scholar-mentor",
+          "../core/domain"
+        ],
+        "currentRuntimeImports": [
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/scholar-mentor",
+          "@ai-werewolf-arena/game-contract"
+        ]
+      },
+      {
+        "path": "backend/src/recording/mist_raven_record.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "./mist_raven_requests",
+          "./mist_raven_sheriff_record",
+          "./mist_raven_feed_record",
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/mist-raven",
+          "../core/domain/identity"
+        ],
+        "currentRuntimeImports": [
+          "./mist_raven_requests",
+          "./mist_raven_sheriff_record",
+          "./mist_raven_feed_record",
+          "../verification/board-support",
+          "@ai-werewolf-arena/game-contract/facts/mist-raven",
+          "@ai-werewolf-arena/game-contract"
+        ]
+      },
+      {
+        "path": "backend/src/recording/mist_raven_feed_record.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "@ai-werewolf-arena/game-contract/facts/mist-raven",
+          "../core/domain/identity",
+          "./mist_raven_requests",
+          "./mist_raven_sheriff_record",
+          "../utils/speech_text"
+        ],
+        "currentRuntimeImports": [
+          "@ai-werewolf-arena/game-contract/facts/mist-raven",
+          "@ai-werewolf-arena/game-contract",
+          "./mist_raven_requests",
+          "./mist_raven_sheriff_record",
+          "../utils/speech_text"
+        ]
+      },
+      {
+        "path": "backend/src/recording/mist_raven_requests.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "../core/domain/identity"
+        ],
+        "currentRuntimeImports": [
+          "@ai-werewolf-arena/game-contract"
+        ]
+      },
+      {
+        "path": "backend/src/recording/mist_raven_sheriff_record.ts",
+        "nonImportDeclarationsRawSame": true,
+        "oldRuntimeImports": [
+          "../core/domain/identity",
+          "./mist_raven_requests"
+        ],
+        "currentRuntimeImports": [
+          "@ai-werewolf-arena/game-contract",
+          "./mist_raven_requests"
+        ]
+      }
+    ],
+    "checks": {
+      "assemblyExact16Order": true,
+      "nobleReturnAtSameDemonSite": true,
+      "sameSchemaAdmissionBeforeAssembly": true,
+      "noWriterRuntimeImports": true,
+      "enumCanonSameObjectReexport": true
+    },
+    "originalRows": [
+      {
+        "path": "backend/src/recording/reproduction.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/fragrant_pair_seer_record.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/noble_secret_body_record.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/demon_hunter_record.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/demon_hunter_stocks.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/ghost_bride_record.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/radiant_eclipse_record.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/time_consort_record.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/wolf_sorcerer_record.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/trickster_record.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/magician_record.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/order_prince_record.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/red_moon_record.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/scholar_mentor_record.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/mist_raven_record.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/mist_raven_feed_record.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/mist_raven_requests.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      },
+      {
+        "path": "backend/src/recording/mist_raven_sheriff_record.ts",
+        "actualGitSame": true,
+        "hashSame": true
+      }
+    ],
+    "scope": "Pre-review of current un-frozen 22 source; final23 SHA/newunit after author freeze still pending.",
+    "limits": "No tests/types/transpilation/cold source import/discovery repeated. AST/source comparison only. Canonical source enum binding is same object by explicit identity reexport; no module execution used."
+  },
+  "independentFinalReview": {
+    "passed": true,
+    "findings": [],
+    "rows": [
+      {
+        "path": "backend/src/recording/reproduction.ts",
+        "sha256": "8ec87306470745564ced1e0c911c32d962f58d2a9759006fb8edce42c357c98c",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/fragrant_pair_seer_record.ts",
+        "sha256": "8f1875c37917d90a03c676ffbc316ba4b75e8106604dd4c25e745646dae61313",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/noble_secret_body_record.ts",
+        "sha256": "003cdebb281cb59e7e580469f05388af687d1d78b9668ea4d2ab6c73791cd007",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/demon_hunter_record.ts",
+        "sha256": "9a8bd7df74b61b91e7418294e0c9bd89abf534111cdf93d235020e350445a3e1",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/demon_hunter_stocks.ts",
+        "sha256": "5a56f55af49a1fe23599a2c8d1c913ea7fac21e2b19ad1d3a126995706c23bf0",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/ghost_bride_record.ts",
+        "sha256": "eb1b31561d49d8eaefad5cf0a59d61c6f46176f7931ead674936948ca2d9abad",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/radiant_eclipse_record.ts",
+        "sha256": "8e7ed6cd1505f37cbc726fcfe583d0d18e490c602e2bde2309ebcb954dd73007",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/time_consort_record.ts",
+        "sha256": "863643e566a80e89dc09fa70b9c4526d0638fdde14d61d58c9571867304e823c",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/wolf_sorcerer_record.ts",
+        "sha256": "6a3d40ec4bd45d9006efbedaf09887f45d976b80dcbde4f2b07b3f5aded2d2d0",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/trickster_record.ts",
+        "sha256": "7e6752ed70f3be2c852bbf059dc3eae9245cb0607d5ffde9227eaa886adc0065",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/magician_record.ts",
+        "sha256": "0f42f2a3aae4772d8493eab0603ea200cebe2cbdf684e870138456a84517d25f",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/order_prince_record.ts",
+        "sha256": "957decee843fcfe79b0deda72b84ace7c61b432a47bbe96269c485a7d21a1641",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/red_moon_record.ts",
+        "sha256": "58fd62dc2db2e35d36ca2b13de55b7ccb6f97521e7fd3e8e24e5380c83b59e9e",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/scholar_mentor_record.ts",
+        "sha256": "c1982679e1c7ca07ba487e125a4dbb70282ca18753b712d55be16acda76b3812",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/mist_raven_record.ts",
+        "sha256": "8a258fe1c497564dbd288238c4a9a86e7d4b926bc1f5354d1890995f7dbd6ece",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/mist_raven_feed_record.ts",
+        "sha256": "c8955b4c4fa7b41e40f3408841e1fd465d55499c664c0b129b4d06282b1a0e96",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/mist_raven_requests.ts",
+        "sha256": "f9b0950e6b59573c492724a0bdb98053275b1b0fbf44db98314e694c9edb290f",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/mist_raven_sheriff_record.ts",
+        "sha256": "d7e99279096f2bdbb122179059089052baea4b8102957769d217d0689fd68f78",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/recording/magician_action_evidence.ts",
+        "sha256": "0d68a9b9fe6d893154059969c54ff22912790e0004061c36d1223a92bfb8246b",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "sha256": "70ca4d940f0e6310c828a9f674fee0f9011748d478a43cf8e72686dba5510755",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/initial-identity.ts",
+        "sha256": "44d08cca834a495294e9540caf8223254793b33f337c48c18954ddafdde6d3de",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/lonely-girl.ts",
+        "sha256": "fa02f1382e978a8a0b33c94182da0a90598bac5a6de8603fb73ec0a766362f24",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/wild-child.ts",
+        "sha256": "119bb9dccb4dece9b8e207869bd9fcd48c0721d7921cd597c1a1a4ef9d4edfde",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/tests/unit/verification/reproduction-assembly.test.ts",
+        "sha256": "450a6c1f111f3bcd9ae21b630bdbde9699df986fcc47c1c9455635759cee8a6e",
+        "shaMatch": true
+      }
+    ],
+    "helper": {
+      "path": "backend/src/recording/magician_action_evidence.ts",
+      "trueGitOriginal": true,
+      "originalHashMatch": true,
+      "nonImportAlgorithmRawSame": true,
+      "canonicalSameEnumRuntimeRoute": true,
+      "scopeSHA": {
+        "path": "backend/src/recording/magician_action_evidence.ts",
+        "sha256": "0d68a9b9fe6d893154059969c54ff22912790e0004061c36d1223a92bfb8246b",
+        "shaMatch": true
+      }
+    },
+    "compatibility": [
+      {
+        "name": "boardConfigSchema",
+        "path": "backend/src/core/domain/board_schema.ts",
+        "fragment": "export { boardConfigSchema } from \"@ai-werewolf-arena/game-contract\";",
+        "sameObjectDirectExport": true
+      },
+      {
+        "name": "CUPID_POLICIES",
+        "path": "backend/src/core/domain/board.ts",
+        "fragment": "  CUPID_POLICIES,",
+        "sameObjectDirectExport": true
+      },
+      {
+        "name": "WOLF_TEAM_EVENT_TYPES",
+        "path": "backend/src/core/domain/events.ts",
+        "fragment": "export { WOLF_TEAM_EVENT_TYPES } from \"@ai-werewolf-arena/game-contract/events\";",
+        "sameObjectDirectExport": true
+      },
+      {
+        "name": "TOOL_NAMES/ACTION_STAGES",
+        "path": "backend/src/core/domain/actions.ts",
+        "fragment": "export { TOOL_NAMES, ACTION_STAGES, DEATH_SHOT_STAGES } from \"@ai-werewolf-arena/game-contract\";",
+        "sameObjectDirectExport": true
+      }
+    ],
+    "checks": {
+      "all24SHA": true,
+      "preReviewPassed": true,
+      "helperClosed": true,
+      "rootCanonicalSameSchemaConstants": true,
+      "declaredGraphNoForbiddenOrUnknown": true,
+      "allGraphEdgesHaveInternalEndpoints": true,
+      "pureDomainBoundaryOnly": true
+    },
+    "previousFiniteBodyProof": "/tmp/awa-c37-verifier/third-pre-review.json",
+    "graphArtifactBoundary": {
+      "entry": "backend/src/verification/reproduction/assembly.ts",
+      "internal": 136,
+      "edges": 313,
+      "externals": [
+        "node:util",
+        "zod"
+      ],
+      "knownDomains": [
+        "backend/src/core/domain/fault_plan.ts",
+        "backend/src/core/domain/identity.ts"
+      ],
+      "forbiddenMembers": [],
+      "missingEdgeEndpoints": []
+    },
+    "closedFinding": "Initial real assembly→magician_record→magician_action_evidence→core/domain heavyweight load route was outside17enum-only scope; now exact18th helper algorithm unchanged/canonical same enums/CN responsibility header. Final24 includes helper.",
+    "newUnitSourceReview": [
+      "Pure handwritten six-seat schema2 archive, fixed roles/count/locale/version/engine64hex fields valid parser envelope; no World/production writer creates expected data",
+      "Readonly metadata getter observes first metadata-access sequence through16 top-level auditors+existing nestedRedMoon. Literal trace not a complete function-entry trace; exact16 call AST proof already separately passed",
+      "Parser test checks detached schema result and original WildChild beforeLonely firstfailure on literal residual keys",
+      "Direct assembly malformed twin identity owners stops at first identity validator; case intentionally tests role auditor without parser schema admission",
+      "Unsupported schemaVersion99 and malformed decisions reject before auditors. Source/lock hashes are parser shape only; actualstrict replay admission still separate and unchanged"
+    ],
+    "limits": "Final finite actual SHA/helper AST/schema identity exports/author graph boundary only; no old22 body/16assembly/17algorithms rechecked, compiler/runtime/transpilation/import/discovery/games not repeated. Graph136/313 reused author evidence and checked endpoints/forbidden membership only; not independent re-traversal nor arbitraryJS purity proof. New4/9, oldAnimal3/3, main2829/helper28711 actual0 receipts are author only. C37 all current16 assembly complete, not all55role semantic coverage/C39/all audit directory moves."
+  },
+  "rootReview": {
+    "actualSourceRead": [
+      "assembly.ts 完整16显式调用",
+      "initial-identity.ts 完整原声明",
+      "parseReproductionRecord 原版本/schema准入及真实调用",
+      "newunit 手写归档/metadata观察和第一拒绝",
+      "fault_plan.ts 纯数据schema读器"
+    ],
+    "frozenSHA24Match": true,
+    "passed": true
+  },
+  "receipts": {
+    "newUnit": {
+      "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/verification/reproduction-assembly.test.ts",
+      "passes": 4,
+      "fails": 0,
+      "assertions": 9,
+      "actualExitCode": 0,
+      "log": "/tmp/awa-c37-verifier/tests-first.log"
+    },
+    "originalBounded": {
+      "passes": 3,
+      "fails": 0,
+      "assertions": 3,
+      "filtered": 2,
+      "actualExitCode": 0,
+      "scope": "Animal CP0真实接受、伪造Fox请求拒绝、不可能cursor拒绝；未改旧输入和预期",
+      "log": "/tmp/awa-c37-verifier/original-bounded.log"
+    },
+    "typesFirst": {
+      "execSession": 2829,
+      "actualTerminalExitCode": 0,
+      "log": "/tmp/awa-c37-verifier/types-first.log",
+      "config": "/tmp/awa-c37-verifier/tsconfig.json",
+      "scope": "main/3算法/assembly/newunit/原Animal bounded入口及传递依赖，作者实际终态收据"
+    },
+    "typesHelperIncrement": {
+      "execSession": 28711,
+      "actualTerminalExitCode": 0,
+      "log": "/tmp/awa-c37-verifier/types-added-helper.log",
+      "config": "/tmp/awa-c37-verifier/tsconfig-added-helper.json",
+      "scope": "独立审查补入Magician helper后只检查该helper有限入口；未重前7个用例或全项目"
+    }
+  },
+  "limits": [
+    "24路径中文职责头已完成；现存少量英文内部注释下一批独立翻译，不据头注释声称全部中文。",
+    "metadata测试仅观察首次metadata访问，不冒称全部函数进入轨迹；16调用完整AST另有证明。",
+    "静态运行时图逐实际type-erased内部边，外部Node/Zod未递归，不证明任意JavaScript纯度；第三向只有限核边界和端点，未重复独立遍历。",
+    "本批保持schema2/版本准入/算法/第一拒绝；不代表全55角色审计覆盖、全目录退出、C39或P7完成。",
+    "未运行全量门禁、整局、模型或网络。"
+  ]
+}

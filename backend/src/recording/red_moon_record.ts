@@ -1,15 +1,15 @@
 /**
- * Responsibility: independently verify recorded red-moon next-night and expiry causality.
- * Input: archive decisions, operations and facts at their recorded prefixes.
- * Output: consistency checks and reconstructed next-night and expiry evidence.
- * Boundary: never schedules live effects or uses domain resolution as its oracle.
+ * 负责独立审核红月延迟、转换与胜利前缀。输入为归档配置、决定、事实与 checkpoint；
+ * 输出为独立重建的审计结果或原拒绝，原纯数据推导、迭代与第一失败顺序保持。
+ * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
+ * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
 import { isRedMoonPreset } from "../verification/board-support";
 import {
   readRedMoonNextNightFact,
   readRedMoonExpiryFact,
 } from "@ai-werewolf-arena/game-contract/facts/red-moon";
-import { Camp, Role, Phase, DeathCause } from "../core/domain";
+import { Camp, Role, Phase, DeathCause } from "@ai-werewolf-arena/game-contract";
 import type { ReproductionRecord } from "./reproduction";
 const roleId = "red_moon_apostle";
 const factTypes = new Set([

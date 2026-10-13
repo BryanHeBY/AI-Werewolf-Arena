@@ -1,8 +1,8 @@
 /**
- * Responsibility: independently verify demon-hunter recorded choices and native outcomes.
- * Input: archive facts, checkpoint stocks and causal operations.
- * Output: consistency checks and a reconstructed audit view.
- * Boundary: runtime hunt permissions, resource payment and live settlement are not granted here.
+ * 负责独立审核恶魔选择、原生结果及贵族／红月联动证据。输入为归档配置、决定、事实与 checkpoint；
+ * 输出为独立重建的审计结果或原拒绝，原纯数据推导、迭代与第一失败顺序保持。
+ * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
+ * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
 import type { NobleRecordAudit } from "./noble_secret_body_record";
 import { validateRedMoonRecord } from "./red_moon_record";
@@ -17,7 +17,7 @@ import {
   readDemonHuntTool,
 } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { isDemonHunterPreset } from "../verification/board-support";
-import { Role, Camp, Phase, DeathCause } from "../core/domain";
+import { Role, Camp, Phase, DeathCause } from "@ai-werewolf-arena/game-contract";
 import { readFaultPlan } from "../core/domain/fault_plan";
 import type { ReproductionRecord } from "./reproduction";
 const positive = z.number().int().positive().max(Number.MAX_SAFE_INTEGER);

@@ -1,8 +1,8 @@
 /**
- * Responsibility: independently verify mist-raven archive actions and deferred outcomes.
- * Input: recorded actions, operations and checkpoints.
- * Output: archive consistency checks rejecting invalid deferred outcomes.
- * Boundary: never runs the live reducer, authorizes turns or mutates domain state.
+ * 负责独立审核雾鸦致死、延期与请求因果。输入为归档配置、决定、事实与 checkpoint；
+ * 输出为原一致性结果或明确拒绝，原纯数据推导、迭代与第一失败顺序保持。
+ * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
+ * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
 import {
   check,
@@ -20,7 +20,7 @@ import {
   MIST_RAVEN_EVENT_TYPES,
   readMistRavenFact,
 } from "@ai-werewolf-arena/game-contract/facts/mist-raven";
-import { Camp, Phase, Role } from "../core/domain/identity";
+import { Camp, Phase, Role } from "@ai-werewolf-arena/game-contract";
 import type { RecordedCheckpoint, ReproductionRecord } from "./reproduction";
 
 type AlchemistLedger = {

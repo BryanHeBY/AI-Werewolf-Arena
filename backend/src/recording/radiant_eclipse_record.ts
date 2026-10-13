@@ -1,6 +1,8 @@
 /**
- * Responsibility: independently validate recorded radiant-eclipse actions and publication prefixes.
- * Replay evidence, original seats and checkpoints are the inputs; rejection or an audit result is the output. The archive verifier does not own runtime leases, pay resources or execute the domain settlement.
+ * 负责独立审核日蚀行动、继承与发表因果前缀。输入为归档配置、决定、事实与 checkpoint；
+ * 输出为原一致性结果或明确拒绝，原纯数据推导、迭代与第一失败顺序保持。
+ * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
+ * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
 import { isRadiantEclipsePreset } from "../verification/board-support";
 import {
@@ -8,7 +10,7 @@ import {
   readRadiantEclipseFact,
   radiantEclipseAudience,
 } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
-import { Camp, Phase, Role } from "../core/domain/identity";
+import { Camp, Phase, Role } from "@ai-werewolf-arena/game-contract";
 import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from "./reproduction";
 import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
 import { sanitizeSpeechText } from "../utils/speech_text";

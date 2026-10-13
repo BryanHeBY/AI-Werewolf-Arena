@@ -1,37 +1,29 @@
 /**
- * Responsibility: define and validate native reproduction evidence and track decisions.
- * Input: normalized requests, committed facts/operations and checkpoints;
- * output: strict Tape data with existing version, causal and parameter constraints.
- * The trace owns request opening/settlement evidence, not domain resource commit.
- * Its existing request-delivery subscription returns actions before synchronous
- * domain completion; preflight selection receipts never settle this trace.
- * Feature verifiers reconstruct recorded rules; runtime authorization and original
- * component references are never serialized. Exact source/lock admission belongs
- * to replay execution; raw user messages remain untouched by locale formatting.
+ * 负责 reproduction 原版本／schema 准入、因果请求轨迹和决定记录。输入为纯数据请求、事实、操作和 checkpoint；
+ * 输出为原严格 Tape，机制审核交给独立固定 verifier 装配，准入与第一失败顺序保持。
+ * Trace 只拥有请求开启／结算证据，不把预检回执当资源提交，不序列化权限或原体句柄。
+ * 精确 source／lock 检查仍由实际 replay 执行；用户原文不经过展示翻译改写。
  */
+import { verifyReproductionMechanisms } from "../verification/reproduction/assembly";
 import { animalCheckpointSchema } from "./animal_dream_checkpoint";
-import { validateAnimalDreamRecord } from "./animal_dream_record";
 import {
   ANIMAL_DREAM_EVENT_TYPES,
   readAnimalDreamFact,
   animalDreamFactAudience,
   type AnimalDreamEventType,
 } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
-import { validateFragrantPairRecord } from "./fragrant_pair_seer_record";
 import {
   FRAGRANT_PAIR_EVENT_TYPES,
   readFragrantPairFact,
   fragrantPairVisibility,
 } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import { fragrantCheckpointSchema } from "./fragrant_pair_seer_checkpoint";
-import { validateNobleSecretBodyRecord } from "./noble_secret_body_record";
 import { nobleBodyCheckpointSchema } from "./noble_secret_body_checkpoint";
 import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
   readNobleSecretBodyFact,
   nobleSecretBodyVisibility,
 } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
-import { validateRadiantEclipseRecord } from "./radiant_eclipse_record";
 import {
   RADIANT_ECLIPSE_EVENT_TYPES,
   readRadiantEclipseFact,
@@ -41,8 +33,6 @@ import {
   MIST_RAVEN_EVENT_TYPES,
   readMistRavenFact,
 } from "@ai-werewolf-arena/game-contract/facts/mist-raven";
-import { validateMistRavenRecord } from "./mist_raven_record";
-import { validateScholarMentorRecord } from "./scholar_mentor_record";
 import {
   readModifierChoiceFact,
   readModifierSkipFact,
@@ -54,30 +44,24 @@ import {
   readTimeConsortSkipFact,
   readTimeConsortReflectionFact,
 } from "@ai-werewolf-arena/game-contract/facts/time-consort";
-import { validateTimeConsortRecord } from "./time_consort_record";
 import {
   readWolfSorcererExchangeFact,
   readWolfSorcererSkipFact,
 } from "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer";
-import { validateWolfSorcererRecord } from "./wolf_sorcerer_record";
 import {
   readTricksterExchangeFact,
   readTricksterSkipFact,
   readExileMappingFact,
 } from "@ai-werewolf-arena/game-contract/facts/trickster";
-import { validateTricksterRecord } from "./trickster_record";
 import {
   readOrderPrinceChoiceFact,
   readOrderPrinceRevoteFact,
 } from "@ai-werewolf-arena/game-contract/facts/order-prince";
-import { validateOrderPrinceRecord } from "./order_prince_record";
 import { readNightmareFearFact } from "@ai-werewolf-arena/game-contract/facts/nightmare";
 import {
   readMagicianExchangeFact,
   readDeathShotMissFact,
 } from "@ai-werewolf-arena/game-contract/facts/magician";
-import { validateDemonHunterRecord } from "./demon_hunter_record";
-import { validateMagicianRecord } from "./magician_record";
 import { readFaultPlan, type FaultPlan } from "../core/domain/fault_plan";
 import { DEMON_HUNTER_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import {
@@ -85,23 +69,9 @@ import {
   GHOST_BRIDE_POLICY,
   readWeddingSetup,
 } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
-import { validateGhostBrideRecord } from "./ghost_bride_record";
-import {
-  readLonelyGirlEventFact,
-  readLonelyGirlChoiceTool,
-  LONELY_GIRL_POLICY,
-} from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
-import { readShapeshifterChoiceTool } from "@ai-werewolf-arena/game-contract/facts/shapeshifter";
-import {
-  SHAPESHIFTER_EVENT_TYPES,
-  readShapeshifterEventFact,
-} from "@ai-werewolf-arena/game-contract/facts/shapeshifter";
-import {
-  readWildChildEventFact,
-  WILD_CHILD_EVENT_TYPES,
-} from "@ai-werewolf-arena/game-contract/facts/wild-child";
-import { CUPID_POLICIES } from "../core/domain/board";
-import { boardConfigSchema } from "../core/domain/board_schema";
+import { LONELY_GIRL_POLICY } from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
+import { CUPID_POLICIES } from "@ai-werewolf-arena/game-contract";
+import { boardConfigSchema } from "@ai-werewolf-arena/game-contract";
 import { dictionaries, text, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { z } from "zod";
 import {
@@ -120,7 +90,6 @@ import {
   ACTION_STAGES,
   SHERIFF_BADGE_POLICIES,
   TOOL_NAMES,
-  WOLF_TEAM_EVENT_TYPES,
   ActionWindow,
   KnightDuelWindow,
   Camp,
@@ -129,13 +98,13 @@ import {
   WinCondition,
   WitchSelfHealRule,
   DeathCause,
-  type ActionProvider,
-  type ActionRequest,
   type BoardConfig,
-  type GameEvent,
   type RuntimeSnapshot,
   type ToolCall,
-} from "../core";
+} from "@ai-werewolf-arena/game-contract";
+import { WOLF_TEAM_EVENT_TYPES, type GameEvent } from "@ai-werewolf-arena/game-contract/events";
+import type { ActionRequest } from "@ai-werewolf-arena/game-contract/requests";
+import type { ActionProvider } from "../core/domain/actions";
 import type { RandomMetadata } from "../core/domain/random";
 
 export const REPRODUCTION_SCHEMA_VERSION = 2 as const;
@@ -882,7 +851,7 @@ const schema = z.strictObject({
     .nullable(),
 });
 
-/** A serialization boundary: strict envelopes, then runtime validates role and board semantics. */
+/** 先保原版本／严格 envelope 准入，再按固定独立装配审核角色与板子；审核不执行游戏规则。 */
 export function parseReproductionRecord(value: unknown): ReproductionRecord {
   if (
     value &&
@@ -894,22 +863,7 @@ export function parseReproductionRecord(value: unknown): ReproductionRecord {
   const parsed = schema.safeParse(value);
   if (!parsed.success) throw new Error("reproduction_record_invalid");
   const result = parsed.data as unknown as ReproductionRecord;
-  validateInitialIdentityRecord(result);
-  validateWildChildRecord(result);
-  validateLonelyGirlRecord(result);
-  validateGhostBrideRecord(result);
-  validateAnimalDreamRecord(result);
-  validateFragrantPairRecord(result);
-  const noble = validateNobleSecretBodyRecord(result);
-  validateDemonHunterRecord(result, noble);
-  validateScholarMentorRecord(result);
-  validateMistRavenRecord(result);
-  validateRadiantEclipseRecord(result);
-  validateTimeConsortRecord(result);
-  validateWolfSorcererRecord(result);
-  validateTricksterRecord(result);
-  validateMagicianRecord(result);
-  validateOrderPrinceRecord(result);
+  verifyReproductionMechanisms(result);
   return result;
 }
 
@@ -1080,715 +1034,5 @@ export class ReproductionTrace {
     if (input && this.decisions.some((entry) => entry.outcome.kind === "pending"))
       throw new Error("reproduction_decisions_pending");
     return parseReproductionRecord(record);
-  }
-}
-
-/** New Thief archives carry the original full deal; old ordinary archives keep their exact shape. */
-function validateInitialIdentityRecord(record: ReproductionRecord): void {
-  const m = record.metadata,
-    hasThief = m.normalizedBoard.roleSetups.some((row) => row.role === Role.Thief && row.count > 0),
-    hasShape = m.normalizedBoard.roleSetups.some(
-      (row) => row.role === Role.Shapeshifter && row.count > 0,
-    ),
-    identity = hasShape ? Role.Shapeshifter : Role.Thief;
-  if (hasShape && hasThief) throw new Error("reproduction_initial_identity_owners_invalid");
-  const fail = () => {
-    throw new Error(
-      hasShape ? "reproduction_shapeshifter_state_invalid" : "reproduction_thief_state_invalid",
-    );
-  };
-  if (
-    !hasShape &&
-    (record.events.some((e) => (SHAPESHIFTER_EVENT_TYPES as readonly string[]).includes(e.type)) ||
-      record.decisions.some(
-        (d) =>
-          d.stage === "shapeshifter" ||
-          d.request.context.stage === "shapeshifter" ||
-          d.request.allowedTools.includes("choose_shapeshifter_card") ||
-          (d.outcome.kind === "action" && d.outcome.action?.name === "choose_shapeshifter_card"),
-      ) ||
-      record.checkpoints.some((c) =>
-        c.players.some((p) => p.privateState.shapeshifter !== undefined),
-      ))
-  )
-    fail();
-  if (!hasThief && !hasShape) {
-    if (
-      m.initialDeal !== undefined ||
-      record.checkpoints.some(
-        (c) => c.thiefSetup !== undefined || c.shapeshifterSetup !== undefined,
-      ) ||
-      record.events.some((e) => (SHAPESHIFTER_EVENT_TYPES as readonly string[]).includes(e.type))
-    )
-      fail();
-    return;
-  }
-  const initial = m.initialDeal,
-    n = m.normalizedBoard.boardSize;
-  if (!initial || initial.length !== n + 2 || m.players.length !== n) return fail();
-  const deck = m.normalizedBoard.roleSetups.flatMap((row) => Array<Role>(row.count).fill(row.role));
-  deck.push(Role.Villager, Role.Villager);
-  if (
-    [...initial].sort().join(",") !== deck.sort().join(",") ||
-    initial.filter((role) => role === identity).length !== 1
-  )
-    fail();
-  const supported = [
-    identity,
-    Role.Wolf,
-    Role.Villager,
-    Role.Seer,
-    Role.Witch,
-    Role.Hunter,
-    Role.Guard,
-    Role.Idiot,
-  ];
-  if (
-    initial.some((role) => !supported.includes(role)) ||
-    m.players.some(
-      (p, i) => p.role !== initial[i] || p.camp !== (p.role === Role.Wolf ? Camp.Wolf : Camp.Good),
-    )
-  )
-    fail();
-  const actorIndex = initial.slice(0, n).indexOf(identity),
-    actorId = actorIndex < 0 ? null : m.players[actorIndex]!.id;
-  const originalIds = Array.from({ length: n + 2 }, (_, i) => `deal:${i}`);
-  let previousStatus: string | undefined, previousSelection: string | undefined;
-  for (const checkpoint of record.checkpoints) {
-    if (hasShape ? checkpoint.thiefSetup !== undefined : checkpoint.shapeshifterSetup !== undefined)
-      fail();
-    const state = hasShape ? checkpoint.shapeshifterSetup : checkpoint.thiefSetup;
-    if (!state || state.hands.length !== n || state.reserve.length !== 2) return fail();
-    const cards = [...state.hands, ...state.reserve];
-    if (
-      new Set(cards.map((card) => card.cardId)).size !== n + 2 ||
-      cards.some(
-        (card) =>
-          !originalIds.includes(card.cardId) ||
-          initial[originalIds.indexOf(card.cardId)] !== card.role,
-      )
-    )
-      fail();
-    if (
-      new Set(state.hands.map((hand) => hand.actorId)).size !== n ||
-      state.hands.some((hand) => !m.players.some((p) => p.id === hand.actorId))
-    )
-      fail();
-    const selection = state.selection;
-    if (checkpoint.cycle > 0 && state.status === "pending") fail();
-    if (checkpoint.cycle === 0 && (state.status !== "pending" || selection !== null)) fail();
-    if (
-      previousStatus &&
-      previousStatus !== "pending" &&
-      (state.status !== previousStatus || JSON.stringify(selection) !== previousSelection)
-    )
-      fail();
-    previousStatus = state.status;
-    previousSelection = JSON.stringify(selection);
-    if (state.status !== "complete" && selection !== null) fail();
-    if (state.status === "complete" && (actorId === null) !== (selection === null)) fail();
-    if (
-      selection &&
-      (selection.actorId !== actorId ||
-        (selection.slot === null
-          ? selection.role !== identity
-          : selection.role !== initial[n + selection.slot]))
-    )
-      fail();
-    if (selection?.slot === null && initial[n] === Role.Wolf && initial[n + 1] === Role.Wolf)
-      fail();
-    if (
-      hasShape &&
-      selection &&
-      (selection.slot === null ||
-        ([initial[n], initial[n + 1]].includes(Role.Wolf) && selection.role !== Role.Wolf))
-    )
-      fail();
-    for (let i = 0; i < n; i++) {
-      const player = m.players[i]!,
-        hand = state.hands.find((h) => h.actorId === player.id),
-        current = checkpoint.players.find((p) => p.id === player.id);
-      const expected =
-        i === actorIndex && selection?.slot !== undefined && selection.slot !== null
-          ? `deal:${n + selection.slot}`
-          : `deal:${i}`;
-      if (
-        !hand ||
-        !current ||
-        hand.cardId !== expected ||
-        current.role !== hand.role ||
-        current.camp !== (hand.role === Role.Wolf ? Camp.Wolf : Camp.Good)
-      )
-        fail();
-    }
-    for (const slot of [0, 1] as const) {
-      const expected = selection?.slot === slot ? `deal:${actorIndex}` : `deal:${n + slot}`;
-      if (state.reserve[slot].cardId !== expected) fail();
-    }
-  }
-  if (hasShape) {
-    if (
-      record.decisions.some(
-        (d) =>
-          d.stage === "thief" ||
-          d.request.context.stage === "thief" ||
-          d.request.allowedTools.includes("choose_thief_card") ||
-          (d.outcome.kind === "action" && d.outcome.action?.name === "choose_thief_card"),
-      )
-    )
-      fail();
-    const facts = record.events.filter((e) =>
-      (SHAPESHIFTER_EVENT_TYPES as readonly string[]).includes(e.type),
-    );
-    if (
-      record.events.some(
-        (e) => e.type === "thief_initial_deal" || e.type === "thief_identity_chosen",
-      ) ||
-      facts.some((e) => !readShapeshifterEventFact(e.type, e.payload))
-    )
-      fail();
-    const deals = facts.filter((e) => e.type === "shapeshifter_initial_deal"),
-      choices = facts.filter((e) => e.type === "shapeshifter_identity_chosen"),
-      decisions = record.decisions.filter(
-        (d) =>
-          d.stage === "shapeshifter" ||
-          d.request.context.stage === "shapeshifter" ||
-          d.request.allowedTools.includes("choose_shapeshifter_card") ||
-          (d.outcome.kind === "action" && d.outcome.action?.name === "choose_shapeshifter_card"),
-      );
-    if (
-      deals.length !== 1 ||
-      JSON.stringify(deals[0]!.payload.roles) !== JSON.stringify(initial) ||
-      deals[0]!.payload.boardSize !== n ||
-      choices.length > 1 ||
-      decisions.length > (actorId === null ? 0 : 1)
-    )
-      fail();
-    if (
-      decisions.some(
-        (d) =>
-          d.stage !== "shapeshifter" ||
-          d.actorId !== actorId ||
-          d.request.actorId !== d.actorId ||
-          d.request.context.day !== d.day ||
-          d.request.context.stage !== "shapeshifter" ||
-          d.day !== 1 ||
-          d.request.phase !== Phase.Night ||
-          d.request.allowedTools.length !== 1 ||
-          d.request.allowedTools[0] !== "choose_shapeshifter_card" ||
-          d.request.context.allow_fallback !== false ||
-          d.request.context.action_failure_policy !== "error" ||
-          d.request.context.turn_constraints.min_valid_actions !== 1 ||
-          d.request.context.turn_constraints.max_valid_actions !== 1 ||
-          JSON.stringify(d.request.context.turn_constraints.required_any_tools) !==
-            JSON.stringify(["choose_shapeshifter_card"]),
-      )
-    )
-      fail();
-    if (choices.length) {
-      const choice = choices[0]!.payload,
-        decision = decisions[0],
-        call =
-          decision?.outcome.kind === "action"
-            ? readShapeshifterChoiceTool(decision.outcome.action)
-            : null;
-      if (
-        !decision ||
-        decision.outcome.kind !== "action" ||
-        !call ||
-        call.args.slot !== choice.slot ||
-        choice.actorId !== actorId ||
-        choice.role !== initial![n + (choice.slot as number)] ||
-        ([initial![n], initial![n + 1]].includes(Role.Wolf) && choice.role !== Role.Wolf)
-      )
-        fail();
-    }
-    for (const checkpoint of record.checkpoints) {
-      const state = checkpoint.shapeshifterSetup!,
-        selection = state.selection;
-      const seen = record.events
-        .slice(0, checkpoint.eventCount)
-        .filter((e) => e.type === "shapeshifter_identity_chosen");
-      if (
-        seen.length !== (selection ? 1 : 0) ||
-        (selection &&
-          (seen[0]!.payload.slot !== selection.slot ||
-            seen[0]!.payload.actorId !== selection.actorId))
-      )
-        fail();
-      for (const player of checkpoint.players) {
-        const expectedCamp = player.role === Role.Wolf ? Camp.Wolf : Camp.Good;
-        if (
-          JSON.stringify(player.victory.affiliations) !==
-          JSON.stringify([{ kind: "faction", faction: expectedCamp }])
-        )
-          fail();
-        const resource = player.privateState.shapeshifter;
-        if (player.role === Role.Shapeshifter) {
-          if (
-            !resource ||
-            typeof resource !== "object" ||
-            Array.isArray(resource) ||
-            Object.keys(resource).sort().join(",") !== "choice,policy,remaining" ||
-            (resource as any).policy !== "awa_netease_shapeshifter_two_extra_villagers_v1" ||
-            (resource as any).choice !== null ||
-            (resource as any).remaining !== (state.status === "pending" ? 1 : 0)
-          )
-            fail();
-        } else if (resource !== undefined) fail();
-      }
-    }
-  }
-}
-
-/** AWA finite Wild Child causal state: original identity is immutable; only committed facts move faction. */
-function validateWildChildRecord(record: ReproductionRecord): void {
-  const has = record.metadata.normalizedBoard.roleSetups.some(
-    (row) => row.role === Role.WildChild && row.count === 1,
-  );
-  const fail: () => never = () => {
-    throw new Error("reproduction_wild_child_state_invalid");
-  };
-  const facts = record.events.filter((e) =>
-    (WILD_CHILD_EVENT_TYPES as readonly string[]).includes(e.type),
-  );
-  if (!has) {
-    if (
-      facts.length ||
-      record.checkpoints.some((c) => c.players.some((p) => p.privateState.wildChild !== undefined))
-    )
-      fail();
-    return;
-  }
-  const initial = record.metadata.players.filter((p) => p.role === Role.WildChild);
-  if (
-    initial.length !== 1 ||
-    initial[0]!.camp !== Camp.Good ||
-    !record.metadata.players.some((p) => p.role === Role.Wolf && p.camp === Camp.Wolf)
-  )
-    fail();
-  const actorId = initial[0]!.id,
-    ids = new Set(record.metadata.players.map((p) => p.id));
-  let choice: { day: 1; targetId: number } | null = null,
-    eligible: number | null = null,
-    active: number | null = null,
-    camp = Camp.Good;
-  let cause: Record<string, unknown> | null = null,
-    chosen = false,
-    transformed = false,
-    activated = false;
-  const byCount = new Map<
-    number,
-    {
-      choice: { day: 1; targetId: number } | null;
-      eligible: number | null;
-      active: number | null;
-      camp: Camp;
-      status: string;
-    }
-  >();
-  byCount.set(0, { choice, eligible, active, camp, status: "pending" });
-  const choiceDecisions = record.decisions.filter((d) => d.stage === "wild_child");
-  if (
-    choiceDecisions.length > 1 ||
-    choiceDecisions.some(
-      (d) =>
-        d.actorId !== actorId ||
-        d.day !== 1 ||
-        d.request.phase !== Phase.Night ||
-        d.request.context.allow_fallback !== false ||
-        d.request.context.turn_constraints.min_valid_actions !== 1,
-    )
-  )
-    fail();
-  type NativeDeath = {
-    root: number;
-    wave: number;
-    day: number;
-    sources: readonly unknown[];
-    phase: Phase;
-  };
-  const nativeDeaths = new Map<number, NativeDeath>();
-  const nightOps = record.operations.filter(
-    (op) => op.scope === "resolution" && op.op === "night_damage_resolved",
-  );
-  let nightIndex = 0;
-  let eventDay = 1,
-    eventPhase: Phase = Phase.Night;
-  for (let index = 0; index < record.events.length; index++) {
-    const event = record.events[index]!;
-    if (event.type === "phase_changed") {
-      eventDay = event.payload.day as number;
-      eventPhase = event.payload.phase as Phase;
-    }
-    if (event.type === "night_resolved") {
-      const output = nightOps[nightIndex++]?.output,
-        deaths = event.payload.deaths;
-      if (
-        !Array.isArray(deaths) ||
-        (record.finalized && (!output || !Array.isArray(output.deaths)))
-      )
-        fail();
-      const sourceMap = output?.death_sources as Record<string, unknown> | undefined;
-      for (const id of deaths as number[]) {
-        const sources = sourceMap?.[id];
-        if (
-          record.finalized &&
-          (!Array.isArray(sources) || !sources.length || !(output!.deaths as number[]).includes(id))
-        )
-          fail();
-        nativeDeaths.set(id, {
-          root: index,
-          wave: 0,
-          day: eventDay,
-          sources: record.finalized ? (sources as unknown[]) : [],
-          phase: Phase.Night,
-        });
-      }
-    }
-    if (event.type === "voted_out" && typeof event.payload.target === "number")
-      nativeDeaths.set(event.payload.target, {
-        root: index,
-        wave: 0,
-        day: eventDay,
-        sources: ["exile"],
-        phase: Phase.Voting,
-      });
-    if (event.type === "wolf_self_destruct" && typeof event.payload.wolfId === "number")
-      nativeDeaths.set(event.payload.wolfId, {
-        root: index,
-        wave: 0,
-        day: eventDay,
-        sources: ["self_destruct"],
-        phase: eventPhase,
-      });
-    if (
-      event.type === "hunter_shot" &&
-      typeof event.payload.hunterId === "number" &&
-      typeof event.payload.targetId === "number"
-    ) {
-      const source = nativeDeaths.get(event.payload.hunterId);
-      if (source && source.day === eventDay)
-        nativeDeaths.set(event.payload.targetId, {
-          ...source,
-          wave: source.wave + 1,
-          sources: ["shot"],
-          phase: eventPhase,
-        });
-    }
-    if ((WILD_CHILD_EVENT_TYPES as readonly string[]).includes(event.type)) {
-      const p = readWildChildEventFact(event.type, event.payload);
-      if (!p || p.actorId !== actorId) fail();
-      if (event.type === "wild_child_model_chosen") {
-        if (
-          chosen ||
-          eventDay !== 1 ||
-          eventPhase !== Phase.Night ||
-          !ids.has(p.targetId as number)
-        )
-          fail();
-        const decision = choiceDecisions[0];
-        if (
-          !decision ||
-          decision.outcome.kind !== "action" ||
-          decision.outcome.action?.name !== "choose_wild_model" ||
-          decision.outcome.action.args.target_id !== p.targetId
-        )
-          fail();
-        chosen = true;
-        choice = { day: 1, targetId: p.targetId as number };
-      } else if (event.type === "wild_child_model_eliminated") {
-        if (
-          !choice ||
-          cause ||
-          p.targetId !== choice.targetId ||
-          (p.deadIds as number[]).some((id) => !ids.has(id))
-        )
-          fail();
-        const actual = nativeDeaths.get(p.targetId as number);
-        if (
-          !actual ||
-          actual.day !== p.day ||
-          actual.phase !== p.phase ||
-          (record.finalized &&
-            JSON.stringify([...actual.sources].sort()) !==
-              JSON.stringify([...(p.sources as string[])].sort()))
-        )
-          fail();
-        const wave = [...nativeDeaths]
-          .filter(
-            ([, d]) => d.root === actual.root && d.wave === actual.wave && d.day === actual.day,
-          )
-          .map(([id]) => id)
-          .sort((a, b) => a - b);
-        if (
-          JSON.stringify(wave) !==
-          JSON.stringify([...(p.deadIds as number[])].sort((a, b) => a - b))
-        )
-          fail();
-        cause = p;
-      } else if (event.type === "wild_child_transformed") {
-        if (
-          !choice ||
-          !cause ||
-          transformed ||
-          p.deathCommit !== cause.deathCommit ||
-          p.day !== cause.day ||
-          (cause.deadIds as number[]).includes(actorId) ||
-          eventDay !== p.day
-        )
-          fail();
-        transformed = true;
-        eligible = p.eligibleNight as number;
-        camp = Camp.Wolf;
-      } else {
-        if (
-          !transformed ||
-          activated ||
-          eventPhase !== Phase.Night ||
-          p.eligibleNight !== eligible ||
-          p.day !== eventDay ||
-          eventDay < eligible!
-        )
-          fail();
-        activated = true;
-        active = p.day as number;
-      }
-    }
-    byCount.set(index + 1, {
-      choice: choice ? { ...choice } : null,
-      eligible,
-      active,
-      camp,
-      status: activated ? "active" : transformed ? "transformed" : chosen ? "chosen" : "pending",
-    });
-  }
-  for (const checkpoint of record.checkpoints) {
-    const player = checkpoint.players.find((p) => p.id === actorId),
-      expected = byCount.get(checkpoint.eventCount);
-    if (
-      !player ||
-      !expected ||
-      player.role !== Role.WildChild ||
-      player.camp !== expected.camp ||
-      JSON.stringify(player.victory.affiliations) !==
-        JSON.stringify([{ kind: "faction", faction: expected.camp }])
-    )
-      fail();
-    const state = player.privateState.wildChild as Record<string, unknown> | undefined;
-    if (
-      !state ||
-      Object.keys(state).sort().join(",") !==
-        ["policy", "remaining", "status", "choice", "eligibleNight", "activeFromNight"]
-          .sort()
-          .join(",") ||
-      state.policy !== "awa_lui_meme_wild_child_v1" ||
-      JSON.stringify(state.choice) !== JSON.stringify(expected.choice) ||
-      state.eligibleNight !== expected.eligible ||
-      state.activeFromNight !== expected.active
-    )
-      fail();
-    const closed = expected.status === "pending" && checkpoint.cycle > 0 && !checkpoint.complete;
-    if (
-      state.status !== (closed ? "closed" : expected.status) ||
-      state.remaining !== (expected.status === "pending" && !closed ? 1 : 0) ||
-      (checkpoint.cycle === 0 && (expected.status !== "pending" || !player.alive)) ||
-      (checkpoint.complete && checkpoint.cycle > 0 && expected.status === "pending")
-    )
-      fail();
-  }
-}
-
-function validateLonelyGirlRecord(record: ReproductionRecord): void {
-  const board = record.metadata.normalizedBoard,
-    owner = board.roleSetups.some((row) => row.role === Role.LonelyGirl && row.count > 0),
-    facts = record.events.filter((e) => e.type === "lonely_girl_admired_chosen"),
-    decisions = record.decisions.filter(
-      (d) =>
-        d.stage === "lonely_girl" ||
-        d.request.context.stage === "lonely_girl" ||
-        d.request.allowedTools.includes("choose_admired_player") ||
-        (d.outcome.kind === "action" && d.outcome.action?.name === "choose_admired_player"),
-    );
-  const fail = () => {
-    throw new Error("reproduction_lonely_girl_state_invalid");
-  };
-  if (!owner) {
-    if (
-      facts.length ||
-      decisions.length ||
-      record.metadata.players.some((p) => p.role === Role.LonelyGirl) ||
-      record.checkpoints.some(
-        (c) =>
-          c.lonelyGirlSetup !== undefined ||
-          c.players.some((p) => Object.hasOwn(p.privateState, "lonelyGirl")),
-      )
-    )
-      fail();
-    return;
-  }
-  const initial = record.metadata.players.filter((p) => p.role === Role.LonelyGirl),
-    actor = initial[0];
-  if (
-    initial.length !== 1 ||
-    !actor ||
-    actor.camp !== Camp.Good ||
-    record.metadata.initialDeal !== undefined ||
-    board.boardSize < 6 ||
-    JSON.stringify(
-      board.winConditions?.length
-        ? board.winConditions
-        : [board.winCondition ?? WinCondition.SlaughterCity],
-    ) !== JSON.stringify([WinCondition.SlaughterCity]) ||
-    board.events ||
-    !board.roleSetups.some((row) => row.role === Role.Wolf && row.count > 0) ||
-    board.roleSetups.some(
-      (row) =>
-        ![
-          Role.LonelyGirl,
-          Role.Wolf,
-          Role.Villager,
-          Role.Seer,
-          Role.Witch,
-          Role.Hunter,
-          Role.Guard,
-          Role.Idiot,
-        ].includes(row.role),
-    ) ||
-    facts.length > 1 ||
-    decisions.length > 1 ||
-    record.events.some(
-      (e) => e.type === "hybrid_exemplar_chosen" || e.type === "hybrid_affiliation_resolved",
-    ) ||
-    record.decisions.some(
-      (d) =>
-        d.stage === "hybrid" ||
-        d.request.context.stage === "hybrid" ||
-        d.request.allowedTools.includes("choose_exemplar") ||
-        (d.outcome.kind === "action" && d.outcome.action?.name === "choose_exemplar"),
-    )
-  )
-    fail();
-  for (const d of decisions) {
-    const c = d.request.context.turn_constraints;
-    if (
-      d.actorId !== actor.id ||
-      d.request.actorId !== actor.id ||
-      d.day !== 1 ||
-      d.request.context.day !== 1 ||
-      d.stage !== "lonely_girl" ||
-      d.request.context.stage !== "lonely_girl" ||
-      d.request.phase !== Phase.Night ||
-      d.request.allowedTools.length !== 1 ||
-      d.request.allowedTools[0] !== "choose_admired_player" ||
-      c.min_valid_actions !== 1 ||
-      c.max_valid_actions !== 1 ||
-      JSON.stringify(c.required_any_tools) !== JSON.stringify(["choose_admired_player"]) ||
-      d.request.context.allow_fallback !== false ||
-      d.request.context.action_failure_policy !== "error"
-    )
-      fail();
-  }
-  const fact = facts[0],
-    p = fact && readLonelyGirlEventFact(fact.type, fact.payload),
-    decision = decisions[0],
-    call =
-      decision?.outcome.kind === "action"
-        ? readLonelyGirlChoiceTool(decision.outcome.action)
-        : null,
-    target = p && record.metadata.players.find((row) => row.id === p.targetId);
-  if (
-    fact &&
-    (!p ||
-      !p.camp ||
-      p.actorId !== actor.id ||
-      !target ||
-      target.camp !== p.camp ||
-      !call ||
-      call.args.target_id !== p.targetId)
-  )
-    fail();
-  if (
-    record.metadata.players.some(
-      (player) => player.camp !== (player.role === Role.Wolf ? Camp.Wolf : Camp.Good),
-    )
-  )
-    fail();
-  // In-flight flushes carry current decisions but only the last completed cycle's events.
-  // The initial pending checkpoint may therefore precede the first choice fact.
-  // Finalized records and every post-setup checkpoint must contain that fact.
-  if (
-    !facts.length &&
-    record.decisions.some((d) => !decisions.includes(d)) &&
-    (record.finalized || record.checkpoints.some((c) => c.cycle > 0))
-  )
-    fail();
-  let completed = false,
-    closed = false,
-    finalStatus: string | null = null;
-  for (const checkpoint of record.checkpoints) {
-    const setup = checkpoint.lonelyGirlSetup,
-      player = checkpoint.players.find((row) => row.id === actor.id),
-      visible = record.events
-        .slice(0, checkpoint.eventCount)
-        .some((e) => e.type === "lonely_girl_admired_chosen");
-    if (
-      checkpoint.players.some((player) => {
-        const initial = record.metadata.players.find((p) => p.id === player.id);
-        return !initial || player.role !== initial.role || player.camp !== initial.camp;
-      })
-    )
-      fail();
-    if (
-      !setup ||
-      !player ||
-      setup.actorId !== actor.id ||
-      player.role !== Role.LonelyGirl ||
-      player.camp !== Camp.Good ||
-      checkpoint.players.some(
-        (row) => row.id !== actor.id && Object.hasOwn(row.privateState, "lonelyGirl"),
-      ) ||
-      checkpoint.players.some((row) => Object.hasOwn(row.privateState, "hybrid"))
-    )
-      fail();
-    if (checkpoint.cycle === 0 && (setup!.status !== "pending" || visible || !checkpoint.complete))
-      fail();
-    if (checkpoint.cycle > 0 && setup!.status === "pending") fail();
-    if (setup!.status === "failed" && checkpoint.complete) fail();
-    if (finalStatus && setup!.status !== finalStatus) fail();
-    if (setup!.status !== "pending") finalStatus = setup!.status;
-    const state = player!.privateState.lonelyGirl as Record<string, unknown> | undefined;
-    if (
-      !state ||
-      Array.isArray(state) ||
-      Object.keys(state).length !== 3 ||
-      state.policy !== LONELY_GIRL_POLICY
-    )
-      fail();
-    if (visible) {
-      if (
-        !p ||
-        !p.camp ||
-        setup!.status !== "complete" ||
-        state!.remaining !== 0 ||
-        JSON.stringify(state!.choice) !== JSON.stringify({ day: 1, targetId: p.targetId }) ||
-        JSON.stringify(player!.victory.affiliations) !==
-          JSON.stringify([{ kind: "faction", faction: p.camp }]) ||
-        closed
-      )
-        fail();
-      completed = true;
-    } else {
-      if (
-        completed ||
-        setup!.status === "complete" ||
-        state!.choice !== null ||
-        JSON.stringify(player!.victory.affiliations) !== "[]" ||
-        state!.remaining !== (setup!.status === "pending" ? 1 : 0)
-      )
-        fail();
-      if (setup!.status !== "pending") closed = true;
-      else if (closed) fail();
-    }
   }
 }

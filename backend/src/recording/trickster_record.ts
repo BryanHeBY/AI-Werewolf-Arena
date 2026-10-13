@@ -1,11 +1,8 @@
 /**
- * Responsibility: independently verify recorded trickster execution evidence.
- * Input: immutable reproduction decisions, facts, operations and checkpoints;
- * output: accepted evidence or the existing stable reproduction rejection.
- * This verifier owns its reconstructed arithmetic/state and never authorizes
- * engine actions, pays resources or invokes production settlement as its oracle.
- * Shared readers only establish data shape; historical success and failure
- * prefixes, causal cursors and feature-specific policy checks remain unchanged.
+ * 负责独立审核诡术师换位、放逐映射与枪击证据。输入为归档配置、决定、事实与 checkpoint；
+ * 输出为原一致性结果或明确拒绝，原纯数据推导、迭代与第一失败顺序保持。
+ * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
+ * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
 import { isTricksterPreset } from "../verification/board-support";
 import {
@@ -14,7 +11,7 @@ import {
   readExileMappingFact,
 } from "@ai-werewolf-arena/game-contract/facts/trickster";
 import { readMagicianExchangeFact } from "@ai-werewolf-arena/game-contract/facts/magician";
-import { Camp, Role, Phase } from "../core/domain";
+import { Camp, Role, Phase } from "@ai-werewolf-arena/game-contract";
 import type { ReproductionRecord } from "./reproduction";
 const exchange = "trickster_exchange_committed",
   skip = "trickster_exchange_skipped",

@@ -1,8 +1,8 @@
 /**
- * Responsibility: independently verify fragrant-pair archive arithmetic and disclosure.
- * Input: recorded decisions, checkpoints and publication prefixes.
- * Output: archive consistency checks and independently reconstructed knowledge.
- * Boundary: live knowledge changes and runtime relation handles are not owned here.
+ * 负责独立审核双生知识、配对、来源与公开次序。输入为归档配置、决定、事实与 checkpoint；
+ * 输出为原一致性结果或明确拒绝，原纯数据推导、迭代与第一失败顺序保持。
+ * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
+ * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
 import { fragrantFeedAt } from "./fragrant_pair_seer_feed_record";
 import { createMistSheriffEvidence } from "./mist_raven_sheriff_record";
@@ -13,7 +13,7 @@ import {
   readFragrantPairFact,
 } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import { isFragrantPairSeerPreset } from "../verification/board-support";
-import { Camp, Role, Phase } from "../core/domain/identity";
+import { Camp, Role, Phase } from "@ai-werewolf-arena/game-contract";
 import type { ReproductionRecord, RecordedDecision, RecordedCheckpoint } from "./reproduction";
 import type { RecordedFragrantState } from "./fragrant_pair_seer_checkpoint";
 
