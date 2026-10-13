@@ -9,6 +9,7 @@
  * intent 元数据不进入夜间摘要、事件或 schema2，旧注入 claim 保持兼容。
  * 晚交接保留真实单位的 owned 状态和原失败前缀，result 与最终伤害仍在原已付效果之后准备。
  */
+import { attachNightUnit } from "../../../core/domain/night-unit";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { prepareNightPipelineLifecycle, type NightLifecycleHandoff } from "../../../rulesets/night-lifecycle-plan";
 
@@ -350,7 +351,7 @@ export class NightPipeline {
         const stage = entry.handler;
         assertEvilKnightRosterCurrent(this.world);
         if (!isCurrent())
-          return attachNobleNightReceiver({ interrupted: true }, nobleNight.receiver);
+          return attachNightUnit(attachNobleNightReceiver({ interrupted: true }, nobleNight.receiver), lifecycle.nightUnit);
         assertReadable();
         discardStaleWolfKnife(this.world, stageState);
         if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
@@ -360,7 +361,7 @@ export class NightPipeline {
         assertEvilKnightRosterCurrent(this.world);
         assertReadable();
         if (!isCurrent())
-          return attachNobleNightReceiver({ interrupted: true }, nobleNight.receiver);
+          return attachNightUnit(attachNobleNightReceiver({ interrupted: true }, nobleNight.receiver), lifecycle.nightUnit);
         discardStaleWolfKnife(this.world, stageState);
         if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
       }
@@ -515,7 +516,7 @@ export class NightPipeline {
             }),
           );
       lifecycle.finishPipeline();
-      return attachNobleNightReceiver(
+      return attachNightUnit(attachNobleNightReceiver(
         {
           interrupted: false,
           summary,
@@ -530,7 +531,7 @@ export class NightPipeline {
           ...(demonSources ? { demonSources, demonWolfSourceCurrent, demonKnifeProtection } : {}),
         },
         nobleNight.receiver,
-      );
+      ), lifecycle.nightUnit);
     } finally {
       lifecycle.abortPipeline();
     }

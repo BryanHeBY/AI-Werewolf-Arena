@@ -1,9 +1,11 @@
 /**
- * Owns Noble/Secret Body original roster, servant stock and protection leases. Inputs are
- * current night/exile/death contexts and captured choices; writes produce accepted contracts,
- * protection receipts and snapshots only for matching original players. Expiry, close or abort
- * retires the affected authority without restoring paid stock.
+ * 负责贵族／夜仆资源、原生命与契约权威。输入为原 roster、实际夜间及受控行动；
+ * 输出为已重检提交、通知、到期提案与显式纯数据快照。单一 owner 持有原实例和付款状态。
+ * 正常／撤销、原体替换、资源与记录失败保留原合法前缀，不恢复已付契约或修改对局阶段。
+ * 新夜间身份仅关联本 Night 对象；到期消费同一身份，不改变旧日次数值、期限或归档字段。
+ * 规则依据：docs/expansion/rules/awa-noble-secret-body-twelve-v1.md。
  */
+import { attachNightUnit, isNightUnit, nightUnitOf, type NightUnit } from "../../../../core/domain/night-unit";
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -360,7 +362,11 @@ export function beginNobleBodyNight(
   world: World,
   day: number,
   isCurrent: () => boolean,
+  nightUnit?: NightUnit,
 ): readonly NobleBodyNightNotice[] {
+  // 新自有身份必须属于本次真实夜；旧两参数／三参数调用不增加元数据读取。
+  if (isNightUnit(nightUnit) && nightUnit.day !== day)
+    throw Error("noble_body_night_unit_day_mismatch");
   const owner = requireOwner(world);
   if (
     !Number.isSafeInteger(day) ||
@@ -391,6 +397,7 @@ export function beginNobleBodyNight(
     revealOpened: false,
     revealCompleted: false,
   };
+  attachNightUnit(night, nightUnit);
   owner.nights.set(day, night);
   owner.active = night;
   const notices: NobleBodyNightNotice[] = [];
@@ -555,8 +562,13 @@ export function clearServantFromHunt(
 export function expireServantAtNightEnd(
   world: World,
   day: number,
+  nightUnit?: NightUnit,
 ): Readonly<{ contractId: string; targetId: number; cause: "servant_expiry" }> | null {
   const { owner, night } = requireNight(world, day);
+  // 已绑定的新调用须消费同一真实夜；旧两参数API与未知元数据仍保原接受边界。
+  const boundUnit = nightUnitOf(night);
+  if (isNightUnit(nightUnit) && boundUnit && boundUnit !== nightUnit)
+    throw Error("noble_body_night_unit_mismatch");
   if (night.expiryProcessed) throw Error("night_noble_expiry_already_processed");
   const contract = owner.nobleState.contracts.find(
     (c) => c.status.kind === "pending" && c.expiresNight === day,

@@ -48,3 +48,5 @@ export {
 export { appendNobleContractClosure } from "./facts";
 
 export { closeServantForDeath } from "./authority";
+
+export { expireNobleNight } from "./night-lifecycle";

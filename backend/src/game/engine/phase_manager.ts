@@ -15,7 +15,6 @@ import { NightManagerLifecycle } from "../../rulesets/night-lifecycle-plan";
 import { bindBoardParameters } from "../../rulesets/board-parameters";
 import { RulePlan } from "../../rulesets/rule-plan";
 import {
-  expireServantAtNightEnd,
   resolveSecretBodyDamage,
   checkpointNobleBodyAuthority,
   appendNobleContractClosure,
@@ -602,7 +601,7 @@ export class PhaseManager {
               payload: demon.hunt.servantCleared,
               audience: Object.freeze([]),
             });
-          const expiry = expireServantAtNightEnd(this.world, nightDay);
+          const expiry = lifecycle.expireNobleAtNightEnd(night, () => nightDay);
           if (expiry) {
             appendNobleContractClosure(this.world, nightDay, expiry, this.events, Phase.Night);
             (proposedSources[expiry.targetId] ??= []).push(DeathCause.ServantExpiry);

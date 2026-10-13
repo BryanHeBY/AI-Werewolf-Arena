@@ -1,0 +1,342 @@
+{
+  "baseline": "927c650e",
+  "files": [
+    {
+      "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+      "sha256": "45fe8eaa3b6415f8df49bc2e3b2da792423163390810304408cad225f76d39c8"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "0fe5a73f2917cd3b2b022c00c5e631d4909c8cc0425809451e4479133232a2bb"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "757151fb21770368b349f3727be03f28bad08b3ba84f5df67e26a6e542d78e93"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-lifecycle.ts",
+      "sha256": "dce39789ba33cd52e5710b191b7bc4d6b7fef3ff13945acbe2289b35b00c266f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "sha256": "8f25ed51beb927bbe1e48690265e2d5c4324de16af168fb5c4d16bb72e9edf75"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+      "sha256": "cfd7fece8533f77f9c880752f766210a5b0ff8cf9c23e5bd499242241aefe55c"
+    },
+    {
+      "path": "backend/src/core/domain/night-unit.ts",
+      "sha256": "9d24eb5c63f643b7635546a24e6646802ea3f10db51d89b80d31f1d7eb5452ca"
+    },
+    {
+      "path": "backend/tests/unit/engine/night-unit-ownership.test.ts",
+      "sha256": "fca14b7c8da737637db8190da9b9ddba35bed7151e6ce5e4af526a1aa03454a5"
+    }
+  ],
+  "programProof": {
+    "rows": [
+      {
+        "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+        "registeredChanges": 6,
+        "wholeProgramSame": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "registeredChanges": 5,
+        "wholeProgramSame": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "registeredChanges": 2,
+        "wholeProgramSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-lifecycle.ts",
+        "registeredChanges": 12,
+        "wholeProgramSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+        "registeredChanges": 6,
+        "wholeProgramSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+        "registeredChanges": 1,
+        "wholeProgramSame": true
+      }
+    ],
+    "findings": [],
+    "limits": "新增identity/receiver expiry/explicit unit mismatch单独审查；不冒全输入等价。manager baseline含先前冻结PhaseRevision，需独立exact blob提交"
+  },
+  "heads": {
+    "files": 8,
+    "documentationPaths": [
+      "docs/expansion/rules/awa-noble-secret-body-twelve-v1.md"
+    ],
+    "findings": []
+  },
+  "independentSecond": {
+    "passed": true,
+    "rows": [
+      {
+        "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-lifecycle.ts",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/core/domain/night-unit.ts",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/tests/unit/engine/night-unit-ownership.test.ts",
+        "shaMatch": true
+      }
+    ],
+    "originRows": [
+      {
+        "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+        "actualGitSame": true,
+        "sourceOrigin": "actual Git"
+      },
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "actualGitSame": true,
+        "sourceOrigin": "actual Git"
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "actualGitSame": false,
+        "sourceOrigin": "declared concurrent PhaseRevision captured source"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-lifecycle.ts",
+        "actualGitSame": true,
+        "sourceOrigin": "actual Git"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+        "actualGitSame": true,
+        "sourceOrigin": "actual Git"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+        "actualGitSame": true,
+        "sourceOrigin": "actual Git"
+      }
+    ],
+    "checks": {
+      "uniqueMintAtActualPrepare": true,
+      "metadataFactoryNoClockWorldRng": true,
+      "originalAuthoritySnapshotFunctionsSame": true,
+      "ownedReceiverExpireNewMethodNotLegacy": true,
+      "managerSourceOriginDeclared": true
+    },
+    "unchangedSnapshot": [
+      {
+        "name": "checkpointNobleBodyAuthority",
+        "same": true
+      },
+      {
+        "name": "isNobleBodyBoard",
+        "same": true
+      },
+      {
+        "name": "snapshotNobleBodyAuthority",
+        "same": true
+      }
+    ],
+    "methodReadOrder": "Caller supplies World/day closures without evaluation; new owned receiver or legacy fallback loads original authority callee before world(), day(), unit() argument reads; one original World evaluation, day later. Source-only closure check, no repeated runtime/type.",
+    "policy": "New owned-unit mismatch refuses before original expiryProcessed branch after original requireNight; legacy 2arg or unknown metadata retains old path. NightUnit is identity only, no permission and no new archive field.",
+    "limits": "Read-only source/AST/sha; no tests/compiler/cold/inverse repeated. PhaseRevision body belongs separate Root batch.",
+    "pendingFinding": null,
+    "originalCalleeFindingClosed": true,
+    "newOwnedDayPolicy": {
+      "declaredBehaviorStrengthening": true,
+      "knownDayMismatchBeforeOwnerCurrentFrame": true,
+      "legacyNoKnownUnitPreserved": true,
+      "unknownUnitSkippedByIdentityBrand": true
+    }
+  },
+  "independentThird": {
+    "passed": true,
+    "scopeRows": [
+      {
+        "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+        "sha256": "45fe8eaa3b6415f8df49bc2e3b2da792423163390810304408cad225f76d39c8",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "sha256": "0fe5a73f2917cd3b2b022c00c5e631d4909c8cc0425809451e4479133232a2bb",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "sha256": "757151fb21770368b349f3727be03f28bad08b3ba84f5df67e26a6e542d78e93",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-lifecycle.ts",
+        "sha256": "dce39789ba33cd52e5710b191b7bc4d6b7fef3ff13945acbe2289b35b00c266f",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+        "sha256": "8f25ed51beb927bbe1e48690265e2d5c4324de16af168fb5c4d16bb72e9edf75",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+        "sha256": "cfd7fece8533f77f9c880752f766210a5b0ff8cf9c23e5bd499242241aefe55c",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/src/core/domain/night-unit.ts",
+        "sha256": "9d24eb5c63f643b7635546a24e6646802ea3f10db51d89b80d31f1d7eb5452ca",
+        "shaMatch": true
+      },
+      {
+        "path": "backend/tests/unit/engine/night-unit-ownership.test.ts",
+        "sha256": "fca14b7c8da737637db8190da9b9ddba35bed7151e6ce5e4af526a1aa03454a5",
+        "shaMatch": true
+      }
+    ],
+    "originRows": [
+      {
+        "path": "backend/src/rulesets/night-lifecycle-plan.ts",
+        "sourceCommit": "927c650e",
+        "actualGitSame": true,
+        "sha256": "8341d54da1b03f286d11c7f333f7f69ef320ec1540e4ea781674fd3f1a83c9a8"
+      },
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "sourceCommit": "927c650e",
+        "actualGitSame": true,
+        "sha256": "949c76fb9cfd5ca94521bdd050a19b2d5cd5a8309e6c28706ed2bc277a4ab9f7"
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "sourceCommit": "069ff355",
+        "actualGitSame": true,
+        "sha256": "5b7bf0a944503bdb38109f53843ddddd263225648ec7adc2cb52a504e10aa27e"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-lifecycle.ts",
+        "sourceCommit": "927c650e",
+        "actualGitSame": true,
+        "sha256": "59680fc75c6aa77f3cb478c7b32eb08bf8b8fbdbbd91e941403673fa0c4a95b3"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+        "sourceCommit": "927c650e",
+        "actualGitSame": true,
+        "sha256": "8afd52249a671bd16963025d6f46348d8f1fbe4458cba95d51b4fbda0d8d8f1e"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+        "sourceCommit": "927c650e",
+        "actualGitSame": true,
+        "sha256": "371dd9af9b0824844a2e3a582cb3f7bd44c986dd8be57eba337cde9835c0306e"
+      }
+    ],
+    "checks": {
+      "genuineDayMismatchBeforeRequireOwner": true,
+      "dayMismatchBeforeCurrentCallbackAndFrame": true,
+      "authorityExpiryOriginalNumericContractPolicy": true,
+      "expiryIdentityComparison": true,
+      "authorityCalleeThenWorldDayUnit": true,
+      "managerDayDeferred": true,
+      "legacyResultBeforePropertyRead": true,
+      "legacyReceiverBeforeExpireMethod": true,
+      "unitMetadataNonEnumerable": true,
+      "unitFactoryNoWorldRngClock": true,
+      "legacyUnitIdentityBeforeMetadataRead": true
+    },
+    "findings": [],
+    "closedSourceFindings": [
+      {
+        "id": "callee-order",
+        "detail": "World/day thunks now reach actual authority call; function callee is obtained before original World→day arguments. New identity checks do not reflect legacy result/receiver getters."
+      },
+      {
+        "id": "genuine-unit-day",
+        "detail": "Genuine branded day mismatch rejects before requireOwner, controller callback or frame installation; unknown/legacy optional inputs do not add day reads."
+      }
+    ],
+    "schema": "Runtime unit stays same result/night via non-enumerable Symbol and identity-only WeakSets; numeric day/contract expiresNight, explicit snapshot schema2/event fields unchanged. Snapshot function raw check separately recorded below.",
+    "evidenceReuseOnly": [
+      "Parent final6 program inverse",
+      "Char final8 bounded source review",
+      "Author3 fixed expiry/day cases and closed76257 type receipt"
+    ],
+    "limits": [
+      "Read-only source/SHA review; no tests/type/compiler/inverse/cold imports repeated",
+      "PhaseRevision is a separately committed owner; manager origin identified by exact069ff355 file, not baseline927",
+      "Actual Night prepare→Noble authority/receiver→expiry chain reviewed; ExileUnit/Wave parent/allC31 integration not claimed complete"
+    ]
+  },
+  "rootReview": {
+    "findings": [],
+    "inputProvenance": "manager真Git069ff355冻结phase字节，其余5真Git927c650e，单次night新metadata新增叶与test同scope",
+    "newUnitPolicy": "新owned unit跨日preOwner拒；新identity在expiry与authorityframe匹配；旧API/unknown数据宽度保留"
+  },
+  "acceptance": {
+    "newInitialThree": {
+      "pass": 3,
+      "fail": 0,
+      "assertions": 16
+    },
+    "legalActionPipelineCase": {
+      "pass": 1,
+      "fail": 0,
+      "assertions": 6
+    },
+    "lastCalleeAndDayCases": {
+      "pass": 3,
+      "fail": 0,
+      "assertions": 14
+    },
+    "originalNobleLifecycle": {
+      "pass": 6,
+      "fail": 0,
+      "assertions": 31
+    },
+    "originalContractExpiry": {
+      "pass": 1,
+      "fail": 0,
+      "assertions": 5
+    },
+    "strictCompiler": {
+      "firstLegalSession": 72501,
+      "lastCalleeDaySession": 76257,
+      "actualTerminalExit": 0
+    }
+  },
+  "limits": [
+    "各时点收据分别保，不冒最后全新4cases重跑",
+    "首58456并行A缺import和newtest动作错误真实红保，无生产为测试改",
+    "Exile全板/PK/skip/完整Wave关联继续，不能以本nightunit宣C31完成",
+    "无全量gate/模型/网络/整局重复"
+  ]
+}

@@ -6,6 +6,8 @@
  * 所有 World/day/events 求值仍发生在原时点，不去重重复 close，不增加 acquired 守卫，
  * 不返还已付库存、不推进阶段、不序列化运行时 receiver。
  */
+import { openNightUnit } from "../core/domain/night-unit";
+import { expireNobleNight } from "../game/mechanisms/roles/noble_secret_body/ports";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../core/domain/world";
 import {
@@ -129,6 +131,11 @@ export class NightManagerLifecycle implements NightLifecycleHandoff {
     this.mist = unit;
   }
 
+  /** 原夜末到期的 World 参数先求值，再读取当次 day；同一接收方保留实际 Night 身份。 */
+  expireNobleAtNightEnd(result: { interrupted: false }, day: () => number) {
+    return expireNobleNight(result, () => this.runtime.world, day);
+  }
+
   closeNobleNormally(result: { interrupted: false }, day: number): void {
     nobleNightReceiver(result).closeNormally(this.runtime.world, day);
   }
@@ -194,6 +201,8 @@ export function prepareNightPipelineLifecycle(
   handoff?: () => NightLifecycleHandoff | undefined,
   expectedParameters?: BoardParameters,
 ) {
+    // setup/current 门禁已通过；准备中的早开夜或失败仍属于这次真实尝试。
+    const nightUnit = openNightUnit(day);
     // 先在原参数位置捕获 World，再绑定参数；身份检查不会增加一次 World getter 读取。
     let parameterWorld: World;
     let parameters: BoardParameters;
@@ -303,6 +312,7 @@ export function prepareNightPipelineLifecycle(
         },
       },
       day,
+      nightUnit,
     );
     const ownsRadiant = config.radiantEclipse !== undefined;
     const radiantNight = new RadiantNightUnit(
@@ -345,7 +355,7 @@ export function prepareNightPipelineLifecycle(
       ownsWedding,
     );
   return {
-    config, parameters, ownsWedding, ownsDemon, ownsNoble, ownsFragrant, ownsAnimal, ownsRadiant, ownsMist,
+    nightUnit, config, parameters, ownsWedding, ownsDemon, ownsNoble, ownsFragrant, ownsAnimal, ownsRadiant, ownsMist,
     animalNight, fragrantNight, nobleNight, radiantNight, mistNight,
     demonNight, weddingNight, magicianNight, wolfSorcererNight, tricksterNight,
     timeConsortNight, scholarMentorNight,

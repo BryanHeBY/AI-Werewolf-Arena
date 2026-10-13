@@ -1,12 +1,12 @@
 /**
- * Owns Noble's pipeline night acquisition and its explicit manager handoff.
- * Inputs are original delegated World/events, day/currentness and required recording;
- * writes preserve notices and the acquired-before-publication prefix. After transfer
- * the pipeline cannot normally open or abort this unit. The manager receiver keeps
- * original normal/abort authority behavior, including post-normal bodyResolved checks;
- * it accepts original manager arguments rather than caching a replacement World.
- * Internal result metadata never enters request, MCP, checkpoint or Tape data.
+ * 负责贵族／夜仆夜间取得与经理交接，输入为延迟 World／事件、日期、current 与必要记录；
+ * 输出保留原通知、取得先于发布及相同 receiver。真实夜间身份随同一 owner 交付并消费夜末到期。
+ * 交接后 pipeline 不再正常开夜或终止；经理保原正常／abort 政策与 bodyResolved 检查。
+ * World／day 在原调用点取值，不缓存替身世界；身份不进入请求、MCP、checkpoint 或 Tape。
+ * 规则依据：docs/expansion/rules/awa-noble-secret-body-twelve-v1.md。
  */
+import { types } from "node:util";
+import type { NightUnit } from "../../../../core/domain/night-unit";
 import type { World } from "../../../../core/domain/world";
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import {
@@ -14,6 +14,7 @@ import {
   abortNobleBodyNight,
   closeNobleBodyNight,
   checkpointNobleBodyAuthority,
+  expireServantAtNightEnd,
 } from "./authority";
 import { appendNobleBodyNotices } from "./facts";
 
@@ -34,9 +35,11 @@ export interface NobleNightAbortReceiver {
 export interface NobleNightReceiver extends NobleNightAbortReceiver {
   closeNormally(world: World, day: number): void;
 }
+const ownedResults = new WeakSet<object>();
+const ownedReceivers = new WeakSet<object>();
 const NOBLE_NIGHT_RECEIVER = Symbol("noble_night_receiver");
 
-/** No World/day/config is observed when the pre-acquisition interrupt receiver is created. */
+/** 取得前的中断接收方不读取 World／day／config，不生成成功开夜身份。 */
 export function createNobleNightAbortReceiver(): NobleNightAbortReceiver {
   return Object.freeze({
     abort(world: World, day: number) {
@@ -45,23 +48,29 @@ export function createNobleNightAbortReceiver(): NobleNightAbortReceiver {
   });
 }
 
-function createNobleNightReceiver(): NobleNightReceiver {
-  return Object.freeze({
+function createNobleNightReceiver(unit: () => NightUnit | undefined): NobleNightReceiver {
+  const receiver = Object.freeze({
     closeNormally(world: World, day: number) {
       closeNobleBodyNight(world, day, "normal");
     },
     abort(world: World, day: number) {
       abortNobleBodyNight(world, day);
     },
+    expire(world: () => World, day: () => number) {
+      return expireServantAtNightEnd(world(), day(), unit());
+    },
   });
+  ownedReceivers.add(receiver);
+  return receiver;
 }
 
-/** Only backend result metadata changes; enumerable data, JSON and spread remain unchanged. */
+/** 只给后端结果关联运行时接收方；原可枚举字段、JSON 与展开复制保持。 */
 export function attachNobleNightReceiver<T extends object>(
   result: T,
   receiver: NobleNightAbortReceiver,
 ): T {
   Object.defineProperty(result, NOBLE_NIGHT_RECEIVER, { value: receiver });
+  ownedResults.add(result);
   return result;
 }
 
@@ -74,19 +83,31 @@ export function nobleNightReceiver(result: object): NobleNightAbortReceiver {
   return receiver;
 }
 
+/**
+ * 夜末到期真正消费同一夜间接收方的身份。只读本owner创建的结果／receiver；
+ * 外部旧对象与旧receiver继续原两参数到期路径，不新增Symbol或方法getter读取。
+ */
+export function expireNobleNight(result: object, world: () => World, day: () => number) {
+  if (!ownedResults.has(result) || types.isProxy(result)) return expireServantAtNightEnd(world(), day());
+  const receiver = (result as { readonly [NOBLE_NIGHT_RECEIVER]: NobleNightReceiver })[NOBLE_NIGHT_RECEIVER];
+  if (!ownedReceivers.has(receiver)) return expireServantAtNightEnd(world(), day());
+  return (receiver as NobleNightReceiver & { expire(world: () => World, day: () => number): ReturnType<typeof expireServantAtNightEnd> }).expire(world, day);
+}
+
 export class NobleNightUnit {
   private acquired = false;
   private transferred = false;
-  readonly receiver = createNobleNightReceiver();
+  readonly receiver = createNobleNightReceiver(() => this.nightUnit);
   constructor(
     private readonly runtime: NobleNightRuntime,
     private readonly day: number,
+    private readonly nightUnit?: NightUnit,
   ) {}
   open(isCurrent: () => boolean): void {
     if (this.transferred) throw new Error("noble_night_pipeline_ownership_transferred");
     const ctx = this.runtime,
       day = this.day;
-    const notices = beginNobleBodyNight(ctx.world, day, isCurrent);
+    const notices = beginNobleBodyNight(ctx.world, day, isCurrent, this.nightUnit);
     this.acquired = true;
     appendNobleBodyNotices(ctx.events, notices);
     const payload = {
