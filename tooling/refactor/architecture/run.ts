@@ -1,12 +1,9 @@
 /**
- * Runs dependency, naming and responsibility-contract gates over public sources.
- * Input is either immutable Git baseline 27a97cb or current tracked plus untracked
- * public files; output is a JSON debt manifest or candidate report. Only baseline
- * generation creates debt. Checks never update it, and changed/new TypeScript
- * files must clear their responsibility-head debt immediately. Source and parent
- * symlinks are rejected before file reads; private configs and auth are excluded.
- * Legacy exceptions are reported, strict final mode rejects all remaining debt,
- * and semantic correctness of contract prose remains a separate review duty.
+ * 负责公共源码的依赖、命名与职责说明门禁装配，输出固定基线债务或候选 JSON 报告。
+ * 输入来源分为原 27a97cb 固定 Git 字节与当前已跟踪／未跟踪工作区文件；固定版本报告不能混入并行 WIP。
+ * 仅基线生成入口产生债务，检查不改写原 1779 项冻结清单；新增违规失败，改动或新增的 JS／TS 源必须立即清除职责头债务。
+ * 工作区源码及其父路径在读取前拒绝符号链接，私有配置和认证不进入公共输入；外部捕获输入的文本／SHA 一致性归调用方。
+ * 原债务按精确绑定与路径政策匹配并报告，最终 strict 模式要求无现存违规；职责内容真实性与游戏验收另行审查。
  */
 import { execFileSync } from "node:child_process";
 import { lstat, readFile, realpath } from "node:fs/promises";
@@ -68,8 +65,7 @@ export async function readCurrentPublicInput(repository: string): Promise<Archit
     .toString()
     .split("\0")
     .filter(Boolean);
-  // Git lists a replaced source root itself rather than traversing its symlink.
-  // Validate those allowlisted ancestors before filtering ordinary public files.
+  // Git 会列出被替换的源码根本身，不遍历其符号链接；先检查白名单祖先，再筛普通公共文件。
   const publicAncestors = new Set([
     "backend",
     "frontend",
@@ -116,12 +112,13 @@ export async function readCurrentPublicInput(repository: string): Promise<Archit
         throw Error("architecture_input_not_file");
       checked.add(prefix);
     }
-    if (missing) continue; // Deleted tracked inputs are represented by their absence.
+    if (missing) continue; // 已删除的跟踪输入按缺席记录，不补造旧源码。
     const bytes = await readFile(path.join(root, file));
     files.push({ path: file, text: bytes.toString(), sha256: digest(bytes) });
   }
   return { files: sortFiles(files), documentationPaths: listed.filter(documentationPath).sort() };
 }
+/** 从固定基线 Git 读取字节与文档路径名，不调用工作区读取器或混入其未提交源码。 */
 export function readBaselinePublicInput(repository: string): ArchitectureInput {
   const { files } = readPublicGitBlobs(repository, BASELINE_COMMIT);
   const docs = execFileSync("git", ["ls-tree", "-r", "--name-only", BASELINE_COMMIT], {
@@ -161,6 +158,7 @@ export function allViolations(
               : 1,
   );
 }
+/** 只从原固定 Git 生成基线结构；返回数据供调用方保存，不在普通检查中改写债务文件。 */
 export function generateBaselineDebt(repository: string): ArchitectureDebt {
   const input = readBaselinePublicInput(repository);
   return {
@@ -196,6 +194,7 @@ export function checkArchitecture(
     ) !== debt.baselineInputHash
   )
     throw Error("architecture_debt_input_mismatch");
+  // 映射的批准归调用方；这里仅核理由、公共路径、唯一性与原摘要，不把说明文字当授权凭据。
   const mappings = options.mappings ?? [],
     mappedPaths = new Map<string, string>(),
     originals = new Map(debt.files.map((file) => [file.path, file.sha256]));
@@ -227,6 +226,7 @@ export function checkArchitecture(
       );
     else mappedPaths.set(map.to, map.from);
   }
+  // 固定债务记录只读；检查结果单独分类，不把新违规写回基线来消除回归。
   const baselineViolations = new Map(debt.violations.map((row) => [row.id, row])),
     failures = [...mappingFailures],
     remainingDebt: ArchitectureViolation[] = [],
@@ -235,6 +235,7 @@ export function checkArchitecture(
     byPath = new Map(input.files.map((file) => [file.path, file]));
   for (const row of currentViolations) {
     const originalPath = mappedPaths.get(row.path) ?? row.path;
+    // 旧债须匹配规则、原路径、specifier、完整 binding 与目标；注释诊断另保原类别匹配政策。
     const legacy = [...baselineViolations.values()].find(
       (old) =>
         old.rule === row.rule &&
@@ -244,6 +245,8 @@ export function checkArchitecture(
         (old.target ?? "") === (mappedPaths.get(row.target ?? "") ?? row.target ?? "") &&
         (old.rule.startsWith("comment.") || old.detail === row.detail),
     );
+    // 使用调用方提供的源摘要判断整文件是否改变；不是只看头部，也不在此重算 text 的 SHA。
+    // 改动脚本的职责头必须清零；strict 则把所有当前违规都列为失败，不沿用历史豁免。
     const changed = byPath.get(row.path)!.sha256 !== originals.get(originalPath);
     if (
       !legacy ||
@@ -308,7 +311,8 @@ if (import.meta.main) {
         options.get("--debt") ??
         path.join(repository, "docs/refactor/generated/architecture-debt.json");
       const debt = (await readGateData(repository, debtPath)) as ArchitectureDebt;
-      // Recompute from immutable Git so a rewritten debt file cannot silently approve a regression.
+      // CLI 对整个债务清单与固定 Git 重生成结果逐项一致核对，不能用改写清单静默接纳回归。
+      // 直接调用 checkArchitecture 的捕获方须另行完成这项基线真实性与输入字节核对。
       if (JSON.stringify(debt) !== JSON.stringify(generateBaselineDebt(repository)))
         throw Error("architecture_debt_baseline_changed");
       const mappings = options.has("--mappings")

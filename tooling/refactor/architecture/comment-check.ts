@@ -1,10 +1,8 @@
 /**
- * Validates the first substantive responsibility contract before business code.
- * Inputs are inert TypeScript source and public documentation path names; output
- * is missing, misplaced, placeholder, category-field or broken-link violations.
- * It checks AST/trivia position and concrete contract vocabulary, not comment
- * density. State write rights, failure policy and prose accuracy still require
- * independent human review; a syntactically valid header is not acceptance.
+ * 负责检查首个源码语句之前的第一份有效职责说明。输入为 JS／TS 文本和公开文档路径名；
+ * 输出为缺头、占位、类别字段或已知链接目标违规，不按注释数量判验收。
+ * 检查只核 AST／注释位置与职责词项形状；真实写权、失败政策、生命周期和说明内容仍须独立人工审查。
+ * 这里不执行源码、不读取文档内容或授予任何业务权限，语法合格的职责头不等于完整架构或玩法验收。
  */
 import path from "node:path";
 import type * as TypeScript from "typescript";
@@ -17,6 +15,7 @@ import {
 } from "./contracts";
 
 type Category = "behavior" | "test" | "data" | "lifecycle" | "adapter" | "exports" | "hook";
+// 类别按原路径优先级决定，测试／生命周期等先匹配；不依据正文猜模块职责或改变规则。
 export function commentCategory(file: string): Category {
   if (/\.(?:test|spec)\.[cm]?[jt]sx?$/.test(file) || /\/tests\/(?:support|fixtures)\//.test(file))
     return "test";
@@ -65,6 +64,7 @@ const required: Record<Category, (keyof typeof concepts)[]> = {
   exports: ["consumer", "output", "boundary"],
   hook: ["responsibility", "timing", "input", "permission", "terminal"],
 };
+// 许可证、引用和工具指令不作为职责说明；保留原识别范围，不把后续好注释用来掩盖首个占位头。
 const nonSubstantive = (text: string) => {
   const content = text
     .replace(/^\s*\/\*[*!]?|\*\/\s*$/g, "")
@@ -119,6 +119,7 @@ export function checkComments(
       } else header = { start, end: scanner.getTextPos(), text };
       break;
     }
+    // scanner 只寻找首语句前的首份有效说明；后面的内容不能替代这一已选职责头。
     const category = commentCategory(file.path),
       pos = source.getLineAndCharacterOfPosition(header?.start ?? boundary);
     const add = (rule: string, detail: string, identity: string = category) =>
@@ -166,6 +167,7 @@ export function checkComments(
         ),
       ].map((match) => ({ target: match[1]!, rootRelative: match[1]!.startsWith("docs/") })),
     ];
+    // 链接只核调用方给定的公共文件／文档路径集合；去掉 fragment，不在此验证实际锚点或文档语义。
     for (const link of [...new Map(links.map((link) => [link.target, link])).values()]) {
       const target = link.target.replace(/^<|>$/g, "").split("#")[0]!;
       if (!target || /^(?:https?:|mailto:)/.test(target)) continue;
