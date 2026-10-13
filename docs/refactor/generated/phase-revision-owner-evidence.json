@@ -1,0 +1,139 @@
+{
+  "baseline": "927c650e",
+  "files": [
+    {
+      "path": "backend/src/game/engine/phase-revision.ts",
+      "sha256": "e00911a5ba24458b37840cb00cb27866269bf76c0e15679b8df514428fdc83f7"
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "5b7bf0a944503bdb38109f53843ddddd263225648ec7adc2cb52a504e10aa27e"
+    },
+    {
+      "path": "backend/tests/unit/engine/phase-revision-owner.test.ts",
+      "sha256": "0bbac8434cc516c5dc4d6b9e43e1fb3bbbc106586364138d775ea377c21bdbdf"
+    }
+  ],
+  "programProof": {
+    "rows": [
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "sha256": "5b7bf0a944503bdb38109f53843ddddd263225648ec7adc2cb52a504e10aa27e",
+        "sameExecutableTokens": true
+      }
+    ],
+    "findings": []
+  },
+  "heads": {
+    "files": 3,
+    "documentationPaths": [
+      "docs/expansion/rules/awa-animal-dream-twelve-v1.md",
+      "docs/expansion/rules/awa-fragrant-pair-seer-twelve-v1.md",
+      "docs/expansion/rules/awa-netease-demon-hunter-v1.md",
+      "docs/expansion/rules/awa-melbourne-ghost-bride-v1.md"
+    ],
+    "findings": []
+  },
+  "independentSecond": {
+    "status": "independent_source_second_direction_green",
+    "findings": [],
+    "files": [
+      {
+        "path": "backend/src/game/engine/phase-revision.ts",
+        "actualSource": "working frozen source",
+        "sha256": "e00911a5ba24458b37840cb00cb27866269bf76c0e15679b8df514428fdc83f7",
+        "matchesFinal": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "actualSource": "night-originals captured exact phase manager",
+        "sha256": "5b7bf0a944503bdb38109f53843ddddd263225648ec7adc2cb52a504e10aa27e",
+        "matchesFinal": true
+      },
+      {
+        "path": "backend/tests/unit/engine/phase-revision-owner.test.ts",
+        "actualSource": "working frozen source",
+        "sha256": "0bbac8434cc516c5dc4d6b9e43e1fb3bbbc106586364138d775ea377c21bdbdf",
+        "matchesFinal": true
+      }
+    ],
+    "scopeBoundary": "只读PhaseRevision3，manager明确用phase冻结快照；不把Root liveNight另外两处变化归到phase。",
+    "checked": [
+      "单一clock private value=0，advance只原value++，current只原数字读，不持有World/day/phase或第二状态。",
+      "debug原失效点调用advance，真实setPhase另原++点调用advance；同phase在state.phase赋值与previous比较后早返，不额外close或event。",
+      "Night/Day/Voting三处捕获current，三个迟到检查读同owner.current与原捕获数字比，不在getter内推进。",
+      "不同phase仍state.phase先写→advance→World.closeDeathActions→phase_changed；close错误保留原state/revision前缀。",
+      "三个newtest输入有效：固定真实六席、原debug、受控pending首请求。字面初始phase_changed来自Bootstrap没有被忽略，补正仅预期非production行为。"
+    ],
+    "receiptAttribution": "Root author actual3/0/14 and finite23269 terminal receipt read from task; this reviewer did not rerun/poll these checks.",
+    "limits": [
+      "不重复Root/inventory whole inverse或type/runtime，只源时序及准确3SHA。",
+      "本片只PhaseRevision primitive，不宣称整个C31 Night/Exile/Wave时钟已完成。"
+    ]
+  },
+  "independentThird": {
+    "baseline": "927c650e5bc692c32dcb3cf25cc8e700a7dc7799",
+    "files": [
+      {
+        "path": "backend/src/game/engine/phase-revision.ts",
+        "sha256": "e00911a5ba24458b37840cb00cb27866269bf76c0e15679b8df514428fdc83f7",
+        "currentSHA": "e00911a5ba24458b37840cb00cb27866269bf76c0e15679b8df514428fdc83f7",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "sha256": "5b7bf0a944503bdb38109f53843ddddd263225648ec7adc2cb52a504e10aa27e",
+        "currentSHA": "5b7bf0a944503bdb38109f53843ddddd263225648ec7adc2cb52a504e10aa27e",
+        "sameSHA": true
+      },
+      {
+        "path": "backend/tests/unit/engine/phase-revision-owner.test.ts",
+        "sha256": "0bbac8434cc516c5dc4d6b9e43e1fb3bbbc106586364138d775ea377c21bdbdf",
+        "currentSHA": "0bbac8434cc516c5dc4d6b9e43e1fb3bbbc106586364138d775ea377c21bdbdf",
+        "sameSHA": true
+      }
+    ],
+    "checks": {
+      "actualGitOriginal": true,
+      "fullManagerAfterOneFieldTwoAdvancesSixReadsSame": true,
+      "exactReplacementCounts": true,
+      "oneActualValueOwner": true,
+      "noWorldOrPhaseMirrorInOwner": true,
+      "samePhaseSetNoAdvanceBeforeEarlyReturn": true
+    },
+    "counts": {
+      "field": 1,
+      "advances": 2,
+      "reads": 6
+    },
+    "heads": [],
+    "findings": [],
+    "semantics": [
+      "Clock holds only the original numeric revision value, instance-owned by this manager; state phase/day remain original RuntimeSnapshot, not another World keyed time store.",
+      "Debug advance retains its original location before setPhase; same phase debug invalidates once without closing/death event; different phase debug advances twice and retains state/revision if closeDeathActions later throws.",
+      "Normal setPhase keeps original state write→equal early return→advance→World close→event construction prefix. All three captures and three comparisons get the same unique owner value, no added date/World or actor eligibility query.",
+      "New three bounded cases use fixed real six-role bootstrap, hand initial phase_changed payload, actual failing close and held first action; no complete game or reused SUT as expected-value oracle. Their first bootstrap event expectation fix is new test-only and not production behavior."
+    ],
+    "limits": [
+      "Finite trueGit/registered whole-program AST inverse/read/3SHA/head check only. No transpile/type/compiler/runtime/tests/game/discovery executed.",
+      "This closes only PhaseRevision actual owner. NightId/ExileUnitId/complete business expiry clocks and C31 all mechanisms are separate remaining work. Private diagnostic cast in new tests observes owner and grants no production write port."
+    ]
+  },
+  "acceptance": {
+    "boundedTests": {
+      "pass": 3,
+      "fail": 0,
+      "assertions": 14
+    },
+    "focusedStrictTypes": {
+      "actualSession": 23269,
+      "observedTerminalExit": 0
+    }
+  },
+  "mixedWorkingFile": "manager随后Night候选不属此批；精确phase冻结字节由night-originals保存且两方向核SHA，提交index只该blob，不覆盖工作树",
+  "limits": [
+    "完整Night/Exile单位继续",
+    "首newtest预期忽略bootstrap初phase_changed红保，仅修newtest手写预期，生产不改",
+    "无全量门禁/发现/游戏/模型/网络重复"
+  ]
+}

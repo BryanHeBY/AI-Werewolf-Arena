@@ -5,6 +5,7 @@
  * 每夜仍创建独立生命周期 receiver，沿原 current 检查和重复 finally 消费同一已交接单位。
  * 计划中的具名 checkpoint 只提供原值，最终死亡链和判胜时点仍由本经理拥有。
  */
+import { PhaseRevisionClock } from "./phase-revision";
 import { damagePoisonRoutes } from "../../core/domain/damage-evidence";
 import type { DeathCommitReceipt, DeathOriginalLife } from "./death-wave";
 import type { DamageResolutionResult } from "../../core/domain/systems/damage_resolution_system";
@@ -161,7 +162,8 @@ export class PhaseManager {
   private readonly votingPipeline: VotingPipeline;
   private readonly deathResolution: DeathResolution;
   private previousExile: ExileFeedback | null = null;
-  private phaseRevision = 0;
+  // 修订号唯一归此实例；正常同阶段不推进，debug 撤销与真实变化仍可分别推进。
+  private readonly phaseRevision = new PhaseRevisionClock();
   private mistPending: MistPendingNight | null = null;
   private readonly nightFaultPlan?: NightFaultPlan;
 
@@ -341,7 +343,7 @@ export class PhaseManager {
       (!this.state.gameOver && hasLonelyGirlNightCommit(this.world, this.state.day))
     )
       throw new Error("lonely_girl_phase_reentry");
-    this.phaseRevision++;
+    this.phaseRevision.advance();
     this.setPhase(phase);
   }
 
@@ -464,12 +466,12 @@ export class PhaseManager {
       this.mistPending = null;
     }
     const nightDay = this.state.day,
-      nightRevision = this.phaseRevision;
+      nightRevision = this.phaseRevision.current;
     const nightIsCurrent = () =>
       this.state.day === nightDay &&
       this.state.phase === Phase.Night &&
       !this.state.gameOver &&
-      this.phaseRevision === nightRevision;
+      this.phaseRevision.current === nightRevision;
     if (!initialIdentitySetupReady(this.world)) {
       const ready = await new InitialIdentitySetupWindow(
         this.world,
@@ -840,12 +842,12 @@ export class PhaseManager {
 
     this.setPhase(Phase.Day);
     const cycleDay = this.state.day,
-      dayRevision = this.phaseRevision;
+      dayRevision = this.phaseRevision.current;
     const dayIsCurrent = () =>
       this.state.day === cycleDay &&
       this.state.phase === Phase.Day &&
       !this.state.gameOver &&
-      this.phaseRevision === dayRevision;
+      this.phaseRevision.current === dayRevision;
     let nightSettled = ownsWedding || ownsDemon || ownsPureWhite || ownsEvilKnight;
     if (night.mistDelay) {
       assertMistRosterCurrent(this.world);
@@ -1125,12 +1127,12 @@ export class PhaseManager {
     }
 
     this.setPhase(Phase.Voting);
-    const votingRevision = this.phaseRevision;
+    const votingRevision = this.phaseRevision.current;
     const votingIsCurrent = () =>
       this.state.day === cycleDay &&
       this.state.phase === Phase.Voting &&
       !this.state.gameOver &&
-      this.phaseRevision === votingRevision;
+      this.phaseRevision.current === votingRevision;
     const votingResult = await this.votingPipeline.execute(this.config, actionProvider, {
       day: cycleDay,
       isCurrent: votingIsCurrent,
@@ -1396,7 +1398,7 @@ export class PhaseManager {
     if (previous === phase) {
       return;
     }
-    this.phaseRevision++;
+    this.phaseRevision.advance();
     this.world.closeDeathActions();
     const gameOverPayload =
       phase === Phase.GameOver && this.state.result
