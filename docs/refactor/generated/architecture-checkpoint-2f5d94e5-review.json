@@ -1,0 +1,100 @@
+{
+  "schema": "awa-checkpoint-independent-review-v1",
+  "状态": "批准",
+  "审查者": "/root/preflight_final_review",
+  "固定完整提交": "2f5d94e5404067d7b3b8a9ce93cc8bebd31a643f",
+  "公开输入核对": {
+    "真实Git公开文件": 3115,
+    "真实同Git文档路径": 435,
+    "完整路径集合与顺序相同": true,
+    "每项原始Git字节SHA一致": true,
+    "无软链接blob": true,
+    "摘要": "4f8a81ff48833d3f3f720184bf2626e9859c7d19cbc77fb979e0884b8826e5fe",
+    "报告摘要一致": true,
+    "只读Git政策来源": "tooling/refactor/inventory.ts:isPublicInventoryPath/readPublicGitBlobs；独立审查按真实声明重建公开路径集合并用git cat-file读取blob。",
+    "政策源固定GitSHA256": "3905f88d6124cb9a1cb2b468b812561292a60b021f65b03427f0e717859db9ce",
+    "排除边界": "固定Git公开白名单；未读取私有配置或把并行业务工作树作为检查输入。"
+  },
+  "五工具字节": [
+    {
+      "path": "tooling/refactor/architecture/run.ts",
+      "sha256": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394",
+      "固定Git及当前工作字节与报告一致": true
+    },
+    {
+      "path": "tooling/refactor/architecture/contracts.ts",
+      "sha256": "4fb704dfc26fd1e326c520856c8d751e86b9ae62d73bf1d2350d4ac1e5a0863d",
+      "固定Git及当前工作字节与报告一致": true
+    },
+    {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "sha256": "acfd1dae8ad2142178ed1a67ebb573a618cfc2f3808913401b75ee5071e9c069",
+      "固定Git及当前工作字节与报告一致": true
+    },
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "sha256": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db",
+      "固定Git及当前工作字节与报告一致": true
+    },
+    {
+      "path": "tooling/refactor/architecture/naming-check.ts",
+      "sha256": "2747a2f36e3b5ffe21dae807a70a6a894cd10b1df96439ab799ef292ecb9ccb3",
+      "固定Git及当前工作字节与报告一致": true
+    }
+  ],
+  "冻结债务": {
+    "SHA256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+    "原项数": 1779,
+    "当前原始字节与固定Git相同": true,
+    "原基线输入摘要一致": true
+  },
+  "结果分类核对": {
+    "报告计数": {
+      "files": 3115,
+      "violations": 409,
+      "failures": 0,
+      "remainingDebt": 409,
+      "clearedDebt": 1370
+    },
+    "逐余债原规则路径specifier绑定目标匹配": 409,
+    "已清原ID与原顺序完整一致": 1370,
+    "重复或遗漏": 0,
+    "完整1779分区": true,
+    "未重新推导诊断": "只独立核对已发布报告的实际源输入及旧债分类，不重新执行结构检查算法。"
+  },
+  "实际执行归属": {
+    "执行者": "/root",
+    "启动chunk": "718aa5",
+    "session": 99272,
+    "实际终止chunk": "809272",
+    "exitCode": 0,
+    "来源限定": "Root提供的真实工具终止回执；当前输出与报告计数一致，但输出文本本身不被当作退出证明。"
+  },
+  "文档与证据": [
+    {
+      "path": "docs/refactor/architecture-checkpoint-2f5d94e5.md",
+      "sha256": "29e173ada920a036e9e456a86ab69918afed20c6aa6b2d524a8c68cbfa00ac2c"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-2f5d94e5.json",
+      "sha256": "1bab5c07d8314e819852e9c2995cf72b137d7f703e0d42ce26b2a2df8c5e2e67"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-2f5d94e5-harness-history.json",
+      "sha256": "8ffe89cbc3122bb6a39273931f5262ba824929b25dcc4af0c109ba03b6eee480"
+    }
+  ],
+  "进度条目": {
+    "path": "docs/refactor/progress.md",
+    "精确新增文本": "- 固定2f5d94e5结构检查收口：真实3115公开Git原始blob／435同Git文档，后台session99272实际终止chunk809272 exit0；0新增、409余债、1370已清，原1779债务SHA297b逐字不变。独立全路径与SHA／sourceDigest4f8a81ff／五工具固定Git及当前字节／409+1370完整不重复原债分区核准，不重新运行门禁；该固定提交已含赤月使徒状态槽、家族玩家DTO和轮次记录器，仅排除提交后的未提交工作树。仅固定依赖、命名与职责说明证据，完整类型、行为及P9同源验收仍待；现行历史观察审查保留。见 architecture-checkpoint-2f5d94e5.md。",
+    "SHA256": "5d0831d313f83684f42a990104b28df178355f872a7473ffc0946e7df9cbc676",
+    "原观察历史保留": true
+  },
+  "发现": [],
+  "审查限制": [
+    "没有重新执行门禁、类型检查、测试、对局、网络或模型调用。",
+    "没有宣称当前并行未提交源码或完整传递依赖图通过；本次输入只属于固定2f5d94e5。",
+    "这不是全仓架构完成或P9同源验收；409余债真实保留。"
+  ],
+  "文档时间说明修正": "Root核对提交时间后指出首稿误称赤月状态槽、家族DTO和轮次记录器为后续候选；已精确改为固定提交已经包含三批，只排除提交后的未提交工作树。原3115文件、435文档、债务分区、摘要和实际执行收据不变，未重新运行门禁。"
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "awa-checkpoint-harness-history-v1",
+  "固定完整提交": "2f5d94e5404067d7b3b8a9ce93cc8bebd31a643f",
+  "执行者": "/root",
+  "runner原路径": "/tmp/awa-inspection-policy-contract/checkpoint-2f.ts",
+  "runner源字节SHA256": "6dd7318ecbe0b4da8c858f5917a49bad10a76a3c88cfae428f5095270261f39f",
+  "runner完整原文": "import fs from 'node:fs';\nimport {execFileSync} from 'node:child_process';\nimport {createHash} from 'node:crypto';\nimport {readPublicGitBlobs} from '/home/hby/dev/AI-Werewolf-Arena/tooling/refactor/inventory';\nimport {checkArchitecture} from '/home/hby/dev/AI-Werewolf-Arena/tooling/refactor/architecture/run';\nconst repository='/home/hby/dev/AI-Werewolf-Arena',commit='2f5d94e5';\nconst hash=(s:Uint8Array|string)=>createHash('sha256').update(s).digest('hex');\nconst blobs=readPublicGitBlobs(repository,commit);\nconst files=blobs.files.map(({path,bytes})=>({path,text:bytes.toString('utf8'),sha256:hash(bytes)}));\nconst documentationPaths=execFileSync('git',['ls-tree','-r','--name-only',commit],{cwd:repository,encoding:'utf8'}).trim().split('\\n').filter(p=>/^docs\\/.*\\.md$/.test(p)||p==='README.md').sort();\nconst debtBytes=execFileSync('git',['show',commit+':docs/refactor/generated/architecture-debt.json'],{cwd:repository,maxBuffer:32*1024*1024});\nconst debt=JSON.parse(debtBytes.toString('utf8'));\nconst report=checkArchitecture(repository,{files,documentationPaths},debt);\nconst capture={commit,files:files.map(({path,sha256})=>({path,sha256})),documentationPaths,debtSha256:hash(debtBytes),gateModules:['tooling/refactor/architecture/run.ts','tooling/refactor/architecture/contracts.ts','tooling/refactor/architecture/dependency-check.ts','tooling/refactor/architecture/comment-check.ts','tooling/refactor/architecture/naming-check.ts'].map(path=>{const git=execFileSync('git',['show',commit+':'+path],{cwd:repository});const current=fs.readFileSync(repository+'/'+path);if(!git.equals(current))throw Error('checkpoint_gate_source_changed');return{path,sha256:hash(git)};}),report};\nfs.writeFileSync(repository+'/docs/refactor/generated/architecture-checkpoint-2f5d94e5.json',JSON.stringify(capture,null,2)+'\\n');\nconsole.log(JSON.stringify({commit,files:files.length,documentationPaths:documentationPaths.length,debtSha256:capture.debtSha256,counts:report.counts,failures:report.failures}));if(report.failures.length)process.exitCode=1;\n",
+  "输出原路径": "/tmp/awa-inspection-policy-contract/checkpoint-2f.log",
+  "输出字节SHA256": "6b06bbe6eec37ecaee81e32825e3ec10aac11dba99fe349a2ba33eaf6488a3ab",
+  "原输出完整文本": "{\"commit\":\"2f5d94e5\",\"files\":3115,\"documentationPaths\":435,\"debtSha256\":\"297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d\",\"counts\":{\"files\":3115,\"violations\":409,\"failures\":0,\"remainingDebt\":409,\"clearedDebt\":1370},\"failures\":[]}\n",
+  "启动实际工具收据": {
+    "chunk": "718aa5",
+    "状态": "真实后台启动并返回运行会话",
+    "session": 99272
+  },
+  "终止实际工具收据": {
+    "chunk": "809272",
+    "session": 99272,
+    "exitCode": 0,
+    "来源": "Root本次实际终止工具回执；独立审查未重新执行或轮询该已关闭会话"
+  },
+  "历史边界": "本次已提供启动及终止回执，当前捕获器与输出仍实际存在。未借用694a的ENOBUFS历史，也不从空日志推定通过。",
+  "输入政策": "runner只从固定Git读取公开blob、同Git文档、原债务；5项当前执行工具逐字核对固定Git源。未把工作区并行业务源输入本次门禁。"
+}
