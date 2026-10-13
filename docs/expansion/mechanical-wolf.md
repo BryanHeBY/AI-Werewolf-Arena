@@ -1,6 +1,6 @@
 # Mechanical Wolf 接入契约
 
-本版以 [AWA 机械狼 1.0.0 规则卡](rules/awa-mechanical-wolf-v1.md) 为准。六人示例采用屠城；十二人标准机械通灵示例采用屠边并开启警长。两者均只允许 Mechanical/Wolf/Psychic/Witch/Hunter/Guard/Villager；其它底牌组合在公开解析及直接装配入口均拒绝，不通过隐藏身份过滤学习目标。
+本版以 [AWA 机械狼 1.0.0 规则卡](../rules/awa-mechanical-wolf-v1.md) 为准。六人示例采用屠城；十二人标准机械通灵示例采用屠边并开启警长。两者均只允许 Mechanical/Wolf/Psychic/Witch/Hunter/Guard/Villager；其它底牌组合在公开解析及直接装配入口均拒绝，不通过隐藏身份过滤学习目标。
 
 ## 身份、状态及行动
 

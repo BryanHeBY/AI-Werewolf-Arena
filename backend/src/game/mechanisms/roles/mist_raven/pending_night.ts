@@ -2,7 +2,7 @@
  * 负责雾鸦夜间伤害交接与有界蛇反应窗口。输入为原生命和脱离的待结算伤害；
  * 输出为已 claim 的反应和最终伤害。finish／abort 终止本次 pending，不替换任何目标原体。
  * 本模块不切换阶段或标死；延期副本保留真实毒因果，疗救和梦扩展仍用原政策。
- * 规则依据：docs/expansion/rules/awa-mist-raven-twelve-v1.md。
+ * 规则依据：docs/rules/awa-mist-raven-twelve-v1.md。
  */
 import {
   AliveComponent,

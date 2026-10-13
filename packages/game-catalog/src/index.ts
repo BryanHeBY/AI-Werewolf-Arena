@@ -1,9 +1,8 @@
 /**
- * Owns role metadata consumed by configuration, engine assembly and presentation.
- * Inputs are game-contract IDs; outputs are bilingual names, delivery status and
- * rule references in the existing catalog order. Metadata describes a role and
- * never grants execution permission. Stable IDs/enums/locales remain contract
- * owned; named compatibility exports preserve existing public consumers.
+ * 负责配置、引擎装配与展示消费的角色资料目录。
+ * 输入为契约包的稳定 ID；输出按原顺序提供双语名称、交付状态和现行规则卡引用。
+ * 资料描述角色，不授予执行许可；机器 ID、枚举与语言的唯一所有者仍是契约包。
+ * 规则卡位于 docs/rules，扩充验收历史单独保留；公开具名兼容出口服务既有消费者。
  */
 import { Role, PLANNED_ROLE_IDS, type Locale } from "@ai-werewolf-arena/game-contract";
 export {
@@ -34,7 +33,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "狼人", en: "Werewolf" },
     status: "verified",
     targetPhase: "P1",
-    ruleCardRef: "docs/expansion/rules/awa-classic-v1.md#wolf",
+    ruleCardRef: "docs/rules/awa-classic-v1.md#wolf",
     mechanismSummary: "夜聊、狼刀、自爆",
   },
   {
@@ -42,7 +41,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "平民", en: "Villager" },
     status: "verified",
     targetPhase: "P1",
-    ruleCardRef: "docs/expansion/rules/awa-classic-v1.md#villager",
+    ruleCardRef: "docs/rules/awa-classic-v1.md#villager",
     mechanismSummary: "发言、投票",
   },
   {
@@ -50,7 +49,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "预言家", en: "Seer" },
     status: "verified",
     targetPhase: "P1",
-    ruleCardRef: "docs/expansion/rules/awa-classic-v1.md#seer",
+    ruleCardRef: "docs/rules/awa-classic-v1.md#seer",
     mechanismSummary: "阵营查验",
   },
   {
@@ -58,7 +57,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "女巫", en: "Witch" },
     status: "verified",
     targetPhase: "P1",
-    ruleCardRef: "docs/expansion/rules/awa-classic-v1.md#witch",
+    ruleCardRef: "docs/rules/awa-classic-v1.md#witch",
     mechanismSummary: "解药、毒药",
   },
   {
@@ -66,7 +65,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "猎人", en: "Hunter" },
     status: "verified",
     targetPhase: "P1",
-    ruleCardRef: "docs/expansion/rules/awa-classic-v1.md#hunter",
+    ruleCardRef: "docs/rules/awa-classic-v1.md#hunter",
     mechanismSummary: "死亡开枪",
   },
   {
@@ -74,7 +73,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "守卫", en: "Guard" },
     status: "verified",
     targetPhase: "P1",
-    ruleCardRef: "docs/expansion/rules/awa-classic-v1.md#guard",
+    ruleCardRef: "docs/rules/awa-classic-v1.md#guard",
     mechanismSummary: "狼刀保护",
   },
   {
@@ -82,7 +81,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "白痴", en: "Village Idiot" },
     status: "verified",
     targetPhase: "P1",
-    ruleCardRef: "docs/expansion/rules/awa-classic-v1.md#idiot",
+    ruleCardRef: "docs/rules/awa-classic-v1.md#idiot",
     mechanismSummary: "放逐豁免、投票权",
   },
   {
@@ -90,7 +89,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "狼王", en: "Wolf King" },
     status: "verified",
     targetPhase: "P5",
-    ruleCardRef: "docs/expansion/rules/awa-wolf-king-v1.md#wolf_king",
+    ruleCardRef: "docs/rules/awa-wolf-king-v1.md#wolf_king",
     mechanismSummary: "死亡带人、死因限制",
   },
   {
@@ -98,7 +97,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "白狼王", en: "White Wolf King" },
     status: "verified",
     targetPhase: "P5",
-    ruleCardRef: "docs/expansion/rules/awa-white-wolf-king-v1.md#white_wolf_king",
+    ruleCardRef: "docs/rules/awa-white-wolf-king-v1.md#white_wolf_king",
     mechanismSummary: "自爆带人、流程中断",
   },
   {
@@ -106,7 +105,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "骑士", en: "Knight" },
     status: "verified",
     targetPhase: "P5",
-    ruleCardRef: "docs/expansion/rules/awa-knight-v1.md#knight",
+    ruleCardRef: "docs/rules/awa-knight-v1.md#knight",
     mechanismSummary: "白天决斗",
   },
   {
@@ -114,7 +113,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "守墓人", en: "Gravekeeper" },
     status: "verified",
     targetPhase: "P5",
-    ruleCardRef: "docs/expansion/rules/awa-gravekeeper-v1.md#gravekeeper",
+    ruleCardRef: "docs/rules/awa-gravekeeper-v1.md#gravekeeper",
     mechanismSummary: "放逐后的信息反馈",
   },
   {
@@ -122,7 +121,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "摄梦人", en: "Dreamer" },
     status: "verified",
     targetPhase: "P6",
-    ruleCardRef: "docs/expansion/rules/awa-dreamer-v1.md#dreamer",
+    ruleCardRef: "docs/rules/awa-dreamer-v1.md#dreamer",
     mechanismSummary: "持续关系、保护/伤害",
   },
   {
@@ -130,7 +129,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "狼美人", en: "Wolf Beauty" },
     status: "verified",
     targetPhase: "P6",
-    ruleCardRef: "docs/expansion/rules/awa-wolf-beauty-v1.md#wolf_beauty",
+    ruleCardRef: "docs/rules/awa-wolf-beauty-v1.md#wolf_beauty",
     mechanismSummary: "魅惑、死亡牵连",
   },
   {
@@ -138,7 +137,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "熊", en: "Bear" },
     status: "verified",
     targetPhase: "P6",
-    ruleCardRef: "docs/expansion/rules/awa-bear-v1.md#bear",
+    ruleCardRef: "docs/rules/awa-bear-v1.md#bear",
     mechanismSummary: "邻接的公开反馈",
   },
   {
@@ -146,7 +145,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "隐狼", en: "Hidden Wolf" },
     status: "verified",
     targetPhase: "P6",
-    ruleCardRef: "docs/expansion/rules/awa-hidden-wolf-v1.md#hidden_wolf",
+    ruleCardRef: "docs/rules/awa-hidden-wolf-v1.md#hidden_wolf",
     mechanismSummary: "特殊互认、查验和接刀",
   },
   {
@@ -154,7 +153,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "石像鬼", en: "Gargoyle" },
     status: "verified",
     targetPhase: "P6",
-    ruleCardRef: "docs/expansion/rules/awa-gargoyle-v1.md#gargoyle",
+    ruleCardRef: "docs/rules/awa-gargoyle-v1.md#gargoyle",
     mechanismSummary: "独立狼、身份查验",
   },
   {
@@ -162,7 +161,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "通灵师", en: "Spirit Seer" },
     status: "verified",
     targetPhase: "P7",
-    ruleCardRef: "docs/expansion/rules/awa-psychic-v1.md#psychic",
+    ruleCardRef: "docs/rules/awa-psychic-v1.md#psychic",
     mechanismSummary: "具体身份查验",
   },
   {
@@ -170,7 +169,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "魔镜少女", en: "Mirror Girl" },
     status: "verified",
     targetPhase: "P7",
-    ruleCardRef: "docs/expansion/rules/awa-mirror-girl-v1.md#mirror_girl",
+    ruleCardRef: "docs/rules/awa-mirror-girl-v1.md#mirror_girl",
     mechanismSummary: "具体身份、查验限制",
   },
   {
@@ -178,7 +177,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "机械狼", en: "Mechanical Wolf" },
     status: "verified",
     targetPhase: "P7",
-    ruleCardRef: "docs/expansion/rules/awa-mechanical-wolf-v1.md#mechanical_wolf",
+    ruleCardRef: "docs/rules/awa-mechanical-wolf-v1.md#mechanical_wolf",
     mechanismSummary: "复制技能、资源和接刀",
   },
   {
@@ -186,7 +185,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "奇迹商人", en: "Miracle Merchant" },
     status: "verified",
     targetPhase: "P7",
-    ruleCardRef: "docs/expansion/rules/awa-miracle-merchant-v1.md#miracle_merchant",
+    ruleCardRef: "docs/rules/awa-miracle-merchant-v1.md#miracle_merchant",
     mechanismSummary: "授予限次能力",
   },
   {
@@ -194,7 +193,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "黑市商人", en: "Black Market Merchant" },
     status: "verified",
     targetPhase: "P7",
-    ruleCardRef: "docs/expansion/rules/awa-black-market-merchant-v1.md#black_market_merchant",
+    ruleCardRef: "docs/rules/awa-black-market-merchant-v1.md#black_market_merchant",
     mechanismSummary: "技能交易、反噬",
   },
   {
@@ -202,7 +201,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "混血儿", en: "Hybrid" },
     status: "verified",
     targetPhase: "P7",
-    ruleCardRef: "docs/expansion/rules/awa-hybrid-v1.md#hybrid",
+    ruleCardRef: "docs/rules/awa-hybrid-v1.md#hybrid",
     mechanismSummary: "榜样、独立胜利归属",
   },
   {
@@ -210,7 +209,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "盗贼", en: "Thief" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/lui-meme-thief-v1.md",
+    ruleCardRef: "docs/rules/lui-meme-thief-v1.md",
     mechanismSummary: "额外底牌、初始身份选择",
   },
   {
@@ -218,7 +217,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "千面人", en: "Many-Faced One" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-netease-shapeshifter-v1.md",
+    ruleCardRef: "docs/rules/awa-netease-shapeshifter-v1.md",
     mechanismSummary: "首夜必选身份、有狼强制狼槽",
   },
   {
@@ -226,7 +225,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "孤独少女", en: "Lonely Girl" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-netease-lonely-girl-v1.md",
+    ruleCardRef: "docs/rules/awa-netease-lonely-girl-v1.md",
     mechanismSummary: "崇拜对象、胜利归属",
   },
   {
@@ -234,7 +233,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "野孩子", en: "Wild Child" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-lui-meme-wild-child-v1.md",
+    ruleCardRef: "docs/rules/awa-lui-meme-wild-child-v1.md",
     mechanismSummary: "榜样死亡、阵营变化",
   },
   {
@@ -242,7 +241,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "鬼魂新娘", en: "Ghost Bride" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-melbourne-ghost-bride-v1.md",
+    ruleCardRef: "docs/rules/awa-melbourne-ghost-bride-v1.md",
     mechanismSummary: "伴侣、第三方目标",
   },
   {
@@ -250,7 +249,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "丘比特", en: "Cupid" },
     status: "implemented",
     targetPhase: "P8",
-    ruleCardRef: "docs/expansion/rules/sourced-cupid-v1.md#cupid",
+    ruleCardRef: "docs/rules/sourced-cupid-v1.md#cupid",
     mechanismSummary: "情侣、殉情和目标变化",
   },
   {
@@ -258,7 +257,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "咒狐", en: "Cursed Fox" },
     status: "implemented",
     targetPhase: "P8",
-    ruleCardRef: "docs/expansion/rules/netease-cursed-fox-v1.md#cursed_fox",
+    ruleCardRef: "docs/rules/netease-cursed-fox-v1.md#cursed_fox",
     mechanismSummary: "特殊生存、查验和胜利",
   },
   {
@@ -266,7 +265,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "猎魔人", en: "Demon Hunter" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-netease-demon-hunter-v1.md",
+    ruleCardRef: "docs/rules/awa-netease-demon-hunter-v1.md",
     mechanismSummary: "夜间对决、伤害资格",
   },
   {
@@ -274,7 +273,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "纯白之女", en: "Pure White Girl" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-pure-white-night-v1.md",
+    ruleCardRef: "docs/rules/awa-pure-white-night-v1.md",
     mechanismSummary: "查验与伤害",
   },
   {
@@ -282,7 +281,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "狼巫", en: "Wolf Witch" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-pure-white-night-v1.md",
+    ruleCardRef: "docs/rules/awa-pure-white-night-v1.md",
     mechanismSummary: "狼队身份查验",
   },
   {
@@ -290,7 +289,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "恶夜骑士", en: "Dark Knight" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-evil-knight-v1.md",
+    ruleCardRef: "docs/rules/awa-evil-knight-v1.md",
     mechanismSummary: "夜间免疫、反伤",
   },
   {
@@ -298,7 +297,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "赤月使徒", en: "Red Moon Apostle" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-red-moon-demon-v1.md",
+    ruleCardRef: "docs/rules/awa-red-moon-demon-v1.md",
     mechanismSummary: "自爆、封夜、特殊死亡",
   },
   {
@@ -306,7 +305,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "炼金魔女", en: "Alchemist" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-mist-raven-twelve-v1.md",
+    ruleCardRef: "docs/rules/awa-mist-raven-twelve-v1.md",
     mechanismSummary: "刀口约束、特殊救人流程",
   },
   {
@@ -314,7 +313,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "狼鸦之爪", en: "Raven-Claw Wolf" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-mist-raven-twelve-v1.md",
+    ruleCardRef: "docs/rules/awa-mist-raven-twelve-v1.md",
     mechanismSummary: "解封、特殊攻击",
   },
   {
@@ -322,7 +321,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "流光伯爵", en: "Radiant Count" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-radiant-eclipse-twelve-v1.md",
+    ruleCardRef: "docs/rules/awa-radiant-eclipse-twelve-v1.md",
     mechanismSummary: "保护范围和限制",
   },
   {
@@ -330,7 +329,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "蚀日侍女", en: "Eclipse Maid" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-radiant-eclipse-twelve-v1.md",
+    ruleCardRef: "docs/rules/awa-radiant-eclipse-twelve-v1.md",
     mechanismSummary: "技能吞噬与临时失效",
   },
   {
@@ -338,7 +337,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "夜之贵族", en: "Night Noble" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-noble-secret-body-twelve-v1.md",
+    ruleCardRef: "docs/rules/awa-noble-secret-body-twelve-v1.md",
     mechanismSummary: "持续夜间状态",
   },
   {
@@ -346,7 +345,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "寻香魅影", en: "Fragrant Phantom" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-fragrant-pair-seer-twelve-v1.md",
+    ruleCardRef: "docs/rules/awa-fragrant-pair-seer-twelve-v1.md",
     mechanismSummary: "绑定、牵连、接刀",
   },
   {
@@ -354,7 +353,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "噩梦之影", en: "Nightmare" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-nightmare-dreamer-v1.md",
+    ruleCardRef: "docs/rules/awa-nightmare-dreamer-v1.md",
     mechanismSummary: "恐惧、行动封锁",
   },
   {
@@ -362,7 +361,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "魔术师", en: "Magician" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-magician-wolf-king-v1.md",
+    ruleCardRef: "docs/rules/awa-magician-wolf-king-v1.md",
     mechanismSummary: "夜间技能目标映射",
   },
   {
@@ -370,7 +369,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "诡术师", en: "Trickster" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-trickster-exile-v1.md",
+    ruleCardRef: "docs/rules/awa-trickster-exile-v1.md",
     mechanismSummary: "号码映射及公开结果",
   },
   {
@@ -378,7 +377,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "狼术师", en: "Wolf Sorcerer" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-wolf-sorcerer-seats-v1.md",
+    ruleCardRef: "docs/rules/awa-wolf-sorcerer-seats-v1.md",
     mechanismSummary: "狼队目标/座位映射",
   },
   {
@@ -386,7 +385,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "定序王子", en: "Order Prince" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-order-prince-first-ballot-v1.md",
+    ruleCardRef: "docs/rules/awa-order-prince-first-ballot-v1.md",
     mechanismSummary: "限次重投与发言",
   },
   {
@@ -394,7 +393,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "蚀时狼妃", en: "Time-Wolf Consort" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-time-consort-reflection-v1.md",
+    ruleCardRef: "docs/rules/awa-time-consort-reflection-v1.md",
     mechanismSummary: "反弹与封锁",
   },
   {
@@ -402,7 +401,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "白昼学者", en: "Day Scholar" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-scholar-mentor-twelve-v1.md",
+    ruleCardRef: "docs/rules/awa-scholar-mentor-twelve-v1.md",
     mechanismSummary: "技能增幅/削弱",
   },
   {
@@ -410,7 +409,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "寂夜导师", en: "Night Mentor" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-scholar-mentor-twelve-v1.md",
+    ruleCardRef: "docs/rules/awa-scholar-mentor-twelve-v1.md",
     mechanismSummary: "技能增幅/削弱",
   },
   {
@@ -418,7 +417,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "杠精", en: "Debater" },
     status: "implemented",
     targetPhase: "P8",
-    ruleCardRef: "docs/expansion/rules/awa-melbourne-debater-v1.md#debater",
+    ruleCardRef: "docs/rules/awa-melbourne-debater-v1.md#debater",
     mechanismSummary: "挑战、辩论、投票资格",
   },
   {
@@ -442,7 +441,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "白猫", en: "White Cat" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-animal-dream-twelve-v1.md",
+    ruleCardRef: "docs/rules/awa-animal-dream-twelve-v1.md",
     mechanismSummary: "延迟死亡",
   },
   {
@@ -450,7 +449,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "子狐", en: "Fox Cub" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-animal-dream-twelve-v1.md",
+    ruleCardRef: "docs/rules/awa-animal-dream-twelve-v1.md",
     mechanismSummary: "迷惑及目标交互",
   },
   {
@@ -458,7 +457,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "河豚", en: "Pufferfish" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-animal-dream-twelve-v1.md",
+    ruleCardRef: "docs/rules/awa-animal-dream-twelve-v1.md",
     mechanismSummary: "投票反击、特殊死亡",
   },
   {
@@ -474,7 +473,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "觉醒愚者", en: "Awakened Village Idiot" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-noble-secret-body-twelve-v1.md",
+    ruleCardRef: "docs/rules/awa-noble-secret-body-twelve-v1.md",
     mechanismSummary: "秘密之身/伤害替代",
   },
   {
@@ -482,7 +481,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "觉醒预言家", en: "Awakened Seer" },
     status: "implemented",
     targetPhase: "P9",
-    ruleCardRef: "docs/expansion/rules/awa-fragrant-pair-seer-twelve-v1.md",
+    ruleCardRef: "docs/rules/awa-fragrant-pair-seer-twelve-v1.md",
     mechanismSummary: "双目标信息",
   },
   {
@@ -498,7 +497,7 @@ export const ROLE_DEFINITIONS = [
     names: { "zh-CN": "觉醒隐狼", en: "Awakened Hidden Wolf" },
     status: "verified",
     targetPhase: "P7",
-    ruleCardRef: "docs/expansion/rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf",
+    ruleCardRef: "docs/rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf",
     mechanismSummary: "复制、生效时机、独立狼",
   },
   {

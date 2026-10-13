@@ -1,6 +1,6 @@
 # P7：混血儿实现与验收边界
 
-规则依据与 AWA 选择以[冻结卡](rules/awa-hybrid-v1.md#hybrid)为准。角色实现、最终门槛与三路复查见[角色审查](reviews/p7-hybrid.md)；规则冻结历史笔仍是文档交付，不能当作角色运行证据。
+规则依据与 AWA 选择以[冻结卡](../rules/awa-hybrid-v1.md#hybrid)为准。角色实现、最终门槛与三路复查见[角色审查](reviews/p7-hybrid.md)；规则冻结历史笔仍是文档交付，不能当作角色运行证据。
 
 ## 状态的唯一负责人
 

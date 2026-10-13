@@ -1,6 +1,6 @@
 # P7 觉醒隐狼规则冻结交叉审查
 
-范围：[AWA Awakened Hidden Wolf 1.0.0](../rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)及[实现/提交边界](../awakened-hidden-wolf.md)。纯文档，不注册角色或开配置，21 verified/43 planned保持。
+范围：[AWA Awakened Hidden Wolf 1.0.0](../../rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)及[实现/提交边界](../awakened-hidden-wolf.md)。纯文档，不注册角色或开配置，21 verified/43 planned保持。
 
 ## 来源与范围核验
 

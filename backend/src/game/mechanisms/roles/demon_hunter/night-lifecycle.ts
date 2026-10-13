@@ -2,7 +2,7 @@
  * 负责恶魔猎手本次夜间的取得与晚交接；输入为延迟 World 查询、日期和有效性回调，
  * 输出保持原生开夜及原 pipeline 条件关闭。成功 begin 后才 acquired，失败 begin 不新增 close。
  * 经理的原终止入口保持无条件调用；不修改封存库存、原生生命、已付效果或阶段。
- * 规则依据：docs/expansion/rules/awa-netease-demon-hunter-v1.md。
+ * 规则依据：docs/rules/awa-netease-demon-hunter-v1.md。
  */
 import type { World } from "../../../../core/domain/world";
 import { beginDemonHunterNight, closeDemonHunterNight } from "./authority";

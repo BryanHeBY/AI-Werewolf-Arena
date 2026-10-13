@@ -1,6 +1,6 @@
 # P5：狼王接入与验收
 
-冻结规则见[AWA Wolf King 1.0.0](rules/awa-wolf-king-v1.md)，来源及AWA改编边界以规则卡为准。`wolf_king`是实际注册的第八项角色，其余56项继续后续阶段。
+冻结规则见[AWA Wolf King 1.0.0](../rules/awa-wolf-king-v1.md)，来源及AWA改编边界以规则卡为准。`wolf_king`是实际注册的第八项角色，其余56项继续后续阶段。
 
 ## 所有权与行为
 
@@ -52,4 +52,4 @@ bun run --cwd backend run --configs-dir ../configs.example --game-config-name tw
 
 [前端实际档案](../../frontend/tests/fixtures/six-player-wolf-king/wolf-king/en/god.replay.json)来自真实SDK完整六人放逐链；单测、Chromium两语交互及实际双语Remotion帧核对枪击标签、逐事件死亡、终局前无winner/最终名单。模型响应为本机合成，不声称完成外部Codex/Claude策略质量评测。最终门槛和三路复查见[交叉审查](reviews/p5-wolf-king.md)。
 
-P5白狼王扩展使用独立WhiteWolfBlast死因；本AWA版本允许猎人/狼王对此追枪，含毒等禁因仍禁止。具体窗口、合并死亡及来源歧义见[白狼王卡](rules/awa-white-wolf-king-v1.md)。
+P5白狼王扩展使用独立WhiteWolfBlast死因；本AWA版本允许猎人/狼王对此追枪，含毒等禁因仍禁止。具体窗口、合并死亡及来源歧义见[白狼王卡](../rules/awa-white-wolf-king-v1.md)。

@@ -1,6 +1,6 @@
 # P7：黑市商人实现步骤与资源所有权
 
-规则以[AWA卡](rules/awa-black-market-merchant-v1.md#black_market_merchant)为准。赠枪底座与完整角色已交付，当前23 verified/41 planned。下列职责边界保持；运行、双语、随机、失败Tape及三路复查证据见[完整验收](reviews/p7-black-market-merchant.md)。
+规则以[AWA卡](../rules/awa-black-market-merchant-v1.md#black_market_merchant)为准。赠枪底座与完整角色已交付，当前23 verified/41 planned。下列职责边界保持；运行、双语、随机、失败Tape及三路复查证据见[完整验收](reviews/p7-black-market-merchant.md)。
 
 ## 1. 被动赠枪底座
 

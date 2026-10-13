@@ -3,7 +3,7 @@
  * 输入为原名单、可写原因表和来源阶段，以及保原晚读的运行／权威／事实端口；
  * 输出为原有效死亡名单、原因表修改及初／追加波事实。运行装配不向玩家暴露 World 或库存写权。
  * 已公布猫事实与已删原因属于原失败前缀，后续到期或记录失败不回滚，也不修改 Alive 或扩展其他关系。
- * 规则依据：docs/expansion/rules/awa-animal-dream-twelve-v1.md。
+ * 规则依据：docs/rules/awa-animal-dream-twelve-v1.md。
  */
 import { Phase, DeathCause, type EntityId, type DeathSources } from "../../../../core/domain/model";
 import {

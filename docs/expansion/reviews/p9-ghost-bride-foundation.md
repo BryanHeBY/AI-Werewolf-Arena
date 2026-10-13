@@ -1,6 +1,6 @@
 # P9a 鬼魂新娘独立授权基础
 
-接928eec2[正式规则卡](../rules/awa-melbourne-ghost-bride-v1.md)，本笔只交付可接线primitive，不注册Role/profile/WinCondition，不改变catalog，Ghost Bride仍planned。尚未接实际factory、SDK/ACP、阶段、事件、录制、Tape或前端，不冒称完整功能。
+接928eec2[正式规则卡](../../rules/awa-melbourne-ghost-bride-v1.md)，本笔只交付可接线primitive，不注册Role/profile/WinCondition，不改变catalog，Ghost Bride仍planned。尚未接实际factory、SDK/ACP、阶段、事件、录制、Tape或前端，不冒称完整功能。
 
 ## 已实现与边界
 

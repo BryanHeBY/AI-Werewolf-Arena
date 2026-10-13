@@ -1,6 +1,6 @@
 # P9a 鬼魂新娘完整功能验收
 
-基线 `68e0c5a`，原目录 main 线性本地实施。唯一 `awa_melbourne_ghost_bride_v1`，12人三狼四民、预言家/女巫/猎人/守卫/鬼魂新娘。来源为 Melbourne Masters 2026 的[指定板子](https://melbournemasters.org/setups/gui-hun-xin-niang)及[角色页](https://melbournemasters.org/setups/roles/%E9%AC%BC%E9%AD%82%E6%96%B0%E5%A8%98)，不是网易或全部同名规则。具名 AWA 补全与有限组合见[规则卡](../rules/awa-melbourne-ghost-bride-v1.md)。公开[示例](../../../configs.example/boards/awa_melbourne_ghost_bride_12_v1.json)实际解析/初始化；额外角色、非三方目标、活动、自救、可重复守护、其它枪策略等未支持组合明确拒绝。
+基线 `68e0c5a`，原目录 main 线性本地实施。唯一 `awa_melbourne_ghost_bride_v1`，12人三狼四民、预言家/女巫/猎人/守卫/鬼魂新娘。来源为 Melbourne Masters 2026 的[指定板子](https://melbournemasters.org/setups/gui-hun-xin-niang)及[角色页](https://melbournemasters.org/setups/roles/%E9%AC%BC%E9%AD%82%E6%96%B0%E5%A8%98)，不是网易或全部同名规则。具名 AWA 补全与有限组合见[规则卡](../../rules/awa-melbourne-ghost-bride-v1.md)。公开[示例](../../../configs.example/boards/awa_melbourne_ghost_bride_12_v1.json)实际解析/初始化；额外角色、非三方目标、活动、自救、可重复守护、其它枪策略等未支持组合明确拒绝。
 
 ## 完整执行与授权
 

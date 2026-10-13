@@ -99,16 +99,16 @@ P7通灵师按[规则与契约](psychic.md)启用，roles.psychic支持inspectio
 
 ## P9a 盗贼有限来源配置
 
-`roles.thief.policy`唯一接受`lui_meme_thief_two_extra_villagers_v1`（省略等价默认）。至多一Thief、City、仅七基础角色组合，原配置至少两Wolf/两非ThiefGood；其它角色或event pack组合显式拒绝。roleSetups仍N张，初始化另加两普通Villager，一次随机发N留2，不保证Thief或God上场。fixed/Tape必须完整N+2且原多重集一致，两Wolf底牌必选slot0/1，其它可null保留Thief。无fallback/任意底牌/保证神职参数。公开例子`configs.example/boards/lui_meme_thief_{6,12}_v1.json`；实际schema、实例、native库存、首夜动作与Tape边界见[来源卡](rules/lui-meme-thief-v1.md)/[验收](reviews/p9-thief.md)。
+`roles.thief.policy`唯一接受`lui_meme_thief_two_extra_villagers_v1`（省略等价默认）。至多一Thief、City、仅七基础角色组合，原配置至少两Wolf/两非ThiefGood；其它角色或event pack组合显式拒绝。roleSetups仍N张，初始化另加两普通Villager，一次随机发N留2，不保证Thief或God上场。fixed/Tape必须完整N+2且原多重集一致，两Wolf底牌必选slot0/1，其它可null保留Thief。无fallback/任意底牌/保证神职参数。公开例子`configs.example/boards/lui_meme_thief_{6,12}_v1.json`；实际schema、实例、native库存、首夜动作与Tape边界见[来源卡](../rules/lui-meme-thief-v1.md)/[验收](reviews/p9-thief.md)。
 
 ## P9a 野孩子有限来源配置
 
-`roles.wild_child.policy=awa_lui_meme_wild_child_v1`，标准N牌、最多一个，与七基础角色/City有限支持；至少一个普通Wolf、一个非WildChildGood。首实际夜必选其它活人榜样，榜样引擎实际淘汰后转真实Wolf阵营/胜利，原WildChild身份保留，下一实际Night才能入群互认/夜聊/投刀。完整波次、权限撤回、初始roster/录制与private DTO边界见[规则卡](rules/awa-lui-meme-wild-child-v1.md)/[验收](reviews/p9-wild-child.md)。6/12例为 `configs.example/boards/awa_lui_meme_wild_child_{6,12}_v1.json`；Thief/Cupid/事件包/其它扩展明确拒绝，不冒完整官方预设。
+`roles.wild_child.policy=awa_lui_meme_wild_child_v1`，标准N牌、最多一个，与七基础角色/City有限支持；至少一个普通Wolf、一个非WildChildGood。首实际夜必选其它活人榜样，榜样引擎实际淘汰后转真实Wolf阵营/胜利，原WildChild身份保留，下一实际Night才能入群互认/夜聊/投刀。完整波次、权限撤回、初始roster/录制与private DTO边界见[规则卡](../rules/awa-lui-meme-wild-child-v1.md)/[验收](reviews/p9-wild-child.md)。6/12例为 `configs.example/boards/awa_lui_meme_wild_child_{6,12}_v1.json`；Thief/Cupid/事件包/其它扩展明确拒绝，不冒完整官方预设。
 
 ## P9a 孤独少女有限来源配置
 
-`roles.lonely_girl.policy=awa_netease_lonely_girl_v1`，省略参数等价唯一默认。最多一Girl、City、N>=6、七基础角色、至少普通Wolf与非GirlGood；标准N牌，拒绝Hybrid/Cupid/Thief/Shape/WildChild及其它扩展/event pack。首夜普通技能前必选另一原活人，独立个人胜利归属跟随原真实Camp；原Girl/Good民边及库存不变。本人只知对象号码，无对象身份/归属字段，终局获胜名单允许必然推断。来源及AWA补全分别见[规则卡](rules/awa-netease-lonely-girl-v1.md)/[验收](reviews/p9-lonely-girl.md)。公开例 `configs.example/boards/awa_netease_lonely_girl_{6,12}_v1.json`，不覆盖用户configs。
+`roles.lonely_girl.policy=awa_netease_lonely_girl_v1`，省略参数等价唯一默认。最多一Girl、City、N>=6、七基础角色、至少普通Wolf与非GirlGood；标准N牌，拒绝Hybrid/Cupid/Thief/Shape/WildChild及其它扩展/event pack。首夜普通技能前必选另一原活人，独立个人胜利归属跟随原真实Camp；原Girl/Good民边及库存不变。本人只知对象号码，无对象身份/归属字段，终局获胜名单允许必然推断。来源及AWA补全分别见[规则卡](../rules/awa-netease-lonely-girl-v1.md)/[验收](reviews/p9-lonely-girl.md)。公开例 `configs.example/boards/awa_netease_lonely_girl_{6,12}_v1.json`，不覆盖用户configs。
 
 ## P9a 鬼魂新娘有限来源配置
 
-`roles.ghost_bride.policy=awa_melbourne_ghost_bride_v1`，唯一精确12牌与three_factions_elimination；所有normalized参数固定并在共享preset、公共schema、bootstrap及strict Tape一致拒绝表外组合。原Role/Camp/库存保持，独立三人Third胜利与逐夜唯一刀owner，完整Night死亡公开后判胜。公开例 `configs.example/boards/awa_melbourne_ghost_bride_12_v1.json` 已实际解析/初始化；具名AWA改编和隐私矩阵见[规则卡](rules/awa-melbourne-ghost-bride-v1.md)/[验收](reviews/p9-ghost-bride.md)。当前23verified/8implemented/33planned；不覆盖用户configs。
+`roles.ghost_bride.policy=awa_melbourne_ghost_bride_v1`，唯一精确12牌与three_factions_elimination；所有normalized参数固定并在共享preset、公共schema、bootstrap及strict Tape一致拒绝表外组合。原Role/Camp/库存保持，独立三人Third胜利与逐夜唯一刀owner，完整Night死亡公开后判胜。公开例 `configs.example/boards/awa_melbourne_ghost_bride_12_v1.json` 已实际解析/初始化；具名AWA改编和隐私矩阵见[规则卡](../rules/awa-melbourne-ghost-bride-v1.md)/[验收](reviews/p9-ghost-bride.md)。当前23verified/8implemented/33planned；不覆盖用户configs。

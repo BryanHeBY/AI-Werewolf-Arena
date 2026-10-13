@@ -1,6 +1,6 @@
 # P9d 猎日逐光有限板完整技术验收
 
-本批登记流光伯爵与蚀日侍女为 implemented，仅支持[冻结规则卡](../rules/awa-radiant-eclipse-twelve-v1.md)的精确十二人板 `awa_radiant_eclipse_12_v1`。目录达到23 verified、25 implemented、16 planned，48/64。P9d其它板、P9e／P9f、P10及真实模型T6继续；main本地功能提交，不推送。
+本批登记流光伯爵与蚀日侍女为 implemented，仅支持[冻结规则卡](../../rules/awa-radiant-eclipse-twelve-v1.md)的精确十二人板 `awa_radiant_eclipse_12_v1`。目录达到23 verified、25 implemented、16 planned，48/64。P9d其它板、P9e／P9f、P10及真实模型T6继续；main本地功能提交，不推送。
 
 ## 功能与交叉审查
 

@@ -1,6 +1,6 @@
 # P9b 猎魔人规则冻结审查
 
-接 main@f5153b8 的鬼魂新娘完整交付。2026-10-10主代理直接读取网易官网下载的公开卡表num23（本地Unicode解码，不执行JavaScript），三组原只读审查者独立对照下载件与已有源码。精确来源及AWA补全见[规则卡](../rules/awa-netease-demon-hunter-v1.md)。未杜撰发布日期，不把URL数字作为日期。
+接 main@f5153b8 的鬼魂新娘完整交付。2026-10-10主代理直接读取网易官网下载的公开卡表num23（本地Unicode解码，不执行JavaScript），三组原只读审查者独立对照下载件与已有源码。精确来源及AWA补全见[规则卡](../../rules/awa-netease-demon-hunter-v1.md)。未杜撰发布日期，不把URL数字作为日期。
 
 死亡链审查闭合：源归并在任何Alive写入前，待结算狼刀不撤合法hunt/原毒；完整Night死亡链→终局也公开完整死亡ID→原City/Side；同时全灭Good，Demon计入神。
 

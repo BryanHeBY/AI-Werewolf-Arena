@@ -1,6 +1,6 @@
 # P7：觉醒隐狼实现与资源边界
 
-以[规则卡](rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)为准；角色已完成并登记 `verified`，见[完整验收](reviews/p7-awakened-hidden-wolf.md)。本笔包含原12人镜隐迷踪组合；先前Mirror单角色交付不作为原联合板证明。
+以[规则卡](../rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)为准；角色已完成并登记 `verified`，见[完整验收](reviews/p7-awakened-hidden-wolf.md)。本笔包含原12人镜隐迷踪组合；先前Mirror单角色交付不作为原联合板证明。
 
 ## 状态与能力所有权
 

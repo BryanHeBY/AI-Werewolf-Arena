@@ -230,31 +230,31 @@ A01/A02/M21/G01–G04和基础差异闭环；七項在awa_classic1.0.0已验板�
 
 ## P5：狼王
 
-`wolf_king`作为第八项真实角色交付：普通狼队/自爆能力、独立枪资源、明确死因/Shot连锁、共享单次枪schema/消费/修复及按演员profile的同名工具校验；每轮Day与本人状态中英一致，新death_shot/wolf_king_shot与旧Hunter契约分开。native shoot无locale metadata改英文角色中性，旧路径保留，主动SDK/MCP协议仍双语。规则/边界/API见[狼王卡](rules/awa-wolf-king-v1.md)及[接入契约](wolf-king.md)，五场景字面oracle与发现修正见[三路审查](reviews/p5-wolf-king.md)。
+`wolf_king`作为第八项真实角色交付：普通狼队/自爆能力、独立枪资源、明确死因/Shot连锁、共享单次枪schema/消费/修复及按演员profile的同名工具校验；每轮Day与本人状态中英一致，新death_shot/wolf_king_shot与旧Hunter契约分开。native shoot无locale metadata改英文角色中性，旧路径保留，主动SDK/MCP协议仍双语。规则/边界/API见[狼王卡](../rules/awa-wolf-king-v1.md)及[接入契约](wolf-king.md)，五场景字面oracle与发现修正见[三路审查](reviews/p5-wolf-king.md)。
 
 最后后端release664／38789／95文件及smoke通过；原50＋狼王30＝80实际本机SDK/ACP/混合双语完整局和逐局严格Tape，狼王24受限观察seed及重放补覆盖。新core12／327、配置2／10、加强身份/私有枪/日次的actual wire15／3967、随机2／34，front69／560/types/build、真实Chromium12、中英实际PNG均通过。三路最终0阻断，目录8verified／56planned；新6/12板子和运行example可加载，未改用户configs。没有声称完成外部模型质量或整个P5，后续先白狼王，再骑士/守墓人与P6–P10。
 
 ## P5：白狼王
 
-第九项`white_wolf_king`实际交付：独立自爆带人/null工具与机会、WhiteWolfBlast来源、可追枪/复合毒禁枪、演员/目标生命与资源引用再验、最小有效候选及无效应false继续下一候选。PhaseManager私有pending-night caster不可吞刀/毒施放，接收不泄露，目标合并死因/阶段与完整死亡链后判胜。shared中英正确实际tool/遗言说明，新旧普通wolf/Hunter/King事件和schema2/Tape2边界保留。规则/明确版本选择见[白狼王卡](rules/awa-white-wolf-king-v1.md)，API迁移及验收范围见[契约](white-wolf-king.md)，三路修正和门槛见[审查](reviews/p5-white-wolf-king.md)。
+第九项`white_wolf_king`实际交付：独立自爆带人/null工具与机会、WhiteWolfBlast来源、可追枪/复合毒禁枪、演员/目标生命与资源引用再验、最小有效候选及无效应false继续下一候选。PhaseManager私有pending-night caster不可吞刀/毒施放，接收不泄露，目标合并死因/阶段与完整死亡链后判胜。shared中英正确实际tool/遗言说明，新旧普通wolf/Hunter/King事件和schema2/Tape2边界保留。规则/明确版本选择见[白狼王卡](../rules/awa-white-wolf-king-v1.md)，API迁移及验收范围见[契约](white-wolf-king.md)，三路修正和门槛见[审查](reviews/p5-white-wolf-king.md)。
 
 最终后端release717／45747／99文件及smoke通过；原80＋白狼54＝134实际本机双语SDK/ACP/混合完整局与逐局Tape；两板32显式active受限seed实际技能正覆盖及重放2／42，核心22／319、配置4／16、front73／585/types/build、Chromium14与中英PNG通过。扫描全仓AST采用独立30秒预算、覆盖/精确57例外/断言不变，生产预算不改。目录9verified／55planned，P5尚余骑士/守墓人，后续P6–P10目标保持；未调用外部模型或用户认证、未改用户configs。
 
 ## P5：骑士
 
-第十项`knight`交付：普通一次决斗、三离散窗口及[]关闭，真实Camp/查验伪装分离、公开wolf/not_wolf不揭第三方牌、双方生命/角色/camp与本人资源最终再验。资源/事实提案由同步commit提交，DeathResolution唯一死亡链、PhaseManager唯一推进和判胜；Duel禁枪/带人，纯Day初批DuelFailure获本人授权遗言及徽章。间隙含最后发言、自爆先手与双末窗顺序已明确。冻结版本/API/Tape及资料改编见[规则卡](rules/awa-knight-v1.md)、[契约](knight.md)，[审查记录](reviews/p5-knight.md)保来源/资源提示证据纠正及最终门槛。
+第十项`knight`交付：普通一次决斗、三离散窗口及[]关闭，真实Camp/查验伪装分离、公开wolf/not_wolf不揭第三方牌、双方生命/角色/camp与本人资源最终再验。资源/事实提案由同步commit提交，DeathResolution唯一死亡链、PhaseManager唯一推进和判胜；Duel禁枪/带人，纯Day初批DuelFailure获本人授权遗言及徽章。间隙含最后发言、自爆先手与双末窗顺序已明确。冻结版本/API/Tape及资料改编见[规则卡](../rules/awa-knight-v1.md)、[契约](knight.md)，[审查记录](reviews/p5-knight.md)保来源/资源提示证据纠正及最终门槛。
 
 最终release770／51514／103文件及smoke通过；原134＋新48＝182实际本机SDK/ACP/混合中英完整局及全部Tape，新增两板40受限seed零拒绝/回退/自然终局/技能正覆盖与重放2／50。core23／204，终端5／321，front77／614/types/build、实际Chromium18及中文命中/英文失误PNG通过。三路复查0阻断，目录10verified／54planned，新6/12 board和game example可加载。P5剩守墓人再推进P6–P10；未将12人已死骑士CP0当次日模型输入，未访问真实认证/外部模型或改用户configs；整体目标继续。
 
 ## P5：守墓人及第一批角色收尾
 
-第十一项`gravekeeper`交付：前日真实放逐主目标的camp标签定案冻结、下一夜女巫后/预言家前被动反馈，无原生主动工具；PhaseManager私有fact输入、角色/DTO只有已交付历史，actor-only事件与条件终端显示，白痴/无放逐/自爆/决斗/追加枪死不冒充exile。审查修复Night取消后续写/结伤/覆盖跳转，以phaseRevision与阶段/await/gateway检查短路；camp-only共享严格reader让坏历史Unknown而非具体牌。接口与边界见[卡](rules/awa-gravekeeper-v1.md)、[契约](gravekeeper.md)，[审查](reviews/p5-gravekeeper.md)记录发现、复查与证据。
+第十一项`gravekeeper`交付：前日真实放逐主目标的camp标签定案冻结、下一夜女巫后/预言家前被动反馈，无原生主动工具；PhaseManager私有fact输入、角色/DTO只有已交付历史，actor-only事件与条件终端显示，白痴/无放逐/自爆/决斗/追加枪死不冒充exile。审查修复Night取消后续写/结伤/覆盖跳转，以phaseRevision与阶段/await/gateway检查短路；camp-only共享严格reader让坏历史Unknown而非具体牌。接口与边界见[卡](../rules/awa-gravekeeper-v1.md)、[契约](gravekeeper.md)，[审查](reviews/p5-gravekeeper.md)记录发现、复查与证据。
 
 最终release820／60313／107文件及smoke通过；原182＋守墓48＝230实际本机SDK/ACP/混合双语完整局及全部Tape。core20／236，40受限seed/重放及条件终端合9／385，配置8／50；front83／711/type/build，最终actualChromium20（含席位/字幕bbox）与中英十二人真实PNG通过。英文字幕遮下排角色问题已修并复验，未改视频编码器。目录11verified／53planned，新6/12 public board与game可加载，四项P5要求闭环见[整阶段验收](reviews/p5-activation.md)。P6从摄梦人等冻结依赖继续，P7–P10/53角色/发布级矩阵与T6保持完整目标；没有把记录当模型实际输入，没有调用真实模型/认证或改用户configs。
 
 ## P6：摄梦人
 
-第十二项`dreamer`交付：G02实例内强制梦、相邻同实例目标连续梦亡、本夜生命周期私有Frame与Night保护/牵连；核心Damage只收已验效果ID，Alive/所有徽章/追加波次归DeathResolution，PhaseManager最后judge。逐actor Night来源枪保护/消耗落空/命中施梦者牵连，普通Day无关系；同波死目标及时补Dream禁后续枪，匿名实际additional_deaths同步玩家和前端，God梦原因不提前泄待夜死。World级重入、mandatory耗尽、phaseRevision/最终gateway许可与gift规则缺口均由独立审查修正，见[卡](rules/awa-dreamer-v1.md)、[契约](dreamer.md)、[审查](reviews/p6-dreamer.md)。
+第十二项`dreamer`交付：G02实例内强制梦、相邻同实例目标连续梦亡、本夜生命周期私有Frame与Night保护/牵连；核心Damage只收已验效果ID，Alive/所有徽章/追加波次归DeathResolution，PhaseManager最后judge。逐actor Night来源枪保护/消耗落空/命中施梦者牵连，普通Day无关系；同波死目标及时补Dream禁后续枪，匿名实际additional_deaths同步玩家和前端，God梦原因不提前泄待夜死。World级重入、mandatory耗尽、phaseRevision/最终gateway许可与gift规则缺口均由独立审查修正，见[卡](../rules/awa-dreamer-v1.md)、[契约](dreamer.md)、[审查](reviews/p6-dreamer.md)。
 
 最终release885／68872／112文件及smoke/type/deps/boundaries/i18n通过，原230＋新54＝284本机双语SDK/ACP/混合完整局及全部严格Tape；另4个gift实际任务身份/规则/只读接收/回收通过，非完整局。core30／440，配置10／60，两板40受限seed与重放2／50，front85／732/type/build、actualChromium24及中英PNG通过。三路0剩余阻断，目录12verified／52planned；新6/12 board/game示例可加载。P6其余四角色及P7–P10/T6/长局/发布矩阵继续，觉醒摄梦人仍在64外长期候选，未改用户configs或真实认证。
 
@@ -262,11 +262,11 @@ A01/A02/M21/G01–G04和基础差异闭环；七項在awa_classic1.0.0已验板�
 
 第十三项 `wolf_beauty` 交付：普通狼队权限与无自爆／本人自刀，刀后女巫前可选魅惑，合法skip耗本夜清关系、相邻夜不能同目标；原World绑定不通知目标，hook令牌在await后同步认领才派生死亡／Night来源。Exile／Poison触发，Duel／Dream复合禁技能，Guard／Heal不挡，Night有效梦保护／梦链与同波原遗言、补因禁后续枪明确。PhaseManager私有末狼候选，仅SlaughterSide条目内应用实际放逐带最后神／民的特殊狼胜，保配置次序与全死亡／徽章连锁先结束。runner own cancellation保持AbortError，不转合法skip，实际失败／已提交前缀及严格Tape保留。
 
-[卡](rules/awa-wolf-beauty-v1.md)、[契约](wolf-beauty.md)、[三路审查](reviews/p6-wolf-beauty.md)记录来源／AWA细则／内部API与修正。最终release963／79767／117文件、smoke/type/deps/boundaries/i18n通过，原284＋新72＝356本机SDK/ACP/混合双语完整局及全部严格Tape；core34／292含四条件徽章1→2→4再judge，runner取消重放／并发失败／配置8／94，40受限seed自然／0拒绝回退／实际Charm分支与重放2／52。front89／781/type/build、actualChromium28及中英真实PNG通过，三路0剩余阻断，目录13verified／51planned。六／十二人board/game示例可加载，用户configs／认证未读写。P6剩熊／隐狼／石像鬼，P7–P10／51角色／22机制完整矩阵／T6保持目标。
+[卡](../rules/awa-wolf-beauty-v1.md)、[契约](wolf-beauty.md)、[三路审查](reviews/p6-wolf-beauty.md)记录来源／AWA细则／内部API与修正。最终release963／79767／117文件、smoke/type/deps/boundaries/i18n通过，原284＋新72＝356本机SDK/ACP/混合双语完整局及全部严格Tape；core34／292含四条件徽章1→2→4再judge，runner取消重放／并发失败／配置8／94，40受限seed自然／0拒绝回退／实际Charm分支与重放2／52。front89／781/type/build、actualChromium28及中英真实PNG通过，三路0剩余阻断，目录13verified／51planned。六／十二人board/game示例可加载，用户configs／认证未读写。P6剩熊／隐狼／石像鬼，P7–P10／51角色／22机制完整矩阵／T6保持目标。
 
 ## P6：熊
 
-第十四项 `bear` 交付：入夜按当前seat存活环取邻居，待公布样本仅manager持有原World／role／state／life版本；邻居本夜死亡不重算，完整夜死／原遗言／徽章／追加波次后才匿名公布day/bool，再judge。原熊夜死／已死quiet，取消／生命替换／复活无晚报，重复不加history；真Wolf感知独立Seer伪装和临时刀权。profile原生maxCount1在parse/directbootstrap聚合约束；实际竞选取消发现旧Election缺epoch并补所有await／gateway／阶段交接检查。来源版与AWA细则见[卡](rules/awa-bear-v1.md)，API及范围见[契约](bear.md)、[三路审查](reviews/p6-bear.md)。
+第十四项 `bear` 交付：入夜按当前seat存活环取邻居，待公布样本仅manager持有原World／role／state／life版本；邻居本夜死亡不重算，完整夜死／原遗言／徽章／追加波次后才匿名公布day/bool，再judge。原熊夜死／已死quiet，取消／生命替换／复活无晚报，重复不加history；真Wolf感知独立Seer伪装和临时刀权。profile原生maxCount1在parse/directbootstrap聚合约束；实际竞选取消发现旧Election缺epoch并补所有await／gateway／阶段交接检查。来源版与AWA细则见[卡](../rules/awa-bear-v1.md)，API及范围见[契约](bear.md)、[三路审查](reviews/p6-bear.md)。
 
 最终受影响engine／配置／目录／中英终端／契约492／10133／51文件与type/deps/boundaries/i18n通过；本角色最终source的78实际SDK/ACP/混合双语完整局＋40受限seed／全部严格Tape，41／9214通过，roar与quiet都有正覆盖且自然／0拒绝回退。core36／215、public/config/console连core52／809；front93／848/type/build、actualChromium32、中英真实PNG过，三路0剩余阻断。目录14verified／50planned，六／十二人board/game示例可加载；来源Hidden／白神未冒认已实现，用户configs／认证未读写。
 
@@ -274,7 +274,7 @@ A01/A02/M21/G01–G04和基础差异闭环；七項在awa_classic1.0.0已验板�
 
 ## P6：隐狼
 
-第十五项 `hidden_wolf` 交付：单向其它Wolf授权ID、普通pack不知其身份、不夜聊／不补旧狼聊票；开局或真实死亡批后存活成唯一Wolf时一次本人接刀事实，当前资格与永久曾获得分开。伪装／熊按历史事实，真camp用于Knight／人数／胜利；死后标签不复位，原state不在query/预检中消费。完整提案mark后刷新避免顺序假接，聊天gateway后动态权限再验；合法票保prefix，目标life/version有效tally、临时knife scope到Damage前、首日pending NightDamage到真正mark前均复验，旧刀不伤同ID新生命。API/细则见[卡](rules/awa-hidden-wolf-v1.md)、[契约](hidden-wolf.md)，[三路审查](reviews/p6-hidden-wolf.md)记录具体fail→修复及范围。
+第十五项 `hidden_wolf` 交付：单向其它Wolf授权ID、普通pack不知其身份、不夜聊／不补旧狼聊票；开局或真实死亡批后存活成唯一Wolf时一次本人接刀事实，当前资格与永久曾获得分开。伪装／熊按历史事实，真camp用于Knight／人数／胜利；死后标签不复位，原state不在query/预检中消费。完整提案mark后刷新避免顺序假接，聊天gateway后动态权限再验；合法票保prefix，目标life/version有效tally、临时knife scope到Damage前、首日pending NightDamage到真正mark前均复验，旧刀不伤同ID新生命。API/细则见[卡](../rules/awa-hidden-wolf-v1.md)、[契约](hidden-wolf.md)，[三路审查](reviews/p6-hidden-wolf.md)记录具体fail→修复及范围。
 
 最终所涉engine／配置／目录／console／契约524／10323／54文件与type/deps/boundaries/i18n过；隐狼＋8生命core30／156（含白狼/Beauty与正新生命票），本轮最终source72真实本机SDK/ACP/混合双语完整局＋40受限seed／全部严格Tape38／9858自然0拒绝回退，接刀与实际刀票正覆盖。12全active探索无继承未降低断言，采用既有四style0–19／六人active，40seed2／328通过；没有改变公开板子或机器人策略。
 
@@ -282,7 +282,7 @@ front97／893/type/build、actualChromium36及中英实际PNG过，三路0剩余
 
 ## P6：石像鬼与整阶段完成
 
-第16项gargoyle按[冻结卡](rules/awa-gargoyle-v1.md)交付独立typed具体role查验、每实例禁重复、完整旧知识转移及原生本夜查后刀。world私有完成范围绑定原role/native state/ability/inspection/life/phase；真实完整死亡提案后继承，目标耗尽不假报告或消费。审查发现的转移清空、字段顺序误拒、第三次耗尽未完成、native状态替换旧授权均修复，查后六类撤权、熊/墓/Knight/White/Beauty/Dream/Hidden交互及copy/gift独立账本纳入core32/229。
+第16项gargoyle按[冻结卡](../rules/awa-gargoyle-v1.md)交付独立typed具体role查验、每实例禁重复、完整旧知识转移及原生本夜查后刀。world私有完成范围绑定原role/native state/ability/inspection/life/phase；真实完整死亡提案后继承，目标耗尽不假报告或消费。审查发现的转移清空、字段顺序误拒、第三次耗尽未完成、native状态替换旧授权均修复，查后六类撤权、熊/墓/Knight/White/Beauty/Dream/Hidden交互及copy/gift独立账本纳入core32/229。
 
 最终目录16verified／48planned，完整release1176／105387／131文件、0失败、smoke/type/deps/boundaries/i18n通过，`/tmp/awa-p6-release-verified.log`。所有已支持542实际本机SDK/ACP/混合双语完整局与每局严格Tape、各板受限观察seed和资源故障专项共同回归；石像新增36完整局＋4gift重复拒绝/纠正任务。两板40 seed零拒绝回退、自然终局、真实查验/接刀/新刀票正覆盖及全重放；十二人0–19初探无接刀，扩展定位53后采用固定40–59，不改板子/策略或降低断言。
 
@@ -294,7 +294,7 @@ front103／953、type/build、actualChromium42、中文接刀与英文十二人�
 
 ## P7：通灵师
 
-第17项psychic按[冻结卡](rules/awa-psychic-v1.md)与[契约](psychic.md)交付：Good神职，600女巫后允许跨夜重验/无工具skip；共用role_check明确实例policy，旧Garg默认规则保留。同名schema/validator中性，bound实例统一控制stage/目标/Baseline/共享提示；合法skip只关本夜不耗use，scope/policy/生命/gateway再验、完整JSON语义转移，不授狼或Garg刀权限。
+第17项psychic按[冻结卡](../rules/awa-psychic-v1.md)与[契约](psychic.md)交付：Good神职，600女巫后允许跨夜重验/无工具skip；共用role_check明确实例policy，旧Garg默认规则保留。同名schema/validator中性，bound实例统一控制stage/目标/Baseline/共享提示；合法skip只关本夜不耗use，scope/policy/生命/gateway再验、完整JSON语义转移，不授狼或Garg刀权限。
 
 最终source type/deps/boundaries/i18n与受影响engine/config/catalog/console **527/10558/42文件**过；通灵core24，连Garg/config58/413，三路独立复查0阻断。最终实际基础50＋Garg36＋通灵36＝**122双语SDK/ACP/混合完整局与全部严格Tape**、两角色80受限seed/Tape＋8gift专项 **73/36177**，日志`/tmp/awa-p7-psychic-wire-final.log`；新角色40seed实际查验/重验/skip自然终局0拒绝回退。没有把前P6全部542历史source当本笔复跑全部。
 
@@ -328,7 +328,7 @@ front103／953、type/build、actualChromium42、中文接刀与英文十二人�
 
 ## P7：机械狼完整交付
 
-第 18 项 mechanical_wolf 按[冻结卡](rules/awa-mechanical-wolf-v1.md)与[接入契约](mechanical-wolf.md)完整交付：六学习结果及独立次夜资源、250 模式/580 学习/650 技能/660 额外刀、真实批后固定首刀夜、仅穿普通 Guard 的额外刀、逐源单次反毒/独立机械盾/连守自罚、被动枪原生命与 owner、具体角色伪装和真实 Wolf 阵营分离。有限角色白名单在 parse/directbootstrap 同验；玩家无毒手因果，机械枪类型披露已明确授权。
+第 18 项 mechanical_wolf 按[冻结卡](../rules/awa-mechanical-wolf-v1.md)与[接入契约](mechanical-wolf.md)完整交付：六学习结果及独立次夜资源、250 模式/580 学习/650 技能/660 额外刀、真实批后固定首刀夜、仅穿普通 Guard 的额外刀、逐源单次反毒/独立机械盾/连守自罚、被动枪原生命与 owner、具体角色伪装和真实 Wolf 阵营分离。有限角色白名单在 parse/directbootstrap 同验；玩家无毒手因果，机械枪类型披露已明确授权。
 
 三路独立发现的 skill 模式序列化绕过、毒瓶 gateway 后耗尽、枪浅 owner/camp/container、配置诊断及双语前缀问题均修并复查；真实同批不假接/不同提案保前缀、外部 G02 与原生排他也有实际核心场景。最终 verified 源码 type/deps/boundaries/i18n、engine/config/catalog **627/8916**，**176 双语本地完整局＋40 受限 seed/全部严格 Tape（90/46157）**通过；没有把候选 source 冒认激活后，登记后同矩阵再次运行。
 
@@ -336,7 +336,7 @@ front **119/1078**、type/build、实际 Chromium **50**与中英真实 PNG root
 
 ## P7：奇迹商人完整交付
 
-第19项 miracle_merchant 按[冻结卡](rules/awa-miracle-merchant-v1.md)及[接入契约](miracle-merchant.md)交付：125任意夜一次赠予／700独立当夜或后夜幸运验毒守，普通与Lucky独立库存、同actor同kind本夜及守前夜联合目标限制；原ID/activation/state/actor-target生命最终复验。真实Wolf不授且冻结MerchantBacklash提案，Dream可挡但不返次数，首夜遗言／徽章／全部死亡后PM判胜。无即时成功或donorID、opaque giftID、个人账本分离DTO、God分类不向任何玩家输出；死亡永久失效、transfer不返库存、copy附加gift拒绝。
+第19项 miracle_merchant 按[冻结卡](../rules/awa-miracle-merchant-v1.md)及[接入契约](miracle-merchant.md)交付：125任意夜一次赠予／700独立当夜或后夜幸运验毒守，普通与Lucky独立库存、同actor同kind本夜及守前夜联合目标限制；原ID/activation/state/actor-target生命最终复验。真实Wolf不授且冻结MerchantBacklash提案，Dream可挡但不返次数，首夜遗言／徽章／全部死亡后PM判胜。无即时成功或donorID、opaque giftID、个人账本分离DTO、God分类不向任何玩家输出；死亡永久失效、transfer不返库存、copy附加gift拒绝。
 
 三路修复并复查提交后账本变动、实例ID漂移、Lucky毒误用强制原生directive、none本人目标例外与roleCard锚点；真实反噬末神／末狼／徽章终局和九类字面Source计划相互验证。**verified最终source全release1463／134151／151文件＋smoke/type/deps/boundaries/i18n全过**，包括原632＋新54＝**686本机双语SDK/ACP/混合完整局及全部严格Tape**、各板种子与故障专项。新角色两板各20seed自然终局、0拒绝回退、赠予/反噬/Lucky/wait正分支及全重放；未把candidate54冒认激活后门槛。
 
@@ -344,11 +344,11 @@ front **127／1140**、type/build、实际Chromium **54**及中英真实PNG root
 
 ## P7：混血儿规则冻结
 
-[规则卡](rules/awa-hybrid-v1.md)与[实现边界](hybrid.md)明确首夜榜样、实体 Good 民与独立 victory affiliation、真实阵营快照、验好及无狼权限，采用 Melbourne/GTV 核心并单列 AWA 精确选择。既有 God replay 保存合法私有事实；普通公开事件与玩家投影不带隐藏归属，未新增匿名 public perspective。三路冻结审查与修正见[审查记录](reviews/p7-hybrid-rules.md)。本笔仅文档，Hybrid 仍 planned，19 verified/45 planned 不变；下一笔完整角色/双语/6与12示例/真实本地通路/Tape/seed/前端门槛通过后才能启用，P7 后续四项与 P8–P10/T6/长局目标保持。
+[规则卡](../rules/awa-hybrid-v1.md)与[实现边界](hybrid.md)明确首夜榜样、实体 Good 民与独立 victory affiliation、真实阵营快照、验好及无狼权限，采用 Melbourne/GTV 核心并单列 AWA 精确选择。既有 God replay 保存合法私有事实；普通公开事件与玩家投影不带隐藏归属，未新增匿名 public perspective。三路冻结审查与修正见[审查记录](reviews/p7-hybrid-rules.md)。本笔仅文档，Hybrid 仍 planned，19 verified/45 planned 不变；下一笔完整角色/双语/6与12示例/真实本地通路/Tape/seed/前端门槛通过后才能启用，P7 后续四项与 P8–P10/T6/长局目标保持。
 
 ## P7：混血儿完整交付
 
-第20项 Hybrid 按[规则卡](rules/awa-hybrid-v1.md#hybrid)与[接入契约](hybrid.md)完成：110首夜必选，真实Good民/验好不变，胜利独立跟随提交时榜样真camp；原Victory组件/数组/空内容与actor/target原生命最终复验，同步只首个提交、同日重入拒绝。本人仅choice，God affiliation不进入任何玩家输入，目标无通知/狼混无夜聊刀权；死者胜利/屠民与全真狼死后的Good优先仍由既有成员和实体统计决定。
+第20项 Hybrid 按[规则卡](../rules/awa-hybrid-v1.md#hybrid)与[接入契约](hybrid.md)完成：110首夜必选，真实Good民/验好不变，胜利独立跟随提交时榜样真camp；原Victory组件/数组/空内容与actor/target原生命最终复验，同步只首个提交、同日重入拒绝。本人仅choice，God affiliation不进入任何玩家输入，目标无通知/狼混无夜聊刀权；死者胜利/屠民与全真狼死后的Good优先仍由既有成员和实体统计决定。
 
 审查发现真实SDK/ACP默认fallback会代选，已由显式 `allow_fallback:false` 共用校验修正，连注入备用策略也不调用；记录used=false、原重试/传输诊断和none，8故障落盘/失败Tape与篡改检测通过。十二人首日警选在公布夜死前，人工脚本按all electorate补齐H8请求；未改引擎流程。英文长终局caption遮角色已修为仅封盘席位预留空间，实际终局bbox断言与root/L双语PNG目检通过。
 
@@ -358,7 +358,7 @@ front **127／1140**、type/build、实际Chromium **54**及中英真实PNG root
 
 ## P7：魔镜少女规则冻结
 
-[规则卡](rules/awa-mirror-girl-v1.md#mirror_girl)与[实现边界](mirror-girl.md)按网易2023-10-26正文和官方35/126秒规则帧冻结具体role禁重复；明确AWA独立600/mirror policy、optional/空目标闭夜、稳定ID/复活保历史、fresh copy/gift与完整transfer、原ID/来源/历史提交终验。三policy分别提示/调度、不借Garg原生完成权，四普通狼AWA例不冒原觉醒隐狼镜隐迷踪。R/A/L/D[冻结复查](reviews/p7-mirror-girl-rules.md)0文档阻断。本笔纯文档，不注册角色/policy或配置，目录20 verified/44 planned不变；共用作用域缺口独立fix，后续完整Mirror启用必须过全部角色门槛，P7余3及P8–P10/T6/长局保持。
+[规则卡](../rules/awa-mirror-girl-v1.md#mirror_girl)与[实现边界](mirror-girl.md)按网易2023-10-26正文和官方35/126秒规则帧冻结具体role禁重复；明确AWA独立600/mirror policy、optional/空目标闭夜、稳定ID/复活保历史、fresh copy/gift与完整transfer、原ID/来源/历史提交终验。三policy分别提示/调度、不借Garg原生完成权，四普通狼AWA例不冒原觉醒隐狼镜隐迷踪。R/A/L/D[冻结复查](reviews/p7-mirror-girl-rules.md)0文档阻断。本笔纯文档，不注册角色/policy或配置，目录20 verified/44 planned不变；共用作用域缺口独立fix，后续完整Mirror启用必须过全部角色门槛，P7余3及P8–P10/T6/长局保持。
 
 ## P7：具体身份查验原归属修正
 
@@ -368,7 +368,7 @@ Gargoyle/Psychic共用执行器绑定原ability ID/activation与来源ref/分类
 
 ## P7：魔镜少女完整交付
 
-第21项mirror_girl沿[规则卡](rules/awa-mirror-girl-v1.md#mirror_girl)/[实现边界](mirror-girl.md)增加独立600 mirror policy：optional、整局按实例稳定ID禁重查、无目标闭夜不花uses、真Good神/胜利身份不变；Garg180/原生查后刀及Psychic600/repeat保持独立。能力贡献与实际实例预收三handler、显式Prompt/Baseline/ObservedBot映射；fresh native/copy/gift空历史严格校数组结构，transfer保完整旧状态，重apply/复活不清native历史、转出不补发。
+第21项mirror_girl沿[规则卡](../rules/awa-mirror-girl-v1.md#mirror_girl)/[实现边界](mirror-girl.md)增加独立600 mirror policy：optional、整局按实例稳定ID禁重查、无目标闭夜不花uses、真Good神/胜利身份不变；Garg180/原生查后刀及Psychic600/repeat保持独立。能力贡献与实际实例预收三handler、显式Prompt/Baseline/ObservedBot映射；fresh native/copy/gift空历史严格校数组结构，transfer保完整旧状态，重apply/复活不清native历史、转出不补发。
 
 A审发现完整ability/source与事件裁剪漏洞、假空history结构，已改元数据/state/history/result/source字段白名单和真正空数组校验；God原资料保留、玩家不继承未知内部字段。R逐盘核八人工oracle与末目标变历史/取消/原life/闭夜；king徽reason按直接放逐voted_out修字面预期。L/D实图确认验尽目标时所有人仍活，no_targets文案改为“没有可查验的存活目标”，原机器reason/原话不改。
 
@@ -378,7 +378,7 @@ A审发现完整ability/source与事件裁剪漏洞、假空history结构，已�
 
 ## P7：觉醒隐狼规则冻结
 
-[规则卡](rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)与[实现边界](awakened-hidden-wolf.md)冻结原七角色/十二人镜隐组合、580即刻模板标签/实际900激活、主动实际激活次夜与Hunter同夜末armed、独立资源与无目标wait；once额外刀可留后夜、独立刀毒盾无机械反毒/破盾/模式/自罚。A关于迟到激活、Mirror原库存依赖、双盾毒顺序，R关于Native/复制枪类型及玩家event档stage推来源的意见已明确修正，见[冻结审查](reviews/p7-awakened-hidden-rules.md)。本笔纯文档，Aw仍planned/目录21 verified43 planned不变；随后按底座职责分笔及完整Aw/原12板通路/双语/全gate启用，P7余2及P8–P10/64角色22机制/长局T6继续。
+[规则卡](../rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)与[实现边界](awakened-hidden-wolf.md)冻结原七角色/十二人镜隐组合、580即刻模板标签/实际900激活、主动实际激活次夜与Hunter同夜末armed、独立资源与无目标wait；once额外刀可留后夜、独立刀毒盾无机械反毒/破盾/模式/自罚。A关于迟到激活、Mirror原库存依赖、双盾毒顺序，R关于Native/复制枪类型及玩家event档stage推来源的意见已明确修正，见[冻结审查](reviews/p7-awakened-hidden-rules.md)。本笔纯文档，Aw仍planned/目录21 verified43 planned不变；随后按底座职责分笔及完整Aw/原12板通路/双语/全gate启用，P7余2及P8–P10/64角色22机制/长局T6继续。
 
 ## P7：中立玩家枪底座
 
@@ -450,31 +450,31 @@ Black完整功能commit `83cac45`；赠枪底座 `5c41428`、死亡实例许可 
 
 ## 2026-10-09 P8 首项：咒狐
 
-[规则卡](rules/netease-cursed-fox-v1.md)与[三组审查/验证](reviews/p8-cursed-fox.md)已交付；implemented首项、剩余40项planned，P8/P9/P10持续推进。三组源/执行/时序问题修复复查关闭；本批2441后端、229前端、88浏览器无失败，1000固定seed局及48实际双语SDK/ACP/MCP局含strict Tape。未推送、未运行真实模型；总体任务等待用户最终验收。下一项丘比特规则草案正在核对计数、保密与殉情波次，不把草案登记为支持。
+[规则卡](../rules/netease-cursed-fox-v1.md)与[三组审查/验证](reviews/p8-cursed-fox.md)已交付；implemented首项、剩余40项planned，P8/P9/P10持续推进。三组源/执行/时序问题修复复查关闭；本批2441后端、229前端、88浏览器无失败，1000固定seed局及48实际双语SDK/ACP/MCP局含strict Tape。未推送、未运行真实模型；总体任务等待用户最终验收。下一项丘比特规则草案正在核对计数、保密与殉情波次，不把草案登记为支持。
 
 ## 2026-10-09 P8 第二项：丘比特
 
-[来源策略卡](rules/sourced-cupid-v1.md)区分网易2017丘比特始终跟随与Lui-même未被选丘比特仍随好人，保留真实身份/刀权、情侣互认ID、殉情禁技能和完整链后胜利。三组审查发现的请求构造撤权、当前关系DTO生命、数组choice丢失、取消与外部种子漏链均修复复查。60实际双语三transport局/Tape、480受限ObservedBot局逐局Tape、1200World基线、前端/浏览器与最终源码门禁分别见[验收](reviews/p8-cupid.md)。implemented已2项，23verified/39planned；杠精与首组事件道具、P9/P10继续开放，不关闭总体用户验收。本批只本地commit，未push或调用真实模型。
+[来源策略卡](../rules/sourced-cupid-v1.md)区分网易2017丘比特始终跟随与Lui-même未被选丘比特仍随好人，保留真实身份/刀权、情侣互认ID、殉情禁技能和完整链后胜利。三组审查发现的请求构造撤权、当前关系DTO生命、数组choice丢失、取消与外部种子漏链均修复复查。60实际双语三transport局/Tape、480受限ObservedBot局逐局Tape、1200World基线、前端/浏览器与最终源码门禁分别见[验收](reviews/p8-cupid.md)。implemented已2项，23verified/39planned；杠精与首组事件道具、P9/P10继续开放，不关闭总体用户验收。本批只本地commit，未push或调用真实模型。
 
 ## P8 第三项：杠精（2026-10-09）
 
-杠精implemented，来源为Melbourne Masters 2026特定赛事，唯一具名AWA普通发言前改编。匿名活人严格过半、整局一次付费、临时普通/PK禁票、完整徽资格与配置权重、原发言顺序/骑士自爆间隙、生命/身份/phase撤权及前端活人翻牌均闭环；三组已报告项修复复查关闭。见[规则卡](rules/awa-melbourne-debater-v1.md)/[验收](reviews/p8-debater.md)。最终冻结源码后完整backend 2648/237397/219文件、frontend248/2411/36文件、Chromium104/104均0失败；check/lint/format/build通过。36实际本机双语三transport完整局/Tape、320受限观察局逐Tape、1008独立World基线分别记录。当前23verified/3implemented/38planned；首组事件道具/P9/P10继续，总体等待用户最终验收。
+杠精implemented，来源为Melbourne Masters 2026特定赛事，唯一具名AWA普通发言前改编。匿名活人严格过半、整局一次付费、临时普通/PK禁票、完整徽资格与配置权重、原发言顺序/骑士自爆间隙、生命/身份/phase撤权及前端活人翻牌均闭环；三组已报告项修复复查关闭。见[规则卡](../rules/awa-melbourne-debater-v1.md)/[验收](reviews/p8-debater.md)。最终冻结源码后完整backend 2648/237397/219文件、frontend248/2411/36文件、Chromium104/104均0失败；check/lint/format/build通过。36实际本机双语三transport完整局/Tape、320受限观察局逐Tape、1008独立World基线分别记录。当前23verified/3implemented/38planned；首组事件道具/P9/P10继续，总体等待用户最终验收。
 
 ## P8 首组有限事件与道具：匿名墙（2026-10-09）
 
-发行商New Moon匿名墙独立变体适配为AWA首日完整非终局Voting后一次窗口，唯一event pack与anonymous_note个人实例；默认关闭、七基础组合有限支持。schema/库存/私有提示、晚撤权/异常finally、匿名多重集合shuffle、God与公共矩阵、录制/严格Tape及共享回放呈现闭环。三组审查与共享夹具污染修正均复查关闭，见[规则卡](rules/awa-wall-notes-v1.md)/[最终验收](reviews/p8-wall-notes.md)。最终backend2726/247401/222文件、frontend258/2508/38文件、Chromium112/112全部0失败；check/lint/format、双端build通过。24实际双语本机SDK/ACP/MCP/混合完整局逐Tape，200受限自然观察局逐Tape与1000独立World基线分别记录。P8既定三角色和首组有限事件道具已implemented；不是36卡/通用道具全部实现。目录23verified/3implemented/38planned，P9/P10继续，总体待用户最终验收。仅本地commit，未push/真实模型/秘密读取。
+发行商New Moon匿名墙独立变体适配为AWA首日完整非终局Voting后一次窗口，唯一event pack与anonymous_note个人实例；默认关闭、七基础组合有限支持。schema/库存/私有提示、晚撤权/异常finally、匿名多重集合shuffle、God与公共矩阵、录制/严格Tape及共享回放呈现闭环。三组审查与共享夹具污染修正均复查关闭，见[规则卡](../rules/awa-wall-notes-v1.md)/[最终验收](reviews/p8-wall-notes.md)。最终backend2726/247401/222文件、frontend258/2508/38文件、Chromium112/112全部0失败；check/lint/format、双端build通过。24实际双语本机SDK/ACP/MCP/混合完整局逐Tape，200受限自然观察局逐Tape与1000独立World基线分别记录。P8既定三角色和首组有限事件道具已implemented；不是36卡/通用道具全部实现。目录23verified/3implemented/38planned，P9/P10继续，总体待用户最终验收。仅本地commit，未push/真实模型/秘密读取。
 
 ## P9a 首项：盗贼（2026-10-09）
 
-唯一来源策略真实N+2发牌、两Wolf必选与其它可保留、原生新身份/库存及首夜动作、原物理牌交换/晚授权、私有提示/录制/strict Tape和初始回放身份已完整贯通。52核心/失败Tape/样例测试，90实际双语三transport完整局及逐Tape、200受限ObservedBot逐Tape、1000独立World自然局分别验证。三组只读审查所有报告项修复复验关闭。最终后端2834/266021/225文件、前端267/2601/40文件、Chromium120/120均零失败；check/lint/format、双端build通过。见[规则卡](rules/lui-meme-thief-v1.md)/[验收](reviews/p9-thief.md)。当前23verified/4implemented/37planned，继续P9a其余角色及P9/P10；仅本地commit，整体仍待用户最终验收。
+唯一来源策略真实N+2发牌、两Wolf必选与其它可保留、原生新身份/库存及首夜动作、原物理牌交换/晚授权、私有提示/录制/strict Tape和初始回放身份已完整贯通。52核心/失败Tape/样例测试，90实际双语三transport完整局及逐Tape、200受限ObservedBot逐Tape、1000独立World自然局分别验证。三组只读审查所有报告项修复复验关闭。最终后端2834/266021/225文件、前端267/2601/40文件、Chromium120/120均零失败；check/lint/format、双端build通过。见[规则卡](../rules/lui-meme-thief-v1.md)/[验收](reviews/p9-thief.md)。当前23verified/4implemented/37planned，继续P9a其余角色及P9/P10；仅本地commit，整体仍待用户最终验收。
 
 ## P9a 第二项：野孩子（2026-10-09）
 
-唯一来源AWA适配首夜必选榜样、实际完整死亡波次转真实阵营/胜利、下一实际Night才双向狼队权限、原始roster与严格因果Tape已贯通。47核心/309断言、60实际双语三transport完整局及逐Tape、8真实严格失败partial Tape、200受限观察局逐Tape、1000独立World自然局（788转换/678实际activation）分别验证。三组已报告问题修复并由原审查者复验闭合。冻结源码后全backend **2932/281583/229文件**、frontend **277/2696/42文件**、完整Chromium **128/128**均0失败；type/lint/format与双端build通过，双语12人实际PNG/shared frame已目检。见[规则卡](rules/awa-lui-meme-wild-child-v1.md)/[验收](reviews/p9-wild-child.md)。当前23verified/5implemented/36planned；main本地commit，继续千面人/P9/P10，总体待用户最终验收，无push/真实模型/用户configs或秘密操作。
+唯一来源AWA适配首夜必选榜样、实际完整死亡波次转真实阵营/胜利、下一实际Night才双向狼队权限、原始roster与严格因果Tape已贯通。47核心/309断言、60实际双语三transport完整局及逐Tape、8真实严格失败partial Tape、200受限观察局逐Tape、1000独立World自然局（788转换/678实际activation）分别验证。三组已报告问题修复并由原审查者复验闭合。冻结源码后全backend **2932/281583/229文件**、frontend **277/2696/42文件**、完整Chromium **128/128**均0失败；type/lint/format与双端build通过，双语12人实际PNG/shared frame已目检。见[规则卡](../rules/awa-lui-meme-wild-child-v1.md)/[验收](reviews/p9-wild-child.md)。当前23verified/5implemented/36planned；main本地commit，继续千面人/P9/P10，总体待用户最终验收，无push/真实模型/用户configs或秘密操作。
 
 ## P9a 千面人规则冻结
 
-网易现用公开卡表真实HTTP与静态解码确认一狼强制、无狼仍必选，与已实施发行商Thief默认分开。三组只读审查/复验已关闭空方配置和请求/私有槽/录制字段缺口，共享底座、原Thief兼容与God/本人实际回放门禁冻结于[规则卡](rules/awa-netease-shapeshifter-v1.md)。尚未注册，目录23verified/5implemented/36planned不变；立即接续实现，整体仍待用户最终验收。
+网易现用公开卡表真实HTTP与静态解码确认一狼强制、无狼仍必选，与已实施发行商Thief默认分开。三组只读审查/复验已关闭空方配置和请求/私有槽/录制字段缺口，共享底座、原Thief兼容与God/本人实际回放门禁冻结于[规则卡](../rules/awa-netease-shapeshifter-v1.md)。尚未注册，目录23verified/5implemented/36planned不变；立即接续实现，整体仍待用户最终验收。
 
 ## P9a：共用初始身份物理牌底座
 
@@ -482,19 +482,19 @@ Thief 原物理牌/投影/optional 政策保持，共用 kind 所有权与 PM/Ni
 
 ## P9a 第三项：千面人（2026-10-09）
 
-网易现用卡表直接来源的首夜必选、一狼强制与原Thief optional策略分开，真实N+2物理deal、原native身份/库存及同夜技能、独立God/本人档、严格decision/物理牌因果Tape已贯通。三组只读复核报告全部修复复验闭合，见[规则卡](rules/awa-netease-shapeshifter-v1.md)/[验收](reviews/p9-shapeshifter.md)。冻结源码后全backend **3049/303048/233文件**、frontend **294/2869/44文件**、完整Chromium **140/140**均0失败；check/lint/format、双端build通过。96实际双语三transport完整局及逐Tape、8严格失败Tape、200受限观察逐Tape、1000独立World自然局分别验证；旧Thief90实际双语完整局/Tape保持。当前23verified/6implemented/35planned，main本地commit，立即继续孤独少女/P9/P10，总体待用户最终验收。
+网易现用卡表直接来源的首夜必选、一狼强制与原Thief optional策略分开，真实N+2物理deal、原native身份/库存及同夜技能、独立God/本人档、严格decision/物理牌因果Tape已贯通。三组只读复核报告全部修复复验闭合，见[规则卡](../rules/awa-netease-shapeshifter-v1.md)/[验收](reviews/p9-shapeshifter.md)。冻结源码后全backend **3049/303048/233文件**、frontend **294/2869/44文件**、完整Chromium **140/140**均0失败；check/lint/format、双端build通过。96实际双语三transport完整局及逐Tape、8严格失败Tape、200受限观察逐Tape、1000独立World自然局分别验证；旧Thief90实际双语完整局/Tape保持。当前23verified/6implemented/35planned，main本地commit，立即继续孤独少女/P9/P10，总体待用户最终验收。
 
 ## P9a 孤独少女规则冻结
 
-网易num24直接来源与2020相近暗恋者/2024赛事评分辅助已分别核实；首夜关系秘密、真实Good民与独立胜利、原Camp/空Victory授权、精确God→本人lean事件/关闭矩阵及终局winner推断边界，经三路原审查者复验闭合。见[规则卡](rules/awa-netease-lonely-girl-v1.md)/[冻结审查](reviews/p9-lonely-girl-rules.md)。仅冻结文档，未注册；目录23verified/6implemented/35planned不变，立即接续实现，整体仍待用户最终验收。
+网易num24直接来源与2020相近暗恋者/2024赛事评分辅助已分别核实；首夜关系秘密、真实Good民与独立胜利、原Camp/空Victory授权、精确God→本人lean事件/关闭矩阵及终局winner推断边界，经三路原审查者复验闭合。见[规则卡](../rules/awa-netease-lonely-girl-v1.md)/[冻结审查](reviews/p9-lonely-girl-rules.md)。仅冻结文档，未注册；目录23verified/6implemented/35planned不变，立即接续实现，整体仍待用户最终验收。
 
 ## P9a 第四项：孤独少女（2026-10-09）
 
-来源首夜崇拜、胜利跟随与双方秘密语义通过独立原组件授权、God五键/本人lean四键事实、原Girl/Good民边、独立胜利目标和失败安全审计贯通。保持Hybrid旧窗口/状态/接口，修正首夜阶段重入、getter、原choice污染和慢ACP中途刷盘边界，三组报告全部复查闭合。见[规则卡](rules/awa-netease-lonely-girl-v1.md)/[验收](reviews/p9-lonely-girl.md)。冻结源码全backend **3164/318832/237文件**、frontend **312/3072/46文件**、完整Chromium **152/152**均0失败；check/lint/format及双端build通过。72真实双语三transport完整局逐Tape、8严格失败partialTape、200受限Observed逐Tape、1000独立World自然终局分别验证。目录23verified/7implemented/34planned；main本地commit，接续鬼魂新娘/P9/P10，总体待用户最终验收。
+来源首夜崇拜、胜利跟随与双方秘密语义通过独立原组件授权、God五键/本人lean四键事实、原Girl/Good民边、独立胜利目标和失败安全审计贯通。保持Hybrid旧窗口/状态/接口，修正首夜阶段重入、getter、原choice污染和慢ACP中途刷盘边界，三组报告全部复查闭合。见[规则卡](../rules/awa-netease-lonely-girl-v1.md)/[验收](reviews/p9-lonely-girl.md)。冻结源码全backend **3164/318832/237文件**、frontend **312/3072/46文件**、完整Chromium **152/152**均0失败；check/lint/format及双端build通过。72真实双语三transport完整局逐Tape、8严格失败partialTape、200受限Observed逐Tape、1000独立World自然终局分别验证。目录23verified/7implemented/34planned；main本地commit，接续鬼魂新娘/P9/P10，总体待用户最终验收。
 
 ## P9a 鬼魂新娘规则冻结
 
-接孤独少女4a9b953，直接赛事来源条款完整保留，唯一严格12人AWA三方改编含新郎/证婚人共同选择、两条私聊、原身份库存/独立目标、复合死亡源、单刀owner与两级继承、吞徽及独立全roster封盘。三组原审查者所有规则问题修正复查闭合，见[规则卡](rules/awa-melbourne-ghost-bride-v1.md)/[冻结审查](reviews/p9-ghost-bride-rules.md)。本笔仅冻结docs、未注册角色、无未来门禁通过声明，目录仍23verified/7implemented/34planned；立即接续生产实现与实际通路，总体待用户最终验收。
+接孤独少女4a9b953，直接赛事来源条款完整保留，唯一严格12人AWA三方改编含新郎/证婚人共同选择、两条私聊、原身份库存/独立目标、复合死亡源、单刀owner与两级继承、吞徽及独立全roster封盘。三组原审查者所有规则问题修正复查闭合，见[规则卡](../rules/awa-melbourne-ghost-bride-v1.md)/[冻结审查](reviews/p9-ghost-bride-rules.md)。本笔仅冻结docs、未注册角色、无未来门禁通过声明，目录仍23verified/7implemented/34planned；立即接续生产实现与实际通路，总体待用户最终验收。
 
 ## P9a 鬼魂新娘独立授权基础
 
@@ -506,11 +506,11 @@ Thief 原物理牌/投影/optional 政策保持，共用 kind 所有权与 PM/Ni
 
 ## P9a 第五项：鬼魂新娘（2026-10-10）
 
-精确12人来源AWA三方板、首夜共同婚礼/两条私聊、原身份库存/独立目标、逐夜普通包→情侣→证婚人唯一刀、复合殉情/枪及吞徽、完整Night死亡公开后封盘已交付。三组只读复验关闭；24真实双语三transport完整局/Tape、8严格失败partialTape、200受限Observed逐Tape与1000独立World（逐局公开死亡ID投影等于真实Alive）分别验证。最终全backend **3315/329141/246文件**、frontend **364/3862/48文件**、完整Chromium **172/172**均0失败，check/lint/format及双端build通过。Observed仅每语言seed43一次blind Hunter合法拒绝，fallback0，不以隐藏Alive喂bot。见[规则卡](rules/awa-melbourne-ghost-bride-v1.md)/[验收](reviews/p9-ghost-bride.md)。P9a五角色技术功能完成，23verified/8implemented/33planned；继续猎魔人/P9b–f/P10，总体待用户最终验收。没有push/真实模型/用户configs或秘密操作。
+精确12人来源AWA三方板、首夜共同婚礼/两条私聊、原身份库存/独立目标、逐夜普通包→情侣→证婚人唯一刀、复合殉情/枪及吞徽、完整Night死亡公开后封盘已交付。三组只读复验关闭；24真实双语三transport完整局/Tape、8严格失败partialTape、200受限Observed逐Tape与1000独立World（逐局公开死亡ID投影等于真实Alive）分别验证。最终全backend **3315/329141/246文件**、frontend **364/3862/48文件**、完整Chromium **172/172**均0失败，check/lint/format及双端build通过。Observed仅每语言seed43一次blind Hunter合法拒绝，fallback0，不以隐藏Alive喂bot。见[规则卡](../rules/awa-melbourne-ghost-bride-v1.md)/[验收](reviews/p9-ghost-bride.md)。P9a五角色技术功能完成，23verified/8implemented/33planned；继续猎魔人/P9b–f/P10，总体待用户最终验收。没有push/真实模型/用户configs或秘密操作。
 
 ## P9b 猎魔人规则冻结（2026-10-10）
 
-接f5153b8鬼魂新娘，网易公开卡表num23直接来源与具名AWA补全已分开。四份精确6/12×City/Side板、第二夜规范选择/弃猎、原生Witch毒免、真实Camp猎杀/反噬、整波源授权冻结/Night完整公开后胜利、精确CP/private矩阵及晚取消fault-plan Tape边界经三组只读修正复验闭合。见[规则卡](rules/awa-netease-demon-hunter-v1.md)/[冻结审查](reviews/p9-demon-hunter-rules.md)。尚未注册，23verified/8implemented/33planned不变；立即接续实现，不把文档当角色功能完成。
+接f5153b8鬼魂新娘，网易公开卡表num23直接来源与具名AWA补全已分开。四份精确6/12×City/Side板、第二夜规范选择/弃猎、原生Witch毒免、真实Camp猎杀/反噬、整波源授权冻结/Night完整公开后胜利、精确CP/private矩阵及晚取消fault-plan Tape边界经三组只读修正复验闭合。见[规则卡](../rules/awa-netease-demon-hunter-v1.md)/[冻结审查](reviews/p9-demon-hunter-rules.md)。尚未注册，23verified/8implemented/33planned不变；立即接续实现，不把文档当角色功能完成。
 
 ## P9b 猎魔人有限故障输入与严格数据底座
 

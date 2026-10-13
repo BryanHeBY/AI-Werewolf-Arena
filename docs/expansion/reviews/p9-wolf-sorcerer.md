@@ -3,7 +3,7 @@
 ## 范围与来源
 
 公开预设 awa_wolf_sorcerer_12_v1：3 普通狼、狼术师、4 村民、通灵师、女巫、猎人、魔术师，十二人屠边。
-对应 [规则卡](../rules/awa-wolf-sorcerer-seats-v1.md)。参考 Melbourne Masters 狼术师与魔幻对决说明；该有限 AWA 版本不代表所有同名商业板型。
+对应 [规则卡](../../rules/awa-wolf-sorcerer-seats-v1.md)。参考 Melbourne Masters 狼术师与魔幻对决说明；该有限 AWA 版本不代表所有同名商业板型。
 
 默认两名换位角色从第二夜开始，显式支持同步 firstNight=1 的 AWA 特化。交换映射为 M(W(number))；两套独立号码库存、空过、重叠环、相同配对相消且不退款。夜间枪口 original/exchanged 可配，白天目标不延伸映射。
 首个有效选择或明确空过前无狼队知识；此后保留历史互认，本夜夜聊和刀权仍等本夜交换完成。

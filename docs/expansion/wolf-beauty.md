@@ -1,6 +1,6 @@
 # P6：狼美人接入与契约
 
-第十三项原生角色 `wolf_beauty`／狼美人／Wolf Beauty，规则以 [AWA 1.0.0 冻结卡](rules/awa-wolf-beauty-v1.md) 为准。P9 觉醒狼美人分别实现；2023 设计赛投稿不作为本普通版的规则。
+第十三项原生角色 `wolf_beauty`／狼美人／Wolf Beauty，规则以 [AWA 1.0.0 冻结卡](../rules/awa-wolf-beauty-v1.md) 为准。P9 觉醒狼美人分别实现；2023 设计赛投稿不作为本普通版的规则。
 
 ## 行动、状态与授权
 

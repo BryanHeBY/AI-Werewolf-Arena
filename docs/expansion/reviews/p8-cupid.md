@@ -1,6 +1,6 @@
 # P8 丘比特功能审查
 
-[来源策略卡](../rules/sourced-cupid-v1.md)冻结网易2017与Lui-même两个实际分歧版本；首批只开放13角色有限City组合。丘比特登记implemented，整体P8–P10及用户最终验收仍开放。
+[来源策略卡](../../rules/sourced-cupid-v1.md)冻结网易2017与Lui-même两个实际分歧版本；首批只开放13角色有限City组合。丘比特登记implemented，整体P8–P10及用户最终验收仍开放。
 
 ## 独立审查与修正
 

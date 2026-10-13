@@ -4,7 +4,13 @@
 
 当前产品链路为：LLM/ACP 对局 → `record/` 对局记录 → `.replay.json` 导出文件 → React 离线复盘播放器。在线观战、多租户在线服务隔离和外部服务 API 不在此次范围；玩家信息权限、并行对局隔离及离线复盘共享契约属于既有链路与扩充验收。
 
-## 玩法扩充计划
+## 当前规则与架构
+
+- [现行规则卡与来源](rules/README.md)
+- [完整架构重构计划](refactor/plan.md)
+- [架构重构进度与证据](refactor/progress.md)
+
+## 玩法扩充历史与验收
 
 - [完整目标、机制、中英双语要求与阶段路线](expansion/roadmap.md)
 - [64 项可配置角色目录与规则来源](expansion/roles.md)

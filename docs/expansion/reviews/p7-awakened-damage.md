@@ -1,6 +1,6 @@
 # P7：觉醒隐狼刀毒盾伤害底座
 
-落实[规则卡](../rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)中的独立伤害语义。Aw仍planned，目录21 verified/43 planned；本笔没有注册角色、学习/库存、900激活或公开配置。
+落实[规则卡](../../rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)中的独立伤害语义。Aw仍planned，目录21 verified/43 planned；本笔没有注册角色、学习/库存、900激活或公开配置。
 
 ## 职责与实际行为
 

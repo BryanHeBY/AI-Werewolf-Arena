@@ -3,7 +3,7 @@
  * 输入为原源／目标引用及死亡原因；输出为仍当前的关系和具体阶段结果，bindings 是唯一权威状态。
  * resolved 表示牵连已经领取，applied 表示目标确实死亡；梦阻断仍消耗领取，不能退款重触发。
  * 回执只保同一绑定的不可伪造运行时引用，不复制状态或授予死亡权限；不标死或发布事实。
- * 规则来源：docs/expansion/rules/awa-wolf-beauty-v1.md，各政策保留其独立来源抑制。
+ * 规则来源：docs/rules/awa-wolf-beauty-v1.md，各政策保留其独立来源抑制。
  */
 import type { WolfBeautyReadState as WolfBeautyState } from "@ai-werewolf-arena/game-contract";
 

@@ -1,6 +1,6 @@
 # P9d 寻香识命原生十二人完整技术验收
 
-本批登记寻香魅影与从 P9f 前置的觉醒预言家为 implemented，限定[规则卡](../rules/awa-fragrant-pair-seer-twelve-v1.md)的原生十二人组合。目录达到23 verified、29 implemented、12 planned，52/64；P9d及两个觉醒前置已齐。继续 P9e六项、P9f余六项与P10，保持main本地功能提交。
+本批登记寻香魅影与从 P9f 前置的觉醒预言家为 implemented，限定[规则卡](../../rules/awa-fragrant-pair-seer-twelve-v1.md)的原生十二人组合。目录达到23 verified、29 implemented、12 planned，52/64；P9d及两个觉醒前置已齐。继续 P9e六项、P9f余六项与P10，保持main本地功能提交。
 
 ## 完整交付与独立审查
 

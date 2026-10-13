@@ -1,6 +1,6 @@
 # P7：魔镜少女实现边界
 
-规则以[冻结卡](rules/awa-mirror-girl-v1.md#mirror_girl)为准。角色实现与[功能验收](reviews/p7-mirror-girl.md)分别记录当前有限组合；觉醒隐狼的原镜隐迷踪联合板仍需其后续独立交付。
+规则以[冻结卡](../rules/awa-mirror-girl-v1.md#mirror_girl)为准。角色实现与[功能验收](reviews/p7-mirror-girl.md)分别记录当前有限组合；觉醒隐狼的原镜隐迷踪联合板仍需其后续独立交付。
 
 ## 继续使用的职责
 
@@ -45,4 +45,4 @@ role/state/ID/policy/来源/生命与时钟在await、gateway与应用点复验�
 3. 完整Mirror启用：policy、profile/阶段、规则/目标/Baseline/观察机器人、所有权/转移、两语、有限6/12配置、核心与跨角色/多policy判例、字面完整SDK/ACP/混合两语局与严格Tape、每板20seed正分支、unit/type/build/actual browser与PNG，独立审查闭环后标verified并提交。
 4. 觉醒隐狼后续启用笔交付原镜隐迷踪板的真实组合，冻结其当夜role伪装、夜末能力和复制资源，另做联合矩阵。不能提前用机械狼替代或把4普通狼的AWA样例称完整原板。
 
-支持范围、R/A/T/L/D分工和最终门槛见[规则卡](rules/awa-mirror-girl-v1.md)与[delivery](delivery.md)。P7余觉醒隐狼/黑市商人、P8–P10、64/22、长局与T6目标持续。
+支持范围、R/A/T/L/D分工和最终门槛见[规则卡](../rules/awa-mirror-girl-v1.md)与[delivery](delivery.md)。P7余觉醒隐狼/黑市商人、P8–P10、64/22、长局与T6目标持续。

@@ -1,6 +1,6 @@
 # P7 机械狼规则冻结
 
-规则：[AWA Mechanical Wolf 1.0.0](../rules/awa-mechanical-wolf-v1.md)。版本以赛事特有机械技能为基础，明确AWA自主私选模式/晚学/next-night/反射和首刀窗口；不混经典版同人穿heal双刀或觉醒隐狼。
+规则：[AWA Mechanical Wolf 1.0.0](../../rules/awa-mechanical-wolf-v1.md)。版本以赛事特有机械技能为基础，明确AWA自主私选模式/晚学/next-night/反射和首刀窗口；不混经典版同人穿heal双刀或觉醒隐狼。
 
 R核primary角色/赛事板及经典版2024/2026冲突，卡注明资料不足的AWA选择。冻结复查关闭六结果/五技能计数、每原始Poison各反一次、反射绕施毒者机械盾不递归/self同理、Dream仍挡、普通Guard+Heal仅普通抵消、学习独立于kill/skill模式等歧义。L/D核真Role/Camp不改、role伪装独立、choice不是死亡/图形变更、core6开局白名单非隐藏目标筛选、God因果ID必须裁除出玩家资料；A建议唯一typed资源owner、原生命effects与最终死亡owner边界。
 

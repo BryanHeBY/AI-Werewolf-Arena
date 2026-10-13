@@ -1,6 +1,6 @@
 # P7：黑市商人完整运行与双语交付
 
-规则：[AWA Black Market Merchant 1.0.0](../rules/awa-black-market-merchant-v1.md#black_market_merchant)；所有权：[实现契约](../black-market-merchant.md)。规则冻结、死亡许可与赠枪底座分别由 `0b389d8`、`0c3c878`、`5c41428` 提交，本笔交付最后一个P7角色。
+规则：[AWA Black Market Merchant 1.0.0](../../rules/awa-black-market-merchant-v1.md#black_market_merchant)；所有权：[实现契约](../black-market-merchant.md)。规则冻结、死亡许可与赠枪底座分别由 `0b389d8`、`0c3c878`、`5c41428` 提交，本笔交付最后一个P7角色。
 
 ## 实现与审查修正
 

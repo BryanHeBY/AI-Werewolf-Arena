@@ -2,7 +2,7 @@
  * 负责狼美人原源死亡后的未领取牵连 proposal。
  * 输入为死亡原体、原因和 hook 上下文；输出只引用当前绑定及原 nightEffect 旗标。
  * 实际领取、梦阻断和死亡提交随后由 relation owner 在原结算时点执行，不能在 hook 提前付款。
- * 失效关系不发 proposal；不修改库存、标死或发布事实。规则见 docs/expansion/rules/awa-wolf-beauty-v1.md。
+ * 失效关系不发 proposal；不修改库存、标死或发布事实。规则见 docs/rules/awa-wolf-beauty-v1.md。
  */
 import { getWolfBeautyState } from "./state";
 import { Role, DeathCause } from "../../../../core/domain/model";

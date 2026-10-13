@@ -1,6 +1,6 @@
 # P9d 觉醒之夜有限板完整技术验收
 
-本批登记夜之贵族与觉醒愚者为 implemented，仅支持[规则卡](../rules/awa-noble-secret-body-twelve-v1.md)的四份精确原生十二人政策组合。目录达到23 verified、27 implemented、14 planned，50/64。P9d寻香魅影／觉醒预言家、P9e六项、P9f余六项及P10继续；不推送，不把功能门禁当用户最终验收。
+本批登记夜之贵族与觉醒愚者为 implemented，仅支持[规则卡](../../rules/awa-noble-secret-body-twelve-v1.md)的四份精确原生十二人政策组合。目录达到23 verified、27 implemented、14 planned，50/64。P9d寻香魅影／觉醒预言家、P9e六项、P9f余六项及P10继续；不推送，不把功能门禁当用户最终验收。
 
 ## 功能与独立交叉审查
 

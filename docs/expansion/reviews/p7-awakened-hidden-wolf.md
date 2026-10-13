@@ -1,6 +1,6 @@
 # P7：觉醒隐狼完整运行、原镜隐板与双语交付
 
-规则：[AWA Awakened Hidden Wolf 1.0.0](../rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)；所有权：[实现契约](../awakened-hidden-wolf.md)。先前规则、枪协议、刀毒盾、资源与strict策略分笔保留；本笔启用完整角色及明确支持的六人缩编、原十二人板。
+规则：[AWA Awakened Hidden Wolf 1.0.0](../../rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)；所有权：[实现契约](../awakened-hidden-wolf.md)。先前规则、枪协议、刀毒盾、资源与strict策略分笔保留；本笔启用完整角色及明确支持的六人缩编、原十二人板。
 
 ## 实现与首审修正
 

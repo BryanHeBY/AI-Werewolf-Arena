@@ -4,7 +4,7 @@
 
 ## 唯一职责与有限规则
 
-沿[规则卡](../rules/awa-fragrant-pair-seer-twelve-v1.md)限定原生十二人。独立native:pair_check实例拥有双目标历史、次数及最后行动日，不能复制、赠予或转移。Fragrant owner持原玩家Alive/Role/独立Camp、原能力与记录feed；原生命变更撤销请求。原施法者首次死亡不倒销本周期已付关系。
+沿[规则卡](../../rules/awa-fragrant-pair-seer-twelve-v1.md)限定原生十二人。独立native:pair_check实例拥有双目标历史、次数及最后行动日，不能复制、赠予或转移。Fragrant owner持原玩家Alive/Role/独立Camp、原能力与记录feed；原生命变更撤销请求。原施法者首次死亡不倒销本周期已付关系。
 
 真实开夜先到期、固定命名流一次抽取、冻结刀权；player knowledge与实际触发分开。严格bind/pair及狼聊/刀不fallback，普通Guard/Witch/day行为兼容。CLI JSON往返共用exact preset；Hunter缺省仅可补awa_qualified_sources_v1，其它政策拒绝。计数及实际阵营在安装owner时再次校验。
 

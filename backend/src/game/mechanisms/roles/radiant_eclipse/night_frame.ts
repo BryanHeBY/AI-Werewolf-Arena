@@ -3,7 +3,7 @@
  * 输入为当前能力原体和目标租约；输出为当次资格检查、封存夜效果与关闭事实。
  * 仅原匹配来源可以付款，借用关闭不恢复失效原体；payload、租约和原主抑制仍在此持有。
  * 公共 metadata 安装和退役写归共享实例 owner，原库存、抑制解除、生命校验和失败前缀不变。
- * 规则依据：docs/expansion/rules/awa-radiant-eclipse-twelve-v1.md。
+ * 规则依据：docs/rules/awa-radiant-eclipse-twelve-v1.md。
  */
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";

@@ -10,7 +10,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Role, WinCondition } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
 export const CURSED_FOX_GOAL = "netease_cursed_fox_last_faction_v1";
-/** 规则来源与工程补全见 docs/expansion/rules/netease-cursed-fox-v1.md。 */
+/** 规则来源与工程补全见 docs/rules/netease-cursed-fox-v1.md。 */
 export const CURSED_FOX_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
     role: Role.CursedFox,

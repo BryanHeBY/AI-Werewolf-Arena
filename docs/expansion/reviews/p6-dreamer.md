@@ -1,6 +1,6 @@
 # P6 摄梦人交叉审查
 
-范围：[卡](../rules/awa-dreamer-v1.md)、[契约](../dreamer.md)。普通必选梦、Night关系/保护/连续梦亡、逐actor夜枪来源、same-wave因集合、匿名死亡、能力实例/取消/World级重入、中英/记录/展示。
+范围：[卡](../../rules/awa-dreamer-v1.md)、[契约](../dreamer.md)。普通必选梦、Night关系/保护/连续梦亡、逐actor夜枪来源、same-wave因集合、匿名死亡、能力实例/取消/World级重入、中英/记录/展示。
 
 ## 已运行证据
 

@@ -1,6 +1,6 @@
 # P5 守墓人交叉审查
 
-范围：[冻结卡](../rules/awa-gravekeeper-v1.md)、[契约](../gravekeeper.md)。被动前日真实放逐主目标/冻结camp-only标签、无pending泄露、night时点/去重/死亡、夜间中断、双语/严格序列化、真实接入/记录/展示。石像鬼与后续角色未提前启用。
+范围：[冻结卡](../../rules/awa-gravekeeper-v1.md)、[契约](../gravekeeper.md)。被动前日真实放逐主目标/冻结camp-only标签、无pending泄露、night时点/去重/死亡、夜间中断、双语/严格序列化、真实接入/记录/展示。石像鬼与后续角色未提前启用。
 
 ## 主代理已运行证据
 

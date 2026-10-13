@@ -6,10 +6,10 @@ roadmap P5要求狼王、白狼王、骑士、守墓人逐项规则卡、双语�
 
 | 角色   | 明确版本与接口                                                                                                                    | 完整场景证据                                                          | 公开6/12板子                      |
 | ------ | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------- |
-| 狼王   | [规则卡](../rules/awa-wolf-king-v1.md)、[契约](../wolf-king.md)；独立死亡枪/受限死因、普通狼权限                                  | [审查](p5-wolf-king.md)，30双语actual SDK/ACP/混合局+Tape，24受限seed | six/twelve_player_wolf_king       |
-| 白狼王 | [规则卡](../rules/awa-white-wolf-king-v1.md)、[契约](../white-wolf-king.md)；四自爆窗口、null带人、无吞待夜死、独立WhiteWolfBlast | [审查](p5-white-wolf-king.md)，54actual局+Tape、32active受限seed      | six/twelve_player_white_wolf_king |
-| 骑士   | [规则卡](../rules/awa-knight-v1.md)、[契约](../knight.md)；三离散窗/一次机会、真实camp、Duel/DuelFailure、末神/末狼与徽章         | [审查](p5-knight.md)，48actual局+Tape、40active受限seed               | six/twelve_player_knight          |
-| 守墓人 | [规则卡](../rules/awa-gravekeeper-v1.md)、[契约](../gravekeeper.md)；前日实际exile冻结标签、后夜被动反馈/actor-only、无主动tool   | [审查](p5-gravekeeper.md)，48actual局+Tape、40active受限seed          | six/twelve_player_gravekeeper     |
+| 狼王   | [规则卡](../../rules/awa-wolf-king-v1.md)、[契约](../wolf-king.md)；独立死亡枪/受限死因、普通狼权限                                  | [审查](p5-wolf-king.md)，30双语actual SDK/ACP/混合局+Tape，24受限seed | six/twelve_player_wolf_king       |
+| 白狼王 | [规则卡](../../rules/awa-white-wolf-king-v1.md)、[契约](../white-wolf-king.md)；四自爆窗口、null带人、无吞待夜死、独立WhiteWolfBlast | [审查](p5-white-wolf-king.md)，54actual局+Tape、32active受限seed      | six/twelve_player_white_wolf_king |
+| 骑士   | [规则卡](../../rules/awa-knight-v1.md)、[契约](../knight.md)；三离散窗/一次机会、真实camp、Duel/DuelFailure、末神/末狼与徽章         | [审查](p5-knight.md)，48actual局+Tape、40active受限seed               | six/twelve_player_knight          |
+| 守墓人 | [规则卡](../../rules/awa-gravekeeper-v1.md)、[契约](../gravekeeper.md)；前日实际exile冻结标签、后夜被动反馈/actor-only、无主动tool   | [审查](p5-gravekeeper.md)，48actual局+Tape、40active受限seed          | six/twelve_player_gravekeeper     |
 
 基础7项保持[P4范围](p4-activation.md)。四角色版本不是所有同名平台统一规范：Knight/White的分歧与组织者/官方站资料各自记在卡。Awakened Knight等不复用普通角色；石像鬼未注册，守墓人当前12人是普通狼改编示例，不冒充来源的石像鬼板子。
 

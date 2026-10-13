@@ -1,6 +1,6 @@
 # P7 机械狼完整启用审查
 
-本笔按 [冻结卡](../rules/awa-mechanical-wolf-v1.md) 和 [接入契约](../mechanical-wolf.md) 将第 18 项 `mechanical_wolf` 交付为 verified。六学习结果、五机械技能、实际阶段/网关/PM/死亡 owner、双语提示/信息权限、配置/记录/呈现共同启用；不是只登记角色或把普通 gift 冒充机械技能。目录现 18 verified、46 planned，P7 尚未结束。
+本笔按 [冻结卡](../../rules/awa-mechanical-wolf-v1.md) 和 [接入契约](../mechanical-wolf.md) 将第 18 项 `mechanical_wolf` 交付为 verified。六学习结果、五机械技能、实际阶段/网关/PM/死亡 owner、双语提示/信息权限、配置/记录/呈现共同启用；不是只登记角色或把普通 gift 冒充机械技能。目录现 18 verified、46 planned，P7 尚未结束。
 
 ## 独立审查与修复
 

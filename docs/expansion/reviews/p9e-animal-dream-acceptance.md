@@ -1,6 +1,6 @@
 # P9e 动物梦境原生十二人验收
 
-本批白猫、子狐、河豚完成完整技术验收，限定[联合规则卡](../rules/awa-animal-dream-twelve-v1.md)的原生十二人范围，登记 implemented。当前 **55/64：23 verified、32 implemented、9 planned**。原长期目标保持暂停，按用户限定的三角色收口任务结束，等待后续重构指令。
+本批白猫、子狐、河豚完成完整技术验收，限定[联合规则卡](../../rules/awa-animal-dream-twelve-v1.md)的原生十二人范围，登记 implemented。当前 **55/64：23 verified、32 implemented、9 planned**。原长期目标保持暂停，按用户限定的三角色收口任务结束，等待后续重构指令。
 
 ## 功能范围
 

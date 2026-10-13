@@ -1,6 +1,6 @@
 # P7 奇迹商人完整启用审查
 
-按 [冻结卡](../rules/awa-miracle-merchant-v1.md) 和 [接入契约](../miracle-merchant.md)，第19项奇迹商人的 once trade、当夜/延后独立幸运技能、同actor联合目标约束、原生命、反噬与Dream、隐私、死亡/转移/复制、中英文与公开板子一起交付。verified最终目录与源码已通过完整发布门槛；候选证据和最终激活后证据分开保留。
+按 [冻结卡](../../rules/awa-miracle-merchant-v1.md) 和 [接入契约](../miracle-merchant.md)，第19项奇迹商人的 once trade、当夜/延后独立幸运技能、同actor联合目标约束、原生命、反噬与Dream、隐私、死亡/转移/复制、中英文与公开板子一起交付。verified最终目录与源码已通过完整发布门槛；候选证据和最终激活后证据分开保留。
 
 ## 第一方及 AWA 决策
 

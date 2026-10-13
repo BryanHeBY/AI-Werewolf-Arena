@@ -6,13 +6,13 @@ P7七角色已经逐项交付，当前目录23 verified/41 planned。用户最�
 
 | 角色     | 规则与独立交付证据                                                                    | 公开六/十二板子ID后缀 |
 | -------- | ------------------------------------------------------------------------------------- | --------------------- |
-| 通灵师   | [规则](../rules/awa-psychic-v1.md)、[验收](p7-psychic.md)                             | psychic               |
-| 机械狼   | [规则](../rules/awa-mechanical-wolf-v1.md)、[验收](p7-mechanical-wolf.md)             | mechanical_wolf       |
-| 奇迹商人 | [规则](../rules/awa-miracle-merchant-v1.md)、[验收](p7-miracle-merchant.md)           | miracle_merchant      |
-| 混血儿   | [规则](../rules/awa-hybrid-v1.md)、[验收](p7-hybrid.md)                               | hybrid                |
-| 魔镜少女 | [规则](../rules/awa-mirror-girl-v1.md)、[验收](p7-mirror-girl.md)                     | mirror_girl           |
-| 觉醒隐狼 | [规则](../rules/awa-awakened-hidden-wolf-v1.md)、[验收](p7-awakened-hidden-wolf.md)   | awakened_hidden_wolf  |
-| 黑市商人 | [规则](../rules/awa-black-market-merchant-v1.md)、[验收](p7-black-market-merchant.md) | black_market_merchant |
+| 通灵师   | [规则](../../rules/awa-psychic-v1.md)、[验收](p7-psychic.md)                             | psychic               |
+| 机械狼   | [规则](../../rules/awa-mechanical-wolf-v1.md)、[验收](p7-mechanical-wolf.md)             | mechanical_wolf       |
+| 奇迹商人 | [规则](../../rules/awa-miracle-merchant-v1.md)、[验收](p7-miracle-merchant.md)           | miracle_merchant      |
+| 混血儿   | [规则](../../rules/awa-hybrid-v1.md)、[验收](p7-hybrid.md)                               | hybrid                |
+| 魔镜少女 | [规则](../../rules/awa-mirror-girl-v1.md)、[验收](p7-mirror-girl.md)                     | mirror_girl           |
+| 觉醒隐狼 | [规则](../../rules/awa-awakened-hidden-wolf-v1.md)、[验收](p7-awakened-hidden-wolf.md)   | awakened_hidden_wolf  |
+| 黑市商人 | [规则](../../rules/awa-black-market-merchant-v1.md)、[验收](p7-black-market-merchant.md) | black_market_merchant |
 
 每行板子均为`six_player_<后缀>`和`twelve_player_<后缀>`，在configs.example/boards与games中维护。规则集为AWA明确版本及各自有限组合，不声明23角色任意排列、社区所有同名版本或64角色全部可运行。
 

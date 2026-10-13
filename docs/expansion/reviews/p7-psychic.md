@@ -1,6 +1,6 @@
 # P7 通灵师交叉审查
 
-范围：[冻结卡](../rules/awa-psychic-v1.md)、[契约](../psychic.md)，共用role_check的policy、女巫后时序、repeat/skip、原生命与私有受众、真实接入/重放、中英前端。纯文件归属先独立提交46a4bed，行为与角色启用本笔。
+范围：[冻结卡](../../rules/awa-psychic-v1.md)、[契约](../psychic.md)，共用role_check的policy、女巫后时序、repeat/skip、原生命与私有受众、真实接入/重放、中英前端。纯文件归属先独立提交46a4bed，行为与角色启用本笔。
 
 ## 发现与处理
 

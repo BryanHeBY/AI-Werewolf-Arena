@@ -1,6 +1,6 @@
 # P7：通灵师与具体查验实例规则
 
-第17项 `psychic`／通灵师／Spirit Seer，采用[AWA冻结卡](rules/awa-psychic-v1.md)。普通通灵师、魔镜少女、石像鬼及机械/觉醒的复制者分别冻结，AWA 机械狼有限白名单板已独立交付，见[机械接入契约](mechanical-wolf.md)。
+第17项 `psychic`／通灵师／Spirit Seer，采用[AWA冻结卡](../rules/awa-psychic-v1.md)。普通通灵师、魔镜少女、石像鬼及机械/觉醒的复制者分别冻结，AWA 机械狼有限白名单板已独立交付，见[机械接入契约](mechanical-wolf.md)。
 
 ## 共用能力，分开的规则
 
@@ -30,7 +30,7 @@ bun run --cwd backend run --configs-dir ../configs.example --game-config-name si
 bun run --cwd backend run --configs-dir ../configs.example --game-config-name twelve_player_psychic
 ```
 
-[6字面场景](../../backend/tests/support/psychic_scenarios.ts)×SDK/ACP/混合×两语=36本机完整局及全部严格Tape，覆盖首夜刀通灵又救、次夜repeat/skip、Good/Wolf末边、王枪报告前缀与完整流程、隐狼接前/后重验、十二人三夜及真实竞选/毒枪/警徽。演员只持本人静态计划；机械原生查验为另一个独立技能，时点以[机械卡](rules/awa-mechanical-wolf-v1.md)为准。两公开板各20受限seed自然终局、0拒绝/回退、实际查验/重验/skip正覆盖并全部重放。
+[6字面场景](../../backend/tests/support/psychic_scenarios.ts)×SDK/ACP/混合×两语=36本机完整局及全部严格Tape，覆盖首夜刀通灵又救、次夜repeat/skip、Good/Wolf末边、王枪报告前缀与完整流程、隐狼接前/后重验、十二人三夜及真实竞选/毒枪/警徽。演员只持本人静态计划；机械原生查验为另一个独立技能，时点以[机械卡](../rules/awa-mechanical-wolf-v1.md)为准。两公开板各20受限seed自然终局、0拒绝/回退、实际查验/重验/skip正覆盖并全部重放。
 
 另四个真实factory双policy赠予任务验证Garg重复拒绝后纠正、Psychic允许重复、身份/完整规则/接收只读及MCP/Agent回收，不算完整局。核心固定gateway后撤权、同refpolicy改变、null取消、copy独立账本、同World完整pipeline重入、跨World、梦保护/连续梦死/魅惑实际结算后报告保留。前端从实际God档验证skip/role信息不改seat、后续真实死亡及胜者独立，纯frame/原文/locale不变；证据见[三路审查](reviews/p7-psychic.md)。
 

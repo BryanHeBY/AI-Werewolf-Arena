@@ -4,7 +4,7 @@
  * 输出是原隐藏事实、记录条目及有公开根事件时的披露。receipt 是运行时权威凭据，不能当普通归档数据。
  * 本模块只构造原纯数据 payload；先追加全部事实，再执行可失败的发布与必要记录，保留已发生前缀。
  * 不修改 Alive，不准备、消费或取消双生绑定，也不扩展关系、请求遗言/警徽、处理枪或切换阶段。
- * 规则依据：docs/expansion/rules/awa-fragrant-pair-seer-twelve-v1.md。
+ * 规则依据：docs/rules/awa-fragrant-pair-seer-twelve-v1.md。
  */
 import { getSessionRecorder } from "../../../../recording/recording_context";
 import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";

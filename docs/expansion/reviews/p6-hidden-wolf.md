@@ -1,6 +1,6 @@
 # P6 隐狼交叉审查
 
-范围：[规则卡](../rules/awa-hidden-wolf-v1.md)、[契约](../hidden-wolf.md)。单向知识／接刀与伪装、真实死亡及原生命、history audience、SDK/ACP共用观察、中英及公开God复盘。功能提交门槛与三路正式复查已完成，P6及完整目标继续。
+范围：[规则卡](../../rules/awa-hidden-wolf-v1.md)、[契约](../hidden-wolf.md)。单向知识／接刀与伪装、真实死亡及原生命、history audience、SDK/ACP共用观察、中英及公开God复盘。功能提交门槛与三路正式复查已完成，P6及完整目标继续。
 
 ## 发现、修正与独立复查
 

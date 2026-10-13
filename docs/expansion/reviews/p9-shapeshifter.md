@@ -1,6 +1,6 @@
 # P9a 千面人首夜身份选择验收
 
-接规则冻结492fc8f与物理牌底座53c569d，唯一有限 `awa_netease_shapeshifter_two_extra_villagers_v1`。网易现用官方卡表直接支持首夜先选两身份之一、任一狼牌强制选狼；两额外Villager、City/七基础组合、至少两配置Wolf、N>=6和无混扩展均明确AWA补全，见[规则卡](../rules/awa-netease-shapeshifter-v1.md)。真实N+2一次shuffle，千面人可落底，候选两Wolf不早判空场；不重开、不重抽。0Wolf必选任一、1Wolf仅狼slot、2Wolf任一，与Thief的两Wolf强制/其它optional分别保留。
+接规则冻结492fc8f与物理牌底座53c569d，唯一有限 `awa_netease_shapeshifter_two_extra_villagers_v1`。网易现用官方卡表直接支持首夜先选两身份之一、任一狼牌强制选狼；两额外Villager、City/七基础组合、至少两配置Wolf、N>=6和无混扩展均明确AWA补全，见[规则卡](../../rules/awa-netease-shapeshifter-v1.md)。真实N+2一次shuffle，千面人可落底，候选两Wolf不早判空场；不重开、不重抽。0Wolf必选任一、1Wolf仅狼slot、2Wolf任一，与Thief的两Wolf强制/其它optional分别保留。
 
 ## 实现与复核
 

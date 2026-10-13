@@ -2,7 +2,7 @@
 
 ## 范围与证据
 
-解药当前目标校验/不消费预检/最终再验、解药耗尽的当前刀口输入、独立毒来源及原生/赠予NightPipeline回归。冻结规则见[基础规则卡](../rules/awa-classic-v1.md)，契约见[witch-resolution](../witch-resolution.md)。不覆盖全部Hunter、空枪、自爆、死亡链、G03/G04或新角色。
+解药当前目标校验/不消费预检/最终再验、解药耗尽的当前刀口输入、独立毒来源及原生/赠予NightPipeline回归。冻结规则见[基础规则卡](../../rules/awa-classic-v1.md)，契约见[witch-resolution](../witch-resolution.md)。不覆盖全部Hunter、空枪、自爆、死亡链、G03/G04或新角色。
 
 - 最终release:check：490测试、30327断言、84文件，类型/deps/模块边界/i18n扫描/test/smoke全部通过，日志 `/tmp/awa-p4-g02-witch-release-complete.log`。含34实际SDK/ACP/混合中英六/十二基础完整对局及每局严格Tape。
 - 人工规则专项31测试/325断言，日志 `/tmp/awa-p4-g02-witch-targets.log`：当夜mark、合法更正、不存在/死亡/伪造旧目标、无错误消费、16字面来源组合、当前信息未知与保历史、实际复合毒猎人gun0。

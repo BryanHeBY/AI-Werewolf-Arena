@@ -1,6 +1,6 @@
 # P4 G03：统一基础死亡收尾
 
-本子批统一基础夜间、放逐、默认放逐前自爆和猎人追加死亡的写入/收尾，沿用[基础规则卡](rules/awa-classic-v1.md)与[死亡窗口授权](death-action-authority.md)。接续实现已完成[四个公开窗口](self-destruct-windows.md)、[警长/白痴资格](public-participation.md)与[G04结果](victory-record-display.md)，原子批边界不代表当前仍待修。
+本子批统一基础夜间、放逐、默认放逐前自爆和猎人追加死亡的写入/收尾，沿用[基础规则卡](../rules/awa-classic-v1.md)与[死亡窗口授权](death-action-authority.md)。接续实现已完成[四个公开窗口](self-destruct-windows.md)、[警长/白痴资格](public-participation.md)与[G04结果](victory-record-display.md)，原子批边界不代表当前仍待修。
 
 ## 顺序与状态负责人
 

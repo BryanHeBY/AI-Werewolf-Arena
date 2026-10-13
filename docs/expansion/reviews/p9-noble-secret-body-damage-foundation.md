@@ -4,7 +4,7 @@
 
 ## 规则与职责
 
-依据[有限规则卡](../rules/awa-noble-secret-body-twelve-v1.md)的确定伤害次序，`planSecretBodyBlock` 接收最终有效来源，从指定目标抵消一项；指定目标无有效伤害时转向本人，指定目标实际挡过后不再转护自己。明确不指定目标时直接自护。无人有伤害时返回 `blocked:null`。
+依据[有限规则卡](../../rules/awa-noble-secret-body-twelve-v1.md)的确定伤害次序，`planSecretBodyBlock` 接收最终有效来源，从指定目标抵消一项；指定目标无有效伤害时转向本人，指定目标实际挡过后不再转护自己。明确不指定目标时直接自护。无人有伤害时返回 `blocked:null`。
 
 固定优先级为 `wolf_kill → poison → demon_hunt → demon_hunt_backlash → servant_expiry`，与输入数组顺序无关。输出复制并冻结，其他目标及剩余来源保持独立。
 

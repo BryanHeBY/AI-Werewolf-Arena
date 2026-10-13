@@ -16,11 +16,11 @@ CLI目录、能力授权、独立玩家/展示DTO、统一回放事实reader、�
 
 ## P8 第三项：杠精（2026-10-09）
 
-杠精implemented，来源为Melbourne Masters 2026特定赛事，唯一具名AWA普通发言前改编。匿名活人严格过半、整局一次付费、临时普通/PK禁票、完整徽资格与配置权重、原发言顺序/骑士自爆间隙、生命/身份/phase撤权及前端活人翻牌均闭环；三组已报告项修复复查关闭。见[规则卡](../rules/awa-melbourne-debater-v1.md)/[验收](../reviews/p8-debater.md)。最终冻结源码后完整backend 2648/237397/219文件、frontend248/2411/36文件、Chromium104/104均0失败；check/lint/format/build通过。36实际本机双语三transport完整局/Tape、320受限观察局逐Tape、1008独立World基线分别记录。当前23verified/3implemented/38planned；首组事件道具/P9/P10继续，总体等待用户最终验收。
+杠精implemented，来源为Melbourne Masters 2026特定赛事，唯一具名AWA普通发言前改编。匿名活人严格过半、整局一次付费、临时普通/PK禁票、完整徽资格与配置权重、原发言顺序/骑士自爆间隙、生命/身份/phase撤权及前端活人翻牌均闭环；三组已报告项修复复查关闭。见[规则卡](../../rules/awa-melbourne-debater-v1.md)/[验收](../reviews/p8-debater.md)。最终冻结源码后完整backend 2648/237397/219文件、frontend248/2411/36文件、Chromium104/104均0失败；check/lint/format/build通过。36实际本机双语三transport完整局/Tape、320受限观察局逐Tape、1008独立World基线分别记录。当前23verified/3implemented/38planned；首组事件道具/P9/P10继续，总体等待用户最终验收。
 
 ## P8 首组有限事件与道具：匿名墙（2026-10-09）
 
-发行商New Moon匿名墙独立变体适配为AWA首日完整非终局Voting后一次窗口，唯一event pack与anonymous_note个人实例；默认关闭、七基础组合有限支持。schema/库存/私有提示、晚撤权/异常finally、匿名多重集合shuffle、God与公共矩阵、录制/严格Tape及共享回放呈现闭环。三组审查与共享夹具污染修正均复查关闭，见[规则卡](../rules/awa-wall-notes-v1.md)/[最终验收](../reviews/p8-wall-notes.md)。最终backend2726/247401/222文件、frontend258/2508/38文件、Chromium112/112全部0失败；check/lint/format、双端build通过。24实际双语本机SDK/ACP/MCP/混合完整局逐Tape，200受限自然观察局逐Tape与1000独立World基线分别记录。P8既定三角色和首组有限事件道具已implemented；不是36卡/通用道具全部实现。目录23verified/3implemented/38planned，P9/P10继续，总体待用户最终验收。仅本地commit，未push/真实模型/秘密读取。
+发行商New Moon匿名墙独立变体适配为AWA首日完整非终局Voting后一次窗口，唯一event pack与anonymous_note个人实例；默认关闭、七基础组合有限支持。schema/库存/私有提示、晚撤权/异常finally、匿名多重集合shuffle、God与公共矩阵、录制/严格Tape及共享回放呈现闭环。三组审查与共享夹具污染修正均复查关闭，见[规则卡](../../rules/awa-wall-notes-v1.md)/[最终验收](../reviews/p8-wall-notes.md)。最终backend2726/247401/222文件、frontend258/2508/38文件、Chromium112/112全部0失败；check/lint/format、双端build通过。24实际双语本机SDK/ACP/MCP/混合完整局逐Tape，200受限自然观察局逐Tape与1000独立World基线分别记录。P8既定三角色和首组有限事件道具已implemented；不是36卡/通用道具全部实现。目录23verified/3implemented/38planned，P9/P10继续，总体待用户最终验收。仅本地commit，未push/真实模型/秘密读取。
 
 ## 当前 P8–P10 接续（024a933之后）
 
@@ -28,7 +28,7 @@ CLI目录、能力授权、独立玩家/展示DTO、统一回放事实reader、�
 
 ## P9a 孤独少女（2026-10-09）
 
-唯一AWA网易来源版本implemented，保持原Girl/Good民边、独立冻结崇拜目标阵营、死亡后胜利归属以及封盘前的身份秘密；标准N和七基础/City有限组合。原请求/组件/生命/目标/Victory授权、完整失败矩阵、God/lean reader、录制及实际strict Tape贯通，旧Hybrid行为保持，三组审查报告复查闭合。见[规则卡](../rules/awa-netease-lonely-girl-v1.md)/[验收](../reviews/p9-lonely-girl.md)。冻结源码完整后端3164/318832/237文件、前端312/3072/46文件、Chromium152/152全部0失败，check/lint/format和双端build通过；72实际双语三transport完整局/Tape、8严格失败partialTape、200受限Observed逐Tape、1000独立World分别记录。当前23verified/7implemented/34planned，继续鬼魂新娘/P9/P10，总体待最终验收；无push/真实模型/秘密操作。
+唯一AWA网易来源版本implemented，保持原Girl/Good民边、独立冻结崇拜目标阵营、死亡后胜利归属以及封盘前的身份秘密；标准N和七基础/City有限组合。原请求/组件/生命/目标/Victory授权、完整失败矩阵、God/lean reader、录制及实际strict Tape贯通，旧Hybrid行为保持，三组审查报告复查闭合。见[规则卡](../../rules/awa-netease-lonely-girl-v1.md)/[验收](../reviews/p9-lonely-girl.md)。冻结源码完整后端3164/318832/237文件、前端312/3072/46文件、Chromium152/152全部0失败，check/lint/format和双端build通过；72实际双语三transport完整局/Tape、8严格失败partialTape、200受限Observed逐Tape、1000独立World分别记录。当前23verified/7implemented/34planned，继续鬼魂新娘/P9/P10，总体待最终验收；无push/真实模型/秘密操作。
 
 ## 本次 Seer/摄梦/狼美人实施与门禁（本提交，基线 ef2f48f）
 
@@ -137,15 +137,15 @@ Chromium完整门禁在`90cb845`完成；其后`52103ea`仅改变后端警徽请
 
 ## P9a 首项：盗贼（2026-10-09）
 
-唯一来源策略真实N+2发牌、两Wolf必选与其它可保留、原生新身份/库存及首夜动作、原物理牌交换/晚授权、私有提示/录制/strict Tape和初始回放身份已完整贯通。52核心/失败Tape/样例测试，90实际双语三transport完整局及逐Tape、200受限ObservedBot逐Tape、1000独立World自然局分别验证。三组只读审查所有报告项修复复验关闭。最终后端2834/266021/225文件、前端267/2601/40文件、Chromium120/120均零失败；check/lint/format、双端build通过。见[规则卡](../rules/lui-meme-thief-v1.md)/[验收](../reviews/p9-thief.md)。当前23verified/4implemented/37planned，继续P9a其余角色及P9/P10；仅本地commit，整体仍待用户最终验收。
+唯一来源策略真实N+2发牌、两Wolf必选与其它可保留、原生新身份/库存及首夜动作、原物理牌交换/晚授权、私有提示/录制/strict Tape和初始回放身份已完整贯通。52核心/失败Tape/样例测试，90实际双语三transport完整局及逐Tape、200受限ObservedBot逐Tape、1000独立World自然局分别验证。三组只读审查所有报告项修复复验关闭。最终后端2834/266021/225文件、前端267/2601/40文件、Chromium120/120均零失败；check/lint/format、双端build通过。见[规则卡](../../rules/lui-meme-thief-v1.md)/[验收](../reviews/p9-thief.md)。当前23verified/4implemented/37planned，继续P9a其余角色及P9/P10；仅本地commit，整体仍待用户最终验收。
 
 ## P9a 第二项：野孩子（2026-10-09）
 
-唯一来源AWA适配首夜必选榜样、实际完整死亡波次转真实阵营/胜利、下一实际Night才双向狼队权限、原始roster与严格因果Tape已贯通。47核心/309断言、60实际双语三transport完整局及逐Tape、8真实严格失败partial Tape、200受限观察局逐Tape、1000独立World自然局（788转换/678实际activation）分别验证。三组已报告问题修复并由原审查者复验闭合。冻结源码后全backend **2932/281583/229文件**、frontend **277/2696/42文件**、完整Chromium **128/128**均0失败；type/lint/format与双端build通过，双语12人实际PNG/shared frame已目检。见[规则卡](../rules/awa-lui-meme-wild-child-v1.md)/[验收](../reviews/p9-wild-child.md)。当前23verified/5implemented/36planned；main本地commit，继续千面人/P9/P10，总体待用户最终验收，无push/真实模型/用户configs或秘密操作。
+唯一来源AWA适配首夜必选榜样、实际完整死亡波次转真实阵营/胜利、下一实际Night才双向狼队权限、原始roster与严格因果Tape已贯通。47核心/309断言、60实际双语三transport完整局及逐Tape、8真实严格失败partial Tape、200受限观察局逐Tape、1000独立World自然局（788转换/678实际activation）分别验证。三组已报告问题修复并由原审查者复验闭合。冻结源码后全backend **2932/281583/229文件**、frontend **277/2696/42文件**、完整Chromium **128/128**均0失败；type/lint/format与双端build通过，双语12人实际PNG/shared frame已目检。见[规则卡](../../rules/awa-lui-meme-wild-child-v1.md)/[验收](../reviews/p9-wild-child.md)。当前23verified/5implemented/36planned；main本地commit，继续千面人/P9/P10，总体待用户最终验收，无push/真实模型/用户configs或秘密操作。
 
 ## P9a 第五项：鬼魂新娘（2026-10-10）
 
-唯一Melbourne来源AWA精确12人三方板implemented；首夜原请求共同婚礼、私聊/证婚人、原身份库存和独立胜利、普通狼/情侣/证婚人逐夜唯一刀owner、复合殉情/枪源、吞徽与完整Night终局闭环。严格God/四scope投影、CP安全库存/零getter和Proxy、实际provider失败/accepted提交边界及strict Tape贯通，三组报告修复复验关闭。见[规则卡](../rules/awa-melbourne-ghost-bride-v1.md)/[完整验收](../reviews/p9-ghost-bride.md)。最终全backend **3315/329141/246文件**、frontend **364/3862/48文件**、Chromium **172/172**均0失败；check/lint/format及双端build通过。24真实双语三transport完整局逐Tape、8严格失败partialTape、200受限Observed逐Tape、1000独立World及终局公开死亡逐人等于真实Alive分别记录。Observed每语言seed43一次盲枪合法拒绝精确断言，不冒零reject，fallback为0。P9a五角色技术功能已交付，目录23verified/8implemented/33planned；猎魔人规则候选审查继续，P9b–f/P10和总体用户验收保持开放。仅main本地commit，无push/部署/真实模型或用户configs/秘密操作。
+唯一Melbourne来源AWA精确12人三方板implemented；首夜原请求共同婚礼、私聊/证婚人、原身份库存和独立胜利、普通狼/情侣/证婚人逐夜唯一刀owner、复合殉情/枪源、吞徽与完整Night终局闭环。严格God/四scope投影、CP安全库存/零getter和Proxy、实际provider失败/accepted提交边界及strict Tape贯通，三组报告修复复验关闭。见[规则卡](../../rules/awa-melbourne-ghost-bride-v1.md)/[完整验收](../reviews/p9-ghost-bride.md)。最终全backend **3315/329141/246文件**、frontend **364/3862/48文件**、Chromium **172/172**均0失败；check/lint/format及双端build通过。24真实双语三transport完整局逐Tape、8严格失败partialTape、200受限Observed逐Tape、1000独立World及终局公开死亡逐人等于真实Alive分别记录。Observed每语言seed43一次盲枪合法拒绝精确断言，不冒零reject，fallback为0。P9a五角色技术功能已交付，目录23verified/8implemented/33planned；猎魔人规则候选审查继续，P9b–f/P10和总体用户验收保持开放。仅main本地commit，无push/部署/真实模型或用户configs/秘密操作。
 
 ## P9b 猎魔人有限原生夜间交付（2026-10-10）
 

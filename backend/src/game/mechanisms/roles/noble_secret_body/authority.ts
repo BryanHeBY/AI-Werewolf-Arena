@@ -3,7 +3,7 @@
  * 输出为已重检提交、通知、到期提案与显式纯数据快照。单一 owner 持有原实例和付款状态。
  * 正常／撤销、原体替换、资源与记录失败保留原合法前缀，不恢复已付契约或修改对局阶段。
  * 新夜间身份仅关联本 Night 对象；到期消费同一身份，不改变旧日次数值、期限或归档字段。
- * 规则依据：docs/expansion/rules/awa-noble-secret-body-twelve-v1.md。
+ * 规则依据：docs/rules/awa-noble-secret-body-twelve-v1.md。
  */
 import { attachNightUnit, isNightUnit, nightUnitOf, type NightUnit } from "../../../../core/domain/night-unit";
 import { types } from "node:util";

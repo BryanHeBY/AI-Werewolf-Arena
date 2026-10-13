@@ -1,6 +1,6 @@
 # P9e 动物梦境纯状态与有限资格底座
 
-依据[冻结规则](../rules/awa-animal-dream-twelve-v1.md)及[三路预审](p9e-animal-rule-freeze.md)，迁入Fox／Puffer一次资源、WhiteCat延期时钟及四份内部规范形状。未注册Role enum、Profile、Board schema、事件或工具；公开配置仍拒未实现角色，正式52/64和三角色planned不变。
+依据[冻结规则](../../rules/awa-animal-dream-twelve-v1.md)及[三路预审](p9e-animal-rule-freeze.md)，迁入Fox／Puffer一次资源、WhiteCat延期时钟及四份内部规范形状。未注册Role enum、Profile、Board schema、事件或工具；公开配置仍拒未实现角色，正式52/64和三角色planned不变。
 
 ## 职责与实际范围
 

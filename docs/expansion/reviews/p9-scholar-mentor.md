@@ -11,7 +11,7 @@
 - 导师非末狼不参加狼刀；狼队可识别导师，导师不获得队友身份。
 - 不支持复制、转移、复活、第三方或跨扩展混搭。
 
-规则契约：[AWA 学者导师十二人板](../rules/awa-scholar-mentor-twelve-v1.md)。
+规则契约：[AWA 学者导师十二人板](../../rules/awa-scholar-mentor-twelve-v1.md)。
 
 ## 已获得的定向证据
 

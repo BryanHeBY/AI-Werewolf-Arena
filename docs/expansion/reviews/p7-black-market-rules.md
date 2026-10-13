@@ -1,6 +1,6 @@
 # P7：黑市商人规则与实现步骤冻结审查
 
-范围仅[AWA规则卡](../rules/awa-black-market-merchant-v1.md#black_market_merchant)和[资源/提交步骤](../black-market-merchant.md)，不注册角色、不修改生产源码。当前仍 **22 verified/42 planned**；原社区双枪狼王及节目狼兄弟不作为本笔已支持板子。
+范围仅[AWA规则卡](../../rules/awa-black-market-merchant-v1.md#black_market_merchant)和[资源/提交步骤](../black-market-merchant.md)，不注册角色、不修改生产源码。当前仍 **22 verified/42 planned**；原社区双枪狼王及节目狼兄弟不作为本笔已支持板子。
 
 ## 来源与AWA裁决
 

@@ -1,6 +1,6 @@
 # P7：中立玩家枪协议底座
 
-这是[觉醒隐狼规则卡](../rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)要求的独立协议修正，未注册或启用觉醒隐狼。目录仍21 verified/43 planned。
+这是[觉醒隐狼规则卡](../../rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)要求的独立协议修正，未注册或启用觉醒隐狼。目录仍21 verified/43 planned。
 
 ## 实现边界
 

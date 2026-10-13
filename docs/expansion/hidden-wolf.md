@@ -1,6 +1,6 @@
 # P6：隐狼接入与契约
 
-第十五项 `hidden_wolf`／隐狼／Hidden Wolf，采用[AWA冻结卡](rules/awa-hidden-wolf-v1.md)的熊隐狼版本。迷雾的互不认识／固定刀顺位／永久角色平民与P7觉醒隐狼分别处理。
+第十五项 `hidden_wolf`／隐狼／Hidden Wolf，采用[AWA冻结卡](../rules/awa-hidden-wolf-v1.md)的熊隐狼版本。迷雾的互不认识／固定刀顺位／永久角色平民与P7觉醒隐狼分别处理。
 
 ## 身份、信息、接刀
 

@@ -1,6 +1,6 @@
 # P7 混血儿规则冻结交叉审查
 
-范围：[规则卡](../rules/awa-hybrid-v1.md#hybrid)、[实现与验收边界](../hybrid.md)。只冻结下一笔角色的明确规则；不注册角色、不启用配置、不改变19 verified/45 planned计数。
+范围：[规则卡](../../rules/awa-hybrid-v1.md#hybrid)、[实现与验收边界](../hybrid.md)。只冻结下一笔角色的明确规则；不注册角色、不启用配置、不改变19 verified/45 planned计数。
 
 ## 首轮与修正
 

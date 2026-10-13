@@ -1,6 +1,6 @@
 # P4 G03：四个自爆窗口与首日结算
 
-本批完成[基础规则卡](rules/awa-classic-v1.md)的公开窗口执行语义和配置校验；保留默认放逐前窗口。特殊狼自爆效果及其他角色仍按后续阶段交付。
+本批完成[基础规则卡](../rules/awa-classic-v1.md)的公开窗口执行语义和配置校验；保留默认放逐前窗口。特殊狼自爆效果及其他角色仍按后续阶段交付。
 
 ## AWA 明确选择的时点
 
@@ -45,4 +45,4 @@ Daybreak第二天可在预言家验完后直接终局：模型没有后续prompt
 
 ## P5白狼王扩展与接口
 
-四时点及普通wolf_self_destruct保持；白狼王用独立self_destruct_with_target/WhiteWolfBlast/white_wolf_king_self_destruct。SelfDestructWindow.execute现返typed selection，callback接selection，false无效应拒绝后继续更高候选；pipeline保旧summary actorID并带新selfDestruct意图。首日待夜死白狼王不可吞死施放，接收不提前泄露，PhaseManager提交前静默排除；具体角色及来源/接口见[白狼王卡](rules/awa-white-wolf-king-v1.md)与[契约](white-wolf-king.md)。
+四时点及普通wolf_self_destruct保持；白狼王用独立self_destruct_with_target/WhiteWolfBlast/white_wolf_king_self_destruct。SelfDestructWindow.execute现返typed selection，callback接selection，false无效应拒绝后继续更高候选；pipeline保旧summary actorID并带新selfDestruct意图。首日待夜死白狼王不可吞死施放，接收不提前泄露，PhaseManager提交前静默排除；具体角色及来源/接口见[白狼王卡](../rules/awa-white-wolf-king-v1.md)与[契约](white-wolf-king.md)。

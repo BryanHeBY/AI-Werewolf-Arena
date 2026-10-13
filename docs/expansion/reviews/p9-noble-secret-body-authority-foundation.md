@@ -29,4 +29,4 @@ R=`review_scholar_rules`，A=`review_configuration_closure`，全程只读。保
 
 本批连同纯状态和伤害原语7文件为104通过／450断言，`/tmp/awa-noble-authority-maintained-closure.log`。源码与测试类型、新源码lint、格式和diff检查分别保留退出码证据。本批没有公开注册或新角色完成声明。
 
-按[四组合规则卡](../rules/awa-noble-secret-body-twelve-v1.md)继续：独立已告知投影→正式角色／配置及严格请求→猎魔清除和最终有效伤害→真实放逐／翻牌→双语事实与独立Tape→四组合实际传输／私有前端及本批完整验收。
+按[四组合规则卡](../../rules/awa-noble-secret-body-twelve-v1.md)继续：独立已告知投影→正式角色／配置及严格请求→猎魔清除和最终有效伤害→真实放逐／翻牌→双语事实与独立Tape→四组合实际传输／私有前端及本批完整验收。

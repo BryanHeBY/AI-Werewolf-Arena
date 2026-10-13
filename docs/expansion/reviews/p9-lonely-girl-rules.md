@@ -1,6 +1,6 @@
 # P9a 孤独少女规则冻结审查
 
-以[规则卡](../rules/awa-netease-lonely-girl-v1.md)为唯一实施契约。网易现用card num24的原缓存实际HTTP/静态JSON解码支持首夜先选择、胜利跟随和少女不知身份/对象不知被崇拜。2020暗恋者赛事页仅相近语义辅助，不冒完整同名玩法。主代理及delivery独立读取2024官方评分正文，确认少女放逐时始终按平民计分；City计数/Seer Good/冻结原Camp/死亡获胜等明确AWA补全，不冒称评分文裁定。
+以[规则卡](../../rules/awa-netease-lonely-girl-v1.md)为唯一实施契约。网易现用card num24的原缓存实际HTTP/静态JSON解码支持首夜先选择、胜利跟随和少女不知身份/对象不知被崇拜。2020暗恋者赛事页仅相近语义辅助，不冒完整同名玩法。主代理及delivery独立读取2024官方评分正文，确认少女放逐时始终按平民计分；City计数/Seer Good/冻结原Camp/死亡获胜等明确AWA补全，不冒称评分文裁定。
 
 三路只读复验闭合：chain要求原bootstrap候选body/life/Role/privateState/Camp引用和值与immutable roster一致、原Victory空数组引用及内容、提交后membership独立保存；policy要求pending/complete/failed/cancelled资源与Victory矩阵、原资源安全审计、不消费替换主体，以及终局公共winner名单允许必然推断；delivery要求唯一God五字段→本人lean四字段严格reader、独立三字段checkpoint、跨Hybrid/无owner坏档拒绝。全已写入契约，原审查者最后确认无新增冻结阻断。
 

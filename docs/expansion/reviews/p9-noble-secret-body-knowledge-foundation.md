@@ -29,4 +29,4 @@ R=`review_scholar_rules`、A=`review_configuration_closure`、T/L/D=`review_scho
 
 本切片31项，加先前104项，9文件135通过／617断言：`/tmp/awa-noble-known-maintained-first.log`。维护独立测试的首轮类型日志保留：判别联合未收窄与字面期望宽化，已改为明确字面类型及等价字段匹配；原输入不变，最终31项／167断言通过。源码与测试类型、新源码lint、格式及diff检查保留独立退出码。没有把仅领域DTO的配对测试冒认SDK／ACP／MCP隐私证据。
 
-继续正式角色与公开四组合、严格请求／期限、猎魔夜仆例外及FINAL来源、真正放逐翻牌；统一PlayerObservation／statusDirective、私有新通知事件与永久God事实；独立Tape／checkpoint、双语完整实传与故障、实际玩家前端及本板全量验收。下游必查入口见[规则卡](../rules/awa-noble-secret-body-twelve-v1.md)，必须检查完整system/current/delta_messages/schema/错误，不能只测事件行或只藏state字段。
+继续正式角色与公开四组合、严格请求／期限、猎魔夜仆例外及FINAL来源、真正放逐翻牌；统一PlayerObservation／statusDirective、私有新通知事件与永久God事实；独立Tape／checkpoint、双语完整实传与故障、实际玩家前端及本板全量验收。下游必查入口见[规则卡](../../rules/awa-noble-secret-body-twelve-v1.md)，必须检查完整system/current/delta_messages/schema/错误，不能只测事件行或只藏state字段。

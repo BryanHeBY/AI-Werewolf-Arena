@@ -1,6 +1,6 @@
 # P8 首组有限事件与道具：匿名墙
 
-本笔接在杠精功能提交 f8678fe070ef7632ac3f96b0c69774e52a813e90 后，于原目录main线性开发。来源为发行商New Moon规则书“The Writing’s on the Wall”独立变体（印刷10–11/PDF9–10），不是36张事件卡之一；[规则卡](../rules/awa-wall-notes-v1.md)区分来源的匿名自由文字与AWA一次性第一日Voting后适配。唯一pack `awa_wall_notes_once_v1`、event `awa_wall_notes_v1`、item `anonymous_note`。
+本笔接在杠精功能提交 f8678fe070ef7632ac3f96b0c69774e52a813e90 后，于原目录main线性开发。来源为发行商New Moon规则书“The Writing’s on the Wall”独立变体（印刷10–11/PDF9–10），不是36张事件卡之一；[规则卡](../../rules/awa-wall-notes-v1.md)区分来源的匿名自由文字与AWA一次性第一日Voting后适配。唯一pack `awa_wall_notes_once_v1`、event `awa_wall_notes_v1`、item `anonymous_note`。
 
 配置默认关闭，七基础有限白名单，独立整局一次栅栏与个人实例贯通strict schema/反向转换→真实首次非终局Voting结束→完整请求/晚Scope授权→原文字消费/过期→本人DTO/双语→God与公共事实→录制及strict Tape→终端/前端/视频frame。无新角色数量、战斗/胜利效果；不是通用交易、复制、36卡或任意道具框架。早自爆跳白天不补首日窗口，终局不发库存，平票/无人出局/Idiot免死的正常Voting仍可开始。
 

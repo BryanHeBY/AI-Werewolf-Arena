@@ -3,7 +3,7 @@
  * 输出保留原通知、取得先于发布及相同 receiver。真实夜间身份随同一 owner 交付并消费夜末到期。
  * 交接后 pipeline 不再正常开夜或终止；经理保原正常／abort 政策与 bodyResolved 检查。
  * World／day 在原调用点取值，不缓存替身世界；身份不进入请求、MCP、checkpoint 或 Tape。
- * 规则依据：docs/expansion/rules/awa-noble-secret-body-twelve-v1.md。
+ * 规则依据：docs/rules/awa-noble-secret-body-twelve-v1.md。
  */
 import { types } from "node:util";
 import type { NightUnit } from "../../../../core/domain/night-unit";

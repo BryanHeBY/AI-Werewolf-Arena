@@ -1,6 +1,6 @@
 # P8 咒狐功能审查
 
-规则：[来源规则卡](../rules/netease-cursed-fox-v1.md#cursed_fox)。新角色注册为implemented，功能闭环与本批门禁完成；P8阶段、剩余40角色及P10仍在实施，不关闭总体用户验收。
+规则：[来源规则卡](../../rules/netease-cursed-fox-v1.md#cursed_fox)。新角色注册为implemented，功能闭环与本批门禁完成；P8阶段、剩余40角色及P10仍在实施，不关闭总体用户验收。
 
 ## 独立审查与修正
 

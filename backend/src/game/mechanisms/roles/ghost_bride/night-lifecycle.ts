@@ -2,7 +2,7 @@
  * 负责鬼新娘本次夜间开夜事实与晚交接；输入为延迟 World／事件、日期和原 setup ownership，
  * 输出保持原刀源捕获与关闭。owned 的捕获失败仍须关闭，不增加取得成功的前置守卫。
  * 经理原两个终止调用保持；已付婚约、setup、源验证、死亡规则及阶段推进由各原 owner 负责。
- * 规则依据：docs/expansion/rules/awa-melbourne-ghost-bride-v1.md。
+ * 规则依据：docs/rules/awa-melbourne-ghost-bride-v1.md。
  */
 import type { GameEvent } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../../../../core/domain/world";

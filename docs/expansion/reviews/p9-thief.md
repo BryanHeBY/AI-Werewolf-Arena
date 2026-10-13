@@ -1,6 +1,6 @@
 # P9a 盗贼真实发牌与身份选择验收
 
-本笔接在规则冻结 `17fd377a3dcd87e85d04a890659460c5f9d2d27e` 后，原目录 main 线性实施。唯一策略 `lui_meme_thief_two_extra_villagers_v1`；来源与有限支持条件见[规则卡](../rules/lui-meme-thief-v1.md)。N配置牌加两普通Villager、真实N+2随机发牌/留底，两Wolf必选，其它组合可保留；来源不支持的组合不会因角色目录已启用而自动授权。
+本笔接在规则冻结 `17fd377a3dcd87e85d04a890659460c5f9d2d27e` 后，原目录 main 线性实施。唯一策略 `lui_meme_thief_two_extra_villagers_v1`；来源与有限支持条件见[规则卡](../../rules/lui-meme-thief-v1.md)。N配置牌加两普通Villager、真实N+2随机发牌/留底，两Wolf必选，其它组合可保留；来源不支持的组合不会因角色目录已启用而自动授权。
 
 ## 完整链路与边界
 

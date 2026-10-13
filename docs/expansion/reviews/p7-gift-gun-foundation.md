@@ -1,6 +1,6 @@
 # P7：被动赠枪库存、夜末激活与逐枪结算
 
-本笔落实[规则卡](../rules/awa-black-market-merchant-v1.md#black_market_merchant)与[底座步骤](../black-market-merchant.md#1-被动赠枪底座)。前一笔许可绑定 `0c3c878` 保留。本笔提供受控G02接口和完整死亡流程，**没有注册Black或开放其交易/板子**；当前22 verified/42 planned。
+本笔落实[规则卡](../../rules/awa-black-market-merchant-v1.md#black_market_merchant)与[底座步骤](../black-market-merchant.md#1-被动赠枪底座)。前一笔许可绑定 `0c3c878` 保留。本笔提供受控G02接口和完整死亡流程，**没有注册Black或开放其交易/板子**；当前22 verified/42 planned。
 
 ## 状态与提交所有权
 

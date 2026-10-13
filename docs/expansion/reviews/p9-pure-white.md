@@ -4,7 +4,7 @@
 
 ## 支持边界
 
-- 规则契约：[AWA 纯白夜影 v1](../rules/awa-pure-white-night-v1.md)。
+- 规则契约：[AWA 纯白夜影 v1](../../rules/awa-pure-white-night-v1.md)。
 - 仅十二人原生配对板：3 普狼、1 狼巫、4 平民、纯白之女、女巫、猎人、守卫各 1。
 - 四个公开 v2 示例为双方同灭优先级（wolf/good）与女巫自救（disabled/first_night_only）的笛卡尔积。
 - 不支持复制、赠予、混入其它扩展角色或任意改动预设规则；入口明确拒绝。

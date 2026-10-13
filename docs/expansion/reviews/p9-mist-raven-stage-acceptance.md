@@ -1,6 +1,6 @@
 # P9d 迷雾鸦影有限板完整技术验收
 
-本批登记炼金魔女与狼鸦之爪为 **implemented**，仅支持 [冻结规则卡](../rules/awa-mist-raven-twelve-v1.md) 的精确十二人板 `awa_mist_raven_12_v1`。目录达到 **23 verified、23 implemented、18 planned，46/64**；P9d 其它板、两个觉醒前置、P9e／P9f 和 P10 仍开放。本地 main 提交，不自动 push。
+本批登记炼金魔女与狼鸦之爪为 **implemented**，仅支持 [冻结规则卡](../../rules/awa-mist-raven-twelve-v1.md) 的精确十二人板 `awa_mist_raven_12_v1`。目录达到 **23 verified、23 implemented、18 planned，46/64**；P9d 其它板、两个觉醒前置、P9e／P9f 和 P10 仍开放。本地 main 提交，不自动 push。
 
 ## 功能与交叉审查证据
 

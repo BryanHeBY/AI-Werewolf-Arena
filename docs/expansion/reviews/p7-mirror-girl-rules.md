@@ -1,6 +1,6 @@
 # P7 魔镜少女规则冻结
 
-范围：[AWA Mirror Girl 1.0.0](../rules/awa-mirror-girl-v1.md#mirror_girl)与[实现边界](../mirror-girl.md)。纯文档冻结，不注册Mirror，不改20 verified/44 planned或启用配置。
+范围：[AWA Mirror Girl 1.0.0](../../rules/awa-mirror-girl-v1.md#mirror_girl)与[实现边界](../mirror-girl.md)。纯文档冻结，不注册Mirror，不改20 verified/44 planned或启用配置。
 
 ## 独立审查与处理
 

@@ -42,6 +42,6 @@ PlayerObservation与statusDirective只读同一已告知投影，role brief静�
 
 ## 立即接续
 
-按[有限规则卡](../rules/awa-noble-secret-body-twelve-v1.md)完成独立Noble账本及猎魔账本新资格：原始动作推导契约／唯一身体、库存与已知历史逐CP、源集合与票徽、错误／pending及失败前缀；实际SDK／ACP／mixed×中英完整局、strict missing／late／撤权和闭资源；全部手写终局／交互及种子观察；真正God与玩家档案、逐frame seek／Remotion／Chromium，再执行冻结同源全支持门禁与独立最终核验，届时才可登记50/64。
+按[有限规则卡](../../rules/awa-noble-secret-body-twelve-v1.md)完成独立Noble账本及猎魔账本新资格：原始动作推导契约／唯一身体、库存与已知历史逐CP、源集合与票徽、错误／pending及失败前缀；实际SDK／ACP／mixed×中英完整局、strict missing／late／撤权和闭资源；全部手写终局／交互及种子观察；真正God与玩家档案、逐frame seek／Remotion／Chromium，再执行冻结同源全支持门禁与独立最终核验，届时才可登记50/64。
 
 本仓库当前未发现独立前端board editor。规则卡编辑器要求仍需在后续交付中实现或落实明确共享配置接口验收；本批公共JSON roundtrip不能作为编辑器完成证据。P9d其余角色、P9e／P9f、P10与T6授权边界继续开放。

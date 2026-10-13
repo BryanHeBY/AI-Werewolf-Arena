@@ -5,7 +5,7 @@
  * 安装槽的 LHS 仍先于原能力复制调用；不读时 clone、替换存储状态、退款或吞掉部分写入错误。
  * create/schema、唯一追加写命令、checkpoint codec 与别名／已提交 JSON 失效规则实际统一于本 owner。
  * codec 只在原 JSON 位置编码已验证数据，不把重新校验提前到付款或篡改普通 private 扩展键。
- * 规则边界见 docs/expansion/rules/awa-fragrant-pair-seer-twelve-v1.md。
+ * 规则边界见 docs/rules/awa-fragrant-pair-seer-twelve-v1.md。
  */
 import type { PairSeerState } from "@ai-werewolf-arena/game-contract";
 

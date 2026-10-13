@@ -1,6 +1,6 @@
 # P9a 孤独少女首夜崇拜验收
 
-接规则冻结525ea1b，唯一有限 `awa_netease_lonely_girl_v1`。[规则卡](../rules/awa-netease-lonely-girl-v1.md)以网易现用num24孤独少女卡表为直接来源，2020暗恋者条款和2024少女放逐评分为辅助。首夜先选、胜利跟随、少女不知对象身份/对象不知被崇拜有来源；City/原Good民边、冻结原真实Camp、保留死亡后归属、原生命授权、mandatory窗口与有限组合明确AWA补全，不冒称完整官方preset或评分文裁定。
+接规则冻结525ea1b，唯一有限 `awa_netease_lonely_girl_v1`。[规则卡](../../rules/awa-netease-lonely-girl-v1.md)以网易现用num24孤独少女卡表为直接来源，2020暗恋者条款和2024少女放逐评分为辅助。首夜先选、胜利跟随、少女不知对象身份/对象不知被崇拜有来源；City/原Good民边、冻结原真实Camp、保留死亡后归属、原生命授权、mandatory窗口与有限组合明确AWA补全，不冒称完整官方preset或评分文裁定。
 
 ## 实现与独立复核
 

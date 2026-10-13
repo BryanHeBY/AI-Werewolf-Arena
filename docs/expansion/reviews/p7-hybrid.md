@@ -1,6 +1,6 @@
 # P7 混血儿功能交叉审查
 
-规则：[AWA Hybrid 1.0.0](../rules/awa-hybrid-v1.md#hybrid)；[接入与验收边界](../hybrid.md)，冻结历史笔 `f2eb3d9`。实现原生首夜必选与独立胜利归属，实体 Good 民、普通查验 Good；有限十角色组合与六/十二 AWA 示例不冒充白神原板。
+规则：[AWA Hybrid 1.0.0](../../rules/awa-hybrid-v1.md#hybrid)；[接入与验收边界](../hybrid.md)，冻结历史笔 `f2eb3d9`。实现原生首夜必选与独立胜利归属，实体 Good 民、普通查验 Good；有限十角色组合与六/十二 AWA 示例不冒充白神原板。
 
 ## 独立首审、处理与复查
 

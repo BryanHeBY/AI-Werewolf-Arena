@@ -3,7 +3,7 @@
  * 输入为原角色／authority 内存 fixture、手写历史及可控 JSON 字段错误；输出断言为字面归档和引用／错误前缀。
  * 独立预期不调用生产结算构造，不启动完整对局、传输、模型或文件持久化。
  * schema 保留原 Node 拒绝范围，codec 保留 JSON 访问顺序；失败快照不获得当前行动权限。
- * 规则边界见 docs/expansion/rules/awa-fragrant-pair-seer-twelve-v1.md。
+ * 规则边界见 docs/rules/awa-fragrant-pair-seer-twelve-v1.md。
  */
 import { expect, test } from "bun:test";
 import type { PairSeerState } from "@ai-werewolf-arena/game-contract";

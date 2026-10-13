@@ -1,6 +1,6 @@
 # P5：守墓人接入与契约
 
-第十一项原生角色 `gravekeeper`／守墓人／Gravekeeper，依据与AWA细则见[冻结卡](rules/awa-gravekeeper-v1.md)。好人神职，自动获得上一日实际放逐的阵营标签；没有原生夜间动作、选目标或确认工具，不把被动通知伪装为模型行动。
+第十一项原生角色 `gravekeeper`／守墓人／Gravekeeper，依据与AWA细则见[冻结卡](../rules/awa-gravekeeper-v1.md)。好人神职，自动获得上一日实际放逐的阵营标签；没有原生夜间动作、选目标或确认工具，不把被动通知伪装为模型行动。
 
 ## 信息与时序
 

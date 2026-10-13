@@ -1,6 +1,6 @@
 # P6：石像鬼具体角色查验与接刀
 
-第十六项 `gargoyle`／石像鬼／Gargoyle，采用[AWA冻结卡](rules/awa-gargoyle-v1.md)。普通独立狼版本与迷雾、觉醒版本分别处理。
+第十六项 `gargoyle`／石像鬼／Gargoyle，采用[AWA冻结卡](../rules/awa-gargoyle-v1.md)。普通独立狼版本与迷雾、觉醒版本分别处理。
 
 ## 信息和执行边界
 

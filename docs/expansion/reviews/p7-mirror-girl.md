@@ -1,6 +1,6 @@
 # P7 魔镜少女功能审查
 
-规则：[AWA Mirror Girl 1.0.0](../rules/awa-mirror-girl-v1.md#mirror_girl)，冻结笔 `889bfc6`；已交付作用域基础 `ed30c58`。本功能在现role_check增加mirror policy，原生600 optional、整局按实例稳定ID禁重查；Garg180/必验/原生刀、Psychic600/repeat保持分别规则。
+规则：[AWA Mirror Girl 1.0.0](../../rules/awa-mirror-girl-v1.md#mirror_girl)，冻结笔 `889bfc6`；已交付作用域基础 `ed30c58`。本功能在现role_check增加mirror policy，原生600 optional、整局按实例稳定ID禁重查；Garg180/必验/原生刀、Psychic600/repeat保持分别规则。
 
 ## 独立审查、修正与复查
 

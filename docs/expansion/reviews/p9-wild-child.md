@@ -1,6 +1,6 @@
 # P9a 野孩子榜样死亡与次夜狼队验收
 
-原目录main线性接规则冻结490fa53；唯一 `awa_lui_meme_wild_child_v1`，来源为发行商Characters印刷16–17页。基础七角色+WildChild、City有限支持；不自动开放Thief/Cupid/事件包/其它扩展。标准N牌，原WildChild/Good民边，一次首夜必选其他活人，不窥榜样身份；榜样实际淘汰后转真实Wolf阵营/胜利，Role仍WildChild，实际下一Night才获得狼队互认/chat/knife。孩子无自爆，原Wolf配置不变。复合死亡波次/生命周期等明确AWA工程补全，见[规则卡](../rules/awa-lui-meme-wild-child-v1.md)。
+原目录main线性接规则冻结490fa53；唯一 `awa_lui_meme_wild_child_v1`，来源为发行商Characters印刷16–17页。基础七角色+WildChild、City有限支持；不自动开放Thief/Cupid/事件包/其它扩展。标准N牌，原WildChild/Good民边，一次首夜必选其他活人，不窥榜样身份；榜样实际淘汰后转真实Wolf阵营/胜利，Role仍WildChild，实际下一Night才获得狼队互认/chat/knife。孩子无自爆，原Wolf配置不变。复合死亡波次/生命周期等明确AWA工程补全，见[规则卡](../../rules/awa-lui-meme-wild-child-v1.md)。
 
 ## 全链与关键边界
 

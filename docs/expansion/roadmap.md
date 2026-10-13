@@ -244,7 +244,7 @@ P9 共 38 项，不合为一笔角色提交。下面列出全量分组及最低�
 
 2026-10-11 来源板依赖调整：P9f 的觉醒愚者前置到夜之贵族，觉醒预言家前置到寻香魅影；两项仍在 P9f 的八项总数中，只计一次。夜之贵族合板同时扩展猎魔人解除夜仆状态。P9d 完成后 P9f 尚余六项；其中觉醒狼王先于觉醒女巫，觉醒狼美人／觉醒守卫先于觉醒骑士。具体官方板型链接及有序交付见[持续实施契约](contracts/p8-p10-continuation.md#来源板型带来的跨波次前置)。
 
-P9d 的四组实施规则卡：[迷雾鸦影](rules/awa-mist-raven-twelve-v1.md)、[猎日逐光](rules/awa-radiant-eclipse-twelve-v1.md)、[觉醒之夜](rules/awa-noble-secret-body-twelve-v1.md)、[寻香识命](rules/awa-fragrant-pair-seer-twelve-v1.md)。规则卡的 planned 状态不计交付；各卡明确来源事实、AWA 补全、可配置分歧和 R/A/T/L/D 判例。
+P9d 的四组实施规则卡：[迷雾鸦影](../rules/awa-mist-raven-twelve-v1.md)、[猎日逐光](../rules/awa-radiant-eclipse-twelve-v1.md)、[觉醒之夜](../rules/awa-noble-secret-body-twelve-v1.md)、[寻香识命](../rules/awa-fragrant-pair-seer-twelve-v1.md)。规则卡的 planned 状态不计交付；各卡明确来源事实、AWA 补全、可配置分歧和 R/A/T/L/D 判例。
 
 觉醒隐狼已在 P7 扩展，不在 P9 再计数。每波都执行 [交叉审查流程](delivery.md#4-子代理交叉审查安排)，不能以整体 P9 审查替代逐波审查。
 

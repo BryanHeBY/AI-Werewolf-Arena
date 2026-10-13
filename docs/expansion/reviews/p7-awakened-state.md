@@ -1,6 +1,6 @@
 # P7：觉醒隐狼独立资源状态
 
-范围：[规则卡](../rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)与[实现边界](../awakened-hidden-wolf.md)中的纯状态操作。没有注册Role/Profile、公开export、请求、阶段或配置；角色仍planned，21 verified/43 planned保持。
+范围：[规则卡](../../rules/awa-awakened-hidden-wolf-v1.md#awakened_hidden_wolf)与[实现边界](../awakened-hidden-wolf.md)中的纯状态操作。没有注册Role/Profile、公开export、请求、阶段或配置；角色仍planned，21 verified/43 planned保持。
 
 ## 已实现边界
 
