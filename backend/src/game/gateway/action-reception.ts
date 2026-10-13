@@ -23,7 +23,7 @@ import {
   ghostBrideRequestScope,
   weddingSetup,
 } from "../mechanisms/roles/ghost_bride/ports";
-import { readWeddingTool } from "@ai-werewolf-arena/game-text";
+import { readWeddingTool } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { lonelyGirlRequestScope } from "../mechanisms/roles/lonely_girl/ports";
 import { readLonelyGirlTool } from "../mechanisms/roles/lonely_girl/ports";
 import { wildChildRequestScope } from "../mechanisms/roles/wild_child/ports";
@@ -34,7 +34,8 @@ import { readThiefChoice } from "../mechanisms/roles/thief/ports";
 import { wallRequestScope } from "../mechanisms/events/wall_notes/ports";
 import { z, type ZodType } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
-import { readWallTool, toolFailure } from "@ai-werewolf-arena/game-text";
+import { toolFailure } from "@ai-werewolf-arena/game-text";
+import { readWallTool } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
 import {
   DEATH_SHOT_STAGES,
   type ActionRequest,

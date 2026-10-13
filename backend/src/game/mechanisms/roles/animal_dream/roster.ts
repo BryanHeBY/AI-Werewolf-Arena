@@ -1,14 +1,9 @@
 /**
- * Responsibility: validate the original finite animal-dream roster and scopes.
- * Input: normalized board and original World/role identities; output: typed
- * roster snapshots and current membership checks used by the feature owner.
- * Node ingress rejects hostile objects before reflection. Runtime original-life
- * ownership remains distinct from serialized seat data; this reader never pays
- * effects or grants action authority merely from a copied roster.
+ * 校验原有限动物梦境板子及阵容 scope。输入为规范板子、World／role 原身份；输出为 typed 阵容快照和当前成员检查。Node 反射前拒绝 hostile 对象，原生命归属不同于序列化座位，副本不授予付款／行动权限。
  */
 import { types } from "node:util";
 import { isAnimalDreamPreset } from "../../../../rulesets";
-import { type CatSkippedVotePolicy, type PufferBallotPolicy } from "@ai-werewolf-arena/game-text";
+import { type CatSkippedVotePolicy, type PufferBallotPolicy } from "@ai-werewolf-arena/game-contract";
 import type { RoleId } from "@ai-werewolf-arena/game-catalog";
 import type { World } from "../../../../core/domain/world";
 import { Camp } from "../../../../core/domain/identity";
@@ -120,7 +115,7 @@ function capture(world: World, id: number): AnimalOriginalPlayer {
     },
   });
 }
-/** Fixed original identities only. Resource objects and real unit/phase leases belong to the board owner. */
+/** 只保留固定原身份；资源对象及真实 unit／phase lease 归板子 owner。 */
 export function installAnimalRoster(world: World, rawConfig: unknown): void {
   if (rosters.has(world)) throw Error("animal_roster_already_installed");
   const config = snapshotPlainData(rawConfig, new Set(), 0, 65536);
@@ -164,7 +159,7 @@ function current(world: World, p: AnimalOriginalPlayer, living: boolean): boolea
     json(p.victory) === p.victoryJson
   );
 }
-/** An observed original-roster violation is terminal, even if external code later restores fields. */
+/** 一旦观察到原阵容违反约束即终止，即使外部代码后来恢复字段。 */
 export function animalRosterCurrent(world: World): boolean {
   const roster = rosters.get(world);
   if (!roster || roster.revoked) return false;
@@ -179,7 +174,7 @@ export function animalRosterCurrent(world: World): boolean {
   }
   return true;
 }
-/** Trusted engine query, never a player DTO. It contains original component references. */
+/** 可信引擎查询，含原 component 引用，不是玩家 DTO。 */
 export function animalOriginalPlayer(
   world: World,
   id: number,
@@ -189,7 +184,7 @@ export function animalOriginalPlayer(
   const p = rosters.get(world)!.players.get(id);
   return p && current(world, p, living) ? p : null;
 }
-/** May return the first-dead original body; callers still need a living action lease. */
+/** 可返回首次死亡的原体；caller 行动仍需存活 lease。 */
 export function animalOriginalRolePlayer(
   world: World,
   roleId: RoleId,
@@ -200,14 +195,14 @@ export function animalOriginalRolePlayer(
   );
   return matches.length === 1 ? matches[0]! : null;
 }
-/** Detached policy metadata remains available for a failed checkpoint after revocation. */
+/** 撤销后仍可用独立政策 metadata 记录失败 checkpoint。 */
 export function animalRosterPolicies(world: World) {
   const roster = rosters.get(world);
   return (
     roster && { skippedVotePolicy: roster.skippedVotePolicy, ballotPolicy: roster.ballotPolicy }
   );
 }
-/** Failure recording retains the installed bodies; it never grants an action lease. */
+/** 失败记录保留安装时原体，不授予行动 lease。 */
 export function animalOriginalAuditPlayer(world: World, id: number): AnimalOriginalPlayer | null {
   return rosters.get(world)?.players.get(id) ?? null;
 }

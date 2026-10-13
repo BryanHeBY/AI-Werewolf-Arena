@@ -1,16 +1,12 @@
 /**
- * Owns Fragrant's player-known journal and pure knowledge updates.
- * Inputs are recorded visible notices, known wolf/choice/death facts and pair IDs;
- * outputs are checked copied knowledge and updated journal data in original order.
- * This journal never derives hidden trigger receipts or grants roster/action
- * authority; its shared pair type is neutral data, not a live state handle.
+ * 维护香对预言家的玩家已知日志与纯知识更新。输入为已发表通知、已知狼／选择／死亡及 pair ID；输出按原序校验复制和更新，不推导隐藏触发凭据或授予阵容／行动权限。
  */
 
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
 import { normalizePair } from "./state";
-/** This journal stores only owner-authorized knowledge, never actual trigger receipts. */
-export type { FragrantKnowledge } from "@ai-werewolf-arena/game-text";
-import { readFragrantKnownState, type FragrantKnowledge } from "@ai-werewolf-arena/game-text";
+/** 此日志只保存 owner 授权的已知信息，不保存真实触发凭据。 */
+export type { FragrantKnowledge } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
+import { readFragrantKnownState, type FragrantKnowledge } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 const id = (v: unknown): v is number =>
   typeof v === "number" && Number.isSafeInteger(v) && v > 0 && v < Number.MAX_SAFE_INTEGER - 1;
 export function freshFragrantKnowledge(): FragrantKnowledge {
@@ -30,7 +26,7 @@ export function readFragrantKnowledge(value: unknown): FragrantKnowledge | null 
     return null;
   }
 }
-/** Eligibility was frozen by the real night owner; history grants no live permission. */
+/** 资格由真实夜 owner 冻结，历史本身不授予 live 权限。 */
 export function knowFragrantKnife(
   value: FragrantKnowledge,
   day: number,
@@ -60,7 +56,7 @@ export function knowFragrantWolf(value: FragrantKnowledge, targetId: number): Fr
     throw Error("fragrant_known_wolf_duplicate");
   return { ...s, knownWolfId: targetId };
 }
-/** Only a committed real night-open owner may call this; phase labels never call it. */
+/** 仅实际提交夜开启的 owner 可调用；单独阶段标签不触发此更新。 */
 export function knowFragrantNightOpen(value: FragrantKnowledge, day: number): FragrantKnowledge {
   const s = valid(value);
   if (!id(day) || day <= s.lastOpenedNight) throw Error("fragrant_known_night_invalid");
@@ -87,7 +83,7 @@ export function knowFragrantChoice(
     activeBinding: pairIds === null ? null : { createdNight: day, expiresNight: day + 1, pairIds },
   };
 }
-/** Supply already-published real deaths from the authorized event prefix, not proposed damage. */
+/** 输入来自授权事件前缀中已发表的真实死亡，不是拟议伤害。 */
 export function knowFragrantPublishedDeaths(
   value: FragrantKnowledge,
   day: number,

@@ -22,7 +22,7 @@ import {
 import type { NightPoisonRoute } from "../../core/domain/night_effects";
 import { DeathCommitter } from "./death-committer";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
+import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import {
   FragrantDeathWavePublication,
   isFragrantPairBoard,
@@ -40,7 +40,7 @@ import {
 import { nightmareFearBlocks } from "../mechanisms/roles/nightmare_shadow/night_frame";
 import { demonHunterNativeGunCurrent } from "../mechanisms/roles/demon_hunter/authority";
 import { expandWeddingDeaths, weddingGroup } from "../mechanisms/roles/ghost_bride/authority";
-import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-text";
+import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { expandLoversWave } from "../mechanisms/roles/cupid/relation";
 import type { BoardConfig, LastWordsPolicy } from "../../core/domain/board";
 import { captureNightLife, livingNightLife } from "../../core/domain/night_effects";

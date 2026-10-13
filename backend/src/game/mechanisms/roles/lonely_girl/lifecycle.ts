@@ -1,13 +1,13 @@
 /**
- * Owns Lonely Girl choice bindings, copied camp and selected-target lifetime. Receives
- * original World participants and first-night requests; writes accepted target choice and
- * later target-death settlement only while current. Closed or replaced participant scopes
- * revoke local permission, including deadline aliases.
+ * 负责孤独少女的首夜选择绑定、复制阵营与已选目标生命，拥有该关系的原参与者记录。
+ * 输入为原 World 参与者和首夜请求；输出为已接受选择和后续目标死亡结算。
+ * 不变量：仅在原身份／资源仍匹配时写入；关闭或替换参与者使 scope 失效，包括期限别名。
+ * 失败窗口审计保留原授权身份，不读取外来 accessor 或恢复已消耗库存。
  */
 import type { LonelyGirlState, LonelyGirlReadState } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
-import { copyEventData } from "@ai-werewolf-arena/game-text";
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import {
   COMPONENT,
   Camp,
@@ -275,7 +275,7 @@ export function commitLonelyGirlChoice(b: LonelyGirlBinding, targetId: number): 
   if (!target || targetId === b.actorId || !validLonelyGirlChoice(b)) return null;
   const choice = { day: 1 as const, targetId },
     membership = createVictoryComponent([{ kind: "faction", faction: target.campValue }]);
-  // No await or callback between the final authority checks and owned writes.
+  // 最后权限检查与 owned 写入之间没有 await 或回调。
   (b.state as Pick<LonelyGirlState, "remaining">).remaining = 0;
   (b.state as Pick<LonelyGirlState, "choice">).choice = choice;
   b.world.addComponent(b.actorId, COMPONENT.Victory, membership);
@@ -343,7 +343,7 @@ export function openLonelyGirlNight(world: World, day: number): () => void {
   };
 }
 
-/** Failed-window audits use the original authorized identity/resource, never foreign accessors. */
+/** 失败窗口审计使用原授权身份／资源，不读取 foreign accessor。 */
 export function projectLonelyGirlAuditPlayer(world: World, id: number) {
   const b = bindings.get(world),
     p = b?.participants.get(id);

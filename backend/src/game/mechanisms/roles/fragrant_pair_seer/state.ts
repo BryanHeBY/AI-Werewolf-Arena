@@ -9,8 +9,8 @@
 import type { Pair, PairSeerState } from "@ai-werewolf-arena/game-contract";
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
 
-import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
-export { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
+import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
+export { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 export interface Binding {
   id: string;
   createdNight: number;
@@ -286,7 +286,7 @@ export function chooseFragrantPair(
           ],
   };
 }
-/** Caller proves actual original-life deaths; this pure receipt never marks World or decides victory. */
+/** caller 证明真实原生命死亡；此纯回执不标记 World 或判胜。 */
 export function triggerFragrantPair(
   value: FragrantState,
   day: number,

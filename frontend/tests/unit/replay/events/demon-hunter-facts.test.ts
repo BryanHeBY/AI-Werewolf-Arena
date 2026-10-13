@@ -2,7 +2,7 @@
  * 单元测试验证猎魔人事实接收、对应标签与事件前缀展示。输入为原字面量、畸形 payload、语言和用例表；手写字段、标签与效果预期作为独立 oracle，不执行真实游戏或重生成 golden。
  */
 import { expect, test } from "bun:test";
-import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-text";
+import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { demonHunterEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
 import { eventLabel } from "../../../../src/replay/event-labels";

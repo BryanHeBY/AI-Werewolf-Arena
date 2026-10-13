@@ -7,12 +7,8 @@
 import { z } from "zod";
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
 
-import {
-  ANIMAL_DREAM_POLICY,
-  CAT_SKIPPED_VOTE_POLICIES,
-  type CatSkippedVotePolicy,
-} from "@ai-werewolf-arena/game-text";
-export { ANIMAL_DREAM_POLICY } from "@ai-werewolf-arena/game-text";
+import { ANIMAL_DREAM_POLICY, CAT_SKIPPED_VOTE_POLICIES, type CatSkippedVotePolicy } from "@ai-werewolf-arena/game-contract";
+export { ANIMAL_DREAM_POLICY } from "@ai-werewolf-arena/game-contract";
 const id = z.number().int().positive().safe();
 const night = id;
 const sources = z

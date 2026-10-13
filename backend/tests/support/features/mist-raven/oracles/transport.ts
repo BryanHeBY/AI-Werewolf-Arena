@@ -1,7 +1,7 @@
 /**
- * Provides the oracle test boundary: Mist/Raven actual wire visibility, sequence and authorization assertions with supplied literal expectations and independent state. Inputs and literal expectations remain owned by the original tests; output preserves their original DTO/assertion contract. No production settlement supplies a new expected result.
+ * 提供迷雾／渡鸦真实 wire 可见性、序号与授权的测试断言。调用方提供字面预期和独立状态；这里保留原 DTO／断言关系，不以生产结算制造新预期。
  */
-import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-text";
+import { MIST_RAVEN_EVENT_TYPES, readMistRavenFact } from "@ai-werewolf-arena/game-contract/facts/mist-raven";
 export interface MistExpectedWireChoice {
   type: string;
   payload: Record<string, unknown>;
@@ -14,7 +14,7 @@ export interface MistWireExpectations {
   choices?: MistExpectedWireChoice[];
   packFacts?: MistExpectedWireChoice[];
 }
-/** The fixture owns this per player, across SDK history windows or ACP deltas. */
+/** fixture 按玩家持有此记录，跨 SDK 历史窗口或 ACP 增量保留。 */
 export interface MistWireState {
   unsealSeq?: number;
   currentDay?: number;
@@ -161,7 +161,7 @@ export function assertMistTransportEvents(
   }
 }
 
-/** Both transports expose the same three-field submission envelope on their real wire. */
+/** 两种传输在真实 wire 上均提供同一三字段提交包。 */
 export function assertSubmitActionWireSchema(value: unknown): void {
   if (!value || typeof value !== "object") throw new Error("fixture_submission_schema_missing");
   const schema = value as Record<string, unknown>,

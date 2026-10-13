@@ -1,4 +1,10 @@
-import { ANIMAL_DREAM_POLICY } from "@ai-werewolf-arena/game-text";
+/**
+ * 负责子狐既有夜行动与刀／魅惑通知的有序执行。
+ * 输入为当前夜上下文、原 actor／scope 和 Provider 行动；输出为提交回执后的选择及效果
+ * 事实，再按原阶段资格发表通知。权限与资源归动物 authority，网关校验先于回执提交。
+ * 请求始终在 finally 关闭，阶段失效后不发表后续通知，不回滚已付历史。
+ */
+import { ANIMAL_DREAM_POLICY } from "@ai-werewolf-arena/game-contract";
 import { Phase } from "../../../../core/domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
 import { animalFoxChoiceActor, animalFoxChoiceCandidates, animalFoxEffect } from "./authority";

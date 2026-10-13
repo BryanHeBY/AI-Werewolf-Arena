@@ -1,7 +1,5 @@
 /**
- * Unit test verifies a literal Noble owner contract projects exact fields and rejects private extras/getters.
- * Input: Original controlled bootstrap/prompt setup, literal audience/status envelopes and zero-read accessor canary.
- * Output and oracle: Exact fact/projector results and audience rejection remain unchanged; no real day/night cycle, recorder or model runs.
+ * 单元测试负责验证字面贵族 owner 契约的精确字段投影及私有额外字段／getter 拒绝。受控 bootstrap／prompt、受众与状态包及零读取 canary 为输入；原断言保持，不执行真实日夜、记录器或模型。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -17,7 +15,7 @@ import {
 } from "../../../../src/game/mechanisms";
 import { buildAgentVisibleEvent } from "../../../../src/game/engine/agent_visible_event_feed";
 import { AgentEventVisibilityRegistry } from "../../../../src/game/mechanisms/broadcast/agent_event_visibility_registry";
-import { readNobleSecretBodyFact, NOBLE_SECRET_BODY_POLICY } from "@ai-werewolf-arena/game-text";
+import { readNobleSecretBodyFact, NOBLE_SECRET_BODY_POLICY } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 
 function setup(locale: "zh-CN" | "en") {
   const config = nobleSecretBodyTwelveConfig();

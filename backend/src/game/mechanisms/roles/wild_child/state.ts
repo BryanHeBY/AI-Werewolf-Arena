@@ -1,10 +1,10 @@
 /**
- * Owns Wild Child state construction, descriptor-based live reads and tool-data parsing.
- * Inputs are the original role record or candidate tool data; outputs preserve the stored
- * reference and existing finite choice checks. This boundary never changes camp or life.
+ * 负责构造野孩子数据、按 descriptor 读取 live 槽并解析原工具选择字段。
+ * 状态由原角色及野孩子 lifecycle 所有者持有；输入为角色记录或工具候选，输出保留原槽
+ * 引用及既有有限字段校验。此数据边界不改变阵营、提交生命或从副本取得转换权限。
  */
 import type { WildChildState, WildChildReadState } from "@ai-werewolf-arena/game-contract";
-import { copyEventData } from "@ai-werewolf-arena/game-text";
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 export const WILD_CHILD_POLICY = "awa_lui_meme_wild_child_v1" as const;
 export function freshWildChildState(): WildChildState {

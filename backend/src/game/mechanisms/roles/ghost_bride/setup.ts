@@ -1,12 +1,11 @@
 /**
- * Collects Ghost Bride's groom and witness choices through the existing wedding authority.
- * Inputs are readonly board policy, current roster and requests; outputs are ordered
- * setup facts or interruption. This coordinator never rewrites rules or bypasses
- * the authority's original identity, failure and deadline checks.
+ * 负责通过原婚礼 authority 顺序收集鬼新娘的新郎／见证人选择。
+ * 输入为只读板子政策、当前阵容和引擎请求；输出为设置事实或中断结果，回合由原 owner 关闭。
+ * 此协调器不改规则或绕过身份、失败及期限校验，每次请求保留原 factory 和 opaque turn。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
-import { GHOST_BRIDE_POLICY, readWeddingTool } from "@ai-werewolf-arena/game-text";
+import { GHOST_BRIDE_POLICY, readWeddingTool } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import {
   Phase,
   type World,
@@ -32,7 +31,7 @@ import {
   commitWeddingTool,
   takeWeddingChat,
 } from "./authority";
-/** Every call uses the actual engine factory and an opaque original turn, with no fallback. */
+/** 每次调用使用真实引擎工厂及 opaque 原回合，不启用 fallback。 */
 export async function executeWeddingTurn(input: {
   world: World;
   gateway: ToolGateway;

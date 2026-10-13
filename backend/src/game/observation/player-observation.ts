@@ -44,7 +44,7 @@ export interface PlayerObservation {
   deathAbilities: PlayerDeathGun[];
   ownNightActions: OwnNightAction[];
   ownState: {
-    fragrantPhantom?: import("@ai-werewolf-arena/game-text").FragrantPlayerState;
+    fragrantPhantom?: import("@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer").FragrantPlayerState;
     nightNoble?: import("../mechanisms/roles/noble_secret_body/player_projection").NoblePlayerState;
     secretBody?: import("../mechanisms/roles/noble_secret_body/player_projection").SecretBodyPlayerState;
     eclipse?: import("../mechanisms/roles/radiant_eclipse/state").EclipseState;
@@ -64,7 +64,7 @@ export interface PlayerObservation {
     nightmare?: import("@ai-werewolf-arena/game-contract").NightmareShadowState;
     evilKnight?: import("@ai-werewolf-arena/game-contract").EvilKnightState;
     demonHunter?: import("../mechanisms/roles/demon_hunter/state").DemonHunterState;
-    ghostBride?: import("@ai-werewolf-arena/game-text").GhostBrideState;
+    ghostBride?: import("@ai-werewolf-arena/game-contract/facts/ghost-bride").GhostBrideState;
     wedding?: import("../mechanisms/roles/ghost_bride/authority").WeddingActorView;
     lonelyGirl?: import("@ai-werewolf-arena/game-contract").LonelyGirlState;
     wildChild?: import("@ai-werewolf-arena/game-contract").WildChildState;

@@ -1,49 +1,18 @@
 /**
- * 向后端与浏览器公开冻结的两语词典、严格占位格式化及原事实兼容出口。
- * 输入为每次调用的语言、消息 ID 和参数；输出保留原错误码、完整参数校验和用户原文。
- * 展示映射由 game-presentation 消费此词典 owner；本模块不授予行动或资源权限。
- * 事实兼容出口仅转发原契约，退出工作在 C44 单独核对，不能把它们当作第二 reader。
+ * 公开冻结的中文／英文词典、严格占位格式化、角色／术语文案及诊断说明。
+ * 输入为调用方显式语言、消息 ID 和参数；输出保留原错误码、完整参数校验和用户原文。
+ * 文案与事实契约各有唯一所有者：事实、政策和 inert copier 由 game-contract 的公开模块提供，
+ * 此处不再转发数据 reader；语言类型与消息引用仍服务实际文案入口，不授予行动或资源权限。
  */
-
-export { AWAKENED_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/awakened";
-
-export { MECHANICAL_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/mechanical";
 
 import type { MessageKey, MessageRef } from "@ai-werewolf-arena/game-contract";
 
-export * from "./animal-dream";
-
-export {
-  readWildChildEventFact,
-  readWildChildPlayerFact,
-  WILD_CHILD_EVENT_TYPES,
-} from "./wild-child";
-
-export {
-  readShapeshifterEventFact,
-  readShapeshifterChoiceTool,
-  SHAPESHIFTER_EVENT_TYPES,
-} from "./shapeshifter";
-
-export { readThiefEventFact, THIEF_EVENT_TYPES } from "./thief";
-export { copyEventData } from "./event-data";
-
-export {
-  WALL_EVENT_TYPES,
-  readWallEventFact,
-  validWallText,
-  readWallTool,
-  readWallNoteData,
-} from "./wall-notes";
 import {
   isLocale,
   roleName as catalogRoleName,
   type Locale,
 } from "@ai-werewolf-arena/game-catalog";
 
-export { DEBATE_EVENT_TYPES, readDebateEventFact } from "./debate";
-
-export { CUPID_EVENT_TYPES, readCupidEventFact } from "./cupid";
 import { zhCN } from "./zh-CN";
 import { en } from "./en";
 
@@ -136,50 +105,3 @@ export function auditHeadings(locale: Locale): Record<AuditSection, string> {
     ]),
   ) as Record<AuditSection, string>;
 }
-
-export * from "./lonely-girl";
-
-export * from "./ghost-bride";
-
-export * from "./demon-hunter";
-
-export { PURE_WHITE_POLICY } from "@ai-werewolf-arena/game-contract";
-export { EVIL_KNIGHT_POLICY } from "@ai-werewolf-arena/game-contract";
-
-export { NIGHTMARE_SHADOW_POLICY } from "@ai-werewolf-arena/game-contract";
-
-export * from "./nightmare";
-
-export * from "./red-moon";
-
-export * from "./magician";
-
-export * from "./order-prince";
-
-export * from "./trickster";
-
-export * from "./wolf-sorcerer";
-
-export * from "./time-consort";
-
-export * from "./scholar-mentor";
-
-export * from "./mist-raven";
-
-export * from "./radiant-eclipse";
-
-export * from "./noble-secret-body";
-
-export * from "./fragrant-pair-seer";
-
-export {
-  ANIMAL_DREAM_POLICY,
-  CAT_SKIPPED_VOTE_POLICIES,
-  PUFFER_BALLOT_POLICIES,
-  BEAR_SIGNAL_POLICIES,
-} from "@ai-werewolf-arena/game-contract";
-export type {
-  CatSkippedVotePolicy,
-  PufferBallotPolicy,
-  BearSignalPolicy,
-} from "@ai-werewolf-arena/game-contract";

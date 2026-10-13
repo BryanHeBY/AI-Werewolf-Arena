@@ -1,11 +1,8 @@
 /**
- * Builds original ghost-bride test input plans, fixed boards and explicit player/marker data. Inputs are
- * supplied variant/locale/seed choices; outputs retain the same arrays, stock parameters and configured
- * identities. Existing dealing may construct input identities, while handwritten expected outcomes remain
- * supplied data. It runs no game or model and changes no oracle algorithm.
+ * 构造鬼新娘测试的计划、固定板子与明确玩家／标记数据。输入为 variant、语言、seed；输出保持原数组、库存和身份，发牌只构造输入，手写结果仍由测试提供，不运行对局或改变预期算法。
  */
 import { Role } from "../../../../../src/core";
-import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-text";
+import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { WinCondition } from "../../../../../src/core";
 import { ActionWindow } from "../../../../../src/core";
 import { WitchSelfHealRule } from "../../../../../src/core";

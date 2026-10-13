@@ -1,18 +1,11 @@
 /**
- * Owns Animal Dream validated fact publication and event-time player knowledge.
- * Inputs are original authoritative facts, actor IDs and existing event storage;
- * outputs are immutable appended facts and retained knowledge for player views.
- * Only a successfully appended fact advances this journal; resource queries and
- * copied state views never spend stock or reveal uncommitted mechanism results.
+ * 负责发表动物梦境已验证事实，并拥有按 World 隔离的事件时点知识日志。
+ * 输入为原权威事实、演员与事件数组；输出为不可变追加事实及对应玩家已知数据。
+ * 不变量：仅成功发表才能更新知识，覆盖 push 不得冒充提交；God 资源查询和复制视图
+ * 不消费库存、推进日志或揭示未提交结果。
  */
-import {
-  readAnimalDreamFact,
-  animalDreamFactAudience,
-  ANIMAL_DREAM_POLICY,
-  type AnimalDreamEventType,
-  type AnimalDreamPayloadMap,
-  type AnimalBeautyKnowledge,
-} from "@ai-werewolf-arena/game-text";
+import { readAnimalDreamFact, animalDreamFactAudience, type AnimalDreamEventType, type AnimalDreamPayloadMap, type AnimalBeautyKnowledge } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
+import { ANIMAL_DREAM_POLICY } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../../../../core/domain/world";
 import { types } from "node:util";
 import type { GameEvent } from "../../../../core/domain/events";
@@ -54,7 +47,7 @@ function journal(world: World): Knowledge {
   }
   return k;
 }
-/** Only the successfully appended fact advances knowledge; God resource queries never do. */
+/** 仅成功追加的事实推进知识；God 资源查询不推进。 */
 export function appendAnimalFact<K extends AnimalDreamEventType>(
   world: World,
   events: GameEvent[],
@@ -85,7 +78,7 @@ export function appendAnimalFact<K extends AnimalDreamEventType>(
           : {}),
     } as GameEvent;
   Object.freeze(event);
-  // Publish through the array's own data slot: an overridden push must not acknowledge publication.
+  // 经数组 own data 槽发表，覆盖的 push 不能冒充发表成功。
   Object.defineProperty(events, events.length, {
     value: event,
     writable: true,
@@ -140,7 +133,7 @@ export function animalBeautyKnowledge(world: World, id: number): AnimalBeautyKno
 export function animalBearKnowledge(world: World) {
   return { history: structuredClone(journal(world).bear) };
 }
-/** Called after BearNightFrame has really appended its public event, before any later request. */
+/** BearNightFrame 真正追加公开事件后、任何后续请求前调用。 */
 export function noteAnimalBearPublication(
   world: World,
   events: readonly GameEvent[],

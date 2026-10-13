@@ -1,11 +1,11 @@
 /**
  * 负责按事件类型装配脚本和终端的展示贡献。输入为事件、私有输出选项与语言；输出为原聊天行和分类文本。保留各贡献的读取、受众与分派顺序，不提交行动、改写事实或重算历史阵营。事件文案消费共享展示 owner，自定义贡献仍保留原接口。
  */
-import { nobleSecretBodyVisibility } from "@ai-werewolf-arena/game-text";
+import { nobleSecretBodyVisibility } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import { nobleSecretBodyEventLabel } from "@ai-werewolf-arena/game-presentation";
-import { animalDreamFactAudience, type AnimalDreamEventType } from "@ai-werewolf-arena/game-text";
+import { animalDreamFactAudience, type AnimalDreamEventType } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
 import { animalDreamEventLabel } from "@ai-werewolf-arena/game-presentation";
-import { fragrantPairVisibility } from "@ai-werewolf-arena/game-text";
+import { fragrantPairVisibility } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import { fragrantPairEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { radiantEclipseEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { mistRavenEventLabel } from "@ai-werewolf-arena/game-presentation";

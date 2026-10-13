@@ -1,8 +1,5 @@
 /**
- * Opens the configured wall-note opportunity and collects its existing author actions.
- * Inputs are readonly event policy, original World, provider and named RNG factory;
- * outputs are wall-note facts and window completion. Wall authority owns author stock
- * and request closure; this window never changes rules or acquires unrelated capabilities.
+ * 开启已配置的匿名墙机会并收集原作者行动。输入为只读政策、World、Provider 及具名 RNG 工厂；输出为墙事实与窗口完成，库存和请求关闭归 authority，不改规则或取得其他能力。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import {
@@ -14,7 +11,7 @@ import {
   type ToolCall,
 } from "../../../../core/domain";
 import { shuffled, type RandomSource } from "../../../../core/domain/random";
-import { readWallTool } from "@ai-werewolf-arena/game-text";
+import { readWallTool } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
 import type { GameActionRequestFactory } from "../../../engine/action_request_factory";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import {

@@ -28,7 +28,7 @@ import { GameActionRequestFactory } from "../../../../src/game/engine/action_req
 import { NightPipeline } from "../../../../src/game/engine/phase_pipeline/night_pipeline";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { readLonelyGirlEventFact, readLonelyGirlChoiceTool } from "@ai-werewolf-arena/game-text";
+import { readLonelyGirlEventFact, readLonelyGirlChoiceTool } from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
 import { lonelyGirlEventLabel } from "@ai-werewolf-arena/game-presentation";
 import {
   knownWolfTeammates,

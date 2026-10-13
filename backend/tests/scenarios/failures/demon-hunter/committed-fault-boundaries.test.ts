@@ -9,7 +9,7 @@ import {
   type AliveComponent,
   type RoleComponent,
 } from "../../../../src/core";
-import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-text";
+import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";
 import { getWitchState } from "../../../../src/game/mechanisms/roles/witch/ports";

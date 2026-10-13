@@ -1,15 +1,15 @@
 /**
- * Owns Thief/Shapeshifter dealt cards, original hands and first-night setup data. Inputs are the
- * installed roster and explicit card selection; outputs are stock, setup status and copied
- * player setup views. Closed setup keeps its original chosen-card identity; no later role
- * replacement redeals the stock.
+ * 负责拥有盗贼／变形者发到的卡、原手牌与首夜设置状态。
+ * 输入为已安装阵容和明确选牌；输出为库存、设置状态和玩家 setup 数据副本。
+ * 原 World 对应的 deal owner 持有手牌及参与者快照；关闭后保留选牌身份，后续角色替换
+ * 不重新发库存，副本不授予 live 选择权限。
  */
 import {
   captureNightLife,
   livingNightLife,
   type NightLifeScope,
 } from "../../../../core/domain/night_effects";
-import { copyEventData } from "@ai-werewolf-arena/game-text";
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT, type RoleComponent, Role, type World } from "../../../../core/domain";
 export interface InitialIdentityCard {
   cardId: string;

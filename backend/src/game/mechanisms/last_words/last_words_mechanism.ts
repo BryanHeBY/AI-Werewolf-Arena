@@ -1,7 +1,8 @@
 /**
- * Decides and records whether a death context grants last words. Inputs are the World, death
- * timing and configured last-word policy; outputs are eligibility and the grant event. The
- * mechanism does not deliver a speech or advance the death wave itself.
+ * 负责按遗言政策判定资格，并为已死亡玩家发表遗言授予事实。
+ * 输入为死亡阶段、日期、原死因及可选初始波上下文；记录入口另接收 World 与待写事件数组。
+ * 输出为资格布尔值和 last_words_granted 事件；实际生命仍在写入前检查，规则未知则拒绝。
+ * 此机制不执行玩家发言、更新死亡波或判胜，发言与阶段推进归原调用流程。
  */
 /** 文件说明：遗言规则与事件写入机制。 */
 import type { LastWordsPolicy } from "../../../core/domain/board";
@@ -15,7 +16,7 @@ import {
   type DeathSources,
 } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";
-import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-text";
+import { FRAGRANT_PAIR_POLICY } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 export interface LastWordsGrantContext {
   policy: typeof FRAGRANT_PAIR_POLICY;
   initialWave: boolean;

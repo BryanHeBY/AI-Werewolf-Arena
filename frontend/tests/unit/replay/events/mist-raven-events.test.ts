@@ -1,12 +1,8 @@
 /**
- * Unit tests verify mist raven fact acceptance, display labels, event-prefix effects.
- * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
- * Output: the original fact acceptance, display labels, event-prefix effects assertions.
- * Handwritten field, label and effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试负责验证迷雾／渡鸦事实的接受范围、标签与事件前缀。输入为原合法及畸形 payload；手写受众、字段和效果提供独立预期，不运行对局。
  */
 import { expect, test } from "bun:test";
-import { readMistRavenFact } from "@ai-werewolf-arena/game-text";
+import { readMistRavenFact } from "@ai-werewolf-arena/game-contract/facts/mist-raven";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
 import { eventLabel } from "../../../../src/replay/event-labels";

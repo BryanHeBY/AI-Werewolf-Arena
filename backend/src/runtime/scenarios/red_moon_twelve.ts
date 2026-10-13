@@ -1,3 +1,8 @@
+/**
+ * 提供红月使徒／恶魔猎手十二人局的固定板子数据，供配置装配与有限规则验证调用。
+ * 输入无需运行参数；输出为 BoardConfig 的既有政策、配比、遗言与投票参数。
+ * 本模块不注册生命周期、选择行动或证明所有规则组合；执行与支持性检查归原机制／ruleset。
+ */
 import {
   ActionWindow,
   Role,
@@ -5,8 +10,8 @@ import {
   WitchSelfHealRule,
   type BoardConfig,
 } from "../../core/domain/model";
-import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-text";
-/** Candidate fixture until the full Red Moon lifecycle is registered. */
+import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
+/** 既有固定板子数据；实际生命周期和有限支持检查由注册的机制／ruleset 负责。 */
 export const redMoonTwelveConfig: BoardConfig = {
   boardSize: 12,
   enableSheriff: true,

@@ -1,8 +1,14 @@
+/**
+ * 负责从贵族／隐秘之躯已知知识构造冻结的玩家视图，结构类型直接来自契约包。
+ * 输入为 known journal 与公开 phase；输出为复制的选择／契约／资源字段和 awaitingNightReport。
+ * 日志所有者仍拥有知识更新；此模块仅投影，不付款或授予行动权限。标记必须由公开阶段
+ * 决定，不能比较真实与已知状态来泄漏尚未通知的变化。
+ */
 import { Phase } from "../../../../core/domain/identity";
 import type { NightChoice } from "./state";
 
-import type { SecretBodyKnowledge, NobleKnowledge } from "@ai-werewolf-arena/game-text";
-export type { SecretBodyKnowledge, NobleKnowledge } from "@ai-werewolf-arena/game-text";
+import type { SecretBodyKnowledge, NobleKnowledge } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
+export type { SecretBodyKnowledge, NobleKnowledge } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 export type SecretBodyPlayerState = Readonly<
   SecretBodyKnowledge & { awaitingNightReport: boolean }
 >;
@@ -44,7 +50,7 @@ export function projectSecretBodyKnowledge(
 ): SecretBodyPlayerState {
   return Object.freeze({
     ...copySecretBodyKnowledge(known),
-    // Public phase, never actual-versus-known inequality, determines this marker.
+    // 仅公开阶段决定此标记，不能用真实／已知状态的差异推断尚未通知的结果。
     awaitingNightReport: phase !== Phase.Night && known.resource !== "exile_revealed",
   });
 }

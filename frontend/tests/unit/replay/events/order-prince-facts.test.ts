@@ -1,13 +1,9 @@
 /**
- * Unit tests verify order prince fact acceptance, display labels.
- * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
- * Output: the original fact acceptance, display labels assertions.
- * Handwritten field, label and effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试负责验证秩序王子事实接受范围与复盘标签：原字面事实、畸形字段和语言用例保留，预期由手写字段／文案给出，不调用对局结算生成结果。
  */
 import { expect, test } from "bun:test";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
-import { readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-text";
+import { readOrderPrinceRevoteFact } from "@ai-werewolf-arena/game-contract/facts/order-prince";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
 import { eventLabel } from "../../../../src/replay/event-labels";
 function event(payload: Record<string, unknown>, phase = "voting"): ReplayEvent {

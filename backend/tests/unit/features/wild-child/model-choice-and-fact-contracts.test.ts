@@ -21,7 +21,7 @@ import {
 } from "../../../../src/game/mechanisms/roles/wild_child/lifecycle";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { readWildChildEventFact } from "@ai-werewolf-arena/game-text";
+import { readWildChildEventFact } from "@ai-werewolf-arena/game-contract/facts/wild-child";
 import {
   boardDefinitionFromConfig,
   parseBoardDefinition,

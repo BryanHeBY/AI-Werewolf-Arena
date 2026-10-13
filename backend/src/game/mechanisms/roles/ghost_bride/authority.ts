@@ -1,25 +1,13 @@
 /**
- * Owns Ghost Bride wedding turns, participant snapshots and transactional commits. Receives
- * original World objects and sealed requests; writes accepted choices and bound aliases only
- * through current wedding authority. Cancellation and failed commits keep their original
- * settlement order; alias routing never replaces local validation.
+ * 负责鬼新娘婚礼回合、原参与者快照与有序提交，拥有婚礼选择和绑定别名的写权。
+ * 输入保留原 World 及封存请求；输出为原校验后已接受的选择、消息与结算记录。
+ * 不变量：提交必须匹配原参与者和绑定回合，别名不能替代本地校验。取消、关闭或失败
+ * 均保持原结算及部分写入顺序，不修复被替换的库存。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { types } from "node:util";
-import {
-  GHOST_BRIDE_POLICY,
-  GHOST_BRIDE_ROLE,
-  freshGhostBrideState,
-  readGhostBrideState,
-  type GhostBrideState,
-  type WeddingPair,
-  type WeddingGroup,
-  type WeddingSetup,
-  type WeddingKnifeCapture,
-  type WeddingTool,
-  readWeddingTool,
-} from "@ai-werewolf-arena/game-text";
+import { GHOST_BRIDE_POLICY, GHOST_BRIDE_ROLE, freshGhostBrideState, readGhostBrideState, type GhostBrideState, type WeddingPair, type WeddingGroup, type WeddingSetup, type WeddingKnifeCapture, type WeddingTool, readWeddingTool } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import {
   bindRequestDeliveryGuard,
   settleRequestDelivery,
@@ -42,7 +30,7 @@ import {
 } from "../../../../core/domain/components/alive";
 import { assertGhostBridePreset } from "./preset";
 
-/** Read own data only: substituted getters never execute during rejection or auditing. */
+/** 只读 own data；拒绝或审计期间不执行被替换的 getter。 */
 function data(value: unknown, key: string): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
   const d = Object.getOwnPropertyDescriptor(value, key);
@@ -249,7 +237,7 @@ function sameBody(b: Binding, p: Participant, mustLive = false): boolean {
     (!d.get && d.value !== p.aliveDescriptor.value)
   )
     return false;
-  // Only the originally captured accessor is evaluated after its descriptor is verified.
+  // 验证 descriptor 后，只执行最初捕获的 accessor。
   const alive = p.aliveDescriptor.get
     ? p.aliveDescriptor.get.call(p.life) === true
     : d.value === true;
@@ -312,7 +300,7 @@ function third(b: Binding, id: number): void {
   p.affiliations = victory.affiliations;
   p.victoryJson = json(victory.affiliations)!;
 }
-/** Installation is deliberately separate from catalog activation and runtime setup. */
+/** 安装与 catalog 激活、runtime setup 各自独立。 */
 export function installGhostBride(world: World, config: ReadonlyBoardConfig): void {
   if (bindings.has(world)) throw new Error("ghost_bride_already_installed");
   assertGhostBridePreset(config);
@@ -579,7 +567,7 @@ export function closeWeddingSetup(world: World, status: "failed" | "cancelled"):
   b.pendingChat = null;
   b.setupCurrent = null;
   if (writable(b.state, "remaining")) b.state.remaining = 0;
-  // Keep only the actually committed pair; never consume or repair a substituted state.
+  // 仅保留实际提交的 pair，不消耗或修复替换状态。
 }
 const stages: Record<TurnKind, string> = {
   bridegroom: "ghost_bride_groom",
@@ -762,7 +750,7 @@ function commitWeddingToolInternal(scope: object, value: unknown): boolean {
     if (b.votes.length === 1) b.consent = t;
     if (b.votes.length === 2) {
       if (b.votes[0]!.targetId !== id) {
-        // Both valid but disagreeing votes really committed; replay must retain this action.
+        // 两个合法但相互矛盾的票均已实际提交，复盘必须保留该行动。
         settleRequestDelivery(scope, true);
         closeWeddingSetup(b.world, "failed");
         return false;
@@ -959,8 +947,8 @@ export function weddingAuditPlayer(world: World, id: number, failedCycle = false
   const b = bindings.get(world),
     p = b?.participants.get(id);
   if (!b || !p || (!failedCycle && b.status !== "failed" && b.status !== "cancelled")) return null;
-  // Refresh each still-owned plain stock independently: another participant may have failed.
-  // json reads descriptors only, so foreign getters/proxies keep the last safe snapshot.
+  // 分别刷新仍归原 owner 的 plain 库存；其他参与者可能已经失败。
+  // json 仅读 descriptor，foreign getter／Proxy 因而保留最近安全快照。
   if (sameBody(b, p) && sameIdentity(b, p)) {
     const encoded = json(p.state);
     if (encoded !== null) p.auditPrivateJson = encoded;
@@ -987,7 +975,7 @@ export function weddingAuditPlayer(world: World, id: number, failedCycle = false
 }
 
 const deathEdges = new WeakMap<World, Set<string>>();
-/** Close independent roots before native gun eligibility. Derived Lovers never seed a reverse edge. */
+/** 原生枪资格检查前关闭独立 roots；派生情侣关系不建立反向边。 */
 export function expandWeddingDeaths(
   world: World,
   ids: number[],
@@ -1033,7 +1021,7 @@ export function weddingNightCapture(
   return bindings.get(world)?.nights.get(day)?.capture ?? null;
 }
 
-/** Consume a committed message once, after rechecking both original lives and the original request. */
+/** 重检双方原生命及原请求后，仅消耗一次已提交消息。 */
 export function takeWeddingChat(
   scope: object,
 ): { actorId: number; recipientId: number; day: number; text: string } | null {
@@ -1081,7 +1069,7 @@ export type WeddingActorView =
       groomId: number;
       canKnife: boolean;
     };
-/** Minimal identity-independent projection; Witness never receives chats, votes or native stocks. */
+/** 与身份无关的最小投影；见证人不接收聊天、票型或原生库存。 */
 export function weddingActorView(world: World, actorId: number): WeddingActorView | null {
   const b = bindings.get(world);
   if (!b?.pair || b.status === "failed" || b.status === "cancelled") return null;
@@ -1112,7 +1100,7 @@ export function weddingActorView(world: World, actorId: number): WeddingActorVie
     : null;
 }
 
-/** Pure preflight over the same original body/request target proof used at commit. */
+/** 纯 preflight 与提交使用同一原体／请求目标证明。 */
 export function canSubmitWeddingTool(
   world: World,
   actorId: number,

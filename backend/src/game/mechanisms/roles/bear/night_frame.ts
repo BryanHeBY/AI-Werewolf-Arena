@@ -19,7 +19,7 @@ import type { World } from "../../../../core/domain/world";
 import { RoleCatalog } from "../catalog";
 import { getDefaultRoleCatalog } from "../role-catalog-assembly";
 import { getBearState } from "./state";
-import { BEAR_SIGNAL_POLICIES, type BearSignalPolicy } from "@ai-werewolf-arena/game-text";
+import { BEAR_SIGNAL_POLICIES, type BearSignalPolicy } from "@ai-werewolf-arena/game-contract";
 import {
   captureOriginalPlayer,
   originalPlayerSameLife,
@@ -88,7 +88,7 @@ function sampleRoar(world: World, actorId: EntityId, catalog: RoleCatalog): bool
   });
 }
 
-/** The snapshot stays with the manager, never on a player component or DTO. */
+/** 快照由 manager 持有，不放在玩家 component 或 DTO 中。 */
 export class BearNightFrame {
   private constructor(
     private readonly owner: World,
@@ -153,7 +153,7 @@ export class BearNightFrame {
     );
   }
 
-  /** Publish after the complete night death wave and before its victory check. */
+  /** 完整夜死亡波后、该波判胜前发表。 */
   publish(world: World, events: GameEvent[], isCurrent: () => boolean): void {
     if (this.signalPolicy === "netease_dawn_live_v1") {
       this.publishDawn(world, events, isCurrent);
@@ -238,7 +238,7 @@ export class BearNightFrame {
       if (history === events || !appendable(history) || !appendable(events)) return;
       const report = { day: this.day, roared: this.life.alive && this.wasAlive && sampled },
         event: GameEvent = { timestamp: now(), type: "bear_roared", payload: { ...report } };
-      // Both inert arrays are appendable; no user callback/setter runs between these two writes.
+      // 两个 inert 数组均可追加，两次写入间不执行用户回调／setter。
       Object.defineProperty(events, String(events.length), {
         value: event,
         enumerable: true,

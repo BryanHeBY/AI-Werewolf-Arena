@@ -3,7 +3,7 @@
  */
 import { expect, test } from "bun:test";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
-import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-text";
+import { GHOST_BRIDE_POLICY } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { ghostBrideEventLabel } from "@ai-werewolf-arena/game-presentation";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 const base = { policy: GHOST_BRIDE_POLICY, groupId: "ghost-bride:1:1", day: 1 };

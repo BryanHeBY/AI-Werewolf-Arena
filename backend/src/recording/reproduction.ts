@@ -200,7 +200,7 @@ export interface RecordedCheckpoint {
   operationCount?: number;
   settlementCount?: number;
   decisionCount?: number;
-  ghostBrideSetup?: import("@ai-werewolf-arena/game-text").WeddingSetup;
+  ghostBrideSetup?: import("@ai-werewolf-arena/game-contract/facts/ghost-bride").WeddingSetup;
   lonelyGirlSetup?: {
     policy: "awa_netease_lonely_girl_v1";
     status: "pending" | "complete" | "cancelled" | "failed";

@@ -7,12 +7,8 @@
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
-import {
-  text,
-  roleName,
-  CAT_SKIPPED_VOTE_POLICIES,
-  PUFFER_BALLOT_POLICIES,
-} from "@ai-werewolf-arena/game-text";
+import { text, roleName } from "@ai-werewolf-arena/game-text";
+import { CAT_SKIPPED_VOTE_POLICIES, PUFFER_BALLOT_POLICIES } from "@ai-werewolf-arena/game-contract";
 import { Role, Camp, WinCondition } from "../../../../core/domain/identity";
 import type { BoardConfig } from "../../../../core/domain/board";
 import type { NativeRoleContributions } from "../contracts";

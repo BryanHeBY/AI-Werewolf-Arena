@@ -22,7 +22,8 @@ import { fragrantAuthoritySnapshot } from "../../../../src/game/mechanisms/roles
 import { fragrantPairSeerTwelveConfig } from "../../../../src/runtime/scenarios/fragrant_pair_seer_twelve";
 import { fragrantRuntimeGame } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
 import { fragrantRuntimeAction } from "../../../support/features/fragrant-pair-seer/drivers/actions";
-import { FRAGRANT_PAIR_EVENT_TYPES, text } from "@ai-werewolf-arena/game-text";
+import { text } from "@ai-werewolf-arena/game-text";
+import { FRAGRANT_PAIR_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import { fragrantPairEventLabel } from "@ai-werewolf-arena/game-presentation";
 
 for (const locale of ["zh-CN", "en"] as const)

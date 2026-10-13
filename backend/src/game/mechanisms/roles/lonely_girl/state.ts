@@ -1,15 +1,16 @@
 /**
- * Owns Lonely Girl state construction and validated live slot reads. Inputs are the
- * original role record; outputs preserve the stored reference after the existing copied
- * validation. This boundary never resolves a relationship, reveals truth or commits stock.
+ * 负责构造孤独少女 policy／remaining／choice 数据并验证原角色状态槽。
+ * 槽由原角色及关系 lifecycle 所有者持有，输入为角色记录，输出为复制校验通过后的原引用。
+ * choice 的首夜字段与库存关系沿用原接受集合；查询不结算关系、公开底牌或提交库存。
  */
 import type { LonelyGirlState, LonelyGirlReadState } from "@ai-werewolf-arena/game-contract";
-import { copyEventData, LONELY_GIRL_POLICY } from "@ai-werewolf-arena/game-text";
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
+import { LONELY_GIRL_POLICY } from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
 import type { RoleComponent } from "../../../../core/domain";
 export {
   LONELY_GIRL_POLICY,
   readLonelyGirlChoiceTool as readLonelyGirlTool,
-} from "@ai-werewolf-arena/game-text";
+} from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
 export function freshLonelyGirlState(): LonelyGirlState {
   return { policy: LONELY_GIRL_POLICY, remaining: 1, choice: null };
 }

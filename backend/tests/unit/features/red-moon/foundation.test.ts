@@ -1,10 +1,5 @@
 /**
- * Unit tests for red-moon; Isolated red-moon foundation contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试负责验证红月独立基础契约：使用原内存 owner／frame／reader、回调控制及明确畸形修改。手写预期、身份快照和拒绝断言不变，不推进装配后的完整日夜或使用模型／实体传输。
  */
 import { describe, expect, test } from "bun:test";
 import { Camp } from "../../../../src/core/domain/identity";
@@ -14,13 +9,7 @@ import {
   getRedMoonState,
   RED_MOON_ROLE,
 } from "../../../../src/game/mechanisms/roles/red_moon_apostle/state";
-import {
-  readRedMoonNextNightFact,
-  readRedMoonExpiryFact,
-  RED_MOON_BLAST_EVENT,
-  RED_MOON_EXILE_EVENT,
-  RED_MOON_EXPIRY_EVENT,
-} from "@ai-werewolf-arena/game-text";
+import { readRedMoonNextNightFact, readRedMoonExpiryFact, RED_MOON_BLAST_EVENT, RED_MOON_EXILE_EVENT, RED_MOON_EXPIRY_EVENT } from "@ai-werewolf-arena/game-contract/facts/red-moon";
 function role(state: unknown = freshRedMoonState()): RoleComponent {
   return {
     role: RED_MOON_ROLE,
@@ -147,7 +136,7 @@ test("Red Moon fact readers reject accessors without invoking getters", () => {
   expect(reads).toBe(0);
 });
 
-import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-text";
+import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { isRedMoonPreset } from "../../../../src/rulesets";
 function redMoonConfig(lastWolfBlastPolicy: "ends_game" | "forbidden" = "ends_game") {
   return {

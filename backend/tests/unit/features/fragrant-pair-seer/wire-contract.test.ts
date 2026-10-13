@@ -1,20 +1,8 @@
 /**
- * Unit tests for fragrant-pair-seer; Isolated fragrant-pair-seer wire-contract contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试负责验证香对预言家的独立 wire 契约：原内存 owner／frame／reader、回调和非法修改为输入；字面预期、身份快照与拒绝断言保持，不运行整局或模型／实体传输。
  */
 import { expect, test } from "bun:test";
-import {
-  FRAGRANT_PAIR_POLICY,
-  readPairCheckFact,
-  readFragrantKnownState,
-  readFragrantPairFact,
-  type FragrantKnowledge,
-  type FragrantPairPayloadMap,
-} from "@ai-werewolf-arena/game-text";
+import { FRAGRANT_PAIR_POLICY, readPairCheckFact, readFragrantKnownState, readFragrantPairFact, type FragrantKnowledge, type FragrantPairPayloadMap } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import { readFragrantKnowledge } from "../../../../src/game/mechanisms/roles/fragrant_pair_seer/knowledge";
 const known: FragrantKnowledge = {
   knownWolfId: 3,

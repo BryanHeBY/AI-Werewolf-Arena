@@ -1,29 +1,28 @@
 /**
- * Owns original test oracle shared test handwritten expected data and bounded contract assertions. Inputs are supplied
- * plans or observed tuples; outputs preserve literal stock, identity, marker and error expectations. No
- * expected game result is regenerated from production settlement; this owner performs no game, model or
- * transport execution.
+ * 负责提供传输测试的共享断言与手写预期，属于测试支持层而非生产观察器。
+ * 输入为调用方的计划或观察元组，输出为库存、身份、标记和错误的有界断言。
+ * 预期由原测试字面数据提供，不执行传输、模型或生产结算来重新计算结果。
  */
 import type { ActorTransportPlan } from "../../transport/contracts";
 import { isDeepStrictEqual } from "node:util";
 import type { PlannedTurn } from "../../transport/contracts";
-import { ANIMAL_DREAM_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
-import { readAnimalDreamFact } from "@ai-werewolf-arena/game-text";
-import { FRAGRANT_PAIR_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
-import { readFragrantPairFact } from "@ai-werewolf-arena/game-text";
-import { RADIANT_ECLIPSE_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
-import { readRadiantEclipseFact } from "@ai-werewolf-arena/game-text";
-import { radiantEclipseAudience } from "@ai-werewolf-arena/game-text";
-import { readModifierChoiceFact } from "@ai-werewolf-arena/game-text";
-import { readModifierSkipFact } from "@ai-werewolf-arena/game-text";
-import { readModifierBonusFact } from "@ai-werewolf-arena/game-text";
-import { readTimeConsortChoiceFact } from "@ai-werewolf-arena/game-text";
-import { readTimeConsortSkipFact } from "@ai-werewolf-arena/game-text";
-import { readWolfSorcererExchangeFact } from "@ai-werewolf-arena/game-text";
-import { readWolfSorcererSkipFact } from "@ai-werewolf-arena/game-text";
-import { readNightmareOwnFearFact } from "@ai-werewolf-arena/game-text";
-import { readTricksterExchangeFact } from "@ai-werewolf-arena/game-text";
-import { readTricksterSkipFact } from "@ai-werewolf-arena/game-text";
+import { ANIMAL_DREAM_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
+import { readAnimalDreamFact } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
+import { FRAGRANT_PAIR_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
+import { readFragrantPairFact } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
+import { RADIANT_ECLIPSE_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
+import { readRadiantEclipseFact } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
+import { radiantEclipseAudience } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
+import { readModifierChoiceFact } from "@ai-werewolf-arena/game-contract/facts/scholar-mentor";
+import { readModifierSkipFact } from "@ai-werewolf-arena/game-contract/facts/scholar-mentor";
+import { readModifierBonusFact } from "@ai-werewolf-arena/game-contract/facts/scholar-mentor";
+import { readTimeConsortChoiceFact } from "@ai-werewolf-arena/game-contract/facts/time-consort";
+import { readTimeConsortSkipFact } from "@ai-werewolf-arena/game-contract/facts/time-consort";
+import { readWolfSorcererExchangeFact } from "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer";
+import { readWolfSorcererSkipFact } from "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer";
+import { readNightmareOwnFearFact } from "@ai-werewolf-arena/game-contract/facts/nightmare";
+import { readTricksterExchangeFact } from "@ai-werewolf-arena/game-contract/facts/trickster";
+import { readTricksterSkipFact } from "@ai-werewolf-arena/game-contract/facts/trickster";
 import { assertMistTransportEvents } from "../../features/mist-raven/oracles/transport";
 import type { MistWireExpectations } from "../../features/mist-raven/oracles/transport";
 import type { MistWireState } from "../../features/mist-raven/oracles/transport";

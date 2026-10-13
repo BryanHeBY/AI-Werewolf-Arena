@@ -1,15 +1,11 @@
 /**
- * Unit tests verify time consort fact acceptance, display labels.
- * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
- * Output: the original fact acceptance, display labels assertions.
- * Handwritten field, label and effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试负责验证时序妃锁定事实及复盘文案；输入与独立字段／标签预期均来自原用例表，畸形记录应按原 reader 拒绝，不执行真实对局或模型。
  */
 import { expect, test } from "bun:test";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
 import { eventLabel } from "../../../../src/replay/event-labels";
-import { readTimeConsortReflectionFact } from "@ai-werewolf-arena/game-text";
+import { readTimeConsortReflectionFact } from "@ai-werewolf-arena/game-contract/facts/time-consort";
 function event(type: string, payload: Record<string, unknown>, phase = "night"): ReplayEvent {
   return {
     seq: 1,

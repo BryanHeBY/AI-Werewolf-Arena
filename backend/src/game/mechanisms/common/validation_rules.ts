@@ -1,4 +1,7 @@
-import { readWallTool } from "@ai-werewolf-arena/game-text";
+/**
+ * 提供通用工具的原校验集合：匿名墙检查作者／窗口，辩论检查参与者／阶段，放逐票检查票权与候选。输入为网关上下文和工具参数；返回既有 RuleError 或 null，不在校验中提交资源或阶段。
+ */
+import { readWallTool } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
 import { authorizedWallAuthor } from "../events/wall_notes/authority";
 import { prohibitsLoversVote } from "../roles/cupid/relation";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";

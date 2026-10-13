@@ -4,7 +4,7 @@
 import { expect, test } from "bun:test";
 import type { ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
-import { LONELY_GIRL_POLICY } from "@ai-werewolf-arena/game-text";
+import { LONELY_GIRL_POLICY } from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
 import { lonelyGirlEventLabel } from "@ai-werewolf-arena/game-presentation";
 const payload = { policy: LONELY_GIRL_POLICY, actorId: 1, day: 1, targetId: 2 };
 const fact = (p: Record<string, unknown>, day = 1, phase = "night"): ReplayEvent => ({

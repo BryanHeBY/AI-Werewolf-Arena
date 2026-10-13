@@ -60,7 +60,8 @@ import {
 import { DefaultTargetHintRegistry } from "../../../../src/game/mechanisms/llm/target_hint_registry";
 import { setIdiotState } from "../../../../src/game/mechanisms/roles/idiot/ports";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
-import { readDebateEventFact, text } from "@ai-werewolf-arena/game-text";
+import { text } from "@ai-werewolf-arena/game-text";
+import { readDebateEventFact } from "@ai-werewolf-arena/game-contract/facts/debate";
 import { debateEventLabel } from "@ai-werewolf-arena/game-presentation";
 const deck = [Role.Debater, Role.Wolf, Role.Hunter, Role.Idiot, Role.Villager, Role.Villager];
 const fixture = (roles = deck) => {

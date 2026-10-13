@@ -1,20 +1,17 @@
 /**
- * Responsibility: independently verify animal-dream actions, ballots and death evidence.
- * Input: normalized board data and recorded causal prefixes.
- * Output: consistency checks that throw on invalid archive evidence.
- * Boundary: never invokes live effect, vote or death resolvers or owns their resources.
+ * 独立验证动物梦境的行动、票型和死亡证据。输入为规范板子与已记录因果前缀；输出为一致性检查，档案证据无效时抛错，不调用 live 效果／投票／死亡结算或取得其资源。
  */
 import { animalFeedAt } from "./animal_dream_feed_record";
 import { isDeepStrictEqual as equal } from "node:util";
 import { ANIMAL_DREAM_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/animal-dream";
 import { isAnimalDreamPreset } from "../verification/board-support";
-import { ANIMAL_DREAM_POLICY as policy } from "@ai-werewolf-arena/game-text";
+import { ANIMAL_DREAM_POLICY as policy } from "@ai-werewolf-arena/game-contract";
 import type { ReproductionRecord } from "./reproduction";
 function check(value: unknown): asserts value {
   if (!value) throw Error("reproduction_animal_dream_invalid");
 }
-/** Independent arithmetic over recorded actions, original seats and actual publication prefixes.
- * No World, runtime owner, damage reducer, vote selector or visibility projection is used. */
+/** 独立核算已记录行动、原座位与实际发表前缀。
+ * 不使用 World、runtime owner、伤害结算、票型选择或可见性投影。 */
 export function validateAnimalDreamRecord(r: ReproductionRecord): void {
   const board = r.metadata.normalizedBoard;
   const animal = (type: string) => (ANIMAL_DREAM_EVENT_TYPES as readonly string[]).includes(type);
@@ -597,7 +594,7 @@ export function validateAnimalDreamRecord(r: ReproductionRecord): void {
       prepared = null;
       expiry = null;
     }
-    // No actual batch is emitted for an empty/deferred-only wave; it still consumes a preparation.
+    // 空波／仅延后死亡的波不发表实际 batch，但仍消耗一次 preparation。
     if (
       prepared?.length === 0 &&
       expiry === null &&

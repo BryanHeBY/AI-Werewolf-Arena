@@ -1,11 +1,13 @@
+/**
+ * 负责构造恶魔猎手数据并读取原角色的 demonHunter 状态槽，结构包含 policy 和选择 history。
+ * 状态库存由原角色及 authority 所有者持有；输入为角色记录或未知工具数据，输出为原字段
+ * 校验后的槽引用／工具副本。Node 快照拒绝外来 descriptor，复制只用于校验，查询不生成
+ * 第二份 live 状态，也不结算选择或封存资源。
+ */
 import { snapshotPlainData } from "../../../../core/domain/plain_data";
 import { types } from "node:util";
 import type { RoleComponent } from "../../../../core";
-import {
-  DEMON_HUNTER_POLICY,
-  readDemonHunterState as readState,
-  readDemonHuntTool as readTool,
-} from "@ai-werewolf-arena/game-text";
+import { DEMON_HUNTER_POLICY, readDemonHunterState as readState, readDemonHuntTool as readTool } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 export { DEMON_HUNTER_POLICY };
 export const DEMON_HUNTER_ROLE = "demon_hunter" as const;
 export interface DemonHunterChoice {
@@ -60,6 +62,7 @@ export function readDemonHunterState(value: unknown): DemonHunterState | null {
 }
 export function getDemonHunterState(role: RoleComponent | undefined): DemonHunterState | undefined {
   const s = ownDemonData(ownDemonData(role, "privateState"), "demonHunter");
+  // 复制只用于验证；成功后仍返回原 slot，不能让查询生成第二份 live 状态。
   return readDemonHunterState(s) ? (s as DemonHunterState) : undefined;
 }
 export interface DemonHuntTool {

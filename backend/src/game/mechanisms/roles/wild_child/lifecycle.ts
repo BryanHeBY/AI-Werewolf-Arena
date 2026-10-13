@@ -7,7 +7,7 @@ import { createCampComponent } from "../../../observation/component-presentation
 import type { WildChildState, WildChildReadState } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
-import { copyEventData } from "@ai-werewolf-arena/game-text";
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT, Camp, Role, Phase, createVictoryComponent, type World, type ActionRequest, type RoleComponent, type CampComponent, type VictoryComponent, type GameEvent, type DeathSources } from "../../../../core/domain";
 import { aliveLifeVersion } from "../../../../core/domain/components/alive";
 import {
@@ -273,7 +273,7 @@ export function closeWildChildChoice(b: WildChildBinding, status: "failed" | "ca
     b.expectedState = safeJson(b.state);
   }
 }
-/** Called immediately before an actual engine-owned Alive commit, never by queries or raw proposals. */
+/** 紧邻实际引擎 Alive 提交之前调用，不由查询或原始拟议目标调用。 */
 export function recordWildChildDeathCommit(world: World, id: number): void {
   const b = bindings.get(world);
   if (!b || !validWildChildIdentity(b)) return;
@@ -287,7 +287,7 @@ export function recordWildChildDeathCommit(world: World, id: number): void {
   )
     b.modelDeath = true;
 }
-/** Full pending wave is marked before this call; later shot waves have separate commits. */
+/** 调用前标记完整 pending 死亡波；后续射击波独立提交。 */
 export function resolveWildChildDeathWave(
   world: World,
   ids: readonly number[],

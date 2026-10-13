@@ -6,7 +6,8 @@
  */
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
-import { roleName, text, BEAR_SIGNAL_POLICIES } from "@ai-werewolf-arena/game-text";
+import { roleName, text } from "@ai-werewolf-arena/game-text";
+import { BEAR_SIGNAL_POLICIES } from "@ai-werewolf-arena/game-contract";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { getBearState, setBearState } from "./state";

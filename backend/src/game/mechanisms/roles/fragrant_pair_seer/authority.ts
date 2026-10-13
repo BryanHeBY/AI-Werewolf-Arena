@@ -8,7 +8,7 @@
 import type { PairSeerState, Pair } from "@ai-werewolf-arena/game-contract";
 
 import { types } from "node:util";
-import type { FragrantPlayerState } from "@ai-werewolf-arena/game-text";
+import type { FragrantPlayerState } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import type { World } from "../../../../core/domain/world";
 import type { GameEvent } from "../../../../core/domain/events";
 import type { RandomDraws } from "../../../../core/domain/random";
@@ -237,7 +237,7 @@ function commitState(o: Owner, next: FragrantState): void {
   write(o.fragrant, next);
   o.fragrantJson = JSON.stringify(next);
 }
-/** The owner requires the complete original native roster. No replacement resources are granted. */
+/** owner 要求完整原生阵容，不向替换对象授予资源。 */
 export function installFragrantPairAuthority(
   world: World,
   events: GameEvent[],
@@ -348,7 +348,7 @@ export function installFragrantPairAuthority(
 export function isFragrantPairBoard(world: World): boolean {
   return owners.has(world);
 }
-/** Expiry, sole N1 draw and knife freeze commit before any asynchronous player request. */
+/** 到期、唯一首夜抽取与狼刀冻结均在异步玩家请求前提交。 */
 export function beginFragrantNight(
   world: World,
   day: number,
@@ -387,7 +387,7 @@ export function beginFragrantNight(
       bind: { opened: false, committed: false, revoked: false },
       pair: { opened: false, committed: false, revoked: false },
     };
-  // Reserve before entering randomness. A failed sampled night stays aborted and cannot redraw.
+  // 进入随机抽样前先预留；抽样夜失败后保持 aborted，不能重新抽取。
   o.active = night;
   o.nights.set(day, night);
   try {
@@ -592,7 +592,7 @@ export function fragrantRoleKnifeEligible(world: World, role: PairTargetScope["r
     fragrantKnifeEligible(world, o.phantom.target.id, o.active.day)
   );
 }
-/** Historical single-ID knowledge; this never returns the private original ordinary-wolf roster. */
+/** 只返回历史单一 ID 知识，不返回私有原普通狼人阵容。 */
 export function fragrantKnownWolfIds(
   world: World,
   role: PairTargetScope["role"],
@@ -640,7 +640,7 @@ interface WaveProof {
   committed: boolean;
 }
 const waves = new WeakMap<FragrantWaveReceipt, WaveProof>();
-/** Prepare only final effective living deaths; preparation does not spend the resource. */
+/** 只准备最终有效的存活死亡目标；preparation 不消耗资源。 */
 export function prepareFragrantDeathWave(
   world: World,
   day: number,
@@ -699,7 +699,7 @@ export function cancelFragrantDeathWave(world: World, receipt: FragrantWaveRecei
   o.pendingWave = null;
   waves.delete(receipt);
 }
-/** The resolver marks the entire validated wave synchronously before committing this receipt. */
+/** 结算器在提交此回执前同步标记整批已验证死亡波。 */
 export function commitFragrantDeathWave(world: World, receipt: FragrantWaveReceipt): void {
   const o = requireOwner(world),
     p = waves.get(receipt);
@@ -723,7 +723,7 @@ export function commitFragrantDeathWave(world: World, receipt: FragrantWaveRecei
   p.committed = true;
   o.pendingWave = null;
 }
-/** Only an issued, actually committed wave and its public event in this game's feed disclose use. */
+/** 只有已发出且实际提交的波及本局 feed 中公开事件才披露使用。 */
 export function publishFragrantDeathWave(
   world: World,
   receipt: FragrantWaveReceipt,

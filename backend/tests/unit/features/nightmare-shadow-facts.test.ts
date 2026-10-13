@@ -2,7 +2,7 @@
  * 单元测试验证梦魇的全知／本人事实、无效玩家和日期。输入为字面量记录；精确字段与描述符断言检验有限 reader，不授予权限，不调用模型或完整游戏驱动。
  */
 import { expect, test } from "bun:test";
-import { readNightmareFearFact, readNightmareOwnFearFact } from "@ai-werewolf-arena/game-text";
+import { readNightmareFearFact, readNightmareOwnFearFact } from "@ai-werewolf-arena/game-contract/facts/nightmare";
 import { nightmareEventLabel } from "@ai-werewolf-arena/game-presentation";
 const type = "nightmare_fear_committed";
 test("nightmare full and own facts have disjoint exact shapes", () => {

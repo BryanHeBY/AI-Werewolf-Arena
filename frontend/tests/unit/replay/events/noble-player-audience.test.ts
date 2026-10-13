@@ -1,16 +1,12 @@
 /**
- * Unit tests verify noble player audience fact acceptance, display labels, event-prefix effects.
- * Input: the original literal facts, malformed payloads and case tables with explicit display locale.
- * Output: the original fact acceptance, display labels, event-prefix effects assertions.
- * Handwritten field, label and effect expectations are the independent oracle.
- * Existing case tables remain unchanged; no live game executes or golden regenerates.
+ * 单元测试负责验证贵族玩家受众、事实字段、显示标签和事件前缀。原字面受众／效果预期独立于生产结算，语言显式给出，不改变旧用例或重建 golden。
  */
-// Independent readonly reviewer cases; original inputs retained.
+// 独立的只读审查用例，保留原输入。
 import { expect, test } from "bun:test";
 import { readReplayEvent } from "../../../../src/replay/replay-event-reader";
 import { eventLabel } from "../../../../src/replay/event-labels";
 import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
-import { NOBLE_SECRET_BODY_POLICY as policy } from "@ai-werewolf-arena/game-text";
+import { NOBLE_SECRET_BODY_POLICY as policy } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 const row = (type: string, payload: any, phase = "night", day = payload.day, seq = 1) => ({
   seq,
   type,

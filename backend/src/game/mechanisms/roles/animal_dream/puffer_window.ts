@@ -1,4 +1,9 @@
-import { ANIMAL_DREAM_POLICY } from "@ai-werewolf-arena/game-text";
+/**
+ * 负责收集河豚反噬选择，输入为 World、事件数组、Provider／网关、日期与原单元对象。
+ * 当前单元／actor 及绑定请求决定资格；校验后先提交回执，再按原票型政策发表揭示与目标。
+ * 输出为捕获的目标数组；请求始终在 finally 关闭，库存及原票源归 authority，此处不提交死亡波。
+ */
+import { ANIMAL_DREAM_POLICY } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../../../../core/domain/world";
 import type { ActionProvider } from "../../../../core/domain/actions";
 import type { GameEvent } from "../../../../core/domain/events";

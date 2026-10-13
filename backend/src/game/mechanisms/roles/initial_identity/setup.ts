@@ -8,7 +8,7 @@ import type {
   ShapeshifterState,
 } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
-import { copyEventData } from "@ai-werewolf-arena/game-text";
+import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT, Camp, Phase, Role, createVictoryComponent, type ActionProvider, type ActionRequest, type CampComponent, type GameEvent, type RoleComponent, type VictoryComponent, type World } from "../../../../core/domain";
 import { createRoleComponent } from "../../../observation/role-presentation";
 import { GameActionRequestFactory } from "../../../engine/action_request_factory";
@@ -387,7 +387,7 @@ export class InitialIdentitySetupWindow {
         status = "cancelled";
         return false;
       }
-      // No await, provider callback or event between physical swap and identity installation.
+      // 物理交换与身份安装之间没有 await、Provider 回调或事件发表。
       if (chosen && slot !== null && newRole && newCamp && newVictory) {
         if (this.kind === "shapeshifter") {
           (state as Pick<ThiefState | ShapeshifterState, "remaining">).remaining = 0;

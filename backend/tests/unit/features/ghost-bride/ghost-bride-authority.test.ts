@@ -3,18 +3,7 @@
  */
 import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
-import {
-  GHOST_BRIDE_POLICY,
-  GHOST_BRIDE_GOAL,
-  GHOST_BRIDE_ROLE,
-  freshGhostBrideState,
-  readGhostBrideState,
-  readWeddingSetup,
-  readWeddingPair,
-  readWeddingGroup,
-  readWeddingKnifeCapture,
-  readWeddingTool,
-} from "@ai-werewolf-arena/game-text";
+import { GHOST_BRIDE_POLICY, GHOST_BRIDE_GOAL, GHOST_BRIDE_ROLE, freshGhostBrideState, readGhostBrideState, readWeddingSetup, readWeddingPair, readWeddingGroup, readWeddingKnifeCapture, readWeddingTool } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { World, assertRequestDelivery, deferRequestDelivery, Role, Camp, Phase, COMPONENT, ActionWindow, WitchSelfHealRule, WinCondition, DeathCause, createVictoryComponent, type BoardConfig, type RoleComponent, type AliveComponent, type VictoryComponent, type DeathSources } from "../../../../src/core";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
 import { assertGhostBridePreset } from "../../../../src/game/mechanisms/roles/ghost_bride/preset";

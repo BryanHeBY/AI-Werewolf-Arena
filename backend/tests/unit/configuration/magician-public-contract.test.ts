@@ -1,15 +1,9 @@
 /**
- * Unit tests: Magician eligibility uses explicit first-night and shot policies; literal
- * supported combinations and named invalid variants check the public finite predicate.
- * Inputs and expected outcomes remain the original literal or immutable-fixture oracle;
- * these module assertions invoke no model or complete-game driver.
+ * 单元测试负责验证魔术师首夜与射击政策的有限公开支持谓词。手写可支持组合和具名非法变体为输入与预期，不以完整结算或模型重新生成结果。
  */
 import { expect, test } from "bun:test";
 import { isMagicianPreset } from "../../../src/rulesets";
-import {
-  readMagicianExchangeFact,
-  readMagicianOwnExchangeFact,
-} from "@ai-werewolf-arena/game-text";
+import { readMagicianExchangeFact, readMagicianOwnExchangeFact } from "@ai-werewolf-arena/game-contract/facts/magician";
 function board(
   firstNight: 1 | 2 = 1,
   deathShotTargetPolicy: "original" | "exchanged" = "original",

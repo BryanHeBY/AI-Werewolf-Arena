@@ -47,7 +47,8 @@ import {
 } from "../../../../src/game/mechanisms/roles/wolf_team";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import { captureCheckpoint } from "../../../../src/runtime/simulation/reproduction_context";
-import { readCupidEventFact, text } from "@ai-werewolf-arena/game-text";
+import { text } from "@ai-werewolf-arena/game-text";
+import { readCupidEventFact } from "@ai-werewolf-arena/game-contract/facts/cupid";
 import { cupidEventLabel } from "@ai-werewolf-arena/game-presentation";
 
 const deck = [Role.Cupid, Role.Hunter, Role.Wolf, Role.Villager, Role.Wolf, Role.Villager];

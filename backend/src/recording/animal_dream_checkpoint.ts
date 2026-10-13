@@ -1,8 +1,14 @@
+/**
+ * 负责声明动物梦境 checkpoint 的严格档案形状，供记录器与档案校验消费。
+ * 输入为待校验档案数据；输出为 Zod 结构接受／拒绝及 RecordedAnimalState 类型，保存政策、
+ * 库存、夜状态、效果、票型和完成单元。schema 只验证字段结构，原归属与因果值由独立账本
+ * 核对；此数据契约不恢复 live owner、支付资源或授予权限。
+ */
 import { z } from "zod";
-import { CAT_SKIPPED_VOTE_POLICIES, PUFFER_BALLOT_POLICIES } from "@ai-werewolf-arena/game-text";
+import { CAT_SKIPPED_VOTE_POLICIES, PUFFER_BALLOT_POLICIES } from "@ai-werewolf-arena/game-contract";
 const id = z.number().int().positive().safe(),
   stock = z.record(z.string(), z.json());
-/** Archive shape only; the independent ledger proves original ownership and causal values. */
+/** 这里只校验档案形状；独立账本另验证原归属及因果值。 */
 export const animalCheckpointSchema = z.strictObject({
   policies: z
     .strictObject({

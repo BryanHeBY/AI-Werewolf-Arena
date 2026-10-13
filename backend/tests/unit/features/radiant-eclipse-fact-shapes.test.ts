@@ -1,11 +1,8 @@
 /**
- * Unit tests: Radiant Eclipse fact readers use literal empty/pass/villager/borrowed
- * records; exact target/ability/close-field rejection expectations check legal data
- * shapes. Inputs and expected outcomes remain the original literal or immutable-fixture
- * oracle; these module assertions invoke no model or complete-game driver.
+ * 单元测试负责验证明辉／黯月事实形状：空状态、跳过、村民和借用记录为手写输入；目标／能力／关闭字段的精确接受与拒绝为独立预期，不执行模型或完整对局。
  */
 import { expect, test } from "bun:test";
-import { readRadiantEclipseFact } from "@ai-werewolf-arena/game-text";
+import { readRadiantEclipseFact } from "@ai-werewolf-arena/game-contract/facts/radiant-eclipse";
 const close = (body: object) => readRadiantEclipseFact("eclipse_lease_closed", body);
 for (const status of ["committed", "aborted"]) {
   test(`${status}: literal legal day1 empty, pass, villager and actual borrowed close shapes`, () => {

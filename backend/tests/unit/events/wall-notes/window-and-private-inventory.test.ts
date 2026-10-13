@@ -37,7 +37,7 @@ import {
   boardDefinitionFromConfig,
   parseBoardDefinition,
 } from "../../../../src/runtime/config/board_definition";
-import { validWallText, readWallTool, readWallEventFact } from "@ai-werewolf-arena/game-text";
+import { validWallText, readWallTool, readWallEventFact } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
 import { wallEventLabel } from "@ai-werewolf-arena/game-presentation";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
 

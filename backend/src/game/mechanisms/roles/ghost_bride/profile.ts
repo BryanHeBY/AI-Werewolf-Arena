@@ -6,12 +6,8 @@
  */
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
-import {
-  GHOST_BRIDE_POLICY,
-  freshGhostBrideState,
-  roleName,
-  text,
-} from "@ai-werewolf-arena/game-text";
+import { roleName, text } from "@ai-werewolf-arena/game-text";
+import { GHOST_BRIDE_POLICY, freshGhostBrideState } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { RuleError } from "@ai-werewolf-arena/game-catalog";
 import { Role, Camp, WinCondition, COMPONENT } from "../../../../core/domain";
 import type { NativeRoleContributions } from "../contracts";

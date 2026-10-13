@@ -6,7 +6,8 @@
  */
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
-import { roleName, text, PURE_WHITE_POLICY } from "@ai-werewolf-arena/game-text";
+import { roleName, text } from "@ai-werewolf-arena/game-text";
+import { PURE_WHITE_POLICY } from "@ai-werewolf-arena/game-contract";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 import { Camp, Role, WinCondition } from "../../../../core/domain/model";
 import { ELIMINATION_PRIORITIES } from "../../../../core/domain/board";

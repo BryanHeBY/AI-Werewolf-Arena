@@ -1,11 +1,11 @@
 /**
- * Owns the active wall, original author stock and request bindings. Reads the World and
- * original request context; writes accepted wall actions and aliases only for the same
- * author/window. A closed wall and replaced participants revoke its local authority; alias
- * routing never bypasses these checks.
+ * 负责拥有当前匿名墙、原作者库存与请求绑定，按窗口和作者身份提交行动及派生别名。
+ * 输入为原 World、作者与请求；输出为已接受墙操作，写权只覆盖该作者／窗口的库存及绑定。
+ * 不变量：别名必须保留原请求身份和窗口校验。关闭墙或参与者替换撤销本地权限，
+ * 失败仍保留原已提交前缀，不以别名跳过 authority 检查。
  */
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
-import { readWallNoteData } from "@ai-werewolf-arena/game-text";
+import { readWallNoteData } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
 import {
   COMPONENT,
   Role,
@@ -213,7 +213,7 @@ export function projectWallNote(
   };
 }
 
-/** Only the runtime deadline wrapper may derive an otherwise identical request. */
+/** 仅 runtime 期限包装可派生其余字段相同的请求。 */
 export function inheritWallDeadlineRequest(source: ActionRequest, target: ActionRequest): void {
   const binding = requestScopes.get(source);
   if (!binding || !wallRequestScope(binding.world, source)) return;

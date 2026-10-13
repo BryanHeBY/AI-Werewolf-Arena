@@ -1,12 +1,11 @@
 /**
- * Unit tests: Noble and Secret Body replay presentation uses private owner/God facts and
- * public reveals; literal visibility-flag results check which lines may appear in live
- * output. Inputs and expected outcomes remain the original literal or immutable-fixture
- * oracle; these module assertions invoke no model or complete-game driver.
+ * 单元测试负责验证贵族／隐秘之躯的复盘显示边界。
+ * 输入为私有 owner／God 事实与公开揭示；输出为哪些行可显示到 live 的可见性标志断言。
+ * 原手写字段与字面显示预期独立于生产结算，不运行模型或完整对局驱动器。
  */
 import { expect, test } from "bun:test";
 import { ScriptEventRenderRegistry } from "../../../src/game/mechanisms/script/event_render_registry";
-import { NOBLE_SECRET_BODY_POLICY as policy } from "@ai-werewolf-arena/game-text";
+import { NOBLE_SECRET_BODY_POLICY as policy } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 const row = (type: string, payload: any, phase = "night", day = payload.day, seq = 1) => ({
   seq,
   type,

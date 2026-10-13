@@ -5,7 +5,7 @@
  */
 import { createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
-import { DEMON_HUNTER_POLICY, DEMON_HUNTER_EVENT_TYPES } from "@ai-werewolf-arena/game-text";
+import { DEMON_HUNTER_POLICY, DEMON_HUNTER_EVENT_TYPES } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { COMPONENT, PotionType, type ActionRequest, type RoleComponent, type GameEvent } from "../../../../src/core";
 import { demonHunterFixture } from "../../../support/features/demon-hunter/builders/candidate-world";
 import { demonNightChoice } from "../../../support/features/demon-hunter/drivers/actions";

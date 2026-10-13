@@ -43,7 +43,7 @@ import {
 import { ConditionRegistry } from "../../../../src/core/domain/registries/condition_registry";
 import { WinCondition } from "../../../../src/core";
 import { buildAgentVisibleEventFeed } from "../../../../src/game/engine/agent_visible_event_feed";
-import { readWildChildEventFact } from "@ai-werewolf-arena/game-text";
+import { readWildChildEventFact } from "@ai-werewolf-arena/game-contract/facts/wild-child";
 
 const deck = [Role.WildChild, Role.Wolf, Role.Wolf, Role.Seer, Role.Witch, Role.Hunter];
 

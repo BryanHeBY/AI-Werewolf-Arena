@@ -1,14 +1,14 @@
 /**
- * Owns Demon Hunter choice, native ability snapshots and audited resource commits. Receives
- * original World/state/request references; writes only current sealed turns and accepted
- * deadline aliases. Invalid or retired scopes fail locally, preserving partial-write and
- * settlement order; alias routing adds no capability.
- * The guarded Idiot replacement restores only its idiot slot; sealed native stock and all original JSON/descriptor checks remain separate.
+ * 负责恶魔猎手选择、原生能力封存快照与可核查资源提交，拥有该板子的原对象和提交账本。
+ * 输入保留原 World／state／request，输出为有限封存回合及已接受期限别名的原有写入。
+ * 不变量：必须匹配原封存资格；审计只读最近合法同步提交，不能采用任意 live 库存。
+ * 失效或失败保持部分写入与结算顺序，别名不增加能力；受保护白痴替换只恢复 idiot 槽，
+ * 原生库存及 JSON／descriptor 检查仍归各自领域所有者。
  */
 import type { ReadonlyBoardConfig, RedMoonState } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { recordNobleContractClosure } from "../noble_secret_body/facts";
-import type { NobleContractClosedFact } from "@ai-werewolf-arena/game-text";
+import type { NobleContractClosedFact } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import {
   isNobleBodyBoard,
   assertNobleBodyRosterCurrent,
@@ -332,8 +332,7 @@ function delegatedCurrent(b: Binding): boolean {
     return false;
   }
 }
-/** The two native subtrees belong exclusively to their domain owner. Other private
- * keys remain compared with the original synchronous Demon snapshot. */
+/** 两个原生子树只归其领域 owner；其他 private key 仍与原同步恶魔快照比较。 */
 function privateAuditCurrent(b: Binding, p: Participant): boolean {
   const current = demonJson(p.privateState);
   if (!current) return false;
@@ -371,7 +370,7 @@ function validBinding(b: Binding): boolean {
     )
   );
 }
-/** Captures native objects once. A public profile registration is a separate later step. */
+/** 原生对象只捕获一次；公开 profile 注册是后续独立步骤。 */
 export function installDemonHunter(world: World, config: ReadonlyBoardConfig): void {
   if (bindings.has(world)) throw new Error("demon_hunter_already_installed");
   assertDemonHunterPreset(config);
@@ -696,7 +695,7 @@ export function closeDemonHunterTurn(scope: object): void {
   if (t && t.night.turn === t) t.night.turn = null;
   settleRequestDelivery(scope, false);
 }
-/** Derived only from the actual engine choice. It is not reconstructed from a recorded cancellation fact. */
+/** 只由引擎实际选择派生，不从已记录的取消事实重建。 */
 export function committedDemonFaultBoundary(world: World): FaultDecisionBoundary | null {
   const n = bindings.get(world)?.active,
     c = n?.choice;
@@ -732,7 +731,7 @@ export interface DemonHuntSettlement {
     faultId: string | null;
   }> | null;
 }
-/** Freeze all original source qualifications before the caller marks any player in the initial wave. */
+/** 在 caller 标记初始波任何玩家前，冻结全部原来源资格。 */
 export function freezeDemonHunt(
   world: World,
   faultId: string | null = null,
@@ -792,7 +791,7 @@ export function projectDemonHunter(
     ? (readDemonHunterState(b.state) ?? undefined)
     : undefined;
 }
-/** Audit is a read of the last synchronous domain commit, never a refresh from mutable live inventory. */
+/** 审计读取最近同步领域提交，不从可变 live 库存刷新。 */
 export function demonHunterAuditPlayer(
   world: World,
   id: number,
@@ -807,7 +806,7 @@ export function demonHunterFreezeDay(world: World): number {
   if (n.requiresChoice && !n.choice) throw new Error("demon_hunter_required_choice_missing");
   return n.day;
 }
-/** Internal original-instance boundary for the native poison proof, never a recording or model capability. */
+/** 原生毒药证明的内部原实例边界，不是记录或模型能力。 */
 export interface DemonNativePoisonFrame {
   readonly day: number;
   readonly actorId: number;
@@ -864,7 +863,7 @@ export function demonNativePoisonFrame(
   });
 }
 
-/** Finite original Witch transaction. Audit changes are computed from the prior committed snapshot. */
+/** 女巫既有有限提交；审计变化由上一次已提交快照计算。 */
 export interface DemonWitchTurnFrame {
   readonly day: number;
   readonly witchId: number;
@@ -944,7 +943,7 @@ export function openDemonWitchTurnFrame(world: World): Readonly<DemonWitchTurnFr
       return !!d && "value" in d && d.writable === true;
     });
   if (!writable()) return null;
-  // Reset is itself a finite synchronous transition. It cannot adopt arbitrary live inventory.
+  // 重置本身是有限同步转换，不能采用任意 live 库存。
   n.witchOpened = true;
   const resetState: Record<string, unknown> = {
     ...state,
@@ -1057,7 +1056,7 @@ export function demonOriginalWolfSourceCurrent(
   );
 }
 
-/** Before ordinary engine queries, reject foreign/proxy/accessor bodies without reading them. */
+/** 普通引擎查询前拒绝 foreign／Proxy／accessor 原体，不读取这些外来字段。 */
 export function assertDemonNightReadable(world: World): void {
   const b = bindings.get(world);
   if (!b) return;
@@ -1106,7 +1105,7 @@ export function demonOriginalWolfTargetCurrent(
   );
 }
 
-/** Finite native Seer/Guard commits compute the next stock from the last lawful snapshot. */
+/** 原生预言家／守卫的有限提交从最近合法快照计算下一库存。 */
 export interface DemonNativeNightFrame {
   readonly targetCurrent: (id: number) => boolean;
   readonly sourceCurrent: () => boolean;
@@ -1271,7 +1270,7 @@ export function openDemonNativeNightFrame(
   });
 }
 
-/** Hunter consumption is a synchronous stock transition, including pass and forbidden causes. */
+/** 猎人消耗是同步库存转换，包括跳过和禁止触发的死因。 */
 export function openDemonHunterStockFrame(
   world: World,
   actorId: number,
@@ -1330,7 +1329,7 @@ export function openDemonHunterStockFrame(
   });
 }
 
-/** Original roster and committed stocks survive foreign replacement during a failed cycle. */
+/** 失败周期中即使外来代码替换对象，仍保留原阵容及已提交库存。 */
 export function demonHunterCheckpointPlayers(world: World, complete: boolean) {
   const b = bindings.get(world);
   if (!b) return null;
@@ -1387,7 +1386,7 @@ export function demonHunterCheckpointPlayers(world: World, complete: boolean) {
   });
 }
 
-/** Permission callbacks inspect descriptors before any legacy gun policy/state read. */
+/** 权限回调在任何旧枪政策／状态读取前检查 descriptor。 */
 export function demonHunterNativeGunCurrent(world: World, actorId: number): boolean {
   const b = bindings.get(world);
   if (!b) return true;
@@ -1402,7 +1401,7 @@ export function demonHunterNativeGunCurrent(world: World, actorId: number): bool
   );
 }
 
-/** Badge writes on the finite board are cached at the actual synchronous commit, never by failed CP refresh. */
+/** 有限板子的警徽写入在实际同步提交时缓存，不在失败 checkpoint 中刷新。 */
 export function openDemonBadgeFrame(world: World): Readonly<{
   commit: (
     change:
@@ -1515,7 +1514,7 @@ export function openDemonBadgeFrame(world: World): Readonly<{
   });
 }
 
-/** Optional native badge metadata must distinguish absence from a rejected accessor. */
+/** 原生警徽可选 metadata 必须区分缺失与被拒绝的 accessor。 */
 export function assertDemonBadgeReadable(world: World): void {
   const b = bindings.get(world);
   if (!b) return;
@@ -1550,7 +1549,7 @@ export function demonNativeNightActor(
   return { actorId: p.id, ability };
 }
 
-/** Finite audit transition for the native Red Moon state; never adopts arbitrary live inventory. */
+/** 原生红月状态的有限审计转换，不采用任意 live 库存。 */
 export function commitDemonRedMoonTransition(
   world: World,
   actorId: number,
@@ -1610,7 +1609,7 @@ export function commitDemonRedMoonTransition(
   return true;
 }
 
-/** Original self-destructed Red Moon suppresses good actions for exactly the next night. */
+/** 原红月自爆只抑制紧接的下一夜好人行动。 */
 export function demonRedMoonNightSealed(world: World, day: number): boolean {
   const b = bindings.get(world);
   if (!b) return false;
@@ -1625,7 +1624,7 @@ export function demonRedMoonNightSealed(world: World, day: number): boolean {
   return sealed;
 }
 
-/** Preserve both private-stock and public-vote audit when the finite board's Idiot reveals. */
+/** 有限板子的白痴翻牌时，同时保留私有库存与公开票权审计。 */
 export function commitDemonIdiotReveal(world: World, actorId: number): boolean {
   const b = bindings.get(world);
   if (!b) return false;
@@ -1647,7 +1646,7 @@ export function commitDemonIdiotReveal(world: World, actorId: number): boolean {
   const before = ownDemonData(p.privateState, "idiot");
   if (!exactDemonData(before, ["revealed"]) || ownDemonData(before, "revealed") !== false)
     throw new Error("demon_hunter_idiot_state_revoked");
-  // Validate the subsequent synchronous badge handoff before consuming reveal.
+  // 消耗翻牌前先验证后续同步警徽交接。
   openDemonBadgeFrame(world);
   const next = { revealed: true };
   const original = JSON.parse(p.auditPrivateJson) as Record<string, unknown>;
@@ -1669,7 +1668,7 @@ export function commitDemonIdiotReveal(world: World, actorId: number): boolean {
   return true;
 }
 
-/** Read the committed Idiot state before any legacy state getter can run. */
+/** 在任何旧状态 getter 可执行前读取已提交的白痴状态。 */
 export function demonIdiotRevealed(world: World, actorId: number): boolean | null {
   const b = bindings.get(world);
   if (!b) return null;
@@ -1693,7 +1692,7 @@ export function demonIdiotRevealed(world: World, actorId: number): boolean | nul
   return revealed;
 }
 
-/** Latest settled night is the only source of the finite board's current day. */
+/** 有限板子当前日只由最近已结算的夜产生。 */
 export function demonRedMoonDay(world: World, actorId: number): number | null {
   const b = bindings.get(world),
     p = b?.players.get(actorId);
@@ -1729,7 +1728,7 @@ export function commitDemonRedMoonBlast(
   return { day, sealsNight: wolves > 1 };
 }
 
-/** A delayed living last wolf expires only after ordinary sources have been settled. */
+/** 被延后的存活最后一狼只在普通来源已结算后到期。 */
 export function demonRedMoonExpiry(world: World, day: number): number | null {
   const b = bindings.get(world);
   if (!b) return null;
