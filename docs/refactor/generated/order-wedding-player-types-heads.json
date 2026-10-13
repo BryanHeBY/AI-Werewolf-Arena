@@ -1,0 +1,65 @@
+{
+  "source": [
+    {
+      "path": "packages/game-contract/src/facts/order-prince.ts",
+      "sha256": "2bfad0b41218eca1c3747b4f176d11d6a18de33c4d573b820360cdf605b2f635"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+      "sha256": "9d176c284d2da70422be8648a12db7ef4fefa064f535f855bed062e81ab6886e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "sha256": "90b391cd2c89d268e25b65a786be8d739f9b64d10084688c5a7b98359633e8c7"
+    },
+    {
+      "path": "packages/game-contract/src/facts/ghost-bride.ts",
+      "sha256": "ddc1b0a6077ddd025dec6b724f6de8d63c142a24b00bca713b70fc01c2629a85"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "sha256": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "sha256": "e7ce9727093e82b939df8d16aa44a051adc4f2714cf3397567db6818b6d3eec5"
+    },
+    {
+      "path": "backend/tests/unit/contracts/order-wedding-player-types.types.ts",
+      "sha256": "df3c52f4c3f7a96de6972bc097392ebf4f5f6d8295be3125d1b25164e09438f5"
+    }
+  ],
+  "documentationPathsCount": 445,
+  "diagnostics": [],
+  "chinese": [
+    {
+      "path": "packages/game-contract/src/facts/order-prince.ts",
+      "chineseHeader": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+      "chineseHeader": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "chineseHeader": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/ghost-bride.ts",
+      "chineseHeader": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "chineseHeader": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "chineseHeader": true
+    },
+    {
+      "path": "backend/tests/unit/contracts/order-wedding-player-types.types.ts",
+      "chineseHeader": true
+    }
+  ],
+  "purpose": "职责头形状与中文 presence 分别检查；内容／读写时点仍交独立语义审查。"
+}

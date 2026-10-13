@@ -1,16 +1,15 @@
+/**
+ * 负责定序王子原状态读取、初始构造、脱离历史投影与下一选择数据准备。
+ * 输入为原角色、观察／选择日和 activate；输出为原槽同引用或独立可写数据，不提交效果。
+ * 公共字段结构归 GC facts/order-prince；本 owner 保持原精确描述符／Proxy 拒绝与历史顺序，
+ * 真实 pending、原生命和写权仍由 authority 持有，准备副本不授予重投权限。
+ */
+import type { OrderPrinceChoice, OrderPrinceState } from "@ai-werewolf-arena/game-contract/facts/order-prince";
 import { types } from "node:util";
 import { Camp, type RoleComponent } from "../../../../core";
 
 export const ORDER_PRINCE_ROLE = "order_prince" as const;
 export const ORDER_PRINCE_POLICY = "awa_order_prince_first_ballot_v1" as const;
-export interface OrderPrinceChoice {
-  day: number;
-  activate: boolean;
-}
-export interface OrderPrinceState {
-  policy: typeof ORDER_PRINCE_POLICY;
-  history: OrderPrinceChoice[];
-}
 function field(value: unknown, key: PropertyKey): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
   const d = Object.getOwnPropertyDescriptor(value, key);
@@ -47,7 +46,7 @@ function rows(value: unknown): unknown[] | undefined {
   }
   return result;
 }
-/** Read the original role state without invoking accessors or proxy traps. */
+/** 按原 own data descriptor 检查原槽；Node Proxy 先拒绝，成功返回同一原状态引用。 */
 export function getOrderPrinceState(role: RoleComponent | undefined): OrderPrinceState | undefined {
   if (field(role, "role") !== ORDER_PRINCE_ROLE || field(role, "camp") !== Camp.Good)
     return undefined;
@@ -77,6 +76,7 @@ export function projectOrderPrinceState(
 ): OrderPrinceState | undefined {
   const state = getOrderPrinceState(role);
   if (!state) return undefined;
+  // 每行重新构造，保持原可写历史数组；调用者修改该知识不会改写原槽。
   const history: OrderPrinceChoice[] = [];
   for (const row of rows(field(state, "history"))!) {
     history.push({
@@ -86,7 +86,7 @@ export function projectOrderPrinceState(
   }
   return { policy: ORDER_PRINCE_POLICY, history };
 }
-/** A detached next state; the caller commits it only after current-life checks. */
+/** 准备独立下一状态；原 caller 重验 pending 与原生命后才提交，不写 live 槽。 */
 export function nextOrderPrinceChoice(
   role: RoleComponent | undefined,
   day: number,

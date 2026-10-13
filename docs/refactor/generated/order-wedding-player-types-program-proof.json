@@ -1,0 +1,274 @@
+{
+  "base": "d589dfbdb79797d2afcfd9c18d7efe60b5675328",
+  "source": [
+    {
+      "path": "packages/game-contract/src/facts/order-prince.ts",
+      "sha256": "2bfad0b41218eca1c3747b4f176d11d6a18de33c4d573b820360cdf605b2f635"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+      "sha256": "9d176c284d2da70422be8648a12db7ef4fefa064f535f855bed062e81ab6886e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "sha256": "90b391cd2c89d268e25b65a786be8d739f9b64d10084688c5a7b98359633e8c7"
+    },
+    {
+      "path": "packages/game-contract/src/facts/ghost-bride.ts",
+      "sha256": "ddc1b0a6077ddd025dec6b724f6de8d63c142a24b00bca713b70fc01c2629a85"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "sha256": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "sha256": "e7ce9727093e82b939df8d16aa44a051adc4f2714cf3397567db6818b6d3eec5"
+    },
+    {
+      "path": "backend/tests/unit/contracts/order-wedding-player-types.types.ts",
+      "sha256": "df3c52f4c3f7a96de6972bc097392ebf4f5f6d8295be3125d1b25164e09438f5"
+    }
+  ],
+  "programs": [
+    {
+      "path": "packages/game-contract/src/facts/order-prince.ts",
+      "wholeProgramSame": true,
+      "wholeOutsideListedEditsRawSame": true,
+      "nodes": 557,
+      "oldProgramSHA256": "e4c56479f67332496cb7fdbba2b24ebd7fb5a2479d698f2018c41c634993e7f1",
+      "inverseProgramSHA256": "e4c56479f67332496cb7fdbba2b24ebd7fb5a2479d698f2018c41c634993e7f1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+      "wholeProgramSame": true,
+      "wholeOutsideListedEditsRawSame": true,
+      "nodes": 1281,
+      "oldProgramSHA256": "80aca1071c9883681b501e2660d50db32e6aa655100e83255a387ffc9b60a005",
+      "inverseProgramSHA256": "80aca1071c9883681b501e2660d50db32e6aa655100e83255a387ffc9b60a005"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "wholeProgramSame": true,
+      "wholeOutsideListedEditsRawSame": true,
+      "nodes": 1683,
+      "oldProgramSHA256": "33ac42b48a0a700bacae70b6e4545ab24eb68e331bf51619f14b4148076af7cf",
+      "inverseProgramSHA256": "33ac42b48a0a700bacae70b6e4545ab24eb68e331bf51619f14b4148076af7cf"
+    },
+    {
+      "path": "packages/game-contract/src/facts/ghost-bride.ts",
+      "wholeProgramSame": true,
+      "wholeOutsideListedEditsRawSame": true,
+      "nodes": 3142,
+      "oldProgramSHA256": "ad654436e700df50a3e663f822d57141163f101762ff43e07f130b6052a38b04",
+      "inverseProgramSHA256": "ad654436e700df50a3e663f822d57141163f101762ff43e07f130b6052a38b04"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "wholeProgramSame": true,
+      "wholeOutsideListedEditsRawSame": true,
+      "nodes": 14173,
+      "oldProgramSHA256": "be9e92bb587d2daeacbdd2e0ab03e143417096a63857a96ca837a6a89ad93d13",
+      "inverseProgramSHA256": "be9e92bb587d2daeacbdd2e0ab03e143417096a63857a96ca837a6a89ad93d13"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "wholeProgramSame": true,
+      "wholeOutsideListedEditsRawSame": true,
+      "nodes": 1160,
+      "oldProgramSHA256": "369cfc1bd7f5dbb1f432b35ac5afa8877e1e89a5343ec2fcd7b1c3c4d37324c7",
+      "inverseProgramSHA256": "369cfc1bd7f5dbb1f432b35ac5afa8877e1e89a5343ec2fcd7b1c3c4d37324c7"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "packages/game-contract/src/facts/order-prince.ts",
+      "module": "ESNext",
+      "actualWholeRawSame": true,
+      "oldSHA256": "94c279896b6b335cb22d7168e04f60aab1e10f8af220240ca5f56e0ccff31108",
+      "currentSHA256": "94c279896b6b335cb22d7168e04f60aab1e10f8af220240ca5f56e0ccff31108"
+    },
+    {
+      "path": "packages/game-contract/src/facts/order-prince.ts",
+      "module": "CommonJS",
+      "actualWholeRawSame": true,
+      "oldSHA256": "cf775e3da096dc9542530eb42cb042cdfa5ed4eeb500d7db406e30606a7d3801",
+      "currentSHA256": "cf775e3da096dc9542530eb42cb042cdfa5ed4eeb500d7db406e30606a7d3801"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+      "module": "ESNext",
+      "actualWholeRawSame": true,
+      "oldSHA256": "4c909c5f1252bba2207185246eb3199af934845901b352e7c1d0a641de0dd276",
+      "currentSHA256": "4c909c5f1252bba2207185246eb3199af934845901b352e7c1d0a641de0dd276"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+      "module": "CommonJS",
+      "actualWholeRawSame": true,
+      "oldSHA256": "3b5518668c19013a42f09192132ca8104b90cec51ae3f699bac884402ad11706",
+      "currentSHA256": "3b5518668c19013a42f09192132ca8104b90cec51ae3f699bac884402ad11706"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "module": "ESNext",
+      "actualWholeRawSame": true,
+      "oldSHA256": "72c36976b24d37b7a0743220a25d4bd6ad80fddc4e5cee5630e926d88832a997",
+      "currentSHA256": "72c36976b24d37b7a0743220a25d4bd6ad80fddc4e5cee5630e926d88832a997"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "module": "CommonJS",
+      "actualWholeRawSame": true,
+      "oldSHA256": "bcfa1e28ae0ed325b2f7620569c0a238cc9a59a2aef73279f941b73e2641c03e",
+      "currentSHA256": "bcfa1e28ae0ed325b2f7620569c0a238cc9a59a2aef73279f941b73e2641c03e"
+    },
+    {
+      "path": "packages/game-contract/src/facts/ghost-bride.ts",
+      "module": "ESNext",
+      "actualWholeRawSame": true,
+      "oldSHA256": "694317703c504454b55e38f08bdc60e7289773e78c712b804697af0dbc4301b2",
+      "currentSHA256": "694317703c504454b55e38f08bdc60e7289773e78c712b804697af0dbc4301b2"
+    },
+    {
+      "path": "packages/game-contract/src/facts/ghost-bride.ts",
+      "module": "CommonJS",
+      "actualWholeRawSame": true,
+      "oldSHA256": "de89af643f109afbfcb485cb1ea28bec9fb64d45a36d24d50e1abfb72b14fb4b",
+      "currentSHA256": "de89af643f109afbfcb485cb1ea28bec9fb64d45a36d24d50e1abfb72b14fb4b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "module": "ESNext",
+      "actualWholeRawSame": true,
+      "oldSHA256": "914d974f0fbe60e6a137b1274a7363fd92e5b9a26d1560961f80a503860b4945",
+      "currentSHA256": "914d974f0fbe60e6a137b1274a7363fd92e5b9a26d1560961f80a503860b4945"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "module": "CommonJS",
+      "actualWholeRawSame": true,
+      "oldSHA256": "e176b4fe0ebc47e171452b6db37103d7359491a09d7b4a5e0c68826f7a81ec8c",
+      "currentSHA256": "e176b4fe0ebc47e171452b6db37103d7359491a09d7b4a5e0c68826f7a81ec8c"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "module": "ESNext",
+      "actualWholeRawSame": true,
+      "oldSHA256": "9de9e80c923b494a277154dcb5b10da4a02843d41c2d7d06e38cd07d7e99090b",
+      "currentSHA256": "9de9e80c923b494a277154dcb5b10da4a02843d41c2d7d06e38cd07d7e99090b"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "module": "CommonJS",
+      "actualWholeRawSame": true,
+      "oldSHA256": "41f59e3842e065b442844b3599e8e9103c7847a55210d09f67941c5f7f179f26",
+      "currentSHA256": "41f59e3842e065b442844b3599e8e9103c7847a55210d09f67941c5f7f179f26"
+    }
+  ],
+  "declarations": [
+    {
+      "name": "OrderPrinceChoice",
+      "oldPath": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+      "newPath": "packages/game-contract/src/facts/order-prince.ts",
+      "normalization": "none",
+      "wholeDeclarationASTSame": true,
+      "nodes": 20,
+      "oldExactNormalized": "export interface OrderPrinceChoice {\n  day: number;\n  activate: boolean;\n}",
+      "currentExact": "export interface OrderPrinceChoice {\n  day: number;\n  activate: boolean;\n}"
+    },
+    {
+      "name": "OrderPrinceState",
+      "oldPath": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+      "newPath": "packages/game-contract/src/facts/order-prince.ts",
+      "normalization": "policy typeof backend original literal constant → exact same string literal type (finite fixture asserts independent shape)",
+      "wholeDeclarationASTSame": true,
+      "nodes": 25,
+      "oldExactNormalized": "export interface OrderPrinceState {\n  policy: \"awa_order_prince_first_ballot_v1\";\n  history: OrderPrinceChoice[];\n}",
+      "currentExact": "export interface OrderPrinceState {\n  policy: \"awa_order_prince_first_ballot_v1\";\n  history: OrderPrinceChoice[];\n}"
+    },
+    {
+      "name": "WeddingActorView",
+      "oldPath": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "newPath": "packages/game-contract/src/facts/ghost-bride.ts",
+      "normalization": "none",
+      "wholeDeclarationASTSame": true,
+      "nodes": 111,
+      "oldExactNormalized": "export type WeddingActorView =\n  | {\n      policy: typeof GHOST_BRIDE_POLICY;\n      member: \"bride\" | \"groom\";\n      faction: Camp.ThirdParty;\n      partnerId: number;\n      witnessId: number | null;\n      proposedWitnessId?: number;\n      canKnife: boolean;\n    }\n  | {\n      policy: typeof GHOST_BRIDE_POLICY;\n      member: \"witness\";\n      faction: Camp.ThirdParty;\n      brideId: number;\n      groomId: number;\n      canKnife: boolean;\n    };",
+      "currentExact": "export type WeddingActorView =\n  | {\n      policy: typeof GHOST_BRIDE_POLICY;\n      member: \"bride\" | \"groom\";\n      faction: Camp.ThirdParty;\n      partnerId: number;\n      witnessId: number | null;\n      proposedWitnessId?: number;\n      canKnife: boolean;\n    }\n  | {\n      policy: typeof GHOST_BRIDE_POLICY;\n      member: \"witness\";\n      faction: Camp.ThirdParty;\n      brideId: number;\n      groomId: number;\n      canKnife: boolean;\n    };"
+    }
+  ],
+  "functions": [
+    {
+      "path": "packages/game-contract/src/facts/order-prince.ts",
+      "count": 4,
+      "currentCount": 4,
+      "allCompleteRuntimeFunctionsSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+      "count": 9,
+      "currentCount": 9,
+      "allCompleteRuntimeFunctionsSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "count": 12,
+      "currentCount": 12,
+      "allCompleteRuntimeFunctionsSame": true
+    },
+    {
+      "path": "packages/game-contract/src/facts/ghost-bride.ts",
+      "count": 15,
+      "currentCount": 15,
+      "allCompleteRuntimeFunctionsSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "count": 92,
+      "currentCount": 92,
+      "allCompleteRuntimeFunctionsSame": true
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "count": 2,
+      "currentCount": 2,
+      "allCompleteRuntimeFunctionsSame": true
+    }
+  ],
+  "totalNodes": 21996,
+  "wholeOutputs": 12,
+  "approved": true,
+  "scopeLimit": "整体逆只精确已列纯声明／type import／inline type来源／中文注释；没有恢复旧整个 runtime body。函数再独立按当前真正 AST 对比完整程序。",
+  "sourceBeforeUnitComment": [
+    {
+      "path": "packages/game-contract/src/facts/order-prince.ts",
+      "sha256": "2bfad0b41218eca1c3747b4f176d11d6a18de33c4d573b820360cdf605b2f635"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/state.ts",
+      "sha256": "9d176c284d2da70422be8648a12db7ef4fefa064f535f855bed062e81ab6886e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/order_prince/authority.ts",
+      "sha256": "90b391cd2c89d268e25b65a786be8d739f9b64d10084688c5a7b98359633e8c7"
+    },
+    {
+      "path": "packages/game-contract/src/facts/ghost-bride.ts",
+      "sha256": "ddc1b0a6077ddd025dec6b724f6de8d63c142a24b00bca713b70fc01c2629a85"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "sha256": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation.ts",
+      "sha256": "e7ce9727093e82b939df8d16aa44a051adc4f2714cf3397567db6818b6d3eec5"
+    },
+    {
+      "path": "backend/tests/unit/contracts/order-wedding-player-types.types.ts",
+      "sha256": "569b43f5a24ab5df7c183fc5f42e553ad2456d73f0e83474084dddd2f77335aa"
+    }
+  ],
+  "unitCommentDelta": "order-wedding-player-types-unit-comment-delta.json"
+}

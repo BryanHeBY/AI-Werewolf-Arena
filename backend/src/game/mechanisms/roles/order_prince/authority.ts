@@ -1,10 +1,11 @@
 /**
- * Owns Order Prince original identity binding and its pending reveal choice. Inputs are the
- * World and selected target; outputs are currentness checks, reveal state and committed choice
- * evidence. Only the matching pending choice writes; a closed choice prevents stale targets from
- * completing it.
- * The checked orderPrince replacement restores only that slot after the original authority checks, without caching the container.
+ * 负责定序王子的原身份／生命绑定与待答选择，拥有唯一 orderPrince 槽和 pending 的写权。
+ * 输入为 World、原参与者与日次／activate，输出为当前性查询或已提交选择证据。
+ * 不变量：只有匹配 pending 且原体／生命未撤权的选择可提交；关闭仅清 pending。
+ * 写入依原槽、绑定引用、JSON 证据、pending 的顺序，失败保留已发生前缀，不缓存新容器
+ * 或把公共状态数据当成许可。初始安装和纯数据投影不替代提交前复验。
  */
+import type { OrderPrinceState } from "@ai-werewolf-arena/game-contract/facts/order-prince";
 import { types } from "node:util";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
@@ -20,7 +21,6 @@ import {
   projectOrderPrinceState,
   nextOrderPrinceChoice,
   ORDER_PRINCE_ROLE,
-  type OrderPrinceState,
 } from "./state";
 
 interface Authority {
@@ -136,6 +136,7 @@ export function commitOrderPrinceChoice(
   const b = requireAuthority(world);
   const next = nextOrderPrinceChoice(b.role, day, activate);
   if (!next) throw new Error("order_prince_choice_invalid");
+  // 顺序不能合成事务：原槽先替换，随后更新绑定／证据并关闭 pending；失败不回滚已写前缀。
   (b.privateState as { orderPrince: OrderPrinceState }).orderPrince = next;
   b.state = next;
   b.expected = JSON.stringify(next);

@@ -1,0 +1,3 @@
+backend/tests/unit/contracts/order-wedding-player-types.types.ts(15,1): error TS2578: Unused '@ts-expect-error' directive.
+backend/tests/unit/contracts/order-wedding-player-types.types.ts(17,3): error TS2724: '"../../../src/game/mechanisms/roles/order_prince/state"' has no exported member named 'OrderPrinceChoice'. Did you mean 'nextOrderPrinceChoice'?
+backend/tests/unit/contracts/order-wedding-player-types.types.ts(18,3): error TS2724: '"../../../src/game/mechanisms/roles/order_prince/state"' has no exported member named 'OrderPrinceState'. Did you mean 'getOrderPrinceState'?

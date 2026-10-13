@@ -1,19 +1,37 @@
 /**
- * Owns pure Ghost Bride wedding, knife capture and tool contracts for wire consumers.
- * Inputs are identifiers and proven inert payload data; outputs are detached
- * shapes or null with original keys, limits, defaults and scalar correlations.
- * freshGhostBrideState creates only a fresh serialized-default object; it never
- * installs a role or owns/spends domain stock, handles or original-life rights.
- * For these inputs the reader never changes rules, resources, phases or action
- * authority. Proxy reflection safety belongs to Node ingress before calling;
- * browser consumers must supply inert data rather than arbitrary JS objects.
+ * 负责鬼魂新娘婚礼、刀权捕获、工具及玩家关系知识的公共数据契约。
+ * 输入为标识与已确认 inert 数据；输出为脱离结构／null，保持原字段、默认、限额及相关性。
+ * 数据 owner 只构造序列化默认副本，不安装角色、持有 live 生命／回执或花费库存；
+ * canKnife 是捕获时的知识布尔值，不是提交许可。浏览器反射不承诺 Proxy 零 trap，
+ * Node 准入须先拒绝恶意对象，reader 不改变原阶段、资源或权限政策。
  */
 import { copyEventData } from "../inert-event-data";
+import type { Camp } from "../identity";
 
-/** One sourced, finite preset. Additional rules require another named policy. */
+/** 唯一有来源的有限预设；扩展规则须有另一个具名政策，不从公共数据推导变体。 */
 export const GHOST_BRIDE_POLICY = "awa_melbourne_ghost_bride_v1" as const;
 export const GHOST_BRIDE_GOAL = "three_factions_elimination" as const;
 export const GHOST_BRIDE_ROLE = "ghost_bride" as const;
+/** 原可写成员知识联合；见证人没有伴侣聊天／库存字段，原 nullable 和 optional 保留。 */
+export type WeddingActorView =
+  | {
+      policy: typeof GHOST_BRIDE_POLICY;
+      member: "bride" | "groom";
+      faction: Camp.ThirdParty;
+      partnerId: number;
+      witnessId: number | null;
+      proposedWitnessId?: number;
+      canKnife: boolean;
+    }
+  | {
+      policy: typeof GHOST_BRIDE_POLICY;
+      member: "witness";
+      faction: Camp.ThirdParty;
+      brideId: number;
+      groomId: number;
+      canKnife: boolean;
+    };
+
 export type WeddingStatus = "pending" | "active" | "paired" | "complete" | "failed" | "cancelled";
 export interface GhostBrideState {
   policy: typeof GHOST_BRIDE_POLICY;

@@ -53,14 +53,14 @@ export interface PlayerObservation {
     timeConsort?: import("@ai-werewolf-arena/game-contract/facts/time-consort").PlayerTimeConsortState;
     wolfSorcerer?: import("@ai-werewolf-arena/game-contract").WolfSorcererState;
     trickster?: import("@ai-werewolf-arena/game-contract").TricksterState;
-    orderPrince?: import("../mechanisms/roles/order_prince/state").OrderPrinceState;
+    orderPrince?: import("@ai-werewolf-arena/game-contract/facts/order-prince").OrderPrinceState;
     magician?: import("@ai-werewolf-arena/game-contract").MagicianState;
     redMoon?: import("@ai-werewolf-arena/game-contract").RedMoonState;
     nightmare?: import("@ai-werewolf-arena/game-contract").NightmareShadowState;
     evilKnight?: import("@ai-werewolf-arena/game-contract").EvilKnightState;
     demonHunter?: import("@ai-werewolf-arena/game-contract/facts/demon-hunter").DemonHunterState;
     ghostBride?: import("@ai-werewolf-arena/game-contract/facts/ghost-bride").GhostBrideState;
-    wedding?: import("../mechanisms/roles/ghost_bride/authority").WeddingActorView;
+    wedding?: import("@ai-werewolf-arena/game-contract/facts/ghost-bride").WeddingActorView;
     lonelyGirl?: import("@ai-werewolf-arena/game-contract").LonelyGirlState;
     wildChild?: import("@ai-werewolf-arena/game-contract").WildChildState;
     thief?: import("@ai-werewolf-arena/game-contract").ThiefState & {

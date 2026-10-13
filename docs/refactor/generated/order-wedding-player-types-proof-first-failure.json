@@ -1,0 +1,8 @@
+{
+  "chunk": "849bf6",
+  "exitCode": 1,
+  "message": "inverse_not_unique:backend/src/game/mechanisms/roles/order_prince/state.ts",
+  "reason": "删除纯声明的 replacement new 是空串，首 harness 不能拿空串作唯一逆向 anchor。修为实际原声明后120字符唯一 anchor，只恢复该声明；生产未变。",
+  "correctedChunk": "830aa3",
+  "correctedExitCode": 0
+}

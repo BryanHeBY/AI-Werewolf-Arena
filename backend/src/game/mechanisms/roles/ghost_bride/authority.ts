@@ -1,10 +1,11 @@
 /**
- * 负责鬼新娘婚礼回合、原参与者快照与有序提交，拥有婚礼选择和绑定别名的写权。
+ * 负责鬼魂新娘婚礼回合、原参与者快照与有序提交，拥有婚礼选择和绑定别名的写权。
  * 输入保留原 World 及封存请求；输出为原校验后已接受的选择、消息与结算记录。
  * 不变量：提交必须匹配原参与者和绑定回合，别名不能替代本地校验。取消、关闭或失败
  * 均保持原结算及部分写入顺序，不修复被替换的库存。
  */
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
+import type { WeddingActorView } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { types } from "node:util";
 import { GHOST_BRIDE_POLICY, GHOST_BRIDE_ROLE, freshGhostBrideState, readGhostBrideState, type GhostBrideState, type WeddingPair, type WeddingGroup, type WeddingSetup, type WeddingKnifeCapture, type WeddingTool, readWeddingTool } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
@@ -1051,25 +1052,7 @@ export function takeWeddingChat(
   settleRequestDelivery(scope, true);
   return { ...message };
 }
-export type WeddingActorView =
-  | {
-      policy: typeof GHOST_BRIDE_POLICY;
-      member: "bride" | "groom";
-      faction: Camp.ThirdParty;
-      partnerId: number;
-      witnessId: number | null;
-      proposedWitnessId?: number;
-      canKnife: boolean;
-    }
-  | {
-      policy: typeof GHOST_BRIDE_POLICY;
-      member: "witness";
-      faction: Camp.ThirdParty;
-      brideId: number;
-      groomId: number;
-      canKnife: boolean;
-    };
-/** 与身份无关的最小投影；见证人不接收聊天、票型或原生库存。 */
+/** 与原身份无关的最小关系投影；先复验绑定，canKnife 仍只是此时知识，见证人不接收聊天、票型或原生库存。 */
 export function weddingActorView(world: World, actorId: number): WeddingActorView | null {
   const b = bindings.get(world);
   if (!b?.pair || b.status === "failed" || b.status === "cancelled") return null;

@@ -1,0 +1,21 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/packages/game-contract/src/facts/order-prince.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/order_prince/state.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/order_prince/authority.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/packages/game-contract/src/facts/ghost-bride.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/observation/player-observation.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/contracts/order-wedding-player-types.types.ts"
+  ],
+  "include": [],
+  "exclude": []
+}
