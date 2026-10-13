@@ -1,9 +1,5 @@
 /**
- * Unit tests: Player-state projection uses explicit private histories and hostile fields;
- * exact detached whitelists and selected-ability equality check that unknown data/getters
- * cannot enter an owner DTO. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证玩家状态投影的分离白名单及所选能力。输入为原私有历史与恶意字段；精确字段和能力相等断言拒绝未知数据／getter 进入 owner DTO，不复制运行句柄。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -69,7 +65,7 @@ function fixture(kind: Role, locale: "zh-CN" | "en") {
     })),
   };
   const game = bootstrapGame(config, { fixedRoles: roles, locale });
-  const role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+  const role = game.world.getComponent(1, COMPONENT.Role)!;
   const policy = new PlayerPromptPolicy(game.world, {
     boardConfig: config,
     roleCatalog: getDefaultRoleCatalog(),

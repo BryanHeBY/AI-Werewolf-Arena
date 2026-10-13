@@ -46,7 +46,7 @@ const roles = [
 ];
 function fixture(locale: "zh-CN" | "en") {
   const game = bootstrapGame(twelvePlayerStandardConfig, { locale, fixedRoles: roles });
-  game.world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!.alive = false;
+  game.world.getComponent(7, COMPONENT.Alive)!.alive = false;
   return game;
 }
 function gunRequest(id?: number): ActionRequest {
@@ -125,10 +125,10 @@ for (const locale of ["zh-CN", "en"] as const)
         deathActionId: second.id,
       }),
     ).toMatchObject({ ok: false, error: "death_action_unavailable" });
-    expect(getHunterState(world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!.canShoot).toBe(
+    expect(getHunterState(world.getComponent(7, COMPONENT.Role)!)!.canShoot).toBe(
       true,
     );
-    expect(world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive).toBe(true);
+    expect(world.getComponent(1, COMPONENT.Alive)!.alive).toBe(true);
     if (locale === "en")
       expect(JSON.stringify(receive.validate(gunRequest(), "shoot", { target_id: 1 }))).not.toMatch(
         /\p{Script=Han}/u,
@@ -149,7 +149,7 @@ for (const locale of ["zh-CN", "en"] as const)
       "death_action_invalid_actor_or_stage",
     );
     const permit = world.openDeathAction(7, "shoot", Phase.Day, 2);
-    world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!.alive = true;
+    world.getComponent(7, COMPONENT.Alive)!.alive = true;
     expect(receive.validate(gunRequest(permit.id), "shoot", { target_id: null })).toMatchObject({
       ok: false,
       error: "death_action_unavailable",
@@ -222,10 +222,10 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(
         new ActionReception(world).validate(request!, "shoot", { target_id: 1 }),
       ).toMatchObject({ ok: false, error: "death_action_unavailable" });
-      expect(world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive).toBe(
+      expect(world.getComponent(1, COMPONENT.Alive)!.alive).toBe(
         outcome !== "shot",
       );
-      expect(getHunterState(world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!.canShoot).toBe(
+      expect(getHunterState(world.getComponent(7, COMPONENT.Role)!)!.canShoot).toBe(
         !["shot", "pass"].includes(outcome),
       );
       expect(events.filter((event) => event.type === "hunter_shot")).toHaveLength(
@@ -288,7 +288,7 @@ for (const locale of ["zh-CN", "en"] as const)
         receive = new ActionReception(world),
         old = world.openDeathAction(7, "shoot", Phase.Day, 2);
       if (transition === "revive") {
-        const alive = world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!;
+        const alive = world.getComponent(7, COMPONENT.Alive)!;
         alive.alive = true;
         alive.alive = false; // No intermediate permission query may be required.
       } else world.addComponent(7, COMPONENT.Alive, createAliveComponent(false, locale));
@@ -335,7 +335,7 @@ for (const locale of ["zh-CN", "en"] as const)
                   if (revoke === "game_over") state.gameOver = true;
                   if (revoke === "closed") world.closeDeathActions();
                   if (revoke === "revive") {
-                    const alive = world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!;
+                    const alive = world.getComponent(7, COMPONENT.Alive)!;
                     alive.alive = true;
                     alive.alive = false;
                   }
@@ -349,9 +349,9 @@ for (const locale of ["zh-CN", "en"] as const)
         );
         expect(revoked).toBe(true);
         expect(world.activeDeathActionCount).toBe(0);
-        expect(world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive).toBe(true);
+        expect(world.getComponent(1, COMPONENT.Alive)!.alive).toBe(true);
         expect(
-          getHunterState(world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!.canShoot,
+          getHunterState(world.getComponent(7, COMPONENT.Role)!)!.canShoot,
         ).toBe(true);
         expect(events.filter((event) => event.type === "hunter_shot")).toEqual([]);
       }
@@ -364,7 +364,7 @@ for (const locale of ["zh-CN", "en"] as const)
     for (const hiddenCount of [0, 1, 7]) {
       const { world } = fixture(locale);
       for (let i = 0; i < hiddenCount; i++) world.openDeathAction(7, "shoot", Phase.Day, 2).close();
-      world.getComponent<{ alive: boolean }>(9, COMPONENT.Alive)!.alive = false;
+      world.getComponent(9, COMPONENT.Alive)!.alive = false;
       const own = world.openDeathAction(9, "speak", Phase.Day, 2);
       const request: ActionRequest = {
         actorId: 9,

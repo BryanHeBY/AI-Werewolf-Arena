@@ -132,7 +132,7 @@ for (const position of ["before_native", "after_native", "after_damage"] as cons
   test(`unknown Guard survives native source revocation ${position}`, async () => {
     const f = demonHunterFixture(12);
     await f.phaseManager.runSingleCycle({ getAction: async (r) => demonNightChoice(r, 9) }, 10);
-    const marks = f.world.getComponent<StatusMarksComponent>(12, COMPONENT.StatusMarks)!;
+    const marks = f.world.getComponent(12, COMPONENT.StatusMarks)!;
     const original = f.damage.resolve.bind(f.damage),
       damage = spyOn(f.damage, "resolve").mockImplementation((world, effects) => {
         const result = original(world, effects);
@@ -287,7 +287,7 @@ for (const mark of [StatusMark.GuardMark, StatusMark.HealMark])
           const result = original(world, effects);
           const marks = replacement
             ? createStatusMarksComponent()
-            : world.getComponent<StatusMarksComponent>(12, COMPONENT.StatusMarks)!;
+            : world.getComponent(12, COMPONENT.StatusMarks)!;
           if (replacement) world.addComponent(12, COMPONENT.StatusMarks, marks);
           marks.add(mark);
           return result;

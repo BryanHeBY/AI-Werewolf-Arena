@@ -68,8 +68,8 @@ const fixture = (roles = deck) => {
   return { ...bootstrapGame(config, { fixedRoles: roles }), config };
 };
 type Fixture = ReturnType<typeof fixture>;
-const role = (g: Fixture, id: number) => g.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
-const life = (g: Fixture, id: number) => g.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+const role = (g: Fixture, id: number) => g.world.getComponent(id, COMPONENT.Role)!;
+const life = (g: Fixture, id: number) => g.world.getComponent(id, COMPONENT.Alive)!;
 const challenge: ToolCall = { name: "challenge", args: { target_id: 2 } };
 async function run(
   g: Fixture,
@@ -114,7 +114,7 @@ for (const [votes, success, blocked] of [
       events: GameEvent[] = [],
       requests: ActionRequest[] = [];
     setIdiotState(role(g, 4), { revealed: true });
-    g.world.getComponent<VotingRightComponent>(4, COMPONENT.VotingRight)!.canVote = false;
+    g.world.getComponent(4, COMPONENT.VotingRight)!.canVote = false;
     const result = await run(g, events, provider([...votes], requests));
     expect(result.skipSpeech).toBe(success);
     expect(getDebaterState(role(g, 1))).toEqual({
@@ -255,7 +255,7 @@ for (const stage of ["debate_challenge", "debate_speech", "debate_ballot"])
             (getDebaterState(role(g, 1))! as { remaining: 0 | 1 }).remaining =
               stage === "debate_challenge" ? 0 : 1;
           if (change === "badge")
-            g.world.getComponent<BadgeComponent>(2, COMPONENT.Badge)!.voteWeight = 9;
+            g.world.getComponent(2, COMPONENT.Badge)!.voteWeight = 9;
           if (change === "phase") current = false;
         }),
         () => current,
@@ -339,7 +339,7 @@ test("same-body role change retains penalty; revival/replacement and next day re
   blockDebateVote(g.world, 2, 1, 1);
   g.world.addComponent(2, COMPONENT.Alive, createAliveComponent());
   expect(canVoteExile(g.world, 2, 1)).toBe(true);
-  g.world.getComponent<VotingRightComponent>(4, COMPONENT.VotingRight)!.canVote = false;
+  g.world.getComponent(4, COMPONENT.VotingRight)!.canVote = false;
   blockDebateVote(g.world, 4, 1, 1);
   expect(canVoteExile(g.world, 4, 2)).toBe(false);
 });
@@ -348,11 +348,11 @@ for (const success of [true, false])
     const g = fixture(),
       events: GameEvent[] = [];
     g.config.enableSheriff = true;
-    const badge = g.world.getComponent<BadgeComponent>(2, COMPONENT.Badge)!;
+    const badge = g.world.getComponent(2, COMPONENT.Badge)!;
     badge.isSheriff = true;
     badge.voteWeight = 2.25;
     badge.handoffPolicy = "awa_holder_choice_v1";
-    g.world.getComponent<VotingRightComponent>(2, COMPONENT.VotingRight)!.weight = 2.25;
+    g.world.getComponent(2, COMPONENT.VotingRight)!.weight = 2.25;
     const requests: ActionRequest[] = [];
     await run(
       g,
@@ -362,14 +362,14 @@ for (const success of [true, false])
         requests,
       ),
     );
-    expect(g.world.getComponent<BadgeComponent>(1, COMPONENT.Badge)!.isSheriff).toBe(success);
+    expect(g.world.getComponent(1, COMPONENT.Badge)!.isSheriff).toBe(success);
     expect(badge.isSheriff).toBe(!success);
     expect(requests.some((r) => r.allowedTools.includes("choose_badge_successor"))).toBe(false);
     if (success) {
-      const own = g.world.getComponent<BadgeComponent>(1, COMPONENT.Badge)!;
+      const own = g.world.getComponent(1, COMPONENT.Badge)!;
       expect(own.voteWeight).toBe(2.25);
       expect(own.handoffPolicy).toBe("awa_holder_choice_v1");
-      expect(g.world.getComponent<VotingRightComponent>(1, COMPONENT.VotingRight)!.weight).toBe(
+      expect(g.world.getComponent(1, COMPONENT.VotingRight)!.weight).toBe(
         2.25,
       );
       expect(events.filter((e) => e.type === "sheriff_badge_transferred")).toHaveLength(1);
@@ -378,7 +378,7 @@ for (const success of [true, false])
 test("failed Debater sheriff keeps badge and its weight", async () => {
   const g = fixture(),
     events: GameEvent[] = [];
-  const b = g.world.getComponent<BadgeComponent>(1, COMPONENT.Badge)!;
+  const b = g.world.getComponent(1, COMPONENT.Badge)!;
   b.isSheriff = true;
   b.voteWeight = 2;
   await run(g, events, provider([true, true, true, false, false, false]));
@@ -617,8 +617,8 @@ for (const before of ["death", "revive"])
 test("destroyed receiving badge cancels instead of destroying target badge", async () => {
   const g = fixture(),
     events: GameEvent[] = [];
-  g.world.getComponent<BadgeComponent>(1, COMPONENT.Badge)!.destroyed = true;
-  const badge = g.world.getComponent<BadgeComponent>(2, COMPONENT.Badge)!;
+  g.world.getComponent(1, COMPONENT.Badge)!.destroyed = true;
+  const badge = g.world.getComponent(2, COMPONENT.Badge)!;
   badge.isSheriff = true;
   await run(g, events, provider([true, true, true, true, true, true]));
   expect(events.at(-1)?.type).toBe("debate_canceled");
@@ -787,11 +787,11 @@ test("success against sheriff retains original direction order and automatic con
     events: GameEvent[] = [],
     requests: ActionRequest[] = [];
   g.config.enableSheriff = true;
-  const b = g.world.getComponent<BadgeComponent>(2, COMPONENT.Badge)!;
+  const b = g.world.getComponent(2, COMPONENT.Badge)!;
   b.isSheriff = true;
   b.voteWeight = 2.25;
   b.handoffPolicy = "awa_holder_choice_v1";
-  g.world.getComponent<VotingRightComponent>(2, COMPONENT.VotingRight)!.weight = 2.25;
+  g.world.getComponent(2, COMPONENT.VotingRight)!.weight = 2.25;
   const pipeline = new DayPipeline({
     world: g.world,
     roleRegistry: createDefaultRoleRegistry(),
@@ -816,8 +816,8 @@ test("success against sheriff retains original direction order and automatic con
     { day: 1 },
   );
   expect(result.summary.speeches.map((s) => s.actorId)).toEqual([3, 4, 5, 6, 1]);
-  expect(g.world.getComponent<BadgeComponent>(1, COMPONENT.Badge)!.isSheriff).toBe(true);
-  expect(g.world.getComponent<VotingRightComponent>(1, COMPONENT.VotingRight)!.weight).toBe(2.25);
+  expect(g.world.getComponent(1, COMPONENT.Badge)!.isSheriff).toBe(true);
+  expect(g.world.getComponent(1, COMPONENT.VotingRight)!.weight).toBe(2.25);
   expect(requests.some((r) => r.allowedTools.includes("choose_badge_successor"))).toBe(false);
 });
 

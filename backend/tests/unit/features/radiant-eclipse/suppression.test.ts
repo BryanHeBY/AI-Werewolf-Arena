@@ -160,12 +160,7 @@ for (const mode of [
   test(`revoked ${mode} authorization still releases this blocker's original resource`, () => {
     const f = fixture(),
       scope = openEclipseSuppression(f.world, f.actorId, f.ability, 2);
-    const identity = f.world.getComponent<{
-      id: number;
-      seat: number;
-      name: string;
-      sessionId: string;
-    }>(f.actorId, COMPONENT.Identity)!;
+    const identity = f.world.getComponent(f.actorId, COMPONENT.Identity)!;
     if (mode === "name" || mode === "first_death_name" || mode === "permanent_disabled_name")
       identity.name = "changed";
     if (mode === "identity_ref")

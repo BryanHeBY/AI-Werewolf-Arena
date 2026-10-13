@@ -70,7 +70,7 @@ test("pair scope revokes replaced native state, edited policy or first death and
     else if (action === "policy")
       Object.defineProperty(f.state, "policy", { value: "other", writable: true });
     else {
-      const life = f.world.getComponent<{ alive: boolean }>(f.actorId, COMPONENT.Alive)!;
+      const life = f.world.getComponent(f.actorId, COMPONENT.Alive)!;
       life.alive = false;
       life.alive = true;
     }

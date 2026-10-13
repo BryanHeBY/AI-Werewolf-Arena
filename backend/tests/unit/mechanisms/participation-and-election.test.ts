@@ -112,11 +112,11 @@ for (const locale of ["zh-CN", "en"] as const)
       removed: [],
       reason: "idiot_revealed",
     });
-    expect(world.getComponent<{ alive: boolean }>(8, COMPONENT.Alive)!.alive).toBe(true);
+    expect(world.getComponent(8, COMPONENT.Alive)!.alive).toBe(true);
     expect(
-      world.getComponent<{ weight: number; canVote: boolean }>(8, COMPONENT.VotingRight),
+      world.getComponent(8, COMPONENT.VotingRight),
     ).toMatchObject({ weight: 0, canVote: false });
-    expect(getIdiotState(world.getComponent<RoleComponent>(8, COMPONENT.Role)!)!.revealed).toBe(
+    expect(getIdiotState(world.getComponent(8, COMPONENT.Role)!)!.revealed).toBe(
       true,
     );
     expect([canVote(world, 8), canBeExiled(world, 8), canBeSheriff(world, 8)]).toEqual([
@@ -125,10 +125,10 @@ for (const locale of ["zh-CN", "en"] as const)
       false,
     ]);
     expect(findSheriffId(world)).toBe(1);
-    expect(world.getComponent<{ weight: number }>(1, COMPONENT.VotingRight)!.weight).toBe(2.75);
+    expect(world.getComponent(1, COMPONENT.VotingRight)!.weight).toBe(2.75);
     const before = structuredClone(events),
       ownBefore = structuredClone(
-        world.getComponent<RoleComponent>(8, COMPONENT.Role)!.privateState,
+        world.getComponent(8, COMPONENT.Role)!.privateState,
       );
     expect(registry.onVotedOut(world, 8, events)).toEqual({
       prevented: true,
@@ -136,7 +136,7 @@ for (const locale of ["zh-CN", "en"] as const)
       reason: "idiot_already_revealed",
     });
     expect(events).toEqual(before);
-    expect(world.getComponent<RoleComponent>(8, COMPONENT.Role)!.privateState).toEqual(ownBefore);
+    expect(world.getComponent(8, COMPONENT.Role)!.privateState).toEqual(ownBefore);
     const reception = new ActionReception(world);
     expect(reception.validate(request(8, "speak", "day_speech"), "speak", { text: "raw" }).ok).toBe(
       true,
@@ -171,7 +171,7 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(await bot.getAction(request(8, "run_for_sheriff", "sheriff_nomination"))).toBeNull();
     expect(await bot.getAction(request(8, "speak", "day_speech"))).toMatchObject({ name: "speak" });
     // An unrelated component edit cannot grant back this public role restriction.
-    world.getComponent<{ canVote: boolean }>(8, COMPONENT.VotingRight)!.canVote = true;
+    world.getComponent(8, COMPONENT.VotingRight)!.canVote = true;
     expect(canVote(world, 8)).toBe(false);
     expect(canBeSheriff(world, 8)).toBe(false);
     const prompt = policy(world).buildUser(request(9, "vote", "voting"), {
@@ -198,7 +198,7 @@ for (const locale of ["zh-CN", "en"] as const)
       Phase.Night,
       Phase.Day,
     );
-    expect(world.getComponent<{ alive: boolean }>(8, COMPONENT.Alive)!.alive).toBe(false);
+    expect(world.getComponent(8, COMPONENT.Alive)!.alive).toBe(false);
     expect(events.filter((event) => event.type === "idiot_revealed")).toHaveLength(1);
   });
 
@@ -267,8 +267,8 @@ for (const locale of ["zh-CN", "en"] as const)
       const { world } = fixture(locale),
         events: GameEvent[] = [],
         voteActors: number[] = [];
-      world.getComponent<{ seat: number }>(9, COMPONENT.Identity)!.seat = 10;
-      world.getComponent<{ seat: number }>(10, COMPONENT.Identity)!.seat = 9;
+      world.getComponent(9, COMPONENT.Identity)!.seat = 10;
+      world.getComponent(10, COMPONENT.Identity)!.seat = 9;
       const winner = await electSheriffIfNeeded({
         world,
         events,
@@ -322,7 +322,7 @@ for (const locale of ["zh-CN", "en"] as const)
       ).toBe(false);
       expect(winner).toBe(strategy === "min_id" ? 9 : strategy === "min_seat" ? 10 : null);
       if (winner !== null)
-        expect(world.getComponent<{ weight: number }>(winner, COMPONENT.VotingRight)!.weight).toBe(
+        expect(world.getComponent(winner, COMPONENT.VotingRight)!.weight).toBe(
           2.75,
         );
     }
@@ -354,10 +354,10 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(winner).toBe(9);
     expect(requests.some((input) => input.actorId === 8)).toBe(false);
     for (const id of [1, 2, 3, 4, 5, 6, 7])
-      world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive = false;
+      world.getComponent(id, COMPONENT.Alive)!.alive = false;
     transferOrDestroySheriffBadge(world, 9, "test", events);
     expect(findSheriffId(world)).toBe(10);
-    expect(world.getComponent<{ isSheriff: boolean }>(8, COMPONENT.Badge)!.isSheriff).toBe(false);
+    expect(world.getComponent(8, COMPONENT.Badge)!.isSheriff).toBe(false);
   });
 
 test("candidate snapshots cannot be changed by one provider; late loss of eligibility cannot elect or record a vote", async () => {

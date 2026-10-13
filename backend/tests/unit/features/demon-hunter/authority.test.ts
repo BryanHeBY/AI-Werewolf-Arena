@@ -88,7 +88,7 @@ function fixture(locale: "zh-CN" | "en" = "zh-CN") {
     ...{ demonHunter: { policy: "awa_netease_demon_hunter_v1" } },
   };
   installDemonHunter(world, config);
-  return { world, config, role: world.getComponent<RoleComponent>(6, COMPONENT.Role)! };
+  return { world, config, role: world.getComponent(6, COMPONENT.Role)! };
 }
 function turn(
   f: ReturnType<typeof fixture>,
@@ -187,7 +187,7 @@ for (const target of [6, 99, 0])
   });
 test("a previously dead target and revived target never borrow an original target proof", () => {
   const f = fixture();
-  const life = f.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!;
+  const life = f.world.getComponent(1, COMPONENT.Alive)!;
   life.alive = false;
   const { scope } = turn(f);
   expect(commitDemonHunt(f.world, scope, hunt(1))).toBeNull();
@@ -351,7 +351,7 @@ test("an independently supplied fault really replaces the life and the engine in
 });
 test("the original native potion consumption is independently audited; getter/Proxy substitutions preserve that last snapshot", () => {
   const f = fixture(),
-    witch = f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!;
+    witch = f.world.getComponent(5, COMPONENT.Role)!;
   const ability = (
     (witch.privateState as { readonly abilities?: unknown }).abilities as Record<
       string,
@@ -383,7 +383,7 @@ test("the original native potion consumption is independently audited; getter/Pr
   expect(reads).toBe(0);
   const g = fixture(),
     before = demonHunterAuditPlayer(g.world, 5)!;
-  const original = g.world.getComponent<RoleComponent>(5, COMPONENT.Role)!;
+  const original = g.world.getComponent(5, COMPONENT.Role)!;
   (original.privateState as Record<string, unknown>).abilities = new Proxy(
     (original.privateState as { readonly abilities?: unknown }).abilities as object,
     {
@@ -403,7 +403,7 @@ test("the original native potion consumption is independently audited; getter/Pr
 test("a same-name replacement nested native inventory cannot lend identity to a hunt", () => {
   const f = fixture(),
     { scope } = turn(f);
-  const witch = f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!;
+  const witch = f.world.getComponent(5, COMPONENT.Role)!;
   const stored = (witch.privateState as { readonly abilities?: unknown }).abilities as Record<
     string,
     NightAbility
@@ -438,7 +438,7 @@ test("actual domain commit caches its history before later actor identity revoca
 test("a native nested getter rejects the whole bound action without executing it", () => {
   const f = fixture(),
     { scope } = turn(f);
-  const witch = f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!;
+  const witch = f.world.getComponent(5, COMPONENT.Role)!;
   const ability = (
     (witch.privateState as { readonly abilities?: unknown }).abilities as Record<
       string,
@@ -502,7 +502,7 @@ test("a replacement life cannot refresh a native inventory audit", () => {
   const f = fixture(),
     before = demonHunterAuditPlayer(f.world, 5)!;
   f.world.addComponent(5, COMPONENT.Alive, createAliveComponent());
-  const witch = f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!;
+  const witch = f.world.getComponent(5, COMPONENT.Role)!;
   const ability = (
     (witch.privateState as { readonly abilities?: unknown }).abilities as Record<
       string,
@@ -584,7 +584,7 @@ test("closed night frames strictly increase even when no first-night choice exis
 for (const kind of ["replace", "revive", "descriptor"] as const)
   test(`a ${kind} actor life cannot make a required night look inactive`, () => {
     const f = fixture(),
-      life = f.world.getComponent<AliveComponent>(6, COMPONENT.Alive)!;
+      life = f.world.getComponent(6, COMPONENT.Alive)!;
     if (kind === "replace") f.world.addComponent(6, COMPONENT.Alive, createAliveComponent());
     if (kind === "revive") {
       life.alive = false;
@@ -597,14 +597,14 @@ for (const kind of ["replace", "revive", "descriptor"] as const)
   });
 test("the original first death skips future hunt prompts without borrowing a new life", () => {
   const f = fixture();
-  f.world.getComponent<AliveComponent>(6, COMPONENT.Alive)!.alive = false;
+  f.world.getComponent(6, COMPONENT.Alive)!.alive = false;
   beginDemonHunterNight(f.world, 2, () => true);
   expect(() => openDemonHunterTurn(f.world)).toThrow("demon_hunter_turn_unavailable");
   expect(freezeDemonHunt(f.world)).toEqual({ choice: null, damage: null, cancelled: null });
 });
 function poisonFixture(isCurrent = () => true) {
   const f = fixture(),
-    witch = f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!,
+    witch = f.world.getComponent(5, COMPONENT.Role)!,
     ability = (
       (witch.privateState as { readonly abilities?: unknown }).abilities as Record<
         string,
@@ -632,7 +632,7 @@ test("first-night immunity requires the actual original native Witch consumption
   const fact = freezeDemonNativePoison(proof);
   expect(fact).toEqual({ policy: "awa_netease_demon_hunter_v1", actorId: 6, day: 1, witchId: 5 });
   expect(f.world.getAliveEntityIds()).toEqual([1, 2, 3, 4, 5, 6]);
-  f.world.getComponent<AliveComponent>(5, COMPONENT.Alive)!.alive = false;
+  f.world.getComponent(5, COMPONENT.Alive)!.alive = false;
   expect(fact).toEqual({ policy: "awa_netease_demon_hunter_v1", actorId: 6, day: 1, witchId: 5 });
   expect(() => freezeDemonNativePoison(proof)).toThrow(
     "demon_hunter_native_poison_proof_unavailable",
@@ -785,7 +785,7 @@ test("incorrect hunt-first freezing cannot silently swallow an otherwise qualifi
 });
 test("batch validates missing required response and all proofs before consuming any source", () => {
   const f = fixture(),
-    witch = f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!,
+    witch = f.world.getComponent(5, COMPONENT.Role)!,
     ability = (
       (witch.privateState as { readonly abilities?: unknown }).abilities as Record<
         string,
@@ -1257,7 +1257,7 @@ for (const kind of [
               deferRequestDelivery(request, (accepted) => receipts.push(accepted));
               const ability = (
                 (
-                  f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState as {
+                  f.world.getComponent(5, COMPONENT.Role)!.privateState as {
                     readonly abilities?: unknown;
                   }
                 ).abilities as Record<string, NightAbility<"potion">>
@@ -1383,7 +1383,7 @@ test("actual original Witch pass → heal → poison: exact cross-night cache an
   expect(audit.abilities["native:potion"]!.state.poison).toBe(0);
   const ability = (
     (
-      f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState as {
+      f.world.getComponent(5, COMPONENT.Role)!.privateState as {
         readonly abilities?: unknown;
       }
     ).abilities as Record<string, NightAbility<"potion">>
@@ -1456,7 +1456,7 @@ for (const kind of [
     if (kind === "source_getter") {
       const a = (
         (
-          f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState as {
+          f.world.getComponent(5, COMPONENT.Role)!.privateState as {
             readonly abilities?: unknown;
           }
         ).abilities as Record<string, NightAbility<"potion">>
@@ -1558,14 +1558,14 @@ for (const kind of [
               deferRequestDelivery(request, (ok) => receipts.push(ok));
               const ability = (
                 (
-                  f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState as {
+                  f.world.getComponent(5, COMPONENT.Role)!.privateState as {
                     readonly abilities?: unknown;
                   }
                 ).abilities as Record<string, NightAbility<"potion">>
               )["native:potion"]!;
               if (kind === "target_getter")
                 Object.defineProperty(
-                  f.world.getComponent<AliveComponent>(6, COMPONENT.Alive)!,
+                  f.world.getComponent(6, COMPONENT.Alive)!,
                   "alive",
                   {
                     get() {
@@ -1620,7 +1620,7 @@ for (const kind of [
       expect(demonHunterAuditPlayer(f.world, 5)).toEqual(before);
       const ability = (
         (
-          f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState as {
+          f.world.getComponent(5, COMPONENT.Role)!.privateState as {
             readonly abilities?: unknown;
           }
         ).abilities as Record<string, NightAbility<"potion">>
@@ -1866,7 +1866,7 @@ test("delivered immunity keeps a new toxin written after ordinary marks consumpt
     },
   });
   const token = sealDeliveredDemonWitchSources(f.world, 1),
-    marks = f.world.getComponent<StatusMarksComponent>(6, COMPONENT.StatusMarks)!;
+    marks = f.world.getComponent(6, COMPONENT.StatusMarks)!;
   marks.clear();
   marks.add(StatusMark.PoisonMark);
   const result = freezeDeliveredDemonNightSources(f.world, token);

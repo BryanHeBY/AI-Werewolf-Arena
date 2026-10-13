@@ -1,9 +1,5 @@
 /**
- * Scenario simulation tests: Runs actual Wolf Sorcerer Worlds across first-night,
- * shot-target and locale policies for the original seeds. Explicit history lower bounds,
- * positive choices and non-timeout termination check eligibility timing. The original
- * seed/action matrices and literal assertions remain the oracle; these trials do not
- * replace archived goldens or claim newly independent rule coverage.
+ * 模拟场景测试：负责执行狼术师原种子的首夜、枪目标及语言政策实际 World。输入保留原矩阵；历史下限、正选择次数及非超时终局检查资格时点，不替代归档 golden 或声称新增独立规则覆盖。
  */
 import type { RoleComponent } from "../../../../src/core/domain/components/role";
 import { getWolfSorcererState } from "../../../../src/game/mechanisms/roles/wolf_sorcerer/state";
@@ -47,7 +43,7 @@ for (const firstNight of [1, 2] as const)
             const state = game.world
               .entityIds()
               .map((id) =>
-                getWolfSorcererState(game.world.getComponent<RoleComponent>(id, COMPONENT.Role)),
+                getWolfSorcererState(game.world.getComponent(id, COMPONENT.Role)),
               )
               .find(Boolean);
             expect(state?.history.every((row) => row.day >= firstNight)).toBe(true);

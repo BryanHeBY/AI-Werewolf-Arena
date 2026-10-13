@@ -40,10 +40,10 @@ const fixture = (locale: "zh-CN" | "en") =>
   bootstrapGame(twelvePlayerStandardConfig, { locale, fixedRoles: roles12 });
 
 const role = (world: ReturnType<typeof fixture>["world"], id: number) =>
-  world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  world.getComponent(id, COMPONENT.Role)!;
 
 const marks = (world: ReturnType<typeof fixture>["world"], id: number) =>
-  world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!;
+  world.getComponent(id, COMPONENT.StatusMarks)!;
 
 const request: ActionRequest = {
   actorId: 6,
@@ -99,11 +99,11 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(role(world, 6).privateState).toEqual(before);
       expect(turn.action).toBeNull();
     }
-    world.getComponent<{ alive: boolean }>(9, COMPONENT.Alive)!.alive = false;
+    world.getComponent(9, COMPONENT.Alive)!.alive = false;
     expect(
       turn.submit("t1", "use_potion", { target_id: 9, potion_type: PotionType.Heal }),
     ).toMatchObject({ ok: false, error: "heal_target" });
-    world.getComponent<{ alive: boolean }>(9, COMPONENT.Alive)!.alive = true;
+    world.getComponent(9, COMPONENT.Alive)!.alive = true;
     expect(turn.submit("t1", "use_potion", { target_id: 9, potion_type: PotionType.Heal })).toEqual(
       { ok: true, accepted: true, applied: false, action: "use_potion" },
     );
@@ -134,6 +134,6 @@ for (const locale of ["zh-CN", "en"] as const)
         deathSources: expected.length ? { 7: expected } : {},
       });
       expect(marks(world, 7).values()).toEqual([]);
-      expect(world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!.alive).toBe(true); // PhaseManager owns death settlement.
+      expect(world.getComponent(7, COMPONENT.Alive)!.alive).toBe(true); // PhaseManager owns death settlement.
     }
   });

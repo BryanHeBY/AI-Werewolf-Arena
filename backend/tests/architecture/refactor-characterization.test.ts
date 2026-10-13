@@ -117,7 +117,7 @@ describe("F01 current production fallback privilege", () => {
 
     // God-only intervention, not a legal conversion scenario: alter just the
     // field baseline reads. HiddenWolf remains absent from pack recognition.
-    game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!.camp = Camp.Good;
+    game.world.getComponent(2, COMPONENT.Role)!.camp = Camp.Good;
     await observed.getAction(request);
     expect(observations[1]).toEqual(observations[0]);
     expect(await baseline.getAction(request)).toEqual({

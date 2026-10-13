@@ -65,8 +65,8 @@ for (const locale of ["zh-CN", "en"] as const)
         async getAction(r) {
           if (!before && r.context.stage === "sheriff_nomination") {
             before = true;
-            expect(g.world.getComponent<AliveComponent>(5, COMPONENT.Alive)!.alive).toBe(true);
-            expect(g.world.getComponent<AliveComponent>(6, COMPONENT.Alive)!.alive).toBe(true);
+            expect(g.world.getComponent(5, COMPONENT.Alive)!.alive).toBe(true);
+            expect(g.world.getComponent(6, COMPONENT.Alive)!.alive).toBe(true);
             const view = observation(r, 1);
             expect(view.observed.ownState.fragrantPhantom).toMatchObject({
               used: false,
@@ -82,8 +82,8 @@ for (const locale of ["zh-CN", "en"] as const)
           }
           if (!after && r.context.stage === "last_words") {
             after = true;
-            expect(g.world.getComponent<AliveComponent>(5, COMPONENT.Alive)!.alive).toBe(false);
-            expect(g.world.getComponent<AliveComponent>(6, COMPONENT.Alive)!.alive).toBe(false);
+            expect(g.world.getComponent(5, COMPONENT.Alive)!.alive).toBe(false);
+            expect(g.world.getComponent(6, COMPONENT.Alive)!.alive).toBe(false);
             const f = observation(r, 1).observed,
               other = observation(r, 7).observed,
               pair = observation(r, 9).observed;

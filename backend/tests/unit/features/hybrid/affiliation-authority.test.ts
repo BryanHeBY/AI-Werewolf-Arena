@@ -78,10 +78,10 @@ const fixture = (roles = deck, locale: "zh-CN" | "en" = "en") => {
 };
 
 const role = (game: ReturnType<typeof fixture>, id = 1) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  game.world.getComponent(id, COMPONENT.Role)!;
 
 const victory = (game: ReturnType<typeof fixture>, id = 1) =>
-  game.world.getComponent<VictoryComponent>(id, COMPONENT.Victory)!;
+  game.world.getComponent(id, COMPONENT.Victory)!;
 
 const choose = (target_id: number): ToolCall => ({ name: "choose_exemplar", args: { target_id } });
 
@@ -125,7 +125,7 @@ function context(
         context: extra,
       }),
     getAliveByRole: (r) => game.world.getAliveEntityIds().filter((id) => role(game, id).role === r),
-    ensureMarks: (id) => game.world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!,
+    ensureMarks: (id) => game.world.getComponent(id, COMPONENT.StatusMarks)!,
     pickMajorityTarget: () => null,
     shuffleWolves: (ids) => ids,
     state: {
@@ -238,8 +238,8 @@ for (const locale of ["zh-CN", "en"] as const)
       if (locale === "en")
         expect(renderRolePrompt(role(game), locale)).not.toMatch(/[\u4e00-\u9fff]/);
       role(game, target).camp = faction === "wolf" ? Camp.Good : Camp.Wolf;
-      game.world.getComponent<{ alive: boolean }>(target, COMPONENT.Alive)!.alive = false;
-      game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive = false;
+      game.world.getComponent(target, COMPONENT.Alive)!.alive = false;
+      game.world.getComponent(1, COMPONENT.Alive)!.alive = false;
       expect(victory(game).affiliations).toEqual([{ kind: "faction", faction }]);
       await HYBRID_STAGE.execute(
         context(
@@ -299,10 +299,10 @@ for (const invalid of ["pass", "dead", "no_targets"] as const)
     const game = fixture(),
       events: GameEvent[] = [];
     let calls = 0;
-    game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive = false;
+    game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
     if (invalid === "no_targets")
       for (const id of [3, 4, 5, 6])
-        game.world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive = false;
+        game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
     await expect(
       HYBRID_STAGE.execute(
         context(game, events, async () => {
@@ -427,7 +427,7 @@ test("a Wolf-affiliated Hybrid still fills the villager side and true Good count
   await HYBRID_STAGE.execute(context(game, events, async () => choose(2)));
   const dead = (ids: number[]) =>
     ids.forEach((id) => {
-      game.world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive = false;
+      game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
     });
   dead([6]);
   expect(registry.evaluate(game.world, WinCondition.SlaughterSide)).toBeNull();

@@ -96,7 +96,7 @@ for (const protection of [
       expect(game.world.getAliveEntityIds()).toEqual([1, 2, 3, 4, 5, 6]);
       expect(
         game.world
-          .getComponent<StatusMarksComponent>(5, COMPONENT.StatusMarks)!
+          .getComponent(5, COMPONENT.StatusMarks)!
           .has(StatusMark.WolfKillMark),
       ).toBe(false);
     });
@@ -240,7 +240,7 @@ for (const change of ["replacement", "revival", "cancel"] as const)
       for (const id of [5, 6]) game.world.addComponent(id, COMPONENT.Alive, createAliveComponent());
     if (change === "revival")
       for (const id of [5, 6]) {
-        const life = game.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+        const life = game.world.getComponent(id, COMPONENT.Alive)!;
         life.alive = false;
         life.alive = true;
       }

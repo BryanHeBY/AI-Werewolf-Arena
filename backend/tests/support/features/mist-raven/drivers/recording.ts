@@ -1,8 +1,5 @@
 /**
- * Owns original test driver mist-raven controlled execution and recording support. Inputs are literal action plans and
- * original fixture handles; outputs preserve driver callbacks, traces, caches and cleanup. Concrete
- * transport/replay or scripted actions retain their original lifetimes; supplied handwritten oracles own
- * expected outcomes, and no billed model or production state writer is introduced.
+ * 测试 driver：负责原雾鸦受控执行与录制。输入为原角色、动作计划及局部 store；输出保留原请求和录制前缀，独立预期由外部测试提供，不调用模型。
  */
 import type { ReproductionRecord } from "../../../../../src/recording/reproduction";
 import type { ActionRequest } from "../../../../../src/core";
@@ -104,7 +101,7 @@ export function mistRecording(
                             .getAliveEntityIds()
                             .filter(
                               (id) =>
-                                game.world.getComponent<BadgeComponent>(id, COMPONENT.Badge)
+                                game.world.getComponent(id, COMPONENT.Badge)
                                   ?.isSheriff,
                             ),
                           gameOver: game.phaseManager.getSnapshot().gameOver,

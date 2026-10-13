@@ -1,9 +1,5 @@
 /**
- * Integration tests for wild child model. Inputs are original model choices, life replacements and real
- * initial/additional death causes. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Actual synchronous public JSON read with table-selected six/twelve URL
- * followed by finite parse/bootstrap, no phase execution. Actual public filesystem or synthetic local
- * transport boundaries are exercised; private config/auth and paid model services are excluded.
+ * 配置集成测试：验证野孩子公开示例与原榜样配置。输入为既有公开配置和局部装配；原字面预期及不可变 fixture 检查边界，不调用模型或重写样本。
  */
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -31,7 +27,7 @@ for (const size of [6, 12])
       g.world
         .entityIds()
         .filter(
-          (id) => g.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.WildChild,
+          (id) => g.world.getComponent(id, COMPONENT.Role)?.role === Role.WildChild,
         ),
     ).toHaveLength(1);
   });

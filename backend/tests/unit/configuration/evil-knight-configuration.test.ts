@@ -1,9 +1,5 @@
 /**
- * Unit tests: Evil Knight configuration uses literal policy combinations and immutable
- * public examples; exact schema/roundtrip/state and named rejection assertions check
- * finite board setup. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证恶灵骑士有限配置。输入为字面政策组合与不可变公开示例；schema、往返、状态及具名拒绝采用精确预期，不执行模型或完整对局。
  */
 import { expect, test } from "bun:test";
 import { isEvilKnightPreset } from "../../../src/rulesets";
@@ -34,7 +30,7 @@ for (const shotPolicy of ["night_shot_immune", "hunter_shot_bypasses"] as const)
       expect(world.entityIds()).toHaveLength(12);
       const knight = world
         .entityIds()
-        .map((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role))
+        .map((id) => world.getComponent(id, COMPONENT.Role))
         .find((r) => r?.role === Role.EvilKnight)!;
       expect(getEvilKnightState(knight)).toEqual({
         policy: "awa_evil_knight_v1",

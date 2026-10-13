@@ -21,7 +21,7 @@ for (const policy of ["ends_game", "forbidden"] as const)
         const f = bootstrapGame(config, { locale });
         const id = (r: Role) =>
           f.playerIds.find(
-            (id) => f.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === r,
+            (id) => f.world.getComponent(id, COMPONENT.Role)?.role === r,
           )!;
         const actor = id(Role.RedMoonApostle),
           other = id(Role.Villager);
@@ -51,7 +51,7 @@ for (const policy of ["ends_game", "forbidden"] as const)
             requiresAction: true,
             summary: "Vote",
           });
-        const state = getRedMoonState(f.world.getComponent<RoleComponent>(actor, COMPONENT.Role))!;
+        const state = getRedMoonState(f.world.getComponent(actor, COMPONENT.Role))!;
         await provider.getAction(request(actor));
         const snapshot = seen[0]!.ownState.redMoon!;
         expect(snapshot).toEqual(state);

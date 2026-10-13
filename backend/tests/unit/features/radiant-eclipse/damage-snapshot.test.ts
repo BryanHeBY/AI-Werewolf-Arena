@@ -18,7 +18,7 @@ function fixture() {
   for (let n = 0; n < 5; n++)
     world.addComponent(world.createEntity(), COMPONENT.Alive, createAliveComponent());
   const body = (n: number) =>
-    world.getComponent<ReturnType<typeof createAliveComponent>>(n, COMPONENT.Alive)!;
+    world.getComponent(n, COMPONENT.Alive)!;
   const scope = (n: number) => captureNightLife(world, n)!;
   const link: DreamNightLink = {
     actorId: 2,

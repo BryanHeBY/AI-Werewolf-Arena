@@ -1,7 +1,5 @@
 /**
- * Failure scenarios verify required recording faults preserve Animal Dream Cat deferred versus actual-death state and the original failure prefix.
- * Input: Original controlled PhaseManager cycles, real session stores and injected record failures at two Cat death points.
- * Output and oracle: Explicit Cat/role/death/checkpoint assertions and original error identity remain causal with persisted output; no expected archived fixture is regenerated.
+ * 故障场景测试：验证动物梦境白猫必需录制故障保留延期／真实死亡状态及原失败前缀。输入为原受控周期、真实 session store 和两个死亡点的故障；白猫、身份、死亡与 checkpoint 及错误身份为明确预期，不重新生成归档。
  */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
@@ -30,7 +28,7 @@ for (const point of ["deferred", "actually_dead"] as const)
   test(`R actual PM+Trace Cat ${point} publication-failure archive`, async () => {
     const g = animalGame(),
       root = await createTestTempDirectory("awa-animal-cat-" + point + "-"),
-      life = g.world.getComponent<AliveComponent>(9, COMPONENT.Alive)!;
+      life = g.world.getComponent(9, COMPONENT.Alive)!;
     const manager = await SessionRecordManager.create(
         {
           sessionId: "game",

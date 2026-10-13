@@ -22,14 +22,14 @@ function fixture(cause: NightInspectionAttack["cause"]) {
   const { world } = bootstrapGame(sixPlayerMvpConfig);
   const actorId = world
     .entityIds()
-    .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Seer)!;
+    .find((id) => world.getComponent(id, COMPONENT.Role)?.role === Role.Seer)!;
   const targetId = world
     .entityIds()
-    .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Wolf)!;
+    .find((id) => world.getComponent(id, COMPONENT.Role)?.role === Role.Wolf)!;
   const target = captureNightLife(world, targetId)!;
   let current = true;
   const attack: NightInspectionAttack = { actorId, target, cause, isCurrent: () => current };
-  const marks = world.getComponent<StatusMarksComponent>(targetId, COMPONENT.StatusMarks)!;
+  const marks = world.getComponent(targetId, COMPONENT.StatusMarks)!;
   return {
     world,
     actorId,
@@ -67,7 +67,7 @@ for (const cause of [DeathCause.PureWhiteInspection, DeathCause.WolfWitchInspect
       });
       expect(damage.deaths).toEqual([f.targetId]);
       expect([...damage.deathSources[f.targetId]!].sort()).toEqual([cause, ...row.other].sort());
-      expect(f.world.getComponent<AliveComponent>(f.targetId, COMPONENT.Alive)?.alive).toBe(true);
+      expect(f.world.getComponent(f.targetId, COMPONENT.Alive)?.alive).toBe(true);
     });
   }
   test(`${cause}: revoked original authority cannot contribute a death`, () => {
@@ -79,7 +79,7 @@ for (const cause of [DeathCause.PureWhiteInspection, DeathCause.WolfWitchInspect
   });
   test(`${cause}: a dead and revived target is not the captured life`, () => {
     const f = fixture(cause);
-    const life = f.world.getComponent<AliveComponent>(f.targetId, COMPONENT.Alive)!;
+    const life = f.world.getComponent(f.targetId, COMPONENT.Alive)!;
     life.alive = false;
     life.alive = true;
     expect(
@@ -104,7 +104,7 @@ for (const cause of [DeathCause.PureWhiteInspection, DeathCause.WolfWitchInspect
     const damage = new DamageResolutionSystem().resolve(f.world, { inspectionAttacks: [f.attack] });
     expect(damage.deaths).toEqual([f.targetId]);
     expect([...damage.deathSources[f.targetId]!]).toEqual([cause]);
-    expect(f.world.getComponent<AliveComponent>(f.targetId, COMPONENT.Alive)?.alive).toBe(true);
+    expect(f.world.getComponent(f.targetId, COMPONENT.Alive)?.alive).toBe(true);
   });
 }
 
@@ -118,5 +118,5 @@ test("both inspection sources are preserved once while marking no player dead pr
   expect([...damage.deathSources[f.targetId]!].sort()).toEqual(
     [DeathCause.PureWhiteInspection, DeathCause.WolfWitchInspection].sort(),
   );
-  expect(f.world.getComponent<AliveComponent>(f.targetId, COMPONENT.Alive)?.alive).toBe(true);
+  expect(f.world.getComponent(f.targetId, COMPONENT.Alive)?.alive).toBe(true);
 });

@@ -46,7 +46,7 @@ for (const changed of ["life", "role", "camp"] as const)
   });
 test("same body death and revival revokes target even when currently living", () => {
   const { world, scopes } = targets(),
-    life = world.getComponent<AliveComponent>(2, COMPONENT.Alive)!;
+    life = world.getComponent(2, COMPONENT.Alive)!;
   life.alive = false;
   life.alive = true;
   expect(capturedPairContainsWolf(world, scopes)).toBeNull();

@@ -74,7 +74,7 @@ const config: BoardConfig = {
 const fixture = () => bootstrapGame(config, { fixedRoles: deck });
 
 const role = (game: ReturnType<typeof fixture>, id: number) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  game.world.getComponent(id, COMPONENT.Role)!;
 
 const seer = () => ({ lastTarget: null, lastIsWerewolf: null, lastResult: null, history: [] });
 
@@ -127,7 +127,7 @@ function context(
         context: extra,
       }),
     getAliveByRole: (r) => game.world.getAliveEntityIds().filter((id) => role(game, id).role === r),
-    ensureMarks: (id) => game.world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!,
+    ensureMarks: (id) => game.world.getComponent(id, COMPONENT.StatusMarks)!,
     pickMajorityTarget: () => null,
     shuffleWolves: (ids) => ids,
     state: {
@@ -215,7 +215,7 @@ test("native Witch heal and Lucky poison have independent bottles; Lucky waits t
       events,
     );
   game.world
-    .getComponent<StatusMarksComponent>(6, COMPONENT.StatusMarks)!
+    .getComponent(6, COMPONENT.StatusMarks)!
     .add(StatusMark.WolfKillMark);
   const ctx = context(game, 1, events, async () => ({
     name: "use_potion",
@@ -347,7 +347,7 @@ test("Lucky actual death permanently expires an unused gift, and neither revival
     Phase.Day,
   );
   expect(gift).toMatchObject({ uses: 0, disabled: true, deathExpired: true });
-  game.world.getComponent<{ alive: boolean }>(6, COMPONENT.Alive)!.alive = true;
+  game.world.getComponent(6, COMPONENT.Alive)!.alive = true;
   expect(() => setNightAbilityEnabled(game.world, 6, gift.id, true, events)).toThrow(
     "ability_lucky_expired_on_death",
   );
@@ -467,9 +467,9 @@ test("an already committed ordinary guard protects its original target after cas
       args: { target_id: 6, abstain: false },
     }));
   await ordinary("guard_action").execute(ctx);
-  game.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!.alive = false;
+  game.world.getComponent(5, COMPONENT.Alive)!.alive = false;
   game.world
-    .getComponent<StatusMarksComponent>(6, COMPONENT.StatusMarks)!
+    .getComponent(6, COMPONENT.StatusMarks)!
     .add(StatusMark.WolfKillMark);
   expect(
     new DamageResolutionSystem().resolve(game.world, { guardClaims: ctx.state.guardClaims }),
@@ -482,7 +482,7 @@ test("an already committed ordinary guard protects its original target after cas
   await ordinary("guard_action").execute(next);
   other.world.addComponent(6, COMPONENT.Alive, createAliveComponent());
   other.world
-    .getComponent<StatusMarksComponent>(6, COMPONENT.StatusMarks)!
+    .getComponent(6, COMPONENT.StatusMarks)!
     .add(StatusMark.WolfKillMark);
   expect(
     new DamageResolutionSystem().resolve(other.world, { guardClaims: next.state.guardClaims }),

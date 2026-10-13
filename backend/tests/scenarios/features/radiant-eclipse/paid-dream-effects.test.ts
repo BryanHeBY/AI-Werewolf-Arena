@@ -94,7 +94,7 @@ function fixture() {
         protectionPolicy: "netease_2026_night_immunity_v1",
       });
   }
-  const role = (id: number) => world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  const role = (id: number) => world.getComponent(id, COMPONENT.Role)!;
   const events: GameEvent[] = [];
   installRadiantEclipseBoard(world);
   return { world, role, events };
@@ -164,7 +164,7 @@ for (const dead of [1, 5])
       protectionPolicy: "netease_2026_night_immunity_v1",
     });
     expect(result.dreamFrame.protectedTargets(f.world)).toEqual([7]);
-    const life = f.world.getComponent<any>(dead, COMPONENT.Alive)!;
+    const life = f.world.getComponent(dead, COMPONENT.Alive)!;
     life.alive = false;
     expect(result.dreamFrame.linkedDeaths(f.world, [dead])).toEqual(dead === 1 ? [7] : []);
     expect(

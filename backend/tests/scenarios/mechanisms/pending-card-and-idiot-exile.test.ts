@@ -1,7 +1,5 @@
 /**
- * Public-death scenarios verify actual first-day election hides pending cards and surviving Idiot exile never becomes death disclosure.
- * Input: Original fixed rosters, configured public policy and controlled complete PM requests.
- * Output and oracle: Handwritten early-error identity, public reveal absence and retained life state preserve original causal checks; no generated oracle is added.
+ * 公开死亡场景测试：验证首日竞选隐藏 pending 身份，存活白痴放逐不变成死亡披露。输入为原固定名单、公开政策及完整 PM 请求；早期错误身份、无公开底牌和保留生命为手写预期，不添加生成式 oracle。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -63,7 +61,7 @@ test("first-day election sees no premature role card for pending night deaths", 
             expect(
               req.context.visible_events?.some((event) => event.type === "player_role_revealed"),
             ).toBe(false);
-            expect(game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive).toBe(
+            expect(game.world.getComponent(2, COMPONENT.Alive)!.alive).toBe(
               true,
             );
             throw stop;
@@ -116,7 +114,7 @@ test("actual surviving Village Idiot exile gets its special reveal but no death 
     },
     2,
   );
-  expect(game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive).toBe(true);
+  expect(game.world.getComponent(2, COMPONENT.Alive)!.alive).toBe(true);
   expect(
     game.phaseManager.getEvents().filter((event) => event.type === "idiot_revealed"),
   ).toHaveLength(1);

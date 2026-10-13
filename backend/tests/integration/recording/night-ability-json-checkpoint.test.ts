@@ -1,9 +1,5 @@
 /**
- * Integration tests for night ability shared contracts. Inputs are original grant/copy/transfer/expiry
- * instances and configured native state. Original literal receipts, reference/getter/error traces, facts
- * and expected state remain the oracle. Real SessionRecordManager temp directory and currentEngineVersion
- * feed the initial CP/Tape serialization check, with no phase cycle. Actual public filesystem or synthetic
- * local transport boundaries are exercised; private config/auth and paid model services are excluded.
+ * 集成测试：验证夜间能力共享契约的 JSON checkpoint 接线。输入为原能力、快照及序列化数据；既有字面预期和不可变 fixture 检查完整边界，不重写归档或调用模型。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -18,7 +14,7 @@ const fixture = (locale: "zh-CN" | "en" = "en") =>
   bootstrapGame(sixPlayerMvpConfig, { fixedRoles, locale });
 
 const role = (world: ReturnType<typeof fixture>["world"], id: number) =>
-  world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  world.getComponent(id, COMPONENT.Role)!;
 
 test("explicit undefined optional fields normalize into a serializable CP/Tape without weakening strict JSON parsing", async () => {
   const { SessionRecordManager } = await import("../../../src/recording/session_recorder");

@@ -72,7 +72,7 @@ async function run(locale: "zh-CN" | "en", spec: (typeof cases)[number], variant
     fixedRoles: roles,
     random: createRandom("independent-radiant-private"),
   });
-  const owner = world.getComponent<RoleComponent>(spec.owner, COMPONENT.Role)!;
+  const owner = world.getComponent(spec.owner, COMPONENT.Role)!;
   const original = findNightAbility(owner, spec.kind)!;
   const tag = variant ? "ORIGINAL_HISTORY_B_841327" : "ORIGINAL_HISTORY_A_527841";
   (owner.privateState as Record<string, unknown>).privateNote = tag;
@@ -210,7 +210,7 @@ async function run(locale: "zh-CN" | "en", spec: (typeof cases)[number], variant
       return v ? [v] : [];
     });
   };
-  const maid = world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+  const maid = world.getComponent(1, COMPONENT.Role)!;
   const borrowed = findNightAbility(maid, spec.kind, "copy:eclipse:night:4")!;
   const afterRequest: ActionRequest = {
     actorId: 1,

@@ -1,7 +1,5 @@
 /**
- * Witch policy scenarios verify the native opt-in settles both bottles after all complete-night actions.
- * Input: Original potion order table, fixed role world and controlled complete NightPipeline provider.
- * Output and oracle: Exact lethal source and committed stock outcomes retain original assertions; expected data and fixture bytes are not regenerated.
+ * 女巫政策场景测试：验证显式 opt-in 双药在整夜行动之后结算。输入为原药瓶次序表、固定角色与受控完整 NightPipeline；精确致死来源和已付库存保留原断言，不重生预期或 fixture。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -64,11 +62,11 @@ function setup(
   ).config;
   const game = bootstrapGame(config, { fixedRoles: roles, locale });
   const ability = findNightAbility(
-    game.world.getComponent<RoleComponent>(2, COMPONENT.Role),
+    game.world.getComponent(2, COMPONENT.Role),
     "potion",
   )!;
   game.world
-    .getComponent<StatusMarksComponent>(3, COMPONENT.StatusMarks)!
+    .getComponent(3, COMPONENT.StatusMarks)!
     .add(StatusMark.WolfKillMark);
   const events: GameEvent[] = [];
   const requests: ActionRequest[] = [];

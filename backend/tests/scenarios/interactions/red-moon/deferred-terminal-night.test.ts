@@ -1,7 +1,5 @@
 /**
- * Interaction scenarios verify Red Moon deferred last-wolf terminal nights and one-night sealing preserve literal win/expiry policy.
- * Input: Original ends-game/forbidden and win/expiry matrix, fixed role plans and three actual blast/resume cycles.
- * Output and oracle: Explicit winners, expiry, request timing and sealed-night counts cover executed phases; no production World generates expected terminal state.
+ * 交互场景测试：验证赤月最后狼人延迟终局与单夜封印的胜负／到期政策。输入为原允许终局／禁止矩阵、固定角色计划及三次实际自爆／恢复周期；胜者、到期、请求时点和封印夜次数为明确预期，不调用生产 World 生成终局预期。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -71,7 +69,7 @@ for (const wins of [false, true])
           ),
         ).toBe(true);
         expect(
-          getRedMoonState(g.world.getComponent<RoleComponent>(4, COMPONENT.Role))!.expirySettled,
+          getRedMoonState(g.world.getComponent(4, COMPONENT.Role))!.expirySettled,
         ).toBe(!wins);
       },
     );

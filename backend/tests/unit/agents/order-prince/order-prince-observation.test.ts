@@ -24,7 +24,7 @@ for (const locale of ["zh-CN", "en"] as const)
     const actor = f.world
       .entityIds()
       .find(
-        (id) => f.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.OrderPrince,
+        (id) => f.world.getComponent(id, COMPONENT.Role)?.role === Role.OrderPrince,
       )!;
     const other = f.world.entityIds().find((id) => id !== actor)!;
     const seen: PlayerObservation[] = [];
@@ -60,7 +60,7 @@ for (const locale of ["zh-CN", "en"] as const)
     commitOrderPrinceChoice(f.world, actor, 1, false);
     await provider.getAction(request(actor));
     const current = getOrderPrinceState(
-      f.world.getComponent<RoleComponent>(actor, COMPONENT.Role),
+      f.world.getComponent(actor, COMPONENT.Role),
     )!;
     expect(seen[0]!.ownState.orderPrince?.history).toEqual([]);
     expect(seen[1]!.ownState.orderPrince?.history).toEqual([{ day: 1, activate: false }]);
@@ -76,7 +76,7 @@ test("Order Prince private receipt requires an exact owner audience", () => {
   const actor = f.world
     .entityIds()
     .find(
-      (id) => f.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.OrderPrince,
+      (id) => f.world.getComponent(id, COMPONENT.Role)?.role === Role.OrderPrince,
     )!;
   const other = f.world.entityIds().find((id) => id !== actor)!;
   const registry = new AgentEventVisibilityRegistry();

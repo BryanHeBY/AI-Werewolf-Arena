@@ -46,11 +46,11 @@ const fixture = (locale: "zh-CN" | "en", winCondition = WinCondition.SlaughterCi
   );
 
 const dead = (world: ReturnType<typeof fixture>["world"], id: number) => {
-  world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive = false;
+  world.getComponent(id, COMPONENT.Alive)!.alive = false;
 };
 
 const gun = (world: ReturnType<typeof fixture>["world"]) =>
-  getHunterState(world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!;
+  getHunterState(world.getComponent(7, COMPONENT.Role)!)!;
 
 type UnboundSelection = { kind: "shot"; targetId: number } | { kind: "pass" } | { kind: "invalid" };
 
@@ -348,10 +348,10 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(
       events.filter((event) => event.type === "hunter_shot").map((event) => event.payload),
     ).toEqual([{ hunterId: 2, targetId: 3 }]);
-    expect(game.world.getComponent<{ alive: boolean }>(3, COMPONENT.Alive)!.alive).toBe(false);
+    expect(game.world.getComponent(3, COMPONENT.Alive)!.alive).toBe(false);
     for (const id of [2, 3])
       expect(
-        getHunterState(game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!)!.canShoot,
+        getHunterState(game.world.getComponent(id, COMPONENT.Role)!)!.canShoot,
       ).toBe(false);
   });
 
@@ -361,7 +361,7 @@ for (const locale of ["zh-CN", "en"] as const)
       const { world } = fixture(locale),
         events: GameEvent[] = [];
       dead(world, 7);
-      const originalRole = world.getComponent<RoleComponent>(7, COMPONENT.Role)!,
+      const originalRole = world.getComponent(7, COMPONENT.Role)!,
         originalGun = gun(world);
       const result = await runHunterHook(
         world,
@@ -373,13 +373,13 @@ for (const locale of ["zh-CN", "en"] as const)
           if (revoke === "role") originalRole.role = Role.Villager;
           if (revoke === "component") world.addComponent(7, COMPONENT.Role, { ...originalRole });
           if (revoke === "alive")
-            world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!.alive = true;
+            world.getComponent(7, COMPONENT.Alive)!.alive = true;
           return { kind: "shot", targetId: 1 };
         },
         events,
       );
       expect(result).toEqual({ extraDeaths: [], extraDeathSources: {} });
-      expect(world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive).toBe(true);
+      expect(world.getComponent(1, COMPONENT.Alive)!.alive).toBe(true);
       expect(events).toEqual([]);
       if (revoke !== "resource") expect(originalGun.canShoot).toBe(true);
     }

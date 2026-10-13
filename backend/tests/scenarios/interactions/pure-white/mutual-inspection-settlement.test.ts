@@ -1,7 +1,5 @@
 /**
- * Interaction scenarios verify actual Pure White/Wolf Witch nights preserve inspection priority, mutual death and terminal Hunter timing.
- * Input: Original locale/elimination-priority matrices, controlled paired actions and awaited reentry or failed-night replies.
- * Output and oracle: Literal private results, complete-night/death announcement order and permanent reentry rejection retain actual phase execution; no action or expectation is regenerated.
+ * 交互场景测试：验证纯白／狼巫真实夜晚的查验优先级、互相死亡及终局猎人时点。输入为原语言／清边政策矩阵、配对行动及受控重入／失败回复；私有结果、整夜／公告次序及永久拒绝重入为字面预期，不重新生成行动或结果。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -29,7 +27,7 @@ function fixture(
   const id = (role: Role) =>
     game.world
       .entityIds()
-      .find((id) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === role)!;
+      .find((id) => game.world.getComponent(id, COMPONENT.Role)?.role === role)!;
   return { ...game, id, pure: id(Role.PureWhiteGirl), wolf: id(Role.WolfWitch) };
 }
 function provider(
@@ -91,9 +89,9 @@ for (const locale of ["zh-CN", "en"] as const) {
       const f = fixture(locale, priority);
       await f.phaseManager.runSingleCycle(provider(f), 10);
       for (const id of f.world.entityIds()) {
-        const role = f.world.getComponent<RoleComponent>(id, COMPONENT.Role)!.role;
+        const role = f.world.getComponent(id, COMPONENT.Role)!.role;
         if ([Role.Wolf, Role.Witch, Role.Hunter, Role.Guard].includes(role))
-          f.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
+          f.world.getComponent(id, COMPONENT.Alive)!.alive = false;
       }
       const seen: ActionRequest[] = [];
       await f.phaseManager.runSingleCycle(provider(f, {}, seen), 10);
@@ -126,9 +124,9 @@ for (const locale of ["zh-CN", "en"] as const) {
     expect(nightDeaths(f)).toEqual([f.pure]);
     for (const id of [f.pure, f.wolf])
       expect(
-        getRoleInspectionState(f.world.getComponent<RoleComponent>(id, COMPONENT.Role)!)?.history,
+        getRoleInspectionState(f.world.getComponent(id, COMPONENT.Role)!)?.history,
       ).toHaveLength(1);
-    expect(f.world.getComponent<AliveComponent>(f.wolf, COMPONENT.Alive)?.alive).toBe(true);
+    expect(f.world.getComponent(f.wolf, COMPONENT.Alive)?.alive).toBe(true);
     expect(
       seen
         .filter((r) => r.context.stage === "sheriff_nomination")
@@ -139,8 +137,8 @@ for (const locale of ["zh-CN", "en"] as const) {
     const f = fixture(locale);
     await f.phaseManager.runSingleCycle(provider(f), 10);
     for (const id of f.world.entityIds())
-      if (f.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Wolf)
-        f.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
+      if (f.world.getComponent(id, COMPONENT.Role)?.role === Role.Wolf)
+        f.world.getComponent(id, COMPONENT.Alive)!.alive = false;
     const hunter = f.id(Role.Hunter),
       victim = f.id(Role.Villager),
       seen: ActionRequest[] = [];
@@ -153,7 +151,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     );
     expect(f.phaseManager.getSnapshot().result?.winner).toBe(Camp.Good);
     expect(seen.some((r) => r.allowedTools.includes("shoot") && r.actorId === hunter)).toBe(true);
-    expect(f.world.getComponent<AliveComponent>(f.pure, COMPONENT.Alive)?.alive).toBe(true);
+    expect(f.world.getComponent(f.pure, COMPONENT.Alive)?.alive).toBe(true);
   });
 }
 

@@ -1,9 +1,5 @@
 /**
- * Unit tests: Player prompt injection uses inert LLM/ACP providers and explicit seat/role
- * profiles; literal captured names/directives check inheritance and overrides through both
- * shared prompt paths. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证共用 LLM／ACP 提示路径的玩家配置继承与覆盖。输入为 inert provider、明确席位／角色资料；捕获昵称和指令采用原字面预期，不调用模型。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -71,8 +67,8 @@ for (const kind of ["llm", "acp"] as const) {
       ),
     });
     // Seat-to-role fixtures exercise selection after assignment, independently of shuffle.
-    world.getComponent<RoleComponent>(4, COMPONENT.Role)!.role = Role.Wolf;
-    world.getComponent<RoleComponent>(5, COMPONENT.Role)!.role = Role.Villager;
+    world.getComponent(4, COMPONENT.Role)!.role = Role.Wolf;
+    world.getComponent(5, COMPONENT.Role)!.role = Role.Villager;
     const profiles = new Map(
       world
         .entityIds()
@@ -81,7 +77,7 @@ for (const kind of ["llm", "acp"] as const) {
           resolvePlayerProfile(
             setup,
             id,
-            world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role,
+            world.getComponent(id, COMPONENT.Role)?.role,
           ),
         ]),
     );

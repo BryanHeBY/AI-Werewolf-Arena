@@ -1,7 +1,5 @@
 /**
- * Unit tests verify bilingual rule explanations, gateway rejection codes and generic failure callbacks preserve original resources.
- * Input: Literal malformed calls, fresh in-memory worlds/registries, error dictionaries and the original refusal matrix.
- * Output and oracle: Exact messages, unchanged state and injected-error behavior remain literal; one explicit test-owned mutable Guard view seeds the same original slot while production reads stay readonly.
+ * 单元测试：验证双语规则解释、Gateway 拒绝码及一般失败回调保留原资源。输入为字面非法调用、局部 World／注册表、错误词典和原拒绝矩阵；消息、状态与注入错误行为为精确预期。测试持有的可写守卫视图仅给原槽放入同一样本，生产读取仍只读。
  */
 import { expect, test } from "bun:test";
 import { RuleError, type Locale } from "@ai-werewolf-arena/game-catalog";
@@ -114,7 +112,7 @@ test("gateway refusals have language-neutral codes and never change private reso
       tool: { name: "speak", args: { text: "original" } },
       code: "actor_dead",
       prepare: (game) => {
-        game.world.getComponent<AliveComponent>(9, COMPONENT.Alive)!.alive = false;
+        game.world.getComponent(9, COMPONENT.Alive)!.alive = false;
       },
     },
     {
@@ -128,7 +126,7 @@ test("gateway refusals have language-neutral codes and never change private reso
       code: "heal_unavailable",
       prepare: (game) => {
         (
-          getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)! as {
+          getWitchState(game.world.getComponent(6, COMPONENT.Role)!)! as {
             heal: number;
           }
         ).heal = 0;
@@ -140,7 +138,7 @@ test("gateway refusals have language-neutral codes and never change private reso
       code: "two_potions",
       prepare: (game) => {
         (
-          getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)! as {
+          getWitchState(game.world.getComponent(6, COMPONENT.Role)!)! as {
             healUsedThisNight: boolean;
           }
         ).healUsedThisNight = true;
@@ -158,7 +156,7 @@ test("gateway refusals have language-neutral codes and never change private reso
       code: "shoot_unavailable",
       prepare: (game) => {
         (
-          getHunterState(game.world.getComponent<RoleComponent>(7, COMPONENT.Role)!)! as {
+          getHunterState(game.world.getComponent(7, COMPONENT.Role)!)! as {
             canShoot: boolean;
           }
         ).canShoot = false;
@@ -169,7 +167,7 @@ test("gateway refusals have language-neutral codes and never change private reso
       tool: { name: "vote", args: { target_id: 1, abstain: false } },
       code: "vote_right",
       prepare: (game) => {
-        game.world.getComponent<VotingRightComponent>(8, COMPONENT.VotingRight)!.canVote = false;
+        game.world.getComponent(8, COMPONENT.VotingRight)!.canVote = false;
       },
     },
     {
@@ -197,12 +195,12 @@ test("gateway refusals have language-neutral codes and never change private reso
     game.world.entityIds().map((id) => ({
       id,
       state: structuredClone(
-        game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!.privateState,
+        game.world.getComponent(id, COMPONENT.Role)!.privateState,
       ),
-      alive: game.world.getComponent<AliveComponent>(id, COMPONENT.Alive)?.alive,
+      alive: game.world.getComponent(id, COMPONENT.Alive)?.alive,
       vote: {
-        canVote: game.world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight)?.canVote,
-        weight: game.world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight)?.weight,
+        canVote: game.world.getComponent(id, COMPONENT.VotingRight)?.canVote,
+        weight: game.world.getComponent(id, COMPONENT.VotingRight)?.weight,
       },
     }));
   for (const item of cases)
@@ -229,7 +227,7 @@ test("gateway refusals have language-neutral codes and never change private reso
       fixedRoles: [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager],
     });
     (
-      getGuardState(game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)! as {
+      getGuardState(game.world.getComponent(5, COMPONENT.Role)!)! as {
         lastTarget: number | null;
       }
     ).lastTarget = 2;
@@ -241,7 +239,7 @@ test("gateway refusals have language-neutral codes and never change private reso
     );
     expect(rejected.error).toBe("guard_repeat");
     expect(
-      getGuardState(game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget,
+      getGuardState(game.world.getComponent(5, COMPONENT.Role)!)!.lastTarget,
     ).toBe(2);
   }
 });

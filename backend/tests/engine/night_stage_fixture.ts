@@ -45,7 +45,7 @@ export function nightStageContext(
     pickMajorityTarget: unused,
     shuffleWolves: unused,
     ensureMarks: (id) => {
-      let marks = input.world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks);
+      let marks = input.world.getComponent(id, COMPONENT.StatusMarks);
       if (!marks) {
         marks = new StatusMarksComponent();
         input.world.addComponent(id, COMPONENT.StatusMarks, marks);

@@ -76,7 +76,7 @@ for (const [stage, id, revive] of [
         async getAction(q) {
           if (q.context.stage === stage && !changed) {
             changed = true;
-            const life = g.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+            const life = g.world.getComponent(id, COMPONENT.Alive)!;
             if (revive) {
               life.alive = false;
               life.alive = true;
@@ -91,7 +91,7 @@ for (const [stage, id, revive] of [
     expect(has(g, "night_resolved")).toHaveLength(0);
     expect(
       (
-        g.world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState as {
+        g.world.getComponent(1, COMPONENT.Role)!.privateState as {
           readonly alchemist?: unknown;
         }
       ).alchemist,
@@ -349,7 +349,7 @@ test("real Raven badge-await failure preserves spent healing stock and aborted p
   expect(g.world.getAliveEntityIds()).not.toContain(6);
   expect(
     (
-      g.world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState as {
+      g.world.getComponent(1, COMPONENT.Role)!.privateState as {
         readonly alchemist?: unknown;
       }
     ).alchemist,
@@ -404,7 +404,7 @@ for (const stale of ["target", "voter"] as const)
           if (q.context.stage === "wolf_vote") {
             votes++;
             if (votes === 2)
-              g.world.getComponent<AliveComponent>(
+              g.world.getComponent(
                 stale === "target" ? 5 : 10,
                 COMPONENT.Alive,
               )!.alive = false;
@@ -463,7 +463,7 @@ for (const stage of ["alchemist_mist", "wolf_discussion", "wolf_vote", "alchemis
     expect(has(g, "game_over")).toHaveLength(0);
     expect(
       (
-        g.world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState as {
+        g.world.getComponent(1, COMPONENT.Role)!.privateState as {
           readonly alchemist?: unknown;
         }
       ).alchemist,

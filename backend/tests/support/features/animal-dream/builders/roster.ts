@@ -108,7 +108,7 @@ export function animalRosterFixture(
   return {
     world,
     config,
-    role: (id: number) => world.getComponent<RoleComponent>(id, COMPONENT.Role)!,
-    life: (id: number) => world.getComponent<AliveComponent>(id, COMPONENT.Alive)!,
+    role: (id: number) => world.getComponent(id, COMPONENT.Role)!,
+    life: (id: number) => world.getComponent(id, COMPONENT.Alive)!,
   };
 }

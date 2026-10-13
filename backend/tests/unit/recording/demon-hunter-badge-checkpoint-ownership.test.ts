@@ -1,5 +1,5 @@
 /**
- * Unit test checks committed badge transfer/destruction in the original Demon checkpoint metadata owner. Inputs are an in-memory roster, trusted badge commands and a fake badge refund; literal original checkpoint fields and revocation errors are the oracle. No complete phase, persistence, network or model runs.
+ * 单元测试：验证猎魔人 checkpoint 元数据 owner 记录已提交警徽转移／销毁。输入为原警徽状态和录制边界；独立字面断言检查提交后的元数据，不把 checkpoint 当作规则决策器。
  */
 import { expect, test } from "bun:test";
 import { COMPONENT } from "../../../src/core";
@@ -28,7 +28,7 @@ test("actual badge transfer and destruction survive subsequent failure; mutable 
     badge: { isSheriff: false, destroyed: true },
     vote: { weight: 1 },
   });
-  const badge = f.world.getComponent<import("../../../src/core").BadgeComponent>(
+  const badge = f.world.getComponent(
     5,
     COMPONENT.Badge,
   )!;

@@ -1,10 +1,5 @@
 /**
- * Unit tests: Red Moon seals use in-memory native stage frames and explicit next nights;
- * literal request counts, stock preservation and eligibility assertions check
- * sealed/unsealed transitions. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
- * The controlled context binds its query at the original World read position.
+ * 单元测试：验证赤月封印在封印／未封印夜之间的转换。输入为原内存阶段 frame 与明确下一夜；请求次数、库存保留和资格为字面预期，查询仍在原 World 读取点绑定。
  */
 import { bindNativeNightFailurePolicy } from "../../../src/rulesets/native-night-failure-policy";
 import { bindNativeNightTargetPolicy } from "../../../src/rulesets/native-night-target-policy";
@@ -38,14 +33,14 @@ function sealedWorld() {
   freezeDemonHunt(fixture.world);
   closeDemonHunterNight(fixture.world);
   expect(commitDemonRedMoonTransition(fixture.world, 4, "blast", 1)).toBe(true);
-  fixture.world.getComponent<AliveComponent>(4, COMPONENT.Alive)!.alive = false;
+  fixture.world.getComponent(4, COMPONENT.Alive)!.alive = false;
   beginDemonHunterNight(fixture.world, 2, () => true);
   return fixture;
 }
 test("Red Moon sealed night runs all good native stages without requests or inventory changes", async () => {
   const { world, catalog } = sealedWorld();
   const before = [9, 10, 11, 12].map((id) =>
-    JSON.stringify(world.getComponent<RoleComponent>(id, COMPONENT.Role)!.privateState),
+    JSON.stringify(world.getComponent(id, COMPONENT.Role)!.privateState),
   );
   let requests = 0;
   const unexpected = (): never => {
@@ -99,7 +94,7 @@ test("Red Moon sealed night runs all good native stages without requests or inve
   expect(ctx.state.poisonClaims).toBeUndefined();
   expect(
     [9, 10, 11, 12].map((id) =>
-      JSON.stringify(world.getComponent<RoleComponent>(id, COMPONENT.Role)!.privateState),
+      JSON.stringify(world.getComponent(id, COMPONENT.Role)!.privateState),
     ),
   ).toEqual(before);
   expect(freezeDemonHunt(world)).toEqual({ choice: null, damage: null, cancelled: null });
@@ -112,7 +107,7 @@ test("Sealed native frames reject direct opening and restore eligibility next ni
   expect(demonNativeNightActor(world, "seer_check")).toBeNull();
   expect(openDemonWitchTurnFrame(world)).toBeNull();
   expect(() => openDemonHunterTurn(world)).toThrow("demon_hunter_turn_unavailable");
-  const seer = world.getComponent<RoleComponent>(9, COMPONENT.Role)!;
+  const seer = world.getComponent(9, COMPONENT.Role)!;
   const ability = (
     (seer.privateState as { readonly abilities?: unknown }).abilities as Record<string, object>
   )["native:seer_check"]!;
@@ -141,8 +136,8 @@ for (const mutation of ["replace", "in_place"] as const)
   test(`Red Moon seal retains original identity binding after ${mutation}`, () => {
     const { world } = redMoonCandidateWorld();
     expect(demonRedMoonNightSealed(world, 2)).toBe(false);
-    const red = world.getComponent<RoleComponent>(4, COMPONENT.Role)!;
-    const wolf = world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+    const red = world.getComponent(4, COMPONENT.Role)!;
+    const wolf = world.getComponent(1, COMPONENT.Role)!;
     if (mutation === "replace") world.addComponent(4, COMPONENT.Role, { ...red, role: wolf.role });
     else red.role = wolf.role;
     expect(() => demonRedMoonNightSealed(world, 2)).toThrow("red_moon_original_state_revoked");

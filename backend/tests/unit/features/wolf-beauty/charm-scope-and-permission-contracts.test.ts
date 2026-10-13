@@ -41,7 +41,7 @@ const board = (roles = deck): BoardConfig => ({
 });
 
 const role = (game: ReturnType<typeof bootstrapGame>, id: number) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  game.world.getComponent(id, COMPONENT.Role)!;
 
 test("compound Duel/Dream suppress charm despite poison, while standalone exile/poison are its only trigger causes", () => {
   expect(permitsCharm([DeathCause.Exile])).toBe(true);
@@ -88,12 +88,12 @@ for (const mutation of ["phase", "actor_life", "target_life", "state"] as const)
         async getAction() {
           if (mutation === "phase") current = false;
           if (mutation === "actor_life") {
-            const life = game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!;
+            const life = game.world.getComponent(1, COMPONENT.Alive)!;
             life.alive = false;
             life.alive = true;
           }
           if (mutation === "target_life") {
-            const life = game.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!;
+            const life = game.world.getComponent(5, COMPONENT.Alive)!;
             life.alive = false;
             life.alive = true;
           }
@@ -119,7 +119,7 @@ test("a restored or replaced target life cannot inherit a previous charm", () =>
   (state as { targetId: number | null }).targetId = 5;
   bindCharm(game.world, 1, 5);
   expect(activeCharm(game.world, 1)).not.toBeNull();
-  const life = game.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!;
+  const life = game.world.getComponent(5, COMPONENT.Alive)!;
   life.alive = false;
   life.alive = true;
   expect(activeCharm(game.world, 1)).toBeNull();

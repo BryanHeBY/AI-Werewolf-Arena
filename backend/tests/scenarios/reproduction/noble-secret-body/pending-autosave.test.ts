@@ -1,7 +1,5 @@
 /**
- * Reproduction scenarios verify pending Noble and Secret Body requests autosave the original unresolved recording prefix.
- * Input: Actual night cycles, held provider completion and temporary live/finalized stores across the original target-stage matrix.
- * Output and oracle: Literal pending outcome, authorized owner feed and exact finalized replay distinguish provider return from domain settlement; stored fixture archives are not rewritten.
+ * 复现场景测试：验证 pending 贵族／不死之身请求自动保存未结算录制前缀。输入为原夜周期、held provider 与临时 live／finalized store 的阶段矩阵；pending 结果、授权 feed 及精确复盘为字面预期，区分 provider 返回和领域结算，不重写归档。
  */
 import { expect, test } from "bun:test";
 import { readFile, writeFile, rm } from "node:fs/promises";
@@ -119,7 +117,7 @@ for (const target of ["secret_body", "night_noble", "awakened_idiot_reveal_speec
                         payload: { policy: "awa_noble_secret_body_v1", actorId: 5, day: 1 },
                       });
                       expect(
-                        g.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!.alive,
+                        g.world.getComponent(5, COMPONENT.Alive)!.alive,
                       ).toBe(true);
                     }
                     await writeFile(root + "/pending-direct.json", JSON.stringify(prefix, null, 2));
@@ -186,9 +184,9 @@ for (const target of ["secret_body", "night_noble", "awakened_idiot_reveal_speec
         finishReason: "runtime_timeout",
         players: g.world.entityIds().map((id) => ({
           player_id: id,
-          role: g.world.getComponent<any>(id, COMPONENT.Role)!.role,
-          camp: g.world.getComponent<any>(id, COMPONENT.Camp)!.camp,
-          alive: g.world.getComponent<any>(id, COMPONENT.Alive)!.alive,
+          role: g.world.getComponent(id, COMPONENT.Role)!.role,
+          camp: g.world.getComponent(id, COMPONENT.Camp)!.camp,
+          alive: g.world.getComponent(id, COMPONENT.Alive)!.alive,
         })),
       });
     });

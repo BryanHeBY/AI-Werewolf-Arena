@@ -60,8 +60,8 @@ function request(
 const state = (world: ReturnType<typeof game>["world"]) =>
   world.entityIds().map((id) => ({
     id,
-    alive: world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive,
-    private: structuredClone(world.getComponent<RoleComponent>(id, COMPONENT.Role)!.privateState),
+    alive: world.getComponent(id, COMPONENT.Alive)!.alive,
+    private: structuredClone(world.getComponent(id, COMPONENT.Role)!.privateState),
   }));
 
 test("all action schemas reject missing/extra arguments and ambiguous types before repair; numeric seat strings remain supported", () => {
@@ -130,7 +130,7 @@ for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: rules reject before sealing, leave resources intact, and accept one detached sanitized action`, async () => {
     const { world } = game(locale),
       receive = new ActionReception(world);
-    const witch = getWitchState(world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!;
+    const witch = getWitchState(world.getComponent(6, COMPONENT.Role)!)!;
     (witch as { heal: number }).heal = 0;
     const before = state(world);
     const turn = new ActionTurn(receive, request(6, ["use_potion"], "witch"), "t1");
@@ -208,7 +208,7 @@ test("dead actions require trusted engine authorization; role, target, candidate
     receive.validate(vote, "vote_for_sheriff", { target_id: 2, abstain: false }),
   ).toMatchObject({ ok: false, error: "sheriff_vote_target" });
   vote.context.sheriff_candidates = [1, 2, 10];
-  world.getComponent<AliveComponent>(10, COMPONENT.Alive)!.alive = false;
+  world.getComponent(10, COMPONENT.Alive)!.alive = false;
   const voting = new ActionTurn(receive, vote, "t1");
   expect(voting.submit("t1", "vote_for_sheriff", { target_id: 3, abstain: false })).toMatchObject({
     ok: false,
@@ -225,7 +225,7 @@ test("dead actions require trusted engine authorization; role, target, candidate
     applied: false,
     action: "vote_for_sheriff",
   });
-  world.getComponent<AliveComponent>(7, COMPONENT.Alive)!.alive = false;
+  world.getComponent(7, COMPONENT.Alive)!.alive = false;
   const gun = request(7, ["shoot"], "hunter_shot");
   expect(receive.validate(gun, "shoot", { target_id: 1 })).toMatchObject({
     ok: false,
@@ -238,9 +238,9 @@ test("dead actions require trusted engine authorization; role, target, candidate
   });
   const shotPermit = world.openDeathAction(7, "shoot", Phase.Day, 1);
   gun.context.death_action_id = shotPermit.id;
-  const before = getHunterState(world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!.canShoot;
+  const before = getHunterState(world.getComponent(7, COMPONENT.Role)!)!.canShoot;
   expect(receive.validate(gun, "shoot", { target_id: 1 }).ok).toBe(true);
-  expect(getHunterState(world.getComponent<RoleComponent>(7, COMPONENT.Role)!)!.canShoot).toBe(
+  expect(getHunterState(world.getComponent(7, COMPONENT.Role)!)!.canShoot).toBe(
     before,
   );
   shotPermit.close();
@@ -278,7 +278,7 @@ test("dead actions require trusted engine authorization; role, target, candidate
     fixedRoles: [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager],
   });
   (
-    getGuardState(guarded.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)! as {
+    getGuardState(guarded.world.getComponent(5, COMPONENT.Role)!)! as {
       lastTarget: number | null;
     }
   ).lastTarget = 2;
@@ -291,7 +291,7 @@ test("dead actions require trusted engine authorization; role, target, candidate
   // The final engine guard still sees changes since preflight.
   const action = receive.validate(request(9, ["vote"]), "vote", { target_id: 1, abstain: false });
   expect(action.ok).toBe(true);
-  world.getComponent<AliveComponent>(1, COMPONENT.Alive)!.alive = false;
+  world.getComponent(1, COMPONENT.Alive)!.alive = false;
   if (action.ok)
     expect(
       new ToolGateway().validateAndSanitize(world, 9, action.action, { phase: Phase.Voting }).error,

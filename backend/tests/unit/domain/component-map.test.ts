@@ -1,5 +1,5 @@
 /**
- * 单元测试：验证 World 类型槽与原引用／生命所有权。输入为十一种组件名、原对象和死亡许可修订，字面顺序、对象身份及版本为预期；编译正反例检查默认槽推断与暂存 legacy 特权，不更改角色规则、传输或序列化句柄。
+ * 单元测试：验证 World 类型槽与原引用／生命所有权。输入为十一种组件名、原对象和死亡许可修订，字面顺序、对象身份及版本为预期；编译正反例检查统一槽推断与旧任意泛型拒绝，不更改角色规则、传输或序列化句柄。
  */
 import { createAliveComponent, createCampComponent } from "../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
@@ -16,35 +16,36 @@ function compilerExamples(world: World, actorId: number) {
   const inferred: AliveComponent | undefined = world.getComponent(actorId, COMPONENT.Alive);
   if (inferred) {
     const aliveFlag: boolean = inferred.alive;
-    // @ts-expect-error Alive's default mapped subtype has no role-private state.
+    // @ts-expect-error Alive 槽不携带角色私有容器。
     inferred.privateState;
     void aliveFlag;
   }
-  // @ts-expect-error Wrong default slot cannot infer a legacy T from the value.
+  // @ts-expect-error 错误槽不能从值反向推断出任意组件类型。
   world.addComponent(actorId, COMPONENT.Alive, camp);
-  // @ts-expect-error Camp does not satisfy Role's component shape.
+  // @ts-expect-error Camp 不能满足 Role 的完整组件结构。
   world.addComponent(actorId, COMPONENT.Role, camp);
-  // @ts-expect-error Role's exclusive fields cannot occupy Camp's slot.
+  // @ts-expect-error Role 的独有字段不能装入 Camp 槽。
   world.addComponent(actorId, COMPONENT.Camp, role);
-  // @ts-expect-error Missing original required fields cannot use a default legacy fallback.
+  // @ts-expect-error 缺少必需字段不能退回任意类型重载。
   world.addComponent(actorId, COMPONENT.Role, { role: Role.Wolf, camp: Camp.Wolf });
-  // @ts-expect-error A contextual return type cannot infer the legacy getter T.
+  // @ts-expect-error 接收变量的类型不能把 Alive 槽改成 Camp。
   const wrong: CampComponent | undefined = world.getComponent(actorId, COMPONENT.Alive);
   const unionName: typeof COMPONENT.Role | typeof COMPONENT.Camp =
     actorId > 1 ? COMPONENT.Role : COMPONENT.Camp;
-  // @ts-expect-error Value inference cannot widen a named union to the Alive slot.
+  // @ts-expect-error 值推断不能把具名槽联合扩成 Alive 槽。
   world.addComponent(actorId, unionName, alive);
-  // @ts-expect-error Actor IDs remain numbers; arbitrary actor arguments cannot enter a slot.
+  // @ts-expect-error 实体 ID 仍是数字，任意实体参数不能进入槽。
   world.addComponent("actor", COMPONENT.Alive, alive);
-  // @ts-expect-error Unknown source arguments do not become an entity ID.
+  // @ts-expect-error 未知来源对象不能成为实体 ID。
   world.getComponent({ actorId }, COMPONENT.Role);
-  // @ts-expect-error A machine slot name remains a closed eleven-name set.
+  // @ts-expect-error 机器槽名仍是闭合的十一种名称。
   world.getComponent(actorId, "ForeignComponent");
-  // C44 must remove these explicit unchecked type-argument overloads after callers migrate.
+  // @ts-expect-error 旧调用方任意 RoleComponent 泛型不再能覆盖 Camp 槽。
   const legacy: RoleComponent | undefined = world.getComponent<RoleComponent>(
     actorId,
     COMPONENT.Camp,
   );
+  // @ts-expect-error 旧单一任意组件泛型不能绕过具名槽写入约束。
   world.addComponent<RoleComponent>(actorId, COMPONENT.Camp, role);
   type SameKeys = keyof ComponentMap extends ComponentName
     ? ComponentName extends keyof ComponentMap
@@ -115,7 +116,7 @@ test("typed Alive reads retain original factory life revisions and death-permiss
 });
 
 test("typed signatures leave original invalid-locale and missing-entity errors intact", () => {
-  // Runtime invalid input is deliberate here; factories keep their original checks.
+  // 此处非法运行输入是原测试样本，工厂仍保留原校验。
   expect(() => new World("unsupported" as "en")).toThrow("game_locale_invalid");
   const world = new World();
   expect(() => world.addComponent(99, COMPONENT.Alive, createAliveComponent())).toThrow(

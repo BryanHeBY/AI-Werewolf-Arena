@@ -81,7 +81,7 @@ function fixture(locale: "zh-CN" | "en" = "en", choice = true, idiot = false) {
 test("revealed Idiot destroys directly under holder choice without a dead permit", () => {
   const f = fixture("en", true, true);
   expect(f.registry.onVotedOut(f.world, 2, f.events).prevented).toBe(true);
-  expect(f.world.getComponent<AliveComponent>(2, COMPONENT.Alive)?.alive).toBe(true);
+  expect(f.world.getComponent(2, COMPONENT.Alive)?.alive).toBe(true);
   expect(f.events.filter((e) => e.type === "sheriff_badge_destroyed")).toHaveLength(1);
   expect(f.events.some((e) => e.type === "sheriff_badge_transferred")).toBe(false);
   expect(f.world.activeDeathActionCount).toBe(0);
@@ -89,7 +89,7 @@ test("revealed Idiot destroys directly under holder choice without a dead permit
 
 test("badge preflight metadata alone grants nothing; malformed, stage/day/phase and generation changes reject", () => {
   const f = fixture();
-  f.world.getComponent<AliveComponent>(2, COMPONENT.Alive)!.alive = false;
+  f.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   const make = (id?: number) =>
     new GameActionRequestFactory(f.world, f.events, 2).create({
       phase: Phase.Voting,

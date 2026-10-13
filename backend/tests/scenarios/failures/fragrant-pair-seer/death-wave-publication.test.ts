@@ -1,7 +1,5 @@
 /**
- * Failure scenarios verify Fragrant Pair Seer death waves retain paid deaths when required publication fails.
- * Input: Original initial/gun wave actions and a required-logic recorder that throws the supplied failure.
- * Output and oracle: Literal death, binding-trigger and once-only checks preserve the original error and unpublished prefix; recording failure is not treated as an unpaid wave.
+ * 故障场景测试：验证寻香死亡波在必需发布失败后保留已付死亡。输入为原初始／枪波次动作与抛出原错误的必需 recorder；死亡、关系触发及单次提交为字面预期，保留未发布前缀，不把录制失败视为未付款波次。
  */
 import { expect, test } from "bun:test";
 import { fragrantRuntimeGame as game } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
@@ -53,7 +51,7 @@ for (const path of ["initial", "gun"] as const)
     expect(
       g.world
         .entityIds()
-        .filter((id) => !g.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive),
+        .filter((id) => !g.world.getComponent(id, COMPONENT.Alive)!.alive),
     ).toEqual(path === "initial" ? [5, 6] : [1, 5, 6, 11]);
     const owned = fragrantAuthoritySnapshot(g.world);
     expect(owned.fragrant.trigger).toEqual({

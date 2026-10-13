@@ -1,7 +1,5 @@
 /**
- * Configuration filesystem integration tests verify Fragrant public policy declarations, native counts, roundtrip and setup agree.
- * Input: Original top-level public board JSON read, public game/board loaders and literal cloned policy alterations.
- * Output and oracle: Fixed role/camp/count and conflicting policy assertions remain unchanged; the actual file read is retained in this owner rather than labeled a pure unit input.
+ * 配置文件集成测试：验证寻香公开政策、原生数量、往返与装配一致。输入为原公开板子 JSON 的真实读取、游戏／板子 loader 及字面政策修改；角色、阵营、数量和冲突断言保留，不把文件 I/O 标为纯单元输入。
  */
 import path from "node:path";
 import { test, expect } from "bun:test";
@@ -43,16 +41,17 @@ test("public example load, roundtrip, game resolve and bootstrap agree", async (
   expect(setup.boardConfig).toEqual(config);
   const g = bootstrapGame(setup.boardConfig);
   expect(g.playerIds).toHaveLength(12);
+  // ID 来自完整 bootstrap 名单；非空类型说明不增加运行检查或修复缺失槽。
   for (const row of config.roleSetups)
     expect(
-      g.playerIds.filter((i) => g.world.getComponent<any>(i, COMPONENT.Role).role === row.role),
+      g.playerIds.filter((i) => g.world.getComponent(i, COMPONENT.Role)!.role === row.role),
     ).toHaveLength(row.count);
   for (const i of g.playerIds) {
-    const role = g.world.getComponent<any>(i, COMPONENT.Role);
+    const role = g.world.getComponent(i, COMPONENT.Role)!;
     expect(role.camp).toBe(
       [Role.Wolf, Role.FragrantPhantom].includes(role.role) ? Camp.Wolf : Camp.Good,
     );
-    expect(g.world.getComponent<any>(i, COMPONENT.Camp).camp).toBe(role.camp);
+    expect(g.world.getComponent(i, COMPONENT.Camp)!.camp).toBe(role.camp);
   }
 });
 

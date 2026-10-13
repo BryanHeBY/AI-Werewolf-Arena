@@ -1,10 +1,5 @@
 /**
- * Owns the controlled Red Moon game driver that derives a later transport plan.
- * Inputs are the original mode, last-wolf policy and fixed scenario configuration;
- * outputs are captured production action turns, winner and surviving actor IDs.
- * This test driver actually advances PhaseManager to game over and keeps the
- * original terminal guard and deterministic callbacks. Its generated results
- * are production observations, not an independent rules oracle; no model runs.
+ * 测试 driver：负责执行原受控赤月对局并推导后续传输计划。输入为固定角色和明确回复；输出为实际已执行前缀及传输输入，期望保留在外部字面 oracle，不调用模型。
  */
 import { bootstrapGame } from "../../../../../src/app/bootstrap";
 import { Camp } from "../../../../../src/core";
@@ -38,7 +33,7 @@ export async function redMoonScenario(
   const seed = "red-moon-transport:" + mode + ":" + policy;
   const game = bootstrapGame(config, { random: createRandom(seed) });
   const roles = game.playerIds.map(
-    (id) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!.role,
+    (id) => game.world.getComponent(id, COMPONENT.Role)!.role,
   );
   const id = (r: Role) => roles.indexOf(r) + 1;
   const red = id(Role.RedMoonApostle),

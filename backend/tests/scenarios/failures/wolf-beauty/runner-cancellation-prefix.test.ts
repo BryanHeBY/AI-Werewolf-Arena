@@ -1,7 +1,5 @@
 /**
- * Failure scenarios verify runner cancellation preserves a paid Wolf Beauty charm when recording fails during a held response.
- * Input: Original factory/recording injections and late or null Charm results on the real runner.
- * Output and oracle: Literal paid-relation snapshots, absent consuming skip and partial-replay equality are asserted; cancellation is not converted into a consuming role action.
+ * 故障场景测试：验证 held 回复期间录制失败，runner 取消仍保留已付款狼美人魅惑。输入为原工厂／录制注入及晚到或 null 回复；关系、没有消费式跳过及部分复盘相等为字面预期，不把取消改成花资源行动。
  */
 import { PotionType } from "../../../../src/core/domain/identity";
 import { expect, spyOn, test } from "bun:test";
@@ -145,10 +143,10 @@ for (const late of [null, { name: "charm", args: { target_id: null } }] as const
       const actor = world
         .entityIds()
         .find(
-          (id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.WolfBeauty,
+          (id) => world.getComponent(id, COMPONENT.Role)?.role === Role.WolfBeauty,
         )!;
       expect(
-        getWolfBeautyState(world.getComponent<RoleComponent>(actor, COMPONENT.Role)!),
+        getWolfBeautyState(world.getComponent(actor, COMPONENT.Role)!),
       ).toMatchObject({
         lastActedDay: 1,
         history: [{ day: 1, targetId: world.entityIds().find((id) => id !== actor)! }],
@@ -168,7 +166,7 @@ for (const late of [null, { name: "charm", args: { target_id: null } }] as const
       expect(
         tape.checkpoints.at(-1)!.players.find((player) => player.id === actor)!.privateState
           .wolf_beauty,
-      ).toEqual(getWolfBeautyState(world.getComponent<RoleComponent>(actor, COMPONENT.Role)!));
+      ).toEqual(getWolfBeautyState(world.getComponent(actor, COMPONENT.Role)!));
       expect(
         (await replayReproduction(tape, await createTestTempDirectory("awa-charm-cancel-replay-")))
           .snapshot,

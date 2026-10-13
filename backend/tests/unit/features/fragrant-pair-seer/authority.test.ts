@@ -381,7 +381,7 @@ for (const replacement of ["casterRevival", "targetRevival", "identity", "victor
     if (replacement.endsWith("Revival")) {
       const id = replacement === "casterRevival" ? 1 : 10;
       f.kill(id);
-      f.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = true;
+      f.world.getComponent(id, COMPONENT.Alive)!.alive = true;
     } else if (replacement === "identity")
       f.world.addComponent(10, COMPONENT.Identity, createIdentityComponent(10, 10, "p10"));
     else

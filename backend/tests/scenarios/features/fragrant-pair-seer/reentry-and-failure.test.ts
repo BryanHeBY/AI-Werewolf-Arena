@@ -46,7 +46,7 @@ test("day cycle reentry rejects before mutating the outer phase or feed", async 
 for (const replace of [false, true])
   test(`aborted night retains original provider failure even after actor replacement=${replace}`, async () => {
     const g = game(),
-      original = g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!,
+      original = g.world.getComponent(1, COMPONENT.Alive)!,
       failure = Error("provider_unique_failure");
     let thrown: unknown;
     try {

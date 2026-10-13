@@ -30,7 +30,7 @@ function fixture(day: number, locale: "zh-CN" | "en") {
   const id = (role: Role) =>
     world
       .entityIds()
-      .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === role)!;
+      .find((id) => world.getComponent(id, COMPONENT.Role)?.role === role)!;
   const pure = id(Role.PureWhiteGirl),
     wolf = id(Role.WolfWitch);
   let calls = 0;
@@ -81,8 +81,8 @@ function fixture(day: number, locale: "zh-CN" | "en") {
     getAliveByRole: (role) =>
       world
         .getAliveEntityIds()
-        .filter((actor) => world.getComponent<RoleComponent>(actor, COMPONENT.Role)?.role === role),
-    ensureMarks: (actor) => world.getComponent<StatusMarksComponent>(actor, COMPONENT.StatusMarks)!,
+        .filter((actor) => world.getComponent(actor, COMPONENT.Role)?.role === role),
+    ensureMarks: (actor) => world.getComponent(actor, COMPONENT.StatusMarks)!,
     pickMajorityTarget: () => null,
     shuffleWolves: (ids) => ids,
     state: {
@@ -105,7 +105,7 @@ for (const locale of ["zh-CN", "en"] as const) {
       expect(f.calls()).toBe(2);
       expect(f.ctx.events.filter((event) => event.type === "role_inspected")).toHaveLength(2);
       expect(
-        getRoleInspectionState(f.world.getComponent<RoleComponent>(f.pure, COMPONENT.Role)!)
+        getRoleInspectionState(f.world.getComponent(f.pure, COMPONENT.Role)!)
           ?.history[0]?.result,
       ).toMatchObject({ kind: "role", role: Role.WolfWitch });
       const damage = new DamageResolutionSystem().resolve(f.world, {
@@ -118,8 +118,8 @@ for (const locale of ["zh-CN", "en"] as const) {
         expect(damage.deathSources[f.wolf]).toContain(DeathCause.PureWhiteInspection);
         expect(damage.deathSources[f.pure]).toContain(DeathCause.WolfWitchInspection);
       }
-      expect(f.world.getComponent<AliveComponent>(f.pure, COMPONENT.Alive)?.alive).toBe(true);
-      expect(f.world.getComponent<AliveComponent>(f.wolf, COMPONENT.Alive)?.alive).toBe(true);
+      expect(f.world.getComponent(f.pure, COMPONENT.Alive)?.alive).toBe(true);
+      expect(f.world.getComponent(f.wolf, COMPONENT.Alive)?.alive).toBe(true);
       await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
       await WOLF_WITCH_INSPECTION_STAGE.execute(f.ctx);
       expect(f.calls()).toBe(2);
@@ -135,7 +135,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     };
     await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
     const ability = findNightAbility(
-      f.world.getComponent<RoleComponent>(f.pure, COMPONENT.Role),
+      f.world.getComponent(f.pure, COMPONENT.Role),
       "role_check",
     )!;
     expect(ability.lastUsedDay).toBe(2);
@@ -168,14 +168,14 @@ for (const locale of ["zh-CN", "en"] as const) {
     const f = fixture(2, locale);
     f.ctx.actionProvider = {
       getAction: async () => {
-        f.world.getComponent<AliveComponent>(f.pure, COMPONENT.Alive)!.alive = false;
+        f.world.getComponent(f.pure, COMPONENT.Alive)!.alive = false;
         return { name: "inspect_night_identity", args: { target_id: f.wolf, abstain: false } };
       },
     };
     await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
     expect(f.ctx.events).toEqual([]);
     expect(
-      findNightAbility(f.world.getComponent<RoleComponent>(f.pure, COMPONENT.Role), "role_check")
+      findNightAbility(f.world.getComponent(f.pure, COMPONENT.Role), "role_check")
         ?.uses,
     ).toBe(0);
   });
@@ -189,7 +189,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     f.ctx.currentDay = () => 2;
     await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
     const ability = findNightAbility(
-      f.world.getComponent<RoleComponent>(f.pure, COMPONENT.Role),
+      f.world.getComponent(f.pure, COMPONENT.Role),
       "role_check",
     )!;
     expect(ability.state.history.map((r) => [r.day, r.targetId])).toEqual([
@@ -207,7 +207,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     const f = fixture(2, locale);
     f.ctx.actionProvider = {
       getAction: async () => {
-        const life = f.world.getComponent<AliveComponent>(f.wolf, COMPONENT.Alive)!;
+        const life = f.world.getComponent(f.wolf, COMPONENT.Alive)!;
         life.alive = false;
         life.alive = true;
         return { name: "inspect_night_identity", args: { target_id: f.wolf, abstain: false } };
@@ -218,7 +218,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     );
     expect(f.ctx.events).toEqual([]);
     expect(
-      findNightAbility(f.world.getComponent<RoleComponent>(f.pure, COMPONENT.Role), "role_check")
+      findNightAbility(f.world.getComponent(f.pure, COMPONENT.Role), "role_check")
         ?.uses,
     ).toBe(0);
   });
@@ -226,7 +226,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     const f = fixture(2, locale);
     await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
     const ability = findNightAbility(
-      f.world.getComponent<RoleComponent>(f.pure, COMPONENT.Role),
+      f.world.getComponent(f.pure, COMPONENT.Role),
       "role_check",
     )!;
     (ability as { disabled: boolean }).disabled = true;
@@ -242,14 +242,14 @@ for (const locale of ["zh-CN", "en"] as const) {
   test(`late target identity change cancels damage without rewriting history ${locale}`, async () => {
     const f = fixture(2, locale);
     await PURE_WHITE_INSPECTION_STAGE.execute(f.ctx);
-    f.world.getComponent<RoleComponent>(f.wolf, COMPONENT.Role)!.role = Role.Villager;
+    f.world.getComponent(f.wolf, COMPONENT.Role)!.role = Role.Villager;
     expect(
       new DamageResolutionSystem().resolve(f.world, {
         inspectionAttacks: f.ctx.state.inspectionAttacks,
       }).deaths,
     ).toEqual([]);
     const report = getRoleInspectionState(
-      f.world.getComponent<RoleComponent>(f.pure, COMPONENT.Role)!,
+      f.world.getComponent(f.pure, COMPONENT.Role)!,
     )!.history[0]!;
     expect(report.result).toMatchObject({ kind: "role", role: Role.WolfWitch });
   });

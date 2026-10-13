@@ -47,7 +47,7 @@ const board: BoardConfig = {
 };
 
 const role = (world: ReturnType<typeof bootstrapGame>["world"], id: number) =>
-  world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  world.getComponent(id, COMPONENT.Role)!;
 
 const state = (world: ReturnType<typeof bootstrapGame>["world"], id = 3) =>
   getGravekeeperState(role(world, id))!;
@@ -186,7 +186,7 @@ for (const locale of ["zh-CN", "en"] as const)
     await GRAVEKEEPER_FEEDBACK_STAGE.execute(ctx);
     expect(events).toHaveLength(2);
     fact = { ...fact, exileDay: 2 };
-    game.world.getComponent<{ alive: boolean }>(3, COMPONENT.Alive)!.alive = false;
+    game.world.getComponent(3, COMPONENT.Alive)!.alive = false;
     role(game.world, 4).role = Role.Villager;
     await GRAVEKEEPER_FEEDBACK_STAGE.execute(ctx);
     expect(events).toHaveLength(2);

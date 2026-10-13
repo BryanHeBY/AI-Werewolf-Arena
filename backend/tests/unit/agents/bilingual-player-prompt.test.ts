@@ -126,7 +126,7 @@ test("all base role identities, rules, private state and stages are bilingual an
     expect(en).toContain("Use English");
     expect(en).not.toMatch(/[\u4e00-\u9fff]/);
     expect(chinese.policy.buildObservation(req)).toEqual(english.policy.buildObservation(req));
-    const role = english.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!;
+    const role = english.world.getComponent(actorId, COMPONENT.Role)!;
     expect(renderRolePrompt(role)).not.toMatch(/[\u4e00-\u9fff]/);
   }
   for (const [stage, tools] of stages) {
@@ -158,7 +158,7 @@ test("all base role identities, rules, private state and stages are bilingual an
     [undefined, "No definite"],
   ] as const) {
     const req = request(5, "witch", ["use_potion"], target);
-    const before = getWitchState(english.world.getComponent<RoleComponent>(5, COMPONENT.Role)!);
+    const before = getWitchState(english.world.getComponent(5, COMPONENT.Role)!);
     expect(
       english.policy.buildUser(req, {
         turnId: "t9",
@@ -166,11 +166,11 @@ test("all base role identities, rules, private state and stages are bilingual an
         actionSubmissionHint: "submit",
       }),
     ).toContain(expected);
-    expect(getWitchState(english.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)).toEqual(
+    expect(getWitchState(english.world.getComponent(5, COMPONENT.Role)!)).toEqual(
       before,
     );
   }
-  setSeerState(english.world.getComponent<RoleComponent>(3, COMPONENT.Role)!, {
+  setSeerState(english.world.getComponent(3, COMPONENT.Role)!, {
     lastTarget: 1,
     lastIsWerewolf: true,
     history: [],
@@ -226,7 +226,7 @@ test("player original text and explicit injected profile/directive text survive 
     ]);
     expect(catalog.label(Role.Wolf, locale)).toBe("自定狼人");
     expect(catalog.skillBrief(Role.Wolf, locale)).toBe("原文说明");
-    const role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+    const role = game.world.getComponent(1, COMPONENT.Role)!;
     catalog.applyRuntime(role, { locale });
     expect(renderRolePrompt(role, locale)).toBe("原文私有状态");
     const tools = new ToolSpecRegistry([], [{ match: () => true, text: "定制阶段 {actor}" }]);

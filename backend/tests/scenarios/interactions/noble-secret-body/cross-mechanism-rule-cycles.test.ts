@@ -1,7 +1,5 @@
 /**
- * Interaction scenarios verify Noble and Secret Body cross-mechanism rules preserve immunity, expiry, clearing and strict reveal prefixes.
- * Input: Original deterministic cycle plans, knife/poison/hunt combinations, blast policy and required-action failures.
- * Output and oracle: Literal paid sources, pending contract/knowledge and final death assertions retain exact real-cycle order; review provenance does not turn these traces into isolated unit tests.
+ * 交互场景测试：验证贵族／不死之身跨机制免疫、到期、清除及严格亮牌前缀。输入为原确定性周期、狼刀／毒／猎杀、自爆政策及必需行动失败；来源、pending 契约／知识和最终死亡为字面预期，审查来源不改变真实周期测试归属。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -52,7 +50,7 @@ const nights = (g: ReturnType<typeof game>) =>
     .filter((e) => e.type === "night_resolved")
     .map((e) => e.payload.deaths);
 const live = (g: ReturnType<typeof game>, id: number) =>
-  g.world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive;
+  g.world.getComponent(id, COMPONENT.Alive)!.alive;
 async function cycles(plans: Plan[]) {
   const g = game(),
     seen: ActionRequest[] = [];

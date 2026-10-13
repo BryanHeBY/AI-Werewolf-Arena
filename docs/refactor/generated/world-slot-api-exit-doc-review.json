@@ -1,0 +1,23 @@
+{
+  "result": "accept exact frozen staged 241-input document and aggregate evidence; no finding",
+  "files": [
+    {
+      "path": "docs/refactor/world-slot-api-exit.md",
+      "sha256": "9edb1c1f86d265a03a90becee69e4872f90ee6a3538ed6b22e939e8187caf626"
+    },
+    {
+      "path": "docs/refactor/generated/world-slot-api-exit-evidence.json",
+      "sha256": "bdf01ea3b299c5f4cdd4aa1c1796ed83647bdd42cdb2df2b855dc0577770aee5"
+    }
+  ],
+  "verifiedScopeCount": 241,
+  "scopeSHAFailures": [],
+  "verifiedClaim": "866 source-bound World calls /864 erased caller type arguments /2 original negative cases /11 named slots /238 whole raw pairs +3 specifically foreign changes. Original unknown write calls10 (9hostile+1Identity), any read calls10. No runtime permission or true World clock claim. Finite compiler/type/run receipts remain author provenance; no stage/fullrepo completion claimed.",
+  "priorIndependentEvidence": "/tmp/awa-world-slots-independent/final-review.json",
+  "scope": "Doc/evidence and final hash read-only; no type/test/gate/model/production run.",
+  "scopePolicy": "Snapshot proof covers immutable frozen241 stage input. Two RoleInspection import routes changed later only in working tree and are explicitly excluded from C44 staged blobs; exact original frozen blobs independently recreated with matching SHA in isolated-shared.json. Root confirms cacheinfo isolation, does not overwrite working sources. Subsequent import routes are not claimed raw equal.",
+  "lateWorkingOnlyChangesPreviouslyObserved": [
+    "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+    "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts"
+  ]
+}

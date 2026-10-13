@@ -1,7 +1,5 @@
 /**
- * Scenario tests run fifty fixed-seed Cursed Fox games for each configured board and locale with the existing baseline provider.
- * Inputs are finite scripted/official-size rosters; independent literal terminal count, Fox survival, god-side/wolf-side membership and settlement invariants are the oracle.
- * The provider retains explicit true-camp simulation privilege and the known F01 exception; it is not an expected-rule oracle. No model transport or golden archive generation occurs.
+ * 完整场景测试：负责按每种咒狐板子与语言的原五十个固定种子运行 baseline 对局。输入为原政策及策略；既有独立成员、数量、生命和终局断言为预期，不把策略决策当独立规则 oracle，不调用模型。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -78,7 +76,7 @@ for (const { name, board } of boards)
         const roles = new Map(
           game.playerIds.map((id) => [
             id,
-            game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!,
+            game.world.getComponent(id, COMPONENT.Role)!,
           ]),
         );
         const alive = game.world.getAliveEntityIds(),

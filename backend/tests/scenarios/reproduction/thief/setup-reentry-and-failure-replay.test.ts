@@ -46,7 +46,7 @@ type Fixture = ReturnType<typeof fixture>;
 
 const choose = (slot: 0 | 1): ToolCall => ({ name: "choose_thief_card", args: { slot } });
 
-const actor = (g: Fixture) => g.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+const actor = (g: Fixture) => g.world.getComponent(1, COMPONENT.Role)!;
 
 test("first PM cycle enables chosen Wolf before pack chat, rejects ordinary-night reentry and never judges initial zero wolves", async () => {
   const g = fixture([

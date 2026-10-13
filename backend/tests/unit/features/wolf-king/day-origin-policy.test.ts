@@ -58,7 +58,7 @@ function fixture(selected: DeathActionPolicy = policy, registry = new EventRegis
   const state = { day: 2, phase: Phase.Day, gameOver: false, result: null };
   const gateway = new ToolGateway();
   const resolver = new DeathResolution(game.world, events, gateway, registry, state, config);
-  const king = game.world.getComponent<RoleComponent>(3, COMPONENT.Role)!;
+  const king = game.world.getComponent(3, COMPONENT.Role)!;
   return {
     ...game,
     config,
@@ -325,7 +325,7 @@ for (const timing of ["await", "deferred"] as const)
             async (...args) => {
               const [world, , sources] = args;
               const state = getWolfKingState(
-                world.getComponent<RoleComponent>(3, COMPONENT.Role)!,
+                world.getComponent(3, COMPONENT.Role)!,
               )!;
               mutate = () => {
                 if (field === "policy")
@@ -419,7 +419,7 @@ test("resolver-owned origin cannot be rewritten through a hook context", async (
 for (const timing of ["await", "deferred"] as const)
   test(`legacy direct hook origin mutation invalidates its result/${timing}`, async () => {
     const f = fixture();
-    f.world.getComponent<{ alive: boolean }>(3, COMPONENT.Alive)!.alive = false;
+    f.world.getComponent(3, COMPONENT.Alive)!.alive = false;
     const context: DeathHookContext = {
       deathOriginPhase: Phase.Day,
       nightEffect: false,
@@ -453,7 +453,7 @@ for (const timing of ["await", "deferred"] as const)
 test("direct hooks with no origin reject only the new policy", async () => {
   for (const selected of ["awa_qualified_sources_v1", policy] as const) {
     const f = fixture(selected);
-    f.world.getComponent<{ alive: boolean }>(3, COMPONENT.Alive)!.alive = false;
+    f.world.getComponent(3, COMPONENT.Alive)!.alive = false;
     let requests = 0;
     const result = await WOLF_KING_ROLE_PROFILE.runtime.deathHook!(
       f.world,

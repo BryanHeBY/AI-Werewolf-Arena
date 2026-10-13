@@ -19,7 +19,7 @@ describe("LlmActionProvider protocol", () => {
     const witchId = context.world
       .entityIds()
       .find(
-        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "witch",
+        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === "witch",
       )!;
     let requests = 0;
     const server = Bun.serve({

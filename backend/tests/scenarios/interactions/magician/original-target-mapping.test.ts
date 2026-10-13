@@ -1,7 +1,5 @@
 /**
- * Interaction scenarios verify Magician original requested targets map through actual knife, potion, inspection and death-gun cycles.
- * Input: Original exchange/shot policy plans, controlled role actions and required or stale replies.
- * Output and oracle: Explicit mapped effects, requested-number privacy and paid/failure assertions retain original night-origin scope; expected target/action tables are unchanged.
+ * 交互场景测试：验证魔术师原请求目标经狼刀、药瓶、查验和死亡枪的真实映射。输入为原交换／枪政策、受控行动及必需／过期回复；效果、请求号码隐私及已付／失败前缀为明确预期，保留原夜间来源与目标表。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -29,8 +27,8 @@ function fixture(shot: "original" | "exchanged" = "original") {
   const id = (role: Role) =>
     f.world
       .entityIds()
-      .find((id) => f.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === role)!;
-  const alive = (id: number) => f.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive;
+      .find((id) => f.world.getComponent(id, COMPONENT.Role)?.role === role)!;
+  const alive = (id: number) => f.world.getComponent(id, COMPONENT.Alive)!.alive;
   return { ...f, config, id, alive };
 }
 function provider(
@@ -104,7 +102,7 @@ test("Magician allows an original other-player heal to land on the Witch herself
   await f.phaseManager.runSingleCycle(p);
   expect(f.alive(w)).toBe(true);
   expect(f.alive(v)).toBe(true);
-  expect(getWitchState(f.world.getComponent<RoleComponent>(w, COMPONENT.Role)!)!.heal).toBe(0);
+  expect(getWitchState(f.world.getComponent(w, COMPONENT.Role)!)!.heal).toBe(0);
   expect(p.seen.find((r) => r.allowedTools.includes("use_potion"))?.context.wolf_target).toBe(v);
 });
 test("Magician rejects healing an original self knife before spending a potion", async () => {
@@ -114,7 +112,7 @@ test("Magician rejects healing an original self knife before spending a potion",
   await expect(f.phaseManager.runSingleCycle(provider(f, [w, v], w, "heal", w))).rejects.toThrow(
     "magician_witch_action_invalid",
   );
-  expect(getWitchState(f.world.getComponent<RoleComponent>(w, COMPONENT.Role)!)!.heal).toBe(1);
+  expect(getWitchState(f.world.getComponent(w, COMPONENT.Role)!)!.heal).toBe(1);
   expect(() => resolveMagicianNightTarget(f.world, 1, v)).toThrow("magician_night_unsettled");
 });
 test("Magician maps poison onto the Witch without changing her requested target", async () => {
@@ -192,7 +190,7 @@ test("Magician refuses a late reply after in-place original identity mutation", 
       async getAction(r: ActionRequest) {
         const action = await base.getAction(r);
         if (r.allowedTools.includes("check_identity")) {
-          const role = f.world.getComponent<RoleComponent>(v, COMPONENT.Role)!;
+          const role = f.world.getComponent(v, COMPONENT.Role)!;
           (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
             ...role.privateState,
           };

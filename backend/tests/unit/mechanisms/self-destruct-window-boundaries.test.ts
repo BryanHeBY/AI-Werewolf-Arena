@@ -1,7 +1,5 @@
 /**
- * Unit tests verify explicit/legacy window configuration and bounded concurrent blast choices reject changed actor authority.
- * Input: Original locale matrix, literal override variants and controlled SelfDestructWindow reply timing.
- * Output and oracle: Exact effective windows, no stale application and closed permission assertions remain unchanged; no complete Day/PM flow runs.
+ * 单元测试：验证显式／历史自爆窗口及并发选择在演员权威改变后拒绝。输入为原语言矩阵、覆盖变体与受控回复时点；有效窗口、不应用过期选择及许可关闭为精确字面预期，不运行完整白天／PM 流程。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -73,12 +71,12 @@ for (const locale of ["zh-CN", "en"] as const)
             if (request.actorId === 4) {
               await Promise.resolve();
               if (revoke === "life") {
-                const alive = world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!;
+                const alive = world.getComponent(1, COMPONENT.Alive)!;
                 alive.alive = false;
                 alive.alive = true;
               }
               if (revoke === "role")
-                world.getComponent<{ role: Role }>(1, COMPONENT.Role)!.role = Role.Villager;
+                world.getComponent(1, COMPONENT.Role)!.role = Role.Villager;
               if (revoke === "phase") live = false;
             }
             return { name: "self_destruct", args: { confirm: true, reason: "raw" } };

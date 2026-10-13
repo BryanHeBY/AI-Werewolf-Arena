@@ -50,7 +50,7 @@ const config = (roles = deck): BoardConfig => ({
 });
 
 const role = (game: ReturnType<typeof bootstrapGame>, id: number) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  game.world.getComponent(id, COMPONENT.Role)!;
 
 const catalog = getDefaultRoleCatalog();
 
@@ -359,7 +359,7 @@ for (const target of ["hidden", "last_god"] as const)
 test("raw expected deaths and permission queries do not inherit; the actual death owner commits once and reviving another wolf only disables current action", async () => {
   const game = bootstrapGame(config(), { fixedRoles: deck }),
     events: GameEvent[] = [],
-    life = game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!;
+    life = game.world.getComponent(2, COMPONENT.Alive)!;
   life.alive = false;
   expect(canHiddenWolfKnife(role(game, 1), game.world)).toBe(false);
   expect(resolveInspection(game.world, 1, "camp", catalog)).toEqual({
@@ -507,7 +507,7 @@ for (const mutation of ["revive", "replace_life", "replace_state", "replace_role
       async getAction(request) {
         if (request.allowedTools.includes("kill_vote")) {
           calls++;
-          const life = game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!;
+          const life = game.world.getComponent(1, COMPONENT.Alive)!;
           if (mutation === "revive") {
             life.alive = false;
             life.alive = true;

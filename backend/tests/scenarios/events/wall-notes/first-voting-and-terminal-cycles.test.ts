@@ -1,9 +1,5 @@
 /**
- * Scenario tests for wall notes window. Inputs are original paper/Unicode/RNG/request matrices and
- * first-voting/terminal inputs. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Actual PM voting/exile/self-destruction cycles decide the event
- * opening/terminal suppression and following-night behavior. Engine sequencing remains real and models
- * remain controlled providers; production output is not a newly generated golden.
+ * 完整场景测试：验证墙报首轮投票与终局周期窗口。输入为原角色、事件和受控周期；既有字面预期及不可变 fixture 保留原授权与关闭结果，不调用模型或重写样本。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -60,7 +56,7 @@ for (const outcome of ["abstain", "tie", "idiot"] as const)
       1,
     );
     if (outcome === "idiot")
-      expect(g.world.getComponent<{ canVote: boolean }>(4, COMPONENT.VotingRight)!.canVote).toBe(
+      expect(g.world.getComponent(4, COMPONENT.VotingRight)!.canVote).toBe(
         false,
       );
   });

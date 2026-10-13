@@ -1,9 +1,5 @@
 /**
- * Unit tests: Elimination priority uses explicit alive rosters and priority values;
- * handwritten result objects check independent ordering while invalid values leave
- * unrelated victory rules intact. Inputs and expected outcomes remain the original literal
- * or immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证清边优先级与非法政策不会改变无关判胜规则。输入为明确存活名单及优先级；手写结果对象检查独立次序，不从生产判胜器反推预期。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -87,11 +83,11 @@ for (const locale of ["zh-CN", "en"] as const) {
         const members = new Map(
           world
             .entityIds()
-            .map((id) => [id, world.getComponent<RoleComponent>(id, COMPONENT.Role)!]),
+            .map((id) => [id, world.getComponent(id, COMPONENT.Role)!]),
         );
         for (const [id, role] of members) {
           if ((scenario.dead as readonly Role[]).includes(role.role)) {
-            world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
+            world.getComponent(id, COMPONENT.Alive)!.alive = false;
           }
         }
         const registry = new WinConditionRegistry(createEliminationWinConditionSpecs(priority));

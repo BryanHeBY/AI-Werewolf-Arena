@@ -49,7 +49,7 @@ const fixture = (locale: "zh-CN" | "en" = "en") =>
   bootstrapGame(sixPlayerMvpConfig, { fixedRoles, locale });
 
 const role = (world: ReturnType<typeof fixture>["world"], id: number) =>
-  world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  world.getComponent(id, COMPONENT.Role)!;
 
 const request = (actorId: number, id: string, day = 1): ActionRequest => ({
   actorId,
@@ -417,10 +417,11 @@ for (const locale of ["zh-CN", "en"] as const)
         locale === "en" ? "Actionable IDs (excluding yourself)" : "可行动编号（不含自己）",
       );
       expect(policy.buildObservation(input).identity.role).toBe(Role.Villager);
+      // 原机器标记值不变，类型说明不为回退补动作或改变请求参数。
       if (tool === "use_potion")
         world
-          .getComponent<{ add(value: string): void }>(actor, COMPONENT.StatusMarks)!
-          .add("WolfKillMark");
+          .getComponent(actor, COMPONENT.StatusMarks)!
+          .add("WolfKillMark" as import("@ai-werewolf-arena/game-contract").StatusMark);
       const args =
         tool === "guard"
           ? { target_id: actor, abstain: false }

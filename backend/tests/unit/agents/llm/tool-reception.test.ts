@@ -73,7 +73,7 @@ describe("LlmActionProvider protocol", () => {
     const seerId = context.world
       .entityIds()
       .find(
-        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "seer",
+        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === "seer",
       )!;
     const provider = new LlmActionProvider(
       context.world,

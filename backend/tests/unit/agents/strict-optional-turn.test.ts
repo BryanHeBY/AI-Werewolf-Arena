@@ -145,7 +145,7 @@ for (const transport of ["sdk", "acp"] as const)
           if (success) await action();
           else await expect(action()).rejects.toThrow("action_turn_failed");
           const state = getAwakenedState(
-            game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
+            game.world.getComponent(1, COMPONENT.Role)!,
           )!;
           expect(fallbackCalls).toBe(0);
           if (mode === "clean_wait") {

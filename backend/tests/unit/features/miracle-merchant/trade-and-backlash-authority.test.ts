@@ -58,7 +58,7 @@ const fixture = (roles = deck, locale: "zh-CN" | "en" = "en") => {
 };
 
 const role = (game: ReturnType<typeof fixture>, actor = 1) =>
-  game.world.getComponent<RoleComponent>(actor, COMPONENT.Role)!;
+  game.world.getComponent(actor, COMPONENT.Role)!;
 
 function context(
   game: ReturnType<typeof fixture>,
@@ -100,7 +100,7 @@ function context(
         context: extra,
       }),
     getAliveByRole: (r) => game.world.getAliveEntityIds().filter((id) => role(game, id).role === r),
-    ensureMarks: (id) => game.world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!,
+    ensureMarks: (id) => game.world.getComponent(id, COMPONENT.StatusMarks)!,
     pickMajorityTarget: () => null,
     shuffleWolves: (ids) => ids,
     state: {
@@ -223,13 +223,13 @@ for (const dream of [false, true])
     expect(getMerchantState(role(game))!.remaining).toBe(0);
     expect(JSON.stringify(getMerchantState(role(game)))).not.toContain("backlash");
     game.world
-      .getComponent<StatusMarksComponent>(1, COMPONENT.StatusMarks)!
+      .getComponent(1, COMPONENT.StatusMarks)!
       .add(StatusMark.GuardMark);
     game.world
-      .getComponent<StatusMarksComponent>(1, COMPONENT.StatusMarks)!
+      .getComponent(1, COMPONENT.StatusMarks)!
       .add(StatusMark.HealMark);
     role(game, 2).camp = Camp.Good;
-    game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive = false;
+    game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
     const damage = new DamageResolutionSystem().resolve(game.world, {
       merchantBacklashes: ctx.state.merchantBacklashes,
       protectedTargets: dream ? [1] : [],

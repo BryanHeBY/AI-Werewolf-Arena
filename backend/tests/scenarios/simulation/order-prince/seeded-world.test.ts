@@ -1,9 +1,5 @@
 /**
- * Scenario simulation tests: Runs actual Order Prince Worlds for the original twenty seeds
- * and both locales. Seeded observed-player strategies supply actions; literal natural
- * termination and positive activation counters check that the native reveal path is
- * exercised. The original seed/action matrices and literal assertions remain the oracle;
- * these trials do not replace archived goldens or claim newly independent rule coverage.
+ * 模拟场景测试：执行序王双语与原二十个种子的实际 World。输入为有种子的观察玩家策略；自然终局及正激活次数为字面预期，验证原翻牌路径，不替代 golden 或声称新增独立规则覆盖。
  */
 import type { RoleComponent } from "../../../../src/core/domain/components/role";
 import { getOrderPrinceState } from "../../../../src/game/mechanisms/roles/order_prince/state";
@@ -39,7 +35,7 @@ for (const locale of ["zh-CN", "en"] as const)
         const state = game.world
           .entityIds()
           .map((id) =>
-            getOrderPrinceState(game.world.getComponent<RoleComponent>(id, COMPONENT.Role)),
+            getOrderPrinceState(game.world.getComponent(id, COMPONENT.Role)),
           )
           .find(Boolean);
         if (state?.history.some((row) => row.activate)) activations++;

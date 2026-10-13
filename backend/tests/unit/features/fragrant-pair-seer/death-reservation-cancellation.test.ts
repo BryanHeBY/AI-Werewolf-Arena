@@ -1,7 +1,5 @@
 /**
- * Unit tests verify uncommitted Fragrant death reservations release on false/throw cancellation without spending or killing.
- * Input: Original owner fixture, bounded DeathResolution operation and two literal currentness modes.
- * Output and oracle: Exact surviving lives, null trigger and reusable reservation receipt remain unchanged; no PM cycle, recorder or model executes.
+ * 单元测试：验证未提交寻香死亡预约在 false／抛错取消后释放，不花资源或标死。输入为原 owner fixture、有限 DeathResolution 操作与两种当前性模式；存活生命、空触发和可复用预约回执为原字面预期，不执行 PM 周期、录制或模型。
  */
 import { expect, test } from "bun:test";
 import { fragrantPairOwnerFixture } from "../../../engine/fragrant_pair_seer_fixture";
@@ -61,8 +59,8 @@ for (const mode of ["false", "throw"] as const)
     }
     if (mode === "throw") expect(String(error)).toContain("cancel_at_wave");
     else expect(error).toBeUndefined();
-    expect(f.world.getComponent<AliveComponent>(9, COMPONENT.Alive)!.alive).toBe(true);
-    expect(f.world.getComponent<AliveComponent>(10, COMPONENT.Alive)!.alive).toBe(true);
+    expect(f.world.getComponent(9, COMPONENT.Alive)!.alive).toBe(true);
+    expect(f.world.getComponent(10, COMPONENT.Alive)!.alive).toBe(true);
     expect(fragrantAuthoritySnapshot(f.world).fragrant.trigger).toBeNull();
     const receipt = prepareFragrantDeathWave(f.world, 1, [9])!;
     expect(receipt).not.toBeNull();

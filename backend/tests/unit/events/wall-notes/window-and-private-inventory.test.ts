@@ -51,9 +51,9 @@ function fixture(deck = roles) {
 type Fixture = ReturnType<typeof fixture>;
 
 const note = (g: Fixture, id: number) =>
-  g.world.getComponent<WallNoteComponent>(id, COMPONENT.WallNote)!;
+  g.world.getComponent(id, COMPONENT.WallNote)!;
 
-const role = (g: Fixture, id: number) => g.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+const role = (g: Fixture, id: number) => g.world.getComponent(id, COMPONENT.Role)!;
 
 const text = (body: string): ToolCall => ({ name: "write_note", args: { text: body } });
 
@@ -261,10 +261,10 @@ for (const mutation of [
           rc = role(g, 1);
         switch (mutation) {
           case "death":
-            g.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive = false;
+            g.world.getComponent(1, COMPONENT.Alive)!.alive = false;
             break;
           case "revive": {
-            const alive = g.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!;
+            const alive = g.world.getComponent(1, COMPONENT.Alive)!;
             alive.alive = false;
             alive.alive = true;
             break;

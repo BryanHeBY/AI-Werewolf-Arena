@@ -51,7 +51,7 @@ export function nobleBodyAuthorityFixture() {
     roles.push(role);
   }
   installNobleBodyAuthority(world, 1, 2);
-  const life = (id: number) => world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+  const life = (id: number) => world.getComponent(id, COMPONENT.Alive)!;
   const finish = (day: number) => {
     expireServantAtNightEnd(world, day);
     closeNobleBodyNight(world, day, "normal");

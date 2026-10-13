@@ -38,7 +38,7 @@ const board = (window: ActionWindow) => ({
 });
 
 const role = (world: ReturnType<typeof bootstrapGame>["world"], id: number) =>
-  world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  world.getComponent(id, COMPONENT.Role)!;
 
 const call = (target_id: number | null) => ({
   name: "self_destruct_with_target" as const,

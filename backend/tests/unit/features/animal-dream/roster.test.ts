@@ -49,7 +49,7 @@ test("real first death retains original relation identity; revival does not", ()
 });
 test("observed Camp drift is terminal after restoration", () => {
   const f = animalRosterFixture(),
-    camp = f.world.getComponent<CampComponent>(10, COMPONENT.Camp)!;
+    camp = f.world.getComponent(10, COMPONENT.Camp)!;
   camp.camp = Camp.Wolf;
   expect(animalRosterCurrent(f.world)).toBe(false);
   camp.camp = Camp.Good;
@@ -70,35 +70,36 @@ test("Identity metadata mutation revokes, ordinary private JSON state updates do
     history: [{ day: 1, roared: false }],
   };
   expect(animalRosterCurrent(f.world)).toBe(true);
-  f.world.getComponent<IdentityComponent>(11, COMPONENT.Identity)!.name = "changed";
+  f.world.getComponent(11, COMPONENT.Identity)!.name = "changed";
   expect(animalRosterCurrent(f.world)).toBe(false);
 });
 const invalid: Record<string, (w: ReturnType<typeof animalRosterFixture>["world"]) => void> = {
   "unsupported actual role": (w) => {
-    w.getComponent<RoleComponent>(10, COMPONENT.Role)!.role = Role.Seer;
+    w.getComponent(10, COMPONENT.Role)!.role = Role.Seer;
   },
   "wrong actual Fox camp": (w) => {
-    w.getComponent<RoleComponent>(10, COMPONENT.Role)!.camp = Camp.Wolf;
-    w.getComponent<CampComponent>(10, COMPONENT.Camp)!.camp = Camp.Wolf;
+    w.getComponent(10, COMPONENT.Role)!.camp = Camp.Wolf;
+    w.getComponent(10, COMPONENT.Camp)!.camp = Camp.Wolf;
   },
   "shared life": (w) => {
-    w.addComponent<unknown>(6, COMPONENT.Alive, w.getComponent(5, COMPONENT.Alive));
+    w.addComponent(6, COMPONENT.Alive, w.getComponent(5, COMPONENT.Alive)!);
   },
+  // 错槽别名本身是被测非法样本；类型断言不复制对象或纠正存储内容。
   "Role and Camp alias": (w) => {
-    w.addComponent<unknown>(10, COMPONENT.Camp, w.getComponent(10, COMPONENT.Role));
+    w.addComponent(10, COMPONENT.Camp, w.getComponent(10, COMPONENT.Role) as unknown as import("../../../../src/core/domain/component-map").ComponentWrite<typeof COMPONENT.Camp>);
   },
   "shared private container": (w) => {
     (
-      w.getComponent<RoleComponent>(6, COMPONENT.Role)! as {
+      w.getComponent(6, COMPONENT.Role)! as {
         privateState: object;
       }
-    ).privateState = w.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState;
+    ).privateState = w.getComponent(5, COMPONENT.Role)!.privateState;
   },
   "duplicate seat": (w) => {
-    w.getComponent<IdentityComponent>(6, COMPONENT.Identity)!.seat = 5;
+    w.getComponent(6, COMPONENT.Identity)!.seat = 5;
   },
   "duplicate session": (w) => {
-    w.getComponent<IdentityComponent>(6, COMPONENT.Identity)!.sessionId = "player_5";
+    w.getComponent(6, COMPONENT.Identity)!.sessionId = "player_5";
   },
   "wrong victory": (w) => {
     w.addComponent(1, COMPONENT.Victory, {
@@ -113,7 +114,7 @@ test("invalid private accessors are rejected without executing them", () => {
   let calls = 0;
   expect(() =>
     animalRosterFixture((w) => {
-      Object.defineProperty(w.getComponent<RoleComponent>(9, COMPONENT.Role)!, "privateState", {
+      Object.defineProperty(w.getComponent(9, COMPONENT.Role)!, "privateState", {
         enumerable: true,
         get() {
           calls++;

@@ -1,7 +1,5 @@
 /**
- * Interaction scenarios verify first-night settlement, day-one election, deaths and last words retain their causal PhaseManager order.
- * Input: Fixed role assignments and the original deterministic action provider and terminal-stop cases.
- * Output and oracle: Explicit event ordering, request history and once-only assertions stay attached to the actual cycles; no production result is substituted for those literal expectations.
+ * 交互场景测试：验证首夜结算、首日竞选、死亡和遗言的 PhaseManager 因果顺序。输入为固定身份、原确定动作 provider 与终局停止样本；事件、请求历史及单次执行为明确字面预期，不以生产结果替换预期。
  */
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
@@ -29,7 +27,7 @@ class DeterministicFlowProvider implements ActionProvider {
         if (id === this.sheriffCandidateId) {
           return false;
         }
-        const role = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+        const role = this.world.getComponent(id, COMPONENT.Role);
         return role?.camp !== "wolf";
       }) ?? null;
   }
@@ -98,10 +96,10 @@ describe("first day flow order", () => {
       ],
     });
     const wolfId = context.playerIds.find(
-      (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Wolf,
+      (id) => context.world.getComponent(id, COMPONENT.Role)?.role === Role.Wolf,
     )!;
     const sheriffId = context.playerIds.find(
-      (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Villager,
+      (id) => context.world.getComponent(id, COMPONENT.Role)?.role === Role.Villager,
     )!;
     const requests: ActionRequest[] = [];
     const provider: ActionProvider = {

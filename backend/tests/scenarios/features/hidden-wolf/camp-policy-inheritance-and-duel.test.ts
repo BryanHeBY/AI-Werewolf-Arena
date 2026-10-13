@@ -47,7 +47,7 @@ function setup(campInspection?: HiddenWolfCampInspectionPolicy, locale: "en" | "
 for (const campInspection of ["awa_inheritance_v1", "netease_2020_good_v1"] as const) {
   test(`${campInspection}: actual pack self-knife changes inheritance while Seer results follow the named camp policy`, async () => {
     const game = setup(campInspection),
-      hidden = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+      hidden = game.world.getComponent(1, COMPONENT.Role)!;
     const act = async (request: ActionRequest) => {
       if (request.allowedTools.includes("speak_to_wolves"))
         return { name: "speak_to_wolves" as const, args: { text: "End", end_chat: true } };
@@ -85,7 +85,7 @@ for (const campInspection of ["awa_inheritance_v1", "netease_2020_good_v1"] as c
     expect(wolfKnifeHolders(game.world, catalog)).toEqual([1]);
     await game.phaseManager.runSingleCycle({ getAction: act });
     expect(
-      getSeerState(game.world.getComponent<RoleComponent>(3, COMPONENT.Role)!)?.history.map(
+      getSeerState(game.world.getComponent(3, COMPONENT.Role)!)?.history.map(
         (report) => report.isWerewolf,
       ),
     ).toEqual([false, campInspection !== "netease_2020_good_v1"]);

@@ -57,10 +57,10 @@ function fixture() {
 
 type Game = ReturnType<typeof fixture>;
 
-const role = (game: Game, id = 3) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+const role = (game: Game, id = 3) => game.world.getComponent(id, COMPONENT.Role)!;
 
 const life = (game: Game, id: number) =>
-  game.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+  game.world.getComponent(id, COMPONENT.Alive)!;
 
 function context(game: Game, getAction: ActionProvider["getAction"], day = 1): NightStageContext {
   const events: GameEvent[] = [],

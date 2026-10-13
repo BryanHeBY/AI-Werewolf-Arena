@@ -1,7 +1,5 @@
 /**
- * Night scenarios verify complete pipeline wolf discussion/votes, Guard/poison settlement, Seer state and bounded retries.
- * Input: All original local provider classes and public twelve-player configuration variants.
- * Output and oracle: Exact request order, targets, deaths and private result assertions remain unchanged; the whole night flow is retained as scenario coverage without model calls.
+ * 整夜场景测试：验证完整狼队讨论／投票、守卫／毒结算、预言家状态及有限重试。输入为原局部 provider 类与公开十二人配置变体；请求次序、目标、死亡和私有结果为精确字面预期，保留完整夜流程但不调用模型。
  */
 import { completedNight } from "../../engine/night_stage_fixture";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -246,7 +244,7 @@ describe("night wolf tactical loop", () => {
     });
 
     const wolfTargetId = context.world.getAliveEntityIds().find((id) => {
-      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = context.world.getComponent(id, COMPONENT.Role);
       return role?.camp === Camp.Good;
     })!;
 
@@ -280,7 +278,7 @@ describe("night wolf tactical loop", () => {
     });
 
     const wolfTargetId = context.world.getAliveEntityIds().find((id) => {
-      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = context.world.getComponent(id, COMPONENT.Role);
       return role?.camp === Camp.Good;
     })!;
 
@@ -343,7 +341,7 @@ describe("night wolf tactical loop", () => {
     });
 
     const aliveGood = context.world.getAliveEntityIds().filter((id) => {
-      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = context.world.getComponent(id, COMPONENT.Role);
       return role?.camp === Camp.Good;
     });
 
@@ -368,7 +366,7 @@ describe("night wolf tactical loop", () => {
     });
 
     const wolfTargetId = context.world.getAliveEntityIds().find((id) => {
-      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = context.world.getComponent(id, COMPONENT.Role);
       return role?.role === Role.Wolf;
     })!;
 
@@ -376,10 +374,10 @@ describe("night wolf tactical loop", () => {
     await pipeline.execute(twelvePlayerStandardConfig, provider, 1);
 
     const seerId = context.world.getAliveEntityIds().find((id) => {
-      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = context.world.getComponent(id, COMPONENT.Role);
       return role?.role === Role.Seer;
     })!;
-    const seerRole = context.world.getComponent<RoleComponent>(seerId, COMPONENT.Role)!;
+    const seerRole = context.world.getComponent(seerId, COMPONENT.Role)!;
     const seerState = getSeerState(seerRole);
 
     expect(seerState?.lastTarget).toBe(wolfTargetId);
@@ -418,7 +416,7 @@ describe("night wolf tactical loop", () => {
       events,
     });
     const targetId = context.world.getAliveEntityIds().find((id) => {
-      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = context.world.getComponent(id, COMPONENT.Role);
       return role?.camp === Camp.Good;
     })!;
     const provider = new RetryThenKillVoteProvider(targetId);
@@ -429,7 +427,7 @@ describe("night wolf tactical loop", () => {
     const wolfIds = context.world
       .getAliveEntityIds()
       .filter(
-        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Wolf,
+        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === Role.Wolf,
       );
     for (const wolfId of wolfIds) {
       expect(provider.killVoteAttempts.get(wolfId)).toBe(4);

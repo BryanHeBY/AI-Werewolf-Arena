@@ -129,7 +129,7 @@ for (const changed of ["life", "role", "camp", "state", "owner"] as const)
     let current = true;
     commitFoxInspection(world, state, life, 1, () => current);
     const identity = captureInspectionIdentity(world, life),
-      role = world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+      role = world.getComponent(1, COMPONENT.Role)!;
     if (changed === "life") world.addComponent(1, COMPONENT.Alive, createAliveComponent(true));
     if (changed === "role") role.role = Role.Villager;
     if (changed === "camp") role.camp = Camp.Good;
@@ -147,7 +147,7 @@ test("inspection-only damage, poison composite, guard/heal, Dream protection and
     const { world } = fixture(),
       state = nightStageContext({ world }).state;
     commitFoxInspection(world, state, captureNightLife(world, 1)!, 1, () => true);
-    const marks = world.getComponent<StatusMarksComponent>(1, COMPONENT.StatusMarks)!;
+    const marks = world.getComponent(1, COMPONENT.StatusMarks)!;
     if (kind === "poison") marks.add(StatusMark.PoisonMark);
     if (kind === "guard_heal") {
       marks.add(StatusMark.GuardMark);
@@ -193,11 +193,11 @@ for (const changed of ["role", "life", "owner", "phase", "invalid"] as const)
       actionProvider: {
         async getAction() {
           if (changed === "role")
-            world.getComponent<RoleComponent>(1, COMPONENT.Role)!.role = Role.Villager;
+            world.getComponent(1, COMPONENT.Role)!.role = Role.Villager;
           if (changed === "life")
             world.addComponent(1, COMPONENT.Alive, createAliveComponent(true));
           if (changed === "owner")
-            world.getComponent<RoleComponent>(2, COMPONENT.Role)!.role = Role.Villager;
+            world.getComponent(2, COMPONENT.Role)!.role = Role.Villager;
           if (changed === "phase") current = false;
           return { name: "check_identity", args: { target_id: changed === "invalid" ? 99 : 1 } };
         },
@@ -221,7 +221,7 @@ for (const stage of ["native", "lucky"] as const) {
               runtime: {
                 ...profile.runtime,
                 inspectionLabels: () => {
-                  const role = world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+                  const role = world.getComponent(1, COMPONENT.Role)!;
                   role.role = Role.Villager;
                   role.camp = Camp.Good;
                   (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {};
@@ -257,7 +257,7 @@ for (const stage of ["native", "lucky"] as const) {
       },
     });
     await (stage === "native" ? SEER_NIGHT_STAGES[0]! : LUCKY_ABILITY_STAGE).execute(ctx);
-    const life = world.getComponent<AliveComponent>(stage === "native" ? 2 : 6, COMPONENT.Alive)!;
+    const life = world.getComponent(stage === "native" ? 2 : 6, COMPONENT.Alive)!;
     life.alive = false;
     world.removeComponent(1, COMPONENT.StatusMarks);
     expect(

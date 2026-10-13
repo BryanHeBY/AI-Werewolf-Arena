@@ -1,9 +1,5 @@
 /**
- * Unit tests: Event hooks use in-memory voted-out, poisoned and shot cases; literal life,
- * voting-right and gun expectations check role death/exile hooks without advancing a
- * complete game. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证内存放逐、中毒及被枪击的角色 hook。输入为原事件与角色；生命、票权和枪的字面结果为预期，不推进完整对局。
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
@@ -21,13 +17,13 @@ describe("EventRegistry hooks", () => {
 
     const idiotId = world
       .getAliveEntityIds()
-      .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Idiot);
+      .find((id) => world.getComponent(id, COMPONENT.Role)?.role === Role.Idiot);
 
     expect(idiotId).toBeDefined();
 
     const result = eventRegistry.onVotedOut(world, idiotId!, events);
-    const alive = world.getComponent<AliveComponent>(idiotId!, COMPONENT.Alive)!;
-    const voting = world.getComponent<any>(idiotId!, COMPONENT.VotingRight)!;
+    const alive = world.getComponent(idiotId!, COMPONENT.Alive)!;
+    const voting = world.getComponent(idiotId!, COMPONENT.VotingRight)!;
 
     expect(result.prevented).toBe(true);
     expect(alive.alive).toBe(true);
@@ -42,10 +38,10 @@ describe("EventRegistry hooks", () => {
 
     const hunterId = world
       .getAliveEntityIds()
-      .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Hunter)!;
+      .find((id) => world.getComponent(id, COMPONENT.Role)?.role === Role.Hunter)!;
     const targetId = world.getAliveEntityIds().find((id) => id !== hunterId)!;
 
-    const hunterAlive = world.getComponent<AliveComponent>(hunterId, COMPONENT.Alive)!;
+    const hunterAlive = world.getComponent(hunterId, COMPONENT.Alive)!;
     hunterAlive.alive = false;
 
     const result = await eventRegistry.onDeath(
@@ -56,7 +52,7 @@ describe("EventRegistry hooks", () => {
       events,
     );
 
-    const targetAlive = world.getComponent<AliveComponent>(targetId, COMPONENT.Alive)!;
+    const targetAlive = world.getComponent(targetId, COMPONENT.Alive)!;
 
     expect(result.extraDeaths).toHaveLength(0);
     expect(targetAlive.alive).toBe(true);
@@ -69,10 +65,10 @@ describe("EventRegistry hooks", () => {
 
     const hunterId = world
       .getAliveEntityIds()
-      .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Hunter)!;
+      .find((id) => world.getComponent(id, COMPONENT.Role)?.role === Role.Hunter)!;
     const targetId = world.getAliveEntityIds().find((id) => id !== hunterId)!;
 
-    const hunterAlive = world.getComponent<AliveComponent>(hunterId, COMPONENT.Alive)!;
+    const hunterAlive = world.getComponent(hunterId, COMPONENT.Alive)!;
     hunterAlive.alive = false;
 
     const permit = world.openDeathAction(hunterId, "shoot", Phase.Day, 1);
@@ -85,7 +81,7 @@ describe("EventRegistry hooks", () => {
     );
 
     permit.close();
-    const targetAlive = world.getComponent<AliveComponent>(targetId, COMPONENT.Alive)!;
+    const targetAlive = world.getComponent(targetId, COMPONENT.Alive)!;
 
     expect(result.extraDeaths).toContain(targetId);
     expect(targetAlive.alive).toBe(true);

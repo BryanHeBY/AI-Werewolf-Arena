@@ -54,9 +54,9 @@ function fixture(roles = deck, extra: Partial<BoardConfig> = {}) {
 
 type Fixture = ReturnType<typeof fixture>;
 
-const role = (g: Fixture, id = 1) => g.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+const role = (g: Fixture, id = 1) => g.world.getComponent(id, COMPONENT.Role)!;
 
-const victory = (g: Fixture) => g.world.getComponent<VictoryComponent>(1, COMPONENT.Victory)!;
+const victory = (g: Fixture) => g.world.getComponent(1, COMPONENT.Victory)!;
 
 const choose = (target_id = 2): ToolCall => ({
   name: "choose_admired_player",
@@ -84,7 +84,7 @@ const changes: { name: string; apply: (g: Fixture) => void }[] = [
   {
     name: "actor revive",
     apply: (g) => {
-      const a = g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!;
+      const a = g.world.getComponent(1, COMPONENT.Alive)!;
       a.alive = false;
       a.alive = true;
     },
@@ -161,7 +161,7 @@ const changes: { name: string; apply: (g: Fixture) => void }[] = [
   {
     name: "target dead",
     apply: (g) => {
-      g.world.getComponent<AliveComponent>(2, COMPONENT.Alive)!.alive = false;
+      g.world.getComponent(2, COMPONENT.Alive)!.alive = false;
     },
   },
   {
@@ -195,7 +195,7 @@ for (const target of [2, 4, 6])
   test(`true original target ${target}: own role/camp/stock unchanged and independent membership`, async () => {
     const g = fixture(),
       original = role(g),
-      originalLife = g.world.getComponent<AliveComponent>(1, COMPONENT.Alive);
+      originalLife = g.world.getComponent(1, COMPONENT.Alive);
     expect(victory(g).affiliations).toEqual([]);
     await setup(g, async (r) => {
       expect(r.allowedTools).toEqual(["choose_admired_player"]);
@@ -210,7 +210,7 @@ for (const target of [2, 4, 6])
     expect(role(g)).toBe(original);
     expect(role(g).role).toBe(Role.LonelyGirl);
     expect(role(g).camp).toBe(Camp.Good);
-    expect(g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)).toBe(originalLife);
+    expect(g.world.getComponent(1, COMPONENT.Alive)).toBe(originalLife);
     expect(Object.keys(role(g).privateState)).toEqual(["lonelyGirl"]);
     expect(getLonelyGirlState(role(g))).toEqual({
       policy: LONELY_GIRL_POLICY,
@@ -357,7 +357,7 @@ test("post-gateway cancellation cannot install affiliation", async () => {
     original = gateway.validateAndSanitize.bind(gateway);
   const spy = spyOn(gateway, "validateAndSanitize").mockImplementation((...args) => {
     const result = original(...args);
-    g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!.alive = false;
+    g.world.getComponent(1, COMPONENT.Alive)!.alive = false;
     return result;
   });
   try {
@@ -473,14 +473,14 @@ test("Girl membership survives both deaths and target future change; City still 
   await setup(g);
   role(g, 2).camp = Camp.Good;
   g.world.addComponent(2, COMPONENT.Camp, createCampComponent(Camp.Good));
-  g.world.getComponent<AliveComponent>(2, COMPONENT.Alive)!.alive = false;
+  g.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   expect(victory(g).affiliations).toEqual([{ kind: "faction", faction: Camp.Wolf }]);
-  g.world.getComponent<AliveComponent>(6, COMPONENT.Alive)!.alive = false;
+  g.world.getComponent(6, COMPONENT.Alive)!.alive = false;
   const judge = new ConditionRegistry(getDefaultWinConditionRegistry());
   expect(judge.evaluate(g.world, WinCondition.SlaughterCity)).toBeNull();
-  for (const id of [4, 5]) g.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
+  for (const id of [4, 5]) g.world.getComponent(id, COMPONENT.Alive)!.alive = false;
   expect(judge.evaluate(g.world, WinCondition.SlaughterCity)).toBeNull();
-  g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!.alive = false;
+  g.world.getComponent(1, COMPONENT.Alive)!.alive = false;
   expect(judge.evaluate(g.world, WinCondition.SlaughterCity)?.winner).toBe(Camp.Wolf);
   expect(projectLonelyGirl(g.world, role(g))?.choice).toEqual({ day: 1, targetId: 2 });
   expect(victory(g).affiliations).toEqual([{ kind: "faction", faction: Camp.Wolf }]);

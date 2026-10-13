@@ -57,7 +57,7 @@ function ballots(
         weight:
           targetId === null
             ? 0
-            : f.world.getComponent<VotingRightComponent>(actorId, COMPONENT.VotingRight)!.weight,
+            : f.world.getComponent(actorId, COMPONENT.VotingRight)!.weight,
       };
     });
 }
@@ -81,7 +81,7 @@ function finish(f: ReturnType<typeof fixture>, token: object) {
 }
 test("full accepted electorate, self ballot and 1.5 weight give one target per original voter", () => {
   const f = fixture();
-  f.world.getComponent<VotingRightComponent>(12, COMPONENT.VotingRight)!.weight = 1.5;
+  f.world.getComponent(12, COMPONENT.VotingRight)!.weight = 1.5;
   const token = reaction(f, 1, { 2: 12, 12: 12 });
   const receipt = openAnimalPufferChoice(f.world, token).commit(true);
   expect(receipt).toEqual({ day: 1, activate: true });
@@ -343,7 +343,7 @@ for (const mutation of ["weight", "getter"] as const)
     night(f, 1);
     const token = beginAnimalExileUnit(f.world, 1, "exile", () => true);
     const votes = ballots(f).filter((v) => v.actorId !== 2),
-      voting = f.world.getComponent<VotingRightComponent>(2, COMPONENT.VotingRight)!;
+      voting = f.world.getComponent(2, COMPONENT.VotingRight)!;
     let calls = 0;
     if (mutation === "weight") voting.weight = 2;
     else

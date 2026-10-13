@@ -1,7 +1,5 @@
 /**
- * Failure scenarios verify Noble Secret Body death publication cannot separate an actual death from closure of its servant contract.
- * Input: Fixed roles, two real phase cycles and the original required death-operation failure.
- * Output and oracle: Explicit dead-target, closed-contract and original failure assertions remain causal; the test does not derive expected state from a replay verifier.
+ * 故障场景测试：验证贵族／不死之身真实死亡不能与仆从契约关闭分离。输入为固定身份、两个真实周期及必需死亡操作故障；死者、闭合契约和原错误为明确预期，不从复盘 verifier 推导预期。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -54,7 +52,7 @@ test("required death-op failure must not split actual death from closing its ori
     runWithSessionRecorder(recorder as any, () => g.phaseManager.runSingleCycle(provider, 8)),
   ).rejects.toThrow("injected_required_append_failed");
   expect(faultApplied).toBe(true);
-  expect(g.world.getComponent<{ alive: boolean }>(6, COMPONENT.Alive)?.alive).toBe(false);
+  expect(g.world.getComponent(6, COMPONENT.Alive)?.alive).toBe(false);
   const cp = checkpointNobleBodyAuthority(g.world, false);
   expect(cp.knowledge.noble.contracts[0]?.status).toEqual({ kind: "pending" });
   expect(cp.noble.contracts[0]?.status).toEqual({ kind: "target_dead", day: 2 });

@@ -117,7 +117,7 @@ for (const mode of ["replacement", "revival"] as const)
     const f = fixture();
     if (mode === "replacement") f.world.addComponent(1, COMPONENT.Alive, createAliveComponent());
     else {
-      const life = f.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!;
+      const life = f.world.getComponent(1, COMPONENT.Alive)!;
       life.alive = false;
       life.alive = true;
     }

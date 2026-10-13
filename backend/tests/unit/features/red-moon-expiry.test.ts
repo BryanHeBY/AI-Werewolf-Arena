@@ -1,8 +1,5 @@
 /**
- * Unit tests: Red Moon expiry uses frozen night sources and already dead holders; exact
- * once-only expiry and no-duplicate-death assertions check delayed settlement. Inputs and
- * expected outcomes remain the original literal or immutable-fixture oracle; these module
- * assertions invoke no model or complete-game driver.
+ * 单元测试：验证赤月延迟到期只发生一次且不重复标死。输入为冻结夜间来源和已死亡持有者；原到期与无追加死亡断言为预期，不生成新 fixture 或模型输入。
  */
 import { expect, test } from "bun:test";
 import { COMPONENT, type AliveComponent } from "../../../src/core";
@@ -21,7 +18,7 @@ function deferredWorld() {
   freezeDemonHunt(world);
   closeDemonHunterNight(world);
   for (const id of [1, 2, 3, 11])
-    world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
+    world.getComponent(id, COMPONENT.Alive)!.alive = false;
   expect(commitDemonRedMoonTransition(world, 4, "exile", 1)).toBe(true);
   beginDemonHunterNight(world, 2, () => true);
   return world;
@@ -40,7 +37,7 @@ test("Delayed Red Moon expires exactly once after the following night sources fr
 test("Ordinary night damage that already killed delayed Red Moon prevents duplicate expiry", () => {
   const world = deferredWorld();
   freezeDemonHunt(world);
-  world.getComponent<AliveComponent>(4, COMPONENT.Alive)!.alive = false;
+  world.getComponent(4, COMPONENT.Alive)!.alive = false;
   expect(demonRedMoonExpiry(world, 2)).toBeNull();
   expect(demonHunterCheckpointPlayers(world, true)).toHaveLength(12);
 });

@@ -30,7 +30,7 @@ function fixture(locale: "zh-CN" | "en") {
   const id = (kind: Role) =>
     world
       .entityIds()
-      .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === kind)!;
+      .find((id) => world.getComponent(id, COMPONENT.Role)?.role === kind)!;
   const knight = id(Role.EvilKnight),
     witch = id(Role.Witch),
     seer = id(Role.Seer);
@@ -88,8 +88,8 @@ function fixture(locale: "zh-CN" | "en") {
     getAliveByRole: (role) =>
       world
         .getAliveEntityIds()
-        .filter((actor) => world.getComponent<RoleComponent>(actor, COMPONENT.Role)?.role === role),
-    ensureMarks: (actor) => world.getComponent<StatusMarksComponent>(actor, COMPONENT.StatusMarks)!,
+        .filter((actor) => world.getComponent(actor, COMPONENT.Role)?.role === role),
+    ensureMarks: (actor) => world.getComponent(actor, COMPONENT.StatusMarks)!,
     pickMajorityTarget: () => null,
     shuffleWolves: (ids) => ids,
     state: {
@@ -126,18 +126,18 @@ for (const locale of ["zh-CN", "en"] as const) {
       expect(damage.deathSources[victim]).toEqual([DeathCause.EvilKnightReflection]);
       expect(f.ctx.state.retaliationAttacks).toHaveLength(1);
       expect(
-        getEvilKnightState(f.world.getComponent<RoleComponent>(f.knight, COMPONENT.Role))!
+        getEvilKnightState(f.world.getComponent(f.knight, COMPONENT.Role))!
           .reflectionRemaining,
       ).toBe(0);
       expect(
-        getSeerState(f.world.getComponent<RoleComponent>(f.seer, COMPONENT.Role)!)!.lastIsWerewolf,
+        getSeerState(f.world.getComponent(f.seer, COMPONENT.Role)!)!.lastIsWerewolf,
       ).toBe(true);
       expect(
-        getWitchState(f.world.getComponent<RoleComponent>(f.witch, COMPONENT.Role)!)!.poison,
+        getWitchState(f.world.getComponent(f.witch, COMPONENT.Role)!)!.poison,
       ).toBe(poison ? 0 : 1);
       expect(f.ctx.events.filter((e) => e.type === "seer_checked")).toHaveLength(1);
-      expect(f.world.getComponent<AliveComponent>(f.knight, COMPONENT.Alive)!.alive).toBe(true);
-      expect(f.world.getComponent<AliveComponent>(victim, COMPONENT.Alive)!.alive).toBe(true);
+      expect(f.world.getComponent(f.knight, COMPONENT.Alive)!.alive).toBe(true);
+      expect(f.world.getComponent(victim, COMPONENT.Alive)!.alive).toBe(true);
     });
   }
   test(`passing potion and inspecting another identity do not spend reflection ${locale}`, async () => {
@@ -145,7 +145,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     f.choices.inspectKnight = false;
     expect((await f.run()).deaths).toEqual([]);
     expect(
-      getEvilKnightState(f.world.getComponent<RoleComponent>(f.knight, COMPONENT.Role))!
+      getEvilKnightState(f.world.getComponent(f.knight, COMPONENT.Role))!
         .reflectionRemaining,
     ).toBe(1);
   });

@@ -52,7 +52,7 @@ const board = (window: ActionWindow) => ({
 });
 
 const role = (world: ReturnType<typeof bootstrapGame>["world"], id: number) =>
-  world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  world.getComponent(id, COMPONENT.Role)!;
 
 const call = (target_id: number | null) => ({
   name: "self_destruct_with_target" as const,
@@ -160,12 +160,12 @@ for (const locale of ["zh-CN", "en"] as const)
           async getAction(request) {
             if (request.actorId === 2) {
               if (change === "target_life") {
-                const alive = world.getComponent<{ alive: boolean }>(3, COMPONENT.Alive)!;
+                const alive = world.getComponent(3, COMPONENT.Alive)!;
                 alive.alive = false;
                 alive.alive = true;
               }
               if (change === "target_component")
-                world.addComponent<unknown>(3, COMPONENT.Alive, { alive: true });
+                world.addComponent(3, COMPONENT.Alive, { alive: true });
               if (change === "resource")
                 setWhiteWolfKingState(role(world, 1), { canDetonate: true });
               if (change === "role") role(world, 1).role = Role.Wolf;

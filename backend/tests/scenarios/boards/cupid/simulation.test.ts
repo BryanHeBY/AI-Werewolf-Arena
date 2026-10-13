@@ -1,7 +1,5 @@
 /**
- * Scenario tests run fifty fixed-seed Cupid games per board and locale through the existing baseline simulation provider.
- * Inputs include both configured lovers-victory policies; independent literal membership, count, original-life and terminal-outcome expectations check the real game cycles.
- * The baseline retains its explicit true-camp test privilege and F01 production exception. These tests do not claim that provider is a player-knowledge or expected-rule oracle, and use no model transport.
+ * 完整场景测试：负责按每种板子和语言的原五十个固定种子执行丘比特对局，覆盖两种恋人胜利政策。输入为原 baseline 模拟策略；成员、数量、原生命和终局采用独立字面预期。baseline 明确保留真实阵营测试特权，不能据此声称它只消费玩家知识或充当独立规则 oracle；不调用模型传输。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -79,7 +77,7 @@ for (const { name, board } of boards)
           } else {
             expect(result.outcome.primary.kind).toBe("faction");
             const actualRoles = alive.map(
-              (id) => [id, game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!] as const,
+              (id) => [id, game.world.getComponent(id, COMPONENT.Role)!] as const,
             );
             const wolves = actualRoles.filter(([, role]) => role.camp === Camp.Wolf).length;
             const good = actualRoles.filter(
@@ -95,7 +93,7 @@ for (const { name, board } of boards)
             expect(result.outcome.winningPlayerIds).toEqual(
               game.playerIds.filter((id) =>
                 game.world
-                  .getComponent<VictoryComponent>(id, COMPONENT.Victory)!
+                  .getComponent(id, COMPONENT.Victory)!
                   .affiliations.some((a) => a.kind === "faction" && a.faction === result.winner),
               ),
             );

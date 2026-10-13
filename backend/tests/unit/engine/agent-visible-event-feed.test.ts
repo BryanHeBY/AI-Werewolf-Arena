@@ -1,8 +1,5 @@
 /**
- * Unit tests: Agent event feeds use explicit wolf, role, vote and public result facts;
- * handwritten per-viewer fields check privacy and summarized public ballots. Inputs and
- * expected outcomes remain the original literal or immutable-fixture oracle; these module
- * assertions invoke no model or complete-game driver.
+ * 单元测试：验证玩家事件 feed 的隐私与公开投票摘要。输入为明确狼队、角色、投票及公开结果事实；每位观察者的字段采用手写预期，不用真实私有状态代替已授权事件。
  */
 import { Phase } from "../../../src/core";
 import { PotionType } from "../../../src/core";
@@ -21,7 +18,7 @@ describe("buildAgentVisibleEventFeed", () => {
       context.world
         .entityIds()
         .find(
-          (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === roleName,
+          (id) => context.world.getComponent(id, COMPONENT.Role)?.role === roleName,
         )!;
     const wolfId = findRole("wolf");
     const witchId = findRole("witch");
@@ -157,12 +154,12 @@ describe("buildAgentVisibleEventFeed", () => {
     const villagerId = context.world
       .entityIds()
       .find(
-        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "villager",
+        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === "villager",
       )!;
     const wolfId = context.world
       .entityIds()
       .find(
-        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "wolf",
+        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === "wolf",
       )!;
     const publicEvents: GameEvent[] = [
       { timestamp: 1, type: "phase_changed", payload: { day: 1, phase: Phase.Night } },

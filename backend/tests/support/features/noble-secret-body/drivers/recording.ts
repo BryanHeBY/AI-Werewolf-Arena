@@ -1,8 +1,5 @@
 /**
- * Owns original test driver noble-secret-body controlled execution and recording support. Inputs are literal action
- * plans and original fixture handles; outputs preserve driver callbacks, traces, caches and cleanup.
- * Concrete transport/replay or scripted actions retain their original lifetimes; supplied handwritten
- * oracles own expected outcomes, and no billed model or production state writer is introduced.
+ * 测试 driver：负责原贵族／不死之身受控执行及录制。输入为原固定角色、动作与局部 store；输出保留原请求和录制前缀，独立预期不由此 driver 生成，不调用模型。
  */
 import { nobleLiteralPlans } from "../builders/literal-plans";
 import { readFile } from "node:fs/promises";
@@ -168,9 +165,9 @@ export async function recordNobleLiteral(
         ...(snapshot.result ? { gameResult: snapshot.result } : {}),
         players: game.world.entityIds().map((id) => ({
           player_id: id,
-          role: game.world.getComponent<{ role: Role }>(id, COMPONENT.Role)!.role,
-          camp: game.world.getComponent<{ camp: Camp }>(id, COMPONENT.Camp)!.camp,
-          alive: game.world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive,
+          role: game.world.getComponent(id, COMPONENT.Role)!.role,
+          camp: game.world.getComponent(id, COMPONENT.Camp)!.camp,
+          alive: game.world.getComponent(id, COMPONENT.Alive)!.alive,
         })),
       });
     });

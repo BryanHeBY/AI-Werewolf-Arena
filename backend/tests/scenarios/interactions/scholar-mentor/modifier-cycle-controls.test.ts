@@ -1,7 +1,5 @@
 /**
- * Interaction scenarios verify actual Scholar Mentor modifier cycles preserve native versus bonus eligibility, payment and knowledge.
- * Input: Original seeded control variants, both modifiers and deterministic first/second-cycle role responses.
- * Output and oracle: Explicit choice/history, bonus/request and result assertions remain tied to executed phases; original control tables and RNG inputs stay unchanged.
+ * 交互场景测试：验证学者／导师修饰周期的原生／额外资格、付款和知识。输入为原种子控制变体、两种修饰及确定首／次周期回复；选择／历史、额外请求和结果为明确预期，控制表及 RNG 输入不变。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -39,7 +37,7 @@ for (const locale of ["zh-CN", "en"] as const)
           game = bootstrapGame(config, { locale, random });
         const ids = (name: Role) =>
           game.playerIds.filter(
-            (id) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === name,
+            (id) => game.world.getComponent(id, COMPONENT.Role)?.role === name,
           );
         const scholar = ids(Role.DayScholar)[0]!,
           mentor = ids(Role.NightMentor)[0]!,
@@ -164,7 +162,7 @@ for (const locale of ["zh-CN", "en"] as const)
         const bonus = events.filter((e) => e.type === "modifier_bonus_resolved"),
           conflict = events.filter((e) => e.type === "modifier_conflict_resolved");
         const charge = scholarMentorStateForRole(
-          game.world.getComponent<RoleComponent>(scholar, COMPONENT.Role),
+          game.world.getComponent(scholar, COMPONENT.Role),
         )!;
         expect(charge.history).toHaveLength(1);
         expect(charge.history[0]!.day).toBe(2);

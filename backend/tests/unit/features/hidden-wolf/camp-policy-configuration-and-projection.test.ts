@@ -54,7 +54,7 @@ for (const campInspection of ["awa_inheritance_v1", "netease_2020_good_v1"] as c
       expect(
         getDefaultConfigRenderRegistry().renderBoardConfigPrompt(game.config, locale),
       ).toContain(campInspection);
-      const hidden = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+      const hidden = game.world.getComponent(1, COMPONENT.Role)!;
       const prompt = renderRolePrompt(hidden, locale);
       expect(prompt).toContain(
         campInspection === "netease_2020_good_v1"
@@ -91,7 +91,7 @@ for (const campInspection of ["awa_inheritance_v1", "netease_2020_good_v1"] as c
 test("omission preserves the legacy raw state and unknown policies fail closed", () => {
   const game = setup();
   expect(game.definition.roles.hidden_wolf).toEqual({ campInspection: "awa_inheritance_v1" });
-  expect(getHiddenWolfState(game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!)).toEqual({
+  expect(getHiddenWolfState(game.world.getComponent(1, COMPONENT.Role)!)).toEqual({
     hasInheritedKnife: false,
   });
   for (const bad of [

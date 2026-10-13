@@ -1,10 +1,5 @@
 /**
- * Unit tests for trickster; Isolated trickster frame contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试：验证捣蛋鬼独立 frame 契约。输入为原内存 owner、frame、reader 与受控非法修改；原字面断言、对象身份及拒绝结果为预期，不组装完整对局或模型传输。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -51,7 +46,7 @@ function fixture() {
     { fixedRoles },
   );
   // Isolated frame fixture; production role registration is a later integration step.
-  const role = world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+  const role = world.getComponent(1, COMPONENT.Role)!;
   role.role = "trickster" as Role;
   (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
     trickster: createTricksterState(),
@@ -80,7 +75,7 @@ test("trickster frame keeps committed mapping after caster death", () => {
   const f = fixture();
   beginTricksterNight(f.world, 1);
   commitTricksterExchange(f.world, 1, 1, [2, 6]);
-  f.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!.alive = false;
+  f.world.getComponent(1, COMPONENT.Alive)!.alive = false;
   finishTricksterNight(f.world, 1);
   expect(resolveTricksterExile(f.world, 1, 2).effectiveId).toBe(6);
   expect(beginTricksterNight(f.world, 2)).toBeNull();
@@ -89,7 +84,7 @@ test("trickster mapped dead target yields no extra death rather than reverting",
   const f = fixture();
   beginTricksterNight(f.world, 1);
   commitTricksterExchange(f.world, 1, 1, [2, 6]);
-  f.world.getComponent<AliveComponent>(6, COMPONENT.Alive)!.alive = false;
+  f.world.getComponent(6, COMPONENT.Alive)!.alive = false;
   finishTricksterNight(f.world, 1);
   expect(resolveTricksterExile(f.world, 1, 2)).toEqual({
     requestedId: 2,
@@ -120,7 +115,7 @@ test("trickster rejects second voluntary pass and permits forced exhausted night
   commitTricksterExchange(f.world, 1, 2, [1, 2]);
   finishTricksterNight(f.world, 2);
   for (const id of f.world.entityIds())
-    if (id !== 1) f.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
+    if (id !== 1) f.world.getComponent(id, COMPONENT.Alive)!.alive = false;
   expect(beginTricksterNight(f.world, 3)).toBeNull();
   finishTricksterNight(f.world, 3);
   expect(getTricksterState(f.role)!.history).toHaveLength(2);
@@ -153,7 +148,7 @@ for (const kind of ["state", "role", "revival"] as const)
       };
     if (kind === "role") f.role.camp = Camp.Good;
     if (kind === "revival") {
-      const life = f.world.getComponent<AliveComponent>(6, COMPONENT.Alive)!;
+      const life = f.world.getComponent(6, COMPONENT.Alive)!;
       life.alive = false;
       life.alive = true;
     }

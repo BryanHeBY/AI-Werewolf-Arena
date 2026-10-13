@@ -28,12 +28,12 @@ function fixture(policy: EvilKnightShotPolicy = "night_shot_immune") {
   const id = (kind: Role) =>
     world
       .entityIds()
-      .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === kind)!;
+      .find((id) => world.getComponent(id, COMPONENT.Role)?.role === kind)!;
   const knight = id(Role.Wolf),
     seer = id(Role.Seer),
     witch = id(Role.Witch) ?? id(Role.Villager);
-  const role = world.getComponent<RoleComponent>(knight, COMPONENT.Role)!;
-  world.getComponent<RoleComponent>(witch, COMPONENT.Role)!.role = Role.Witch;
+  const role = world.getComponent(knight, COMPONENT.Role)!;
+  world.getComponent(witch, COMPONENT.Role)!.role = Role.Witch;
   role.role = "evil_knight" as Role;
   const state = freshEvilKnightState(policy);
   (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
@@ -96,7 +96,7 @@ for (const mode of ["role", "state", "camp", "policy", "life", "revive"] as cons
     if (mode === "policy") f.state.shotPolicy = "hunter_shot_bypasses";
     if (mode === "life") f.world.addComponent(f.knight, COMPONENT.Alive, createAliveComponent());
     if (mode === "revive") {
-      const life = f.world.getComponent<AliveComponent>(f.knight, COMPONENT.Alive)!;
+      const life = f.world.getComponent(f.knight, COMPONENT.Alive)!;
       life.alive = false;
       life.alive = true;
     }
@@ -123,7 +123,7 @@ test("replacement and revived caster lives cannot inherit retaliation", () => {
       effect = f.commit()!;
     if (replace) f.world.addComponent(f.seer, COMPONENT.Alive, createAliveComponent());
     else {
-      const life = f.world.getComponent<AliveComponent>(f.seer, COMPONENT.Alive)!;
+      const life = f.world.getComponent(f.seer, COMPONENT.Alive)!;
       life.alive = false;
       life.alive = true;
     }
@@ -132,7 +132,7 @@ test("replacement and revived caster lives cannot inherit retaliation", () => {
 });
 test("only native good Seer or Witch identity can trigger this finite resource", () => {
   const f = fixture();
-  f.world.getComponent<RoleComponent>(f.seer, COMPONENT.Role)!.role = Role.Villager;
+  f.world.getComponent(f.seer, COMPONENT.Role)!.role = Role.Villager;
   expect(f.commit()).toBeNull();
   expect(f.state.reflectionRemaining).toBe(1);
 });
@@ -159,7 +159,7 @@ for (const marks of [
   test(`retaliation remains independent of ordinary marks ${marks.join(",")}`, () => {
     const f = fixture(),
       effect = f.commit()!;
-    const status = f.world.getComponent<StatusMarksComponent>(f.seer, COMPONENT.StatusMarks)!;
+    const status = f.world.getComponent(f.seer, COMPONENT.StatusMarks)!;
     for (const mark of marks) status.add(mark);
     const damage = new DamageResolutionSystem().resolve(f.world, {
       retaliationAttacks: [effect, effect],
@@ -175,7 +175,7 @@ for (const marks of [
         ...(marks.includes(StatusMark.WolfKillMark) ? [DeathCause.WolfKill] : []),
       ]),
     );
-    expect(f.world.getComponent<AliveComponent>(f.seer, COMPONENT.Alive)!.alive).toBe(true);
+    expect(f.world.getComponent(f.seer, COMPONENT.Alive)!.alive).toBe(true);
   });
 }
 test("revoked retaliation contributes no damage; absence of status marks does not suppress a valid effect", () => {
@@ -196,7 +196,7 @@ for (const shot of ["night_shot_immune", "hunter_shot_bypasses"] as const) {
     test(`persistent night immunity ${shot}/poison=${poison} survives spent reflection`, () => {
       const f = fixture(shot);
       f.commit();
-      const marks = f.world.getComponent<StatusMarksComponent>(f.knight, COMPONENT.StatusMarks)!;
+      const marks = f.world.getComponent(f.knight, COMPONENT.StatusMarks)!;
       marks.add(StatusMark.WolfKillMark);
       if (poison) marks.add(StatusMark.PoisonMark);
       const damage = new DamageResolutionSystem().resolve(f.world, {
@@ -213,7 +213,7 @@ test("revoked immunity binding cannot protect a replacement body", () => {
   const f = fixture();
   f.world.addComponent(f.knight, COMPONENT.Alive, createAliveComponent());
   f.world
-    .getComponent<StatusMarksComponent>(f.knight, COMPONENT.StatusMarks)!
+    .getComponent(f.knight, COMPONENT.StatusMarks)!
     .add(StatusMark.PoisonMark);
   const damage = new DamageResolutionSystem().resolve(f.world, { nightImmunities: [f.binding] });
   expect(damage.deaths).toEqual([f.knight]);
@@ -222,7 +222,7 @@ test("night immunity does not remove retaliation against its caster", () => {
   const f = fixture(),
     effect = f.commit()!;
   f.world
-    .getComponent<StatusMarksComponent>(f.knight, COMPONENT.StatusMarks)!
+    .getComponent(f.knight, COMPONENT.StatusMarks)!
     .add(StatusMark.PoisonMark);
   const damage = new DamageResolutionSystem().resolve(f.world, {
     nightImmunities: [f.binding],

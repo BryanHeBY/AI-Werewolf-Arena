@@ -38,7 +38,7 @@ const roles = [Role.Wolf, Role.Witch, Role.Seer, Role.Guard, Role.Villager, Role
   stage = WITCH_NIGHT_STAGES.find((s) => s.id === "witch_action")!;
 const fixture = () => bootstrapGame(config, { fixedRoles: roles }),
   role = (game: ReturnType<typeof fixture>, id: number) =>
-    game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+    game.world.getComponent(id, COMPONENT.Role)!;
 function context(
   game: ReturnType<typeof fixture>,
   events: GameEvent[],
@@ -65,7 +65,7 @@ function context(
         context: extra,
       }),
     ensureMarks: (id) => {
-      let marks = game.world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks);
+      let marks = game.world.getComponent(id, COMPONENT.StatusMarks);
       if (!marks) {
         marks = new StatusMarksComponent();
         game.world.addComponent(id, COMPONENT.StatusMarks, marks);
@@ -102,7 +102,7 @@ for (const change of [
       events,
       async () => {
         if (change === "actor_revive" || change === "target_revive") {
-          const life = game.world.getComponent<{ alive: boolean }>(
+          const life = game.world.getComponent(
             change === "actor_revive" ? 2 : 5,
             COMPONENT.Alive,
           )!;
@@ -131,7 +131,7 @@ for (const change of [
     expect(events).toEqual([]);
     expect(
       game.world
-        .getComponent<StatusMarksComponent>(5, COMPONENT.StatusMarks)
+        .getComponent(5, COMPONENT.StatusMarks)
         ?.has(StatusMark.PoisonMark) ?? false,
     ).toBe(false);
   });
@@ -175,7 +175,7 @@ for (const change of [
     expect(ctx.state.poisonClaims![0].source.id).toBe(2);
     expect(ctx.state.poisonClaims![0].target.id).toBe(5);
     if (change === "caster_dead" || change === "caster_revive" || change === "target_revive") {
-      const life = game.world.getComponent<{ alive: boolean }>(
+      const life = game.world.getComponent(
         change === "target_revive" ? 5 : 2,
         COMPONENT.Alive,
       )!;
@@ -306,7 +306,7 @@ for (const change of [
       expect(events).toEqual([]);
       expect(
         game.world
-          .getComponent<StatusMarksComponent>(5, COMPONENT.StatusMarks)
+          .getComponent(5, COMPONENT.StatusMarks)
           ?.has(StatusMark.PoisonMark) ?? false,
       ).toBe(false);
     });

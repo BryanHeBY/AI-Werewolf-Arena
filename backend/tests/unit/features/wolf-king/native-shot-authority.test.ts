@@ -56,10 +56,10 @@ const fixture = (locale: "zh-CN" | "en") =>
   });
 
 const role = (world: ReturnType<typeof fixture>["world"], id: number) =>
-  world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  world.getComponent(id, COMPONENT.Role)!;
 
 const dead = (world: ReturnType<typeof fixture>["world"], id: number) => {
-  world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive = false;
+  world.getComponent(id, COMPONENT.Alive)!.alive = false;
 };
 
 const gun = (actorId: number, deathActionId: number): ActionRequest => ({
@@ -118,7 +118,7 @@ for (const locale of ["zh-CN", "en"] as const)
             : { extraDeaths: [], extraDeathSources: {} },
         );
         expect(getWolfKingState(role(world, 1))!.canShoot).toBe(false);
-        expect(world.getComponent<{ alive: boolean }>(3, COMPONENT.Alive)!.alive).toBe(true); // Hook proposes; resolver kills.
+        expect(world.getComponent(3, COMPONENT.Alive)!.alive).toBe(true); // Hook proposes; resolver kills.
         expect(events.map((event) => event.type)).toEqual(allowed ? ["wolf_king_shot"] : []);
         await hook(
           world,
@@ -329,7 +329,7 @@ for (const locale of ["zh-CN", "en"] as const)
             if (mode === "role") role(world, 1).role = Role.Wolf;
             if (mode === "resource") setWolfKingState(role(world, 1), { canShoot: true });
             if (mode === "life") {
-              world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive = true;
+              world.getComponent(1, COMPONENT.Alive)!.alive = true;
               dead(world, 1);
             }
             if (mode === "window") permit.close();

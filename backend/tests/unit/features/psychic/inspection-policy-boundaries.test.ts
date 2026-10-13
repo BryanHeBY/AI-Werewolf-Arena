@@ -57,7 +57,7 @@ const board = (roles = deck): BoardConfig => ({
 });
 
 const role = (game: ReturnType<typeof bootstrapGame>, actor: number) =>
-  game.world.getComponent<RoleComponent>(actor, COMPONENT.Role)!;
+  game.world.getComponent(actor, COMPONENT.Role)!;
 
 function context(
   game: ReturnType<typeof bootstrapGame>,
@@ -296,7 +296,7 @@ test("no living targets closes without a request/use/result, whereas three illeg
   expect(ability.uses).toBe(0);
   expect(events).toEqual([]);
   for (const id of game.world.getAliveEntityIds().filter((id) => id !== 1))
-    game.world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive = false;
+    game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
   await PSYCHIC_INSPECTION_STAGE.execute(
     context(game, events, async () => {
       throw new Error("no_empty_request");
@@ -334,7 +334,7 @@ for (const change of [
         calls++;
         if (change === "clock") current = false;
         if (change === "actor_revive" || change === "target_revive") {
-          const life = game.world.getComponent<{ alive: boolean }>(
+          const life = game.world.getComponent(
             change === "actor_revive" ? 1 : 2,
             COMPONENT.Alive,
           )!;

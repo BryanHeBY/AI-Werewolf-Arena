@@ -184,7 +184,7 @@ for (const locale of ["zh-CN", "en"] as const)
         expect(fallbacks).toBe(0);
         expect(closes).toBe(1);
         expect(
-          getGuardState(world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget,
+          getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget,
         ).toBeNull();
         const summary = await manager.finalize({
           endedAtIso: new Date(1).toISOString(),

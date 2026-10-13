@@ -63,7 +63,7 @@ const fixture = (targetRole = Role.Hunter) => {
 
 type Game = ReturnType<typeof fixture>;
 
-const role = (game: Game, id = 1) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+const role = (game: Game, id = 1) => game.world.getComponent(id, COMPONENT.Role)!;
 
 const state = (game: Game) => getAwakenedState(role(game))!;
 
@@ -194,7 +194,7 @@ test("revoked paid copied poison does not fall through its old PoisonMark or era
 test("an extra knife remains current after its stock is spent and the slot closes, and the base knife remains independent", async () => {
   const game = fixture();
   ready(game, "wolf");
-  game.world.getComponent<AliveComponent>(2, COMPONENT.Alive)!.alive = false;
+  game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   refreshAwakenedInheritance(game.world, 1, []);
   const ctx = context(game, 2, async () => ({ name: "awakened_attack", args: { target_id: 6 } }));
   await stage("awakened_opening").execute(ctx);
@@ -242,7 +242,7 @@ test("whole night reentry after a paid mimic is explicit and preserves the learn
 test("a completed night with only a Villager template and inherited base knife cannot be replayed in the same World/day", async () => {
   const game = fixture();
   ready(game, "villager");
-  game.world.getComponent<AliveComponent>(2, COMPONENT.Alive)!.alive = false;
+  game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   refreshAwakenedInheritance(game.world, 1, []);
   const pipeline = new NightPipeline({
     world: game.world,

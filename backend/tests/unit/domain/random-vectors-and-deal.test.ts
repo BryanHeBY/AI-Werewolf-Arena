@@ -1,8 +1,5 @@
 /**
- * Unit tests own frozen named-RNG vectors and fixed-role deck validation. Literal seeds,
- * reference floats and complete role lists supply input; exact nonconsuming forks and
- * original invalid-deck assertions remain the oracle. These module checks run no complete
- * game.
+ * 单元测试：验证固定命名 RNG 向量及固定角色发牌校验。输入为字面种子、参考浮点数和完整角色表；不消耗父随机流的 fork 及原非法牌组断言为预期，不执行完整对局。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -34,7 +31,7 @@ test("fixed role fixtures preserve deck counts and never bypass board rules", ()
     random: createRandom("fixed"),
   });
   expect(
-    world.entityIds().map((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role),
+    world.entityIds().map((id) => world.getComponent(id, COMPONENT.Role)?.role),
   ).toEqual(fixedRoles);
   expect(() => bootstrapGame(sixPlayerMvpConfig, { fixedRoles: fixedRoles.slice(1) })).toThrow(
     "fixed_role_deck_mismatch",

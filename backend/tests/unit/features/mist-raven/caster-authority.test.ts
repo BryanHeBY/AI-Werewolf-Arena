@@ -212,7 +212,7 @@ for (const day of [1, 2])
 for (const mode of ["same-value", "camp-value", "getter"] as const)
   test(`actual Camp component is bound/${mode}`, () => {
     const { world, id, authority } = fixture();
-    const camp = world.getComponent<ReturnType<typeof createCampComponent>>(id, COMPONENT.Camp)!;
+    const camp = world.getComponent(id, COMPONENT.Camp)!;
     let calls = 0;
     if (mode === "same-value") world.addComponent(id, COMPONENT.Camp, { ...camp });
     else if (mode === "camp-value") camp.camp = Camp.Wolf;

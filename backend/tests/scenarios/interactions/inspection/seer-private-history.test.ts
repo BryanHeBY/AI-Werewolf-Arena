@@ -86,8 +86,8 @@ for (const locale of ["zh-CN", "en"] as const) {
           isWerewolf: inspectedCamp === Camp.Wolf,
         },
       ]);
-      expect(world.getComponent<RoleComponent>(1, COMPONENT.Role)!.camp).toBe(Camp.Wolf);
-      const state = getSeerState(world.getComponent<RoleComponent>(3, COMPONENT.Role)!)!;
+      expect(world.getComponent(1, COMPONENT.Role)!.camp).toBe(Camp.Wolf);
+      const state = getSeerState(world.getComponent(3, COMPONENT.Role)!)!;
       expect(state.lastResult).toEqual({ kind: "camp", camp: inspectedCamp });
       expect(state.history).toEqual([
         {
@@ -126,7 +126,7 @@ for (const locale of ["zh-CN", "en"] as const) {
         [],
       );
       expect(
-        renderRolePrompt(world.getComponent<RoleComponent>(3, COMPONENT.Role)!, locale),
+        renderRolePrompt(world.getComponent(3, COMPONENT.Role)!, locale),
       ).toContain(text(locale, "inspection.latest", { target: 1, result: expectedLabel }));
     });
 }

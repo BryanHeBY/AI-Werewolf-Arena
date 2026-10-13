@@ -1,7 +1,5 @@
 /**
- * Knight scenarios verify actual day windows, prior blasts, miss words/badge and exact final faction settlement.
- * Input: Original locale/window matrices and fixed controlled PM speeches, duels and death-chain actions.
- * Output and oracle: Handwritten stage/event order, stock and final results remain unchanged; neither expected data nor role behavior is generated or replaced.
+ * 骑士场景测试：验证实际白天窗口、前置自爆、未中后的遗言／警徽及最终阵营。输入为原语言／窗口矩阵与受控发言、决斗和死亡连锁；阶段／事件、库存及终局采用手写预期，不替换角色规则。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -34,7 +32,7 @@ const board = (window: KnightDuelWindow) => ({
 });
 
 const role = (world: ReturnType<typeof bootstrapGame>["world"], id: number) =>
-  world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  world.getComponent(id, COMPONENT.Role)!;
 
 const duel = (target_id: number) => ({ name: "duel" as const, args: { target_id, confirm: true } });
 

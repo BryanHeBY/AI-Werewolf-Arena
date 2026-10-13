@@ -1,8 +1,5 @@
 /**
- * Time Consort recording/verifier scenarios verify reflection scope, resources and independent death causality.
- * Input: Fixed native games, adopted scope policies and explicit record/inventory/death mutations.
- * Output and independent oracle: Handwritten result/resource checkpoints and precise rejection of forged causal tapes.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 复现场景测试：验证时间狼妃录制与 verifier 的反射范围、资源及独立死因。输入为固定原生对局、既有政策及明确记录／库存／死亡修改；手写资源和结果 checkpoint 及伪造因果 Tape 的拒绝为预期，不调用计费模型或重写期望归档。
  */
 import { validateTimeConsortRecord } from "../../../../src/recording/time_consort_record";
 import { expect, test } from "bun:test";
@@ -60,7 +57,7 @@ function recording(
     );
     const native = new ObservedPlayersActionProvider(context.world, strategies, config);
     const locked = context.playerIds.find(
-      (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Wolf,
+      (id) => context.world.getComponent(id, COMPONENT.Role)?.role === Role.Wolf,
     )!;
     const root = await createTestTempDirectory("awa-time-consort-tape-");
     try {

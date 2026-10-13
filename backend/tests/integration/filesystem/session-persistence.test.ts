@@ -1,7 +1,5 @@
 /**
- * Filesystem integration tests verify SessionRecordManager persists public/player timelines, manifests, debug summaries and isolated recording scopes.
- * Input: Original literal event/round/report records, temporary stores, concurrent scopes and injected write failures.
- * Output and oracle: Explicit stored fields, stage sequences, debug text and warning behavior are read from real files; existing fixture archives are not rewritten.
+ * 文件集成测试：验证 SessionRecordManager 落盘公开／玩家时间线、manifest、调试摘要及隔离录制 scope。输入为原临时目录、会话与事件；既有字面文件预期保留真实 I/O 边界，不重新生成 fixture。
  */
 import { promises as fs } from "fs";
 import path from "path";
@@ -127,7 +125,7 @@ describe("SessionRecordManager", () => {
       },
     ];
     const playerId = 1;
-    const role = context.world.getComponent<any>(playerId, COMPONENT.Role);
+    const role = context.world.getComponent(playerId, COMPONENT.Role);
     for (let index = 0; index < events.length; index += 1) {
       const event = events[index];
       const visibleEvent = buildAgentVisibleEvent(context.world, event as any, playerId, index + 1);

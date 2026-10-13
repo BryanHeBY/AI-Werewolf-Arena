@@ -86,12 +86,12 @@ for (const [stage, old, changed] of [
                         changed === "actor"
                           ? actorId
                           : scenario.mapping.get(stage === "secret_body" ? 7 : 6)!,
-                      previous = world.getComponent<AliveComponent>(id, COMPONENT.Alive),
+                      previous = world.getComponent(id, COMPONENT.Alive),
                       replacement = createAliveComponent(true, locale);
                     expect(Number.isSafeInteger(id)).toBe(true);
                     expect(previous).toBeDefined();
                     world.addComponent(id, COMPONENT.Alive, replacement);
-                    expect(world.getComponent<AliveComponent>(id, COMPONENT.Alive)).toBe(
+                    expect(world.getComponent(id, COMPONENT.Alive)).toBe(
                       replacement,
                     );
                     expect(replacement).not.toBe(previous);

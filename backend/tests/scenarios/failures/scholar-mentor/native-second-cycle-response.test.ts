@@ -1,7 +1,5 @@
 /**
- * Failure scenarios verify actual Scholar Mentor second-cycle invalid or missing requests preserve the paid choice prefix without bonus settlement.
- * Input: The original ten failure variants, seeded first cycle and controlled second-cycle native/bonus responses.
- * Output and oracle: Literal absent bonus/night result and remaining/history values stay attached to the failed phase execution; no expected action is repaired or regenerated.
+ * 故障场景测试：验证学者／导师第二周期非法或缺失回复保留已付选择、不执行额外结算。输入为原十种失败变体、有种子首周期及受控次周期原生／额外回复；额外行动缺席、夜结果与剩余库存／历史为字面预期，不修复动作或生成预期。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -39,7 +37,7 @@ for (const variant of [
         game = bootstrapGame(config, { random });
       const ids = (name: Role) =>
         game.playerIds.filter(
-          (id) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === name,
+          (id) => game.world.getComponent(id, COMPONENT.Role)?.role === name,
         );
       const scholar = ids(Role.DayScholar)[0]!,
         mentor = ids(Role.NightMentor)[0]!,
@@ -129,7 +127,7 @@ for (const variant of [
       expect(events.some((e) => e.type === "modifier_bonus_resolved")).toBe(false);
       expect(events.some((e) => e.type === "night_resolved")).toBe(false);
       const state = scholarMentorStateForRole(
-        game.world.getComponent<RoleComponent>(scholar, COMPONENT.Role),
+        game.world.getComponent(scholar, COMPONENT.Role),
       )!;
       const choiceInvalid =
         variant === "missing-choice" || variant === "invalid-mode" || variant === "invalid-target";

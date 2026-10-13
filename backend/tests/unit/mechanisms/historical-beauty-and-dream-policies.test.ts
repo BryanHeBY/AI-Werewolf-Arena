@@ -1,5 +1,5 @@
 /**
- * Unit tests check Beauty/Dream historical suppression, captured scope invalidation, compound damage and transferred policy metadata. Inputs are explicit source vectors, captured lives and literal parameter variants; handwritten cause arithmetic and exact policy rejection are the oracle. Full recorded phase chains and strict replay remain scenarios.
+ * 单元测试：验证狼美人／摄梦历史抑制、已捕获 scope 失效、复合伤害与转移政策元数据。输入为原历史、scope 和伤害样本；原字面断言及独立 fixture 保留，不替换结算预期。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -79,8 +79,8 @@ for (const policy of BEAUTY_DEATH_LINK_POLICIES)
 test("policy changes revoke captured dream scope and established charm binding; independent DTOs reject unknown values", () => {
   const roles = [Role.Dreamer, Role.WolfBeauty, Role.Wolf, Role.Hunter, Role.Witch, Role.Villager];
   const game = bootstrapGame(config(roles), { fixedRoles: roles });
-  const dreamRole = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
-    beautyRole = game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!;
+  const dreamRole = game.world.getComponent(1, COMPONENT.Role)!,
+    beautyRole = game.world.getComponent(2, COMPONENT.Role)!;
   const ability = allNightAbilities(dreamRole).find((a) => a.kind === "dream")!;
   const scope = captureNightAbilityScope(game.world, 1, ability, 1, () => true)!;
   expect(scope.isEligible()).toBe(true);
@@ -224,7 +224,7 @@ for (const policy of DREAM_PROTECTION_POLICIES)
       }),
     ).toThrow("ability_transfer_resources_changed");
     expect(
-      allNightAbilities(game.world.getComponent<RoleComponent>(4, COMPONENT.Role)).find(
+      allNightAbilities(game.world.getComponent(4, COMPONENT.Role)).find(
         (a) => a.id === gift.id,
       ),
     ).toBe(gift);
@@ -233,7 +233,7 @@ for (const policy of DREAM_PROTECTION_POLICIES)
       statePolicy: (s) => structuredClone(s),
     });
     const received = allNightAbilities(
-      game.world.getComponent<RoleComponent>(5, COMPONENT.Role),
+      game.world.getComponent(5, COMPONENT.Role),
     ).find((a) => a.id === "transfer:dream")!;
     expect(received.state).toEqual(gift.state);
     expect(received.uses).toBe(1);

@@ -1,10 +1,5 @@
 /**
- * Owns Radiant/Eclipse test fixture construction from its public board and locale.
- * Inputs are the tracked configs.example board JSON and selected locale; outputs
- * are the original fixed-role World, pipeline, request/event buffers and read handles.
- * Public readFile/JSON/board parsing and deterministic input construction remain.
- * This builder does not run a night, settle deaths or produce expected outcomes;
- * test drivers and handwritten oracles retain those separate responsibilities.
+ * 测试 builder：负责按辉光／蚀月公开板子与语言构造原运行 fixture。输入为原配置、角色及受控组件；输出保留原对象和装配顺序，预期仍由独立字面测试提供，不执行模型或替换 oracle。
  */
 import { Role } from "../../../../../src/core";
 import { readFile } from "node:fs/promises";
@@ -50,7 +45,7 @@ export async function radiantFixture(locale: "zh-CN" | "en" = "zh-CN") {
     });
   const events: GameEvent[] = [],
     requests: ActionRequest[] = [];
-  const role = (id: number) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  const role = (id: number) => game.world.getComponent(id, COMPONENT.Role)!;
   const native = (id: number) =>
     allNightAbilities(role(id)).find((a) => a.source.kind === "native")!;
   const pipeline = new NightPipeline({

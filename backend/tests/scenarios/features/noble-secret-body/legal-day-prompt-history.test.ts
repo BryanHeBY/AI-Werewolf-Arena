@@ -72,7 +72,7 @@ async function run(locale: "zh-CN" | "en", kind: "body" | "noble", changed: bool
             actionSubmissionHint: "REVIEW_STATIC",
           }),
           system = g.policy.buildSystem(r, { supportsDebugReporting: true }),
-          role = g.world.getComponent<RoleComponent>(r.actorId, COMPONENT.Role)!;
+          role = g.world.getComponent(r.actorId, COMPONENT.Role)!;
         const name = kind === "body" ? "protect_secret_body" : "choose_servant",
           stage = kind === "body" ? "secret_body" : "night_noble",
           reception = new ActionReception(g.world);

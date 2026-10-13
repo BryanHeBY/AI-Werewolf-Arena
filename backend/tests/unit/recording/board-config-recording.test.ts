@@ -1,9 +1,5 @@
 /**
- * Unit tests: Board recording uses normalized contributions, reverse configurations and
- * historical absent-role parameters; literal JSON Tape and initialization equality check
- * lossless metadata serialization. Inputs and expected outcomes remain the original
- * literal or immutable-fixture oracle; these module assertions invoke no model or
- * complete-game driver.
+ * 单元测试：验证板子录制保留规范化贡献、逆向配置及历史缺席角色参数。输入为原配置与归档；JSON Tape 和初始化相等断言验证元数据无损序列化，不重新生成预期。
  */
 import { expect, test } from "bun:test";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
@@ -44,7 +40,7 @@ function trace(config: BoardConfig) {
       maxDays: 10,
       dealMode: "fixed",
       players: game.playerIds.map((id) => {
-        const role = game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+        const role = game.world.getComponent(id, COMPONENT.Role)!;
         return { id, name: String(id), role: role.role, camp: role.camp };
       }),
     },
@@ -79,10 +75,10 @@ for (const rule of Object.values(WitchSelfHealRule))
       );
       const restored = bootstrapGame(record.metadata.normalizedBoard);
       const witchId = restored.playerIds.find(
-        (id) => restored.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Witch,
+        (id) => restored.world.getComponent(id, COMPONENT.Role)?.role === Role.Witch,
       )!;
       expect(
-        getWitchState(restored.world.getComponent<RoleComponent>(witchId, COMPONENT.Role)!)
+        getWitchState(restored.world.getComponent(witchId, COMPONENT.Role)!)
           ?.selfHealRule,
       ).toBe(rule);
     });

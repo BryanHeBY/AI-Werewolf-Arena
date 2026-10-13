@@ -1,7 +1,5 @@
 /**
- * Interaction scenarios verify Nightmare fear suppresses original native requests without extending stock or changing later death timing.
- * Input: Original locale/target/policy matrices and controlled multi-night fear, pass, knife, dream and Hunter replies.
- * Output and oracle: Literal request absence, consecutive-target rules, resource/history and night-versus-day shot assertions retain actual cycles; no World execution manufactures the expected state.
+ * 交互场景测试：验证梦魇恐惧抑制原生请求，不扩展库存或改变后续死亡时点。输入为原语言／目标／政策矩阵及多夜恐惧、跳过、狼刀、梦和猎人回复；请求缺席、连续目标、库存／历史及昼夜枪规则为字面预期，不用 World 推导预期。
  */
 import { getDreamerState } from "../../../../src/game/mechanisms/roles/dreamer/ports";
 import { expect, test } from "bun:test";
@@ -21,7 +19,7 @@ function fixture(locale: "zh-CN" | "en") {
   const id = (role: Role) =>
     game.world
       .entityIds()
-      .find((id) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === role)!;
+      .find((id) => game.world.getComponent(id, COMPONENT.Role)?.role === role)!;
   return {
     ...game,
     id,
@@ -61,7 +59,7 @@ function provider(
               .getAliveEntityIds()
               .filter(
                 (id) =>
-                  f.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Villager,
+                  f.world.getComponent(id, COMPONENT.Role)?.role === Role.Villager,
               )[(r.context.day - 1) % 4]!,
           },
         };
@@ -100,7 +98,7 @@ function provider(
   };
 }
 const alive = (f: ReturnType<typeof fixture>, id: number) =>
-  f.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive;
+  f.world.getComponent(id, COMPONENT.Alive)!.alive;
 for (const locale of ["zh-CN", "en"] as const) {
   for (const [role, tool] of [
     [Role.Seer, "check_identity"],
@@ -199,7 +197,7 @@ for (const wolfActionPolicy of ["standard", "no_blast_no_self_knife"] as const)
             f.world
               .entityIds()
               .find(
-                (id) => f.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === role,
+                (id) => f.world.getComponent(id, COMPONENT.Role)?.role === role,
               )!,
           nightmare: 0,
           hunter: 0,
@@ -213,7 +211,7 @@ for (const wolfActionPolicy of ["standard", "no_blast_no_self_knife"] as const)
       10,
     );
     const blasts = seen.filter((r) => r.allowedTools.includes("self_destruct"));
-    const roleOf = (id: number) => f.world.getComponent<RoleComponent>(id, COMPONENT.Role)!.role;
+    const roleOf = (id: number) => f.world.getComponent(id, COMPONENT.Role)!.role;
     expect(blasts.some((r) => roleOf(r.actorId) === Role.Wolf)).toBe(true);
     expect(blasts.some((r) => roleOf(r.actorId) === Role.NightmareShadow)).toBe(
       wolfActionPolicy === "standard",
@@ -234,7 +232,7 @@ for (const locale of ["zh-CN", "en"] as const) {
       },
       10,
     );
-    const state = getDreamerState(f.world.getComponent<RoleComponent>(f.dreamer, COMPONENT.Role)!)!;
+    const state = getDreamerState(f.world.getComponent(f.dreamer, COMPONENT.Role)!)!;
     expect(state.lastDay).toBe(1);
     await f.phaseManager.runSingleCycle(provider(f, { fear: f.dreamer, knife: target }), 10);
     expect(alive(f, target)).toBe(false);
@@ -256,7 +254,7 @@ for (const locale of ["zh-CN", "en"] as const) {
         10,
       );
     }
-    const state = getDreamerState(f.world.getComponent<RoleComponent>(f.dreamer, COMPONENT.Role)!)!;
+    const state = getDreamerState(f.world.getComponent(f.dreamer, COMPONENT.Role)!)!;
     expect(state.history.map((row) => row.day)).toEqual([1, 3]);
     expect(alive(f, target)).toBe(true);
   });

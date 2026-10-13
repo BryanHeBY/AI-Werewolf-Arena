@@ -1,9 +1,5 @@
 /**
- * Integration tests: Exercises actual MCP submissions against held Mist Raven role turns.
- * Literal late/closed/stale receipts and unchanged original facts check that retained
- * session capability cannot consume a revoked request. Existing literal expectations and
- * independently supplied fixture plans remain the oracle; transport/recording setup is
- * local and no billed model session is started.
+ * 传输集成测试：验证在受控雾鸦回合中提交真实 MCP 行动。输入为原保留的 session 能力；晚到／关闭／过期回执及事实不变采用字面预期，撤权请求不能消费，不启动计费模型。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";
@@ -108,7 +104,7 @@ for (const stage of ["alchemist_mist", "alchemist_snake", "raven_knife"] as cons
             throw new Error("fixture_target_not_reached");
           }),
         ]);
-        const role = game.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role)!;
+        const role = game.world.getComponent(request.actorId, COMPONENT.Role)!;
         const state = structuredClone(role.privateState),
           events = structuredClone(game.phaseManager.getEvents());
         const action: ToolCall =

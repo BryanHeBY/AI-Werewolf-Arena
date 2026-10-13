@@ -1,11 +1,8 @@
 /**
- * Owns entity IDs, component Maps and transient original-life death permissions.
- * Inputs are existing entity/slot operations and lifecycle callbacks; outputs
- * are the original mutable component references, selections and permission IDs.
- * Only this World writes its stores; factories and role owners retain their
- * value/state checks. Typed default calls add no runtime guard, copy or freeze.
- * Explicit legacy generics temporarily retain unchecked typing until C44 removes
- * that escape; stale life/currentness still revokes death permissions as before.
+ * 负责实体 ID、组件 Map 与原生命绑定的临时死亡行动许可。输入为既有实体／槽操作及
+ * 生命周期回调，输出保持原可写组件引用、筛选结果和许可 ID。World 唯一写入自己的存储，
+ * 工厂与角色所有者仍负责值和资源校验；槽推断不增加运行守卫、复制或冻结。
+ * 旧任意组件类型 T 重载已退出，读写关系由具名槽约束；死亡许可仍按原生命版本与当前性撤销，ID 本身不授权。
  */
 import { EntityId, Phase, Role } from "./model";
 import { COMPONENT, ComponentName } from "./components/names";
@@ -26,6 +23,7 @@ export class World {
   private entities: Set<EntityId> = new Set();
   private stores: Map<ComponentName, Map<EntityId, unknown>> = new Map();
   private nextDeathActionId = 1;
+  // 许可绑定原 Alive 对象和该对象的生命版本；复活、替换组件或失去当前性均撤销旧许可。
   private deathActions = new Map<
     EntityId,
     {
@@ -40,7 +38,7 @@ export class World {
     }
   >();
 
-  /** Engine-owned, transient permission; its ID alone does not grant an action. */
+  /** 引擎拥有的临时行动许可；ID 不授予行动。World 复核原生命与传入的当前性回调，带阶段的查询另核许可记录的 phase／day。 */
   openDeathAction(
     actorId: EntityId,
     tool: "shoot" | "speak" | "choose_badge_successor",
@@ -169,10 +167,7 @@ export class World {
     entityId: EntityId,
     name: K,
     component: C,
-  ): void;
-  /** @deprecated C44: explicit legacy type arguments bypass the slot relation. */
-  addComponent<T = never>(entityId: EntityId, name: ComponentName, component: NoInfer<T>): void;
-  addComponent<T>(entityId: EntityId, name: ComponentName, component: T): void {
+  ): void {
     if (!this.hasEntity(entityId)) {
       throw new Error(`Entity ${entityId} does not exist`);
     }
@@ -182,12 +177,9 @@ export class World {
     store.set(entityId, component);
   }
 
-  getComponent<K extends ComponentName>(entityId: EntityId, name: K): ComponentMap[K] | undefined;
-  /** @deprecated C44: explicit legacy type arguments bypass the slot relation. */
-  getComponent<T = never>(entityId: EntityId, name: ComponentName): NoInfer<T> | undefined;
-  getComponent<T>(entityId: EntityId, name: ComponentName): T | undefined {
+  getComponent<K extends ComponentName>(entityId: EntityId, name: K): ComponentMap[K] | undefined {
     const store = this.stores.get(name);
-    return store?.get(entityId) as T | undefined;
+    return store?.get(entityId) as ComponentMap[K] | undefined;
   }
 
   /**

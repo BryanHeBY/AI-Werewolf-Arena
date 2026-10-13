@@ -69,7 +69,7 @@ export function fragrantPairOwnerFixture(
       createVictoryComponent([{ kind: "faction", faction: camp }]),
     );
   }
-  beforeInstall?.(world.getComponent<RoleComponent>(5, COMPONENT.Role)!);
+  beforeInstall?.(world.getComponent(5, COMPONENT.Role)!);
   installFragrantPairAuthority(world, events, 1, 5);
   let current = true,
     draws = 0;
@@ -82,9 +82,9 @@ export function fragrantPairOwnerFixture(
     isCurrent = () => current && (nightHook?.() ?? true);
   const open = (day = 1) => beginFragrantNight(world, day, random, isCurrent);
   const kill = (...ids: number[]) => {
-    for (const id of ids) world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
+    for (const id of ids) world.getComponent(id, COMPONENT.Alive)!.alive = false;
   };
-  const role = (id: number) => world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  const role = (id: number) => world.getComponent(id, COMPONENT.Role)!;
   const choices = (pair: number[] | null = [9, 10]) => {
     openFragrantBindChoice(world, 1).commit(pair);
     openPairCheckChoice(world, 1).commit([5, 6]);

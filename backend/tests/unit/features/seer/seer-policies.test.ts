@@ -48,7 +48,7 @@ function setup(parameters?: BoardConfig["seer"], locale: "zh-CN" | "en" = "en") 
   const resolved = parseBoardDefinition(boardDefinitionFromConfig("seer_policy", config));
   const game = bootstrapGame(resolved.config, { fixedRoles: roles, locale });
   const ability = findNightAbility(
-    game.world.getComponent<RoleComponent>(2, COMPONENT.Role),
+    game.world.getComponent(2, COMPONENT.Role),
     "seer_check",
   )!;
   const events: GameEvent[] = [];
@@ -159,7 +159,7 @@ test("fresh target policy rechecks history after await and exhausts without an i
     requiresAction: false,
     summary: "Exhausted",
   });
-  const role = game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!;
+  const role = game.world.getComponent(2, COMPONENT.Role)!;
   expect(
     SEER_ROLE_PROFILE.runtime.baselineAction!(
       role,
@@ -186,7 +186,7 @@ for (const locale of ["zh-CN", "en"] as const)
     );
     const prompt = captureNativeRolePresentation(
       SEER_ROLE_PROFILE.presentation!.id,
-      game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!,
+      game.world.getComponent(2, COMPONENT.Role)!,
       locale,
     );
     const board = getDefaultConfigRenderRegistry().renderBoardConfigPrompt(game.config, locale);

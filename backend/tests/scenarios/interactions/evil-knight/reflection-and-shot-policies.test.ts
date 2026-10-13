@@ -1,7 +1,5 @@
 /**
- * Interaction scenarios verify Evil Knight reflection and Hunter shot policies preserve actual inspection, death and winner order.
- * Input: Original locale/policy matrices, controlled night/day replies and in-flight role/ability/currentness mutations.
- * Output and oracle: Literal reflected results, death announcements, stock and failed/reentry prefixes remain tied to real phase cycles; no detached unit expectation replaces the interaction.
+ * 交互场景测试：验证恶灵骑士反射与猎人枪政策的查验、死亡和判胜顺序。输入为原语言／政策矩阵、受控昼夜回复及进行中身份／能力／当前性变化；反射结果、死亡公告、库存及失败／重入前缀采用字面预期，不用分离单元结果替代真实周期。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -29,7 +27,7 @@ function fixture(
   const id = (role: Role) =>
     game.world
       .entityIds()
-      .find((id) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === role)!;
+      .find((id) => game.world.getComponent(id, COMPONENT.Role)?.role === role)!;
   return {
     ...game,
     id,
@@ -99,7 +97,7 @@ function provider(
   };
 }
 const alive = (f: ReturnType<typeof fixture>, id: number) =>
-  f.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive;
+  f.world.getComponent(id, COMPONENT.Alive)!.alive;
 function nightDeaths(f: ReturnType<typeof fixture>) {
   return f.phaseManager
     .getEvents()
@@ -112,8 +110,8 @@ for (const locale of ["zh-CN", "en"] as const) {
       const f = fixture(locale, policy),
         seen: ActionRequest[] = [];
       for (const id of f.world.entityIds())
-        if (f.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Wolf)
-          f.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
+        if (f.world.getComponent(id, COMPONENT.Role)?.role === Role.Wolf)
+          f.world.getComponent(id, COMPONENT.Alive)!.alive = false;
       await f.phaseManager.runSingleCycle(
         provider(f, { knife: f.hunter, shot: f.knight }, seen),
         10,
@@ -121,7 +119,7 @@ for (const locale of ["zh-CN", "en"] as const) {
       expect(alive(f, f.knight)).toBe(policy === "night_shot_immune");
       expect(alive(f, f.hunter)).toBe(false);
       expect(
-        getHunterState(f.world.getComponent<RoleComponent>(f.hunter, COMPONENT.Role)!)!.canShoot,
+        getHunterState(f.world.getComponent(f.hunter, COMPONENT.Role)!)!.canShoot,
       ).toBe(false);
       expect([...nightDeaths(f)].sort((a, b) => a - b)).toEqual(
         (policy === "night_shot_immune" ? [f.hunter] : [f.hunter, f.knight]).sort((a, b) => a - b),
@@ -155,7 +153,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     );
     expect(nightDeaths(f)).toEqual([f.seer]);
     expect(
-      getSeerState(f.world.getComponent<RoleComponent>(f.seer, COMPONENT.Role)!)!.lastIsWerewolf,
+      getSeerState(f.world.getComponent(f.seer, COMPONENT.Role)!)!.lastIsWerewolf,
     ).toBe(true);
     expect(
       seen
@@ -170,7 +168,7 @@ for (const locale of ["zh-CN", "en"] as const) {
     expect(alive(f, f.knight)).toBe(true);
     expect(alive(f, f.seer)).toBe(true);
     expect(
-      getSeerState(f.world.getComponent<RoleComponent>(f.seer, COMPONENT.Role)!)!.lastIsWerewolf,
+      getSeerState(f.world.getComponent(f.seer, COMPONENT.Role)!)!.lastIsWerewolf,
     ).toBe(true);
   });
 }
@@ -237,7 +235,7 @@ for (const former of [Role.Seer, Role.Witch, Role.Guard]) {
     const f = fixture("en"),
       base = provider(f),
       actor = f.id(former);
-    const role = f.world.getComponent<RoleComponent>(actor, COMPONENT.Role)!;
+    const role = f.world.getComponent(actor, COMPONENT.Role)!;
     const abilities = Object.values(
       (role.privateState as { readonly abilities?: unknown }).abilities as Record<
         string,
@@ -269,8 +267,8 @@ for (const former of [Role.Seer, Role.Witch, Role.Guard]) {
 test("witch target role replacement aborts before potion consumption", async () => {
   const f = fixture("en"),
     base = provider(f, { poison: f.knight });
-  const target = f.world.getComponent<RoleComponent>(f.knight, COMPONENT.Role)!;
-  const witch = f.world.getComponent<RoleComponent>(f.witch, COMPONENT.Role)!;
+  const target = f.world.getComponent(f.knight, COMPONENT.Role)!;
+  const witch = f.world.getComponent(f.witch, COMPONENT.Role)!;
   const abilities = Object.values(
     (witch.privateState as { readonly abilities?: unknown }).abilities as Record<
       string,
@@ -304,7 +302,7 @@ for (const stage of ["wolf_discussion", "seer"] as const) {
   test(`seer ability replacement during ${stage} cannot skip required inspection`, async () => {
     const f = fixture("en"),
       base = provider(f);
-    const role = f.world.getComponent<RoleComponent>(f.seer, COMPONENT.Role)!;
+    const role = f.world.getComponent(f.seer, COMPONENT.Role)!;
     const abilities = (role.privateState as { readonly abilities?: unknown }).abilities as Record<
       string,
       { uses: number }
@@ -352,7 +350,7 @@ for (const mutation of [
   test(`seer authority edit ${mutation} during await fails before commitment`, async () => {
     const f = fixture("en"),
       base = provider(f);
-    const role = f.world.getComponent<RoleComponent>(f.seer, COMPONENT.Role)!;
+    const role = f.world.getComponent(f.seer, COMPONENT.Role)!;
     const ability = Object.values(
       (role.privateState as { readonly abilities?: unknown }).abilities as Record<
         string,

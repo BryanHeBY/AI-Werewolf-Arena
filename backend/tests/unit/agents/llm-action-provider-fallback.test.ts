@@ -55,7 +55,7 @@ describe("LlmActionProvider fallback", () => {
   test("does not invent an action when the native loop returns none", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const wolfId = context.world.getAliveEntityIds().find((id) => {
-      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = context.world.getComponent(id, COMPONENT.Role);
       return role?.role === "wolf";
     })!;
 
@@ -177,7 +177,7 @@ describe("LlmActionProvider fallback", () => {
     );
 
     const witchId = context.world.entityIds().find((id) => {
-      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = context.world.getComponent(id, COMPONENT.Role);
       return role?.role === "witch";
     })!;
 
@@ -235,7 +235,7 @@ describe("LlmActionProvider fallback", () => {
     const wolfId = context.world
       .entityIds()
       .find(
-        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "wolf",
+        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === "wolf",
       )!;
     const client = new NoActionToolLoopClient();
     const provider = new LlmActionProvider(context.world, client as any, {

@@ -1,10 +1,5 @@
 /**
- * Scenario simulation tests: Runs actual six/twelve-player Demon Hunter Worlds for both
- * win goals, locales and the original 125 seeds. Initial role/camp/state object identity,
- * public terminal deaths and handwritten faction-result formulas check native choices,
- * immunity and final victory. The original seed/action matrices and literal assertions
- * remain the oracle; these trials do not replace archived goldens or claim newly
- * independent rule coverage.
+ * 模拟场景测试：负责执行六人／十二人猎魔人的两种胜利目标、双语及原一百二十五个种子的实际 World。输入保留原角色、种子和动作矩阵；初始身份／阵营／状态引用、公开死亡及手写阵营公式检查选择、免疫和终局，不替代 golden 或声称新增独立覆盖。
  */
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";
@@ -42,7 +37,7 @@ for (const size of [6, 12] as const)
             game = bootstrapGame(config, { locale, random });
           const original = new Map(
             game.playerIds.map((id) => {
-              const role = game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+              const role = game.world.getComponent(id, COMPONENT.Role)!;
               return [
                 id,
                 { ref: role, role: role.role, camp: role.camp, state: role.privateState },
@@ -67,7 +62,7 @@ for (const size of [6, 12] as const)
           expect(result.gameOver).toBe(true);
           expect(result.result!.reason).not.toBe("max_days_reached");
           for (const [id, expected] of original) {
-            const actual = game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+            const actual = game.world.getComponent(id, COMPONENT.Role)!;
             expect(actual).toBe(expected.ref);
             expect(actual.role).toBe(expected.role);
             expect(actual.camp).toBe(expected.camp);

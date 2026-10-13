@@ -1,7 +1,5 @@
 /**
- * Dreamer scenarios verify actual night protection/link/gun/word rules, mandatory choices and committed-prefix reentry.
- * Input: Original locale/case/king matrices, controlled PM or complete NightPipeline actions and literal damage plans.
- * Output and oracle: Handwritten death/shot/event/result and resource-prefix assertions retain original causality; no new golden or model is introduced.
+ * 摄梦场景测试：验证实际夜间保护、关系、枪、遗言、必选与已提交前缀重入。输入为原语言／样本／狼王矩阵、受控 PM／整夜回复及字面伤害计划；死亡、枪、事件、终局和资源为手写预期，不引入新 golden 或模型。
  */
 import { Camp } from "../../../../src/core";
 import { PotionType } from "../../../../src/core";
@@ -41,7 +39,7 @@ function config(roles = deck): BoardConfig {
 }
 
 const role = (game: ReturnType<typeof bootstrapGame>, id: number) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  game.world.getComponent(id, COMPONENT.Role)!;
 
 type Case =
   | "protected"

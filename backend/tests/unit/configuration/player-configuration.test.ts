@@ -1,9 +1,5 @@
 /**
- * Unit tests: Player configuration uses literal names, personalities, locales, seeds and
- * legacy bindings; exact normalized profiles and ambiguity rejection check
- * model-independent player setup. Inputs and expected outcomes remain the original literal
- * or immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证玩家模型无关配置。输入为字面昵称、人设、语言、种子和旧绑定；规范化资料与歧义拒绝采用精确预期，不执行模型或完整对局。
  */
 import { expect, test } from "bun:test";
 import { parseRuntimeConfig } from "../../../src/runtime/config/parse_config";
@@ -56,7 +52,7 @@ test("player names and personalities are independent of model selection", () => 
   const { world } = bootstrapGame(setup.boardConfig, {
     playerNames: { "1": setup.players["1"].name! },
   });
-  expect(world.getComponent<IdentityComponent>(1, COMPONENT.Identity)?.name).toBe(" 苏茶茶 ");
+  expect(world.getComponent(1, COMPONENT.Identity)?.name).toBe(" 苏茶茶 ");
   const output = JSON.stringify(describeResolvedSetup(setup));
   expect(output).not.toContain("private seat style");
   expect(output).not.toContain("private English style");

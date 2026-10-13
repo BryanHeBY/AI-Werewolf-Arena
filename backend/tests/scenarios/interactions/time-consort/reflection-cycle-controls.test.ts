@@ -1,7 +1,5 @@
 /**
- * Interaction scenarios verify actual Time Consort reflection scopes preserve heal, knife, pass and repeat control semantics.
- * Input: Original whole-night/first-effect scope matrix, six controlled variants and seeded native cycles.
- * Output and oracle: Literal receipt, stock, reflected effects and invalid-repeat failures retain real phase order; source policy/RNG data and expectations are unchanged.
+ * 交互场景测试：验证时间狼妃两种反射 scope 的救人、狼刀、跳过与重复控制。输入为原六种变体和有种子原生周期；回执、库存、反射效果及非法重复错误为字面预期，政策、RNG 和控制表保持原值。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -28,7 +26,7 @@ for (const scope of ["whole_night", "first_effect"] as const)
         game = bootstrapGame(config, { random });
       const ids = (name: Role) =>
         game.playerIds.filter(
-          (id) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === name,
+          (id) => game.world.getComponent(id, COMPONENT.Role)?.role === name,
         );
       const consort = ids(Role.TimeWolfConsort)[0]!,
         guard = ids(Role.Guard)[0]!,
@@ -103,7 +101,7 @@ for (const scope of ["whole_night", "first_effect"] as const)
       };
       await game.phaseManager.runSingleCycle(provider, 30);
       const state = getTimeConsortState(
-        game.world.getComponent<RoleComponent>(consort, COMPONENT.Role),
+        game.world.getComponent(consort, COMPONENT.Role),
       )!;
       const reflected = game.phaseManager
         .getEvents()
@@ -114,7 +112,7 @@ for (const scope of ["whole_night", "first_effect"] as const)
         .deaths as number[];
       expect(dead.includes(killed)).toBe(variant !== "heal" && variant !== "self");
       expect(state.history[0]!.targetId).toBe(variant === "pass" ? null : locked);
-      expect(game.world.getComponent<RoleComponent>(seer, COMPONENT.Role)).toBeDefined();
+      expect(game.world.getComponent(seer, COMPONENT.Role)).toBeDefined();
       if (variant === "repeat-lock") {
         await expect(game.phaseManager.runSingleCycle(provider, 30)).rejects.toThrow(
           "time_consort_lock_action_invalid",

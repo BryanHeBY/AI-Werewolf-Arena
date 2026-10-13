@@ -86,7 +86,7 @@ function actor(plan: (r: ActionRequest) => ToolCall | null | undefined) {
 
 test("real first-night Cat knife stays alive through election, announces no night death, then expires after all-abstain exile", async () => {
   const g = game(),
-    life = g.world.getComponent<AliveComponent>(9, COMPONENT.Alive)!,
+    life = g.world.getComponent(9, COMPONENT.Alive)!,
     initial = aliveLifeVersion(life),
     a = actor((r) =>
       r.allowedTools.includes("kill_vote")
@@ -114,7 +114,7 @@ test("real first-night Cat knife stays alive through election, announces no nigh
 
 test("real current-unit Cat exile preserves life and badge until next unit Exile plus expiry settles once", async () => {
   const g = game(),
-    life = g.world.getComponent<AliveComponent>(9, COMPONENT.Alive)!,
+    life = g.world.getComponent(9, COMPONENT.Alive)!,
     a = actor((r) => {
       if (r.allowedTools.includes("run_for_sheriff") && r.actorId === 9)
         return { name: "run_for_sheriff", args: { run: true } };
@@ -125,7 +125,7 @@ test("real current-unit Cat exile preserves life and badge until next unit Exile
   await g.phaseManager.runSingleCycle(a.provider);
   expect(life.alive).toBe(true);
   expect(aliveLifeVersion(life)).toBe(0);
-  expect(g.world.getComponent<{ isSheriff: boolean }>(9, COMPONENT.Badge)?.isSheriff).toBe(true);
+  expect(g.world.getComponent(9, COMPONENT.Badge)?.isSheriff).toBe(true);
   expect(g.phaseManager.getEvents().filter((e) => e.type === "voted_out")).toEqual([]);
   await g.phaseManager.runSingleCycle(a.provider);
   expect(life.alive).toBe(false);
@@ -212,7 +212,7 @@ for (const skip of [false, true])
         return undefined;
       });
     await g.phaseManager.runSingleCycle(a.provider);
-    expect(g.world.getComponent<AliveComponent>(9, COMPONENT.Alive)!.alive).toBe(!skip);
+    expect(g.world.getComponent(9, COMPONENT.Alive)!.alive).toBe(!skip);
     expect(
       g.phaseManager
         .getEvents()
@@ -303,14 +303,14 @@ for (const skip of [false, true])
         return { name: "self_destruct", args: { confirm: true, reason: "literal preVote" } };
     });
     await g.phaseManager.runSingleCycle(a.provider);
-    expect(g.world.getComponent<AliveComponent>(9, COMPONENT.Alive)!.alive).toBe(!skip);
+    expect(g.world.getComponent(9, COMPONENT.Alive)!.alive).toBe(!skip);
     expect(animalAuthoritySnapshot(g.world)!.completedUnits).toBe(skip ? 1 : 0);
     expect(a.requests.some((r) => r.context.day === 1 && r.allowedTools.includes("vote"))).toBe(
       false,
     );
     if (!skip) {
       await g.phaseManager.runSingleCycle(a.provider);
-      expect(g.world.getComponent<AliveComponent>(9, COMPONENT.Alive)!.alive).toBe(false);
+      expect(g.world.getComponent(9, COMPONENT.Alive)!.alive).toBe(false);
     }
     expect(a.requests.filter((r) => r.actorId === 9 && r.context.stage === "last_words")).toEqual(
       [],
@@ -325,11 +325,11 @@ test("Beauty exile linked Cat is deferred in added wave, no false charm death, e
       return { name: "vote", args: { target_id: 1, abstain: false } };
   });
   await g.phaseManager.runSingleCycle(a.provider);
-  expect(g.world.getComponent<AliveComponent>(9, COMPONENT.Alive)!.alive).toBe(true);
+  expect(g.world.getComponent(9, COMPONENT.Alive)!.alive).toBe(true);
   expect(g.phaseManager.getEvents().filter((e) => e.type === "charm_death")).toEqual([]);
   expect(a.requests.filter((r) => r.actorId === 9 && r.context.stage === "last_words")).toEqual([]);
   await g.phaseManager.runSingleCycle(a.provider);
-  expect(g.world.getComponent<AliveComponent>(9, COMPONENT.Alive)!.alive).toBe(false);
+  expect(g.world.getComponent(9, COMPONENT.Alive)!.alive).toBe(false);
   expect(a.requests.filter((r) => r.actorId === 9 && r.context.stage === "last_words")).toEqual([]);
 });
 
@@ -381,7 +381,7 @@ test("paid Puffer later real knife still blocks Beauty exile link that day", asy
   expect(animalAuthoritySnapshot(g.world)!.puffer.usedDay).toBe(1);
   await g.phaseManager.runSingleCycle(a.provider);
   expect(animalAuthoritySnapshot(g.world)!.puffer.knifeDeathDay).toBe(2);
-  expect(g.world.getComponent<AliveComponent>(6, COMPONENT.Alive)!.alive).toBe(true);
+  expect(g.world.getComponent(6, COMPONENT.Alive)!.alive).toBe(true);
   expect(g.phaseManager.getEvents().filter((e) => e.type === "charm_death")).toEqual([]);
   expect(
     a.requests.filter((r) => r.context.day === 2 && r.allowedTools.includes("puffer_retaliate")),

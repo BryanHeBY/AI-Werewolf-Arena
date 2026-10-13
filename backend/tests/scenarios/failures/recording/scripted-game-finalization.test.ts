@@ -1,5 +1,5 @@
 /**
- * Failure scenario checks the actual scripted-game driver preserves request, final flush and persistence failures. Inputs are an empty literal script and original spy failures; exact AggregateError order and finalize count are the oracle. The original runRecorded lifetime and finally cleanup remain; no model or generated expected game is used.
+ * 故障场景测试：验证实际脚本对局 driver 保留请求、最终 flush 和持久化失败。输入为原动作、录制 scope 和注入错误；原失败身份及部分输出为字面预期，不重新生成 fixture 或调用模型。
  */
 import type { Locale } from "@ai-werewolf-arena/game-text";
 import { PlayerPromptPolicy } from "../../../../src/ai/agents/player/player_prompt_policy";
@@ -103,7 +103,7 @@ async function runRecorded(
           winner: snapshot.result?.winner ?? null,
           finishReason: failures.length ? "runtime_error" : snapshot.result!.reason,
           players: context.world.entityIds().map((id) => {
-            const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+            const role = context.world.getComponent(id, COMPONENT.Role)!;
             return {
               player_id: id,
               role: role.role,

@@ -52,7 +52,7 @@ const config = (roles = deck): BoardConfig => ({
 });
 
 const role = (game: ReturnType<typeof bootstrapGame>, id: number) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  game.world.getComponent(id, COMPONENT.Role)!;
 
 function publish(game: ReturnType<typeof bootstrapGame>) {
   const events: GameEvent[] = [];
@@ -81,15 +81,15 @@ for (const [kind, expected] of [
             : deck;
     const game = bootstrapGame(config(fixed), { fixedRoles: fixed });
     if (kind === "dead_skip")
-      game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive = false;
+      game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
     if (kind === "seat_order") {
-      game.world.getComponent<IdentityComponent>(2, COMPONENT.Identity)!.seat = 4;
-      game.world.getComponent<IdentityComponent>(4, COMPONENT.Identity)!.seat = 2;
+      game.world.getComponent(2, COMPONENT.Identity)!.seat = 4;
+      game.world.getComponent(4, COMPONENT.Identity)!.seat = 2;
     }
     if (kind === "single" || kind === "empty")
       for (const id of game.world.entityIds())
         if (id !== 1 && (kind === "empty" || id !== 2))
-          game.world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive = false;
+          game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
     const events = publish(game);
     expect(events.map((event) => [event.type, event.payload])).toEqual([
       ["bear_roared", { day: 1, roared: expected }],
@@ -150,7 +150,7 @@ for (const mutation of [
     if (mutation === "life_replace")
       game.world.addComponent(1, COMPONENT.Alive, createAliveComponent());
     if (mutation === "revive") {
-      const life = game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!;
+      const life = game.world.getComponent(1, COMPONENT.Alive)!;
       life.alive = false;
       life.alive = true;
     }
@@ -172,7 +172,7 @@ test("a sampled neighbor's later death does not resample; next night skips its d
   const game = bootstrapGame(config(), { fixedRoles: deck }),
     frame = BearNightFrame.capture(game.world, 1)!,
     events: GameEvent[] = [];
-  game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive = false;
+  game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   frame.publish(game.world, events, () => true);
   frame.publish(game.world, events, () => true);
   BearNightFrame.capture(game.world, 1)!.publish(game.world, events, () => true);
@@ -205,7 +205,7 @@ test("night role/state/faction or seat changes of neighbors do not rewrite the c
     frame = BearNightFrame.capture(game.world, 1)!,
     events: GameEvent[] = [];
   role(game, 2).camp = Camp.Good;
-  game.world.getComponent<IdentityComponent>(2, COMPONENT.Identity)!.seat = 4;
+  game.world.getComponent(2, COMPONENT.Identity)!.seat = 4;
   frame.publish(game.world, events, () => true);
   BearNightFrame.capture(game.world, 2)!.publish(game.world, events, () => true);
   expect(events.map((event) => event.payload)).toEqual([
@@ -217,7 +217,7 @@ test("night role/state/faction or seat changes of neighbors do not rewrite the c
 for (const killedBefore of [false, true])
   test(`dead/${killedBefore}: the original dead Bear announces quiet, but a revived life never inherits that sample`, () => {
     const game = bootstrapGame(config(), { fixedRoles: deck }),
-      life = game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!,
+      life = game.world.getComponent(1, COMPONENT.Alive)!,
       events: GameEvent[] = [];
     if (killedBefore) life.alive = false;
     const frame = BearNightFrame.capture(game.world, 1)!;

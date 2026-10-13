@@ -1,9 +1,5 @@
 /**
- * Unit tests: Sheriff and exile PK policies use fixed nominees and ballots; handwritten
- * eligibility, withdrawal, tie-break and no-ballot results check each public
- * election/exile module independently. Inputs and expected outcomes remain the original
- * literal or immutable-fixture oracle; these module assertions invoke no model or
- * complete-game driver.
+ * 单元测试：分别验证警长与放逐 PK 政策。输入为固定候选人与选票；资格、退水、平票及无票结果采用手写预期，不合并两种投票规则。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -279,7 +275,7 @@ test("late death and revival invalidates original voter and target life", async 
     if (r.context.stage === "exile_pk_vote" && !once) {
       once = true;
       for (const id of [1, 3]) {
-        const life = f.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+        const life = f.world.getComponent(id, COMPONENT.Alive)!;
         life.alive = false;
         life.alive = true;
       }
@@ -296,7 +292,7 @@ test("PK vote weights retain current sheriff weight", async () => {
   const f = fixture();
   const p = provider((r) => {
     if (r.context.stage === "exile_pk_speech")
-      f.world.getComponent<VotingRightComponent>(6, COMPONENT.VotingRight)!.weight = 3;
+      f.world.getComponent(6, COMPONENT.VotingRight)!.weight = 3;
     return exileHandler(r, (id) => (id === 6 ? 2 : 1));
   });
   const result = await f.voting.execute(f.config, p, { day: 2 });

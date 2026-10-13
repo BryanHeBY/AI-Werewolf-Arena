@@ -97,7 +97,7 @@ function fixture() {
         protectionPolicy: "netease_2026_night_immunity_v1",
       });
   }
-  const role = (id: number) => world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  const role = (id: number) => world.getComponent(id, COMPONENT.Role)!;
   const events: GameEvent[] = [];
   installRadiantEclipseBoard(world);
   beginRadiantNight(world, 2);

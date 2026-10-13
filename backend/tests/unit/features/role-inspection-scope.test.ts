@@ -49,7 +49,7 @@ function fixture(kind: Role.Gargoyle | Role.Psychic | Role.MirrorGirl) {
   return {
     ...game,
     ability: findNightAbility(
-      game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
+      game.world.getComponent(1, COMPONENT.Role)!,
       "role_check",
     )!,
     stage:
@@ -215,8 +215,8 @@ for (const change of ["id", "source", "private_owner", "activation", "actor_tran
   test(`${change}: paid native Gargoyle completion cannot authorize a different ability owner but keeps its report`, async () => {
     const game = fixture(Role.Gargoyle),
       events: GameEvent[] = [],
-      role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
-    game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive = false;
+      role = game.world.getComponent(1, COMPONENT.Role)!;
+    game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
     refreshGargoyleInheritance(game.world, events, 1);
     await game.stage.execute(
       context(game, events, async () => ({ name: "inspect_role", args: { target_id: 3 } })),
@@ -238,7 +238,7 @@ for (const change of ["id", "source", "private_owner", "activation", "actor_tran
     if (change === "activation")
       (game.ability as { activation: "lucky" | "black_market" | undefined }).activation = "lucky";
     if (change === "actor_transfer") {
-      const otherRole = game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!,
+      const otherRole = game.world.getComponent(5, COMPONENT.Role)!,
         ownLife = game.world.getComponent(1, COMPONENT.Alive)!,
         otherLife = game.world.getComponent(5, COMPONENT.Alive)!;
       game.world.addComponent(1, COMPONENT.Role, otherRole);
@@ -256,9 +256,9 @@ for (const point of ["await", "gateway", "label"] as const)
   test(`${point}: a gifted inspection cannot become native while pending and fabricate Gargoyle knife authority`, async () => {
     const game = fixture(Role.Gargoyle),
       events: GameEvent[] = [],
-      role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+      role = game.world.getComponent(1, COMPONENT.Role)!;
     (game.ability as { disabled: boolean }).disabled = true;
-    game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive = false;
+    game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
     refreshGargoyleInheritance(game.world, events, 1);
     events.length = 0;
     const gift = grantNightAbility(

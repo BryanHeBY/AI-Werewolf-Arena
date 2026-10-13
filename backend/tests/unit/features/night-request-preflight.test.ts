@@ -1,9 +1,5 @@
 /**
- * Unit tests: Night request preflight uses deliberate scope and policy changes during
- * request construction; literal provider-call and stock assertions check rejection before
- * a stale request can escape. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证构造夜间请求期间 scope／policy 改变会在请求泄出前拒绝。输入为原作用域变化；provider 调用次数和库存的字面断言为预期，不修复非法输入。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -47,7 +43,7 @@ for (const item of cases)
       };
       const game = bootstrapGame(board, { fixedRoles: roles });
       const ability = findNightAbility(
-        game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
+        game.world.getComponent(1, COMPONENT.Role)!,
         item.kind,
       )!;
       const state = structuredClone(ability.state),
@@ -118,7 +114,7 @@ for (const item of cases.filter((item) => item.kind !== "dream"))
       { fixedRoles: roles },
     );
     const ability = findNightAbility(
-      game.world.getComponent<RoleComponent>(1, COMPONENT.Role),
+      game.world.getComponent(1, COMPONENT.Role),
       item.kind,
     )!;
     const events: GameEvent[] = [];

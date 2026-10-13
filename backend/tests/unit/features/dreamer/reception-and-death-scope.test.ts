@@ -47,7 +47,7 @@ function config(roles = deck): BoardConfig {
 }
 
 const role = (game: ReturnType<typeof bootstrapGame>, id: number) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  game.world.getComponent(id, COMPONENT.Role)!;
 
 function policy(game: ReturnType<typeof bootstrapGame>, board = config()) {
   return new PlayerPromptPolicy(game.world, {

@@ -106,7 +106,7 @@ for (const kind of ["poison", "hunter", "wolf_king", "black_backlash"] as const)
           random: createRandom("historical-policy"),
         });
         const holder = 1,
-          role = game.world.getComponent<RoleComponent>(holder, COMPONENT.Role)!;
+          role = game.world.getComponent(holder, COMPONENT.Role)!;
         expect(captureNativeRolePresentation(roles[holder - 1], role, locale)).toContain(policy);
         expect(
           getDefaultConfigRenderRegistry().renderBoardConfigPrompt(normalized, locale),

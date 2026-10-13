@@ -36,7 +36,7 @@ function fixture(roles = deck, extra: Partial<BoardConfig> = {}) {
 
 type Fixture = ReturnType<typeof fixture>;
 
-const role = (g: Fixture, id = 1) => g.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+const role = (g: Fixture, id = 1) => g.world.getComponent(id, COMPONENT.Role)!;
 
 const choose = (target_id: number): ToolCall => ({
   name: "choose_wild_model",
@@ -57,10 +57,10 @@ const setup = (
 
 const changes: Record<string, (g: Fixture) => void> = {
   actorLife: (g) => {
-    g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!.alive = false;
+    g.world.getComponent(1, COMPONENT.Alive)!.alive = false;
   },
   actorRevive: (g) => {
-    const life = g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!;
+    const life = g.world.getComponent(1, COMPONENT.Alive)!;
     life.alive = false;
     life.alive = true;
   },
@@ -86,7 +86,7 @@ const changes: Record<string, (g: Fixture) => void> = {
       createVictoryComponent([{ kind: "faction", faction: Camp.Good }]),
     ),
   modelLife: (g) => {
-    g.world.getComponent<AliveComponent>(2, COMPONENT.Alive)!.alive = false;
+    g.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   },
   modelBody: (g) => g.world.addComponent(2, COMPONENT.Alive, createAliveComponent()),
   modelRole: (g) => {

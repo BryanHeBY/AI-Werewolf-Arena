@@ -24,7 +24,7 @@ function fixture(locale: "zh-CN" | "en" = "en") {
     },
     { fixedRoles: roles, locale },
   );
-  game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive = false;
+  game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   return game;
 }
 
@@ -68,7 +68,7 @@ for (const locale of ["zh-CN", "en"] as const)
         turn_constraints: { min_valid_actions: 1, max_valid_actions: 1 },
       },
     };
-    const nativeState = getHunterState(world.getComponent<RoleComponent>(2, COMPONENT.Role)!)!;
+    const nativeState = getHunterState(world.getComponent(2, COMPONENT.Role)!)!;
     try {
       const forged = structuredClone(request);
       forged.context.ability_id = "gift:1";
@@ -104,7 +104,7 @@ for (const change of ["revive", "replace", "clock", "close"] as const)
     let current = true;
     const permit = world.openDeathAction(2, "shoot", Phase.Day, 1, () => current, "gift:1");
     if (change === "revive") {
-      const life = world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!;
+      const life = world.getComponent(2, COMPONENT.Alive)!;
       life.alive = true;
       life.alive = false;
     }

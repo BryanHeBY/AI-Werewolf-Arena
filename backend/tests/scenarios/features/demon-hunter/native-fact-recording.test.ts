@@ -136,7 +136,7 @@ test("actual event recorder keeps complete God facts and source operations; all 
     winner: null,
     finishReason: "candidate-test",
     players: f.world.entityIds().map((id) => {
-      const role = f.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+      const role = f.world.getComponent(id, COMPONENT.Role)!;
       return {
         player_id: id,
         role: role.role,

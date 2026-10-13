@@ -38,10 +38,10 @@ const fixture = (roles = deck, policy: CupidPolicy = "netease_2017_cupid_follows
 };
 
 const role = (game: ReturnType<typeof fixture>, id: number) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  game.world.getComponent(id, COMPONENT.Role)!;
 
 const life = (game: ReturnType<typeof fixture>, id: number) =>
-  game.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+  game.world.getComponent(id, COMPONENT.Alive)!;
 
 const choose = (a: number, b: number): ToolCall => ({
   name: "choose_lovers",

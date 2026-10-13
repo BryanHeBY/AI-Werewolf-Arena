@@ -1,7 +1,5 @@
 /**
- * Interaction scenarios verify Time Consort native effect scopes reject in-flight state or actor revocation before committing stale receipts.
- * Input: Original role/stage/event and mutation matrices on seeded actual phase cycles.
- * Output and oracle: Explicit source error, absent publication and preserved paid-prefix assertions stay causal with native execution; no pure mock-only contract is inferred from the scope filename.
+ * 交互场景测试：验证时间狼妃原生效果 scope 在进行中撤权后不提交过期回执。输入为原角色／阶段／事件及修改矩阵的实际周期；来源错误、未发布及已付款前缀为明确预期，不把 scope 文件误认作纯 mock 测试。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -43,7 +41,7 @@ for (const [role, stage, event] of [
           const game = bootstrapGame(config, { random });
           const id = (name: Role) =>
             game.playerIds.find(
-              (id) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === name,
+              (id) => game.world.getComponent(id, COMPONENT.Role)?.role === name,
             )!;
           const actor = id(role),
             consort = id(Role.TimeWolfConsort),
@@ -62,7 +60,7 @@ for (const [role, stage, event] of [
                 (timing === "during-action" && r.actorId === actor && r.context.stage === stage) ||
                 (timing === "before-stage" && r.context.stage === "time_consort_lock")
               ) {
-                const p = game.world.getComponent<RoleComponent>(actor, COMPONENT.Role)!;
+                const p = game.world.getComponent(actor, COMPONENT.Role)!;
                 const abilities = (p.privateState as { readonly abilities?: unknown })
                     .abilities as Record<string, Record<string, unknown>>,
                   key = Object.keys(abilities)[0]!,
@@ -123,7 +121,7 @@ for (const [role, stage, event] of [
               .some((e) => e.type === event && e.payload.actorId === actor),
           ).toBe(false);
           const state = getTimeConsortState(
-            game.world.getComponent<RoleComponent>(consort, COMPONENT.Role),
+            game.world.getComponent(consort, COMPONENT.Role),
           )!;
           expect(state.history).toHaveLength(timing === "before-stage" ? 0 : 1);
           expect(state.triggeredDay).toBeNull();
@@ -140,16 +138,16 @@ for (const ownerRole of [Role.Villager, Role.TimeWolfConsort] as const)
         const game = bootstrapGame(config, { random });
         const id = (name: Role) =>
           game.playerIds.find(
-            (id) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === name,
+            (id) => game.world.getComponent(id, COMPONENT.Role)?.role === name,
           )!;
         const actor = id(ownerRole),
           guard = id(Role.Guard),
           target = id(Role.Wolf);
-        const role = game.world.getComponent<RoleComponent>(actor, COMPONENT.Role)!;
+        const role = game.world.getComponent(actor, COMPONENT.Role)!;
         expect(Object.hasOwn(role.privateState, "abilities")).toBe(false);
         const donor = structuredClone(
           (
-            game.world.getComponent<RoleComponent>(guard, COMPONENT.Role)!.privateState as {
+            game.world.getComponent(guard, COMPONENT.Role)!.privateState as {
               readonly abilities?: unknown;
             }
           ).abilities,

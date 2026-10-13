@@ -72,7 +72,7 @@ test("[slot] real installation captures original states; accepted Fox pass repla
   const originals: unknown[] = [];
   const f = animalRosterFixture((world) => {
     for (const [id, key] of [[10, "foxCub"], [12, "pufferfish"], [9, "whiteCat"]] as const)
-      originals.push(privateData(world.getComponent<RoleComponent>(id, COMPONENT.Role)!)[key]);
+      originals.push(privateData(world.getComponent(id, COMPONENT.Role)!)[key]);
   }, installAnimalAuthority);
   expect(privateData(f.role(10)).foxCub).toBe(originals[0]);
   expect(privateData(f.role(12)).pufferfish).toBe(originals[1]);

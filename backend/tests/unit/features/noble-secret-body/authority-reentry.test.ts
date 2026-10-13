@@ -1,10 +1,5 @@
 /**
- * Unit tests for noble-secret-body; Isolated noble-secret-body authority-review contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试：验证贵族／不死之身的独立权威重入契约。输入为原内存 owner、frame、reader 与明确非法修改；原字面预期、对象身份和拒绝断言为 oracle，不组装完整对局。
  */
 import { World } from "../../../../src/core/domain/world";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
@@ -330,7 +325,7 @@ test("initial missing Identity must not become a permanently valid sentinel bind
 });
 test("initial accessor Identity must not become a valid sentinel binding without reading getter", () => {
   const world = uninstalled(),
-    identity = world.getComponent<object>(2, COMPONENT.Identity)!;
+    identity = world.getComponent(2, COMPONENT.Identity)!;
   let reads = 0;
   Object.defineProperty(identity, "id", {
     configurable: true,
@@ -349,7 +344,7 @@ test("initial accessor Identity must not become a valid sentinel binding without
 });
 test("initial accessor Role kind must not become valid sentinel binding without reading getter", () => {
   const world = uninstalled(),
-    role = world.getComponent<object>(2, COMPONENT.Role)!;
+    role = world.getComponent(2, COMPONENT.Role)!;
   let reads = 0;
   Object.defineProperty(role, "role", {
     configurable: true,
@@ -385,7 +380,8 @@ for (const [name, affiliations] of [
 ] as const)
   test(`initial Victory rejects ${name}`, () => {
     const world = uninstalled();
-    world.addComponent<unknown>(3, COMPONENT.Victory, { affiliations });
+    // 原畸形成员样本必须原样进入存储；断言仅替代旧 unknown 写入泛型，不补齐或验证它。
+    world.addComponent(3, COMPONENT.Victory, { affiliations } as unknown as import("../../../../src/core/domain/component-map").ComponentWrite<typeof COMPONENT.Victory>);
     expect(() => commit(world)).toThrow();
   });
 test("finite noble-body owner rejects empty Victory without changing shared generic membership schema", () => {

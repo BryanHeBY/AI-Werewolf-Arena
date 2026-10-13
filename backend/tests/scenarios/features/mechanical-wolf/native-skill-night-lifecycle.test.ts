@@ -59,7 +59,7 @@ function board(roles = deck): BoardConfig {
 function fixture(locale: "zh-CN" | "en" = "zh-CN", roles = deck) {
   const config = board(roles),
     game = bootstrapGame(config, { fixedRoles: roles, locale });
-  const role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+  const role = game.world.getComponent(1, COMPONENT.Role)!;
   return { ...game, config, role, state: getMechanicalState(role)! };
 }
 
@@ -169,8 +169,8 @@ function stageContext(
     getAliveByRole: (role) =>
       game.world
         .getAliveEntityIds()
-        .filter((id) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === role),
-    ensureMarks: (id) => game.world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!,
+        .filter((id) => game.world.getComponent(id, COMPONENT.Role)?.role === role),
+    ensureMarks: (id) => game.world.getComponent(id, COMPONENT.StatusMarks)!,
     pickMajorityTarget: () => null,
     shuffleWolves: (ids) => ids,
     state: {
@@ -438,7 +438,7 @@ for (const forge of ["serialized", "revive", "switch_mode"] as const)
           game.state.mode! as { kind: import("@ai-werewolf-arena/game-contract").MechanicalMode }
         ).kind = "skill";
       else {
-        const life = game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!;
+        const life = game.world.getComponent(1, COMPONENT.Alive)!;
         life.alive = false;
         life.alive = true;
       }

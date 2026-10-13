@@ -102,7 +102,7 @@ for (const locale of ["zh-CN", "en"] as const)
         expect(fallbacks).toBe(0);
         expect(describeError(new Error("action_turn_failed"))).toEqual({ code: "action_failed" });
         expect(
-          getGuardState(world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget,
+          getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget,
         ).toBeNull();
       } finally {
         await provider.close();
@@ -161,7 +161,7 @@ for (const locale of ["zh-CN", "en"] as const)
         expect(await provider.getAction(request(true))).toBeNull();
         expect(requests).toBe(4);
         expect(
-          getGuardState(world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget,
+          getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget,
         ).toBeNull();
       } finally {
         await provider.close();

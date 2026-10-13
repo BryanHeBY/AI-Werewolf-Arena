@@ -1,7 +1,5 @@
 /**
- * Unit tests verify initial identity authority installs once and the legacy Thief facade cannot expose or close another mechanism.
- * Input: Original fixed literal roles, bounded original World setup and explicit duplicate/invented deal operations.
- * Output and oracle: Exact stock object identity, readiness errors and pre-setup wolf permissions remain unchanged; no complete phase or model runs.
+ * 单元测试：验证初始身份权威仅安装一次，旧盗贼门面不能披露或关闭其他机制。输入为原固定角色、有限 World 装配及重复／伪造发牌操作；库存对象身份、准备错误与准备前狼队许可为原字面预期，不执行完整阶段或模型。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -60,7 +58,7 @@ test("legacy Thief boundary never exposes or closes a different initial mechanis
   expect(shared.initialIdentitySetupReady(g.world)).toBe(false);
   expect(
     wolfTeamPermissions(
-      g.world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
+      g.world.getComponent(1, COMPONENT.Role)!,
       getDefaultRoleCatalog(),
       g.world,
     ),

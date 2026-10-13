@@ -1,8 +1,5 @@
 /**
- * Unit tests: Trickster combination uses explicit unordered/overlapping pairs and existing
- * histories; literal mapping and unchanged-history assertions check independent active
- * outputs. Inputs and expected outcomes remain the original literal or immutable-fixture
- * oracle; these module assertions invoke no model or complete-game driver.
+ * 单元测试：验证捣蛋鬼无序／重叠配对与既有历史。输入为原配对和历史；目标映射及历史不变的原字面断言检查独立生效结果，不重新生成预期。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -28,7 +25,7 @@ import { getTricksterState } from "../../../src/game/mechanisms/roles/trickster/
 import { getMagicianState } from "../../../src/game/mechanisms/roles/magician/state";
 function fixture() {
   const g = bootstrapGame(structuredClone(tricksterTwelveConfig));
-  const role = (id: number) => g.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  const role = (id: number) => g.world.getComponent(id, COMPONENT.Role)!;
   return {
     ...g,
     role,

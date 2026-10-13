@@ -1,8 +1,5 @@
 /**
- * Unit tests: Red Moon blast auditing uses explicit day authority and last-wolf policies;
- * literal single-commit, following-night seal and roster assertions check the audit state
- * module. Inputs and expected outcomes remain the original literal or immutable-fixture
- * oracle; these module assertions invoke no model or complete-game driver.
+ * 单元测试：验证赤月自爆审计的白天权威与最后狼人政策。输入为原日期和名单；单次提交、后续夜晚封印及名单断言为独立预期，保留原 fixture 与审计状态。
  */
 import { assignSheriff } from "../../../src/game/mechanisms/sheriff/badge";
 import type { BadgeComponent } from "../../../src/core";
@@ -36,7 +33,7 @@ test("Red Moon blast audit commits once and seals only the next night after deat
   expect(commitDemonRedMoonTransition(world, 4, "blast", 1)).toBe(true);
   expect(commitDemonRedMoonTransition(world, 4, "blast", 1)).toBe(false);
   expect(() => demonRedMoonNightSealed(world, 2)).toThrow("red_moon_blast_death_unsettled");
-  world.getComponent<AliveComponent>(4, COMPONENT.Alive)!.alive = false;
+  world.getComponent(4, COMPONENT.Alive)!.alive = false;
   expect(demonRedMoonNightSealed(world, 1)).toBe(false);
   expect(demonRedMoonNightSealed(world, 2)).toBe(true);
   expect(demonRedMoonNightSealed(world, 3)).toBe(false);
@@ -46,9 +43,9 @@ for (const policy of ["ends_game", "forbidden"] as const)
   test(policy + ": last-wolf blast authority uses the actual live roster", () => {
     const { world } = dayWorld(policy);
     for (const id of [1, 2, 3])
-      world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
+      world.getComponent(id, COMPONENT.Alive)!.alive = false;
     expect(commitDemonRedMoonTransition(world, 4, "blast", 1)).toBe(policy === "ends_game");
-    expect(getRedMoonState(world.getComponent<RoleComponent>(4, COMPONENT.Role))!.blastDay).toBe(
+    expect(getRedMoonState(world.getComponent(4, COMPONENT.Role))!.blastDay).toBe(
       policy === "ends_game" ? 1 : null,
     );
     expect(demonHunterCheckpointPlayers(world, true)).toHaveLength(12);
@@ -57,7 +54,7 @@ test("Only last-wolf exile can defer; wrong phase and repeated transitions fail 
   const { world } = dayWorld();
   expect(commitDemonRedMoonTransition(world, 4, "exile", 1)).toBe(false);
   for (const id of [1, 2, 3])
-    world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
+    world.getComponent(id, COMPONENT.Alive)!.alive = false;
   expect(commitDemonRedMoonTransition(world, 4, "exile", 2)).toBe(false);
   expect(commitDemonRedMoonTransition(world, 4, "exile", 1)).toBe(true);
   expect(commitDemonRedMoonTransition(world, 4, "exile", 1)).toBe(false);
@@ -66,27 +63,27 @@ test("Only last-wolf exile can defer; wrong phase and repeated transitions fail 
 });
 test("Raw Red Moon inventory tampering cannot become an audited transition", () => {
   const { world } = dayWorld();
-  const state = getRedMoonState(world.getComponent<RoleComponent>(4, COMPONENT.Role))!;
+  const state = getRedMoonState(world.getComponent(4, COMPONENT.Role))!;
   (state as { lastWolfBlastPolicy: "ends_game" | "forbidden" }).lastWolfBlastPolicy = "forbidden";
   expect(commitDemonRedMoonTransition(world, 4, "blast", 1)).toBe(false);
   expect(() => demonHunterCheckpointPlayers(world, true)).toThrow();
 });
 test("Idiot reveal keeps the original-world audit and disables voting without killing", () => {
   const { world } = dayWorld();
-  const role = world.getComponent<RoleComponent>(12, COMPONENT.Role)!;
+  const role = world.getComponent(12, COMPONENT.Role)!;
   const before = (role.privateState as { readonly idiot?: unknown }).idiot;
   const events: Parameters<typeof idiotVotedOutHook>[2] = [];
   expect(idiotVotedOutHook(world, 12, events)?.removed).toEqual([]);
   expect((role.privateState as { readonly idiot?: unknown }).idiot).toEqual({ revealed: true });
   expect((role.privateState as { readonly idiot?: unknown }).idiot).not.toBe(before);
-  expect(world.getComponent<VotingRightComponent>(12, COMPONENT.VotingRight)!.canVote).toBe(false);
-  expect(world.getComponent<AliveComponent>(12, COMPONENT.Alive)!.alive).toBe(true);
+  expect(world.getComponent(12, COMPONENT.VotingRight)!.canVote).toBe(false);
+  expect(world.getComponent(12, COMPONENT.Alive)!.alive).toBe(true);
   expect(demonHunterCheckpointPlayers(world, true)).toHaveLength(12);
   expect(idiotVotedOutHook(world, 12, events)?.reason).toBe("idiot_already_revealed");
 });
 test("Idiot readonly vote stock rejects before consuming reveal", () => {
   const { world } = dayWorld();
-  const role = world.getComponent<RoleComponent>(12, COMPONENT.Role)!;
+  const role = world.getComponent(12, COMPONENT.Role)!;
   Object.defineProperty(world.getComponent(12, COMPONENT.VotingRight)!, "canVote", {
     writable: false,
   });
@@ -97,7 +94,7 @@ test("Idiot readonly vote stock rejects before consuming reveal", () => {
 for (const getter of [false, true])
   test("Idiot rejects unaudited reveal before reading getter: " + getter, () => {
     const { world } = dayWorld();
-    const role = world.getComponent<RoleComponent>(12, COMPONENT.Role)!;
+    const role = world.getComponent(12, COMPONENT.Role)!;
     let reads = 0;
     if (getter)
       Object.defineProperty((role.privateState as { readonly idiot?: unknown }).idiot, "revealed", {
@@ -113,15 +110,15 @@ for (const getter of [false, true])
       ).revealed = true;
     expect(() => idiotVotedOutHook(world, 12, [])).toThrow("demon_hunter_idiot_state_revoked");
     expect(reads).toBe(0);
-    expect(world.getComponent<VotingRightComponent>(12, COMPONENT.VotingRight)!.canVote).toBe(true);
+    expect(world.getComponent(12, COMPONENT.VotingRight)!.canVote).toBe(true);
   });
 test("Idiot badge preflight rejects readonly stock before reveal and vote changes", () => {
   const { world } = dayWorld();
-  const role = world.getComponent<RoleComponent>(12, COMPONENT.Role)!;
+  const role = world.getComponent(12, COMPONENT.Role)!;
   Object.defineProperty(world.getComponent(12, COMPONENT.Badge)!, "isSheriff", { writable: false });
   expect(() => idiotVotedOutHook(world, 12, [])).toThrow("demon_hunter_badge_stock_revoked");
   expect((role.privateState as { readonly idiot?: unknown }).idiot).toEqual({ revealed: false });
-  expect(world.getComponent<VotingRightComponent>(12, COMPONENT.VotingRight)!.canVote).toBe(true);
+  expect(world.getComponent(12, COMPONENT.VotingRight)!.canVote).toBe(true);
   expect(demonHunterCheckpointPlayers(world, true)).toHaveLength(12);
 });
 test("Red Moon daytime transition rejects an active night and a stale closed day", () => {
@@ -136,28 +133,28 @@ test("Red Moon daytime transition rejects an active night and a stale closed day
 test("Sheriff Idiot reveal transfers its badge without breaking audited metadata", () => {
   const { world, config, catalog } = dayWorld();
   expect(assignSheriff(world, 12, config, catalog)).toBe(true);
-  expect(world.getComponent<BadgeComponent>(12, COMPONENT.Badge)!.isSheriff).toBe(true);
+  expect(world.getComponent(12, COMPONENT.Badge)!.isSheriff).toBe(true);
   expect(idiotVotedOutHook(world, 12, [])?.reason).toBe("idiot_revealed");
-  expect(world.getComponent<BadgeComponent>(12, COMPONENT.Badge)!.isSheriff).toBe(false);
-  expect(world.getComponent<VotingRightComponent>(12, COMPONENT.VotingRight)!.weight).toBe(0);
+  expect(world.getComponent(12, COMPONENT.Badge)!.isSheriff).toBe(false);
+  expect(world.getComponent(12, COMPONENT.VotingRight)!.weight).toBe(0);
   expect(demonHunterCheckpointPlayers(world, true)).toHaveLength(12);
 });
 test("Readonly sheriff badge rejects before Idiot reveal or vote consumption", () => {
   const { world, config, catalog } = dayWorld();
   expect(assignSheriff(world, 12, config, catalog)).toBe(true);
-  const badge = world.getComponent<BadgeComponent>(12, COMPONENT.Badge)!;
+  const badge = world.getComponent(12, COMPONENT.Badge)!;
   Object.defineProperty(badge, "isSheriff", { writable: false });
   expect(() => idiotVotedOutHook(world, 12, [])).toThrow("demon_hunter_badge_stock_revoked");
   expect(
     (
-      world.getComponent<RoleComponent>(12, COMPONENT.Role)!.privateState as {
+      world.getComponent(12, COMPONENT.Role)!.privateState as {
         readonly idiot?: unknown;
       }
     ).idiot,
   ).toEqual({
     revealed: false,
   });
-  expect(world.getComponent<VotingRightComponent>(12, COMPONENT.VotingRight)!.canVote).toBe(true);
+  expect(world.getComponent(12, COMPONENT.VotingRight)!.canVote).toBe(true);
   expect(badge.isSheriff).toBe(true);
   expect(demonHunterCheckpointPlayers(world, true)).toHaveLength(12);
 });

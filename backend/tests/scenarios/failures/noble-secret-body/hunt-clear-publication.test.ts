@@ -1,7 +1,5 @@
 /**
- * Failure scenarios verify a delivered Noble Secret Body hunt clear remains paid before later source publication fails.
- * Input: Original role actions, required God-operation failures and exact delivered-choice inputs.
- * Output and oracle: Literal operation ordering, once-only publication and paid-state checks remain tied to the real failed cycles; no golden record is rewritten.
+ * 故障场景测试：验证已送达贵族／不死之身猎杀清除在后续来源发布失败前已付款。输入为原角色行动、必需上帝操作故障及精确已送达选择；操作次序、单次发布及已付状态为字面预期，不重写 golden。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -52,7 +50,7 @@ const nights = (g: ReturnType<typeof game>) =>
     .filter((e) => e.type === "night_resolved")
     .map((e) => e.payload.deaths);
 const live = (g: ReturnType<typeof game>, id: number) =>
-  g.world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive;
+  g.world.getComponent(id, COMPONENT.Alive)!.alive;
 async function cycles(plans: Plan[]) {
   const g = game(),
     seen: ActionRequest[] = [];
@@ -91,7 +89,7 @@ test("actual delivered hunt clear has required God op before subsequent FINAL-so
           kind: "cleared",
           day: 2,
         });
-        const identity = g.world.getComponent<{ name: string }>(3, COMPONENT.Identity)!;
+        const identity = g.world.getComponent(3, COMPONENT.Identity)!;
         identity.name = "fault-after-clear-god-op";
         faultApplied = true;
       }

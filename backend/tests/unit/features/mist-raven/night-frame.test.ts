@@ -86,14 +86,14 @@ function fixture() {
   });
   installMistRavenBoard(world);
   expect(
-    getDreamerState(world.getComponent<RoleComponent>(3, COMPONENT.Role)!)?.protectionPolicy,
+    getDreamerState(world.getComponent(3, COMPONENT.Role)!)?.protectionPolicy,
   ).toBe("netease_2026_night_immunity_v1");
   const kill = (id: number) => {
-    world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
+    world.getComponent(id, COMPONENT.Alive)!.alive = false;
   };
   const healState = () =>
     (
-      world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState as {
+      world.getComponent(1, COMPONENT.Role)!.privateState as {
         readonly alchemist?: unknown;
       }
     ).alchemist as AlchemistState;
@@ -275,7 +275,7 @@ for (const edit of [
   test(`whole native roster revokes unsafe changes/${edit}`, () => {
     const { world, kill } = fixture();
     beginMistNight(world, 1);
-    const role = world.getComponent<RoleComponent>(2, COMPONENT.Role)!;
+    const role = world.getComponent(2, COMPONENT.Role)!;
     const abilities = (role.privateState as { readonly abilities?: unknown }).abilities as Record<
       string,
       { state: object }
@@ -285,7 +285,7 @@ for (const edit of [
     switch (edit) {
       case "caster_state":
         (
-          world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState as Record<
+          world.getComponent(1, COMPONENT.Role)!.privateState as Record<
             string,
             unknown
           >
@@ -302,7 +302,7 @@ for (const edit of [
         break;
       case "revival":
         kill(5);
-        world.getComponent<AliveComponent>(5, COMPONENT.Alive)!.alive = true;
+        world.getComponent(5, COMPONENT.Alive)!.alive = true;
         break;
       case "private_proto":
         Object.setPrototypeOf(role.privateState, {});
@@ -331,7 +331,7 @@ for (const edit of [
 for (const id of [1, 9])
   test(`installation binds original caster state before any night/${id}`, () => {
     const { world } = fixture(),
-      role = world.getComponent<RoleComponent>(id, COMPONENT.Role)!,
+      role = world.getComponent(id, COMPONENT.Role)!,
       key = id === 1 ? "alchemist" : "ravenClaw";
     (role.privateState as Record<string, unknown>)[key] = structuredClone(
       (role.privateState as { readonly alchemist?: unknown; readonly ravenClaw?: unknown })[key],
@@ -341,7 +341,7 @@ for (const id of [1, 9])
   });
 test("four-wolf night cannot inherit a forged pre-start awakening", () => {
   const { world } = fixture(),
-    role = world.getComponent<RoleComponent>(9, COMPONENT.Role)!;
+    role = world.getComponent(9, COMPONENT.Role)!;
   (role.privateState as Record<string, unknown>).ravenClaw = {
     ...createRavenState(),
     awakenedDay: 1,

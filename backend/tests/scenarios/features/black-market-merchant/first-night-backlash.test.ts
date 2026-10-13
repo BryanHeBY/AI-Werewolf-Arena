@@ -1,7 +1,5 @@
 /**
- * Black Market Merchant scenario verifies actual first-night backlash receives original last words before day voting.
- * Input: Original fixed roster and controlled complete PM trade/knife/potion/vote responses.
- * Output and oracle: Handwritten death causes, stock and public request/event ordering remain unchanged; no model or regenerated expectation is involved.
+ * 黑市商人场景测试：验证首夜反噬先获得原遗言再进入白天投票。输入为固定名单和完整 PM 交易／狼刀／药瓶／投票回复；死因、库存及公开请求／事件次序为手写预期，不调用模型或重生预期。
  */
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
@@ -28,7 +26,7 @@ function fixture() {
 
 type Game = ReturnType<typeof fixture>;
 
-const role = (game: Game, id = 3) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+const role = (game: Game, id = 3) => game.world.getComponent(id, COMPONENT.Role)!;
 
 test("a pure first-night Black backlash gets actual last words before day voting", async () => {
   const game = fixture();

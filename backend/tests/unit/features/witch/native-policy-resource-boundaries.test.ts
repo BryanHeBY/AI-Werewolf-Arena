@@ -67,11 +67,11 @@ function setup(
   ).config;
   const game = bootstrapGame(config, { fixedRoles: roles, locale });
   const ability = findNightAbility(
-    game.world.getComponent<RoleComponent>(2, COMPONENT.Role),
+    game.world.getComponent(2, COMPONENT.Role),
     "potion",
   )!;
   game.world
-    .getComponent<StatusMarksComponent>(3, COMPONENT.StatusMarks)!
+    .getComponent(3, COMPONENT.StatusMarks)!
     .add(StatusMark.WolfKillMark);
   const events: GameEvent[] = [];
   const requests: ActionRequest[] = [];
@@ -220,7 +220,7 @@ for (const revoked of ["disabled", "source", "day"] as const)
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: role and board disclose both native policy boundaries`, () => {
     const game = setup("awa_always_v1", "awa_both_native_experimental_v1", locale);
-    const role = game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!;
+    const role = game.world.getComponent(2, COMPONENT.Role)!;
     for (const prompt of [
       captureNativeRolePresentation(WITCH_ROLE_PROFILE.presentation!.id, role, locale),
       getDefaultConfigRenderRegistry().renderBoardConfigPrompt(game.config, locale),

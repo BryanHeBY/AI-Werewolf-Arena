@@ -48,7 +48,7 @@ const board = (window: KnightDuelWindow) => ({
 });
 
 const role = (world: ReturnType<typeof bootstrapGame>["world"], id: number) =>
-  world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  world.getComponent(id, COMPONENT.Role)!;
 
 const duel = (target_id: number) => ({ name: "duel" as const, args: { target_id, confirm: true } });
 
@@ -243,7 +243,7 @@ for (const locale of ["zh-CN", "en"] as const)
             if (request.actorId === 2) {
               if (mode === "resource") setKnightState(role(world, 1), { canDuel: true });
               if (mode === "target") {
-                const life = world.getComponent<{ alive: boolean }>(3, COMPONENT.Alive)!;
+                const life = world.getComponent(3, COMPONENT.Alive)!;
                 life.alive = false;
                 life.alive = true;
               }

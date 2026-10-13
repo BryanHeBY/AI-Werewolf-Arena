@@ -1,7 +1,5 @@
 /**
- * Unit tests verify initial sheriff configuration and bounded vote/death badge lifecycle under the original sheriff pipeline describe prefix.
- * Input: Original local worlds, explicit badge/vote/life edits and controlled direct DeathResolution operations.
- * Output and oracle: Literal canonical election, transfer/destroy and Idiot reveal assertions remain unchanged; no complete Day pipeline or model executes.
+ * 单元测试：验证警长初始配置及有限投票／死亡警徽生命周期。输入为原局部 World、警徽／票权／生命修改和直接 DeathResolution 操作；竞选、转移／销毁与白痴翻牌为原字面预期，不运行完整白天 pipeline 或模型。
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
@@ -20,7 +18,7 @@ describe("sheriff pipeline", () => {
     const { world } = bootstrapGame(twelvePlayerStandardConfig);
     const sheriffId = world
       .entityIds()
-      .find((id) => world.getComponent<BadgeComponent>(id, COMPONENT.Badge)?.isSheriff);
+      .find((id) => world.getComponent(id, COMPONENT.Badge)?.isSheriff);
 
     expect(sheriffId).toBeUndefined();
   });
@@ -29,7 +27,7 @@ describe("sheriff pipeline", () => {
     const config = { ...twelvePlayerStandardConfig, initialSheriffSeat: 1 };
     const context = bootstrapGame(config);
     const sheriffId = context.playerIds.find(
-      (id) => context.world.getComponent<{ seat: number }>(id, COMPONENT.Identity)?.seat === 1,
+      (id) => context.world.getComponent(id, COMPONENT.Identity)?.seat === 1,
     );
     const event = context.phaseManager.getEvents().find((item) => item.type === "sheriff_elected");
 
@@ -45,11 +43,11 @@ describe("sheriff pipeline", () => {
 
     const sheriffId = world
       .entityIds()
-      .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role !== "idiot")!;
-    const sheriffBadge = world.getComponent<BadgeComponent>(sheriffId, COMPONENT.Badge)!;
+      .find((id) => world.getComponent(id, COMPONENT.Role)?.role !== "idiot")!;
+    const sheriffBadge = world.getComponent(sheriffId, COMPONENT.Badge)!;
     sheriffBadge.isSheriff = true;
     sheriffBadge.destroyed = false;
-    const sheriffVoting = world.getComponent<VotingRightComponent>(
+    const sheriffVoting = world.getComponent(
       sheriffId,
       COMPONENT.VotingRight,
     )!;
@@ -59,7 +57,7 @@ describe("sheriff pipeline", () => {
     expect(result.prevented).toBe(false);
     expect(result.removed).toEqual([sheriffId]);
 
-    expect(world.getComponent<AliveComponent>(sheriffId, COMPONENT.Alive)!.alive).toBe(true);
+    expect(world.getComponent(sheriffId, COMPONENT.Alive)!.alive).toBe(true);
     expect(events).toEqual([]);
     await new DeathResolution(world, events, new ToolGateway(), registry, {
       day: 1,
@@ -80,8 +78,8 @@ describe("sheriff pipeline", () => {
     const transferred = events.find((event) => event.type === "sheriff_badge_transferred");
     expect(transferred).toBeDefined();
     const toId = Number(transferred.payload.toId);
-    const nextBadge = world.getComponent<BadgeComponent>(toId, COMPONENT.Badge);
-    const nextVoting = world.getComponent<VotingRightComponent>(toId, COMPONENT.VotingRight);
+    const nextBadge = world.getComponent(toId, COMPONENT.Badge);
+    const nextVoting = world.getComponent(toId, COMPONENT.VotingRight);
     expect(nextBadge?.isSheriff).toBe(true);
     expect(nextBadge?.destroyed).toBe(false);
     expect(nextVoting?.weight).toBe(1.5);
@@ -94,8 +92,8 @@ describe("sheriff pipeline", () => {
 
     const sheriffId = world
       .entityIds()
-      .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role !== "idiot")!;
-    const sheriffBadge = world.getComponent<BadgeComponent>(sheriffId, COMPONENT.Badge)!;
+      .find((id) => world.getComponent(id, COMPONENT.Role)?.role !== "idiot")!;
+    const sheriffBadge = world.getComponent(sheriffId, COMPONENT.Badge)!;
     sheriffBadge.isSheriff = true;
     sheriffBadge.destroyed = false;
 
@@ -103,11 +101,11 @@ describe("sheriff pipeline", () => {
       if (id === sheriffId) {
         continue;
       }
-      const alive = world.getComponent<AliveComponent>(id, COMPONENT.Alive);
+      const alive = world.getComponent(id, COMPONENT.Alive);
       if (alive) {
         alive.alive = false;
       }
-      const voting = world.getComponent<VotingRightComponent>(id, COMPONENT.VotingRight);
+      const voting = world.getComponent(id, COMPONENT.VotingRight);
       if (voting) {
         voting.canVote = false;
         voting.weight = 0;
@@ -136,7 +134,7 @@ describe("sheriff pipeline", () => {
 
     const anySheriffLeft = world
       .entityIds()
-      .some((id) => world.getComponent<BadgeComponent>(id, COMPONENT.Badge)?.isSheriff);
+      .some((id) => world.getComponent(id, COMPONENT.Badge)?.isSheriff);
     expect(anySheriffLeft).toBe(false);
   });
 
@@ -147,8 +145,8 @@ describe("sheriff pipeline", () => {
 
     const idiotId = world
       .entityIds()
-      .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "idiot")!;
-    const idiotBadge = world.getComponent<BadgeComponent>(idiotId, COMPONENT.Badge)!;
+      .find((id) => world.getComponent(id, COMPONENT.Role)?.role === "idiot")!;
+    const idiotBadge = world.getComponent(idiotId, COMPONENT.Badge)!;
     idiotBadge.isSheriff = true;
     idiotBadge.destroyed = false;
 

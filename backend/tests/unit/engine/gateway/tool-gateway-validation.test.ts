@@ -1,10 +1,5 @@
 /**
- * Unit tests for ToolGateway; Rule preflight and domain gateway rejection on isolated constructed players.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试：验证 ToolGateway 在独立构造玩家上的规则预检与拒绝。输入为原局部玩家、工具及非法参数；原字面断言为预期，不执行模型或完整对局。
  */
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
@@ -23,11 +18,11 @@ describe("ToolGateway validation", () => {
 
     const guardId = world
       .getAliveEntityIds()
-      .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Guard);
+      .find((id) => world.getComponent(id, COMPONENT.Role)?.role === Role.Guard);
 
     expect(guardId).toBeDefined();
 
-    const guard = world.getComponent<RoleComponent>(guardId!, COMPONENT.Role)!;
+    const guard = world.getComponent(guardId!, COMPONENT.Role)!;
     const guardState = getGuardState(guard)!;
     (guardState as { lastTarget: number | null }).lastTarget = 1;
 
@@ -49,7 +44,7 @@ describe("ToolGateway validation", () => {
 
     const witchId = world
       .getAliveEntityIds()
-      .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Witch);
+      .find((id) => world.getComponent(id, COMPONENT.Role)?.role === Role.Witch);
 
     expect(witchId).toBeDefined();
 
@@ -64,7 +59,7 @@ describe("ToolGateway validation", () => {
     expect(selfHeal.error).toBe("self_heal");
     expect(selfHeal.message).toContain("不可自救");
 
-    const witch = world.getComponent<RoleComponent>(witchId!, COMPONENT.Role)!;
+    const witch = world.getComponent(witchId!, COMPONENT.Role)!;
     const witchState = getWitchState(witch)!;
     (witchState as { healUsedThisNight: boolean }).healUsedThisNight = true;
 

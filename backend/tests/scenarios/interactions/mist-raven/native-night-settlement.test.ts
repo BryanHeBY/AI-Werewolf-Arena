@@ -1,7 +1,5 @@
 /**
- * Interaction scenarios verify Mist/Raven actual nights preserve deferred speakers, one Snake decision and original damage timing.
- * Input: Existing public board bytes, original blast/window/knife plans and first/second-night providers.
- * Output and oracle: Literal death, badge, speaker and penetrated-dream assertions remain causal with executed cycles; the public board URL resolves to the same source after relocation.
+ * 交互场景测试：验证雾鸦实际夜晚的延迟发言、单次蛇选择及原伤害时点。输入为既有公开板子字节、自爆／窗口／狼刀计划和首／次夜 provider；死亡、警徽、发言者与穿透梦的结果为字面预期，公开板子路径仍指同一来源。
  */
 import { expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
@@ -69,7 +67,7 @@ test("real first night preserves all doomed speakers until one snake and never r
       if (stage === "seer") return { name: "check_identity", args: { target_id: 9 } };
       if (stage === "sheriff_nomination") return { name: "run_for_sheriff", args: { run: false } };
       if (stage === "day_speech") {
-        expect(game.world.getComponent<AliveComponent>(5, COMPONENT.Alive)!.alive).toBe(true);
+        expect(game.world.getComponent(5, COMPONENT.Alive)!.alive).toBe(true);
         expect(game.phaseManager.getEvents().some((event) => event.type === "night_resolved")).toBe(
           false,
         );
@@ -101,7 +99,7 @@ test("real first night preserves all doomed speakers until one snake and never r
   expect(game.world.getAliveEntityIds()).not.toContain(10);
   expect(
     (
-      game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState as {
+      game.world.getComponent(1, COMPONENT.Role)!.privateState as {
         readonly alchemist?: unknown;
       }
     ).alchemist,
@@ -142,7 +140,7 @@ for (const window of Object.values(ActionWindow))
           if (window !== ActionWindow.OnPreVote) {
             expect(game.world.getAliveEntityIds()).not.toContain(10);
             if (window !== ActionWindow.OnPreElection)
-              expect(game.world.getComponent<BadgeComponent>(5, COMPONENT.Badge)!.isSheriff).toBe(
+              expect(game.world.getComponent(5, COMPONENT.Badge)!.isSheriff).toBe(
                 true,
               );
           }
@@ -265,7 +263,7 @@ test("real second-night Raven unseals and penetrates a dream-protected target de
   ).toEqual([{ actorId: 9, day: 2, awakened: true, knownTeammateIds: [10] }]);
   expect(
     (
-      game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!.privateState as {
+      game.world.getComponent(1, COMPONENT.Role)!.privateState as {
         readonly alchemist?: unknown;
       }
     ).alchemist,

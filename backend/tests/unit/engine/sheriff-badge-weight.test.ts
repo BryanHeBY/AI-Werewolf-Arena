@@ -1,8 +1,5 @@
 /**
- * Unit tests: Sheriff badge weight uses fixed transfers and Idiot reveals; literal
- * effective voting weights check preservation of the configured badge rule. Inputs and
- * expected outcomes remain the original literal or immutable-fixture oracle; these module
- * assertions invoke no model or complete-game driver.
+ * 单元测试：验证警徽转移与白痴翻牌保留配置票权。输入为固定警徽变化；有效票重使用原字面预期，不执行完整对局或模型。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -24,7 +21,7 @@ test("configured sheriff weight survives normal transfer and idiot reveal", () =
   const { world } = bootstrapGame(twelvePlayerStandardConfig);
   const idiot = world
     .entityIds()
-    .find((id) => world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Idiot)!;
+    .find((id) => world.getComponent(id, COMPONENT.Role)?.role === Role.Idiot)!;
   assignSheriff(world, idiot, { ...twelvePlayerStandardConfig, sheriff: { voteWeight: 2.25 } });
   const events: GameEvent[] = [];
   new EventRegistry().onVotedOut(world, idiot, events);
@@ -32,11 +29,11 @@ test("configured sheriff weight survives normal transfer and idiot reveal", () =
   const next = transfer.payload.toId;
   expect(typeof next).toBe("number");
   expect(
-    world.getComponent<VotingRightComponent>(next as number, COMPONENT.VotingRight)?.weight,
+    world.getComponent(next as number, COMPONENT.VotingRight)?.weight,
   ).toBe(2.25);
   const result = transferOrDestroySheriffBadge(world, next as number, "test", events)!;
   if (result.toId !== null)
     expect(
-      world.getComponent<VotingRightComponent>(result.toId, COMPONENT.VotingRight)?.weight,
+      world.getComponent(result.toId, COMPONENT.VotingRight)?.weight,
     ).toBe(2.25);
 });

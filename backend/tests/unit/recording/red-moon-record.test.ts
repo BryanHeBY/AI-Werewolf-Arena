@@ -1,9 +1,5 @@
 /**
- * Unit tests: Red Moon archive verification uses literal blast/seal and native-decision
- * records; exact adjacency and following-night rejection assertions check causal
- * serialized facts. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证赤月归档中自爆、封印及原生决定的因果事实。输入为原字面记录；事件相邻性与后续夜拒绝断言为预期，不执行模型或完整对局驱动。
  */
 import { validateDemonHunterRecord } from "../../../src/recording/demon_hunter_record";
 import { expect, test } from "bun:test";
@@ -18,7 +14,7 @@ function fixture(policy: "ends_game" | "forbidden" = "ends_game"): any {
     metadata: {
       normalizedBoard: config,
       players: world.entityIds().map((id) => {
-        const role = world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+        const role = world.getComponent(id, COMPONENT.Role)!;
         return { id, role: role.role, camp: role.camp };
       }),
     },
@@ -148,7 +144,7 @@ test("Incremental Demon record still enforces original checkpoint identity", () 
       complete: true,
       eventCount: 0,
       players: world.entityIds().map((id) => {
-        const role = world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+        const role = world.getComponent(id, COMPONENT.Role)!;
         return {
           id,
           role: role.role,

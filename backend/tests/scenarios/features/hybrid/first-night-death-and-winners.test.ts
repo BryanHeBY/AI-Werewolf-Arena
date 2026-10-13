@@ -1,7 +1,5 @@
 /**
- * Hybrid scenarios verify actual first-night affiliation, self-knife, badge and original final membership settle together.
- * Input: Original follow-Wolf matrix and fixed controlled PM responses.
- * Output and oracle: Handwritten death, independent affiliation and winning-player results preserve original causality; no expected result is generated from new code.
+ * 混血儿场景测试：验证首夜归属、自刀、警徽与原终局成员一起结算。输入为原跟随狼人矩阵及固定 PM 回复；死亡、独立归属和获胜玩家采用手写预期，不用新代码生成结果。
  */
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
@@ -28,7 +26,7 @@ const fixture = (roles = deck, locale: "zh-CN" | "en" = "en") => {
 };
 
 const role = (game: ReturnType<typeof fixture>, id = 1) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  game.world.getComponent(id, COMPONENT.Role)!;
 
 const choose = (target_id: number): ToolCall => ({ name: "choose_exemplar", args: { target_id } });
 

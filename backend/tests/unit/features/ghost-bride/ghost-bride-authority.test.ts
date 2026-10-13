@@ -121,10 +121,10 @@ function fixture(groom = 2, witness = 3, install = true) {
   return { world, c, groom, witness };
 }
 type Fixture = ReturnType<typeof fixture>;
-const role = (g: Fixture, id: number) => g.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
-const life = (g: Fixture, id: number) => g.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+const role = (g: Fixture, id: number) => g.world.getComponent(id, COMPONENT.Role)!;
+const life = (g: Fixture, id: number) => g.world.getComponent(id, COMPONENT.Alive)!;
 const goal = (g: Fixture, id: number) =>
-  g.world.getComponent<VictoryComponent>(id, COMPONENT.Victory)!;
+  g.world.getComponent(id, COMPONENT.Victory)!;
 function turn(
   g: Fixture,
   kind: "bridegroom" | "chat" | "witness" | "knife",

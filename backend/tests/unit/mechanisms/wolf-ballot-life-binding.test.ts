@@ -53,7 +53,7 @@ for (const mutation of ["revive", "replace_life"] as const)
             if (mutation === "replace_life")
               game.world.addComponent(5, COMPONENT.Alive, createAliveComponent());
             else {
-              const life = game.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!;
+              const life = game.world.getComponent(5, COMPONENT.Alive)!;
               life.alive = false;
               life.alive = true;
             }
@@ -70,7 +70,7 @@ for (const mutation of ["revive", "replace_life"] as const)
         }),
         getAliveByRole: () => [],
         ensureMarks: (id) => {
-          let marks = game.world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks);
+          let marks = game.world.getComponent(id, COMPONENT.StatusMarks);
           if (!marks) {
             marks = new StatusMarksComponent();
             game.world.addComponent(id, COMPONENT.StatusMarks, marks);
@@ -91,7 +91,7 @@ for (const mutation of ["revive", "replace_life"] as const)
     });
     expect(
       game.world
-        .getComponent<StatusMarksComponent>(5, COMPONENT.StatusMarks)
+        .getComponent(5, COMPONENT.StatusMarks)
         ?.has(StatusMark.WolfKillMark) ?? false,
     ).toBe(false);
   });
@@ -121,7 +121,7 @@ for (const mutation of ["revive", "replace_life"] as const)
               if (mutation === "replace_life")
                 game.world.addComponent(5, COMPONENT.Alive, createAliveComponent());
               else {
-                const life = game.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!;
+                const life = game.world.getComponent(5, COMPONENT.Alive)!;
                 life.alive = false;
                 life.alive = true;
               }
@@ -142,7 +142,7 @@ for (const mutation of ["revive", "replace_life"] as const)
         }),
         getAliveByRole: () => [],
         ensureMarks: (id) =>
-          game.world.getComponent<StatusMarksComponent>(id, COMPONENT.StatusMarks)!,
+          game.world.getComponent(id, COMPONENT.StatusMarks)!,
         pickMajorityTarget: (votes) => Math.min(...Object.keys(votes).map(Number)),
         shuffleWolves: (ids) => ids,
         state,
@@ -161,7 +161,7 @@ for (const mutation of ["revive", "replace_life"] as const)
     ]);
     expect(
       game.world
-        .getComponent<StatusMarksComponent>(5, COMPONENT.StatusMarks)!
+        .getComponent(5, COMPONENT.StatusMarks)!
         .has(StatusMark.WolfKillMark),
     ).toBe(true);
   });

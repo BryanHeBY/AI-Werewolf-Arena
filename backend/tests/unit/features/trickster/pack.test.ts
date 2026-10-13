@@ -1,10 +1,5 @@
 /**
- * Unit tests for trickster; Isolated trickster pack contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试：验证捣蛋鬼独立 pack 契约。输入为原内存 owner、frame、reader 与受控非法修改；原字面断言、对象身份及拒绝结果为预期，不组装完整对局或模型传输。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -22,11 +17,11 @@ test("trickster meets pack only after first personal choice is committed", () =>
   const actor = f.world
     .entityIds()
     .find(
-      (id) => f.world.getComponent<RoleComponent>(id, COMPONENT.Role)!.role === Role.Trickster,
+      (id) => f.world.getComponent(id, COMPONENT.Role)!.role === Role.Trickster,
     )!;
   const wolves = f.world
     .entityIds()
-    .filter((id) => f.world.getComponent<RoleComponent>(id, COMPONENT.Role)!.role === Role.Wolf);
+    .filter((id) => f.world.getComponent(id, COMPONENT.Role)!.role === Role.Wolf);
   expect(knownWolfTeammates(f.world, actor, catalog)).toEqual([]);
   for (const wolf of wolves)
     expect(knownWolfTeammates(f.world, wolf, catalog)).not.toContain(actor);

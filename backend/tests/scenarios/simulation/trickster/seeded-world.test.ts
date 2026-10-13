@@ -1,9 +1,5 @@
 /**
- * Scenario simulation tests: Runs actual Trickster Worlds for the original twenty seeds
- * and locales. Seeded observed-player strategies supply actions; literal natural
- * termination and positive pair-activation counts check the native path. The original
- * seed/action matrices and literal assertions remain the oracle; these trials do not
- * replace archived goldens or claim newly independent rule coverage.
+ * 模拟场景测试：负责执行捣蛋鬼双语及原二十个种子的实际 World。输入为有种子的观察玩家策略；自然终局和正配对次数采用字面预期，不替代归档 golden 或声称新增独立规则覆盖。
  */
 import type { RoleComponent } from "../../../../src/core/domain/components/role";
 import { getTricksterState } from "../../../../src/game/mechanisms/roles/trickster/state";
@@ -39,7 +35,7 @@ for (const locale of ["zh-CN", "en"] as const)
         const state = game.world
           .entityIds()
           .map((id) =>
-            getTricksterState(game.world.getComponent<RoleComponent>(id, COMPONENT.Role)),
+            getTricksterState(game.world.getComponent(id, COMPONENT.Role)),
           )
           .find(Boolean);
         if (state?.history.some((row) => row.pair !== null)) activations++;

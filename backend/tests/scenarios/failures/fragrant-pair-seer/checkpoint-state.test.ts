@@ -1,7 +1,5 @@
 /**
- * Failure scenarios verify Fragrant Pair Seer checkpoint state agrees with canonical God facts after controlled stock corruption.
- * Input: The original runtime game, pair/phantom forgeries or a hostile getter and an injected phase failure.
- * Output and oracle: Literal canonical stock, getter-call counts and original error identity are asserted after the real failed cycle; no expected archive is regenerated.
+ * 故障场景测试：验证寻香 checkpoint 库存遭修改后仍与上帝事实一致。输入为原对局、配对／狼影伪造或恶意 getter 及阶段故障；实际失败后的规范库存、getter 次数及错误身份为字面预期，不重新生成归档。
  */
 import { test, expect } from "bun:test";
 import { fragrantRuntimeGame as game } from "../../../support/features/fragrant-pair-seer/builders/runtime-game";
@@ -19,17 +17,18 @@ for (const alteration of ["pair_forgery", "pair_getter", "phantom_forgery"] as c
         {
           async getAction(r) {
             if (r.context.stage === "pair_inspection") {
-              const role = g.world.getComponent<any>(
+              const role = g.world.getComponent(
                 alteration === "phantom_forgery" ? 1 : 9,
                 COMPONENT.Role,
               )!;
-              if (alteration === "phantom_forgery") role.privateState.fragrant.knownWolfId = 2;
+              // 只给原容器伪造读写加类型说明；仍逐次读取同一字段，不缓存或重新构造库存。
+              if (alteration === "phantom_forgery") (role.privateState as { fragrant: { knownWolfId: number } }).fragrant.knownWolfId = 2;
               else if (alteration === "pair_forgery")
-                role.privateState.pairSeer.history = [
+                (role.privateState as { pairSeer: { history: unknown[] } }).pairSeer.history = [
                   { day: 1, targetIds: [1, 9], containsWerewolf: false },
                 ];
               else
-                Object.defineProperty(role.privateState.pairSeer, "history", {
+                Object.defineProperty((role.privateState as { pairSeer: { history: unknown[] } }).pairSeer, "history", {
                   enumerable: true,
                   configurable: true,
                   get() {

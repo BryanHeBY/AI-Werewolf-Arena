@@ -1,9 +1,5 @@
 /**
- * Scenario simulation tests: Runs actual Red Moon Worlds for both last-wolf policies,
- * locales and the original twenty seeds. Original role references, public death sets and
- * an explicit remaining-faction formula check terminal life/winner consistency. The
- * original seed/action matrices and literal assertions remain the oracle; these trials do
- * not replace archived goldens or claim newly independent rule coverage.
+ * 模拟场景测试：负责执行赤月两种最后狼人政策、双语及原二十个种子的实际 World。输入保留原角色和动作矩阵；角色引用、公开死亡集及手写剩余阵营公式检查终局生命／胜者，不替代归档 golden 或声称新增独立规则覆盖。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -34,7 +30,7 @@ for (const policy of ["ends_game", "forbidden"] as const)
           const initial = new Map(
             game.playerIds.map((id) => [
               id,
-              game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!,
+              game.world.getComponent(id, COMPONENT.Role)!,
             ]),
           );
           const styles = ["active", "conservative", "competitive", "random"] as const;
@@ -73,7 +69,7 @@ for (const policy of ["ends_game", "forbidden"] as const)
           expect(winner).not.toBeNull();
           expect(result.result!.winner).toBe(winner);
           for (const [id, role] of initial)
-            expect(game.world.getComponent<RoleComponent>(id, COMPONENT.Role)).toBe(role);
+            expect(game.world.getComponent(id, COMPONENT.Role)).toBe(role);
         }
       },
       120000,

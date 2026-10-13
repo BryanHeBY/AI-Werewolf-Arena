@@ -35,7 +35,7 @@ const roles = [Role.Wolf, Role.Hunter, Role.Seer, Role.Guard, Role.Villager, Rol
   };
 const fixture = () => bootstrapGame(config, { fixedRoles: roles }),
   role = (game: ReturnType<typeof fixture>, id: number) =>
-    game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+    game.world.getComponent(id, COMPONENT.Role)!;
 for (const change of ["revive", "replace"] as const)
   test(`${change}: every old shot request is rejected without consuming the gun or publicly killing a new target life`, async () => {
     const game = fixture(),
@@ -57,7 +57,7 @@ for (const change of ["revive", "replace"] as const)
           if (change === "replace")
             game.world.addComponent(5, COMPONENT.Alive, createAliveComponent());
           else {
-            const life = game.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!;
+            const life = game.world.getComponent(5, COMPONENT.Alive)!;
             life.alive = false;
             life.alive = true;
           }
@@ -266,7 +266,7 @@ for (const change of ["actor_revive", "actor_replace", "clock", "accepted_clock"
         async getAction(request) {
           if (request.allowedTools.includes("shoot")) {
             if (change === "actor_revive") {
-              const life = game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!;
+              const life = game.world.getComponent(2, COMPONENT.Alive)!;
               life.alive = true;
               life.alive = false;
             }
@@ -287,7 +287,7 @@ for (const change of ["actor_revive", "actor_replace", "clock", "accepted_clock"
 test("legacy direct hook callers without a target scope still bind the target life before choose", async () => {
   const game = fixture(),
     events: GameEvent[] = [];
-  game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive = false;
+  game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   const permit = game.world.openDeathAction(2, "shoot", Phase.Day, 1);
   try {
     const result = await hunterDeathHook(

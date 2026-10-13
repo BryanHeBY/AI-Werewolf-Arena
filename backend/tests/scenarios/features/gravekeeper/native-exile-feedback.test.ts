@@ -60,7 +60,7 @@ const board: BoardConfig = {
 };
 
 const role = (world: ReturnType<typeof bootstrapGame>["world"], id: number) =>
-  world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  world.getComponent(id, COMPONENT.Role)!;
 
 const state = (world: ReturnType<typeof bootstrapGame>["world"], id = 3) =>
   getGravekeeperState(role(world, id))!;
@@ -249,7 +249,7 @@ for (const locale of ["zh-CN", "en"] as const)
     const fact = captureExileFeedback(world, 1, 1, catalog)!;
     expect(fact).toEqual({ exileDay: 1, targetId: 1, result: { kind: "camp", camp: "good" } });
     role(world, 1).camp = Camp.ThirdParty;
-    world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive = false;
+    world.getComponent(1, COMPONENT.Alive)!.alive = false;
     expect(state(world)).toEqual({ history: [] });
     expect(policy(world).buildObservation(request(3, 1, [])).ownState.gravekeeper).toEqual({
       history: [],
@@ -371,7 +371,7 @@ for (const locale of ["zh-CN", "en"] as const)
       events,
     );
     const fact = captureExileFeedback(world, 1, 1)!;
-    world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive = false;
+    world.getComponent(1, COMPONENT.Alive)!.alive = false;
     let actions = 0;
     await new NightPipeline({
       world,

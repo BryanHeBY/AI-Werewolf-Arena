@@ -1,7 +1,5 @@
 /**
- * Unit tests verify bootstrap initial God information and Wolf-half condition selection under the original PhaseManager describe prefix.
- * Input: Original public boards and bounded world state edits or condition registry query.
- * Output and oracle: Exact initial player fields and literal faction outcome remain unchanged; no full phase, filesystem or model runs.
+ * 单元测试：验证启动时上帝信息与狼人半数条件。输入为原公开板子、有限 World 修改或条件注册表查询；初始玩家字段及阵营结果保留精确字面预期，不执行完整阶段、文件或模型。
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
@@ -35,12 +33,12 @@ describe("PhaseManager", () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const aliveIds = context.world.getAliveEntityIds();
     const goodIds = aliveIds.filter((id) => {
-      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = context.world.getComponent(id, COMPONENT.Role);
       return role?.camp === Camp.Good;
     });
     // 6人局初始 2狼4好，击杀两名好人后达到 2狼2好，满足“狼人达半”。
     for (let i = 0; i < 2; i++) {
-      const alive = context.world.getComponent<AliveComponent>(goodIds[i], COMPONENT.Alive);
+      const alive = context.world.getComponent(goodIds[i], COMPONENT.Alive);
       if (alive) {
         alive.alive = false;
       }

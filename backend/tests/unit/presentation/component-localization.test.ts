@@ -26,12 +26,12 @@ for (const locale of ["zh-CN", "en"] as const)
       locale,
       fixedRoles: [Role.Wolf, Role.Seer, Role.Villager, Role.Wolf, Role.Guard, Role.Villager],
     });
-    const alive = world.getComponent<AliveComponent>(1, COMPONENT.Alive)!;
-    const camp = world.getComponent<CampComponent>(1, COMPONENT.Camp)!;
-    const badge = world.getComponent<BadgeComponent>(1, COMPONENT.Badge)!;
-    const vote = world.getComponent<VotingRightComponent>(1, COMPONENT.VotingRight)!;
-    const role = world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
-    const marks = world.getComponent<StatusMarksComponent>(1, COMPONENT.StatusMarks)!;
+    const alive = world.getComponent(1, COMPONENT.Alive)!;
+    const camp = world.getComponent(1, COMPONENT.Camp)!;
+    const badge = world.getComponent(1, COMPONENT.Badge)!;
+    const vote = world.getComponent(1, COMPONENT.VotingRight)!;
+    const role = world.getComponent(1, COMPONENT.Role)!;
+    const marks = world.getComponent(1, COMPONENT.StatusMarks)!;
     expect(renderAlivePrompt(alive)).toBe(locale === "en" ? "You are still alive." : "你当前仍存活。");
     alive.alive = false;
     expect(renderAlivePrompt(alive)).toBe(

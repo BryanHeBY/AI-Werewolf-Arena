@@ -61,9 +61,9 @@ function fixture(locale: "en" | "zh-CN" = "en", target = 2) {
 
 type Game = ReturnType<typeof fixture>;
 
-const role = (game: Game, id = 2) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+const role = (game: Game, id = 2) => game.world.getComponent(id, COMPONENT.Role)!;
 
-const life = (game: Game, id = 2) => game.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+const life = (game: Game, id = 2) => game.world.getComponent(id, COMPONENT.Alive)!;
 
 function resolver(game: Game, gateway = new ToolGateway()) {
   return new DeathResolution(game.world, game.events, gateway, new EventRegistry(), game.state);

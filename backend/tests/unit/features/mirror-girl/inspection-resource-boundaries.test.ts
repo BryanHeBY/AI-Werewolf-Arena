@@ -78,7 +78,7 @@ const fixture = (locale: "zh-CN" | "en" = "en", roles = deck) => ({
 });
 
 const role = (game: ReturnType<typeof fixture>, id = 1) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  game.world.getComponent(id, COMPONENT.Role)!;
 
 const native = (game: ReturnType<typeof fixture>) => findNightAbility(role(game), "role_check")!;
 
@@ -156,7 +156,7 @@ for (const locale of ["zh-CN", "en"] as const)
     ]);
     expect(ability.uses).toBe(1);
     for (const id of [1, 2]) {
-      const life = game.world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!;
+      const life = game.world.getComponent(id, COMPONENT.Alive)!;
       life.alive = false;
       life.alive = true;
     }
@@ -204,7 +204,7 @@ test("Hidden role labels change after inheritance but a previous Mirror report i
     context(game, events, async () => ({ name: "inspect_role", args: { target_id: 3 } })),
   );
   expect(ability.state.history[0].result).toEqual({ kind: "role", role: Role.Villager });
-  game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive = false;
+  game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   refreshHiddenWolfInheritance(game.world, events, 1);
   expect(resolveInspection(game.world, 3, "role", getDefaultRoleCatalog())).toEqual({
     kind: "role",
@@ -501,7 +501,7 @@ test("a gifted Mirror instance runs without a Mirror entity and cannot replace n
     events: GameEvent[] = [];
   (findNightAbility(role(game, 1), "role_check")! as { disabled: boolean }).disabled = true;
   (findNightAbility(role(game, 2), "role_check")! as { disabled: boolean }).disabled = true;
-  game.world.getComponent<{ alive: boolean }>(3, COMPONENT.Alive)!.alive = false;
+  game.world.getComponent(3, COMPONENT.Alive)!.alive = false;
   refreshGargoyleInheritance(game.world, events, 1);
   const gift = grantNightAbility(
     game.world,
@@ -668,7 +668,7 @@ for (const change of ["cancel_null", "actor_revive", "target_revive", "state", "
           return null;
         }
         if (change === "actor_revive" || change === "target_revive") {
-          const life = game.world.getComponent<{ alive: boolean }>(
+          const life = game.world.getComponent(
             change === "actor_revive" ? 1 : 2,
             COMPONENT.Alive,
           )!;

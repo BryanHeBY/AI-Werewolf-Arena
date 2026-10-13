@@ -36,7 +36,7 @@ function nightDeaths(f: ReturnType<typeof demonHunterFixture>) {
 function history(f: ReturnType<typeof demonHunterFixture>) {
   return projectDemonHunter(
     f.world,
-    f.world.getComponent<RoleComponent>(f.demonId, COMPONENT.Role)!,
+    f.world.getComponent(f.demonId, COMPONENT.Role)!,
   )!.history;
 }
 
@@ -54,7 +54,7 @@ for (const size of [6, 12] as const)
         expect(f.world.getAliveEntityIds()).toHaveLength(size);
         expect(seen.some((r) => r.context.stage === ("demon_hunter" as any))).toBe(false);
         expect(
-          getWitchState(f.world.getComponent<RoleComponent>(f.witchId, COMPONENT.Role)!)!.poison,
+          getWitchState(f.world.getComponent(f.witchId, COMPONENT.Role)!)!.poison,
         ).toBe(0);
         expect(history(f)).toEqual([]);
         expect(f.phaseManager.getSnapshot().day).toBe(2);
@@ -131,7 +131,7 @@ for (const [title, choices, deaths, demonCauses] of [
 for (const position of ["before_native", "after_native", "after_ordinary_damage"] as const)
   test(`actual pipeline native immunity retains independent generic poison ${position}`, async () => {
     const f = demonHunterFixture(),
-      marks = f.world.getComponent<StatusMarksComponent>(6, COMPONENT.StatusMarks)!;
+      marks = f.world.getComponent(6, COMPONENT.StatusMarks)!;
     await f.phaseManager.runSingleCycle(provider(f), 10);
     let added = false;
     const add = () => {
@@ -237,17 +237,18 @@ for (const phase of [
 ] as const)
   test(`actual engine rejects foreign Alive getter without execution ${phase}`, async () => {
     const f = demonHunterFixture(),
-      original = f.world.getComponent<AliveComponent>(3, COMPONENT.Alive)!;
+      original = f.world.getComponent(3, COMPONENT.Alive)!;
     await f.phaseManager.runSingleCycle(provider(f), 10);
     let reads = 0;
+    // 原外来 Alive getter 必须由真实权威拒绝；断言只容许把原样本送入存储，不改 getter。
     const revoke = () =>
-      f.world.addComponent<unknown>(3, COMPONENT.Alive, {
+      f.world.addComponent(3, COMPONENT.Alive, {
         get alive() {
           reads++;
           throw new Error("foreign_alive_read");
         },
         renderPrompt: () => "",
-      });
+      } as unknown as import("../../../../src/core/domain/component-map").ComponentWrite<typeof COMPONENT.Alive>);
     if (phase === "before_night") revoke();
     const realResolve = f.damage.resolve.bind(f.damage),
       calls = spyOn(f.damage, "resolve").mockImplementation((world, effects) => {
@@ -287,7 +288,7 @@ for (const phase of [
 for (const target of [1, 6])
   test(`actual postcommit replacement ${target} cancels hunt without erasing history or poisoning new body`, async () => {
     const f = demonHunterFixture(),
-      original = f.world.getComponent<AliveComponent>(target, COMPONENT.Alive)!;
+      original = f.world.getComponent(target, COMPONENT.Alive)!;
     await f.phaseManager.runSingleCycle(provider(f), 10);
     const realResolve = f.damage.resolve.bind(f.damage),
       replacement = createAliveComponent(),
@@ -347,7 +348,7 @@ test("actual missing hunt preserves native Witch consumption prefix and denies r
       10,
     ),
   ).rejects.toThrow("demon_hunter_required_action_invalid");
-  expect(getWitchState(f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.poison).toBe(0);
+  expect(getWitchState(f.world.getComponent(5, COMPONENT.Role)!)!.poison).toBe(0);
   expect(f.world.getAliveEntityIds()).toHaveLength(6);
   expect(history(f)).toEqual([]);
   await expect(f.phaseManager.runSingleCycle(provider(f), 10)).rejects.toThrow(
@@ -392,7 +393,7 @@ for (const size of [6, 12] as const)
           );
           expect(nightDeaths(f)).toEqual(guarded ? [] : [size]);
           expect(
-            getWitchState(f.world.getComponent<RoleComponent>(f.witchId, COMPONENT.Role)!)!.heal,
+            getWitchState(f.world.getComponent(f.witchId, COMPONENT.Role)!)!.heal,
           ).toBe(0);
           expect(history(f)).toEqual([{ day: 2, targetId: null }]);
         } finally {
@@ -403,7 +404,7 @@ for (const size of [6, 12] as const)
 test("actual Night→PM microtask handoff rejects external getter before read and retains committed choice", async () => {
   const f = demonHunterFixture();
   await f.phaseManager.runSingleCycle(provider(f), 10);
-  const original = f.world.getComponent<AliveComponent>(3, COMPONENT.Alive)!,
+  const original = f.world.getComponent(3, COMPONENT.Alive)!,
     realResolve = f.damage.resolve.bind(f.damage);
   let reads = 0;
   const calls = spyOn(f.damage, "resolve").mockImplementation((world, effects) => {
@@ -443,7 +444,7 @@ test("actual selected knife never authorizes a generic WolfKill mark on another 
       getAction: async (request) => {
         if (request.context.stage === "seer")
           f.world
-            .getComponent<StatusMarksComponent>(3, COMPONENT.StatusMarks)!
+            .getComponent(3, COMPONENT.StatusMarks)!
             .add(StatusMark.WolfKillMark);
         return demonNightChoice(request, f.witchId, { knife: 6, hunt: null });
       },
@@ -485,7 +486,7 @@ test("direct actual NightPipeline reentry cannot close the already waiting origi
 for (const position of ["before_native", "after_native", "after_ordinary_damage"] as const)
   test(`actual Heal source revocation retains independent generic Heal ${position}`, async () => {
     const f = demonHunterFixture(),
-      marks = f.world.getComponent<StatusMarksComponent>(6, COMPONENT.StatusMarks)!;
+      marks = f.world.getComponent(6, COMPONENT.StatusMarks)!;
     await f.phaseManager.runSingleCycle(provider(f), 10);
     let added = false;
     const add = () => {
@@ -517,7 +518,7 @@ for (const position of ["before_native", "after_native", "after_ordinary_damage"
         10,
       );
       expect(nightDeaths(f)).toEqual([]);
-      expect(getWitchState(f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.heal).toBe(0);
+      expect(getWitchState(f.world.getComponent(5, COMPONENT.Role)!)!.heal).toBe(0);
     } finally {
       calls.mockRestore();
     }
@@ -531,7 +532,7 @@ test("actual pure-data Heal refund cannot renew the consumed source or protect t
       getAction: async (request) => {
         if (request.context.stage === "seer")
           (
-            getWitchState(f.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)! as {
+            getWitchState(f.world.getComponent(5, COMPONENT.Role)!)! as {
               heal: number;
             }
           ).heal = 1;
@@ -557,7 +558,7 @@ for (const trigger of ["last_words", "hunter_shot"] as const)
     const f = demonHunterFixture(trigger === "last_words" ? 6 : 12);
     if (trigger === "hunter_shot") await f.phaseManager.runSingleCycle(provider(f), 10);
     const unrelated = trigger === "last_words" ? 4 : 8,
-      life = f.world.getComponent<AliveComponent>(unrelated, COMPONENT.Alive)!;
+      life = f.world.getComponent(unrelated, COMPONENT.Alive)!;
     let reads = 0;
     await expect(
       f.phaseManager.runSingleCycle(
@@ -596,7 +597,7 @@ test("actual completed death-chain handoff rejects microtask getter before publi
   const resolver = (f.phaseManager as unknown as { deathResolution: DeathResolution })
       .deathResolution,
     realResolve = resolver.resolve.bind(resolver),
-    life = f.world.getComponent<AliveComponent>(3, COMPONENT.Alive)!;
+    life = f.world.getComponent(3, COMPONENT.Alive)!;
   let reads = 0;
   const calls = spyOn(resolver, "resolve").mockImplementation(async (...args) => {
     const result = await realResolve(...args);

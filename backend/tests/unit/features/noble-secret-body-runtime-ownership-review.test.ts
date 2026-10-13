@@ -1,9 +1,5 @@
 /**
- * Unit tests: Noble and Secret Body ownership uses controlled native requests and foreign
- * component replacements; literal delegated-choice, checkpoint and lease assertions check
- * the original authority prefix. Inputs and expected outcomes remain the original literal
- * or immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证贵族／不死之身原生请求与外来组件替换的所有权边界。输入为受控请求和替换样本；委托选择、checkpoint 和租约断言保留原权威失败前缀，不新增资源政策。
  */
 import { expect, test, spyOn } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -101,7 +97,7 @@ for (const kind of ["original-getter", "foreign-state", "foreign-role"] as const
     beginNobleBodyNight(g.world, 1, () => true);
     openSecretBodyChoice(g.world, 1).commit(6);
     const expected = checkpointNobleBodyAuthority(g.world, true).body,
-      role = g.world.getComponent<RoleComponent>(5, COMPONENT.Role)!;
+      role = g.world.getComponent(5, COMPONENT.Role)!;
     let reads = 0;
     const foreign = {
       get body() {
@@ -123,13 +119,14 @@ for (const kind of ["original-getter", "foreign-state", "foreign-role"] as const
       );
     if (kind === "foreign-state")
       (role.privateState as Record<string, unknown>).secretBody = foreign;
+    // 保留缺少正常字段且带 getter 的原非法对象；类型断言不运行 getter 或授予角色能力。
     if (kind === "foreign-role")
-      g.world.addComponent<unknown>(5, COMPONENT.Role, {
+      g.world.addComponent(5, COMPONENT.Role, {
         get privateState() {
           reads++;
           throw Error("foreign role getter");
         },
-      });
+      } as unknown as import("../../../src/core/domain/component-map").ComponentWrite<typeof COMPONENT.Role>);
     expect(() => demonHunterCheckpointPlayers(g.world, true)).toThrow();
     const cp = demonHunterCheckpointPlayers(g.world, false)!;
     expect(cp.find((p) => p.id === 5)!.privateState.secretBody).toEqual(expected);
@@ -140,7 +137,7 @@ test("delegation does not adopt another private key or changes to original Witch
   const g = game();
   beginNobleBodyNight(g.world, 1, () => true);
   openSecretBodyChoice(g.world, 1).commit(6);
-  const role = g.world.getComponent<RoleComponent>(5, COMPONENT.Role)!;
+  const role = g.world.getComponent(5, COMPONENT.Role)!;
   (role.privateState as Record<string, unknown>).foreign = { uses: 0 };
   expect(() => demonHunterCheckpointPlayers(g.world, true)).toThrow();
   expect(
@@ -226,10 +223,10 @@ test("Demon installation rejects an existing Noble owner bound to wrong native a
     }
   }
   (
-    world.getComponent<RoleComponent>(10, COMPONENT.Role)!.privateState as Record<string, unknown>
+    world.getComponent(10, COMPONENT.Role)!.privateState as Record<string, unknown>
   ).noble = createNobleState();
   (
-    world.getComponent<RoleComponent>(6, COMPONENT.Role)!.privateState as Record<string, unknown>
+    world.getComponent(6, COMPONENT.Role)!.privateState as Record<string, unknown>
   ).secretBody = createSecretBodyState();
   installNobleBodyAuthority(world, 10, 6);
   expect(() => installDemonHunter(world, source.config)).toThrow();

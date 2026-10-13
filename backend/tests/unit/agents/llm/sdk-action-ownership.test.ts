@@ -1,9 +1,5 @@
 /**
- * Unit tests for action reception parity. Inputs are original receipt/permission matrices and synthetic SDK
- * callbacks or local HTTP/MCP endpoints. Original literal receipts, reference/getter/error traces, facts
- * and expected state remain the oracle. Injected SDK callbacks test accepted-action ownership and
- * completion/deadline, with no HTTP server or spawned MCP in this callback. No complete game phase or paid
- * model runs; existing local windows and denied entry probes remain bounded.
+ * 单元测试：验证 SDK 行动接收的原生所有权与接收一致性。输入为原内存请求、mock 组件和非法调用；既有字面预期及引用断言检查边界，不调用模型或完整对局。
  */
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
@@ -174,5 +170,5 @@ test("SDK owns its accepted action, rejects callbacks after completion/timeout, 
       })
     ).toolResult,
   ).toMatchObject({ ok: false, error: "turn_not_open_or_session_invalid" });
-  expect(getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!.poison).toBe(1);
+  expect(getWitchState(game.world.getComponent(6, COMPONENT.Role)!)!.poison).toBe(1);
 });

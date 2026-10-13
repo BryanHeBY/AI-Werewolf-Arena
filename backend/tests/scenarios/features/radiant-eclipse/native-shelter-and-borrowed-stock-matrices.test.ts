@@ -208,7 +208,7 @@ for (const [heal, poison] of [
 test("night-start last wolf gets one knife together with borrowed skill and never chats", async () => {
   const f = await radiantFixture();
   for (const id of [10, 11, 12])
-    f.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
+    f.world.getComponent(id, COMPONENT.Alive)!.alive = false;
   const result = await f.pipeline.execute(
     f.board.config,
     radiantProvider(f.requests, { swallow: 3, knife: 6 }, (r) =>

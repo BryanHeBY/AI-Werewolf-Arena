@@ -24,10 +24,10 @@ describe("LlmActionProvider prompts", () => {
   test("prompt no longer contains private-intel snapshot line", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const seerId = context.world.entityIds().find((id) => {
-      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = context.world.getComponent(id, COMPONENT.Role);
       return role?.role === "seer";
     })!;
-    const seerRole = context.world.getComponent<RoleComponent>(seerId, COMPONENT.Role)!;
+    const seerRole = context.world.getComponent(seerId, COMPONENT.Role)!;
     const seerState = getSeerState(
       seerRole,
     )! as import("@ai-werewolf-arena/game-contract").SeerState;
@@ -162,7 +162,7 @@ describe("LlmActionProvider prompts", () => {
   test("target_id tools should include actionable ids hint with role-specific self override", async () => {
     const context = bootstrapGame(sixPlayerMvpConfig);
     const wolfId = context.world.entityIds().find((id) => {
-      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = context.world.getComponent(id, COMPONENT.Role);
       return role?.role === "wolf";
     })!;
     const provider = new LlmActionProvider(
@@ -278,7 +278,7 @@ describe("LlmActionProvider prompts", () => {
     const wolfId = context.world
       .entityIds()
       .find(
-        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "wolf",
+        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === "wolf",
       )!;
     const provider = new LlmActionProvider(
       context.world,
@@ -309,7 +309,7 @@ describe("LlmActionProvider prompts", () => {
   test("witch prompt should include wolf target hint before potion action", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const witchId = context.world.entityIds().find((id) => {
-      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = context.world.getComponent(id, COMPONENT.Role);
       return role?.role === "witch";
     })!;
     const provider = new LlmActionProvider(
@@ -350,9 +350,9 @@ describe("LlmActionProvider prompts", () => {
     const witchId = context.world
       .entityIds()
       .find(
-        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === "witch",
+        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === "witch",
       )!;
-    const witch = context.world.getComponent<RoleComponent>(witchId, COMPONENT.Role)!;
+    const witch = context.world.getComponent(witchId, COMPONENT.Role)!;
     (getWitchState(witch)! as { heal: number }).heal = 0;
     const targetId = context.world.entityIds().find((id) => id !== witchId)!;
     const client = new InvalidPotionThenNoneToolLoopClient(targetId);
@@ -389,7 +389,7 @@ describe("LlmActionProvider prompts", () => {
   test("on_pre_vote self_destruct window should include strict tool boundary hint", async () => {
     const context = bootstrapGame(twelvePlayerStandardConfig);
     const wolfId = context.world.entityIds().find((id) => {
-      const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const role = context.world.getComponent(id, COMPONENT.Role);
       return role?.role === "wolf";
     })!;
     const provider = new LlmActionProvider(

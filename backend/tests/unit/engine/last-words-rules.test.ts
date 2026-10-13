@@ -1,9 +1,5 @@
 /**
- * Unit tests: Last-word eligibility uses fixed first-night, exile and self-destruct
- * deaths; literal allow/deny assertions check the request rule without running an election
- * or full game. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试：验证首夜、放逐及自爆死亡的遗言资格。输入为固定死因与日期；原允许／拒绝断言检查请求规则，不执行竞选或完整对局。
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
@@ -18,7 +14,7 @@ describe("last words rules", () => {
     const mechanism = new LastWordsMechanism();
     const events: any[] = [];
     const deadId = playerIds[0];
-    const alive = world.getComponent<AliveComponent>(deadId, COMPONENT.Alive)!;
+    const alive = world.getComponent(deadId, COMPONENT.Alive)!;
     alive.alive = false;
 
     mechanism.recordLastWordsGranted(world, [deadId], Phase.Night, Phase.Day, 1, events, {
@@ -38,7 +34,7 @@ describe("last words rules", () => {
     const mechanism = new LastWordsMechanism();
     const events: any[] = [];
     const deadId = playerIds[1];
-    const alive = world.getComponent<AliveComponent>(deadId, COMPONENT.Alive)!;
+    const alive = world.getComponent(deadId, COMPONENT.Alive)!;
     alive.alive = false;
 
     mechanism.recordLastWordsGranted(world, [deadId], Phase.Voting, Phase.Voting, 3, events, {

@@ -60,7 +60,7 @@ const config = (roles = deck): BoardConfig => ({
 });
 
 const role = (game: ReturnType<typeof bootstrapGame>, id: number) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  game.world.getComponent(id, COMPONENT.Role)!;
 
 function stageContext(
   game: ReturnType<typeof bootstrapGame>,
@@ -504,12 +504,12 @@ for (const mutation of [
           if (mutation === "native_state")
             setGargoyleState(role(game, 1), structuredClone(getGargoyleState(role(game, 1))!));
           if (mutation === "actor_revive") {
-            const life = game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!;
+            const life = game.world.getComponent(1, COMPONENT.Alive)!;
             life.alive = false;
             life.alive = true;
           }
           if (mutation === "wolf_revive")
-            game.world.getComponent<{ alive: boolean }>(6, COMPONENT.Alive)!.alive = true;
+            game.world.getComponent(6, COMPONENT.Alive)!.alive = true;
           expect(canGargoyleKnife(role(game, 1), game.world)).toBe(false);
           return { name: "guard", args: { target_id: 5, abstain: false } };
         }

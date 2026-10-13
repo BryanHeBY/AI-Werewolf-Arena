@@ -1,9 +1,5 @@
 /**
- * Scenario simulation tests: Runs actual Scholar Mentor Worlds with the original forty
- * seeds and locales. Explicit preset checks, expected two-holder stocks, once-only modes
- * and day-two history bounds check natural completion and real modifier choices. The
- * original seed/action matrices and literal assertions remain the oracle; these trials do
- * not replace archived goldens or claim newly independent rule coverage.
+ * 模拟场景测试：负责执行学者／导师原四十个种子和双语的实际 World。输入为原 preset 和动作矩阵；双持有者库存、模式只用一次、第二天历史边界及自然完成为明确预期，不替代归档 golden 或声称新增独立规则覆盖。
  */
 import { expect, test } from "bun:test";
 import { COMPONENT, createRandom, randomDraws, type RoleComponent } from "../../../../src/core";
@@ -27,7 +23,7 @@ for (const locale of ["zh-CN", "en"] as const)
           game.world
             .entityIds()
             .filter(
-              (id) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.camp === "wolf",
+              (id) => game.world.getComponent(id, COMPONENT.Role)?.camp === "wolf",
             ).length,
         ).toBe(4);
         const styles = ["active", "conservative", "competitive", "random"] as const;
@@ -46,7 +42,7 @@ for (const locale of ["zh-CN", "en"] as const)
         const states = game.world
           .entityIds()
           .map((id) =>
-            scholarMentorStateForRole(game.world.getComponent<RoleComponent>(id, COMPONENT.Role)),
+            scholarMentorStateForRole(game.world.getComponent(id, COMPONENT.Role)),
           )
           .filter(Boolean);
         expect(states.length).toBe(2);

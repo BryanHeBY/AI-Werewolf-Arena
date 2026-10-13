@@ -49,7 +49,7 @@ const fixture = (locale: "zh-CN" | "en" = "en") =>
   bootstrapGame(sixPlayerMvpConfig, { fixedRoles, locale });
 
 const role = (world: ReturnType<typeof fixture>["world"], id: number) =>
-  world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  world.getComponent(id, COMPONENT.Role)!;
 
 const request = (actorId: number, id: string, day = 1): ActionRequest => ({
   actorId,
@@ -390,7 +390,7 @@ test("later snapshot entries lose their opportunity before another model request
           asked.push(input.actorId);
           if (input.actorId === 3) {
             setNightAbilityEnabled(world, 5, "gift:queued", false, events);
-            world.getComponent<{ alive: boolean }>(6, COMPONENT.Alive)!.alive = false;
+            world.getComponent(6, COMPONENT.Alive)!.alive = false;
           }
           return { name: "check_identity", args: { target_id: 1 } };
         }

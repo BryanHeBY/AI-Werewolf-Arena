@@ -1,7 +1,5 @@
 /**
- * Self-destruction scenarios verify actual pipeline opening points, gating, committed deaths and early/night terminal order.
- * Input: Original locale/window/poison matrices with controlled DayPipeline or PM actions.
- * Output and oracle: Exact stages, death/event order, badges/guns and final result retain original causal assertions; no new fixture or production-generated expectation is created.
+ * 自爆场景测试：验证实际 pipeline 开启点、门禁、已提交死亡及提前／夜晚终局顺序。输入为原语言／窗口／毒政策矩阵和受控 DayPipeline／PM 行动；阶段、死亡／事件、警徽／枪及结果为精确字面预期，不创建新 oracle。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -284,7 +282,7 @@ for (const locale of ["zh-CN", "en"] as const)
     const watch = () => {
       if (game.phaseManager.getEvents().some((event) => event.type === "wolf_self_destruct")) {
         observed = true;
-        expect(game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive).toBe(false);
+        expect(game.world.getComponent(1, COMPONENT.Alive)!.alive).toBe(false);
         game.phaseManager.jumpTo(Phase.Voting);
       } else if (++checks < 50) queueMicrotask(watch);
     };
@@ -302,7 +300,7 @@ for (const locale of ["zh-CN", "en"] as const)
     expect(observed).toBe(true);
     expect(result.phase).toBe(Phase.Voting);
     expect(result.gameOver).toBe(false);
-    expect(game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive).toBe(false);
+    expect(game.world.getComponent(1, COMPONENT.Alive)!.alive).toBe(false);
     expect(game.world.activeDeathActionCount).toBe(0);
     expect(
       game.phaseManager.getEvents().filter((event) => event.type === "wolf_self_destruct"),

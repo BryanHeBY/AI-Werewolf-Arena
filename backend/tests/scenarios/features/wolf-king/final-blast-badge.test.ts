@@ -1,7 +1,5 @@
 /**
- * Wolf King scenarios verify the last native king blast has no gun and settles its badge before one victory.
- * Input: Original locale matrix, fixed king/sheriff setup and actual PM self-destruction request.
- * Output and oracle: Exact shot absence, badge order and final outcome retain original assertions; no expected result is generated from new rules.
+ * 狼王场景测试：验证最后原生狼王自爆没有枪，先结警徽再发布唯一终局。输入为原双语矩阵、狼王／警长装配与真实 PM 请求；枪缺席、警徽顺序及最终结果为精确预期，不用新规则推导预期。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -37,7 +35,7 @@ const fixture = (locale: "zh-CN" | "en") =>
   });
 
 const role = (world: ReturnType<typeof fixture>["world"], id: number) =>
-  world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  world.getComponent(id, COMPONENT.Role)!;
 
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: a last Wolf King's ordinary self-destruct has no gun and settles its badge before one victory`, async () => {

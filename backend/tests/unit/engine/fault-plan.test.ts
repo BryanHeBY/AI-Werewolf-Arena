@@ -46,7 +46,7 @@ test("fault input is independent immutable data and actually replaces the origin
     }),
   ).toEqual(["f1"]);
   expect(w.getComponent(6, COMPONENT.Alive)).not.toBe(before);
-  expect(w.getComponent<AliveComponent>(6, COMPONENT.Alive)!.alive).toBe(true);
+  expect(w.getComponent(6, COMPONENT.Alive)!.alive).toBe(true);
   expect(applied).toEqual([
     { step: readFaultPlan(plan()).steps[0], originalVersion: 0, replacementVersion: 0 },
   ]);
@@ -129,7 +129,7 @@ for (const variant of [
       return;
     }
     const r = new NightFaultPlan(w, p),
-      original = w.getComponent<AliveComponent>(6, COMPONENT.Alive)!;
+      original = w.getComponent(6, COMPONENT.Alive)!;
     let calls = 0;
     if (variant === "unconsumed") expect(() => r.assertConsumed()).toThrow("fault_plan_unconsumed");
     else if (variant === "missed")
@@ -156,13 +156,13 @@ for (const variant of [
       } else expect(() => r.applyBeforeNightSourceFreeze(2, b, () => calls++)).toThrow();
     }
     expect(calls).toBe(0);
-    expect(w.getComponent<AliveComponent>(6, COMPONENT.Alive)).toBe(original);
+    expect(w.getComponent(6, COMPONENT.Alive)).toBe(original);
   });
 
 test("tampered factory Alive getter is rejected without executing it", () => {
   const w = world(),
     r = new NightFaultPlan(w, plan()),
-    life = w.getComponent<AliveComponent>(6, COMPONENT.Alive)!;
+    life = w.getComponent(6, COMPONENT.Alive)!;
   let reads = 0;
   Object.defineProperty(life, "alive", {
     enumerable: true,
@@ -182,11 +182,11 @@ for (const targetId of [null, 0, -1, 99, "1", 6])
   test(`bad target ${String(targetId)} cannot authorize an actor fault and closes the instance`, () => {
     const w = world(),
       r = new NightFaultPlan(w, plan()),
-      original = w.getComponent<AliveComponent>(6, COMPONENT.Alive);
+      original = w.getComponent(6, COMPONENT.Alive);
     expect(() =>
       r.applyBeforeNightSourceFreeze(2, { ...boundary, targetId } as any, () => {}),
     ).toThrow();
-    expect(w.getComponent<AliveComponent>(6, COMPONENT.Alive)).toBe(original);
+    expect(w.getComponent(6, COMPONENT.Alive)).toBe(original);
     expect(() => r.applyBeforeNightSourceFreeze(2, boundary, () => {})).toThrow(
       "fault_plan_failed",
     );
@@ -196,14 +196,14 @@ for (const targetId of [null, 0, -1, 99, "1", 6])
 test("recording failure preserves the actual mutation but permanently rejects completion or retry", () => {
   const w = world(),
     r = new NightFaultPlan(w, plan()),
-    original = w.getComponent<AliveComponent>(6, COMPONENT.Alive);
+    original = w.getComponent(6, COMPONENT.Alive);
   const error = new Error("synthetic_record_failure");
   expect(() =>
     r.applyBeforeNightSourceFreeze(2, boundary, () => {
       throw error;
     }),
   ).toThrow(error);
-  expect(w.getComponent<AliveComponent>(6, COMPONENT.Alive)).not.toBe(original);
+  expect(w.getComponent(6, COMPONENT.Alive)).not.toBe(original);
   expect(() => r.assertConsumed()).toThrow("fault_plan_failed");
   expect(() => r.applyBeforeNightSourceFreeze(3, boundary, () => {})).toThrow("fault_plan_failed");
 });
@@ -228,7 +228,7 @@ test("foreign decision getter is rejected with zero reads before a mutation", ()
 test("async recorder is rejected before any mutation", () => {
   const w = world(),
     r = new NightFaultPlan(w, plan()),
-    original = w.getComponent<AliveComponent>(6, COMPONENT.Alive);
+    original = w.getComponent(6, COMPONENT.Alive);
   let called = 0;
   expect(() =>
     r.applyBeforeNightSourceFreeze(2, boundary, async () => {
@@ -237,20 +237,20 @@ test("async recorder is rejected before any mutation", () => {
     }),
   ).toThrow("fault_plan_recorder_invalid");
   expect(called).toBe(0);
-  expect(w.getComponent<AliveComponent>(6, COMPONENT.Alive)).toBe(original);
+  expect(w.getComponent(6, COMPONENT.Alive)).toBe(original);
   expect(() => r.assertConsumed()).toThrow("fault_plan_failed");
 });
 
 test("a disguised promise recorder locks the actual prefix as unverifiable", async () => {
   const w = world(),
     r = new NightFaultPlan(w, plan()),
-    original = w.getComponent<AliveComponent>(6, COMPONENT.Alive);
+    original = w.getComponent(6, COMPONENT.Alive);
   expect(() =>
     r.applyBeforeNightSourceFreeze(2, boundary, () =>
       Promise.reject(new Error("synthetic_async_recorder")),
     ),
   ).toThrow("fault_plan_recorder_not_sync");
-  expect(w.getComponent<AliveComponent>(6, COMPONENT.Alive)).not.toBe(original);
+  expect(w.getComponent(6, COMPONENT.Alive)).not.toBe(original);
   expect(() => r.assertConsumed()).toThrow("fault_plan_failed");
   await Promise.resolve();
 });

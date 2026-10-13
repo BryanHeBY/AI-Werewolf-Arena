@@ -1,7 +1,5 @@
 /**
- * Bear scenarios verify actual whole-night death chains and phase revisions settle before public sensing and final judgment.
- * Input: Original cause/point/locale plans, fixed roles and controlled PM actions including badge/gun/blast chains.
- * Output and oracle: Exact quiet/positive announcements, event ordering and terminal results remain unchanged; existing fixtures and expected outcomes are not regenerated.
+ * 熊场景测试：验证整夜死亡连锁和阶段修订先于公开感知与判胜。输入为原死因／时点／语言计划、固定身份和警徽／枪／自爆链；安静／咆哮、事件次序及终局采用精确预期，不重生 fixture。
  */
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
@@ -34,7 +32,7 @@ const config = (roles = deck): BoardConfig => ({
 });
 
 const role = (game: ReturnType<typeof bootstrapGame>, id: number) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  game.world.getComponent(id, COMPONENT.Role)!;
 
 const passive = (request: ActionRequest): ToolCall | null => {
   if (request.allowedTools.includes("speak_to_wolves"))

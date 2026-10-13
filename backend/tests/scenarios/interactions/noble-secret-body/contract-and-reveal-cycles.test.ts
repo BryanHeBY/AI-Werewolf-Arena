@@ -1,7 +1,5 @@
 /**
- * Interaction scenarios verify Noble and Secret Body actual cycles preserve servant creation, expiry, hunt clearing and reveal authority.
- * Input: Original wolf/body policies, deterministic choices, pending contracts and real reveal/exile cycles.
- * Output and oracle: Explicit contract, knife, last-word, badge/vote and natural terminal assertions remain causal; original expected policies and archived formats are unchanged.
+ * 交互场景测试：验证贵族／不死之身真实周期的仆从建立、到期、猎杀清除和亮牌权威。输入为原狼／身体政策、确定选择、pending 契约及亮牌／放逐周期；契约、狼刀、遗言、警徽／票权和自然终局为明确预期，保留归档及政策。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -139,7 +137,7 @@ for (const target of [6, 12])
       day: 2,
     });
     expect(events.some((e) => e.type === "demon_hunter_cancelled")).toBe(false);
-    expect(g.world.getComponent<{ alive: boolean }>(4, COMPONENT.Alive)!.alive).toBe(true);
+    expect(g.world.getComponent(4, COMPONENT.Alive)!.alive).toBe(true);
     expect(events.filter((e) => e.type === "demon_hunter_chosen").at(-1)?.payload.targetId).toBe(
       target,
     );
@@ -165,16 +163,16 @@ test("real intact Body exile reveals alive, speaks once, retains vote and badge;
   const events = g.phaseManager.getEvents();
   expect(events.filter((e) => e.type === "secret_body_revealed")).toHaveLength(1);
   expect(events.filter((e) => e.type === "secret_body_reveal_speech")).toHaveLength(1);
-  expect(g.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!.alive).toBe(true);
+  expect(g.world.getComponent(5, COMPONENT.Alive)!.alive).toBe(true);
   expect(
-    g.world.getComponent<{ weight: number; canVote: boolean }>(5, COMPONENT.VotingRight),
+    g.world.getComponent(5, COMPONENT.VotingRight),
   ).toMatchObject({ weight: 1.5, canVote: true });
-  expect(g.world.getComponent<{ isSheriff: boolean }>(5, COMPONENT.Badge)!.isSheriff).toBe(true);
+  expect(g.world.getComponent(5, COMPONENT.Badge)!.isSheriff).toBe(true);
   expect(events.some((e) => e.type === "player_role_revealed" && e.payload.playerId === 5)).toBe(
     false,
   );
   await g.phaseManager.runSingleCycle(provider, 8);
-  expect(g.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!.alive).toBe(false);
+  expect(g.world.getComponent(5, COMPONENT.Alive)!.alive).toBe(false);
   expect(g.phaseManager.getEvents().filter((e) => e.type === "secret_body_revealed")).toHaveLength(
     1,
   );

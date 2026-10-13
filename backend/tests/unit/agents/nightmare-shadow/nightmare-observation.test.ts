@@ -26,7 +26,7 @@ for (const fear of ["optional", "required_when_legal"] as const)
       const id = (role: Role) =>
         f.world
           .entityIds()
-          .find((id) => f.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === role)!;
+          .find((id) => f.world.getComponent(id, COMPONENT.Role)?.role === role)!;
       const actor = id(Role.NightmareShadow),
         villager = id(Role.Villager),
         wolf = id(Role.Wolf);
@@ -48,7 +48,7 @@ for (const fear of ["optional", "required_when_legal"] as const)
         config,
       );
       const privateState = getNightmareShadowState(
-        f.world.getComponent<RoleComponent>(actor, COMPONENT.Role)!,
+        f.world.getComponent(actor, COMPONENT.Role)!,
       )!;
       Object.defineProperty(privateState.history, "map", {
         get() {

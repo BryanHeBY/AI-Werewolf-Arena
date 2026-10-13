@@ -96,23 +96,23 @@ function fixture() {
     world.addComponent(id, COMPONENT.Identity, createIdentityComponent(id, id, `Player ${id}`));
   }
   expect(
-    getDreamerState(world.getComponent<RoleComponent>(3, COMPONENT.Role)!)?.protectionPolicy,
+    getDreamerState(world.getComponent(3, COMPONENT.Role)!)?.protectionPolicy,
   ).toBe("netease_2026_night_immunity_v1");
   installMistRavenBoard(world);
   const rule = (id: number, call: ToolCall, phase = Phase.Night, day = 1) =>
     catalog
-      .requireRuntime(world.getComponent<RoleComponent>(id, COMPONENT.Role)!.role)
+      .requireRuntime(world.getComponent(id, COMPONENT.Role)!.role)
       .validationRules?.[call.name]?.({
         world,
         actorId: id,
-        role: world.getComponent<RoleComponent>(id, COMPONENT.Role)!,
+        role: world.getComponent(id, COMPONENT.Role)!,
         roleCatalog: catalog,
         toolCall: call,
         phase,
         day,
       });
   const kill = (id: number) => {
-    world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive = false;
+    world.getComponent(id, COMPONENT.Alive)!.alive = false;
   };
   return { world, catalog, rule, kill };
 }
@@ -127,8 +127,8 @@ test("original profiles contribute exact defaults and bilingual mechanism meanin
     expect(profile.runtime.canSelfDestruct).toBe(false);
   }
   const { world } = fixture(),
-    alchemist = world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
-    raven = world.getComponent<RoleComponent>(9, COMPONENT.Role)!;
+    alchemist = world.getComponent(1, COMPONENT.Role)!,
+    raven = world.getComponent(9, COMPONENT.Role)!;
   expect(
     captureNativeRolePresentation(ALCHEMIST_ROLE_PROFILE.presentation!.id, alchemist, "zh-CN"),
   ).toContain("发言结束");

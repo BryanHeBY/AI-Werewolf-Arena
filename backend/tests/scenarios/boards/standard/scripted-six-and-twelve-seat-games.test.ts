@@ -1,5 +1,5 @@
 /**
- * Complete scripted scenarios check six/twelve-seat standard games, resource use and recorded views. Inputs are original literal player scripts, fixed random stream and locale variants; handwritten deaths, winners, skill/event order and consumed turn counts are the oracle. The original recorder owns real files and cleanup; no model or fixture regeneration runs.
+ * 完整脚本场景测试：验证六人／十二人标准对局、资源使用及录制视角。输入为原固定角色和受控动作；原字面预期与不可变 fixture 检查真实周期，不替换动作或归档格式。
  */
 import { ActionWindow } from "../../../../src/core";
 import type { Locale } from "@ai-werewolf-arena/game-text";
@@ -162,7 +162,7 @@ async function runRecorded(
           winner: snapshot.result?.winner ?? null,
           finishReason: failures.length ? "runtime_error" : snapshot.result!.reason,
           players: context.world.entityIds().map((id) => {
-            const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+            const role = context.world.getComponent(id, COMPONENT.Role)!;
             return {
               player_id: id,
               role: role.role,
@@ -324,13 +324,13 @@ for (const locale of ["zh-CN", "en"] as const)
           .map((event) => event.payload),
       ).toEqual(checks);
       expect(
-        getSeerState(game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!)?.history,
+        getSeerState(game.world.getComponent(2, COMPONENT.Role)!)?.history,
       ).toEqual([
         { targetId: 1, isWerewolf: true, result: { kind: "camp", camp: "wolf" } },
         { targetId: 4, isWerewolf: true, result: { kind: "camp", camp: "wolf" } },
       ]);
       expect(
-        getGuardState(game.world.getComponent<RoleComponent>(5, COMPONENT.Role)!)?.lastTarget,
+        getGuardState(game.world.getComponent(5, COMPONENT.Role)!)?.lastTarget,
       ).toBe(blocked ? 6 : null);
       expect(
         game.provider.trace
@@ -421,11 +421,11 @@ for (const locale of ["zh-CN", "en"] as const)
           .filter((player: { alive: boolean }) => player.alive)
           .map((player: { player_id: number }) => player.player_id),
       ).toEqual(flipIdiot ? [6, 8, 9, 10, 11, 12] : [5, 6, 8, 9, 10, 11, 12]);
-      const witch = getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role)!);
+      const witch = getWitchState(game.world.getComponent(6, COMPONENT.Role)!);
       expect(witch?.heal).toBe(0);
       expect(witch?.poison).toBe(0);
       expect(
-        getHunterState(game.world.getComponent<RoleComponent>(7, COMPONENT.Role)!)?.canShoot,
+        getHunterState(game.world.getComponent(7, COMPONENT.Role)!)?.canShoot,
       ).toBe(false);
       expect(
         game.replay.events.filter((event: { type: string }) => event.type === "witch_potion_used"),
@@ -483,7 +483,7 @@ for (const locale of ["zh-CN", "en"] as const)
       expect(types.indexOf("wolf_self_destruct")).toBeLessThan(types.indexOf("game_over"));
       if (flipIdiot) {
         expect(
-          game.world.getComponent<VotingRightComponent>(8, COMPONENT.VotingRight)?.canVote,
+          game.world.getComponent(8, COMPONENT.VotingRight)?.canVote,
         ).toBe(false);
         expect(
           game.replay.events.filter((event: { type: string }) => event.type === "idiot_revealed"),

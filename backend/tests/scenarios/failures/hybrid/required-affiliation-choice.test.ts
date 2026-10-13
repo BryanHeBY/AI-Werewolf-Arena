@@ -160,10 +160,10 @@ for (const locale of ["zh-CN", "en"] as const)
             expect(nativeCalls).toBeGreaterThanOrEqual(3);
             expect(fallbacks).toBe(0);
             expect(
-              getHybridState(game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!),
+              getHybridState(game.world.getComponent(1, COMPONENT.Role)!),
             ).toEqual({ remaining: 1, choice: null });
             expect(
-              game.world.getComponent<VictoryComponent>(1, COMPONENT.Victory)!.affiliations,
+              game.world.getComponent(1, COMPONENT.Victory)!.affiliations,
             ).toEqual([]);
             expect(game.phaseManager.getEvents().some((e) => e.type.startsWith("hybrid_"))).toBe(
               false,

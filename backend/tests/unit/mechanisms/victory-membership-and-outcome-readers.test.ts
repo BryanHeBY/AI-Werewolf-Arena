@@ -1,5 +1,5 @@
 /**
- * Unit tests check condition priority, explicit faction/individual/relationship membership and strict outcome readers. Inputs are original literal rosters, memberships, dead flags and hostile facts; fixed winner unions and rejection expectations are the oracle. No phase cycle, filesystem publication or model executes.
+ * 单元测试：验证判胜条件优先级、阵营／个人／关系成员与严格 outcome reader。输入为原名单和纯结果数据；独立字面预期检查规则次序与读取拒绝，不用被测算法生成预期。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -20,7 +20,7 @@ const fixture = (locale: "zh-CN" | "en") =>
   );
 
 function dead(world: ReturnType<typeof fixture>["world"], ids: number[]) {
-  for (const id of ids) world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive = false;
+  for (const id of ids) world.getComponent(id, COMPONENT.Alive)!.alive = false;
 }
 
 for (const locale of ["zh-CN", "en"] as const)
@@ -72,11 +72,11 @@ for (const locale of ["zh-CN", "en"] as const)
       additional: [],
       winningPlayerIds: [1, 2, 5],
     });
-    expect(world.getComponent<RoleComponent>(5, COMPONENT.Role)).toMatchObject({
+    expect(world.getComponent(5, COMPONENT.Role)).toMatchObject({
       role: Role.Villager,
       camp: Camp.Good,
     });
-    world.getComponent<RoleComponent>(3, COMPONENT.Role)!.camp = Camp.ThirdParty;
+    world.getComponent(3, COMPONENT.Role)!.camp = Camp.ThirdParty;
     dead(world, [4]);
     expect(
       new ConditionRegistry(new WinConditionRegistry()).evaluate(world, WinCondition.SlaughterSide)!

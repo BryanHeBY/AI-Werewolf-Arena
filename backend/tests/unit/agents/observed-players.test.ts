@@ -25,18 +25,18 @@ test("hidden opponent identities and private state cannot change a villager obse
     fixedRoles,
     random: createRandom("observation"),
   });
-  const wolf = second.world.getComponent<RoleComponent>(2, COMPONENT.Role)!;
-  const guard = second.world.getComponent<RoleComponent>(3, COMPONENT.Role)!;
+  const wolf = second.world.getComponent(2, COMPONENT.Role)!;
+  const guard = second.world.getComponent(3, COMPONENT.Role)!;
   second.world.addComponent(2, COMPONENT.Role, guard);
   second.world.addComponent(3, COMPONENT.Role, wolf);
   (
-    second.world.getComponent<RoleComponent>(5, COMPONENT.Role)!.privateState as Record<
+    second.world.getComponent(5, COMPONENT.Role)!.privateState as Record<
       string,
       unknown
     >
   ).hiddenTest = "PRIVATE_OPPONENT_STATE";
   // 未发表的状态变化不能被观察适配器提升为公开知识。
-  second.world.getComponent<AliveComponent>(6, COMPONENT.Alive)!.alive = false;
+  second.world.getComponent(6, COMPONENT.Alive)!.alive = false;
   const observed: PlayerObservation[] = [];
   const actions = [];
   for (const context of [first, second]) {
@@ -122,7 +122,7 @@ test("own skill resources are detached and immutable, while teammate knowledge i
     observations[0].ownState.guard!.lastTarget = 99;
   }).toThrow();
   expect(
-    getGuardState(context.world.getComponent<RoleComponent>(3, COMPONENT.Role)!)?.lastTarget,
+    getGuardState(context.world.getComponent(3, COMPONENT.Role)!)?.lastTarget,
   ).toBeNull();
   await provider.getAction(
     factory.create({
@@ -148,7 +148,7 @@ test("a wolf cannot infer a teammate's unannounced death from identity knowledge
     fixedRoles,
     random: createRandom("wolf-observation"),
   });
-  second.world.getComponent<AliveComponent>(4, COMPONENT.Alive)!.alive = false;
+  second.world.getComponent(4, COMPONENT.Alive)!.alive = false;
   const observed: PlayerObservation[] = [];
   const actions = [];
   for (const context of [first, second]) {

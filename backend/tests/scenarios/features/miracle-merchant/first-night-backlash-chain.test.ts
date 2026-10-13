@@ -1,7 +1,5 @@
 /**
- * Miracle Merchant scenarios verify complete first-night backlash, last-Wolf death, words and badge before final judgment.
- * Input: Original fixed role plans and controlled complete PM requests.
- * Output and oracle: Handwritten death/event/order and final Good membership retain original causal assertions; no fixture file is loaded or model is called.
+ * 奇迹商人场景测试：验证完整首夜反噬、最后狼人死亡、遗言和警徽先于判胜。输入为固定角色和受控完整 PM 请求；死亡、事件次序及好人成员为手写预期，不读取新 fixture 或调用模型。
  */
 import { PotionType } from "../../../../src/core";
 import { expect, test } from "bun:test";
@@ -29,7 +27,7 @@ const fixture = (roles = deck, locale: "zh-CN" | "en" = "en") => {
 };
 
 const role = (game: ReturnType<typeof fixture>, actor = 1) =>
-  game.world.getComponent<RoleComponent>(actor, COMPONENT.Role)!;
+  game.world.getComponent(actor, COMPONENT.Role)!;
 
 test("full actual first-night Wolf backlash grants last words and settles initial deaths before later voting", async () => {
   const game = fixture(),

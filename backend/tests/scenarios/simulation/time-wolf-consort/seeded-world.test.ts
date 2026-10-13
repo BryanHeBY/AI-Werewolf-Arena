@@ -1,9 +1,5 @@
 /**
- * Scenario simulation tests: Runs actual Time Consort Worlds for both reflection scopes,
- * locales and original seeds. Explicit preset, surviving state and positive choice
- * counters check natural termination and native reflection activation. The original
- * seed/action matrices and literal assertions remain the oracle; these trials do not
- * replace archived goldens or claim newly independent rule coverage.
+ * 模拟场景测试：负责执行时间狼妃两种反射范围、语言及原种子的实际 World。输入为原 preset 和策略；存活状态、自然终局及正选择次数采用明确预期，不替代归档 golden 或声称新增独立规则覆盖。
  */
 import { expect, test } from "bun:test";
 import { COMPONENT, createRandom, randomDraws, type RoleComponent } from "../../../../src/core";
@@ -44,7 +40,7 @@ for (const locale of ["zh-CN", "en"] as const)
           const state = game.world
             .entityIds()
             .map((id) =>
-              getTimeConsortState(game.world.getComponent<RoleComponent>(id, COMPONENT.Role)),
+              getTimeConsortState(game.world.getComponent(id, COMPONENT.Role)),
             )
             .find(Boolean);
           expect(state).toBeDefined();

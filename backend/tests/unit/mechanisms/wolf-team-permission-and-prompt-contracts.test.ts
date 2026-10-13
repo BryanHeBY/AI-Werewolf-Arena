@@ -40,9 +40,9 @@ import {
 
 const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, Role.Villager];
 
-const role = (world: World, id: number) => world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+const role = (world: World, id: number) => world.getComponent(id, COMPONENT.Role)!;
 
-const alive = (world: World, id: number) => world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+const alive = (world: World, id: number) => world.getComponent(id, COMPONENT.Alive)!;
 
 const request = (
   actorId: number,

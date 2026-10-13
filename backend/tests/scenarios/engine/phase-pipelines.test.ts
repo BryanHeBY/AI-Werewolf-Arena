@@ -1,7 +1,5 @@
 /**
- * Engine scenarios verify actual full game, Day/Voting pipelines and Hunter request context under the original PhaseManager describe prefix.
- * Input: Original controlled providers, configured worlds and retry/vote/order matrices.
- * Output and oracle: Exact snapshot, weight, retry and request-context assertions retain original behavior; production-derived targeting is existing debt, not a new independent oracle.
+ * 引擎场景测试：验证完整对局、白天／投票 pipeline 和猎人请求上下文。输入为原受控 provider、World 和重试／票权／顺序矩阵；快照、权重、重试及请求上下文为精确预期，生产推导目标是既有债务，不冒称独立 oracle。
  */
 import { bootstrapGame } from "../../../src/app/bootstrap";
 import { COMPONENT } from "../../../src/core/domain/components/names";
@@ -27,13 +25,13 @@ class WolfOnlyNightProvider implements ActionProvider {
       return null;
     }
 
-    const role = this.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role);
+    const role = this.world.getComponent(request.actorId, COMPONENT.Role);
     if (role?.role !== Role.Wolf) {
       return null;
     }
 
     const target = this.world.getAliveEntityIds().find((id) => {
-      const targetRole = this.world.getComponent<RoleComponent>(id, COMPONENT.Role);
+      const targetRole = this.world.getComponent(id, COMPONENT.Role);
       return id !== request.actorId && targetRole?.camp !== Camp.Wolf;
     });
 
@@ -219,12 +217,12 @@ describe("PhaseManager", () => {
     const hunterId = context.world
       .getAliveEntityIds()
       .find(
-        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Hunter,
+        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === Role.Hunter,
       )!;
     const wolfIds = context.world
       .getAliveEntityIds()
       .filter(
-        (id) => context.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Wolf,
+        (id) => context.world.getComponent(id, COMPONENT.Role)?.role === Role.Wolf,
       );
     const shootTarget = context.world
       .getAliveEntityIds()

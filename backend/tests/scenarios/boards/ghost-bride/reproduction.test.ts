@@ -1,8 +1,5 @@
 /**
- * Wedding engine/replay scenarios verify full Ghost Bride inventory and precise failed setup/night prefixes.
- * Input: Scripted three-faction worlds, getter/field/fault mutations and actual recording.
- * Output and independent oracle: Manual winner/role/goal snapshots, no getter execution and exact causal failure prefixes.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 引擎／复盘场景测试：验证鬼新娘完整库存及准备／夜晚失败前缀。输入为原三阵营脚本 World、getter／字段／故障修改和实际录制；胜者、身份、目标、getter 不执行及因果失败采用手写预期，不调用计费模型或重写 Tape。
  */
 import { readFile, writeFile } from "node:fs/promises";
 import { expect, test } from "bun:test";
@@ -108,7 +105,7 @@ async function recordGame(
       }
       if (failure === "proxy_stock" && request.allowedTools.includes("guard")) {
         const abilities = (
-          context.world.getComponent<RoleComponent>(10, COMPONENT.Role)!.privateState as {
+          context.world.getComponent(10, COMPONENT.Role)!.privateState as {
             readonly abilities?: unknown;
           }
         ).abilities as Record<string, object>;
@@ -129,7 +126,7 @@ async function recordGame(
         throw new Error("synthetic_nested_proxy_failure");
       }
       if (failure === "complete_stock" && request.allowedTools.includes("guard")) {
-        const witchRole = context.world.getComponent<RoleComponent>(10, COMPONENT.Role)!;
+        const witchRole = context.world.getComponent(10, COMPONENT.Role)!;
         Object.defineProperty(witchRole.privateState, "abilities", {
           enumerable: true,
           configurable: true,
@@ -258,7 +255,7 @@ async function recordGame(
       finishReason: failureObserved ? "runtime_error" : snapshot.result!.reason,
       ...(snapshot.result ? { gameResult: snapshot.result } : {}),
       players: context.playerIds.map((id) => {
-        const role = context.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+        const role = context.world.getComponent(id, COMPONENT.Role)!;
         return {
           player_id: id,
           role: role.role,

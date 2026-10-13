@@ -1,7 +1,5 @@
 /**
- * Unit tests verify bounded death waves order original last words, badge and gun hooks while preserving causes and failure identity.
- * Input: Original fixed local worlds, explicit death sources, cyclic/compound hooks and controlled provider responses.
- * Output and oracle: Exact lives, action-window closure, returned source arrays and request/event ordering remain unchanged; no full PM cycle or recorded game runs.
+ * 单元测试：验证有限死亡波保留遗言、警徽、枪 hook 的顺序及原死因／错误身份。输入为原局部 World、死因、循环／复合 hook 和受控回复；生命、关闭窗口、来源数组与请求／事件次序为精确预期，不执行完整 PM 周期或录制对局。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -65,14 +63,14 @@ for (const locale of ["zh-CN", "en"] as const)
       {
         async getAction(request) {
           asks.push(request);
-          expect(world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive).toBe(false);
-          expect(world.getComponent<{ alive: boolean }>(3, COMPONENT.Alive)!.alive).toBe(false);
+          expect(world.getComponent(2, COMPONENT.Alive)!.alive).toBe(false);
+          expect(world.getComponent(3, COMPONENT.Alive)!.alive).toBe(false);
           if (request.context.stage === "last_words")
             return { name: "speak", args: { text: `raw-${request.actorId}` } };
           const attempt = (tries.get(request.actorId) ?? 0) + 1;
           tries.set(request.actorId, attempt);
           if (request.actorId === 3)
-            expect(world.getComponent<{ alive: boolean }>(4, COMPONENT.Alive)!.alive).toBe(false);
+            expect(world.getComponent(4, COMPONENT.Alive)!.alive).toBe(false);
           return {
             name: "shoot",
             args: { target_id: request.actorId === 2 || attempt === 1 ? 4 : 5 },
@@ -144,7 +142,7 @@ for (const locale of ["zh-CN", "en"] as const)
     await resolver.resolve([4], { 4: [DeathCause.Exile] }, provider, Phase.Voting, Phase.Voting);
     await resolver.resolve([4], { 4: [DeathCause.Exile] }, provider, Phase.Voting, Phase.Voting);
     expect(words).toBe(1);
-    world.getComponent<{ alive: boolean }>(4, COMPONENT.Alive)!.alive = true;
+    world.getComponent(4, COMPONENT.Alive)!.alive = true;
     await resolver.resolve([4], { 4: [DeathCause.Exile] }, provider, Phase.Voting, Phase.Voting);
     expect(words).toBe(2);
     await resolver.resolve([5], { 5: [DeathCause.Exile] }, provider, Phase.Voting, Phase.Voting);
@@ -238,8 +236,8 @@ test("a later hook failure keeps a completed gun death, original error and close
   expect(
     events.filter((event) => event.type === "hunter_shot").map((event) => event.payload),
   ).toEqual([{ hunterId: 2, targetId: 4 }]);
-  expect(world.getComponent<{ alive: boolean }>(4, COMPONENT.Alive)!.alive).toBe(false);
-  expect(getHunterState(world.getComponent<RoleComponent>(2, COMPONENT.Role)!)!.canShoot).toBe(
+  expect(world.getComponent(4, COMPONENT.Alive)!.alive).toBe(false);
+  expect(getHunterState(world.getComponent(2, COMPONENT.Role)!)!.canShoot).toBe(
     false,
   );
   expect(afterError).toBe(0);

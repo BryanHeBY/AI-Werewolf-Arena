@@ -1,7 +1,5 @@
 /**
- * Death-chain scenarios verify actual exile and concurrent self-destruction settle all badge/gun effects before final judgment.
- * Input: Original locale matrix, explicit fixed roles and real PM action providers through successive cycles.
- * Output and oracle: Handwritten dead/live sets, exact events and terminal result retain original assertions; no model, fixture rewrite or generated oracle is used.
+ * 死亡连锁场景测试：验证实际放逐及并发自爆先结完警徽／枪再判胜。输入为原双语矩阵、固定身份和连续 PM 周期；手写死活集合、精确事件及终局保留原断言，不调用模型、改 fixture 或生成 oracle。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -91,7 +89,7 @@ for (const locale of ["zh-CN", "en"] as const)
       [2, 1],
       [1, 3],
     ]);
-    expect(game.world.getComponent<{ weight: number }>(3, COMPONENT.VotingRight)!.weight).toBe(
+    expect(game.world.getComponent(3, COMPONENT.VotingRight)!.weight).toBe(
       2.25,
     );
     expect(
@@ -144,10 +142,10 @@ for (const locale of ["zh-CN", "en"] as const)
     const first = await game.phaseManager.runSingleCycle(provider);
     expect(first).toMatchObject({ day: 2, phase: Phase.Night, gameOver: false });
     expect(game.world.getAliveEntityIds()).toEqual([2, 3, 4, 5, 6]);
-    expect(game.world.getComponent<{ isSheriff: boolean }>(2, COMPONENT.Badge)!.isSheriff).toBe(
+    expect(game.world.getComponent(2, COMPONENT.Badge)!.isSheriff).toBe(
       true,
     );
-    expect(game.world.getComponent<{ weight: number }>(2, COMPONENT.VotingRight)!.weight).toBe(
+    expect(game.world.getComponent(2, COMPONENT.VotingRight)!.weight).toBe(
       2.25,
     );
     const last = await game.phaseManager.runSingleCycle(provider);
@@ -163,7 +161,7 @@ for (const locale of ["zh-CN", "en"] as const)
       decidedAt: { day: 2, phase: Phase.Voting, checkpoint: "day_interrupted" },
     });
     expect(game.world.getAliveEntityIds()).toEqual([3, 4, 5, 6]);
-    expect(game.world.getComponent<{ isSheriff: boolean }>(3, COMPONENT.Badge)!.isSheriff).toBe(
+    expect(game.world.getComponent(3, COMPONENT.Badge)!.isSheriff).toBe(
       true,
     );
     expect(game.world.activeDeathActionCount).toBe(0);

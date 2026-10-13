@@ -1,7 +1,5 @@
 /**
- * Hunter death scenarios verify actual last-god gun resolution finishes before one final Good victory across win modes and locales.
- * Input: Original fixed roles, controlled prior deaths and real PM knife/shot requests.
- * Output and oracle: Handwritten final result, gun count and event order retain original causal assertions; expected data is not regenerated.
+ * 猎人死亡场景测试：验证跨目标政策和双语的最后神枪结算先于唯一好人终局。输入为固定身份、受控前置死亡和真实 PM 狼刀／枪请求；手写结果、枪次数及事件次序保留原因果链，不重生预期。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -31,7 +29,7 @@ const fixture = (locale: "zh-CN" | "en", winCondition = WinCondition.SlaughterCi
   );
 
 const dead = (world: ReturnType<typeof fixture>["world"], id: number) => {
-  world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive = false;
+  world.getComponent(id, COMPONENT.Alive)!.alive = false;
 };
 
 for (const locale of ["zh-CN", "en"] as const)

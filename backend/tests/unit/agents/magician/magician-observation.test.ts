@@ -26,12 +26,12 @@ for (const locale of ["zh-CN", "en"] as const)
       const actor = f.world
         .entityIds()
         .find(
-          (id) => f.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Magician,
+          (id) => f.world.getComponent(id, COMPONENT.Role)?.role === Role.Magician,
         )!;
       const villager = f.world
         .entityIds()
         .find(
-          (id) => f.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Villager,
+          (id) => f.world.getComponent(id, COMPONENT.Role)?.role === Role.Villager,
         )!;
       const seen: PlayerObservation[] = [];
       const provider = new ObservedPlayersActionProvider(
@@ -69,7 +69,7 @@ for (const locale of ["zh-CN", "en"] as const)
       await provider.getAction(request(actor));
       expect(seen[0]!.ownState.magician!.history).toEqual([]);
       expect(seen[1]!.ownState.magician!.history).toEqual([{ day: 1, pair }]);
-      const state = getMagicianState(f.world.getComponent<RoleComponent>(actor, COMPONENT.Role))!;
+      const state = getMagicianState(f.world.getComponent(actor, COMPONENT.Role))!;
       expect(seen[1]!.ownState.magician!.history).not.toBe(state.history);
       expect(seen[1]!.ownState.magician!.history[0]!.pair).not.toBe(state.history[0]!.pair);
       expect(Object.isFrozen(seen[1]!.ownState.magician!.history[0]!.pair)).toBe(true);
@@ -81,7 +81,7 @@ test("Magician exchange visibility requires valid fact and exact singleton owner
   const f = bootstrapGame(structuredClone(magicianTwelveConfig));
   const actor = f.world
     .entityIds()
-    .find((id) => f.world.getComponent<RoleComponent>(id, COMPONENT.Role)?.role === Role.Magician)!;
+    .find((id) => f.world.getComponent(id, COMPONENT.Role)?.role === Role.Magician)!;
   const other = f.world.entityIds().find((id) => id !== actor)!;
   const registry = new AgentEventVisibilityRegistry();
   const event: GameEvent = {

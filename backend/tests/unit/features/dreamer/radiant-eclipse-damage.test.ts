@@ -28,7 +28,7 @@ function bodies() {
   for (let index = 0; index < 6; index++)
     world.addComponent(world.createEntity(), COMPONENT.Alive, createAliveComponent());
   const life = (id: number) =>
-    world.getComponent<ReturnType<typeof createAliveComponent>>(id, COMPONENT.Alive)!;
+    world.getComponent(id, COMPONENT.Alive)!;
   const mark = (id: number, ...values: StatusMark[]) =>
     world.addComponent(id, COMPONENT.StatusMarks, new StatusMarksComponent(values));
   const shelter = (id: number, isCurrent = () => true): NightImmunityClaim => ({
@@ -67,7 +67,7 @@ for (const marks of [
     });
     expect(result).toEqual({ deaths: [], deathSources: {} });
     expect(f.life(5).alive).toBe(true);
-    const mark = f.world.getComponent<StatusMarksComponent>(5, COMPONENT.StatusMarks)!;
+    const mark = f.world.getComponent(5, COMPONENT.StatusMarks)!;
     for (const value of marks) expect(mark.has(value)).toBe(false);
   });
 

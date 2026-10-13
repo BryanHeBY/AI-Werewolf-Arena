@@ -1,8 +1,5 @@
 /**
- * Unit tests: Order Prince voting uses fixed exile ballots, explicit declines and eligible
- * holders; literal life, restart and stock assertions check the reveal-once vote module.
- * Inputs and expected outcomes remain the original literal or immutable-fixture oracle;
- * these module assertions invoke no model or complete-game driver.
+ * 单元测试：验证序王固定放逐票、明确放弃与合格持有者的翻牌投票。输入为原票和库存；生命、重启及库存断言检查仅翻牌一次的原机制，不生成新预期。
  */
 import { assignSheriff } from "../../../../src/game/mechanisms/sheriff/badge";
 import type { BadgeComponent } from "../../../../src/core/domain/components/badge";
@@ -59,7 +56,7 @@ function fixture() {
     eventRegistry: new EventRegistry(),
     roleRegistry: createDefaultRoleRegistry(),
   });
-  const state = () => getOrderPrinceState(world.getComponent<RoleComponent>(12, COMPONENT.Role));
+  const state = () => getOrderPrinceState(world.getComponent(12, COMPONENT.Role));
   return { world, events, voting, config, state };
 }
 function vote(id: number | null): ToolCall {
@@ -146,7 +143,7 @@ for (const stage of [
       async getAction(r: ActionRequest): Promise<ToolCall | null> {
         if (r.context.stage === stage && !replaced) {
           replaced = true;
-          const role = f.world.getComponent<RoleComponent>(12, COMPONENT.Role)!;
+          const role = f.world.getComponent(12, COMPONENT.Role)!;
           (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {
             ...role.privateState,
           };
@@ -185,12 +182,12 @@ test("order prince: public reveal preserves badge and weighted revote", async ()
   const result = await f.voting.execute(f.config, provider(), { day: 1 });
   expect(result.removed).toEqual([1]);
   expect(f.world.getAliveEntityIds()).toContain(12);
-  expect(f.world.getComponent<BadgeComponent>(12, COMPONENT.Badge)).toMatchObject({
+  expect(f.world.getComponent(12, COMPONENT.Badge)).toMatchObject({
     isSheriff: true,
     destroyed: false,
     voteWeight: 1.5,
   });
-  expect(f.world.getComponent<VotingRightComponent>(12, COMPONENT.VotingRight)).toMatchObject({
+  expect(f.world.getComponent(12, COMPONENT.VotingRight)).toMatchObject({
     canVote: true,
     weight: 1.5,
   });

@@ -124,7 +124,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
     for (const locale of ["zh-CN", "en"] as const)
       test(`${kind}/${policy}/${locale}: real stage, late validation, target hints, baseline and DTO consume instance policy without changing identity`, async () => {
         const game = fixture(kind, { inspectionPolicy: policy }, locale),
-          role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+          role = game.world.getComponent(1, COMPONENT.Role)!;
         const ability = findNightAbility(role, "role_check")!;
         const stage =
           kind === Role.Gargoyle
@@ -251,7 +251,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
   for (const point of ["construct", "await", "gateway"] as const)
     test(`${kind}/${point}: policy mutation revokes pending inspection rather than reinterpreting it`, async () => {
       const game = fixture(kind, { inspectionPolicy: "awa_unique_required_v1" }),
-        role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
+        role = game.world.getComponent(1, COMPONENT.Role)!,
         ability = findNightAbility(role, "role_check")!,
         events: GameEvent[] = [];
       const stage =
@@ -339,8 +339,8 @@ for (const kind of [Role.Hunter, Role.WolfKing] as const)
       ];
       for (const sources of cases) {
         const game = fixture(kind, { deathActionPolicy: policy }),
-          role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
-        game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive = false;
+          role = game.world.getComponent(1, COMPONENT.Role)!;
+        game.world.getComponent(1, COMPONENT.Alive)!.alive = false;
         let asks = 0;
         const events: GameEvent[] = [];
         const hook =
@@ -406,13 +406,13 @@ test("gift/copy explicit inspection state is independent of holder board; transf
     statePolicy: (state) => structuredClone(state),
   });
   const transferred = findNightAbility(
-    game.world.getComponent<RoleComponent>(6, COMPONENT.Role),
+    game.world.getComponent(6, COMPONENT.Role),
     "role_check",
     "transfer:policy",
   )!;
   expect(transferred.state).toEqual(gift.state);
   expect(
-    findNightAbility(game.world.getComponent<RoleComponent>(1, COMPONENT.Role), "role_check")?.state
+    findNightAbility(game.world.getComponent(1, COMPONENT.Role), "role_check")?.state
       .inspectionPolicy,
   ).toBe("awa_unique_required_v1");
 });
@@ -421,7 +421,7 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
   for (const policy of inspectionPolicies)
     test(`${kind}/${policy}: missing/invalid actions are bounded and exhausted targets do not force an impossible request`, async () => {
       const game = fixture(kind, { inspectionPolicy: policy }),
-        role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
+        role = game.world.getComponent(1, COMPONENT.Role)!,
         ability = findNightAbility(role, "role_check")!;
       const stage =
         kind === Role.Gargoyle
@@ -468,11 +468,11 @@ for (const kind of [Role.Gargoyle, Role.Psychic, Role.MirrorGirl] as const)
       expect(ability.uses).toBe(0);
       // A fresh World avoids authorizing reentry through an already committed optional pass.
       const exhausted = fixture(kind, { inspectionPolicy: policy }),
-        exhaustedRole = exhausted.world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
+        exhaustedRole = exhausted.world.getComponent(1, COMPONENT.Role)!,
         exhaustedAbility = findNightAbility(exhaustedRole, "role_check")!;
       for (const id of exhausted.world.getAliveEntityIds().filter((id) => id !== 1)) {
         if (policy === "awa_repeat_optional_v1")
-          exhausted.world.getComponent<{ alive: boolean }>(id, COMPONENT.Alive)!.alive = false;
+          exhausted.world.getComponent(id, COMPONENT.Alive)!.alive = false;
         else
           (
             exhaustedAbility.state.history as {
@@ -509,10 +509,10 @@ test("optional Gargoyle pass completes only its native current-policy knife gate
   const { canGargoyleKnife, refreshGargoyleInheritance } =
     await import("../../../src/game/mechanisms/roles/gargoyle/inheritance");
   const game = fixture(Role.Gargoyle, { inspectionPolicy: "awa_unique_optional_v1" }),
-    role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
+    role = game.world.getComponent(1, COMPONENT.Role)!,
     ability = findNightAbility(role, "role_check")!,
     events: GameEvent[] = [];
-  game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive = false;
+  game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   refreshGargoyleInheritance(game.world, events, 1);
   expect(canGargoyleKnife(role, game.world)).toBe(false);
   const factory = new GameActionRequestFactory(game.world, events, 1);
@@ -550,10 +550,10 @@ test("optional Gargoyle pass completes only its native current-policy knife gate
 
 test("a native death proposal is revoked by a policy edit before central commit", async () => {
   const game = fixture(Role.Hunter),
-    role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
+    role = game.world.getComponent(1, COMPONENT.Role)!,
     state = getHunterState(role)!,
     events: GameEvent[] = [];
-  game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive = false;
+  game.world.getComponent(1, COMPONENT.Alive)!.alive = false;
   const permit = game.world.openDeathAction(1, "shoot", Phase.Day, 1);
   try {
     const result = await hunterDeathHook(

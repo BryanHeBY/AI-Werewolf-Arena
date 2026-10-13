@@ -83,7 +83,7 @@ type Fixture = ReturnType<typeof fixture>;
 
 const choose = (slot: 0 | 1): ToolCall => ({ name: "choose_thief_card", args: { slot } });
 
-const actor = (g: Fixture) => g.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+const actor = (g: Fixture) => g.world.getComponent(1, COMPONENT.Role)!;
 
 const run = (
   g: Fixture,
@@ -213,8 +213,8 @@ for (const slot of [0, 1] as const)
     });
     expect(actor(g).role).toBe(Role.Wolf);
     expect(actor(g).camp).toBe(Camp.Wolf);
-    expect(g.world.getComponent<{ camp: Camp }>(1, COMPONENT.Camp)?.camp).toBe(Camp.Wolf);
-    expect(g.world.getComponent<VictoryComponent>(1, COMPONENT.Victory)).toEqual({
+    expect(g.world.getComponent(1, COMPONENT.Camp)?.camp).toBe(Camp.Wolf);
+    expect(g.world.getComponent(1, COMPONENT.Victory)).toEqual({
       affiliations: [{ kind: "faction", faction: Camp.Wolf }],
     });
     expect(
@@ -287,13 +287,13 @@ for (const [label, mutate] of [
   [
     "death",
     (g: Fixture) => {
-      g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!.alive = false;
+      g.world.getComponent(1, COMPONENT.Alive)!.alive = false;
     },
   ],
   [
     "revive",
     (g: Fixture) => {
-      const l = g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!;
+      const l = g.world.getComponent(1, COMPONENT.Alive)!;
       l.alive = false;
       l.alive = true;
     },
@@ -319,13 +319,13 @@ for (const [label, mutate] of [
   [
     "other role",
     (g: Fixture) => {
-      g.world.getComponent<RoleComponent>(2, COMPONENT.Role)!.role = Role.Villager;
+      g.world.getComponent(2, COMPONENT.Role)!.role = Role.Villager;
     },
   ],
   [
     "other death",
     (g: Fixture) => {
-      g.world.getComponent<AliveComponent>(2, COMPONENT.Alive)!.alive = false;
+      g.world.getComponent(2, COMPONENT.Alive)!.alive = false;
     },
   ],
   [
@@ -367,7 +367,7 @@ for (const [label, mutate] of [
   [
     "camp component",
     (g: Fixture) => {
-      g.world.addComponent<unknown>(1, COMPONENT.Camp, { camp: Camp.Good });
+      g.world.addComponent(1, COMPONENT.Camp, { camp: Camp.Good });
     },
   ],
   [
@@ -389,7 +389,7 @@ for (const [label, mutate] of [
         return choose(1);
       }),
     ).toBe(false);
-    expect(g.world.getComponent<RoleComponent>(1, COMPONENT.Role)).toBe(old);
+    expect(g.world.getComponent(1, COMPONENT.Role)).toBe(old);
     expect(g.events).toEqual([]);
     expect(thiefSetupStatus(g.world)).toBe("cancelled");
     expect(hasActiveThiefSetup(g.world)).toBe(false);
@@ -620,7 +620,7 @@ test("ordinary N-card deal preserves prior seeded RNG path and has no Thief stoc
     createRandom("legacy-thief-absent").fork("deal"),
   );
   expect(
-    g.playerIds.map((id) => g.world.getComponent<RoleComponent>(id, COMPONENT.Role)!.role),
+    g.playerIds.map((id) => g.world.getComponent(id, COMPONENT.Role)!.role),
   ).toEqual(expected);
   expect(initialThiefDeal(g.world)).toBeUndefined();
   expect(projectThiefSetup(g.world)).toBeUndefined();

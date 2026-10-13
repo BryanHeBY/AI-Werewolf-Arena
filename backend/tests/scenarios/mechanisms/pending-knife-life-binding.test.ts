@@ -32,7 +32,7 @@ for (const mutation of ["revive", "replace_life"] as const)
           if (mutation === "replace_life")
             game.world.addComponent(5, COMPONENT.Alive, createAliveComponent());
           else {
-            const life = game.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!;
+            const life = game.world.getComponent(5, COMPONENT.Alive)!;
             life.alive = false;
             life.alive = true;
           }
@@ -47,7 +47,7 @@ for (const mutation of ["revive", "replace_life"] as const)
     expect(
       game.phaseManager.getEvents().filter((e) => e.type === "wolf_kill_vote_cast"),
     ).toHaveLength(1);
-    expect(game.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!.alive).toBe(true);
+    expect(game.world.getComponent(5, COMPONENT.Alive)!.alive).toBe(true);
   });
 
 for (const mutation of ["revive", "replace_life"] as const)
@@ -67,7 +67,7 @@ for (const mutation of ["revive", "replace_life"] as const)
             if (mutation === "replace_life")
               game.world.addComponent(5, COMPONENT.Alive, createAliveComponent());
             else {
-              const life = game.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!;
+              const life = game.world.getComponent(5, COMPONENT.Alive)!;
               life.alive = false;
               life.alive = true;
             }

@@ -73,7 +73,7 @@ for (const [groom, witness] of [
       reception = new ActionReception(g.world);
     const originalRoles = g.world
       .entityIds()
-      .map((id) => g.world.getComponent<RoleComponent>(id, COMPONENT.Role)!);
+      .map((id) => g.world.getComponent(id, COMPONENT.Role)!);
     const originalStocks = originalRoles.map((role) => role.privateState);
     await new GhostBrideSetupWindow(g.world, new ToolGateway(), g.events).execute(
       g.config,
@@ -95,7 +95,7 @@ for (const [groom, witness] of [
     expect(seen[4]!.context.proposedWitnessId).toBe(witness);
     expect(seen[3]!.context.proposedWitnessId).toBeUndefined();
     for (let i = 0; i < 12; i++) {
-      expect(g.world.getComponent<RoleComponent>(i + 1, COMPONENT.Role)).toBe(originalRoles[i]);
+      expect(g.world.getComponent(i + 1, COMPONENT.Role)).toBe(originalRoles[i]);
       expect(originalRoles[i]!.privateState).toBe(originalStocks[i]);
       expect(originalRoles[i]!.role).toBe(ghostBrideDeck[i]!);
     }
@@ -165,8 +165,8 @@ test("actual first-night factory order keeps Guard before ordinary chat and nati
   expect(events.find((e) => e.type === "night_resolved")!.payload).toEqual({ deaths: [2, 1] });
   expect(grief).toBeGreaterThan(0);
   expect(grief).toBeLessThan(nightResolved);
-  expect(g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!.alive).toBe(false);
-  expect(g.world.getComponent<AliveComponent>(2, COMPONENT.Alive)!.alive).toBe(false);
+  expect(g.world.getComponent(1, COMPONENT.Alive)!.alive).toBe(false);
+  expect(g.world.getComponent(2, COMPONENT.Alive)!.alive).toBe(false);
   expect(g.phaseManager.getSnapshot().gameOver).toBe(false);
 });
 
@@ -190,7 +190,7 @@ for (const poison of [false, true])
       async function (this: NightPipeline, ...args) {
         const result = await original.apply(this, args);
         // Exact cross-await gap: captured pack owner dies after pipeline result, before PM commits.
-        g.world.getComponent<AliveComponent>(4, COMPONENT.Alive)!.alive = false;
+        g.world.getComponent(4, COMPONENT.Alive)!.alive = false;
         return result;
       },
     );
@@ -209,7 +209,7 @@ for (const poison of [false, true])
         },
         10,
       );
-      expect(g.world.getComponent<AliveComponent>(5, COMPONENT.Alive)!.alive).toBe(!poison);
+      expect(g.world.getComponent(5, COMPONENT.Alive)!.alive).toBe(!poison);
       expect(g.phaseManager.getEvents().find((e) => e.type === "night_resolved")!.payload).toEqual({
         deaths: poison ? [5] : [],
       });
@@ -241,7 +241,7 @@ test("day exile publishes partner death IDs without exposing marriage metadata",
   expect(
     buildAgentVisibleEventFeed(g.world, events, 4).filter((e) => e.type.startsWith("ghost_bride_")),
   ).toEqual([]);
-  expect(g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!.alive).toBe(false);
+  expect(g.world.getComponent(1, COMPONENT.Alive)!.alive).toBe(false);
 });
 
 for (const locale of ["zh-CN", "en"] as const)

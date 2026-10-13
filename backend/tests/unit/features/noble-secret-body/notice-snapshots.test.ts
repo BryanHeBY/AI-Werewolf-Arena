@@ -283,9 +283,10 @@ for (const alteration of ["replacement", "revive", "identity"] as const)
       f.life(2).alive = false;
       f.life(2).alive = true;
     }
+    // fixture 已安装原 Identity；非空说明只恢复其类型，替换时仍按原 spread 读取。
     if (alteration === "identity")
-      f.world.addComponent<unknown>(2, COMPONENT.Identity, {
-        ...f.world.getComponent<object>(2, COMPONENT.Identity),
+      f.world.addComponent(2, COMPONENT.Identity, {
+        ...f.world.getComponent(2, COMPONENT.Identity)!,
       });
     expect(() => getNobleBodyPlayerState(f.world, 2, Phase.Day)).toThrow(
       "noble_body_owner_revoked",

@@ -22,7 +22,7 @@ const fixedRoles = [Role.Wolf, Role.Wolf, Role.Seer, Role.Guard, Role.Villager, 
 for (const locale of ["zh-CN", "en"] as const) {
   test(`${locale}: camp/role/combined projections are exact detached labels, independent of real identity and wolf permissions`, () => {
     const { world } = bootstrapGame(sixPlayerMvpConfig, { fixedRoles, locale });
-    const wolf = world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+    const wolf = world.getComponent(1, COMPONENT.Role)!;
     const catalog = createRoleCatalog({
       contributions: getDefaultRoleContributions().map((profile) =>
         profile.metadata.role !== Role.Wolf
@@ -60,7 +60,7 @@ for (const locale of ["zh-CN", "en"] as const) {
       camp: "wolf",
     });
     expect(combined).toEqual({ kind: "combined", role: "villager", camp: "good" });
-    world.getComponent<RoleComponent>(6, COMPONENT.Role)!.camp = Camp.ThirdParty;
+    world.getComponent(6, COMPONENT.Role)!.camp = Camp.ThirdParty;
     expect(resolveInspection(world, 6, "camp", catalog)).toEqual({
       kind: "camp",
       camp: "third_party",

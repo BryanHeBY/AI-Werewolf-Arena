@@ -1,7 +1,5 @@
 /**
- * Fragrant runtime scenarios verify native linking, source deaths, inherited knife, ordering and final victory through actual cycles.
- * Input: Original literal plans, fixed roles, controlled action providers and reserved RNG canary.
- * Output and oracle: Handwritten draw, death, binding, words/badge/gun and faction outcomes preserve assertions; existing golden values are not produced from new rules.
+ * 寻香原生运行场景测试：验证实际绑定、来源死亡、继承狼刀、次序及终局。输入为原受控角色与真实周期；既有字面预期和不可变 fixture 保留因果链，不生成新动作或 oracle。
  */
 import { expect, test } from "bun:test";
 import { createRandom, type RandomSource } from "../../../../src/core/domain/random";
@@ -29,7 +27,7 @@ async function cycle(g: ReturnType<typeof game>, plan: Plan, seen: ActionRequest
 function dead(g: ReturnType<typeof game>) {
   return g.world
     .entityIds()
-    .filter((id) => !g.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive);
+    .filter((id) => !g.world.getComponent(id, COMPONENT.Alive)!.alive);
 }
 
 test("literal seed golden uses one reserved draw across three actual nights regardless of unrelated streams", async () => {

@@ -1,7 +1,5 @@
 /**
- * Failure scenarios verify Demon Hunter executed fault boundaries preserve committed choices and exactly one native cancellation.
- * Input: Original phase cycles, injected source/recording faults, current-life replacements and real session stores.
- * Output and oracle: Literal paid prefixes, absent hunt damage, fault evidence order and closed-recorder rejection retain the actual causal state; unused future faults are never fabricated.
+ * 故障场景测试：验证猎魔人实际故障边界保留已提交选择且原生取消恰好一次。输入为原阶段周期、来源／录制故障、原生命替换及真实 store；已付前缀、无猎杀伤害、故障证据次序和关闭拒绝为字面预期，不伪造未执行故障。
  */
 import { expect, test, spyOn } from "bun:test";
 import {
@@ -50,7 +48,7 @@ for (const size of [6, 12] as const)
       test(`actual fault boundary ${size}/${locale}/${replaced}: committed prefix, one cancellation, no hunt damage`, async () => {
         const input = plan(size, replaced === "actor" ? size : 1),
           f = demonHunterFixture(size, undefined, locale, undefined, input),
-          original = f.world.getComponent<AliveComponent>(
+          original = f.world.getComponent(
             input.steps[0]!.mutation.playerId,
             COMPONENT.Alive,
           );

@@ -83,7 +83,7 @@ for (const locale of ["zh-CN", "en"] as const)
       },
     });
     const game = bootstrapGame(twelvePlayerStandardConfig, { locale, fixedRoles: twelveRoles });
-    const witch = getWitchState(game.world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!;
+    const witch = getWitchState(game.world.getComponent(6, COMPONENT.Role)!)!;
     (witch as { heal: number }).heal = 0;
     const before = structuredClone(witch);
     const provider = new LlmActionProvider(

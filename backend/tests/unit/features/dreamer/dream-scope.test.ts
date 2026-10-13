@@ -38,7 +38,7 @@ function fixture() {
   };
   const game = bootstrapGame(config, { fixedRoles: roles });
   const role = (actorId: number) =>
-    game.world.getComponent<RoleComponent>(actorId, COMPONENT.Role)!;
+    game.world.getComponent(actorId, COMPONENT.Role)!;
   return { ...game, role, ability: (actorId: number) => findNightAbility(role(actorId), "dream")! };
 }
 
@@ -174,7 +174,7 @@ for (const point of ["await", "gateway"] as const)
             ...game.role(1).privateState,
           };
         if (change === "life") {
-          const life = game.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!;
+          const life = game.world.getComponent(1, COMPONENT.Alive)!;
           life.alive = false;
           life.alive = true;
         }

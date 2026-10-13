@@ -55,7 +55,7 @@ function fixture(locale: "en" | "zh-CN" = "en", target = 2) {
 
 type Game = ReturnType<typeof fixture>;
 
-const role = (game: Game, id = 2) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+const role = (game: Game, id = 2) => game.world.getComponent(id, COMPONENT.Role)!;
 
 for (const first of [1, 3])
   for (const locale of ["zh-CN", "en"] as const)
@@ -239,7 +239,7 @@ test("a declared death capability collects final activation before a gift is pro
       ),
     }),
     stageRegistry = new NightStageRegistry(catalog);
-  expect(allDeathGuns(game.world.getComponent<RoleComponent>(5, COMPONENT.Role))).toHaveLength(0);
+  expect(allDeathGuns(game.world.getComponent(5, COMPONENT.Role))).toHaveLength(0);
   expect(
     stageRegistry
       .getStages(config, game.world)
@@ -269,6 +269,6 @@ test("a declared death capability collects final activation before a gift is pro
   );
   expect(result.interrupted).toBe(false);
   expect(
-    allDeathGuns(game.world.getComponent<RoleComponent>(5, COMPONENT.Role))[0].armedOnNight,
+    allDeathGuns(game.world.getComponent(5, COMPONENT.Role))[0].armedOnNight,
   ).toBe(1);
 });

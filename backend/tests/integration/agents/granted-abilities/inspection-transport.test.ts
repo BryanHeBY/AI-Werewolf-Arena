@@ -1,9 +1,5 @@
 /**
- * Integration tests: Exercises actual SDK/ACP factory transport for bound granted
- * inspections and Witch knife visibility. Literal application, identity and prompt
- * assertions check copied-ability ownership and the exhausted-antidote disclosure
- * boundary. Existing literal expectations and independently supplied fixture plans remain
- * the oracle; transport/recording setup is local and no billed model session is started.
+ * 传输集成测试：验证实际 SDK／ACP 工厂对绑定赠予查验和女巫刀口的接线。输入为原复制能力和已耗尽解药状态；应用、身份及提示采用字面预期，保留所有权与披露边界，不启动计费模型。
  */
 import { acpAdapterEntry } from "../../../support/fixtures/manifest";
 import { PotionType } from "../../../../src/core";
@@ -160,7 +156,7 @@ for (const locale of ["zh-CN", "en"] as const)
           },
           1,
         );
-        const ability = allNightAbilities(world.getComponent<RoleComponent>(5, COMPONENT.Role)!)[0];
+        const ability = allNightAbilities(world.getComponent(5, COMPONENT.Role)!)[0];
         expect(ability.uses).toBe(1);
         expect(ability.lastUsedDay).toBe(1);
         expect(
@@ -176,7 +172,7 @@ for (const locale of ["zh-CN", "en"] as const)
             result: { kind: "camp", camp: "wolf" },
           },
         ]);
-        expect(world.getComponent<RoleComponent>(5, COMPONENT.Role)!).toMatchObject({
+        expect(world.getComponent(5, COMPONENT.Role)!).toMatchObject({
           role: Role.Villager,
           camp: Camp.Good,
         });
@@ -244,7 +240,7 @@ for (const locale of ["zh-CN", "en"] as const)
         ],
       });
       (
-        getWitchState(world.getComponent<RoleComponent>(6, COMPONENT.Role)!)! as { heal: number }
+        getWitchState(world.getComponent(6, COMPONENT.Role)!)! as { heal: number }
       ).heal = 0;
       const planFile = path.join(root, "plan.json");
       await writeFile(
@@ -389,7 +385,7 @@ for (const locale of ["zh-CN", "en"] as const)
         expect(prompts).toHaveLength(1);
         expect(prompts[0]).toContain(text(locale, "prompt.stage.unknown_wolf_target"));
         expect(prompts[0]).not.toContain(text(locale, "prompt.stage.wolf_target", { target: 10 }));
-        expect(getWitchState(world.getComponent<RoleComponent>(6, COMPONENT.Role)!)!.poison).toBe(
+        expect(getWitchState(world.getComponent(6, COMPONENT.Role)!)!.poison).toBe(
           1,
         );
       } finally {

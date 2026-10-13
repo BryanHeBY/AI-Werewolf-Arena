@@ -22,7 +22,7 @@ function stock(f: ReturnType<typeof demonHunterFixture>, id: number, key: string
 }
 
 const role = (f: ReturnType<typeof demonHunterFixture>, id: number) =>
-  f.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  f.world.getComponent(id, COMPONENT.Role)!;
 
 for (const size of [6, 12] as const)
   test(`actual ${size} native night stock commits enter CP, including Guard pass`, async () => {
@@ -238,7 +238,8 @@ test("failed CP uses original roster/life/inventory despite added entity, compon
         },
       },
     );
-    f.world.addComponent<unknown>(4, key, foreign);
+    // 动态槽里的原 Proxy 是刻意非法输入；只作槽写入类型断言，所有 trap 与样本保持原样。
+    f.world.addComponent(4, key, foreign as unknown as import("../../../../src/core/domain/component-map").ComponentWrite<typeof key>);
   }
   f.world.createEntity();
   const cp = captureCheckpoint(
@@ -373,7 +374,7 @@ test("optional badge accessor differs from absence: CP and next actual Night rej
   let reads = 0;
   expect(assignSheriff(f.world, 4, f.config)).toBe(true);
   const baseline = captureCheckpoint(f.world, f.phaseManager.getSnapshot(), 0, true, 0);
-  const badge = f.world.getComponent<import("../../../../src/core").BadgeComponent>(
+  const badge = f.world.getComponent(
     4,
     COMPONENT.Badge,
   )!;

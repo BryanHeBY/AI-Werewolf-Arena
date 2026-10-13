@@ -1,5 +1,5 @@
 /**
- * Scenario tests drive actual DeathResolution for configured native permits and gift/copied guns. Inputs are fixed role boards and original policy mutations during real requests; literal gun proposal, event and permit-closure expectations are the oracle. Production policies and the original death chain order are not rewritten.
+ * 死亡行动场景测试：验证配置原生许可与赠予／复制枪经过实际 DeathResolution 执行。输入为原许可、库存与受控选择；原字面预期及因果事件断言保留，不生成新规则结果。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
@@ -54,7 +54,7 @@ function fixture(
 for (const kind of [Role.Hunter, Role.WolfKing] as const)
   test(`${kind}: death request policy edit revokes real gateway permit and late selection`, async () => {
     const game = fixture(kind),
-      role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
+      role = game.world.getComponent(1, COMPONENT.Role)!,
       state = kind === Role.Hunter ? getHunterState(role)! : getWolfKingState(role)!;
     const events: GameEvent[] = [],
       snapshot = { ...game.phaseManager.getSnapshot(), phase: Phase.Day };
@@ -176,7 +176,7 @@ for (const kind of [Role.MechanicalWolf, Role.AwakenedHiddenWolf] as const)
       hunter: { deathActionPolicy: "awa_knife_or_exile_v1" },
     };
     const game = bootstrapGame(config, { fixedRoles: roles }),
-      role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!,
+      role = game.world.getComponent(1, COMPONENT.Role)!,
       events: GameEvent[] = [];
     if (kind === Role.MechanicalWolf) {
       const m = await import("../../../src/game/mechanisms/roles/mechanical_wolf/state");
@@ -215,7 +215,7 @@ for (const kind of [Role.MechanicalWolf, Role.AwakenedHiddenWolf] as const)
       events.filter((e) => e.type === "mechanical_shot" || e.type === "player_shot"),
     ).toHaveLength(1);
     expect(
-      getHunterState(game.world.getComponent<RoleComponent>(2, COMPONENT.Role)!)?.canShoot,
+      getHunterState(game.world.getComponent(2, COMPONENT.Role)!)?.canShoot,
     ).toBe(true);
     expect(game.world.activeDeathActionCount).toBe(0);
   });

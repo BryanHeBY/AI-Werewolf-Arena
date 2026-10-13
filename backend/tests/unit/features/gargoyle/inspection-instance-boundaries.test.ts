@@ -59,7 +59,7 @@ const config = (roles = deck): BoardConfig => ({
 });
 
 const role = (game: ReturnType<typeof bootstrapGame>, id: number) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  game.world.getComponent(id, COMPONENT.Role)!;
 
 function stageContext(
   game: ReturnType<typeof bootstrapGame>,
@@ -148,7 +148,7 @@ test("repeat is per instance, including revived same-ID targets; completed same-
   const ability = findNightAbility(role(game, 1), "role_check")!;
   expect(ability.uses).toBe(1);
   expect(events.filter((e) => e.type === "role_inspected")).toHaveLength(1);
-  const life = game.world.getComponent<{ alive: boolean }>(3, COMPONENT.Alive)!;
+  const life = game.world.getComponent(3, COMPONENT.Alive)!;
   life.alive = false;
   life.alive = true;
   const req: ActionRequest = {
@@ -193,12 +193,12 @@ for (const mutation of [
         calls++;
         if (mutation === "clock") current = false;
         if (mutation === "actor_revive") {
-          const life = game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!;
+          const life = game.world.getComponent(1, COMPONENT.Alive)!;
           life.alive = false;
           life.alive = true;
         }
         if (mutation === "target_revive") {
-          const life = game.world.getComponent<{ alive: boolean }>(3, COMPONENT.Alive)!;
+          const life = game.world.getComponent(3, COMPONENT.Alive)!;
           life.alive = false;
           life.alive = true;
         }
@@ -353,7 +353,7 @@ for (const exhaustedOn of [2, 3])
     await ROLE_INSPECTION_STAGE.execute(
       stageContext(game, events, async () => {
         if (++calls === exhaustedOn)
-          game.world.getComponent<{ alive: boolean }>(2, COMPONENT.Alive)!.alive = false;
+          game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
         return null;
       }),
     );

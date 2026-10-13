@@ -87,7 +87,7 @@ for (const transport of ["sdk", "acp"] as const)
         expect(describeError(result.error).code).toBe("request_aborted");
       } else expect(result).toEqual({ value: null });
       expect(
-        getGuardState(world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget,
+        getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget,
       ).toBeNull();
       expect(provider.runtimeState.turns).toBe(0);
       if (transport === "acp") expect(closes).toBe(1);
@@ -145,7 +145,7 @@ for (const transport of ["sdk", "acp"] as const)
       await expect(provider.getAction(request(true))).rejects.toThrow("action_turn_failed");
       expect(fallbacks).toBe(0);
       expect(
-        getGuardState(world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget,
+        getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget,
       ).toBeNull();
     } finally {
       await provider.close();
@@ -198,7 +198,7 @@ test("strict cancellation does not swallow a real ACP cleanup error", async () =
   const result = await pending;
   expect("error" in result).toBe(true);
   expect(
-    getGuardState(world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget,
+    getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget,
   ).toBeNull();
 });
 
@@ -223,7 +223,7 @@ for (const strict of [false, true])
       if (strict) await expect(provider.getAction(input)).rejects.toThrow("action_turn_failed");
       else expect(await provider.getAction(input)).toBeNull();
       expect(
-        getGuardState(world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget,
+        getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget,
       ).toBeNull();
     } finally {
       await provider.close();
@@ -286,7 +286,7 @@ for (const transport of ["sdk", "acp"] as const)
       try {
         await expect(provider.getAction(input)).rejects.toThrow("action_turn_failed");
         expect(
-          getGuardState(world.getComponent<RoleComponent>(5, COMPONENT.Role)!)!.lastTarget,
+          getGuardState(world.getComponent(5, COMPONENT.Role)!)!.lastTarget,
         ).toBeNull();
         expect(
           outcomes.some((outcome) =>

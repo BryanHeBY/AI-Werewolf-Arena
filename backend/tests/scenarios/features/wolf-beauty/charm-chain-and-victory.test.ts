@@ -42,7 +42,7 @@ const board = (roles = deck): BoardConfig => ({
 });
 
 const role = (game: ReturnType<typeof bootstrapGame>, id: number) =>
-  game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  game.world.getComponent(id, COMPONENT.Role)!;
 
 for (const mutation of [
   "replace_life",
@@ -57,7 +57,7 @@ for (const mutation of [
       state = getWolfBeautyState(role(game, 1))!;
     (state as { targetId: number | null }).targetId = 5;
     bindCharm(game.world, 1, 5);
-    const original = game.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!;
+    const original = game.world.getComponent(5, COMPONENT.Alive)!;
     const registry = new EventRegistry(
       new HookRegistry(
         [],
@@ -108,7 +108,7 @@ for (const mutation of [
       Phase.Voting,
       Phase.Voting,
     );
-    expect(game.world.getComponent<{ alive: boolean }>(5, COMPONENT.Alive)!.alive).toBe(true);
+    expect(game.world.getComponent(5, COMPONENT.Alive)!.alive).toBe(true);
     expect(original.alive).toBe(true);
     expect(
       events.some((event) =>

@@ -1,9 +1,5 @@
 /**
- * Integration tests: Exercises actual MCP submissions while controlled Animal game
- * prefixes hold a role turn. Literal late/closed/stale receipts and original stock/state
- * assertions check that retained wire capability cannot commit again. Existing literal
- * expectations and independently supplied fixture plans remain the oracle;
- * transport/recording setup is local and no billed model session is started.
+ * 传输集成测试：验证在受控动物梦境前缀中提交真实 MCP 行动。输入为原 retained wire 能力；晚到／关闭／过期回执、库存及状态采用字面预期，原能力不能再次提交，不启动计费模型。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";
@@ -95,7 +91,7 @@ for (const boundary of [
             throw new Error("fixture_target_not_reached");
           }),
         ]);
-        const role = game.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role)!;
+        const role = game.world.getComponent(request.actorId, COMPONENT.Role)!;
         const state = structuredClone(role.privateState),
           events = structuredClone(game.phaseManager.getEvents());
         const action: ToolCall = boundary.action;

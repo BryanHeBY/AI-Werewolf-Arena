@@ -54,7 +54,7 @@ const fixture = (locale: "zh-CN" | "en") =>
   bootstrapGame(twelvePlayerStandardConfig, { locale, fixedRoles: roles12 });
 
 const role = (world: ReturnType<typeof fixture>["world"], id: number) =>
-  world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+  world.getComponent(id, COMPONENT.Role)!;
 
 for (const locale of ["zh-CN", "en"] as const)
   test(`${locale}: an exhausted antidote removes the knife from requests and prompts but preserves legitimate past knowledge`, async () => {
@@ -194,7 +194,7 @@ for (const locale of ["zh-CN", "en"] as const)
       deathSources: { 7: [DeathCause.Poison, DeathCause.WolfKill] },
     });
     let shots = 0;
-    world.getComponent<{ alive: boolean }>(7, COMPONENT.Alive)!.alive = false;
+    world.getComponent(7, COMPONENT.Alive)!.alive = false;
     await hunterDeathHook(
       world,
       [7],

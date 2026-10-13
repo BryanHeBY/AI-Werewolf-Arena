@@ -93,7 +93,7 @@ for (const poison of [false, true])
               },
             };
           if (req.context.stage === "sheriff_nomination" && !replaced) {
-            const role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+            const role = game.world.getComponent(1, COMPONENT.Role)!;
             role.role = Role.Villager;
             role.camp = Camp.Good;
             (role as { privateState: Readonly<Record<string, unknown>> }).privateState = {};

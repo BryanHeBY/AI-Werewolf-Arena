@@ -1,8 +1,5 @@
 /**
- * Complete policy Tape scenarios verify configured inspection and death-action rules execute through real chains.
- * Input: Public policy boards, explicit actions, original native sources and scoped recordings.
- * Output and independent oracle: Literal eligible requests/death sequence and exact strict Tape for both locales.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 完整政策 Tape 场景测试：验证配置查验与死亡行动规则经过真实连锁执行。输入为公开政策板子、明确动作、原生来源和录制 scope；请求、死亡次序及双语严格 Tape 为独立字面预期，不调用计费模型或重写 fixture。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";
@@ -94,7 +91,7 @@ for (const inspectionPolicy of [
               if (request.context.day === 2 && inspectionPolicy !== "awa_unique_required_v1")
                 return null;
               const ability = findNightAbility(
-                game.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role),
+                game.world.getComponent(request.actorId, COMPONENT.Role),
                 "role_check",
                 request.context.ability_id,
               )!;

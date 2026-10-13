@@ -1,9 +1,5 @@
 /**
- * Unit tests for mechanical native runtime. Inputs are original learning/mode/stock and original-body
- * revocation inputs. Original literal receipts, reference/getter/error traces, facts and expected state
- * remain the oracle. Captured native learned gun is tested through the actual bounded death-hook and
- * permit, with manual activation and no PhaseManager execution. No complete game phase or paid model runs;
- * existing local windows and denied entry probes remain bounded.
+ * 单元测试：验证机械狼人捕获枪的原生运行所有权。输入为原内存能力与受控操作；既有字面结果及原枪引用为预期，不运行模型传输或重建 fixture。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
@@ -35,7 +31,7 @@ function board(roles = deck): BoardConfig {
 function fixture(locale: "zh-CN" | "en" = "zh-CN", roles = deck) {
   const config = board(roles),
     game = bootstrapGame(config, { fixedRoles: roles, locale });
-  const role = game.world.getComponent<RoleComponent>(1, COMPONENT.Role)!;
+  const role = game.world.getComponent(1, COMPONENT.Role)!;
   return { ...game, config, role, state: getMechanicalState(role)! };
 }
 
@@ -54,7 +50,7 @@ for (const revoke of ["camp", "private_state", "owner_state", "learning"] as con
       game = fixture("en", roles);
     learnMechanicalRole(game.state, 3, Role.Hunter, 1);
     advanceMechanicalNight(game.state, 2);
-    game.world.getComponent<{ alive: boolean }>(1, COMPONENT.Alive)!.alive = false;
+    game.world.getComponent(1, COMPONENT.Alive)!.alive = false;
     const gun = game.state.learned!.skill,
       events = [] as ReturnType<Game["phaseManager"]["getEvents"]>;
     const permit = game.world.openDeathAction(1, "shoot", Phase.Voting, 2);

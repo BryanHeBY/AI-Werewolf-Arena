@@ -54,7 +54,7 @@ function fixture(roles = deck, extra: Partial<BoardConfig> = {}) {
 
 type Fixture = ReturnType<typeof fixture>;
 
-const role = (g: Fixture, id = 1) => g.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+const role = (g: Fixture, id = 1) => g.world.getComponent(id, COMPONENT.Role)!;
 
 const choose = (target_id: number): ToolCall => ({
   name: "choose_wild_model",
@@ -117,7 +117,7 @@ for (const source of [
     expect(role(g)).toBe(original);
     expect(role(g).role).toBe(Role.WildChild);
     expect(role(g).camp).toBe(Camp.Wolf);
-    expect(g.world.getComponent<VictoryComponent>(1, COMPONENT.Victory)!.affiliations).toEqual([
+    expect(g.world.getComponent(1, COMPONENT.Victory)!.affiliations).toEqual([
       { kind: "faction", faction: Camp.Wolf },
     ]);
     expect(getWildChildState(role(g))?.status).toBe("transformed");
@@ -205,7 +205,7 @@ test("Hunter model first dies then shoots Child in the next wave: Wolf death, no
   await setup(g);
   await deaths(g, [2], DeathCause.Exile, 1);
   expect(role(g).camp).toBe(Camp.Wolf);
-  expect(g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!.alive).toBe(false);
+  expect(g.world.getComponent(1, COMPONENT.Alive)!.alive).toBe(false);
   expect(g.events.filter((e) => e.type === "wild_child_transformed")).toHaveLength(1);
   const close = openWildChildNight(g.world, 2, g.events);
   close();
@@ -220,7 +220,7 @@ for (const change of ["modelRevive", "modelReplace", "childRevive"] as const)
     if (change === "modelReplace")
       g.world.addComponent(id, COMPONENT.Alive, createAliveComponent());
     else {
-      const life = g.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!;
+      const life = g.world.getComponent(id, COMPONENT.Alive)!;
       life.alive = false;
       life.alive = true;
     }
@@ -245,7 +245,7 @@ test("accepted model binding survives later role/camp change without learning or
 test("raw external dead flip does not trigger a model elimination", async () => {
   const g = fixture();
   await setup(g);
-  g.world.getComponent<AliveComponent>(2, COMPONENT.Alive)!.alive = false;
+  g.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   await deaths(g, [2]);
   expect(role(g).camp).toBe(Camp.Good);
   expect(g.events.some((e) => e.type === "wild_child_model_eliminated")).toBe(false);
@@ -261,7 +261,7 @@ test("active dead Child retains pack knowledge while losing chat/knife; revival 
   expect(knownWolfTeammates(g.world, 3, c)).toEqual([1, 2]);
   expect(wolfTeamPermissions(role(g), c, g.world).canChat).toBe(false);
   expect(wolfKnifeHolders(g.world, c)).toEqual([3]);
-  g.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!.alive = true;
+  g.world.getComponent(1, COMPONENT.Alive)!.alive = true;
   expect(wolfTeamPermissions(role(g), c, g.world).canChat).toBe(false);
 });
 
@@ -416,7 +416,7 @@ for (const mode of ["guard", "heal", "idiot"] as const)
         }
       },
     });
-    expect(g.world.getComponent<AliveComponent>(model, COMPONENT.Alive)?.alive).toBe(true);
+    expect(g.world.getComponent(model, COMPONENT.Alive)?.alive).toBe(true);
     expect(role(g).camp).toBe(Camp.Good);
     expect(
       g.phaseManager

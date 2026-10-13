@@ -79,7 +79,7 @@ const fixture = (targetRole = Role.Hunter) => {
 
 type Game = ReturnType<typeof fixture>;
 
-const role = (game: Game, id = 1) => game.world.getComponent<RoleComponent>(id, COMPONENT.Role)!;
+const role = (game: Game, id = 1) => game.world.getComponent(id, COMPONENT.Role)!;
 
 const state = (game: Game) => getAwakenedState(role(game))!;
 
@@ -369,7 +369,7 @@ test("interruption before 900 preserves learning but later activation uses the l
 test("no other living target closes mimic without a request or spending the once opportunity", async () => {
   const game = fixture();
   for (const id of [2, 3, 4, 5, 6])
-    game.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
+    game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
   const ctx = context(game, 1, async () => {
     throw new Error("must_not_request");
   });
@@ -400,12 +400,12 @@ test("three invalid mimic actions with living candidates fail explicitly instead
 test("last candidate disappearing during the third attempt becomes a legal wait without spending learning", async () => {
   const game = fixture(Role.MirrorGirl);
   for (const id of [2, 4, 5, 6])
-    game.world.getComponent<AliveComponent>(id, COMPONENT.Alive)!.alive = false;
+    game.world.getComponent(id, COMPONENT.Alive)!.alive = false;
   let requests = 0;
   const ctx = context(game, 1, async () => {
     requests++;
     if (requests < 3) return { name: "awakened_mimic", args: { target_id: 1 } };
-    game.world.getComponent<AliveComponent>(3, COMPONENT.Alive)!.alive = false;
+    game.world.getComponent(3, COMPONENT.Alive)!.alive = false;
     return { name: "awakened_mimic", args: { target_id: 3 } };
   });
   await stage("awakened_opening").execute(ctx);
@@ -438,7 +438,7 @@ for (const mutation of [
           if (mutation === "life")
             game.world.addComponent(1, COMPONENT.Alive, createAliveComponent());
           if (mutation === "revival") {
-            const life = game.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!;
+            const life = game.world.getComponent(1, COMPONENT.Alive)!;
             life.alive = false;
             life.alive = true;
           }
@@ -509,7 +509,7 @@ for (const skillKind of ["poison", "guard"] as const)
       skillKind === "poison" ? ctx.state.poisonClaims![0] : ctx.state.awakenedEffects!.shields[0];
     expect(effect.isCurrent!()).toBe(true);
     expect(state(game).skillClosedDay).toBe(2);
-    const life = game.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!;
+    const life = game.world.getComponent(1, COMPONENT.Alive)!;
     life.alive = false;
     expect(effect.isCurrent!()).toBe(true);
     life.alive = true;
@@ -526,7 +526,7 @@ for (const field of ["role", "targetId", "day", "activeFromNight", "activationNi
     const learned = state(game).learned!,
       gun = learned.skill;
     if (gun.kind !== "hunter") throw new Error("wrong fixture");
-    game.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!.alive = false;
+    game.world.getComponent(1, COMPONENT.Alive)!.alive = false;
     const permit = game.world.openDeathAction(1, "shoot", Phase.Day, 1),
       events: GameEvent[] = [];
     try {
@@ -553,14 +553,14 @@ for (const field of ["role", "targetId", "day", "activeFromNight", "activationNi
 test("same-night opening cannot replace a revoked original-body knife permission after revival", async () => {
   const game = fixture();
   ready(game, "villager");
-  game.world.getComponent<AliveComponent>(2, COMPONENT.Alive)!.alive = false;
+  game.world.getComponent(2, COMPONENT.Alive)!.alive = false;
   refreshAwakenedInheritance(game.world, 1, []);
   const ctx = context(game, 2, async () => {
     throw new Error("must_not_request");
   });
   await stage("awakened_opening").execute(ctx);
   expect(canAwakenedKnife(role(game), game.world)).toBe(true);
-  const life = game.world.getComponent<AliveComponent>(1, COMPONENT.Alive)!;
+  const life = game.world.getComponent(1, COMPONENT.Alive)!;
   life.alive = false;
   life.alive = true;
   expect(canAwakenedKnife(role(game), game.world)).toBe(false);
@@ -573,7 +573,7 @@ test("same-night opening cannot replace a revoked original-body knife permission
 test("another Wolf revival temporarily removes a current knife without resetting its inheritance or extra stock", async () => {
   const game = fixture();
   ready(game, "wolf");
-  const other = game.world.getComponent<AliveComponent>(2, COMPONENT.Alive)!;
+  const other = game.world.getComponent(2, COMPONENT.Alive)!;
   other.alive = false;
   refreshAwakenedInheritance(game.world, 1, []);
   const ctx = context(game, 2, async () => {

@@ -42,7 +42,7 @@ const board = (roles = deck): BoardConfig => ({
 });
 
 const role = (game: ReturnType<typeof bootstrapGame>, actor: number) =>
-  game.world.getComponent<RoleComponent>(actor, COMPONENT.Role)!;
+  game.world.getComponent(actor, COMPONENT.Role)!;
 
 function context(
   game: ReturnType<typeof bootstrapGame>,

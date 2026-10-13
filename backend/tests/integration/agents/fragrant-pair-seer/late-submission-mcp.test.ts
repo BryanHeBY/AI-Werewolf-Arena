@@ -1,9 +1,5 @@
 /**
- * Integration tests: Exercises actual MCP submissions while controlled Fragrant game
- * prefixes hold a role turn. Literal late/closed/stale receipts and original stock/state
- * expectations check retained wire capability after revocation. Existing literal
- * expectations and independently supplied fixture plans remain the oracle;
- * transport/recording setup is local and no billed model session is started.
+ * 传输集成测试：验证在受控寻香对局前缀持有回合时提交真实 MCP 行动。输入为原 retained wire 能力；晚到／关闭／过期回执、库存与状态采用字面预期，撤权后不恢复提交，不启动计费模型。
  */
 import { expect, test } from "bun:test";
 import path from "node:path";
@@ -93,7 +89,7 @@ for (const boundary of [
             throw new Error("fixture_target_not_reached");
           }),
         ]);
-        const role = game.world.getComponent<RoleComponent>(request.actorId, COMPONENT.Role)!;
+        const role = game.world.getComponent(request.actorId, COMPONENT.Role)!;
         const state = structuredClone(role.privateState),
           events = structuredClone(game.phaseManager.getEvents());
         const action: ToolCall = boundary.action;
