@@ -91161,13 +91161,672 @@
       "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Copied runRecorded/fixture helpers are latent function declarations; original case-local Worlds, scripts, recorders and cleanup stay one allocation per original call. No extra eager cached catalog read was introduced.",
       "loadSetPolicy": "Unused public value graph explicitly pruned; 473 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
       "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/victory_outcomes.test.ts",
+      "to": "backend/tests/unit/mechanisms/victory-membership-and-outcome-readers.test.ts",
+      "sourceCommit": "346b1f0020a03d220b7af3971853d0ae202614a8",
+      "reason": "Actual selected unit module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "9c65050710423566b0d4cfba8d1e6d6a25b1f25063499a740071f9fc88c4337c",
+      "candidateSha256": "e95e0d71decc2e88190e96f91ee98487a1494f6112e8009afd53cd3dd3893dc2",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 626,
+          "end": 678,
+          "original": "../../../src/runtime/simulation/reproduction_context",
+          "value": "../../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 537,
+          "end": 588,
+          "original": "../../../src/game/mechanisms/win_conditions/results",
+          "value": "../../../src/game/mechanisms/win_conditions/results",
+          "originalResolved": "backend/src/game/mechanisms/win_conditions/results.ts",
+          "expectedResolved": "backend/src/game/mechanisms/win_conditions/results.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 439,
+          "end": 501,
+          "original": "../../../src/game/mechanisms/registries/win_condition_registry",
+          "value": "../../../src/game/mechanisms/registries/win_condition_registry",
+          "originalResolved": "backend/src/game/mechanisms/registries/win_condition_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/registries/win_condition_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 344,
+          "end": 398,
+          "original": "../../../src/core/domain/registries/condition_registry",
+          "value": "../../../src/core/domain/registries/condition_registry",
+          "originalResolved": "backend/src/core/domain/registries/condition_registry.ts",
+          "expectedResolved": "backend/src/core/domain/registries/condition_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 261,
+          "end": 306,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 205,
+          "end": 222,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "e70465bd3dd97e81660bcc2c285a5024de58e548e2d288fb3fe684dced8e3e10",
+          "title": "zh-CN: native conditions declare all faction winners including dead teammates and retain ordered condition priority",
+          "occurrence": 1
+        },
+        {
+          "id": "1b96f3da4cce2b2bfdada803a7499234dcd2f33c117bffddae1fb259e5fe3e07",
+          "title": "en: native conditions declare all faction winners including dead teammates and retain ordered condition priority",
+          "occurrence": 1
+        },
+        {
+          "id": "0097e9bc6648f462406268d6a49335152c97252de6d8043f5223e0a01442e0d7",
+          "title": "zh-CN: win membership is independent of identity, true camp, survival and abilities; third-party gods do not count as good gods",
+          "occurrence": 1
+        },
+        {
+          "id": "c539c6c5601e6844d791e77670e8c375528282250eb31f6fed8b6c4ea69af14f",
+          "title": "en: win membership is independent of identity, true camp, survival and abilities; third-party gods do not count as good gods",
+          "occurrence": 1
+        },
+        {
+          "id": "37fedb75c765e9bf9f4d5e1dd0c22d62414ac260c8cec71539db8281c8e76fa8",
+          "title": "zh-CN: individual, relationship and additional faction wins explicitly declare a deduplicated winner union",
+          "occurrence": 1
+        },
+        {
+          "id": "75e200e26870e64174f6fbde575622734267ecd16fa39ceac98e4a55232256df",
+          "title": "en: individual, relationship and additional faction wins explicitly declare a deduplicated winner union",
+          "occurrence": 1
+        },
+        {
+          "id": "88a9f13a0483b56a854126657347052ee3d28aa591df5e4dbb1f15eb3e0cdff2",
+          "title": "strict shared outcome readers reject malformed facts and never invoke foreign accessors",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-unit",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Camp,\n  Phase,\n  Role,\n  WinCondition,\n  createVictoryComponent,\n  type RoleComponent,\n  type GameResult,\n  type ActionRequest,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, Camp, Phase, Role, WinCondition, createVictoryComponent, type RoleComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "GameResult",
+              "imported": "GameResult",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/phase_manager",
+          "originalImport": "import { PhaseManager } from \"../../../src/game/engine/phase_manager\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PhaseManager",
+              "imported": "PhaseManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalImport": "import { DamageResolutionSystem } from \"../../../src/core/domain/systems/damage_resolution_system\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DamageResolutionSystem",
+              "imported": "DamageResolutionSystem",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import { createDefaultRoleRegistry } from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createDefaultRoleRegistry",
+              "imported": "createDefaultRoleRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Copied runRecorded/fixture helpers are latent function declarations; original case-local Worlds, scripts, recorders and cleanup stay one allocation per original call. No extra eager cached catalog read was introduced.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 473 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/victory_outcomes.test.ts",
+      "to": "backend/tests/scenarios/features/victory/checkpoints-and-terminal-sealing.test.ts",
+      "sourceCommit": "346b1f0020a03d220b7af3971853d0ae202614a8",
+      "reason": "Actual selected scenario module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "9c65050710423566b0d4cfba8d1e6d6a25b1f25063499a740071f9fc88c4337c",
+      "candidateSha256": "c737003556f2b69d4396fd44244eff34153bfd4ebfbd324ee6f9b842561e5057",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "module-specifier",
+          "start": 875,
+          "end": 903,
+          "original": "../../../src/game/mechanisms",
+          "value": "../../../../src/game/mechanisms",
+          "originalResolved": "backend/src/game/mechanisms/index.ts",
+          "expectedResolved": "backend/src/game/mechanisms/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 772,
+          "end": 829,
+          "original": "../../../src/core/domain/systems/damage_resolution_system",
+          "value": "../../../../src/core/domain/systems/damage_resolution_system",
+          "originalResolved": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "expectedResolved": "backend/src/core/domain/systems/damage_resolution_system.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 691,
+          "end": 729,
+          "original": "../../../src/game/gateway/tool_gateway",
+          "value": "../../../../src/game/gateway/tool_gateway",
+          "originalResolved": "backend/src/game/gateway/tool_gateway.ts",
+          "expectedResolved": "backend/src/game/gateway/tool_gateway.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 621,
+          "end": 659,
+          "original": "../../../src/game/engine/phase_manager",
+          "value": "../../../../src/game/engine/phase_manager",
+          "originalResolved": "backend/src/game/engine/phase_manager.ts",
+          "expectedResolved": "backend/src/game/engine/phase_manager.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 537,
+          "end": 588,
+          "original": "../../../src/game/mechanisms/win_conditions/results",
+          "value": "../../../../src/game/mechanisms/win_conditions/results",
+          "originalResolved": "backend/src/game/mechanisms/win_conditions/results.ts",
+          "expectedResolved": "backend/src/game/mechanisms/win_conditions/results.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 439,
+          "end": 501,
+          "original": "../../../src/game/mechanisms/registries/win_condition_registry",
+          "value": "../../../../src/game/mechanisms/registries/win_condition_registry",
+          "originalResolved": "backend/src/game/mechanisms/registries/win_condition_registry.ts",
+          "expectedResolved": "backend/src/game/mechanisms/registries/win_condition_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 344,
+          "end": 398,
+          "original": "../../../src/core/domain/registries/condition_registry",
+          "value": "../../../../src/core/domain/registries/condition_registry",
+          "originalResolved": "backend/src/core/domain/registries/condition_registry.ts",
+          "expectedResolved": "backend/src/core/domain/registries/condition_registry.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 261,
+          "end": 306,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 205,
+          "end": 222,
+          "original": "../../../src/core",
+          "value": "../../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [],
+      "baselineCases": [
+        {
+          "id": "050fa3631a0ce9f915ff687e359405208b4385192f231f59cf8a6382ba8272f3",
+          "title": "zh-CN/individual: injected goal rules only win at their declared checkpoint and the engine seals immutable result/event copies",
+          "occurrence": 1
+        },
+        {
+          "id": "f622a2a7fa852ba43a665cdf8fb25748ec373a2fd1fd1cdf8809c26da469e3d2",
+          "title": "zh-CN/relationship: injected goal rules only win at their declared checkpoint and the engine seals immutable result/event copies",
+          "occurrence": 1
+        },
+        {
+          "id": "bada75b371a380b183f9e508153d40c0fcd630a6cfb91ef5dcea1eb71558344c",
+          "title": "en/individual: injected goal rules only win at their declared checkpoint and the engine seals immutable result/event copies",
+          "occurrence": 1
+        },
+        {
+          "id": "590d87fbc6ea0701db43361d229d26ac7222e167c4aa7d17f308858b52a0a510",
+          "title": "en/relationship: injected goal rules only win at their declared checkpoint and the engine seals immutable result/event copies",
+          "occurrence": 1
+        },
+        {
+          "id": "07f353e966a915be5c04bad81fbe5e8c4b2d10fad3d03e0857d2fe1fe8ab463a",
+          "title": "zh-CN: max-day termination has an explicit no-winner point and exactly one terminal event",
+          "occurrence": 1
+        },
+        {
+          "id": "5810ca93b988f8e0a73097ed672eb322e9887644587a0530ef60d04daa6ec2d8",
+          "title": "en: max-day termination has an explicit no-winner point and exactly one terminal event",
+          "occurrence": 1
+        },
+        {
+          "id": "90a09bae63a75ab4c9d342e25bb2cd789d582f33208786a82f1e30f0fb4ac33b",
+          "title": "final sealing rejects a structurally valid forged membership even from a custom condition",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-scenarios",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Camp,\n  Phase,\n  Role,\n  WinCondition,\n  createVictoryComponent,\n  type RoleComponent,\n  type GameResult,\n  type ActionRequest,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, Camp, Phase, Role, WinCondition, createVictoryComponent, type ActionRequest } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "GameResult",
+              "imported": "GameResult",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/runtime/simulation/reproduction_context",
+          "originalImport": "import { captureCheckpoint } from \"../../../src/runtime/simulation/reproduction_context\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "captureCheckpoint",
+              "imported": "captureCheckpoint",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "originalImport": "import { readGameOutcome, readVictoryPoint } from \"@ai-werewolf-arena/replay-contract\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readGameOutcome",
+              "imported": "readGameOutcome",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "readVictoryPoint",
+              "imported": "readVictoryPoint",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Copied runRecorded/fixture helpers are latent function declarations; original case-local Worlds, scripts, recorders and cleanup stay one allocation per original call. No extra eager cached catalog read was introduced.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 473 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
+    },
+    {
+      "from": "backend/tests/engine/rules/victory_outcomes.test.ts",
+      "to": "backend/tests/integration/recording/outcome-fingerprint-and-checkpoint-wiring.test.ts",
+      "sourceCommit": "346b1f0020a03d220b7af3971853d0ae202614a8",
+      "reason": "Actual selected integration module, SDK, filesystem or full causal boundary; original callback/setup allocation is recorded by case-split proof, not whole-file relocation.",
+      "originalSha256": "9c65050710423566b0d4cfba8d1e6d6a25b1f25063499a740071f9fc88c4337c",
+      "candidateSha256": "2bbb8e47c4b862a280c0e3f69c4fcb17c2dd61d3b67782e174f3d77fc86f6101",
+      "moduleAndLocationEdits": [
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 2269,
+          "end": 2321,
+          "original": "../../../src/runtime/simulation/reproduction_context",
+          "value": "../../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 2177,
+          "end": 2212,
+          "original": "../../../src/recording/reproduction",
+          "value": "../../../src/recording/reproduction",
+          "originalResolved": "backend/src/recording/reproduction.ts",
+          "expectedResolved": "backend/src/recording/reproduction.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 1113,
+          "end": 1165,
+          "original": "../../../src/runtime/simulation/reproduction_context",
+          "value": "../../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts"
+        },
+        {
+          "kind": "dynamic-module-specifier",
+          "start": 1018,
+          "end": 1056,
+          "original": "../../support/drivers/temp-directories",
+          "value": "../../support/drivers/temp-directories",
+          "originalResolved": "backend/tests/support/drivers/temp-directories.ts",
+          "expectedResolved": "backend/tests/support/drivers/temp-directories.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 411,
+          "end": 463,
+          "original": "../../../src/runtime/simulation/reproduction_context",
+          "value": "../../../src/runtime/simulation/reproduction_context",
+          "originalResolved": "backend/src/runtime/simulation/reproduction_context.ts",
+          "expectedResolved": "backend/src/runtime/simulation/reproduction_context.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 322,
+          "end": 373,
+          "original": "../../../src/game/mechanisms/win_conditions/results",
+          "value": "../../../src/game/mechanisms/win_conditions/results",
+          "originalResolved": "backend/src/game/mechanisms/win_conditions/results.ts",
+          "expectedResolved": "backend/src/game/mechanisms/win_conditions/results.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 241,
+          "end": 286,
+          "original": "../../../src/runtime/scenarios/six_player_mvp",
+          "value": "../../../src/runtime/scenarios/six_player_mvp",
+          "originalResolved": "backend/src/runtime/scenarios/six_player_mvp.ts",
+          "expectedResolved": "backend/src/runtime/scenarios/six_player_mvp.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 185,
+          "end": 202,
+          "original": "../../../src/core",
+          "value": "../../../src/core",
+          "originalResolved": "backend/src/core/index.ts",
+          "expectedResolved": "backend/src/core/index.ts"
+        },
+        {
+          "kind": "module-specifier",
+          "start": 72,
+          "end": 98,
+          "original": "../../../src/app/bootstrap",
+          "value": "../../../src/app/bootstrap",
+          "originalResolved": "backend/src/app/bootstrap.ts",
+          "expectedResolved": "backend/src/app/bootstrap.ts"
+        }
+      ],
+      "locationAnchors": [
+        {
+          "anchor": "backend/tests/support/drivers/temp-directories.ts",
+          "originalExpression": "import(\"../../support/drivers/temp-directories\")",
+          "currentExpression": "import(\"../../support/drivers/temp-directories\")",
+          "currentHead": "../../support/drivers/temp-directories",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/runtime/simulation/reproduction_context.ts",
+          "originalExpression": "import(\"../../../src/runtime/simulation/reproduction_context\")",
+          "currentExpression": "import(\"../../../src/runtime/simulation/reproduction_context\")",
+          "currentHead": "../../../src/runtime/simulation/reproduction_context",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/recording/reproduction.ts",
+          "originalExpression": "import(\"../../../src/recording/reproduction\")",
+          "currentExpression": "import(\"../../../src/recording/reproduction\")",
+          "currentHead": "../../../src/recording/reproduction",
+          "kind": "dynamic-module-path"
+        },
+        {
+          "anchor": "backend/src/runtime/simulation/reproduction_context.ts",
+          "originalExpression": "import(\"../../../src/runtime/simulation/reproduction_context\")",
+          "currentExpression": "import(\"../../../src/runtime/simulation/reproduction_context\")",
+          "currentHead": "../../../src/runtime/simulation/reproduction_context",
+          "kind": "dynamic-module-path"
+        }
+      ],
+      "baselineCases": [
+        {
+          "id": "2af3d050ff0ab7202c71fb402dbab9baa557a20fa6d8e100d9c16af75dbccf70",
+          "title": "an executed shared result decoder change invalidates the engine fingerprint without changing the lockfile",
+          "occurrence": 1
+        },
+        {
+          "id": "79fc0891cf36c6980f62be110b073438199d216ad72b9437a43ec5de44c80685",
+          "title": "empty membership is explicit and serializable; invalid declarations fail at installation rather than final persistence",
+          "occurrence": 1
+        }
+      ],
+      "baselineRunner": "backend",
+      "targetRunner": "backend-integration",
+      "caseSplit": true,
+      "selectedCaseStatementsAndHelpersPreserved": true,
+      "postBaselineRegistrationTitlesWithoutFrozenIDs": [],
+      "typeOnlyTestEdits": [],
+      "importPruning": [
+        {
+          "specifier": "../../../src/core",
+          "originalImport": "import {\n  COMPONENT,\n  Camp,\n  Phase,\n  Role,\n  WinCondition,\n  createVictoryComponent,\n  type RoleComponent,\n  type GameResult,\n  type ActionRequest,\n} from \"../../../src/core\";",
+          "currentImportBeforeRebase": "import { COMPONENT, Camp, Phase, Role, WinCondition, createVictoryComponent } from \"../../../src/core\";",
+          "droppedBindings": [
+            {
+              "name": "RoleComponent",
+              "imported": "RoleComponent",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "GameResult",
+              "imported": "GameResult",
+              "kind": "named",
+              "typeOnly": true
+            },
+            {
+              "name": "ActionRequest",
+              "imported": "ActionRequest",
+              "kind": "named",
+              "typeOnly": true
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/registries/condition_registry",
+          "originalImport": "import { ConditionRegistry } from \"../../../src/core/domain/registries/condition_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ConditionRegistry",
+              "imported": "ConditionRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms/registries/win_condition_registry",
+          "originalImport": "import { WinConditionRegistry } from \"../../../src/game/mechanisms/registries/win_condition_registry\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "WinConditionRegistry",
+              "imported": "WinConditionRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/engine/phase_manager",
+          "originalImport": "import { PhaseManager } from \"../../../src/game/engine/phase_manager\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "PhaseManager",
+              "imported": "PhaseManager",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/gateway/tool_gateway",
+          "originalImport": "import { ToolGateway } from \"../../../src/game/gateway/tool_gateway\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "ToolGateway",
+              "imported": "ToolGateway",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/core/domain/systems/damage_resolution_system",
+          "originalImport": "import { DamageResolutionSystem } from \"../../../src/core/domain/systems/damage_resolution_system\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "DamageResolutionSystem",
+              "imported": "DamageResolutionSystem",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "../../../src/game/mechanisms",
+          "originalImport": "import { createDefaultRoleRegistry } from \"../../../src/game/mechanisms\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "createDefaultRoleRegistry",
+              "imported": "createDefaultRoleRegistry",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        },
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "originalImport": "import { readGameOutcome, readVictoryPoint } from \"@ai-werewolf-arena/replay-contract\";",
+          "currentImportBeforeRebase": null,
+          "droppedBindings": [
+            {
+              "name": "readGameOutcome",
+              "imported": "readGameOutcome",
+              "kind": "named",
+              "typeOnly": false
+            },
+            {
+              "name": "readVictoryPoint",
+              "imported": "readVictoryPoint",
+              "kind": "named",
+              "typeOnly": false
+            }
+          ]
+        }
+      ],
+      "sharedSetupPolicy": "Case-local mutable resources stay single original allocations. Necessary original helper declarations retain exact bodies and loop parents. Copied runRecorded/fixture helpers are latent function declarations; original case-local Worlds, scripts, recorders and cleanup stay one allocation per original call. No extra eager cached catalog read was introduced.",
+      "loadSetPolicy": "Unused public value graph explicitly pruned; 473 unique removed modules independently inspected with preserved necessary setup/IO. No added public modules. External SDK/builtin initialization and complete evaluation order are not asserted.",
+      "fixturesChanged": false
     }
   ],
   "counts": {
-    "sourceFiles": 565,
-    "targetFiles": 635,
-    "mappingEntries": 635,
-    "baselineCases": 7285,
+    "sourceFiles": 566,
+    "targetFiles": 638,
+    "mappingEntries": 638,
+    "baselineCases": 7301,
     "fixtureByteChanges": 0
   },
   "splitPolicy": "Repeated from paths describe explicit one-to-many case allocations, never duplicate original IDs. Counts distinguish unique original files, unique targets and mapping edges. Original baseline/status remains frozen. Per-row program and import-pruning evidence distinguishes full relocation from selected case/source split; candidate SHAs identify historical slice bytes."
