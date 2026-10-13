@@ -81,7 +81,7 @@ import { hasActiveWall } from "../mechanisms/events/wall_notes/authority";
 import { GameActionRequestFactory } from "./action_request_factory";
 import { replaceWithFoxVictory } from "../mechanisms/roles/cursed_fox/victory";
 import { validateVictoryDecision } from "../mechanisms/win_conditions/validated-victory";
-import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-catalog";
+import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-contract";
 import { text } from "@ai-werewolf-arena/game-text";
 import { DEMON_HUNTER_POLICY } from "@ai-werewolf-arena/game-contract/facts/demon-hunter";
 import { NightFaultPlan, type FaultPlan } from "./fault_plan";

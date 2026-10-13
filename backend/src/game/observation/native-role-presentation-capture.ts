@@ -4,7 +4,7 @@
  * 原生文案使用原不绑定 ability_id 的选择规则，不能用请求观察的赠予／借用状态替代。
  * 这里不复制库存、不授予权限、不提前读取 World 或冻结演员；失败保留已读取前缀。
  */
-import type { Locale, InspectionResult } from "@ai-werewolf-arena/game-catalog";
+import type { Locale, InspectionResult } from "@ai-werewolf-arena/game-contract";
 import {
   Role,
   type NativeRolePresentationId,

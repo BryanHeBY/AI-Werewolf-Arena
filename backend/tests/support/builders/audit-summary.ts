@@ -1,9 +1,10 @@
 /**
- * Provides the builder test boundary: Handwritten bilingual audit-summary protocol input, independently specified headings and optional fixture content. Inputs and literal expectations remain owned by the original tests; output preserves their original DTO/assertion contract. No production settlement supplies a new expected result.
+ * 负责测试构造器中的手写双语审计输入、独立标题及可选 fixture 内容。输入及字面预期仍归原测试，输出保持其 DTO／断言契约。
+ * 本支持模块不运行生产结算来生成新的预期结果。
  */
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 
-/** Handwritten expected protocol headings; never derive an oracle from production formatting. */
+/** 手写协议标题预期，不从生产格式器生成 oracle。 */
 export function auditSummaryFixture(locale: Locale, findings?: string, tail = ""): string {
   const headings =
     locale === "en"

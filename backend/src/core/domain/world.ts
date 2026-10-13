@@ -9,7 +9,7 @@ import { COMPONENT, ComponentName } from "./components/names";
 import type { ComponentMap, ComponentWrite } from "./component-map";
 import { AliveComponent, aliveLifeVersion } from "./components/alive";
 import { RoleComponent } from "./components/role";
-import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
+import { isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
 
 /**
  * World 是 ECS 内存状态容器。

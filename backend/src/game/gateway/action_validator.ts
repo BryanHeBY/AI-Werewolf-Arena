@@ -1,10 +1,8 @@
 /**
- * Validates a tool call against actor life, role, trusted action windows and registered role
- * rules. Inputs are a sanitized call and validation context; outputs are structured rule results
- * and the configured validation trace. It never treats schema preflight acceptance as inventory
- * payment.
+ * 负责按演员生命、角色、可信行动窗口及已注册规则校验工具调用。输入为已清洗调用及校验上下文，输出为原规则结果与配置的校验 trace。
+ * 领域预检通过不等于库存付款，本模块不以 schema 接受代替实际资源提交。
  */
-import { RuleError, type RuleViolation } from "@ai-werewolf-arena/game-catalog";
+import { RuleError, type RuleViolation } from "@ai-werewolf-arena/game-contract";
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { AliveComponent } from "../../core/domain/components/alive";
 import { COMPONENT } from "../../core/domain/components/names";
@@ -24,7 +22,7 @@ import { World } from "../../core/domain/world";
  * 动作校验上下文。
  */
 export interface ValidationContext {
-  /** Owned transactional controllers record validation only after the actual commit. */
+  /** 有事务归属的 controller 只在实际提交后记录校验。 */
   deferOperation?: boolean;
   day?: number;
   thiefScope?: object;

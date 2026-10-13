@@ -5,7 +5,7 @@
  */
 import { isRecord, assertField, assertSerializedData, ReplayDocumentValidationError } from "./validation";
 export { ReplayDocumentValidationError } from "./validation";
-import { isLocale, type Locale, type SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
+import { isLocale, type Locale, type SealedVictoryResult } from "@ai-werewolf-arena/game-contract";
 import { unwrapRecordingEnvelope, type RecordingIdentities } from "./archive-envelope";
 import { readVictoryResult } from "./outcomes";
 import {

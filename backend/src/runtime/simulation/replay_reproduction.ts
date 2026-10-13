@@ -7,7 +7,7 @@ import { unwrapRecordingEnvelope } from "@ai-werewolf-arena/replay-contract";
 import { reproductionIdentitiesMatch } from "../../recording/archive_identity";
 import { initialPlayerIdentity } from "../../core/domain/initial_roster";
 import { initialIdentityDeal } from "../../game/mechanisms/roles/initial_identity/deal";
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 import { readFile } from "node:fs/promises";
 import { RULESET } from "@ai-werewolf-arena/game-catalog";
 import { bootstrapGame } from "../../app/bootstrap";

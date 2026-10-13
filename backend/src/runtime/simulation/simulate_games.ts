@@ -1,11 +1,8 @@
 /**
- * Runs the configured simulation batch with explicit seeds and provider setup. Inputs are
- * board/runtime options and independent game executions; outputs are existing reports, branch
- * counts and saved reproduction evidence. It does not turn the baseline provider into a
- * player-knowledge oracle or change per-game RNG order.
- * Observed-player decisions and native recording consume the same bound rules.
+ * 负责用明确种子与 provider 装配执行模拟批次。输入为板子／运行选项和各独立对局，输出原报告、分支计数与录制证据。
+ * 特权 baseline 不是玩家知识 oracle，也不作为独立规则预期；每局 RNG 顺序保持，受限观察与录制使用同一绑定规则。
  */
-import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
+import { isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame } from "../../app/bootstrap";
 import {
   DEATH_SHOT_STAGES,
@@ -56,7 +53,7 @@ export interface SimulationReport {
   fallbacks: number;
 }
 
-/** Counts executed skill outcomes, not merely roles present in a deal. */
+/** 统计实际执行的技能结果，不仅按牌堆有某角色就算命中分支。 */
 function branchCounts(events: readonly GameEvent[]): Record<string, number> {
   const counts: Record<string, number> = {};
   for (const event of events) {
@@ -101,7 +98,7 @@ function branchCounts(events: readonly GameEvent[]): Record<string, number> {
   return counts;
 }
 
-/** Only the controller can inspect truth for assertions and recording; strategies receive DTOs. */
+/** 只有 controller 为断言／录制读取真值，受限策略消费 DTO；特权基线另有明确入口。 */
 export async function simulateGames(
   board: ResolvedBoardDefinition,
   options: SimulationOptions,
@@ -230,7 +227,7 @@ export async function simulateGames(
           }
           if (failures.length) break;
           recorder.flush(context.phaseManager.getEvents());
-          // Public controller invariants do not feed hidden truth back into decisions.
+          // 公开 controller 不变量不把隐藏真值反馈给决策。
           const alive = context.world.getAliveEntityIds();
           if (alive.some((id) => !priorAlive.includes(id)))
             throw new Error("simulation_unexpected_revival");
@@ -288,7 +285,7 @@ export async function simulateGames(
       if (failures.length) throw new AggregateError(failures, "simulation_game_failed");
       return manager;
     });
-    // The persisted operations reflect execution acceptance, not what strategies merely attempted.
+    // 落盘操作反映实际执行接受，不将策略的尝试冒充提交。
     const operations = JSON.parse(
       await readFile(`${summary.sessionDir}/logic_ops.json`, "utf8"),
     ) as { ops: Array<{ status: string }> };

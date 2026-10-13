@@ -4,7 +4,7 @@
 import { types } from "node:util";
 import { isAnimalDreamPreset } from "../../../../rulesets";
 import { type CatSkippedVotePolicy, type PufferBallotPolicy } from "@ai-werewolf-arena/game-contract";
-import type { RoleId } from "@ai-werewolf-arena/game-catalog";
+import type { RoleId } from "@ai-werewolf-arena/game-contract";
 import type { World } from "../../../../core/domain/world";
 import { Camp } from "../../../../core/domain/identity";
 import { COMPONENT } from "../../../../core/domain/components/names";

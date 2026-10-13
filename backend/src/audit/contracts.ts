@@ -1,12 +1,9 @@
 /**
- * Responsibility: define audit task/evidence data and neutral result descriptions.
- * Input: recorded execution evidence and configured audit requirements;
- * output: audit request/result contracts, preserving raw model content separately.
- * The audit subsystem owns these evidence/task shapes; recording owns stored sessions.
- * These declarations do not run audits, select game actions or render translations.
+ * 负责审计任务、证据数据与中立结果说明的类型契约。输入为录制证据和审计要求，输出描述请求／结果并单独保留模型原文。
+ * 审计子系统拥有这些证据与任务结构，持久化会话仍归录制所有者；声明不运行审计、不选择游戏行动或渲染翻译。
  */
 import type { MessageKey, MessageRef } from "@ai-werewolf-arena/game-contract";
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 import type {
   ReplayDebugReport,
   ReplayLogicOp,
@@ -16,9 +13,9 @@ import type {
 } from "../recording/contracts";
 
 export interface BuildDebugSummaryInput {
-  /** Inspection language; source text stays original. */
+  /** 审查语言；来源原文保持。 */
   locale?: Locale;
-  /** Final summary language, independent of audit availability. */
+  /** 最终摘要语言，独立于审计是否可用。 */
   displayLocale?: Locale;
   manifest: ReplayManifest;
   reports: ReplayDebugReport[];

@@ -1,11 +1,9 @@
 /**
- * Real transport correction scenarios verify Noble wolf/protection policy rejection then correction.
- * Input: Literal illegal boundary actions followed by permitted submissions.
- * Output and independent oracle: Exact refusal counts, accepted original action and unchanged independent terminal/wire expectations.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 场景测试负责真实传输中的贵族狼方／保护政策拒绝与纠正。输入为字面非法边界动作及后续合法提交，输出用精确拒绝数、接受的原动作与独立终局／wire 预期核对。
+ * 本测试不调用计费模型，不重写 fixture 或 Tape 字节。
  */
 import { expect, test } from "bun:test";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { nobleTransportScenario } from "../../../support/features/noble-secret-body/builders/transport-plan";
 import { assertNobleTransportWire } from "../../../support/features/noble-secret-body/oracles/wire";
 import { assertNobleTransportGolden } from "../../../support/features/noble-secret-body/oracles/transport-golden";

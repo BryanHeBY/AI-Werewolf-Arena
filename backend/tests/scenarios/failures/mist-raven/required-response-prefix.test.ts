@@ -1,10 +1,9 @@
 /**
- * Failure scenarios verify required Mist/Raven responses retain precise paid prefixes without fallback or random knife substitution.
- * Input: Original day/stage/actor boundary table and missing/late/invalid transport/locale matrices.
- * Output and oracle: Explicit failed decision, incomplete checkpoint and committed-state assertions preserve the actual prefix; source action and failure plans stay unchanged.
+ * 失败场景测试负责雾鸦必选回复的已付前缀，不允许回退或随机替换狼刀。输入为原日次／阶段／演员表及缺失、迟到、非法传输／语言矩阵。
+ * 输出用明确失败决定、未完成检查点和已提交状态断言核对；原行动及失败计划保持，不以生产结果生成预期。
  */
 import { expect, test } from "bun:test";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { type PlannedTurn } from "../../../support/transport/contracts";
 import type { ActionStage } from "../../../../src/core";
 import { mistTransportScenario } from "../../../support/features/mist-raven/builders/transport-plan";

@@ -21,7 +21,7 @@ import {
   gameToolProtocol,
 } from "../../agents/game_tool_protocol";
 import type { Locale } from "@ai-werewolf-arena/game-text";
-import { isLocale } from "@ai-werewolf-arena/game-catalog";
+import { isLocale } from "@ai-werewolf-arena/game-contract";
 import {
   getActionRequestDay,
   getActionRequestStage,

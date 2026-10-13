@@ -1,6 +1,10 @@
+/**
+ * 负责按事件游标把复盘事实投影为席位与当前阶段。输入为原归档和事件索引，输出画面状态副本。
+ * 投影消费共享事实 reader，不执行后端规则、不推进真实对局或把画面状态当行动许可。
+ */
 import { type ReplayDocument, type ReplayEvent } from "@ai-werewolf-arena/replay-contract";
 import { readReplayEvent, readReplayEventEnvelope } from "./replay-event-reader";
-import type { SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
+import type { SealedVictoryResult } from "@ai-werewolf-arena/game-contract";
 
 export interface ReplayPlayerState {
   playerId: number;

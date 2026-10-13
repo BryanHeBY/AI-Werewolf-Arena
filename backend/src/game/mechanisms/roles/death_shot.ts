@@ -1,8 +1,6 @@
 /**
- * Defines and validates death-shot tools and resolves their trusted death permissions. Inputs
- * are the death context, current gun right and selected shot; outputs are validated shot actions
- * and additional death proposals. It does not commit target death outside the ordered death
- * resolver.
+ * 负责死亡枪工具定义、校验、原单枪消费与追加死亡提案。输入为死亡上下文、当前枪权和选择，输出为校验结果及带原生命的追加提案。
+ * 预检不付款，角色死亡流程复验后消费；目标死亡与最终判胜仍由有序中央结算负责。
  */
 import { openDemonHunterStockFrame } from "./demon_hunter/authority";
 import { captureNightLife, livingNightLife } from "../../../core/domain/night_effects";
@@ -21,13 +19,13 @@ import {
 } from "../../../core/domain/model";
 import type { World } from "../../../core/domain/world";
 import type { DeathHookResult, DeathHookContext } from "../hooks/hook_registry";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import type { ToolSpec } from "../contracts";
 import type { ToolRepairPack } from "../llm/contracts";
 import { numberOrNull } from "../llm/helpers";
 import { isAliveTarget, type ValidationRuleContext } from "../validation/contracts";
 
-/** Native metadata is role-neutral; SDK/MCP prose and player hints are localized. */
+/** 原生工具元数据不绑定特定角色；SDK／MCP 文案与玩家提示由本地化入口提供。 */
 export const DEATH_SHOT_TOOL_SPECS: ToolSpec[] = [
   {
     name: "shoot",
@@ -79,7 +77,7 @@ interface DeathShotRules {
   poisonEvent?: (actorId: EntityId) => GameEvent;
 }
 
-/** Shared single-shot consumption; the central resolver owns actual deaths and victory. */
+/** 共用原单枪消费；实际目标死亡和最终判胜仍归中央结算。 */
 export async function resolveDeathShots(
   world: World,
   deadIds: EntityId[],

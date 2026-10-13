@@ -1,9 +1,14 @@
+/**
+ * 负责本机 MCP 控制面服务与会话绑定。输入为 sidecar 配置、带 token 的 HTTP 请求及领域 dispatch，输出原工具回包与启动环境。
+ * 副作用限本机端口、token 和 session 生命周期；异步读完请求后复核会话，领域许可与资源仍归 dispatch。
+ * 请求期限不在本适配器计算，也不另设计时器；取消／关闭先清会话并等待原启动，再按 force 关闭连接，不取消已经交出的领域任务。
+ */
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { randomBytes } from "node:crypto";
 import { createServer, IncomingMessage, ServerResponse } from "node:http";
 import { AddressInfo } from "node:net";
 import { AcpMcpControlServer, AcpMcpServerConfig } from "./acp_mcp_bridge";
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 
 export interface LoopbackMcpControlOptions {
   serverName: string;

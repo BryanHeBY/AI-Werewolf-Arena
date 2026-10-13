@@ -3,7 +3,7 @@
  * 的编号或结构化拒绝。目标枚举不提交查验或发表私密结果，原目标／来源及失败顺序不变。
  */
 import { roleInspectionPolicy } from "../role_inspection/ports";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Camp, Phase, Role, type EntityId } from "../../../../core/domain/model";
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";

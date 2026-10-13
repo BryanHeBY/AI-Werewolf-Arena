@@ -1,10 +1,9 @@
 /**
- * Failure scenarios verify required Pure White or Wolf Witch inspection failure preserves the paid first-night prefix without fallback.
- * Input: Original second-night stage, missing/invalid/late response, transport and locale matrices.
- * Output and oracle: Explicit prior-night/death counts, failed actor and absent unauthorized second result remain causal with real recording; no independent coverage is claimed from a generated archive alone.
+ * 失败场景测试负责纯白／狼巫必选查验失败保留首夜已付前缀且不回退。输入为原第二夜阶段、缺失／非法／迟到回复及传输／语言矩阵。
+ * 输出以手写前夜／死亡数、失败演员及未获授权的第二次结果缺席核对真实录制；生成归档本身不被称为独立覆盖。
  */
 import { expect, test } from "bun:test";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { pureWhiteScenario } from "../../../support/features/pure-white-girl/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { type PlannedTurn } from "../../../support/transport/contracts";

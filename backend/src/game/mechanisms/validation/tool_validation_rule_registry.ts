@@ -2,7 +2,7 @@
  * 负责聚合通用、警长和角色运行校验贡献。输入为原上下文与工具调用；输出为首个规则拒绝或 null。
  * 有来源赠枪保留专属校验，普通角色在原时点读取当前规则；不提交动作、付款或执行结算。
  */
-import { RuleError, type RuleViolation } from "@ai-werewolf-arena/game-catalog";
+import { RuleError, type RuleViolation } from "@ai-werewolf-arena/game-contract";
 import { ToolName } from "../../../core/domain/model";
 import { COMMON_VALIDATION_RULES } from "../common/validation_rules";
 import { RoleCatalog } from "../roles/catalog";

@@ -33,7 +33,7 @@ import { thiefRequestScope } from "../mechanisms/roles/thief/ports";
 import { readThiefChoice } from "../mechanisms/roles/thief/ports";
 import { wallRequestScope } from "../mechanisms/events/wall_notes/ports";
 import { z, type ZodType } from "zod";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { readWallTool } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
 import {

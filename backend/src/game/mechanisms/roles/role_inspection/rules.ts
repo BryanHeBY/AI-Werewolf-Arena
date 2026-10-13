@@ -1,12 +1,10 @@
 /**
- * Defines role-inspection target queries, its tool schema and validation rules.
- * Inputs are live read-only inspection history, World membership and a proposed
- * tool action; outputs are legal IDs or the existing validation error code.
- * This leaf does not mutate history, spend stock or commit an inspection effect.
+ * 负责角色查验的目标查询、工具 schema 与规则校验。输入为原只读查验历史、World 成员及待提交动作，输出合法 ID 或原拒绝代码。
+ * 此业务叶不修改历史、消费库存或提交查验效果，当前许可仍由具体机制核对。
  */
 import type { RoleInspectionReadState } from "@ai-werewolf-arena/game-contract";
 
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Phase, type EntityId } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
 import type { ToolRule } from "../../validation/contracts";

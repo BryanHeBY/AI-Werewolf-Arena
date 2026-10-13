@@ -19,7 +19,7 @@ import {
   readBlackMarketOutcome,
 } from "@ai-werewolf-arena/game-contract/facts/black-market";
 import type { MessageKey } from "@ai-werewolf-arena/game-contract";
-import { type Locale } from "@ai-werewolf-arena/game-catalog";
+import { type Locale } from "@ai-werewolf-arena/game-contract";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 
 export function awakenedEventLabel(type: string, payload: unknown, locale: Locale): string | null {

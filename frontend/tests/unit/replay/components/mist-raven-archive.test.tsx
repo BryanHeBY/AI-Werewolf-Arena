@@ -1,9 +1,6 @@
 /**
- * Unit component tests for mist raven archive replay display.
- * Input: existing recorded or literal replay data, event cursors and explicit
- * language/frame settings; output: the original seat, timeline and rendered
- * frame assertions. Handwritten visibility/state expectations and immutable
- * archives are independent oracles. No live game or model transport executes.
+ * 组件单元测试负责雾鸦归档的复盘展示。输入为既有录制／字面事件、游标、语言和 frame 设置，输出保持原席位、时间线及画面断言。
+ * 手写可见性／状态预期与不可变归档为独立 oracle，不运行真实对局或模型传输。
  */
 import { frontendFixtureURL } from "../../../support/fixtures/manifest";
 import { expect, test } from "bun:test";
@@ -14,7 +11,7 @@ import {
   readReplayPlayerView,
   type ReplayDocument,
 } from "@ai-werewolf-arena/replay-contract";
-import type { SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
+import type { SealedVictoryResult } from "@ai-werewolf-arena/game-contract";
 import { buildReplaySnapshot } from "../../../../src/replay/replay-projection";
 import {
   createReplayRenderInput,
@@ -201,7 +198,7 @@ for (const { kind, variant } of [
               ),
           ).toBe(false);
         }
-        // Actual owner event stream; God identities/results are never used as private knowledge.
+        // 使用实际 owner 事件流，不把 God 身份／结果当作玩家私有知识。
         const replay: ReplayDocument = readReplayDocument({
           ...god,
           result: { winner: null, reason: "private_render" },

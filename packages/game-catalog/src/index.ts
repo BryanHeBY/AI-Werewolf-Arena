@@ -2,22 +2,11 @@
  * 负责配置、引擎装配与展示消费的角色资料目录。
  * 输入为契约包的稳定 ID；输出按原顺序提供双语名称、交付状态和现行规则卡引用。
  * 资料描述角色，不授予执行许可；机器 ID、枚举与语言的唯一所有者仍是契约包。
- * 规则卡位于 docs/rules，扩充验收历史单独保留；公开具名兼容出口服务既有消费者。
+ * 规则卡位于 docs/rules，扩充验收历史单独保留；本出口只提供资料，机读／查验／胜利／错误直接消费契约包。
  */
 import { Role, PLANNED_ROLE_IDS, type Locale } from "@ai-werewolf-arena/game-contract";
-export {
-  EVENT_PACK_IDS,
-  EVENT_IDS,
-  ITEM_IDS,
-  LOCALES,
-  isLocale,
-  ROLE_IDS,
-  isRoleId,
-} from "@ai-werewolf-arena/game-contract";
-export type { Locale, RoleId } from "@ai-werewolf-arena/game-contract";
-export * from "./outcomes";
-export type { InspectionCamp, InspectionResult, InspectionKind } from "./inspection";
 export type RoleStatus = "planned" | "rules_frozen" | "implemented" | "verified";
+/** 资料状态与规则引用说明交付进度，不等于角色已注册、板子可运行或玩家有行动资格。 */
 export interface RoleDefinition {
   readonly id: string;
   readonly names: Readonly<Record<Locale, string>>;
@@ -542,6 +531,7 @@ export const ROLE_DEFINITIONS = [
   },
 ] as const satisfies readonly RoleDefinition[];
 
+/** 按原 ID 查资料；未知 ID 不补造角色或修改注册表。 */
 export function roleDefinition(id: string): RoleDefinition | undefined {
   return ROLE_DEFINITIONS.find((item) => item.id === id);
 }
@@ -549,5 +539,3 @@ export function roleName(id: string, locale: Locale): string {
   return roleDefinition(id)?.names[locale] ?? id;
 }
 export const RULESET = { id: "awa_classic", version: "1.0.0" } as const;
-
-export * from "./errors";

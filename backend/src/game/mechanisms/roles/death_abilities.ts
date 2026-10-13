@@ -4,7 +4,7 @@
  * 实例生命周期和原体证明归 death-gun-lifecycle，玩家投影归 player_state，公共类型归 game-contract。
  * 本入口仅在原参数位置查询枪权；不修改库存、标记死亡、复制运行时授权或执行录制 I/O。
  */
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import type { ValidationRuleContext } from "../validation/contracts";
 import { validateDeathShot } from "./death_shot";
 import { activeDeathGun } from "./death-gun-lifecycle";

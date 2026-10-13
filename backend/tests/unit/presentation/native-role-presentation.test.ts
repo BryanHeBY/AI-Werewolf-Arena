@@ -11,7 +11,7 @@ import {
   type NativeRolePresentationPart,
 } from "@ai-werewolf-arena/game-contract";
 import { formatNativeRolePart } from "@ai-werewolf-arena/game-presentation";
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 import {
   createRoleComponent,
   renderRolePrompt,

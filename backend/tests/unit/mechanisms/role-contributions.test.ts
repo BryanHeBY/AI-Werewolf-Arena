@@ -5,7 +5,7 @@
  */
 import { expect, test } from "bun:test";
 import { Camp, Role, WinCondition } from "@ai-werewolf-arena/game-contract";
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 import { RoleCatalog } from "../../../src/game/mechanisms/roles/catalog";
 import {
   createRoleCatalog,

@@ -4,7 +4,7 @@
  * 调用方按原顺序逐片段提交，印记列表文字只接原逐项格式化后的字符串。
  */
 import type { ComponentPresentationPart } from "@ai-werewolf-arena/game-contract";
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 import { text, term, type MessageKey } from "@ai-werewolf-arena/game-text";
 
 export function formatComponentPart(part: ComponentPresentationPart, locale: Locale): string {

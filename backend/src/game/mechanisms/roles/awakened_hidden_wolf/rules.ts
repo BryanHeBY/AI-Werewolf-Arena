@@ -1,5 +1,9 @@
+/**
+ * 负责觉醒隐狼的工具资格校验贡献。输入为原工具参数、角色状态及可信窗口，输出原规则拒绝或通过。
+ * 当前原体、学习／盾／刀资格仍归实际机制，本校验不执行学习、消费库存或提交死亡。
+ */
 import { AWAKENED_TOOL_NAMES } from "./tool_names";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Camp, Phase, Role } from "../../../../core/domain/model";
 import { isAliveTarget, type ToolRule, type ToolRuleMap } from "../../validation/contracts";
 import { canAwakenedKnife } from "./inheritance";

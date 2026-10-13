@@ -1,4 +1,8 @@
-import { isLocale } from "@ai-werewolf-arena/game-catalog";
+/**
+ * 负责模拟 CLI 的次数、种子前缀、板子与展示语言接线。输入为 argv／配置目录，输出原模拟报告、记录根与失败退出码。
+ * 每局执行及 RNG 归模拟驱动，本入口不把基线策略当规则 oracle，不更改已运行对局结果。
+ */
+import { isLocale } from "@ai-werewolf-arena/game-contract";
 import { text } from "@ai-werewolf-arena/game-text";
 import { runCli, takeDisplayArguments, type CliDisplayContext } from "./display";
 import { loadBoardDefinition } from "../config/load_board_definition";

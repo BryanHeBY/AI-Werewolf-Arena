@@ -86,7 +86,6 @@
       "name": "@ai-werewolf-arena/game-presentation",
       "version": "0.1.0",
       "dependencies": {
-        "@ai-werewolf-arena/game-catalog": "workspace:*",
         "@ai-werewolf-arena/game-contract": "workspace:*",
         "@ai-werewolf-arena/game-text": "workspace:*"
       },
@@ -111,7 +110,6 @@
       "name": "@ai-werewolf-arena/replay-contract",
       "version": "0.1.0",
       "dependencies": {
-        "@ai-werewolf-arena/game-catalog": "workspace:*",
         "@ai-werewolf-arena/game-contract": "workspace:*",
       },
       "devDependencies": {

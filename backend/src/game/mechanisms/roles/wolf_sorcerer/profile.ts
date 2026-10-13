@@ -8,7 +8,7 @@ import { nativeRolePresentation } from "../presentation-contribution";
 import { WOLF_ROLE_PROFILE } from "../wolf/profile";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Role, Camp, WinCondition, Phase } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
 import { WOLF_SORCERER_POLICY, createWolfSorcererState, getWolfSorcererState } from "./state";

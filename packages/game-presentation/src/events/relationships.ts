@@ -7,11 +7,11 @@ import {
   readWildChildEventFact,
   readWildChildPlayerFact,
 } from "@ai-werewolf-arena/game-contract/facts/wild-child";
-import type { RoleId } from "@ai-werewolf-arena/game-catalog";
+import type { RoleId } from "@ai-werewolf-arena/game-contract";
 import { readShapeshifterEventFact } from "@ai-werewolf-arena/game-contract/facts/shapeshifter";
 import { readThiefEventFact } from "@ai-werewolf-arena/game-contract/facts/thief";
 import { readWallEventFact } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
-import { type Locale } from "@ai-werewolf-arena/game-catalog";
+import { type Locale } from "@ai-werewolf-arena/game-contract";
 import {
   DEBATE_EVENT_TYPES,
   readDebateEventFact,

@@ -17,7 +17,7 @@ import type {
 } from "@ai-werewolf-arena/game-contract";
 
 import type { PlayerAwakenedState } from "@ai-werewolf-arena/game-contract/player-state-views";
-import type { RoleId } from "@ai-werewolf-arena/game-catalog";
+import type { RoleId } from "@ai-werewolf-arena/game-contract";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import type { EntityId } from "../../../../core/domain/identity";
 import { copyAbilityData } from "../abilities";

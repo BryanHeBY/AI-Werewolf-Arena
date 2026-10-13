@@ -1,5 +1,9 @@
+/**
+ * 负责 providers、agents、game、可选 audit 及已解析运行配置的类型结构。输入／输出关系分别描述模型 API、ACP 进程、玩家覆盖与装配结果。
+ * 配置数据由读取／解析和 setup 所有者管理；此契约不加载文件或环境、不创建 Agent，也不拥有角色库存或全局缓存。
+ */
 /** `openai` 同时覆盖 OpenRouter 等 Chat Completions 兼容网关。 */
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 export type ProviderType = "openai" | "anthropic" | "acp";
 export type GameBoard = string;
 export type ReasoningEffort = "none" | "minimal" | "low" | "medium" | "high" | "xhigh";
@@ -79,7 +83,7 @@ export interface PlayerConfig {
   name?: string;
   agent?: string;
   spawnArgs?: string[];
-  /** null explicitly clears inherited personality; strings remain verbatim. */
+  /** null 明确清除继承人格；字符串原文保留。 */
   personalityPrompt?: LocalizedPrompt | null;
 }
 

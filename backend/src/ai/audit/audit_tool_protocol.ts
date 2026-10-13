@@ -1,7 +1,11 @@
+/**
+ * 负责 SDK／ACP 审计工具的 schema、单回合上下文与提交状态。输入为会话／turn ID、审计模式及 payload，输出为受控查询或审计发现／摘要回执。
+ * 本注册表唯一持有 pending 回合，成功提交先移除再完成 Promise；证据序号仅限当前上下文，不能代替游戏行动权限。
+ */
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { z } from "zod";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
-import { isLocale } from "@ai-werewolf-arena/game-catalog";
+import { isLocale } from "@ai-werewolf-arena/game-contract";
 import { ToolSchema } from "../integrations/llm/transport";
 
 export type AuditSeverity = "low" | "medium" | "high" | "critical";

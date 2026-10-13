@@ -9,7 +9,7 @@ import { scholarMentorBlocks } from "../scholar_mentor/night_frame";
 import { z } from "zod";
 import { GUARD_REPEAT_POLICIES } from "../../../../core/domain/board";
 import { guardTargetRepeated } from "./ports";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 /** 文件说明：守卫角色 profile。 */
 import { Camp, Role, Phase } from "../../../../core/domain/model";

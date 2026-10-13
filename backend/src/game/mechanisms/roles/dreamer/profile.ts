@@ -7,7 +7,7 @@
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { DREAM_PROTECTION_POLICIES } from "../../../../core/domain/board";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Camp, Role, Phase } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";

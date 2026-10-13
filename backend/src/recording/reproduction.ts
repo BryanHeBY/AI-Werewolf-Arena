@@ -84,7 +84,7 @@ import type {
   GameOutcome,
   VictoryPoint,
   VictoryAffiliation,
-} from "@ai-werewolf-arena/game-catalog";
+} from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import {
   ACTION_STAGES,

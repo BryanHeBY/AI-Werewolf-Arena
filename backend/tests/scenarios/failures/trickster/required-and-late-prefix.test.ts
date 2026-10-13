@@ -1,9 +1,8 @@
 /**
- * Failure scenarios verify Trickster required-choice and later Witch or Prince failures preserve the committed multi-mechanism prefix.
- * Input: Original first/second-night response matrices, controlled transport plans and copied exchange-history forgery.
- * Output and oracle: Explicit exchange/night counts and Magician/Trickster/Prince history assertions retain paid state before deterministic rejection; no role settlement algorithm is used as the expected oracle.
+ * 失败场景测试负责诡术必选及后续女巫／王子失败保留多机制提交前缀。输入为原首夜／第二夜矩阵、传输计划和复制的换位历史伪造。
+ * 输出用明确换位／夜次数、魔术师／诡术／王子历史核对确定拒绝前的已付状态，不把角色结算当预期 oracle。
  */
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
 import { tricksterScenario } from "../../../support/features/trickster/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";

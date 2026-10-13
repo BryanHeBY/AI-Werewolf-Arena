@@ -1,9 +1,8 @@
 /**
- * Failure scenarios verify Wolf Sorcerer required-choice and later-stage failures preserve only the original committed learning prefix.
- * Input: Original night/failure/transport/locale matrices, controlled plans and copied archived learning-state forgeries.
- * Output and oracle: Explicit paid-history, unresolved decision and malformed-prefix rejection remain causal with real recordings; no role action or expected record is regenerated.
+ * 失败场景测试负责狼术必选及后续阶段失败只保留原学习提交前缀。输入为原夜次／失败／传输／语言矩阵和归档学习状态伪造。
+ * 输出用明确已付历史、未解决决定及畸形前缀拒绝核对真实录制，不重新生成角色行动或预期记录。
  */
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
 import { wolfSorcererScenario } from "../../../support/features/wolf-sorcerer/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";

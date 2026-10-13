@@ -1,10 +1,14 @@
-import { isLocale } from "@ai-werewolf-arena/game-catalog";
+/**
+ * 负责 CLI 展示语言参数与顶层错误呈现。输入为原 argv 和可更新的展示上下文，输出剩余参数及本地化进程错误。
+ * 本入口只组织显示／退出，不解析游戏规则；原错误码与明确语言优先级保持。
+ */
+import { isLocale } from "@ai-werewolf-arena/game-contract";
 import { errorMessage, text, type Locale } from "@ai-werewolf-arena/game-text";
 import { describeError } from "../../utils/error_diagnostic";
 import { configDiagnostic } from "../config/error_codes";
 import { COMMAND_ERROR_CODES } from "./error_codes";
 
-/** One invocation owns this context; it never changes a game or process environment. */
+/** 展示上下文只归一次调用，不改变游戏或进程环境。 */
 export interface CliDisplayContext {
   locale: Locale;
   explicit: boolean;
@@ -32,7 +36,7 @@ export function cliFailure(error: unknown, locale: Locale) {
         ? Object.getOwnPropertyDescriptor(error, "message")?.value
         : undefined;
   } catch {
-    /* opaque foreign error */
+    /* 无法透视的外来错误。 */
   }
   const candidate = typeof message === "string" ? message.split(":", 1)[0] : "command_failed";
   const code =
@@ -72,7 +76,7 @@ export function cliFailure(error: unknown, locale: Locale) {
     message: explanation,
   };
 }
-/** CLI output/exit boundary only; programmatic command functions still reject their original errors. */
+/** 仅处理 CLI 输出／退出；程序调用仍沿原函数抛出原错误。 */
 export async function runCli(
   command: (args: string[], display: CliDisplayContext) => Promise<void>,
   args = process.argv.slice(2),

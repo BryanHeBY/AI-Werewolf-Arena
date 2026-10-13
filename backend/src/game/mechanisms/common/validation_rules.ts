@@ -4,7 +4,7 @@
 import { readWallTool } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
 import { authorizedWallAuthor } from "../events/wall_notes/authority";
 import { prohibitsLoversVote } from "../roles/cupid/relation";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：定义通用工具的校验规则。 */
 import { ToolRuleMap } from "../validation/contracts";
 import { debateAuthority, sameDebateParticipant } from "../roles/debater/authority";

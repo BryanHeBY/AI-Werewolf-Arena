@@ -1,9 +1,8 @@
 /**
- * Reproduction scenarios verify Knight complete recorded games preserve legal duel windows, hit/miss outcomes and death-chain timing.
- * Input: Original enum-derived window matrix, additional miss/king/white/twelve-player plans, transports and locales.
- * Output and oracle: Literal duel payload, survivor, last-word, checkpoint and winner assertions retain the actual replay; case generation and declared expected values stay unchanged.
+ * 复现场景测试负责骑士完整录制对局的决斗窗口、命中／落空与死亡链时点。输入为原枚举窗口矩阵、额外落空／狼王／白狼王／十二人计划、传输和语言。
+ * 输出用字面决斗载荷、存活、遗言、检查点和胜者断言核对；用例生成及声明的原预期保持。
  */
-import type { VictoryPoint } from "@ai-werewolf-arena/game-catalog";
+import type { VictoryPoint } from "@ai-werewolf-arena/game-contract";
 import { Camp, DeathCause, KnightDuelWindow, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";

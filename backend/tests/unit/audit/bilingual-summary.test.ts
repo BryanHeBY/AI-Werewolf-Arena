@@ -1,12 +1,9 @@
 /**
- * Unit tests: Audit summaries use literal disabled, empty and finding records; bilingual
- * handwritten output expectations check machine evidence, source preservation and rendered
- * screening language. Inputs and expected outcomes remain the original literal or
- * immutable-fixture oracle; these module assertions invoke no model or complete-game
- * driver.
+ * 单元测试负责禁用、空记录及发现记录的双语审计摘要。输入为原字面／不可变 fixture，输出用手写预期核对机器证据、来源保留和筛查文案。
+ * 这些模块断言不调用模型或完整对局驱动。
  */
 import { expect, test } from "bun:test";
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 import { buildDebugSummaryMarkdown } from "../../../src/audit/debug_summary_generator";
 import { AuditSummaryRenderer } from "../../../src/audit/summary_renderer";
 import { AuditEvidencePolicy } from "../../../src/audit/evidence_policy";
@@ -162,7 +159,7 @@ test("deterministic findings and observations remain machine facts while rendere
     ),
   );
   expect(en).not.toMatch(han);
-  expect(en).toContain("legitimate bluff"); // The finding explicitly distinguishes claims from facts.
+  expect(en).toContain("legitimate bluff"); // 该发现明确区分玩家声称与已记录事实。
   expect(zh).toContain("正常诈身份");
   expect(en).toContain("evidence=8");
   expect(zh).toContain("evidence=8");

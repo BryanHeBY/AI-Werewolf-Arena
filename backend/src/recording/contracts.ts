@@ -4,7 +4,7 @@
  * 私有 seed 只属于 manifest／Tape，协议身份或玩家内容不授予资源写权；此处不执行 IO、规则或阶段。
  */
 import type { ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 import { Camp, PlayerVisibleEvent, ToolCall, type GameResult } from "../core/domain/model";
 import type { RandomMetadata } from "../core/domain/random";
 
@@ -246,7 +246,7 @@ export interface ReplayRecordDebugReportInput {
   evidenceEventSeq?: number[];
 }
 
-/** Finalized recording snapshot consumed by optional debug-summary builders. */
+/** 已完成录制的快照，供可选调试摘要构造器消费。 */
 export interface DebugSummaryInput {
   manifest: ReplayManifest;
   reports: ReplayDebugReport[];

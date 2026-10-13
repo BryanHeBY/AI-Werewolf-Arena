@@ -2,10 +2,11 @@
  * 负责校验和规范化公开板子格式。输入为纯公开 JSON 与已登记角色声明；输出为原 BoardConfig、诊断和反向序列化配置。解析拥有字段／默认值规范化，规则集拥有有限支持裁决；不读取认证、执行对局或授予行动租约。
  */
 import { boardPresetViolation } from "../../rulesets";
-/** The single public board format. Unknown fields and unregistered roles fail closed. */
+/** 唯一公开板子格式；未知字段和未注册角色保持原拒绝。 */
 import { supportsWallRoles } from "../../game/mechanisms/events/wall_notes/authority";
 import { z } from "zod";
-import { ROLE_IDS, RULESET, isRoleId } from "@ai-werewolf-arena/game-catalog";
+import { RULESET } from "@ai-werewolf-arena/game-catalog";
+import { ROLE_IDS, isRoleId } from "@ai-werewolf-arena/game-contract";
 import { ActionWindow, Camp, Role, WinCondition, type BoardConfig } from "../../core/domain/model";
 import { getDefaultRoleCatalog } from "../../game/mechanisms/roles/role-catalog-assembly";
 import {
@@ -296,7 +297,7 @@ export function parseBoardDefinition(raw: unknown, expectedId?: string): Resolve
   return { definition, config, fieldSources };
 }
 
-/** Public boards contain parameters for present roles only; Tape retains the complete internal board. */
+/** 公开板子只含实际角色的参数；Tape 仍保留完整内部板子。 */
 export function boardDefinitionFromConfig(id: string, config: BoardConfig): BoardDefinition {
   const valid = boardConfigSchema.safeParse(config);
   if (!valid.success) {

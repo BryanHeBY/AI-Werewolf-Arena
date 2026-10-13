@@ -1,4 +1,8 @@
-import { isLocale } from "@ai-werewolf-arena/game-catalog";
+/**
+ * 负责复盘显示语言／时区校验和时间文案。输入为归档时间与明确展示选项，输出原格式文本或原错误。
+ * 历史无时区时间保持原文，不借宿主时区解释；本层不修改归档、播放器状态或游戏许可。
+ */
+import { isLocale } from "@ai-werewolf-arena/game-contract";
 import type { Locale } from "@ai-werewolf-arena/game-text";
 
 export type ReplayDisplayOptions = { locale: Locale; timeZone: string };
@@ -19,7 +23,7 @@ export function validateReplayDisplay(options: ReplayDisplayOptions): void {
     throw new Error("replay_display_time_zone_invalid");
   }
 }
-/** Offset-less historical timestamps are raw text, never interpreted in the host time zone. */
+/** 无时区的历史时间保持原文，不按宿主时区解释。 */
 export function formatReplayTime(
   timestamp: string | undefined,
   options: ReplayDisplayOptions,

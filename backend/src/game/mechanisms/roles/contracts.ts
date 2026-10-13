@@ -7,9 +7,9 @@
 import type { NightAbilityKind } from "@ai-werewolf-arena/game-contract";
 
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
-import type { VictoryAffiliation } from "@ai-werewolf-arena/game-catalog";
-import type { InspectionCamp, RoleId } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
+import type { VictoryAffiliation } from "@ai-werewolf-arena/game-contract";
+import type { InspectionCamp, RoleId } from "@ai-werewolf-arena/game-contract";
 import { RoleComponent } from "../../../core/domain/components/role";
 import { ActionRequest, BoardConfig, Camp, Role, ToolCall } from "../../../core/domain/model";
 import type { ToolSpec, StageDirectiveRule } from "../contracts";

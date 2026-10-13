@@ -1,4 +1,8 @@
-import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-catalog";
+/**
+ * 负责胜利条件规格索引和具名评估委托。输入为原规格、World、条件与检查点，输出原判定或 null，未知条件保原错误。
+ * 索引唯一持有规格 Map，允许检查点才调用原 evaluate；本注册表不推进阶段或封盘。
+ */
+import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：管理胜利条件规格与评估入口。 */
 import { WinDecision, WinCondition } from "../../../core/domain/model";
 import { World } from "../../../core/domain/world";

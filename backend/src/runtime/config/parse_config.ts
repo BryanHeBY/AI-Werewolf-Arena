@@ -1,3 +1,7 @@
+/**
+ * 负责 unknown 配置的字段校验、默认归一和环境值解析。输入为原配置及环境表，输出 providers／agents／game／audit 配置或原字段错误。
+ * 本解析模块不读文件、不启动 Agent 或写全局配置，实际执行及资源仍由运行装配持有。
+ */
 import type {
   AcpAgentEntryConfig,
   AgentEntryConfig,
@@ -14,7 +18,7 @@ import type {
   PlayerConfig,
   LocalizedPrompt,
 } from "./contracts";
-import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
+import { isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -502,7 +506,7 @@ function normalizePlayers(
       if (entry.name !== undefined) {
         if (typeof entry.name !== "string" || !entry.name.trim() || entry.name.length > 120)
           throw new Error(`runtime_config_player_name_invalid: ${field}.name`);
-        name = entry.name; // Preserve user spelling; never translate or silently trim names.
+        name = entry.name; // 保留用户名字原文，不翻译或静默裁掉空白。
       }
       const agent = readOptionalString(entry.agent, `${field}.agent`);
       if (agent && !agents.items[agent])

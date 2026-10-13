@@ -59,7 +59,7 @@ import { World } from "../core/domain/world";
 import { PhaseManager } from "../game/engine/phase_manager";
 import { ToolGateway } from "../game/gateway/tool_gateway";
 import { createRandom, shuffled, type RandomSource } from "../core/domain/random";
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 
 /**
  * bootstrap 负责把“配置”装配成“可运行对局上下文”。
@@ -80,9 +80,9 @@ export interface BootstrapOptions {
   locale?: Locale;
   playerNames?: Readonly<Record<string, string>>;
   random?: RandomSource;
-  /** Controller fixture only: exact deck multiplicities are still validated. */
+  /** 仅供 controller fixture：明确牌堆仍按原数量严格验证。 */
   fixedRoles?: readonly Role[];
-  /** Explicit offline causal test input, never a board or model parameter. */
+  /** 显式离线因果测试输入，不是板子或模型参数。 */
   faultPlan?: unknown;
 }
 

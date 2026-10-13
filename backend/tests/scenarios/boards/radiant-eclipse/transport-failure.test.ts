@@ -1,12 +1,10 @@
 /**
- * Real transport failure scenarios verify Radiant borrowed/native choice failure boundaries.
- * Input: Fixed feature scenarios, precise fail/cancel plans and synthetic SDK/ACP wires.
- * Output and independent oracle: Manual stock/source/prefix assertions, expected refusals and no falsely committed night disclosure.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 场景测试负责真实传输中的流光／蚀日受赠与原生选择失败边界。输入为固定场景、失败／取消计划及合成 SDK／ACP wire，输出用手写库存、来源、前缀及拒绝断言核对。
+ * 不得伪造已提交的夜间披露；本测试不调用计费模型或重写 fixture／Tape 预期。
  */
 import { assertRadiantTransportWire } from "../../../support/features/radiant-eclipse/oracles/wire";
 import { expect, test } from "bun:test";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Role, PotionType, type ActionStage, type ToolCall } from "../../../../src/core";
 import { radiantTransportScenario } from "../../../support/features/radiant-eclipse/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";

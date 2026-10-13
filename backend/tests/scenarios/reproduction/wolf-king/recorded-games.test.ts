@@ -1,9 +1,8 @@
 /**
- * Reproduction scenarios verify Wolf King complete recorded games preserve native gun consumption, knowledge and chain-final settlement.
- * Input: Original exile, poison, twelve-player, blast and shot-chain plans across transport and locale matrices.
- * Output and oracle: Literal gun/death/last-word/winner facts retain exact reproduction; failure, skip and chain order remain the supplied policy expectations.
+ * 复现场景测试负责狼王完整录制对局的原生枪消耗、知识与死亡链后结算。输入为原放逐、毒、十二人、带人及枪链计划、传输和语言。
+ * 输出用字面枪／死亡／遗言／胜者事实核对，失败、跳过和链顺序仍采用已声明政策预期。
  */
-import type { VictoryPoint } from "@ai-werewolf-arena/game-catalog";
+import type { VictoryPoint } from "@ai-werewolf-arena/game-contract";
 import { Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";

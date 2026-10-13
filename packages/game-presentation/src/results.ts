@@ -7,7 +7,7 @@ import {
   type GameOutcome,
   type VictoryClaim,
   type VictoryPoint,
-} from "@ai-werewolf-arena/game-catalog";
+} from "@ai-werewolf-arena/game-contract";
 import { text, term, roleName } from "@ai-werewolf-arena/game-text";
 
 export function inspectionLabel(result: InspectionResult, locale: Locale = "zh-CN"): string {

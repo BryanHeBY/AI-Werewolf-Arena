@@ -1,5 +1,9 @@
+/**
+ * 负责机械狼工具的本夜模式与行动资格校验。输入为原工具参数、角色状态及可信上下文，输出原规则拒绝或通过。
+ * 预检不等于复制、付款或落效果，原体与能力资源仍由机械机制持有并在提交时复验。
+ */
 import { MECHANICAL_TOOL_NAMES } from "./tool_names";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Camp, Role, Phase } from "../../../../core/domain/model";
 import type { ToolRule, ToolRuleMap } from "../../validation/contracts";
 import { isAliveTarget } from "../../validation/contracts";
@@ -50,7 +54,7 @@ const validateMechanical: ToolRule = ({ world, actorId, role, day, phase, toolCa
       : { code: RuleError.MechanicalTarget };
   }
   if (toolCall.name === "mechanical_guard" && skill?.kind === "guard") {
-    // Same-ID consecutive guard is a legal commitment; dawn, not preflight, applies its penalty.
+    // 连续守护同编号仍是合法提交；惩罚在黎明生效，不能在预检阶段代付或拒绝。
     return toolCall.args.target_id === null || isAliveTarget(world, toolCall.args.target_id)
       ? null
       : { code: RuleError.MechanicalTarget };

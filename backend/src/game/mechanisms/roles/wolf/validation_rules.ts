@@ -1,9 +1,6 @@
 /**
- * Owns wolf chat, knife and self-destruct validation rule contributions.
- * Inputs are trusted actor permissions, phase/window and submitted wolf tools;
- * outputs retain the original first rule violation or accepted preflight result.
- * Ordinary knife targets consume a public read-only query after existing pass
- * checks. Validation never spends stock, creates a knife or commits an effect.
+ * 负责狼聊、狼刀及自爆的校验贡献。输入为可信演员权限、阶段／窗口和提交工具，输出为原首个规则拒绝或预检通过。
+ * 原 pass 检查之后才读取公开的只读狼刀候选；校验不消费库存、不制造狼刀或提交效果。
  */
 import { canRoleSelfDestruct } from "../self_destruct_capability";
 import { bindWolfKnifeTargetQuery } from "./ports";
@@ -13,7 +10,7 @@ import {
   ghostBrideReady,
   canSubmitWeddingTool,
 } from "../ghost_bride/authority";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：狼人工具校验规则。 */
 import { ActionWindow, Phase } from "../../../../core/domain/model";
 import { ToolRuleMap } from "../../validation/contracts";

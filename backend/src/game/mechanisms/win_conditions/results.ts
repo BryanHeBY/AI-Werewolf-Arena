@@ -1,14 +1,13 @@
 /**
- * Projects an accepted victory decision into the structured game result. Inputs are current
- * affiliations and decided victory targets/reason; outputs preserve winning memberships and
- * claim data. It does not choose a new elimination policy or alter a player component.
+ * 负责把已接受的胜利判定投影成结构化结果。输入为当前胜利归属、已判目标与原因，输出保留获胜成员和 claim 数据。
+ * 本模块不重新选择屠边政策、不修改玩家组件；判胜仍由原胜利条件与检查点负责。
  */
-import type { GameOutcome, VictoryClaim, VictoryTarget } from "@ai-werewolf-arena/game-catalog";
+import type { GameOutcome, VictoryClaim, VictoryTarget } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT, type WinDecision, type World } from "../../../core/domain";
 import type { VictoryComponent } from "../../../core/domain/components/victory";
 import { readGameOutcome } from "@ai-werewolf-arena/replay-contract";
 
-/** Membership comes from the explicit win component, never an inferred role/camp. */
+/** 成员来自明确 Victory 组件，不根据角色或真实阵营推断。 */
 export function victoryDecision(
   world: World,
   primary: VictoryTarget,

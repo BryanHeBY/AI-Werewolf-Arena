@@ -1,3 +1,7 @@
+/**
+ * 负责胜利结果、判定时点及成员归属的归档校验。输入为纯数据和可选玩家 ID，输出原规范 DTO 或结构错误。
+ * 共享类型归 game-contract，reader 只核明确事实，不从真实阵营补归属、不重新判胜或修改组件。
+ */
 import {
   FACTION_IDS,
   VICTORY_CHECKPOINTS,
@@ -6,7 +10,7 @@ import {
   type VictoryPoint,
   type VictoryAffiliation,
   type SealedVictoryResult,
-} from "@ai-werewolf-arena/game-catalog";
+} from "@ai-werewolf-arena/game-contract";
 import { ReplayDocumentValidationError } from "./validation";
 
 const fail = (): never => {
@@ -106,7 +110,7 @@ function claim(value: unknown): VictoryClaim {
   return fail();
 }
 
-/** Strict JSON facts; inherited fields/accessors and nonserialized fields are rejected. */
+/** 严格 JSON 事实，继承字段、访问器和未序列化字段保持原拒绝。 */
 export function readGameOutcome(value: unknown, playerIds?: readonly number[]): GameOutcome {
   try {
     const kind = own(value, "kind");
@@ -167,7 +171,7 @@ export function readVictoryPoint(value: unknown): VictoryPoint {
   }
 }
 
-/** Empty means explicitly no win membership; it never falls back to true camp. */
+/** 空成员明确表示没有胜利归属，不回退到真实阵营。 */
 export function readVictoryAffiliations(value: unknown): VictoryAffiliation[] {
   try {
     const result = array(value).map((entry): VictoryAffiliation => {

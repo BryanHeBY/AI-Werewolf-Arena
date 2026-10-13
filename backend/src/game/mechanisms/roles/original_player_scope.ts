@@ -1,7 +1,6 @@
 /**
- * Captures original player role, private state and factory-owned life/version references. Inputs
- * are World and player ID; outputs are same-life and still-current predicates. These runtime
- * scopes never become protocol data or replace the captured components.
+ * 负责捕获玩家原角色、阵营与工厂生命／版本引用。输入为 World 和玩家 ID，输出为原生命及仍当前的查询谓词。
+ * 运行范围不成为协议数据，也不替换已捕获组件；原体身份与当前性仍在实际查询时复核。
  */
 import { types } from "node:util";
 import type { World } from "../../../core/domain/world";
@@ -13,7 +12,7 @@ import {
   type AliveComponent,
 } from "../../../core/domain/components/alive";
 import { COMPONENT } from "../../../core/domain/components/names";
-import { isRoleId, type RoleId } from "@ai-werewolf-arena/game-catalog";
+import { isRoleId, type RoleId } from "@ai-werewolf-arena/game-contract";
 import { Camp } from "../../../core/domain/identity";
 export interface OriginalPlayerScope {
   readonly id: number;
@@ -65,7 +64,7 @@ export function captureOriginalPlayer(world: World, id: number): OriginalPlayerS
   captured.set(scope, world);
   return scope;
 }
-/** Paid effects may retain the first original death, never a replacement or revival. */
+/** 已付效果可保留第一次原生命死亡，不可借组件替换或复活重新匹配。 */
 export function originalPlayerSameLife(
   world: World,
   s: OriginalPlayerScope,

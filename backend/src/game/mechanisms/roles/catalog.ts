@@ -4,7 +4,7 @@
  * 初始化仍先于默认语言读取，展示才按当前 role 查具体贡献；Catalog 不导入捕获程序。
  * 资料、运行贡献和原文不能相互授予权限，原重复／缺失角色错误前缀保持不变。
  */
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 import { Camp, type Role, type NativeRolePresentationId } from "@ai-werewolf-arena/game-contract";
 import { roleName, text, type MessageKey } from "@ai-werewolf-arena/game-text";
 import type { RoleComponent } from "../../../core/domain/components/role";

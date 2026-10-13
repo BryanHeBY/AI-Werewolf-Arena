@@ -13,7 +13,7 @@ import {
   type DeathWavePlan,
 } from "./death-wave";
 import { getSessionRecorder } from "../../recording/recording_context";
-import { isRoleId } from "@ai-werewolf-arena/game-catalog";
+import { isRoleId } from "@ai-werewolf-arena/game-contract";
 import { aliveLifeVersion, type AliveComponent } from "../../core/domain/components/alive";
 import { COMPONENT } from "../../core/domain/components/names";
 import {

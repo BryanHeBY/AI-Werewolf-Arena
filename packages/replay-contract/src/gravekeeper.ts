@@ -1,4 +1,8 @@
-import type { InspectionResult } from "@ai-werewolf-arena/game-catalog";
+/**
+ * 负责守墓反馈归档的结构读取。输入为纯数据事实，输出带明确阵营查验的报告／反馈或 null；共享类型归 game-contract。
+ * 字段按描述符读取，不用畸形结果补造好人，不修改输入或查询 World；外来反射异常保持原拒绝边界。
+ */
+import type { InspectionResult } from "@ai-werewolf-arena/game-contract";
 import { readInspectionResult } from "./inspection";
 import { isRecord } from "./validation";
 
@@ -14,7 +18,7 @@ export interface GravekeeperFeedback extends GravekeeperReport {
 const positiveId = (value: unknown): value is number =>
   typeof value === "number" && Number.isSafeInteger(value) && value > 0;
 
-/** Exact camp-only facts. Never execute an accessor or infer Good from a malformed result. */
+/** 严格阵营反馈：按描述符读值，不执行字段访问器，不把畸形结果补成好人。 */
 function read(value: unknown, actor: boolean): GravekeeperFeedback | GravekeeperReport | null {
   try {
     if (!isRecord(value)) return null;

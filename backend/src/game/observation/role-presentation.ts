@@ -4,7 +4,7 @@
  * 展示元数据，不复制 privateState、World 或库存，不授予行动或编码归档。
  * 未 applyRuntime 的角色只展示 component.role；只有实际初始化后才消费内建／自定义贡献。
  */
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "@ai-werewolf-arena/game-contract";
 import {

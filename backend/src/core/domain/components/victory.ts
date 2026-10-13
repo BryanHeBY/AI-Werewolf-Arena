@@ -1,7 +1,11 @@
-import type { VictoryAffiliation } from "@ai-werewolf-arena/game-catalog";
+/**
+ * 负责玩家胜利归属组件的结构与创建。输入为明确 affiliations，输出经共享 reader 校验复制后的组件；胜利归属与 Role.camp、技能独立。
+ * 运行组件仍归 World 持有，创建器不推断真实阵营、不选择胜者或授予行动许可。
+ */
+import type { VictoryAffiliation } from "@ai-werewolf-arena/game-contract";
 import { readVictoryAffiliations } from "@ai-werewolf-arena/replay-contract";
 
-/** Owned win membership; deliberately separate from Role.camp and abilities. */
+/** 独立胜利成员归属，与 Role.camp 和能力刻意分开。 */
 export interface VictoryComponent {
   affiliations: VictoryAffiliation[];
 }

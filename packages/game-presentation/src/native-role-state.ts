@@ -4,7 +4,7 @@
  * 角色库存、请求或真实阵营，不解析私有状态、不授权或提交动作。用户自定义原文不经此入口。
  */
 import type { NativeRolePresentationPart } from "@ai-werewolf-arena/game-contract";
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 import { text, roleName, term } from "@ai-werewolf-arena/game-text";
 export function formatNativeRolePart(
   part: NativeRolePresentationPart,

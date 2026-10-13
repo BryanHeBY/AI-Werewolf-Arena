@@ -1,25 +1,10 @@
 /**
- * Package unit contract: verify the catalog's public metadata without importing
- * the backend engine. Literal coverage, machine IDs and bilingual names are the
- * oracle; catalog inclusion describes a role and does not authorize execution.
- * Application tests retain responsibility for profile registration and rules.
+ * 包单元测试负责目录公开资料及与机器契约的关系，不导入后端引擎。输入为字面覆盖、机器 ID 与双语名称，输出以原断言核对。
+ * 目录包含角色不等于允许运行；profile 注册与具体规则仍归应用测试，机器 ID 直接消费契约包。
  */
 import { describe, expect, test } from "bun:test";
-import {
-  EVENT_IDS,
-  EVENT_PACK_IDS,
-  FACTION_IDS,
-  ITEM_IDS,
-  LOCALES,
-  ROLE_DEFINITIONS,
-  ROLE_IDS,
-  RuleError,
-  VICTORY_CHECKPOINTS,
-  isLocale,
-  isRoleId,
-  roleDefinition,
-  roleName,
-} from "@ai-werewolf-arena/game-catalog";
+import { ROLE_DEFINITIONS, roleDefinition, roleName } from "@ai-werewolf-arena/game-catalog";
+import { EVENT_IDS, EVENT_PACK_IDS, FACTION_IDS, ITEM_IDS, LOCALES, ROLE_IDS, RuleError, VICTORY_CHECKPOINTS, isLocale, isRoleId } from "@ai-werewolf-arena/game-contract";
 
 describe("catalog public package contract", () => {
   test("all 64 IDs are unique while planned metadata stays distinct from delivery", () => {

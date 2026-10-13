@@ -1,10 +1,6 @@
 /**
- * Responsibility: read inert replay events into player references and visual effects.
- * Input: JSON archive event data; output: normalized read results or rejection,
- * preserving feature-specific malformed/unknown behavior and user text.
- * Shared fact contracts own structural parsing; this browser layer owns replay
- * interpretation and grants no game permission. It does not promise zero Proxy
- * traps for arbitrary runtime objects supplied outside the inert archive boundary.
+ * 负责把纯数据复盘事件读取为玩家关联及画面效果。输入为 JSON 归档事件，输出为规范读取或拒绝，保各机制未知／畸形分支和用户原文。
+ * 共享事实契约拥有结构解析，浏览器层只解释复盘，不授予游戏许可；不承诺归档边界外的任意 Proxy 零 trap。
  */
 import {
   ANIMAL_DREAM_EVENT_TYPES,
@@ -102,7 +98,7 @@ import {
   readVictoryResult,
   type ReplayEvent,
 } from "@ai-werewolf-arena/replay-contract";
-import { isRoleId, type RoleId, type SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
+import { isRoleId, type RoleId, type SealedVictoryResult } from "@ai-werewolf-arena/game-contract";
 
 export type ReplayEffect =
   | { kind: "camp_changed"; playerId: number; camp: "wolf" }
@@ -119,7 +115,7 @@ export interface ReadReplayEvent {
   effects: ReplayEffect[];
 }
 
-// Required references are event-specific. Unknown extension fields never imply player membership.
+// 必须的玩家引用按事件类别决定；未知扩展字段不自动成为玩家关联。
 const REQUIRED_IDS: Readonly<Record<string, string[]>> = {
   red_moon_night_sealed: ["actorId"],
   red_moon_exile_delayed: ["actorId"],
@@ -286,8 +282,8 @@ export const KNOWN_REPLAY_EVENT_TYPES = Object.freeze([
 ]);
 const KNOWN = new Set(KNOWN_REPLAY_EVENT_TYPES);
 
-// Read only plain JSON data descriptors. Accessors, cycles, sparse arrays and non-JSON values
-// fail before any label, association or state effect uses a payload field.
+// 只读取普通 JSON 数据描述符；访问器、循环、稀疏数组与非 JSON 值
+// 在任何标签、关联或状态效果使用载荷字段之前拒绝。
 function copyJson(value: unknown, ancestors = new Set<object>(), depth = 0): unknown {
   if (value === null || typeof value === "string" || typeof value === "boolean") return value;
   if (typeof value === "number" && Number.isFinite(value)) return value;
@@ -306,8 +302,8 @@ function copyJson(value: unknown, ancestors = new Set<object>(), depth = 0): unk
       if (array && key === "length") continue;
       if (!descriptor.enumerable || !Object.hasOwn(descriptor, "value"))
         throw new Error("replay_event_accessor");
-      // The TypeScript envelope permits an explicitly undefined optional stage.
-      // Disk JSON omits that field; payload values must still be strict JSON.
+      // TypeScript 事件外层允许可选 stage 明确为 undefined。
+      // 磁盘 JSON 会省略该字段，载荷值仍必须符合严格 JSON。
       if (depth === 0 && key === "stage" && descriptor.value === undefined) continue;
       result[key] = copyJson(descriptor.value, ancestors, depth + 1);
     }
@@ -471,7 +467,7 @@ function validKnownFields(type: string, p: Record<string, unknown>): boolean {
   return true;
 }
 
-/** Read a detached, inert envelope for neutral display of malformed event facts. */
+/** 获取分离的纯数据外层，用于中立展示畸形事件事实。 */
 export function readReplayEventEnvelope(event: ReplayEvent): ReplayEvent | null {
   try {
     const safe = copyJson(event) as ReplayEvent;
@@ -493,7 +489,7 @@ export function readReplayEventEnvelope(event: ReplayEvent): ReplayEvent | null 
   }
 }
 
-/** Raw archives remain permissive; malformed known facts have no partial display/state effects. */
+/** 原始归档仍按既有 reader 兼容；已知畸形事实不产生部分标签或状态效果。 */
 export function readReplayEvent(
   event: ReplayEvent,
   knownPlayerIds?: readonly number[],
@@ -553,7 +549,7 @@ export function readReplayEvent(
       )
         return null;
       if (p.day !== safe.day || !["night", "day", "voting"].includes(safe.phase)) return null;
-      // A night-origin wave is announced after the day phase starts; payload.phase is its origin.
+      // 夜源波可在进入白天后公布，payload.phase 保留其死亡来源阶段。
       if (
         Object.hasOwn(p, "phase") &&
         (p.phase === "voting"
@@ -641,7 +637,7 @@ export function readReplayEvent(
     }
     if ((RADIANT_ECLIPSE_EVENT_TYPES as readonly string[]).includes(safe.type)) {
       const abortedClose = safe.type === "eclipse_lease_closed" && p.status === "aborted";
-      // An API interruption can move the recorder cursor before this original night's cleanup.
+      // API 中断可能先推进录制游标，随后才执行原当夜清理。
       if (
         abortedClose
           ? !["night", "day", "voting", "game_over"].includes(safe.phase)
@@ -905,7 +901,7 @@ export function replayEventPlayerIds(
   return readReplayEvent(event, knownPlayerIds)?.relatedPlayerIds ?? [];
 }
 
-/** Classification only: inspect a data descriptor without evaluating an accessor. */
+/** 仅分类：读取数据描述符，不执行字段访问器。 */
 export function readReplayEventType(event: ReplayEvent): string | null {
   try {
     const descriptor = Object.getOwnPropertyDescriptor(event, "type");

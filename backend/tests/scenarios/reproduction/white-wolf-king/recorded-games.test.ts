@@ -1,9 +1,8 @@
 /**
- * Reproduction scenarios verify White Wolf King complete recorded games preserve legal detonation windows and coupled death-chain outcomes.
- * Input: Original enum-derived window matrix and none/poison/knife/king/twelve-player plans across transports and locales.
- * Output and oracle: Handwritten survivor, last-word, checkpoint and winner assertions retain exact replay; declared action-window and temporary-output bytes stay unchanged.
+ * 复现场景测试负责白狼王完整录制对局的自爆窗口与连锁死亡。输入为原枚举窗口及无爆／毒／刀／狼王／十二人计划、传输和语言。
+ * 输出用手写存活、遗言、检查点和胜者的独立预期核对精确复盘；原窗口声明及临时输出字节保持。
  */
-import type { VictoryPoint } from "@ai-werewolf-arena/game-catalog";
+import type { VictoryPoint } from "@ai-werewolf-arena/game-contract";
 import { ActionWindow, Camp, DeathCause, Phase } from "../../../../src/core";
 import { expect, test } from "bun:test";
 import { writeFile } from "node:fs/promises";

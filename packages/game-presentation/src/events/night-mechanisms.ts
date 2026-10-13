@@ -32,7 +32,7 @@ import {
   readRedMoonNextNightFact,
   readRedMoonExpiryFact,
 } from "@ai-werewolf-arena/game-contract/facts/red-moon";
-import { type Locale } from "@ai-werewolf-arena/game-catalog";
+import { type Locale } from "@ai-werewolf-arena/game-contract";
 import {
   readDemonHunterEventFact,
   readDemonHunterPlayerFact,

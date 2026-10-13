@@ -6,7 +6,7 @@
 import { scholarMentorBlocks } from "../scholar_mentor/night_frame";
 import { isMagicianBoard, resolveMagicianNightTarget } from "../magician/night_frame";
 import { nativePotionsCanCombine } from "./policies";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：女巫工具校验规则。 */
 import { PotionType, Phase, WitchSelfHealRule, StatusMark } from "../../../../core/domain/model";
 import { COMPONENT } from "../../../../core/domain/components/names";

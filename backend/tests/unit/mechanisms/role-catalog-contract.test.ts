@@ -3,7 +3,8 @@
  */
 import { renderRolePrompt } from "../../../src/game/observation/role-presentation";
 import { expect, test } from "bun:test";
-import { ROLE_DEFINITIONS, ROLE_IDS, isRoleId, roleName } from "@ai-werewolf-arena/game-catalog";
+import { ROLE_DEFINITIONS, roleName } from "@ai-werewolf-arena/game-catalog";
+import { ROLE_IDS, isRoleId } from "@ai-werewolf-arena/game-contract";
 import { Role } from "../../../src/core/domain/identity";
 import {
   getDefaultRoleCatalog,

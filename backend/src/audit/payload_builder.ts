@@ -1,5 +1,9 @@
+/**
+ * 负责由原录制视图构造有限审计任务与缩减重试载荷。输入为公开事件、逻辑操作、玩家记录及条目上限，输出分来源任务 payload。
+ * 只加工任务副本，原记录仍归录制；传输诊断分支只保受控事实，不把模型异常原文当游戏许可或审计结论。
+ */
 import { readErrorDiagnostic, type ErrorDiagnostic } from "@ai-werewolf-arena/replay-contract";
-import { RuleError, type Locale } from "@ai-werewolf-arena/game-catalog";
+import { RuleError, type Locale } from "@ai-werewolf-arena/game-contract";
 import { AuditFinding, AuditInspectionResult } from "../ai/audit/audit_tool_protocol";
 import type { DebugSummaryPipelineInput } from "./pipeline";
 import { ReplayLogicOp, ReplayPlayerView, ReplayPublicEvent } from "../recording/contracts";
@@ -75,8 +79,8 @@ function summarizePublicEvents(events: ReplayPublicEvent[], maxItems: number) {
   return output;
 }
 
-// Transport exception text and arbitrary transport input/output may contain credentials.
-// Audit tasks receive diagnostic facts, while original records stay unchanged.
+// 传输异常文案及任意输入／输出可能含凭据，不能直接作为该分支的审计摘要。
+// 下面的传输分支只投递受控诊断事实，原始录制不改写。
 const transportOperations = new Set([
   "action_provider_error",
   "tool_call_rejected",
@@ -177,7 +181,7 @@ function summarizePlayerView(view: ReplayPlayerView, maxItems: number) {
         const actionMode = JSON.parse(actionSummary.content)?.action_mode;
         if (actionMode) base.action_mode = actionMode;
       } catch {
-        /* malformed replay data is evidence for another layer */
+        /* 畸形复盘数据由其它层作为证据处理。 */
       }
     }
     base.tool_calls = entry.delta_messages
@@ -199,7 +203,7 @@ function summarizePlayerView(view: ReplayPlayerView, maxItems: number) {
         const reason = JSON.parse(fallback.content)?.reason;
         if (reason) base.fallback_reason = transportReason(reason);
       } catch {
-        /* ignore malformed optional metadata */
+        /* 忽略畸形的可选元数据。 */
       }
     }
     return base;

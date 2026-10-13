@@ -19,13 +19,14 @@ import {
   capturePlayerContributions,
 } from "../../recording/checkpoint/contributions";
 import { initialIdentityDeal } from "../../game/mechanisms/roles/initial_identity/deal";
-import { RULESET, type Locale } from "@ai-werewolf-arena/game-catalog";
+import { RULESET } from "@ai-werewolf-arena/game-catalog";
+import { type Locale } from "@ai-werewolf-arena/game-contract";
 import type { BootstrapResult } from "../../app/bootstrap";
 import type { BoardConfig } from "../../core";
 import type { ResolvedAgentRuntimeProfile } from "../config/contracts";
 import type { SessionRecordManager } from "../../recording/session_recorder";
 
-/** Source and lock hashes make compatibility explicit even with an uncommitted engine edit. */
+/** 即使引擎存在未提交改动，真实源码／lock 指纹仍明确控制重放兼容。 */
 export async function currentEngineVersion(
   sourceRoot: string = path.resolve(__dirname, "../../../.."),
 ): Promise<EngineVersion> {
@@ -41,7 +42,7 @@ export async function currentEngineVersion(
       .trim();
     if (/^[a-f0-9]{40}$/.test(value)) commit = value;
   } catch {
-    /* Source/lock fingerprints remain sufficient in an archive without .git. */
+    /* 无 .git 的归档仍可使用源码／lock 指纹，不补造提交身份。 */
   }
   return {
     id: "awa-engine",

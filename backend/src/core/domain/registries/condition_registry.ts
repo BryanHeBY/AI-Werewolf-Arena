@@ -1,10 +1,8 @@
 /**
- * Owns ordered delegation of victory conditions and override-first selection.
- * Inputs are original World, readonly condition IDs and checkpoint/override data;
- * output is the first original decision or null. This boundary neither changes
- * parameter arrays nor seals results; PhaseManager retains executed checkpoints.
+ * 负责胜利条件的有序委托与覆盖结果优先选择。输入为原 World、只读条件 ID、检查点及覆盖数据；输出为首个原判定或 null。
+ * 本入口不改变参数数组或封存结果，真实检查点执行与终局仍由 PhaseManager 持有。
  */
-import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-catalog";
+import type { VictoryCheckpoint } from "@ai-werewolf-arena/game-contract";
 import { WinDecision, WinCondition } from "../model";
 import { World } from "../world";
 

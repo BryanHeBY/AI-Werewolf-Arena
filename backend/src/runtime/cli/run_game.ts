@@ -1,4 +1,8 @@
-import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
+/**
+ * 负责单局 CLI 参数、配置读取和已解析 setup 的运行接线。输入为 argv、展示上下文及配置目录，输出原 runner 执行结果。
+ * 读取与板子合并仍归配置所有者，生命周期及异常收尾归 runner；本入口不实现角色规则或模型回退。
+ */
+import { isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
 import { runCli, takeDisplayArguments, type CliDisplayContext } from "./display";
 import { loadRuntimeConfig } from "../config/load_config";
 import { loadBoardDefinition } from "../config/load_board_definition";

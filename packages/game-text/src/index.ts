@@ -7,11 +7,8 @@
 
 import type { MessageKey, MessageRef } from "@ai-werewolf-arena/game-contract";
 
-import {
-  isLocale,
-  roleName as catalogRoleName,
-  type Locale,
-} from "@ai-werewolf-arena/game-catalog";
+import { roleName as catalogRoleName } from "@ai-werewolf-arena/game-catalog";
+import { isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
 
 import { zhCN } from "./zh-CN";
 import { en } from "./en";

@@ -1,10 +1,9 @@
 /**
- * Failure scenarios verify Time Consort lock and later night failures retain the exact already-paid history and trigger timing.
- * Input: Original missing/late/invalid controlled transport responses and copied guard/reflection-prefix forgery.
- * Output and oracle: Literal incomplete checkpoint, history and trigger values plus explicit forged-prefix rejection preserve causal payment; no production World is run to compute expected alive.
+ * 失败场景测试负责蚀时锁定和后续夜间失败保留已付历史及触发时点。输入为原缺失／迟到／非法回复和复制的守护／反射前缀伪造。
+ * 输出用字面未完成检查点、历史／触发值和伪造拒绝核对因果付款，不运行生产 World 来计算预期存活。
  */
 import { expect, test } from "bun:test";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { parseReproductionRecord, type ReproductionRecord } from "../../../../src/recording/reproduction";
 import { type PlannedTurn } from "../../../support/transport/contracts";
 import { timeConsortScenario } from "../../../support/features/time-wolf-consort/builders/transport-plan";

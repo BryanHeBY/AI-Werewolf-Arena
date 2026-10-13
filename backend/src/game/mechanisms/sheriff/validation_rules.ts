@@ -1,9 +1,8 @@
 /**
- * Defines sheriff direction and successor validation against the current badge and eligible
- * targets. Inputs are sanitized tools and trusted badge context; outputs are the original rule
- * refusals or acceptance. Validation does not transfer, destroy or recreate the badge.
+ * 负责按当前警徽和候选资格校验方向及接徽选择。输入为已清洗工具和可信警徽上下文，输出原规则拒绝或通过。
+ * 本校验不转移、销毁或重新生成警徽，实际写入仍归警徽所有者。
  */
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：警长机制工具校验规则。 */
 import { Phase } from "../../../core/domain/model";
 import { COMPONENT } from "../../../core/domain/components/names";

@@ -13,7 +13,7 @@ import {
   DEFAULT_SEER_ACTION_POLICY,
 } from "../../../../core/domain/board";
 import { seerTargetAllowed } from "./ports";
-import { RuleError } from "@ai-werewolf-arena/game-catalog";
+import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { roleName, text, term } from "@ai-werewolf-arena/game-text";
 import { inspectionLabel } from "@ai-werewolf-arena/game-presentation";
 /** 文件说明：预言家角色 profile。 */

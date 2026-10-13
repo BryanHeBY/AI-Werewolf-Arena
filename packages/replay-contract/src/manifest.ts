@@ -3,7 +3,7 @@
  * 输出保留全部原字段、私有种子和用户原文；本纯数据契约是该文件形状的唯一所有者。
  * 不读文件、不安装角色、不使用 seed 推导对局或授权跨构建；未知声明版本明确拒绝，旧无声明档不补造身份。
  */
-import { isLocale, type Locale, type SealedVictoryResult } from "@ai-werewolf-arena/game-catalog";
+import { isLocale, type Locale, type SealedVictoryResult } from "@ai-werewolf-arena/game-contract";
 import {
   assertField,
   assertSerializedData,

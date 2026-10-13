@@ -6,7 +6,7 @@
 import { unwrapRecordingEnvelope, assertCurrentRecordingContracts } from "./archive-envelope";
 import { assertErrorDiagnostic, type ErrorDiagnostic } from "./error_diagnostic";
 import { assertField, isRecord, ReplayDocumentValidationError } from "./validation";
-import { isLocale, type Locale } from "@ai-werewolf-arena/game-catalog";
+import { isLocale, type Locale } from "@ai-werewolf-arena/game-contract";
 import { legacyPhaseId, legacyStageId, legacyRoleId, legacyCampId } from "./legacy_aliases";
 
 /** 玩家单回合增量消息。 */

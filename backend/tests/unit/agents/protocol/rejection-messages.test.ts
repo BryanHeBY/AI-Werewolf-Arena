@@ -2,7 +2,7 @@
  * 单元测试：验证双语规则解释、Gateway 拒绝码及一般失败回调保留原资源。输入为字面非法调用、局部 World／注册表、错误词典和原拒绝矩阵；消息、状态与注入错误行为为精确预期。测试持有的可写守卫视图仅给原槽放入同一样本，生产读取仍只读。
  */
 import { expect, test } from "bun:test";
-import { RuleError, type Locale } from "@ai-werewolf-arena/game-catalog";
+import { RuleError, type Locale } from "@ai-werewolf-arena/game-contract";
 import {
   dictionaries,
   errorMessage,
@@ -53,7 +53,7 @@ test("every declared rule code has an explicit bilingual explanation", () => {
   for (const code of Object.values(RuleError)) {
     expect(errorMessage("zh-CN", code)).toMatch(han);
     expect(errorMessage("en", code)).not.toMatch(han);
-    expect(errorMessage("en", code)).not.toContain("Tool call failed:"); // Reject missing translations, not a fallback pass.
+    expect(errorMessage("en", code)).not.toContain("Tool call failed:"); // 缺失翻译必须拒绝，不能用 fallback 文案当作通过。
   }
 });
 
@@ -190,7 +190,7 @@ test("gateway refusals have language-neutral codes and never change private reso
       code: "invalid_report_bug_category",
     },
   ];
-  // Functions are deliberately excluded from the private-state snapshot.
+  // 私有状态快照刻意排除函数。
   const facts = (game: ReturnType<typeof bootstrapGame>) =>
     game.world.entityIds().map((id) => ({
       id,

@@ -1,9 +1,8 @@
 /**
- * Owns role-tool validation contract declarations and the alive-target helper. Inputs are trusted
- * World/context data and candidate IDs; outputs describe rule results and life eligibility.
- * These contracts do not store runtime authority or apply the submitted tool.
+ * 负责角色工具校验契约和存活目标查询。输入为可信 World／上下文与候选 ID，输出描述规则结果及生命资格。
+ * 这些结构不保存第二份运行授权，也不执行提交的工具或付款。
  */
-import type { RuleViolation } from "@ai-werewolf-arena/game-catalog";
+import type { RuleViolation } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：工具校验规则契约定义。 */
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";

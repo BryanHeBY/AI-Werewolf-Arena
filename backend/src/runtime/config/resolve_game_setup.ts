@@ -12,7 +12,7 @@ import type {
   RuntimeConfig,
   PlayerConfig,
 } from "./contracts";
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 import {
   resolveBoardConfig,
   type BoardName,
@@ -64,7 +64,7 @@ export interface ResolvedGameSetup {
   warnings: readonly GameSetupWarning[];
 }
 
-/** Select after seats/roles are assigned; names never influence model selection. */
+/** 座位／角色分配后才选择 Agent；名字不参与模型选择。 */
 export function resolvePlayerProfile(
   setup: ResolvedGameSetup,
   actorId: number,

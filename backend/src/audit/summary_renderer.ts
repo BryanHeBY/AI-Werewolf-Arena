@@ -1,6 +1,10 @@
+/**
+ * 负责把已合并／过滤的审计证据与原报告渲染为摘要。输入为会话清单、发现及允许序号，输出原模型摘要或确定模板 Markdown。
+ * 模型重试与回退保原政策；展示不重新判胜或写角色库存，审计证据归证据策略、持久化归录制。
+ */
 import { auditHeadings, text, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { auditInline, auditReportStats, auditSummaryHeader } from "./summary_format";
-import type { Locale } from "@ai-werewolf-arena/game-catalog";
+import type { Locale } from "@ai-werewolf-arena/game-contract";
 import type { AuditAgentExecutor } from "../ai/audit/contracts";
 import { AuditAgentFinding } from "./payload_builder";
 import { AuditEvidencePolicy, MergedAuditFindings } from "./evidence_policy";
