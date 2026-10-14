@@ -1,0 +1,23 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "sha256": "15908775ab360ad2802202cb9387790bd7a269c188979af8824e5fc539593a3d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "sha256": "e951201547da9f7b2fc0f91964ceff9b1a27177385a78ac5a0a7a4e303d00ab4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "sha256": "1e6ae02c381b2f392a588b73603bd2a9a17902228261ac0734512613397633c0"
+    },
+    {
+      "path": "backend/tests/unit/features/debater-state-owner.test.ts",
+      "sha256": "fcb30e4d4c1eca8be36b9c0d57228e94bf7938a2520b22ee0e791052490ef3c5"
+    }
+  ],
+  "documentationPaths": 651,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

@@ -1,0 +1,69 @@
+{
+  "backend/src/game/mechanisms/roles/debater/state.ts": [
+    {
+      "before": "/**\n * 负责杠精原数据槽的描述符读取与玩家选择投影。输入为原角色／选择数据及提交标记；\n * 输出为原槽只读引用，或保留原字段读取顺序的独立选择数据，结构类型归共享契约。\n * 读取排除字段访问器但不新增完整 live schema，也不为任意 Proxy 保证零 trap。\n * 本模块不执行辩论、写选择／库存或结算死亡，玩家投影不能代替许可、真实付款或档案编码。\n */",
+      "after": "/**\n * 负责杠精选择数据槽的初始化、描述符读取、库存消耗、选择保存与玩家投影。\n * 输入为原角色／上下文或已由窗口接受的状态和选择；输出保留同一 live 槽、选择引用与独立玩家数据。\n * 初始化先求值赋值左值的容器，再读取政策；读取排除字段访问器但不新增完整 live schema 或 Proxy 零 trap 保证。\n * 窗口拥有原体、辩论提交、局部 choice 与关闭；本族命令仅写原字段，付款或保存失败不撤回此前提交。\n * 玩家投影不替代许可或档案编码，readonly 类型不冻结库存；没有镜像、JSON 身份或新的撤销政策。\n */",
+      "count": 1
+    },
+    {
+      "before": "import type { DebaterReadState }",
+      "after": "import type { DebaterReadState, DebaterState }",
+      "count": 1
+    },
+    {
+      "before": "import { playerDataField } from \"../player-state-data\";",
+      "after": "import { playerDataField } from \"../player-state-data\";\nimport type { RoleInitializationComponent, RoleInitContext } from \"../contracts\";",
+      "count": 1
+    },
+    {
+      "before": "",
+      "after": "\n/** 原初始化完整正文：仅槽不存在时安装；政策 getter 或赋值失败照原表达式传播。 */\nexport function initializeDebaterState(role: RoleInitializationComponent, ctx: RoleInitContext): void {\n  if (!getDebaterState(role))\n    role.privateState.debater = {\n      policy: ctx.boardConfig?.debater?.policy ?? \"awa_melbourne_2026_speech_gap_v1\",\n      remaining: 1,\n      choice: null,\n    };\n}\n\n/** 原辩论提交已记账；只消费捕获状态，不再读取角色或在后续 choice 写入失败时退款。 */\nexport function consumeDebaterChallenge(state: DebaterReadState): void {\n  (state as Pick<DebaterState, \"remaining\">).remaining = 0;\n}\n\n/** 接收窗口已创建的同一 choice 引用；不复制数据、不设置窗口局部值或提交 accepted 标记。 */\nexport function recordDebaterChoice(state: DebaterReadState, choice: DebaterReadState[\"choice\"]): void {\n  (state as Pick<DebaterState, \"choice\">).choice = choice;\n}\n",
+      "count": 1,
+      "operation": "append"
+    }
+  ],
+  "backend/src/game/mechanisms/roles/debater/profile.ts": [
+    {
+      "before": "    init: (role, ctx) => {\n      if (!getDebaterState(role))\n        role.privateState.debater = {\n          policy: ctx.boardConfig?.debater?.policy ?? \"awa_melbourne_2026_speech_gap_v1\",\n          remaining: 1,\n          choice: null,\n        };\n    },",
+      "after": "    init: initializeDebaterState,",
+      "count": 1
+    },
+    {
+      "before": "import { getDebaterState, projectDebaterState }",
+      "after": "import { getDebaterState, projectDebaterState, initializeDebaterState }",
+      "count": 1
+    }
+  ],
+  "backend/src/game/mechanisms/roles/debater/window.ts": [
+    {
+      "before": "ReadonlyBoardConfig, DebaterState",
+      "after": "ReadonlyBoardConfig",
+      "count": 1
+    },
+    {
+      "before": "import { getDebaterState }",
+      "after": "import { getDebaterState, consumeDebaterChallenge, recordDebaterChoice }",
+      "count": 1
+    },
+    {
+      "before": "      (state as Pick<DebaterState, \"remaining\">).remaining = 0;",
+      "after": "      consumeDebaterChallenge(state);",
+      "count": 1
+    },
+    {
+      "before": "      (state as Pick<DebaterState, \"choice\">).choice = choice;",
+      "after": "      recordDebaterChoice(state, choice);",
+      "count": 1
+    },
+    {
+      "before": "      commitDebate(this.world, actorId);",
+      "after": "      // 提交账本先于库存；局部 choice 在保存槽之前创建，setter 失败时不回滚这些前缀。\n      commitDebate(this.world, actorId);",
+      "count": 1
+    },
+    {
+      "before": "    let accepted = false,",
+      "after": "    // accepted 仅在两字段写完后置真；choice 保原对象身份，供等待后的状态复验。\n    let accepted = false,",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,255 @@
+{
+  "baseCommit": "a6468c7749b62c76848d7437568ef8749677b20f",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "sha256": "15908775ab360ad2802202cb9387790bd7a269c188979af8824e5fc539593a3d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "sha256": "e951201547da9f7b2fc0f91964ceff9b1a27177385a78ac5a0a7a4e303d00ab4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "sha256": "1e6ae02c381b2f392a588b73603bd2a9a17902228261ac0734512613397633c0"
+    },
+    {
+      "path": "backend/tests/unit/features/debater-state-owner.test.ts",
+      "sha256": "fcb30e4d4c1eca8be36b9c0d57228e94bf7938a2520b22ee0e791052490ef3c5"
+    }
+  ],
+  "programs": [
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "beforeSHA256": "88a8e968ee82fceee7bc03f84f9165e7b62df206e50baba008449060f5fedfe3",
+      "sha256": "15908775ab360ad2802202cb9387790bd7a269c188979af8824e5fc539593a3d",
+      "exactEdits": 4,
+      "typedNodes": 161,
+      "noncommentTokens": 176,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "e59b3f30cc0a0321aa20a464145302a42dd5b23b4888e514b77201e62e62e3f6"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "5546bad6342489535af58ab247070699bdaf098871ae666edb42874bac4beaed"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "beforeSHA256": "cf5f01ee3755919513e22214dd843bfd1e623c1eaf949f7ca45aa8f4a95d7341",
+      "sha256": "e951201547da9f7b2fc0f91964ceff9b1a27177385a78ac5a0a7a4e303d00ab4",
+      "exactEdits": 2,
+      "typedNodes": 607,
+      "noncommentTokens": 700,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "8794f41c953f19be8fb400489f4083da8a77d9caff8c91dc8a01381ed2854656"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "a8c1b5860773d70e6163b3a4f4cb3867aa79e06f1cb7361894d9fb5ecd58af56"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "beforeSHA256": "a56949065f78079e8ee14dec4aaa9508f571d32719c2c70fbeef50f8faa5d83f",
+      "sha256": "1e6ae02c381b2f392a588b73603bd2a9a17902228261ac0734512613397633c0",
+      "exactEdits": 6,
+      "typedNodes": 1708,
+      "noncommentTokens": 1995,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "82822b99fa724dcca12bb8e96a39cc7a5cb0f1e9b8545d13d41dacc771969a5e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "e888608af28a6a815d7dd3b03e179653c809b835598bffb6c31dd1ce3871d186"
+        }
+      ]
+    }
+  ],
+  "retained": [
+    {
+      "name": "getDebaterState",
+      "typedNodes": 29,
+      "noncommentTokens": 33,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "fe9f85ba2719b28ee362d92d45542f4886d4fbeaef461f73d55e386667b0f765"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "ae3169574dcd73df7897b528d58abdedd0bd0592c36868c6823ceb0e41c2a970"
+        }
+      ]
+    },
+    {
+      "name": "projectDebaterState",
+      "typedNodes": 116,
+      "noncommentTokens": 120,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "8efa86a00a2a160127ad134cf1383910eb4e10b55711e63cd144cb72af5f74c6"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "f9dc4d67b6691bc51ddc510d3e7fd77d0f868055484ac89961a75da0001a0ac9"
+        }
+      ]
+    }
+  ],
+  "initializer": {
+    "typedNodes": 39,
+    "noncommentTokens": 43,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "sha256": "1f6b9d0062f4d5e5ad9cba4eb7b9ab9ad874eaa25824ce3e351975575ff93a12"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "sha256": "1f6b9d0062f4d5e5ad9cba4eb7b9ab9ad874eaa25824ce3e351975575ff93a12"
+      }
+    ]
+  },
+  "commands": [
+    {
+      "name": "consumeDebaterChallenge",
+      "typedNodes": 20,
+      "noncommentTokens": 21,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "a8371fb540f9985f720b6abcfddf5e98a55287a34fc88116fc769ccf1d9bfbb3"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "a8371fb540f9985f720b6abcfddf5e98a55287a34fc88116fc769ccf1d9bfbb3"
+        }
+      ]
+    },
+    {
+      "name": "recordDebaterChoice",
+      "typedNodes": 20,
+      "noncommentTokens": 21,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "5f075a1092ca4be5203c31d7e5529052070d7a5a26e5929077fac8480d599232"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "5f075a1092ca4be5203c31d7e5529052070d7a5a26e5929077fac8480d599232"
+        }
+      ]
+    }
+  ],
+  "actualLocalChoiceOrder": true,
+  "callSites": [
+    {
+      "name": "consumeDebaterChallenge",
+      "arguments": [
+        "state"
+      ],
+      "pos": 5933
+    },
+    {
+      "name": "recordDebaterChoice",
+      "arguments": [
+        "state",
+        "choice"
+      ],
+      "pos": 6005
+    }
+  ],
+  "bindings": [
+    {
+      "from": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "name": "getDebaterState",
+      "endpoint": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "wholeDeclarationSHA256": "a09b26bfeb5d5a874134383615aeda047875ab92d95a311d93a9798bb1929797"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "name": "projectDebaterState",
+      "endpoint": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "wholeDeclarationSHA256": "9906f661db30173650743d5df1238330aa56b159f6494b990f74c23d7cfb7ad1"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "name": "initializeDebaterState",
+      "endpoint": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "wholeDeclarationSHA256": "888c88ce6677d6fd85013f53d4f0e6229147a56428e7b40cfcdb51bcb3042b49"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "name": "getDebaterState",
+      "endpoint": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "wholeDeclarationSHA256": "a09b26bfeb5d5a874134383615aeda047875ab92d95a311d93a9798bb1929797"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "name": "consumeDebaterChallenge",
+      "endpoint": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "wholeDeclarationSHA256": "ad486a744224d3757ae51df48a7dc56874974b344ab2e872cfa50b3318358032"
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "name": "recordDebaterChoice",
+      "endpoint": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "wholeDeclarationSHA256": "d9086a39f49f648a7ce004598bc006090ad3005a328171d66b8446fcaa625d0f"
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/authority.ts",
+      "sha256": "d9f998d20271f8e3641795c432990f756a203936bb9c062dbba51100a07d0349",
+      "sameGitAndCurrent": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/ports.ts",
+      "sha256": "a90aacc29b762579e2c451f9163563d1bf3eb9e6ddbc74a8fa0da49fefde2692",
+      "sameGitAndCurrent": true
+    },
+    {
+      "path": "backend/tests/unit/features/debater/debater.test.ts",
+      "sha256": "eecfca6f9213c4c422799092d4b9db338ee0a8f603cbeaa02ef66d3c8ae31a9c",
+      "sameGitAndCurrent": true
+    },
+    {
+      "path": "packages/game-contract/src/role-state-data.ts",
+      "sha256": "e43cbf73ede59fdb70c367dd05808f808ac52211acd46196d63180e8e9956fc0",
+      "sameGitAndCurrent": true
+    }
+  ],
+  "limits": [
+    "三原完整模块的完整两种输出相同只属于精确逆；实际模块导入与调用组织变化。",
+    "新初始化为具名普通函数，原函数身份、调用栈、模块加载组织不保证恒同。",
+    "现存两 getter/projector 公共声明与实际体保留，未退休或复制公共入口；六新旧命名接线明确指向唯一实际声明。",
+    "新测试为真实新增运行输入，不称原测试类型树或 oracle 等价；没有全图初始化、任意 CJS 重绑或全角色 schema/codec 闭包声明。"
+  ]
+}

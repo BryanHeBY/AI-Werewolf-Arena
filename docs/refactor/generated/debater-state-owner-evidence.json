@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "status": "frozen-awaiting-independent-review",
+  "baseCommit": "a6468c7749b62c76848d7437568ef8749677b20f",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "sha256": "15908775ab360ad2802202cb9387790bd7a269c188979af8824e5fc539593a3d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "sha256": "e951201547da9f7b2fc0f91964ceff9b1a27177385a78ac5a0a7a4e303d00ab4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "sha256": "1e6ae02c381b2f392a588b73603bd2a9a17902228261ac0734512613397633c0"
+    },
+    {
+      "path": "backend/tests/unit/features/debater-state-owner.test.ts",
+      "sha256": "fcb30e4d4c1eca8be36b9c0d57228e94bf7938a2520b22ee0e791052490ef3c5"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/debater-state-owner-scope-final.json",
+    "sha256": "02bdc1c6aca4920f754c874d4ca662c12655f4fc316d3c3c79a5b684f1ca912f"
+  },
+  "document": {
+    "path": "docs/refactor/debater-state-owner.md",
+    "sha256": "5c87444d0731deddb222b792117c9bafcf1575a2cc444579cef58f55c1da13cb"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/debater-state-owner-before.json",
+      "sha256": "dba52285efba6a9614dd89c469d460467d26417fa5e491480eb61ff2961861c3"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-edits.json",
+      "sha256": "a952ee6ce96c90a8b034d62eed04d3c5e7cd8badc5b11307c872c1df8b13fae9"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-first-new-tests-output.txt",
+      "sha256": "eac92c0fee4f8f49cc8bdd109c1f9dbc7705da15c8153c6d5f8eeb26e15b2892"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-first-old-tests-output.txt",
+      "sha256": "f19efcc89da165ee983f0fd1bb5e0a07530cf8938efe837071c891ad4554b970"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-first-proof-output.txt",
+      "sha256": "7b4e2bb38ad47eb2aab8e28f1da62115e97841e25c57c4a09458ef3c2d37665b"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-first-proof.cjs",
+      "sha256": "c874262708df654b0080ddc9f0916d4b1b5e041808bbd99c0052ec81283d0fea"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-first-types-output.txt",
+      "sha256": "e66580482af593c356a48a14d47ccb760412d69377c12a4b1d48eccb18ab5358"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-heads-output.txt",
+      "sha256": "02fec3d3c76dbb050c60754c36f93dbaa9c98e01ae7aa3d5a3dea2a5ec264322"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-heads.json",
+      "sha256": "7f9a1d2ddfd927cb2b4f927d08048190d6b81ef76b5f529ce0c49e6966c4f360"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-heads.ts",
+      "sha256": "df466ed0a9a4c4f3b0841777c60559d45d9ca7cee32a6bd1ce250216172f5f4b"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-new-tests-output.txt",
+      "sha256": "7eedbffa1536a4c345a193609916c39c4947911d06de71d88d9d8ff254a73271"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-old-tests-output.txt",
+      "sha256": "7a10a804ed74628884553bf2532cdbf10ec70e965d17a7f9b5c1e8185ffc55ad"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-paths.json",
+      "sha256": "b854ccff1ed5b3ef7c4987a36857b40f1f33aa5df071da3f3f4eca349d7b6191"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-proof-output.txt",
+      "sha256": "fb50984d92304cf2be5b8f7c2e857744d2504050c624920cd0ef01602906362e"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-proof.cjs",
+      "sha256": "0957460e0473825045e437db9368d5c5c19955aecc646b3a162fd5ac165ee4bb"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-proof.json",
+      "sha256": "37db954017fc53577aabc4e204f5aca78b878b6ae551a7e6bf01866d624abb23"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-receipts.json",
+      "sha256": "57d7975078687c4d2c22003151c8ce7d8e1fc0d5ad56bc5801fa922f8a3deb14"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-types-config.json",
+      "sha256": "da09a4e93dbdbe3193dca745eb6af4cdf912aca73358ba5327781a6e4e9bc673"
+    },
+    {
+      "path": "docs/refactor/generated/debater-state-owner-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "receipts": {
+    "newTests": {
+      "first": {
+        "terminalChunk": "11e633",
+        "exitCode": 1,
+        "pass": 0,
+        "loadError": "并行 GhostBride import 已写而 state.ts 尚未落盘",
+        "output": "docs/refactor/generated/debater-state-owner-first-new-tests-output.txt"
+      },
+      "final": {
+        "terminalChunk": "d86b19",
+        "exitCode": 0,
+        "pass": 3,
+        "fail": 0,
+        "assertions": 27,
+        "output": "docs/refactor/generated/debater-state-owner-new-tests-output.txt"
+      }
+    },
+    "oldTests": {
+      "first": {
+        "terminalChunk": "d53c27",
+        "exitCode": 1,
+        "pass": 0,
+        "loadError": "同一共享源码中间态",
+        "output": "docs/refactor/generated/debater-state-owner-first-old-tests-output.txt"
+      },
+      "final": {
+        "terminalChunk": "c1f368",
+        "exitCode": 0,
+        "pass": 1,
+        "fail": 0,
+        "filtered": 61,
+        "assertions": 2,
+        "selection": "committed stock cannot be reset by replacing private state or role instance",
+        "output": "docs/refactor/generated/debater-state-owner-old-tests-output.txt"
+      }
+    },
+    "types": {
+      "first": {
+        "launchChunk": "9417cf",
+        "session": 60604,
+        "terminalChunk": "97cb80",
+        "exitCode": 2,
+        "diagnostics": "尚缺 GhostBride state.ts 所致模块和继承类型诊断",
+        "output": "docs/refactor/generated/debater-state-owner-first-types-output.txt"
+      },
+      "final": {
+        "launchChunk": "dd4c86",
+        "session": 44231,
+        "terminalChunk": "266d03",
+        "exitCode": 0,
+        "roots": 4,
+        "output": "docs/refactor/generated/debater-state-owner-types-output.txt"
+      }
+    },
+    "heads": {
+      "terminalChunk": "7da41b",
+      "exitCode": 0,
+      "roots": 4,
+      "documentationPaths": 651,
+      "executions": 1,
+      "output": "docs/refactor/generated/debater-state-owner-heads-output.txt"
+    },
+    "proof": {
+      "first": {
+        "terminalChunk": "ee23e1",
+        "exitCode": 1,
+        "reason": "工具单行 wrapper 与实际多行 body 的完整 emit 布局不同；语法比较已同，产品未改变",
+        "output": "docs/refactor/generated/debater-state-owner-first-proof-output.txt"
+      },
+      "final": {
+        "terminalChunk": "4bd770",
+        "exitCode": 0,
+        "executions": 1,
+        "output": "docs/refactor/generated/debater-state-owner-proof-output.txt"
+      }
+    },
+    "totals": {
+      "distinctTests": 4,
+      "assertions": 29,
+      "successfulRuns": 2
+    },
+    "notRun": [
+      "已绿 roots 或测试重复",
+      "全量门禁",
+      "模型",
+      "归档 schema 或请求撤权修改"
+    ]
+  },
+  "limits": [
+    "不重复已绿检查或运行全量门禁／模型",
+    "本批数据所有权收口不代表全部目标完成"
+  ]
+}

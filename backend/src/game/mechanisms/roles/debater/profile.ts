@@ -18,7 +18,7 @@ import {
 } from "../../../../core/domain";
 import type { NativeRoleContributions } from "../contracts";
 import { numberOrNull } from "../../llm/helpers";
-import { getDebaterState, projectDebaterState } from "./state";
+import { getDebaterState, projectDebaterState, initializeDebaterState } from "./state";
 import { debateAuthority, hasDebateCommit, sameDebateParticipant } from "./authority";
 const parameters = z.strictObject({
   policy: z.enum(DEBATER_POLICIES).default("awa_melbourne_2026_speech_gap_v1"),
@@ -46,14 +46,7 @@ export const DEBATER_ROLE_PROFILE: NativeRoleContributions = {
     ],
   },
   runtime: {
-    init: (role, ctx) => {
-      if (!getDebaterState(role))
-        role.privateState.debater = {
-          policy: ctx.boardConfig?.debater?.policy ?? "awa_melbourne_2026_speech_gap_v1",
-          remaining: 1,
-          choice: null,
-        };
-    },
+    init: initializeDebaterState,
     configuration: {
       schema: parameters,
       defaults: { policy: "awa_melbourne_2026_speech_gap_v1" },

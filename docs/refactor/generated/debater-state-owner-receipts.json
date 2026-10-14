@@ -1,0 +1,89 @@
+{
+  "newTests": {
+    "first": {
+      "terminalChunk": "11e633",
+      "exitCode": 1,
+      "pass": 0,
+      "loadError": "并行 GhostBride import 已写而 state.ts 尚未落盘",
+      "output": "docs/refactor/generated/debater-state-owner-first-new-tests-output.txt"
+    },
+    "final": {
+      "terminalChunk": "d86b19",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 27,
+      "output": "docs/refactor/generated/debater-state-owner-new-tests-output.txt"
+    }
+  },
+  "oldTests": {
+    "first": {
+      "terminalChunk": "d53c27",
+      "exitCode": 1,
+      "pass": 0,
+      "loadError": "同一共享源码中间态",
+      "output": "docs/refactor/generated/debater-state-owner-first-old-tests-output.txt"
+    },
+    "final": {
+      "terminalChunk": "c1f368",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "filtered": 61,
+      "assertions": 2,
+      "selection": "committed stock cannot be reset by replacing private state or role instance",
+      "output": "docs/refactor/generated/debater-state-owner-old-tests-output.txt"
+    }
+  },
+  "types": {
+    "first": {
+      "launchChunk": "9417cf",
+      "session": 60604,
+      "terminalChunk": "97cb80",
+      "exitCode": 2,
+      "diagnostics": "尚缺 GhostBride state.ts 所致模块和继承类型诊断",
+      "output": "docs/refactor/generated/debater-state-owner-first-types-output.txt"
+    },
+    "final": {
+      "launchChunk": "dd4c86",
+      "session": 44231,
+      "terminalChunk": "266d03",
+      "exitCode": 0,
+      "roots": 4,
+      "output": "docs/refactor/generated/debater-state-owner-types-output.txt"
+    }
+  },
+  "heads": {
+    "terminalChunk": "7da41b",
+    "exitCode": 0,
+    "roots": 4,
+    "documentationPaths": 651,
+    "executions": 1,
+    "output": "docs/refactor/generated/debater-state-owner-heads-output.txt"
+  },
+  "proof": {
+    "first": {
+      "terminalChunk": "ee23e1",
+      "exitCode": 1,
+      "reason": "工具单行 wrapper 与实际多行 body 的完整 emit 布局不同；语法比较已同，产品未改变",
+      "output": "docs/refactor/generated/debater-state-owner-first-proof-output.txt"
+    },
+    "final": {
+      "terminalChunk": "4bd770",
+      "exitCode": 0,
+      "executions": 1,
+      "output": "docs/refactor/generated/debater-state-owner-proof-output.txt"
+    }
+  },
+  "totals": {
+    "distinctTests": 4,
+    "assertions": 29,
+    "successfulRuns": 2
+  },
+  "notRun": [
+    "已绿 roots 或测试重复",
+    "全量门禁",
+    "模型",
+    "归档 schema 或请求撤权修改"
+  ]
+}

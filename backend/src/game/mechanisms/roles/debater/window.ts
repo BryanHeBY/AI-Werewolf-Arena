@@ -4,7 +4,7 @@
  * Provider 等待之后仍复验原体、生命、库存与警徽；请求构造不授权行动，付款和关闭保持本族原顺序。
  * 本窗口不发布局部匿名票统计；最后复验后同步提交结果、生命绑定处罚和需要的警徽移交。
  */
-import type { ReadonlyBoardConfig, DebaterState } from "@ai-werewolf-arena/game-contract";
+import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import {
   COMPONENT,
   Role,
@@ -19,7 +19,7 @@ import {
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import type { ActionRequestConstructionPort } from "../../../../core/domain/actions";
 import { commitSheriffBadgeChoice, badgeSuccessorEligible } from "../../sheriff/badge";
-import { getDebaterState } from "./state";
+import { getDebaterState, consumeDebaterChallenge, recordDebaterChoice } from "./state";
 import {
   captureDebateParticipant,
   sameDebateParticipant,
@@ -111,6 +111,7 @@ export class DebaterWindow {
       stage: "challenge",
       participants,
     };
+    // accepted 仅在两字段写完后置真；choice 保原对象身份，供等待后的状态复验。
     let accepted = false,
       choice: typeof state.choice = null;
     const current = () =>
@@ -166,10 +167,11 @@ export class DebaterWindow {
         }),
       );
       authority.participants = participants;
+      // 提交账本先于库存；局部 choice 在保存槽之前创建，setter 失败时不回滚这些前缀。
       commitDebate(this.world, actorId);
-      (state as Pick<DebaterState, "remaining">).remaining = 0;
+      consumeDebaterChallenge(state);
       choice = { day, targetId };
-      (state as Pick<DebaterState, "choice">).choice = choice;
+      recordDebaterChoice(state, choice);
       accepted = true;
       this.events.push(
         { timestamp: Date.now(), type: "debater_revealed", payload: { actorId, day } },

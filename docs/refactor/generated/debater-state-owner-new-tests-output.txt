@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/features/debater-state-owner.test.ts:
+(pass) Debater init evaluates its assignment container before a late policy failure [0.56ms]
+(pass) Debater remaining setter failure retains the committed prefix and closes its window [121.13ms]
+(pass) Debater choice setter failure retains the committed prefix and closes its window [5.53ms]
+
+ 3 pass
+ 0 fail
+ 27 expect() calls
+Ran 3 tests across 1 file. [538.00ms]
