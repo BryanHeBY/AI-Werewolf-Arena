@@ -6,15 +6,15 @@
  */
 import { readWolfSorcererExchangeFact } from "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer";
 import { readTricksterExchangeFact } from "@ai-werewolf-arena/game-contract/facts/trickster";
-import { isMagicianPreset } from "../verification/board-support";
+import { isMagicianPreset } from "../../board-support";
 import {
   readMagicianExchangeFact,
   readMagicianOwnExchangeFact,
   readDeathShotMissFact,
 } from "@ai-werewolf-arena/game-contract/facts/magician";
 import { Camp, Role, Phase, DeathCause } from "@ai-werewolf-arena/game-contract";
-import type { RecordedDecision, ReproductionRecord } from "./reproduction";
-import { inferMagicianGunSources } from "./magician_action_evidence";
+import type { RecordedDecision, ReproductionRecord } from "../../../recording/reproduction";
+import { inferMagicianGunSources } from "./action-evidence";
 const exchange = "magician_exchange_committed",
   miss = "death_shot_missed";
 function assert(value: unknown): asserts value {

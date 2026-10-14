@@ -17,7 +17,7 @@ import {
 import { replayReproduction } from "../../../../src/runtime/simulation/replay_reproduction";
 import { parseReproductionRecord, type ReproductionRecord, type RecordedCheckpoint } from "../../../../src/recording/reproduction";
 import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";
-import { validateMagicianRecord } from "../../../../src/recording/magician_record";
+import { validateMagicianRecord } from "../../../../src/verification/reproduction/magician/validate";
 import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import { magicianScenario } from "../../../support/features/magician/builders/transport-plan";

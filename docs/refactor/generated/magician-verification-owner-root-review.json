@@ -1,0 +1,258 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "reviewMode": "Root 完整精确路径逆还原与实际Git/source/control/artifact核对；读取原验证职责、type-only入口、helper与装配。独立审查另由 native_presentation_finish 完成，不重复绿色验收。",
+  "baseCommit": "d9be88a2b9fe3834348bf310956099581e81a439",
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "sha256": "036a0aa60622b6697935b6f2643ccb7b92e35487ded1a75243ad76c022efd19e",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "sha256": "ab4f30d7acfe93fd38dc0f7ebe7460470397e66b62fa8fed8b46acd545b8dad3",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "b7084ab2cb676ccb2b794a12c78ef9fcc930e13b76c721e590d156ccb684c14c",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "sha256": "58c0c9f327a0fa1095f0c646f8f976bfe2a11d6082cf119ff8aa71296082c10d",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "sha256": "f4f52044a80455f60bb8b08923c08b51c4bc75a769962b1bd75215168b0ffdaa",
+      "change": "modified"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/recording/magician_record.ts",
+      "sha256": "809e237635aa3828d2232fec52755ff767a03e1159841281beb72295c0cc8a4c",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/magician_action_evidence.ts",
+      "sha256": "678bbee680816a59d946a914e447f938928c9dad4aa6730d92c20e8c1081d4ef",
+      "expectedAbsent": true
+    }
+  ],
+  "sourceChecks": [
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "sha256": "036a0aa60622b6697935b6f2643ccb7b92e35487ded1a75243ad76c022efd19e",
+      "change": "added",
+      "actualSha256": "036a0aa60622b6697935b6f2643ccb7b92e35487ded1a75243ad76c022efd19e",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "sha256": "ab4f30d7acfe93fd38dc0f7ebe7460470397e66b62fa8fed8b46acd545b8dad3",
+      "change": "added",
+      "actualSha256": "ab4f30d7acfe93fd38dc0f7ebe7460470397e66b62fa8fed8b46acd545b8dad3",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "b7084ab2cb676ccb2b794a12c78ef9fcc930e13b76c721e590d156ccb684c14c",
+      "change": "modified",
+      "actualSha256": "b7084ab2cb676ccb2b794a12c78ef9fcc930e13b76c721e590d156ccb684c14c",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "sha256": "58c0c9f327a0fa1095f0c646f8f976bfe2a11d6082cf119ff8aa71296082c10d",
+      "change": "modified",
+      "actualSha256": "58c0c9f327a0fa1095f0c646f8f976bfe2a11d6082cf119ff8aa71296082c10d",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "sha256": "f4f52044a80455f60bb8b08923c08b51c4bc75a769962b1bd75215168b0ffdaa",
+      "change": "modified",
+      "actualSha256": "f4f52044a80455f60bb8b08923c08b51c4bc75a769962b1bd75215168b0ffdaa",
+      "matches": true
+    }
+  ],
+  "beforeChecks": [
+    {
+      "path": "backend/src/recording/magician_record.ts",
+      "sha256": "809e237635aa3828d2232fec52755ff767a03e1159841281beb72295c0cc8a4c",
+      "matches": true
+    },
+    {
+      "path": "backend/src/recording/magician_action_evidence.ts",
+      "sha256": "678bbee680816a59d946a914e447f938928c9dad4aa6730d92c20e8c1081d4ef",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "94757a8ece2a7d4c33959232b4e2324857082ab20f6ffa368f0fb184fd733d57",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "sha256": "2a66289a5145abdf436af67090365be965ab7c75c0798de0d4f6682b9862aa76",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "sha256": "fcabf3836e73f8319991aa2fa676829ef409eac86630e91ee8944ca66288355c",
+      "matches": true
+    }
+  ],
+  "deleteChecks": [
+    {
+      "path": "backend/src/recording/magician_record.ts",
+      "sha256": "809e237635aa3828d2232fec52755ff767a03e1159841281beb72295c0cc8a4c",
+      "expectedAbsent": true,
+      "actualGitSha256": "809e237635aa3828d2232fec52755ff767a03e1159841281beb72295c0cc8a4c",
+      "absent": true
+    },
+    {
+      "path": "backend/src/recording/magician_action_evidence.ts",
+      "sha256": "678bbee680816a59d946a914e447f938928c9dad4aa6730d92c20e8c1081d4ef",
+      "expectedAbsent": true,
+      "actualGitSha256": "678bbee680816a59d946a914e447f938928c9dad4aa6730d92c20e8c1081d4ef",
+      "absent": true
+    }
+  ],
+  "completeSourceInverse": [
+    {
+      "from": "backend/src/recording/magician_record.ts",
+      "to": "backend/src/verification/reproduction/magician/validate.ts",
+      "wholeSourceSame": true
+    },
+    {
+      "from": "backend/src/recording/magician_action_evidence.ts",
+      "to": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "wholeSourceSame": true
+    },
+    {
+      "from": "backend/src/verification/reproduction/assembly.ts",
+      "to": "backend/src/verification/reproduction/assembly.ts",
+      "wholeSourceSame": true
+    },
+    {
+      "from": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "to": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "wholeSourceSame": true
+    },
+    {
+      "from": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "to": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "wholeSourceSame": true
+    }
+  ],
+  "controlChecks": [
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "d0033b8d423388999eed05aa7f627513be01854016f0db327ef8a114ec5e6c16",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/verification/reproduction-assembly.test.ts",
+      "sha256": "450a6c1f111f3bcd9ae21b630bdbde9699df986fcc47c1c9455635759cee8a6e",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/board-support/index.ts",
+      "sha256": "aeeac79dc3aeef4c6794105b0337a20be9b4298052e12f3d10c9aaba6bde02d1",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/support/features/magician/builders/transport-plan.ts",
+      "sha256": "0111f32fb3074c3676c0931cc5c7bda7fb62ce2ef4363d714c083698033ee175",
+      "matches": true
+    }
+  ],
+  "artifactChecks": [
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-before.json",
+      "sha256": "2e9a58ff9762fdbbf286d4aa99c4be555dbcff70fb3cd4dc8fa824cf720a1b9a",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-edits.json",
+      "sha256": "c37f9b895abe34c3d01dd6fe93906c6fbd36d4660bd62bc4ffc5add9bf6b6c99",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-scope-final.json",
+      "sha256": "12ad0afb5673c1f629fe4f4f36fecbb7f2294c4c625f75d41a3aaf69f63bdd55",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-proof.cjs",
+      "sha256": "66a15fd52dcbca35c31a65d375e1025883ae5be65968fcf96140393df4c79667",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-proof.json",
+      "sha256": "7e4a098b5aa2a4a3fad74396e6e4666477ed9f6aa0e673cba1bd7e39fac2f516",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-receipts.json",
+      "sha256": "20c07bb17185fe2a64882902a004e9395e1d7c8e0d4aa4c71fbf38cebf1eed77",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-heads.ts",
+      "sha256": "a82aeaf64f76103320dd868d03e8572a4cb001fa49ac475c5b8940f7f39c412a",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-heads.json",
+      "sha256": "51dff8e49c83932c56813ca66a82d3e8a586597f38716a2c70b011aae9f87ede",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-types-config.json",
+      "sha256": "b02266bf9557fa922cac4c583eaa1bc23959d8491ccd65379b5d5cb9bd8cd66f",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-reader-tests.log",
+      "sha256": "e5dcd0075eedb6a3882d4ac89f9d57391c2f263dfa2b132f48c81c30639f76b4",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/magician-verification-owner.md",
+      "sha256": "b9a605a2e4ea151b218571b50981102a4ad683a0917d5540c2643edca8b8c756",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-evidence.json",
+      "sha256": "8787651587b2ccbbb5228383c8d1eb899dbec0527cacad7dcfb2b641a68ff112",
+      "matches": true
+    }
+  ],
+  "scopeSha256": "12ad0afb5673c1f629fe4f4f36fecbb7f2294c4c625f75d41a3aaf69f63bdd55",
+  "independentReview": {
+    "path": "docs/refactor/generated/magician-verification-owner-review.json",
+    "sha256": "2483053622935e39bed514a66bcead3dcafeee603f337f0eabea3faa97295ab3",
+    "approved": true
+  },
+  "findings": [],
+  "semanticReview": [
+    "7项声明的路径之外所有完整源字节相同；纯数据独立验证不调用生产伤害/授权算法。",
+    "唯一归档type-only声明仍由 recording/reproduction 所有，装配16步及Noble审计传Demon的原位置保留。",
+    "两个旧文件实际删除并验证原Git字节，没有转发桥；模块URL与构建指纹变化已声明，历史归档不改。",
+    "中文五源职责头已有实际输入/输出/失败/权限边界；本批没有只为注释重写已冻结的算法。"
+  ],
+  "limits": [
+    "有限类型及两个既有纯unit为作者实际终态证据；未独立重跑，未覆盖整局/所有规则。",
+    "确认当前冻结五源、两个删除与四控制，不主张全当前树或P9完整验收。"
+  ]
+}

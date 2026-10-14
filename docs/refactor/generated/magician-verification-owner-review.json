@@ -1,0 +1,677 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_presentation_finish",
+  "reviewMode": "Independent complete source/comment/doc read, real Git/source/hash and precise route checks. No author compiler/proof/runtime/head/global-gate rerun.",
+  "baseCommit": "d9be88a2b9fe3834348bf310956099581e81a439",
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "sha256": "036a0aa60622b6697935b6f2643ccb7b92e35487ded1a75243ad76c022efd19e",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "sha256": "ab4f30d7acfe93fd38dc0f7ebe7460470397e66b62fa8fed8b46acd545b8dad3",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "b7084ab2cb676ccb2b794a12c78ef9fcc930e13b76c721e590d156ccb684c14c",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "sha256": "58c0c9f327a0fa1095f0c646f8f976bfe2a11d6082cf119ff8aa71296082c10d",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "sha256": "f4f52044a80455f60bb8b08923c08b51c4bc75a769962b1bd75215168b0ffdaa",
+      "change": "modified"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/recording/magician_record.ts",
+      "sha256": "809e237635aa3828d2232fec52755ff767a03e1159841281beb72295c0cc8a4c",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/magician_action_evidence.ts",
+      "sha256": "678bbee680816a59d946a914e447f938928c9dad4aa6730d92c20e8c1081d4ef",
+      "expectedAbsent": true
+    }
+  ],
+  "sourceChecks": [
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "sha256": "036a0aa60622b6697935b6f2643ccb7b92e35487ded1a75243ad76c022efd19e",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "sha256": "ab4f30d7acfe93fd38dc0f7ebe7460470397e66b62fa8fed8b46acd545b8dad3",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "b7084ab2cb676ccb2b794a12c78ef9fcc930e13b76c721e590d156ccb684c14c",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "sha256": "58c0c9f327a0fa1095f0c646f8f976bfe2a11d6082cf119ff8aa71296082c10d",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "sha256": "f4f52044a80455f60bb8b08923c08b51c4bc75a769962b1bd75215168b0ffdaa",
+      "matches": true
+    }
+  ],
+  "beforeChecks": [
+    {
+      "path": "backend/src/recording/magician_record.ts",
+      "actualGitSha256": "809e237635aa3828d2232fec52755ff767a03e1159841281beb72295c0cc8a4c",
+      "matches": true
+    },
+    {
+      "path": "backend/src/recording/magician_action_evidence.ts",
+      "actualGitSha256": "678bbee680816a59d946a914e447f938928c9dad4aa6730d92c20e8c1081d4ef",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "actualGitSha256": "94757a8ece2a7d4c33959232b4e2324857082ab20f6ffa368f0fb184fd733d57",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "actualGitSha256": "2a66289a5145abdf436af67090365be965ab7c75c0798de0d4f6682b9862aa76",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "actualGitSha256": "fcabf3836e73f8319991aa2fa676829ef409eac86630e91ee8944ca66288355c",
+      "matches": true
+    }
+  ],
+  "deletedChecks": [
+    {
+      "path": "backend/src/recording/magician_record.ts",
+      "expectedAbsent": true,
+      "absent": true,
+      "actualOldGitSha256": "809e237635aa3828d2232fec52755ff767a03e1159841281beb72295c0cc8a4c",
+      "matches": true
+    },
+    {
+      "path": "backend/src/recording/magician_action_evidence.ts",
+      "expectedAbsent": true,
+      "absent": true,
+      "actualOldGitSha256": "678bbee680816a59d946a914e447f938928c9dad4aa6730d92c20e8c1081d4ef",
+      "matches": true
+    }
+  ],
+  "completeSourceInverse": [
+    {
+      "from": "backend/src/recording/magician_record.ts",
+      "to": "backend/src/verification/reproduction/magician/validate.ts",
+      "wholeSourceSame": true
+    },
+    {
+      "from": "backend/src/recording/magician_action_evidence.ts",
+      "to": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "wholeSourceSame": true
+    },
+    {
+      "from": "backend/src/verification/reproduction/assembly.ts",
+      "to": "backend/src/verification/reproduction/assembly.ts",
+      "wholeSourceSame": true
+    },
+    {
+      "from": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "to": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "wholeSourceSame": true
+    },
+    {
+      "from": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "to": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "wholeSourceSame": true
+    }
+  ],
+  "artifactChecks": [
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-before.json",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-edits.json",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-scope-final.json",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-proof.cjs",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-proof.json",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-receipts.json",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-heads.ts",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-heads.json",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-types-config.json",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-types.log",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-reader-tests.log",
+      "matches": true
+    }
+  ],
+  "controlChecks": [
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/verification/reproduction-assembly.test.ts",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/board-support/index.ts",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/support/features/magician/builders/transport-plan.ts",
+      "matches": true
+    }
+  ],
+  "actualAllFormInventory": {
+    "files": 1701,
+    "allForms": [
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "form": "import",
+        "specifier": "./magician/validate",
+        "line": 23,
+        "clause": "{ validateMagicianRecord }"
+      },
+      {
+        "path": "backend/src/verification/reproduction/magician/validate.ts",
+        "form": "import",
+        "specifier": "./action-evidence",
+        "line": 17,
+        "clause": "{ inferMagicianGunSources }"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+        "form": "import",
+        "specifier": "../../../../src/verification/reproduction/magician/validate",
+        "line": 15,
+        "clause": "{ validateMagicianRecord }"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+        "form": "import",
+        "specifier": "../../../../src/verification/reproduction/magician/validate",
+        "line": 20,
+        "clause": "{ validateMagicianRecord }"
+      }
+    ],
+    "retiredReferences": [],
+    "canonicalImportDeclarations": 4,
+    "limits": "Literal module references from actual source AST; historical docs/proof fixtures excluded. Nonliteral module path construction is not claimed resolved, rg old exact names also found none in actual source."
+  },
+  "proofInspection": {
+    "scriptSha256": "66a15fd52dcbca35c31a65d375e1025883ae5be65968fcf96140393df4c79667",
+    "completeTypedPrograms": 5,
+    "authorTypedNodes": 18099,
+    "authorWholeRawOutputs": 10,
+    "authorBindings": 74,
+    "authorMovedBindings": 21,
+    "authorOtherBindings": 53,
+    "inspection": "forEachChild both child and NodeArray callbacks use braces/void, all array lengths/trailing commas and full leaf(kind,text) are included. Only actual seven specifier routes are inverted; no function, tests or fixtures substituted. Current-to-original whole source equality independently checked before accepting author AST/output results."
+  },
+  "semantics": [
+    "Both algorithms consume archive-only metadata, decisions, events and checkpoints; independent mapping/gun-source and inventory/rejection logic are unchanged, not replaced by production World/resource/DeathResolution policy.",
+    "Unique original record declarations remain two import type bindings per leaf from recording/reproduction; no runtime edge back to parser. isMagicianPreset remains the same verification-only board-support function, and named fact readers/enums resolve to original neutral contract owners.",
+    "Assembly keeps original direct synchronous calls/order and noble-to-Demon audit value; new Magician leaf invokes same helper. Public consumers are exactly three importer modules plus internal helper import, with all named aliases/type-only modes preserved. No namespace/dynamic/require/importType/export old module reference remains among actual source AST inventory.",
+    "Two scenario bodies, titles, causal/inventory mutation callbacks, raw inputs, clone/record/finalize/finally and expected assertions are wholly preserved. Original assembly-unit string names are expected-order literals, not retired module imports.",
+    "Both old recording leaves are absent, with original Git hashes retained in deletion records; old private path API is retired with no forwarding bridge. New URL/stack/load placement and source fingerprint differ; historic identities remain unchanged.",
+    "Chinese five heads explain data validation versus real action authority and test oracle ownership accurately; this slice does not claim all existing internal English comments or all verifiers have been translated/moved."
+  ],
+  "documents": {
+    "markdown": {
+      "path": "docs/refactor/magician-verification-owner.md",
+      "sha256": "b9a605a2e4ea151b218571b50981102a4ad683a0917d5540c2643edca8b8c756",
+      "matches": true
+    },
+    "evidence": {
+      "path": "docs/refactor/generated/magician-verification-owner-evidence.json",
+      "sha256": "8787651587b2ccbbb5228383c8d1eb899dbec0527cacad7dcfb2b641a68ff112"
+    },
+    "scope": {
+      "path": "docs/refactor/generated/magician-verification-owner-scope-final.json",
+      "sha256": "12ad0afb5673c1f629fe4f4f36fecbb7f2294c4c625f75d41a3aaf69f63bdd55"
+    }
+  },
+  "authorReceipts": {
+    "beforeCapture": {
+      "chunk": "74f7fc",
+      "exitCode": 0,
+      "actualGitAndWorkingFiles": 5,
+      "controls": 4,
+      "baseCommit": "d9be88a2b9fe3834348bf310956099581e81a439"
+    },
+    "sourceMutation": {
+      "chunk": "cf43fb",
+      "exitCode": 0,
+      "writtenFiles": 5,
+      "deletedFiles": 2,
+      "exactModuleSpecifierEdits": 7
+    },
+    "boundedTests": {
+      "chunk": "6e7620",
+      "exitCode": 0,
+      "path": "backend/tests/unit/verification/reproduction-assembly.test.ts",
+      "selectedCases": [
+        "all actual mechanism auditors execute in the frozen order including the nested RedMoon dependency",
+        "the real parser consumes the complete assembly after valid envelope admission"
+      ],
+      "pass": 2,
+      "fail": 0,
+      "expectCalls": 5,
+      "filtered": 2,
+      "log": "docs/refactor/generated/magician-verification-owner-reader-tests.log"
+    },
+    "finiteTypes": {
+      "launchChunk": "4b70fc",
+      "session": 86237,
+      "terminalChunk": "bbbb2e",
+      "actualExitCode": 0,
+      "rootCount": 5,
+      "log": "docs/refactor/generated/magician-verification-owner-types.log",
+      "config": "docs/refactor/generated/magician-verification-owner-types-config.json",
+      "limit": "实际关闭回执归属为 0；零字节日志本身不是成功证据。传递依赖含并行稳定 Demon 源，不主张所有工作树文件均属于本批或等于 Git。"
+    },
+    "proofFirstFailure": {
+      "chunk": "b099b1",
+      "exitCode": 1,
+      "message": "TypeError c.push is not a function",
+      "cause": "证明脚本 forEachChild 回调参数 c 遮蔽局部 children 数组。只修工具为 child=>{c.push(walk(child));}，没有改产品源码、测试输入或预期；首次失败未生成通过证明。"
+    },
+    "completeProof": {
+      "chunk": "1c553b",
+      "exitCode": 0,
+      "programs": 5,
+      "typedNodes": 18099,
+      "wholeOutputs": 10,
+      "bindings": 74,
+      "movedBindings": 21,
+      "deleted": 2,
+      "controls": 4
+    },
+    "heads": {
+      "chunk": "17d914",
+      "exitCode": 0,
+      "currentFiles": 5,
+      "actualGitDocumentationPaths": 476,
+      "diagnostics": 0,
+      "missingChineseHead": 0
+    },
+    "finalInventory": {
+      "chunk": "724e6e",
+      "exitCode": 0,
+      "actualImportedFunctions": 2,
+      "actualCanonicalImportDeclarations": 4,
+      "limit": "三消费者导入 validator，加其内部 helper；unit 中 validator 名字是原冻结顺序预期字符串，不是旧路径消费。没有扩大或修改这些原 assertions。"
+    },
+    "notRun": [
+      "全仓门禁",
+      "两个场景文件的整局或 transport 测试",
+      "全类型检查",
+      "模型",
+      "浏览器"
+    ]
+  },
+  "findings": [],
+  "limits": [
+    "No reproduction rule/schema/policy acceptance changes or full suite/global gate claim.",
+    "Finite5 actual86237/bbbb2e0 and pure unit2/5 once are author receipts, not independent re-execution. Empty type log alone is not success proof.",
+    "Physical endpoint/source route checks are current candidate plus explicit actual Git five-source map and four frozen controls, not full historical transitive-module graph equivalence."
+  ],
+  "actualMovedEndpointDeclarations": [
+    {
+      "name": "readWolfSorcererExchangeFact",
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/wolf-sorcerer.ts",
+        "name": "readWolfSorcererExchangeFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/wolf-sorcerer.ts",
+        "name": "readWolfSorcererExchangeFact"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "readTricksterExchangeFact",
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/trickster.ts",
+        "name": "readTricksterExchangeFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/trickster.ts",
+        "name": "readTricksterExchangeFact"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "isMagicianPreset",
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "backend/src/verification/board-support/magician-preset.ts",
+        "name": "isMagicianPreset"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/board-support/magician-preset.ts",
+        "name": "isMagicianPreset"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "readMagicianExchangeFact",
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/magician.ts",
+        "name": "readMagicianExchangeFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/magician.ts",
+        "name": "readMagicianExchangeFact"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "readMagicianOwnExchangeFact",
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/magician.ts",
+        "name": "readMagicianOwnExchangeFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/magician.ts",
+        "name": "readMagicianOwnExchangeFact"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "readDeathShotMissFact",
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/magician.ts",
+        "name": "readDeathShotMissFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/magician.ts",
+        "name": "readDeathShotMissFact"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "Camp",
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Camp"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Camp"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "Role",
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "Phase",
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "DeathCause",
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/death-facts.ts",
+        "name": "DeathCause"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/death-facts.ts",
+        "name": "DeathCause"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "RecordedDecision",
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "typeOnly": true,
+      "originalEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "RecordedDecision"
+      },
+      "newEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "RecordedDecision"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "ReproductionRecord",
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "typeOnly": true,
+      "originalEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "inferMagicianGunSources",
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "backend/src/recording/magician_action_evidence.ts",
+        "name": "inferMagicianGunSources"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+        "name": "inferMagicianGunSources"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "DeathCause",
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/death-facts.ts",
+        "name": "DeathCause"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/death-facts.ts",
+        "name": "DeathCause"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "Phase",
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "Role",
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "RecordedDecision",
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "typeOnly": true,
+      "originalEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "RecordedDecision"
+      },
+      "newEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "RecordedDecision"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "ReproductionRecord",
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "typeOnly": true,
+      "originalEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "validateMagicianRecord",
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "backend/src/recording/magician_record.ts",
+        "name": "validateMagicianRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/magician/validate.ts",
+        "name": "validateMagicianRecord"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "validateMagicianRecord",
+      "path": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "backend/src/recording/magician_record.ts",
+        "name": "validateMagicianRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/magician/validate.ts",
+        "name": "validateMagicianRecord"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    },
+    {
+      "name": "validateMagicianRecord",
+      "path": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "typeOnly": false,
+      "originalEndpoint": {
+        "path": "backend/src/recording/magician_record.ts",
+        "name": "validateMagicianRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/magician/validate.ts",
+        "name": "validateMagicianRecord"
+      },
+      "originalDeclarationFound": true,
+      "newDeclarationFound": true
+    }
+  ]
+}

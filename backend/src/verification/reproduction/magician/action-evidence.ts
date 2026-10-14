@@ -5,7 +5,7 @@
  * 原封锁、重试、弃枪与已付失败前缀按既有纯数据程序校验，不改变记录接受集合。
  */
 import { DeathCause, Phase, Role } from "@ai-werewolf-arena/game-contract";
-import type { RecordedDecision, ReproductionRecord } from "./reproduction";
+import type { RecordedDecision, ReproductionRecord } from "../../../recording/reproduction";
 
 function check(value: unknown): asserts value {
   if (!value) throw new Error("reproduction_magician_state_invalid");

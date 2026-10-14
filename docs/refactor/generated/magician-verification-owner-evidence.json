@@ -1,0 +1,81 @@
+{
+  "baseCommit": "d9be88a2b9fe3834348bf310956099581e81a439",
+  "status": "source-frozen-pending-independent-review",
+  "scope": {
+    "paths": 7,
+    "existingCandidates": 5,
+    "added": 2,
+    "modified": 3,
+    "deleted": 2,
+    "path": "docs/refactor/generated/magician-verification-owner-scope-final.json",
+    "sha256": "12ad0afb5673c1f629fe4f4f36fecbb7f2294c4c625f75d41a3aaf69f63bdd55"
+  },
+  "documentation": {
+    "path": "docs/refactor/magician-verification-owner.md",
+    "sha256": "b9a605a2e4ea151b218571b50981102a4ad683a0917d5540c2643edca8b8c756"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-before.json",
+      "sha256": "2e9a58ff9762fdbbf286d4aa99c4be555dbcff70fb3cd4dc8fa824cf720a1b9a"
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-edits.json",
+      "sha256": "c37f9b895abe34c3d01dd6fe93906c6fbd36d4660bd62bc4ffc5add9bf6b6c99"
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-scope-final.json",
+      "sha256": "12ad0afb5673c1f629fe4f4f36fecbb7f2294c4c625f75d41a3aaf69f63bdd55"
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-proof.cjs",
+      "sha256": "66a15fd52dcbca35c31a65d375e1025883ae5be65968fcf96140393df4c79667"
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-proof.json",
+      "sha256": "7e4a098b5aa2a4a3fad74396e6e4666477ed9f6aa0e673cba1bd7e39fac2f516"
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-receipts.json",
+      "sha256": "20c07bb17185fe2a64882902a004e9395e1d7c8e0d4aa4c71fbf38cebf1eed77"
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-heads.ts",
+      "sha256": "a82aeaf64f76103320dd868d03e8572a4cb001fa49ac475c5b8940f7f39c412a"
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-heads.json",
+      "sha256": "51dff8e49c83932c56813ca66a82d3e8a586597f38716a2c70b011aae9f87ede"
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-types-config.json",
+      "sha256": "b02266bf9557fa922cac4c583eaa1bc23959d8491ccd65379b5d5cb9bd8cd66f"
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/magician-verification-owner-reader-tests.log",
+      "sha256": "e5dcd0075eedb6a3882d4ac89f9d57391c2f263dfa2b132f48c81c30639f76b4"
+    }
+  ],
+  "claimScope": [
+    "仅七处module specifier迁移，两个验证算法及全部原输入/断言/字面/失败顺序不变。",
+    "五个完整程序精确source逆/typed AST/all noncomment leaves/10 raw outputs，不裁剪函数或替换整body。",
+    "74实际import bindings归同原实体，包含type-only记录类型和named事实读器；两个旧模块物理删除。"
+  ],
+  "receiptsSummary": {
+    "readerUnit": "2/0/5，2 filtered",
+    "finiteTypes": "5 roots / session86237 / terminalbbbb2e / actual0",
+    "comments": "5 files / 476 docs / 0 diagnostic / 0 missingChineseHead",
+    "proof": "5 programs / 18099 nodes / 10 whole outputs / 74 physical bindings / 4 controls"
+  },
+  "limitations": [
+    "此项位置迁移不声明全部角色规则／全目标验收或全仓门禁通过。",
+    "私有物理模块路径 API 明确退出；来源指纹/模块URL/load及栈位置变化，不重写原归档fingerprint。",
+    "并行Demon五源及Noble注释不在本批源码scope或wholeGitcontrols。",
+    "首工具callback变量遮蔽失败保存于真实receipt；最终通过不掩首次工具红。"
+  ],
+  "independentReview": "pending Root-assigned peer; evidence does not self-approve review"
+}

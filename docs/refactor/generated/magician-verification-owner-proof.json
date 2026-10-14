@@ -1,0 +1,523 @@
+{
+  "baseCommit": "d9be88a2b9fe3834348bf310956099581e81a439",
+  "completePrograms": [
+    {
+      "from": "backend/src/recording/magician_record.ts",
+      "to": "backend/src/verification/reproduction/magician/validate.ts",
+      "actualCurrentSHA": "036a0aa60622b6697935b6f2643ccb7b92e35487ded1a75243ad76c022efd19e",
+      "nodes": 6929,
+      "typedTreeSame": true,
+      "allNoncommentLeavesSame": true,
+      "exactFullSourceInverse": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "c6e32b25cbb75da17afa15aae5a70f985ef3675b8e0678c484eead3de4d8885f",
+          "inverseSHA": "c6e32b25cbb75da17afa15aae5a70f985ef3675b8e0678c484eead3de4d8885f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "4a79bb9a47405bad9719cd8f6c45be532bc392b24d8bc289f3176f2d592259f8",
+          "inverseSHA": "4a79bb9a47405bad9719cd8f6c45be532bc392b24d8bc289f3176f2d592259f8"
+        }
+      ]
+    },
+    {
+      "from": "backend/src/recording/magician_action_evidence.ts",
+      "to": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "actualCurrentSHA": "ab4f30d7acfe93fd38dc0f7ebe7460470397e66b62fa8fed8b46acd545b8dad3",
+      "nodes": 2603,
+      "typedTreeSame": true,
+      "allNoncommentLeavesSame": true,
+      "exactFullSourceInverse": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "7147668ca636df56d5f4221180b2cb077d47da9366cf5810cb89734d8f0e9e6b",
+          "inverseSHA": "7147668ca636df56d5f4221180b2cb077d47da9366cf5810cb89734d8f0e9e6b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "2722b4d13d4069e66b65c2c6bb87e117a5d3b2b97aeac304d0c7eb98f38fda2d",
+          "inverseSHA": "2722b4d13d4069e66b65c2c6bb87e117a5d3b2b97aeac304d0c7eb98f38fda2d"
+        }
+      ]
+    },
+    {
+      "from": "backend/src/verification/reproduction/assembly.ts",
+      "to": "backend/src/verification/reproduction/assembly.ts",
+      "actualCurrentSHA": "b7084ab2cb676ccb2b794a12c78ef9fcc930e13b76c721e590d156ccb684c14c",
+      "nodes": 181,
+      "typedTreeSame": true,
+      "allNoncommentLeavesSame": true,
+      "exactFullSourceInverse": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "169753ff6383265204cbaecddd83fe4087f97527bcf76ff792855fc8069ffc04",
+          "inverseSHA": "169753ff6383265204cbaecddd83fe4087f97527bcf76ff792855fc8069ffc04"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "a4b8a11a7d51296983fff729f5ee1c2d091330d968a06207a394ea2db0b02c23",
+          "inverseSHA": "a4b8a11a7d51296983fff729f5ee1c2d091330d968a06207a394ea2db0b02c23"
+        }
+      ]
+    },
+    {
+      "from": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "to": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "actualCurrentSHA": "58c0c9f327a0fa1095f0c646f8f976bfe2a11d6082cf119ff8aa71296082c10d",
+      "nodes": 4016,
+      "typedTreeSame": true,
+      "allNoncommentLeavesSame": true,
+      "exactFullSourceInverse": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "1394951c122d987932bc938bb8226aa9f9ea9e6c9682ba32267c610cba733f5a",
+          "inverseSHA": "1394951c122d987932bc938bb8226aa9f9ea9e6c9682ba32267c610cba733f5a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "d3efa0555c4e42cd49d61da6e06bcc3eddc6015c97e7e5515cc38f3f7e8eaf3b",
+          "inverseSHA": "d3efa0555c4e42cd49d61da6e06bcc3eddc6015c97e7e5515cc38f3f7e8eaf3b"
+        }
+      ]
+    },
+    {
+      "from": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "to": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "actualCurrentSHA": "f4f52044a80455f60bb8b08923c08b51c4bc75a769962b1bd75215168b0ffdaa",
+      "nodes": 4370,
+      "typedTreeSame": true,
+      "allNoncommentLeavesSame": true,
+      "exactFullSourceInverse": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "9f1cd0ef17e07c9182dd917dfeb415baa283475820fdd20ed9b7bcf45ce1f8d6",
+          "inverseSHA": "9f1cd0ef17e07c9182dd917dfeb415baa283475820fdd20ed9b7bcf45ce1f8d6"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "ab715a58a9ed938beba760ac35190d3230e2efa67bceedd343ff9bcd203c6f2a",
+          "inverseSHA": "ab715a58a9ed938beba760ac35190d3230e2efa67bceedd343ff9bcd203c6f2a"
+        }
+      ]
+    }
+  ],
+  "allBindingCount": 74,
+  "movedBindings": [
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "name": "readWolfSorcererExchangeFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/wolf-sorcerer.ts",
+        "name": "readWolfSorcererExchangeFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/wolf-sorcerer.ts",
+        "name": "readWolfSorcererExchangeFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "name": "readTricksterExchangeFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/trickster",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/trickster",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/trickster.ts",
+        "name": "readTricksterExchangeFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/trickster.ts",
+        "name": "readTricksterExchangeFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "name": "isMagicianPreset",
+      "typeOnly": false,
+      "oldFrom": "../verification/board-support",
+      "newFrom": "../../board-support",
+      "originalEndpoint": {
+        "path": "backend/src/verification/board-support/magician-preset.ts",
+        "name": "isMagicianPreset"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/board-support/magician-preset.ts",
+        "name": "isMagicianPreset"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "name": "readMagicianExchangeFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/magician",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/magician",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/magician.ts",
+        "name": "readMagicianExchangeFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/magician.ts",
+        "name": "readMagicianExchangeFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "name": "readMagicianOwnExchangeFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/magician",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/magician",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/magician.ts",
+        "name": "readMagicianOwnExchangeFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/magician.ts",
+        "name": "readMagicianOwnExchangeFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "name": "readDeathShotMissFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/magician",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/magician",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/magician.ts",
+        "name": "readDeathShotMissFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/magician.ts",
+        "name": "readDeathShotMissFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "name": "Camp",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Camp"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Camp"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "name": "Role",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "name": "Phase",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "name": "DeathCause",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/death-facts.ts",
+        "name": "DeathCause"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/death-facts.ts",
+        "name": "DeathCause"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "name": "RecordedDecision",
+      "typeOnly": true,
+      "oldFrom": "./reproduction",
+      "newFrom": "../../../recording/reproduction",
+      "originalEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "RecordedDecision"
+      },
+      "newEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "RecordedDecision"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "name": "ReproductionRecord",
+      "typeOnly": true,
+      "oldFrom": "./reproduction",
+      "newFrom": "../../../recording/reproduction",
+      "originalEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "name": "inferMagicianGunSources",
+      "typeOnly": false,
+      "oldFrom": "./magician_action_evidence",
+      "newFrom": "./action-evidence",
+      "originalEndpoint": {
+        "path": "backend/src/recording/magician_action_evidence.ts",
+        "name": "inferMagicianGunSources"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+        "name": "inferMagicianGunSources"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "name": "DeathCause",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/death-facts.ts",
+        "name": "DeathCause"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/death-facts.ts",
+        "name": "DeathCause"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "name": "Phase",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "name": "Role",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "name": "RecordedDecision",
+      "typeOnly": true,
+      "oldFrom": "./reproduction",
+      "newFrom": "../../../recording/reproduction",
+      "originalEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "RecordedDecision"
+      },
+      "newEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "RecordedDecision"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "name": "ReproductionRecord",
+      "typeOnly": true,
+      "oldFrom": "./reproduction",
+      "newFrom": "../../../recording/reproduction",
+      "originalEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "name": "validateMagicianRecord",
+      "typeOnly": false,
+      "oldFrom": "../../recording/magician_record",
+      "newFrom": "./magician/validate",
+      "originalEndpoint": {
+        "path": "backend/src/recording/magician_record.ts",
+        "name": "validateMagicianRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/magician/validate.ts",
+        "name": "validateMagicianRecord"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "name": "validateMagicianRecord",
+      "typeOnly": false,
+      "oldFrom": "../../../../src/recording/magician_record",
+      "newFrom": "../../../../src/verification/reproduction/magician/validate",
+      "originalEndpoint": {
+        "path": "backend/src/recording/magician_record.ts",
+        "name": "validateMagicianRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/magician/validate.ts",
+        "name": "validateMagicianRecord"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "name": "validateMagicianRecord",
+      "typeOnly": false,
+      "oldFrom": "../../../../src/recording/magician_record",
+      "newFrom": "../../../../src/verification/reproduction/magician/validate",
+      "originalEndpoint": {
+        "path": "backend/src/recording/magician_record.ts",
+        "name": "validateMagicianRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/magician/validate.ts",
+        "name": "validateMagicianRecord"
+      },
+      "moved": true,
+      "valid": true
+    }
+  ],
+  "unchangedBindingCount": 53,
+  "unchangedOrderedBindingSHA": "0573678d8979fb46b73f2f529bb91080cb5a9ff5bcae3bc545144b02055b4d47",
+  "allPhysicalBindingsVerified": true,
+  "deletedSources": [
+    {
+      "path": "backend/src/recording/magician_record.ts",
+      "sha256": "809e237635aa3828d2232fec52755ff767a03e1159841281beb72295c0cc8a4c",
+      "deleted": true
+    },
+    {
+      "path": "backend/src/recording/magician_action_evidence.ts",
+      "sha256": "678bbee680816a59d946a914e447f938928c9dad4aa6730d92c20e8c1081d4ef",
+      "deleted": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "d0033b8d423388999eed05aa7f627513be01854016f0db327ef8a114ec5e6c16",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/verification/reproduction-assembly.test.ts",
+      "sha256": "450a6c1f111f3bcd9ae21b630bdbde9699df986fcc47c1c9455635759cee8a6e",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/src/verification/board-support/index.ts",
+      "sha256": "aeeac79dc3aeef4c6794105b0337a20be9b4298052e12f3d10c9aaba6bde02d1",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/tests/support/features/magician/builders/transport-plan.ts",
+      "sha256": "0111f32fb3074c3676c0931cc5c7bda7fb62ce2ef4363d714c083698033ee175",
+      "currentWholeBytesSame": true
+    }
+  ],
+  "limits": [
+    "仅物理owner/相对import路线移动，全部完整源精确逆相同，包括所有comment/testtitle/输入/字面/error/policies，无算法或fixture修改。",
+    "旧两个recording private叶API路径明确删除无桥；新模块路径/load/sourceHash不同，不重写历史指纹或主张跨构建重放豁免。",
+    "全部原named/type/default/namespace形态逐binding核；记录type-only仍真实唯一recording/reproduction出口，实际typeowner无value加载。"
+  ],
+  "approved": true
+}

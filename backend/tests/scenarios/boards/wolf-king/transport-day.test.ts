@@ -12,7 +12,7 @@ import { captureCheckpoint } from "../../../../src/runtime/simulation/reproducti
 import { ReproductionTrace } from "../../../../src/recording/reproduction-trace";
 import { magicianScenario } from "../../../support/features/magician/builders/transport-plan";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
-import { validateMagicianRecord } from "../../../../src/recording/magician_record";
+import { validateMagicianRecord } from "../../../../src/verification/reproduction/magician/validate";
 import type { RecordedDecision, ReproductionRecord } from "../../../../src/recording/reproduction";
 
 const records = new Map<string, ReproductionRecord>();

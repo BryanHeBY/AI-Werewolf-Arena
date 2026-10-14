@@ -20,7 +20,7 @@ import { validateRadiantEclipseRecord } from "../../recording/radiant_eclipse_re
 import { validateTimeConsortRecord } from "../../recording/time_consort_record";
 import { validateWolfSorcererRecord } from "../../recording/wolf_sorcerer_record";
 import { validateTricksterRecord } from "../../recording/trickster_record";
-import { validateMagicianRecord } from "../../recording/magician_record";
+import { validateMagicianRecord } from "./magician/validate";
 import { validateOrderPrinceRecord } from "../../recording/order_prince_record";
 
 export function verifyReproductionMechanisms(result: ReproductionRecord): void {
