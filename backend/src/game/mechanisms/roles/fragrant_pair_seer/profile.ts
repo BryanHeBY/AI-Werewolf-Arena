@@ -10,7 +10,7 @@ import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Role, WinCondition } from "../../../../core/domain/identity";
 import type { NativeRoleContributions, RoleRuntimeContribution } from "../contracts";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { freshFragrantState, FRAGRANT_PAIR_POLICY } from "./state";
 import { installPairStateSlot } from "./pair-state-slot";
 import { fragrantKnownWolfIds, fragrantRoleKnifeEligible } from "./authority";
@@ -56,7 +56,7 @@ const pairSchema = {
 };
 export const FRAGRANT_PHANTOM_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     ...common.metadata,
     role: Role.FragrantPhantom,
     camp: Camp.Wolf,
@@ -64,7 +64,7 @@ export const FRAGRANT_PHANTOM_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.fragrant_phantom.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     ...common.runtime,
     canSelfDestruct: false,
     wolfTeam: (role, world) => ({
@@ -78,7 +78,7 @@ export const FRAGRANT_PHANTOM_ROLE_PROFILE: NativeRoleContributions = {
       role.privateState.fragrant = freshFragrantState();
     },
     toolSpecs: [
-      ...(WOLF_ROLE_PROFILE.runtime.toolSpecs ?? []).filter((s) => s.name === "kill_vote"),
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []).filter((s) => s.name === "kill_vote"),
       {
         name: "bind_fragrant_pair",
         parameters: {
@@ -92,7 +92,7 @@ export const FRAGRANT_PHANTOM_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     stageDirectives: [
-      ...(WOLF_ROLE_PROFILE.runtime.stageDirectives ?? []),
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.stageDirectives ?? []),
       {
         match: (tools) => tools.length === 1 && tools[0] === "bind_fragrant_pair",
         messageKey: "action.bind_fragrant_pair.directive",
@@ -100,17 +100,17 @@ export const FRAGRANT_PHANTOM_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     validationRules: {
-      ...WOLF_ROLE_PROFILE.runtime.validationRules,
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       bind_fragrant_pair: ({ world, actorId, phase, day, fragrantPairScope, toolCall }) =>
         canSubmitFragrantPairChoice(world, actorId, phase, day ?? 0, fragrantPairScope, toolCall)
           ? null
           : { code: RuleError.FragrantPairUnavailable },
     },
-    nightStages: [...(WOLF_ROLE_PROFILE.runtime.nightStages ?? []), FRAGRANT_BIND_STAGE],
+    nightStages: [...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []), FRAGRANT_BIND_STAGE],
     baselineAction: (role, request, ...rest) =>
       request.allowedTools.includes("bind_fragrant_pair")
         ? { name: "bind_fragrant_pair", args: { target_ids: null } }
-        : (WOLF_ROLE_PROFILE.runtime.baselineAction?.(role, request, ...rest) ?? null),
+        : (ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(role, request, ...rest) ?? null),
   },
   presentation: nativeRolePresentation("fragrant_phantom"),
 };

@@ -10,11 +10,11 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Camp, Role, WinCondition } from "../../../../core/domain";
 import type { NativeRoleContributions } from "../contracts";
-import { WOLF_NIGHT_STAGES } from "../wolf/night_stages";
-import { WOLF_TOOL_SPECS, WOLF_STAGE_DIRECTIVES } from "../wolf/tool_specs";
-import { WOLF_VALIDATION_RULES } from "../wolf/validation_rules";
-import { WOLF_LLM_REPAIR_PACK } from "../wolf/llm_repair";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { WOLF_NIGHT_STAGES } from "../wolf/ability-ports";
+import { WOLF_TOOL_SPECS, WOLF_STAGE_DIRECTIVES } from "../wolf/ability-ports";
+import { WOLF_VALIDATION_RULES } from "../wolf/ability-ports";
+import { WOLF_LLM_REPAIR_PACK } from "../wolf/ability-ports";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import {
   WILD_CHILD_POLICY,
   freshWildChildState,
@@ -99,7 +99,7 @@ export const WILD_CHILD_ROLE_PROFILE: NativeRoleContributions = {
     baselineAction: (role, request, pickAliveNotSelf, pickAliveByCamp, locale, world) =>
       request.allowedTools.includes("choose_wild_model")
         ? { name: "choose_wild_model", args: { target_id: pickAliveNotSelf()! } }
-        : (WOLF_ROLE_PROFILE.runtime.baselineAction?.(
+        : (ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(
             role,
             request,
             pickAliveNotSelf,

@@ -12,7 +12,7 @@ import { Camp, Phase, Role, WinCondition } from "../../../../core/domain/identit
 import type { NativeRoleContributions, RoleRuntimeContribution } from "../contracts";
 import { activeNightAbility } from "../abilities";
 import { setNightAbilityStartDay, installNativeAbility } from "../ability_changes";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { RADIANT_SHELTER_STAGE, ECLIPSE_SWALLOW_STAGE } from "./night_stages";
 import { createEclipseState, RADIANT_ECLIPSE_POLICY } from "./state";
 import { createShelterState } from "./shelter-state";
@@ -122,7 +122,7 @@ export const RADIANT_COUNT_ROLE_PROFILE: NativeRoleContributions = {
 };
 export const ECLIPSE_MAID_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     ...common.metadata,
     role: Role.EclipseMaid,
     camp: Camp.Wolf,
@@ -130,7 +130,7 @@ export const ECLIPSE_MAID_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.eclipse_maid.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     ...common.runtime,
     init: (role) => {
       role.privateState.eclipse = createEclipseState();
@@ -144,9 +144,9 @@ export const ECLIPSE_MAID_ROLE_PROFILE: NativeRoleContributions = {
     }),
     knownTeammates: (_role, world) => eclipseKnownWolves(world),
     possibleNightAbilities: ["shelter", "dream", "potion", "seer_check"],
-    nightStages: [...(WOLF_ROLE_PROFILE.runtime.nightStages ?? []), ECLIPSE_SWALLOW_STAGE],
+    nightStages: [...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []), ECLIPSE_SWALLOW_STAGE],
     toolSpecs: [
-      ...(WOLF_ROLE_PROFILE.runtime.toolSpecs ?? []),
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []),
       {
         name: "swallow_skill",
         parameters: targetParameters,
@@ -155,7 +155,7 @@ export const ECLIPSE_MAID_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     stageDirectives: [
-      ...(WOLF_ROLE_PROFILE.runtime.stageDirectives ?? []),
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.stageDirectives ?? []),
       {
         match: (tools) => tools.length === 1 && tools[0] === "swallow_skill",
         messageKey: "action.swallow_skill.directive",
@@ -163,7 +163,7 @@ export const ECLIPSE_MAID_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     validationRules: {
-      ...WOLF_ROLE_PROFILE.runtime.validationRules,
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       swallow_skill: ({ world, actorId, day, phase, toolCall }) => {
         if (
           phase !== Phase.Night ||
@@ -183,7 +183,7 @@ export const ECLIPSE_MAID_ROLE_PROFILE: NativeRoleContributions = {
     baselineAction: (role, request, ...rest) =>
       request.allowedTools.includes("swallow_skill")
         ? { name: "swallow_skill", args: { target_id: null } }
-        : (WOLF_ROLE_PROFILE.runtime.baselineAction?.(role, request, ...rest) ?? null),
+        : (ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(role, request, ...rest) ?? null),
   },
   presentation: nativeRolePresentation("eclipse_maid"),
 };

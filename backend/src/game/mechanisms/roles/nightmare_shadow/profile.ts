@@ -10,7 +10,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Role, WinCondition, Phase } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import {
   NIGHTMARE_SHADOW_POLICY,
   freshNightmareShadowState,
@@ -26,7 +26,7 @@ const parameters = z.strictObject({
 });
 export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     role: Role.NightmareShadow,
     maxCount: 1,
     supportedWinConditions: [WinCondition.SlaughterSide],
@@ -43,7 +43,7 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.nightmare.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     canSelfDestruct: (role) => getNightmareShadowState(role)?.wolfActionPolicy === "standard",
     wolfTeam: (role, world) => {
       const ready =
@@ -69,7 +69,7 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
       serialize: (config) => parameters.parse(config.nightmareShadow ?? {}),
     },
     toolSpecs: [
-      ...(WOLF_ROLE_PROFILE.runtime.toolSpecs ?? []),
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []),
       {
         name: "fear",
         parameters: {
@@ -86,7 +86,7 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     stageDirectives: [
-      ...(WOLF_ROLE_PROFILE.runtime.stageDirectives ?? []),
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.stageDirectives ?? []),
       {
         match: (tools) => tools.length === 1 && tools[0] === "fear",
         messageKey: "action.fear.directive",
@@ -94,7 +94,7 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     validationRules: {
-      ...WOLF_ROLE_PROFILE.runtime.validationRules,
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       fear: ({ world, role, actorId, day, phase, toolCall }) => {
         const state = getNightmareShadowState(role);
         if (
@@ -117,11 +117,11 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
           : { code: RuleError.NightmareTarget };
       },
     },
-    nightStages: [NIGHTMARE_FEAR_STAGE, ...(WOLF_ROLE_PROFILE.runtime.nightStages ?? [])],
+    nightStages: [NIGHTMARE_FEAR_STAGE, ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? [])],
     baselineAction: (role, request, pick, pickCamp, locale, world) => {
       if (!request.allowedTools.includes("fear"))
         return (
-          WOLF_ROLE_PROFILE.runtime.baselineAction?.(
+          ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(
             role,
             request,
             pick,

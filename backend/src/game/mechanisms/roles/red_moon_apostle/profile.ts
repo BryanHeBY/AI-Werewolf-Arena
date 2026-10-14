@@ -10,7 +10,7 @@ import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Role, WinCondition } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { RED_MOON_POLICY, RED_MOON_STATE_SLOT } from "./state-slot";
 const parameters = z.strictObject({
   policy: z.literal(RED_MOON_POLICY).default(RED_MOON_POLICY),
@@ -19,7 +19,7 @@ const parameters = z.strictObject({
 /** 有限运行资料；完整发布验收由红月使徒规则契约跟踪。 */
 export const RED_MOON_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     role: Role.RedMoonApostle,
     maxCount: 1,
     supportedWinConditions: [WinCondition.SlaughterSide],
@@ -36,7 +36,7 @@ export const RED_MOON_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.red_moon_apostle.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     votedOutHook: redMoonVotedOutHook,
     init: (role, ctx) => {
       // 延迟政策读取，保原左值容器先于 fresh／配置字段的顺序；安装仍归本族唯一数据槽。

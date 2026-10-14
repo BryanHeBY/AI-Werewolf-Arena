@@ -11,7 +11,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { getHiddenWolfState, setHiddenWolfState } from "./state";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { canHiddenWolfKnife } from "./inheritance";
 
 const parameters = z.strictObject({
@@ -20,14 +20,14 @@ const parameters = z.strictObject({
 
 export const HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     role: Role.HiddenWolf,
     maxCount: 1,
     label: roleName("hidden_wolf"),
     skillBrief: text("zh-CN", "role.hidden_wolf.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     canSelfDestruct: false,
     init: (role, ctx) => {
       setHiddenWolfState(role, {
@@ -63,7 +63,7 @@ export const HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
       apply: (config, value) => ({ ...config, hiddenWolf: parameters.parse(value) }),
       serialize: (config) => parameters.parse(config.hiddenWolf ?? {}),
     },
-    toolSpecs: WOLF_ROLE_PROFILE.runtime.toolSpecs!.filter((spec) => spec.name === "kill_vote"),
+    toolSpecs: ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!.filter((spec) => spec.name === "kill_vote"),
   },
   presentation: nativeRolePresentation("hidden_wolf"),
 };

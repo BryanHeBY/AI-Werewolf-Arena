@@ -9,7 +9,7 @@ import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { DEATH_SHOT_TOOL_SPECS, DEATH_SHOT_REPAIR, validateDeathShot } from "../death_shot";
 import {
   ROLE_INSPECTION_TOOL,
@@ -32,7 +32,7 @@ import {
 
 export const AWAKENED_HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     role: Role.AwakenedHiddenWolf,
     camp: Camp.Wolf,
     maxCount: 1,
@@ -49,7 +49,7 @@ export const AWAKENED_HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.awakened_hidden_wolf.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     canSelfDestruct: false,
     init: (role) => {
       if (!getAwakenedState(role)) setAwakenedState(role, freshAwakenedState());
@@ -72,14 +72,14 @@ export const AWAKENED_HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
     },
     possibleNightAbilities: ["role_check"],
     toolSpecs: [
-      ...WOLF_ROLE_PROFILE.runtime.toolSpecs!.filter((spec) => spec.name === "kill_vote"),
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!.filter((spec) => spec.name === "kill_vote"),
       ...AWAKENED_TOOL_SPECS,
       ROLE_INSPECTION_TOOL,
       ...DEATH_SHOT_TOOL_SPECS,
     ],
-    nightStages: [...AWAKENED_NIGHT_STAGES, ...WOLF_ROLE_PROFILE.runtime.nightStages!],
+    nightStages: [...AWAKENED_NIGHT_STAGES, ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages!],
     validationRules: {
-      ...WOLF_ROLE_PROFILE.runtime.validationRules,
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       ...AWAKENED_VALIDATION_RULES,
       inspect_role: validateRoleInspection,
       shoot: (ctx) => {
@@ -100,7 +100,7 @@ export const AWAKENED_HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
     deathHook: awakenedDeathHook,
     llmRepair: {
       coerce: {
-        ...WOLF_ROLE_PROFILE.runtime.llmRepair?.coerce,
+        ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.llmRepair?.coerce,
         ...DEATH_SHOT_REPAIR.coerce,
         ...Object.fromEntries(
           [...AWAKENED_TOOL_NAMES, "inspect_role"].map((name) => [
@@ -138,7 +138,7 @@ export const AWAKENED_HIDDEN_WOLF_ROLE_PROFILE: NativeRoleContributions = {
       }
       if (request.allowedTools.includes("shoot"))
         return { name: "shoot", args: { target_id: byCamp("good") } };
-      return WOLF_ROLE_PROFILE.runtime.baselineAction!(role, request, pick, byCamp, locale, world);
+      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale, world);
     },
   },
   presentation: nativeRolePresentation("awakened_hidden_wolf"),

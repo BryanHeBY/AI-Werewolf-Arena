@@ -9,7 +9,7 @@ import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Role, WinCondition } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { EVIL_KNIGHT_POLICY, freshEvilKnightState, getEvilKnightState } from "./state";
 import { EVIL_KNIGHT_FRAME_STAGE } from "./night_frame";
 const parameters = z.strictObject({
@@ -18,7 +18,7 @@ const parameters = z.strictObject({
 });
 export const EVIL_KNIGHT_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     role: Role.EvilKnight,
     maxCount: 1,
     supportedWinConditions: [WinCondition.SlaughterSide],
@@ -35,9 +35,9 @@ export const EVIL_KNIGHT_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.evil_knight.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     canSelfDestruct: false,
-    toolSpecs: (WOLF_ROLE_PROFILE.runtime.toolSpecs ?? []).filter(
+    toolSpecs: (ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []).filter(
       (spec) => spec.name !== "self_destruct" && spec.name !== "self_destruct_with_target",
     ),
     init: (role, ctx) => {
@@ -51,7 +51,7 @@ export const EVIL_KNIGHT_ROLE_PROFILE: NativeRoleContributions = {
       apply: (config, value) => ({ ...config, evilKnight: parameters.parse(value) }),
       serialize: (config) => parameters.parse(config.evilKnight ?? {}),
     },
-    nightStages: [EVIL_KNIGHT_FRAME_STAGE, ...(WOLF_ROLE_PROFILE.runtime.nightStages ?? [])],
+    nightStages: [EVIL_KNIGHT_FRAME_STAGE, ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? [])],
   },
   presentation: nativeRolePresentation("evil_knight"),
 };

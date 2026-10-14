@@ -1,0 +1,20 @@
+{
+  "roots": 21,
+  "oldRuntimeModules": 367,
+  "newRuntimeModules": 369,
+  "newPublicNodes": [
+    "backend/src/game/mechanisms/roles/wolf/ability-assembly.ts",
+    "backend/src/game/mechanisms/roles/wolf/ability-ports.ts"
+  ],
+  "normalizedBusinessNodesBefore": 367,
+  "normalizedBusinessNodesAfter": 367,
+  "addedBusinessOwners": [],
+  "lostBusinessOwners": [],
+  "reachabilityChecks": 367,
+  "reachabilityMismatches": [],
+  "limits": [
+    "按每个完整程序ESNext emitted import/export核真正值依赖；忽略外部npm执行和动态import，未执行20种首次入口。",
+    "新增same-binding publicport/alias实际节点不等同于旧图；既有可达循环没有声称清零。对原全部业务owner保完整可达集合，不仅比较新owner自身。"
+  ],
+  "sharedGraphProvenance": "原21 profiles用保存的0ba755c4 before，当前21用working；其余依赖两次读取当前同源，不声称原完整历史图或并行setup依赖全部字节未改。归一化只消去alias/publicfacet并映射原canonical实际业务对象，不执行首次入口。"
+}

@@ -1,0 +1,95 @@
+{
+  "newTests": {
+    "launchTerminalChunk": "56824d",
+    "exitCode": 0,
+    "pass": 3,
+    "fail": 0,
+    "assertions": 43,
+    "log": "docs/refactor/generated/wolf-ability-assembly-new-tests.log",
+    "logSHA256": "6b4ee6e38db5e5ddb979d53fbbb352a3b31ff67330810c44f0899b902721896a",
+    "scope": "最终新unit同字节；此后唯一source行为字节delta是Mist同binding publicroute，未重复这3绿。"
+  },
+  "types": [
+    {
+      "launchChunk": "f5bf3e",
+      "session": 37943,
+      "terminalChunk": "7e705e",
+      "exitCode": 0,
+      "roots": 24,
+      "log": "docs/refactor/generated/wolf-ability-assembly-types.log",
+      "config": "docs/refactor/generated/wolf-ability-assembly-types-config.json",
+      "scope": "首轮完整24源，owner尚用原Mist private路线。"
+    },
+    {
+      "launchChunk": "b34efa",
+      "session": 70244,
+      "terminalChunk": "295e8e",
+      "exitCode": 0,
+      "roots": 1,
+      "log": "docs/refactor/generated/wolf-ability-assembly-route-types.log",
+      "config": "docs/refactor/generated/wolf-ability-assembly-route-types-config.json",
+      "scope": "最终owner唯一import路由改动，仅该1root必要检查；不重复另外23roots。"
+    }
+  ],
+  "programProof": {
+    "chunk": "58b3df",
+    "exitCode": 0,
+    "oldOrdinaryWolfNodes": 294,
+    "consumerWholePrograms": 20,
+    "consumerTypedNodes": 13265,
+    "wholeEmissions": 42,
+    "bindings": 376,
+    "changedBindings": 26,
+    "controls": 7,
+    "scope": "Mist-route前真实候选，当前其余23source字节同；最终owner由route桥单独接续。"
+  },
+  "routeBridge": {
+    "launchChunk": "926b51",
+    "terminalChunk": "2f0bf9",
+    "exitCode": 0,
+    "ownerTypedNodes": 294,
+    "wholeEmissions": 2,
+    "inverseRawSame": true,
+    "actualUnmappedRawSame": false,
+    "queryBindings": 2
+  },
+  "headsAndGraph": [
+    {
+      "launchChunk": "7ecd54",
+      "session": 47677,
+      "terminalChunk": "ebe25b",
+      "exitCode": 0,
+      "scope": "pre-route候选",
+      "files": 24,
+      "documentationPaths": 462,
+      "diagnostics": 0
+    },
+    {
+      "launchChunk": "926b51",
+      "session": 39495,
+      "terminalChunk": "2f0bf9",
+      "exitCode": 0,
+      "scope": "final route候选",
+      "files": 24,
+      "documentationPaths": 462,
+      "diagnostics": 0
+    }
+  ],
+  "preservedFailures": [
+    {
+      "chunk": "cd005e",
+      "exitCode": 1,
+      "detail": "Node spawnSync Git EPERM，proof未完成；同工具以Bun58b3df真实执行成功。"
+    },
+    {
+      "chunk": "91f150",
+      "exitCode": 1,
+      "pass": 0,
+      "fail": 1,
+      "errors": 1,
+      "log": "docs/refactor/generated/wolf-ability-assembly-new-tests-first-placement-error.log",
+      "detail": "fixture写在backend/backend目录，相对src import无法解析；移动到正确scope路径后正文未修改，随后仅新3case成功。"
+    }
+  ],
+  "limits": "实际关闭回执证明类型退出0，空log本身不证明；无全类型/全suite/整局/模型/全architecturegate。未执行旧原套测试，仅新增3边界。"
+}

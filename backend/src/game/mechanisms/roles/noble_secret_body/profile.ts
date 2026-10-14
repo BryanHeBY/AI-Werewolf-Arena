@@ -10,7 +10,7 @@ import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Phase, Role, WinCondition } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { createNobleState, createSecretBodyState, readNobleState } from "./state";
 import { canSubmitNobleBodyChoice } from "./requests";
 import { NOBLE_CHOICE_STAGE, SECRET_BODY_STAGE } from "./night_stages";
@@ -46,7 +46,7 @@ const parameters = {
 };
 export const NIGHT_NOBLE_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     ...common.metadata,
     role: Role.NightNoble,
     camp: Camp.Wolf,
@@ -54,7 +54,7 @@ export const NIGHT_NOBLE_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.night_noble.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     ...common.runtime,
     init: (role, ctx) => {
       role.privateState.noble = createNobleState(
@@ -80,7 +80,7 @@ export const NIGHT_NOBLE_ROLE_PROFILE: NativeRoleContributions = {
       serialize: (config) => noble.parse(config.nightNoble ?? {}),
     },
     toolSpecs: [
-      ...(WOLF_ROLE_PROFILE.runtime.toolSpecs ?? []),
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []),
       {
         name: "choose_servant",
         parameters,
@@ -89,7 +89,7 @@ export const NIGHT_NOBLE_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     stageDirectives: [
-      ...(WOLF_ROLE_PROFILE.runtime.stageDirectives ?? []),
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.stageDirectives ?? []),
       {
         match: (tools) => tools.length === 1 && tools[0] === "choose_servant",
         messageKey: "action.choose_servant.directive",
@@ -97,17 +97,17 @@ export const NIGHT_NOBLE_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     validationRules: {
-      ...WOLF_ROLE_PROFILE.runtime.validationRules,
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       choose_servant: ({ world, actorId, phase, day, nobleBodyScope, toolCall }) =>
         canSubmitNobleBodyChoice(world, actorId, phase, day ?? 0, nobleBodyScope, toolCall)
           ? null
           : { code: RuleError.NobleBodyUnavailable },
     },
-    nightStages: [...(WOLF_ROLE_PROFILE.runtime.nightStages ?? []), NOBLE_CHOICE_STAGE],
+    nightStages: [...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []), NOBLE_CHOICE_STAGE],
     baselineAction: (role, request, ...rest) =>
       request.allowedTools.includes("choose_servant")
         ? { name: "choose_servant", args: { target_id: null } }
-        : (WOLF_ROLE_PROFILE.runtime.baselineAction?.(role, request, ...rest) ?? null),
+        : (ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(role, request, ...rest) ?? null),
   },
   presentation: nativeRolePresentation("night_noble"),
 };

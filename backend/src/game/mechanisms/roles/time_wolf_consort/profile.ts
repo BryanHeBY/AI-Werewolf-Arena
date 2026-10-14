@@ -5,7 +5,7 @@
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
 import { nativeRolePresentation } from "../presentation-contribution";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
@@ -20,7 +20,7 @@ const parameters = z.strictObject({
 });
 export const TIME_CONSORT_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     role: Role.TimeWolfConsort,
     camp: Camp.Wolf,
     maxCount: 1,
@@ -38,7 +38,7 @@ export const TIME_CONSORT_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.time_wolf_consort.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     init: (role, ctx) => {
       const value = parameters.parse(ctx.boardConfig?.timeConsort ?? {});
       role.privateState.timeConsort = createTimeConsortState(value.reflectionScope);
@@ -50,7 +50,7 @@ export const TIME_CONSORT_ROLE_PROFILE: NativeRoleContributions = {
       serialize: (config) => parameters.parse(config.timeConsort ?? {}),
     },
     toolSpecs: [
-      ...(WOLF_ROLE_PROFILE.runtime.toolSpecs ?? []),
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []),
       {
         name: "lock_time",
         parameters: {
@@ -67,7 +67,7 @@ export const TIME_CONSORT_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     stageDirectives: [
-      ...(WOLF_ROLE_PROFILE.runtime.stageDirectives ?? []),
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.stageDirectives ?? []),
       {
         match: (tools) => tools.length === 1 && tools[0] === "lock_time",
         messageKey: "action.lock_time.directive",
@@ -75,7 +75,7 @@ export const TIME_CONSORT_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     validationRules: {
-      ...WOLF_ROLE_PROFILE.runtime.validationRules,
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       lock_time: ({ world, role, actorId, day, phase, toolCall }) => {
         if (
           !getTimeConsortState(role) ||
@@ -92,11 +92,11 @@ export const TIME_CONSORT_ROLE_PROFILE: NativeRoleContributions = {
           : { code: RuleError.TimeConsortTarget };
       },
     },
-    nightStages: [TIME_CONSORT_LOCK_STAGE, ...(WOLF_ROLE_PROFILE.runtime.nightStages ?? [])],
+    nightStages: [TIME_CONSORT_LOCK_STAGE, ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? [])],
     baselineAction: (role, request, pick, pickCamp, locale, world) => {
       if (!request.allowedTools.includes("lock_time") || !world || !getTimeConsortState(role))
         return (
-          WOLF_ROLE_PROFILE.runtime.baselineAction?.(
+          ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(
             role,
             request,
             pick,

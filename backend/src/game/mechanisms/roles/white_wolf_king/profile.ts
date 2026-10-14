@@ -9,26 +9,26 @@ import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Role, ActionWindow, Phase } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { getWhiteWolfKingState, setWhiteWolfKingState } from "./state";
 import { isAliveTarget } from "../../validation/contracts";
 import { numberOrNull } from "../../llm/helpers";
 
 export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     role: Role.WhiteWolfKing,
     label: roleName("white_wolf_king"),
     skillBrief: text("zh-CN", "role.white_wolf_king.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     canSelfDestruct: false,
     init: (role) => {
       setWhiteWolfKingState(role, { canDetonate: true });
     },
     toolSpecs: [
-      ...WOLF_ROLE_PROFILE.runtime.toolSpecs!.filter((spec) => spec.name !== "self_destruct"),
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!.filter((spec) => spec.name !== "self_destruct"),
       {
         name: "self_destruct_with_target",
         parameters: {
@@ -47,7 +47,7 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     validationRules: {
-      ...WOLF_ROLE_PROFILE.runtime.validationRules,
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       self_destruct_with_target: ({
         world,
         actorId,
@@ -76,7 +76,7 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
       },
     },
     stageDirectives: [
-      ...WOLF_ROLE_PROFILE.runtime.stageDirectives!,
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.stageDirectives!,
       {
         match: (tools) => tools.length === 1 && tools[0] === "self_destruct_with_target",
         messageKey: "action.white_wolf_king.directive",
@@ -85,7 +85,7 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
     ],
     llmRepair: {
       coerce: {
-        ...WOLF_ROLE_PROFILE.runtime.llmRepair?.coerce,
+        ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.llmRepair?.coerce,
         self_destruct_with_target: (args) => {
           const target = args.target_id === null ? null : numberOrNull(args.target_id);
           return args.target_id !== null && target === null
@@ -101,7 +101,7 @@ export const WHITE_WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
     baselineAction: (role, request, pickAliveNotSelf, pickAliveByCamp, locale) =>
       request.allowedTools.includes("self_destruct_with_target")
         ? null
-        : WOLF_ROLE_PROFILE.runtime.baselineAction!(
+        : ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(
             role,
             request,
             pickAliveNotSelf,

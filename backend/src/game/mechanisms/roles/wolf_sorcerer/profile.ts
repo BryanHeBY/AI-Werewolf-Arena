@@ -5,7 +5,7 @@
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
 import { nativeRolePresentation } from "../presentation-contribution";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { z } from "zod";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
@@ -24,7 +24,7 @@ const parameters = z.strictObject({
 });
 export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     role: Role.WolfSorcerer,
     camp: Camp.Wolf,
     maxCount: 1,
@@ -42,7 +42,7 @@ export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.wolf_sorcerer.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     wolfTeam: (role, world) => {
       const known = !!getWolfSorcererState(role)?.history.length;
       const active = known && (!world || wolfSorcererPackReady(world));
@@ -64,7 +64,7 @@ export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
       serialize: (config) => parameters.parse(config.wolfSorcerer ?? {}),
     },
     toolSpecs: [
-      ...(WOLF_ROLE_PROFILE.runtime.toolSpecs ?? []),
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []),
       {
         name: "swap_night_seats",
         parameters: {
@@ -83,7 +83,7 @@ export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     stageDirectives: [
-      ...(WOLF_ROLE_PROFILE.runtime.stageDirectives ?? []),
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.stageDirectives ?? []),
       {
         match: (tools) => tools.length === 1 && tools[0] === "swap_night_seats",
         messageKey: "action.swap_night_seats.directive",
@@ -91,7 +91,7 @@ export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     validationRules: {
-      ...WOLF_ROLE_PROFILE.runtime.validationRules,
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       swap_night_seats: ({ world, role, actorId, day, phase, toolCall }) => {
         if (
           !getWolfSorcererState(role) ||
@@ -116,7 +116,7 @@ export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
           : { code: RuleError.WolfSorcererTarget };
       },
     },
-    nightStages: [WOLF_SORCERER_EXCHANGE_STAGE, ...(WOLF_ROLE_PROFILE.runtime.nightStages ?? [])],
+    nightStages: [WOLF_SORCERER_EXCHANGE_STAGE, ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? [])],
     baselineAction: (role, request, pick, pickCamp, locale, world) => {
       if (
         !request.allowedTools.includes("swap_night_seats") ||
@@ -124,7 +124,7 @@ export const WOLF_SORCERER_ROLE_PROFILE: NativeRoleContributions = {
         !getWolfSorcererState(role)
       )
         return (
-          WOLF_ROLE_PROFILE.runtime.baselineAction?.(
+          ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(
             role,
             request,
             pick,

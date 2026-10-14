@@ -16,18 +16,18 @@ import {
   DEATH_SHOT_REPAIR,
   validateDeathShot,
 } from "../death_shot";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 
 /** AWA 狼王 1.0：普通狼队权限，加一次满足死亡来源条件的开枪机会。 */
 export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     role: Role.WolfKing,
     label: roleName("wolf_king"),
     skillBrief: text("zh-CN", "role.wolf_king.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     configuration: deathActionConfiguration("wolfKing"),
     init: (role, ctx) => {
       setWolfKingState(role, {
@@ -38,9 +38,9 @@ export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
           : {}),
       });
     },
-    toolSpecs: [...WOLF_ROLE_PROFILE.runtime.toolSpecs!, ...DEATH_SHOT_TOOL_SPECS],
+    toolSpecs: [...ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!, ...DEATH_SHOT_TOOL_SPECS],
     validationRules: {
-      ...WOLF_ROLE_PROFILE.runtime.validationRules,
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       shoot: (ctx) =>
         validateDeathShot(
           ctx,
@@ -48,7 +48,7 @@ export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
         ),
     },
     llmRepair: {
-      coerce: { ...WOLF_ROLE_PROFILE.runtime.llmRepair?.coerce, ...DEATH_SHOT_REPAIR.coerce },
+      coerce: { ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.llmRepair?.coerce, ...DEATH_SHOT_REPAIR.coerce },
     },
     deathHook: (world, ids, sources, choose, events, context) =>
       resolveDeathShots(
@@ -73,7 +73,7 @@ export const WOLF_KING_ROLE_PROFILE: NativeRoleContributions = {
     baselineAction: (role, request, pickAliveNotSelf, pickAliveByCamp, locale) =>
       request.allowedTools.includes("shoot")
         ? { name: "shoot", args: { target_id: pickAliveByCamp("good") ?? pickAliveNotSelf() } }
-        : WOLF_ROLE_PROFILE.runtime.baselineAction!(
+        : ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(
             role,
             request,
             pickAliveNotSelf,

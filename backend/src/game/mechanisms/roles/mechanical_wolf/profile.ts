@@ -9,7 +9,7 @@ import { z } from "zod";
 import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Camp, Role } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { DEATH_SHOT_TOOL_SPECS, DEATH_SHOT_REPAIR, validateDeathShot } from "../death_shot";
 import { numberOrNull } from "../../llm/helpers";
 import { canMechanicalKnife } from "./inheritance";
@@ -26,7 +26,7 @@ import {
 
 export const MECHANICAL_WOLF_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     role: Role.MechanicalWolf,
     camp: Camp.Wolf,
     maxCount: 1,
@@ -43,7 +43,7 @@ export const MECHANICAL_WOLF_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.mechanical_wolf.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     canSelfDestruct: false,
     init: (role) => {
       if (!getMechanicalState(role)) setMechanicalState(role, freshMechanicalState());
@@ -65,13 +65,13 @@ export const MECHANICAL_WOLF_ROLE_PROFILE: NativeRoleContributions = {
       serialize: () => ({}),
     },
     toolSpecs: [
-      ...WOLF_ROLE_PROFILE.runtime.toolSpecs!.filter((spec) => spec.name === "kill_vote"),
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!.filter((spec) => spec.name === "kill_vote"),
       ...MECHANICAL_TOOL_SPECS,
       ...DEATH_SHOT_TOOL_SPECS,
     ],
-    nightStages: [...MECHANICAL_NIGHT_STAGES, ...WOLF_ROLE_PROFILE.runtime.nightStages!],
+    nightStages: [...MECHANICAL_NIGHT_STAGES, ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages!],
     validationRules: {
-      ...WOLF_ROLE_PROFILE.runtime.validationRules,
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       ...MECHANICAL_VALIDATION_RULES,
       shoot: (ctx) => {
         const skill = getMechanicalState(ctx.role)?.learned?.skill;
@@ -87,7 +87,7 @@ export const MECHANICAL_WOLF_ROLE_PROFILE: NativeRoleContributions = {
     deathHook: mechanicalDeathHook,
     llmRepair: {
       coerce: {
-        ...WOLF_ROLE_PROFILE.runtime.llmRepair?.coerce,
+        ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.llmRepair?.coerce,
         ...DEATH_SHOT_REPAIR.coerce,
         ...Object.fromEntries(
           [
@@ -144,7 +144,7 @@ export const MECHANICAL_WOLF_ROLE_PROFILE: NativeRoleContributions = {
         return { name: "mechanical_attack", args: { target_id: byCamp("good") } };
       if (request.allowedTools.includes("shoot"))
         return { name: "shoot", args: { target_id: byCamp("good") } };
-      return WOLF_ROLE_PROFILE.runtime.baselineAction!(role, request, pick, byCamp, locale, world);
+      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale, world);
     },
   },
   presentation: nativeRolePresentation("mechanical_wolf"),

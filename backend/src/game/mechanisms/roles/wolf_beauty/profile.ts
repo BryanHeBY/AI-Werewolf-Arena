@@ -12,8 +12,8 @@ import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { Role, Camp, Phase } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { getWolfBeautyState, setWolfBeautyState } from "./state";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
-import { WOLF_VALIDATION_RULES } from "../wolf/validation_rules";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
+import { WOLF_VALIDATION_RULES } from "../wolf/ability-ports";
 import { isAliveTarget } from "../../validation/contracts";
 import { numberOrNull } from "../../llm/helpers";
 import { WOLF_BEAUTY_CHARM_STAGE } from "./night_stages";
@@ -28,13 +28,13 @@ const parameters = z.strictObject({
 
 export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     role: Role.WolfBeauty,
     label: roleName("wolf_beauty"),
     skillBrief: text("zh-CN", "role.wolf_beauty.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     canSelfDestruct: false,
     init: (role, ctx) => {
       setWolfBeautyState(role, {
@@ -53,10 +53,10 @@ export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
       apply: (config, value) => ({ ...config, wolfBeauty: parameters.parse(value) }),
       serialize: (config) => parameters.parse(config.wolfBeauty ?? {}),
     },
-    nightStages: [...WOLF_ROLE_PROFILE.runtime.nightStages!, WOLF_BEAUTY_CHARM_STAGE],
+    nightStages: [...ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages!, WOLF_BEAUTY_CHARM_STAGE],
     deathHook: wolfBeautyDeathHook,
     toolSpecs: [
-      ...WOLF_ROLE_PROFILE.runtime.toolSpecs!.filter((spec) => spec.name !== "self_destruct"),
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!.filter((spec) => spec.name !== "self_destruct"),
       {
         name: "charm",
         parameters: {
@@ -103,7 +103,7 @@ export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
     },
     llmRepair: {
       coerce: {
-        ...WOLF_ROLE_PROFILE.runtime.llmRepair?.coerce,
+        ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.llmRepair?.coerce,
         charm: (args) => {
           if (args.target_id === null) return { target_id: null };
           const target = numberOrNull(args.target_id);
@@ -125,7 +125,7 @@ export const WOLF_BEAUTY_ROLE_PROFILE: NativeRoleContributions = {
           },
         };
       }
-      return WOLF_ROLE_PROFILE.runtime.baselineAction!(role, request, pick, byCamp, locale);
+      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale);
     },
   },
   presentation: nativeRolePresentation("wolf_beauty"),

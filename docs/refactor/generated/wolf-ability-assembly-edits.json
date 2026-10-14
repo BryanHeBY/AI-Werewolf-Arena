@@ -1,0 +1,162 @@
+{
+  "consumers": [
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gargoyle/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hidden_wolf/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/pure_white/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/radiant_eclipse/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/trickster/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/white_wolf_king/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/night_stages",
+        "../wolf/tool_specs",
+        "../wolf/validation_rules",
+        "../wolf/llm_repair",
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile",
+        "../wolf/validation_rules"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_king/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/profile.ts",
+      "symbolRename": "WOLF_ROLE_PROFILE → ORDINARY_WOLF_CONTRIBUTIONS",
+      "oldWolfSources": [
+        "../wolf/profile"
+      ]
+    }
+  ],
+  "rejectedCandidate": "先前固定facet候选改变runtime替换路由，已保存后撤回，未运行测试/类型；最终完整canonical对象保真。",
+  "harnessHistory": [
+    {
+      "chunk": "252826",
+      "exitCode": 1,
+      "detail": "未实施的两facet候选脚本子串断言误匹配AWAKENED_HIDDEN_WOLF_ROLE_PROFILE，改工具后保存候选；最终方案未使用其程序。"
+    },
+    {
+      "chunk": "9a8c7d",
+      "exitCode": 0,
+      "detail": "候选完整保存并将21existing恢复真实Gitbefore，随后按Root授权实施canonical对象方案。"
+    }
+  ]
+}

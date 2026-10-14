@@ -10,7 +10,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Role, Camp, WinCondition, Phase } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { SCHOLAR_MENTOR_POLICY, createModifierState } from "./state";
 import {
   scholarMentorStateForRole,
@@ -36,7 +36,7 @@ const supported = [
 ];
 function profile(roleNameId: Role.DayScholar | Role.NightMentor): NativeRoleContributions {
   const mentor = roleNameId === Role.NightMentor;
-  const base = mentor ? WOLF_ROLE_PROFILE : undefined;
+  const base = mentor ? ORDINARY_WOLF_CONTRIBUTIONS : undefined;
   return {
     metadata: {
       ...base?.metadata,

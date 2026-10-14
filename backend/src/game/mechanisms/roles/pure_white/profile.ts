@@ -13,7 +13,7 @@ import { Camp, Role, WinCondition } from "../../../../core/domain/model";
 import { ELIMINATION_PRIORITIES } from "../../../../core/domain/board";
 import type { NativeRoleContributions, RoleRuntimeContribution } from "../contracts";
 import { getRoleInspectionState, setRoleInspectionState } from "../role_inspection/ports";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { PURE_WHITE_INSPECTION_STAGE, WOLF_WITCH_INSPECTION_STAGE } from "./night_stages";
 import {
   PURE_WHITE_INSPECTION_TOOL,
@@ -89,7 +89,7 @@ export const PURE_WHITE_ROLE_PROFILE: NativeRoleContributions = {
 };
 export const WOLF_WITCH_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     role: Role.WolfWitch,
     maxCount: 1,
     supportedWinConditions: [WinCondition.SlaughterSide],
@@ -98,7 +98,7 @@ export const WOLF_WITCH_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.wolf_witch.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     init: (role) =>
       setRoleInspectionState(role, {
         policy: "wolf_witch",
@@ -112,17 +112,17 @@ export const WOLF_WITCH_ROLE_PROFILE: NativeRoleContributions = {
       apply: (config, value) => ({ ...config, wolfWitch: wolfParameters.parse(value) }),
       serialize: (config) => wolfParameters.parse(config.wolfWitch ?? {}),
     },
-    toolSpecs: [...(WOLF_ROLE_PROFILE.runtime.toolSpecs ?? []), PURE_WHITE_INSPECTION_TOOL],
+    toolSpecs: [...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []), PURE_WHITE_INSPECTION_TOOL],
     validationRules: {
-      ...WOLF_ROLE_PROFILE.runtime.validationRules,
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       inspect_night_identity: validatePureWhiteInspection,
     },
-    nightStages: [...(WOLF_ROLE_PROFILE.runtime.nightStages ?? []), WOLF_WITCH_INSPECTION_STAGE],
+    nightStages: [...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []), WOLF_WITCH_INSPECTION_STAGE],
     possibleNightAbilities: ["role_check"],
     baselineAction: (...args) =>
       args[1].allowedTools.includes("inspect_night_identity")
         ? inspectionBaseline(...args)
-        : (WOLF_ROLE_PROFILE.runtime.baselineAction?.(...args) ?? null),
+        : (ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(...args) ?? null),
   },
   presentation: nativeRolePresentation("wolf_witch"),
 };

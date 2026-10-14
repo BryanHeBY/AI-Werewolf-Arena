@@ -10,7 +10,7 @@ import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Phase, Role, WinCondition } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { ALCHEMIST_MIST_STAGE, RAVEN_KNIFE_STAGE } from "./night_stages";
 import {
   MIST_RAVEN_POLICY,
@@ -175,7 +175,7 @@ export const ALCHEMIST_ROLE_PROFILE: NativeRoleContributions = {
 };
 export const RAVEN_CLAW_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     role: Role.RavenClawWolf,
     camp: Camp.Wolf,
     maxCount: 1,
@@ -185,8 +185,8 @@ export const RAVEN_CLAW_ROLE_PROFILE: NativeRoleContributions = {
     skillBrief: text("zh-CN", "role.raven_claw_wolf.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
-    nightStages: [...(WOLF_ROLE_PROFILE.runtime.nightStages ?? []), RAVEN_KNIFE_STAGE],
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
+    nightStages: [...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages ?? []), RAVEN_KNIFE_STAGE],
     canSelfDestruct: false,
     configuration,
     init: (role, ctx) => {
@@ -199,7 +199,7 @@ export const RAVEN_CLAW_ROLE_PROFILE: NativeRoleContributions = {
     },
     knownTeammates: (_role, world) => (isMistRavenBoard(world) ? ravenKnownTeammates(world) : []),
     toolSpecs: [
-      ...(WOLF_ROLE_PROFILE.runtime.toolSpecs ?? []),
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs ?? []),
       {
         name: "raven_knife",
         parameters: {
@@ -213,7 +213,7 @@ export const RAVEN_CLAW_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     stageDirectives: [
-      ...(WOLF_ROLE_PROFILE.runtime.stageDirectives ?? []),
+      ...(ORDINARY_WOLF_CONTRIBUTIONS.runtime.stageDirectives ?? []),
       {
         match: (tools) => tools.length === 1 && tools[0] === "raven_knife",
         messageKey: "action.raven_knife.directive",
@@ -221,7 +221,7 @@ export const RAVEN_CLAW_ROLE_PROFILE: NativeRoleContributions = {
       },
     ],
     validationRules: {
-      ...WOLF_ROLE_PROFILE.runtime.validationRules,
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       raven_knife: ({ world, role, actorId, day, phase, toolCall }) => {
         if (
           phase !== Phase.Night ||
@@ -251,7 +251,7 @@ export const RAVEN_CLAW_ROLE_PROFILE: NativeRoleContributions = {
     baselineAction: (role, request, pick, pickCamp, locale, world) =>
       request.allowedTools.includes("raven_knife")
         ? { name: "raven_knife", args: { target_id: null } }
-        : (WOLF_ROLE_PROFILE.runtime.baselineAction?.(
+        : (ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction?.(
             role,
             request,
             pick,

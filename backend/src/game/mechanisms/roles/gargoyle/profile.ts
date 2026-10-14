@@ -12,7 +12,7 @@ import { Role } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { getGargoyleState, setGargoyleState } from "./state";
 import { getRoleInspectionState, setRoleInspectionState } from "../role_inspection/ports";
-import { WOLF_ROLE_PROFILE } from "../wolf/profile";
+import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import { numberOrNull } from "../../llm/helpers";
 import { canGargoyleKnife } from "./inheritance";
 import { ROLE_INSPECTION_STAGE } from "../role_inspection/night_stages";
@@ -25,14 +25,14 @@ import {
 
 export const GARGOYLE_ROLE_PROFILE: NativeRoleContributions = {
   metadata: {
-    ...WOLF_ROLE_PROFILE.metadata,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.metadata,
     role: Role.Gargoyle,
     maxCount: 1,
     label: roleName("gargoyle"),
     skillBrief: text("zh-CN", "role.gargoyle.brief"),
   },
   runtime: {
-    ...WOLF_ROLE_PROFILE.runtime,
+    ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     canSelfDestruct: false,
     init: (role, ctx) => {
       setGargoyleState(role, { hasInheritedKnife: false });
@@ -53,19 +53,19 @@ export const GARGOYLE_ROLE_PROFILE: NativeRoleContributions = {
       canVoteForKill: canGargoyleKnife(role, world),
     }),
     configuration: inspectionConfiguration("gargoyle", "awa_unique_required_v1"),
-    nightStages: [ROLE_INSPECTION_STAGE, ...WOLF_ROLE_PROFILE.runtime.nightStages!],
+    nightStages: [ROLE_INSPECTION_STAGE, ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.nightStages!],
     possibleNightAbilities: ["role_check"],
     toolSpecs: [
-      ...WOLF_ROLE_PROFILE.runtime.toolSpecs!.filter((spec) => spec.name === "kill_vote"),
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.toolSpecs!.filter((spec) => spec.name === "kill_vote"),
       ROLE_INSPECTION_TOOL,
     ],
     validationRules: {
-      ...WOLF_ROLE_PROFILE.runtime.validationRules,
+      ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules,
       inspect_role: validateRoleInspection,
     },
     llmRepair: {
       coerce: {
-        ...WOLF_ROLE_PROFILE.runtime.llmRepair?.coerce,
+        ...ORDINARY_WOLF_CONTRIBUTIONS.runtime.llmRepair?.coerce,
         inspect_role: (args) => {
           const target = numberOrNull(args.target_id);
           return target === null ? null : { target_id: target };
@@ -80,7 +80,7 @@ export const GARGOYLE_ROLE_PROFILE: NativeRoleContributions = {
           ? null
           : { name: "inspect_role", args: { target_id: target } };
       }
-      return WOLF_ROLE_PROFILE.runtime.baselineAction!(role, request, pick, byCamp, locale, world);
+      return ORDINARY_WOLF_CONTRIBUTIONS.runtime.baselineAction!(role, request, pick, byCamp, locale, world);
     },
   },
   presentation: nativeRolePresentation("gargoyle"),
