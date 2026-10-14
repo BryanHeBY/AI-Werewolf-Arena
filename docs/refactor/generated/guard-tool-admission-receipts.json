@@ -1,0 +1,87 @@
+{
+  "runtime": [
+    {
+      "chunk_id": "628325",
+      "exit_code": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 24,
+      "log": "docs/refactor/generated/guard-tool-admission-new-tests-output.txt"
+    },
+    {
+      "chunk_id": "ee05e0",
+      "exit_code": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 5,
+      "filtered": 8,
+      "log": "docs/refactor/generated/guard-tool-admission-old-repeat-output.txt"
+    }
+  ],
+  "summary": {
+    "distinctSuccessfulCases": 4,
+    "successfulAssertions": 29,
+    "successfulRuntimeExecutions": 2,
+    "greenNotRepeated": true
+  },
+  "types": {
+    "first": {
+      "launchChunk": "2fb193",
+      "session": 9553,
+      "terminalChunk": "29a2d4",
+      "exit_code": 2,
+      "roots": 3,
+      "error": "TS2339 newunit BootstrapResult.roleCatalog absent",
+      "log": "docs/refactor/generated/guard-tool-admission-types-output.txt"
+    },
+    "failedOnly": {
+      "launchChunk": "68b58e",
+      "session": 12872,
+      "terminalChunk": "4e7996",
+      "exit_code": 0,
+      "roots": 1,
+      "log": "docs/refactor/generated/guard-tool-admission-types-failed-output.txt"
+    },
+    "limits": "首查仅新unit诊断；failedOnly只复查一根，没有重编原两生产根。"
+  },
+  "heads": {
+    "chunk_id": "c75ff3",
+    "exit_code": 0,
+    "roots": 3,
+    "gitDocumentationPaths": 594,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0,
+    "limits": "在newunit目录字段更正及profile unused Phase清理前采样，三首头全未再变，不伪称重跑最终源。"
+  },
+  "proof": {
+    "chunk_id": "48c318",
+    "exit_code": 0,
+    "profileWholeNonJSDocNodes": 1244,
+    "profileWholeNonJSDocLeaves": 820,
+    "mapWholeNonJSDocNodes": 343,
+    "mapWholeNonJSDocLeaves": 233,
+    "mappedWholeOutputs": 4,
+    "unusedPhaseWholeRawOutputs": 2,
+    "bindings": 7,
+    "lateTargetReads": 4,
+    "controls": 4,
+    "log": "docs/refactor/generated/guard-tool-admission-proof-output.txt"
+  },
+  "newFixtureCorrection": {
+    "before": "docs/refactor/generated/guard-tool-admission-new-fixture-catalog-before.json",
+    "description": "把newunit一个不存在的game.roleCatalog字段改为实际空RoleCatalog。此字段原生产callback不读取，原所有case/trace/oracle不变；是测试运行输入／目录实例分配变更，不称型擦除，不重首绿。"
+  },
+  "unusedPhaseCorrection": {
+    "before": "docs/refactor/generated/guard-tool-admission-unused-phase-before.json",
+    "description": "同行发现搬迁后唯一新unused Phase，精确删一specifier；其它旧unused不扩大，完整两JS输出同。"
+  },
+  "notRun": [
+    "fullgate",
+    "fullsuite",
+    "fulltypes",
+    "models",
+    "privateconfigs",
+    "golden",
+    "wholegame"
+  ]
+}

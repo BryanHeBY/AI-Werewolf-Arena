@@ -1,0 +1,42 @@
+{
+  "sourceEdits": {
+    "backend/src/game/mechanisms/roles/guard/profile.ts": [
+      {
+        "before": "import { scholarMentorBlocks } from \"../scholar_mentor/night_frame\";",
+        "after": "import { GUARD_VALIDATION_RULES } from \"../../../../rulesets/guard-tool-admission\";",
+        "count": 1
+      },
+      {
+        "before": "import { RuleError } from \"@ai-werewolf-arena/game-contract\";\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "import { isAliveTarget } from \"../../validation/contracts\";\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "    validationRules: {\n      guard: ({ world, actorId, role, toolCall, day, abilityId, phase }) => {\n        const ability = activeNightAbility(role, \"guard\", day ?? 1, abilityId);\n        if (!ability) return { code: RuleError.GuardOnly };\n        if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };\n        if (toolCall.name !== \"guard\") return { code: RuleError.ToolMismatch };\n        if (scholarMentorBlocks(world, day ?? 1, actorId, \"guard\"))\n          return { code: RuleError.ModifierUnavailable };\n        if (toolCall.args.abstain) return null;\n        if (toolCall.args.target_id === null) return { code: RuleError.GuardTarget };\n        if (guardTargetRepeated(ability, day ?? 1, toolCall.args.target_id))\n          return { code: RuleError.GuardRepeat };\n        if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.GuardTarget };\n        if (\n          !luckyTargetAllowed(world, actorId, ability, day ?? 1, \"guard\", toolCall.args.target_id)\n        )\n          return { code: RuleError.LuckyTargetRepeat };\n        return null;\n      },\n    },\n",
+        "after": "    validationRules: GUARD_VALIDATION_RULES,\n",
+        "count": 1
+      },
+      {
+        "before": " * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。",
+        "after": " * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；完整普通守护准入表由规则集组合拥有。\n * 本模块不授予租约、执行归档或复制状态。",
+        "count": 1
+      },
+      {
+        "before": "import { Camp, Role, Phase } from \"../../../../core/domain/model\";",
+        "after": "import { Camp, Role } from \"../../../../core/domain/model\";",
+        "count": 1
+      }
+    ]
+  },
+  "originalRuleTable": "{\n      guard: ({ world, actorId, role, toolCall, day, abilityId, phase }) => {\n        const ability = activeNightAbility(role, \"guard\", day ?? 1, abilityId);\n        if (!ability) return { code: RuleError.GuardOnly };\n        if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };\n        if (toolCall.name !== \"guard\") return { code: RuleError.ToolMismatch };\n        if (scholarMentorBlocks(world, day ?? 1, actorId, \"guard\"))\n          return { code: RuleError.ModifierUnavailable };\n        if (toolCall.args.abstain) return null;\n        if (toolCall.args.target_id === null) return { code: RuleError.GuardTarget };\n        if (guardTargetRepeated(ability, day ?? 1, toolCall.args.target_id))\n          return { code: RuleError.GuardRepeat };\n        if (!isAliveTarget(world, toolCall.args.target_id)) return { code: RuleError.GuardTarget };\n        if (\n          !luckyTargetAllowed(world, actorId, ability, day ?? 1, \"guard\", toolCall.args.target_id)\n        )\n          return { code: RuleError.LuckyTargetRepeat };\n        return null;\n      },\n    }",
+  "paths": [
+    "backend/src/game/mechanisms/roles/guard/profile.ts",
+    "backend/src/rulesets/guard-tool-admission.ts",
+    "backend/tests/unit/rulesets/guard-tool-admission.test.ts"
+  ]
+}

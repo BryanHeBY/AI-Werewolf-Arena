@@ -1,0 +1,54 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "5549ba0c0714bdea5a2056f01773858eb5cf0008",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/profile.ts",
+      "sha256": "ce2eb6e1a3126a6fd9abe127523aa6eb7b41861c18183a2e3f9f6698672038c6",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/guard-tool-admission.ts",
+      "sha256": "fcdb6ca61242f1c3315bba7959eaf13d2c6b9b80bc1dc442003ea9c67fb76586",
+      "change": "added"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/guard-tool-admission.test.ts",
+      "sha256": "f5d9ee9ed97874988ec1b1fe0839c4110da652988e74e53c54fa5864cf8abf19",
+      "change": "added"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/guard-tool-admission-scope-final.json",
+    "sha256": "bd5f84fe88fc3f0bb52ccf4e2b448d9fe08a5584903b0f09854bce15084bb2b8"
+  },
+  "document": {
+    "path": "docs/refactor/guard-tool-admission.md",
+    "sha256": "39ea5cdb71204ffadf54ed2ad52902234c5cba8b3b42d02117d56ff70d50d5f9"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/guard-tool-admission-evidence.json",
+    "sha256": "2f4f0a500281cabcb1f84ccdeb77e0f15ad867461b1cb1707c7fd365177cba4a"
+  },
+  "integrity": {
+    "freshSources": 3,
+    "actualGitBefore": 1,
+    "controls": 4,
+    "artifactHashes": 17,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "完整原guard准入map/mutable binding及能力→phase→tool→削弱→空守→目标四读失败序",
+    "真实获赠接受面、native scope/marks/use仍原stage，无新增角色或重复目标重检",
+    "实际5549原Git/fullprofile/四controls/十七附件与完整callback/body实读",
+    "newfixture真实catalog输入修但整callback不消费该字段，原绿采样边界/failed1type收据",
+    "有效中文数据/晚目标/失败边界与末Phase纯type说明符闭合"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

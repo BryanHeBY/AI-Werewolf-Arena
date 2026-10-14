@@ -1,0 +1,208 @@
+{
+  "baseCommit": "5549ba0c0714bdea5a2056f01773858eb5cf0008",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/profile.ts",
+      "sha256": "ce2eb6e1a3126a6fd9abe127523aa6eb7b41861c18183a2e3f9f6698672038c6"
+    },
+    {
+      "path": "backend/src/rulesets/guard-tool-admission.ts",
+      "sha256": "fcdb6ca61242f1c3315bba7959eaf13d2c6b9b80bc1dc442003ea9c67fb76586"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/guard-tool-admission.test.ts",
+      "sha256": "f5d9ee9ed97874988ec1b1fe0839c4110da652988e74e53c54fa5864cf8abf19"
+    }
+  ],
+  "profile": {
+    "nonJSDocNodes": 1244,
+    "nonJSDocLeaves": 820,
+    "completeTreeSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "rawSame": true,
+        "printerMappedSame": true
+      },
+      {
+        "module": "CommonJS",
+        "rawSame": true,
+        "printerMappedSame": true
+      }
+    ],
+    "exactFullRawForwardInverse": true,
+    "preciseEdits": 6
+  },
+  "wholeRuleMap": {
+    "nonJSDocNodes": 343,
+    "nonJSDocLeaves": 233,
+    "completeTreeSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "rawSame": true,
+        "printerMappedSame": true
+      },
+      {
+        "module": "CommonJS",
+        "rawSame": true,
+        "printerMappedSame": true
+      }
+    ]
+  },
+  "targetReads": [
+    "toolCall.args.target_id",
+    "toolCall.args.target_id",
+    "toolCall.args.target_id",
+    "toolCall.args.target_id"
+  ],
+  "bindings": [
+    {
+      "binding": "scholarMentorBlocks",
+      "before": {
+        "specifier": "../scholar_mentor/night_frame",
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+        "symbol": "scholarMentorBlocks"
+      },
+      "current": {
+        "specifier": "../game/mechanisms/roles/scholar_mentor/ports",
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+        "symbol": "scholarMentorBlocks"
+      },
+      "sameDirectEndpoint": false
+    },
+    {
+      "binding": "guardTargetRepeated",
+      "before": {
+        "specifier": "./ports",
+        "path": "backend/src/game/mechanisms/roles/guard/ports.ts",
+        "symbol": "guardTargetRepeated"
+      },
+      "current": {
+        "specifier": "../game/mechanisms/roles/guard/ports",
+        "path": "backend/src/game/mechanisms/roles/guard/ports.ts",
+        "symbol": "guardTargetRepeated"
+      },
+      "sameDirectEndpoint": true
+    },
+    {
+      "binding": "Phase",
+      "before": {
+        "specifier": "../../../../core/domain/model",
+        "path": "backend/src/core/domain/model.ts",
+        "symbol": "Phase"
+      },
+      "current": {
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "path": "packages/game-contract/src/index.ts",
+        "symbol": "Phase"
+      },
+      "sameDirectEndpoint": false
+    },
+    {
+      "binding": "RuleError",
+      "before": {
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "path": "packages/game-contract/src/index.ts",
+        "symbol": "RuleError"
+      },
+      "current": {
+        "specifier": "@ai-werewolf-arena/game-contract",
+        "path": "packages/game-contract/src/index.ts",
+        "symbol": "RuleError"
+      },
+      "sameDirectEndpoint": true
+    },
+    {
+      "binding": "isAliveTarget",
+      "before": {
+        "specifier": "../../validation/contracts",
+        "path": "backend/src/game/mechanisms/validation/contracts.ts",
+        "symbol": "isAliveTarget"
+      },
+      "current": {
+        "specifier": "../game/mechanisms/validation/contracts",
+        "path": "backend/src/game/mechanisms/validation/contracts.ts",
+        "symbol": "isAliveTarget"
+      },
+      "sameDirectEndpoint": true
+    },
+    {
+      "binding": "activeNightAbility",
+      "before": {
+        "specifier": "../abilities",
+        "path": "backend/src/game/mechanisms/roles/abilities.ts",
+        "symbol": "activeNightAbility"
+      },
+      "current": {
+        "specifier": "../game/mechanisms/roles/abilities",
+        "path": "backend/src/game/mechanisms/roles/abilities.ts",
+        "symbol": "activeNightAbility"
+      },
+      "sameDirectEndpoint": true
+    },
+    {
+      "binding": "luckyTargetAllowed",
+      "before": {
+        "specifier": "../night_action_history",
+        "path": "backend/src/game/mechanisms/roles/night_action_history.ts",
+        "symbol": "luckyTargetAllowed"
+      },
+      "current": {
+        "specifier": "../game/mechanisms/roles/night_action_history",
+        "path": "backend/src/game/mechanisms/roles/night_action_history.ts",
+        "symbol": "luckyTargetAllowed"
+      },
+      "sameDirectEndpoint": true
+    }
+  ],
+  "publicSampling": {
+    "path": "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+    "sha256": "2f13dcd94675e783d2db58e2f1c117db031e98976efe99719b68936a3be52392",
+    "sameExportDeclaration": "export { scholarMentorBlocks } from \"./night_frame\";",
+    "physicalQueryOwner": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+    "limits": "仅本次并行 ports 采样；不属于 immutable controls 或全部历史初始化图证明。"
+  },
+  "unusedPhase": {
+    "beforeSha256": "430a38945e3cbe3c52827b6723012420ea11a412d69edbdb46cb30eb94bf45d4",
+    "sha256": "ce2eb6e1a3126a6fd9abe127523aa6eb7b41861c18183a2e3f9f6698672038c6",
+    "exactSingleSpecifierInverse": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "rawSame": true
+      },
+      {
+        "module": "CommonJS",
+        "rawSame": true
+      }
+    ]
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/state-slot.ts",
+      "sha256": "266ad1977e235c1cc265e0fed82179884e8f70b442fc1eb4a58de56afd19d125",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/night_stages.ts",
+      "sha256": "93f604bed9553705d5292082c0f60a001678ba1ccbf8cc0fb92fd8a2d6268d72",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/guard/ports.ts",
+      "sha256": "fe081f1726aac0479e96c1df08cb0cf5d5b222430d07b54264f94974c7f74dfc",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts",
+      "sha256": "986313bb1059f8829c4b000bc9ad0a48be113e753377bdb2d572508e686c5ddd",
+      "wholeBytesSame": true
+    }
+  ],
+  "limits": [
+    "具名完整 map／callback 被搬迁，profile其余所有程序／原metadata／baselineAction保持；不是完整旧新模块raw输出同。",
+    "新可写表在规则集模块初始化，profile引用该表；对象分配／模块求值次序是实际装配变化，不冒任意namespace/外部private反射等价。",
+    "初newunit的roleCatalog误字段修为真实空目录是测试输入更正，不是type-only；原准入callback不读该字段，原字面断言不改且已绿不重复。"
+  ]
+}
