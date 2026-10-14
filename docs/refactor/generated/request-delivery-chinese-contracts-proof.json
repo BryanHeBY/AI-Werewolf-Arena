@@ -1,0 +1,54 @@
+{
+  "schema": "awa-comment-only-proof-v1",
+  "baseCommit": "27df6552992404dbb1783917cbdaeeaa27e45de3",
+  "source": [
+    {
+      "path": "backend/src/core/domain/request_delivery.ts",
+      "beforeSHA256": "00030a4b6926956e162fa5d7b690e4babcfd430faeace7484e58949ba936df12",
+      "sha256": "e1fdefc703e32fb90d7163c00f371e13cacad419218baaa39cfb973cec0df897",
+      "nonCommentTokens": 491,
+      "tokenSequenceSame": true,
+      "syntaxTreeSame": true,
+      "emits": [
+        {
+          "module": "ESNext",
+          "sha256": "e2016caec45a83021f5375906d99f032b96e33c7ce3699613037546a25445d72",
+          "bytes": 1816,
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "sha256": "25b4293ea6d03379520aa0f87a3998214e3c2b623e38598ec63a3aed87ad9eda",
+          "bytes": 2247,
+          "same": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/core/domain/action_request_context.ts",
+      "beforeSHA256": "24f415fe9c56568e30f1926b7859d258d44fb219c7698b80dd171e71ae2f0ad4",
+      "sha256": "714c66abfe16a7c84d31214891a53255206e25a01dc7b4b24fe1663daf987b04",
+      "nonCommentTokens": 73,
+      "tokenSequenceSame": true,
+      "syntaxTreeSame": true,
+      "emits": [
+        {
+          "module": "ESNext",
+          "sha256": "703dd09cf9e62dc97dbf1349379111f3dac165eda625de76da11c046c757b283",
+          "bytes": 280,
+          "same": true
+        },
+        {
+          "module": "CommonJS",
+          "sha256": "c4b5fe949c8806927658aa24f687ef83bff0c80f1c3910d02cd6241b20ea84e1",
+          "bytes": 449,
+          "same": true
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "源码指纹发生变化；不改历史指纹。",
+    "完整纯注释核对不代替中文说明真实性的独立审查；未运行类型、测试或业务。"
+  ]
+}

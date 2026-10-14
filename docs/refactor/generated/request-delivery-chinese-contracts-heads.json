@@ -1,0 +1,9 @@
+{
+  "files": [
+    {
+      "path": "backend/src/core/domain/request_delivery.ts",
+      "sha256": "e15174e93f271f17f5392218f33d9854ea35fad7ad46ff0e2090b7af240c1748"
+    }
+  ],
+  "violations": []
+}

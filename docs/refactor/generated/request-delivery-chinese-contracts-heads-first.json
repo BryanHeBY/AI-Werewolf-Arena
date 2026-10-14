@@ -1,0 +1,22 @@
+{
+  "files": [
+    {
+      "path": "backend/src/core/domain/request_delivery.ts",
+      "sha256": "e1fdefc703e32fb90d7163c00f371e13cacad419218baaa39cfb973cec0df897"
+    },
+    {
+      "path": "backend/src/core/domain/action_request_context.ts",
+      "sha256": "714c66abfe16a7c84d31214891a53255206e25a01dc7b4b24fe1663daf987b04"
+    }
+  ],
+  "violations": [
+    {
+      "id": "08f7d916f48665f71e0f1ea5d7766fe86d4aad9d7061ef960c5449c35eae6cdd",
+      "rule": "comment.write",
+      "path": "backend/src/core/domain/request_delivery.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "lifecycle head lacks its write contract."
+    }
+  ]
+}

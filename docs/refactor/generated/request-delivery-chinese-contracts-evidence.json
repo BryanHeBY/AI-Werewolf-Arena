@@ -1,0 +1,83 @@
+{
+  "source": [
+    {
+      "path": "backend/src/core/domain/request_delivery.ts",
+      "sha256": "e15174e93f271f17f5392218f33d9854ea35fad7ad46ff0e2090b7af240c1748"
+    },
+    {
+      "path": "backend/src/core/domain/action_request_context.ts",
+      "sha256": "714c66abfe16a7c84d31214891a53255206e25a01dc7b4b24fe1663daf987b04"
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/request-delivery-chinese-contracts-scope-final.json",
+    "sha256": "c16c3603cc794c8935cd61b105bba140059302732e0261f9f799c61429f59f70"
+  },
+  "documentation": {
+    "path": "docs/refactor/request-delivery-chinese-contracts.md",
+    "sha256": "500b0538af46177357c16887669b91d78f284a59d1c9a3e4a762197215b949bc"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/request-delivery-chinese-contracts-before.json",
+      "sha256": "66f9230e866bc2eef04f47a95e1d86d8792b4664982d049950ff3d9e24d78191"
+    },
+    {
+      "path": "docs/refactor/generated/request-delivery-chinese-contracts-final-comment-bridge.json",
+      "sha256": "15e63d55e7afc4d111b5cdca5a1d415e4ad464897d9863590a27b6ae52d65c22"
+    },
+    {
+      "path": "docs/refactor/generated/request-delivery-chinese-contracts-heads-first.json",
+      "sha256": "d24349cf6d1b73b18f2f925427275383d4a6ea34487fb2c9f6ea11c2c49ca77e"
+    },
+    {
+      "path": "docs/refactor/generated/request-delivery-chinese-contracts-heads.json",
+      "sha256": "ca87e8d0e11f85fdedddf95596108e5bac599018caaa94e6a22403d20611d75d"
+    },
+    {
+      "path": "docs/refactor/generated/request-delivery-chinese-contracts-heads.ts",
+      "sha256": "2c2ebe6d6e2633ecad0188acb8e06d5d692c97383ba79650c123cd333a2e9454"
+    },
+    {
+      "path": "docs/refactor/generated/request-delivery-chinese-contracts-proof.cjs",
+      "sha256": "3743412b4e31bddcb36976aad0f0a1e68cb63bc8644a7d1fda72e849f482d4c4"
+    },
+    {
+      "path": "docs/refactor/generated/request-delivery-chinese-contracts-proof.json",
+      "sha256": "53b7256d25042e0ba65aa086f37a4fbf62b972ad51ecfd77e8bebad28ba901e3"
+    },
+    {
+      "path": "docs/refactor/generated/request-delivery-chinese-contracts-scope-final.json",
+      "sha256": "c16c3603cc794c8935cd61b105bba140059302732e0261f9f799c61429f59f70"
+    }
+  ],
+  "executions": [
+    {
+      "kind": "whole comment-only proof",
+      "chunk": "c9fd0d",
+      "exitCode": 0,
+      "files": 2,
+      "nonCommentTokens": 564,
+      "wholeEmits": 4
+    },
+    {
+      "kind": "initial responsibility heads",
+      "chunk": "7e7095",
+      "exitCode": 1,
+      "files": 2,
+      "violations": 1
+    },
+    {
+      "kind": "failed head only",
+      "chunk": "a883e5",
+      "exitCode": 0,
+      "files": 1,
+      "violations": 0
+    }
+  ],
+  "testsTypesFullGatesRun": false,
+  "limits": [
+    "末注释精度桥不是重复执行绿检查；源指纹变化不重写历史。",
+    "结构形状不证明注释真实，交独立审查实际消费者。"
+  ]
+}
