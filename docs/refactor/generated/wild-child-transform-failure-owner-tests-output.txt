@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/wild-child/transform-failure-owner.test.ts:
+(pass) Camp installation failure keeps its prefix and restoring duplicate fields cannot revive the Wild owner [41.41ms]
+(pass) Victory installation failure keeps installed Wolf Camp while retiring only the Wild transformation owner [2.24ms]
+(pass) transformed fact publication failure preserves a fully committed owner and following-night pack activation [2.08ms]
+
+ 3 pass
+ 0 fail
+ 45 expect() calls
+Ran 3 tests across 1 file. [177.00ms]

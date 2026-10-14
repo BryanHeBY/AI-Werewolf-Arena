@@ -1,0 +1,113 @@
+{
+  "baseCommit": "c9adfd3104527fcaceedcd4d170ed7304065aa4c",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "59527ea46c99db33b8765a0f9add6757de0252cd5288bb3b97a7a6a73a8c3ea1"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/transform-failure-owner.test.ts",
+      "sha256": "53b6ed682f3763920bb6886b874e26a16e7ba08a0c6dce008889d48d46cb6e47"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "8cb90cb502f56bd7fc4af3cc5ee247fc5ed4bb5c922347e3430d7e9789dfdcd4"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ability_scope.ts",
+      "sha256": "0ee74cdb94177045b4496b45462e208e0ec16ce62bb477845a851c3f68767c9a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+      "sha256": "2e2c1d665301e62a3f6e487c9a1b9b93213316d267f9a7432fe81abccc5bb2a2"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/wild-child-transform-failure-owner.md",
+    "sha256": "b8f8fb859cb55d13200182d2c856afbd890f757132905e657dbd94dbd935def7"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-before.json",
+      "sha256": "550ccc396f4c82bff799c5a7f110d34da5a863c7f3d55216f379e6aa3b92bdaa"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-binding-storage-delta.json",
+      "sha256": "5a35d1e265989e904af9bb363ccf8afedba5a487920136973514f99fd0f3ddaa"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-binding-write-finding-before.json",
+      "sha256": "ae5d2d01eee66fbe1e3570af64f2645a3af5ad682da67e422d4066543c81fe5e"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-edits-field-stage.json",
+      "sha256": "76d41d389a3c39976af8b3953681aa1df13c97a372ccca8af8d480ef3e027fa4"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-edits.json",
+      "sha256": "6fc1fe4b6b50bf4dbac66cf1caf10509bb6fa0f7cfd8e29e467918f7835800be"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-frozen-binding-tests-output.txt",
+      "sha256": "9949c0708dde9a60e2ac4ef87dc2547006814c8521d44e41a5e62b0eed57e185"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-heads-output.txt",
+      "sha256": "2311298feb260874533a385407c687a2db6dddba2c7fbb4d61e3603c6e6031ff"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-heads.json",
+      "sha256": "d81fbf6748d18b86e28333945a98d139fca1117db41ed1b69736aeb6c1c39051"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-heads.ts",
+      "sha256": "d8aefc20e4780bfca9af22b55e7825b14770d46041c20c38a3fa07336efb8b38"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-paths.json",
+      "sha256": "d3d5cc7d963714f614647695770caf0af4973d214b364b2e2f2f580cf83b91bb"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-private-revocation-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-proof-output.txt",
+      "sha256": "878b2ecfeeb1bb83c886c08e3a68964287f019612a0913646c8ab710941fd318"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-proof.cjs",
+      "sha256": "086ec83310569299d12a5274ebf9353a9ba327e888df6568174c0a981f362af1"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-proof.json",
+      "sha256": "03869253b572e583dd3413ebba685cede491e9d648078ce01dc4809e3ff2f3dd"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-receipts.json",
+      "sha256": "cd7f25691a4ab8c34bdd770e77b10010dc2f13950b774d13bcb70b5565a6fac7"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-tests-output.txt",
+      "sha256": "65dc961b2c75c002a93951854c93fd16f4d8d661660d0d5cccfae6f456efed78"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-types-config.json",
+      "sha256": "63778c59bad8a47e5c9548d7640063edb9dfc4c60b3eb3321fad09fb1b2c7615"
+    },
+    {
+      "path": "docs/refactor/generated/wild-child-transform-failure-owner-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "counts": {
+    "sourcePaths": 2,
+    "present": 2,
+    "deleted": 0,
+    "production": 1,
+    "newTests": 1
+  }
+}

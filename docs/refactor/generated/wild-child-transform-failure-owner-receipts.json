@@ -1,0 +1,105 @@
+{
+  "baseCommit": "c9adfd3104527fcaceedcd4d170ed7304065aa4c",
+  "sourceStages": {
+    "firstPublicField": [
+      {
+        "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+        "sha256": "15f026fda603f72ec3a1be89cc13af0a14ab83a488cf1490f680142f690d5e1d"
+      },
+      {
+        "path": "backend/tests/unit/features/wild-child/transform-failure-owner.test.ts",
+        "sha256": "bee3f228b41645e77b4019b0bb149e485beb19c82b440764fdec8df2dcd46fcc"
+      }
+    ],
+    "finalPrivateWeakSet": [
+      {
+        "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+        "sha256": "59527ea46c99db33b8765a0f9add6757de0252cd5288bb3b97a7a6a73a8c3ea1"
+      },
+      {
+        "path": "backend/tests/unit/features/wild-child/transform-failure-owner.test.ts",
+        "sha256": "53b6ed682f3763920bb6886b874e26a16e7ba08a0c6dce008889d48d46cb6e47"
+      }
+    ]
+  },
+  "runtime": [
+    {
+      "command": "bun --no-env-file test --preload ./backend/tests/setup.ts backend/tests/unit/features/wild-child/transform-failure-owner.test.ts",
+      "receipt": "1ab2be",
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 45,
+      "sourceStage": "firstPublicField",
+      "log": "docs/refactor/generated/wild-child-transform-failure-owner-tests-output.txt"
+    },
+    {
+      "command": "bun --no-env-file test --preload ./backend/tests/setup.ts backend/tests/unit/features/wild-child/transform-failure-owner.test.ts -t 'a frozen public binding'",
+      "receipt": "b7b85a",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 8,
+      "filtered": 3,
+      "sourceStage": "finalPrivateWeakSet",
+      "log": "docs/refactor/generated/wild-child-transform-failure-owner-frozen-binding-tests-output.txt"
+    }
+  ],
+  "runtimeTotals": {
+    "distinctCases": 4,
+    "executedAssertions": 53,
+    "sameGreenRerun": false
+  },
+  "types": [
+    {
+      "launch": "e7f03d",
+      "sessionId": 79614,
+      "terminal": "c3023a",
+      "exitCode": 0,
+      "roots": 2,
+      "sourceStage": "firstPublicField",
+      "log": "docs/refactor/generated/wild-child-transform-failure-owner-types-output.txt"
+    },
+    {
+      "launch": "e1e8d2",
+      "sessionId": 88309,
+      "terminal": "f48085",
+      "exitCode": 0,
+      "roots": 2,
+      "reason": "Both sources changed for Root concrete catch-error regression fix; not same-input repeat.",
+      "sourceStage": "finalPrivateWeakSet",
+      "log": "docs/refactor/generated/wild-child-transform-failure-owner-private-revocation-types-output.txt"
+    }
+  ],
+  "heads": {
+    "receipt": "c00f9c",
+    "exitCode": 0,
+    "roots": 2,
+    "sourceStage": "firstPublicField",
+    "noRepeat": true,
+    "log": "docs/refactor/generated/wild-child-transform-failure-owner-heads-output.txt"
+  },
+  "proof": {
+    "receipt": "06db28",
+    "exitCode": 0,
+    "sourceStage": "finalPrivateWeakSet",
+    "log": "docs/refactor/generated/wild-child-transform-failure-owner-proof-output.txt"
+  },
+  "scopedDiffCheck": {
+    "receipt": "9f32d6",
+    "exitCode": 0
+  },
+  "finding": {
+    "origin": "Root static source finding after first green; no failed-version runtime red was executed.",
+    "inputCorrection": "Freeze at actual Camp callee after original modelCommitted. Entry-frozen binding fails at the original modelCommitted write.",
+    "fix": "Private WeakSet revocation; no public binding write in catch."
+  },
+  "notRun": [
+    "Original 9c0b47 characterization",
+    "Initial old failure case",
+    "Other existing tests",
+    "Whole gate",
+    "Paid model",
+    "Whole game"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "finding": "Root静态发现公开绑定上的catch标记写可能遮盖原异常；未执行失败版本的红测试。",
+  "inputPrecision": "入口前freeze本来会在原modelCommitted写失败；真正新输入在实际Camp安装callee内freeze后抛同Error。",
+  "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+  "beforeSHA256": "15f026fda603f72ec3a1be89cc13af0a14ab83a488cf1490f680142f690d5e1d",
+  "afterSHA256": "59527ea46c99db33b8765a0f9add6757de0252cd5288bb3b97a7a6a73a8c3ea1",
+  "exactForward": true,
+  "edits": [
+    {
+      "before": "  /** 仅生命周期在转换核心失败时置 true；不写公开槽、阵营镜像或档案，也不因字段恢复重新授权。 */\n  transformationFailed: boolean;\n",
+      "after": ""
+    },
+    {
+      "before": "const bindings = new WeakMap<World, WildChildBinding>();\n",
+      "after": "const bindings = new WeakMap<World, WildChildBinding>();\n/** 只记录本绑定转换失败后的永久撤权；不写公开绑定、阵营或档案，冻结绑定也不遮盖原错误。 */\nconst failedTransformations = new WeakSet<WildChildBinding>();\n"
+    },
+    {
+      "before": "    transformationFailed: false,\n",
+      "after": ""
+    },
+    {
+      "before": "    !b.transformationFailed &&\n",
+      "after": "    !failedTransformations.has(b) &&\n"
+    },
+    {
+      "before": "    b.transformationFailed = true;\n",
+      "after": "    failedTransformations.add(b);\n"
+    }
+  ],
+  "unchangedFirstThreeTestBodies": true,
+  "newCaseAppended": "\ntest(\"a frozen public binding does not replace the original Camp error while private failure revocation remains permanent\", async () => {\n  const g = await prepared(), b = g.binding;\n  const camp = b.camp, error = new Error(\"literal_frozen_binding_camp_failure\");\n  expect(validWildChildOwner(b)).toBe(true);\n  const original = g.world.addComponent;\n  g.world.addComponent = new Proxy(original, {\n    apply(target, receiver, args) {\n      if (args[0] === 1 && args[1] === COMPONENT.Camp) {\n        // 原 modelCommitted 已写；在实际安装调用内冻结绑定，再抛本例同一错误。\n        Object.freeze(b);\n        throw error;\n      }\n      return Reflect.apply(target, receiver, args);\n    },\n  });\n  let caught: unknown;\n  try { contribute(g); } catch (e) { caught = e; } finally { g.world.addComponent = original; }\n  expect(caught).toBe(error);\n  expect(Object.isFrozen(b)).toBe(true);\n  expect(g.world.getComponent(1, COMPONENT.Camp)).toBe(camp);\n  expect(b.actor.role.camp).toBe(Camp.Wolf);\n  expect(validWildChildOwner(b)).toBe(false);\n  b.actor.role.camp = Camp.Good;\n  expect(validWildChildOwner(b)).toBe(false);\n  expect(projectWildChild(g.world, b.actor.role)?.status).toBe(\"closed\");\n});\n",
+  "limits": [
+    "运行储存从公开属性改为私有WeakSet是明确程序delta，不是假纯type／comment桥。",
+    "首3/45只对应属性稿；末冻结输入1/8单独运行，原3未复跑。"
+  ]
+}

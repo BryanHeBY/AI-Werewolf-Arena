@@ -4,6 +4,7 @@
  * 不变量：仅在原身份／生命仍当前时提交；关闭、替换或截止别名仍按原政策撤权。
  * 槽所有者执行数据与 expectedState 写入；先发布榜样死亡事实再转换，失败不撤回已发表前缀。
  * 请求记录及别名传播归独立公共实例；观察请求或原领域失配后许可不复活；付款/取消仍由本族执行，别名自身损坏不毒原请求。
+ * 转换核心抛错永久撤销本绑定的身份资格；完整核心提交后的事实发表失败不撤销已提交资格。
  */
 import { createCampComponent } from "../../../observation/component-presentation";
 import type { WildChildReadState } from "@ai-werewolf-arena/game-contract";
@@ -38,6 +39,8 @@ export interface WildChildBinding {
   modelCommitted: boolean;
 }
 const bindings = new WeakMap<World, WildChildBinding>();
+/** 只记录本绑定转换失败后的永久撤权；不写公开绑定、阵营或档案，冻结绑定也不遮盖原错误。 */
+const failedTransformations = new WeakSet<WildChildBinding>();
 const nights = new WeakMap<World, Set<number>>();
 const activeNights = new WeakSet<World>();
 /** 只传原绑定字段／当前性晚查询；请求、context 和别名记录由本实例唯一持有。 */
@@ -121,6 +124,7 @@ function sameChoiceTarget(world: World, snapshot: DebateParticipant): boolean {
 function validWildChildIdentity(b: WildChildBinding): boolean {
   return (
     bindings.get(b.world) === b &&
+    !failedTransformations.has(b) &&
     b.world.getComponent(b.actorId, COMPONENT.Role) === b.actor.role &&
     ownData(b.actor.role, "role") === Role.WildChild &&
     ownData(b.actor.role, "camp") === b.actor.camp &&
@@ -292,16 +296,24 @@ export function resolveWildChildDeathWave(
     !Object.getOwnPropertyDescriptor(b.actor.role, "camp")?.writable
   )
     return;
-  const camp = createCampComponent(Camp.Wolf, world.locale),
-    victory = createVictoryComponent([{ kind: "faction", faction: Camp.Wolf }]);
-  b.actor.role.camp = Camp.Wolf;
-  world.addComponent(b.actorId, COMPONENT.Camp, camp);
-  world.addComponent(b.actorId, COMPONENT.Victory, victory);
-  b.actor.camp = Camp.Wolf;
-  b.camp = camp;
-  b.victory = victory;
-  b.victoryJson = safeJson(victory);
-  transformWildChildState(b, day);
+  // 资格与原可写检查通过后才进入转换核心；Role→Camp→Victory→绑定／槽的原写序不变。
+  // Camp 安装及后续写失败保留已完成前缀，先撤销本族绑定资格再传播同一错误，不补偿或退款。
+  try {
+    const camp = createCampComponent(Camp.Wolf, world.locale),
+      victory = createVictoryComponent([{ kind: "faction", faction: Camp.Wolf }]);
+    b.actor.role.camp = Camp.Wolf;
+    world.addComponent(b.actorId, COMPONENT.Camp, camp);
+    world.addComponent(b.actorId, COMPONENT.Victory, victory);
+    b.actor.camp = Camp.Wolf;
+    b.camp = camp;
+    b.victory = victory;
+    b.victoryJson = safeJson(victory);
+    transformWildChildState(b, day);
+  } catch (error) {
+    failedTransformations.add(b);
+    throw error;
+  }
+  // 核心已经全部提交；事实发表晚抛保已付转换与资格，不将错误重新解释为转换失败。
   events.push({
     timestamp: Date.now(),
     type: "wild_child_transformed",
