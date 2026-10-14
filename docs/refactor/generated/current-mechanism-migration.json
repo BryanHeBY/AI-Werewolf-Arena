@@ -1,6 +1,6 @@
 {
   "schema": "awa-current-mechanism-migration-v1",
-  "observedCommit": "96d3d0272392f8ad625ece176cee36df6dd789ea",
+  "observedCommit": "f524203283956d8c59eb40bb673f071a6b1ec104",
   "baseline": {
     "path": "docs/refactor/generated/mechanism-matrix.json",
     "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
@@ -161,10 +161,23 @@
           ]
         },
         "verifier": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整动物梦境独立核验与历史feed账本归verification，原生命／投票／知情前缀算法保持。",
+              "commit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+              "owners": [
+                "backend/src/verification/reproduction/animal-dream/validate.ts",
+                "backend/src/verification/reproduction/animal-dream/feed-evidence.ts"
+              ],
+              "evidence": [
+                "docs/refactor/remaining-reproduction-verifier-owners.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记verifier职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "text": {
@@ -1064,11 +1077,22 @@
               "evidence": [
                 "docs/refactor/sourced-night-intents.md"
               ]
+            },
+            {
+              "part": "完整伤害来源折叠与事实发布归本族贡献，两原引擎检查点保持；实际瓶账、封存证明、生命筛选和最终标死仍由原所有者负责。",
+              "commit": "7d61cda46985ad7d6e2001d13992d7c3e310de7e",
+              "owners": [
+                "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts"
+              ],
+              "evidence": [
+                "docs/refactor/demon-night-damage-contribution.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格仍须核对其它具体效果类别及实际 Damage→Wave→Commit 消费、原体／当前性、失败前缀和独立交互验收；本子项不能完成整个效果格。"
+            "本格仍须核对其它具体效果类别及实际 Damage→Wave→Commit 消费、原体／当前性、失败前缀和独立交互验收；本子项不能完成整个效果格。",
+            "本次仅登记effect职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "observation": {
@@ -1099,10 +1123,23 @@
           ]
         },
         "verifier": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整猎魔与原生库存独立核验归verification，原贵族audit、赤月子链和首拒绝优先级保持。",
+              "commit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+              "owners": [
+                "backend/src/verification/reproduction/demon-hunter/validate.ts",
+                "backend/src/verification/reproduction/demon-hunter/native-stocks.ts"
+              ],
+              "evidence": [
+                "docs/refactor/remaining-reproduction-verifier-owners.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记verifier职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "text": {
@@ -1274,10 +1311,23 @@
           ]
         },
         "effect": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "同状态身份的原夜间关系数组归唯一运行所有者，生产追加与夜伤害组合消费同引用；付款、关闭和原体资格不转给关系数据。",
+              "commit": "afc3904d52c7355d122efca47d24ef82ec01d7bf",
+              "owners": [
+                "backend/src/game/mechanisms/roles/dreamer/night-links.ts",
+                "backend/src/game/mechanisms/roles/dreamer/night-ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/dream-night-links.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记effect职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "observation": {
@@ -1404,10 +1454,23 @@
           ]
         },
         "effect": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "原夜间绑定与读取归本族运行所有者，规则组合和夜流程在原位置消费；不新增状态或权限。",
+              "commit": "d9be88a2b9fe3834348bf310956099581e81a439",
+              "owners": [
+                "backend/src/game/mechanisms/roles/evil_knight/night-bindings.ts",
+                "backend/src/game/mechanisms/roles/evil_knight/night_frame.ts"
+              ],
+              "evidence": [
+                "docs/refactor/evil-knight-night-bindings.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记effect职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "observation": {
@@ -1599,10 +1662,23 @@
           ]
         },
         "verifier": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整寻香配对独立核验与历史feed账本归verification，原选择、受众、checkpoint前缀保持。",
+              "commit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+              "owners": [
+                "backend/src/verification/reproduction/fragrant-pair-seer/validate.ts",
+                "backend/src/verification/reproduction/fragrant-pair-seer/feed-evidence.ts"
+              ],
+              "evidence": [
+                "docs/refactor/remaining-reproduction-verifier-owners.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记verifier职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "text": {
@@ -1929,10 +2005,22 @@
           ]
         },
         "verifier": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整婚约因果归档核验归verification，原关系、狼聊、刀口与投票账本保持，不重建运行许可。",
+              "commit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+              "owners": [
+                "backend/src/verification/reproduction/ghost-bride/validate.ts"
+              ],
+              "evidence": [
+                "docs/refactor/remaining-reproduction-verifier-owners.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记verifier职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "text": {
@@ -3326,10 +3414,23 @@
           ]
         },
         "verifier": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整独立归档核验与行动证据移入verification，原算法、场景样本和装配顺序保持，旧recording叶退出。",
+              "commit": "173ef9df85b47c7327328d2c135f79294e417e6d",
+              "owners": [
+                "backend/src/verification/reproduction/magician/validate.ts",
+                "backend/src/verification/reproduction/magician/action-evidence.ts"
+              ],
+              "evidence": [
+                "docs/refactor/magician-verification-owner.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记verifier职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "text": {
@@ -3900,10 +4001,25 @@
           ]
         },
         "verifier": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整雾鸦核验、请求／历史feed及共享警长证据归verification；真实共享消费者与原事件时序保持。",
+              "commit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+              "owners": [
+                "backend/src/verification/reproduction/mist-raven/validate.ts",
+                "backend/src/verification/reproduction/mist-raven/feed-evidence.ts",
+                "backend/src/verification/reproduction/mist-raven/requests.ts",
+                "backend/src/verification/reproduction/mist-raven/sheriff-evidence.ts"
+              ],
+              "evidence": [
+                "docs/refactor/remaining-reproduction-verifier-owners.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记verifier职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "text": {
@@ -4225,10 +4341,22 @@
           ]
         },
         "verifier": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整贵族／秘密之身核验归verification，原checkpoint identity与独立night audit在装配原位置交给猎魔核验。",
+              "commit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+              "owners": [
+                "backend/src/verification/reproduction/noble-secret-body/validate.ts"
+              ],
+              "evidence": [
+                "docs/refactor/remaining-reproduction-verifier-owners.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记verifier职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "text": {
@@ -4343,10 +4471,22 @@
           ]
         },
         "verifier": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整定序王子独立归档核验归verification，原选择、清票／重投、映射和票权前缀算法保持。",
+              "commit": "eed72f1f7c44303ed3bc3033b2398da57bd28710",
+              "owners": [
+                "backend/src/verification/reproduction/order-prince/validate.ts"
+              ],
+              "evidence": [
+                "docs/refactor/choice-effect-verifier-owners.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记verifier职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "text": {
@@ -4731,10 +4871,24 @@
           ]
         },
         "verifier": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整光蚀状态／操作核验、请求观察和夜前缀账本归verification，原三叶相依与未完成尾部规则保持。",
+              "commit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+              "owners": [
+                "backend/src/verification/reproduction/radiant-eclipse/validate.ts",
+                "backend/src/verification/reproduction/radiant-eclipse/requests.ts",
+                "backend/src/verification/reproduction/radiant-eclipse/night-request-prefix.ts"
+              ],
+              "evidence": [
+                "docs/refactor/remaining-reproduction-verifier-owners.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记verifier职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "text": {
@@ -4863,10 +5017,22 @@
           ]
         },
         "verifier": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整赤月延迟、身份转换及胜利前缀核验归verification，独立审计数据保原Set／Map语义与实际消费。",
+              "commit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+              "owners": [
+                "backend/src/verification/reproduction/red-moon/validate.ts"
+              ],
+              "evidence": [
+                "docs/refactor/remaining-reproduction-verifier-owners.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记verifier职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "text": {
@@ -5155,11 +5321,22 @@
               "evidence": [
                 "docs/refactor/recipient-scholar-poison-routes.md"
               ]
+            },
+            {
+              "part": "完整加成效果数组及其同状态身份、追加／读取归本族运行记录；通用夜阶段数据不再持有学者私有效果。",
+              "commit": "cc7242548708543a674d2b898aef36e28f9e3dfc",
+              "owners": [
+                "backend/src/game/mechanisms/roles/scholar_mentor/bonus-effect-records.ts"
+              ],
+              "evidence": [
+                "docs/refactor/scholar-bonus-effect-records.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格仍须核对其它具体效果类别及实际 Damage→Wave→Commit 消费、原体／当前性、失败前缀和独立交互验收；本子项不能完成整个效果格。"
+            "本格仍须核对其它具体效果类别及实际 Damage→Wave→Commit 消费、原体／当前性、失败前缀和独立交互验收；本子项不能完成整个效果格。",
+            "本次仅登记effect职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "observation": {
@@ -5177,10 +5354,22 @@
           ]
         },
         "verifier": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整学者／导师独立选择与夜伤害账本归verification，不用生产结算或归档output生成预期，原历史前缀核对保持。",
+              "commit": "eed72f1f7c44303ed3bc3033b2398da57bd28710",
+              "owners": [
+                "backend/src/verification/reproduction/scholar-mentor/validate.ts"
+              ],
+              "evidence": [
+                "docs/refactor/choice-effect-verifier-owners.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记verifier职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "text": {
@@ -5340,10 +5529,21 @@
               "evidence": [
                 "docs/refactor/role-state-owners.md"
               ]
+            },
+            {
+              "part": "完整普通查验准入表归具名规则组合，profile保持同一可写引用；当前角色晚读取与构造fallback、学者削弱和本地历史原顺序保持。",
+              "commit": "874030190c7b26980c1f82fe9a638caad3be99c6",
+              "owners": [
+                "backend/src/rulesets/seer-tool-admission.ts"
+              ],
+              "evidence": [
+                "docs/refactor/seer-tool-admission.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Native/target/failure policies and paid effects outside the actor query remain separate unfinished C24 slices."
+            "Native/target/failure policies and paid effects outside the actor query remain separate unfinished C24 slices.",
+            "本次仅登记eligibility职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "lifecycle": {
@@ -5757,10 +5957,22 @@
           ]
         },
         "verifier": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整蚀时狼妃独立归档核验归verification，反射pending匹配、资源与eventCount历史核对保持。",
+              "commit": "eed72f1f7c44303ed3bc3033b2398da57bd28710",
+              "owners": [
+                "backend/src/verification/reproduction/time-consort/validate.ts"
+              ],
+              "evidence": [
+                "docs/refactor/choice-effect-verifier-owners.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记verifier职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "text": {
@@ -5888,10 +6100,22 @@
           ]
         },
         "verifier": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整独立归档核验移入verification，原映射／历史／检查点算法和实际消费者保持，无旧路径桥。",
+              "commit": "198933bb2d06d2ef702c012be32bd6e851d67875",
+              "owners": [
+                "backend/src/verification/reproduction/trickster/validate.ts"
+              ],
+              "evidence": [
+                "docs/refactor/trickster-verification-owner.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记verifier职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "text": {
@@ -6436,10 +6660,21 @@
               "evidence": [
                 "docs/refactor/night-actor-queries.md"
               ]
+            },
+            {
+              "part": "完整可写用药准入表归具名规则组合，Scholar／Magician经公开端口消费；原资格、库存、目标读取及首拒绝顺序保持，提交和付款仍归阶段。",
+              "commit": "3744a99b2b9a0127a73c8b6407e1e541ec82cdab",
+              "owners": [
+                "backend/src/rulesets/potion-tool-admission.ts"
+              ],
+              "evidence": [
+                "docs/refactor/potion-tool-admission.md"
+              ]
             }
           ],
           "remainingRequirements": [
-            "Native/target/failure policies and paid effects outside the actor query remain separate unfinished C24 slices."
+            "Native/target/failure policies and paid effects outside the actor query remain separate unfinished C24 slices.",
+            "本次仅登记eligibility职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "lifecycle": {
@@ -7014,10 +7249,22 @@
           ]
         },
         "verifier": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "完整独立归档核验移入verification，原M(W(raw))、尝试／历史和eventCount前缀政策保持，无旧路径桥。",
+              "commit": "37f56392322fdfa859b0d674f339693e0ca883ff",
+              "owners": [
+                "backend/src/verification/reproduction/wolf-sorcerer/validate.ts"
+              ],
+              "evidence": [
+                "docs/refactor/wolf-sorcerer-verification-owner.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "本次仅登记verifier职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "text": {
@@ -9720,12 +9967,25 @@
               "evidence": [
                 "docs/refactor/role-inspection-state-slot.md"
               ]
+            },
+            {
+              "part": "完整授予／复制／转移提交归具名所有者，角色查询和事实发布只有一份共享实现；实际字典、计数、目标安装／发布先于原删除／退休／转出事实及失败前缀保持。",
+              "commit": "f4f1ce4a4097a3d56d7fc6dcd09a380283f1867b",
+              "owners": [
+                "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+                "backend/src/game/mechanisms/roles/night-ability-change-runtime.ts",
+                "backend/src/game/mechanisms/roles/ability_changes.ts"
+              ],
+              "evidence": [
+                "docs/refactor/night-ability-grants-owner.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Complete all actual state/schema/codec and common lifecycle/permission consumers; static ordinary read views do not close the whole mechanism.",
             "Finish canonical pure data ownership, obsolete exports and final zero-debt same-source acceptance.",
-            "只交付prepared原生安装写owner；通用能力其它grant/copy/transfer/失效和整格矩阵仍待验，不创建第二store或新lease。"
+            "只交付prepared原生安装写owner；通用能力其它grant/copy/transfer/失效和整格矩阵仍待验，不创建第二store或新lease。",
+            "本次仅登记state职责子项；完整机制的跨生命周期、权限／资源、格式兼容和最终同输入验收继续，不能以本地迁移关闭整格。"
           ]
         },
         "lease": {
@@ -10953,10 +11213,10 @@
     "currentOnlyRows": 2,
     "rows": 91,
     "cells": 910,
-    "pending": 704,
-    "partial": 206,
+    "pending": 688,
+    "partial": 222,
     "complete": 0,
     "not-applicable": 0
   },
-  "scope": "在原203partial／707pending台账上，仅追加771a7bf4、5db015df、40dd1e4d三个实际提交的3part：Noble与Mist两个state格及Wolf Beauty一个lifecycle格；其它907格完整不变，原全部parts／remaining前缀和冻结89行基线保持。新206partial／704pending仍无complete或N/A。本地状态槽／影子与死亡波发布不代表整族类型、请求生命、付款、归档或同输入完整验收，未登记来源继续保留。"
+  "scope": "仅追加21个已提交职责子项：运行效果所有权、完整工具准入、独立归档核验归属和授予／复制／转移；原301个part与所有remaining顺序前缀保持，889个未触及格完整不变。222partial／688pending，无complete或N/A；物理迁移不代表完整行为覆盖、格式兼容或全目标验收。"
 }
