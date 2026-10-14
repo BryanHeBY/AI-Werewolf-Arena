@@ -1,0 +1,5 @@
+{
+  "extends": "./night-readability-types-config.json",
+  "include": ["../../../backend/tests/unit/rulesets/night-readability.test.ts"],
+  "exclude": []
+}

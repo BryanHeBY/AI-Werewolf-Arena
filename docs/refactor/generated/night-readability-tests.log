@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/rulesets/night-readability.test.ts:
+(pass) empty setup retains eight original World reads and an active deal is not cancelled by rejection [0.50ms]
+(pass) readability keeps captured ownership order and unconditional checks before Demon short circuit [0.22ms]
+(pass) a conditional roster failure preserves prior checks and skips all later query effects [0.07ms]
+
+ 3 pass
+ 0 fail
+ 9 expect() calls
+Ran 3 tests across 1 file. [76.00ms]

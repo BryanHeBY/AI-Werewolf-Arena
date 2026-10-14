@@ -1,0 +1,359 @@
+{
+  "bindings": [
+    {
+      "name": "hasActiveGhostBride",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "name": "hasActiveGhostBride"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "name": "hasActiveGhostBride"
+      }
+    },
+    {
+      "name": "ghostBrideReady",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "name": "ghostBrideReady"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "name": "ghostBrideReady"
+      }
+    },
+    {
+      "name": "hasActiveLonelyGirl",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+        "name": "hasActiveLonelyGirl"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+        "name": "hasActiveLonelyGirl"
+      }
+    },
+    {
+      "name": "lonelyGirlReady",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+        "name": "lonelyGirlReady"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+        "name": "lonelyGirlReady"
+      }
+    },
+    {
+      "name": "hasActiveWildChild",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+        "name": "hasActiveWildChild"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+        "name": "hasActiveWildChild"
+      }
+    },
+    {
+      "name": "wildChildReady",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+        "name": "wildChildReady"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+        "name": "wildChildReady"
+      }
+    },
+    {
+      "name": "hasActiveInitialIdentitySetup",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+        "name": "hasActiveInitialIdentitySetup"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+        "name": "hasActiveInitialIdentitySetup"
+      }
+    },
+    {
+      "name": "initialIdentitySetupReady",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+        "name": "initialIdentitySetupReady"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+        "name": "initialIdentitySetupReady"
+      }
+    },
+    {
+      "name": "initialIdentityKind",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+        "name": "initialIdentityKind"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+        "name": "initialIdentityKind"
+      }
+    },
+    {
+      "name": "animalAuthoritySnapshot",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+        "name": "animalAuthoritySnapshot"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+        "name": "animalAuthoritySnapshot"
+      }
+    },
+    {
+      "name": "fragrantAuthoritySnapshot",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+        "name": "fragrantAuthoritySnapshot"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+        "name": "fragrantAuthoritySnapshot"
+      }
+    },
+    {
+      "name": "assertNobleBodyRosterCurrent",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+        "name": "assertNobleBodyRosterCurrent"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+        "name": "assertNobleBodyRosterCurrent"
+      }
+    },
+    {
+      "name": "assertRadiantRosterCurrent",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+        "name": "assertRadiantRosterCurrent"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+        "name": "assertRadiantRosterCurrent"
+      }
+    },
+    {
+      "name": "assertMistRosterCurrent",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+        "name": "assertMistRosterCurrent"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+        "name": "assertMistRosterCurrent"
+      }
+    },
+    {
+      "name": "assertTricksterRosterCurrent",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/trickster/night_frame.ts",
+        "name": "assertTricksterRosterCurrent"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/trickster/night_frame.ts",
+        "name": "assertTricksterRosterCurrent"
+      }
+    },
+    {
+      "name": "assertWolfSorcererRosterCurrent",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+        "name": "assertWolfSorcererRosterCurrent"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/wolf_sorcerer/night_frame.ts",
+        "name": "assertWolfSorcererRosterCurrent"
+      }
+    },
+    {
+      "name": "assertTimeConsortRosterCurrent",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+        "name": "assertTimeConsortRosterCurrent"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+        "name": "assertTimeConsortRosterCurrent"
+      }
+    },
+    {
+      "name": "assertScholarMentorRosterCurrent",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+        "name": "assertScholarMentorRosterCurrent"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+        "name": "assertScholarMentorRosterCurrent"
+      }
+    },
+    {
+      "name": "assertMagicianRosterCurrent",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+        "name": "assertMagicianRosterCurrent"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+        "name": "assertMagicianRosterCurrent"
+      }
+    },
+    {
+      "name": "assertNightmareRosterCurrent",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+        "name": "assertNightmareRosterCurrent"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+        "name": "assertNightmareRosterCurrent"
+      }
+    },
+    {
+      "name": "assertEvilKnightRosterCurrent",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/night_frame.ts",
+        "name": "assertEvilKnightRosterCurrent"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/night_frame.ts",
+        "name": "assertEvilKnightRosterCurrent"
+      }
+    },
+    {
+      "name": "assertDemonNightReadable",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+        "name": "assertDemonNightReadable"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+        "name": "assertDemonNightReadable"
+      }
+    },
+    {
+      "name": "demonWitchMarksSafe",
+      "old": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+        "name": "demonWitchMarksSafe"
+      },
+      "current": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+        "name": "demonWitchMarksSafe"
+      }
+    }
+  ],
+  "remainingPipelineBindingsSame": true,
+  "remainingPipelineBindingCount": 67,
+  "modules": 264,
+  "returns": [
+    {
+      "from": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/fragrant_pair_seer/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/mist_raven/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/trickster/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/wolf_sorcerer/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/time_wolf_consort/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/magician/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/evil_knight/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "toOwner": null,
+      "toPipeline": null
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_requests.ts",
+      "toOwner": null,
+      "toPipeline": null
+    }
+  ],
+  "reachableAI": [],
+  "external": [
+    "node:async_hooks",
+    "node:util",
+    "zod"
+  ],
+  "limits": "当前声明式非type import/export有限图，未枚举计算型动态依赖或执行冷初始化；只核指定新增owner/pipeline返回路径。"
+}

@@ -1,0 +1,24 @@
+{
+  "extends": "../../../backend/tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": "../../..",
+    "types": [
+      "bun-types"
+    ],
+    "typeRoots": [
+      "../../../backend/node_modules/@types",
+      "../../../backend/node_modules"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "Bundler"
+  },
+  "include": [
+    "../../../backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+    "../../../backend/src/rulesets/night-readability.ts",
+    "../../../backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+    "../../../backend/src/game/mechanisms/roles/evil_knight/ports.ts",
+    "../../../backend/tests/unit/rulesets/night-readability.test.ts"
+  ],
+  "exclude": []
+}

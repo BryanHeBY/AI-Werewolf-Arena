@@ -16,50 +16,34 @@ import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { prepareNightPipelineLifecycle, type NightLifecycleHandoff } from "../../../rulesets/night-lifecycle-plan";
 
 
+import { assertNightSetupReady, assertNightReadable } from "../../../rulesets/night-readability";
 import { RulePlan } from "../../../rulesets/rule-plan";
 import { bindNightAbilityActorQuery } from "../../mechanisms/roles/night-ability-actors";
 import { isFragrantPairBoard, fragrantAuthoritySnapshot } from "../../mechanisms/roles/fragrant_pair_seer/ports";
-import { createNobleNightAbortReceiver, attachNobleNightReceiver, checkpointNobleBodyAuthority, assertNobleBodyRosterCurrent, isNobleBodyBoard } from "../../mechanisms/roles/noble_secret_body/ports";
+import { createNobleNightAbortReceiver, attachNobleNightReceiver, checkpointNobleBodyAuthority, isNobleBodyBoard } from "../../mechanisms/roles/noble_secret_body/ports";
 import { animalAuthoritySnapshot } from "../../mechanisms/roles/animal_dream/ports";
-import { isRadiantEclipseBoard, assertRadiantRosterCurrent } from "../../mechanisms/roles/radiant_eclipse/ports";
-import { isScholarMentorBoard, assertScholarMentorRosterCurrent } from "../../mechanisms/roles/scholar_mentor/ports";
-import { mistKnifeTargets, isMistRavenBoard, assertMistRosterCurrent } from "../../mechanisms/roles/mist_raven/ports";
+import { isRadiantEclipseBoard } from "../../mechanisms/roles/radiant_eclipse/ports";
+import { isScholarMentorBoard } from "../../mechanisms/roles/scholar_mentor/ports";
+import { mistKnifeTargets, isMistRavenBoard } from "../../mechanisms/roles/mist_raven/ports";
 import { assertScholarMentorBonusEffects } from "../../mechanisms/roles/scholar_mentor/night_stages";
-import { isTimeConsortBoard, assertTimeConsortRosterCurrent } from "../../mechanisms/roles/time_wolf_consort/ports";
-import { assertWolfSorcererRosterCurrent } from "../../mechanisms/roles/wolf_sorcerer/ports";
-import { assertTricksterRosterCurrent } from "../../mechanisms/roles/trickster/ports";
-import { assertMagicianRosterCurrent, isMagicianBoard } from "../../mechanisms/roles/magician/ports";
+import { isTimeConsortBoard } from "../../mechanisms/roles/time_wolf_consort/ports";
+import { isMagicianBoard } from "../../mechanisms/roles/magician/ports";
 import { isRedMoonBoard } from "../../mechanisms/roles/demon_hunter/ports";
 import {
-  assertNightmareRosterCurrent,
   isNightmareBoard,
-} from "../../mechanisms/roles/nightmare_shadow/night_frame";
+} from "../../mechanisms/roles/nightmare_shadow/ports";
 import {
   isEvilKnightBoard,
   assertEvilKnightRosterCurrent,
-} from "../../mechanisms/roles/evil_knight/night_frame";
+} from "../../mechanisms/roles/evil_knight/ports";
 import {
   sealNativeGuardContribution,
   lateUnknownGuardContribution,
 } from "../../mechanisms/roles/demon_hunter/guard_contribution";
-import {
-  demonHunterActorId,
-  assertDemonNightReadable,
-  originalDemonNightLives,
-  demonOriginalWolfSourceCurrent,
-  demonOriginalWolfTargetCurrent,
-} from "../../mechanisms/roles/demon_hunter/ports";
-import { demonWitchMarksSafe } from "../../mechanisms/roles/demon_hunter/native_potion_requests";
+import { demonHunterActorId, originalDemonNightLives, demonOriginalWolfSourceCurrent, demonOriginalWolfTargetCurrent } from "../../mechanisms/roles/demon_hunter/ports";
 import { sealDeliveredDemonWitchSources } from "../../mechanisms/roles/demon_hunter/native_potion_controller";
-import {
-  weddingSetup,
-  ghostBrideReady,
-  hasActiveGhostBride,
-} from "../../mechanisms/roles/ghost_bride/ports";
+import { weddingSetup } from "../../mechanisms/roles/ghost_bride/ports";
 import { discardStaleWeddingKnife } from "../../mechanisms/roles/ghost_bride/night_stages";
-import { lonelyGirlReady, hasActiveLonelyGirl } from "../../mechanisms/roles/lonely_girl/ports";
-import { wildChildReady, hasActiveWildChild } from "../../mechanisms/roles/wild_child/ports";
-import { hasActiveInitialIdentitySetup, initialIdentityKind, initialIdentitySetupReady } from "../../mechanisms/roles/initial_identity/ports";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import {
@@ -178,14 +162,7 @@ export class NightPipeline {
     day: number,
     options: NightPipelineOptions = {},
   ): Promise<NightPipelineResult> {
-    if (hasActiveGhostBride(this.world) || !ghostBrideReady(this.world))
-      throw new Error("ghost_bride_setup_before_night_required");
-    if (hasActiveLonelyGirl(this.world) || !lonelyGirlReady(this.world))
-      throw new Error("lonely_girl_setup_before_night_required");
-    if (hasActiveWildChild(this.world) || !wildChildReady(this.world))
-      throw new Error("wild_child_setup_before_night_required");
-    if (hasActiveInitialIdentitySetup(this.world) || !initialIdentitySetupReady(this.world))
-      throw new Error(`${initialIdentityKind(this.world) ?? "thief"}_setup_before_night_required`);
+    assertNightSetupReady({ world: () => this.world });
     const isCurrent = options.isCurrent ?? (() => true);
     if (!isCurrent())
       return attachNobleNightReceiver({ interrupted: true }, createNobleNightAbortReceiver());
@@ -212,25 +189,18 @@ export class NightPipeline {
     } = lifecycle;
     try {
       lifecycle.open(isCurrent);
-      const assertReadable = () => {
-        if (ownsAnimal && !animalAuthoritySnapshot(this.world))
-          throw new Error("animal_authority_revoked");
-        if (ownsFragrant) fragrantAuthoritySnapshot(this.world);
-        if (ownsNoble) assertNobleBodyRosterCurrent(this.world);
-        if (ownsRadiant) assertRadiantRosterCurrent(this.world);
-        if (ownsMist) assertMistRosterCurrent(this.world);
-        if (config.trickster) assertTricksterRosterCurrent(this.world);
-        if (config.wolfSorcerer) assertWolfSorcererRosterCurrent(this.world);
-        if (config.timeConsort) assertTimeConsortRosterCurrent(this.world);
-        if (config.scholarMentor) assertScholarMentorRosterCurrent(this.world);
-        if (config.magician) assertMagicianRosterCurrent(this.world);
-        assertNightmareRosterCurrent(this.world);
-        assertEvilKnightRosterCurrent(this.world);
-        if (!ownsDemon) return;
-        assertDemonNightReadable(this.world);
-        if (!this.world.entityIds().every((id) => demonWitchMarksSafe(this.world, id)))
-          throw new Error("demon_hunter_unreadable_marks");
+      // 归属保持本次生命周期的原值；World／config只在每个具体检查点晚读，不缓存玩家名单。
+      const readability = {
+        world: () => this.world,
+        config: () => config,
+        ownsAnimal: () => ownsAnimal,
+        ownsFragrant: () => ownsFragrant,
+        ownsNoble: () => ownsNoble,
+        ownsRadiant: () => ownsRadiant,
+        ownsMist: () => ownsMist,
+        ownsDemon: () => ownsDemon,
       };
+      const assertReadable = () => assertNightReadable(readability);
       assertReadable();
       const nativeProvider =
         ownsAnimal ||

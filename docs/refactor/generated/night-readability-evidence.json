@@ -1,0 +1,47 @@
+{
+  "scope": {
+    "base": "96d3d0272392f8ad625ece176cee36df6dd789ea",
+    "source": [
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "sha256": "e78ad051db063e88af5766107489803c7ec752110eb724278926fe31d092a34c"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+        "sha256": "84632c1c7116ec8fd04cad4164648d1c36f50b3de1ee138711a92923300044ce"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/evil_knight/ports.ts",
+        "sha256": "b87d5976939b109d455a163235a1d3970caafc0582c9adff1d37eb5299d76b64"
+      },
+      {
+        "path": "backend/src/rulesets/night-readability.ts",
+        "sha256": "a5e15010e6e808ace09c99895683abd9727d28fa7d30644e974bbb7fea725634"
+      },
+      {
+        "path": "backend/tests/unit/rulesets/night-readability.test.ts",
+        "sha256": "fcae8f1ddcd4814d7d3ed00fe3a1f9b94e5d17323f7f7fe69cc1275de164a6f4"
+      }
+    ]
+  },
+  "artifacts": {
+    "docs/refactor/generated/night-readability-before.json": "eb0c6f42c5b1f6081699310698fdefbe71665e7090dfea09038d2da8aaafbc8c",
+    "docs/refactor/generated/night-readability-binding-graph.cjs": "a284b3eabf589d1c7531a661736a5b4d8800ebec2931b232affa8df0b72b2237",
+    "docs/refactor/generated/night-readability-bindings-graph.json": "ebbb4a0e8806bddd83a87c2183c45bbdaca504b2a8dddc36afe95e12a0254d7d",
+    "docs/refactor/generated/night-readability-head-check.ts": "95386f1a02a541aa7bbec25633ad46ac7f0ed0f34a968dae8cefdfa0c2f3b930",
+    "docs/refactor/generated/night-readability-heads.json": "dcb5e02796ab45cae91e48fbc6ffbee73efa365b2895d345575f6ca29e76c088",
+    "docs/refactor/generated/night-readability-original-blocks.json": "960cb8e0e8eb8482c3af5b7a585d68be2ae9bf7b241c3c41ce29b0056a9ebf28",
+    "docs/refactor/generated/night-readability-program-proof.json": "5876d5fc7f2203a99dfa8c8a2b905421925830f754dc6fd0113a636bf33bf6ed",
+    "docs/refactor/generated/night-readability-proof.cjs": "c513cc344134a0dc5bfbac7a5bebe0de5e42d09f6b0427d5472f9423144e33c0",
+    "docs/refactor/generated/night-readability-receipts.json": "3a2981596a299b6917011e6a24d4013355abf1845938fe40fa9c97291d632f5e",
+    "docs/refactor/generated/night-readability-scope-final.json": "cbc5256ff53c9c567edd7a771b7e2359c24363ab5ad3de4db918a66307cdae8e",
+    "docs/refactor/generated/night-readability-tests.log": "0719e59f2e5a64915789c3acf70a5eae4f8175b875cad141b238f38f82d5cda8",
+    "docs/refactor/generated/night-readability-type-delta.json": "3e38fc5800a6fe4a3d87230e4372b4c9c02e55fa2fa5be91f5e9f18bde10c049",
+    "docs/refactor/generated/night-readability-types-config.json": "783a93e8db874c73707e4030675adafd0847e493e4d68b728f7646c72e23bafe",
+    "docs/refactor/generated/night-readability-types-final.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/refactor/generated/night-readability-types-unit-config.json": "b95a4e94951f634eb6d5ecf9b5341f394f749727e7fd9f53f89ea8eb156d9d3c",
+    "docs/refactor/generated/night-readability-types.log": "87066240df315080b2591d65ef7c74909d67ce8a819be7ae30b692a7e55d5308",
+    "docs/refactor/generated/night-readability-unused-import-delta.json": "cb1b856767b43e1f93358a58e6dd7fb904eda2b2e7a197c778f22f415140ba5f"
+  },
+  "approvedForIndependentReview": true
+}
