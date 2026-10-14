@@ -1,3 +1,7 @@
+/**
+ * 负责复盘语言与时区选择控件。输入为当前显示选项，输出只含被修改字段的回调参数。
+ * 当前非预设时区也保留为可见选项；控件不校验归档或自行修改播放帧与持久化数据。
+ */
 import { text } from "@ai-werewolf-arena/game-text";
 import { REPLAY_TIME_ZONES, type ReplayDisplayOptions } from "./replay-display";
 

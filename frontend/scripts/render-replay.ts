@@ -1,3 +1,8 @@
+/**
+ * 负责将已校验复盘离线渲染为 PNG 或 MP4。输入为 CLI 参数与渲染依赖，输出独占发布的目标文件或原错误集合。
+ * 本命令拥有临时目录和浏览器的创建／关闭；渲染完成后才发布，源归档与已存在目标不覆盖。
+ * 清理失败与渲染失败按发生顺序汇总；显示选项不改变归档事实，画面仍由同一帧输入构建。
+ */
 import { bundle } from "@remotion/bundler";
 import { openBrowser, renderMedia, renderStill, selectComposition } from "@remotion/renderer";
 import { parseArgs } from "node:util";
@@ -35,7 +40,7 @@ export async function renderReplay(
   const source = resolveReplayInput(values.input);
   const output = path.resolve(values.output);
   if (path.resolve(source) === output) throw new Error("replay_render_source_overwrite");
-  // Refuse existing outputs, including symlinks/hard links, before bundling or opening a browser.
+  // 打包和启动浏览器前先拒绝已有目标，包含符号链接；实际发布时仍需防止检查后的路径竞争。
   try {
     await lstat(output);
     throw new Error("replay_render_output_exists");
@@ -64,7 +69,7 @@ export async function renderReplay(
   )
     throw new Error("replay_frame_out_of_range");
   await mkdir(path.dirname(output), { recursive: true });
-  // Keep the artifact on the target file system so link() publishes it atomically and exclusively.
+  // 临时产物留在目标目录所在文件系统，最后用硬链接独占发布，避免覆盖并发创建的目标。
   const temporary = await mkdtemp(path.join(path.dirname(output), ".awa-replay-render-"));
   const artifact = path.join(temporary, still ? "artifact.png" : "artifact.mp4");
   let browser: Awaited<ReturnType<typeof openBrowser>> | undefined;
@@ -100,6 +105,7 @@ export async function renderReplay(
         concurrency: 2,
         overwrite: false,
       });
+    // 只有完整渲染成功才建立目标链接；发布失败保原文件与临时产物清理路径。
     try {
       await link(artifact, output);
     } catch (error) {
@@ -110,6 +116,7 @@ export async function renderReplay(
   } catch (error) {
     errors.push(error);
   } finally {
+    // 各项清理独立尝试；浏览器关闭失败也继续删本次临时目录，错误保留原发生顺序。
     if (browser) {
       try {
         await browser.close({ silent: true });

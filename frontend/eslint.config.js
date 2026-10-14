@@ -1,3 +1,7 @@
+/**
+ * 负责前端源码的静态错误规则配置。输入为 ESLint 文件集合，输出解析选项、忽略路径与错误级别。
+ * 仅声明配置，不编译或执行播放器；浏览器行为与跨包依赖仍由各自验证入口检查。
+ */
 import tsParser from "@typescript-eslint/parser";
 
 export default [

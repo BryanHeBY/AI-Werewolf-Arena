@@ -1,0 +1,80 @@
+{
+  "source": [
+    {
+      "path": "frontend/eslint.config.js",
+      "sha256": "86a0b7fd87248911256866bf307d83f10a46869363467024c64a2415010d8e29"
+    },
+    {
+      "path": "frontend/scripts/cli_error.ts",
+      "sha256": "81e3dde33c593c9687727684dd0cec39626ec508756b47f8ca0103e856491391"
+    },
+    {
+      "path": "frontend/scripts/render-replay.ts",
+      "sha256": "8a958c7a5ae2a11558cd5b73f29be6eb234208f7188e86cc6d550548dedfca7b"
+    },
+    {
+      "path": "frontend/scripts/replay-dev.ts",
+      "sha256": "a7f94de98672be987d7803a5002d5591eed566afa0d5dc924ba1138f06d64460"
+    },
+    {
+      "path": "frontend/vite.config.ts",
+      "sha256": "d54ee257656959cd4aa97f464e395a7d996ea48cad0e863aa3662984681b54b4"
+    },
+    {
+      "path": "frontend/src/App.tsx",
+      "sha256": "85f6b2ad6267bc4a519058f0a3b15a04807c99bb9d22374bc01b99ab564109dd"
+    },
+    {
+      "path": "frontend/src/main.tsx",
+      "sha256": "3c062f3ea120a20125fba47307c33446f4213e9b90280be959940f5d55490512"
+    },
+    {
+      "path": "frontend/src/replay/EventTimeline.tsx",
+      "sha256": "7d80eb9902898c8c83443539a86610874cfc199384d193d0a9080b96306b445d"
+    },
+    {
+      "path": "frontend/src/replay/PlayerSeats.tsx",
+      "sha256": "8ec5e8ac8d126279a51ddf62d516e09b8b91b46fd8408b36d40502d397c81b8b"
+    },
+    {
+      "path": "frontend/src/replay/ReplayComposition.tsx",
+      "sha256": "53d7067c6b68f6fe491b3a89790238841d174a4fcbfd669ccd2d9375c73b0250"
+    },
+    {
+      "path": "frontend/src/replay/ReplayDisplayControls.tsx",
+      "sha256": "60cf1946656fea88ef11cacd4c90d6d980b6ee54260599d1b7a785357010c3ba"
+    },
+    {
+      "path": "frontend/src/replay/ReplayStage.tsx",
+      "sha256": "ac14f51776d9fcaa4423fc6fe718d732245e45f8bc12be759f4d96192ccd9620"
+    },
+    {
+      "path": "frontend/src/replay/ReplayWorkspace.tsx",
+      "sha256": "26e5e950d47f055ac11a739ae88a18c4c40a009c617b56f213950e44df01cca9"
+    },
+    {
+      "path": "frontend/src/replay/remotion-entry.tsx",
+      "sha256": "c1d94c34bf3fe9a7ad2f4ab7ab1b2adede2616f9b15d19722013af82e0e90295"
+    },
+    {
+      "path": "frontend/src/replay/replay-presentation.ts",
+      "sha256": "fc4f6e0d15970611fd6c748b17d965071bb82fd44d55019b0c288fe155ef1266"
+    },
+    {
+      "path": "frontend/src/replay/useReplayPlayback.ts",
+      "sha256": "3a7887565042821cdc312ffac45afe818d6a56427b6b3a42d0dfd8d9300fd656"
+    },
+    {
+      "path": "frontend/tests/e2e/animal-dream.spec.ts",
+      "sha256": "e5764c03c2d85a71d5363848b9864ad2b536c20a6541b20f466d2e6973f407cb"
+    },
+    {
+      "path": "frontend/tests/e2e/fragrant-pair-seer.spec.ts",
+      "sha256": "4f643d2b0e53d49e027d13b8c4996e1bfff565ee5e5c6d35872e97000a8fdea2"
+    }
+  ],
+  "sourceReadySHA256": "670b0ff3b9dbcaa2877e9583bd653188a12ebae0310757bcfe39c7e922056932",
+  "documentationPaths": 724,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

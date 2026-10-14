@@ -1,3 +1,7 @@
+/**
+ * 负责馥郁双生复盘的双语浏览器集成测试。输入为既有公开／玩家 fixture，断言关键帧席位、反向跳转与私有事实裁剪。
+ * 画面对照来自共用纯帧视图，不替代独立领域核验；只路由本地归档样本，不调用模型或重新运行游戏。
+ */
 import { test, expect } from "@playwright/test";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { fragrantNames, loadFragrant, fragrantPrivateReplay } from "../support/fragrant-replay";
@@ -16,6 +20,7 @@ for (const locale of ["zh-CN", "en"] as const)
           ? [i]
           : [],
       );
+      // 逆跳复用相同目标帧，检查投影不会累积上次播放到的状态。
       for (const i of [...indices, ...[...indices].reverse().slice(0, 3)]) {
         const frame = i * 90 + 45;
         await slider.evaluate((el, frame) => {

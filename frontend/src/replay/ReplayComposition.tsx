@@ -1,3 +1,7 @@
+/**
+ * 负责播放器与离线渲染共用的帧画面。输入为已构建复盘显示参数和帧号，输出席位布局、事件字幕及终局标记。
+ * 画面只消费纯帧投影，不读取工作台焦点、运行时钟或外部游戏状态；身份披露不在此补推。
+ */
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { buildReplayFrame, FRAMES_PER_EVENT, type ReplayRenderInput } from "./replay-frame";
 export { FRAMES_PER_EVENT } from "./replay-frame";
@@ -7,12 +11,13 @@ export function ReplayComposition(input: ReplayRenderInput) {
   return <ReplayFrame input={input} frame={frame} />;
 }
 
-/** The exact frame view used by the Player and offline composition. */
+/** 播放器与离线 composition 使用同一帧视图；直接传帧号也经过同一投影。 */
 export function ReplayFrame({ input, frame }: { input: ReplayRenderInput; frame: number }) {
   const view = buildReplayFrame(input, frame);
-  // A sealed result has a longer caption and winner rows; reserve room below its seats.
+  // 封盘结果有较长字幕与胜者行，因此只调整席位布局，为下方结果保留空间。
   const seatCenter = view.snapshot.decision ? 33 : 38;
   const seatRadius = view.snapshot.decision ? 17 : 21;
+  // 字幕透明度取事件内相对帧，不依赖播放是否暂停或用户前后跳转。
   const fade = interpolate(frame % FRAMES_PER_EVENT, [0, 10, 72, 90], [0, 1, 1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",

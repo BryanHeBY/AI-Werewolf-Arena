@@ -1,3 +1,7 @@
+/**
+ * 负责动物梦境复盘的双语浏览器集成测试。输入为既有公开／玩家 fixture，断言逐帧席位、反向跳转和私有字段缺席。
+ * 画面对照使用共用纯帧视图，不是独立规则 oracle；浏览器路由只提供本地样本，不启动真实模型或重新执行对局。
+ */
 import { test, expect } from "@playwright/test";
 import { readReplayDocument } from "@ai-werewolf-arena/replay-contract";
 import { animalNames, loadAnimal, animalPrivateReplay } from "../support/animal-replay";
@@ -18,6 +22,7 @@ for (const locale of ["zh-CN", "en"] as const)
           ? [i]
           : [],
       );
+      // 先按正序跳到关键边界，再逆跳三个边界，验证当前画面不依赖此前播放路径。
       for (const i of [...indices, ...[...indices].reverse().slice(0, 3)]) {
         const frame = i * 90 + 45;
         await slider.evaluate((el, frame) => {

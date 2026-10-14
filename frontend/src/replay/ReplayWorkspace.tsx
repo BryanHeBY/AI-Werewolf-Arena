@@ -48,6 +48,7 @@ export function ReplayWorkspace({
   const snapshot = buildReplaySnapshot(presentationReplay, activeIndex);
   const activeEvent = presentationReplay.events[activeIndex] ?? null;
   const playerIds = presentationReplay.players.map((player) => player.player_id);
+  // 焦点只筛时间线，不裁剪驱动画面／席位的完整展示事件；公开信息边界由加载文档决定。
   const visibleEvents =
     focusedPlayerId === null
       ? presentationReplay.events
@@ -144,6 +145,7 @@ export function ReplayWorkspace({
         activeEventSeq={activeEvent?.seq ?? null}
         focusedPlayerId={focusedPlayerId}
         onJumpTo={(index) => {
+          // 时间线返回筛后下标；按同一事件引用找回完整展示数组位置，再跳到对应帧。
           const event = visibleEvents[index];
           const originalIndex = presentationReplay.events.indexOf(event);
           jumpTo(originalIndex);

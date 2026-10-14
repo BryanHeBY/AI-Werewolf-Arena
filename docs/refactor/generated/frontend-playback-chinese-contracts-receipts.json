@@ -1,0 +1,43 @@
+{
+  "executor": "/root",
+  "sourceReady": {
+    "path": "docs/refactor/generated/frontend-playback-chinese-contracts-source-ready.json",
+    "sha256": "670b0ff3b9dbcaa2877e9583bd653188a12ebae0310757bcfe39c7e922056932"
+  },
+  "runs": [
+    {
+      "kind": "heads",
+      "chunk": "a7f320",
+      "actualExitCode": 0,
+      "raw": "docs/refactor/generated/frontend-playback-chinese-contracts-heads-output.txt"
+    },
+    {
+      "kind": "proof-first",
+      "chunk": "fe0979",
+      "actualExitCode": 1,
+      "raw": "docs/refactor/generated/frontend-playback-chinese-contracts-proof-first-output.txt",
+      "cause": "工具把正文与代码中的ESLint识别为指令；源码未改"
+    },
+    {
+      "kind": "proof-successor",
+      "chunk": "77763d",
+      "actualExitCode": 0,
+      "raw": "docs/refactor/generated/frontend-playback-chinese-contracts-proof-output.txt",
+      "changes": "仅工具真实注释范围和指令识别"
+    }
+  ],
+  "businessTestsRun": false,
+  "typesRun": false,
+  "fullGatesRun": false,
+  "greenChecksRepeated": false,
+  "finalCommentBridge": {
+    "chunk": "1644ee",
+    "actualExitCode": 0,
+    "sourceReady": {
+      "path": "docs/refactor/generated/frontend-playback-chinese-contracts-source-ready-final.json",
+      "sha256": "6c1998013b89d9220f65f707a87663de2a7b9aa240d8d8ceedea970eef529abd"
+    },
+    "raw": "docs/refactor/generated/frontend-playback-chinese-contracts-final-comment-output.txt",
+    "firstGreenRepeated": false
+  }
+}

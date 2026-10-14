@@ -1,3 +1,7 @@
+/**
+ * 负责将复盘文档映射为播放器展示序列。输入为原文档，输出保源 seq 与出处的筛选视图。
+ * 仅隐藏三个有统一结算展示的逐项事件，不重编号或改原文档，也不执行玩家权限过滤。
+ */
 import { readReplayEventType } from "./replay-event-reader";
 import type { ReplayDocument } from "@ai-werewolf-arena/replay-contract";
 
@@ -11,7 +15,7 @@ const SUMMARY_ONLY_EVENT_TYPES = new Set([
   "vote_cast",
 ]);
 
-/** A filtered view preserves source event seq values; it is not a persisted ReplayDocument. */
+/** 展示视图保留源事件序号与 schema／视角出处；它不是可直接持久化的 ReplayDocument。 */
 export interface PresentationReplay extends Omit<ReplayDocument, "schemaVersion" | "perspective"> {
   kind: "presentation";
   sourceSchemaVersion: ReplayDocument["schemaVersion"];

@@ -1,0 +1,500 @@
+[
+  {
+    "path": "frontend/eslint.config.js",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 102,
+        "before": "",
+        "after": "/**\n * 负责前端源码的静态错误规则配置。输入为 ESLint 文件集合，输出解析选项、忽略路径与错误级别。\n * 仅声明配置，不编译或执行播放器；浏览器行为与跨包依赖仍由各自验证入口检查。\n */\n"
+      }
+    ]
+  },
+  {
+    "path": "frontend/scripts/cli_error.ts",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 120,
+        "before": "",
+        "after": "/**\n * 负责将前端离线命令异常转为有限的双语诊断。输入为未知错误和显示语言，输出本地错误码与文案。\n * 仅接纳白名单字段与 HTTP 状态，不直接输出任意异常文字；描述符读取也可能触发外来 Proxy，失败时退回通用诊断。\n */\n"
+      },
+      {
+        "beforeStart": 801,
+        "beforeEnd": 801,
+        "afterStart": 921,
+        "afterEnd": 981,
+        "before": "",
+        "after": "\n    // 只读取自有数据描述符；不主动调用 messageRef 内的 getter，也不把相同文案当作可信诊断。"
+      },
+      {
+        "beforeStart": 2156,
+        "beforeEnd": 2211,
+        "afterStart": 2336,
+        "afterEnd": 2359,
+        "before": "Only local IDs and local loader messages may cross this",
+        "after": "只有本地白名单错误码和已核对的加载文案可以进入"
+      },
+      {
+        "beforeStart": 2216,
+        "beforeEnd": 2232,
+        "afterStart": 2364,
+        "afterEnd": 2367,
+        "before": "output boundary.",
+        "after": "输出。"
+      },
+      {
+        "beforeStart": 2505,
+        "beforeEnd": 2519,
+        "afterStart": 2640,
+        "afterEnd": 2663,
+        "before": "foreign object",
+        "after": "外来对象的描述符查询失败，继续使用通用错误码。"
+      }
+    ]
+  },
+  {
+    "path": "frontend/scripts/render-replay.ts",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 161,
+        "before": "",
+        "after": "/**\n * 负责将已校验复盘离线渲染为 PNG 或 MP4。输入为 CLI 参数与渲染依赖，输出独占发布的目标文件或原错误集合。\n * 本命令拥有临时目录和浏览器的创建／关闭；渲染完成后才发布，源归档与已存在目标不覆盖。\n * 清理失败与渲染失败按发生顺序汇总；显示选项不改变归档事实，画面仍由同一帧输入构建。\n */\n"
+      },
+      {
+        "beforeStart": 1687,
+        "beforeEnd": 1780,
+        "afterStart": 1848,
+        "afterEnd": 1890,
+        "before": "Refuse existing outputs, including symlinks/hard links, before bundling or opening a browser.",
+        "after": "打包和启动浏览器前先拒绝已有目标，包含符号链接；实际发布时仍需防止检查后的路径竞争。"
+      },
+      {
+        "beforeStart": 2947,
+        "beforeEnd": 3041,
+        "afterStart": 3057,
+        "afterEnd": 3097,
+        "before": "Keep the artifact on the target file system so link() publishes it atomically and exclusively.",
+        "after": "临时产物留在目标目录所在文件系统，最后用硬链接独占发布，避免覆盖并发创建的目标。"
+      },
+      {
+        "beforeStart": 4349,
+        "beforeEnd": 4349,
+        "afterStart": 4405,
+        "afterEnd": 4447,
+        "before": "",
+        "after": "// 只有完整渲染成功才建立目标链接；发布失败保原文件与临时产物清理路径。\n    "
+      },
+      {
+        "beforeStart": 4613,
+        "beforeEnd": 4613,
+        "afterStart": 4711,
+        "afterEnd": 4756,
+        "before": "",
+        "after": "\n    // 各项清理独立尝试；浏览器关闭失败也继续删本次临时目录，错误保留原发生顺序。"
+      }
+    ]
+  },
+  {
+    "path": "frontend/scripts/replay-dev.ts",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 125,
+        "before": "",
+        "after": "/**\n * 负责开发复盘入口的文件定位与 Vite 子进程装配。输入为文件／会话目录路径和显示语言参数，输出已解析路径或子进程退出码。\n * 文件存在性校验不等于归档内容校验；CLI 只把路径传给开发服务器，不改源文件或复制其内容到配置。\n */\n"
+      },
+      {
+        "beforeStart": 1489,
+        "beforeEnd": 1489,
+        "afterStart": 1614,
+        "afterEnd": 1664,
+        "before": "",
+        "after": "// cwd 保持调用目录；复盘路径经独立环境字段传递，标准流与最终退出码直接接回本命令。\n    "
+      }
+    ]
+  },
+  {
+    "path": "frontend/vite.config.ts",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 119,
+        "before": "",
+        "after": "/**\n * 负责前端构建配置与开发态复盘读取端点。输入为 Vite 请求及启动时的归档路径，输出前端资源或原文件字节流。\n * 仅 GET 消费该端点，缺路径返回有限 404；此处不解析归档内容，也不授予游戏行动或持久化写权。\n */\n"
+      },
+      {
+        "beforeStart": 313,
+        "beforeEnd": 313,
+        "afterStart": 432,
+        "afterEnd": 487,
+        "before": "",
+        "after": "\n        // 路径在服务器装配时捕获；每次 GET 另查存在性并流式读取，不把文档内容缓存在配置中。"
+      }
+    ]
+  },
+  {
+    "path": "frontend/src/App.tsx",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 115,
+        "before": "",
+        "after": "/**\n * 负责复盘页面的加载状态与显示偏好入口。输入为加载结果和用户语言／时区选择，输出工作台或加载／错误／空白页面。\n * 默认语言随归档，用户显式选择优先；卸载后忽略迟到结果，不以页面状态修改归档或驱动游戏规则。\n */\n"
+      },
+      {
+        "beforeStart": 674,
+        "beforeEnd": 674,
+        "afterStart": 789,
+        "afterEnd": 828,
+        "before": "",
+        "after": "// null 表示尚无用户覆盖；加载前使用中文，加载后才采用归档语言。\n  "
+      },
+      {
+        "beforeStart": 1055,
+        "beforeEnd": 1055,
+        "afterStart": 1209,
+        "afterEnd": 1243,
+        "before": "",
+        "after": "\n    // 只阻止卸载后的状态写入；该标记不取消已经发起的读取。"
+      }
+    ]
+  },
+  {
+    "path": "frontend/src/main.tsx",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 107,
+        "before": "",
+        "after": "/**\n * 负责浏览器 React 根节点装配。输入为宿主页面的 app 元素，输出 StrictMode 下的复盘应用并加载样式。\n * 本入口不读取归档或保存播放状态，加载与效果清理由实际组件负责。\n */\n"
+      }
+    ]
+  },
+  {
+    "path": "frontend/src/replay/EventTimeline.tsx",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 110,
+        "before": "",
+        "after": "/**\n * 负责渲染调用方提供的事件时间线。输入为已筛选事件、源 seq、焦点及显示语言，输出标签和跳转回调。\n * 回调索引属于当前传入数组，不是源事件 seq；组件不重排归档、计算游戏状态或执行权限过滤。\n */\n"
+      },
+      {
+        "beforeStart": 249,
+        "beforeEnd": 249,
+        "afterStart": 359,
+        "afterEnd": 417,
+        "before": "",
+        "after": "\n/** activeEventSeq 用源序号高亮，onJumpTo 用当前列表下标；筛选后的映射归工作台。 */"
+      }
+    ]
+  },
+  {
+    "path": "frontend/src/replay/PlayerSeats.tsx",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 97,
+        "before": "",
+        "after": "/**\n * 负责展示投影后的席位、存活与胜者标记。输入为当前玩家视图和焦点，输出席位按钮及选择回调。\n * 角色／公开身份区分沿用输入，组件不从事件补全隐藏身份或以焦点授予额外信息。\n */\n"
+      },
+      {
+        "beforeStart": 450,
+        "beforeEnd": 450,
+        "afterStart": 547,
+        "afterEnd": 580,
+        "before": "",
+        "after": "\n  // 存活统计只取当前帧投影；终局胜者与存活是两个独立标记。"
+      }
+    ]
+  },
+  {
+    "path": "frontend/src/replay/ReplayComposition.tsx",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 107,
+        "before": "",
+        "after": "/**\n * 负责播放器与离线渲染共用的帧画面。输入为已构建复盘显示参数和帧号，输出席位布局、事件字幕及终局标记。\n * 画面只消费纯帧投影，不读取工作台焦点、运行时钟或外部游戏状态；身份披露不在此补推。\n */\n"
+      },
+      {
+        "beforeStart": 374,
+        "beforeEnd": 425,
+        "afterStart": 481,
+        "afterEnd": 487,
+        "before": "The exact frame view used by the Player and offline",
+        "after": "播放器与离线"
+      },
+      {
+        "beforeStart": 437,
+        "beforeEnd": 438,
+        "afterStart": 499,
+        "afterEnd": 521,
+        "before": ".",
+        "after": " 使用同一帧视图；直接传帧号也经过同一投影。"
+      },
+      {
+        "beforeStart": 587,
+        "beforeEnd": 670,
+        "afterStart": 670,
+        "afterEnd": 704,
+        "before": "A sealed result has a longer caption and winner rows; reserve room below its seats.",
+        "after": "封盘结果有较长字幕与胜者行，因此只调整席位布局，为下方结果保留空间。"
+      },
+      {
+        "beforeStart": 780,
+        "beforeEnd": 780,
+        "afterStart": 814,
+        "afterEnd": 850,
+        "before": "",
+        "after": "\n  // 字幕透明度取事件内相对帧，不依赖播放是否暂停或用户前后跳转。"
+      }
+    ]
+  },
+  {
+    "path": "frontend/src/replay/ReplayDisplayControls.tsx",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 93,
+        "before": "",
+        "after": "/**\n * 负责复盘语言与时区选择控件。输入为当前显示选项，输出只含被修改字段的回调参数。\n * 当前非预设时区也保留为可见选项；控件不校验归档或自行修改播放帧与持久化数据。\n */\n"
+      }
+    ]
+  },
+  {
+    "path": "frontend/src/replay/ReplayStage.tsx",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 125,
+        "before": "",
+        "after": "/**\n * 负责 Remotion 播放器及传输控件装配。输入为展示复盘、显示选项与外部播放状态，输出帧画面和跳转／播放回调。\n * 帧与播放状态的同步归共用 hook，画面投影归 composition；本组件不以席位筛选重建归档事件。\n */\n"
+      },
+      {
+        "beforeStart": 1018,
+        "beforeEnd": 1054,
+        "afterStart": 1143,
+        "afterEnd": 1145,
+        "before": "rebuilds playback configuration when",
+        "after": "会在"
+      },
+      {
+        "beforeStart": 1066,
+        "beforeEnd": 1083,
+        "afterStart": 1157,
+        "afterEnd": 1185,
+        "before": "identity changes.",
+        "after": "引用变化时重建播放配置；无关帧状态更新不应更换这个对象。"
+      },
+      {
+        "beforeStart": 2008,
+        "beforeEnd": 2086,
+        "afterStart": 2110,
+        "afterEnd": 2135,
+        "before": "This composition has no audio; audio-device startup must not block its frames.",
+        "after": "本画面没有音轨，初始静音以免音频设备启动阻塞首帧。"
+      }
+    ]
+  },
+  {
+    "path": "frontend/src/replay/ReplayWorkspace.tsx",
+    "edits": [
+      {
+        "beforeStart": 1913,
+        "beforeEnd": 1913,
+        "afterStart": 1913,
+        "afterEnd": 1959,
+        "before": "",
+        "after": "\n  // 焦点只筛时间线，不裁剪驱动画面／席位的完整展示事件；公开信息边界由加载文档决定。"
+      },
+      {
+        "beforeStart": 5469,
+        "beforeEnd": 5469,
+        "afterStart": 5515,
+        "afterEnd": 5564,
+        "before": "",
+        "after": "// 时间线返回筛后下标；按同一事件引用找回完整展示数组位置，再跳到对应帧。\n          "
+      }
+    ]
+  },
+  {
+    "path": "frontend/src/replay/remotion-entry.tsx",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 117,
+        "before": "",
+        "after": "/**\n * 负责离线 Remotion composition 注册。输入为渲染 props，输出固定画幅／帧率与按展示事件计算的总帧数。\n * 空文档只是默认装配输入；真正归档仍经共用渲染输入校验，不读取工作台交互状态。\n */\n"
+      }
+    ]
+  },
+  {
+    "path": "frontend/src/replay/replay-presentation.ts",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 98,
+        "before": "",
+        "after": "/**\n * 负责将复盘文档映射为播放器展示序列。输入为原文档，输出保源 seq 与出处的筛选视图。\n * 仅隐藏三个有统一结算展示的逐项事件，不重编号或改原文档，也不执行玩家权限过滤。\n */\n"
+      },
+      {
+        "beforeStart": 339,
+        "beforeEnd": 364,
+        "afterStart": 437,
+        "afterEnd": 449,
+        "before": "A filtered view preserves",
+        "after": "展示视图保留源事件序号与"
+      },
+      {
+        "beforeStart": 366,
+        "beforeEnd": 369,
+        "afterStart": 451,
+        "afterEnd": 451,
+        "before": "our",
+        "after": ""
+      },
+      {
+        "beforeStart": 370,
+        "beforeEnd": 370,
+        "afterStart": 452,
+        "afterEnd": 453,
+        "before": "",
+        "after": "h"
+      },
+      {
+        "beforeStart": 371,
+        "beforeEnd": 383,
+        "afterStart": 454,
+        "afterEnd": 455,
+        "before": " event seq v",
+        "after": "m"
+      },
+      {
+        "beforeStart": 384,
+        "beforeEnd": 411,
+        "afterStart": 456,
+        "afterEnd": 472,
+        "before": "lues; it is not a persisted",
+        "after": "／视角出处；它不是可直接持久化的"
+      },
+      {
+        "beforeStart": 426,
+        "beforeEnd": 427,
+        "afterStart": 487,
+        "afterEnd": 488,
+        "before": ".",
+        "after": "。"
+      }
+    ]
+  },
+  {
+    "path": "frontend/src/replay/useReplayPlayback.ts",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 123,
+        "before": "",
+        "after": "/**\n * 负责播放器事件与工作台播放状态的同步。输入为展示事件数，输出 Player ref、当前帧及跳转／播放／全屏命令。\n * 本 hook 只保存交互状态，画面仍按帧纯计算；effect 清理移除本次捕获播放器上的同一组监听。\n */\n"
+      },
+      {
+        "beforeStart": 376,
+        "beforeEnd": 376,
+        "afterStart": 499,
+        "afterEnd": 541,
+        "before": "",
+        "after": "// 即使没有事件也保留一帧；活动下标只映射当前显示帧，不保存第二份事件进度。\n  "
+      },
+      {
+        "beforeStart": 584,
+        "beforeEnd": 584,
+        "afterStart": 749,
+        "afterEnd": 792,
+        "before": "",
+        "after": "\n    // 清理闭包捕获实际绑定的实例，避免以后 ref 变化时移除到另一播放器。"
+      },
+      {
+        "beforeStart": 1394,
+        "beforeEnd": 1394,
+        "afterStart": 1602,
+        "afterEnd": 1652,
+        "before": "",
+        "after": "// 仅接受有限数并夹入当前片长；先调用实际 seek，正常返回后才同步本地滑块状态。\n      "
+      }
+    ]
+  },
+  {
+    "path": "frontend/tests/e2e/animal-dream.spec.ts",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 128,
+        "before": "",
+        "after": "/**\n * 负责动物梦境复盘的双语浏览器集成测试。输入为既有公开／玩家 fixture，断言逐帧席位、反向跳转和私有字段缺席。\n * 画面对照使用共用纯帧视图，不是独立规则 oracle；浏览器路由只提供本地样本，不启动真实模型或重新执行对局。\n */\n"
+      },
+      {
+        "beforeStart": 1103,
+        "beforeEnd": 1103,
+        "afterStart": 1231,
+        "afterEnd": 1273,
+        "before": "",
+        "after": "\n      // 先顺播关键边界，再逆跳三个边界，验证当前画面不依赖此前播放路径。"
+      }
+    ]
+  },
+  {
+    "path": "frontend/tests/e2e/fragrant-pair-seer.spec.ts",
+    "edits": [
+      {
+        "beforeStart": 0,
+        "beforeEnd": 0,
+        "afterStart": 0,
+        "afterEnd": 120,
+        "before": "",
+        "after": "/**\n * 负责馥郁双生复盘的双语浏览器集成测试。输入为既有公开／玩家 fixture，断言关键帧席位、反向跳转与私有事实裁剪。\n * 画面对照来自共用纯帧视图，不替代独立领域核验；只路由本地归档样本，不调用模型或重新运行游戏。\n */\n"
+      },
+      {
+        "beforeStart": 1089,
+        "beforeEnd": 1089,
+        "afterStart": 1209,
+        "afterEnd": 1246,
+        "before": "",
+        "after": "\n      // 逆跳复用相同目标帧，检查投影不会累积上次播放到的状态。"
+      }
+    ]
+  }
+]

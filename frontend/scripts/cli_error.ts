@@ -1,3 +1,7 @@
+/**
+ * 负责将前端离线命令异常转为有限的双语诊断。输入为未知错误和显示语言，输出本地错误码与文案。
+ * 仅接纳白名单字段与 HTTP 状态，不直接输出任意异常文字；描述符读取也可能触发外来 Proxy，失败时退回通用诊断。
+ */
 import { text, renderMessage, type Locale } from "@ai-werewolf-arena/game-text";
 import { ReplayLoadError } from "../src/replay/offline-replay";
 
@@ -18,6 +22,7 @@ function loaderMessage(error: unknown, locale: Locale): string | undefined {
     if (!(error instanceof ReplayLoadError)) return undefined;
     const ref = Object.getOwnPropertyDescriptor(error, "messageRef")?.value;
     if (!ref || typeof ref !== "object") return undefined;
+    // 只读取自有数据描述符；不主动调用 messageRef 内的 getter，也不把相同文案当作可信诊断。
     const fields = Object.getOwnPropertyDescriptors(ref);
     if (
       Object.entries(fields).some(
@@ -64,7 +69,7 @@ function loaderMessage(error: unknown, locale: Locale): string | undefined {
   }
 }
 
-/** Only local IDs and local loader messages may cross this CLI output boundary. */
+/** 只有本地白名单错误码和已核对的加载文案可以进入 CLI 输出。 */
 export function replayCommandFailure(error: unknown, locale: Locale) {
   let candidate: unknown;
   try {
@@ -73,7 +78,7 @@ export function replayCommandFailure(error: unknown, locale: Locale) {
         ? Object.getOwnPropertyDescriptor(error, "message")?.value
         : undefined;
   } catch {
-    /* foreign object */
+    /* 外来对象的描述符查询失败，继续使用通用错误码。 */
   }
   const code =
     typeof candidate === "string" && codes.includes(candidate as (typeof codes)[number])

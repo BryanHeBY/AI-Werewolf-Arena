@@ -1,3 +1,7 @@
+/**
+ * 负责展示投影后的席位、存活与胜者标记。输入为当前玩家视图和焦点，输出席位按钮及选择回调。
+ * 角色／公开身份区分沿用输入，组件不从事件补全隐藏身份或以焦点授予额外信息。
+ */
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import type { ReplayPlayerState } from "./replay-projection";
 import { campName, roleName } from "./replay-localization";
@@ -10,6 +14,7 @@ interface PlayerSeatsProps {
 }
 
 export function PlayerSeats({ players, locale, focusedPlayerId, onToggleFocus }: PlayerSeatsProps) {
+  // 存活统计只取当前帧投影；终局胜者与存活是两个独立标记。
   const aliveCount = players.filter((player) => player.alive).length;
 
   return (

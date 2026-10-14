@@ -1,3 +1,7 @@
+/**
+ * 负责 Remotion 播放器及传输控件装配。输入为展示复盘、显示选项与外部播放状态，输出帧画面和跳转／播放回调。
+ * 帧与播放状态的同步归共用 hook，画面投影归 composition；本组件不以席位筛选重建归档事件。
+ */
 import { text } from "@ai-werewolf-arena/game-text";
 import type { ReplayDisplayOptions } from "./replay-display";
 import { Player, type PlayerRef } from "@remotion/player";
@@ -33,7 +37,7 @@ export function ReplayStage({
   onTogglePlayback,
 }: ReplayStageProps) {
   const eventCount = replay.events.length;
-  // Remotion rebuilds playback configuration when inputProps identity changes.
+  // Remotion 会在 inputProps 引用变化时重建播放配置；无关帧状态更新不应更换这个对象。
   const inputProps = useMemo(
     () => ({ replay, locale: display.locale, timeZone: display.timeZone }),
     [replay, display.locale, display.timeZone],
@@ -60,7 +64,7 @@ export function ReplayStage({
           compositionHeight={720}
           fps={30}
           controls={false}
-          // This composition has no audio; audio-device startup must not block its frames.
+          // 本画面没有音轨，初始静音以免音频设备启动阻塞首帧。
           initiallyMuted
           acknowledgeRemotionLicense
         />
