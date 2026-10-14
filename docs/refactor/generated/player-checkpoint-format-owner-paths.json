@@ -1,0 +1,5 @@
+[
+  "backend/src/recording/reproduction.ts",
+  "backend/src/recording/checkpoint/player-format.ts",
+  "backend/tests/unit/recording/player-checkpoint-format.test.ts"
+]

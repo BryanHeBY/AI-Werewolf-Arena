@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "approved": true,
+  "findings": [],
+  "reviewer": "native_final_architecture_review",
+  "baseCommit": "849d26441e2d4ee84579d7cf2d6304425e675daf",
+  "scopeSHA256": "b6e1288e9ec10c74ebd677708da046e9747584a07ca9c1a68fbecc43bd635c85",
+  "scope": {
+    "path": "docs/refactor/generated/player-checkpoint-format-owner-scope-final.json",
+    "sha256": "b6e1288e9ec10c74ebd677708da046e9747584a07ca9c1a68fbecc43bd635c85"
+  },
+  "source": [
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "380c73bac804b4e0d2eba81c0a61e841a6f752b89c00df5e8a883f811f03ed99"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/player-format.ts",
+      "sha256": "16d628a1a6ac9b2836e5b2b8982c88740d7402ba750c8d0d6494a4d9fc36a325"
+    },
+    {
+      "path": "backend/tests/unit/recording/player-checkpoint-format.test.ts",
+      "sha256": "10f2addac55cc7eac913b89a734595e6174d38367c36ac2cb7d643168006741d"
+    }
+  ],
+  "deleted": [],
+  "document": {
+    "path": "docs/refactor/player-checkpoint-format-owner.md",
+    "sha256": "2fabc8551b60d7de9faf505525b5b629e198901aa932c05e7fb46e2d5c06a7db"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/player-checkpoint-format-owner-evidence.json",
+    "sha256": "072d88cc7b6f83578ac5c1bc9f0a22d8420d15671f31289bfd8e97f25349a0cd"
+  },
+  "controls": [
+    {
+      "path": "backend/src/recording/checkpoint/private-state-codec.ts",
+      "sha256": "74cd5180ec60e047517d48cce84f78232127e67b4ee2ec0cb19339c4155f3ca3"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/player-snapshots.ts",
+      "sha256": "6447cf1a7b0560442cafded632495471b1d124dbf81e482bb78bed8638023d6d"
+    },
+    {
+      "path": "backend/src/recording/reproduction-trace.ts",
+      "sha256": "700f0f7e53c22ba092b123c2674161a5a9b77d379b7b538b6c04003cb0e18203"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab"
+    }
+  ],
+  "verification": {
+    "freshSources": 3,
+    "actualGitBeforePrograms": 1,
+    "exactWholeEdits": 7,
+    "wholeForwardInverseSame": true,
+    "wholeControlsGitAndCurrent": 4,
+    "authorArtifacts": 25,
+    "mismatches": [],
+    "originalInterfaceMembers": 14,
+    "interfaceExactAfterFourTypeRouteMaps": true,
+    "actualInlineTypeEndpoints": [
+      {
+        "name": "WallNoteComponent",
+        "endpoint": "backend/src/core/domain/components/wall_note.ts",
+        "sha256": "e29144e80f2895680acbfb157f0029f4f731e796ec3e15fa3376835d91492b12"
+      },
+      {
+        "name": "DebatePenaltyComponent",
+        "endpoint": "backend/src/core/domain/components/debate_penalty.ts",
+        "sha256": "9d2ef82453b63fe5c528b273ffa6a8d0abaa50b7fb3c00efe8ef54eb1b4f7413"
+      },
+      {
+        "name": "LoversComponent",
+        "endpoint": "backend/src/core/domain/components/lovers.ts",
+        "sha256": "20ff15713b74974702d36c7757ecf33074c89c5c2c5dd7f376d5b434f700c426"
+      },
+      {
+        "name": "SheriffBadgePolicy",
+        "endpoint": "backend/src/core/domain/board.ts",
+        "sha256": "daf6da87696de329575ae424e37aa975568aeb634ca80d81c6e23d4ca88fef75"
+      }
+    ]
+  },
+  "sourceReview": [
+    "Actual whole schema transform/composite/refines preserve affiliations errors, fourteen fields, optional components, generic JSON privateState and field mutability; positive/jsonObject same refs at original declaration.",
+    "Original public RecordedPlayerState named type endpoint retained with one physical declaration; only inline type paths relocate.",
+    "Read actual ordinary private-state full-container codec/player assembly, Trace.checkpoint clone and later build parse; no eager JSON/schema/live-role filtering added.",
+    "Tape envelope/version/schema admission and actual sixteen verifier/first-failure ordering remain original; no new runtime World/authority import or reverse value cycle in data owner.",
+    "Read complete new three literal tests, original precise log and both test type assertions; no production accepted-set change.",
+    "Chinese comments separate format acceptance, actual independent causality, runtime body/stock/permission and broad clone versus later JSON rejection."
+  ],
+  "receiptReview": {
+    "newRuntime": "0664af exit0 3/21 once",
+    "oldRuntime": "33f456 exit0 1/4 once",
+    "distinctCases": 4,
+    "assertions": 25,
+    "typesFirst": "9f2bea session32402 terminal7acc69 exit2 only2 unit diagnostics",
+    "failedUnit": "ca0e6a session55882 terminal6d577b exit0; empty output is not terminal evidence",
+    "head": "75fd9c exit0 3roots658docs pre-unit-type snapshot",
+    "proofFirst": "6117b9 exit0 assertions done, zero counters erroneous; original bytes retained",
+    "proofCorrected": "03f41d exit0 tool-only counter fix, source unchanged",
+    "bindings": "70ed4e session2151 e3d308 exit0 bounded AST/module endpoint proof"
+  },
+  "limits": [
+    "Author whole9623/6472 and moved86/54+724/498 metrics are their actual saved proof, independently read not rerun.",
+    "Four moved named bindings are matching module/mode/name endpoints; no claim of recursive ultimate package declaration proof.",
+    "Actual reproduction JS/module/builder API changes, while mapped old and actual moved-body full outputs are saved same; no arbitrary Zod mock/CJS reflection equivalence.",
+    "The broad runtime capture codec is unchanged; this one format owner does not complete all55 schemas/codecs/P9.",
+    "Transitive B13/A35 worktree is outside immutable controls; reviewed base/final artifacts are precisely bound."
+  ],
+  "checksExecuted": [],
+  "productSourceEdited": false
+}

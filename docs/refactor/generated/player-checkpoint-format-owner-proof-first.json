@@ -1,0 +1,146 @@
+{
+  "baseCommit": "849d26441e2d4ee84579d7cf2d6304425e675daf",
+  "source": [
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "380c73bac804b4e0d2eba81c0a61e841a6f752b89c00df5e8a883f811f03ed99"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/player-format.ts",
+      "sha256": "16d628a1a6ac9b2836e5b2b8982c88740d7402ba750c8d0d6494a4d9fc36a325"
+    },
+    {
+      "path": "backend/tests/unit/recording/player-checkpoint-format.test.ts",
+      "sha256": "10f2addac55cc7eac913b89a734595e6174d38367c36ac2cb7d643168006741d"
+    }
+  ],
+  "wholeExactForwardInverse": true,
+  "wholeOriginal": {
+    "typedNodes": 0,
+    "nonJSDocLeaves": 0
+  },
+  "movedAffiliations": {
+    "typedNodes": 0,
+    "nonJSDocLeaves": 0
+  },
+  "movedPlayerComposite": {
+    "typedNodes": 0,
+    "nonJSDocLeaves": 0
+  },
+  "interfaceMembers": 14,
+  "actualBodyCompared": true,
+  "originalPrimitiveReferencesAtOriginalDeclaration": true,
+  "outputs": [
+    {
+      "module": "ESNext",
+      "wholeInverseRawSame": true,
+      "actualReproductionRawSame": false,
+      "actualMovedBodyRawSame": true,
+      "originalSHA256": "1b5452f2e0929e2c582fa86e34110a4c9516ed222a8c8aa30db14a7805d27965",
+      "actualSHA256": "c5fced2f3a2ef82d98a72ad2896a4bc64ae169ff200b038a54611d544c04f669",
+      "bodySHA256": "ccdc2f3fba75e8cd1e0b03e143b9c3afa45971f0b6a5255336600e05be499212"
+    },
+    {
+      "module": "CommonJS",
+      "wholeInverseRawSame": true,
+      "actualReproductionRawSame": false,
+      "actualMovedBodyRawSame": true,
+      "originalSHA256": "2d5c595800335218e35a17dab9a45de0637ac7ed87312d9a862a6a91aa2fc5a7",
+      "actualSHA256": "735e8550d67a9ece1895e7662b58f43dc34404fc59b9142fddaa8937955f95bb",
+      "bodySHA256": "ccdc2f3fba75e8cd1e0b03e143b9c3afa45971f0b6a5255336600e05be499212"
+    }
+  ],
+  "unitTypeOnlyEdits": [
+    {
+      "before": "  expect(result).toEqual(input);",
+      "after": "  expect<unknown>(result).toEqual(input);",
+      "count": 1
+    },
+    {
+      "before": "normalizedBoard: game.boardConfig,",
+      "after": "normalizedBoard: game.boardConfig as import(\"@ai-werewolf-arena/game-contract\").BoardConfig,",
+      "count": 1
+    }
+  ],
+  "unitOutputs": [
+    {
+      "module": "ESNext",
+      "wholeRawSame": true,
+      "sha256": "88bda9a9dc98e353acf25e9ede569cd10367f3fed7826da739be974b3cd79ae4"
+    },
+    {
+      "module": "CommonJS",
+      "wholeRawSame": true,
+      "sha256": "e6048c7e9ece561a0733428ff8f8e9032367cd0cac176827bf2d85e4a3899bc5"
+    }
+  ],
+  "publicExportNames": [
+    "RecordedPlayerState",
+    "REPRODUCTION_SCHEMA_VERSION",
+    "RecordedErrorName",
+    "ReproductionFailureScope",
+    "recordedErrorName",
+    "EngineVersion",
+    "ReproductionMetadata",
+    "RecordedCheckpoint",
+    "RecordedDecision",
+    "RecordedGameEvent",
+    "ReproductionRecord",
+    "parseReproductionRecord"
+  ],
+  "retainedNamedImportBindings": 70,
+  "movedNamedImportBindings": [
+    {
+      "specifier": "@ai-werewolf-arena/game-contract",
+      "name": "CUPID_POLICIES",
+      "local": "CUPID_POLICIES",
+      "typeOnly": false
+    },
+    {
+      "specifier": "@ai-werewolf-arena/game-contract",
+      "name": "SHERIFF_BADGE_POLICIES",
+      "local": "SHERIFF_BADGE_POLICIES",
+      "typeOnly": false
+    },
+    {
+      "specifier": "@ai-werewolf-arena/replay-contract",
+      "name": "readVictoryAffiliations",
+      "local": "readVictoryAffiliations",
+      "typeOnly": false
+    },
+    {
+      "specifier": "@ai-werewolf-arena/game-contract",
+      "name": "VictoryAffiliation",
+      "local": "VictoryAffiliation",
+      "typeOnly": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/recording/checkpoint/private-state-codec.ts",
+      "sha256": "74cd5180ec60e047517d48cce84f78232127e67b4ee2ec0cb19339c4155f3ca3",
+      "sameCurrent": true
+    },
+    {
+      "path": "backend/src/recording/checkpoint/player-snapshots.ts",
+      "sha256": "6447cf1a7b0560442cafded632495471b1d124dbf81e482bb78bed8638023d6d",
+      "sameCurrent": true
+    },
+    {
+      "path": "backend/src/recording/reproduction-trace.ts",
+      "sha256": "700f0f7e53c22ba092b123c2674161a5a9b77d379b7b538b6c04003cb0e18203",
+      "sameCurrent": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "c04381c65fec0409c0ba0bd9905cc2eba570f5527520881ca690b23d4ffebfab",
+      "sameCurrent": true
+    }
+  ],
+  "limits": [
+    "完整旧源只由精确edit正逆证明；新owner transform/composite/refine与接口另核实际完整正文，不以恢复整个oldbody替代actualbody。",
+    "两个whole逆输出和两个实际迁入body输出相同；实际reproduction输出改变，不冒任意Zod mock/CJS namespace反射或全cold入口恒同。",
+    "RecordedPlayerState原公共type endpoint保持续具名reexport，唯一声明归新format；接口路线只映射相同原core type模块。",
+    "字段JSON格式不替代55live schema、完整因果或行动授权；四稳定control保持，16verifier原序不变。"
+  ]
+}

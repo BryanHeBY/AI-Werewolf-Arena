@@ -1,0 +1,930 @@
+{
+  "baseCommit": "849d26441e2d4ee84579d7cf2d6304425e675daf",
+  "source": [
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "380c73bac804b4e0d2eba81c0a61e841a6f752b89c00df5e8a883f811f03ed99"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/player-format.ts",
+      "sha256": "16d628a1a6ac9b2836e5b2b8982c88740d7402ba750c8d0d6494a4d9fc36a325"
+    },
+    {
+      "path": "backend/tests/unit/recording/player-checkpoint-format.test.ts",
+      "sha256": "10f2addac55cc7eac913b89a734595e6174d38367c36ac2cb7d643168006741d"
+    }
+  ],
+  "roots": [
+    "backend/src",
+    "backend/tests",
+    "backend/scripts",
+    "frontend/src",
+    "frontend/tests",
+    "packages",
+    "tooling"
+  ],
+  "files": 1915,
+  "publicTypeIdentifiers": [
+    {
+      "path": "backend/src/recording/checkpoint/player-format.ts",
+      "line": 13,
+      "parent": "InterfaceDeclaration"
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "line": 24,
+      "parent": "ImportSpecifier"
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "line": 26,
+      "parent": "ExportSpecifier"
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "line": 205,
+      "parent": "TypeReference"
+    },
+    {
+      "path": "backend/tests/unit/recording/player-checkpoint-format.test.ts",
+      "line": 12,
+      "parent": "ImportSpecifier"
+    },
+    {
+      "path": "backend/tests/unit/recording/player-checkpoint-format.test.ts",
+      "line": 23,
+      "parent": "TypeReference"
+    }
+  ],
+  "publicTypeCanonicalDeclaration": "backend/src/recording/checkpoint/player-format.ts",
+  "publicTypeEndpointRetained": "backend/src/recording/reproduction.ts: named type re-export",
+  "oldInlineEndpoints": [
+    {
+      "name": "WallNoteComponent",
+      "endpoint": "backend/src/core/domain/components/wall_note.ts",
+      "sha256": "e29144e80f2895680acbfb157f0029f4f731e796ec3e15fa3376835d91492b12"
+    },
+    {
+      "name": "DebatePenaltyComponent",
+      "endpoint": "backend/src/core/domain/components/debate_penalty.ts",
+      "sha256": "9d2ef82453b63fe5c528b273ffa6a8d0abaa50b7fb3c00efe8ef54eb1b4f7413"
+    },
+    {
+      "name": "LoversComponent",
+      "endpoint": "backend/src/core/domain/components/lovers.ts",
+      "sha256": "20ff15713b74974702d36c7757ecf33074c89c5c2c5dd7f376d5b434f700c426"
+    },
+    {
+      "name": "SheriffBadgePolicy",
+      "endpoint": "backend/src/core/domain/board.ts",
+      "sha256": "daf6da87696de329575ae424e37aa975568aeb634ca80d81c6e23d4ca88fef75"
+    }
+  ],
+  "movedNamedModuleBindings": [
+    {
+      "specifier": "@ai-werewolf-arena/game-contract",
+      "imported": "CUPID_POLICIES",
+      "local": "CUPID_POLICIES",
+      "typeOnly": false,
+      "moduleEndpoint": "/home/hby/dev/AI-Werewolf-Arena/packages/game-contract/src/index.ts"
+    },
+    {
+      "specifier": "@ai-werewolf-arena/game-contract",
+      "imported": "SHERIFF_BADGE_POLICIES",
+      "local": "SHERIFF_BADGE_POLICIES",
+      "typeOnly": false,
+      "moduleEndpoint": "/home/hby/dev/AI-Werewolf-Arena/packages/game-contract/src/index.ts"
+    },
+    {
+      "specifier": "@ai-werewolf-arena/replay-contract",
+      "imported": "readVictoryAffiliations",
+      "local": "readVictoryAffiliations",
+      "typeOnly": false,
+      "moduleEndpoint": "/home/hby/dev/AI-Werewolf-Arena/packages/replay-contract/src/index.ts"
+    },
+    {
+      "specifier": "@ai-werewolf-arena/game-contract",
+      "imported": "VictoryAffiliation",
+      "local": "VictoryAffiliation",
+      "typeOnly": true,
+      "moduleEndpoint": "/home/hby/dev/AI-Werewolf-Arena/packages/game-contract/src/index.ts"
+    }
+  ],
+  "reproductionAndFormatRoutes": [
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/demon-hunter/native-stocks.ts",
+      "line": 11,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord, RecordedCheckpoint } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/demon-hunter/validate.ts",
+      "line": 22,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/ghost-bride/validate.ts",
+      "line": 26,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord, RecordedCheckpoint, RecordedDecision } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "line": 15,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/animal-dream/feed-evidence.ts",
+      "line": 9,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/animal-dream/validate.ts",
+      "line": 12,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/feed-evidence.ts",
+      "line": 12,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/sheriff-evidence.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedGameEvent, ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/requests.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedDecision, ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/mist-raven/validate.ts",
+      "line": 24,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedCheckpoint, ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/lonely-girl.ts",
+      "line": 7,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/noble-secret-body/validate.ts",
+      "line": 14,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "line": 16,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord, RecordedDecision } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/action-evidence.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedDecision, ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/magician/validate.ts",
+      "line": 16,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedDecision, ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/initial-identity.ts",
+      "line": 7,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/wolf-sorcerer/validate.ts",
+      "line": 14,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/fragrant-pair-seer/feed-evidence.ts",
+      "line": 9,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/fragrant-pair-seer/validate.ts",
+      "line": 17,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord, RecordedDecision, RecordedCheckpoint } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/wild-child.ts",
+      "line": 7,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "line": 15,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/trickster/validate.ts",
+      "line": 15,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/red-moon/validate.ts",
+      "line": 13,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/night-request-prefix.ts",
+      "line": 7,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/requests.ts",
+      "line": 9,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedDecision, RecordedGameEvent, ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/verification/reproduction/radiant-eclipse/validate.ts",
+      "line": 14,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from \"../../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/runtime/simulation/replay_reproduction.ts",
+      "line": 22,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, recordedErrorName, type RecordedDecision, type RecordedGameEvent, type ReproductionRecord } from \"../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/runtime/simulation/reproduction_context.ts",
+      "line": 14,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { EngineVersion, RecordedCheckpoint } from \"../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/runtime/simulation/reproduction_context.ts",
+      "line": 15,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { recordedErrorName } from \"../../recording/reproduction\";"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/authority-snapshots.ts",
+      "line": 7,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedCheckpoint } from \"../reproduction\";"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/player-snapshots.ts",
+      "line": 17,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedCheckpoint } from \"../reproduction\";"
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "line": 23,
+      "target": "backend/src/recording/checkpoint/player-format",
+      "form": "ImportDeclaration",
+      "text": "import { createRecordedPlayerSchema } from \"./checkpoint/player-format\";"
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "line": 24,
+      "target": "backend/src/recording/checkpoint/player-format",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedPlayerState } from \"./checkpoint/player-format\";"
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "line": 26,
+      "target": "backend/src/recording/checkpoint/player-format",
+      "form": "ExportDeclaration",
+      "text": "export type { RecordedPlayerState } from \"./checkpoint/player-format\";"
+    },
+    {
+      "path": "backend/src/recording/archive_identity.ts",
+      "line": 19,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionMetadata, ReproductionRecord } from \"./reproduction\";"
+    },
+    {
+      "path": "backend/src/recording/session_recorder.ts",
+      "line": 26,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { type ReproductionFailureScope, type ReproductionMetadata } from \"./reproduction\";"
+    },
+    {
+      "path": "backend/src/recording/reproduction-trace.ts",
+      "line": 14,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import {\n  REPRODUCTION_SCHEMA_VERSION,\n  parseReproductionRecord,\n  recordedErrorName,\n  type RecordedDecision,\n  type RecordedCheckpoint,\n  type RecordedGameEvent,\n  type RecordedErrorName,\n  type ReproductionFailureScope,\n  type ReproductionMetadata,\n  type ReproductionRecord,\n} from \"./reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/drivers/transport/run-game.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/features/animal-dream/drivers/recording.ts",
+      "line": 14,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/drivers/prefix.ts",
+      "line": 6,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/drivers/recording.ts",
+      "line": 4,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/drivers/recording.ts",
+      "line": 22,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/features/mist-raven/drivers/recording.ts",
+      "line": 23,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedCheckpoint } from \"../../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/drivers/recording.ts",
+      "line": 20,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/oracles/wire.ts",
+      "line": 10,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedDecision, ReproductionRecord } from \"../../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/oracles/transport-golden.ts",
+      "line": 10,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/drivers/recording.ts",
+      "line": 15,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/features/fragrant-pair-seer/oracles/wire.ts",
+      "line": 10,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedDecision, ReproductionRecord } from \"../../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/drivers/recording.ts",
+      "line": 24,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/drivers/recording.ts",
+      "line": 25,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedCheckpoint } from \"../../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/drivers/recording.ts",
+      "line": 26,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/oracles/wire.ts",
+      "line": 9,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/features/radiant-eclipse/oracles/transport-golden.ts",
+      "line": 10,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/support/oracles/transport/outcomes.ts",
+      "line": 13,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/integration/recording/mandatory-prefix-persistence.test.ts",
+      "line": 7,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/integration/recording/archive-identities.test.ts",
+      "line": 15,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/integration/recording/night-ability-json-checkpoint.test.ts",
+      "line": 23,
+      "target": "backend/src/recording/reproduction",
+      "form": "CallExpression",
+      "text": "import(\"../../../src/recording/reproduction\")"
+    },
+    {
+      "path": "backend/tests/scenarios/configuration/fragrant-witch-stock-reset.test.ts",
+      "line": 10,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/wolf-beauty/runner-cancellation-prefix.test.ts",
+      "line": 5,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/scholar-mentor/required-turn-prefix.test.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, type ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/animal-dream/paid-effect-record-failure.test.ts",
+      "line": 22,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/animal-dream/cat-death-record-failure.test.ts",
+      "line": 17,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/order-prince/late-committed-prefix.test.ts",
+      "line": 10,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/magician/late-committed-prefix.test.ts",
+      "line": 6,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/wolf-sorcerer/required-and-late-prefix.test.ts",
+      "line": 10,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/time-consort/required-response-prefix.test.ts",
+      "line": 7,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, type ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/trickster/required-and-late-prefix.test.ts",
+      "line": 10,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/incremental-cleanup-checkpoint.test.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/lease-finalization.test.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/radiant-eclipse/pending-trace-state.test.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/scholar-mentor/spent-heal-visibility.test.ts",
+      "line": 9,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/mist-raven/parallel-response-recording.test.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/mist-raven/parallel-response-recording.test.ts",
+      "line": 10,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/lonely-girl/recorded-games.test.ts",
+      "line": 11,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/animal-dream/ballot-knowledge-forgery.test.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/animal-dream/checkpoint-feed-forgery.test.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/animal-dream/raw-source-forgery.test.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mist-raven/incremental-settlement-forgery.test.ts",
+      "line": 9,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, type ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mist-raven/knowledge-feed-forgery.test.ts",
+      "line": 7,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, type ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/mist-raven/unpublished-feed-compatibility.test.ts",
+      "line": 10,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, type ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/noble-secret-body/pending-autosave.test.ts",
+      "line": 24,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/noble-secret-body/restart-cursor-forgery.test.ts",
+      "line": 9,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, type ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/noble-secret-body/recorded-evidence-forgery.test.ts",
+      "line": 10,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, type ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/noble-secret-body/terminal-request-forgery.test.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, type ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/wild-child/recorded-games.test.ts",
+      "line": 11,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/thief/recorded-games.test.ts",
+      "line": 11,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/fragrant-pair-seer/recorded-evidence-forgery.test.ts",
+      "line": 7,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, type ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/shapeshifter/recorded-games.test.ts",
+      "line": 11,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/radiant-eclipse/incremental-live-prefix.test.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, type ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/radiant-eclipse/recorded-prefixes.test.ts",
+      "line": 10,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, type ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/reproduction/radiant-eclipse/request-prefix-forgery.test.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, type ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/demon-hunter/reproduction.test.ts",
+      "line": 30,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import {\n  parseReproductionRecord,\n  type RecordedCheckpoint,\n} from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/ghost-bride/reproduction.test.ts",
+      "line": 29,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+      "line": 11,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, type ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/mist-raven/reproduction.test.ts",
+      "line": 9,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, type ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-king/transport-day.test.ts",
+      "line": 16,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedDecision, ReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+      "line": 18,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import {\n  parseReproductionRecord,\n  type ReproductionRecord,\n  type RecordedCheckpoint,\n} from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/magician/reproduction.test.ts",
+      "line": 18,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord, type ReproductionRecord, type RecordedCheckpoint } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/wolf-sorcerer/reproduction.test.ts",
+      "line": 20,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import {\n  parseReproductionRecord,\n  type ReproductionRecord,\n  type RecordedCheckpoint,\n} from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/nightmare/observed-simulation.test.ts",
+      "line": 7,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+      "line": 25,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import {\n  parseReproductionRecord,\n  type ReproductionRecord,\n  type RecordedCheckpoint,\n} from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/trickster/reproduction.test.ts",
+      "line": 19,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import {\n  parseReproductionRecord,\n  type ReproductionRecord,\n  type RecordedCheckpoint,\n} from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/red-moon/reproduction.test.ts",
+      "line": 29,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import {\n  parseReproductionRecord,\n  type RecordedCheckpoint,\n} from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/red-moon/edge-reproduction.test.ts",
+      "line": 29,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import {\n  parseReproductionRecord,\n  type RecordedCheckpoint,\n} from \"../../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/board-parameters.test.ts",
+      "line": 18,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { type ReproductionMetadata } from \"../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/unit/verification/reproduction-assembly.test.ts",
+      "line": 9,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import {\n  parseReproductionRecord,\n  type ReproductionRecord,\n  type ReproductionMetadata,\n} from \"../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/unit/recording/live-event-snapshot.test.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { type ReproductionMetadata } from \"../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/unit/recording/animal-dream-initial-review.test.ts",
+      "line": 11,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/unit/recording/owned-board-reproduction.test.ts",
+      "line": 13,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { type ReproductionMetadata } from \"../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/unit/recording/player-checkpoint-format.test.ts",
+      "line": 11,
+      "target": "backend/src/recording/checkpoint/player-format",
+      "form": "ImportDeclaration",
+      "text": "import { createRecordedPlayerSchema } from \"../../../src/recording/checkpoint/player-format\";"
+    },
+    {
+      "path": "backend/tests/unit/recording/player-checkpoint-format.test.ts",
+      "line": 12,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { RecordedPlayerState } from \"../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/unit/recording/reproduction-error-names.test.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { recordedErrorName } from \"../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/unit/recording/red-moon-record.test.ts",
+      "line": 8,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import type { ReproductionRecord } from \"../../../src/recording/reproduction\";"
+    },
+    {
+      "path": "backend/tests/unit/recording/board-config-recording.test.ts",
+      "line": 22,
+      "target": "backend/src/recording/reproduction",
+      "form": "ImportDeclaration",
+      "text": "import { parseReproductionRecord } from \"../../../src/recording/reproduction\";"
+    }
+  ],
+  "ownerValueImports": [
+    "zod",
+    "@ai-werewolf-arena/game-contract",
+    "@ai-werewolf-arena/replay-contract"
+  ],
+  "limits": [
+    "完整语法遍历字面import/export/importType/importEquals/dynamic/require，不执行生产模块或TypeScript诊断；非字面动态属性访问不作全证明。",
+    "四named binding核模式/名称/同module入口，不递归冒称所有package reexport的ultimate declaration；四interface inline type核实际同物理模块/SHA。",
+    "新format没有backend value import，不能直接返World/Trace/authority；不声称所有外部package任意cold图恒同。"
+  ]
+}

@@ -867,3 +867,5 @@
 - F03/F04 现状证据独立登记：保存十份原始脚本、采样、输出与收据全文，不重跑实验或修改生产。F03 一次真实 transfer 目标发布抛错后两实例均 active，两个 owner 固定 5fcc、传递依赖为当时工作树，零生产直接调用方；F04 一次命令两个新 Camp 安装抛错输入，实际 849 相关原稿和 B13 可加载工作树，野孩子死亡前缀及千面人库存／换牌／Role 安装保留，而旧 Camp／Victory 保 Good。两原命令实际退出 0；不冒完整固定 Git、Bun 用例总数或常规玩家故障。Root 完整脚本和字面断言实核，独立中文登记审查后提交；政策及版本影响另行修正，见 state-ownership-failure-boundaries.md。
 
 - C18 四类请求绑定所有权：13 源由公共 RequestLease 实际持有四个独立请求表，收齐 bind/query/alias 比较与登记；保留各协议的读取顺序、同引用记录和异常前缀，退休六个旧 inherit 出口。中文说明覆盖 callee 先读、context 身份、机制关闭与失配恢复。Root 和独立审查核完整原体、真实接线及采样；新三案例首 41 断言，追加同案例新 callee 输入单跑 8 断言；原三精准通过，另两 raw-board 输入在真实旧程序 overlay 仍报同 setup_unavailable，留后继修夹具。有限 13 根类型仅失败新单元纯类型修正后通过，头检查无诊断；不重复已绿检查。F02 最早期限、永久撤权及真实窗口结算另批，见 request-lease-propagation.md。
+
+- C37 玩家检查点格式完整 owner：三源将原 affiliations transform、14 个字段及 Lovers／Wall refine 实际归 player-format；原 reproduction 持续具名 type 出口，两个原 schema 引用在原声明点传入，16 个独立 verifier 顺序不改。中文说明明确 optional 组件、正常 JSON 扩展与 live 权限的区别、capture 后 build 才拒绝的边界。Root 与非作者核实际全文和接线；新三案例 21 断言加原精准 4 断言首绿，有限三根只有新单元纯类型诊断且仅失败根修后通过，职责头无诊断。首证明计数错误为零保留原收据，仅工具修计数；不重复玩法或已绿门禁、不称完整 55 codec／P9 验收，见 player-checkpoint-format-owner.md。

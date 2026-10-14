@@ -1,0 +1,13 @@
+# 玩家checkpoint完整外部格式：正式冻结
+
+仅source三path及本prefix证据；产品源停止编辑。Root拥有stage/commit/progress。
+
+base 849d26441e2d4ee84579d7cf2d6304425e675daf
+
+scope SHA b6e1288e9ec10c74ebd677708da046e9747584a07ca9c1a68fbecc43bd635c85
+
+MD SHA 2fabc8551b60d7de9faf505525b5b629e198901aa932c05e7fb46e2d5c06a7db
+
+evidence SHA 072d88cc7b6f83578ac5c1bc9f0a22d8420d15671f31289bfd8e97f25349a0cd
+
+三新/21＋原精准一/4，四不同25断言；首三类型仅新unit两诊断，纯类型桥后failedunit实际0。头3/658一次0。首proof工具计数0错误保原；只计数修正终9623/6472+86/54+724/498。四control稳定，十四interfacefields和两same schema refs原点，70retained/4moved模块端点，公开type reexport有意持续。不得以本批关闭55live schemas或重绿。

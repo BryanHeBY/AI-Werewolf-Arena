@@ -20,6 +20,10 @@ import {
 } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
 import { fragrantCheckpointSchema } from "./checkpoint/fragrant-pair-format";
 import { nobleBodyCheckpointSchema } from "./checkpoint/noble-body-format";
+import { createRecordedPlayerSchema } from "./checkpoint/player-format";
+import type { RecordedPlayerState } from "./checkpoint/player-format";
+// 持续保留原公共 Tape 类型入口，唯一字段声明与完整玩家格式归同一 owner。
+export type { RecordedPlayerState } from "./checkpoint/player-format";
 import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
   readNobleSecretBodyFact,
@@ -71,24 +75,20 @@ import {
   readWeddingSetup,
 } from "@ai-werewolf-arena/game-contract/facts/ghost-bride";
 import { LONELY_GIRL_POLICY } from "@ai-werewolf-arena/game-contract/facts/lonely-girl";
-import { CUPID_POLICIES } from "@ai-werewolf-arena/game-contract";
 import { boardConfigSchema } from "@ai-werewolf-arena/game-contract";
 import { dictionaries, text, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { z } from "zod";
 import {
   readGameOutcome,
   readVictoryPoint,
-  readVictoryAffiliations,
 } from "@ai-werewolf-arena/replay-contract";
 import type {
   GameOutcome,
   VictoryPoint,
-  VictoryAffiliation,
 } from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import {
   ACTION_STAGES,
-  SHERIFF_BADGE_POLICIES,
   TOOL_NAMES,
   ActionWindow,
   KnightDuelWindow,
@@ -171,27 +171,6 @@ export interface ReproductionMetadata {
     camp: Camp;
     agent?: { kind: "llm" | "acp"; name: string; model?: string };
   }>;
-}
-export interface RecordedPlayerState {
-  id: number;
-  seat: number;
-  name: string;
-  role: Role;
-  camp: Camp;
-  alive: boolean;
-  privateState: Record<string, unknown>;
-  wallNote?: import("../core/domain/components/wall_note").WallNoteComponent;
-  debatePenalty?: import("../core/domain/components/debate_penalty").DebatePenaltyComponent;
-  lovers?: import("../core/domain/components/lovers").LoversComponent;
-  vote: { weight: number; canVote: boolean };
-  badge: {
-    isSheriff: boolean;
-    destroyed: boolean;
-    voteWeight: number;
-    handoffPolicy?: import("../core/domain/board").SheriffBadgePolicy;
-  };
-  marks: string[];
-  victory: { affiliations: VictoryAffiliation[] };
 }
 export interface RecordedCheckpoint {
   animalDream?: import("./checkpoint/animal-format").RecordedAnimalState;
@@ -404,73 +383,8 @@ const snapshotSchema = z.strictObject({
   gameOver: z.boolean(),
   result: resultSchema.nullable(),
 });
-const affiliationsSchema = z.unknown().transform((value, ctx): VictoryAffiliation[] => {
-  try {
-    return readVictoryAffiliations(value);
-  } catch {
-    ctx.addIssue({ code: "custom", message: "reproduction_affiliations_invalid" });
-    return z.NEVER;
-  }
-});
-const playerSchema = z
-  .strictObject({
-    id: positive,
-    seat: positive,
-    name: z.string(),
-    role: z.enum(Role),
-    camp: z.enum(Camp),
-    alive: z.boolean(),
-    privateState: jsonObject,
-    wallNote: z
-      .strictObject({
-        instanceId: z.string().regex(/^wall:1:[1-9][0-9]*$/),
-        source: z.strictObject({
-          kind: z.literal("wall_event"),
-          eventId: z.literal("awa_wall_notes_v1"),
-          day: z.literal(1),
-        }),
-        remaining: z.union([z.literal(0), z.literal(1)]),
-        expired: z.boolean(),
-      })
-      .optional(),
-    debatePenalty: z
-      .strictObject({
-        day: positive,
-        sourceId: positive,
-        lifeVersion: z.number().int().nonnegative(),
-      })
-      .optional(),
-    lovers: z
-      .strictObject({
-        actorId: positive,
-        day: z.literal(1),
-        policy: z.enum(CUPID_POLICIES),
-        pairIds: z.tuple([positive, positive]),
-        pairCamps: z.tuple([z.enum([Camp.Good, Camp.Wolf]), z.enum([Camp.Good, Camp.Wolf])]),
-        groupId: z.literal("cupid_lovers"),
-        mixed: z.boolean(),
-      })
-      .refine(
-        (record) =>
-          record.pairIds[0] !== record.pairIds[1] &&
-          record.mixed === (record.pairCamps[0] !== record.pairCamps[1]),
-        "reproduction_lovers_invalid",
-      )
-      .optional(),
-    victory: z.strictObject({ affiliations: affiliationsSchema }),
-    vote: z.strictObject({ weight: z.number().finite().nonnegative(), canVote: z.boolean() }),
-    badge: z.strictObject({
-      isSheriff: z.boolean(),
-      destroyed: z.boolean(),
-      voteWeight: z.number().finite().positive(),
-      handoffPolicy: z.enum(SHERIFF_BADGE_POLICIES).optional(),
-    }),
-    marks: z.array(z.string()),
-  })
-  .refine(
-    (player) => !player.wallNote || player.wallNote.instanceId === `wall:1:${player.id}`,
-    "reproduction_wall_owner_invalid",
-  );
+// 玩家格式在原声明点使用同一正整数和 generic JSON schema；准入仍只发生在 Tape parse。
+const playerSchema = createRecordedPlayerSchema(positive, jsonObject);
 const thiefCardSchema = z.strictObject({
   cardId: z.string().regex(/^deal:[0-9]+$/),
   role: z.enum(Role),
