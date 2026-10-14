@@ -1,0 +1,20 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/rulesets/beauty-exile-victory.test.ts:
+55 |     const refused = prepareBeautyExileVictory({ summary: { target }, removed: [f.actor] }, () => { throw new Error("literal_unselected_world_must_not_read"); });
+56 |     expect(refused.target).toBe(target);
+57 |     expect(refused.candidate).toBeNull();
+58 |   }
+59 |   const failure = new Error("literal_membership_lookup_failure");
+60 |   Object.defineProperty(removed, "includes", { get() { throw failure; } });
+              ^
+TypeError: Attempting to change the getter of an unconfigurable property.
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/rulesets/beauty-exile-victory.test.ts:60:10)
+(fail) effective exile reads twice before membership and World, while rejected targets never capture [144.01ms]
+(pass) only applied actual charm death produces the captured side and real Victory members [0.76ms]
+(pass) side override obeys condition order and resurrection revokes a paid candidate without refund [0.33ms]
+
+ 2 pass
+ 1 fail
+ 24 expect() calls
+Ran 3 tests across 1 file. [209.00ms]

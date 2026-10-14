@@ -1,0 +1,554 @@
+{
+  "approved": true,
+  "baseCommit": "5549ba0c0714bdea5a2056f01773858eb5cf0008",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "9518cc59ce3b9a0f6b451a01da5234c9dc19a2ec2d6ecf575db52288c521d514"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "sha256": "a5a30bc7434a86b0661b9937b1850353e5b2d2d38e2f2f2efdbe5b242269a2d9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+      "sha256": "0fb280c7cd61f0610939e541ca65e89e5fd89592ada880bc3586c4cda978af38"
+    },
+    {
+      "path": "backend/src/rulesets/beauty-exile-victory.ts",
+      "sha256": "d850fc2f12afa02970aa954abbb4bd81350aed6dc6a54a7cd70d13e41c013b34"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/beauty-exile-victory.test.ts",
+      "sha256": "71a4e64d94e35b908bb1b0bfb843b77192ad3a52ca9b75eaa30f5552166e15c4"
+    }
+  ],
+  "wholeOriginalPrograms": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sourceSHA256": "9518cc59ce3b9a0f6b451a01da5234c9dc19a2ec2d6ecf575db52288c521d514",
+      "edits": 5,
+      "exactForwardInverse": true,
+      "typedNodes": 5129,
+      "noncommentLeaves": 6407,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA256": "d489122e09cac7dafb7b193ab133edb1e2f10bdde8e0cd0fba1f94cac03d4530",
+          "afterSHA256": "d489122e09cac7dafb7b193ab133edb1e2f10bdde8e0cd0fba1f94cac03d4530"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA256": "df7cc04efbc8fd3123d279f188a104791044e0540777f1c24faec1e64b96c5c3",
+          "afterSHA256": "df7cc04efbc8fd3123d279f188a104791044e0540777f1c24faec1e64b96c5c3"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "sourceSHA256": "a5a30bc7434a86b0661b9937b1850353e5b2d2d38e2f2f2efdbe5b242269a2d9",
+      "edits": 7,
+      "exactForwardInverse": true,
+      "typedNodes": 1356,
+      "noncommentLeaves": 1531,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA256": "1ad9688ec55bdd6fdf21484f7b11ed430c82bde1463a091cfeff0503baa83793",
+          "afterSHA256": "1ad9688ec55bdd6fdf21484f7b11ed430c82bde1463a091cfeff0503baa83793"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA256": "8f676317ca4a808661a0b779b26b260b00f63ce4d38253977a446712d0c762b0",
+          "afterSHA256": "8f676317ca4a808661a0b779b26b260b00f63ce4d38253977a446712d0c762b0"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+      "sourceSHA256": "0fb280c7cd61f0610939e541ca65e89e5fd89592ada880bc3586c4cda978af38",
+      "edits": 2,
+      "exactForwardInverse": true,
+      "typedNodes": 34,
+      "noncommentLeaves": 43,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA256": "047fd0e26d0cf4716e88e556beff523482e1393fa051794f2c18408e3b3a3494",
+          "afterSHA256": "047fd0e26d0cf4716e88e556beff523482e1393fa051794f2c18408e3b3a3494"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA256": "b5f4ff9e9cb59088c76bcd3611a320400ae22631c5598b673eb6ac75df32aff1",
+          "afterSHA256": "b5f4ff9e9cb59088c76bcd3611a320400ae22631c5598b673eb6ac75df32aff1"
+        }
+      ]
+    }
+  ],
+  "completeMovedFunctions": [
+    {
+      "name": "captureBeautyExile",
+      "mapping": "旧 export 退休，完整函数保持",
+      "typedNodes": 167,
+      "noncommentLeaves": 175,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA256": "fe09011add607c1aa6865935036646f12267fafc4a4226da3a3ca3a2b2f3336a",
+          "afterSHA256": "fe09011add607c1aa6865935036646f12267fafc4a4226da3a3ca3a2b2f3336a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA256": "fe09011add607c1aa6865935036646f12267fafc4a4226da3a3ca3a2b2f3336a",
+          "afterSHA256": "fe09011add607c1aa6865935036646f12267fafc4a4226da3a3ca3a2b2f3336a"
+        }
+      ]
+    },
+    {
+      "name": "resolveBeautyExileVictory",
+      "mapping": "同函数 alias 名精确逆",
+      "typedNodes": 129,
+      "noncommentLeaves": 142,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA256": "8fde0e882d63f772509a8a108f1c5a8027e7342728b486d12780ca5489a325a6",
+          "afterSHA256": "8fde0e882d63f772509a8a108f1c5a8027e7342728b486d12780ca5489a325a6"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA256": "98b1b60fcb3c4b461b48b80cf0d13dffe29f224b95bddaf8ea4b0930ef62aa60",
+          "afterSHA256": "98b1b60fcb3c4b461b48b80cf0d13dffe29f224b95bddaf8ea4b0930ef62aa60"
+        }
+      ]
+    }
+  ],
+  "candidateDeclaration": {
+    "typedNodes": 24,
+    "noncommentLeaves": 24,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "afterSHA256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230",
+        "afterSHA256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+      }
+    ]
+  },
+  "completePreparation": {
+    "statements": 3,
+    "explicitNullOnlyUnselected": true,
+    "returnedFields": [
+      "target",
+      "candidate"
+    ],
+    "typedNodes": 54,
+    "noncommentLeaves": 57,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA256": "ed492b89c01fee16f6bce890b1daf2b3e88c139dedf3adcb9fe50cd18a68cf4f",
+        "afterSHA256": "ed492b89c01fee16f6bce890b1daf2b3e88c139dedf3adcb9fe50cd18a68cf4f"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA256": "ed492b89c01fee16f6bce890b1daf2b3e88c139dedf3adcb9fe50cd18a68cf4f",
+        "afterSHA256": "ed492b89c01fee16f6bce890b1daf2b3e88c139dedf3adcb9fe50cd18a68cf4f"
+      }
+    ]
+  },
+  "completeOverrideExpression": {
+    "typedNodes": 18,
+    "noncommentLeaves": 25,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA256": "5238e79742afa36e77a76f1edea15b7bf34425ebd002ff1f62684f72d95690e8",
+        "afterSHA256": "5238e79742afa36e77a76f1edea15b7bf34425ebd002ff1f62684f72d95690e8"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA256": "5238e79742afa36e77a76f1edea15b7bf34425ebd002ff1f62684f72d95690e8",
+        "afterSHA256": "5238e79742afa36e77a76f1edea15b7bf34425ebd002ff1f62684f72d95690e8"
+      }
+    ]
+  },
+  "originalCurrentFunction": {
+    "typedNodes": 183,
+    "noncommentLeaves": 173,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA256": "5fdba75800d0e19c212b432672539260b2ed250f6012edca36fb221a14662ff1",
+        "afterSHA256": "5fdba75800d0e19c212b432672539260b2ed250f6012edca36fb221a14662ff1"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA256": "5fdba75800d0e19c212b432672539260b2ed250f6012edca36fb221a14662ff1",
+        "afterSHA256": "5fdba75800d0e19c212b432672539260b2ed250f6012edca36fb221a14662ff1"
+      }
+    ]
+  },
+  "bindings": {
+    "exportedQueries": [
+      {
+        "name": "activeCharm",
+        "importedName": "activeCharm",
+        "module": "./relation"
+      },
+      {
+        "name": "isCharmBindingCurrent",
+        "importedName": "isCharmBindingCurrent",
+        "module": "./relation"
+      }
+    ],
+    "physicalBindings": [
+      {
+        "name": "activeCharm",
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+        "declaration": "activeCharm",
+        "via": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts"
+      },
+      {
+        "name": "isCharmBindingCurrent",
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+        "declaration": "current",
+        "via": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+        "sameBindingAlias": true
+      },
+      {
+        "name": "CharmBinding",
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+        "declaration": "CharmBinding",
+        "via": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+        "typeOnly": true
+      },
+      {
+        "name": "getDefaultRoleCatalog",
+        "path": "backend/src/game/mechanisms/roles/role-catalog-assembly.ts",
+        "declaration": "getDefaultRoleCatalog"
+      },
+      {
+        "name": "victoryDecision",
+        "path": "backend/src/game/mechanisms/win_conditions/results.ts",
+        "declaration": "victoryDecision"
+      }
+    ],
+    "ownerImports": [
+      {
+        "module": "../core/domain/model",
+        "typeOnly": false,
+        "names": [
+          {
+            "name": "Camp",
+            "typeOnly": false
+          },
+          {
+            "name": "Role",
+            "typeOnly": false
+          },
+          {
+            "name": "WinCondition",
+            "typeOnly": false
+          },
+          {
+            "name": "EntityId",
+            "typeOnly": true
+          },
+          {
+            "name": "VotingSummary",
+            "typeOnly": true
+          },
+          {
+            "name": "WinDecision",
+            "typeOnly": true
+          }
+        ]
+      },
+      {
+        "module": "../core/domain/components/names",
+        "typeOnly": false,
+        "names": [
+          {
+            "name": "COMPONENT",
+            "typeOnly": false
+          }
+        ]
+      },
+      {
+        "module": "../core/domain/world",
+        "typeOnly": true,
+        "names": [
+          {
+            "name": "World",
+            "typeOnly": false
+          }
+        ]
+      },
+      {
+        "module": "../game/mechanisms/roles/wolf_beauty/ports",
+        "typeOnly": false,
+        "names": [
+          {
+            "name": "activeCharm",
+            "typeOnly": false
+          },
+          {
+            "name": "isCharmBindingCurrent",
+            "typeOnly": false
+          },
+          {
+            "name": "CharmBinding",
+            "typeOnly": true
+          }
+        ]
+      },
+      {
+        "module": "../game/mechanisms/roles/role-catalog-assembly",
+        "typeOnly": false,
+        "names": [
+          {
+            "name": "getDefaultRoleCatalog",
+            "typeOnly": false
+          }
+        ]
+      },
+      {
+        "module": "../game/mechanisms/win_conditions/results",
+        "typeOnly": false,
+        "names": [
+          {
+            "name": "victoryDecision",
+            "typeOnly": false
+          }
+        ]
+      }
+    ]
+  },
+  "inventory": {
+    "roots": [
+      "backend/src",
+      "backend/tests",
+      "backend/scripts",
+      "frontend/src",
+      "frontend/tests",
+      "packages",
+      "tooling"
+    ],
+    "extensions": "TS/MTS/CTS/TSX/JS/MJS/CJS/JSX",
+    "literalFiles": 1872,
+    "forms": [
+      "import",
+      "export",
+      "importType",
+      "literal dynamic/require",
+      "importEquals"
+    ],
+    "relevantModuleImports": [
+      {
+        "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+        "syntax": "ImportDeclaration",
+        "module": "../../../src/game/mechanisms/roles/wolf_beauty/relation",
+        "names": [
+          "permitsCharm",
+          "activeCharm",
+          "bindCharm"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/death-wave-contributions.test.ts",
+        "syntax": "ImportDeclaration",
+        "module": "../../../src/game/mechanisms/roles/wolf_beauty/relation",
+        "names": [
+          "bindCharm",
+          "activeCharm"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/animal-dream/authority.test.ts",
+        "syntax": "ImportDeclaration",
+        "module": "../../../../src/game/mechanisms/roles/wolf_beauty/relation",
+        "names": [
+          "activeCharm",
+          "bindCharm"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/animal-dream/request-envelope.test.ts",
+        "syntax": "ImportDeclaration",
+        "module": "../../../../src/game/mechanisms/roles/wolf_beauty/relation",
+        "names": [
+          "bindCharm",
+          "activeCharm"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/rulesets/beauty-exile-victory.test.ts",
+        "syntax": "ImportDeclaration",
+        "module": "../../../src/game/mechanisms/roles/wolf_beauty/relation",
+        "names": [
+          "bindCharm"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/wolf-beauty/charm-scope-and-permission-contracts.test.ts",
+        "syntax": "ImportDeclaration",
+        "module": "../../../../src/game/mechanisms/roles/wolf_beauty/relation",
+        "names": [
+          "activeCharm",
+          "bindCharm",
+          "permitsCharm"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/wolf-beauty/trigger-receipts.test.ts",
+        "syntax": "ImportDeclaration",
+        "module": "../../../../src/game/mechanisms/roles/wolf_beauty/relation",
+        "names": [
+          "activeCharm",
+          "bindCharm"
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/wolf-beauty/death-wave-publication.test.ts",
+        "syntax": "ImportDeclaration",
+        "module": "../../../../src/game/mechanisms/roles/wolf_beauty/relation",
+        "names": [
+          "bindCharm",
+          "activeCharm"
+        ]
+      },
+      {
+        "path": "backend/tests/scenarios/features/cupid/ordered-lovers-death-waves.test.ts",
+        "syntax": "ImportDeclaration",
+        "module": "../../../../src/game/mechanisms/roles/wolf_beauty/relation",
+        "names": [
+          "permitsCharm",
+          "bindCharm"
+        ]
+      },
+      {
+        "path": "backend/tests/scenarios/features/animal-dream/native-phase-and-death-unit-chains.test.ts",
+        "syntax": "ImportDeclaration",
+        "module": "../../../../src/game/mechanisms/roles/wolf_beauty/relation",
+        "names": [
+          "activeCharm"
+        ]
+      },
+      {
+        "path": "backend/tests/scenarios/features/wolf-beauty/charm-chain-and-victory.test.ts",
+        "syntax": "ImportDeclaration",
+        "module": "../../../../src/game/mechanisms/roles/wolf_beauty/relation",
+        "names": [
+          "bindCharm"
+        ]
+      },
+      {
+        "path": "backend/tests/scenarios/failures/wolf-beauty/runner-cancellation-prefix.test.ts",
+        "syntax": "ImportDeclaration",
+        "module": "../../../../src/game/mechanisms/roles/wolf_beauty/relation",
+        "names": [
+          "activeCharm"
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+        "syntax": "ImportDeclaration",
+        "module": "../wolf_beauty/relation",
+        "names": [
+          "bindCharm"
+        ]
+      }
+    ],
+    "retiredReferences": []
+  },
+  "graph": {
+    "root": "backend/src/rulesets/beauty-exile-victory.ts",
+    "backendModules": 497,
+    "backendRelativeValueEdges": 1635,
+    "backEdges": [],
+    "kind": "当前相对 literal 后端值依赖；外部包／非字面入口及完整冷执行不计"
+  },
+  "testTypeOnlyDelta": {
+    "path": "backend/tests/unit/rulesets/beauty-exile-victory.test.ts",
+    "beforeSHA256": "a57b6f65a7b69f8ead4e0acf19bd57f2c9c78494dd3ab45481ae64cc46fba85b",
+    "finalSHA256": "71a4e64d94e35b908bb1b0bfb843b77192ad3a52ca9b75eaa30f5552166e15c4",
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "sha256": "749b60b582984ede0a966f35717b06ff81fa5bbf1201735b52cbc3649103bf83"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "sha256": "3f973e78d76684c212e81f1174a0f77ddcb15875a3ad4572b9fb7beb9248aaaa"
+      }
+    ]
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/state.ts",
+      "sha256": "d040dd3bc528648a07ed6cd26db1656bc86d218cfde462587e89bb4c031bb4a1",
+      "wholeGitBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts",
+      "sha256": "d930ea069b275c2fb012ee7ab840dc7149a4381d4a23215db51eac815711ab45",
+      "wholeGitBytesSame": true
+    },
+    {
+      "path": "backend/src/core/domain/registries/condition_registry.ts",
+      "sha256": "ef775732af1cb62499b50c664460519460bbb7e7440bd5b07ca5e00d2afbe772",
+      "wholeGitBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/win_conditions/results.ts",
+      "sha256": "bbec8db30a9ba80a5cff5e72b0c0b1556c3e6f7768557d90aaf25b983f1c8972",
+      "wholeGitBytesSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/wolf-beauty/charm-chain-and-victory.test.ts",
+      "sha256": "75b88465c088794937a8f0895a33891f9eee5cfbfe042bd7d62a539f53a23803",
+      "wholeGitBytesSame": true
+    }
+  ],
+  "summary": {
+    "wholeOriginalPrograms": 3,
+    "completeMovedFunctions": 2,
+    "otherCompletePrograms": 4,
+    "typedNodes": 7094,
+    "noncommentLeaves": 8577,
+    "wholeMappedOutputs": 18,
+    "rawSame": 18,
+    "typeOnlyTestOutputs": 2
+  },
+  "limits": [
+    "whole PM/relation/ports 精准逆不证明无映射当前 JS 恒同；完整新 owner 函数、prepare 三语句和覆盖表达式分别从当前源码核。",
+    "原 relation 三个候选 API 物理退休，新组合 API 和公开同绑定查询会改变模块初始化路径／来源指纹；不承诺任意 namespace 改写或完整冷图相等。",
+    "prepare 新返回容器不冻结原候选；relation 保唯一 binding/current/resolved/applied，运行 World/引用不授死亡或封盘许可。",
+    "仅本批五源与五真实 controls；其它并行工作树和当前传递依赖不声明与 baseline 全字节相同。"
+  ]
+}

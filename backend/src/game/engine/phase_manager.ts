@@ -9,6 +9,7 @@
  * 公开夜报、真实死亡提交、周期时钟、判胜及失败清理仍归本经理。
  * 终局候选规则只选择配置、改写狐狸候选并校验婚约／成员；原评估点、故障核对与唯一封盘写入仍归本经理。
  * 放逐名单／来源和反馈门控归具体规则组合；动物板先标死后反馈，普通板先捕获后死亡，原 await 与提交仍在这里。
+ * 狼美人候选和屠边覆盖归具名组合，原两处捕获／评估点、配置首命中顺序和唯一封盘仍由本经理推进。
  */
 import { openExileUnit, exileUnitOf, type ExileUnit } from "../../core/domain/exile-unit";
 import { nightUnitOf } from "../../core/domain/night-unit";
@@ -85,10 +86,11 @@ import { commitSelfDestructSelection } from "../mechanisms/self_destruct/commit"
 import { commitKnightDuel } from "../mechanisms/roles/knight/commit";
 import { prepareAnimalExileDeaths, captureAnimalExileFeedback, captureOrdinaryExileFeedback, prepareOrdinaryExileDeaths } from "../../rulesets/exile-death-preparation";
 import {
-  captureBeautyExile,
+  prepareBeautyExileVictory,
   resolveBeautyExileVictory,
+  beautyExileVictoryOverrides,
   type BeautyExileCandidate,
-} from "../mechanisms/roles/wolf_beauty/relation";
+} from "../../rulesets/beauty-exile-victory";
 import { BearNightFrame } from "../mechanisms/roles/bear/night_frame";
 import type { AliveComponent } from "../../core/domain/components/alive";
 import {
@@ -886,12 +888,9 @@ export class PhaseManager {
       });
       this.previousExile = captureAnimalExileFeedback(() => this.world, votingResult, sources, cycleDay);
     } else if (votingResult.removed.length > 0) {
-      const target =
-        votingResult.summary.effectiveTarget === undefined
-          ? votingResult.summary.target
-          : votingResult.summary.effectiveTarget;
-      if (target !== null && votingResult.removed.includes(target))
-        beautyCandidate = captureBeautyExile(this.world, target);
+      // 普通放逐在死亡波前捕获末狼／目标侧；动物分支不借此特殊胜利候选。
+      const { target, candidate } = prepareBeautyExileVictory(votingResult, () => this.world);
+      beautyCandidate = candidate;
       this.previousExile = captureOrdinaryExileFeedback(() => this.world, votingResult, target, cycleDay);
       const sources = prepareOrdinaryExileDeaths(votingResult);
       await this.deathResolution.resolve(
@@ -905,11 +904,12 @@ export class PhaseManager {
       );
     }
     if (!votingIsCurrent()) return this.getSnapshot();
+    // await 后先保原当前性守卫，再核整侧；查询不是封盘，已提交死亡不因失败退款。
     const beautyResult = resolveBeautyExileVictory(this.world, beautyCandidate);
     if (
       this.checkAndSealResult(
         this.#rulePlan.checkpoints.exileSettled,
-        beautyResult ? { [WinCondition.SlaughterSide]: beautyResult } : {},
+        beautyExileVictoryOverrides(beautyResult),
       )
     ) {
       return this.getSnapshot();

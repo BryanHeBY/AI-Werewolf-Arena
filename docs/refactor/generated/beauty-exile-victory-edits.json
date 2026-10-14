@@ -1,0 +1,100 @@
+[
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+    "kind": "retire-complete-exile-program",
+    "before": "export interface BeautyExileCandidate {\n  actorId: EntityId;\n  targetId: EntityId;\n  side: \"god\" | \"villager\";\n  binding: CharmBinding;\n}\n/** 仅在真实放逐已确定、完整死亡波尚未执行时捕获候选，不提前封盘。 */\nexport function captureBeautyExile(world: World, actorId: EntityId): BeautyExileCandidate | null {\n  const actor = world.getComponent(actorId, COMPONENT.Role),\n    binding = activeCharm(world, actorId);\n  if (\n    actor?.role !== Role.WolfBeauty ||\n    actor.camp !== Camp.Wolf ||\n    !binding ||\n    !binding.targetLife.alive\n  )\n    return null;\n  if (\n    world\n      .getAliveEntityIds()\n      .some((id) => id !== actorId && world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf)\n  )\n    return null;\n  const target = world.getComponent(binding.targetId, COMPONENT.Role),\n    side = target ? getDefaultRoleCatalog().metadata(target.role)?.goodSide : undefined;\n  return target?.camp === Camp.Good && side\n    ? { actorId, targetId: binding.targetId, side, binding }\n    : null;\n}\nexport function resolveBeautyExileVictory(\n  world: World,\n  candidate: BeautyExileCandidate | null,\n): WinDecision | null {\n  if (\n    !candidate ||\n    !candidate.binding.applied ||\n    !current(world, candidate.binding) ||\n    candidate.binding.targetLife.alive\n  )\n    return null;\n  const sideAlive = world.getAliveEntityIds().some((id) => {\n    const role = world.getComponent(id, COMPONENT.Role);\n    return (\n      role?.camp === Camp.Good &&\n      getDefaultRoleCatalog().metadata(role.role)?.goodSide === candidate.side\n    );\n  });\n  return sideAlive\n    ? null\n    : victoryDecision(world, { kind: \"faction\", faction: Camp.Wolf }, \"wolf_beauty_last_exile\");\n}\n",
+    "after": "",
+    "beforeOffset": 6144
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+    "kind": "unused-moved-camp-import",
+    "before": "  Camp,\n",
+    "after": "",
+    "beforeOffset": 607
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+    "kind": "unused-moved-decision-import",
+    "before": "  type WinDecision,\n",
+    "after": "",
+    "beforeOffset": 659
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+    "kind": "moved-catalog-import",
+    "before": "import { getDefaultRoleCatalog } from \"../role-catalog-assembly\";\n",
+    "after": "",
+    "beforeOffset": 805
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+    "kind": "moved-result-import",
+    "before": "import { victoryDecision } from \"../../win_conditions/results\";\n",
+    "after": "",
+    "beforeOffset": 805
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+    "kind": "same-binding-current-alias",
+    "before": "export function activeCharm(world: World, actorId: EntityId): CharmBinding | null {",
+    "after": "/** 同一 current 函数的具名查询绑定，不建包装、关系副本或新授权；各字段仍按原短路顺序晚读。 */\nexport { current as isCharmBindingCurrent };\n\nexport function activeCharm(world: World, actorId: EntityId): CharmBinding | null {",
+    "beforeOffset": 4022
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+    "kind": "relation-head-owner",
+    "before": " * 负责狼美人魅惑绑定、领取／阻断／实际死亡回执和放逐胜利边界。",
+    "after": " * 负责狼美人魅惑绑定、领取／阻断／实际死亡回执和原体当前性查询。",
+    "beforeOffset": 4
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+    "kind": "public-same-binding-queries",
+    "before": "export { attemptCharmTrigger, commitCharmDeath } from \"./relation\";",
+    "after": "export { attemptCharmTrigger, commitCharmDeath, activeCharm, isCharmBindingCurrent } from \"./relation\";",
+    "beforeOffset": 431
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+    "kind": "ports-head-queries",
+    "before": " * 完整准备仍先领取后裁保护；实际标死后才发布应用事实，不迁移其它关系、阶段或胜负。",
+    "after": " * 完整准备仍先领取后裁保护；实际标死后才发布应用事实。放逐规则组合只查询同一 active／current 绑定，\n * 不取得关系写权、死亡提交或封盘许可，不迁移其它关系、阶段或胜负。",
+    "beforeOffset": 276
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "kind": "actual-rule-owner-import",
+    "before": "  captureBeautyExile,\n  resolveBeautyExileVictory,\n  type BeautyExileCandidate,\n} from \"../mechanisms/roles/wolf_beauty/relation\";",
+    "after": "  prepareBeautyExileVictory,\n  resolveBeautyExileVictory,\n  beautyExileVictoryOverrides,\n  type BeautyExileCandidate,\n} from \"../../rulesets/beauty-exile-victory\";",
+    "beforeOffset": 4186
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "kind": "complete-target-candidate-preparation",
+    "before": "      const target =\n        votingResult.summary.effectiveTarget === undefined\n          ? votingResult.summary.target\n          : votingResult.summary.effectiveTarget;\n      if (target !== null && votingResult.removed.includes(target))\n        beautyCandidate = captureBeautyExile(this.world, target);",
+    "after": "      // 普通放逐在死亡波前捕获末狼／目标侧；动物分支不借此特殊胜利候选。\n      const { target, candidate } = prepareBeautyExileVictory(votingResult, () => this.world);\n      beautyCandidate = candidate;",
+    "beforeOffset": 32992
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "kind": "post-wave-currentness-comment",
+    "before": "    const beautyResult = resolveBeautyExileVictory(this.world, beautyCandidate);",
+    "after": "    // await 后先保原当前性守卫，再核整侧；查询不是封盘，已提交死亡不因失败退款。\n    const beautyResult = resolveBeautyExileVictory(this.world, beautyCandidate);",
+    "beforeOffset": 33694
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "kind": "late-override-argument",
+    "before": "        beautyResult ? { [WinCondition.SlaughterSide]: beautyResult } : {},",
+    "after": "        beautyExileVictoryOverrides(beautyResult),",
+    "beforeOffset": 33912
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "kind": "manager-head-owner",
+    "before": " * 放逐名单／来源和反馈门控归具体规则组合；动物板先标死后反馈，普通板先捕获后死亡，原 await 与提交仍在这里。",
+    "after": " * 放逐名单／来源和反馈门控归具体规则组合；动物板先标死后反馈，普通板先捕获后死亡，原 await 与提交仍在这里。\n * 狼美人候选和屠边覆盖归具名组合，原两处捕获／评估点、配置首命中顺序和唯一封盘仍由本经理推进。",
+    "beforeOffset": 439
+  }
+]

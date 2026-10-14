@@ -1,0 +1,178 @@
+{
+  "approvedByAuthor": true,
+  "baseCommit": "5549ba0c0714bdea5a2056f01773858eb5cf0008",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "9518cc59ce3b9a0f6b451a01da5234c9dc19a2ec2d6ecf575db52288c521d514",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "sha256": "a5a30bc7434a86b0661b9937b1850353e5b2d2d38e2f2f2efdbe5b242269a2d9",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+      "sha256": "0fb280c7cd61f0610939e541ca65e89e5fd89592ada880bc3586c4cda978af38",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/beauty-exile-victory.ts",
+      "sha256": "d850fc2f12afa02970aa954abbb4bd81350aed6dc6a54a7cd70d13e41c013b34",
+      "change": "added"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/beauty-exile-victory.test.ts",
+      "sha256": "71a4e64d94e35b908bb1b0bfb843b77192ad3a52ca9b75eaa30f5552166e15c4",
+      "change": "added"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/beauty-exile-victory-scope-final.json",
+    "sha256": "c20993a049163c576ec0f55be0cb0e1a81b32b2aadc80db8b51144d46d01729d"
+  },
+  "document": {
+    "path": "docs/refactor/beauty-exile-victory.md",
+    "sha256": "058bd26a3a830c7122ec7f16c163b8f93494e559f7e14f9335fd8054d8116d26"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-before.json",
+      "sha256": "7c64a6b4b8238cc382908349fc3b839291a0080316307b4d25ee93b643e36905"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-edits.json",
+      "sha256": "e7d25335b96bc52907fa5309023dbafec7009f5e8e810e7c90596f36423483b6"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-fixture-delta.json",
+      "sha256": "498bb6e870ec84f8e666760cc00e78cc6e045c27de5f608396f6d9c59b9b9577"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-heads.json",
+      "sha256": "5e450cd563980c66ad38a2427d27b0325cd6e26e45921998be2ae05d94c84510"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-heads.log",
+      "sha256": "089ef5301671a8f781f52a4e2842e97a2d93fec251e5175d2ee076892d1b71c8"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-heads.ts",
+      "sha256": "1a2bb3a1802ad938c493b44a525252c001702a197131f04bdb0757bda16c27e5"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-inventory.cjs",
+      "sha256": "a100e51e9aa32ba030260209aae63fa01e6666e818f0958e91e8b1318ae67ad1"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-inventory.json",
+      "sha256": "d0919ad3b8a90f7335c26e2a435fe6551329d940b3b0444ea9b04bff8b27de49"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-inventory.log",
+      "sha256": "e94c347af9078d174419f1a2af93e0441fc6e32054bcf4e32db09bf79031ab41"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-new-tests-failed-only.log",
+      "sha256": "1dcbca1662d3ccb1da6b8d27b50dd31b54b12ea951add79b9091515cf77a70b8"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-new-tests.log",
+      "sha256": "a549aa11c71c558912e7d2ac876bb438627fa87140f00d760f2f5516f64880b1"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-original-test.log",
+      "sha256": "55427fc763ff1b4e3c877e7bc8999b3ff86040d7b33d52b33dcda84d393926e0"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-paths.json",
+      "sha256": "75d3ef78c07ec07215869c797e0605d2f4ec4dfd5271edef72127d4fe690328a"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-proof.cjs",
+      "sha256": "b56f6ec1c1546a27125c467fe34113e75443142004a4827f1def006b23cfa21f"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-proof.json",
+      "sha256": "fd85118e5807453a978aa788e8f2758a0723f82a6970b433a6ebc386cbc30e97"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-proof.log",
+      "sha256": "268413ee5472cc40a8cbd27260fc0376bebcb5ebf7366d444ea6b37b589a54af"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-receipts.json",
+      "sha256": "14792503fd6d00daeddc3ad591d26238feff4386a419f9044308616b8ae15a94"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-scope-final.json",
+      "sha256": "c20993a049163c576ec0f55be0cb0e1a81b32b2aadc80db8b51144d46d01729d"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-test-typefix-before.json",
+      "sha256": "4496df01285812349aeedd2bfd8e96c208f655146576704fbbdba586ca128d60"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-types-config.json",
+      "sha256": "7caf67ee5366a9b3126cb5e7db14cef4bd4b16883c95c7f0fec9e36ca4778471"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-types-failed-config.json",
+      "sha256": "327d15301128320ea739fc966716bb8f324ef65ea15aa34b5442553b12046af9"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-types-failed.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/beauty-exile-victory-types.log",
+      "sha256": "7a47353cc308b73fb089091086d2fce6759f5faef24e8a443f7203df8bff5bdf"
+    }
+  ],
+  "artifactCount": 23,
+  "summary": {
+    "paths": 5,
+    "actualGitBefore": 3,
+    "controls": 5,
+    "programs": {
+      "wholeOriginalPrograms": 3,
+      "completeMovedFunctions": 2,
+      "otherCompletePrograms": 4,
+      "typedNodes": 7094,
+      "noncommentLeaves": 8577,
+      "wholeMappedOutputs": 18,
+      "rawSame": 18,
+      "typeOnlyTestOutputs": 2
+    },
+    "successfulDistinctCases": 4,
+    "successfulDistinctAssertions": 31,
+    "headsRoots": 5,
+    "headsDocumentationPaths": 594,
+    "headDiagnostics": 0,
+    "inventory": {
+      "files": 1872,
+      "relationLiteralSites": 18,
+      "retiredConsumers": 0
+    },
+    "graph": {
+      "root": "backend/src/rulesets/beauty-exile-victory.ts",
+      "backendModules": 497,
+      "backendRelativeValueEdges": 1635,
+      "backEdges": [],
+      "kind": "当前相对 literal 后端值依赖；外部包／非字面入口及完整冷执行不计"
+    }
+  },
+  "receipts": {
+    "path": "docs/refactor/generated/beauty-exile-victory-receipts.json",
+    "sha256": "14792503fd6d00daeddc3ad591d26238feff4386a419f9044308616b8ae15a94"
+  },
+  "limitations": [
+    "whole PM/relation/ports 精准逆不证明无映射当前 JS 恒同；完整新 owner 函数、prepare 三语句和覆盖表达式分别从当前源码核。",
+    "原 relation 三个候选 API 物理退休，新组合 API 和公开同绑定查询会改变模块初始化路径／来源指纹；不承诺任意 namespace 改写或完整冷图相等。",
+    "prepare 新返回容器不冻结原候选；relation 保唯一 binding/current/resolved/applied，运行 World/引用不授死亡或封盘许可。",
+    "仅本批五源与五真实 controls；其它并行工作树和当前传递依赖不声明与 baseline 全字节相同。"
+  ],
+  "reviewStatus": "待 Root 与非作者独立审查；author artifacts 排除二者报告避免循环摘要。"
+}

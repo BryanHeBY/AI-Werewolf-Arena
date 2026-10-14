@@ -1,0 +1,130 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_presentation_finish",
+  "baseCommit": "5549ba0c0714bdea5a2056f01773858eb5cf0008",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "9518cc59ce3b9a0f6b451a01da5234c9dc19a2ec2d6ecf575db52288c521d514",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "sha256": "a5a30bc7434a86b0661b9937b1850353e5b2d2d38e2f2f2efdbe5b242269a2d9",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+      "sha256": "0fb280c7cd61f0610939e541ca65e89e5fd89592ada880bc3586c4cda978af38",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/beauty-exile-victory.ts",
+      "sha256": "d850fc2f12afa02970aa954abbb4bd81350aed6dc6a54a7cd70d13e41c013b34",
+      "change": "added"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/beauty-exile-victory.test.ts",
+      "sha256": "71a4e64d94e35b908bb1b0bfb843b77192ad3a52ca9b75eaa30f5552166e15c4",
+      "change": "added"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/beauty-exile-victory-scope-final.json",
+    "sha256": "c20993a049163c576ec0f55be0cb0e1a81b32b2aadc80db8b51144d46d01729d"
+  },
+  "document": {
+    "path": "docs/refactor/beauty-exile-victory.md",
+    "sha256": "058bd26a3a830c7122ec7f16c163b8f93494e559f7e14f9335fd8054d8116d26"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/beauty-exile-victory-evidence.json",
+    "sha256": "64956c2e3305c170d19c52b8ef309d17ee188ac27ef603cf42bc237b4eddfc74"
+  },
+  "independentChecks": {
+    "freshSource": 5,
+    "actualGitWholeSource": [
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "beforeSHA256": "4bc72dda16e8a138d3b8e9014e0940b2b247469780001657795550af5a3077eb",
+        "wholeExactForwardAndInverse": true,
+        "edits": 5
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+        "beforeSHA256": "298a4bb9105bf9fae457b0de7e9a358fe2571d617f8ab5b2d4116943cc02af3a",
+        "wholeExactForwardAndInverse": true,
+        "edits": 7
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+        "beforeSHA256": "fc22dd712951cf2e9260b8248a2ae440dfcec7aef67cad0bf93e3dc1218b386e",
+        "wholeExactForwardAndInverse": true,
+        "edits": 2
+      }
+    ],
+    "wholeExactEditFragments": 14,
+    "stableActualGitAndCurrentControls": 5,
+    "artifactSHA256": 23,
+    "drift": 0,
+    "currentRawCaptureAndResolveBodyComparedToGit": true,
+    "candidateDeclarationOriginalMutabilityExact": true,
+    "sameCurrentFunctionRawBody": true,
+    "fixtureAndTypeFixWholeBridge": true
+  },
+  "manualReview": [
+    "完整放逐规则归beauty-exile-victory：普通非空removed路径现场选择effectiveTarget，原有定义时两读，nonnull→includes→World；动物分支不捕候选。新prepare同步容器保原target与可写candidate，关系没有复制或多建状态。",
+    "capture先Role查询再activeCharm，原角色/camp/life/末狼过滤与late catalog target-side读取保持；目标侧捕获在死亡波前，previousExile和原来源/DR await仍经理同点。",
+    "await后原votingIsCurrent仍先于resolve World读取，resolve按candidate→applied→同current函数alias→target死亡短路，再扫描原同侧存活。原生命版本/角色/政策current owner不迁，复活撤权不退款。",
+    "actualVictory成员仍调用victoryDecision从Victory.affiliations读取，不依真实Role.camp；新literal deliberately Good角色属于Wolf，独立成员预期为[1,3]。已领取/blocked不等于applied。",
+    "override只在checkAndSealResult第二实参处生成，callee→checkpoint→override条件/SlaughterSide key顺序保。ConditionRegistry按配置首命中，不让Beauty优先越过SlaughterCity；封盘、故障、婚约/成员日期/狐狸替换原经理和共同owner持有。",
+    "relation保唯一bindings/resolved/applied/current，公开alias是同current声明而非wrapper；ports同binding。三旧候选API退休、新规则API/返回容器/模块初始化/调用栈及namespace反射限制明列。",
+    "新3unit字面getter、拒绝/已付/复活与条件顺序不复制算法；首红是自有includes不可配置，精确fixture修仅改configurable。类型失败仅两真实claimed回执参数收窄，不宽生产或改oracle。中文heads/数据/时点/失败和权限说明准确。"
+  ],
+  "findings": [],
+  "authorEvidenceAttribution": {
+    "proof": {
+      "chunk": "ffff7f",
+      "exitCode": 0,
+      "wholeOriginalPrograms": 3,
+      "completeMovedFunctions": 2,
+      "otherCompletePrograms": 4,
+      "typedNodes": 7094,
+      "noncommentLeaves": 8577,
+      "wholeMappedOutputs": 18,
+      "rawSame": 18,
+      "typeOnlyTestOutputs": 2
+    },
+    "runtime": {
+      "successfulDistinctCases": 4,
+      "successfulDistinctAssertions": 31,
+      "runtimeExecutions": 3,
+      "newDistinctCases": 3,
+      "newDistinctAssertions": 26,
+      "originalDistinctCases": 1,
+      "originalAssertions": 5,
+      "typesPolicy": "first5 两 newunit 红，only failed1 收窄后终0；不重复四无诊断 production roots",
+      "fullGateOrModels": false
+    },
+    "newFirst": "17d22b exit1,2pass/1fail/24assert；fixture getter重定义前红",
+    "newFailedOnly": "5bc60a exit0,1pass/10assert,2filtered",
+    "originalPrecise": "13ca7a exit0,1pass/5assert,26filtered",
+    "types": "9e2498/session21866→ff6c48 exit2，只有newunit2diag；failedunit e42680/session98538→57327c exit0。",
+    "heads": "772ec9 exit0,5sources/594当时Git文档，0诊断/0中文缺失。",
+    "inventorySupplement": "5d882e exit0，首完整路径预筛13站点遗漏同族./relation；补七根全字面18站点/0退休消费，不重首proof。",
+    "graph": {
+      "root": "backend/src/rulesets/beauty-exile-victory.ts",
+      "backendModules": 497,
+      "backendRelativeValueEdges": 1635,
+      "backEdges": [],
+      "kind": "当前相对 literal 后端值依赖；外部包／非字面入口及完整冷执行不计"
+    }
+  },
+  "limits": [
+    "只读完整源、真实Git、精确全文变换、作者proof脚本/收据与文档；未执行作者工具、类型、测试或全门禁，未poll。",
+    "作者whole3+2fn+4程序映射及18输出不冒当前无映射raw完全相同；独立从新owner实核完整两body/候选/current，人工核prepare与override。",
+    "图497/1635是当前backend相对literal采样，不包括外部包/非literal或完整cold执行，其他并行源非immutablecontrols。",
+    "只完成本有界放逐胜利职责，不宣称全C24/C28/P9或整个死亡规则矩阵完成；未写产品/Git/progress。"
+  ]
+}

@@ -1,5 +1,5 @@
 /**
- * 负责狼美人魅惑绑定、领取／阻断／实际死亡回执和放逐胜利边界。
+ * 负责狼美人魅惑绑定、领取／阻断／实际死亡回执和原体当前性查询。
  * 输入为原源／目标引用及死亡原因；输出为仍当前的关系和具体阶段结果，bindings 是唯一权威状态。
  * resolved 表示牵连已经领取，applied 表示目标确实死亡；梦阻断仍消耗领取，不能退款重触发。
  * 回执只保同一绑定的不可伪造运行时引用，不复制状态或授予死亡权限；不标死或发布事实。
@@ -12,16 +12,12 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import {
   Role,
-  Camp,
   DeathCause,
   type DeathSources,
   type EntityId,
-  type WinDecision,
 } from "../../../../core/domain/model";
 import type { World } from "../../../../core/domain/world";
 import { getWolfBeautyState } from "./state";
-import { getDefaultRoleCatalog } from "../role-catalog-assembly";
-import { victoryDecision } from "../../win_conditions/results";
 
 export interface CharmBinding {
   readonly actorId: EntityId;
@@ -101,6 +97,9 @@ function current(world: World, binding: CharmBinding): boolean {
       binding.targetVersion + (binding.targetLife.alive ? 0 : 1)
   );
 }
+/** 同一 current 函数的具名查询绑定，不建包装、关系副本或新授权；各字段仍按原短路顺序晚读。 */
+export { current as isCharmBindingCurrent };
+
 export function activeCharm(world: World, actorId: EntityId): CharmBinding | null {
   const binding = bindings.get(world)?.get(actorId);
   return binding && !binding.resolved && current(world, binding) ? binding : null;
@@ -162,57 +161,6 @@ export function commitCharmDeath(
     return null;
   (binding as { applied: boolean }).applied = true;
   return issueReceipt("applied", binding);
-}
-export interface BeautyExileCandidate {
-  actorId: EntityId;
-  targetId: EntityId;
-  side: "god" | "villager";
-  binding: CharmBinding;
-}
-/** 仅在真实放逐已确定、完整死亡波尚未执行时捕获候选，不提前封盘。 */
-export function captureBeautyExile(world: World, actorId: EntityId): BeautyExileCandidate | null {
-  const actor = world.getComponent(actorId, COMPONENT.Role),
-    binding = activeCharm(world, actorId);
-  if (
-    actor?.role !== Role.WolfBeauty ||
-    actor.camp !== Camp.Wolf ||
-    !binding ||
-    !binding.targetLife.alive
-  )
-    return null;
-  if (
-    world
-      .getAliveEntityIds()
-      .some((id) => id !== actorId && world.getComponent(id, COMPONENT.Role)?.camp === Camp.Wolf)
-  )
-    return null;
-  const target = world.getComponent(binding.targetId, COMPONENT.Role),
-    side = target ? getDefaultRoleCatalog().metadata(target.role)?.goodSide : undefined;
-  return target?.camp === Camp.Good && side
-    ? { actorId, targetId: binding.targetId, side, binding }
-    : null;
-}
-export function resolveBeautyExileVictory(
-  world: World,
-  candidate: BeautyExileCandidate | null,
-): WinDecision | null {
-  if (
-    !candidate ||
-    !candidate.binding.applied ||
-    !current(world, candidate.binding) ||
-    candidate.binding.targetLife.alive
-  )
-    return null;
-  const sideAlive = world.getAliveEntityIds().some((id) => {
-    const role = world.getComponent(id, COMPONENT.Role);
-    return (
-      role?.camp === Camp.Good &&
-      getDefaultRoleCatalog().metadata(role.role)?.goodSide === candidate.side
-    );
-  });
-  return sideAlive
-    ? null
-    : victoryDecision(world, { kind: "faction", faction: Camp.Wolf }, "wolf_beauty_last_exile");
 }
 export function permitsCharm(
   sources: readonly DeathCause[],

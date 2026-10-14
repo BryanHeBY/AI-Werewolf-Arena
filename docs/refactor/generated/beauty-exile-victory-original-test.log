@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/scenarios/features/wolf-beauty/charm-chain-and-victory.test.ts:
+(pass) last Beauty god side/slaughter_city+slaughter_side: complete charm and badge chain first, then obey ordered victory conditions [68.65ms]
+
+ 1 pass
+ 26 filtered out
+ 0 fail
+ 5 expect() calls
+Ran 1 test across 1 file. [212.00ms]

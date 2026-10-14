@@ -772,3 +772,5 @@
 - C45 ACP会话／配置中文契约：两源十四精确comment将英文初始提示/结束回调中文化，补运行registry与DTO边界、私有轨迹、关联UUID/远端ID、同初始化预算、取消/关闭、逐响应替换配置列表和失败保已应用前缀。Root作者与非作者完整5549两真实Git/十四正逆/七附件及实际process/pool/lifecycle语义批准；完整392typed/482叶与四raw输出同，首两head/593Gitdocs实际0，无tests/types/gate重复。注释新sourceHash实际变化，历史身份保，全ACP/中文/P9继续，见 acp-session-contract-chinese-comments.md。
 
 - C45 Agent故障报告中文契约：两源十三comment将英文head按真实边界中文化，规范三字段而非调用方actor/day授权、三ledger各实例独占、总量→阶段→消息首命中、直接debug记录后消费名额及回调失败保前缀有效说明。Root作者与非作者完整8db19两Git/十三正逆/九附件及SDK/ACP/记录器实际语义批准，892typed/1070叶/四raw同，首两head/595docs实际0；末accepted=false一comment精度通过完整逆/两raw桥连接旧采样，不重green/types/tests/fullgate。注释只改变新sourceHash，历史身份保，全中文/P9继续，见 agent-bug-report-chinese-contracts.md。
+
+- C24/C28 狼美人放逐定案：五源完整候选目标/末狼/side捕获、波后applied/current/实际目标死亡/整侧Victory成员与late屠边覆盖归具名ruleset；原bindings/resolved/applied/current唯一relation仍同binding查询，三旧候选API退休。PM普通捕获→反馈→死亡await→current→解析→callee/checkpoint/第二实参覆盖与唯一封盘保。Root及非作者完整5549三Git/十四编辑/五controls/23附件、两新owner完整正文及有效中文结构审批准；new首fixture getter红保→onlyfailed1绿，old精准1绿，共四不同31断言；types首5仅newunit两诊断→puretypefailed1实际0，heads首5实0，7094typed/8577叶/十八mapped输出保。13库存漏同族单补18接线而非改写旧report，没有重green/全gate，完整判胜/C24/C28/P9继续，见 beauty-exile-victory.md。

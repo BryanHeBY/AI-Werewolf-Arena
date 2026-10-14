@@ -4,11 +4,12 @@
  * 由实际 state／relation owner 持有，死亡波贡献准备牵连并发布事实，engine 仍标死；本入口仅具名导出真实函数，
  * 领取发生于原死亡 hook 之后、追加死因之前，目标原生命实际标死之后才提交 applied。
  * 阻断／失效是该次触发的终态，不恢复已付领取；本入口不增加查询或第二份状态。
- * 完整准备仍先领取后裁保护；实际标死后才发布应用事实，不迁移其它关系、阶段或胜负。
+ * 完整准备仍先领取后裁保护；实际标死后才发布应用事实。放逐规则组合只查询同一 active／current 绑定，
+ * 不取得关系写权、死亡提交或封盘许可，不迁移其它关系、阶段或胜负。
  * 规则见 docs/rules/awa-wolf-beauty-v1.md。
  */
 export { getWolfBeautyState, setWolfBeautyState } from "./state";
-export { attemptCharmTrigger, commitCharmDeath } from "./relation";
+export { attemptCharmTrigger, commitCharmDeath, activeCharm, isCharmBindingCurrent } from "./relation";
 export type {
   CharmBinding,
   CharmClaimReceipt,

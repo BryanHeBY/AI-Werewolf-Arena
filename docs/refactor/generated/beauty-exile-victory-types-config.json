@@ -1,0 +1,19 @@
+{
+  "extends": "../../../backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "../../..",
+    "typeRoots": [
+      "../../../backend/node_modules/@types",
+      "../../../backend/node_modules"
+    ]
+  },
+  "files": [
+    "../../../backend/src/game/engine/phase_manager.ts",
+    "../../../backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+    "../../../backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+    "../../../backend/src/rulesets/beauty-exile-victory.ts",
+    "../../../backend/tests/unit/rulesets/beauty-exile-victory.test.ts"
+  ],
+  "include": [],
+  "exclude": []
+}
