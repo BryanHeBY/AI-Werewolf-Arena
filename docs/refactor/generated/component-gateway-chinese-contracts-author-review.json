@@ -1,0 +1,63 @@
+{
+  "approved": true,
+  "role": "author",
+  "reviewer": "/root/preflight_final_review",
+  "scope": {
+    "path": "docs/refactor/generated/component-gateway-chinese-contracts-scope-final.json",
+    "sha256": "dd1bc6ac1b84ee67d869bc63e0755f9fecab4a819dd0eac85409274d995cfbb2"
+  },
+  "source": [
+    {
+      "path": "backend/src/core/domain/component-map.ts",
+      "sha256": "9c19923ac04210e10f1f50fd72ea350234942d0beec7928ee269c6e31304062e"
+    },
+    {
+      "path": "backend/src/core/domain/model.ts",
+      "sha256": "bede6d20f309c3ee2cc2108331e329bdc3da55a1aa5fce15de6eef85e95ca279"
+    },
+    {
+      "path": "backend/src/core/domain/components/debate_penalty.ts",
+      "sha256": "874db3cd277c2d6f4841dc74a442edc8ebcba989a65a5aa3e2d19ab55b5dc16d"
+    },
+    {
+      "path": "backend/src/core/domain/systems/win_condition_system.ts",
+      "sha256": "d8cf26cbd15c04678252614ce4021c73a9d11f28348e6867dc194c3694cfd57a"
+    },
+    {
+      "path": "backend/src/core/index.ts",
+      "sha256": "c7919f26fdfe328bff60859222cc5777380ceea90a49da16e339c10a45c866a7"
+    },
+    {
+      "path": "backend/src/game/gateway/tool_gateway.ts",
+      "sha256": "48d375d498e73d2344ba7e724a6366aefa24c3930e2236e2af003859e8253ef6"
+    }
+  ],
+  "deleted": [],
+  "document": {
+    "path": "docs/refactor/component-gateway-chinese-contracts.md",
+    "sha256": "7de02444affdc9f39f659b5e4d7954c9ab9961a1187793a531cadd57dbd6e214"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/component-gateway-chinese-contracts-evidence.json",
+    "sha256": "bba2995dbf3e636d7482975564b2094eb1b73daf6b7383a134e249e9fcfb6ef6"
+  },
+  "actualGitBeforeSources": 6,
+  "stableWholeControls": 4,
+  "exactCommentRecords": 24,
+  "artifacts": 26,
+  "manualReview": [
+    "Complete original/current six files, actual Role/Camp/World typed slots; no new runtime validation or independent Camp mirror.",
+    "Gateway/ActionValidator/reception/real Day+Death callers and sanitizer prefix/spread/Boolean/receiver/failure sequence.",
+    "Debate original record+life query, conditions registry/real win registry and bootstrap assembly, canonical concept and core exports."
+  ],
+  "checks": {
+    "firstProof": "719d05/0",
+    "firstHeads": "d6c347/1",
+    "headRepairProof": "7080e3/0",
+    "failedOnlyHeads": "a05b0b/0"
+  },
+  "limits": [
+    "Author self-review; independent approval remains required.",
+    "No behavior/type/model/gate execution or source/permission algorithm changes."
+  ]
+}

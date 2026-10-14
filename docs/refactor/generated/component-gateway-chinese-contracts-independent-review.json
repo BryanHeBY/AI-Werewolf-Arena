@@ -1,0 +1,383 @@
+{
+  "schema": 1,
+  "reviewer": "native_presentation_finish independent non-author",
+  "approved": true,
+  "findings": [],
+  "source": [
+    {
+      "path": "backend/src/core/domain/component-map.ts",
+      "sha256": "9c19923ac04210e10f1f50fd72ea350234942d0beec7928ee269c6e31304062e"
+    },
+    {
+      "path": "backend/src/core/domain/model.ts",
+      "sha256": "bede6d20f309c3ee2cc2108331e329bdc3da55a1aa5fce15de6eef85e95ca279"
+    },
+    {
+      "path": "backend/src/core/domain/components/debate_penalty.ts",
+      "sha256": "874db3cd277c2d6f4841dc74a442edc8ebcba989a65a5aa3e2d19ab55b5dc16d"
+    },
+    {
+      "path": "backend/src/core/domain/systems/win_condition_system.ts",
+      "sha256": "d8cf26cbd15c04678252614ce4021c73a9d11f28348e6867dc194c3694cfd57a"
+    },
+    {
+      "path": "backend/src/core/index.ts",
+      "sha256": "c7919f26fdfe328bff60859222cc5777380ceea90a49da16e339c10a45c866a7"
+    },
+    {
+      "path": "backend/src/game/gateway/tool_gateway.ts",
+      "sha256": "48d375d498e73d2344ba7e724a6366aefa24c3930e2236e2af003859e8253ef6"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/component-gateway-chinese-contracts-scope-final.json",
+    "sha256": "dd1bc6ac1b84ee67d869bc63e0755f9fecab4a819dd0eac85409274d995cfbb2",
+    "baseCommit": "9df9dd0344f99db150996632d793f2c4c6485a11",
+    "orderedSourceCount": 6,
+    "commentOnly": true
+  },
+  "document": {
+    "path": "docs/refactor/component-gateway-chinese-contracts.md",
+    "sha256": "7de02444affdc9f39f659b5e4d7954c9ab9961a1187793a531cadd57dbd6e214"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/component-gateway-chinese-contracts-evidence.json",
+    "sha256": "bba2995dbf3e636d7482975564b2094eb1b73daf6b7383a134e249e9fcfb6ef6"
+  },
+  "actualGitBefore": [
+    {
+      "path": "backend/src/core/domain/component-map.ts",
+      "sha256": "b4f41d5714c55aca0cba282e5726d2cbee9c06a4002e21836ac870129e57fbb2",
+      "mode": "100644",
+      "blob": "1d96ddfc7761b4c6824d160047479358dcfd95fc"
+    },
+    {
+      "path": "backend/src/core/domain/model.ts",
+      "sha256": "2296ef3bb84963b5a7130db5c7f0ace0245abb42fb0d30a58e038d53881951f1",
+      "mode": "100644",
+      "blob": "f4a94eb1a775d3626fb3d80816bb532de37a2ad9"
+    },
+    {
+      "path": "backend/src/core/domain/components/debate_penalty.ts",
+      "sha256": "9d2ef82453b63fe5c528b273ffa6a8d0abaa50b7fb3c00efe8ef54eb1b4f7413",
+      "mode": "100644",
+      "blob": "cb6c9a7c24a43bafe39ae4d402eb751c984783c3"
+    },
+    {
+      "path": "backend/src/core/domain/systems/win_condition_system.ts",
+      "sha256": "d2aebf9eef81f9aefb39cd3cd1d50cd8af151be507b234bcf60463c802d617c8",
+      "mode": "100644",
+      "blob": "1724666ec6d6e189e867dcffcfb6cce336f04dff"
+    },
+    {
+      "path": "backend/src/core/index.ts",
+      "sha256": "9371814a6c7c65e479c12fbd2f89bc6185fb2db5fe94569127fa358f290428a4",
+      "mode": "100644",
+      "blob": "6a69442c2a11486c0ea50554830b7c6d0c9af71d"
+    },
+    {
+      "path": "backend/src/game/gateway/tool_gateway.ts",
+      "sha256": "06cdb687a636a1a0c49653138658d8ef7ccffc721a1db7ec504597c656840227",
+      "mode": "100644",
+      "blob": "165aafa780f3a92dce71bd06a183fc36031bfa74"
+    }
+  ],
+  "wholeTextEdits": [
+    {
+      "path": "backend/src/core/domain/component-map.ts",
+      "phases": [
+        {
+          "stage": "first",
+          "edits": 4,
+          "wholeForwardInverse": true,
+          "afterSHA256": "9c19923ac04210e10f1f50fd72ea350234942d0beec7928ee269c6e31304062e"
+        },
+        {
+          "stage": "headPrecision",
+          "edits": 0,
+          "wholeForwardInverse": true,
+          "afterSHA256": "9c19923ac04210e10f1f50fd72ea350234942d0beec7928ee269c6e31304062e"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/core/domain/model.ts",
+      "phases": [
+        {
+          "stage": "first",
+          "edits": 1,
+          "wholeForwardInverse": true,
+          "afterSHA256": "e508da2197e310fdc7ef522f05b6a02857e30e49b090de5dce0f5e010fcc1ece"
+        },
+        {
+          "stage": "headPrecision",
+          "edits": 1,
+          "wholeForwardInverse": true,
+          "afterSHA256": "bede6d20f309c3ee2cc2108331e329bdc3da55a1aa5fce15de6eef85e95ca279"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/core/domain/components/debate_penalty.ts",
+      "phases": [
+        {
+          "stage": "first",
+          "edits": 4,
+          "wholeForwardInverse": true,
+          "afterSHA256": "55baf64757ea9a7ed2c59fbe4b95216522ecd04104d2aea02fa7560884ccc129"
+        },
+        {
+          "stage": "headPrecision",
+          "edits": 1,
+          "wholeForwardInverse": true,
+          "afterSHA256": "874db3cd277c2d6f4841dc74a442edc8ebcba989a65a5aa3e2d19ab55b5dc16d"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/core/domain/systems/win_condition_system.ts",
+      "phases": [
+        {
+          "stage": "first",
+          "edits": 3,
+          "wholeForwardInverse": true,
+          "afterSHA256": "d8cf26cbd15c04678252614ce4021c73a9d11f28348e6867dc194c3694cfd57a"
+        },
+        {
+          "stage": "headPrecision",
+          "edits": 0,
+          "wholeForwardInverse": true,
+          "afterSHA256": "d8cf26cbd15c04678252614ce4021c73a9d11f28348e6867dc194c3694cfd57a"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/core/index.ts",
+      "phases": [
+        {
+          "stage": "first",
+          "edits": 1,
+          "wholeForwardInverse": true,
+          "afterSHA256": "c499e166debe4c4f7c126c7b349ab7b3137df941700ae5afd35eba941d577414"
+        },
+        {
+          "stage": "headPrecision",
+          "edits": 1,
+          "wholeForwardInverse": true,
+          "afterSHA256": "c7919f26fdfe328bff60859222cc5777380ceea90a49da16e339c10a45c866a7"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/gateway/tool_gateway.ts",
+      "phases": [
+        {
+          "stage": "first",
+          "edits": 8,
+          "wholeForwardInverse": true,
+          "afterSHA256": "48d375d498e73d2344ba7e724a6366aefa24c3930e2236e2af003859e8253ef6"
+        },
+        {
+          "stage": "headPrecision",
+          "edits": 0,
+          "wholeForwardInverse": true,
+          "afterSHA256": "48d375d498e73d2344ba7e724a6366aefa24c3930e2236e2af003859e8253ef6"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/core/domain/world.ts",
+      "mode": "100644",
+      "blob": "35ead18d1d431599d1ddab53e16925e73faf853a",
+      "sha256": "0422265542c6d782eb52f1dd1c187b5b3a5e9f78c5c7e83d4519d22bd8ac24d1"
+    },
+    {
+      "path": "backend/src/game/gateway/action_validator.ts",
+      "mode": "100644",
+      "blob": "241fbfcd231676976e1a5fc60c3f2b2f9e13bab7",
+      "sha256": "205a3037a406b1654acad3dbedcafd171fac82d3fee898a3a593fe1684d2bb2b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/authority.ts",
+      "mode": "100644",
+      "blob": "f7ef7fb0eada7401ffa072d3848010ba964bd2bb",
+      "sha256": "e83bbc1d73641acb2561b9eb44564975cbc848d12100385bd210a8ab5dcf81ab"
+    },
+    {
+      "path": "backend/src/core/domain/registries/condition_registry.ts",
+      "mode": "100644",
+      "blob": "0cadb206d744ae4ec4b10ed235a0c1bfb52b5849",
+      "sha256": "ef775732af1cb62499b50c664460519460bbb7e7440bd5b07ca5e00d2afbe772"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-before.json",
+      "sha256": "7a05c44907b31d8c487aa5c18e8a78233cfa4e63e15b5964d627a2069d65c07a"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-edits.json",
+      "sha256": "de672a33e4721fa8009ab55c5998924634fa773ae710b033784b18721ef10f5d"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-failed-heads-output.txt",
+      "sha256": "86bfa588b1bd48b913b4c61ef8a717e596713ae417894002c7682976c0c8bec3"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-failed-heads-source-ready.json",
+      "sha256": "9b9f1bebff8742fafac271f4521d5a250e5409e0d8c90050d399537ac8749b9f"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-failed-heads.json",
+      "sha256": "1a9148a7d6590344efbc7736e8d93a991b02eb3dd84f7931ca1930f182d0d499"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-failed-heads.ts",
+      "sha256": "c2d6eb9e7e3d105718984715fd25eefac8cf2ec6a92a059259878f3618f4c3e7"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-final-source-ready.json",
+      "sha256": "8b9c146df56ae1a4eaf03c31a7f5a033e6fcf0e429d81a53e0c3af01b01d4160"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-head-repair-before.json",
+      "sha256": "d304ad7340400c2c3177c98344597b820e164c981ccc0a686ade4bb68b72c430"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-head-repair-edits.json",
+      "sha256": "c53e8748761faa32600626b9dead804b1b763dc1c5234706c3be52777886e4a3"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-head-repair-proof-output.txt",
+      "sha256": "46fdc233660cf3b4fd73e1cf75161e54be3480de8f91c55d7aafc90a7178baa3"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-head-repair-proof.cjs",
+      "sha256": "d10cc796a7564e5ceb068e29d1ff919b0ce2beff8d362de4ce8ca186ff658abe"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-head-repair-proof.json",
+      "sha256": "1311d4c40ca1d89819042e17efde1ebd42aa679a4bc3f8e40d8d8003244bef1b"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-head-repair-source-ready.json",
+      "sha256": "350928c12ecb683cb3baf1feb5b780624256ec47642a87aa35e9e7a1e2372ec0"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-head-repair-stage-before.json",
+      "sha256": "62faffec9c5071ac75b755e4af298365508f9e8f61dd3579d3bb5708ec015736"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-heads-output.txt",
+      "sha256": "91d90e2e79e2741dc2debf577b7e474cd4ee21fc84d76b8df812ea6bb0c565d7"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-heads.json",
+      "sha256": "09ca5318b477f0e132be433c091a0584b9e90f721f1d674ab023d1d9f2eb6628"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-heads.ts",
+      "sha256": "d1cdcec2ddc246f1b86f2f9025eecfb28e9c4114bf26ed9c1acdc7ab95618056"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-paths.json",
+      "sha256": "add684799503c705b2b006035b6f35b2b52222bd63d0e4b9bb33f4232bcb8ffd"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-plan.json",
+      "sha256": "78ddb0cfe57d49b07ec89f79a0ce6893ad2fbfcfd0a7fd704cde5d1d2b19b12d"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-preparation-history.json",
+      "sha256": "a84f73ddc2b02c99210e2949aae34d23bc6e03c4c2bf18df77489eb1713f43b9"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-proof-output.txt",
+      "sha256": "b5f8589cb858afc05e527527a2d483f656e2a39cbc7581b9fa39963d448656dc"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-proof.cjs",
+      "sha256": "3f84ee4a4ba1b27cd62b7ad2050a3d40dc09f27333b406d30cf09dfd3075e888"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-proof.json",
+      "sha256": "1ff6af086e17051509b4fbc7319da6d4f854c2d3f1fe38d0c7f5afb2dffbfe35"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-receipts.json",
+      "sha256": "b07f6b2449223ebfbef0f0a8efca020a5665c7df2c824e35ca15c3773dd96646"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-run-records.json",
+      "sha256": "691130654e73b258fe31e2b99b88ab5a0f0673b6a13a4f477c42be7ae691957c"
+    },
+    {
+      "path": "docs/refactor/generated/component-gateway-chinese-contracts-source-ready.json",
+      "sha256": "a2b040d70e4f16e1f5951007f5047c06ebd2532dc7cbbcd0c1894773282266b7"
+    }
+  ],
+  "boundArtifactReferences": 26,
+  "semanticReview": [
+    "Complete old/current six modules and complete World, ActionValidator, Debater authority, ConditionRegistry controls read, with actual speech sanitizer and ActionReception callers.",
+    "Eleven original named slots; Role/privateState and Camp separate, optional never compile-time only, no runtime shape/permission or extension-width restriction.",
+    "Debate penalty data cannot recreate capability; authority retains exact record and NightLifeScope, undefined-day acceptance and original record/life references.",
+    "WinConditionSystem preserves original evaluator receiver and exactly two arguments, without checkpoint or terminal commit.",
+    "Model/core keep identical exports and leaf ownership; prose does not promise every imported leaf lacks initialization.",
+    "Gateway sanitizes before validator lookup/call; speech outer/args shallow copies, other input identity, getter/spread/cleaning first errors preserved.",
+    "Original regex removes leading reserved labels then trim, not embedded text or authentication; end_chat retains original spread/text/read order and Boolean truthiness."
+  ],
+  "evidenceReview": {
+    "firstProof": {
+      "terminal": "719d05",
+      "exitCode": 0,
+      "sources": 6,
+      "comments": 21,
+      "typedNodes": 515,
+      "nodeArrays": 74,
+      "nonCommentSyntaxLeaves": 638,
+      "jsdocTags": 0,
+      "protectedComments": 0,
+      "wholeRawOutputs": 12
+    },
+    "firstHeads": {
+      "terminal": "d6c347",
+      "exitCode": 1,
+      "diagnostics": 2,
+      "failedRoots": [
+        "backend/src/core/domain/model.ts",
+        "backend/src/core/domain/components/debate_penalty.ts"
+      ],
+      "documentationPathsAtSampling": 712
+    },
+    "repairProof": {
+      "terminal": "7080e3",
+      "exitCode": 0,
+      "changedPrograms": 3,
+      "comments": 3,
+      "typedNodes": 32,
+      "nodeArrays": 5,
+      "nonCommentSyntaxLeaves": 55,
+      "wholeRawOutputs": 6
+    },
+    "failedOnlyHeads": {
+      "terminal": "a05b0b",
+      "exitCode": 0,
+      "roots": 2,
+      "fourGreenNotRepeated": true
+    },
+    "preparationFailure": "31c171 anchor indentation mismatch after ten comments; partial source preserved, not a product/type/runtime/proof failure."
+  },
+  "reviewerPreparation": [
+    "d7591d1: generic current-reference reader incorrectly included historical backend model first-source SHA; source phases were already bound by exact forward/inverse. No review or author file written.",
+    "03e7161: Python keyword-argument syntax typo stopped before execution. Corrected only reviewer command; no product/check rerun."
+  ],
+  "limitations": [
+    "Reviewer only read actual Git/text/hash metadata; no compiler/head/proof/tests/gate/product module loaded.",
+    "Proof scripts/AST/output/head receipts are author evidence read in full, not rerun by reviewer.",
+    "Readiness flags refer to their precheck capture phases; repair3/two failed-head roots do not imply final six-head rerun.",
+    "No source/author metadata/Git/progress changed; not an all55/P9 or archive behavior approval."
+  ]
+}

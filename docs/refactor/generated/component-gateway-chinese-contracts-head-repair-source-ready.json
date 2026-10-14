@@ -1,0 +1,36 @@
+{
+  "source": [
+    {
+      "path": "backend/src/core/domain/component-map.ts",
+      "sha256": "9c19923ac04210e10f1f50fd72ea350234942d0beec7928ee269c6e31304062e"
+    },
+    {
+      "path": "backend/src/core/domain/model.ts",
+      "sha256": "bede6d20f309c3ee2cc2108331e329bdc3da55a1aa5fce15de6eef85e95ca279"
+    },
+    {
+      "path": "backend/src/core/domain/components/debate_penalty.ts",
+      "sha256": "874db3cd277c2d6f4841dc74a442edc8ebcba989a65a5aa3e2d19ab55b5dc16d"
+    },
+    {
+      "path": "backend/src/core/domain/systems/win_condition_system.ts",
+      "sha256": "d8cf26cbd15c04678252614ce4021c73a9d11f28348e6867dc194c3694cfd57a"
+    },
+    {
+      "path": "backend/src/core/index.ts",
+      "sha256": "c7919f26fdfe328bff60859222cc5777380ceea90a49da16e339c10a45c866a7"
+    },
+    {
+      "path": "backend/src/game/gateway/tool_gateway.ts",
+      "sha256": "48d375d498e73d2344ba7e724a6366aefa24c3930e2236e2af003859e8253ef6"
+    }
+  ],
+  "before": {
+    "path": "docs/refactor/generated/component-gateway-chinese-contracts-head-repair-stage-before.json",
+    "sha256": "62faffec9c5071ac75b755e4af298365508f9e8f61dd3579d3bb5708ec015736"
+  },
+  "edits": {
+    "path": "docs/refactor/generated/component-gateway-chinese-contracts-head-repair-edits.json",
+    "sha256": "c53e8748761faa32600626b9dead804b1b763dc1c5234706c3be52777886e4a3"
+  }
+}

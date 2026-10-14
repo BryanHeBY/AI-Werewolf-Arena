@@ -1,0 +1,49 @@
+{
+  "source": [
+    {
+      "path": "backend/src/core/domain/component-map.ts",
+      "sha256": "9c19923ac04210e10f1f50fd72ea350234942d0beec7928ee269c6e31304062e"
+    },
+    {
+      "path": "backend/src/core/domain/model.ts",
+      "sha256": "e508da2197e310fdc7ef522f05b6a02857e30e49b090de5dce0f5e010fcc1ece"
+    },
+    {
+      "path": "backend/src/core/domain/components/debate_penalty.ts",
+      "sha256": "55baf64757ea9a7ed2c59fbe4b95216522ecd04104d2aea02fa7560884ccc129"
+    },
+    {
+      "path": "backend/src/core/domain/systems/win_condition_system.ts",
+      "sha256": "d8cf26cbd15c04678252614ce4021c73a9d11f28348e6867dc194c3694cfd57a"
+    },
+    {
+      "path": "backend/src/core/index.ts",
+      "sha256": "c499e166debe4c4f7c126c7b349ab7b3137df941700ae5afd35eba941d577414"
+    },
+    {
+      "path": "backend/src/game/gateway/tool_gateway.ts",
+      "sha256": "48d375d498e73d2344ba7e724a6366aefa24c3930e2236e2af003859e8253ef6"
+    }
+  ],
+  "sourceReadySHA256": "a2b040d70e4f16e1f5951007f5047c06ebd2532dc7cbbcd0c1894773282266b7",
+  "documentationPaths": 712,
+  "diagnostics": [
+    {
+      "id": "2fac2a148806bb845d74a3ca934e543f40ce9aee1aa5a784c7b90aeaf1432118",
+      "rule": "comment.input",
+      "path": "backend/src/core/domain/model.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its input contract."
+    },
+    {
+      "id": "01ccd277fb28567a49bd2e5c31e5532d74ea55514b461749ba696af932845805",
+      "rule": "comment.output",
+      "path": "backend/src/core/domain/components/debate_penalty.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its output contract."
+    }
+  ],
+  "chineseHeadFailures": []
+}

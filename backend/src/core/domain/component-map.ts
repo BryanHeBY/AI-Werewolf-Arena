@@ -16,8 +16,10 @@ import type { LoversComponent } from "./components/lovers";
 import type { WallNoteComponent } from "./components/wall_note";
 import type { DebatePenaltyComponent } from "./components/debate_penalty";
 
+/** 十一具名槽分别关联其原组件类型；该映射不创建实例，也不把两个槽的字段合成一个对象。 */
 export interface ComponentMap {
   [COMPONENT.Identity]: IdentityComponent;
+  // 角色身份／私有容器与实际阵营是两个独立槽；当前阵营不再镜像到 Role。
   [COMPONENT.Role]: RoleComponent;
   [COMPONENT.Camp]: CampComponent;
   [COMPONENT.Alive]: AliveComponent;
@@ -30,14 +32,16 @@ export interface ComponentMap {
   [COMPONENT.DebatePenalty]: DebatePenaltyComponent;
 }
 
+/** 汇总既有槽的公开字段名，供写入类型排除其它槽字段；自定义扩展名仍可由具体输入保留。 */
 type ComponentFields = {
   [K in ComponentName]: keyof ComponentMap[K];
 }[ComponentName];
 
 /**
- * 保留自定义扩展字段，同时拒绝另一槽的独有公开字段。Role 在结构上包含 Camp，
- * 但 role／privateState 不能装入 Camp 槽；展示方法已退出组件结构。此关系只属于类型，
- * 不执行运行时 shape 检查，也不把扩展对象限制为精确字段集合。
+ * 保留自定义扩展字段，同时在类型上排除其它槽的公开字段。Role 与 Camp 分属独立槽，
+ * role／privateState 不能装入 Camp 槽，camp 不能装入 Role 槽；展示方法已退出组件结构。
+ * optional never 与最终 never 分支仅约束编译期槽关系，不执行运行 shape 检查、冻结或授权，
+ * 也不把扩展对象限制为精确字段集合。
  */
 export type ComponentWrite<K extends ComponentName> = K extends ComponentName
   ? ComponentMap[K] & {

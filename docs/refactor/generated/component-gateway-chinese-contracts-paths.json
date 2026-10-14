@@ -1,0 +1,8 @@
+[
+  "backend/src/core/domain/component-map.ts",
+  "backend/src/core/domain/model.ts",
+  "backend/src/core/domain/components/debate_penalty.ts",
+  "backend/src/core/domain/systems/win_condition_system.ts",
+  "backend/src/core/index.ts",
+  "backend/src/game/gateway/tool_gateway.ts"
+]

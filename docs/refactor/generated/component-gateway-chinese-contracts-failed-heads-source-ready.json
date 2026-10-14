@@ -1,0 +1,19 @@
+{
+  "baseCommit": "9df9dd0344f99db150996632d793f2c4c6485a11",
+  "source": [
+    {
+      "path": "backend/src/core/domain/model.ts",
+      "sha256": "bede6d20f309c3ee2cc2108331e329bdc3da55a1aa5fce15de6eef85e95ca279"
+    },
+    {
+      "path": "backend/src/core/domain/components/debate_penalty.ts",
+      "sha256": "874db3cd277c2d6f4841dc74a442edc8ebcba989a65a5aa3e2d19ab55b5dc16d"
+    }
+  ],
+  "sourceFrozen": true,
+  "initialFullHeadResult": {
+    "path": "docs/refactor/generated/component-gateway-chinese-contracts-heads.json",
+    "sha256": "09ca5318b477f0e132be433c091a0584b9e90f721f1d674ab023d1d9f2eb6628"
+  },
+  "limits": "Only two actual failing heads. Core audience head precision is comment bridge only; prior four green roots are not repeated."
+}

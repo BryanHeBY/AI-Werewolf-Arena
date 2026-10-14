@@ -1,0 +1,38 @@
+{
+  "source": [
+    {
+      "path": "backend/src/core/domain/model.ts",
+      "sha256": "e508da2197e310fdc7ef522f05b6a02857e30e49b090de5dce0f5e010fcc1ece",
+      "text": "/**\n * 负责按身份、板子、动作、事件、结果与死亡概念聚合既有领域出口；输出保持原值／类型绑定。\n * 具体契约仍由各概念及 game-contract 拥有，这里不定义第二套枚举、状态或规则。\n * 原重导出顺序和下游模块加载关系保持；出口本身不创建角色、授予请求权限或封盘。\n */\nexport * from \"./identity\";\nexport * from \"./board\";\nexport * from \"./actions\";\nexport * from \"./events\";\nexport * from \"./results\";\nexport * from \"./deaths\";\n"
+    },
+    {
+      "path": "backend/src/core/domain/components/debate_penalty.ts",
+      "sha256": "55baf64757ea9a7ed2c59fbe4b95216522ecd04104d2aea02fa7560884ccc129",
+      "text": "/**\n * 负责公开杠精辩论禁票处罚的数据结构；输入为处罚日次、来源编号和捕获的生命版本。\n * 实际 record 引用与原 NightLifeScope 另由辩论 authority 保存并查询；这些数字不能重建其许可。\n * 接口字段保持可写，不冻结、安装、撤销或执行处罚；缺省日次和生命复验沿原运行查询。\n */\nexport interface DebatePenaltyComponent {\n  /** 处罚所属日次；运行查询的 day 缺省接受面由 authority 决定，不在字段定义中统一到期。 */\n  day: number;\n  /** 原处罚来源的实体编号；不是请求 token，也不独立证明该来源当前存活或有权提交。 */\n  sourceId: number;\n  /** 记录捕获时的生命版本；真实当前性还依赖 authority 保存的原生命对象与组件引用。 */\n  lifeVersion: number;\n}\n"
+    },
+    {
+      "path": "backend/src/core/index.ts",
+      "sha256": "c499e166debe4c4f7c126c7b349ab7b3137df941700ae5afd35eba941d577414",
+      "text": "/**\n * 负责 core 的既有公共领域出口；输入为 domain 导出的类型、组件工厂、存储与运行端口，\n * 输出保持同一公开绑定，不复制实例、建立第二份状态或替原所有者授予权限。\n * 原重导出与其叶模块加载关系保持；具体初始化、副作用和生命周期仍归实际实现。\n */\nexport * from \"./domain\";\n"
+    }
+  ],
+  "sourceReady": {
+    "path": "docs/refactor/generated/component-gateway-chinese-contracts-source-ready.json",
+    "sha256": "a2b040d70e4f16e1f5951007f5047c06ebd2532dc7cbbcd0c1894773282266b7"
+  },
+  "firstProof": {
+    "path": "docs/refactor/generated/component-gateway-chinese-contracts-proof.json",
+    "sha256": "1ff6af086e17051509b4fbc7319da6d4f854c2d3f1fe38d0c7f5afb2dffbfe35"
+  },
+  "firstHeads": {
+    "path": "docs/refactor/generated/component-gateway-chinese-contracts-heads.json",
+    "sha256": "09ca5318b477f0e132be433c091a0584b9e90f721f1d674ab023d1d9f2eb6628"
+  },
+  "firstProofExit": 0,
+  "firstHeadsExit": 1,
+  "reason": [
+    "actual head diagnostics: model missing input and DebatePenalty missing output",
+    "Root only-comment semantic precision: core exporter audience explicit"
+  ],
+  "fullFirstHeadsText": "{\n  \"source\": [\n    {\n      \"path\": \"backend/src/core/domain/component-map.ts\",\n      \"sha256\": \"9c19923ac04210e10f1f50fd72ea350234942d0beec7928ee269c6e31304062e\"\n    },\n    {\n      \"path\": \"backend/src/core/domain/model.ts\",\n      \"sha256\": \"e508da2197e310fdc7ef522f05b6a02857e30e49b090de5dce0f5e010fcc1ece\"\n    },\n    {\n      \"path\": \"backend/src/core/domain/components/debate_penalty.ts\",\n      \"sha256\": \"55baf64757ea9a7ed2c59fbe4b95216522ecd04104d2aea02fa7560884ccc129\"\n    },\n    {\n      \"path\": \"backend/src/core/domain/systems/win_condition_system.ts\",\n      \"sha256\": \"d8cf26cbd15c04678252614ce4021c73a9d11f28348e6867dc194c3694cfd57a\"\n    },\n    {\n      \"path\": \"backend/src/core/index.ts\",\n      \"sha256\": \"c499e166debe4c4f7c126c7b349ab7b3137df941700ae5afd35eba941d577414\"\n    },\n    {\n      \"path\": \"backend/src/game/gateway/tool_gateway.ts\",\n      \"sha256\": \"48d375d498e73d2344ba7e724a6366aefa24c3930e2236e2af003859e8253ef6\"\n    }\n  ],\n  \"sourceReadySHA256\": \"a2b040d70e4f16e1f5951007f5047c06ebd2532dc7cbbcd0c1894773282266b7\",\n  \"documentationPaths\": 712,\n  \"diagnostics\": [\n    {\n      \"id\": \"2fac2a148806bb845d74a3ca934e543f40ce9aee1aa5a784c7b90aeaf1432118\",\n      \"rule\": \"comment.input\",\n      \"path\": \"backend/src/core/domain/model.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"detail\": \"behavior head lacks its input contract.\"\n    },\n    {\n      \"id\": \"01ccd277fb28567a49bd2e5c31e5532d74ea55514b461749ba696af932845805\",\n      \"rule\": \"comment.output\",\n      \"path\": \"backend/src/core/domain/components/debate_penalty.ts\",\n      \"line\": 1,\n      \"column\": 1,\n      \"detail\": \"behavior head lacks its output contract.\"\n    }\n  ],\n  \"chineseHeadFailures\": []\n}\n"
+}
