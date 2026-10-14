@@ -1,0 +1,676 @@
+{
+  "base": "96d3d0272392f8ad625ece176cee36df6dd789ea",
+  "DRAlsoSame40dd": true,
+  "source": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "2533cf7bba1e6600d3bf883d36b3b6a7c53acf172499ee24d2796a0179de26b3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_abilities.ts",
+      "sha256": "26ac725c665bfdd2a1fad6907b97fb9b7ffa26c517bce8a8ff232d018eee2868"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "7ccf2c0aed16f20b67dca512ef51cc5cf8c8b18add4b98a2b20e3bbaeb0723a1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/state.ts",
+      "sha256": "8fa8a8fc5d030fe18c2cfb1848251d2abe3b1d7b95231ee220328ce84de416f1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_king/state.ts",
+      "sha256": "52d2fd9802f4bc96403fb4ba8b27845b76d35deabd86422d3d005272aad394cb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-shot-eligibility.ts",
+      "sha256": "6131393d44f2d82e239effaa617e3a18252247100ad5b2afa492efcf79c70c25"
+    },
+    {
+      "path": "backend/tests/unit/features/death-gun/eligibility-capture.test.ts",
+      "sha256": "c553245c996eb6c59374ac20762bd226beb8b7ea5323cf3c01a152895c5f2a11"
+    }
+  ],
+  "movedCompleteBlock": {
+    "beforeNodes": 303,
+    "afterNodes": 303,
+    "completeTreeSame": true,
+    "allNoncommentLeafSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA": "9d87782635fd6521862e5de46c3da02d2b00ce456dcbadfba7d887bdb70bce49",
+        "afterSHA": "9d87782635fd6521862e5de46c3da02d2b00ce456dcbadfba7d887bdb70bce49"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA": "9d87782635fd6521862e5de46c3da02d2b00ce456dcbadfba7d887bdb70bce49",
+        "afterSHA": "9d87782635fd6521862e5de46c3da02d2b00ce456dcbadfba7d887bdb70bce49"
+      }
+    ]
+  },
+  "wholeDR": {
+    "beforeNodes": 4831,
+    "afterNodes": 4831,
+    "completeTreeSame": true,
+    "allNoncommentLeafSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA": "6dd14a736db94541b4eb23cf207e77d7b5a3e97c8b74b70f3b986cb9b9f7e093",
+        "afterSHA": "6dd14a736db94541b4eb23cf207e77d7b5a3e97c8b74b70f3b986cb9b9f7e093"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA": "fded836a5af6428d52432c786a10b9ef85581e24bc9e9c91863cfae1e3e020a5",
+        "afterSHA": "fded836a5af6428d52432c786a10b9ef85581e24bc9e9c91863cfae1e3e020a5"
+      }
+    ],
+    "actualGetterCallAndSentinelExact": true,
+    "allOtherImports": [
+      {
+        "name": "refreshWolfKnifeInheritanceAtCheckpoint",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "AnimalDeathWavePreparation",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "planDeathWave",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "openDeathWave",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "deathExecutionContext",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "DeathExecutionContext",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "deathWaveOriginalLives",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "deathWavePoisonMetadata",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "DeathWaveUnit",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "preflightDeathWaveData",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "DeathCommitReceipt",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "DeathOriginalLife",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "NightPoisonRoute",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "DeathCommitter",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "ReadonlyBoardConfig",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "FRAGRANT_PAIR_POLICY",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "FragrantDeathWavePublication",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "isFragrantPairBoard",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "prepareFragrantDeathWave",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "commitFragrantDeathWave",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "publishFragrantDeathWave",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "cancelFragrantDeathWave",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "fragrantAuthoritySnapshot",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "assertMagicianRosterCurrent",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "isMagicianBoard",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "resolveMagicianNightTarget",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "nightmareFearBlocks",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "demonHunterNativeGunCurrent",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "WeddingDeathWavePublication",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "expandLoversWave",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "BoardConfig",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "LastWordsPolicy",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "captureNightLife",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "livingNightLife",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "COMPONENT",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "ActionProvider",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "EntityId",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "GameEvent",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "Phase",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "Role",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "RuntimeSnapshot",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "DeathCause",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "DeathSources",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "DeathShotSelection",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "RoleComponent",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "World",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "ToolGateway",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "getDefaultLastWordsMechanism",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "LastWordsGrantContext",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "resolveSheriffBadge",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "GameActionRequestFactory",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "EventRegistry",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "DreamNightEffects",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "attemptCharmTrigger",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "commitCharmDeath",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "WolfBeautyDeathWavePublication",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "firstDeathGuns",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      },
+      {
+        "name": "finishDeathGuns",
+        "sameShape": true,
+        "samePhysicalEndpoint": true
+      }
+    ]
+  },
+  "nativeBindings": [
+    {
+      "name": "Role",
+      "typeOnly": false,
+      "target": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "originalTarget": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "name": "EntityId",
+      "typeOnly": true,
+      "target": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "EntityId"
+      },
+      "originalTarget": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "EntityId"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "name": "DeathSources",
+      "typeOnly": true,
+      "target": {
+        "path": "packages/game-contract/src/death-facts.ts",
+        "name": "DeathSources"
+      },
+      "originalTarget": {
+        "path": "packages/game-contract/src/death-facts.ts",
+        "name": "DeathSources"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "name": "Phase",
+      "typeOnly": true,
+      "target": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "originalTarget": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "name": "DeathActionPolicy",
+      "typeOnly": true,
+      "target": {
+        "path": "packages/game-contract/src/boards.ts",
+        "name": "DeathActionPolicy"
+      },
+      "originalTarget": null,
+      "samePhysicalEndpoint": false
+    },
+    {
+      "name": "COMPONENT",
+      "typeOnly": false,
+      "target": {
+        "path": "backend/src/core/domain/components/names.ts",
+        "name": "COMPONENT"
+      },
+      "originalTarget": {
+        "path": "backend/src/core/domain/components/names.ts",
+        "name": "COMPONENT"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "name": "World",
+      "typeOnly": true,
+      "target": {
+        "path": "backend/src/core/domain/world.ts",
+        "name": "World"
+      },
+      "originalTarget": {
+        "path": "backend/src/core/domain/world.ts",
+        "name": "World"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "name": "permitsDeathShot",
+      "typeOnly": false,
+      "target": {
+        "path": "backend/src/core/domain/deaths.ts",
+        "name": "permitsDeathShot"
+      },
+      "originalTarget": {
+        "path": "backend/src/core/domain/deaths.ts",
+        "name": "permitsDeathShot"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "name": "activeDeathGun",
+      "typeOnly": false,
+      "target": {
+        "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+        "name": "activeDeathGun"
+      },
+      "originalTarget": {
+        "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+        "name": "activeDeathGun"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "name": "captureDeathGun",
+      "typeOnly": false,
+      "target": {
+        "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+        "name": "captureDeathGun"
+      },
+      "originalTarget": {
+        "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+        "name": "captureDeathGun"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "name": "getHunterState",
+      "typeOnly": false,
+      "target": {
+        "path": "backend/src/game/mechanisms/roles/hunter/state.ts",
+        "name": "getHunterState"
+      },
+      "originalTarget": {
+        "path": "backend/src/game/mechanisms/roles/hunter/state.ts",
+        "name": "getHunterState"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "name": "getWolfKingState",
+      "typeOnly": false,
+      "target": {
+        "path": "backend/src/game/mechanisms/roles/wolf_king/state.ts",
+        "name": "getWolfKingState"
+      },
+      "originalTarget": {
+        "path": "backend/src/game/mechanisms/roles/wolf_king/state.ts",
+        "name": "getWolfKingState"
+      },
+      "samePhysicalEndpoint": true
+    },
+    {
+      "name": "demonHunterNativeGunCurrent",
+      "typeOnly": true,
+      "target": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+        "name": "demonHunterNativeGunCurrent"
+      },
+      "originalTarget": {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+        "name": "demonHunterNativeGunCurrent"
+      },
+      "samePhysicalEndpoint": true
+    }
+  ],
+  "lateBareDemonHelperExact": true,
+  "publicBarrel": {
+    "beforeNodes": 116,
+    "afterNodes": 116,
+    "completeTreeSame": true,
+    "allNoncommentLeafSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA": "26d216dca497dbe968150bca67610f2eca2a1fdfbd9f967a84b5e6db2711f740",
+        "afterSHA": "26d216dca497dbe968150bca67610f2eca2a1fdfbd9f967a84b5e6db2711f740"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA": "d3acc7cc5aa96f843bfb7e877c7ad2f636ec1ebd5f9189dcf68ad0fe5d20e362",
+        "afterSHA": "d3acc7cc5aa96f843bfb7e877c7ad2f636ec1ebd5f9189dcf68ad0fe5d20e362"
+      }
+    ],
+    "added": [
+      "captureDeathShotEligibility",
+      "DeathShotEligibility"
+    ],
+    "oldValidateGiftWholeProgramPreserved": true
+  },
+  "demonPort": {
+    "beforeNodes": 92,
+    "afterNodes": 92,
+    "completeTreeSame": true,
+    "allNoncommentLeafSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA": "adc3bfb26d3d66f6d4fe1178a9ade7e8f2ce917e1e0cfe22686533778dde6317",
+        "afterSHA": "adc3bfb26d3d66f6d4fe1178a9ade7e8f2ce917e1e0cfe22686533778dde6317"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA": "842b1baab0a5792a3994e56c1cb5e2c2aaaff89c8338573a3f6201e57fcbe40c",
+        "afterSHA": "842b1baab0a5792a3994e56c1cb5e2c2aaaff89c8338573a3f6201e57fcbe40c"
+      }
+    ],
+    "onlyAddedActualOriginalQuery": true
+  },
+  "stateOnlyChineseComments": [
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/state.ts",
+      "beforeNodes": 79,
+      "afterNodes": 79,
+      "completeTreeSame": true,
+      "allNoncommentLeafSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "5710c960fce431f9510cc2fbcbabe82eb2e5eb38887b13066f635501d9fcb9c4",
+          "afterSHA": "5710c960fce431f9510cc2fbcbabe82eb2e5eb38887b13066f635501d9fcb9c4"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "018f3ea25419fd2380dbc5f819242c0d0166829b9091abb07d6d3fa62bb4e7f6",
+          "afterSHA": "018f3ea25419fd2380dbc5f819242c0d0166829b9091abb07d6d3fa62bb4e7f6"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_king/state.ts",
+      "beforeNodes": 79,
+      "afterNodes": 79,
+      "completeTreeSame": true,
+      "allNoncommentLeafSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "39ca614c58f29e063ac8060861ede168dc6851b7c80b4597ee00f9d5ff725c38",
+          "afterSHA": "39ca614c58f29e063ac8060861ede168dc6851b7c80b4597ee00f9d5ff725c38"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "da2c5fa4b5e6aacd75ccc9c647ccbe256cab58ae5327949910ae66530442d854",
+          "afterSHA": "da2c5fa4b5e6aacd75ccc9c647ccbe256cab58ae5327949910ae66530442d854"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "sha256": "015df53e3754093d08589356eda20ac7edcbeb2752c96fc67162c08e2dd2487e",
+      "currentSHA": "015df53e3754093d08589356eda20ac7edcbeb2752c96fc67162c08e2dd2487e",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a",
+      "currentSHA": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/ports.ts",
+      "sha256": "b05b22f3ae2aa61b013602f430c6e998c25e132ba0e3e11723693bdab55f429b",
+      "currentSHA": "b05b22f3ae2aa61b013602f430c6e998c25e132ba0e3e11723693bdab55f429b",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_king/ports.ts",
+      "sha256": "be4c57d3de7240947264e38f522260d247036da5bcd8260b701865d11cc9e415",
+      "currentSHA": "be4c57d3de7240947264e38f522260d247036da5bcd8260b701865d11cc9e415",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/core/domain/deaths.ts",
+      "sha256": "84a2fdd78f949e4823fb07fd58c40c4b29f8b6f6f1b09062ca56e197129a377c",
+      "currentSHA": "84a2fdd78f949e4823fb07fd58c40c4b29f8b6f6f1b09062ca56e197129a377c",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_shot.ts",
+      "sha256": "3e1ab1b1d0b5f98cc9e7e70f67d3a4fbf63c8b0f27d101c7a55fbb5ad4c92adb",
+      "currentSHA": "3e1ab1b1d0b5f98cc9e7e70f67d3a4fbf63c8b0f27d101c7a55fbb5ad4c92adb",
+      "wholeBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-king/day-origin-policy.test.ts",
+      "sha256": "38a8a01d740fb0440f07ea10ce23ef5f51cb9e8a455e682b3bfc0941da677043",
+      "currentSHA": "38a8a01d740fb0440f07ea10ce23ef5f51cb9e8a455e682b3bfc0941da677043",
+      "wholeBytesSame": true
+    }
+  ],
+  "limits": [
+    "Complete actualcandidate owner body inverse excludes only final sameclosure objectreturn and explicit lateBareDemon helper after verifying exact command lookup/world/actor order; missing-gift sentinel null mapped exactly to original invalid branch.",
+    "New output/runtime API, call stack/module load/extra query object differ intentionally; not current actualwholebinary or arbitrary reflection equivalence.",
+    "Scope7+7control only; no otherbody excluded, no newarchive/schema/currentness/World snapshot, no await/payment/lease moved."
+  ],
+  "approved": true
+}

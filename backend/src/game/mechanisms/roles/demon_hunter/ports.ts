@@ -11,6 +11,7 @@ export { DemonNightUnit, demonNightTerminal } from "./night-lifecycle";
 export {
   isRedMoonBoard,
   demonHunterActorId,
+  demonHunterNativeGunCurrent,
   assertDemonNightReadable,
   originalDemonNightLives,
   demonOriginalWolfSourceCurrent,

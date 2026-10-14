@@ -36,3 +36,7 @@ export function validateGiftGun(ctx: ValidationRuleContext) {
     !!activeDeathGun(ctx.world, ctx.actorId, ctx.abilityId, ctx.day, true),
   );
 }
+
+/** 完整资格组合的实际公开 owner；不包装调用或改变原赠枪工具校验。 */
+export { captureDeathShotEligibility } from "./death-shot-eligibility";
+export type { DeathShotEligibility } from "./death-shot-eligibility";

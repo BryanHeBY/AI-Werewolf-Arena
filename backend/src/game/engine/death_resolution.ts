@@ -3,6 +3,7 @@
  * 原死因与原生命行动权限；输出是按原顺序提交的死亡、事件和内部关联凭证。实际生命修改和唯一已结算
  * 账本委托 DeathCommitter，双生、动物、婚约及狼美人关系事实归具体贡献；已提交整波在梦／遗言前交角色扩展，
  * 野孩子贡献自行核对榜样原生命。参数仍使用同一深只读规则视图，不建立第二份角色状态。
+ * 枪的资格捕获与复验归共同 owner，请求、等待、目标原生命及许可开关仍在本结算器。
  * 本模块不切换阶段或确定最终胜负；关系扩展、遗言、警徽和枪的最终过期保留原执行顺序。
  */
 import { refreshWolfKnifeInheritanceAtCheckpoint } from "../../rulesets/wolf-knife-inheritance-plan";
@@ -38,7 +39,7 @@ import {
   resolveMagicianNightTarget,
 } from "../mechanisms/roles/magician/night_frame";
 import { nightmareFearBlocks } from "../mechanisms/roles/nightmare_shadow/night_frame";
-import { demonHunterNativeGunCurrent } from "../mechanisms/roles/demon_hunter/authority";
+import { demonHunterNativeGunCurrent } from "../mechanisms/roles/demon_hunter/ports";
 import { WeddingDeathWavePublication } from "../mechanisms/roles/ghost_bride/ports";
 import { expandLoversWave } from "../mechanisms/roles/cupid/relation";
 import type { BoardConfig, LastWordsPolicy } from "../../core/domain/board";
@@ -52,7 +53,6 @@ import {
   Role,
   RuntimeSnapshot,
   DeathCause,
-  permitsDeathShot,
   type DeathSources,
   type DeathShotSelection,
 } from "../../core/domain/model";
@@ -71,13 +71,10 @@ import {
   WolfBeautyDeathWavePublication,
 } from "../mechanisms/roles/wolf_beauty/ports";
 import {
-  activeDeathGun,
-  captureDeathGun,
+  captureDeathShotEligibility,
   firstDeathGuns,
   finishDeathGuns,
 } from "../mechanisms/roles/death_abilities";
-import { getHunterState } from "../mechanisms/roles/hunter/ports";
-import { getWolfKingState } from "../mechanisms/roles/wolf_king/ports";
 
 /** 一次角色死亡动作的窗口；所有 permit 在退出该回调时关闭，不跨波复用。 */
 interface DeathWaveActions {
@@ -736,42 +733,22 @@ export class DeathResolution {
       this.state.phase === actions.phase &&
       this.state.day === actions.day &&
       !this.state.gameOver;
-    const gun =
-      abilityId === undefined
-        ? undefined
-        : activeDeathGun(this.world, actorId, abilityId, actions.day, true);
-    if (abilityId !== undefined && !gun) return { kind: "invalid" };
-    const role = this.world.getComponent(actorId, COMPONENT.Role);
-    const nativeState =
-      abilityId === undefined && role
-        ? role.role === Role.Hunter
-          ? getHunterState(role)
-          : role.role === Role.WolfKing
-            ? getWolfKingState(role)
-            : undefined
-        : undefined;
-    const nativeHunter = role?.role === Role.Hunter;
-    const nativePolicy = nativeState?.deathActionPolicy ?? "awa_qualified_sources_v1";
-    const causeIdentity = JSON.stringify(sources[actorId] ?? []);
-    const nativeCurrent = () =>
-      !nativeState ||
-      (this.world.getComponent(actorId, COMPONENT.Role) === role &&
-        (role?.role === Role.Hunter
-          ? getHunterState(role)
-          : role?.role === Role.WolfKing
-            ? getWolfKingState(role)
-            : undefined) === nativeState &&
-        (nativeState.deathActionPolicy ?? "awa_qualified_sources_v1") === nativePolicy &&
-        JSON.stringify(sources[actorId] ?? []) === causeIdentity &&
-        permitsDeathShot(sources[actorId] ?? [], nativePolicy, deathOriginPhase));
-    const gunCurrent = gun
-      ? captureDeathGun(this.world, actorId, gun, actions.day, isCurrent).isEligible
-      : isCurrent;
-    const permissionCurrent = () =>
-      (!nativeHunter || demonHunterNativeGunCurrent(this.world, actorId)) &&
-      gunCurrent() &&
-      nativeCurrent();
-    const eligible = () => permissionCurrent() && (!nativeState || nativeState.canShoot);
+    // 只装配延迟查询，不提前读取 World／日期；资格 owner 在原 callee 和参数时点捕获。
+    const resolution = this;
+    const qualification = captureDeathShotEligibility(
+      {
+        get world() { return resolution.world; },
+        get day() { return actions.day; },
+        get demonHunterNativeGunCurrent() { return demonHunterNativeGunCurrent; },
+      },
+      actorId,
+      abilityId,
+      sources,
+      deathOriginPhase,
+      isCurrent,
+    );
+    if (!qualification) return { kind: "invalid" };
+    const { nativePolicy, permissionCurrent, eligible } = qualification;
     if (!eligible()) return { kind: "invalid" };
     const permit = this.world.openDeathAction(
       actorId,

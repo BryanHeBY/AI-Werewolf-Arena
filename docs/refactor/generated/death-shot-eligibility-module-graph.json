@@ -1,0 +1,73 @@
+{
+  "entry": "backend/src/game/mechanisms/roles/death-shot-eligibility.ts",
+  "modules": 75,
+  "directDependencies": [
+    {
+      "specifier": "@ai-werewolf-arena/game-contract",
+      "target": "packages/game-contract/src/index.ts"
+    },
+    {
+      "specifier": "../../../core/domain/components/names",
+      "target": "backend/src/core/domain/components/names.ts"
+    },
+    {
+      "specifier": "../../../core/domain/deaths",
+      "target": "backend/src/core/domain/deaths.ts"
+    },
+    {
+      "specifier": "./death-gun-lifecycle",
+      "target": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts"
+    },
+    {
+      "specifier": "./hunter/ports",
+      "target": "backend/src/game/mechanisms/roles/hunter/ports.ts"
+    },
+    {
+      "specifier": "./wolf_king/ports",
+      "target": "backend/src/game/mechanisms/roles/wolf_king/ports.ts"
+    }
+  ],
+  "queryReturns": [
+    {
+      "dependency": "packages/game-contract/src/index.ts",
+      "toDR": null,
+      "toPublicBarrel": null,
+      "toNewOwner": null
+    },
+    {
+      "dependency": "backend/src/core/domain/components/names.ts",
+      "toDR": null,
+      "toPublicBarrel": null,
+      "toNewOwner": null
+    },
+    {
+      "dependency": "backend/src/core/domain/deaths.ts",
+      "toDR": null,
+      "toPublicBarrel": null,
+      "toNewOwner": null
+    },
+    {
+      "dependency": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "toDR": null,
+      "toPublicBarrel": null,
+      "toNewOwner": null
+    },
+    {
+      "dependency": "backend/src/game/mechanisms/roles/hunter/ports.ts",
+      "toDR": null,
+      "toPublicBarrel": null,
+      "toNewOwner": null
+    },
+    {
+      "dependency": "backend/src/game/mechanisms/roles/wolf_king/ports.ts",
+      "toDR": null,
+      "toPublicBarrel": null,
+      "toNewOwner": null
+    }
+  ],
+  "reachableAI": [],
+  "external": [
+    "zod"
+  ],
+  "limits": "仅当前真实声明式值import/export及literal import/require有界依赖闭包；无新owner/DR/publicbarrel返回，不保证全仓、计算型导入或binary冷初始化等价；Demon接口onlytype，生产query在原callee点late。"
+}

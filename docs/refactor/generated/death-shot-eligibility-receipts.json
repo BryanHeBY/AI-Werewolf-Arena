@@ -1,0 +1,57 @@
+{
+  "newTests": {
+    "actualChunk": "a06643",
+    "exitCode": 0,
+    "cases": 3,
+    "failures": 0,
+    "assertions": 28,
+    "log": "docs/refactor/generated/death-shot-eligibility-tests-new.log",
+    "logSHA256": "ddfda7bd1a74c0cbde834ee92e0d8d91a7a9554b517e15d18510f9e39a4431fa",
+    "logBytes": 480
+  },
+  "originalPrecise": {
+    "actualChunk": "ba8f6d",
+    "exitCode": 0,
+    "cases": 1,
+    "failures": 0,
+    "assertions": 8,
+    "filtered": 23,
+    "pattern": "a legal good recipient's gifted gun keeps night eligibility under the Wolf King day policy",
+    "log": "docs/refactor/generated/death-shot-eligibility-tests-old.log",
+    "logSHA256": "403d9d491d7fb85f4f5c0e9eadf9bb74788daa0c365af45dcc849b880b70acaa",
+    "logBytes": 283
+  },
+  "types": {
+    "roots": 7,
+    "launchChunk": "990c81",
+    "session": 2215,
+    "completionChunk": "401f0b",
+    "exitCode": 0,
+    "log": "docs/refactor/generated/death-shot-eligibility-types.log",
+    "config": "docs/refactor/generated/death-shot-eligibility-types-config.json",
+    "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "logBytes": 0
+  },
+  "programProof": {
+    "actualChunk": "3addec",
+    "exitCode": 0,
+    "path": "docs/refactor/generated/death-shot-eligibility-proof.json"
+  },
+  "graphAndHeads": {
+    "actualChunk": "8096e9",
+    "exitCode": 0,
+    "modules": 75,
+    "files": 7,
+    "docs": 455,
+    "heads": 0,
+    "chineseFailures": 0
+  },
+  "totals": {
+    "distinctCases": 4,
+    "assertions": 36,
+    "failures": 0,
+    "fullGame": false,
+    "models": false,
+    "repeatSuiteOrGate": false
+  }
+}

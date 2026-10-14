@@ -1,0 +1,33 @@
+{
+  "base": "96d3d0272392f8ad625ece176cee36df6dd789ea",
+  "source": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "2533cf7bba1e6600d3bf883d36b3b6a7c53acf172499ee24d2796a0179de26b3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_abilities.ts",
+      "sha256": "26ac725c665bfdd2a1fad6907b97fb9b7ffa26c517bce8a8ff232d018eee2868"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "7ccf2c0aed16f20b67dca512ef51cc5cf8c8b18add4b98a2b20e3bbaeb0723a1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/state.ts",
+      "sha256": "8fa8a8fc5d030fe18c2cfb1848251d2abe3b1d7b95231ee220328ce84de416f1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_king/state.ts",
+      "sha256": "52d2fd9802f4bc96403fb4ba8b27845b76d35deabd86422d3d005272aad394cb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-shot-eligibility.ts",
+      "sha256": "6131393d44f2d82e239effaa617e3a18252247100ad5b2afa492efcf79c70c25"
+    },
+    {
+      "path": "backend/tests/unit/features/death-gun/eligibility-capture.test.ts",
+      "sha256": "c553245c996eb6c59374ac20762bd226beb8b7ea5323cf3c01a152895c5f2a11"
+    }
+  ]
+}

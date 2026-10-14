@@ -1,0 +1,48 @@
+{
+  "approved": true,
+  "reviewer": "root",
+  "source": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "2533cf7bba1e6600d3bf883d36b3b6a7c53acf172499ee24d2796a0179de26b3"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_abilities.ts",
+      "sha256": "26ac725c665bfdd2a1fad6907b97fb9b7ffa26c517bce8a8ff232d018eee2868"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "7ccf2c0aed16f20b67dca512ef51cc5cf8c8b18add4b98a2b20e3bbaeb0723a1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hunter/state.ts",
+      "sha256": "8fa8a8fc5d030fe18c2cfb1848251d2abe3b1d7b95231ee220328ce84de416f1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_king/state.ts",
+      "sha256": "52d2fd9802f4bc96403fb4ba8b27845b76d35deabd86422d3d005272aad394cb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-shot-eligibility.ts",
+      "sha256": "6131393d44f2d82e239effaa617e3a18252247100ad5b2afa492efcf79c70c25"
+    },
+    {
+      "path": "backend/tests/unit/features/death-gun/eligibility-capture.test.ts",
+      "sha256": "c553245c996eb6c59374ac20762bd226beb8b7ea5323cf3c01a152895c5f2a11"
+    }
+  ],
+  "scopeSHA256": "03e6cd25e9361f2c5328b832b4c2dd45b8f7ff0beaa56c7d5cde105a3a3cd73e",
+  "review": {
+    "responsibility": "完整capture/current组合归death-shot-eligibility，death_abilities实际publicconsumer给DR，DR保fear/isCurrent/targetLife/request/await/retry/open/close，付款resolveDeathShots不迁。",
+    "eligibility": "实读newowner与整个DRdiff；指定gift的原activeDeathGun内部仍先读取Role，missing后立即returnnull，避免原后续另一次Role/nativeState/cause读取。nativepolicy/causeidentity捕获同原点，nativeCurrent原role/state/policy/causes/allowedcause比较同序。permissionCurrent与eligible区分canShoot最后读取。",
+    "nativeAndGift": "Hunter身份判断独立gift路径，真实赠枪仍Demon检查；Demon→gun→native→canShoot原短路，非Hunter不读Demon命令。native方法type-onlyDemon通过实际readonlycalleegetter裸调用，receiver保持。",
+    "typesAndComments": "返回runtimeclosure与原库存引用不可归档/不赋许可，readonly不freeze；Hunter/WolfKing rawget/set英文头译CN且说明getter可执行、typeassert非schema/Proxy校验与同引用。正式猎魔人名称经catalog核准。",
+    "testsAndEvidence": "已实读3新literal、MD/收据/完整303+DR4831证明与7scopeSHA；新3/28+旧1/8不同4case36断言，7root2215/401f0b实际0；有限75graph无指定返路径/AI限界明确，不重tests/types/gate。"
+  },
+  "findings": [],
+  "limits": [
+    "新增公开函数、runtime返回、nullsentinel、queries分配/加载/栈差异声明；DR将null归原invalid不改变玩法。",
+    "source路径/comment进入新执行来源，历史source指纹不重写。",
+    "不关闭全部C28/55资源/schema/归档或P9。"
+  ]
+}

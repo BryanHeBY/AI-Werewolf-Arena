@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/features/death-gun/eligibility-capture.test.ts:
+(pass) a missing gifted gun returns before another World, native slot or cause read [0.33ms]
+(pass) native qualification retains Demon then scope then stock and cause order and rechecks captured policy [0.36ms]
+(pass) a Hunter holding a real gift still checks Demon but never captures the native stock or pays [0.41ms]
+
+ 3 pass
+ 0 fail
+ 28 expect() calls
+Ran 3 tests across 1 file. [47.00ms]
