@@ -1,0 +1,164 @@
+[
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/copied.ts",
+    "before": "import type { ObservedToolHandler }",
+    "after": "/**\n * 负责根据已告知的机械／觉醒复制状态选择工具候选；输入为玩家观察、请求日次和原选择器，输出为动作或 null。\n * 刀继承日期、所学守护历史只影响本叶偏好，不读取复制目标的真实角色或认定复制已经付款。\n * 当前技能、原体生命、模式窗口和资源仍由机制在提交处复验；工具在请求名单中不等于已获许可。\n */\nimport type { ObservedToolHandler }"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/fragrant_pair_seer.ts",
+    "before": "import type { ObservedToolHandler }",
+    "after": "/**\n * 负责从本次请求的候选 DTO 选择寻香绑定或查验二人组；输入为已告知名单、风格与原随机选择器。\n * 输出为两编号、绑定的明确空选择或原候选缺失错误；不读取引擎身份、关系原体或未告知阵营。\n * 选择名单只是观察依据，不能代替本族请求原体、二人组当前性和实际提交／付款检查。\n */\nimport type { ObservedToolHandler }"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/granted.ts",
+    "before": "import type { ObservedToolHandler }",
+    "after": "/**\n * 负责商人赠予与黑市交易的观察候选选择；输入为已公布存活的他人列表、日次、风格和原随机流。\n * 输出为原目标／技能动作或 null；这里只选受赠者和技能，不写库存、授予能力或判断对手真实阵营。\n * 首夜保守偏好与抽取顺序保持，赠予／交易资格、次数、对方接收和付款仍由各机制检查。\n */\nimport type { ObservedToolHandler }"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/mist_raven.ts",
+    "before": "import type { ObservedToolHandler }",
+    "after": "/**\n * 负责迷雾、灵蛇和鸦爪的观察选择；输入为本次请求的明确候选、日次、风格及原随机选择器。\n * 输出为原具名动作及可空目标，不从 World 补候选、推断未告知身份或消费机制资源。\n * 迷雾三人组在本地副本内去重，灵蛇保留名单首项；真实圈域、生命和付款由原机制复验。\n */\nimport type { ObservedToolHandler }"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/noble_secret_body.ts",
+    "before": "import type { ObservedToolHandler }",
+    "after": "/**\n * 负责夜仆与秘密之身的观察选择；输入为本次请求名单、已知队友、自己的编号和策略风格。\n * 输出为具名动作及可空目标；队友仅是本玩家知识，用于竞争型偏好，不据此判定对手真实阵营。\n * 只读本次已告知候选，不访问关系或库存原体；夜仆／护身当前性与实际效果仍由机制提交检查。\n */\nimport type { ObservedToolHandler }"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/public.ts",
+    "before": "import type { ObservedToolHandler }",
+    "after": "/**\n * 负责发言、警长选择、放逐投票和警徽继承的观察策略；输入为请求公开候选、可见事件及自己的查验知识。\n * 输出为原具名工具动作；投票把已告知查验作偏好，不查询真实阵营、未公布死亡或引擎判胜。\n * 候选、恋人限制和已知队友只用于本次筛选，阶段、票权、实时生命与许可仍由引擎复验。\n * 固定发言文本、空选择和原随机读取保留；本叶不发布事件或修改投票／警徽状态。\n */\nimport type { ObservedToolHandler }"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/radiant_eclipse.ts",
+    "before": "import type { ObservedToolHandler }",
+    "after": "/**\n * 负责庇护和吞噬工具的观察选择；输入为本次请求的明确候选、风格与原随机选择器。\n * 输出为原具名动作和可空目标，不从真实身份推导新候选，也不直接写庇护关系或复制库存。\n * 同名工具可由不同来源的实例提供，候选观察不替代机制的实例、生命周期和付款许可检查。\n */\nimport type { ObservedToolHandler }"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/wedding.ts",
+    "before": "import type { ObservedToolHandler }",
+    "after": "/**\n * 负责新郎、见证人、伴侣交流及婚约刀的观察选择；输入为自己的婚约视图、已公布存活列表和请求提名。\n * 输出为原动作或 null；成员／可刀字段是观察时点的知识，不是婚约绑定、原生命或当前请求许可。\n * 只做原伴侣排除与提名优先，不查询关系原体、真实阵营或改写婚约；提交及已付效果仍归婚约权威。\n */\nimport type { ObservedToolHandler }"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/wolf.ts",
+    "before": "import type { ObservedToolHandler }",
+    "after": "/**\n * 负责狼聊、刀目标、魅惑与自爆的观察选择；输入为已知队友、自己的历史／能力提示和本次请求候选。\n * 输出为原动作或 null，不从队友名单推断实际阵营、实时存活或重新授予已撤销的狼队资格。\n * 生产回退的 F01 检查在外层分别要求自身 canChat／canVoteForKill 为 true；本叶不执行该授权检查。\n * 选择和随机顺序保持，实际目标、窗口、原体、资源与付款仍由各机制在提交处复验。\n */\nimport type { ObservedToolHandler }"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/copied.ts",
+    "before": "  const ready =",
+    "after": "  // 只依据已告知的继承标志和首刀日期决定候选模式；不把该布尔值当成真实刀许可。\n  const ready ="
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/copied.ts",
+    "before": "  const candidates = knownAliveIds.filter(",
+    "after": "  // 所学守护仅避开上一夜同目标；这里的存活列表按已公布事实形成，不查询真实生命。\n  const candidates = knownAliveIds.filter("
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/copied.ts",
+    "before": "  const target = pick(others);",
+    "after": "  // 原先先抽目标再检查保守风格；即使返回 null 也保留这次非空候选的随机消费。\n  const target = pick(others);",
+    "expectedOccurrences": 2
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/copied.ts",
+    "before": "export const mechanical_attack: ObservedToolHandler = (context) => {",
+    "after": "/** 本工具保留原不按风格跳过的选择；不要把其它复制工具的保守策略套到这里。 */\nexport const mechanical_attack: ObservedToolHandler = (context) => {"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/fragrant_pair_seer.ts",
+    "before": "/** Strategies see only their issued candidate DTO; they never inspect engine identities. */",
+    "after": "/** 只消费本次观察携带的名单；绑定可明确不选，查验缺任一目标则保留原错误。 */"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/fragrant_pair_seer.ts",
+    "before": "  const first = pick(ids)!,",
+    "after": "  // 依次抽第一人、排除第一人再抽第二人；原空选择和随机流消费不改。\n  const first = pick(ids)!,"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/fragrant_pair_seer.ts",
+    "before": "  if (first === undefined || second === undefined) throw Error",
+    "after": "  // 查验不是可弃权的绑定选择；两个抽取完成后才判断缺失，不补选或掩盖错误。\n  if (first === undefined || second === undefined) throw Error"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/granted.ts",
+    "before": "  if (style === \"conservative\" && request.context.day === 1) return null;",
+    "after": "  // 首夜保守先返回；其余先抽受赠者，只有实际目标存在时才抽技能，不消耗赠予库存。\n  if (style === \"conservative\" && request.context.day === 1) return null;",
+    "expectedOccurrences": 2
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/mist_raven.ts",
+    "before": "  while (pool.length && targets.length < 3) {",
+    "after": "  // 只从本地候选副本移走已抽编号，保留原逐次抽取；不足三人时整个三人组为空，不补外部目标。\n  while (pool.length && targets.length < 3) {"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/mist_raven.ts",
+    "before": "export const useSnake: ObservedToolHandler",
+    "after": "/** 灵蛇只取已发名单首项；风格／首日短路不引入新的目标抽签或改读真实毒目标。 */\nexport const useSnake: ObservedToolHandler"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/mist_raven.ts",
+    "before": "export const ravenKnife: ObservedToolHandler",
+    "after": "/** 鸦爪在原风格概率判断之后才抽请求名单；空名单仍返回具名的空目标动作。 */\nexport const ravenKnife: ObservedToolHandler"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/noble_secret_body.ts",
+    "before": "/** Legal options come only from this player's engine-issued candidate DTO. */",
+    "after": "/** 竞争型仅从请求名单排除已知队友；未知实际阵营不补判，筛选也不产生行动许可。 */"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/noble_secret_body.ts",
+    "before": "  const candidates = [...(request.context.secret_body_candidates ?? [])];",
+    "after": "  // 竞争型仅在本次名单已包含自己时优先护自己，否则按原选择器抽取；不扩大候选名单。\n  const candidates = [...(request.context.secret_body_candidates ?? [])];"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/public.ts",
+    "before": "  const histories =",
+    "after": "  // 能力查验历史优先，只有该链为空值才回退自身预言家历史；空数组不触发回退。\n  const histories ="
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/public.ts",
+    "before": "  const seenWolves =",
+    "after": "  // 这些是本人查验记录及可见查验报告形成的优先怀疑名单，不是实时真实阵营的查询。\n  const seenWolves ="
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/public.ts",
+    "before": "  const candidates = others.filter(",
+    "after": "  // 保留恋人不可投、已翻牌白痴、已知队友和显式放逐名单的筛选顺序；未知死亡不补读。\n  const candidates = others.filter("
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/public.ts",
+    "before": "export const choose_badge_successor: ObservedToolHandler",
+    "after": "/** 警徽候选与已公布存活相交；这里只给继承偏好，不执行警徽转移或重新验证死亡。 */\nexport const choose_badge_successor: ObservedToolHandler"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/radiant_eclipse.ts",
+    "before": "/** Strategies use only the explicit per-request player DTO candidate lists. */",
+    "after": "/** 仅在本次显式名单内选择，原保守／随机空目标也是具名动作，不等于 handler 返回 null。 */"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/wedding.ts",
+    "before": "  const target =\n    request.context.proposedWitnessId",
+    "after": "  // 原空值优先级：已有提名直接用，只有未提名才从已知他人中排除伴侣后抽取。\n  const target =\n    request.context.proposedWitnessId"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/wedding.ts",
+    "before": "  if (!wedding?.canKnife) return null;",
+    "after": "  // 可刀提示只决定是否生成候选；见证人保留原不排除伴侣的分支，不在这里确认婚约当前性。\n  if (!wedding?.canKnife) return null;"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/wolf.ts",
+    "before": "  // This candidate field is explicit only on the finite Mist Raven board.",
+    "after": "  // 迷雾／鸦爪板子会显式发刀候选；给了名单便优先使用，不再追加基于队友知识的过滤。"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/wolf.ts",
+    "before": "  const previous = ownState.wolfBeauty?.history.at(-1),",
+    "after": "  // 仅看已告知的最后一次魅惑记录，避开上一日同目标；不读取目标关系或真实存活。\n  const previous = ownState.wolfBeauty?.history.at(-1),"
+  },
+  {
+    "path": "backend/src/ai/agents/providers/observed_bot/wolf.ts",
+    "before": "  if (style !== \"active\" || ownState.whiteWolfKing?.canDetonate !== true || random.next() >= 0.5)",
+    "after": "  // 先风格和已知自爆提示，再消费原概率；提示不是现时原体许可，目标也只排除已知队友。\n  if (style !== \"active\" || ownState.whiteWolfKing?.canDetonate !== true || random.next() >= 0.5)"
+  }
+]

@@ -1,0 +1,44 @@
+{
+  "baseCommit": "813ebb9de50ff68e17cfda2742eaa0f80cd75f92",
+  "source": [
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/copied.ts",
+      "sha256": "7e4b3de2816603824af0d2fd868ac6b93dbd73e04d5c22c8ddbbe664c19adaa2"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/fragrant_pair_seer.ts",
+      "sha256": "97e5897de314ccc81a52f9e79c15aeca69f2f9347a40c674ddb0c3cbd18cf94b"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/granted.ts",
+      "sha256": "e3386724834db040869de2c4d441402c1a8048afc87c8024482907e1e8c736eb"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/mist_raven.ts",
+      "sha256": "a498f509f992e5975fca8b6df468e451d1b89120cf741efe1ba7bed39bf78f99"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/noble_secret_body.ts",
+      "sha256": "834dda45799cf81df7079fc58c1ca9eb1438a4326325207d81aff3e97be3d25a"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/public.ts",
+      "sha256": "f27cc156496ab65d67ac8567ffccdb65781634282b6f503e5aac0a487b7f06d8"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/radiant_eclipse.ts",
+      "sha256": "4893990a619351f8d4f7037faa8674446a050421fb39ffb4f15e3a3e50fb6912"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/wedding.ts",
+      "sha256": "099a121ea1b0b6be7c3c95cfb4e61f46178371331bd0b88b976d780f9f139bac"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/wolf.ts",
+      "sha256": "69d1b72e852cab008eb21170667fe8b99df3cb299f6c2de17d46d439c1495592"
+    }
+  ],
+  "sourceCount": 9,
+  "deleted": [],
+  "scope": "九业务叶仅注释，不修改 F01 回退／观察／策略／规则和其它源。"
+}

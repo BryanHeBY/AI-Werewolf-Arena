@@ -1,0 +1,27 @@
+{
+  "source": [
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/mist_raven.ts",
+      "prefinalSHA256": "c783bdcd8833fc323d2600adaaceb26cb1cab3644d2009d4c9030e4d12d7965c",
+      "sha256": "a498f509f992e5975fca8b6df468e451d1b89120cf741efe1ba7bed39bf78f99",
+      "exactWholeSourceCommentInverseSame": true,
+      "fullNoncommentTokenTreeSame": true,
+      "tokenTreeNodes": 513,
+      "noncommentLeaves": 329,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "f6222d319a61d03bccf3211712942d0c7152265d579518a968724cc986540757"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "fb61eb5007df021657c6e820006ef0b84e7597f1b1f17f4cabd391a233d3ac3f"
+        }
+      ]
+    }
+  ],
+  "wholeOutputs": 2,
+  "mismatches": 0
+}

@@ -1,0 +1,186 @@
+{
+  "baseCommit": "813ebb9de50ff68e17cfda2742eaa0f80cd75f92",
+  "source": [
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/copied.ts",
+      "sha256": "7e4b3de2816603824af0d2fd868ac6b93dbd73e04d5c22c8ddbbe664c19adaa2"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/fragrant_pair_seer.ts",
+      "sha256": "97e5897de314ccc81a52f9e79c15aeca69f2f9347a40c674ddb0c3cbd18cf94b"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/granted.ts",
+      "sha256": "e3386724834db040869de2c4d441402c1a8048afc87c8024482907e1e8c736eb"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/mist_raven.ts",
+      "sha256": "a498f509f992e5975fca8b6df468e451d1b89120cf741efe1ba7bed39bf78f99"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/noble_secret_body.ts",
+      "sha256": "834dda45799cf81df7079fc58c1ca9eb1438a4326325207d81aff3e97be3d25a"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/public.ts",
+      "sha256": "f27cc156496ab65d67ac8567ffccdb65781634282b6f503e5aac0a487b7f06d8"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/radiant_eclipse.ts",
+      "sha256": "4893990a619351f8d4f7037faa8674446a050421fb39ffb4f15e3a3e50fb6912"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/wedding.ts",
+      "sha256": "099a121ea1b0b6be7c3c95cfb4e61f46178371331bd0b88b976d780f9f139bac"
+    },
+    {
+      "path": "backend/src/ai/agents/providers/observed_bot/wolf.ts",
+      "sha256": "69d1b72e852cab008eb21170667fe8b99df3cb299f6c2de17d46d439c1495592"
+    }
+  ],
+  "scopeSHA256": "0f724e1c165c80781352a17a23eb0f90181da36eec002966d66b8be8dab7fb7c",
+  "documentation": {
+    "path": "docs/refactor/observed-bot-chinese-contracts.md",
+    "sha256": "473754d28ae3dc7801c748c2ad428067d594dabb21033558c66eca99d213095a"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-before.json",
+      "sha256": "e536e410a1b010812c83d0339abc05064510d4ff77a77798228b14f76223295e"
+    },
+    {
+      "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-edits.json",
+      "sha256": "8c4d4837cba657985c826e05c08aae3aa171408c1b3c29f0dcea7b739fe08410"
+    },
+    {
+      "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-proof.cjs",
+      "sha256": "789a4f952b9f3601e5ec9714a3622cc71dbd7a193cedb0b9c4eaf42af8e01ddf"
+    },
+    {
+      "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-proof.json",
+      "sha256": "56cd9716061ccd5dfddcb6bdc5e16612a627aee9770229cd054393d6cbc45fca"
+    },
+    {
+      "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-heads.ts",
+      "sha256": "d72961a3b3f7af8fec6864198b2bf7495991c02c25378c4e8cae62f5d4e506a8"
+    },
+    {
+      "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-heads-first.json",
+      "sha256": "3861a5e4cd8b07ba89689f045c223bd33e1e3fa8b7358bf473a3ac3fd5259475"
+    },
+    {
+      "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-scope-final.json",
+      "sha256": "0f724e1c165c80781352a17a23eb0f90181da36eec002966d66b8be8dab7fb7c"
+    },
+    {
+      "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-receipts.json",
+      "sha256": "a26d7a75f8f500e9d2f3dd0fe83694a74ced2d4f7ea14e7914d0c07e84062667"
+    },
+    {
+      "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-peer-comment-before.json",
+      "sha256": "f74b868f2734b7bf9811aabde8241a9e330d5e64e4ebf4d520baae3658dc311f"
+    },
+    {
+      "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-peer-comment-proof.cjs",
+      "sha256": "d815c5ee017906efedebb910487befa6b17395411fe820dfe646e8c79ae777b0"
+    },
+    {
+      "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-peer-comment-proof.json",
+      "sha256": "79563fabc1011f89271e5f3e4e9d784e20d555b3692df3724734a19287cd44a9"
+    },
+    {
+      "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-peer-comment-proof-executed.cjs",
+      "sha256": "55318a97a1f31d7ded86a8ad013b31e2d1cd8ed4cf791dad414056bad6be5cd1"
+    },
+    {
+      "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-tool-history.json",
+      "sha256": "93c0f3585a8d895d4e95b984ab885ff82fdbd58322fd31bdba84e85eb936dfd1"
+    }
+  ],
+  "receipts": {
+    "wholeProgramProof": {
+      "command": "bun --no-env-file docs/refactor/generated/observed-bot-chinese-contract-comments-proof.cjs",
+      "chunk_id": "6bf61f",
+      "exit_code": 0,
+      "programs": 9,
+      "typedNodes": 2934,
+      "tokenTreeNodes": 5082,
+      "noncommentLeaves": 3164,
+      "wholeRawOutputs": 18,
+      "mismatches": 0
+    },
+    "responsibilityHeads": {
+      "command": "bun --no-env-file docs/refactor/generated/observed-bot-chinese-contract-comments-heads.ts",
+      "chunk_id": "b1ec0d",
+      "exit_code": 0,
+      "files": 9,
+      "documentationPaths": 519,
+      "diagnostics": 0
+    },
+    "testsExecuted": 0,
+    "typeChecksExecuted": 0,
+    "fullArchitectureGatesExecuted": 0,
+    "modelsCalled": 0,
+    "failedRootsRerun": 0,
+    "finalPeerCommentBridge": {
+      "command": "bun --no-env-file docs/refactor/generated/observed-bot-chinese-contract-comments-peer-comment-proof.cjs",
+      "chunk_id": "a37bc6",
+      "exit_code": 0,
+      "files": 1,
+      "tokenTreeNodes": 513,
+      "wholeRawOutputs": 2,
+      "finding": "Mist仅移走抽中项，不验证或清除重复编号。",
+      "executedScriptBytesPreservedAs": {
+        "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-peer-comment-proof-executed.cjs",
+        "sha256": "55318a97a1f31d7ded86a8ad013b31e2d1cd8ed4cf791dad414056bad6be5cd1"
+      },
+      "originalCommandUnchanged": true
+    },
+    "currentProofScriptCleanupExecuted": false
+  },
+  "exactCommentRecords": 32,
+  "exactCommentLocations": 34,
+  "consumerSemanticsReadOnly": [
+    "game/observation/player-observation.ts",
+    "game/observation/player-observation-projector.ts",
+    "ai/agents/providers/observed_bot/context.ts",
+    "ai/agents/providers/observed_bot/handlers.ts",
+    "ai/agents/providers/observed_bot.ts",
+    "ai/agents/providers/observation-fallback.ts",
+    "docs/refactor/fallback-current-wolf-actions.md"
+  ],
+  "limitations": [
+    "只有九源注释变更，原产品文本、字段、类型、导入、完整算法、RNG 顺序不变。",
+    "候选／能力／历史只影响偏好；本叶没有新增原生命或库存许可。F01 狼队两 literal true 检查只归生产回退外层，不声明普通 ObservedBot 已执行。",
+    "公共命名不是公开数据独占边界：vote 还读本人的私有查验知识；knownAliveIds 不是实时生命查询。",
+    "没有重跑类型、测试、全门禁或模型，也不声称中文／F01 全目标验收。",
+    "当前源码指纹变化，历史证据／指纹保留；不承诺跨构建复现豁免。"
+  ],
+  "independentReview": "pending; Root 调度；review 不纳 artifact 防循环 SHA。",
+  "finalPeerCommentPrecision": 1,
+  "closedFindings": [
+    "Mist 首头去重说明过强，仅改逐次移项；runtime接受面完全保留。",
+    "证明器首头九程序精度及六项未用in-memory写删除，仅工具整理；实际执行版原bytes保存，不重绿。"
+  ],
+  "proofScriptHistory": {
+    "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-tool-history.json",
+    "sha256": "93c0f3585a8d895d4e95b984ab885ff82fdbd58322fd31bdba84e85eb936dfd1",
+    "preservedActualExecution": {
+      "originalCommand": "bun --no-env-file docs/refactor/generated/observed-bot-chinese-contract-comments-peer-comment-proof.cjs",
+      "originalScriptPath": "docs/refactor/generated/observed-bot-chinese-contract-comments-peer-comment-proof.cjs",
+      "preservedScript": {
+        "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-peer-comment-proof-executed.cjs",
+        "sha256": "55318a97a1f31d7ded86a8ad013b31e2d1cd8ed4cf791dad414056bad6be5cd1"
+      },
+      "terminalChunk": "a37bc6",
+      "exitCode": 0,
+      "realWholeOutputs": 2,
+      "initialNineProofWholeOutputs": 18
+    },
+    "currentVersion": {
+      "path": "docs/refactor/generated/observed-bot-chinese-contract-comments-peer-comment-proof.cjs",
+      "sha256": "d815c5ee017906efedebb910487befa6b17395411fe820dfe646e8c79ae777b0",
+      "executedAfterCleanup": false
+    }
+  }
+}
