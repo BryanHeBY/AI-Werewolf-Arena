@@ -1,6 +1,9 @@
 /**
- * 负责 SDK／ACP 审计工具的 schema、单回合上下文与提交状态。输入为会话／turn ID、审计模式及 payload，输出为受控查询或审计发现／摘要回执。
- * 本注册表唯一持有 pending 回合，成功提交先移除再完成 Promise；证据序号仅限当前上下文，不能代替游戏行动权限。
+ * 负责 SDK／ACP 共用的审计 schema、当前 turn、上下文查询与一次正式提交。输入为 session／turn ID、模式及任务payload；
+ * 输出为原拒绝、发现或摘要回执。唯一 pending 属于本注册表，locale 说明与原数据接受集合保持。
+ * 原任务 context 同引用保存；查询包装新建，payload 同引用返回，不作深复制、冻结或 Proxy 隔离。调用方负责提供正确任务数据。
+ * 发现只可引用当前 payload 收集到的序号，source 由任务上下文赋值；这些限制不证明事实正确或授予游戏行动权限。
+ * 提交先清 pending 再构造结果／完成 Promise，关闭也先清后返回null；异常保留已清空的前缀。
  */
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { z } from "zod";
@@ -11,6 +14,7 @@ import { ToolSchema } from "../integrations/llm/transport";
 export type AuditSeverity = "low" | "medium" | "high" | "critical";
 export type AuditCategory = "flow" | "rule" | "state" | "logging" | "other";
 
+/** 模型候选诊断；evidence 是任务内索引，source 由注册表赋值，后续真实性过滤仍归审计证据策略。 */
 export interface AuditFinding {
   severity: AuditSeverity;
   category: AuditCategory;
@@ -34,6 +38,7 @@ export interface AuditSummaryResult {
 
 export type AuditSubmission = AuditInspectionResult | AuditSummaryResult;
 
+/** 任务与payload不是 World／游戏租约；保存原对象引用，不承诺调用方后续变更无法影响本次读取。 */
 export interface AuditToolContext {
   locale?: Locale;
   mode: "inspect" | "summarize";
@@ -149,6 +154,7 @@ export function auditToolProtocol(locale: Locale = "zh-CN") {
   return { inputs, descriptions, schema, specs };
 }
 
+// 默认导出的解析器在模块加载时按默认locale构造；实例schema说明按其locale生成，不改变字段协议。
 const defaultProtocol = auditToolProtocol();
 export const getAuditContextInput = defaultProtocol.inputs.get_audit_context;
 export const getAuditSchemaInput = defaultProtocol.inputs.get_audit_schema;
@@ -161,6 +167,7 @@ export type AuditToolResult =
   | { ok: true; accepted?: true; context?: Record<string, unknown> }
   | { ok: false; error: string; message: string };
 
+/** session与turn必须同时匹配；result/resolve属于同一待处理提交，字段不是可序列化的授权凭证。 */
 interface PendingAuditTurn {
   sessionId: string;
   turnId: string;
@@ -169,7 +176,7 @@ interface PendingAuditTurn {
   resolve: (value: AuditSubmission | null) => void;
 }
 
-/** SDK 与 ACP 共用的单回合上下文隔离、Schema 校验和提交状态机。 */
+/** 单个session／turn的逻辑匹配与schema校验；不以此宣称payload原引用被深隔离。 */
 export class AuditToolTurnRegistry {
   private pending: PendingAuditTurn | null = null;
   private nextTurn = 0;
@@ -191,6 +198,7 @@ export class AuditToolTurnRegistry {
     const result = new Promise<AuditSubmission | null>((done) => {
       resolve = done;
     });
+    // 原context同引用登记；不从提示文本重建上下文，已有pending时不开第二回合。
     this.pending = { sessionId, turnId, context, result, resolve };
     return { turnId, result };
   }
@@ -223,6 +231,7 @@ export class AuditToolTurnRegistry {
     if (pending.context.mode !== "inspect") {
       return toolFailure(this.locale, "audit_tool_not_allowed_in_this_mode");
     }
+    // 模式检查先于证据遍历；索引只是当前payload允许引用的范围，不从其它任务补齐证据。
     const visibleEvidence = collectVisibleEvidenceSeqs(pending.context.payload);
     if (
       parsed.data.findings.some((finding) =>
@@ -231,6 +240,7 @@ export class AuditToolTurnRegistry {
     ) {
       return toolFailure(this.locale, "audit_evidence_not_visible_in_current_context");
     }
+    // 先撤销pending，再读上下文字段／构造结果；后续若抛错不恢复该turn，也不承诺Promise已完成。
     this.pending = null;
     pending.resolve({
       kind: "findings",
@@ -253,6 +263,7 @@ export class AuditToolTurnRegistry {
     if (pending.context.mode !== "summarize") {
       return toolFailure(this.locale, "audit_tool_not_allowed_in_this_mode");
     }
+    // 先撤销pending，再读上下文字段／构造结果；后续若抛错不恢复该turn，也不承诺Promise已完成。
     this.pending = null;
     pending.resolve({ kind: "summary", markdown: parsed.data.markdown.trim() });
     return { ok: true, accepted: true };
@@ -271,6 +282,9 @@ export class AuditToolTurnRegistry {
   }
 }
 
+/** 只认seq/evidence/evidence_event_seq键下的正整数，数组沿原键递归；可信任务数据按原Object.entries读取。
+ * 本遍历没有Proxy／getter／环检测保证，不把序号出现当成事件已提交或证据已验真。
+ */
 function collectVisibleEvidenceSeqs(value: unknown): Set<number> {
   const out = new Set<number>();
   const visit = (current: unknown, key?: string): void => {

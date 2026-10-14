@@ -1,0 +1,20 @@
+{
+  "executed": {
+    "path": "docs/refactor/generated/ai-audit-chinese-contracts-proof-executed.cjs",
+    "sha256": "2d408038ac075633281d0ecf6da67a1207160e20d3c3431dab0982ddb6ff3170",
+    "command": "bun docs/refactor/generated/ai-audit-chinese-contracts-proof.cjs",
+    "terminalChunk": "9e735f",
+    "exitCode": 0
+  },
+  "current": {
+    "path": "docs/refactor/generated/ai-audit-chinese-contracts-proof.cjs",
+    "sha256": "f63c19a88987e5f0099cadba8bfd9b1666dcb2d47412e31eb121c3a6688acfb7",
+    "executed": false
+  },
+  "delta": {
+    "before": "负责观察策略九个审计源码的完整纯注释对照",
+    "after": "负责九个审计源码的完整纯注释对照",
+    "kind": "仅脚本职责头去掉复用误带的观察策略字样；完整程序不变，整理后未执行。"
+  },
+  "originalProofSHA256": "586474c6b10ef733421f0e0291c44416d76aa10471a8fd3682d35c341a398c67"
+}

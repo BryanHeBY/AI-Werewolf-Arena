@@ -1,0 +1,78 @@
+{
+  "reviewer": "/root",
+  "approved": true,
+  "baseCommit": "e45c972b2a271a09bce51c103399af66714fc527",
+  "source": [
+    {
+      "path": "backend/src/ai/audit/acp_audit_runner.ts",
+      "sha256": "26bba92c1050001b2028879575af6b9f6f7d1e7744dcae19a50b4fdcb3aba07a",
+      "actualGitAndExactForwardSame": true
+    },
+    {
+      "path": "backend/src/ai/audit/audit_mcp_control.ts",
+      "sha256": "b0cba7a785135fee12816ab45478469da0bb732c21d92cade845b2460979048d",
+      "actualGitAndExactForwardSame": true
+    },
+    {
+      "path": "backend/src/ai/audit/audit_mcp_server.ts",
+      "sha256": "1cf99d944672c853825bcf0d1233b5e5ba635a4411effa62052e592cd79cb530",
+      "actualGitAndExactForwardSame": true
+    },
+    {
+      "path": "backend/src/ai/audit/audit_tool_protocol.ts",
+      "sha256": "748180c18165475304c0887faa0dee0b36cf08bcc3bff6e84f20c0d80219608b",
+      "actualGitAndExactForwardSame": true
+    },
+    {
+      "path": "backend/src/ai/audit/contracts.ts",
+      "sha256": "b389410ab088c7746490d99970f0f1dd409880b0ef006c6db4ee64c64724c3e2",
+      "actualGitAndExactForwardSame": true
+    },
+    {
+      "path": "backend/src/ai/audit/executor_factory.ts",
+      "sha256": "49e39403fca87a159a8212f07cd4cb14d4030169748f19631c481658e2ee35f4",
+      "actualGitAndExactForwardSame": true
+    },
+    {
+      "path": "backend/src/ai/audit/index.ts",
+      "sha256": "7e7dd36816ff8896880bdabc0bcc57bd76130fcd539217c43dda6b26b1afe059",
+      "actualGitAndExactForwardSame": true
+    },
+    {
+      "path": "backend/src/ai/audit/prompts.ts",
+      "sha256": "b1150c9c252564f40ddf57aabb6ab8e5bbf152e6fe7ffef9dd6560a73b8a806d",
+      "actualGitAndExactForwardSame": true
+    },
+    {
+      "path": "backend/src/ai/audit/sdk_audit_runner.ts",
+      "sha256": "cb909fbec18eb41705be221dbf016ed588e98062571b4cefffb22cdd24567324",
+      "actualGitAndExactForwardSame": true
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/ai-audit-chinese-contracts-scope-final.json",
+    "sha256": "2c575420b13ac7bdcb4b76f96c111c2e99a8401bf972cbded2be5b2be12dd43d"
+  },
+  "documentation": {
+    "path": "docs/refactor/ai-audit-chinese-contracts.md",
+    "sha256": "344e4af2ab8c2b25f2ebcb192b15ab2edafd01e9c497a4a3bcbdd0ba4a137c58"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/ai-audit-chinese-contracts-evidence.json",
+    "sha256": "86b35c6e444aabfa2592f2faef08af73eee771cfe64fd380f5cd89b16533af06"
+  },
+  "peer": {
+    "path": "docs/refactor/generated/ai-audit-chinese-contracts-independent-review.json",
+    "sha256": "6e27ed094413c0006604af0c1eb237276b1b64bdeb8042e6fad30f762bc6d04e"
+  },
+  "checks": [
+    "完整九源码及真实执行／MCP／协议消费者已读；47初始编辑与末单注释精度桥从实际Git完整forward一致。",
+    "取消只终止等待；迟到创建、会话identity去重、主／清理错误对象与关闭账本按实际代码解释。",
+    "SDK close无操作、初始化提示无授权屏障、context同引用保存与query新包装/payload同引用说明准确。",
+    "所有已登记程序／职责头／末单comment桥证据保实际采样；源、文档、scope、artifact当前SHA均匹配。"
+  ],
+  "limits": [
+    "只批准九源纯注释批次；不冒全资源架构或C45/P9完成。",
+    "Root未重跑作者程序证明、类型、测试、职责头、全门禁或模型。"
+  ]
+}

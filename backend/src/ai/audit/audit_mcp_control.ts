@@ -1,9 +1,15 @@
+/**
+ * 负责审计会话的 loopback MCP 控制适配。输入为 sidecar 命令、绑定 session 与工具参数；
+ * 输出为原工具回包及启动配置，网络监听、token、会话复核与关闭由实际 delegate 拥有。
+ * 此层不自设期限／计时器；关闭等待 delegate，取消不撤回已经交给 registry 的提交。
+ * 上下文与发现只作用于审计 turn，不授游戏写权、读取任意文件或发布游戏事件。
+ */
 import { toolFailure } from "@ai-werewolf-arena/game-text";
 import { AcpMcpServerConfig } from "../integrations/acp/acp_mcp_bridge";
 import { LoopbackMcpControlServer } from "../integrations/acp/loopback_mcp_control_server";
 import { AuditToolTurnRegistry } from "./audit_tool_protocol";
 
-/** 单个审计 ACP session 的 loopback MCP 控制面。 */
+/** 原 loopback token／session 生命周期保持唯一 delegate，不在此保存另一套认证或 pending。 */
 export class AuditMcpControlServer {
   private readonly delegate: LoopbackMcpControlServer;
 
@@ -32,6 +38,7 @@ export class AuditMcpControlServer {
   }
 
   private dispatch(sessionId: string, tool: unknown, args: unknown): unknown {
+    // schema 是静态说明；具体上下文／提交再由 registry 核当前 turn，HTTP认证仍先由 delegate 检查。
     if (tool === "get_audit_schema") return this.registry.getSchema();
     if (tool === "get_audit_context") return this.registry.getContext(sessionId, args);
     if (tool === "submit_audit_findings") return this.registry.submitFindings(sessionId, args);

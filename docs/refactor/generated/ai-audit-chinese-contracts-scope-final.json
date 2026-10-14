@@ -1,0 +1,63 @@
+{
+  "baseCommit": "e45c972b2a271a09bce51c103399af66714fc527",
+  "source": [
+    {
+      "path": "backend/src/ai/audit/acp_audit_runner.ts",
+      "sha256": "26bba92c1050001b2028879575af6b9f6f7d1e7744dcae19a50b4fdcb3aba07a",
+      "beforeSHA256": "bc1eda95709c33d59371b3568360641b6eaf5fcfd81beec0c07bbf1c73f5e355",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/ai/audit/audit_mcp_control.ts",
+      "sha256": "b0cba7a785135fee12816ab45478469da0bb732c21d92cade845b2460979048d",
+      "beforeSHA256": "92526116518d673d51a8ba735c7e994b1b0f6927939c1eff8b1ea28a6344a34e",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/ai/audit/audit_mcp_server.ts",
+      "sha256": "1cf99d944672c853825bcf0d1233b5e5ba635a4411effa62052e592cd79cb530",
+      "beforeSHA256": "9122911fda70d2939a395b6c464106faf6b1f34577431c0198808fb88c3069d7",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/ai/audit/audit_tool_protocol.ts",
+      "sha256": "748180c18165475304c0887faa0dee0b36cf08bcc3bff6e84f20c0d80219608b",
+      "beforeSHA256": "2234f7598aae2e8281240bd592f10ac114d6cdcabae9eb61adf39197ef58c6af",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/ai/audit/contracts.ts",
+      "sha256": "b389410ab088c7746490d99970f0f1dd409880b0ef006c6db4ee64c64724c3e2",
+      "beforeSHA256": "1ab4b790ad21463caec3f2cac08ef12bd914f7b30f439a7ff7bb5135372a494d",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/ai/audit/executor_factory.ts",
+      "sha256": "49e39403fca87a159a8212f07cd4cb14d4030169748f19631c481658e2ee35f4",
+      "beforeSHA256": "d50c48b053e4ce0267735707ca1b720ea15073d287a2a5b1707ee066bd9478f0",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/ai/audit/index.ts",
+      "sha256": "7e7dd36816ff8896880bdabc0bcc57bd76130fcd539217c43dda6b26b1afe059",
+      "beforeSHA256": "b3167a0cb1281f84b31407f3333faf33e088727be6a1611446ed6d16f4340c06",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/ai/audit/prompts.ts",
+      "sha256": "b1150c9c252564f40ddf57aabb6ab8e5bbf152e6fe7ffef9dd6560a73b8a806d",
+      "beforeSHA256": "e7726caa752100e9d014905a495c60d8a9d96209d4aa5052ea9cb56327de134e",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/ai/audit/sdk_audit_runner.ts",
+      "sha256": "cb909fbec18eb41705be221dbf016ed588e98062571b4cefffb22cdd24567324",
+      "beforeSHA256": "cc6b3db997b5cc7bb8ac55c37921eaec5c3378a06ac3e4b76a18a6f1fd6367b6",
+      "status": "modified"
+    }
+  ],
+  "sourceCount": 9,
+  "scope": "AI审计九源码纯注释；其余工作树与依赖闭包不在本批程序等价范围。",
+  "validationPhaseScopeSHA256": "f72c3a37e95cca3e1f11b8e9afc3869d1076301b8e1285d7dd94570cdd03e1d2",
+  "finalCommentPrecision": "protocol首头仅校准context保存／新查询包装／payload返回的引用区别。原九源proof、heads和receipts保精度前阶段，经单源comment桥连接最终source。"
+}

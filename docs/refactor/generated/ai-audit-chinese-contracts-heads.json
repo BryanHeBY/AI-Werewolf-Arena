@@ -1,0 +1,43 @@
+{
+  "files": [
+    {
+      "path": "backend/src/ai/audit/acp_audit_runner.ts",
+      "sha256": "26bba92c1050001b2028879575af6b9f6f7d1e7744dcae19a50b4fdcb3aba07a"
+    },
+    {
+      "path": "backend/src/ai/audit/audit_mcp_control.ts",
+      "sha256": "b0cba7a785135fee12816ab45478469da0bb732c21d92cade845b2460979048d"
+    },
+    {
+      "path": "backend/src/ai/audit/audit_mcp_server.ts",
+      "sha256": "1cf99d944672c853825bcf0d1233b5e5ba635a4411effa62052e592cd79cb530"
+    },
+    {
+      "path": "backend/src/ai/audit/audit_tool_protocol.ts",
+      "sha256": "2d7b4f1567c19951e0f2489732b4f32b7fedf672c4837d94ed844f5c2d45eb06"
+    },
+    {
+      "path": "backend/src/ai/audit/contracts.ts",
+      "sha256": "b389410ab088c7746490d99970f0f1dd409880b0ef006c6db4ee64c64724c3e2"
+    },
+    {
+      "path": "backend/src/ai/audit/executor_factory.ts",
+      "sha256": "49e39403fca87a159a8212f07cd4cb14d4030169748f19631c481658e2ee35f4"
+    },
+    {
+      "path": "backend/src/ai/audit/index.ts",
+      "sha256": "7e7dd36816ff8896880bdabc0bcc57bd76130fcd539217c43dda6b26b1afe059"
+    },
+    {
+      "path": "backend/src/ai/audit/prompts.ts",
+      "sha256": "b1150c9c252564f40ddf57aabb6ab8e5bbf152e6fe7ffef9dd6560a73b8a806d"
+    },
+    {
+      "path": "backend/src/ai/audit/sdk_audit_runner.ts",
+      "sha256": "cb909fbec18eb41705be221dbf016ed588e98062571b4cefffb22cdd24567324"
+    }
+  ],
+  "documentationPathCount": 525,
+  "failures": [],
+  "chineseFailures": []
+}
