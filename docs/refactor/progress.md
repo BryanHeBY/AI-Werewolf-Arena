@@ -692,3 +692,5 @@
 - C24/C28 秘密之身完整放逐翻牌与必需发言：三源原64行归同族同步序列，Voting保映射/实际单位/原唯一Provider await与最终结果；晚读receiver、付款→事实→必需记录→请求scope、复验→网关→再复验→提交→事实与finally保原序及失败。Root实际Git完整Voting forward、全新owner/六例/七controls与同行完整算法/三SHA审批准；新六+旧精准一共七不同成功例64断言，fixture后的四重复42另列不冒不同数量，末failed1root类型0。有效中文head和关键逻辑随批补充；原9await、新owner0，无新清理框架或额外等待。全部C24/C28/请求端口/P9继续，见 secret-body-exile-reveal.md。
 
 - P7/C35 checkpoint格式归属：三份完整存档格式移 recording/checkpoint，四真实消费者11specifier随同迁移、三旧leaf删除；格式解析/refine与独立verifier、实际snapshot写入职责分明，七源重要数据/失败前缀补中文。实际e45七Git整体非注释43515nodes/14mapped输出同、1825源69bindings/11route零旧literal，首Node Git EPERM仅修取证、首Node ambient缺失仅修config后有限七根末196658真实0。正式名夜之贵族单头桥不重绿。Root及独立全格式/四consumer/实际Git/七SHA三删除和证据审批准，无类型/test/fullgate重复，最终跨构建归档/P9仍待，见 checkpoint-format-owners.md。
+
+- R01/C24 秘密之身放逐公开端口：两源新增同族窄 exile-ports，Voting仅一导入路径改公开facet，遵循原C04根级出口规则；原owner算法和重型ports未改。Root与独立实际4ddf/Voting全文逆向、两个真实TS出口/运行函数identity及末source/scope/doc/evidence审批准，原两整mapped输出/两根首次有限类型/新一职责头实际0，不重原行为测试或全门禁。新入口中文说明输入输出、加载范围与失败所有者，核心其它机制耦合仍续，见 secret-body-exile-port.md。

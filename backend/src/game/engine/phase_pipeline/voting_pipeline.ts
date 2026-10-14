@@ -5,7 +5,7 @@
  * 秘密之身的付款、必需发言与关闭归本族同步序列；本流水线只在原请求点 await，不额外等待未触发路径。
  * Animal复用原token且独占计数／到期政策。警长选举和狼刀维持各自流程，不合并为通用投票器。
  */
-import { revealSecretBodyExile } from "../../mechanisms/roles/noble_secret_body/exile-reveal";
+import { revealSecretBodyExile } from "../../mechanisms/roles/noble_secret_body/exile-ports";
 import { openExileUnit, attachExileUnit } from "../../../core/domain/exile-unit";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import {
