@@ -22,14 +22,20 @@ import type {
 
 /** kind 与 payload 由各映射关联；这些共同元数据不创建实例、应用默认值或读取实际库存。 */
 export interface NightAbilityMetadata {
+  /** 同 kind 可有不同来源实例；ID 只是标签，提交仍核实际库存对象、原生命与来源。 */
   id: string;
   source: AbilitySource;
   /** 内部披露标记；玩家 DTO 不携带它，来源字段仍由运行投影按原政策裁剪。 */
   sourceDisclosed: boolean;
+  /** 公共状态从此日（含）起考虑起效；具体阶段与原体复验仍独立，不自动打开请求。 */
   startsOnDay: number;
+  /** 公共状态只在 day 大于此日时判到期；类型声明不推进时钟或执行资源退休。 */
   expiresAfterDay?: number;
+  /** null 仅不按公共次数上限判 spent；药瓶等 payload 库存仍各自核对，不因此无限。 */
   maxUses: number | null;
+  /** 共同消耗次数；具体已付效果、伤害或成功结果不能仅由计数存在推断。 */
   uses: number;
+  /** 明确空过也可能记日次而不增加 uses；不能由次数反推此日或统一封堵原生第二药。 */
   lastUsedDay: number | null;
   disabled: boolean;
   /** 本夜有限租约独立持有此阻塞，不能与持久 disabled 旗标合并，也不进入玩家 DTO。 */
@@ -44,6 +50,7 @@ export interface NightAbilityMetadata {
 export type AbilityStatus =
   "pending" | "expired" | "disabled" | "spent" | "used_this_night" | "active";
 
+/** 七种 kind 对应玩家载荷；结构关联不自动向其他玩家披露，也不校验或安装实例。 */
 export interface PlayerNightAbilityStates {
   pair_check: PairSeerState;
   shelter: ShelterState;

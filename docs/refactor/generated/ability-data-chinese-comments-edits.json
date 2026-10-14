@@ -1,0 +1,198 @@
+[
+  {
+    "path": "packages/game-contract/src/night-ability-views.ts",
+    "before": "  id: string;",
+    "after": "  /** 同 kind 可有不同来源实例；ID 只是标签，提交仍核实际库存对象、原生命与来源。 */\n  id: string;",
+    "label": "metadata_id_not_permit",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-views.ts",
+    "before": "  startsOnDay: number;",
+    "after": "  /** 公共状态从此日（含）起考虑起效；具体阶段与原体复验仍独立，不自动打开请求。 */\n  startsOnDay: number;",
+    "label": "inclusive_start",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-views.ts",
+    "before": "  expiresAfterDay?: number;",
+    "after": "  /** 公共状态只在 day 大于此日时判到期；类型声明不推进时钟或执行资源退休。 */\n  expiresAfterDay?: number;",
+    "label": "inclusive_expiry",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-views.ts",
+    "before": "  maxUses: number | null;",
+    "after": "  /** null 仅不按公共次数上限判 spent；药瓶等 payload 库存仍各自核对，不因此无限。 */\n  maxUses: number | null;",
+    "label": "public_count_vs_payload_stock",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-views.ts",
+    "before": "  uses: number;",
+    "after": "  /** 共同消耗次数；具体已付效果、伤害或成功结果不能仅由计数存在推断。 */\n  uses: number;",
+    "label": "uses_not_effect",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-views.ts",
+    "before": "  lastUsedDay: number | null;",
+    "after": "  /** 明确空过也可能记日次而不增加 uses；不能由次数反推此日或统一封堵原生第二药。 */\n  lastUsedDay: number | null;",
+    "label": "attempt_day_vs_count",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/night-ability-views.ts",
+    "before": "export interface PlayerNightAbilityStates {",
+    "after": "/** 七种 kind 对应玩家载荷；结构关联不自动向其他玩家披露，也不校验或安装实例。 */\nexport interface PlayerNightAbilityStates {",
+    "label": "player_kind_state_map",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/player-state-views.ts",
+    "before": "export interface PlayerDreamerState {",
+    "after": "/** 自身选择历史与政策，不携带 DreamNightLink 的原生命、已付回调或保护／死亡闭包句柄。 */\nexport interface PlayerDreamerState {",
+    "label": "dream_knowledge_not_live_link",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/player-state-views.ts",
+    "before": "export interface PlayerSeerState {",
+    "after": "/** 验人结果与历史是规则揭示知识，不保证等于目标真实底牌；结构不重新计算查验结果。 */\nexport interface PlayerSeerState {",
+    "label": "seer_revealed_knowledge",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/player-state-views.ts",
+    "before": "export interface PlayerWitchState {",
+    "after": "/** 自身药瓶与当夜标记摘要；不包含内部 potionTurnClosedDay，字段缺省不能证明第二药窗口开放。 */\nexport interface PlayerWitchState {",
+    "label": "witch_closed_day_not_dto",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/player-state-views.ts",
+    "before": "export interface PlayerRoleInspectionState {",
+    "after": "/** 政策与已获知角色结果的摘要；不执行目标、重复或必选政策，也不提供当前查验许可。 */\nexport interface PlayerRoleInspectionState {",
+    "label": "inspection_summary_not_policy_execution",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/player-state-views.ts",
+    "before": "export type PlayerDeathGun =",
+    "after": "/** 赠枪／转移枪的披露摘要；来源只留 kind，status 不替代实际武装、生命或死亡因果复验。 */\nexport type PlayerDeathGun =",
+    "label": "gift_gun_summary",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/player-state-views.ts",
+    "before": "export interface PlayerMechanicalState {",
+    "after": "/** 学习起效夜、模式与关闭日是自身知识；字段存在不代表本夜窗口、来源或库存仍有效。 */\nexport interface PlayerMechanicalState {",
+    "label": "mechanical_player_knowledge",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/player-state-views.ts",
+    "before": "export interface PlayerAwakenedState {",
+    "after": "/** 激活夜与技能生效夜分列，可空值保持未激活含义；继承刀与习得数据不直接授予夜行动。 */\nexport interface PlayerAwakenedState {",
+    "label": "awakened_player_knowledge",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "/**\n * Defines pure data structures and finite read views for ordinary private role slots.\n * Inputs are original installation/copy data; outputs preserve policy, nullable\n * selection/history and learned-skill shapes with their existing write contracts.\n * These declarations never validate a role, store live resources, render player\n * facts or grant World/lease/receipt/command authority. Runtime slot and effect\n * owners preserve references; custom initialization keys remain unrestricted.\n */",
+    "after": "/**\n * 负责普通角色私有槽的纯数据结构与有限只读类型。输入为原安装／复制数据，输出保留\n * 政策、可空选择、历史和学习技能的原可写／只读边界，本契约唯一声明这些公共结构。\n * 声明不验证角色、不保存活跃库存、不渲染玩家知识，也不授予 World、租约、回执或命令权。\n * 原引用、安装校验和生命周期仍归具体状态／效果所有者；这里不新增自定义初始化键的运行限制。\n */",
+    "label": "translate_role_state_head",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface MechanicalLearning {",
+    "after": "/** 学习来源标签与 readyOnNight 分列；外层 readonly 不冻结 skill 内库存，实际资格仍由本族晚核。 */\nexport interface MechanicalLearning {",
+    "label": "mechanical_learning_identity",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface MechanicalState {",
+    "after": "/** 模式、关闭日和继承历史不替代当前请求／生命许可；learned 与 skill 仍是原资源结构。 */\nexport interface MechanicalState {",
+    "label": "mechanical_runtime_state",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface AwakenedLearning {",
+    "after": "/** activationNight 记录激活夜，activeFromNight 记录后续起效夜；可空声明不自动激活或执行技能。 */\nexport interface AwakenedLearning {",
+    "label": "awakened_two_nights",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface MerchantState {",
+    "after": "/** remaining 与 closedDay 分别记录本族库存和流程关闭；choice 为 null 不足以证明可以再交易。 */\nexport interface MerchantState {",
+    "label": "merchant_stock_and_close",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export type MechanicalReadSkill =",
+    "after": "/** 以下读取类型显式保留原嵌套边界；readonly 只约束类型读取，不复制、深冻结或授予提交权限。 */\nexport type MechanicalReadSkill =",
+    "label": "read_views_not_freeze",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/role-state-data.ts",
+    "before": "export interface ModifierResolution {",
+    "after": "/** 增益解析结果包含死亡提案和效果描述；这些数据不直接标死、付款或取代原体回执。 */\nexport interface ModifierResolution {",
+    "label": "modifier_resolution_not_execution",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/death-ability-data.ts",
+    "before": "/**\n * Defines passive death-gun data and its finite live read view.\n * Inputs are original grant/transfer data; outputs preserve gun metadata,\n * single-use stock and deeply readonly gift/transfer source fields.\n * These structures never store live World/life ownership, arm a resource,\n * validate a permission or consume stock. Runtime owners retain the same refs.\n */",
+    "after": "/**\n * 负责被动赠枪数据和有限运行读取类型。输入为原授予／转移数据，输出保留枪的元数据、\n * 一次库存及 gift／transfer 来源的原深只读类型，本契约唯一声明结构，不复制或冻结对象。\n * 声明不持有活跃 World／生命、不武装资源、不验证许可或扣库存；原引用和写权仍归运行所有者。\n * 原生猎人／狼王枪与本结构不同，不能因相同 gun 名称就合并来源或死亡资格。\n */",
+    "label": "translate_death_gun_head",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/death-ability-data.ts",
+    "before": "  source: Extract<AbilitySource, { kind: \"gift\" | \"transfer\" }>;",
+    "after": "  /** 来历只限 gift／transfer；数据字段不提供赠予者的库存写权或原生枪身份。 */\n  source: Extract<AbilitySource, { kind: \"gift\" | \"transfer\" }>;",
+    "label": "gift_source_scope",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/death-ability-data.ts",
+    "before": "  grantedNight: number;",
+    "after": "  /** 授予夜与武装夜分列，不能仅凭授予记录或剩余数量推断死亡时可以开枪。 */\n  grantedNight: number;",
+    "label": "grant_vs_arm",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/death-ability-data.ts",
+    "before": "  armedOnNight: number | null;",
+    "after": "  /** null 保留未武装状态；非空也不能取代实际死亡因果、原生命与当前枪窗口检查。 */\n  armedOnNight: number | null;",
+    "label": "arm_not_permission",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/death-ability-data.ts",
+    "before": "export type DeathGunReadView =",
+    "after": "/** 原对象的有限只读类型，source 字段也只读；不制作副本或产生运行时冻结／资格快照。 */\nexport type DeathGunReadView =",
+    "label": "gun_read_view_not_freeze",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/inspection.ts",
+    "before": "/**\n * Owns rule-revealed inspection data, separate from a target's true identity.\n * Inputs are contract role IDs and camp labels; outputs preserve the camp, role\n * and combined discriminated shapes. Eligibility and inspection calculations\n * belong to features, never to this pure data contract.\n */",
+    "after": "/**\n * 负责规则揭示的查验数据，明确区别于目标真实身份。输入为公共角色 ID 与阵营标签，\n * 输出保留阵营、角色或两者组合的原判别联合，本契约唯一声明结果形状。\n * 查验资格、目标和结果计算仍归具体机制；这里不读取 World、原生命或政策，不授予请求权限。\n */",
+    "label": "translate_inspection_head",
+    "count": 1
+  },
+  {
+    "path": "packages/game-contract/src/inspection.ts",
+    "before": "export type InspectionResult =",
+    "after": "/** kind 描述本次揭示范围；RoleId 是数据标签，不是实际 Role 对象、真实底牌或活跃许可。 */\nexport type InspectionResult =",
+    "label": "inspection_result_scope",
+    "count": 1
+  }
+]

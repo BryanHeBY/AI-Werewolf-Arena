@@ -1,0 +1,30 @@
+{
+  "baseCommit": "37f56392322fdfa859b0d674f339693e0ca883ff",
+  "captureAndComments": {
+    "chunk": "fa6002",
+    "actualExitCode": 0,
+    "actualGitBefore": 5,
+    "declaredCommentEdits": 28,
+    "translatedEnglishHeads": 3,
+    "newMeaningfulFieldComments": 25
+  },
+  "wholeProgramsAndHeads": {
+    "chunk": "7009c8",
+    "actualExitCode": 0,
+    "wholeTypedPrograms": 5,
+    "typedNodes": 3179,
+    "allNoncommentLeaves": 3702,
+    "wholeRawOutputs": 10,
+    "responsibilityInputs": 5,
+    "actualGitDocumentationPaths": 488,
+    "diagnostics": 0,
+    "missingChineseHead": 0
+  },
+  "notRun": [
+    "type compilation",
+    "runtime tests",
+    "whole architecture/checkpoint gates",
+    "models"
+  ],
+  "limit": "只有真实纯注释程序与职责头对照回执；没有类型/行为运行新证据，不挪用先前测试绿。"
+}

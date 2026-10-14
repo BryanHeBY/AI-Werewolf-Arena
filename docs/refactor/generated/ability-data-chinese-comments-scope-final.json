@@ -1,0 +1,28 @@
+{
+  "baseCommit": "37f56392322fdfa859b0d674f339693e0ca883ff",
+  "source": [
+    {
+      "path": "packages/game-contract/src/night-ability-views.ts",
+      "sha256": "1601ee0ca1274acdc6693d8709e904253e8faef18cdf6fc5629a202567d33467"
+    },
+    {
+      "path": "packages/game-contract/src/player-state-views.ts",
+      "sha256": "c4f2543ba1bea6b661f5253aa598fadd1ab98d313bd95bf2576ba82b45a9fa69"
+    },
+    {
+      "path": "packages/game-contract/src/role-state-data.ts",
+      "sha256": "e43cbf73ede59fdb70c367dd05808f808ac52211acd46196d63180e8e9956fc0"
+    },
+    {
+      "path": "packages/game-contract/src/death-ability-data.ts",
+      "sha256": "7a7b10788293005df3393c852854c869f7ee8247992ecb2d1b44322f60e420ec"
+    },
+    {
+      "path": "packages/game-contract/src/inspection.ts",
+      "sha256": "7efd49f43a242699111ee88c818a7320cc458eaec4c91dd944c07e8dee6627d6"
+    }
+  ],
+  "scopeKind": "comment-only",
+  "sourceCount": 5,
+  "limit": "公共纯数据契约五源，仅28项声明comment；所有字段、type/readonly/nullability/import/export/machineID原文程序保持。"
+}

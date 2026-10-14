@@ -1,0 +1,114 @@
+{
+  "schema": "awa-independent-review-v1",
+  "batch": "ability-data-chinese-comments",
+  "status": "approved",
+  "approved": true,
+  "reviewer": "preflight_final_review",
+  "baseCommit": "37f56392322fdfa859b0d674f339693e0ca883ff",
+  "source": [
+    {
+      "path": "packages/game-contract/src/night-ability-views.ts",
+      "sha256": "1601ee0ca1274acdc6693d8709e904253e8faef18cdf6fc5629a202567d33467"
+    },
+    {
+      "path": "packages/game-contract/src/player-state-views.ts",
+      "sha256": "c4f2543ba1bea6b661f5253aa598fadd1ab98d313bd95bf2576ba82b45a9fa69"
+    },
+    {
+      "path": "packages/game-contract/src/role-state-data.ts",
+      "sha256": "e43cbf73ede59fdb70c367dd05808f808ac52211acd46196d63180e8e9956fc0"
+    },
+    {
+      "path": "packages/game-contract/src/death-ability-data.ts",
+      "sha256": "7a7b10788293005df3393c852854c869f7ee8247992ecb2d1b44322f60e420ec"
+    },
+    {
+      "path": "packages/game-contract/src/inspection.ts",
+      "sha256": "7efd49f43a242699111ee88c818a7320cc458eaec4c91dd944c07e8dee6627d6"
+    }
+  ],
+  "frozenScope": {
+    "path": "docs/refactor/generated/ability-data-chinese-comments-scope-final.json",
+    "sha256": "4c98b78e16934fc7b1ef61aa7c1be15a66218e9d4ca49fcc61ae29eab8d6e17d"
+  },
+  "documentation": {
+    "path": "docs/refactor/ability-data-chinese-comments.md",
+    "sha256": "b44ea42460c8e5693ed2b22f72d2ad6f19077d0dcdb42294d8dc2cad14853a31"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/ability-data-chinese-comments-evidence.json",
+    "sha256": "703a009b3b1f97598a7e4ac89f1668b6bbb0e1540355a8a0eb8050636f1e95da"
+  },
+  "findings": [],
+  "independentChecks": {
+    "freshSources": 5,
+    "actualGitWholeBefore": 5,
+    "exactCommentReverse": 28,
+    "completeRawSourceInverses": 5,
+    "artifactSHA": 6,
+    "mismatches": 0,
+    "codeWritten": false,
+    "validationReexecuted": false
+  },
+  "meaningReview": {
+    "instanceAndCount": "实际 abilityStatus 先禁用／到期，再比较起效日和 day > expiresAfterDay；maxUses 非null才按公共 uses 判spent。注释正确把包含起效日／到期边界、公共次数与payload库存分开；ID只是标签而不是许可。recordNightAbilityUse 先写lastUsedDay，consumed时才++uses，nativePotionSecondTurn另核闭日和剩瓶。没有将尝试日／计数当作已付效果、伤害或第二药窗口。",
+    "learnedAndAwakened": "实际 bindMechanicalSkill 仍核day>=2、owner/current mode、readyOnNight、原learned／skill／mode引用；Awakened scope 另核激活、起效夜和本夜绑定，Mirror分支还核实际abilityID。数据字段、可空激活日、ready夜和继承刀摘要不授予当前请求／生命许可，外层readonly不冻结嵌套技能库存，说明准确。",
+    "gunScope": "实际 grant/arm 分开，activeDeathGun 检查owner、武装夜<=day、弹药及禁用／到期，captureDeathGun再核来源／原体，资格owner另核死因／原生政策／Demon与当前窗口。GC新说明准确保持gift/transfer结构区别于native枪；没有称gift Hunter可以绕过原生／Demon复验。PlayerDeathGun投影只留source.kind与status，status不替代上述资格。",
+    "knowledgeAndDisclosure": "读取实际 projectNightAbility、projectNightState和player_state投影：七种state关联准确；来源披露按原策略裁剪。PlayerDreamer不带live links，PlayerSeer／RoleInspection记录的是规则揭示知识；PlayerWitch只取声明药瓶／标记，确实不读取potionTurnClosedDay。InspectionResult是tagged data，不是Role实例、真实底牌或许可。没有把玩家DTO改成God信息或隐藏字段。",
+    "ownershipAndReadonly": "五文件完整类型／import／export保持。GC唯一声明这些数据，不建立World存储／效果状态，不装配资源、发请求或做新schema验证；只读是原类型边界，不是runtime clone/freeze/深冻结或写权屏障。中文首头与28处就地说明均与实际消费者一致。"
+  },
+  "actualConsumerPaths": [
+    "backend/src/game/mechanisms/roles/abilities.ts",
+    "backend/src/game/mechanisms/roles/ability_changes.ts",
+    "backend/src/game/mechanisms/roles/witch/policies.ts",
+    "backend/src/game/observation/night-ability-projection.ts",
+    "backend/src/game/mechanisms/roles/player_state.ts",
+    "backend/src/game/mechanisms/roles/mechanical_wolf/night_scope.ts",
+    "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_scope.ts",
+    "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+    "backend/src/game/mechanisms/roles/death-shot-eligibility.ts"
+  ],
+  "proofReview": {
+    "attribution": "读取实际check.ts／proof与作者真实收据，不重执行脚本。另实际Git show逐五文件字节核before，再独立逆28exactcomments到完整原文，六artifact和MD/currentSHA核真。",
+    "wholeTypedPrograms": 5,
+    "typedNodes": 3179,
+    "fullNoncommentLeaves": 3702,
+    "wholeRawESNextCJSOutputs": 10,
+    "precision": "完整forEachChild void回调＋NodeArray及尾逗号，全部叶包含type modifier、联合、字面、可空/可选/readonly边界；类型文件的空JS不被单独当结构保真证明。原声明／字段／machine值不变。"
+  },
+  "actualReceipts": {
+    "baseCommit": "37f56392322fdfa859b0d674f339693e0ca883ff",
+    "captureAndComments": {
+      "chunk": "fa6002",
+      "actualExitCode": 0,
+      "actualGitBefore": 5,
+      "declaredCommentEdits": 28,
+      "translatedEnglishHeads": 3,
+      "newMeaningfulFieldComments": 25
+    },
+    "wholeProgramsAndHeads": {
+      "chunk": "7009c8",
+      "actualExitCode": 0,
+      "wholeTypedPrograms": 5,
+      "typedNodes": 3179,
+      "allNoncommentLeaves": 3702,
+      "wholeRawOutputs": 10,
+      "responsibilityInputs": 5,
+      "actualGitDocumentationPaths": 488,
+      "diagnostics": 0,
+      "missingChineseHead": 0
+    },
+    "notRun": [
+      "type compilation",
+      "runtime tests",
+      "whole architecture/checkpoint gates",
+      "models"
+    ],
+    "limit": "只有真实纯注释程序与职责头对照回执；没有类型/行为运行新证据，不挪用先前测试绿。"
+  },
+  "limits": [
+    "没有本批type compilation/runtime test/model/fullgate新收据；不借用之前绿，独立审亦不重复。",
+    "首头检查只核五source/当时488Git文档，说明真义由实际消费者读审补充，不冒全中文或P9完成。",
+    "注释改变源指纹但不改历史fingerprint/seed/Tape/golden；数据语义说明不证明所有运行owner或完整机制矩阵正确。"
+  ]
+}

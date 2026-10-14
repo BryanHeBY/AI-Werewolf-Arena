@@ -1,10 +1,8 @@
 /**
- * Defines pure data structures and finite read views for ordinary private role slots.
- * Inputs are original installation/copy data; outputs preserve policy, nullable
- * selection/history and learned-skill shapes with their existing write contracts.
- * These declarations never validate a role, store live resources, render player
- * facts or grant World/lease/receipt/command authority. Runtime slot and effect
- * owners preserve references; custom initialization keys remain unrestricted.
+ * 负责普通角色私有槽的纯数据结构与有限只读类型。输入为原安装／复制数据，输出保留
+ * 政策、可空选择、历史和学习技能的原可写／只读边界，本契约唯一声明这些公共结构。
+ * 声明不验证角色、不保存活跃库存、不渲染玩家知识，也不授予 World、租约、回执或命令权。
+ * 原引用、安装校验和生命周期仍归具体状态／效果所有者；这里不新增自定义初始化键的运行限制。
  */
 import type { EntityId } from "./identity";
 import type { RoleId } from "./role-ids";
@@ -86,6 +84,7 @@ export type MechanicalSkill =
   | { kind: "hunter"; canShoot: boolean; armed: boolean }
   | { kind: "wolf"; extraKnife: "available" | "spent" | "expired" };
 
+/** 学习来源标签与 readyOnNight 分列；外层 readonly 不冻结 skill 内库存，实际资格仍由本族晚核。 */
 export interface MechanicalLearning {
   readonly targetId: EntityId;
   readonly role: RoleId;
@@ -94,6 +93,7 @@ export interface MechanicalLearning {
   readonly skill: MechanicalSkill;
 }
 
+/** 模式、关闭日和继承历史不替代当前请求／生命许可；learned 与 skill 仍是原资源结构。 */
 export interface MechanicalState {
   learned: MechanicalLearning | null;
   mimicClosedDay: number | null;
@@ -118,6 +118,7 @@ export type AwakenedTemplateRole = Extract<
   "villager" | "mirror_girl" | "witch" | "guard" | "hunter" | "wolf"
 >;
 
+/** activationNight 记录激活夜，activeFromNight 记录后续起效夜；可空声明不自动激活或执行技能。 */
 export interface AwakenedLearning {
   readonly targetId: EntityId;
   readonly role: AwakenedTemplateRole;
@@ -137,6 +138,7 @@ export interface AwakenedState {
 
 export type MiracleSkill = "check" | "poison" | "guard";
 
+/** remaining 与 closedDay 分别记录本族库存和流程关闭；choice 为 null 不足以证明可以再交易。 */
 export interface MerchantState {
   remaining: 0 | 1;
   closedDay: number | null;
@@ -166,6 +168,7 @@ export type GravekeeperReadReport = Readonly<Omit<GravekeeperReport, "result">> 
   readonly result: Readonly<GravekeeperReport["result"]>;
 };
 export type GravekeeperReadState = { readonly history: readonly GravekeeperReadReport[] };
+/** 以下读取类型显式保留原嵌套边界；readonly 只约束类型读取，不复制、深冻结或授予提交权限。 */
 export type MechanicalReadSkill =
   | Readonly<
       Extract<MechanicalSkill, { kind: "villager" | "poison" | "guard" | "hunter" | "wolf" }>
@@ -344,6 +347,7 @@ export interface CommittedModifier {
   targetId: number;
 }
 
+/** 增益解析结果包含死亡提案和效果描述；这些数据不直接标死、付款或取代原体回执。 */
 export interface ModifierResolution {
   pendingDeaths: number[];
   conflict: "same_good" | "both_wolves" | null;

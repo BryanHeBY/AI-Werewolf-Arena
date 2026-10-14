@@ -1,0 +1,139 @@
+{
+  "baseCommit": "37f56392322fdfa859b0d674f339693e0ca883ff",
+  "source": [
+    {
+      "path": "packages/game-contract/src/night-ability-views.ts",
+      "sha256": "1601ee0ca1274acdc6693d8709e904253e8faef18cdf6fc5629a202567d33467",
+      "beforeSHA": "8cd54c6767edd05ab5ed9cef90fff48769fdfea42d845d9250767dd711c3018d",
+      "commentEdits": 7,
+      "exactCommentInverseWholeSourceSame": true,
+      "typedNodes": 230,
+      "typedTreeSame": true,
+      "noncommentLeafCount": 257,
+      "allNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "originalSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+          "currentSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "originalSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230",
+          "currentSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/player-state-views.ts",
+      "sha256": "c4f2543ba1bea6b661f5253aa598fadd1ab98d313bd95bf2576ba82b45a9fa69",
+      "beforeSHA": "01147e24dce1b6862fafffd2f3185e5e2c9eaae6129f4b40e8e1994152c6f660",
+      "commentEdits": 7,
+      "exactCommentInverseWholeSourceSame": true,
+      "typedNodes": 809,
+      "typedTreeSame": true,
+      "noncommentLeafCount": 960,
+      "allNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "originalSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+          "currentSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "originalSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230",
+          "currentSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/role-state-data.ts",
+      "sha256": "e43cbf73ede59fdb70c367dd05808f808ac52211acd46196d63180e8e9956fc0",
+      "beforeSHA": "6192fd518c879e135b994905919485caea4ff173dd7fefc13d7c8d78869d933e",
+      "commentEdits": 7,
+      "exactCommentInverseWholeSourceSame": true,
+      "typedNodes": 1998,
+      "typedTreeSame": true,
+      "noncommentLeafCount": 2325,
+      "allNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "originalSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+          "currentSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "originalSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230",
+          "currentSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/death-ability-data.ts",
+      "sha256": "7a7b10788293005df3393c852854c869f7ee8247992ecb2d1b44322f60e420ec",
+      "beforeSHA": "9704c766260d17e6a9a362acea395a3cf57882e001113d40328720612d87e908",
+      "commentEdits": 5,
+      "exactCommentInverseWholeSourceSame": true,
+      "typedNodes": 81,
+      "typedTreeSame": true,
+      "noncommentLeafCount": 93,
+      "allNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "originalSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+          "currentSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "originalSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230",
+          "currentSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "packages/game-contract/src/inspection.ts",
+      "sha256": "7efd49f43a242699111ee88c818a7320cc458eaec4c91dd944c07e8dee6627d6",
+      "beforeSHA": "85f7f7a835b7c763765d8a7e365de42e882e9d79a280ea473a84f31facae8a77",
+      "commentEdits": 2,
+      "exactCommentInverseWholeSourceSame": true,
+      "typedNodes": 61,
+      "typedTreeSame": true,
+      "noncommentLeafCount": 67,
+      "allNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "originalSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+          "currentSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "originalSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230",
+          "currentSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    }
+  ],
+  "exactCommentEdits": 28,
+  "documentationPathCount": 488,
+  "diagnostics": [],
+  "missingChineseHead": [],
+  "limits": [
+    "Five complete typed programs and all raw literals/type modifiers remain; emitted JS alone is insufficient for type-only files.",
+    "Only explicit comments inverted; source/manifest fingerprints still change, historical archives/IDs untouched.",
+    "No type compilation/runtime tests/whole gates/models; source semantics and comments still need independent review."
+  ]
+}

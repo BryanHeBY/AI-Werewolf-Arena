@@ -39,6 +39,7 @@ export interface PlayerIdiotState {
   revealed: boolean;
 }
 
+/** 自身选择历史与政策，不携带 DreamNightLink 的原生命、已付回调或保护／死亡闭包句柄。 */
 export interface PlayerDreamerState {
   protectionPolicy?: import("./boards").DreamProtectionPolicy;
   lastTarget: number | null;
@@ -59,6 +60,7 @@ export interface PlayerBearState {
   history: Array<{ day: number; roared: boolean }>;
 }
 
+/** 验人结果与历史是规则揭示知识，不保证等于目标真实底牌；结构不重新计算查验结果。 */
 export interface PlayerSeerState {
   targetPolicy?: import("./boards").SeerTargetPolicy;
   actionPolicy?: import("./boards").SeerActionPolicy;
@@ -68,6 +70,7 @@ export interface PlayerSeerState {
   history: Array<{ targetId: number; isWerewolf: boolean; result?: InspectionResult }>;
 }
 
+/** 自身药瓶与当夜标记摘要；不包含内部 potionTurnClosedDay，字段缺省不能证明第二药窗口开放。 */
 export interface PlayerWitchState {
   knifeVisibility?: import("./boards").WitchKnifeVisibilityPolicy;
   potionPolicy?: import("./boards").WitchPotionPolicy;
@@ -79,6 +82,7 @@ export interface PlayerWitchState {
   poisonUsedThisNight: boolean;
 }
 
+/** 政策与已获知角色结果的摘要；不执行目标、重复或必选政策，也不提供当前查验许可。 */
 export interface PlayerRoleInspectionState {
   inspectionPolicy?: import("./boards").InspectionPolicy;
   policy?: "gargoyle" | "psychic" | "mirror" | "pure_white" | "wolf_witch";
@@ -91,6 +95,7 @@ export interface PlayerRoleInspectionState {
   }>;
 }
 
+/** 赠枪／转移枪的披露摘要；来源只留 kind，status 不替代实际武装、生命或死亡因果复验。 */
 export type PlayerDeathGun = Omit<DeathGun, "source"> & {
   source: { kind: "gift" | "transfer" };
   status: "pending" | "active" | "spent" | "disabled";
@@ -138,6 +143,7 @@ export type PlayerMechanicalSkill =
   | { kind: "hunter"; canShoot: boolean; armed: boolean }
   | { kind: "wolf"; extraKnife: "available" | "spent" | "expired" };
 
+/** 学习起效夜、模式与关闭日是自身知识；字段存在不代表本夜窗口、来源或库存仍有效。 */
 export interface PlayerMechanicalState {
   learned: {
     targetId: number;
@@ -161,6 +167,7 @@ export type PlayerAwakenedSkill =
   | { kind: "hunter"; canShoot: boolean; armed: boolean }
   | { kind: "wolf"; extraKnife: "available" | "spent" };
 
+/** 激活夜与技能生效夜分列，可空值保持未激活含义；继承刀与习得数据不直接授予夜行动。 */
 export interface PlayerAwakenedState {
   learned: {
     targetId: number;
