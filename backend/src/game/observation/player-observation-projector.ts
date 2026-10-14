@@ -37,9 +37,9 @@ import { projectDemonHunter } from "../mechanisms/roles/demon_hunter/authority";
 import { weddingActorView, weddingBrideState } from "../mechanisms/roles/ghost_bride/authority";
 import { projectLonelyGirl } from "../mechanisms/roles/lonely_girl/lifecycle";
 import { projectWildChild } from "../mechanisms/roles/wild_child/lifecycle";
-import { projectShapeshifterState } from "../mechanisms/roles/shapeshifter/state";
+import { projectShapeshifterState } from "../mechanisms/roles/shapeshifter/state-ports";
 import { projectShapeshifterChoices } from "../mechanisms/roles/shapeshifter/setup";
-import { projectThiefState } from "../mechanisms/roles/thief/state";
+import { projectThiefState } from "../mechanisms/roles/thief/state-ports";
 import { projectThiefChoices } from "../mechanisms/roles/thief/setup";
 import { projectWallNote } from "../mechanisms/events/wall_notes/authority";
 import {

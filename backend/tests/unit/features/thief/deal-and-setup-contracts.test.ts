@@ -33,7 +33,7 @@ import {
   projectThiefSetup,
   initialThiefDeal,
 } from "../../../../src/game/mechanisms/roles/thief/deal";
-import { readThiefTool, getThiefState } from "../../../../src/game/mechanisms/roles/thief/state";
+import { readThiefTool, getThiefState } from "../../../../src/game/mechanisms/roles/thief/state-ports";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";

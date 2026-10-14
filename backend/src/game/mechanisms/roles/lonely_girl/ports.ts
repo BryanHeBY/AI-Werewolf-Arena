@@ -11,7 +11,10 @@ export { projectLonelyGirl } from "./lifecycle";
 
 export { lonelyGirlRequestScope } from "./lifecycle";
 
-export { readLonelyGirlTool } from "./state";
+export { readLonelyGirlTool } from "./state-slot";
 
 /** 开局组合使用同一准备类绑定；具体窗口仍拥有选择校验、提交与失败关闭。 */
 export { LonelyGirlSetupWindow } from "./setup";
+
+/** 公开原同引用数据查询；不公开槽写命令或由读视图生成许可。 */
+export { getLonelyGirlState } from "./state-slot";

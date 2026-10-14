@@ -1,5 +1,5 @@
 /**
- * 单元测试验证换皮者原 N+2 发牌、备用牌／租约修改和严格 provider 失败 Tape。原字面回执、引用／getter／错误轨迹、事实和状态是预期，覆盖发牌／配置／多重集及有界设置窗口／capability／库存投影。原 case11 只在设置期间探测被拒 PhaseManager 入口，不完成周期；不运行完整阶段或付费模型，原本地窗口及被拒探针保持有界。
+ * 单元测试验证千面人原 N+2 发牌、备用牌／租约修改和严格 provider 失败 Tape。原字面回执、引用／getter／错误轨迹、事实和状态是预期，覆盖发牌／配置／多重集及有界设置窗口／capability／库存投影。原 case11 只在设置期间探测被拒 PhaseManager 入口，不完成周期；不运行完整阶段或付费模型，原本地窗口及被拒探针保持有界。
  */
 import { expect, test } from "bun:test";
 import { shuffled } from "../../../../src/core";
@@ -36,7 +36,7 @@ import {
 import {
   readShapeshifterTool,
   getShapeshifterState,
-} from "../../../../src/game/mechanisms/roles/shapeshifter/state";
+} from "../../../../src/game/mechanisms/roles/shapeshifter/state-ports";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";

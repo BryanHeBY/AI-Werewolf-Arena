@@ -1,0 +1,1619 @@
+{
+  "baseCommit": "34239c73a92b2e59ed8c3499cf708fd51869a5e7",
+  "roots": [
+    "backend/src",
+    "backend/tests",
+    "backend/scripts",
+    "frontend/src",
+    "frontend/tests",
+    "packages",
+    "tooling"
+  ],
+  "files": 1903,
+  "inventory": {
+    "before": [
+      {
+        "file": "backend/src/game/engine/death-committer.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 37,
+        "text": "import { recordWildChildDeathCommit } from \"../mechanisms/roles/wild_child/ports\";",
+        "sha256": "9eaca31ed91647738a2640049ce61a0b8b4c52d43cc8308b6ed8df91db7fb26e"
+      },
+      {
+        "file": "backend/src/game/gateway/action-reception.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/lonely_girl/ports",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "line": 27,
+        "text": "import { lonelyGirlRequestScope } from \"../mechanisms/roles/lonely_girl/ports\";",
+        "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+      },
+      {
+        "file": "backend/src/game/gateway/action-reception.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/lonely_girl/ports",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "line": 28,
+        "text": "import { readLonelyGirlTool } from \"../mechanisms/roles/lonely_girl/ports\";",
+        "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+      },
+      {
+        "file": "backend/src/game/gateway/action-reception.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 29,
+        "text": "import { wildChildRequestScope } from \"../mechanisms/roles/wild_child/ports\";",
+        "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+      },
+      {
+        "file": "backend/src/game/gateway/action-reception.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 30,
+        "text": "import { readWildChildTool } from \"../mechanisms/roles/wild_child/ports\";",
+        "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+      },
+      {
+        "file": "backend/src/game/gateway/action-reception.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/shapeshifter/ports",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/ports.ts",
+        "line": 31,
+        "text": "import { shapeshifterRequestScope } from \"../mechanisms/roles/shapeshifter/ports\";",
+        "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+      },
+      {
+        "file": "backend/src/game/gateway/action-reception.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/thief/ports",
+        "target": "backend/src/game/mechanisms/roles/thief/ports.ts",
+        "line": 32,
+        "text": "import { thiefRequestScope } from \"../mechanisms/roles/thief/ports\";",
+        "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+      },
+      {
+        "file": "backend/src/game/gateway/action-reception.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/thief/ports",
+        "target": "backend/src/game/mechanisms/roles/thief/ports.ts",
+        "line": 33,
+        "text": "import { readThiefChoice } from \"../mechanisms/roles/thief/ports\";",
+        "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+      },
+      {
+        "file": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+        "form": "import",
+        "specifier": "../roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 19,
+        "text": "import { resolveWildChildDeathWave } from \"../roles/wild_child/ports\";",
+        "sha256": "fd757f0e66e354cf22e15bb90cbd2b9aa8a1dde23d768d2b0e023293f7b5f68b"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/initial_identity/choice.ts",
+        "form": "import",
+        "specifier": "../thief/state",
+        "target": "backend/src/game/mechanisms/roles/thief/state.ts",
+        "line": 2,
+        "text": "import { getThiefState, readThiefTool } from \"../thief/state\";",
+        "sha256": "552a74b371327e25effd12ba041ec8c112dc0f8e4cfa64be6648e8a253ebd434"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/initial_identity/choice.ts",
+        "form": "import",
+        "specifier": "../shapeshifter/state",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+        "line": 3,
+        "text": "import { getShapeshifterState, readShapeshifterTool } from \"../shapeshifter/state\";",
+        "sha256": "552a74b371327e25effd12ba041ec8c112dc0f8e4cfa64be6648e8a253ebd434"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+        "form": "import",
+        "specifier": "./state",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+        "line": 24,
+        "text": "import { freshLonelyGirlState, getLonelyGirlState, LONELY_GIRL_POLICY, lonelyData } from \"./state\";",
+        "sha256": "56949095bcf65e6c87ed47e243ce5a910eda09c784b5f03740a3567ae240dc04"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "form": "export",
+        "specifier": "./state",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+        "line": 14,
+        "text": "export { readLonelyGirlTool } from \"./state\";",
+        "sha256": "e5a24613eb7e9d84d83a672a276a1d3cd01310cfe06c7db613f7bb202491643e"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/profile.ts",
+        "form": "import",
+        "specifier": "./state",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+        "line": 13,
+        "text": "import {\n  LONELY_GIRL_POLICY,\n  freshLonelyGirlState,\n  getLonelyGirlState,\n  readLonelyGirlTool,\n} from \"./state\";",
+        "sha256": "4a2e833b41ec30714eda22a0a17ef3881611c42f93263167885104aa59f83d0f"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+        "form": "import",
+        "specifier": "./state",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+        "line": 11,
+        "text": "import { LONELY_GIRL_POLICY, readLonelyGirlTool } from \"./state\";",
+        "sha256": "0700546f6382c24452a2b3e934e81b22e234843cb4e392bcfa0fe3d976899322"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/shapeshifter/ports.ts",
+        "form": "export",
+        "specifier": "./state",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+        "line": 8,
+        "text": "export { projectShapeshifterState } from \"./state\";",
+        "sha256": "8a643007910ea687bfc8a5853fdcd588c08a8f5f53966be86a172beed6dc6c77"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/shapeshifter/profile.ts",
+        "form": "import",
+        "specifier": "./state",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+        "line": 13,
+        "text": "import {\n  SHAPESHIFTER_POLICY,\n  getShapeshifterState,\n  projectShapeshifterState,\n  readShapeshifterChoice,\n} from \"./state\";",
+        "sha256": "eb812218e0d622e7870aed8cfe479c7433ece12aa6181a796354dbbd9b46699e"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/thief/ports.ts",
+        "form": "export",
+        "specifier": "./state",
+        "target": "backend/src/game/mechanisms/roles/thief/state.ts",
+        "line": 7,
+        "text": "export { projectThiefState } from \"./state\";",
+        "sha256": "de9a9b72870ec62a0b63b2581c60b8bc5b938c6463d083eac3e4d7d6faf39f32"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/thief/ports.ts",
+        "form": "export",
+        "specifier": "./state",
+        "target": "backend/src/game/mechanisms/roles/thief/state.ts",
+        "line": 11,
+        "text": "export { readThiefChoice } from \"./state\";",
+        "sha256": "de9a9b72870ec62a0b63b2581c60b8bc5b938c6463d083eac3e4d7d6faf39f32"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/thief/profile.ts",
+        "form": "import",
+        "specifier": "./state",
+        "target": "backend/src/game/mechanisms/roles/thief/state.ts",
+        "line": 13,
+        "text": "import { THIEF_POLICY, getThiefState, projectThiefState, readThiefChoice } from \"./state\";",
+        "sha256": "786a7d6317c66d999af26c719e93d7ccaf75888c50be0c693b9fe08a22f3d107"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+        "form": "import",
+        "specifier": "./state",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+        "line": 19,
+        "text": "import { freshWildChildState, getWildChildState } from \"./state\";",
+        "sha256": "b9d3cea1a5d323897ff7c02c153b9383dacf69b7958764a70f40a88f8e8d737c"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "form": "export",
+        "specifier": "./state",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+        "line": 20,
+        "text": "export { readWildChildTool } from \"./state\";",
+        "sha256": "6aca872ccdd899bdb553b194e1994afeb72fc49de4d2ace3a22fd6a7f25fc7f3"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+        "form": "import",
+        "specifier": "./state",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+        "line": 18,
+        "text": "import {\n  WILD_CHILD_POLICY,\n  freshWildChildState,\n  getWildChildState,\n  readWildChildTool,\n} from \"./state\";",
+        "sha256": "3955b84460f1de82b27fae9f03ed93f73149487f840fa625f370493069dcb1f8"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+        "form": "import",
+        "specifier": "./state",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+        "line": 11,
+        "text": "import { readWildChildTool } from \"./state\";",
+        "sha256": "9729fad5517cd4812c2319ae4abbdbac83f806333915fade8d78e9a773d8716a"
+      },
+      {
+        "file": "backend/src/game/observation/native-role-presentation-capture.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 30,
+        "text": "import { projectWildChild } from \"../mechanisms/roles/wild_child/ports\";",
+        "sha256": "76df1d7165c9a7008f4a2c1a22730bd89795f35dba73cc608c8bb78845aadca8"
+      },
+      {
+        "file": "backend/src/game/observation/native-role-presentation-capture.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/lonely_girl/ports",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "line": 31,
+        "text": "import { projectLonelyGirl } from \"../mechanisms/roles/lonely_girl/ports\";",
+        "sha256": "76df1d7165c9a7008f4a2c1a22730bd89795f35dba73cc608c8bb78845aadca8"
+      },
+      {
+        "file": "backend/src/game/observation/native-role-presentation-capture.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/thief/ports",
+        "target": "backend/src/game/mechanisms/roles/thief/ports.ts",
+        "line": 32,
+        "text": "import { projectThiefState } from \"../mechanisms/roles/thief/ports\";",
+        "sha256": "76df1d7165c9a7008f4a2c1a22730bd89795f35dba73cc608c8bb78845aadca8"
+      },
+      {
+        "file": "backend/src/game/observation/native-role-presentation-capture.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/shapeshifter/ports",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/ports.ts",
+        "line": 33,
+        "text": "import { projectShapeshifterState } from \"../mechanisms/roles/shapeshifter/ports\";",
+        "sha256": "76df1d7165c9a7008f4a2c1a22730bd89795f35dba73cc608c8bb78845aadca8"
+      },
+      {
+        "file": "backend/src/game/observation/player-observation-projector.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/shapeshifter/state",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+        "line": 40,
+        "text": "import { projectShapeshifterState } from \"../mechanisms/roles/shapeshifter/state\";",
+        "sha256": "8598def0aa170f14ffea6c86c33225529be74fe5b2cc62705dc1aa24f55fab22"
+      },
+      {
+        "file": "backend/src/game/observation/player-observation-projector.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/thief/state",
+        "target": "backend/src/game/mechanisms/roles/thief/state.ts",
+        "line": 42,
+        "text": "import { projectThiefState } from \"../mechanisms/roles/thief/state\";",
+        "sha256": "8598def0aa170f14ffea6c86c33225529be74fe5b2cc62705dc1aa24f55fab22"
+      },
+      {
+        "file": "backend/src/game/observation/player-prompt-directives.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/shapeshifter/state",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+        "line": 31,
+        "text": "import { projectShapeshifterState } from \"../mechanisms/roles/shapeshifter/state\";",
+        "sha256": "839f243b900e74032f959f5b2f846e5232052df524176bb61e91322ea677a240"
+      },
+      {
+        "file": "backend/src/game/observation/player-prompt-directives.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/thief/state",
+        "target": "backend/src/game/mechanisms/roles/thief/state.ts",
+        "line": 34,
+        "text": "import { projectThiefState } from \"../mechanisms/roles/thief/state\";",
+        "sha256": "839f243b900e74032f959f5b2f846e5232052df524176bb61e91322ea677a240"
+      },
+      {
+        "file": "backend/src/rulesets/cycle-admission.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/lonely_girl/ports",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "line": 14,
+        "text": "import {\n  lonelyGirlReady, hasActiveLonelyGirl, hasLonelyGirlNightCommit,\n} from \"../game/mechanisms/roles/lonely_girl/ports\";",
+        "sha256": "373addee0028c3b049664272c6055c44e151b2fb831fd75e6822882ef213138d"
+      },
+      {
+        "file": "backend/src/rulesets/cycle-admission.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 17,
+        "text": "import {\n  hasActiveWildChild, hasWildChildNightCommit,\n} from \"../game/mechanisms/roles/wild_child/ports\";",
+        "sha256": "373addee0028c3b049664272c6055c44e151b2fb831fd75e6822882ef213138d"
+      },
+      {
+        "file": "backend/src/rulesets/game-setup.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 19,
+        "text": "import { wildChildReady } from \"../game/mechanisms/roles/wild_child/ports\";",
+        "sha256": "ec830c5c9097164518b8eca8663c8ca09821e63b1da2815a721f0c7fad490bea"
+      },
+      {
+        "file": "backend/src/rulesets/game-setup.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/lonely_girl/ports",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "line": 21,
+        "text": "import { LonelyGirlSetupWindow, lonelyGirlReady } from \"../game/mechanisms/roles/lonely_girl/ports\";",
+        "sha256": "ec830c5c9097164518b8eca8663c8ca09821e63b1da2815a721f0c7fad490bea"
+      },
+      {
+        "file": "backend/src/rulesets/night-lifecycle-plan.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/lonely_girl/ports",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "line": 64,
+        "text": "import { openLonelyGirlNight } from \"../game/mechanisms/roles/lonely_girl/ports\";",
+        "sha256": "45fe8eaa3b6415f8df49bc2e3b2da792423163390810304408cad225f76d39c8"
+      },
+      {
+        "file": "backend/src/rulesets/night-lifecycle-plan.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 65,
+        "text": "import { openWildChildNight } from \"../game/mechanisms/roles/wild_child/ports\";",
+        "sha256": "45fe8eaa3b6415f8df49bc2e3b2da792423163390810304408cad225f76d39c8"
+      },
+      {
+        "file": "backend/src/rulesets/night-readability.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/lonely_girl/ports",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "line": 10,
+        "text": "import { hasActiveLonelyGirl, lonelyGirlReady } from \"../game/mechanisms/roles/lonely_girl/ports\";",
+        "sha256": "896af8f46de8810675ab3bcf1e45d8f34f7d8b22a356259363cfae20d562606f"
+      },
+      {
+        "file": "backend/src/rulesets/night-readability.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 11,
+        "text": "import { hasActiveWildChild, wildChildReady } from \"../game/mechanisms/roles/wild_child/ports\";",
+        "sha256": "896af8f46de8810675ab3bcf1e45d8f34f7d8b22a356259363cfae20d562606f"
+      },
+      {
+        "file": "backend/tests/integration/configuration/lonely-girl-public-examples.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/lonely_girl/state",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+        "line": 10,
+        "text": "import { LONELY_GIRL_POLICY } from \"../../../src/game/mechanisms/roles/lonely_girl/state\";",
+        "sha256": "1a4c4843f191e5c9ac2d398ff9bfcb59dce4f614c9bebafb9cf6bf529cf09058"
+      },
+      {
+        "file": "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+        "form": "import",
+        "specifier": "../../../../src/game/mechanisms/roles/wild_child/state",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+        "line": 25,
+        "text": "import { getWildChildState } from \"../../../../src/game/mechanisms/roles/wild_child/state\";",
+        "sha256": "304676494c8d26db2d6e9132bbe9edfda1ec43639f6c98db36611bfb4afbc467"
+      },
+      {
+        "file": "backend/tests/scenarios/interactions/wild-child/committed-death-contribution.test.ts",
+        "form": "import",
+        "specifier": "../../../../src/game/mechanisms/roles/wild_child/state",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+        "line": 12,
+        "text": "import { getWildChildState } from \"../../../../src/game/mechanisms/roles/wild_child/state\";",
+        "sha256": "c2eec3c438baee5d57f6fede42967c7314bb4d10a06a57f138d4718e3c5140b3"
+      },
+      {
+        "file": "backend/tests/unit/features/first-night-choice-state-slots.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/thief/state-ports",
+        "target": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "line": 9,
+        "text": "import { THIEF_POLICY, initializeThiefState } from \"../../../src/game/mechanisms/roles/thief/state-ports\";",
+        "sha256": "20cce4a50dd95d2490a31ec54f389095bd1ea78f9a0282b9aac4f23217fd07bc"
+      },
+      {
+        "file": "backend/tests/unit/features/first-night-choice-state-slots.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/shapeshifter/state-ports",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "line": 10,
+        "text": "import { SHAPESHIFTER_POLICY, cancelShapeshifterState } from \"../../../src/game/mechanisms/roles/shapeshifter/state-ports\";",
+        "sha256": "20cce4a50dd95d2490a31ec54f389095bd1ea78f9a0282b9aac4f23217fd07bc"
+      },
+      {
+        "file": "backend/tests/unit/features/first-night-choice-state-slots.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/wild_child/state-slot",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "line": 11,
+        "text": "import { freshWildChildState, commitWildChildState } from \"../../../src/game/mechanisms/roles/wild_child/state-slot\";",
+        "sha256": "20cce4a50dd95d2490a31ec54f389095bd1ea78f9a0282b9aac4f23217fd07bc"
+      },
+      {
+        "file": "backend/tests/unit/features/first-night-choice-state-slots.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/lonely_girl/state-slot",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+        "line": 12,
+        "text": "import { freshLonelyGirlState, cancelLonelyGirlState } from \"../../../src/game/mechanisms/roles/lonely_girl/state-slot\";",
+        "sha256": "20cce4a50dd95d2490a31ec54f389095bd1ea78f9a0282b9aac4f23217fd07bc"
+      },
+      {
+        "file": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+        "form": "import",
+        "specifier": "../../../../src/game/mechanisms/roles/lonely_girl/state",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+        "line": 11,
+        "text": "import {\n  getLonelyGirlState,\n  LONELY_GIRL_POLICY,\n} from \"../../../../src/game/mechanisms/roles/lonely_girl/state\";",
+        "sha256": "d9508afc19b9bf2e7d403e74d80df49eab78f98d8961c357866934321d7472dc"
+      },
+      {
+        "file": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+        "form": "import",
+        "specifier": "../../../../src/game/mechanisms/roles/shapeshifter/state",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+        "line": 36,
+        "text": "import {\n  readShapeshifterTool,\n  getShapeshifterState,\n} from \"../../../../src/game/mechanisms/roles/shapeshifter/state\";",
+        "sha256": "ea3270ba78cc674ffa6ee9e9d9c84cdba4fe20b037c45b4c15e68fe2cbf92909"
+      },
+      {
+        "file": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+        "form": "import",
+        "specifier": "../../../../src/game/mechanisms/roles/thief/state",
+        "target": "backend/src/game/mechanisms/roles/thief/state.ts",
+        "line": 36,
+        "text": "import { readThiefTool, getThiefState } from \"../../../../src/game/mechanisms/roles/thief/state\";",
+        "sha256": "32639ead018bdffc6d2c19d11e5ea29fd188b01aac0a0803435440c14b6e3b2f"
+      },
+      {
+        "file": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+        "form": "import",
+        "specifier": "../../../../src/game/mechanisms/roles/wild_child/state",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+        "line": 11,
+        "text": "import {\n  getWildChildState,\n  readWildChildTool,\n} from \"../../../../src/game/mechanisms/roles/wild_child/state\";",
+        "sha256": "7ca164c079856b05bf237ee9d92f7ca83839d25cb7afe2c43c66886058d0d663"
+      },
+      {
+        "file": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/wild_child/state",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+        "line": 17,
+        "text": "import { getWildChildState } from \"../../../src/game/mechanisms/roles/wild_child/state\";",
+        "sha256": "4e2358fcf7005196e13a320f986856193835cfe03189b8c172eb2f013da8f83c"
+      },
+      {
+        "file": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/thief/state",
+        "target": "backend/src/game/mechanisms/roles/thief/state.ts",
+        "line": 18,
+        "text": "import { getThiefState } from \"../../../src/game/mechanisms/roles/thief/state\";",
+        "sha256": "4e2358fcf7005196e13a320f986856193835cfe03189b8c172eb2f013da8f83c"
+      },
+      {
+        "file": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/shapeshifter/state",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+        "line": 19,
+        "text": "import { getShapeshifterState } from \"../../../src/game/mechanisms/roles/shapeshifter/state\";",
+        "sha256": "4e2358fcf7005196e13a320f986856193835cfe03189b8c172eb2f013da8f83c"
+      },
+      {
+        "file": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/lonely_girl/state",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+        "line": 32,
+        "text": "import { getLonelyGirlState } from \"../../../src/game/mechanisms/roles/lonely_girl/state\";",
+        "sha256": "4e2358fcf7005196e13a320f986856193835cfe03189b8c172eb2f013da8f83c"
+      }
+    ],
+    "current": [
+      {
+        "file": "backend/src/game/engine/death-committer.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 37,
+        "text": "import { recordWildChildDeathCommit } from \"../mechanisms/roles/wild_child/ports\";",
+        "sha256": "9eaca31ed91647738a2640049ce61a0b8b4c52d43cc8308b6ed8df91db7fb26e"
+      },
+      {
+        "file": "backend/src/game/gateway/action-reception.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/lonely_girl/ports",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "line": 27,
+        "text": "import { lonelyGirlRequestScope } from \"../mechanisms/roles/lonely_girl/ports\";",
+        "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+      },
+      {
+        "file": "backend/src/game/gateway/action-reception.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/lonely_girl/ports",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "line": 28,
+        "text": "import { readLonelyGirlTool } from \"../mechanisms/roles/lonely_girl/ports\";",
+        "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+      },
+      {
+        "file": "backend/src/game/gateway/action-reception.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 29,
+        "text": "import { wildChildRequestScope } from \"../mechanisms/roles/wild_child/ports\";",
+        "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+      },
+      {
+        "file": "backend/src/game/gateway/action-reception.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 30,
+        "text": "import { readWildChildTool } from \"../mechanisms/roles/wild_child/ports\";",
+        "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+      },
+      {
+        "file": "backend/src/game/gateway/action-reception.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/shapeshifter/ports",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/ports.ts",
+        "line": 31,
+        "text": "import { shapeshifterRequestScope } from \"../mechanisms/roles/shapeshifter/ports\";",
+        "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+      },
+      {
+        "file": "backend/src/game/gateway/action-reception.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/thief/ports",
+        "target": "backend/src/game/mechanisms/roles/thief/ports.ts",
+        "line": 32,
+        "text": "import { thiefRequestScope } from \"../mechanisms/roles/thief/ports\";",
+        "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+      },
+      {
+        "file": "backend/src/game/gateway/action-reception.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/thief/ports",
+        "target": "backend/src/game/mechanisms/roles/thief/ports.ts",
+        "line": 33,
+        "text": "import { readThiefChoice } from \"../mechanisms/roles/thief/ports\";",
+        "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+      },
+      {
+        "file": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+        "form": "import",
+        "specifier": "../roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 19,
+        "text": "import { resolveWildChildDeathWave } from \"../roles/wild_child/ports\";",
+        "sha256": "fd757f0e66e354cf22e15bb90cbd2b9aa8a1dde23d768d2b0e023293f7b5f68b"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/initial_identity/choice.ts",
+        "form": "import",
+        "specifier": "../thief/state-ports",
+        "target": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "line": 8,
+        "text": "import { getThiefState, readThiefTool } from \"../thief/state-ports\";",
+        "sha256": "dc0b3ced09dc93b8c18f5ce87f04ffbe8d4854e8e14de0c152081e3b4bc7a75e"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/initial_identity/choice.ts",
+        "form": "import",
+        "specifier": "../shapeshifter/state-ports",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "line": 9,
+        "text": "import { getShapeshifterState, readShapeshifterTool } from \"../shapeshifter/state-ports\";",
+        "sha256": "dc0b3ced09dc93b8c18f5ce87f04ffbe8d4854e8e14de0c152081e3b4bc7a75e"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+        "form": "import",
+        "specifier": "../shapeshifter/state-ports",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "line": 49,
+        "text": "import { consumeShapeshifterState, cancelShapeshifterState } from \"../shapeshifter/state-ports\";",
+        "sha256": "a505041e8b23cfee3113ef4622c23237feaa4489d5a921a8571669c417a0f5b6"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+        "form": "import",
+        "specifier": "./state-slot",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+        "line": 25,
+        "text": "import { freshLonelyGirlState, getLonelyGirlState, LONELY_GIRL_POLICY, lonelyData,\n  consumeLonelyGirlState, cancelLonelyGirlState, projectLonelyGirlData } from \"./state-slot\";",
+        "sha256": "287b392d2ac7a21fe00d05db5dbb1ea4daf5e3409f2cc6b814c295e4f6dcc050"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "form": "export",
+        "specifier": "./state-slot",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+        "line": 14,
+        "text": "export { readLonelyGirlTool } from \"./state-slot\";",
+        "sha256": "63025874b1f7b9a4b57cf3d615ec67efc06f1b1fca1f916b87d40325a93782f9"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "form": "export",
+        "specifier": "./state-slot",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+        "line": 20,
+        "text": "export { getLonelyGirlState } from \"./state-slot\";",
+        "sha256": "63025874b1f7b9a4b57cf3d615ec67efc06f1b1fca1f916b87d40325a93782f9"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/profile.ts",
+        "form": "import",
+        "specifier": "./state-slot",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+        "line": 13,
+        "text": "import {\n  LONELY_GIRL_POLICY,\n  initializeLonelyGirlState,\n  readLonelyGirlTool,\n} from \"./state-slot\";",
+        "sha256": "cb672185b5bb0ea743f2270b320222681d702c44672099f9d9ccf4140b8965e8"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+        "form": "import",
+        "specifier": "./state-slot",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+        "line": 11,
+        "text": "import { LONELY_GIRL_POLICY, readLonelyGirlTool } from \"./state-slot\";",
+        "sha256": "d3b83f449a42a903152ffcb9b6bca96f85516ee91137c7506077c176c243eecc"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/shapeshifter/ports.ts",
+        "form": "export",
+        "specifier": "./state-ports",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "line": 8,
+        "text": "export { projectShapeshifterState } from \"./state-ports\";",
+        "sha256": "e61d1c491610afe6c097fbec82677c0337cabb71a7636d16953ed4ff41271e3e"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/shapeshifter/ports.ts",
+        "form": "export",
+        "specifier": "./state-ports",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "line": 13,
+        "text": "export { getShapeshifterState } from \"./state-ports\";",
+        "sha256": "e61d1c491610afe6c097fbec82677c0337cabb71a7636d16953ed4ff41271e3e"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/shapeshifter/profile.ts",
+        "form": "import",
+        "specifier": "./state-ports",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "line": 13,
+        "text": "import {\n  SHAPESHIFTER_POLICY,\n  initializeShapeshifterState,\n  readShapeshifterChoice,\n} from \"./state-ports\";",
+        "sha256": "e53d6bca63e288b0dc48ee810f414e5aaee14a16d612e49845cab640977c99ea"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/thief/ports.ts",
+        "form": "export",
+        "specifier": "./state-ports",
+        "target": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "line": 7,
+        "text": "export { projectThiefState } from \"./state-ports\";",
+        "sha256": "97f90274263a35a8e6d76e8ab24fcc6564dbbda6b3a1fa8a910657315d8cd0fe"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/thief/ports.ts",
+        "form": "export",
+        "specifier": "./state-ports",
+        "target": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "line": 11,
+        "text": "export { readThiefChoice } from \"./state-ports\";",
+        "sha256": "97f90274263a35a8e6d76e8ab24fcc6564dbbda6b3a1fa8a910657315d8cd0fe"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/thief/ports.ts",
+        "form": "export",
+        "specifier": "./state-ports",
+        "target": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "line": 14,
+        "text": "export { getThiefState } from \"./state-ports\";",
+        "sha256": "97f90274263a35a8e6d76e8ab24fcc6564dbbda6b3a1fa8a910657315d8cd0fe"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/thief/profile.ts",
+        "form": "import",
+        "specifier": "./state-ports",
+        "target": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "line": 13,
+        "text": "import { THIEF_POLICY, initializeThiefState, readThiefChoice } from \"./state-ports\";",
+        "sha256": "1262929db9ac8e3aed800a22d33b0f13d05003941e8972ab421663b3999b5951"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+        "form": "import",
+        "specifier": "./state-slot",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "line": 19,
+        "text": "import { getWildChildState, encodeWildChildData as safeJson,\n  commitWildChildState, cancelWildChildState, transformWildChildState, activateWildChildState,\n  projectWildChildData } from \"./state-slot\";",
+        "sha256": "1abd878a107988af5fc61d001731115304af3252e78e2ca6d79c0ff4e4c33622"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "form": "export",
+        "specifier": "./state-slot",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "line": 20,
+        "text": "export { readWildChildTool } from \"./state-slot\";",
+        "sha256": "49d418163474d2602549f414b1e7509da359a14cf429061d76d65d86f1f76c4c"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "form": "export",
+        "specifier": "./state-slot",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "line": 23,
+        "text": "export { getWildChildState } from \"./state-slot\";",
+        "sha256": "49d418163474d2602549f414b1e7509da359a14cf429061d76d65d86f1f76c4c"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+        "form": "import",
+        "specifier": "./state-slot",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "line": 18,
+        "text": "import {\n  WILD_CHILD_POLICY,\n  initializeWildChildState,\n  readWildChildTool,\n} from \"./state-slot\";",
+        "sha256": "5858f2ff590c1591634b735b54c4c1536295cabf01f68758f1596f3a946be71b"
+      },
+      {
+        "file": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+        "form": "import",
+        "specifier": "./state-slot",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "line": 11,
+        "text": "import { readWildChildTool } from \"./state-slot\";",
+        "sha256": "a2274eca1a94e5e22d8bc7ee2f75204b6ffb5f4b32dc281dc422b3f34b4f06a9"
+      },
+      {
+        "file": "backend/src/game/observation/native-role-presentation-capture.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 30,
+        "text": "import { projectWildChild } from \"../mechanisms/roles/wild_child/ports\";",
+        "sha256": "76df1d7165c9a7008f4a2c1a22730bd89795f35dba73cc608c8bb78845aadca8"
+      },
+      {
+        "file": "backend/src/game/observation/native-role-presentation-capture.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/lonely_girl/ports",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "line": 31,
+        "text": "import { projectLonelyGirl } from \"../mechanisms/roles/lonely_girl/ports\";",
+        "sha256": "76df1d7165c9a7008f4a2c1a22730bd89795f35dba73cc608c8bb78845aadca8"
+      },
+      {
+        "file": "backend/src/game/observation/native-role-presentation-capture.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/thief/ports",
+        "target": "backend/src/game/mechanisms/roles/thief/ports.ts",
+        "line": 32,
+        "text": "import { projectThiefState } from \"../mechanisms/roles/thief/ports\";",
+        "sha256": "76df1d7165c9a7008f4a2c1a22730bd89795f35dba73cc608c8bb78845aadca8"
+      },
+      {
+        "file": "backend/src/game/observation/native-role-presentation-capture.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/shapeshifter/ports",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/ports.ts",
+        "line": 33,
+        "text": "import { projectShapeshifterState } from \"../mechanisms/roles/shapeshifter/ports\";",
+        "sha256": "76df1d7165c9a7008f4a2c1a22730bd89795f35dba73cc608c8bb78845aadca8"
+      },
+      {
+        "file": "backend/src/game/observation/player-observation-projector.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/shapeshifter/state-ports",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "line": 40,
+        "text": "import { projectShapeshifterState } from \"../mechanisms/roles/shapeshifter/state-ports\";",
+        "sha256": "8e54493b6ba9b01ffa1936ce3492fc55056b30c1a5276555cd74d34981170f4d"
+      },
+      {
+        "file": "backend/src/game/observation/player-observation-projector.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/thief/state-ports",
+        "target": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "line": 42,
+        "text": "import { projectThiefState } from \"../mechanisms/roles/thief/state-ports\";",
+        "sha256": "8e54493b6ba9b01ffa1936ce3492fc55056b30c1a5276555cd74d34981170f4d"
+      },
+      {
+        "file": "backend/src/game/observation/player-prompt-directives.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/shapeshifter/state-ports",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "line": 31,
+        "text": "import { projectShapeshifterState } from \"../mechanisms/roles/shapeshifter/state-ports\";",
+        "sha256": "88388634c655d699d3943bb3a74bcef322adc988be77e7764eec13b65188184f"
+      },
+      {
+        "file": "backend/src/game/observation/player-prompt-directives.ts",
+        "form": "import",
+        "specifier": "../mechanisms/roles/thief/state-ports",
+        "target": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "line": 34,
+        "text": "import { projectThiefState } from \"../mechanisms/roles/thief/state-ports\";",
+        "sha256": "88388634c655d699d3943bb3a74bcef322adc988be77e7764eec13b65188184f"
+      },
+      {
+        "file": "backend/src/rulesets/cycle-admission.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/lonely_girl/ports",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "line": 14,
+        "text": "import {\n  lonelyGirlReady, hasActiveLonelyGirl, hasLonelyGirlNightCommit,\n} from \"../game/mechanisms/roles/lonely_girl/ports\";",
+        "sha256": "373addee0028c3b049664272c6055c44e151b2fb831fd75e6822882ef213138d"
+      },
+      {
+        "file": "backend/src/rulesets/cycle-admission.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 17,
+        "text": "import {\n  hasActiveWildChild, hasWildChildNightCommit,\n} from \"../game/mechanisms/roles/wild_child/ports\";",
+        "sha256": "373addee0028c3b049664272c6055c44e151b2fb831fd75e6822882ef213138d"
+      },
+      {
+        "file": "backend/src/rulesets/game-setup.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 19,
+        "text": "import { wildChildReady } from \"../game/mechanisms/roles/wild_child/ports\";",
+        "sha256": "ec830c5c9097164518b8eca8663c8ca09821e63b1da2815a721f0c7fad490bea"
+      },
+      {
+        "file": "backend/src/rulesets/game-setup.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/lonely_girl/ports",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "line": 21,
+        "text": "import { LonelyGirlSetupWindow, lonelyGirlReady } from \"../game/mechanisms/roles/lonely_girl/ports\";",
+        "sha256": "ec830c5c9097164518b8eca8663c8ca09821e63b1da2815a721f0c7fad490bea"
+      },
+      {
+        "file": "backend/src/rulesets/night-lifecycle-plan.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/lonely_girl/ports",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "line": 64,
+        "text": "import { openLonelyGirlNight } from \"../game/mechanisms/roles/lonely_girl/ports\";",
+        "sha256": "45fe8eaa3b6415f8df49bc2e3b2da792423163390810304408cad225f76d39c8"
+      },
+      {
+        "file": "backend/src/rulesets/night-lifecycle-plan.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 65,
+        "text": "import { openWildChildNight } from \"../game/mechanisms/roles/wild_child/ports\";",
+        "sha256": "45fe8eaa3b6415f8df49bc2e3b2da792423163390810304408cad225f76d39c8"
+      },
+      {
+        "file": "backend/src/rulesets/night-readability.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/lonely_girl/ports",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "line": 10,
+        "text": "import { hasActiveLonelyGirl, lonelyGirlReady } from \"../game/mechanisms/roles/lonely_girl/ports\";",
+        "sha256": "896af8f46de8810675ab3bcf1e45d8f34f7d8b22a356259363cfae20d562606f"
+      },
+      {
+        "file": "backend/src/rulesets/night-readability.ts",
+        "form": "import",
+        "specifier": "../game/mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 11,
+        "text": "import { hasActiveWildChild, wildChildReady } from \"../game/mechanisms/roles/wild_child/ports\";",
+        "sha256": "896af8f46de8810675ab3bcf1e45d8f34f7d8b22a356259363cfae20d562606f"
+      },
+      {
+        "file": "backend/tests/integration/configuration/lonely-girl-public-examples.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/lonely_girl/state-slot",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+        "line": 8,
+        "text": "import { LONELY_GIRL_POLICY } from \"../../../src/game/mechanisms/roles/lonely_girl/state-slot\";",
+        "sha256": "4abf32c95afcb885d587983be92e4a97e85f21dddf0a74c392a378dc5d835cd1"
+      },
+      {
+        "file": "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+        "form": "import",
+        "specifier": "../../../../src/game/mechanisms/roles/wild_child/state-slot",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "line": 25,
+        "text": "import { getWildChildState } from \"../../../../src/game/mechanisms/roles/wild_child/state-slot\";",
+        "sha256": "03f2867291ac2d7da885824be4fa0e631f85722ad331754617fb5aea83f0470a"
+      },
+      {
+        "file": "backend/tests/scenarios/interactions/wild-child/committed-death-contribution.test.ts",
+        "form": "import",
+        "specifier": "../../../../src/game/mechanisms/roles/wild_child/state-slot",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "line": 12,
+        "text": "import { getWildChildState } from \"../../../../src/game/mechanisms/roles/wild_child/state-slot\";",
+        "sha256": "af07af554f297d7d7649cf07b3b76a92e1ac019115f78d1c78b9b8cb69df6cfc"
+      },
+      {
+        "file": "backend/tests/unit/features/first-night-choice-state-slots.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/thief/state-ports",
+        "target": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "line": 9,
+        "text": "import { THIEF_POLICY, initializeThiefState } from \"../../../src/game/mechanisms/roles/thief/state-ports\";",
+        "sha256": "20cce4a50dd95d2490a31ec54f389095bd1ea78f9a0282b9aac4f23217fd07bc"
+      },
+      {
+        "file": "backend/tests/unit/features/first-night-choice-state-slots.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/shapeshifter/state-ports",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "line": 10,
+        "text": "import { SHAPESHIFTER_POLICY, cancelShapeshifterState } from \"../../../src/game/mechanisms/roles/shapeshifter/state-ports\";",
+        "sha256": "20cce4a50dd95d2490a31ec54f389095bd1ea78f9a0282b9aac4f23217fd07bc"
+      },
+      {
+        "file": "backend/tests/unit/features/first-night-choice-state-slots.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/wild_child/state-slot",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "line": 11,
+        "text": "import { freshWildChildState, commitWildChildState } from \"../../../src/game/mechanisms/roles/wild_child/state-slot\";",
+        "sha256": "20cce4a50dd95d2490a31ec54f389095bd1ea78f9a0282b9aac4f23217fd07bc"
+      },
+      {
+        "file": "backend/tests/unit/features/first-night-choice-state-slots.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/lonely_girl/state-slot",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+        "line": 12,
+        "text": "import { freshLonelyGirlState, cancelLonelyGirlState } from \"../../../src/game/mechanisms/roles/lonely_girl/state-slot\";",
+        "sha256": "20cce4a50dd95d2490a31ec54f389095bd1ea78f9a0282b9aac4f23217fd07bc"
+      },
+      {
+        "file": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+        "form": "import",
+        "specifier": "../../../../src/game/mechanisms/roles/lonely_girl/state-slot",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+        "line": 11,
+        "text": "import {\n  getLonelyGirlState,\n  LONELY_GIRL_POLICY,\n} from \"../../../../src/game/mechanisms/roles/lonely_girl/state-slot\";",
+        "sha256": "3c564c3fe835addd146e16dad17718c3616e9124c043199f677e980b3034f7f3"
+      },
+      {
+        "file": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+        "form": "import",
+        "specifier": "../../../../src/game/mechanisms/roles/shapeshifter/state-ports",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "line": 36,
+        "text": "import {\n  readShapeshifterTool,\n  getShapeshifterState,\n} from \"../../../../src/game/mechanisms/roles/shapeshifter/state-ports\";",
+        "sha256": "1cb3f82ff8a30675dd1316057fb4c7a4debb63824f372c10503492ef0f92c5ac"
+      },
+      {
+        "file": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+        "form": "import",
+        "specifier": "../../../../src/game/mechanisms/roles/thief/state-ports",
+        "target": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "line": 36,
+        "text": "import { readThiefTool, getThiefState } from \"../../../../src/game/mechanisms/roles/thief/state-ports\";",
+        "sha256": "23488dd476117f2c6247d25eb89995e3eedda481cb06bba0b0fb738b44e681e0"
+      },
+      {
+        "file": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+        "form": "import",
+        "specifier": "../../../../src/game/mechanisms/roles/wild_child/state-slot",
+        "target": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "line": 11,
+        "text": "import {\n  getWildChildState,\n  readWildChildTool,\n} from \"../../../../src/game/mechanisms/roles/wild_child/state-slot\";",
+        "sha256": "089e444a9c951867143250ed127200ede616e489b02dbe5b771f8143b67a37bf"
+      },
+      {
+        "file": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/wild_child/ports",
+        "target": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+        "line": 17,
+        "text": "import { getWildChildState } from \"../../../src/game/mechanisms/roles/wild_child/ports\";",
+        "sha256": "ed1dd344aa7aceac80b19b3afc97ea3e0d38fa40087e1375857cc70fe8781410"
+      },
+      {
+        "file": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/thief/state-ports",
+        "target": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "line": 18,
+        "text": "import { getThiefState } from \"../../../src/game/mechanisms/roles/thief/state-ports\";",
+        "sha256": "ed1dd344aa7aceac80b19b3afc97ea3e0d38fa40087e1375857cc70fe8781410"
+      },
+      {
+        "file": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/shapeshifter/state-ports",
+        "target": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "line": 19,
+        "text": "import { getShapeshifterState } from \"../../../src/game/mechanisms/roles/shapeshifter/state-ports\";",
+        "sha256": "ed1dd344aa7aceac80b19b3afc97ea3e0d38fa40087e1375857cc70fe8781410"
+      },
+      {
+        "file": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+        "form": "import",
+        "specifier": "../../../src/game/mechanisms/roles/lonely_girl/ports",
+        "target": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+        "line": 32,
+        "text": "import { getLonelyGirlState } from \"../../../src/game/mechanisms/roles/lonely_girl/ports\";",
+        "sha256": "ed1dd344aa7aceac80b19b3afc97ea3e0d38fa40087e1375857cc70fe8781410"
+      }
+    ]
+  },
+  "movedNamedBindings": [
+    {
+      "file": "backend/src/game/mechanisms/roles/thief/profile.ts",
+      "local": "THIEF_POLICY",
+      "imported": "THIEF_POLICY",
+      "oldOwner": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "name": "THIEF_POLICY"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/thief/profile.ts",
+      "local": "getThiefState",
+      "originalOwner": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "retiredUnusedOrInitializationBinding": true,
+      "detail": "初始化整体迁槽或此前未用的投影binding"
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/thief/profile.ts",
+      "local": "projectThiefState",
+      "originalOwner": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "retiredUnusedOrInitializationBinding": true,
+      "detail": "初始化整体迁槽或此前未用的投影binding"
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/thief/profile.ts",
+      "local": "readThiefChoice",
+      "imported": "readThiefChoice",
+      "oldOwner": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "name": "readThiefChoice"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/shapeshifter/profile.ts",
+      "local": "SHAPESHIFTER_POLICY",
+      "imported": "SHAPESHIFTER_POLICY",
+      "oldOwner": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "name": "SHAPESHIFTER_POLICY"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/shapeshifter/profile.ts",
+      "local": "getShapeshifterState",
+      "originalOwner": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "retiredUnusedOrInitializationBinding": true,
+      "detail": "初始化整体迁槽或此前未用的投影binding"
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/shapeshifter/profile.ts",
+      "local": "projectShapeshifterState",
+      "originalOwner": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "retiredUnusedOrInitializationBinding": true,
+      "detail": "初始化整体迁槽或此前未用的投影binding"
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/shapeshifter/profile.ts",
+      "local": "readShapeshifterChoice",
+      "imported": "readShapeshifterChoice",
+      "oldOwner": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "name": "readShapeshifterChoice"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+      "local": "WILD_CHILD_POLICY",
+      "imported": "WILD_CHILD_POLICY",
+      "oldOwner": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "name": "WILD_CHILD_POLICY"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+      "local": "freshWildChildState",
+      "originalOwner": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+      "retiredUnusedOrInitializationBinding": true,
+      "detail": "初始化整体迁槽或此前未用的投影binding"
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+      "local": "getWildChildState",
+      "originalOwner": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+      "retiredUnusedOrInitializationBinding": true,
+      "detail": "初始化整体迁槽或此前未用的投影binding"
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+      "local": "readWildChildTool",
+      "imported": "readWildChildTool",
+      "oldOwner": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "name": "readWildChildTool"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/lonely_girl/profile.ts",
+      "local": "LONELY_GIRL_POLICY",
+      "imported": "LONELY_GIRL_POLICY",
+      "oldOwner": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+      "physical": {
+        "file": "packages/game-contract/src/facts/lonely-girl.ts",
+        "name": "LONELY_GIRL_POLICY"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/lonely_girl/profile.ts",
+      "local": "freshLonelyGirlState",
+      "originalOwner": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "retiredUnusedOrInitializationBinding": true,
+      "detail": "初始化整体迁槽或此前未用的投影binding"
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/lonely_girl/profile.ts",
+      "local": "getLonelyGirlState",
+      "originalOwner": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "retiredUnusedOrInitializationBinding": true,
+      "detail": "初始化整体迁槽或此前未用的投影binding"
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/lonely_girl/profile.ts",
+      "local": "readLonelyGirlTool",
+      "imported": "readLonelyGirlTool",
+      "oldOwner": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+      "physical": {
+        "file": "packages/game-contract/src/facts/lonely-girl.ts",
+        "name": "readLonelyGirlChoiceTool"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/initial_identity/choice.ts",
+      "local": "getThiefState",
+      "imported": "getThiefState",
+      "oldOwner": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "name": "getThiefState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/initial_identity/choice.ts",
+      "local": "readThiefTool",
+      "imported": "readThiefTool",
+      "oldOwner": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "name": "readThiefTool"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/initial_identity/choice.ts",
+      "local": "getShapeshifterState",
+      "imported": "getShapeshifterState",
+      "oldOwner": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "name": "getShapeshifterState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/initial_identity/choice.ts",
+      "local": "readShapeshifterTool",
+      "imported": "readShapeshifterTool",
+      "oldOwner": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+      "physical": {
+        "file": "packages/game-contract/src/facts/shapeshifter.ts",
+        "name": "readShapeshifterChoiceTool"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "local": "freshWildChildState",
+      "originalOwner": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+      "retiredUnusedOrInitializationBinding": true,
+      "detail": "完整关闭投影归槽，原fresh函数在槽内同一实现使用"
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "local": "getWildChildState",
+      "imported": "getWildChildState",
+      "oldOwner": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "name": "getWildChildState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "local": "freshLonelyGirlState",
+      "imported": "freshLonelyGirlState",
+      "oldOwner": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+        "name": "freshLonelyGirlState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "local": "getLonelyGirlState",
+      "imported": "getLonelyGirlState",
+      "oldOwner": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+        "name": "getLonelyGirlState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "local": "LONELY_GIRL_POLICY",
+      "imported": "LONELY_GIRL_POLICY",
+      "oldOwner": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+      "physical": {
+        "file": "packages/game-contract/src/facts/lonely-girl.ts",
+        "name": "LONELY_GIRL_POLICY"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "local": "lonelyData",
+      "imported": "lonelyData",
+      "oldOwner": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+        "name": "lonelyData"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "local": "readWildChildTool",
+      "imported": "readWildChildTool",
+      "oldOwner": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "name": "readWildChildTool"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "local": "LONELY_GIRL_POLICY",
+      "imported": "LONELY_GIRL_POLICY",
+      "oldOwner": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+      "physical": {
+        "file": "packages/game-contract/src/facts/lonely-girl.ts",
+        "name": "LONELY_GIRL_POLICY"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "local": "readLonelyGirlTool",
+      "imported": "readLonelyGirlTool",
+      "oldOwner": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+      "physical": {
+        "file": "packages/game-contract/src/facts/lonely-girl.ts",
+        "name": "readLonelyGirlChoiceTool"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "local": "readThiefTool",
+      "imported": "readThiefTool",
+      "oldOwner": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "name": "readThiefTool"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "local": "getThiefState",
+      "imported": "getThiefState",
+      "oldOwner": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "name": "getThiefState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "local": "readShapeshifterTool",
+      "imported": "readShapeshifterTool",
+      "oldOwner": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+      "physical": {
+        "file": "packages/game-contract/src/facts/shapeshifter.ts",
+        "name": "readShapeshifterChoiceTool"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "local": "getShapeshifterState",
+      "imported": "getShapeshifterState",
+      "oldOwner": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "name": "getShapeshifterState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "local": "getWildChildState",
+      "imported": "getWildChildState",
+      "oldOwner": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "name": "getWildChildState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "local": "readWildChildTool",
+      "imported": "readWildChildTool",
+      "oldOwner": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "name": "readWildChildTool"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "local": "getLonelyGirlState",
+      "imported": "getLonelyGirlState",
+      "oldOwner": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+        "name": "getLonelyGirlState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "local": "LONELY_GIRL_POLICY",
+      "imported": "LONELY_GIRL_POLICY",
+      "oldOwner": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+      "physical": {
+        "file": "packages/game-contract/src/facts/lonely-girl.ts",
+        "name": "LONELY_GIRL_POLICY"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/tests/integration/configuration/lonely-girl-public-examples.test.ts",
+      "local": "LONELY_GIRL_POLICY",
+      "imported": "LONELY_GIRL_POLICY",
+      "oldOwner": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+      "physical": {
+        "file": "packages/game-contract/src/facts/lonely-girl.ts",
+        "name": "LONELY_GIRL_POLICY"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+      "local": "getWildChildState",
+      "imported": "getWildChildState",
+      "oldOwner": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "name": "getWildChildState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/tests/scenarios/interactions/wild-child/committed-death-contribution.test.ts",
+      "local": "getWildChildState",
+      "imported": "getWildChildState",
+      "oldOwner": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "name": "getWildChildState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/observation/player-observation-projector.ts",
+      "local": "projectShapeshifterState",
+      "imported": "projectShapeshifterState",
+      "oldOwner": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "name": "projectShapeshifterState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/observation/player-observation-projector.ts",
+      "local": "projectThiefState",
+      "imported": "projectThiefState",
+      "oldOwner": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "name": "projectThiefState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/observation/player-prompt-directives.ts",
+      "local": "projectShapeshifterState",
+      "imported": "projectShapeshifterState",
+      "oldOwner": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "name": "projectShapeshifterState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/src/game/observation/player-prompt-directives.ts",
+      "local": "projectThiefState",
+      "imported": "projectThiefState",
+      "oldOwner": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "name": "projectThiefState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "local": "getWildChildState",
+      "imported": "getWildChildState",
+      "oldOwner": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+        "name": "getWildChildState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "local": "getThiefState",
+      "imported": "getThiefState",
+      "oldOwner": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+        "name": "getThiefState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "local": "getShapeshifterState",
+      "imported": "getShapeshifterState",
+      "oldOwner": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+        "name": "getShapeshifterState"
+      },
+      "typeOnly": false
+    },
+    {
+      "file": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "local": "getLonelyGirlState",
+      "imported": "getLonelyGirlState",
+      "oldOwner": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "currentRoute": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "physical": {
+        "file": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+        "name": "getLonelyGirlState"
+      },
+      "typeOnly": false
+    }
+  ],
+  "oldRuntimePaths": [
+    "backend/src/game/mechanisms/roles/thief/state.ts",
+    "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+    "backend/src/game/mechanisms/roles/wild_child/state.ts",
+    "backend/src/game/mechanisms/roles/lonely_girl/state.ts"
+  ],
+  "remainingOldLiteralConsumers": 0,
+  "lightOwners": [
+    {
+      "file": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+      "declaredValueTargets": [
+        "backend/src/core/domain/index.ts",
+        "backend/src/game/mechanisms/roles/thief/deal.ts",
+        "backend/src/game/mechanisms/roles/initial_identity/data-ports.ts"
+      ],
+      "noDirectHeavySetupOrChoiceOrLifecycle": true
+    },
+    {
+      "file": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+      "declaredValueTargets": [
+        "backend/src/core/domain/index.ts",
+        "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+        "backend/src/game/mechanisms/roles/initial_identity/data-ports.ts"
+      ],
+      "noDirectHeavySetupOrChoiceOrLifecycle": true
+    }
+  ],
+  "limits": [
+    "前样仅这28真实Git文件与四旧叶虚拟解析，其它当前输入处于并行cohort；不冒称完整固定34239源码树。",
+    "完整访问import/export/importType/importEquals/require/dynamic字面路径，无name文本预筛；不涵盖计算specifier/eval/仓外。",
+    "这里只核轻owner直接值依赖无重型返边；原shared deal/core图及任意cold getter行为未作完整加载验收。"
+  ]
+}

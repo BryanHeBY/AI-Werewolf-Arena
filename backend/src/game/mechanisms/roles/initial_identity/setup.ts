@@ -1,14 +1,12 @@
 /**
  * 负责盗贼／千面人的初始选择 scope 与请求绑定。输入为原 World 参与者、首夜请求及装配端构造依赖；
- * 输出保留原选择结果与请求绑定，仅在 setup 仍当前时写选择及接受的别名。
+ * 输出保留原选择结果与请求绑定；setup 仍当前时调用数据所有者写选择，再沿原物理换牌／身份安装顺序提交。
  * 工厂在原 scope 复验之后才 new，固定日次仍为 1；构造／请求异常保留已开准备前缀并由原 finally 关闭。
  * 失败选择与已关闭 setup 保留原终结决定；构造端口和元数据均不携带行动许可。
  */
 import { createCampComponent } from "../../../observation/component-presentation";
 import type {
   ReadonlyBoardConfig,
-  ThiefState,
-  ShapeshifterState,
 } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
@@ -44,9 +42,11 @@ import {
   initialIdentityRole,
   initialIdentityTool,
   initialIdentityChoiceRule,
+  consumeRetainedInitialIdentityState,
   type InitialIdentityState,
 } from "./choice";
 import { initialIdentityKind, type InitialIdentityKind } from "./deal";
+import { consumeShapeshifterState, cancelShapeshifterState } from "../shapeshifter/state-ports";
 interface CardScope {
   card: InitialIdentityCard;
   cardId: string;
@@ -396,16 +396,14 @@ export class InitialIdentitySetupWindow {
       // 物理交换与身份安装之间没有 await、Provider 回调或事件发表。
       if (chosen && slot !== null && newRole && newCamp && newVictory) {
         if (this.kind === "shapeshifter") {
-          (state as Pick<ThiefState | ShapeshifterState, "remaining">).remaining = 0;
-          (state as Pick<ThiefState | ShapeshifterState, "choice">).choice = slot;
+          consumeShapeshifterState(state, slot);
         }
         selectInitialIdentityCard(this.world, actorId, slot);
         this.world.addComponent(actorId, COMPONENT.Role, newRole);
         this.world.addComponent(actorId, COMPONENT.Camp, newCamp);
         this.world.addComponent(actorId, COMPONENT.Victory, newVictory);
       } else {
-        (state as Pick<ThiefState | ShapeshifterState, "remaining">).remaining = 0;
-        (state as Pick<ThiefState | ShapeshifterState, "choice">).choice = null;
+        consumeRetainedInitialIdentityState(state);
         selectInitialIdentityCard(this.world, actorId, null);
       }
       status = "complete";
@@ -445,14 +443,7 @@ export class InitialIdentitySetupWindow {
               getInitialIdentityState(this.world.getComponent(id, COMPONENT.Role), this.kind),
             )
             .find(Boolean);
-        if (
-          original &&
-          Object.getOwnPropertyDescriptor(original, "remaining")?.writable &&
-          Object.getOwnPropertyDescriptor(original, "choice")?.writable
-        ) {
-          (original as Pick<ThiefState | ShapeshifterState, "remaining">).remaining = 0;
-          (original as Pick<ThiefState | ShapeshifterState, "choice">).choice = null;
-        }
+        cancelShapeshifterState(original);
       }
       scopes.delete(this.world);
       closeInitialIdentitySetup(this.world, status);

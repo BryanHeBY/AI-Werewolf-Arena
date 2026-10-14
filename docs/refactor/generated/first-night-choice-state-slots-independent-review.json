@@ -1,0 +1,289 @@
+{
+  "approved": true,
+  "reviewer": "native_final_architecture_review",
+  "baseCommit": "34239c73a92b2e59ed8c3499cf708fd51869a5e7",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/profile.ts",
+      "sha256": "1262929db9ac8e3aed800a22d33b0f13d05003941e8972ab421663b3999b5951",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/ports.ts",
+      "sha256": "97f90274263a35a8e6d76e8ab24fcc6564dbbda6b3a1fa8a910657315d8cd0fe",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/profile.ts",
+      "sha256": "e53d6bca63e288b0dc48ee810f414e5aaee14a16d612e49845cab640977c99ea",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/ports.ts",
+      "sha256": "e61d1c491610afe6c097fbec82677c0337cabb71a7636d16953ed4ff41271e3e",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+      "sha256": "5858f2ff590c1591634b735b54c4c1536295cabf01f68758f1596f3a946be71b",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+      "sha256": "49d418163474d2602549f414b1e7509da359a14cf429061d76d65d86f1f76c4c",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/profile.ts",
+      "sha256": "cb672185b5bb0ea743f2270b320222681d702c44672099f9d9ccf4140b8965e8",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+      "sha256": "63025874b1f7b9a4b57cf3d615ec67efc06f1b1fca1f916b87d40325a93782f9",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/choice.ts",
+      "sha256": "dc0b3ced09dc93b8c18f5ce87f04ffbe8d4854e8e14de0c152081e3b4bc7a75e",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "a505041e8b23cfee3113ef4622c23237feaa4489d5a921a8571669c417a0f5b6",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "1abd878a107988af5fc61d001731115304af3252e78e2ca6d79c0ff4e4c33622",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "sha256": "287b392d2ac7a21fe00d05db5dbb1ea4daf5e3409f2cc6b814c295e4f6dcc050",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "sha256": "a2274eca1a94e5e22d8bc7ee2f75204b6ffb5f4b32dc281dc422b3f34b4f06a9",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "sha256": "d3b83f449a42a903152ffcb9b6bca96f85516ee91137c7506077c176c243eecc",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "sha256": "23488dd476117f2c6247d25eb89995e3eedda481cb06bba0b0fb738b44e681e0",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "sha256": "1cb3f82ff8a30675dd1316057fb4c7a4debb63824f372c10503492ef0f92c5ac",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "sha256": "089e444a9c951867143250ed127200ede616e489b02dbe5b771f8143b67a37bf",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "sha256": "3c564c3fe835addd146e16dad17718c3616e9124c043199f677e980b3034f7f3",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/tests/integration/configuration/lonely-girl-public-examples.test.ts",
+      "sha256": "4abf32c95afcb885d587983be92e4a97e85f21dddf0a74c392a378dc5d835cd1",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+      "sha256": "03f2867291ac2d7da885824be4fa0e631f85722ad331754617fb5aea83f0470a",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/wild-child/committed-death-contribution.test.ts",
+      "sha256": "af07af554f297d7d7649cf07b3b76a92e1ac019115f78d1c78b9b8cb69df6cfc",
+      "status": "modified",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "8e54493b6ba9b01ffa1936ce3492fc55056b30c1a5276555cd74d34981170f4d",
+      "status": "modified",
+      "ownership": "Root precise shared routes"
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "sha256": "88388634c655d699d3943bb3a74bcef322adc988be77e7764eec13b65188184f",
+      "status": "modified",
+      "ownership": "Root precise shared routes"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "ed1dd344aa7aceac80b19b3afc97ea3e0d38fa40087e1375857cc70fe8781410",
+      "status": "modified",
+      "ownership": "Root precise shared routes"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+      "sha256": "043192e3e064fcfd93a90066344564cb8a57b7e5405cf53426c703c0c4207140",
+      "status": "added",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+      "sha256": "dc6b3834559522f343c40ef6cf0336ef331b270ac3af222ee22ce0cc94dcc4fd",
+      "status": "added",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+      "sha256": "2e2c1d665301e62a3f6e487c9a1b9b93213316d267f9a7432fe81abccc5bb2a2",
+      "status": "added",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+      "sha256": "1b981b71c437564462b9df26702fed57b8752017ab1e8466dd8349742e48c6b7",
+      "status": "added",
+      "ownership": "author"
+    },
+    {
+      "path": "backend/tests/unit/features/first-night-choice-state-slots.test.ts",
+      "sha256": "20cce4a50dd95d2490a31ec54f389095bd1ea78f9a0282b9aac4f23217fd07bc",
+      "status": "added",
+      "ownership": "author"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "sha256": "42234cd1201b7d1e2de8cbee1028327e54059a18f779d26e3d8ba81c3dc7ec3e",
+      "beforeSHA256": "42234cd1201b7d1e2de8cbee1028327e54059a18f779d26e3d8ba81c3dc7ec3e",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "sha256": "a5c0898575b002666d95dfe5b5fc0b3d8efdfd3b9e9855ef951fae72b4f44018",
+      "beforeSHA256": "a5c0898575b002666d95dfe5b5fc0b3d8efdfd3b9e9855ef951fae72b4f44018",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+      "sha256": "978e427f42baa185385d374276c90547d6a491cce27553c17cd260c9333d26e0",
+      "beforeSHA256": "978e427f42baa185385d374276c90547d6a491cce27553c17cd260c9333d26e0",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+      "sha256": "59c11e032c0329fe96943c9877940a4b56bfc01737ffb638f0ea808504d1b954",
+      "beforeSHA256": "59c11e032c0329fe96943c9877940a4b56bfc01737ffb638f0ea808504d1b954",
+      "expectedAbsent": true
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/first-night-choice-state-slots-scope-final.json",
+    "sha256": "50b4c16d86e8429f1acf070a3b176210ee4865a193bd753f6c7a9acaa7ec7cbc"
+  },
+  "scopeSHA256": "50b4c16d86e8429f1acf070a3b176210ee4865a193bd753f6c7a9acaa7ec7cbc",
+  "document": {
+    "path": "docs/refactor/first-night-choice-state-slots.md",
+    "sha256": "5726b37aa901a765c13483a92470958086cda54cc91eb04e07d4ed1e3625031b"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/first-night-choice-state-slots-evidence.json",
+    "sha256": "a8bf89f45d4d894958cd25a7bbfe6a35006d9192806aa0167b45b03d73e39fbf"
+  },
+  "findings": [
+    {
+      "kind": "Chinese contract precision",
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+      "detail": "公开知识→玩家知识副本，避免全员公开含义",
+      "status": "closed",
+      "bridge": "docs/refactor/generated/first-night-choice-state-slots-peer-comment-bridge.json"
+    },
+    {
+      "kind": "Chinese contract precision",
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "detail": "首夜选择与独立Victory归属；不改Role/Camp，不承担目标死亡结算",
+      "status": "closed",
+      "bridge": "docs/refactor/generated/first-night-choice-state-slots-peer-comment-bridge.json"
+    }
+  ],
+  "remainingBlockingFindings": [],
+  "sourceRead": {
+    "oldFullGit": 28,
+    "actualExisting": 29,
+    "realDeleted": 4,
+    "controlsWholeGitAndCurrent": 4,
+    "retainedWholeForward": 24,
+    "actualNewDataBodies": 16,
+    "oldCompleteDeclarations": 18,
+    "oldStateConsumers": 0,
+    "literalInventoryScope": "七根1903含virtual旧叶4；import/export/namespace/star/importType/importEquals/require/dynamic字面，不含计算specifier/eval/仓外",
+    "namedBindings": 48,
+    "moduleSitesBeforeCurrent": [
+      55,
+      60
+    ],
+    "authorArtifacts": 37,
+    "allHashMismatches": 0
+  },
+  "businessReview": [
+    "四原get/schema/tool原接受宽度；Wild get非payload schema；原同引用和可写数据保留，无复制/冻结/权限强化",
+    "Thief换新角色原不在Shape分支付款；保留只两写不增kind读，Shape finally两descriptor短路完整保",
+    "四初始化完整条件/左值/creator/policy表达式时点不提前；新thunk捕获原引用",
+    "Wild三写→target.life晚读→model→原编码expected→setup/windows；转换先modelCommitted/fact后原身份/营/Victory，原失败前缀不撤销",
+    "Lonely两写→Victory→choice冻结/成员标记；取消原status/current先写再逐descriptor/define；投影只知识非真营",
+    "全部旧测试只真实route/评论，原title/input/oracle/assert完整；Root三共同源8routes+17原directive说明权属明列",
+    "新4风险是数据命令的独立字面/错误ref，不冒真实全生命周期，旧Wild/Lonely当前与隔离342均在早config identity guard同红"
+  ],
+  "receiptReview": {
+    "successfulCoverage": {
+      "differentTests": 6,
+      "successfulAssertions": 31,
+      "executionsWithSuccess": 3
+    },
+    "oldFixtureCasesRemainRed": 2,
+    "typesFirst29Exit2FailedUnitOnlyExit0": true,
+    "firstHeads29ZeroDiagnostics": true,
+    "peerBridgeWholeLeaves": 3128,
+    "peerBridgeWholeOutputs": 4,
+    "originalArchiveToolFailureKept": true,
+    "dependencyReusedNotHistoricalReinstall": true,
+    "rawOutputPreservedAndDisplayWhitespaceOnly": true
+  },
+  "independentSourceRead": {
+    "path": "docs/refactor/generated/first-night-choice-state-slots-independent-source-check.json",
+    "sha256": "69c33d56491c1e4487089c4d9ecbf6bda1ba3033a7eeb8308a3e10f3b3d3852f"
+  },
+  "limits": [
+    "批准本批四族完整首夜数据职责，非全C17/checkpoint/copy/transfer或P9",
+    "28真实Gitoverlay不冒整个before/current静态图固定；轻owner只直接值图，无完整cold执行承诺",
+    "API路径/新增callee/thunk/作用域变化明列；任意CJS/反射不作全环境等价",
+    "未执行作者proof/inventory、compiler/type、head/test、gate或models，也未写生产/Git/progress/matrix"
+  ]
+}

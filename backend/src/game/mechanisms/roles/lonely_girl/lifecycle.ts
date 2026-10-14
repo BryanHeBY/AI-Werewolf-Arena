@@ -1,10 +1,11 @@
 /**
- * 负责孤独少女的首夜选择绑定、复制阵营与已选目标生命，拥有该关系的原参与者记录。
- * 输入为原 World 参与者和首夜请求；输出为已接受选择和后续目标死亡结算。
- * 不变量：仅在原身份／资源仍匹配时写入；关闭或替换参与者使 scope 失效，包括期限别名。
- * 失败窗口审计保留原授权身份，不读取外来 accessor 或恢复已消耗库存。
+ * 负责孤独少女首夜选择、原参与者／生命与独立 Victory 归属，拥有原关系绑定及窗口时序。
+ * 输入为原 World 参与者和首夜请求；输出为已接受选择、捕获目标阵营对应的成员关系及原准备结果。
+ * 不变量：仅在原身份／资源仍匹配时提交；关闭或替换参与者使 scope 失效，包括期限别名。
+ * 选择不改变演员的 Role／Camp，已选成员关系在双方死亡后仍保留；本模块不新增目标死亡结算。
+ * 数据写由槽执行，失败窗口审计保留原授权身份，不读取外来 accessor 或恢复已消耗库存。
  */
-import type { LonelyGirlState, LonelyGirlReadState } from "@ai-werewolf-arena/game-contract";
+import type { LonelyGirlReadState } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
@@ -21,7 +22,8 @@ import {
   type VictoryComponent,
 } from "../../../../core/domain";
 import { aliveLifeVersion, type AliveComponent } from "../../../../core/domain/components/alive";
-import { freshLonelyGirlState, getLonelyGirlState, LONELY_GIRL_POLICY, lonelyData } from "./state";
+import { freshLonelyGirlState, getLonelyGirlState, LONELY_GIRL_POLICY, lonelyData,
+  consumeLonelyGirlState, cancelLonelyGirlState, projectLonelyGirlData } from "./state-slot";
 interface Participant {
   id: number;
   life: AliveComponent;
@@ -275,9 +277,8 @@ export function commitLonelyGirlChoice(b: LonelyGirlBinding, targetId: number): 
   if (!target || targetId === b.actorId || !validLonelyGirlChoice(b)) return null;
   const choice = { day: 1 as const, targetId },
     membership = createVictoryComponent([{ kind: "faction", faction: target.campValue }]);
-  // 最后权限检查与 owned 写入之间没有 await 或回调。
-  (b.state as Pick<LonelyGirlState, "remaining">).remaining = 0;
-  (b.state as Pick<LonelyGirlState, "choice">).choice = choice;
+  // 最后权限检查后依次交数据所有者写库存与选择，再安装 Victory；两者之间没有 await。
+  consumeLonelyGirlState(b, choice);
   b.world.addComponent(b.actorId, COMPONENT.Victory, membership);
   b.choice = Object.freeze({ ...choice });
   b.membership = target.campValue;
@@ -289,14 +290,7 @@ export function closeLonelyGirlChoice(b: LonelyGirlBinding, status: "failed" | "
   if (b.status === "complete") return;
   b.status = status;
   b.isCurrent = null;
-  for (const [key, value] of [
-    ["remaining", 0],
-    ["choice", null],
-  ] as const) {
-    const d = Object.getOwnPropertyDescriptor(b.state, key);
-    if (d && Object.hasOwn(d, "value") && d.writable)
-      Object.defineProperty(b.state, key, { ...d, value });
-  }
+  cancelLonelyGirlState(b);
 }
 export function projectLonelyGirl(
   world: World,
@@ -304,12 +298,7 @@ export function projectLonelyGirl(
 ): LonelyGirlReadState | undefined {
   const b = bindings.get(world);
   if (!b || b.actor.role !== role) return undefined;
-  return b.status === "complete"
-    ? { ...freshLonelyGirlState(), remaining: 0, choice: b.choice && { ...b.choice } }
-    : {
-        ...freshLonelyGirlState(),
-        remaining: (b.status === "pending" || b.status === "active") && pendingOwner(b) ? 1 : 0,
-      };
+  return projectLonelyGirlData(b, () => pendingOwner(b));
 }
 export function projectLonelyGirlSetup(world: World) {
   const b = bindings.get(world);

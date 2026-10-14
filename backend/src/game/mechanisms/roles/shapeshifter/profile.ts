@@ -12,10 +12,9 @@ import { Camp, Role, WinCondition } from "../../../../core/domain";
 import type { NativeRoleContributions } from "../contracts";
 import {
   SHAPESHIFTER_POLICY,
-  getShapeshifterState,
-  projectShapeshifterState,
+  initializeShapeshifterState,
   readShapeshifterChoice,
-} from "./state";
+} from "./state-ports";
 import { authorizedShapeshifterScope } from "./setup";
 const parameters = z.strictObject({
   policy: z.literal(SHAPESHIFTER_POLICY).default(SHAPESHIFTER_POLICY),
@@ -42,12 +41,7 @@ export const SHAPESHIFTER_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     init: (role, ctx) => {
-      if (!getShapeshifterState(role))
-        role.privateState.shapeshifter = {
-          policy: ctx.boardConfig?.shapeshifter?.policy ?? SHAPESHIFTER_POLICY,
-          remaining: 1,
-          choice: null,
-        };
+      initializeShapeshifterState(role, () => ctx.boardConfig?.shapeshifter?.policy ?? SHAPESHIFTER_POLICY);
     },
     configuration: {
       schema: parameters,

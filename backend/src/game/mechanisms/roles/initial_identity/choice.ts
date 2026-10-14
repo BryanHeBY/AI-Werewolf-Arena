@@ -1,6 +1,12 @@
+/**
+ * 负责盗贼／千面人共有选择数据、原工具分派和两张牌的有限选择规则。
+ * 输入为原kind／状态／角色与候选牌；输出同引用查询、原工具结果或共同保留身份的两字段写前缀。
+ * 千面人换新身份先付款及失败补偿归其轻数据槽；盗贼换新身份原不消耗旧槽，保留分支不额外读取kind。
+ * 此组合不发牌、不查询World或验证许可，不因数据写入保证身份安装成功或回滚失败。
+ */
 import { Role, type RoleComponent, type ToolCall } from "../../../../core/domain";
-import { getThiefState, readThiefTool } from "../thief/state";
-import { getShapeshifterState, readShapeshifterTool } from "../shapeshifter/state";
+import { getThiefState, readThiefTool } from "../thief/state-ports";
+import { getShapeshifterState, readShapeshifterTool } from "../shapeshifter/state-ports";
 import {
   INITIAL_IDENTITY_POLICIES,
   type InitialIdentityKind,
@@ -34,4 +40,10 @@ export function initialIdentityChoiceRule(
       kind === "shapeshifter" && wolfSlots.length ? wolfSlots : ([0, 1] as InitialIdentitySlot[]),
     ),
   });
+}
+
+/** 原保留身份分支只顺序写remaining／choice；不增加kind getter，首setter失败保原部分提交。 */
+export function consumeRetainedInitialIdentityState(state: InitialIdentityState): void {
+  (state as Pick<import("@ai-werewolf-arena/game-contract").ThiefState | import("@ai-werewolf-arena/game-contract").ShapeshifterState, "remaining">).remaining = 0;
+  (state as Pick<import("@ai-werewolf-arena/game-contract").ThiefState | import("@ai-werewolf-arena/game-contract").ShapeshifterState, "choice">).choice = null;
 }

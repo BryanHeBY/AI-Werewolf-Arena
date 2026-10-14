@@ -17,10 +17,9 @@ import { WOLF_LLM_REPAIR_PACK } from "../wolf/ability-ports";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import {
   WILD_CHILD_POLICY,
-  freshWildChildState,
-  getWildChildState,
+  initializeWildChildState,
   readWildChildTool,
-} from "./state";
+} from "./state-slot";
 import {
   authorizedWildChild,
   projectWildChild,
@@ -53,7 +52,7 @@ export const WILD_CHILD_ROLE_PROFILE: NativeRoleContributions = {
   runtime: {
     canSelfDestruct: false,
     init: (role) => {
-      if (!getWildChildState(role)) role.privateState.wildChild = freshWildChildState();
+      initializeWildChildState(role);
     },
     configuration: {
       schema: parameters,

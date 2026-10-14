@@ -10,7 +10,7 @@ import { text, roleName } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Camp, Role, WinCondition } from "../../../../core/domain";
 import type { NativeRoleContributions } from "../contracts";
-import { THIEF_POLICY, getThiefState, projectThiefState, readThiefChoice } from "./state";
+import { THIEF_POLICY, initializeThiefState, readThiefChoice } from "./state-ports";
 import { authorizedThiefScope } from "./setup";
 const parameters = z.strictObject({ policy: z.literal(THIEF_POLICY).default(THIEF_POLICY) });
 export const THIEF_ROLE_PROFILE: NativeRoleContributions = {
@@ -35,12 +35,7 @@ export const THIEF_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     init: (role, ctx) => {
-      if (!getThiefState(role))
-        role.privateState.thief = {
-          policy: ctx.boardConfig?.thief?.policy ?? THIEF_POLICY,
-          remaining: 1,
-          choice: null,
-        };
+      initializeThiefState(role, () => ctx.boardConfig?.thief?.policy ?? THIEF_POLICY);
     },
     configuration: {
       schema: parameters,

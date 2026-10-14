@@ -11,7 +11,7 @@ import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild
 import {
   getWildChildState,
   readWildChildTool,
-} from "../../../../src/game/mechanisms/roles/wild_child/state";
+} from "../../../../src/game/mechanisms/roles/wild_child/state-slot";
 import {
   wildChildBinding,
   wildChildRequestScope,

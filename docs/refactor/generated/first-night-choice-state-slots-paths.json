@@ -1,0 +1,45 @@
+{
+  "existing": [
+    "backend/src/game/mechanisms/roles/thief/state.ts",
+    "backend/src/game/mechanisms/roles/thief/profile.ts",
+    "backend/src/game/mechanisms/roles/thief/ports.ts",
+    "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+    "backend/src/game/mechanisms/roles/shapeshifter/profile.ts",
+    "backend/src/game/mechanisms/roles/shapeshifter/ports.ts",
+    "backend/src/game/mechanisms/roles/wild_child/state.ts",
+    "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+    "backend/src/game/mechanisms/roles/wild_child/ports.ts",
+    "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+    "backend/src/game/mechanisms/roles/lonely_girl/profile.ts",
+    "backend/src/game/mechanisms/roles/lonely_girl/ports.ts",
+    "backend/src/game/mechanisms/roles/initial_identity/choice.ts",
+    "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+    "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+    "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+    "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+    "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+    "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+    "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+    "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+    "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+    "backend/tests/integration/configuration/lonely-girl-public-examples.test.ts",
+    "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+    "backend/tests/scenarios/interactions/wild-child/committed-death-contribution.test.ts",
+    "backend/src/game/observation/player-observation-projector.ts",
+    "backend/src/game/observation/player-prompt-directives.ts",
+    "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts"
+  ],
+  "new": [
+    "backend/src/game/mechanisms/roles/thief/state-ports.ts",
+    "backend/src/game/mechanisms/roles/shapeshifter/state-ports.ts",
+    "backend/src/game/mechanisms/roles/wild_child/state-slot.ts",
+    "backend/src/game/mechanisms/roles/lonely_girl/state-slot.ts",
+    "backend/tests/unit/features/first-night-choice-state-slots.test.ts"
+  ],
+  "deleted": [
+    "backend/src/game/mechanisms/roles/thief/state.ts",
+    "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+    "backend/src/game/mechanisms/roles/wild_child/state.ts",
+    "backend/src/game/mechanisms/roles/lonely_girl/state.ts"
+  ]
+}

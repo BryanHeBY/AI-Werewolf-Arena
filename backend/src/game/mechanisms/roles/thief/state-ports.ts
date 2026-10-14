@@ -1,8 +1,8 @@
 /**
- * 负责盗贼原状态读取、玩家知识副本和初始选择工具解析。输入为原角色记录、World准备状态或未知工具对象；
- * 输出合法原槽引用、policy／remaining／choice新副本或原明确拒绝，不发牌、不替换身份或授予选择许可。
- * 三字段形状、原政策与0／1资源保持；字段契约由共享data-ports拥有，不强化descriptor或Proxy接受面。
- * 展示只在setup pending时保留存储remaining，其它状态归0；这不会消费或更新live库存。
+ * 负责盗贼首夜选择数据的原接受集合、同引用读取、创建安装、工具解析和玩家知识副本。
+ * 输入为原角色／上下文和未知工具数据；输出为原三字段槽、脱离显示或原明确拒绝。
+ * 数据所有者不发物理牌、不验证选择窗口或授予身份替换权限；原 descriptor／Proxy 接受宽度不收窄。
+ * 玩家 remaining 只按原 setup 状态展示，副本不消费库存；换新身份的盗贼旧对象不在千面人分支付款。
  */
 import type { ThiefState, ThiefReadState } from "@ai-werewolf-arena/game-contract";
 import { Role, type RoleComponent, type World } from "../../../../core/domain";
@@ -67,4 +67,16 @@ export function readThiefTool(
     return null;
   const slot = readThiefChoice(dataField(value, "args"));
   return slot === undefined ? null : { name: "choose_thief_card", args: { slot } };
+}
+
+import type { RoleInitializationComponent } from "../contracts";
+
+/** 原 LHS 私有容器先于 policy 求值；不缓存 config 或改写已存在的合法槽。 */
+export function initializeThiefState(role: RoleInitializationComponent, policy: () => ThiefState["policy"]): void {
+  if (!getThiefState(role))
+    role.privateState.thief = {
+      policy: policy(),
+      remaining: 1,
+      choice: null,
+    };
 }

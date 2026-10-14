@@ -9,7 +9,7 @@ import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario
 import { Role, Camp, Phase, DeathCause, type GameEvent } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../../src/core/domain/components/names";
 import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";
-import { getWildChildState } from "../../../../src/game/mechanisms/roles/wild_child/state";
+import { getWildChildState } from "../../../../src/game/mechanisms/roles/wild_child/state-slot";
 import { DeathResolution } from "../../../../src/game/engine/death_resolution";
 import { EventRegistry } from "../../../../src/game/engine/event_registry";
 import type { HookRegistry } from "../../../../src/game/mechanisms/hooks/hook_registry";

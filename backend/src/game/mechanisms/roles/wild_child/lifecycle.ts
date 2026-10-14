@@ -1,13 +1,13 @@
 /**
- * 负责野孩子榜样选择、参与者快照与转阵营生命周期。输入为原 World 组件和首夜请求；
- * 仅通过仍当前的局部窗口写选择绑定及榜样死亡后的转换。组件替换或选择关闭撤销局部
- * 权限，截止时间别名仍保留原检查。
+ * 负责野孩子参与者／榜样原生命、选择窗口、死亡提交与转阵营时序，拥有原 World 关系绑定。
+ * 输入为原组件、首夜请求和实际死亡波；输出为原许可结果、阵营／Victory 及有界事实。
+ * 不变量：仅在原身份／生命仍当前时提交；关闭、替换或截止别名仍按原政策撤权。
+ * 槽所有者执行数据与 expectedState 写入；先发布榜样死亡事实再转换，失败不撤回已发表前缀。
  */
 import { createCampComponent } from "../../../observation/component-presentation";
-import type { WildChildState, WildChildReadState } from "@ai-werewolf-arena/game-contract";
+import type { WildChildReadState } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
-import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT, Camp, Role, Phase, createVictoryComponent, type World, type ActionRequest, type RoleComponent, type CampComponent, type VictoryComponent, type GameEvent, type DeathSources } from "../../../../core/domain";
 import { aliveLifeVersion } from "../../../../core/domain/components/alive";
 import {
@@ -16,7 +16,9 @@ import {
   type NightLifeScope,
 } from "../../../../core/domain/night_effects";
 import { captureDebateParticipant, type DebateParticipant } from "../debater/authority";
-import { freshWildChildState, getWildChildState } from "./state";
+import { getWildChildState, encodeWildChildData as safeJson,
+  commitWildChildState, cancelWildChildState, transformWildChildState, activateWildChildState,
+  projectWildChildData } from "./state-slot";
 export interface WildChildBinding {
   world: World;
   actorId: number;
@@ -45,13 +47,7 @@ const windows = new WeakMap<
   World,
   { isCurrent: () => boolean; targets: Map<number, DebateParticipant> }
 >();
-function safeJson(value: unknown): string {
-  try {
-    return JSON.stringify(copyEventData(value));
-  } catch {
-    return "invalid";
-  }
-}
+
 export function installWildChild(world: World, config: ReadonlyBoardConfig): void {
   if (bindings.has(world)) throw new Error("wild_child_already_installed");
   const actorId = world
@@ -141,8 +137,7 @@ export function projectWildChild(
 ): WildChildReadState | undefined {
   const b = bindings.get(world);
   if (!b || b.actor.role !== role) return undefined;
-  if (!validWildChildOwner(b)) return { ...freshWildChildState(), remaining: 0, status: "closed" };
-  return structuredClone(b.state);
+  return projectWildChildData(b, () => validWildChildOwner(b));
 }
 export function wildChildReady(world: World): boolean {
   const b = bindings.get(world);
@@ -248,17 +243,7 @@ export function commitWildChildChoice(b: WildChildBinding, targetId: number): bo
   const target = windows.get(b.world)?.targets.get(targetId);
   if (!validWildChildChoice(b) || !target || !sameChoiceTarget(b.world, target)) return false;
   const choice = { day: 1 as const, targetId };
-  if (
-    !["remaining", "status", "choice"].every(
-      (k) => Object.getOwnPropertyDescriptor(b.state, k)?.writable,
-    )
-  )
-    return false;
-  (b.state as Pick<WildChildState, "remaining">).remaining = 0;
-  (b.state as Pick<WildChildState, "status">).status = "chosen";
-  (b.state as Pick<WildChildState, "choice">).choice = choice;
-  b.model = target.life;
-  b.expectedState = safeJson(b.state);
+  if (!commitWildChildState(b, choice, () => target.life)) return false;
   b.setup = "complete";
   windows.delete(b.world);
   return true;
@@ -267,11 +252,7 @@ export function closeWildChildChoice(b: WildChildBinding, status: "failed" | "ca
   if (b.setup === "complete") return;
   b.setup = status;
   windows.delete(b.world);
-  if (["remaining", "status"].every((k) => Object.getOwnPropertyDescriptor(b.state, k)?.writable)) {
-    (b.state as Pick<WildChildState, "remaining">).remaining = 0;
-    (b.state as Pick<WildChildState, "status">).status = "closed";
-    b.expectedState = safeJson(b.state);
-  }
+  cancelWildChildState(b);
 }
 /** 紧邻实际引擎 Alive 提交之前调用，不由查询或原始拟议目标调用。 */
 export function recordWildChildDeathCommit(world: World, id: number): void {
@@ -343,9 +324,7 @@ export function resolveWildChildDeathWave(
   b.camp = camp;
   b.victory = victory;
   b.victoryJson = safeJson(victory);
-  (b.state as Pick<WildChildState, "status">).status = "transformed";
-  (b.state as Pick<WildChildState, "eligibleNight">).eligibleNight = day + 1;
-  b.expectedState = safeJson(b.state);
+  transformWildChildState(b, day);
   events.push({
     timestamp: Date.now(),
     type: "wild_child_transformed",
@@ -393,9 +372,7 @@ export function openWildChildNight(world: World, day: number, events: GameEvent[
         (k) => Object.getOwnPropertyDescriptor(b.state, k)?.writable,
       )
     ) {
-      (b.state as Pick<WildChildState, "status">).status = "active";
-      (b.state as Pick<WildChildState, "activeFromNight">).activeFromNight = day;
-      b.expectedState = safeJson(b.state);
+      activateWildChildState(b, day);
       events.push({
         timestamp: Date.now(),
         type: "wild_child_pack_activated",

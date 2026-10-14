@@ -17,4 +17,7 @@ export { projectWildChild } from "./lifecycle";
 
 export { wildChildRequestScope } from "./lifecycle";
 
-export { readWildChildTool } from "./state";
+export { readWildChildTool } from "./state-slot";
+
+/** 公开原同引用数据查询；不公开槽写命令或由读视图生成许可。 */
+export { getWildChildState } from "./state-slot";

@@ -1,5 +1,5 @@
 /**
- * 野孩子榜样场景以原选择、生命替换与真实初始／追加死因为输入。原字面回执、引用／getter／
+ * 场景测试负责验证野孩子榜样转换，以原选择、生命替换与真实初始／追加死因为输入。原字面回执、引用／getter／
  * 错误轨迹、事实与状态是预期；真实中央死亡结算及完整 PhaseManager 周期驱动转阵营、实际
  * 死亡波和下一夜狼群激活。模型受控，不从生产输出新建 golden。
  */
@@ -22,7 +22,7 @@ import {
 } from "../../../../src/core";
 import { foxBoard } from "../../../support/features/cursed-fox/builders/scenario";
 import { WildChildSetupWindow } from "../../../../src/game/mechanisms/roles/wild_child/setup";
-import { getWildChildState } from "../../../../src/game/mechanisms/roles/wild_child/state";
+import { getWildChildState } from "../../../../src/game/mechanisms/roles/wild_child/state-slot";
 import {
   openWildChildNight,
   projectWildChild,

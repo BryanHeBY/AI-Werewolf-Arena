@@ -8,7 +8,7 @@ import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { Phase, type World, type GameEvent, type ActionProvider } from "../../../../core/domain";
 import type { ActionRequestFactoryConstructorPort } from "../../../../core/domain/actions";
 import type { ToolGateway } from "../../../gateway/tool_gateway";
-import { LONELY_GIRL_POLICY, readLonelyGirlTool } from "./state";
+import { LONELY_GIRL_POLICY, readLonelyGirlTool } from "./state-slot";
 import {
   lonelyGirlBinding,
   lonelyGirlReady,

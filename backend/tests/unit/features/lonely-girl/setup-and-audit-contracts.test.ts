@@ -11,7 +11,7 @@ import { LonelyGirlSetupWindow } from "../../../../src/game/mechanisms/roles/lon
 import {
   getLonelyGirlState,
   LONELY_GIRL_POLICY,
-} from "../../../../src/game/mechanisms/roles/lonely_girl/state";
+} from "../../../../src/game/mechanisms/roles/lonely_girl/state-slot";
 import {
   lonelyGirlBinding,
   lonelyGirlReady,

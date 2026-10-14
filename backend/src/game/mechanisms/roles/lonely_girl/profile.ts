@@ -12,10 +12,9 @@ import { Role, Camp, WinCondition } from "../../../../core/domain";
 import type { NativeRoleContributions } from "../contracts";
 import {
   LONELY_GIRL_POLICY,
-  freshLonelyGirlState,
-  getLonelyGirlState,
+  initializeLonelyGirlState,
   readLonelyGirlTool,
-} from "./state";
+} from "./state-slot";
 import { authorizedLonelyGirl, projectLonelyGirl } from "./lifecycle";
 const parameters = z.strictObject({
   policy: z.literal(LONELY_GIRL_POLICY).default(LONELY_GIRL_POLICY),
@@ -44,7 +43,7 @@ export const LONELY_GIRL_ROLE_PROFILE: NativeRoleContributions = {
     initialVictoryAffiliations: [],
     canSelfDestruct: false,
     init: (role) => {
-      if (!getLonelyGirlState(role)) role.privateState.lonelyGirl = freshLonelyGirlState();
+      initializeLonelyGirlState(role);
     },
     configuration: {
       schema: parameters,

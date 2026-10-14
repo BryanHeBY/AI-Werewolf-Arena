@@ -1,13 +1,11 @@
 /**
- * Integration tests for lonely girl setup. Inputs are original required choices, getter/revocation matrices
- * and public board configuration. Original literal receipts, reference/getter/error traces, facts and
- * expected state remain the oracle. Actual Bun.file loads two public example board JSON files and
- * parses/bootstrap-initializes each exact N-card configuration. Actual public filesystem or synthetic local
- * transport boundaries are exercised; private config/auth and paid model services are excluded.
+ * 集成测试负责验证孤独少女两个公开板子文件的解析和普通 N 张牌初始化。
+ * 输入为真实 6／12 人公开 JSON；原 policy、人数和 pending 准备状态是字面预期。
+ * 实际 Bun.file 读取公开文件并执行 bootstrap；不执行选择窗口、私有配置或付费模型。
  */
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../src/app/bootstrap";
-import { LONELY_GIRL_POLICY } from "../../../src/game/mechanisms/roles/lonely_girl/state";
+import { LONELY_GIRL_POLICY } from "../../../src/game/mechanisms/roles/lonely_girl/state-slot";
 import { projectLonelyGirlSetup } from "../../../src/game/mechanisms/roles/lonely_girl/lifecycle";
 import { parseBoardDefinition } from "../../../src/runtime/config/board_definition";
 

@@ -1,0 +1,36 @@
+{
+  "phase": "首次类型/运行之后、首次完整证明和职责检查之前",
+  "changes": [
+    {
+      "path": "backend/tests/integration/configuration/lonely-girl-public-examples.test.ts",
+      "before": "/**\n * Integration tests for lonely girl setup. Inputs are original required choices, getter/revocation matrices\n * and public board configuration. Original literal receipts, reference/getter/error traces, facts and\n * expected state remain the oracle. Actual Bun.file loads two public example board JSON files and\n * parses/bootstrap-initializes each exact N-card configuration. Actual public filesystem or synthetic local\n * transport boundaries are exercised; private config/auth and paid model services are excluded.\n */",
+      "after": "/**\n * 集成测试负责验证孤独少女两个公开板子文件的解析和普通 N 张牌初始化。\n * 输入为真实 6／12 人公开 JSON；原 policy、人数和 pending 准备状态是字面预期。\n * 实际 Bun.file 读取公开文件并执行 bootstrap；不执行选择窗口、私有配置或付费模型。\n */"
+    },
+    {
+      "path": "backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts",
+      "before": " * 野孩子榜样场景以原选择、生命替换与真实初始／追加死因为输入。",
+      "after": " * 场景测试负责验证野孩子榜样转换，以原选择、生命替换与真实初始／追加死因为输入。"
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "before": "单元测试验证换皮者原 N+2",
+      "after": "单元测试验证千面人原 N+2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "before": "/**\n * 负责野孩子榜样选择、参与者快照与转阵营生命周期。输入为原 World 组件和首夜请求；\n * 仅通过仍当前的局部窗口写选择绑定及榜样死亡后的转换。组件替换或选择关闭撤销局部\n * 权限，截止时间别名仍保留原检查。\n */",
+      "after": "/**\n * 负责野孩子参与者／榜样原生命、选择窗口、死亡提交与转阵营时序，拥有原 World 关系绑定。\n * 输入为原组件、首夜请求和实际死亡波；输出为原许可结果、阵营／Victory 及有界事实。\n * 不变量：仅在原身份／生命仍当前时提交；关闭、替换或截止别名仍按原政策撤权。\n * 槽所有者执行数据与 expectedState 写入；先发布榜样死亡事实再转换，失败不撤回已发表前缀。\n */"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "before": " * 输出保留原选择结果与请求绑定，仅在 setup 仍当前时写选择及接受的别名。",
+      "after": " * 输出保留原选择结果与请求绑定；setup 仍当前时调用数据所有者写选择，再沿原物理换牌／身份安装顺序提交。"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "before": "  // 最后权限检查与 owned 写入之间没有 await 或回调。",
+      "after": "  // 最后权限检查后依次交数据所有者写库存与选择，再安装 Victory；两者之间没有 await。"
+    }
+  ],
+  "limits": "不伪造已执行收据的source SHA；正式证明使用末字节，不重复已绿类型/运行。"
+}

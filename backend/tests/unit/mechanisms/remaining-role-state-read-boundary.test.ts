@@ -14,9 +14,9 @@ import { createRoleComponent } from "../../../src/game/observation/role-presenta
 import type { RoleInitializationComponent } from "../../../src/game/mechanisms/roles/contracts";
 import { getCupidState } from "../../../src/game/mechanisms/roles/cupid/state";
 import { getHybridState } from "../../../src/game/mechanisms/roles/hybrid/state";
-import { getWildChildState } from "../../../src/game/mechanisms/roles/wild_child/state";
-import { getThiefState } from "../../../src/game/mechanisms/roles/thief/state";
-import { getShapeshifterState } from "../../../src/game/mechanisms/roles/shapeshifter/state";
+import { getWildChildState } from "../../../src/game/mechanisms/roles/wild_child/ports";
+import { getThiefState } from "../../../src/game/mechanisms/roles/thief/state-ports";
+import { getShapeshifterState } from "../../../src/game/mechanisms/roles/shapeshifter/state-ports";
 import { getDebaterState } from "../../../src/game/mechanisms/roles/debater/state";
 import { getEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/ports";
 import { getNightmareShadowState } from "../../../src/game/mechanisms/roles/nightmare_shadow/ports";
@@ -29,7 +29,7 @@ import { getWolfSorcererState } from "../../../src/game/mechanisms/roles/wolf_so
 import { getTimeConsortState } from "../../../src/game/mechanisms/roles/time_wolf_consort/ports";
 import { scholarMentorStateForRole } from "../../../src/game/mechanisms/roles/scholar_mentor/ports";
 import { readModifierState } from "../../../src/game/mechanisms/roles/scholar_mentor/ports";
-import { getLonelyGirlState } from "../../../src/game/mechanisms/roles/lonely_girl/state";
+import { getLonelyGirlState } from "../../../src/game/mechanisms/roles/lonely_girl/ports";
 import { getRedMoonState } from "../../../src/game/mechanisms/roles/red_moon_apostle/state-slot";
 
 function forbiddenLiveWrites(
@@ -49,55 +49,55 @@ function forbiddenLiveWrites(
   lonely: NonNullable<ReturnType<typeof getLonelyGirlState>>,
   red: NonNullable<ReturnType<typeof getRedMoonState>>,
 ) {
-  // @ts-expect-error A live stock read is not an accepted Cupid command.
+  // @ts-expect-error 读取活库存不等于已接受的丘比特命令。
   cupid.remaining = 0;
   if (cupid.choice) {
-    // @ts-expect-error Nested pair identity stays read-only through the live getter.
+    // @ts-expect-error 活状态读取中的内层配对身份也只读。
     cupid.choice.pairIds[0] = 2;
   }
   if (hybrid.choice) {
-    // @ts-expect-error Exemplar choice remains owned by its actual stage.
+    // @ts-expect-error 榜样选择仍由实际选择阶段提交。
     hybrid.choice.targetId = 2;
   }
-  // @ts-expect-error Wild Child eligibility belongs to its lifecycle writer.
+  // @ts-expect-error 野孩子的夜间资格由其实际状态命令更新。
   wild.eligibleNight = 2;
-  // @ts-expect-error Initial identity choice is not a read permission.
+  // @ts-expect-error 读取初始身份选择不授予修改选择的权限。
   thief.choice = 0;
-  // @ts-expect-error Shapeshifter stock is committed by the initial identity owner.
+  // @ts-expect-error 千面人库存由初始身份选择命令提交。
   shape.remaining = 0;
   if (debate.choice) {
-    // @ts-expect-error Debate target stays read-only below the slot.
+    // @ts-expect-error 槽内的辩论目标也只读。
     debate.choice.targetId = 2;
   }
-  // @ts-expect-error Reflection stock is consumed only after the existing authorization.
+  // @ts-expect-error 反射库存仅在原授权检查后消费。
   evil.reflectionRemaining = 0;
-  // @ts-expect-error Fear history has no reader append operation.
+  // @ts-expect-error 普通读取方不能追加恐惧历史。
   nightmare.history.push({ day: 1, targetId: null });
   if (magician.history[0]?.pair) {
-    // @ts-expect-error Exchange tuples stay read-only within stored history.
+    // @ts-expect-error 已存历史中的交换元组也只读。
     magician.history[0].pair[0] = 2;
   }
-  // @ts-expect-error Trickster history is owned by its frame command.
+  // @ts-expect-error 诡术师历史由原夜帧命令写入。
   trickster.history.push({ day: 1, pair: null });
   if (sorcerer.history[0]?.pair) {
-    // @ts-expect-error Sorcerer stored pair IDs cannot be reassigned through a read.
+    // @ts-expect-error 不能经读视图重写狼术师已存配对编号。
     sorcerer.history[0].pair[1] = 3;
   }
   if (consort.history[0]) {
-    // @ts-expect-error Consort history entries are deeply read-only.
+    // @ts-expect-error 时间狼妃历史条目的内层字段也只读。
     consort.history[0].targetId = 2;
   }
-  // @ts-expect-error Live Scholar stock remains separate from a detached normalized DTO.
+  // @ts-expect-error 学者活库存与脱离归一化DTO保持区别。
   scholar.remaining.enhance = 0;
   if (scholar.history[0]) {
-    // @ts-expect-error Stored Scholar history entries remain read-only.
+    // @ts-expect-error 学者已存历史条目也保持只读。
     scholar.history[0].mode = "enhance";
   }
   if (lonely.choice) {
-    // @ts-expect-error Lonely Girl source choice stays read-only below the slot.
+    // @ts-expect-error 孤独少女槽内的来源选择也只读。
     lonely.choice.targetId = 2;
   }
-  // @ts-expect-error Red Moon settlement flags belong to their guarded authority.
+  // @ts-expect-error 赤月结算标记由原带检查的权威写入。
   red.expirySettled = true;
 }
 void forbiddenLiveWrites;

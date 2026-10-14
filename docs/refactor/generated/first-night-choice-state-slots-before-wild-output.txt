@@ -1,0 +1,19 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts:
+34 |   ): Promise<boolean> {
+35 |     if (hasActiveWildChild(this.world)) throw new Error("wild_child_setup_reentry");
+36 |     if (wildChildReady(this.world)) return true;
+37 |     const b = wildChildBinding(this.world);
+38 |     if (!b || config !== b.config || day !== 1 || !isCurrent())
+39 |       throw new Error("wild_child_setup_unavailable");
+                     ^
+error: wild_child_setup_unavailable
+      at execute (/tmp/awa-first-night-choice-baseline-34239/backend/src/game/mechanisms/roles/wild_child/setup.ts:39:17)
+      at <anonymous> (/tmp/awa-first-night-choice-baseline-34239/backend/tests/scenarios/features/wild-child/model-death-and-pack-activation.test.ts:116:11)
+(fail) poison: actual model death synchronously changes faction and waits for the following actual night [41.28ms]
+
+ 0 pass
+ 21 filtered out
+ 1 fail
+Ran 1 test across 1 file. [178.00ms]
