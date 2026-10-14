@@ -1,6 +1,10 @@
+/**
+ * 负责可选 AI 审计之外的确定性摘要渲染；输入原清单、报告和录制历史，输出本地化标题与原报告文本。
+ * 组合筛选报告、事件疑点和玩家元数据观察，不确认真实违规、不重判胜负、不写记录或调用模型。
+ * 翻译／字段展示及后续渲染异常原样传播；本模块不设失败汇总或取消／资源生命周期。
+ */
 import { auditHeadings, renderMessage, text, type MessageKey } from "@ai-werewolf-arena/game-text";
 import { auditInline, auditSummaryHeader } from "./summary_format";
-/** Render a deterministic summary when AI audit is unavailable or unnecessary. */
 import type { ReplayDebugReport } from "../recording/contracts";
 import type { BuildDebugSummaryInput } from "./contracts";
 import {
@@ -17,6 +21,7 @@ export function buildFallbackSummary(input: BuildDebugSummaryInput): string {
   const actionableReports = filterActionableReports(reports, input.publicEvents ?? []);
   const autoFindings = scanEventsForPotentialIssues(input);
   const metadataFindings = scanPlayerTimelineMetadataIssues(input.playerViews ?? []);
+  // 原报告保持筛选顺序，随后附加两类候选；不跨来源去重或改写严重度，消息引用只在这里按 locale 渲染。
   const allFindings = [
     ...actionableReports.map((r) => ({
       severity: r.severity,
@@ -58,6 +63,7 @@ export function buildFallbackSummary(input: BuildDebugSummaryInput): string {
   }
 
   lines.push("", `## ${headings.todo}`);
+  // 待办单独复制后按严重度排序，不重排上方发现章节或任何原输入数组。
   if (allFindings.length > 0) {
     allFindings
       .slice()
@@ -71,8 +77,8 @@ export function buildFallbackSummary(input: BuildDebugSummaryInput): string {
         );
       });
   } else {
-    // 批量运行场景：无问题时避免输出待办噪声，给出明确“无需处理”结论。
-    lines.pop(); // remove "## TODO"
+    // 没有收集到候选时移除刚追加的待办标题；这是本次摘要输出，不证明对局无隐藏问题。
+    lines.pop(); // 仅移除刚写入的待办标题，保原空行和结论顺序。
     lines.push("", `## ${headings.conclusion}`, `- ${text(locale, "audit.conclusion")}`);
   }
 

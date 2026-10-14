@@ -1,7 +1,7 @@
 /**
  * 负责单会话事件、玩家回合与诊断的原内存聚合；输入为录制数据，输出为原公开／玩家 schema 2 快照与清单。
- * 本 owner 保留局部序号、原文、初始prompt和操作计数；写盘格式声明由 manager／档案 codec 拥有。
- * 玩家规范化已在原返回前调用完整断言，故返回类型明确为 canonical2；不改变字段、IO或资源／游戏状态。
+ * 本 owner 写局部序号、原文片段、初始提示和操作计数；指定文本受字符上限约束，文件发布和严格身份仍由 manager／档案 codec 拥有。
+ * 玩家规范化在原返回前作 canonical2 断言，保 timeline 同引用；不推进游戏或回收资源，序列化外的失败不回滚已发生的聚合前缀。
  */
 import { assertReplayPlayerView, readVictoryResult, type CanonicalReplayPlayerView } from "@ai-werewolf-arena/replay-contract";
 import { PlayerVisibleEvent } from "../core/domain/model";
@@ -33,6 +33,10 @@ function toIso(timestampMs: number): string {
   return new Date(timestampMs).toISOString();
 }
 
+/**
+ * 原 JSON stringify／parse 复制，执行 getter／toJSON 且沿 JSON 规则丢弃／转换值；任何该过程失败返回普通 sentinel 数据。
+ * sentinel 不验证 schema、不授予权限，也不撤回序列化前已经发生的副作用；其他时间转换／聚合调用不在此 catch 内。
+ */
 export function safeReplayJson(value: unknown): unknown {
   try {
     return JSON.parse(JSON.stringify(value));
@@ -41,6 +45,7 @@ export function safeReplayJson(value: unknown): unknown {
   }
 }
 
+/** 每行新建并截取 content，按原真值条件保 tool_call_id；不在这里过滤玩家可见性或重写协议历史。 */
 function normalizeRequestMessages(
   messages: ReplayLlmRequestMessage[] | undefined,
 ): ReplayLlmRequestMessage[] | undefined {
@@ -52,6 +57,7 @@ function normalizeRequestMessages(
   }));
 }
 
+/** 保原行的其余字段引用，只有 content 截取、args／result 经 JSON helper；不是整行深隔离或行动接受验证。 */
 function normalizeDeltaMessages(
   messages: ReplayPlayerDeltaMessage[] | undefined,
 ): ReplayPlayerDeltaMessage[] {
@@ -67,13 +73,14 @@ function normalizeDeltaMessages(
   }));
 }
 
-/** In-memory aggregate and projection boundary for one replay session. */
+/** 同一会话的内存聚合与投影边界；各序列只在自己的记录点追加，刷盘／关闭与严格归档仍归外层管理器。 */
 export class ReplaySessionAggregate {
   private reproductionEnabled = false;
 
   enableReproduction(): void {
     this.reproductionEnabled = true;
   }
+  // 公共事件与逻辑操作各有独立计数器；玩家 timeline 另用自身长度，turn_seq 又只计 turn，不能互换证据序号。
   private publicSeq = 0;
   private logicSeq = 0;
   private readonly publicEvents: ReplayPublicEvent[] = [];
@@ -83,6 +90,7 @@ export class ReplaySessionAggregate {
 
   constructor(readonly sessionMeta: ReplaySessionMeta) {}
 
+  // seq 先递增，再转换 timestamp／payload；时间转换等未捕获失败可消耗序号而尚未 append，不在这里补偿。
   recordPublicEvent(input: ReplayRecordPublicEventInput): void {
     this.publicEvents.push({
       seq: ++this.publicSeq,
@@ -95,6 +103,7 @@ export class ReplaySessionAggregate {
     });
   }
 
+  // 逻辑 seq 独立追加，event_count 仅保调用方传入的因果位置，不据此重新排序公开事件。
   recordLogicOp(input: ReplayRecordLogicOpInput): void {
     this.logicOps.push({
       seq: ++this.logicSeq,
@@ -111,6 +120,10 @@ export class ReplaySessionAggregate {
     });
   }
 
+  /**
+   * 先取得／登记玩家 view，尚无初始提示才记录；之后规范化或派生消息再追加 turn，已有 view／提示不因后续抛错回滚。
+   * 仅 delta 为空时派生默认消息；显式 delta 不被默认轨迹覆盖，turn_seq 与混合 event/turn 的局部 seq 分开。
+   */
   recordPlayerRound(input: ReplayRecordPlayerRoundInput): void {
     const view = this.ensurePlayerView(input.playerId, input.role, input.camp);
     if (!view.initial_prompt) {
@@ -148,6 +161,7 @@ export class ReplaySessionAggregate {
     });
   }
 
+  // source_event_seq 是可选公共来源关联；entry.seq 仍为该玩家自己的混合时间线位置，不在此重新检查可见性。
   recordPlayerEvent(input: ReplayRecordPlayerEventInput): void {
     const view = this.ensurePlayerView(input.playerId, input.role, input.camp);
     const entry: ReplayPlayerEventEntry = {
@@ -164,6 +178,7 @@ export class ReplaySessionAggregate {
     view.timeline.push(entry);
   }
 
+  // 报告 ID 来自当前报告数量；证据数组浅复制、message 保原文，不在聚合点把上报判断为已确认 bug。
   recordDebugReport(input: ReplayRecordDebugReportInput): string {
     const reportId = `rb-${this.sessionMeta.sessionId}-${this.debugReports.length + 1}`;
     this.debugReports.push({
@@ -184,6 +199,7 @@ export class ReplaySessionAggregate {
     return reportId;
   }
 
+  // 这些 payload 只新建外层包装，事件／操作／报告数组仍属同一聚合，不是深快照或冻结结果。
   publicTimelinePayload() {
     return { events: this.publicEvents };
   }
@@ -210,6 +226,7 @@ export class ReplaySessionAggregate {
   normalizedPlayerViews(): CanonicalReplayPlayerView[] {
     return this.playerIds().map((id) => this.normalizedPlayerView(id)!);
   }
+  /** 只按原 scope 排除 llm_action_provider；这是本聚合的操作计数，不校验或复演每条业务因果。 */
   get reproductionOperationCount(): number {
     return this.logicOps.filter((op) => op.scope !== "llm_action_provider").length;
   }
@@ -222,6 +239,7 @@ export class ReplaySessionAggregate {
     };
   }
 
+  // 先由原结果 reader 校验 decision 与成员，再比 winner；失败不生成清单，成功仍沿原默认时间和文件声明。
   buildManifest(meta?: ReplayFinalizeMeta): ReplayManifest {
     const decision =
       meta?.gameResult === undefined
@@ -256,6 +274,7 @@ export class ReplaySessionAggregate {
     };
   }
 
+  /** 按现有事件顺序合并连续同 day／phase 及 stage；不排序，不把同名但分离的窗口全局合并。 */
   phaseWindowsPayload(): ReplayPhaseWindowsFile {
     const windows: ReplayPhaseWindow[] = [];
     let current: ReplayPhaseWindow | null = null;
@@ -285,6 +304,7 @@ export class ReplaySessionAggregate {
     return { session_id: this.sessionMeta.sessionId, windows };
   }
 
+  /** 公开 min/max 用实际首尾 seq；玩家只报各自 timeline 数量，阶段数量从原窗口投影取得。 */
   timelineIndexPayload(): ReplayTimelineIndexFile {
     const count = this.publicEvents.length;
     const players: ReplayTimelineIndexFile["players"] = {};
@@ -303,6 +323,7 @@ export class ReplaySessionAggregate {
     };
   }
 
+  // 首次创建记录当时的 role／camp，后续原 view 保历史值，不跟随当前角色／阵营变化重写旧玩家文件元数据。
   private ensurePlayerView(playerId: number, role: string, camp: string): ReplayPlayerView {
     const existing = this.playerViews.get(playerId);
     if (existing) return existing;
@@ -318,6 +339,7 @@ export class ReplaySessionAggregate {
     return view;
   }
 
+  // 新建 canonical2 包装但 timeline 保原数组；先补派生初始提示再断言，断言失败原样抛，不冻结或重写历史。
   private normalizePlayerView(view: ReplayPlayerView): CanonicalReplayPlayerView {
     const initialPrompt = view.initial_prompt ?? this.deriveInitialPrompt(view);
     const result: ReplayPlayerView = {
@@ -333,6 +355,7 @@ export class ReplaySessionAggregate {
     return result;
   }
 
+  /** 只从首个 turn 的首条真值 system 消息补提示；没有此消息就保持缺失，不猜测更早模型上下文。 */
   private deriveInitialPrompt(
     view: ReplayPlayerView,
   ): ReplayPlayerView["initial_prompt"] | undefined {
@@ -353,6 +376,7 @@ export class ReplaySessionAggregate {
       : undefined;
   }
 
+  /** 按原 prompt→重试／思考→tool call/result→行动摘要→fallback 次序派生；诊断 structuredClone 等未捕获失败保此前 target 前缀。 */
   private deriveRoundDeltaMessages(
     target: ReplayPlayerDeltaMessage[],
     input: ReplayRecordPlayerRoundInput,

@@ -1,0 +1,14 @@
+{
+  "source": [
+    "backend/src/audit/debug_summary_generator.ts",
+    "backend/src/audit/deterministic_checks.ts",
+    "backend/src/audit/fallback_summary_renderer.ts",
+    "backend/src/recording/replay_document.ts",
+    "backend/src/recording/session_aggregate.ts"
+  ],
+  "deleted": [],
+  "controls": [
+    "backend/src/recording/session_recorder.ts",
+    "backend/src/runtime/game_runner.ts"
+  ]
+}

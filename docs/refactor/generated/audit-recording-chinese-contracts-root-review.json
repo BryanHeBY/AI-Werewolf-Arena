@@ -1,0 +1,58 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "ce0353ce7bc9fa3ab9be9b34df3266848f5d6c05",
+  "source": [
+    {
+      "path": "backend/src/audit/debug_summary_generator.ts",
+      "sha256": "d3e8579742489651ed8c57282f60b08f99c151533146d63e5ef59cfab4921234"
+    },
+    {
+      "path": "backend/src/audit/deterministic_checks.ts",
+      "sha256": "ee112fda35efcea62ce853ffab1e64237101ac00ead636bd5183e6b66a647f8e"
+    },
+    {
+      "path": "backend/src/audit/fallback_summary_renderer.ts",
+      "sha256": "7b6fc515fb89c82b320c1a29c62d478ddf962ac89b814c063e0f01f3a9970a97"
+    },
+    {
+      "path": "backend/src/recording/replay_document.ts",
+      "sha256": "184808740fa0f525cf76bf6d4ea0b3505bec719c95da6dedf900ef8cde46671a"
+    },
+    {
+      "path": "backend/src/recording/session_aggregate.ts",
+      "sha256": "31680cfc51a928870d728d4bf63c9f630ddcffda18efbacf0e02bcffde11f46e"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/audit-recording-chinese-contracts-scope-final.json",
+    "sha256": "621a716f6cc3a9b95526167190734915cf4d544651e6ea3a18cc95586df786d7"
+  },
+  "document": {
+    "path": "docs/refactor/audit-recording-chinese-contracts.md",
+    "sha256": "7b8bc8c2991d6f7fc60885bdf1c8f4da6a67ecf1d740e1c6aa3831fdefdebfd2"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/audit-recording-chinese-contracts-evidence.json",
+    "sha256": "8435399a9bfbc0b5cfeb4563a69773b617a8499452ecd78ae62ca802ebf50b41"
+  },
+  "integrity": {
+    "freshSources": 5,
+    "actualGitBefore": 5,
+    "controls": 2,
+    "artifactHashes": 12,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "完整五源与真实caller语义：可选AI只已捕获失败回退，确定性规则为疑点候选",
+    "局部/公共/turn序号与先自增后时间转换失败前缀，JSON副作用及同引用历史",
+    "完整语法/JSDoc/十整输出与精确48注释正演证据，保首模板范围误label",
+    "实际ce0353 Git前态、controls2、12附件及末文档摘要；不重复绿检查"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

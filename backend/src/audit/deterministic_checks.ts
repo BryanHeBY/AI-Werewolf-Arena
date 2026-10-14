@@ -1,4 +1,8 @@
-/** Deterministic observations and report screening for one recorded game. */
+/**
+ * 负责录制事件、玩家历史的确定性观察和报告筛选；输入原公开序列／玩家时间线，输出计数与潜在疑点。
+ * 判断依据是列明的历史标签、关键词和局部流程模式，不读取当前 World、隐藏库存或再次执行规则。
+ * 本模块不写游戏／档案、不确认玩家发言为真；证据保原序号，玩家时间线序号不在这里映射为公共事件序号。
+ */
 import type {
   ReplayDebugReport,
   ReplayPlayerView,
@@ -6,7 +10,7 @@ import type {
 } from "../recording/contracts";
 import type { BuildDebugSummaryInput, DeterministicFinding, SummaryObservation } from "./contracts";
 
-/** Exact historic labels; do not infer IDs from arbitrary player text. */
+/** 只比对这些精确历史标签；不从任意发言推断请求 ID，也不额外规范化大小写或阶段值。 */
 const REQUEST_PHASE_ALIASES: Record<string, readonly string[]> = {
   night: ["夜晚", "Night"],
   day: ["白天", "Day"],
@@ -20,6 +24,7 @@ function requestPhaseMatchesTimelinePhase(requestPhase: string, timelinePhase: s
   );
 }
 
+/** 缺省集合按空数组统计；只扫描 turn 的元数据与标记，保原 number／day 条件和证据截取上限。 */
 export function collectObservations(input: BuildDebugSummaryInput): SummaryObservation[] {
   const events = input.publicEvents ?? [];
   const ops = input.logicOps ?? [];
@@ -63,6 +68,7 @@ export function collectObservations(input: BuildDebugSummaryInput): SummaryObser
       if (entry.delta_messages.some((item) => item.kind === "fallback")) {
         fallbackCount += 1;
       }
+      // 警告／重试与 accepted=false 两类分别累加，同一 turn 可计两次；不是去重的失败请求数。
       if (
         entry.delta_messages.some(
           (item) => item.kind === "constraint_warning" || item.kind === "retry_prompt",
@@ -133,6 +139,7 @@ export function collectObservations(input: BuildDebugSummaryInput): SummaryObser
 
   return observations;
 }
+/** 返回原 report 引用的筛选数组；非空 evidence 只作现有门槛，不在此核实序号或事实真伪。 */
 export function filterActionableReports(
   reports: ReplayDebugReport[],
   publicEvents: ReplayPublicEvent[],
@@ -150,6 +157,7 @@ function isActionableReport(report: ReplayDebugReport, publicEvents: ReplayPubli
   const hasEvidenceSeq =
     Array.isArray(report.evidence_event_seq) && report.evidence_event_seq.length > 0;
 
+  // 硬信号先结合非空证据或局部异常判定，之后才排策略噪声；三层顺序不能合并为关键词黑名单。
   const hardBugSignal =
     /(日志|广播|顺序|重复|缺失|未(触发|执行|生效|公布|记录|结算)|跳过|死后|出局后|仍然发言|工具.*调用|调用.*失败|报错|error|timeout|fallback|不一致|矛盾|\bcontradict(?:ion|s|ory)?\b|越权|空守|弃票|\blogs?\b|\bbroadcast\b|\border\b|\bduplicate\b|\bmissing\b|\bskipped\b|\bafter death\b|\bafter elimination\b|\btool.*call\b|\bcall.*failed\b|\binconsistent\b|\bunauthorized\b|\babstain\b|没(有)?(公布|记录|触发|执行|生效))/i;
   if (hardBugSignal.test(text) && (hasEvidenceSeq || detectFlowAnomaly(publicEvents))) {
@@ -172,10 +180,14 @@ function isActionableReport(report: ReplayDebugReport, publicEvents: ReplayPubli
     );
   }
 
-  // 规则/流程类分类在无明显噪声时默认保留，避免漏掉简短上报。
+  // 前面均未命中时，仍须非空 evidence 且属 flow／rule／logging；分类本身不足以保留简短上报。
   return hasEvidenceSeq && (category === "flow" || category === "rule" || category === "logging");
 }
 
+/**
+ * 只检查相邻 phase_changed 的允许转移和 day>1 发言当天是否存在夜报；不复演配置，也不比较夜报与发言的先后 seq。
+ * 未知／转换后的值沿原判断处理；单个首阶段不在相邻对循环内验证。
+ */
 function detectFlowAnomaly(events: ReplayPublicEvent[]): boolean {
   if (events.length === 0) {
     return false;
@@ -220,6 +232,7 @@ function detectFlowAnomaly(events: ReplayPublicEvent[]): boolean {
   return false;
 }
 
+/** 初日自爆、无原生守卫的发言及无公开用药事件的女巫说法均是候选，未复核受赠能力或发言真实性。 */
 export function scanEventsForPotentialIssues(
   input: BuildDebugSummaryInput,
 ): DeterministicFinding[] {
@@ -269,6 +282,7 @@ export function scanEventsForPotentialIssues(
     }
   }
 
+  // 只取清单首个原生女巫，usedPotion 看整个公共序列；不额外按玩家／日期把用药事件配对。
   const witchId = input.manifest.players.find((p) => p.role === "witch")?.player_id ?? 0;
   if (witchId > 0) {
     const usedPotion = events.some((e) => e.type === "witch_potion_used");
@@ -297,6 +311,7 @@ export function scanEventsForPotentialIssues(
   return findings;
 }
 
+/** 输出 day=0／unknown 的日志疑点；evidence 来自各玩家 timeline 的局部 seq，原请求前缀未匹配时不猜测元数据。 */
 export function scanPlayerTimelineMetadataIssues(
   views: ReplayPlayerView[],
 ): DeterministicFinding[] {
