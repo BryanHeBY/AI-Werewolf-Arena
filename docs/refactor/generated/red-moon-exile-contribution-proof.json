@@ -1,0 +1,123 @@
+{
+  "baseCommit": "cdbe1cf15c6046f893436c7a39764e10117ef097",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/red-moon-ports.ts",
+      "sha256": "acddbc42507d1a269b3fdcd46ae76d9cb82423b78788bb7f70c2b871633eb53f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+      "sha256": "179c99ea4cf8d6bc766104b9f1365bc34eaf9d6ea73f48b2099da1aabe0be355"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon/exile-contribution.test.ts",
+      "sha256": "f2d035fe76746d884a9adcc3c2aa053521e03fb0a49ee3265a4e7193d2393f9c"
+    }
+  ],
+  "deleted": [],
+  "hook": {
+    "path": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+    "beforeSha256": "9767bd37f72a2d79ce2fc55ee540d70d54101d67c409c642d3f533ca1cbc58f5",
+    "preciseEdits": 4,
+    "wholeRawForwardInverse": true,
+    "typedNodes": 95,
+    "noncommentLeaves": 118,
+    "completeTreeAndLeavesSame": true,
+    "completeOriginalArrowBodySame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeInverseRawSame": true,
+        "currentRawSame": false
+      },
+      {
+        "module": "CommonJS",
+        "wholeInverseRawSame": true,
+        "currentRawSame": false
+      }
+    ]
+  },
+  "bindings": [
+    {
+      "name": "demonRedMoonDay",
+      "sameRuntimeBinding": true,
+      "endpoint": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts"
+    },
+    {
+      "name": "commitDemonRedMoonTransition",
+      "sameRuntimeBinding": true,
+      "endpoint": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts"
+    }
+  ],
+  "profileHookSameRuntimeBinding": true,
+  "oldConsumers": [
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+      "sha256": "76600cf5faa57053760dd5e63b73be1f76af07a0364d5ef4ec1e36edb5e98393",
+      "import": "import { redMoonVotedOutHook } from \"./voted_out_hook\";",
+      "endpoint": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+      "mode": "value"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-day-actions.test.ts",
+      "sha256": "1f1f6249c3b98f097592a5390a64cf598c032ea3137a84b723278f53477aa43e",
+      "import": "import { redMoonVotedOutHook } from \"../../../src/game/mechanisms/roles/red_moon_apostle/voted_out_hook\";",
+      "endpoint": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+      "mode": "value"
+    }
+  ],
+  "facet": {
+    "path": "backend/src/game/mechanisms/roles/demon_hunter/red-moon-ports.ts",
+    "declarations": 1,
+    "runtimeFunctions": 0,
+    "directAuthorityExports": 2,
+    "noHeavyPortsImport": true
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a",
+      "currentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "9139efec2cd11feee2c087a385b4f67fa92e75ac24f13de5fa9e7849f6485316",
+      "currentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+      "sha256": "68a06f9440216357d3b8508f1134c8d3f3b869a7a6884646086ed72125918a22",
+      "currentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+      "sha256": "17f64b00868bdbe6d4291c75d576ea3812ca5d40c87b5540f383236bc722031b",
+      "currentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+      "sha256": "76600cf5faa57053760dd5e63b73be1f76af07a0364d5ef4ec1e36edb5e98393",
+      "currentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+      "sha256": "fd757f0e66e354cf22e15bb90cbd2b9aa8a1dde23d768d2b0e023293f7b5f68b",
+      "currentWholeSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-audit.test.ts",
+      "sha256": "10e84350466ae987d029f34a79a0da3d45118e334194999d1c72e38148468578",
+      "currentWholeSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-day-actions.test.ts",
+      "sha256": "1f1f6249c3b98f097592a5390a64cf598c032ea3137a84b723278f53477aa43e",
+      "currentWholeSame": true
+    }
+  ],
+  "limits": [
+    "当前钩子的raw输出因specifier改变确实不同；只完整逆路由／注释后的两raw输出相同，不冒任意CJS重绑定或全初始化图恒同。",
+    "本族完整同步组合仍唯一归原hook，未迁走资源审计、生命周期或原档案codec；公共facet直接绑定不是新权限。",
+    "TS解析与实际runtime两绑定、profile接线及两个旧消费者在此范围核对，不宣称全仓动态／计算引用库存或全部cold graph不变。"
+  ]
+}

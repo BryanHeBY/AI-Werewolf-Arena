@@ -1,0 +1,28 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/red-moon-ports.ts",
+      "sha256": "acddbc42507d1a269b3fdcd46ae76d9cb82423b78788bb7f70c2b871633eb53f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+      "sha256": "179c99ea4cf8d6bc766104b9f1365bc34eaf9d6ea73f48b2099da1aabe0be355"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon/exile-contribution.test.ts",
+      "sha256": "f2d035fe76746d884a9adcc3c2aa053521e03fb0a49ee3265a4e7193d2393f9c"
+    }
+  ],
+  "documentationPaths": 628,
+  "diagnostics": [
+    {
+      "id": "6fbb0826c1abe81e68d5d7d7f9cc92167675bf436b6ebdd7a6ac7518f9c7a2b0",
+      "rule": "comment.timing",
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "hook head lacks its timing contract."
+    }
+  ],
+  "chineseHeadFailures": []
+}

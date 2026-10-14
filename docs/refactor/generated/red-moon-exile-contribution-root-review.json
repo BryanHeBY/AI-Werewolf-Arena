@@ -1,0 +1,53 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "cdbe1cf15c6046f893436c7a39764e10117ef097",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/red-moon-ports.ts",
+      "sha256": "acddbc42507d1a269b3fdcd46ae76d9cb82423b78788bb7f70c2b871633eb53f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+      "sha256": "c6fee3f0674e2ea096d02f23725e2b1ad8bab68be5ee54636517e0bc260b356e"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon/exile-contribution.test.ts",
+      "sha256": "f2d035fe76746d884a9adcc3c2aa053521e03fb0a49ee3265a4e7193d2393f9c"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/red-moon-exile-contribution-scope-final.json",
+    "sha256": "0cb95b83abef063ff51f8e488e88a47417f23d1affdc6b605baa1e5e72d68ff6"
+  },
+  "document": {
+    "path": "docs/refactor/red-moon-exile-contribution.md",
+    "sha256": "237e61797c8ba67297e83f67771493e7288e9bf53c41c056e6b80f7f1c69dd51"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/red-moon-exile-contribution-evidence.json",
+    "sha256": "6772690956eafcfdb98a389cad4531226ec27dfa31233c106b13b665628d8121"
+  },
+  "integrity": {
+    "freshSources": 3,
+    "actualGitBefore": 1,
+    "controls": 8,
+    "artifactHashes": 22,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "actualcdbe原hook完整Git与八authority/state/profile/HookRegistry/独立旧场景控制",
+    "原完整13行同步组合body95typed118leaf路线逆、真实两public绑定与profile/两个旧caller",
+    "日期取最近closed frozen原夜与原资源审计权威，未新增PM阶段或库存副本",
+    "null/false短路、提交后events.push查找→clock→原payload→免死返回首失败前缀",
+    "单头时点真红仅中文comment两raw桥与失败根复查，三有限type/四风险25断言真实收据",
+    "公开command/query轻facet无wrapper、原入口/统一Noble-Hook-Idiot顺序和有效中文说明",
+    "22作者附件和API/静态初始化边界，不冒全角色/C17/P9完成"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

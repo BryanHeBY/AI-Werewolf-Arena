@@ -813,3 +813,6 @@
 
 
 - 固定cdbe1cf1阶段结构检查：3233实际公共Git文件和629同Git文档、80,432,289 bytes完整原输入、六同Git工具与原1779债务SHA297b保持；唯一e3558d/session16839→5bbafd真实0，0new/250原余债/1529原ID已清，相对033清12返0。纯输入b9a350/分区83eebf各一次0，Root及非作者逐Git blob/mode/全文/UTF8/order、十附件、唯一终态和九实际提交独审批准；不重架构门禁/类型/测试，不含当前Wolf/RedMoon后继WIP。历史623真实红保留，渐进结果不代替全55/51、全部中文或P9；原债和严格终验继续，见 architecture-checkpoint-cdbe1cf1.md。
+
+
+- C24 赤月放逐贡献接线：三源新增Demon族实际公开同binding查询/提交端口，原voted-out hook完整算法与profile/Hooks身份不动；原末狼/原夜/原体/三字段写与审计仍唯一authority。重要中文注释说明原hook时点和commit已付后push方法→clock失败前缀，不退款、不新增阶段验证。Root及非作者完整cdbe旧hook/四逐项正逆/八控制/22附件与末单head桥独审批准；95typed118leaf逆输出同、raw route差异保真；new3/19+原audit1/6共四不同25assert，三finite type0，head首仅hook timing红→单comment精确桥→onlyfailed1头0，不重绿。不是完整资源/codec/lifecycle或C17/P9验收，见 red-moon-exile-contribution.md。

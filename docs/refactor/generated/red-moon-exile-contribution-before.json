@@ -1,0 +1,48 @@
+{
+  "baseCommit": "cdbe1cf15c6046f893436c7a39764e10117ef097",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+      "sha256": "9767bd37f72a2d79ce2fc55ee540d70d54101d67c409c642d3f533ca1cbc58f5",
+      "text": "import type { VotedOutHook } from \"../../hooks/hook_registry\";\nimport { demonRedMoonDay, commitDemonRedMoonTransition } from \"../demon_hunter/authority\";\n/** Only the original last wolf survives this exile; all other removal causes are unchanged. */\nexport const redMoonVotedOutHook: VotedOutHook = (world, actorId, events) => {\n  const day = demonRedMoonDay(world, actorId);\n  if (day === null || !commitDemonRedMoonTransition(world, actorId, \"exile\", day)) return null;\n  events.push({\n    timestamp: Date.now(),\n    type: \"red_moon_exile_delayed\",\n    payload: { actorId, day, night: day + 1 },\n  });\n  return { prevented: true, removed: [], reason: \"red_moon_exile_delayed\" };\n};\n"
+    }
+  ],
+  "newPaths": [
+    "backend/src/game/mechanisms/roles/demon_hunter/red-moon-ports.ts",
+    "backend/tests/unit/features/red-moon/exile-contribution.test.ts"
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "9139efec2cd11feee2c087a385b4f67fa92e75ac24f13de5fa9e7849f6485316"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+      "sha256": "68a06f9440216357d3b8508f1134c8d3f3b869a7a6884646086ed72125918a22"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+      "sha256": "17f64b00868bdbe6d4291c75d576ea3812ca5d40c87b5540f383236bc722031b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+      "sha256": "76600cf5faa57053760dd5e63b73be1f76af07a0364d5ef4ec1e36edb5e98393"
+    },
+    {
+      "path": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+      "sha256": "fd757f0e66e354cf22e15bb90cbd2b9aa8a1dde23d768d2b0e023293f7b5f68b"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-audit.test.ts",
+      "sha256": "10e84350466ae987d029f34a79a0da3d45118e334194999d1c72e38148468578"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-day-actions.test.ts",
+      "sha256": "1f1f6249c3b98f097592a5390a64cf598c032ea3137a84b723278f53477aa43e"
+    }
+  ]
+}

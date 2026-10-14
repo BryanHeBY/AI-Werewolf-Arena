@@ -1,0 +1,369 @@
+{
+  "baseCommit": "cdbe1cf15c6046f893436c7a39764e10117ef097",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/red-moon-ports.ts",
+      "sha256": "acddbc42507d1a269b3fdcd46ae76d9cb82423b78788bb7f70c2b871633eb53f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+      "sha256": "c6fee3f0674e2ea096d02f23725e2b1ad8bab68be5ee54636517e0bc260b356e"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon/exile-contribution.test.ts",
+      "sha256": "f2d035fe76746d884a9adcc3c2aa053521e03fb0a49ee3265a4e7193d2393f9c"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "ac6897e21e4535298368240876dbc407e6c8acf94b26d263e482ff2854c2ca5a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/ports.ts",
+      "sha256": "9139efec2cd11feee2c087a385b4f67fa92e75ac24f13de5fa9e7849f6485316"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/state.ts",
+      "sha256": "68a06f9440216357d3b8508f1134c8d3f3b869a7a6884646086ed72125918a22"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+      "sha256": "17f64b00868bdbe6d4291c75d576ea3812ca5d40c87b5540f383236bc722031b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+      "sha256": "76600cf5faa57053760dd5e63b73be1f76af07a0364d5ef4ec1e36edb5e98393"
+    },
+    {
+      "path": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+      "sha256": "fd757f0e66e354cf22e15bb90cbd2b9aa8a1dde23d768d2b0e023293f7b5f68b"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-audit.test.ts",
+      "sha256": "10e84350466ae987d029f34a79a0da3d45118e334194999d1c72e38148468578"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-day-actions.test.ts",
+      "sha256": "1f1f6249c3b98f097592a5390a64cf598c032ea3137a84b723278f53477aa43e"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/red-moon-exile-contribution.md",
+    "sha256": "237e61797c8ba67297e83f67771493e7288e9bf53c41c056e6b80f7f1c69dd51"
+  },
+  "frozen": true,
+  "limits": [
+    "当前钩子的raw输出因specifier改变确实不同；只完整逆路由／注释后的两raw输出相同，不冒任意CJS重绑定或全初始化图恒同。",
+    "本族完整同步组合仍唯一归原hook，未迁走资源审计、生命周期或原档案codec；公共facet直接绑定不是新权限。",
+    "TS解析与实际runtime两绑定、profile接线及两个旧消费者在此范围核对，不宣称全仓动态／计算引用库存或全部cold graph不变。"
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/red-moon-exile-contribution-scope-final.json",
+    "sha256": "0cb95b83abef063ff51f8e488e88a47417f23d1affdc6b605baa1e5e72d68ff6"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-before.json",
+      "sha256": "7c0ef1452c31c3595fb01babd2e58b0cb2d9c376dc498549442ba10c4d82ebd3"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-paths.json",
+      "sha256": "d8129f170306a8b56638eb030973926c08d78f272c157fe5c7d4eb08e02bbcb8"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-edits.json",
+      "sha256": "84cf8a6267bdc5c81ff76870a08825fd9fb78bf2930aeaaa09a6df6268c0739e"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-types-config.json",
+      "sha256": "03bf08d04162f65b607a8d59abad81d0ffbd462f6f3fbc41091e57f446176624"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-new-tests-output.txt",
+      "sha256": "8daed96c4ce87be5acd9cc4715610f5fbfe615f80d4773a9e560e6b8eac84d91"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-old-test-output.txt",
+      "sha256": "0883cef22de00db50ff83b20e4b7123d0adddaeab40e776f20514081f8a87b9a"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-proof.cjs",
+      "sha256": "d2c91a24783e4a66e095178a72984ab668eee7e01e2912172dfe9526af8a771c"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-proof.json",
+      "sha256": "3c835ee3bf1e7a03c8052dbf8961c1a8ab127ca59226a05bed6cf72c42bfae3b"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-proof-output.txt",
+      "sha256": "6743e654101439deaecaae3c6c5711857a85b80a2da29e6fba92667f1fe3d432"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-heads.ts",
+      "sha256": "9f00d49f5a05826b9f953e1cfa53bb938feff14cb836f3db0b2543da758b114f"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-heads-first.json",
+      "sha256": "8bf3b97e704a1bbda7fd4dfbdc7a1ed795c0b1c8ebd9d7f5910d0e4cc725a827"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-heads-first-output.txt",
+      "sha256": "02b1bc42bf3728b523c83c342a40bf57f93eef0d17abaa358876e9965f4758ea"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-head-fix-before.json",
+      "sha256": "69da9f3792143e9be55ec533178a74375b1cadc7b28a54a8b61003679f1a92b3"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-head-fix-proof.cjs",
+      "sha256": "552486712fbcc5a331627954559ff710cf769603b7401cca7f343a18141af4a7"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-head-fix-proof.json",
+      "sha256": "9fb2ef8f90db6e08f58957c4bf4bf62374808e08fea28babb6dcbfa83917f5a9"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-head-fix-output.txt",
+      "sha256": "689edbff818371ef6db127823bb28a71adb82094c2163bc3f603fcd55f7ad2aa"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-heads-failed.ts",
+      "sha256": "02bde901b09d9b27f6fe48a6ebf1e590feb49edc1b46314f6215cb6d21a6c2da"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-heads-failed.json",
+      "sha256": "64a72e1c90cf782d11592d77196bcc6ce6ecaded7c2a2fe1b401bfd1af2ec094"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-heads-failed-output.txt",
+      "sha256": "b97000b2958028961632f95a6f94067454d4e2214ac7909a2be5faa94a93caef"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-receipts.json",
+      "sha256": "ee54e3b2234d141ded9762934bddc370c4d5a4fa2520aab21a1efd7f2ea0dc92"
+    },
+    {
+      "path": "docs/refactor/generated/red-moon-exile-contribution-handoff.md",
+      "sha256": "96df1a0f2ebacbfd4f868066d62961bd7d67a499fac9e4ed57a3cead559da728"
+    }
+  ],
+  "proof": {
+    "path": "docs/refactor/generated/red-moon-exile-contribution-proof.json",
+    "sha256": "3c835ee3bf1e7a03c8052dbf8961c1a8ab127ca59226a05bed6cf72c42bfae3b",
+    "sourcePhase": "head时点修复之前的完整原程序采样",
+    "hook": {
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+      "beforeSha256": "9767bd37f72a2d79ce2fc55ee540d70d54101d67c409c642d3f533ca1cbc58f5",
+      "preciseEdits": 4,
+      "wholeRawForwardInverse": true,
+      "typedNodes": 95,
+      "noncommentLeaves": 118,
+      "completeTreeAndLeavesSame": true,
+      "completeOriginalArrowBodySame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeInverseRawSame": true,
+          "currentRawSame": false
+        },
+        {
+          "module": "CommonJS",
+          "wholeInverseRawSame": true,
+          "currentRawSame": false
+        }
+      ]
+    },
+    "bindings": [
+      {
+        "name": "demonRedMoonDay",
+        "sameRuntimeBinding": true,
+        "endpoint": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts"
+      },
+      {
+        "name": "commitDemonRedMoonTransition",
+        "sameRuntimeBinding": true,
+        "endpoint": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts"
+      }
+    ],
+    "oldConsumers": [
+      {
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/profile.ts",
+        "sha256": "76600cf5faa57053760dd5e63b73be1f76af07a0364d5ef4ec1e36edb5e98393",
+        "import": "import { redMoonVotedOutHook } from \"./voted_out_hook\";",
+        "endpoint": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+        "mode": "value"
+      },
+      {
+        "path": "backend/tests/unit/features/red-moon-day-actions.test.ts",
+        "sha256": "1f1f6249c3b98f097592a5390a64cf598c032ea3137a84b723278f53477aa43e",
+        "import": "import { redMoonVotedOutHook } from \"../../../src/game/mechanisms/roles/red_moon_apostle/voted_out_hook\";",
+        "endpoint": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+        "mode": "value"
+      }
+    ],
+    "profileHookSameRuntimeBinding": true
+  },
+  "finalCommentBridge": {
+    "path": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+    "beforeSha256": "179c99ea4cf8d6bc766104b9f1365bc34eaf9d6ea73f48b2099da1aabe0be355",
+    "sha256": "c6fee3f0674e2ea096d02f23725e2b1ad8bab68be5ee54636517e0bc260b356e",
+    "preciseCommentForwardInverse": true,
+    "typedNodes": 95,
+    "noncommentLeaves": 118,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true
+      }
+    ]
+  },
+  "heads": {
+    "first": {
+      "terminalChunk": "94c845",
+      "exitCode": 1,
+      "roots": 3,
+      "documentationPaths": 628,
+      "diagnostics": 1,
+      "rule": "comment.timing",
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+      "report": "docs/refactor/generated/red-moon-exile-contribution-heads-first.json",
+      "output": "docs/refactor/generated/red-moon-exile-contribution-heads-first-output.txt"
+    },
+    "failedOnly": {
+      "terminalChunk": "5cf516",
+      "exitCode": 0,
+      "roots": 1,
+      "documentationPaths": 628,
+      "diagnostics": 0,
+      "report": "docs/refactor/generated/red-moon-exile-contribution-heads-failed.json",
+      "output": "docs/refactor/generated/red-moon-exile-contribution-heads-failed-output.txt"
+    },
+    "finalZeroByUnion": true,
+    "notAFullThreeRootRerun": true
+  },
+  "receipts": {
+    "capture": {
+      "baseCommit": "cdbe1cf15c6046f893436c7a39764e10117ef097",
+      "terminalChunk": "c5f60c",
+      "exitCode": 0,
+      "originalSource": 1,
+      "newSource": 2,
+      "controls": 8
+    },
+    "runtime": [
+      {
+        "kind": "newRiskCases",
+        "terminalChunk": "401343",
+        "exitCode": 0,
+        "cases": 3,
+        "assertions": 19,
+        "output": "docs/refactor/generated/red-moon-exile-contribution-new-tests-output.txt"
+      },
+      {
+        "kind": "originalAuditCase",
+        "terminalChunk": "643c4a",
+        "exitCode": 0,
+        "cases": 1,
+        "assertions": 6,
+        "filtered": 12,
+        "output": "docs/refactor/generated/red-moon-exile-contribution-old-test-output.txt"
+      }
+    ],
+    "types": {
+      "launchChunk": "468ed1",
+      "session": 8680,
+      "terminalChunk": "6a9798",
+      "exitCode": 0,
+      "roots": 3,
+      "config": "docs/refactor/generated/red-moon-exile-contribution-types-config.json",
+      "output": "docs/refactor/generated/red-moon-exile-contribution-types-output.txt"
+    },
+    "wholeProof": {
+      "terminalChunk": "4a3bf4",
+      "exitCode": 0,
+      "executions": 1,
+      "script": "docs/refactor/generated/red-moon-exile-contribution-proof.cjs",
+      "report": "docs/refactor/generated/red-moon-exile-contribution-proof.json",
+      "output": "docs/refactor/generated/red-moon-exile-contribution-proof-output.txt"
+    },
+    "headsFirst": {
+      "terminalChunk": "94c845",
+      "exitCode": 1,
+      "roots": 3,
+      "documentationPaths": 628,
+      "diagnostics": 1,
+      "rule": "comment.timing",
+      "path": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+      "report": "docs/refactor/generated/red-moon-exile-contribution-heads-first.json",
+      "output": "docs/refactor/generated/red-moon-exile-contribution-heads-first-output.txt"
+    },
+    "commentRepair": {
+      "changedSources": 1,
+      "changedComments": 1,
+      "before": "docs/refactor/generated/red-moon-exile-contribution-head-fix-before.json",
+      "terminalChunk": "40e0b3",
+      "exitCode": 0,
+      "report": "docs/refactor/generated/red-moon-exile-contribution-head-fix-proof.json",
+      "output": "docs/refactor/generated/red-moon-exile-contribution-head-fix-output.txt"
+    },
+    "headsFailedOnly": {
+      "terminalChunk": "5cf516",
+      "exitCode": 0,
+      "roots": 1,
+      "documentationPaths": 628,
+      "diagnostics": 0,
+      "report": "docs/refactor/generated/red-moon-exile-contribution-heads-failed.json",
+      "output": "docs/refactor/generated/red-moon-exile-contribution-heads-failed-output.txt"
+    },
+    "sourceAtBehaviorTypeWholeProof": [
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/red-moon-ports.ts",
+        "sha256": "acddbc42507d1a269b3fdcd46ae76d9cb82423b78788bb7f70c2b871633eb53f"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+        "sha256": "179c99ea4cf8d6bc766104b9f1365bc34eaf9d6ea73f48b2099da1aabe0be355"
+      },
+      {
+        "path": "backend/tests/unit/features/red-moon/exile-contribution.test.ts",
+        "sha256": "f2d035fe76746d884a9adcc3c2aa053521e03fb0a49ee3265a4e7193d2393f9c"
+      }
+    ],
+    "finalSource": [
+      {
+        "path": "backend/src/game/mechanisms/roles/demon_hunter/red-moon-ports.ts",
+        "sha256": "acddbc42507d1a269b3fdcd46ae76d9cb82423b78788bb7f70c2b871633eb53f"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+        "sha256": "c6fee3f0674e2ea096d02f23725e2b1ad8bab68be5ee54636517e0bc260b356e"
+      },
+      {
+        "path": "backend/tests/unit/features/red-moon/exile-contribution.test.ts",
+        "sha256": "f2d035fe76746d884a9adcc3c2aa053521e03fb0a49ee3265a4e7193d2393f9c"
+      }
+    ],
+    "distinctCases": 4,
+    "successfulAssertions": 25,
+    "greenRepeated": false,
+    "notRun": [
+      "full gates",
+      "full old suites",
+      "models",
+      "private configs",
+      "golden updates",
+      "additional cold graph"
+    ]
+  },
+  "reviewStatus": "冻结交非作者，作者不自审"
+}
