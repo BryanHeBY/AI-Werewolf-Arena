@@ -1,0 +1,226 @@
+{
+  "baseCommit": "198933bb2d06d2ef702c012be32bd6e851d67875",
+  "wholePrograms": [
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+      "to": "backend/src/rulesets/potion-tool-admission.ts",
+      "originalSha256": "5997ad5adc138108a8e7c533887c564db25946c29bce9c548938f73394c9b599",
+      "sourceSha256": "b716024440df7862ee49a8b27663e2bee97066c2cbbaf1ff7e15ad8c75f732ff",
+      "actualGitBeforeSame": true,
+      "exactWholeSourceInverseSame": true,
+      "completeProgram": {
+        "originalTypedNodes": 588,
+        "candidateTypedNodes": 588,
+        "typedTreeSame": true,
+        "originalLeafTokens": 679,
+        "allNonCommentLeafTokensSame": true
+      },
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "originalSha256": "9e04aa6b76ac1c7ebd98d7fc3f16cf5639b271488006c5e438f033d50edc1c55",
+          "candidateSha256": "9e04aa6b76ac1c7ebd98d7fc3f16cf5639b271488006c5e438f033d50edc1c55",
+          "completeEmittedProgram": {
+            "originalTypedNodes": 563,
+            "candidateTypedNodes": 563,
+            "typedTreeSame": true,
+            "originalLeafTokens": 649,
+            "allNonCommentLeafTokensSame": true
+          }
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "originalSha256": "466f56e5c56f0cea9e8a8e2229aa1e05f5454785c3829dc99ddafb6832c04ace",
+          "candidateSha256": "466f56e5c56f0cea9e8a8e2229aa1e05f5454785c3829dc99ddafb6832c04ace",
+          "completeEmittedProgram": {
+            "originalTypedNodes": 704,
+            "candidateTypedNodes": 704,
+            "typedTreeSame": true,
+            "originalLeafTokens": 792,
+            "allNonCommentLeafTokensSame": true
+          }
+        }
+      ]
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/profile.ts",
+      "to": "backend/src/game/mechanisms/roles/witch/profile.ts",
+      "originalSha256": "db94a72a812f7827d25afb796d648e4bcf971c3a26f534b89bca10ce4fc7ffb0",
+      "sourceSha256": "baa3c433e7144765ac340338b9eec5d8faa78a62ab5aaeeef4aa6d22fccc6cbc",
+      "actualGitBeforeSame": true,
+      "exactWholeSourceInverseSame": true,
+      "completeProgram": {
+        "originalTypedNodes": 450,
+        "candidateTypedNodes": 450,
+        "typedTreeSame": true,
+        "originalLeafTokens": 531,
+        "allNonCommentLeafTokensSame": true
+      },
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "originalSha256": "eb35b64ce770a249cd122172c7a1ec9e38a54082ce8e97e6e24f8b1bc633cfa8",
+          "candidateSha256": "eb35b64ce770a249cd122172c7a1ec9e38a54082ce8e97e6e24f8b1bc633cfa8",
+          "completeEmittedProgram": {
+            "originalTypedNodes": 440,
+            "candidateTypedNodes": 440,
+            "typedTreeSame": true,
+            "originalLeafTokens": 520,
+            "allNonCommentLeafTokensSame": true
+          }
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "originalSha256": "5dd2f4ff2fb39894c0662769c57bcf2c0ac14d9dc20c63fd5b22891fae5f4271",
+          "candidateSha256": "5dd2f4ff2fb39894c0662769c57bcf2c0ac14d9dc20c63fd5b22891fae5f4271",
+          "completeEmittedProgram": {
+            "originalTypedNodes": 526,
+            "candidateTypedNodes": 526,
+            "typedTreeSame": true,
+            "originalLeafTokens": 607,
+            "allNonCommentLeafTokensSame": true
+          }
+        }
+      ]
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/ports.ts",
+      "to": "backend/src/game/mechanisms/roles/witch/ports.ts",
+      "originalSha256": "bef2a8707ba031671dde6f8aa9c516500f5315cd0b2b4f15dac5a11f2d79a600",
+      "sourceSha256": "d0906d361c528845fdcca072516d8029b8a0080ad676537fa4d04fbb05f62b71",
+      "actualGitBeforeSame": true,
+      "exactWholeSourceInverseSame": true,
+      "completeProgram": {
+        "originalTypedNodes": 29,
+        "candidateTypedNodes": 29,
+        "typedTreeSame": true,
+        "originalLeafTokens": 34,
+        "allNonCommentLeafTokensSame": true
+      },
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "originalSha256": "ce1a8d00f466d25143742839b73ad70b830851431ceab649e9c28c777f8ee913",
+          "candidateSha256": "ce1a8d00f466d25143742839b73ad70b830851431ceab649e9c28c777f8ee913",
+          "completeEmittedProgram": {
+            "originalTypedNodes": 29,
+            "candidateTypedNodes": 29,
+            "typedTreeSame": true,
+            "originalLeafTokens": 34,
+            "allNonCommentLeafTokensSame": true
+          }
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "originalSha256": "0e8850f40bf7413cf0d34ae776ac24c6b66a45cd395c10d62788e5583f8c89f4",
+          "candidateSha256": "0e8850f40bf7413cf0d34ae776ac24c6b66a45cd395c10d62788e5583f8c89f4",
+          "completeEmittedProgram": {
+            "originalTypedNodes": 255,
+            "candidateTypedNodes": 255,
+            "typedTreeSame": true,
+            "originalLeafTokens": 341,
+            "allNonCommentLeafTokensSame": true
+          }
+        }
+      ]
+    }
+  ],
+  "actualCompleteMap": {
+    "originalTypedNodes": 503,
+    "candidateTypedNodes": 503,
+    "typedTreeSame": true,
+    "originalLeafTokens": 580,
+    "allNonCommentLeafTokensSame": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "rawSame": true,
+        "originalSha256": "66ffe91d5390fdab167a2d5556722f05b5fdb2dc5953c36e84f5734d2a024b73",
+        "candidateSha256": "66ffe91d5390fdab167a2d5556722f05b5fdb2dc5953c36e84f5734d2a024b73",
+        "completeEmittedProgram": {
+          "originalTypedNodes": 500,
+          "candidateTypedNodes": 500,
+          "typedTreeSame": true,
+          "originalLeafTokens": 577,
+          "allNonCommentLeafTokensSame": true
+        }
+      },
+      {
+        "module": "CommonJS",
+        "rawSame": true,
+        "originalSha256": "66ffe91d5390fdab167a2d5556722f05b5fdb2dc5953c36e84f5734d2a024b73",
+        "candidateSha256": "66ffe91d5390fdab167a2d5556722f05b5fdb2dc5953c36e84f5734d2a024b73",
+        "completeEmittedProgram": {
+          "originalTypedNodes": 500,
+          "candidateTypedNodes": 500,
+          "typedTreeSame": true,
+          "originalLeafTokens": 577,
+          "allNonCommentLeafTokensSame": true
+        }
+      }
+    ]
+  },
+  "unusedBindings": [
+    {
+      "name": "getWitchState",
+      "absentFromOriginalEmittedProgram": true
+    },
+    {
+      "name": "StatusMarksComponent",
+      "absentFromOriginalEmittedProgram": true
+    },
+    {
+      "name": "RoleComponent",
+      "absentFromOriginalEmittedProgram": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/policies.ts",
+      "sha256": "15ebc56f69903fdb22fcb56dee06e6f8e97ff2c777b28d34121f40c0091a5fc1",
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/profile.ts",
+      "sha256": "7481bd3a7ef3609a7a8c8e51d9392d1279e57d53e5dbb7262e7a8f4ddacc3e8a",
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts",
+      "sha256": "986313bb1059f8829c4b000bc9ad0a48be113e753377bdb2d572508e686c5ddd",
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/rulesets/native-night-target-policy.ts",
+      "sha256": "d27f1662dee42b65cb4bf2d8507efd71f2c63d307b5df2ef7067dc5041a87a1d",
+      "currentSame": true
+    }
+  ],
+  "deleted": {
+    "path": "backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+    "sha256": "5997ad5adc138108a8e7c533887c564db25946c29bce9c548938f73394c9b599",
+    "expectedAbsent": true,
+    "absent": true
+  },
+  "negativeHarnessChecks": [
+    {
+      "name": "non-first heal target field mutation",
+      "rejected": true
+    },
+    {
+      "name": "non-first poison default day mutation",
+      "rejected": true
+    }
+  ],
+  "limits": [
+    "Only nineteen declared source/import/comment edits are inverted. The real complete map literal is separately checked without restoring any business body.",
+    "Original unused getter/type imports were already erased; value route changes through public ports are explicit and need separate bounded graph/endpoint review.",
+    "Module paths/stack/source fingerprint change; no arbitrary namespace reassignment/reflective API equivalence or full gate claim."
+  ]
+}

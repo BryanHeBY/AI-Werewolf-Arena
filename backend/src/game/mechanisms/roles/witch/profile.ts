@@ -13,7 +13,7 @@ import { getWitchState, setWitchState } from "./ports";
 import { WITCH_LLM_REPAIR_PACK } from "./llm_repair";
 import { WITCH_NIGHT_STAGES } from "./night_stages";
 import { WITCH_TOOL_SPECS, WITCH_STAGE_DIRECTIVES } from "./tool_specs";
-import { WITCH_VALIDATION_RULES } from "./validation_rules";
+import { WITCH_VALIDATION_RULES } from "../../../../rulesets/potion-tool-admission";
 import { z } from "zod";
 import {
   WITCH_KNIFE_VISIBILITY_POLICIES,

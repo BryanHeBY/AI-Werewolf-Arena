@@ -1,0 +1,32 @@
+{
+  "reviewer": "/root/native_presentation_finish",
+  "kind": "documentation-precision-only",
+  "reason": "独立源审指出 setup driver 的 actor/day 两实参确已交换，故不能笼统说全部输入不改。",
+  "edit": {
+    "path": "docs/refactor/potion-tool-admission.md",
+    "beforePhrase": "原输入和预期不改",
+    "afterPhrase": "原目标／用药上下文和预期不改"
+  },
+  "finalDocumentation": {
+    "path": "docs/refactor/potion-tool-admission.md",
+    "sha256": "71fe6d259629ddde5cdaedf66ae189d7409a7566e6bea46fd0ada56dc753498f"
+  },
+  "finalEvidence": {
+    "path": "docs/refactor/generated/potion-tool-admission-evidence.json",
+    "sha256": "b450e2d38a43aaae35640eb8b0fb1776d27968592d4befe4a640384b31cb972a"
+  },
+  "scope": {
+    "path": "docs/refactor/generated/potion-tool-admission-scope-final.json",
+    "sha256": "98bef4f86b0064d9ac84b4d9ca0eac2873d6a64ba3f88375a3e0e40a9038f185",
+    "sourceUnchanged": true
+  },
+  "handoff": {
+    "path": "docs/refactor/generated/potion-tool-admission-handoff.md",
+    "sha256": "724b8db4dfccadac78c002a6141d176ff594432c6e14decb6a074ee597168e82"
+  },
+  "notes": [
+    "仅该措辞和 evidence.documentation.sha256 更新；同一段保留实际参数交换、原目标／用药上下文与断言保持的说明。",
+    "未保存这一次文档措辞修改前的完整 MD 快照，因此本记录不宣称旧文档完整字节逆证明；实际最终文档与已完成独立审查的 source/receipt 范围以给定 SHA 绑定。",
+    "未修改任何生产／单元源码、scope、旧运行／类型／head／证明收据，未复跑检查。"
+  ]
+}

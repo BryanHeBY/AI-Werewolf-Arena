@@ -1,0 +1,21 @@
+{
+  "files": 1704,
+  "actualCanonicalReferences": [
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/profile.ts",
+      "form": "import",
+      "specifier": "../../../../rulesets/potion-tool-admission",
+      "target": "backend/src/rulesets/potion-tool-admission",
+      "line": 16
+    },
+    {
+      "path": "backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+      "form": "import",
+      "specifier": "../../../src/rulesets/potion-tool-admission",
+      "target": "backend/src/rulesets/potion-tool-admission",
+      "line": 13
+    }
+  ],
+  "retiredReferences": [],
+  "limits": "All literal AST module-reference forms; historical docs/proof artifacts excluded, nonliteral computed module paths not claimed resolved."
+}

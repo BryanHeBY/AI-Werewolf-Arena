@@ -1,0 +1,33 @@
+{
+  "baseCommit": "198933bb2d06d2ef702c012be32bd6e851d67875",
+  "source": [
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "sha256": "b716024440df7862ee49a8b27663e2bee97066c2cbbaf1ff7e15ad8c75f732ff",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/profile.ts",
+      "sha256": "baa3c433e7144765ac340338b9eec5d8faa78a62ab5aaeeef4aa6d22fccc6cbc",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/ports.ts",
+      "sha256": "d0906d361c528845fdcca072516d8029b8a0080ad676537fa4d04fbb05f62b71",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+      "sha256": "69b1d44989e84a195c1b741571037fd83054a8f69a7e1d5a30750ca568632040",
+      "change": "added"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+      "sha256": "5997ad5adc138108a8e7c533887c564db25946c29bce9c548938f73394c9b599",
+      "expectedAbsent": true
+    }
+  ],
+  "limits": "五实际路径含四当前候选与一真实删除叶；原Magic第五类型根是只读测试控制，不计源码编辑。"
+}

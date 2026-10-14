@@ -17,3 +17,6 @@ export {
 export { setWitchState } from "./state-slot";
 
 export { WITCH_STATE_SLOT } from "./state-slot";
+
+/** 完整用药组合只读取同一原生双药政策；该查询不扣瓶、关闭回合或授予提交许可。 */
+export { nativePotionsCanCombine } from "./policies";

@@ -1,0 +1,51 @@
+{
+  "baseCommit": "198933bb2d06d2ef702c012be32bd6e851d67875",
+  "before": [
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+      "text": "/**\n * 定义女巫药瓶库存、目标、自救及当前狼刀上下文的工具校验。输入为已清洗用药工具与\n * 可信校验上下文；输出保留原结构化规则结果。预检不消费药瓶，不虚构缺失的救药目标；\n * 状态只读入口已归完整状态槽，付款与真实效果仍在原提交边界。\n */\nimport { scholarMentorBlocks } from \"../scholar_mentor/night_frame\";\nimport { isMagicianBoard, resolveMagicianNightTarget } from \"../magician/night_frame\";\nimport { nativePotionsCanCombine } from \"./policies\";\nimport { RuleError } from \"@ai-werewolf-arena/game-contract\";\n/** 文件说明：女巫工具校验规则。 */\nimport { PotionType, Phase, WitchSelfHealRule, StatusMark } from \"../../../../core/domain/model\";\nimport { COMPONENT } from \"../../../../core/domain/components/names\";\nimport type { StatusMarksComponent } from \"../../../../core/domain/components/status_marks\";\nimport type { RoleComponent } from \"../../../../core/domain/components/role\";\nimport { ToolRuleMap, isAliveTarget } from \"../../validation/contracts\";\nimport { getWitchState } from \"./ports\";\nimport { activeNightAbility } from \"../abilities\";\nimport { luckyTargetAllowed } from \"../night_action_history\";\n\n/** 女巫工具校验规则集合。 */\nexport const WITCH_VALIDATION_RULES: ToolRuleMap = {\n  use_potion: ({ world, actorId, role, toolCall, day, abilityId, phase }) => {\n    const ability = activeNightAbility(role, \"potion\", day ?? 1, abilityId);\n    const witchState = ability?.state;\n    if (!witchState) {\n      return { code: RuleError.WitchOnly };\n    }\n    if (phase !== Phase.Night) return { code: RuleError.AbilityPhase };\n    if (toolCall.name !== \"use_potion\") {\n      return { code: RuleError.ToolMismatch };\n    }\n    if (\n      ability?.activation === \"lucky\" &&\n      toolCall.args.potion_type === PotionType.None &&\n      toolCall.args.target_id !== actorId\n    )\n      return { code: RuleError.PoisonTarget };\n    if (\n      ability?.activation === \"black_market\" &&\n      toolCall.args.potion_type === PotionType.None &&\n      !isAliveTarget(world, toolCall.args.target_id)\n    )\n      return { code: RuleError.PoisonTarget };\n    if (toolCall.args.potion_type === PotionType.Heal) {\n      const canSelfHeal =\n        day === undefined\n          ? witchState.canSelfHeal\n          : witchState.selfHealRule === WitchSelfHealRule.Always ||\n            (witchState.selfHealRule === WitchSelfHealRule.FirstNightOnly && day === 1);\n      if (!canSelfHeal && toolCall.args.target_id === actorId) {\n        return { code: RuleError.SelfHeal };\n      }\n      if (witchState.heal <= 0 || witchState.healUsedThisNight) {\n        return { code: RuleError.HealUnavailable };\n      }\n      if (witchState.poisonUsedThisNight && !nativePotionsCanCombine(ability!)) {\n        return { code: RuleError.TwoPotions };\n      }\n      const requestedId = toolCall.args.target_id;\n      if (!isAliveTarget(world, requestedId)) return { code: RuleError.HealTarget };\n      const mapping = isMagicianBoard(world)\n        ? resolveMagicianNightTarget(world, day ?? 0, requestedId)\n        : null;\n      if (mapping && !mapping.isCurrent()) return { code: RuleError.HealTarget };\n      const targetId = mapping?.effectiveId ?? requestedId;\n      if (\n        !isAliveTarget(world, targetId) ||\n        !world.getComponent(targetId, COMPONENT.Role) ||\n        !world.getComponent(targetId, COMPONENT.StatusMarks)?.has(StatusMark.WolfKillMark)\n      ) {\n        return { code: RuleError.HealTarget };\n      }\n      return null;\n    }\n    if (toolCall.args.potion_type === PotionType.Poison) {\n      if (scholarMentorBlocks(world, day ?? 1, actorId, \"poison\"))\n        return { code: RuleError.ModifierUnavailable };\n      if (witchState.poison <= 0 || witchState.poisonUsedThisNight) {\n        return { code: RuleError.PoisonUnavailable };\n      }\n      if (witchState.healUsedThisNight && !nativePotionsCanCombine(ability!)) {\n        return { code: RuleError.TwoPotions };\n      }\n      if (!isAliveTarget(world, toolCall.args.target_id)) {\n        return { code: RuleError.PoisonTarget };\n      }\n      if (\n        !luckyTargetAllowed(world, actorId, ability!, day ?? 1, \"poison\", toolCall.args.target_id)\n      )\n        return { code: RuleError.LuckyTargetRepeat };\n      return null;\n    }\n    return null;\n  },\n};\n",
+      "sha256": "5997ad5adc138108a8e7c533887c564db25946c29bce9c548938f73394c9b599",
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/profile.ts",
+      "text": "/**\n * 负责 女巫 的原资料、初始化与运行贡献装配，内建展示只登记语言中立的具体角色标识。\n * 输入为原板子参数、角色组件与请求上下文；输出为分别登记的资料、运行及展示贡献，工具、阶段、初始化和特权 mock 回调保留原引用与顺序。\n * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。\n * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。\n */\nimport { nativeRolePresentation } from \"../presentation-contribution\";\nimport { roleName, text } from \"@ai-werewolf-arena/game-text\";\n/** 文件说明：女巫角色 profile。 */\nimport { Camp, PotionType, Role, WitchSelfHealRule } from \"../../../../core/domain/model\";\nimport { NativeRoleContributions } from \"../contracts\";\nimport { getWitchState, setWitchState } from \"./ports\";\nimport { WITCH_LLM_REPAIR_PACK } from \"./llm_repair\";\nimport { WITCH_NIGHT_STAGES } from \"./night_stages\";\nimport { WITCH_TOOL_SPECS, WITCH_STAGE_DIRECTIVES } from \"./tool_specs\";\nimport { WITCH_VALIDATION_RULES } from \"./validation_rules\";\nimport { z } from \"zod\";\nimport {\n  WITCH_KNIFE_VISIBILITY_POLICIES,\n  WITCH_POTION_POLICIES,\n} from \"../../../../core/domain/board\";\n\nconst witchParameters = z.strictObject({\n  selfHeal: z.enum(WitchSelfHealRule).default(WitchSelfHealRule.Disabled),\n  knifeVisibility: z.enum(WITCH_KNIFE_VISIBILITY_POLICIES).default(\"awa_with_heal_v1\"),\n  potionPolicy: z.enum(WITCH_POTION_POLICIES).default(\"awa_one_native_v1\"),\n});\n\n/** 女巫角色配置。 */\nexport const WITCH_ROLE_PROFILE: NativeRoleContributions = {\n  metadata: {\n    role: Role.Witch,\n    camp: Camp.Good,\n    label: roleName(\"witch\"),\n    skillBrief: text(\"zh-CN\", \"role.witch.brief\"),\n    goodSide: \"god\",\n  },\n  runtime: {\n    configuration: {\n      schema: witchParameters,\n      defaults: {\n        selfHeal: WitchSelfHealRule.Disabled,\n        knifeVisibility: \"awa_with_heal_v1\",\n        potionPolicy: \"awa_one_native_v1\",\n      },\n      apply: (config, value) => {\n        const parameters = witchParameters.parse(value);\n        return {\n          ...config,\n          witch: {\n            canSelfHeal: parameters.selfHeal,\n            knifeVisibility: parameters.knifeVisibility,\n            potionPolicy: parameters.potionPolicy,\n          },\n        };\n      },\n      serialize: (config) =>\n        witchParameters.parse({\n          selfHeal: config.witch?.canSelfHeal ?? WitchSelfHealRule.Disabled,\n          knifeVisibility: config.witch?.knifeVisibility,\n          potionPolicy: config.witch?.potionPolicy,\n        }),\n    },\n    init: (roleComp, ctx) => {\n      const selfHealRule = ctx.boardConfig?.witch?.canSelfHeal ?? WitchSelfHealRule.Disabled;\n      setWitchState(roleComp, {\n        heal: 1,\n        poison: 1,\n        selfHealRule,\n        canSelfHeal:\n          selfHealRule === WitchSelfHealRule.Always ||\n          selfHealRule === WitchSelfHealRule.FirstNightOnly,\n        ...(ctx.boardConfig?.witch?.knifeVisibility &&\n        ctx.boardConfig.witch.knifeVisibility !== \"awa_with_heal_v1\"\n          ? { knifeVisibility: ctx.boardConfig.witch.knifeVisibility }\n          : {}),\n        ...(ctx.boardConfig?.witch?.potionPolicy === \"awa_both_native_experimental_v1\"\n          ? { potionPolicy: ctx.boardConfig.witch.potionPolicy }\n          : {}),\n        healUsedThisNight: false,\n        poisonUsedThisNight: false,\n      });\n    },\n    toolSpecs: WITCH_TOOL_SPECS,\n    stageDirectives: WITCH_STAGE_DIRECTIVES,\n    validationRules: WITCH_VALIDATION_RULES,\n    nightStages: WITCH_NIGHT_STAGES,\n    llmRepair: WITCH_LLM_REPAIR_PACK,\n    baselineAction: (roleComp, request) => {\n      if (!request.allowedTools.includes(\"use_potion\")) {\n        return null;\n      }\n      return {\n        name: \"use_potion\",\n        args: {\n          target_id: request.actorId,\n          potion_type: PotionType.None,\n        },\n      };\n    },\n  },\n  presentation: nativeRolePresentation(\"witch\"),\n};\n",
+      "sha256": "db94a72a812f7827d25afb796d648e4bcf971c3a26f534b89bca10ce4fc7ffb0",
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/ports.ts",
+      "text": "/**\n * 提供女巫普通药剂状态命令的公开入口。输入是原规则检查之后选定的只读状态或能力引用；\n * 输出按原顺序写入夜间标记、药剂库存和回合关闭状态。行动权限与效果提交仍由调用方负责，\n * 失败不会回滚已写标记或已消费资源。独立审计账本和封印的猎魔人原生库存不使用这些命令。\n * 初始化具名绑定保留原输入复制契约，调用方模板不因此获得新的活跃库存写权限。\n */\nexport {\n  getWitchState,\n  resetWitchNightState,\n  refreshWitchSelfHeal,\n  closeWitchPotionTurn,\n  consumeWitchHeal,\n  consumeWitchPoison,\n  consumeRecipientPoison,\n} from \"./state-slot\";\n\nexport { setWitchState } from \"./state-slot\";\n\nexport { WITCH_STATE_SLOT } from \"./state-slot\";\n",
+      "sha256": "bef2a8707ba031671dde6f8aa9c516500f5315cd0b2b4f15dac5a11f2d79a600",
+      "actualGitSame": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/policies.ts",
+      "sha256": "15ebc56f69903fdb22fcb56dee06e6f8e97ff2c777b28d34121f40c0091a5fc1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/profile.ts",
+      "sha256": "7481bd3a7ef3609a7a8c8e51d9392d1279e57d53e5dbb7262e7a8f4ddacc3e8a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts",
+      "sha256": "986313bb1059f8829c4b000bc9ad0a48be113e753377bdb2d572508e686c5ddd"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-target-policy.ts",
+      "sha256": "d27f1662dee42b65cb4bf2d8507efd71f2c63d307b5df2ef7067dc5041a87a1d"
+    }
+  ],
+  "newPaths": [
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "exists": false
+    },
+    {
+      "path": "backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+      "exists": false
+    }
+  ]
+}

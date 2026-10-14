@@ -1,0 +1,234 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "reviewMode": "Root全文比较原95行准入和现行map/旧private消费者、原3新unit/动态registry语义；真实3Git/完整19edit forward/4fresh及删除/control/artifact核，独立peer另审。",
+  "baseCommit": "198933bb2d06d2ef702c012be32bd6e851d67875",
+  "source": [
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "sha256": "b716024440df7862ee49a8b27663e2bee97066c2cbbaf1ff7e15ad8c75f732ff",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/profile.ts",
+      "sha256": "baa3c433e7144765ac340338b9eec5d8faa78a62ab5aaeeef4aa6d22fccc6cbc",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/ports.ts",
+      "sha256": "d0906d361c528845fdcca072516d8029b8a0080ad676537fa4d04fbb05f62b71",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/potion-tool-admission.test.ts",
+      "sha256": "468d24e6f5a3bd2215785add5254773180a87c1d577e4e6d39316c0b1980efe1",
+      "change": "added"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+      "sha256": "5997ad5adc138108a8e7c533887c564db25946c29bce9c548938f73394c9b599",
+      "expectedAbsent": true
+    }
+  ],
+  "scopeSha256": "98bef4f86b0064d9ac84b4d9ca0eac2873d6a64ba3f88375a3e0e40a9038f185",
+  "actualBeforeChecks": [
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+      "sha256": "5997ad5adc138108a8e7c533887c564db25946c29bce9c548938f73394c9b599",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/profile.ts",
+      "sha256": "db94a72a812f7827d25afb796d648e4bcf971c3a26f534b89bca10ce4fc7ffb0",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/ports.ts",
+      "sha256": "bef2a8707ba031671dde6f8aa9c516500f5315cd0b2b4f15dac5a11f2d79a600",
+      "matches": true
+    }
+  ],
+  "completeSourceForward": [
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+      "to": "backend/src/rulesets/potion-tool-admission.ts",
+      "wholeSourceForwardEqual": true
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/profile.ts",
+      "to": "backend/src/game/mechanisms/roles/witch/profile.ts",
+      "wholeSourceForwardEqual": true
+    },
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/ports.ts",
+      "to": "backend/src/game/mechanisms/roles/witch/ports.ts",
+      "wholeSourceForwardEqual": true
+    }
+  ],
+  "controlChecks": [
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/policies.ts",
+      "sha256": "15ebc56f69903fdb22fcb56dee06e6f8e97ff2c777b28d34121f40c0091a5fc1",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/seer/profile.ts",
+      "sha256": "7481bd3a7ef3609a7a8c8e51d9392d1279e57d53e5dbb7262e7a8f4ddacc3e8a",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts",
+      "sha256": "986313bb1059f8829c4b000bc9ad0a48be113e753377bdb2d572508e686c5ddd",
+      "matches": true
+    },
+    {
+      "path": "backend/src/rulesets/native-night-target-policy.ts",
+      "sha256": "d27f1662dee42b65cb4bf2d8507efd71f2c63d307b5df2ef7067dc5041a87a1d",
+      "matches": true
+    }
+  ],
+  "artifactChecks": [
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-before.json",
+      "sha256": "02344dd0d63dca441327d3e871c8e3144e1d0f93d1afe6421c165881051658c3",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-edits.json",
+      "sha256": "81624d50eb4172be675ff4a0cb6470e1a5dc83964dae17e928794e1e36a9f15b",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-proof.cjs",
+      "sha256": "e3352c7bfba0410a5eacf675dbf73334446d6dc8234502daeb335336d43eeafa",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-proof-first.json",
+      "sha256": "e6dae88a35b2029b5eb524b6342c49ff1dc9b8face90acf9bef2711443e887f3",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-proof.json",
+      "sha256": "43c954c8cb5b605a0bccfa024efbefcea7981a0c3f44f8adf49e3a97b27c6cd0",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-bindings.cjs",
+      "sha256": "e511eafbd9ef6c68fb2b9b5913085cef77fe0702b0776a4273c609f6a8689bcb",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-bindings.json",
+      "sha256": "f06fd0a6954a83aa97565b499e46159e69b55a9736482434ef02b6c41364105b",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-heads.ts",
+      "sha256": "95265331638e10b5f5b75fadbfce7c864d025ccb029243ed4f7f3398f6066bc4",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-heads.json",
+      "sha256": "3d51a1716736747f7a2fe5b9cff46ec8683f1181f5e77375f3086d91970f4096",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-inventory.json",
+      "sha256": "dfcb45596d56d6a177a0349ba6777704c0427c5e5b93025980f2b0258f9dc0bb",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-fixture-fix-before.json",
+      "sha256": "3044c7bd665020d81fe0b91e330b97d576967f4083121b2d06b4ce60a8d81faf",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-new-tests-first.log",
+      "sha256": "3bc52001b7d8705f36f904bd358b8cdce8ce940ba37d2e7c5ea93c70530354b5",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-new-test-failed-only.log",
+      "sha256": "0f6de55f26d415ee26234d81761b3f64ae1fbbcad4de45cd69058a1e459b24df",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-original-tests.log",
+      "sha256": "fa306fabb1fc06d923764b5a9f03edfb771fcea7dd6e2a821947b679da45f51a",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-types-config.json",
+      "sha256": "5337f9883f9bf57521d71defb09d18b6b759445f882ad3d7ffeb6f7ab5ab175f",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-types-first.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-receipts.json",
+      "sha256": "57afc4d25231a76fc8d9f96b3fee08ce6a8d00cc1e5f067cb49e8d593e4416fd",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-scope-final.json",
+      "sha256": "98bef4f86b0064d9ac84b4d9ca0eac2873d6a64ba3f88375a3e0e40a9038f185",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-scope-before-final-comments.json",
+      "sha256": "895f10b52738c0187d6a0c693bfe33564d8c8d71061577ad229e7bbd1d668ad3",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-final-comments-before.json",
+      "sha256": "970c7c398b2eba2cfbed03f61c6c8a0615123d856aa1d722f25301ac46bda7fb",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-final-comments-bridge.json",
+      "sha256": "1fed15af85d15dc652b9855448d86436140cbdff06ef438f372631fd5a8ac730",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-final-comments-bridge-first.json",
+      "sha256": "c1d6c1c323110a7dfafd1f28de3741137ff2167666f6ab48b24e0cb1f4123959",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/potion-tool-admission.md",
+      "sha256": "71fe6d259629ddde5cdaedf66ae189d7409a7566e6bea46fd0ada56dc753498f",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/potion-tool-admission-documentation-precision-delta.json",
+      "sha256": "e161ba418de8381000abab1207a0b13897cc64264245991559783265c4c0d7cd",
+      "matches": true
+    }
+  ],
+  "semantics": [
+    "完整准入map归rulesets而非仅重导两个特殊query；基础Witch仅实际装配，原股权/stock/frame/current/history/payment仍具体owner。",
+    "参数解构/能力day1→phase→tool→activation不同none政策→heal请求自救/库存/双药/alive→day0mapper current receiver→effective alive/Role/mark→poison削弱/库存/双药/目标/history次序保。",
+    "可写map同runtime/profile引用，registry构造全局索引与调用时当前角色late查询仍真实保；不加Witch标签门槛，不把查询准入当实际付款。",
+    "三个unused binding实际旧TSC输出已擦除，不当成被删除的业务getter；publicports声明端点14原绑定同。",
+    "有界值图109→116多7模块且无指定owner/profile回环，明确初始化/反射/API差异，无门禁豁免或全历史初始化等价宣称。",
+    "新unit只切换activation策略，不冒真实gift/transfer来源；peer指出两中文精度问题以末纯comment bridge闭合，原titles/fixture/assert/source不改。"
+  ],
+  "findings": [],
+  "limits": [
+    "新unit首fixture APIactor/day传反留红，仅失败case5assert重，其它绿不重复；原Magic2/7一次，五distinct38assert为3执行。",
+    "有限5root实际476132/0及prefinalhead回执保原SHA阶段，末unitcomment以完整程序/两output桥闭，不伪重。",
+    "旧private路径实际退休，sourceHash/API位置改变明确；其它Seer/Wolf横向规则及全I04继续。"
+  ],
+  "independentReview": {
+    "path": "docs/refactor/generated/potion-tool-admission-independent-review.json",
+    "sha256": "e4be6b0c3a39828bd33e840c68134b026467a887260dcc5d85f40a07be619541",
+    "approved": true
+  },
+  "finalDocPrecision": "末实际MD准确限定原目标/用药上下文和expect不变，明确setup actor/day API修正已改变fixture调用参数；独立peer末docs/evidence SHA窄确认，不重greens。"
+}

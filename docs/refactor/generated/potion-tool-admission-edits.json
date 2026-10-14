@@ -1,0 +1,124 @@
+{
+  "moves": [
+    {
+      "from": "backend/src/game/mechanisms/roles/witch/validation_rules.ts",
+      "to": "backend/src/rulesets/potion-tool-admission.ts"
+    }
+  ],
+  "edits": [
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "/**\n * 定义女巫药瓶库存、目标、自救及当前狼刀上下文的工具校验。输入为已清洗用药工具与\n * 可信校验上下文；输出保留原结构化规则结果。预检不消费药瓶，不虚构缺失的救药目标；\n * 状态只读入口已归完整状态槽，付款与真实效果仍在原提交边界。\n */",
+      "after": "/**\n * 负责普通用药工具的完整准入组合：能力／库存、自救、学者／导师削弱、目标映射与受赠目标限制。\n * 输入为原校验上下文和已清洗工具，输出为原首个结构化拒绝或通过；不执行用药或付款。\n * 读取同一实例和当前 settled frame，不因角色标签限定受赠／复制／转移能力，不建立库存快照。\n * 参数、短路及 getter 失败顺序保持；预检通过不替代实际提交时的原体、生命和来源复验。\n */",
+      "label": "head"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "import { scholarMentorBlocks } from \"../scholar_mentor/night_frame\";",
+      "after": "import { scholarMentorBlocks } from \"../game/mechanisms/roles/scholar_mentor/ports\";",
+      "label": "scholar_public_binding"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "import { isMagicianBoard, resolveMagicianNightTarget } from \"../magician/night_frame\";",
+      "after": "import { isMagicianBoard, resolveMagicianNightTarget } from \"../game/mechanisms/roles/magician/ports\";",
+      "label": "magician_public_bindings"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "import { nativePotionsCanCombine } from \"./policies\";",
+      "after": "import { nativePotionsCanCombine } from \"../game/mechanisms/roles/witch/ports\";",
+      "label": "potion_public_binding"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "/** 文件说明：女巫工具校验规则。 */\n",
+      "after": "",
+      "label": "remove_duplicate_midhead"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "import { PotionType, Phase, WitchSelfHealRule, StatusMark } from \"../../../../core/domain/model\";",
+      "after": "import { PotionType, Phase, WitchSelfHealRule, StatusMark } from \"@ai-werewolf-arena/game-contract\";",
+      "label": "canonical_enums"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "import { COMPONENT } from \"../../../../core/domain/components/names\";",
+      "after": "import { COMPONENT } from \"../core/domain/components/names\";",
+      "label": "component_path"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "import type { StatusMarksComponent } from \"../../../../core/domain/components/status_marks\";\n",
+      "after": "",
+      "label": "unused_type_statusmarks"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "import type { RoleComponent } from \"../../../../core/domain/components/role\";\n",
+      "after": "",
+      "label": "unused_type_role"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "import { ToolRuleMap, isAliveTarget } from \"../../validation/contracts\";",
+      "after": "import { type ToolRuleMap, isAliveTarget } from \"../game/mechanisms/validation/contracts\";",
+      "label": "same_rule_contract"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "import { getWitchState } from \"./ports\";\n",
+      "after": "",
+      "label": "unused_elided_getter"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "import { activeNightAbility } from \"../abilities\";",
+      "after": "import { activeNightAbility } from \"../game/mechanisms/roles/abilities\";",
+      "label": "same_inventory_query"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "import { luckyTargetAllowed } from \"../night_action_history\";",
+      "after": "import { luckyTargetAllowed } from \"../game/mechanisms/roles/night_action_history\";",
+      "label": "same_local_history"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "/** 女巫工具校验规则集合。 */",
+      "after": "/** 保留原可写规则表；Catalog 仍晚读当前 callback，不把准入冻结为登记时的授权快照。 */",
+      "label": "mutable_map_comment"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "    const ability = activeNightAbility(role, \"potion\", day ?? 1, abilityId);",
+      "after": "    // 原库存选择也适用于受赠／复制／转移药剂；不新增 Witch 角色标签门槛。\n    const ability = activeNightAbility(role, \"potion\", day ?? 1, abilityId);",
+      "label": "dynamic_instance_comment"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "      const mapping = isMagicianBoard(world)",
+      "after": "      // 自救先检查请求编号；这里才映射有效目标，缺失 day 的原默认是 0 而非库存查询的 1。\n      const mapping = isMagicianBoard(world)",
+      "label": "mapping_order_comment"
+    },
+    {
+      "path": "backend/src/rulesets/potion-tool-admission.ts",
+      "before": "      if (scholarMentorBlocks(world, day ?? 1, actorId, \"poison\"))",
+      "after": "      // 削弱查询先于瓶数／目标；原 frame 错误原样传播，不转成库存不足或补读目标。\n      if (scholarMentorBlocks(world, day ?? 1, actorId, \"poison\"))",
+      "label": "poison_prefix_comment"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/profile.ts",
+      "before": "import { WITCH_VALIDATION_RULES } from \"./validation_rules\";",
+      "after": "import { WITCH_VALIDATION_RULES } from \"../../../../rulesets/potion-tool-admission\";",
+      "label": "profile_canonical_rule_map"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/witch/ports.ts",
+      "before": "",
+      "after": "\n/** 完整用药组合只读取同一原生双药政策；该查询不扣瓶、关闭回合或授予提交许可。 */\nexport { nativePotionsCanCombine } from \"./policies\";\n",
+      "label": "public_native_combination_query"
+    }
+  ]
+}
