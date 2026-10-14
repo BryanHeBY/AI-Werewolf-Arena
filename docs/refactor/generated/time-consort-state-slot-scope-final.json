@@ -1,0 +1,87 @@
+{
+  "baseCommit": "751604fd1d5feea8911354fee550b9ad49c262b7",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state-slot.ts",
+      "sha256": "b3a7740fdf3b6bf70e94f79f523e2965c08b6c30d02965e48f9ab612b6b98e4d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/profile.ts",
+      "sha256": "077585ba4d67cefd540e4eb4462cf73bd2600798a1eaa29423fb1baaf1f41c1a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "sha256": "36ea83bc91dcf0e5143cc2de41bbcb1e1101b8988e28b324ec0efd3d6e925433"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_stages.ts",
+      "sha256": "85515308e16203e76272d1caf081f433ca8d19235b7b74c810797c3b6b6a6dd2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/ports.ts",
+      "sha256": "138ba5d3f0d116a56a82fdb68628f1906785bf6b2a690345c28a87509cd71f5a"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "9fa5688b9bbad3980cd57c00d71d83bd512f417b0f5bf24a6656e3e442bc6bae"
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/state.test.ts",
+      "sha256": "3ffabca1826988510334e2324a55c2f76eedc66088e6ae29aa50e9032869db0d"
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/frame.test.ts",
+      "sha256": "30d1ed4339a548e556527fae2c6a1a80a5dae99ace85a1656dce04bb908f97ff"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "d15f7e6b8e83ed85380ac2456068eb42b09c07da13732b6ad4afa7b219eb880e"
+    },
+    {
+      "path": "backend/tests/unit/contracts/time-consort-player-dto.types.ts",
+      "sha256": "f51e99b6861ea94904d119aeb29dd939499aca0340f476b315489f3dfa22e21b"
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/time-wolf-consort/seeded-world.test.ts",
+      "sha256": "9ff769f5be3358540a294b4d3f86f6f9e1e66e105d21c2f57354c1443b5ad99e"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/time-consort/reflection-cycle-controls.test.ts",
+      "sha256": "a205bee64a9abb6d0c50bb4bca5a1c7a45d7aeb385d843bc6e466d2cace85b48"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/time-consort/native-scope-revocation.test.ts",
+      "sha256": "e7215c71946a5a10ebf2c2c13b3800436a2a61a8aa4495647785a4d7eb5e5a01"
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/state-slot.test.ts",
+      "sha256": "5689f01cb94923df49652cddbee93499a227d1a861ac5ef9a1d51c85c2867fd5"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+      "sha256": "b88a27cb1efbfbe62a18c1f5322420e8c744305b0500c0c01f39902a518068f4",
+      "expectedAbsent": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "packages/game-contract/src/role-state-data.ts",
+      "sha256": "e43cbf73ede59fdb70c367dd05808f808ac52211acd46196d63180e8e9956fc0"
+    },
+    {
+      "path": "packages/game-contract/src/facts/time-consort.ts",
+      "sha256": "458e30c10c93b0106e9549c031f68667d99b478310cab4b1aea87cffa84dab31"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/effects.ts",
+      "sha256": "61ef19f60a4d801257571bb96b227db79d7bb7a985624ed422e93891191caada"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night-lifecycle.ts",
+      "sha256": "9e800454793a72a875cc1bf86987293b8d35843a0947cd1660d5eb282583b30f"
+    }
+  ],
+  "frozen": true
+}

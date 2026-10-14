@@ -1,0 +1,255 @@
+{
+  "approved": true,
+  "baseCommit": "751604fd1d5feea8911354fee550b9ad49c262b7",
+  "programs": [
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state-slot.ts",
+      "beforePath": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+      "finalSHA256": "b3a7740fdf3b6bf70e94f79f523e2965c08b6c30d02965e48f9ab612b6b98e4d",
+      "wholeExactForwardSame": true,
+      "wholeExactInverseSame": true,
+      "mappedOutputSHA256": [
+        "4a932f25c9ce6f42090983b912f71d45e9a45ae6ec1458dd91671c48d451d8b3",
+        "b1811e404a3aae9b695dcbe250ee9b1d8d1021c9416741e30f92d0bc4d987461"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/profile.ts",
+      "beforePath": "backend/src/game/mechanisms/roles/time_wolf_consort/profile.ts",
+      "finalSHA256": "077585ba4d67cefd540e4eb4462cf73bd2600798a1eaa29423fb1baaf1f41c1a",
+      "wholeExactForwardSame": true,
+      "wholeExactInverseSame": true,
+      "mappedOutputSHA256": [
+        "290d2838c5c5a2fbcc8f8b4be2fbc0bd3a25b7a95a079a430cd67369a27bb74c",
+        "1321f3661980aa2ebecd5116bb8c01468f60ed8967ca5db908d4ef5d5f9c34e5"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "beforePath": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "finalSHA256": "36ea83bc91dcf0e5143cc2de41bbcb1e1101b8988e28b324ec0efd3d6e925433",
+      "wholeExactForwardSame": true,
+      "wholeExactInverseSame": true,
+      "mappedOutputSHA256": [
+        "06056af5a6351dc9f30b234683255a799383d8a2ed10d4eae3fc277bdd202c33",
+        "0924df4c0bb376c7b6ecebab48ba7aea475819a31ce5a953a9920f7c3423065a"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_stages.ts",
+      "beforePath": "backend/src/game/mechanisms/roles/time_wolf_consort/night_stages.ts",
+      "finalSHA256": "85515308e16203e76272d1caf081f433ca8d19235b7b74c810797c3b6b6a6dd2",
+      "wholeExactForwardSame": true,
+      "wholeExactInverseSame": true,
+      "mappedOutputSHA256": [
+        "d0c6857052e88c6d2fafe9c931b3073af59fba617de595378fdb9b9d486a6536",
+        "5084df66d496d864864dbb51c33e54929a9b9aabfbc3c622caec7d72a51b0b67"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/ports.ts",
+      "beforePath": "backend/src/game/mechanisms/roles/time_wolf_consort/ports.ts",
+      "finalSHA256": "138ba5d3f0d116a56a82fdb68628f1906785bf6b2a690345c28a87509cd71f5a",
+      "wholeExactForwardSame": true,
+      "wholeExactInverseSame": true,
+      "mappedOutputSHA256": [
+        "d2f48c9778273a7f1f75cf29a68f3aa5176b6871b7eeaf98f7f0fde2c89d130a",
+        "bc1cfc477f1d032213633d36c6b7ffe4f109251a3c0553bab75518192ef83ba4"
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "beforePath": "backend/src/game/observation/player-observation-projector.ts",
+      "finalSHA256": "9fa5688b9bbad3980cd57c00d71d83bd512f417b0f5bf24a6656e3e442bc6bae",
+      "wholeExactForwardSame": true,
+      "wholeExactInverseSame": true,
+      "mappedOutputSHA256": [
+        "50db89cbee29f2387d14f75924145f2efefa8062ab76a2f67165231d3ac3bda1",
+        "b1e6be13b44d0f19a091b305fe6af0f8d1c13423431e1d50fc09aab48c3bbdb4"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/state.test.ts",
+      "beforePath": "backend/tests/unit/features/time-consort/state.test.ts",
+      "finalSHA256": "3ffabca1826988510334e2324a55c2f76eedc66088e6ae29aa50e9032869db0d",
+      "wholeExactForwardSame": true,
+      "wholeExactInverseSame": true,
+      "mappedOutputSHA256": [
+        "a61149eb21f7bbe6e0f4678be895d89bd7bdb9ecdf10ab80f3179f4db98e20cf",
+        "e088846af4b8fa7b92740ab67708d02356c8e0dff33b81f221376d4f4c62b68d"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/frame.test.ts",
+      "beforePath": "backend/tests/unit/features/time-consort/frame.test.ts",
+      "finalSHA256": "30d1ed4339a548e556527fae2c6a1a80a5dae99ace85a1656dce04bb908f97ff",
+      "wholeExactForwardSame": true,
+      "wholeExactInverseSame": true,
+      "mappedOutputSHA256": [
+        "c99d4a6c953f4f3eab3640fd5b74dba71ccd2b6325c967fd1f850a1635f7341f",
+        "88e7b59d331adf11b2105683f7030afd419a75ae922a944048f0f029ad4af36a"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "beforePath": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "finalSHA256": "d15f7e6b8e83ed85380ac2456068eb42b09c07da13732b6ad4afa7b219eb880e",
+      "wholeExactForwardSame": true,
+      "wholeExactInverseSame": true,
+      "mappedOutputSHA256": [
+        "34d0433b85159e544a9d23b1f599c0bb9f85dae74b5d8570afdaae49468d41ba",
+        "d0462a1434ba11c16d802f506dff07eacbf1965b706d1c709e268c628afa9493"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/contracts/time-consort-player-dto.types.ts",
+      "beforePath": "backend/tests/unit/contracts/time-consort-player-dto.types.ts",
+      "finalSHA256": "f51e99b6861ea94904d119aeb29dd939499aca0340f476b315489f3dfa22e21b",
+      "wholeExactForwardSame": true,
+      "wholeExactInverseSame": true,
+      "mappedOutputSHA256": [
+        "2e31d803909e70422ec973600325a7f34fd2139b8a4a43047963d3bc7904aa0a",
+        "35da5c06f20595fd57f0c77f7001a84fb33962fb42151a9632388e37ff3c90a1"
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/time-wolf-consort/seeded-world.test.ts",
+      "beforePath": "backend/tests/scenarios/simulation/time-wolf-consort/seeded-world.test.ts",
+      "finalSHA256": "9ff769f5be3358540a294b4d3f86f6f9e1e66e105d21c2f57354c1443b5ad99e",
+      "wholeExactForwardSame": true,
+      "wholeExactInverseSame": true,
+      "mappedOutputSHA256": [
+        "cc2f727b19958cf4e9a24a38be771ef31f1bbf744b878533a2de922f504e9f2b",
+        "7542ddf0a77a2ef5e78a69fe8b6f898ecfb8eca9cafda12067974ad9359bc623"
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/time-consort/reflection-cycle-controls.test.ts",
+      "beforePath": "backend/tests/scenarios/interactions/time-consort/reflection-cycle-controls.test.ts",
+      "finalSHA256": "a205bee64a9abb6d0c50bb4bca5a1c7a45d7aeb385d843bc6e466d2cace85b48",
+      "wholeExactForwardSame": true,
+      "wholeExactInverseSame": true,
+      "mappedOutputSHA256": [
+        "0970b1bb9bdeed5d45458163229717760977664b1be2d9356fa41174d19daa62",
+        "a27d3ff453534d2fcb282d0f39b1a29c052d7468d764ccdd66923f722f2acf6b"
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/time-consort/native-scope-revocation.test.ts",
+      "beforePath": "backend/tests/scenarios/interactions/time-consort/native-scope-revocation.test.ts",
+      "finalSHA256": "e7215c71946a5a10ebf2c2c13b3800436a2a61a8aa4495647785a4d7eb5e5a01",
+      "wholeExactForwardSame": true,
+      "wholeExactInverseSame": true,
+      "mappedOutputSHA256": [
+        "0596e34099285248a93d0acfe1b0b32bc4da10f90ff122446b24fc66d2f692ff",
+        "0c312277985f6683e1d7400baefb5209490089ab129a8ba5447f14720622fcc1"
+      ]
+    }
+  ],
+  "producers": [
+    {
+      "name": "install",
+      "actualSHA256": "2ee6e0a07999a664a357b83a5b068d5256774e0eb35cb3bcd62acb1495bf3f46",
+      "originalSHA256": "2ee6e0a07999a664a357b83a5b068d5256774e0eb35cb3bcd62acb1495bf3f46",
+      "fullNormalizedProgramSame": true
+    },
+    {
+      "name": "appendHistory",
+      "actualSHA256": "e0c410604bcfb699c95faa527e5b068a0dce1f0b9f94bc57fc87257985acb52a",
+      "originalSHA256": "924e34a994e53099e079fc86e7952696cef241b8b07133af491f27ee0ba64693",
+      "fullNormalizedProgramSame": true
+    },
+    {
+      "name": "trigger",
+      "actualSHA256": "9dfc5ac995c84066a2bc01ebf57385d7e19f3da25fca797ae384e2153f76fc88",
+      "originalSHA256": "9dfc5ac995c84066a2bc01ebf57385d7e19f3da25fca797ae384e2153f76fc88",
+      "fullNormalizedProgramSame": true
+    },
+    {
+      "name": "identity",
+      "actualSHA256": "547bf0c3e9da62c045cac28865f8e1e1ac7a28a35df000b96a3216612bad0c8b",
+      "originalSHA256": "ca66837e9f5fcfa7895bffebc2f5174482fd7bff1e0e1f2b3476f4e29dd26f14",
+      "fullNormalizedProgramSame": true
+    },
+    {
+      "name": "field",
+      "actualSHA256": "2037768f3cd92e09f79dcbfc3967a844bc6f3f4c4d5686270eeb413fb4a0fb48",
+      "originalSHA256": "2037768f3cd92e09f79dcbfc3967a844bc6f3f4c4d5686270eeb413fb4a0fb48",
+      "fullNormalizedProgramSame": true
+    },
+    {
+      "name": "exact",
+      "actualSHA256": "cfb51b99df4ce2821c2fb4347a0fe51dd2150415f06d7bff58c5ef2b942b9c2a",
+      "originalSHA256": "cfb51b99df4ce2821c2fb4347a0fe51dd2150415f06d7bff58c5ef2b942b9c2a",
+      "fullNormalizedProgramSame": true
+    },
+    {
+      "name": "integer",
+      "actualSHA256": "4847138b916eb59c4fa9a0e838f4fff746e57a72fa26eec1d66ce4fc95fbde9d",
+      "originalSHA256": "4847138b916eb59c4fa9a0e838f4fff746e57a72fa26eec1d66ce4fc95fbde9d",
+      "fullNormalizedProgramSame": true
+    },
+    {
+      "name": "arrayItems",
+      "actualSHA256": "fb9d5c12e90d5e1a04bef37d8ea4f5074585e396f8f690e011fbfda56f370db9",
+      "originalSHA256": "fb9d5c12e90d5e1a04bef37d8ea4f5074585e396f8f690e011fbfda56f370db9",
+      "fullNormalizedProgramSame": true
+    },
+    {
+      "name": "getTimeConsortState",
+      "actualSHA256": "99ddf941f36fc4d2a42bec4253aef850fbb9e1207ebe6c9412e527011568f40d",
+      "originalSHA256": "99ddf941f36fc4d2a42bec4253aef850fbb9e1207ebe6c9412e527011568f40d",
+      "fullNormalizedProgramSame": true
+    },
+    {
+      "name": "createTimeConsortState",
+      "actualSHA256": "11cb57e66a57f93913e3fabdd2daeec1e10dfd52ed284411fe42f9ca7c434d3c",
+      "originalSHA256": "11cb57e66a57f93913e3fabdd2daeec1e10dfd52ed284411fe42f9ca7c434d3c",
+      "fullNormalizedProgramSame": true
+    },
+    {
+      "name": "projectTimeConsortState",
+      "actualSHA256": "1447eaf62001f47fd9d2fb8f31e7871633fa2e10aee4f6ab5425eaca4dbe2e4f",
+      "originalSHA256": "1447eaf62001f47fd9d2fb8f31e7871633fa2e10aee4f6ab5425eaca4dbe2e4f",
+      "fullNormalizedProgramSame": true
+    },
+    {
+      "name": "timeConsortReflectionTarget",
+      "actualSHA256": "5bf99b5eb6de6f24e80ce10f8644ea4c0029927e8c84d00897b2fbd5ba6e54c0",
+      "originalSHA256": "5bf99b5eb6de6f24e80ce10f8644ea4c0029927e8c84d00897b2fbd5ba6e54c0",
+      "fullNormalizedProgramSame": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "packages/game-contract/src/role-state-data.ts",
+      "sha256": "e43cbf73ede59fdb70c367dd05808f808ac52211acd46196d63180e8e9956fc0"
+    },
+    {
+      "path": "packages/game-contract/src/facts/time-consort.ts",
+      "sha256": "458e30c10c93b0106e9549c031f68667d99b478310cab4b1aea87cffa84dab31"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/effects.ts",
+      "sha256": "61ef19f60a4d801257571bb96b227db79d7bb7a985624ed422e93891191caada"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night-lifecycle.ts",
+      "sha256": "9e800454793a72a875cc1bf86987293b8d35843a0947cd1660d5eb282583b30f"
+    }
+  ],
+  "retired": [],
+  "summary": {
+    "wholePrograms": 13,
+    "mappedOutputs": 26,
+    "preservedStateFunctions": 8,
+    "movedDataPrograms": 4,
+    "exactEdits": 30
+  },
+  "limitations": [
+    "完整程序输出在精确迁移逆展开后对照；不冒新方法表／额外调用／模块路径全部raw不变。",
+    "公开ports仅实际get/project，库存、used／revision／expectedState及回执权限仍原owner；槽不创建镜像。",
+    "新槽value依赖保持原state的node:util与core，没有反导frame；此局部方向不冒全图冷初始化证明。",
+    "六当前源码根仅字面旧入口扫描，不覆盖计算路径、仓外或历史generated。"
+  ]
+}

@@ -1,10 +1,11 @@
 /**
- * Owns Time Consort target locks and their reflected night-action receipts. Inputs are original
- * players, the lock choice and native action kind; outputs are effective-target mappings and
- * currentness checks. Close/abort ends the lock night without transferring its effect to revived
- * targets.
+ * 负责蚀时狼妃原体与能力绑定、锁定夜窗口和反射回执。输入为原 World、选择与效果来源，
+ * 输出为原有效目标、原生命 scope 和一次提交回执；close／abort 在原时点结束夜窗口。
+ * 原字段、生命版本和能力政策复验不让复活／换体继承已付反射；已提交锁定允许一次普通死亡。
+ * 状态槽拥有原数据写入和内部编码，frame 仍在原顺序拥有 used、revision、targetId／committed 及 expectedState。
+ * 读取、写入或编码失败保留原前缀，不退款；回执及 scope 是运行引用，不是玩家 DTO 或独立授权。
  */
-import type { TimeConsortState, TimeConsortReadState } from "@ai-werewolf-arena/game-contract";
+import type { TimeConsortReadState } from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
 import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../core";
 import {
@@ -13,7 +14,7 @@ import {
   type AliveComponent,
 } from "../../../../core/domain/components/alive";
 import type { NightLifeScope } from "../../../../core/domain/night_effects";
-import { getTimeConsortState, projectTimeConsortState, TIME_CONSORT_ROLE } from "./state";
+import { getTimeConsortState, projectTimeConsortState, TIME_CONSORT_ROLE, TIME_CONSORT_STATE_SLOT } from "./state-slot";
 
 interface OriginalPlayer {
   abilityAuthority: () => boolean;
@@ -45,11 +46,6 @@ interface Board {
   night: ExchangeNight | null;
 }
 const boards = new WeakMap<World, Board>();
-function stateIdentity(role: RoleComponent): string {
-  const view = projectTimeConsortState(role, Number.MAX_SAFE_INTEGER - 1);
-  if (!view) throw new Error("time_consort_original_state_revoked");
-  return JSON.stringify({ ...view, triggeredDay: getTimeConsortState(role)!.triggeredDay });
-}
 function ownData(value: unknown, key: PropertyKey): unknown {
   if (!value || typeof value !== "object" || types.isProxy(value)) return undefined;
   const d = Object.getOwnPropertyDescriptor(value, key);
@@ -154,7 +150,7 @@ function originalPlayer(world: World, p: OriginalPlayer): boolean {
   )
     return false;
   const version = aliveLifeVersion(p.life);
-  // A committed exchange survives one ordinary death, never revival or another life.
+  // 已提交锁定保留一次普通死亡的原生命版本前缀，不允许复活或换生命。
   return p.life.alive ? version === p.version : version === p.version + 1;
 }
 function requireBoard(world: World): Board {
@@ -168,7 +164,7 @@ function requireBoard(world: World): Board {
   )
     throw new Error("time_consort_original_state_revoked");
   const actor = b.players.get(b.actorId)!;
-  if (getTimeConsortState(actor.role) !== b.state || stateIdentity(actor.role) !== b.expectedState)
+  if (getTimeConsortState(actor.role) !== b.state || TIME_CONSORT_STATE_SLOT.checkpoint.identity(actor.role) !== b.expectedState)
     throw new Error("time_consort_original_state_revoked");
   return b;
 }
@@ -242,7 +238,7 @@ export function installTimeConsortBoard(world: World): void {
   boards.set(world, {
     actorId,
     state,
-    expectedState: stateIdentity(players.get(actorId)!.role),
+    expectedState: TIME_CONSORT_STATE_SLOT.checkpoint.identity(players.get(actorId)!.role),
     players,
     night: null,
   });
@@ -303,16 +299,12 @@ export function commitTimeConsortChoice(
     (!Number.isSafeInteger(targetId) || !n.targets.get(targetId)?.life.alive)
   )
     throw new Error("time_consort_choice_target_invalid");
-  Object.defineProperty(b.state.history, String(b.state.history.length), {
-    value: { day, targetId },
-    writable: true,
-    enumerable: true,
-    configurable: true,
-  });
+  // 先追加历史，再依原顺序更新目标／提交标志／版本；编码失败不回滚已写前缀。
+  TIME_CONSORT_STATE_SLOT.allowedWrites.appendHistory(() => b.state, day, targetId);
   n.targetId = targetId;
   n.committed = true;
   n.revision++;
-  b.expectedState = stateIdentity(b.players.get(actorId)!.role);
+  b.expectedState = TIME_CONSORT_STATE_SLOT.checkpoint.identity(b.players.get(actorId)!.role);
 }
 export interface TimeConsortReceipt {
   readonly requestedId: number;
@@ -382,9 +374,10 @@ export function resolveTimeConsortTarget(
       if (!current()) throw new Error("time_consort_receipt_stale");
       used = true;
       if (reflected) {
-        (b.state as Pick<TimeConsortState, "triggeredDay">).triggeredDay = day;
+        // used 已消费；触发 setter 失败时不再重开回执，版本及编码仍在此写入之后。
+        TIME_CONSORT_STATE_SLOT.allowedWrites.trigger(() => b.state, day);
         n.revision++;
-        b.expectedState = stateIdentity(b.players.get(b.actorId)!.role);
+        b.expectedState = TIME_CONSORT_STATE_SLOT.checkpoint.identity(b.players.get(b.actorId)!.role);
       }
     },
   });

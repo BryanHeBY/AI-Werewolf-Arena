@@ -720,3 +720,5 @@
 - 固定005c92e4阶段结构检查：3177实际Git公共raw及550同Gitdocs，原六工具/1779债SHA297b保持；唯一后台7e5309/session32034→a3fbd7真实0，新问题0/旧债300/清1479，较固定5d42净清21且返回0。Root全3177blob/mode/SHA/UTF8与80,162,360字节input/digest、六工具/原债完整分区核真及独立同源/11附件/收据/MD审批准，不重gate/type/test。固定树不含Knight2cc后继和其它WIP；300结构旧债、全中文和玩法/资源/最终P9仍待，本次不冒完整重构完成，见 architecture-checkpoint-005c92e4.md。
 
 - C20 白天中断请求端口：一源三个接口参数统一既有领域create-only端口，与Self/Knight/Debater真实execute一致；静态接受面扩大明确，不引入运行wrapper/授权/冻结。真实751604一Git八精确全文forward/inverse、六实际控制（领域端口/三个窗口/装配/白天pipeline）与独立语义/中文审批准。七根有限类型96f268/session32489→92a839首0，两完整当前JS输出同/head0；末一comment回调所有权精度只227token/两output窄桥不重绿，13附件末绑。MD控制首项误名工厂已改领域端口只doc，不跑游戏tests或全gate/model。全部C20/角色/中文/P9继续，见 daytime-request-port.md。
+
+- C17 蚀时狼妃唯一状态槽：十五路径（十四现行／旧state删除），完整八state函数和四实际安装／history／trigger／identity数据程序归本族，frame保原体/生命/能力、used/revision/窗口/expectedState。Root实际751604十三Git、十二完整consumer＋原state全文前缀、四真实data body/四控制/16附件与独立全语义/中文审批准，history<=day和trigger<day知识边界、两reflection政策保持。new3/15＋原whole/first2/26两首次共五不同41断言，十四根types26c388/0、heads0；首工具空after误匹配红保留仅工具修，完整26逆输出49baa0/0，不重绿。公开get/project不公开writer，原数据与生命周期唯一owner、无镜像或原入口桥；全部C17/中文/档案/P9继续，见 time-consort-state-slot.md。

@@ -1,0 +1,158 @@
+{
+  "oldPath": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+  "newPath": "backend/src/game/mechanisms/roles/time_wolf_consort/state-slot.ts",
+  "identity": "function stateIdentity(role: RoleComponent): string {\n  const view = projectTimeConsortState(role, Number.MAX_SAFE_INTEGER - 1);\n  if (!view) throw new Error(\"time_consort_original_state_revoked\");\n  return JSON.stringify({ ...view, triggeredDay: getTimeConsortState(role)!.triggeredDay });\n}\n",
+  "oldAppend": "  Object.defineProperty(b.state.history, String(b.state.history.length), {\n    value: { day, targetId },\n    writable: true,\n    enumerable: true,\n    configurable: true,\n  });",
+  "edits": [
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state-slot.ts",
+      "before": "/**\n * 负责蚀时狼妃状态构造、原槽同引用读取、玩家知识裁剪和纯反射目标选择。\n * 输入为原角色／历史、日次与请求目标，输出为原状态引用、独立知识 DTO 或原目标决策。\n * 本数据 owner 保持 Node Proxy／描述符拒绝和精确形状；反射回执、实际状态写权与生命／\n * 请求权限仍归夜机制，数据检查和字段可写声明不提交效果或授予许可。\n */\n",
+      "after": "/**\n * 负责蚀时狼妃唯一状态槽的创建、完整 live 校验、同引用读取、初始化／历史／触发写入和身份编码。\n * 输入为原角色、范围参数、日次与晚读容器；输出为原状态、脱离知识副本或原明确拒绝。\n * Node Proxy／自身数据 descriptor、历史日期、重复目标和触发关联保持原政策；写入失败保留已写前缀。\n * frame 独自拥有原体、生命、能力、夜回执及 expectedState；槽不另存镜像、付款、开启窗口或授予许可。\n * 内部 JSON 只用于原运行比对，不是严格档案 codec；玩家历史可见至 day，耗尽只在触发日之后告知。\n */\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state-slot.ts",
+      "before": "export function getTimeConsortState(",
+      "after": "/** 完整原 live 校验先拒绝 Proxy，再读自身数据 descriptor；合法时保原状态／历史引用，不复制或冻结库存。 */\nexport function getTimeConsortState("
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state-slot.ts",
+      "before": "  let previous = 0,",
+      "after": "  // 日期严格递增，连续夜不能重复同一非空目标；触发必须对应非空选择且其后不能再有历史。\n  let previous = 0,"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/profile.ts",
+      "before": "import { TIME_CONSORT_POLICY, createTimeConsortState, getTimeConsortState } from \"./state\";",
+      "after": "import { TIME_CONSORT_POLICY, TIME_CONSORT_STATE_SLOT, getTimeConsortState } from \"./state-slot\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/profile.ts",
+      "before": "      role.privateState.timeConsort = createTimeConsortState(value.reflectionScope);",
+      "after": "      // 原参数解析之后，仍先读左值 privateState，再读 reflectionScope 并创建／赋值。\n      TIME_CONSORT_STATE_SLOT.install(() => role.privateState, value);"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "before": "/**\n * Owns Time Consort target locks and their reflected night-action receipts. Inputs are original\n * players, the lock choice and native action kind; outputs are effective-target mappings and\n * currentness checks. Close/abort ends the lock night without transferring its effect to revived\n * targets.\n */\n",
+      "after": "/**\n * 负责蚀时狼妃原体与能力绑定、锁定夜窗口和反射回执。输入为原 World、选择与效果来源，\n * 输出为原有效目标、原生命 scope 和一次提交回执；close／abort 在原时点结束夜窗口。\n * 原字段、生命版本和能力政策复验不让复活／换体继承已付反射；已提交锁定允许一次普通死亡。\n * 状态槽拥有原数据写入和内部编码，frame 仍在原顺序拥有 used、revision、targetId／committed 及 expectedState。\n * 读取、写入或编码失败保留原前缀，不退款；回执及 scope 是运行引用，不是玩家 DTO 或独立授权。\n */\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "before": "import type { TimeConsortState, TimeConsortReadState }",
+      "after": "import type { TimeConsortReadState }"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "before": "import { getTimeConsortState, projectTimeConsortState, TIME_CONSORT_ROLE } from \"./state\";",
+      "after": "import { getTimeConsortState, projectTimeConsortState, TIME_CONSORT_ROLE, TIME_CONSORT_STATE_SLOT } from \"./state-slot\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "before": "function stateIdentity(role: RoleComponent): string {\n  const view = projectTimeConsortState(role, Number.MAX_SAFE_INTEGER - 1);\n  if (!view) throw new Error(\"time_consort_original_state_revoked\");\n  return JSON.stringify({ ...view, triggeredDay: getTimeConsortState(role)!.triggeredDay });\n}\n",
+      "after": ""
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "before": "// A committed exchange survives one ordinary death, never revival or another life.",
+      "after": "// 已提交锁定保留一次普通死亡的原生命版本前缀，不允许复活或换生命。"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "before": "  Object.defineProperty(b.state.history, String(b.state.history.length), {\n    value: { day, targetId },\n    writable: true,\n    enumerable: true,\n    configurable: true,\n  });",
+      "after": "  // 先追加历史，再依原顺序更新目标／提交标志／版本；编码失败不回滚已写前缀。\n  TIME_CONSORT_STATE_SLOT.allowedWrites.appendHistory(() => b.state, day, targetId);"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "before": "        (b.state as Pick<TimeConsortState, \"triggeredDay\">).triggeredDay = day;",
+      "after": "        // used 已消费；触发 setter 失败时不再重开回执，版本及编码仍在此写入之后。\n        TIME_CONSORT_STATE_SLOT.allowedWrites.trigger(() => b.state, day);"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "before": "stateIdentity(actor.role)",
+      "after": "TIME_CONSORT_STATE_SLOT.checkpoint.identity(actor.role)"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "before": "stateIdentity(players.get(actorId)!.role)",
+      "after": "TIME_CONSORT_STATE_SLOT.checkpoint.identity(players.get(actorId)!.role)"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "before": "stateIdentity(b.players.get(actorId)!.role)",
+      "after": "TIME_CONSORT_STATE_SLOT.checkpoint.identity(b.players.get(actorId)!.role)"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "before": "stateIdentity(b.players.get(b.actorId)!.role)",
+      "after": "TIME_CONSORT_STATE_SLOT.checkpoint.identity(b.players.get(b.actorId)!.role)"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_stages.ts",
+      "before": "/**\n * Executes the Time Consort lock request before affected native actions. Inputs are the bound\n * night frame and validated target choice; outputs are the committed lock fact. It does not move\n * reflection or paid-effect commitment ahead of the later native action owners.\n */\n",
+      "after": "/**\n * 负责在受影响原生动作之前执行蚀时狼妃锁定阶段。输入为原夜 frame、请求及校验后的选择，\n * 输出为原私有锁定／跳过事实；反射付款仍在之后具体原生效果回执的提交时点。\n * 等待及网关前后保原名单／当前日复验，提交历史先于事件发布；失败不回滚已付前缀。\n */\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_stages.ts",
+      "before": "from \"./state\"",
+      "after": "from \"./state-slot\""
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_stages.ts",
+      "before": "/** Runs from the configured role set, including after the time_consort's death. */",
+      "after": "/** 按配置角色集收集并执行此阶段，蚀时狼妃死亡后仍执行原跳过分支。 */"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/ports.ts",
+      "before": "提供时空狼妃",
+      "after": "提供蚀时狼妃"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/ports.ts",
+      "before": "export { getTimeConsortState } from \"./state\";",
+      "after": "/** 原槽同引用读取和脱离知识投影；历史／耗尽只说明已告知数据，不提供写入或付款入口。 */\nexport { getTimeConsortState, projectTimeConsortState } from \"./state-slot\";"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "before": "\"../mechanisms/roles/time_wolf_consort/state\"",
+      "after": "\"../mechanisms/roles/time_wolf_consort/ports\""
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/state.test.ts",
+      "before": "/time_wolf_consort/state\"",
+      "after": "/time_wolf_consort/state-slot\""
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/state.test.ts",
+      "before": "/**\n * Unit tests for time-consort; Isolated time-consort state contract; native in-memory owner/frame/readers, no assembled game cycle.\n * Inputs are existing in-memory fixtures, original callback controls and explicit\n * invalid mutations. Original literal expectations, identity snapshots and\n * rejection assertions supply the oracle; none are regenerated during relocation.\n * Test-owned mocks/components exercise this boundary without a model or physical\n * transport. Support files, fixture bytes, policy and state behavior are retained.\n */\n",
+      "after": "/**\n * 单元测试验证蚀时狼妃原状态接受、同引用读取、反射目标与知识延迟；输入为原内存 fixture、\n * 明确非法修改和范围参数，原字面预期与拒绝是预期，不生成新 golden 或运行完整对局。\n * 测试自有 getter／Proxy 样本只核读取边界，不调用模型、传输或实际效果付款。\n */\n"
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/frame.test.ts",
+      "before": "/time_wolf_consort/state\"",
+      "after": "/time_wolf_consort/state-slot\""
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "before": "/time_wolf_consort/state\"",
+      "after": "/time_wolf_consort/ports\""
+    },
+    {
+      "path": "backend/tests/unit/contracts/time-consort-player-dto.types.ts",
+      "before": "/time_wolf_consort/state\"",
+      "after": "/time_wolf_consort/ports\""
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/time-wolf-consort/seeded-world.test.ts",
+      "before": "/time_wolf_consort/state\"",
+      "after": "/time_wolf_consort/ports\""
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/time-consort/reflection-cycle-controls.test.ts",
+      "before": "/time_wolf_consort/state\"",
+      "after": "/time_wolf_consort/ports\""
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/time-consort/native-scope-revocation.test.ts",
+      "before": "/time_wolf_consort/state\"",
+      "after": "/time_wolf_consort/ports\""
+    }
+  ]
+}

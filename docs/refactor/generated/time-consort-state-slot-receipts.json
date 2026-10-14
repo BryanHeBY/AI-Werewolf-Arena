@@ -1,0 +1,68 @@
+{
+  "types": {
+    "roots": 14,
+    "launch": {
+      "chunk_id": "f9b226",
+      "session_id": 13219
+    },
+    "terminal": {
+      "chunk_id": "26c388",
+      "exit_code": 0
+    },
+    "log": "docs/refactor/generated/time-consort-state-slot-types.log"
+  },
+  "newTests": {
+    "chunk_id": "4888d5",
+    "exit_code": 0,
+    "cases": 3,
+    "assertions": 15,
+    "log": "docs/refactor/generated/time-consort-state-slot-new-tests.log"
+  },
+  "originalTest": {
+    "chunk_id": "17b6fc",
+    "exit_code": 0,
+    "cases": 2,
+    "assertions": 26,
+    "filtered": 4,
+    "log": "docs/refactor/generated/time-consort-state-slot-original-test.log"
+  },
+  "proofFirst": {
+    "chunk_id": "e5b45f",
+    "exit_code": 1,
+    "reason": "工具把移走函数的空after按普通substring计数；不是产品失败",
+    "log": "docs/refactor/generated/time-consort-state-slot-proof-first.log",
+    "script": "docs/refactor/generated/time-consort-state-slot-proof-first.cjs"
+  },
+  "proofFinal": {
+    "launch": {
+      "chunk_id": "c76363",
+      "session_id": 39481
+    },
+    "terminal": {
+      "chunk_id": "49baa0",
+      "exit_code": 0
+    },
+    "log": "docs/refactor/generated/time-consort-state-slot-proof.log",
+    "toolOnlyFix": "只在原ownData紧邻锚点恢复已移走identity函数；产品原文未因该工具修正改变"
+  },
+  "heads": {
+    "chunk_id": "ff45a4",
+    "exit_code": 0,
+    "files": 14,
+    "diagnostics": 0,
+    "log": "docs/refactor/generated/time-consort-state-slot-heads.log"
+  },
+  "notRun": [
+    "再次运行已绿case/types/heads",
+    "全门禁",
+    "全suite",
+    "整局",
+    "模型",
+    "浏览器"
+  ],
+  "limits": [
+    "空types日志不推导退出，实际terminal为26c388/0。",
+    "五个不同用例41断言仅覆盖本批具体风险及原反射两policy，不宣称全部机制完备。",
+    "仅14现行根及当次传递依赖，Root其它并行源码不属于本批冻结闭包。"
+  ]
+}

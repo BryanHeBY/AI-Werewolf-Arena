@@ -11,7 +11,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 import { Role, Camp, WinCondition, Phase } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
-import { TIME_CONSORT_POLICY, createTimeConsortState, getTimeConsortState } from "./state";
+import { TIME_CONSORT_POLICY, TIME_CONSORT_STATE_SLOT, getTimeConsortState } from "./state-slot";
 import { timeConsortChoicePending, timeConsortChoiceTargets } from "./night_frame";
 import { TIME_CONSORT_LOCK_STAGE } from "./night_stages";
 const parameters = z.strictObject({
@@ -41,7 +41,8 @@ export const TIME_CONSORT_ROLE_PROFILE: NativeRoleContributions = {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     init: (role, ctx) => {
       const value = parameters.parse(ctx.boardConfig?.timeConsort ?? {});
-      role.privateState.timeConsort = createTimeConsortState(value.reflectionScope);
+      // 原参数解析之后，仍先读左值 privateState，再读 reflectionScope 并创建／赋值。
+      TIME_CONSORT_STATE_SLOT.install(() => role.privateState, value);
     },
     configuration: {
       schema: parameters,

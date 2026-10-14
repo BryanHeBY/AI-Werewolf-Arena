@@ -1,8 +1,9 @@
 /**
- * 负责蚀时狼妃状态构造、原槽同引用读取、玩家知识裁剪和纯反射目标选择。
- * 输入为原角色／历史、日次与请求目标，输出为原状态引用、独立知识 DTO 或原目标决策。
- * 本数据 owner 保持 Node Proxy／描述符拒绝和精确形状；反射回执、实际状态写权与生命／
- * 请求权限仍归夜机制，数据检查和字段可写声明不提交效果或授予许可。
+ * 负责蚀时狼妃唯一状态槽的创建、完整 live 校验、同引用读取、初始化／历史／触发写入和身份编码。
+ * 输入为原角色、范围参数、日次与晚读容器；输出为原状态、脱离知识副本或原明确拒绝。
+ * Node Proxy／自身数据 descriptor、历史日期、重复目标和触发关联保持原政策；写入失败保留已写前缀。
+ * frame 独自拥有原体、生命、能力、夜回执及 expectedState；槽不另存镜像、付款、开启窗口或授予许可。
+ * 内部 JSON 只用于原运行比对，不是严格档案 codec；玩家历史可见至 day，耗尽只在触发日之后告知。
  */
 import type {
   ReflectionScope,
@@ -52,6 +53,7 @@ function arrayItems(value: unknown): unknown[] | null {
   return result;
 }
 
+/** 完整原 live 校验先拒绝 Proxy，再读自身数据 descriptor；合法时保原状态／历史引用，不复制或冻结库存。 */
 export function getTimeConsortState(
   role: RoleComponent | undefined,
 ): TimeConsortReadState | undefined {
@@ -69,6 +71,7 @@ export function getTimeConsortState(
     return undefined;
   const history = arrayItems(field(state, "history"));
   if (!history) return undefined;
+  // 日期严格递增，连续夜不能重复同一非空目标；触发必须对应非空选择且其后不能再有历史。
   let previous = 0,
     previousTarget: number | null = null,
     triggerFound = trigger === null;
@@ -144,3 +147,52 @@ export function timeConsortReflectionTarget(
     return requestedId;
   return sourceId;
 }
+
+/** 原初始化先取赋值左侧容器，再取范围参数和 create；setter 或创建失败不补写／回滚。 */
+function installTimeConsortState(
+  privateState: () => Record<string, unknown>,
+  value: { reflectionScope: ReflectionScope },
+): void {
+  privateState().timeConsort = createTimeConsortState(value.reflectionScope);
+}
+
+/** frame 先完成原准入；这里先取 defineProperty callee，再两次晚读原 state／history，保 index 与 descriptor。 */
+function appendTimeConsortHistory(
+  state: () => TimeConsortReadState,
+  day: number,
+  targetId: number | null,
+): void {
+  Object.defineProperty(state().history, String(state().history.length), {
+    value: { day, targetId },
+    writable: true,
+    enumerable: true,
+    configurable: true,
+  });
+}
+
+/** 原回执先标 used，再写触发日；setter 失败不恢复凭证，revision 和 expectedState 仍由 frame 随后更新。 */
+function triggerTimeConsortState(state: () => TimeConsortReadState, day: number): void {
+  (state() as Pick<TimeConsortState, "triggeredDay">).triggeredDay = day;
+}
+
+/** 原身份比对先投影／拒绝，再读取 JSON.stringify 与触发日；不替代归档格式或回执权限。 */
+function encodeTimeConsortStateIdentity(role: RoleComponent): string {
+  const view = projectTimeConsortState(role, Number.MAX_SAFE_INTEGER - 1);
+  if (!view) throw new Error("time_consort_original_state_revoked");
+  return JSON.stringify({ ...view, triggeredDay: getTimeConsortState(role)!.triggeredDay });
+}
+/**
+ * 本族唯一槽的方法表。schema/get 使用同一完整原校验，allowedWrites 收走原两项写入，
+ * 原状态可写性及引用保持；冻结方法表不深冻结状态。expectedState、revision、targetId、
+ * committed 与 used 仍只由 frame 在原时点更新，读取或知识耗尽不授予反射付款许可。
+ */
+export const TIME_CONSORT_STATE_SLOT = Object.freeze({
+  create: createTimeConsortState,
+  schema: getTimeConsortState,
+  get: getTimeConsortState,
+  project: projectTimeConsortState,
+  reflectionTarget: timeConsortReflectionTarget,
+  install: installTimeConsortState,
+  allowedWrites: Object.freeze({ appendHistory: appendTimeConsortHistory, trigger: triggerTimeConsortState }),
+  checkpoint: Object.freeze({ identity: encodeTimeConsortStateIdentity }),
+});

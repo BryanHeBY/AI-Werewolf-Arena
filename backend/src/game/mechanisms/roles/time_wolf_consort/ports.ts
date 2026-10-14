@@ -1,5 +1,5 @@
 /**
- * 提供时空狼妃具体 pipeline 移交、经理终结、反射目标读取与玩家状态投影入口。
+ * 提供蚀时狼妃具体 pipeline 移交、经理终结、反射目标读取与玩家状态投影入口。
  * 输入为委托的原 World 读取及经理 World／日期；输出是清理单元、终结端口、运行类型和原名单断言。
  * 查询错误原样传播，单元只在原晚移交后抑制 pipeline abort；优先级 50 的阶段开启仍独立。
  * close 与重复 abort 保持原时点和 frame 错误；反射目标读视图不授付款或提交权限。
@@ -12,4 +12,5 @@ export { resolveTimeConsortTarget } from "./night_frame";
 export type { TimeConsortReceipt } from "./night_frame";
 export { commitTimeConsortEffect } from "./effects";
 
-export { getTimeConsortState } from "./state";
+/** 原槽同引用读取和脱离知识投影；历史／耗尽只说明已告知数据，不提供写入或付款入口。 */
+export { getTimeConsortState, projectTimeConsortState } from "./state-slot";

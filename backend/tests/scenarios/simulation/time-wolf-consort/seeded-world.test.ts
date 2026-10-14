@@ -5,7 +5,7 @@ import { expect, test } from "bun:test";
 import { COMPONENT, createRandom, randomDraws, type RoleComponent } from "../../../../src/core";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { timeConsortTwelveConfig } from "../../../../src/runtime/scenarios/time_consort_twelve";
-import { getTimeConsortState } from "../../../../src/game/mechanisms/roles/time_wolf_consort/state";
+import { getTimeConsortState } from "../../../../src/game/mechanisms/roles/time_wolf_consort/ports";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
 import { isTimeConsortPreset } from "../../../../src/rulesets";

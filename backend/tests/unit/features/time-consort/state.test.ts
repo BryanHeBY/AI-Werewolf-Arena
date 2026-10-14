@@ -1,10 +1,7 @@
 /**
- * Unit tests for time-consort; Isolated time-consort state contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试验证蚀时狼妃原状态接受、同引用读取、反射目标与知识延迟；输入为原内存 fixture、
+ * 明确非法修改和范围参数，原字面预期与拒绝是预期，不生成新 golden 或运行完整对局。
+ * 测试自有 getter／Proxy 样本只核读取边界，不调用模型、传输或实际效果付款。
  */
 import type { ReflectionScope } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
@@ -14,7 +11,7 @@ import {
   getTimeConsortState,
   projectTimeConsortState,
   timeConsortReflectionTarget,
-} from "../../../../src/game/mechanisms/roles/time_wolf_consort/state";
+} from "../../../../src/game/mechanisms/roles/time_wolf_consort/state-slot";
 function fixture(scope: ReflectionScope = "whole_night") {
   const state = createTimeConsortState(scope);
   const role = {

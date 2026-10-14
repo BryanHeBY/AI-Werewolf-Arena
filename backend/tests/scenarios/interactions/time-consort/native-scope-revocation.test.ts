@@ -16,7 +16,7 @@ import {
 } from "../../../../src/core";
 import { ObservedBot } from "../../../../src/ai/agents/providers/observed_bot";
 import { ObservedPlayersActionProvider } from "../../../../src/app/observed-players-action-provider";
-import { getTimeConsortState } from "../../../../src/game/mechanisms/roles/time_wolf_consort/state";
+import { getTimeConsortState } from "../../../../src/game/mechanisms/roles/time_wolf_consort/ports";
 for (const [role, stage, event] of [
   [Role.Guard, "guard", "guard_applied"],
   [Role.Seer, "seer", "seer_checked"],

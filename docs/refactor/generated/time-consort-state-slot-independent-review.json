@@ -1,0 +1,149 @@
+{
+  "approved": true,
+  "reviewer": "preflight_final_review",
+  "baseCommit": "751604fd1d5feea8911354fee550b9ad49c262b7",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state-slot.ts",
+      "sha256": "b3a7740fdf3b6bf70e94f79f523e2965c08b6c30d02965e48f9ab612b6b98e4d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/profile.ts",
+      "sha256": "077585ba4d67cefd540e4eb4462cf73bd2600798a1eaa29423fb1baaf1f41c1a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_frame.ts",
+      "sha256": "36ea83bc91dcf0e5143cc2de41bbcb1e1101b8988e28b324ec0efd3d6e925433"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/night_stages.ts",
+      "sha256": "85515308e16203e76272d1caf081f433ca8d19235b7b74c810797c3b6b6a6dd2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/ports.ts",
+      "sha256": "138ba5d3f0d116a56a82fdb68628f1906785bf6b2a690345c28a87509cd71f5a"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "9fa5688b9bbad3980cd57c00d71d83bd512f417b0f5bf24a6656e3e442bc6bae"
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/state.test.ts",
+      "sha256": "3ffabca1826988510334e2324a55c2f76eedc66088e6ae29aa50e9032869db0d"
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/frame.test.ts",
+      "sha256": "30d1ed4339a548e556527fae2c6a1a80a5dae99ace85a1656dce04bb908f97ff"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "d15f7e6b8e83ed85380ac2456068eb42b09c07da13732b6ad4afa7b219eb880e"
+    },
+    {
+      "path": "backend/tests/unit/contracts/time-consort-player-dto.types.ts",
+      "sha256": "f51e99b6861ea94904d119aeb29dd939499aca0340f476b315489f3dfa22e21b"
+    },
+    {
+      "path": "backend/tests/scenarios/simulation/time-wolf-consort/seeded-world.test.ts",
+      "sha256": "9ff769f5be3358540a294b4d3f86f6f9e1e66e105d21c2f57354c1443b5ad99e"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/time-consort/reflection-cycle-controls.test.ts",
+      "sha256": "a205bee64a9abb6d0c50bb4bca5a1c7a45d7aeb385d843bc6e466d2cace85b48"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/time-consort/native-scope-revocation.test.ts",
+      "sha256": "e7215c71946a5a10ebf2c2c13b3800436a2a61a8aa4495647785a4d7eb5e5a01"
+    },
+    {
+      "path": "backend/tests/unit/features/time-consort/state-slot.test.ts",
+      "sha256": "5689f01cb94923df49652cddbee93499a227d1a861ac5ef9a1d51c85c2867fd5"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/time_wolf_consort/state.ts",
+      "sha256": "b88a27cb1efbfbe62a18c1f5322420e8c744305b0500c0c01f39902a518068f4",
+      "expectedAbsent": true,
+      "actualExpectedAbsent": true
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/time-consort-state-slot-scope-final.json",
+    "sha256": "b05f306bd12de62a002a0a20e56ae8e9ad4c6d8b0206de82ea30908e091efa7a"
+  },
+  "document": {
+    "path": "docs/refactor/time-consort-state-slot.md",
+    "sha256": "6b6c5a9d7b4c83c75a95e44dcf7fc148c495e84a9d6f325a269a75662ce48ec6"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/time-consort-state-slot-evidence.json",
+    "sha256": "e163449222be05addeb6a4de4767cec955876332d81f09fe4c4606c8731a0e2d"
+  },
+  "findings": [],
+  "independentChecks": {
+    "actualGitBefore": 13,
+    "exactListedEditsFullOriginalPrograms": 13,
+    "listedEdits": 30,
+    "freshPresentSources": 14,
+    "deletedAbsent": 1,
+    "wholeGitAndCurrentStableControls": 4,
+    "artifactHashesMatched": 16,
+    "mismatches": 0
+  },
+  "reviewDimensions": {
+    "completeDataOwner": "完整旧8函数／policy／role常量归新槽，live schema先拒Proxy再查descriptor，精确字段、历史日期／目标／trigger关联原接受面保留。get保原库存／数组引用，project逐行独立副本、历史<=观察day、trigger严格<day才耗尽。新槽收原profile安装、history defineProperty、trigger写与身份编码四程序，仍原privateState.timeConsort唯一库存。",
+    "authorityTimingAndFailure": "profile先parameters.parse，再同左值容器查找→scope→create→setter。history先defineProperty callee，随后原state/history两读与index；成功之后frame写targetId→committed→revision→expectedState。receipt current后used=true→triggeredDay→revision→identity编码，setter／JSON失败保前缀，不恢复used或资源。identity先project／invalid拒绝，再JSON.stringify callee，参数构造第二次get读取triggeredDay；原JSON receiver保持。frame owns原体／life版本／能力指纹／夜／scope与receipt，额外数据函数不授这些权限。",
+    "realConsumersAndEvidence": "profile/frame/stage真实调用新槽，checkpoint编码不留旧private函数桥；ports直接get/project同绑定，不公开方法表，Observer仅此家族import走public，七旧消费者完整route迁移，全部原fixture/title/action/assert/body未弱化。证明当前源四helper实际body与旧原程序对照后核13整体／26映射输出，未把整个helper掩掉作等价；原first空after反演工具红诚实保。"
+  },
+  "authorReceiptAttribution": {
+    "newRiskCases": {
+      "chunk": "4888d5",
+      "exitCode": 0,
+      "pass": 3,
+      "asserts": 15
+    },
+    "originalReceiptPolicies": {
+      "chunk": "17b6fc",
+      "exitCode": 0,
+      "pass": 2,
+      "asserts": 26,
+      "filtered": 4
+    },
+    "distinctTotal": 5,
+    "assertTotal": 41,
+    "finiteTypes": {
+      "roots": 14,
+      "sessionId": 13219,
+      "terminalChunk": "26c388",
+      "exitCode": 0,
+      "basis": "作者真实terminal；本审没有执行compiler，不靠空log推导。"
+    },
+    "heads": {
+      "chunk": "ff45a4",
+      "exitCode": 0,
+      "files": 14,
+      "diagnostics": 0,
+      "sameGitDocPathsAtRun": 551
+    },
+    "proof": {
+      "firstChunk": "e5b45f",
+      "exitCode": 0,
+      "failure": "工具对empty after普通substring反演，产品未改。",
+      "sessionId": 39481,
+      "terminalChunk": "49baa0",
+      "originalFunctions": 8,
+      "movedDataPrograms": 4,
+      "wholePrograms": 13,
+      "mappedOutputs": 26
+    }
+  },
+  "limits": [
+    "本审只有完整源读、精确whole Git／源码编辑正向和fresh SHA／历史收据绑定；没有重proof、行为测试、类型、头检查、全门禁或模型。",
+    "方法表及nested allowedWrites/checkpoint是新增freeze与额外函数调用，原库存／知识副本未深freeze；不声明任意外部函数替换、旧private入口／反射或全冷初始化同。",
+    "data写方法是原准入之后的内部程序，不独立执行frame current／life／资源授权；new getter／setter单元的非法live样本仅核程序顺序，没伪称schema接受。",
+    "identity是原运行比对，不是档案codec／strictTape兼容；此族没有第二state或字段政策加强，未更新golden／源指纹或RNG。",
+    "新槽value只保持原node:util/core依赖，不反导frame；Observerpublic路由的加载面变化已准确限界，不依据局部方向冒全仓循环图合格。",
+    "本批限定TimeConsort状态写入归属，不宣称全角色C17/C45/P9收口；并行PM和其它Root源不作为whole控制。"
+  ]
+}

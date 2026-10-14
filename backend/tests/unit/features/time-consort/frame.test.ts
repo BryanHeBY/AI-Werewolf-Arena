@@ -8,7 +8,7 @@ import type { ReflectionScope } from "@ai-werewolf-arena/game-contract";
 import { expect, test } from "bun:test";
 import { COMPONENT, Camp, type RoleComponent, type World } from "../../../../src/core";
 
-import { createTimeConsortState } from "../../../../src/game/mechanisms/roles/time_wolf_consort/state";
+import { createTimeConsortState } from "../../../../src/game/mechanisms/roles/time_wolf_consort/state-slot";
 import {
   installTimeConsortBoard,
   beginTimeConsortNight,

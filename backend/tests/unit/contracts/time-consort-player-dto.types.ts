@@ -7,7 +7,7 @@
 import type { PlayerTimeConsortState } from "@ai-werewolf-arena/game-contract/facts/time-consort";
 import type { ReflectionScope, TimeConsortChoice } from "@ai-werewolf-arena/game-contract";
 import type { PlayerObservation } from "../../../src/game/observation/player-observation";
-import type { projectTimeConsortState } from "../../../src/game/mechanisms/roles/time_wolf_consort/state";
+import type { projectTimeConsortState } from "../../../src/game/mechanisms/roles/time_wolf_consort/ports";
 
 // 修改前实际 TypeChecker 确认 policy 是此 literal、history 是原可写 Choice[]，返回另有 undefined。
 interface OriginalProjection {

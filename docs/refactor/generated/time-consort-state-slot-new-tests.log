@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/time-consort/state-slot.test.ts:
+(pass) slot initialization preserves container, scope, creation and throwing setter order [0.79ms]
+(pass) history writer looks up defineProperty before both state/history reads and preserves its descriptor [0.34ms]
+(pass) trigger write failures keep their prefix and identity reads the trigger after stringify lookup [0.58ms]
+
+ 3 pass
+ 0 fail
+ 15 expect() calls
+Ran 3 tests across 1 file. [66.00ms]
