@@ -1,0 +1,127 @@
+{
+  "capture": {
+    "terminalChunk": "d3bfc5",
+    "exitCode": 0,
+    "baseCommit": "4e0d25c88e4aa70a0f942b8361d43986ebed8893",
+    "oldGitSources": 13,
+    "newSources": 3,
+    "controls": 6
+  },
+  "newTests": {
+    "terminalChunk": "775d85",
+    "exitCode": 0,
+    "executions": 1,
+    "tests": 3,
+    "assertions": 26,
+    "output": "docs/refactor/generated/cupid-hybrid-state-slots-new-tests-output.txt"
+  },
+  "oldPending": {
+    "terminalChunk": "ca0c8e",
+    "exitCode": 0,
+    "executions": 1,
+    "tests": 1,
+    "assertions": 6,
+    "filtered": 34,
+    "title": "two pending Hybrid replies have one synchronous winner, and a committed full pipeline reentry is rejected",
+    "output": "docs/refactor/generated/cupid-hybrid-state-slots-old-pending-output.txt"
+  },
+  "successfulCoverage": {
+    "differentTests": 4,
+    "assertions": 32,
+    "executions": 2
+  },
+  "firstTypes": {
+    "launchChunk": "e0dfaa",
+    "session": 31060,
+    "terminalChunk": "faef25",
+    "exitCode": 2,
+    "roots": 14,
+    "executions": 1,
+    "diagnostics": [
+      {
+        "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+        "line": 96,
+        "code": 2741,
+        "legacyMissing": "requestFactory"
+      }
+    ],
+    "output": "docs/refactor/generated/cupid-hybrid-state-slots-types-output.txt",
+    "typeAllGreen": false
+  },
+  "legacyInputOverlay": {
+    "launchChunk": "94461c",
+    "session": 60129,
+    "terminalChunk": "d0af31",
+    "exitCode": 0,
+    "roots": 1,
+    "executions": 1,
+    "diagnosticsRetained": 1,
+    "typeAllGreen": false,
+    "meaning": "工具断言同一既有TS2741；原测试＋两旧state虚拟叶，其中Hybrid实际读取，非全部原固定Git编译。",
+    "output": "docs/refactor/generated/cupid-hybrid-state-slots-legacy-type-overlay-output.txt"
+  },
+  "proofFirst": {
+    "terminalChunk": "cdad8f",
+    "exitCode": 1,
+    "failure": "工具对空after用split计数，未处理退休type-import恢复锚点；未修改产品求通过。",
+    "script": "docs/refactor/generated/cupid-hybrid-state-slots-proof-first.cjs",
+    "output": "docs/refactor/generated/cupid-hybrid-state-slots-proof-first-output.txt"
+  },
+  "proofFinal": {
+    "terminalChunk": "43c7bf",
+    "exitCode": 0,
+    "executions": 1,
+    "summary": {
+      "originalPrograms": 13,
+      "nonJSDocTypedNodes": 14212,
+      "noncommentLeaves": 17744,
+      "wholeMappedOutputs": 26,
+      "movedAlgorithms": 4,
+      "controls": 6
+    },
+    "output": "docs/refactor/generated/cupid-hybrid-state-slots-proof-output.txt"
+  },
+  "heads": {
+    "terminalChunk": "072f13",
+    "exitCode": 0,
+    "executions": 1,
+    "sources": 14,
+    "documentationPaths": 646,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0,
+    "output": "docs/refactor/generated/cupid-hybrid-state-slots-heads-output.txt"
+  },
+  "bindingsFirst": {
+    "launchChunk": "8cc87a",
+    "session": 75581,
+    "terminalChunk": "4892b9",
+    "shellExitCode": 0,
+    "nestedBunExitNotIndependentlyCaptured": true,
+    "reportProduced": false,
+    "failure": "实际player_state.ts目标被工具错误预期为player_state/index.ts；组合shell后续cat成功不能算绑定成功。",
+    "script": "docs/refactor/generated/cupid-hybrid-state-slots-bindings-first.cjs",
+    "output": "docs/refactor/generated/cupid-hybrid-state-slots-bindings-first-output.txt"
+  },
+  "bindingsFinal": {
+    "launchChunk": "e2201f",
+    "session": 32752,
+    "terminalChunk": "6c2a2a",
+    "exitCode": 0,
+    "executions": 1,
+    "sourceFilesScanned": 1911,
+    "oldClauses": 15,
+    "oldConsumerFiles": 11,
+    "retiredClauses": 0,
+    "publicBindings": 4,
+    "algorithmConsumers": 4,
+    "output": "docs/refactor/generated/cupid-hybrid-state-slots-bindings-output.txt"
+  },
+  "phasePolicy": "新3／原pending／首type采LHS中文精度前阶段，真实first-validation-source-phase保；只有一条comment后继，首proof/head采最终源，原绿不复跑。",
+  "notRun": [
+    "full architecture gate",
+    "other old cases",
+    "models",
+    "full reproduction",
+    "cold initialization"
+  ]
+}

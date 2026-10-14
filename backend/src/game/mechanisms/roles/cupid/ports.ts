@@ -5,6 +5,6 @@
  * 输入为原角色对象；查询在展示时点读取，不拥有关系写权，失败不在出口兜底或补交。
  */
 
-export { getCupidState } from "./state";
+export { getCupidState } from "./state-slot";
 
-export { projectCupidState } from "./state";
+export { projectCupidState } from "./state-slot";

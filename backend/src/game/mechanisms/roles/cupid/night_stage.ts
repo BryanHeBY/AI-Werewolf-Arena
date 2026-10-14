@@ -1,9 +1,9 @@
 /**
- * Runs Cupid selection from the current relation candidates. Inputs are the night request and
- * validated paired choice; outputs are the installed lovers relation and its original event. It
- * does not replace the relation owner or independently choose a victory result.
+ * 负责丘比特首夜恋人选择的请求、await 复验、关系绑定、成员归属与事实发布。
+ * 输入为原夜上下文和经网关验证的配对；输出是同一关系记录及原事件，数据库存／选择写入由本族槽负责。
+ * 原角色、容器、生命与双方 Victory 在等待前后复验；最终同步段依次绑定关系、消费选择、安装归属再发布。
+ * 同步段不是事务：字段、组件或事件失败保留先完成的前缀，不退款或重新使用旧请求，殉情与判胜另有 owner。
  */
-import type { CupidState } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../../core/domain/components/names";
 
 import {
@@ -14,7 +14,7 @@ import type { LoversComponent } from "../../../../core/domain/components/lovers"
 import { Camp, Phase, Role } from "../../../../core/domain/model";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { getCupidState } from "./state";
+import { getCupidState, commitCupidChoice } from "./state-slot";
 import { bindLovers, hasCupidNightCommit } from "./relation";
 
 export const CUPID_STAGE: NightStageHandler = {
@@ -125,10 +125,9 @@ export const CUPID_STAGE: NightStageHandler = {
         });
         const memberIds = new Set(pairIds);
         if (policy === "netease_2017_cupid_follows_lovers_v1") memberIds.add(actorId);
-        // Final authorization has no await before atomic relation/state/membership writes.
+        // 最后授权后不再 await；关系先绑定，选择随后付款，再逐成员安装归属。失败不撤回已完成的前缀。
         bindLovers(ctx.world, record, [first.life, second.life]);
-        (state as Pick<CupidState, "remaining">).remaining = 0;
-        (state as Pick<CupidState, "choice">).choice = { day: 1, pairIds: [...pairIds] };
+        commitCupidChoice(state, pairIds);
         for (const id of memberIds)
           ctx.world.addComponent(
             id,

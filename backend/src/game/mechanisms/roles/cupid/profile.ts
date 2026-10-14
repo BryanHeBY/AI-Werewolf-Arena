@@ -13,7 +13,7 @@ import { Camp, Role, Phase, WinCondition } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { isAliveTarget } from "../../validation/contracts";
 import { numberOrNull } from "../../llm/helpers";
-import { getCupidState, projectCupidState } from "./state";
+import { getCupidState, projectCupidState, installCupidState } from "./state-slot";
 import { hasCupidNightCommit } from "./relation";
 import { CUPID_STAGE } from "./night_stage";
 const parameters = z.strictObject({
@@ -45,14 +45,7 @@ export const CUPID_ROLE_PROFILE: NativeRoleContributions = {
     ],
   },
   runtime: {
-    init: (role, ctx) => {
-      if (!getCupidState(role))
-        role.privateState.cupid = {
-          policy: ctx.boardConfig?.cupid?.policy ?? "netease_2017_cupid_follows_lovers_v1",
-          remaining: 1,
-          choice: null,
-        };
-    },
+    init: installCupidState,
     configuration: {
       schema: parameters,
       defaults: { policy: "netease_2017_cupid_follows_lovers_v1" },

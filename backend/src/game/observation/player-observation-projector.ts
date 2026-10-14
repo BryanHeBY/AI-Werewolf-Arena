@@ -81,9 +81,9 @@ import {
 import { ownNightActions } from "../mechanisms/roles/night_action_history";
 import { getDebaterState, projectDebaterState } from "../mechanisms/roles/debater/state";
 import { hasDebateCommit, debateVoteBlocked } from "../mechanisms/roles/debater/authority";
-import { getCupidState, projectCupidState } from "../mechanisms/roles/cupid/state";
+import { getCupidState, projectCupidState } from "../mechanisms/roles/cupid/ports";
 import { projectLover } from "../mechanisms/roles/cupid/relation";
-import { getHybridState, projectHybridState } from "../mechanisms/roles/hybrid/state";
+import { getHybridState, projectHybridState } from "../mechanisms/roles/hybrid/ports";
 import { getMerchantState, projectMerchantState } from "../mechanisms/roles/miracle_merchant/state";
 import { projectEclipseState } from "../mechanisms/roles/radiant_eclipse/ports";
 import { COMPONENT } from "../../core/domain/components/names";

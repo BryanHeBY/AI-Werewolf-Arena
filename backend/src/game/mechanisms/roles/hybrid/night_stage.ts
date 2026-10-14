@@ -1,10 +1,9 @@
 /**
- * Executes Hybrid exemplar selection and records its actual night commitment. Inputs are the
- * current Hybrid body, candidates and validated tool; outputs are the chosen exemplar state and
- * corresponding facts. Selection never replaces the original role component or silently repeats
- * a completed choice.
+ * 负责混血儿首夜榜样选择的请求、原体／目标复验及隐藏胜利归属安装。
+ * 输入为当前夜上下文和经网关验证的榜样；输出为已选数据、独立归属和原事实，不改变角色或真实阵营。
+ * 等待前后仍核原容器、状态、生命和空 Victory；先构造归属，再由本族槽消费次数／写选择，随后安装组件。
+ * 同步字段与组件提交失败保留已写前缀；夜提交账本和事件仍在原安装之后，不以玩家知识恢复许可。
  */
-import type { HybridState } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../../core/domain/components/names";
 
 import {
@@ -15,7 +14,7 @@ import { Camp, Phase, Role } from "../../../../core/domain/model";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import type { World } from "../../../../core/domain/world";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { canChooseExemplar, getHybridState } from "./state";
+import { canChooseExemplar, getHybridState, commitHybridChoice } from "./state-slot";
 
 const committed = new WeakMap<World, Set<number>>();
 export function hasHybridNightCommit(world: World, day: number): boolean {
@@ -100,9 +99,8 @@ export const HYBRID_STAGE: NightStageHandler = {
         )
           continue;
         const membership = createVictoryComponent([{ kind: "faction", faction: target.camp }]);
-        // No await between the final checks and both owned writes. A second reply loses its original scope.
-        (state as Pick<HybridState, "remaining">).remaining = 0;
-        (state as Pick<HybridState, "choice">).choice = { day, targetId };
+        // 最后复验到两字段写入之间没有 await；同一原体的第二个回复不能复用已消费的选择。
+        commitHybridChoice(state, day, targetId);
         ctx.world.addComponent(actorId, COMPONENT.Victory, membership);
         const days = committed.get(ctx.world) ?? new Set<number>();
         days.add(day);

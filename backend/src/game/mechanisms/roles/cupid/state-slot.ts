@@ -1,12 +1,14 @@
 /**
- * 负责丘比特原槽读取与玩家选择投影。输入为原角色和选择数据；输出为原只读状态引用，
- * 或只含已选择编号的独立玩家视图，其公共类型归 game-contract。
- * 此处不绑定情侣、提交选择库存或判断关系胜负；字段投影不能新增行动许可。
+ * 负责丘比特完整选择数据的原初始化、同槽读取、玩家投影与库存／选择写入。
+ * 输入是原初始化角色及上下文，或已获准提交的原状态和配对编号；输出保留原槽引用与独立玩家选择视图。
+ * 初始化先查原槽，先求值赋值左值的容器，再读取政策并安装；提交先消费剩余次数，再复制配对数组并写选择，失败不回滚。
+ * 本槽不新增 live schema、深冻结或档案编码；关系、生命、Victory、窗口和许可仍由原夜阶段／关系 owner 持有。
  */
-import type { CupidReadState } from "@ai-werewolf-arena/game-contract";
+import type { CupidReadState, CupidState } from "@ai-werewolf-arena/game-contract";
 import { playerDataField } from "../player_state";
 
 import type { RoleComponent } from "../../../../core/domain/components/role";
+import type { RoleInitializationComponent, RoleInitContext } from "../contracts";
 export function getCupidState(role: RoleComponent | undefined): CupidReadState | undefined {
   return (role as { readonly privateState: { readonly cupid?: unknown } } | undefined)?.privateState
     .cupid as CupidReadState | undefined;
@@ -40,4 +42,20 @@ export function projectCupidState(
         ? { day: 1, pairIds: [first, second] }
         : null,
   };
+}
+
+/** 原完整初始化：槽不存在时才建初态，不提前读取政策或把整个私有容器复制／冻结。 */
+export function installCupidState(role: RoleInitializationComponent, ctx: RoleInitContext): void {
+  if (!getCupidState(role))
+    role.privateState.cupid = {
+      policy: ctx.boardConfig?.cupid?.policy ?? "netease_2017_cupid_follows_lovers_v1",
+      remaining: 1,
+      choice: null,
+    };
+}
+
+/** 调用前关系已由原 owner 绑定；次数写入后的配对复制或 choice setter 失败不撤回已绑定关系或补发事实。 */
+export function commitCupidChoice(state: CupidReadState, pairIds: [number, number]): void {
+  (state as Pick<CupidState, "remaining">).remaining = 0;
+  (state as Pick<CupidState, "choice">).choice = { day: 1, pairIds: [...pairIds] };
 }

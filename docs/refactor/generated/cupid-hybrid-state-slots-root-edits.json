@@ -1,0 +1,26 @@
+{
+  "backend/src/game/observation/player-observation-projector.ts": [
+    {
+      "old": "mechanisms/roles/cupid/state\"",
+      "new": "mechanisms/roles/cupid/ports\"",
+      "count": 1
+    },
+    {
+      "old": "mechanisms/roles/hybrid/state\"",
+      "new": "mechanisms/roles/hybrid/ports\"",
+      "count": 1
+    }
+  ],
+  "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts": [
+    {
+      "old": "mechanisms/roles/cupid/state\"",
+      "new": "mechanisms/roles/cupid/ports\"",
+      "count": 1
+    },
+    {
+      "old": "mechanisms/roles/hybrid/state\"",
+      "new": "mechanisms/roles/hybrid/ports\"",
+      "count": 1
+    }
+  ]
+}

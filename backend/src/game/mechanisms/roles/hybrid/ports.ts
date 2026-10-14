@@ -5,6 +5,6 @@
  * 输入为原角色对象；调用时点只允许查询，选择终态和失败前缀仍由原机制维护。
  */
 
-export { projectHybridState } from "./state";
+export { projectHybridState } from "./state-slot";
 
-export { getHybridState } from "./state";
+export { getHybridState } from "./state-slot";

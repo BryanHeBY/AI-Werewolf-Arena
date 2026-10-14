@@ -12,8 +12,8 @@ import {
 } from "@ai-werewolf-arena/game-contract";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 import type { RoleInitializationComponent } from "../../../src/game/mechanisms/roles/contracts";
-import { getCupidState } from "../../../src/game/mechanisms/roles/cupid/state";
-import { getHybridState } from "../../../src/game/mechanisms/roles/hybrid/state";
+import { getCupidState } from "../../../src/game/mechanisms/roles/cupid/ports";
+import { getHybridState } from "../../../src/game/mechanisms/roles/hybrid/ports";
 import { getWildChildState } from "../../../src/game/mechanisms/roles/wild_child/ports";
 import { getThiefState } from "../../../src/game/mechanisms/roles/thief/state-ports";
 import { getShapeshifterState } from "../../../src/game/mechanisms/roles/shapeshifter/state-ports";

@@ -1,0 +1,8 @@
+{
+  "document": "docs/refactor/cupid-hybrid-state-slots.md",
+  "beforeSHA256": "cb279cbd68baf71534e0df7a031320fa2a71e68afd5e80b9448c2f595a94a2df",
+  "sha256": "d061e882eb28f4729eaa39342f890596abc41687c35c0b7653330dc24d06317c",
+  "before": "Cupid 仅保原 player_state 值导入，Hybrid 零值导入；没有执行完整冷图或冷启动。",
+  "after": "Cupid 仅保原 player_state 值导入，Hybrid 零值导入；没有执行完整冷图或冷启动。扫描形态仅含 import／export、ImportType、字面 dynamic import／require，不包含 ImportEquals 或计算字符串；退休引用0仅指本次实际扫描形态。",
+  "meaning": "非作者建议仅明确实际walker形态边界，不改source/proof/scripts/receipts，不扩大扫描或重绿。"
+}

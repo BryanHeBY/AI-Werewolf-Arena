@@ -7,7 +7,7 @@ import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Role, WinCondition, type RoleComponent } from "../../../../src/core";
 import type { VictoryComponent } from "../../../../src/core/domain/components/victory";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
-import { getHybridState } from "../../../../src/game/mechanisms/roles/hybrid/state";
+import { getHybridState } from "../../../../src/game/mechanisms/roles/hybrid/ports";
 import { AiSdkClient } from "../../../../src/ai/integrations/llm/ai_sdk_client";
 import { LlmActionProvider } from "../../../../src/ai/agents/llm/llm_action_provider";
 import { AcpActionProvider } from "../../../../src/ai/agents/acp/acp_action_provider";

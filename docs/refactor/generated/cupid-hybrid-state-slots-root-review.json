@@ -1,0 +1,120 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "4e0d25c88e4aa70a0f942b8361d43986ebed8893",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "sha256": "db31288f223fc2ae0fb871f45aed1c17b5d06e466c79aa1c2bc04a3fc2730d37",
+      "owner": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "sha256": "a3c75c8e1ba24d4b232110cc55344431cc1ee5bcb88d59197a06885c8a0ad032",
+      "owner": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/ports.ts",
+      "sha256": "69e6a73136929072fa2819edb1b338a6aeea8b6c19feaefcbe51231b844fd9b6",
+      "owner": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+      "sha256": "af69ed84483491502eac71332c3975a485ccb441e140e7df61a8eeacd6f153e8",
+      "owner": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "sha256": "b06fe82de0733d61edaabeed2b076f5b50d2e253675608a7eec1831798aad08d",
+      "owner": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/ports.ts",
+      "sha256": "1b511011cbcea191a18d9fe7fce8ffcba9143b44957f2ba87cc9afb96ea6e144",
+      "owner": "author"
+    },
+    {
+      "path": "backend/tests/unit/features/cupid/choice-and-membership-contracts.test.ts",
+      "sha256": "ee938bfce073349eae0aa533f7322ff8d7eb2d610cecda1aa84bff039d4f1c6a",
+      "owner": "author"
+    },
+    {
+      "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+      "sha256": "451af69184b042f57f1f43ccafc0701991e8915e8d095ca62c29197126c85224",
+      "owner": "author"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts",
+      "sha256": "ff23277e078437a7417537aa32d1ed0b6281699a5882e9c1b7a1684a3cb252e7",
+      "owner": "author"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "41f541444e117c7a51a2862c4b52afb253d56ac5705ed63ddea1b3ef3f636d46",
+      "owner": "Root shared route"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "ab756577ce390b7818b3af4382ff4015cd34c0b16b374a068d14ba24d33c8c22",
+      "owner": "Root shared route"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+      "sha256": "13d1aa581dfb56974ccb17674b204194529e59cc88f99938bf78505e2748e04f",
+      "owner": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/state-slot.ts",
+      "sha256": "a0fac5d164c1f9182e8a43469e64e1006ab4f3518a58340ffde31ae0d5e6671b",
+      "owner": "author"
+    },
+    {
+      "path": "backend/tests/unit/features/cupid-hybrid-state-slots.test.ts",
+      "sha256": "0924326aba646a364be33f289e6816ffb347b30adfd3bf8bdc31d61317104b37",
+      "owner": "author"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/state.ts",
+      "sha256": "3cbf9f421d7c52ab8f18d01c29bc8ad38954ba70bf0bad703522363cf19cb7c2",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+      "sha256": "dbc5cb9100f534fe767a2ce71b8cf2731cf97bd246d549d644a78461cf8a9c8a",
+      "expectedAbsent": true
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/cupid-hybrid-state-slots-scope-final.json",
+    "sha256": "ef4c3d5fc7e0db74c8d256a006a13b1db14de16d2690fdd50ebd035978f28fb5"
+  },
+  "document": {
+    "path": "docs/refactor/cupid-hybrid-state-slots.md",
+    "sha256": "d061e882eb28f4729eaa39342f890596abc41687c35c0b7653330dc24d06317c"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/cupid-hybrid-state-slots-evidence.json",
+    "sha256": "ef7d66300903b338df30922a7f6e0057f421b91c413c6288cf260275fafd526f"
+  },
+  "integrity": {
+    "freshSources": 14,
+    "actualGitBefore": 13,
+    "controls": 6,
+    "artifactHashes": 28,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "原槽全算法和真实初始化／两字段写体，以及caller的四specifier接线",
+    "LHS晚policy、关系先付、Victory后装和原异常／资源引用",
+    "真实4e0d十三Git／两删除／六控制和28附件来源",
+    "new3+old1绿色与legacy TS2741原输入overlay的准确界限",
+    "中文求值／写入区别和不冒strict schema／归档codec"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "extends": "../../../backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "../../..",
+    "typeRoots": [
+      "../../../backend/node_modules/@types",
+      "../../../backend/node_modules"
+    ]
+  },
+  "files": [
+    "../../../backend/src/game/mechanisms/roles/cupid/profile.ts",
+    "../../../backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+    "../../../backend/src/game/mechanisms/roles/cupid/ports.ts",
+    "../../../backend/src/game/mechanisms/roles/hybrid/profile.ts",
+    "../../../backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+    "../../../backend/src/game/mechanisms/roles/hybrid/ports.ts",
+    "../../../backend/tests/unit/features/cupid/choice-and-membership-contracts.test.ts",
+    "../../../backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+    "../../../backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts",
+    "../../../backend/src/game/observation/player-observation-projector.ts",
+    "../../../backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+    "../../../backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+    "../../../backend/src/game/mechanisms/roles/hybrid/state-slot.ts",
+    "../../../backend/tests/unit/features/cupid-hybrid-state-slots.test.ts"
+  ],
+  "include": [],
+  "exclude": []
+}

@@ -14,7 +14,7 @@ import { Camp, Role, Phase } from "../../../../core/domain/model";
 import type { NativeRoleContributions } from "../contracts";
 import { isAliveTarget } from "../../validation/contracts";
 import { numberOrNull } from "../../llm/helpers";
-import { canChooseExemplar, freshHybridState, getHybridState, projectHybridState } from "./state";
+import { canChooseExemplar, getHybridState, projectHybridState, installHybridState } from "./state-slot";
 import { HYBRID_STAGE } from "./night_stage";
 
 export const HYBRID_ROLE_PROFILE: NativeRoleContributions = {
@@ -40,9 +40,7 @@ export const HYBRID_ROLE_PROFILE: NativeRoleContributions = {
   },
   runtime: {
     initialVictoryAffiliations: [],
-    init: (role) => {
-      if (!getHybridState(role)) role.privateState.hybrid = freshHybridState();
-    },
+    init: installHybridState,
     configuration: {
       schema: z.strictObject({}),
       defaults: {},

@@ -1,0 +1,1 @@
+{"scanned":1911,"oldClauses":15,"oldConsumerFiles":11,"retired":0,"publicBindings":4,"algorithmConsumers":4,"runtimeImports":[1,0]}

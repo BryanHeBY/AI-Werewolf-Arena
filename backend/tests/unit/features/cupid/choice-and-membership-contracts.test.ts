@@ -25,7 +25,7 @@ import { CUPID_STAGE } from "../../../../src/game/mechanisms/roles/cupid/night_s
 import {
   getCupidState,
   projectCupidState,
-} from "../../../../src/game/mechanisms/roles/cupid/state";
+} from "../../../../src/game/mechanisms/roles/cupid/ports";
 import {
   loversRecord,
   projectLover,

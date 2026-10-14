@@ -1,0 +1,32 @@
+ 8 | for(const row of before.source)scan(row.path,row.text,'before');for(const p of files)scan(p,fs.readFileSync(p,'utf8'),'current');
+ 9 | const oldRows=rows.filter(x=>x.phase==='before'&&deleted.includes(x.target)),retired=rows.filter(x=>x.phase==='current'&&deleted.includes(x.target));assert.equal(oldRows.length,15);assert.equal(new Set(oldRows.map(x=>x.path)).size,11);assert.deepEqual(retired,[]);
+10 | function exported(p,name,seen=[]){assert(!seen.includes(p),'export cycle');const s=ts.createSourceFile(p,fs.readFileSync(p,'utf8'),ts.ScriptTarget.Latest,true);const declaration=s.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text===name||ts.isVariableStatement(n)&&n.declarationList.declarations.some(d=>d.name.getText(s)===name));if(declaration)return{path:p,name,kind:ts.SyntaxKind[declaration.kind]};for(const n of s.statements)if(ts.isExportDeclaration(n)&&n.moduleSpecifier&&n.exportClause&&ts.isNamedExports(n.exportClause)){const x=n.exportClause.elements.find(x=>x.name.text===name);if(x)return exported(endpoint(p,n.moduleSpecifier.text),x.propertyName?.text??x.name.text,[...seen,p]);}throw Error('missing export '+p+' '+name);}
+11 | const publicBindings=[];for(const fam of ['cupid','hybrid']){const title=fam==='cupid'?'Cupid':'Hybrid',slot='backend/src/game/mechanisms/roles/'+fam+'/state-slot.ts',port='backend/src/game/mechanisms/roles/'+fam+'/ports.ts';for(const name of ['get'+title+'State','project'+title+'State']){const target=exported(port,name);assert.equal(target.path,slot);publicBindings.push({publicPath:port,name,canonicalDeclaration:target});}}
+12 | const algorithmConsumers=[];for(const fam of ['cupid','hybrid']){const title=fam==='cupid'?'Cupid':'Hybrid',slot='backend/src/game/mechanisms/roles/'+fam+'/state-slot.ts';for(const [name,p] of [['install'+title+'State','backend/src/game/mechanisms/roles/'+fam+'/profile.ts'],['commit'+title+'Choice','backend/src/game/mechanisms/roles/'+fam+'/night_stage.ts']]){assert(rows.some(x=>x.phase==='current'&&x.path===p&&x.target===slot&&x.bindings.some(b=>b.imported===name&&!b.typeOnly)));algorithmConsumers.push({name,consumer:p,canonicalDeclaration:exported(slot,name)});}}
+13 | const runtimeSlots=['cupid','hybrid'].map(fam=>{const p='backend/src/game/mechanisms/roles/'+fam+'/state-slot.ts',text=fs.readFileSync(p,'utf8'),s=ts.createSourceFile(p,text,ts.ScriptTarget.Latest,true),imports=[];for(const n of s.statements)if(ts.isImportDeclaration(n)&&!(n.importClause?.isTypeOnly||ts.isNamedImports(n.importClause?.namedBindings)&&n.importClause.namedBindings.elements.every(x=>x.isTypeOnly)))imports.push({specifier:n.moduleSpecifier.text,target:endpoint(p,n.moduleSpecifier.text)});return{path:p,sha256:sha(text),runtimeImports:imports};});assert.deepEqual(runtimeSlots[0].runtimeImports,[{specifier:'../player_state',target:'backend/src/game/mechanisms/roles/player_state/index.ts'}]);assert.deepEqual(runtimeSlots[1].runtimeImports,[]);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ^
+AssertionError: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
+    {
+      specifier: '../player_state',
++     target: 'backend/src/game/mechanisms/roles/player_state.ts'
+-     target: 'backend/src/game/mechanisms/roles/player_state/index.ts'
+    }
+  ]
+
+ generatedMessage: true,
+     actual: [
+  [Object ...]
+],
+   expected: [
+  [Object ...]
+],
+   operator: "deepStrictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/cupid-hybrid-state-slots-bindings.cjs:13:571
+
+Bun v1.4.3 (Linux x64)

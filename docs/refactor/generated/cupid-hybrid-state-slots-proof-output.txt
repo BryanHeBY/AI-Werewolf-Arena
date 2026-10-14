@@ -1,0 +1,1 @@
+{"originalPrograms":13,"nonJSDocTypedNodes":14212,"noncommentLeaves":17744,"wholeMappedOutputs":26,"movedAlgorithms":4,"controls":6}

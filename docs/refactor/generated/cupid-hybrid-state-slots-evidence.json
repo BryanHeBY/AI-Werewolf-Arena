@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 1,
+  "status": "frozen",
+  "baseCommit": "4e0d25c88e4aa70a0f942b8361d43986ebed8893",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/profile.ts",
+      "sha256": "db31288f223fc2ae0fb871f45aed1c17b5d06e466c79aa1c2bc04a3fc2730d37",
+      "owner": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/night_stage.ts",
+      "sha256": "a3c75c8e1ba24d4b232110cc55344431cc1ee5bcb88d59197a06885c8a0ad032",
+      "owner": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/ports.ts",
+      "sha256": "69e6a73136929072fa2819edb1b338a6aeea8b6c19feaefcbe51231b844fd9b6",
+      "owner": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/profile.ts",
+      "sha256": "af69ed84483491502eac71332c3975a485ccb441e140e7df61a8eeacd6f153e8",
+      "owner": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/night_stage.ts",
+      "sha256": "b06fe82de0733d61edaabeed2b076f5b50d2e253675608a7eec1831798aad08d",
+      "owner": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/ports.ts",
+      "sha256": "1b511011cbcea191a18d9fe7fce8ffcba9143b44957f2ba87cc9afb96ea6e144",
+      "owner": "author"
+    },
+    {
+      "path": "backend/tests/unit/features/cupid/choice-and-membership-contracts.test.ts",
+      "sha256": "ee938bfce073349eae0aa533f7322ff8d7eb2d610cecda1aa84bff039d4f1c6a",
+      "owner": "author"
+    },
+    {
+      "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+      "sha256": "451af69184b042f57f1f43ccafc0701991e8915e8d095ca62c29197126c85224",
+      "owner": "author"
+    },
+    {
+      "path": "backend/tests/scenarios/failures/hybrid/required-affiliation-choice.test.ts",
+      "sha256": "ff23277e078437a7417537aa32d1ed0b6281699a5882e9c1b7a1684a3cb252e7",
+      "owner": "author"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "41f541444e117c7a51a2862c4b52afb253d56ac5705ed63ddea1b3ef3f636d46",
+      "owner": "Root shared route"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "ab756577ce390b7818b3af4382ff4015cd34c0b16b374a068d14ba24d33c8c22",
+      "owner": "Root shared route"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/state-slot.ts",
+      "sha256": "13d1aa581dfb56974ccb17674b204194529e59cc88f99938bf78505e2748e04f",
+      "owner": "author"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/state-slot.ts",
+      "sha256": "a0fac5d164c1f9182e8a43469e64e1006ab4f3518a58340ffde31ae0d5e6671b",
+      "owner": "author"
+    },
+    {
+      "path": "backend/tests/unit/features/cupid-hybrid-state-slots.test.ts",
+      "sha256": "0924326aba646a364be33f289e6816ffb347b30adfd3bf8bdc31d61317104b37",
+      "owner": "author"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/cupid/state.ts",
+      "sha256": "3cbf9f421d7c52ab8f18d01c29bc8ad38954ba70bf0bad703522363cf19cb7c2",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+      "sha256": "dbc5cb9100f534fe767a2ce71b8cf2731cf97bd246d549d644a78461cf8a9c8a",
+      "expectedAbsent": true
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/cupid-hybrid-state-slots-scope-final.json",
+    "sha256": "ef4c3d5fc7e0db74c8d256a006a13b1db14de16d2690fdd50ebd035978f28fb5"
+  },
+  "document": {
+    "path": "docs/refactor/cupid-hybrid-state-slots.md",
+    "sha256": "d061e882eb28f4729eaa39342f890596abc41687c35c0b7653330dc24d06317c"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-before.json",
+      "sha256": "0fee1f254f796371688cb5b0f6ff1d052b6a4c1b90c7f40208fb3710f025f918"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-paths.json",
+      "sha256": "6241ef0ed69f0dccd081213ce97dc3d36bd82e505f6da794daf115507822519f"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-edits.json",
+      "sha256": "97c9eab2c45e1801d53fa9aa70bc63659ea1840399d0a283a653129cbba1e76f"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-root-edits.json",
+      "sha256": "c6b559444e30bfa19642b16e95ca47496f63abcde2de38ceea1c843272659688"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-new-tests-output.txt",
+      "sha256": "1eced643e4f77efa0addbc4f8779ab72c5508691d0c471a545c908c0a0b2c344"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-old-pending-output.txt",
+      "sha256": "e52b35bc36279ab122899f8391fa5746cbfcd32f04b6a68a32e35d904693f650"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-types-config.json",
+      "sha256": "2f42bf9f1b7f2f404f198a4ad66c5ffe1efa34debda051b988c22ce2cd41ec37"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-types-output.txt",
+      "sha256": "19e2cb54fd416df485f6efd439bb020ab2805f16a6e6c544b486b5b35882c832"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-first-validation-source-phase.json",
+      "sha256": "9740c1701208962d695bf962bcb682259687922e9cc083c87faea20a787c108d"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-head-precision.json",
+      "sha256": "4549559dfa5a695d86403682f83a0129fea148749cce9e173692faa0b20b089a"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-legacy-type-overlay.cjs",
+      "sha256": "66dafbc1ef5ff7729e49b06d3dcccf827621a5d6622af2ba5db16e1aa4dee9bd"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-legacy-type-overlay.json",
+      "sha256": "18d06d913822679aaabcb60e14a9289a1349bb7979b15e035648dd3059749f4a"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-legacy-type-overlay-output.txt",
+      "sha256": "0fa1e04c4e187003ef936c972d6816fa45c36762433e8a4102ced2b805d5ba03"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-proof-first.cjs",
+      "sha256": "eaa08dbe711893f478369dc38261c3718930c66abc54b17e381b224b1247fd66"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-proof-first-output.txt",
+      "sha256": "272288ebc636addb3133b1a496787ae1186bd3450b20a1e177d45d54c7842149"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-proof.cjs",
+      "sha256": "4707e49e299243c89c07576f1047c4d5da1c10a45c4f54fa6149bf0dc0556339"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-proof.json",
+      "sha256": "07f20a470ead7ba74d3115cf2bc0b1cf7b7fe80ccd02accf57a7db926bbd8bc8"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-proof-output.txt",
+      "sha256": "8fc8d7228a34227d17bc47dfc63d7dd438c0cb8993df74a885914a2ce4fd7bbc"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-heads.ts",
+      "sha256": "7edde59e2610685425c5c68c4977e449ec7cb1eae0e2add6c583652a3c9df15c"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-heads.json",
+      "sha256": "6eadd579329aa7e56a6c5c8daf0a09d9b49f0f760bdf51fbe86778235ef06144"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-heads-output.txt",
+      "sha256": "8b3c64cc1b2af643e40842907f765413d74cdb4167aecda9266730f763f7a2e2"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-bindings-first.cjs",
+      "sha256": "267d49df9c78dfeeea7a64992ca1ae4d3f63279b7395d3d58b1577045beb5c62"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-bindings-first-output.txt",
+      "sha256": "5c8b7189a2be19cd15821bdfc65b2bc6e86e2adf61438a7dca45ce6ed3006b3a"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-bindings.cjs",
+      "sha256": "c98062da5ede36e20edfa6ac56bad6aecfbad084eeb6b0a548c4234ea74fb298"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-bindings.json",
+      "sha256": "70e489dd6927327b64fdca84e738c439065aca6a8c7010f53f2b7ddf22519183"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-bindings-output.txt",
+      "sha256": "95ab131a60851f710e8de5e14a5164070c1fc728647b52070fa653d9f3194490"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-receipts.json",
+      "sha256": "b78a69d94518483b76b8592d52cd852c7c855e81e99d1c9600f2b2e704535cec"
+    },
+    {
+      "path": "docs/refactor/generated/cupid-hybrid-state-slots-doc-scan-precision.json",
+      "sha256": "55ee96bb6e8d84b16a94f96a52336a07afb7ed7e03dabd369ff6283b8724507c"
+    }
+  ],
+  "receipts": {
+    "capture": {
+      "terminalChunk": "d3bfc5",
+      "exitCode": 0,
+      "baseCommit": "4e0d25c88e4aa70a0f942b8361d43986ebed8893",
+      "oldGitSources": 13,
+      "newSources": 3,
+      "controls": 6
+    },
+    "newTests": {
+      "terminalChunk": "775d85",
+      "exitCode": 0,
+      "executions": 1,
+      "tests": 3,
+      "assertions": 26,
+      "output": "docs/refactor/generated/cupid-hybrid-state-slots-new-tests-output.txt"
+    },
+    "oldPending": {
+      "terminalChunk": "ca0c8e",
+      "exitCode": 0,
+      "executions": 1,
+      "tests": 1,
+      "assertions": 6,
+      "filtered": 34,
+      "title": "two pending Hybrid replies have one synchronous winner, and a committed full pipeline reentry is rejected",
+      "output": "docs/refactor/generated/cupid-hybrid-state-slots-old-pending-output.txt"
+    },
+    "successfulCoverage": {
+      "differentTests": 4,
+      "assertions": 32,
+      "executions": 2
+    },
+    "firstTypes": {
+      "launchChunk": "e0dfaa",
+      "session": 31060,
+      "terminalChunk": "faef25",
+      "exitCode": 2,
+      "roots": 14,
+      "executions": 1,
+      "diagnostics": [
+        {
+          "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+          "line": 96,
+          "code": 2741,
+          "legacyMissing": "requestFactory"
+        }
+      ],
+      "output": "docs/refactor/generated/cupid-hybrid-state-slots-types-output.txt",
+      "typeAllGreen": false
+    },
+    "legacyInputOverlay": {
+      "launchChunk": "94461c",
+      "session": 60129,
+      "terminalChunk": "d0af31",
+      "exitCode": 0,
+      "roots": 1,
+      "executions": 1,
+      "diagnosticsRetained": 1,
+      "typeAllGreen": false,
+      "meaning": "工具断言同一既有TS2741；原测试＋两旧state虚拟叶，其中Hybrid实际读取，非全部原固定Git编译。",
+      "output": "docs/refactor/generated/cupid-hybrid-state-slots-legacy-type-overlay-output.txt"
+    },
+    "proofFirst": {
+      "terminalChunk": "cdad8f",
+      "exitCode": 1,
+      "failure": "工具对空after用split计数，未处理退休type-import恢复锚点；未修改产品求通过。",
+      "script": "docs/refactor/generated/cupid-hybrid-state-slots-proof-first.cjs",
+      "output": "docs/refactor/generated/cupid-hybrid-state-slots-proof-first-output.txt"
+    },
+    "proofFinal": {
+      "terminalChunk": "43c7bf",
+      "exitCode": 0,
+      "executions": 1,
+      "summary": {
+        "originalPrograms": 13,
+        "nonJSDocTypedNodes": 14212,
+        "noncommentLeaves": 17744,
+        "wholeMappedOutputs": 26,
+        "movedAlgorithms": 4,
+        "controls": 6
+      },
+      "output": "docs/refactor/generated/cupid-hybrid-state-slots-proof-output.txt"
+    },
+    "heads": {
+      "terminalChunk": "072f13",
+      "exitCode": 0,
+      "executions": 1,
+      "sources": 14,
+      "documentationPaths": 646,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "output": "docs/refactor/generated/cupid-hybrid-state-slots-heads-output.txt"
+    },
+    "bindingsFirst": {
+      "launchChunk": "8cc87a",
+      "session": 75581,
+      "terminalChunk": "4892b9",
+      "shellExitCode": 0,
+      "nestedBunExitNotIndependentlyCaptured": true,
+      "reportProduced": false,
+      "failure": "实际player_state.ts目标被工具错误预期为player_state/index.ts；组合shell后续cat成功不能算绑定成功。",
+      "script": "docs/refactor/generated/cupid-hybrid-state-slots-bindings-first.cjs",
+      "output": "docs/refactor/generated/cupid-hybrid-state-slots-bindings-first-output.txt"
+    },
+    "bindingsFinal": {
+      "launchChunk": "e2201f",
+      "session": 32752,
+      "terminalChunk": "6c2a2a",
+      "exitCode": 0,
+      "executions": 1,
+      "sourceFilesScanned": 1911,
+      "oldClauses": 15,
+      "oldConsumerFiles": 11,
+      "retiredClauses": 0,
+      "publicBindings": 4,
+      "algorithmConsumers": 4,
+      "output": "docs/refactor/generated/cupid-hybrid-state-slots-bindings-output.txt"
+    },
+    "phasePolicy": "新3／原pending／首type采LHS中文精度前阶段，真实first-validation-source-phase保；只有一条comment后继，首proof/head采最终源，原绿不复跑。",
+    "notRun": [
+      "full architecture gate",
+      "other old cases",
+      "models",
+      "full reproduction",
+      "cold initialization"
+    ]
+  },
+  "programSummary": {
+    "originalPrograms": 13,
+    "nonJSDocTypedNodes": 14212,
+    "noncommentLeaves": 17744,
+    "wholeMappedOutputs": 26,
+    "movedAlgorithms": 4,
+    "controls": 6
+  },
+  "wholeActualRawSame": false,
+  "bindingSummary": {
+    "oldClauses": 15,
+    "oldConsumerFiles": 11,
+    "retiredClauses": 0,
+    "publicBindings": 4,
+    "actualAlgorithmConsumers": 4
+  },
+  "typeAllGreen": false,
+  "limits": [
+    "14present＋2delete只交付两族原完整数据职责；无新strict live schema、档案codec、生命周期或C17整族complete。",
+    "实际init函数身份/模块/栈布局改变；不承诺任意CJS重绑定或全部初始化时序反射等价。",
+    "typeAllGreen=false：首14根真实exit2仅legacy测试TS2741，原输入overlay重现；没有混入getter/cast修复。",
+    "Root公共两源仅四specifier，后继其它cohort待本批提交后取新before，不冒整个当前依赖闭包固定。",
+    "引用扫描只覆盖import/export/ImportType及字面dynamic/require，不称支持ImportEquals/计算字符串。"
+  ]
+}

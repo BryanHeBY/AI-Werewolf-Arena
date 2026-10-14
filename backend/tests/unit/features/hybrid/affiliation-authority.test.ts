@@ -32,7 +32,7 @@ import { HYBRID_STAGE } from "../../../../src/game/mechanisms/roles/hybrid/night
 import {
   getHybridState,
   projectHybridState,
-} from "../../../../src/game/mechanisms/roles/hybrid/state";
+} from "../../../../src/game/mechanisms/roles/hybrid/ports";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { resolveInspection } from "../../../../src/game/mechanisms/roles/inspection";
 import {
