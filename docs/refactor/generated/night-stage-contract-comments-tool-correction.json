@@ -1,0 +1,5 @@
+{
+  "firstExecution": {"chunkId":"75e95e", "exitCode":1},
+  "reason":"getChildren 包含 JSDoc 节点，首实现把本次允许修改的注释也计入非注释程序树。",
+  "correction":"仅证明工具滤除 TypeScript 已声明 JSDoc 节点范围；所有业务节点和 token 仍逐序比较，生产源码未改。"
+}

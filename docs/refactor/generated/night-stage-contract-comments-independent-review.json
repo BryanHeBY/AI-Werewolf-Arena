@@ -1,0 +1,165 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_final_architecture_review",
+  "scope": [
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "sha256": "8c8a334e0f9dc432ee0c2d6e3f4090a800ec3e3da3e039e0141cbe6feea6116c"
+    }
+  ],
+  "baseCommit": "b6d4a7adf96eee0130540b7b4e25e853b144471f",
+  "actualGitBeforeSame": true,
+  "beforeSHA256": "86a0a04b8ce67bdd7a309a5a09e4df8c4d5ff6c2f806cddec07c3cb2d8e0d914",
+  "documents": [
+    {
+      "path": "docs/refactor/night-stage-contract-comments.md",
+      "sha256": "9ec3863b422cb5c99f2507e4091b5f34e5fb9dd369af77e200af9459751b07e3"
+    },
+    {
+      "path": "docs/refactor/generated/night-stage-contract-comments-evidence.json",
+      "sha256": "62b49d2a393c1ba1c17252e1a968c0d944b3555f28cb8d01d0f90c82f95d04e6"
+    },
+    {
+      "path": "docs/refactor/generated/night-stage-contract-comments-before.json",
+      "sha256": "099a2f8db63cffff7122d9902bb1eff758bc56b3a7705fd174ed4c6bdb8ffa1c"
+    },
+    {
+      "path": "docs/refactor/generated/night-stage-contract-comments-tool-correction.json",
+      "sha256": "cc9db5d1f4840c1b83f45538dde23b86a107a16cf947f393b5657ecbab177ad2"
+    },
+    {
+      "path": "docs/refactor/generated/night-stage-contract-comments-check.ts",
+      "sha256": "3e45f3dbf5ce5a14b667252579d50db8f28d1b0aca6a3c84e26095c35403d133"
+    }
+  ],
+  "sourceReadReferences": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "e78ad051db063e88af5766107489803c7ec752110eb724278926fe31d092a34c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+      "sha256": "b2a68301f75bbdb42169826eedd47355e583e88c6e7c6244ee24a122dbea2501"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "sha256": "48ff74ddb1d95e7e7564a58a2075e8abc6e22b3e952641205241eb719ef34189"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts",
+      "sha256": "134e7e639d0d1a59e67c14ec2dd0a00f7b084b66d4443cbe15bd22f1090c034e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_stages.ts",
+      "sha256": "e4d25ea5854df50df6f12764929817bcea58a3ba0605306e519fbd6d891e9eac"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/scholar_mentor/night_frame.ts",
+      "sha256": "e50c030bc86c4f649923533aa6563653c6aae55913087798364458d076ff08c8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/night_frame.ts",
+      "sha256": "dcdf1de6efa67f268c153a21e54d39e6e6a10688df770f47faba6fe5e03a774a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+      "sha256": "0a324c252e162cf50ef0adb642509b64c689b4e565eec60a9de95c9f6796e18a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mechanical_wolf/night_stages.ts",
+      "sha256": "f34dee6205bc4c068d0b482bf7344c70d0b26294b5712be255eaf01d6f58ed82"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/night_stages.ts",
+      "sha256": "38c9bbbb9ac976e9ae96723a3db38c60800a6b251a36af6720fb9ed21d8e5f10"
+    },
+    {
+      "path": "backend/src/core/domain/night_effects.ts",
+      "sha256": "0f7c0734ba2585213dbeb11509845efeba4e4afd2c61f27de5cdc84812dcdd97"
+    },
+    {
+      "path": "backend/src/core/domain/systems/damage_resolution_system.ts",
+      "sha256": "5544f82a72547a6c9c23632a4abe5fb93719faaf251b355f5b5f3131e77cc676"
+    },
+    {
+      "path": "backend/src/rulesets/night-damage-composition.ts",
+      "sha256": "4b297b7acff93e84f06a3f8a85035d760104e8b09ba74b472095922248e3ba37"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-effects.ts",
+      "sha256": "018ffeed50b5650845d548b38050efae620eeb2e1ddac136b19722e27ca95761"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-failure-policy.ts",
+      "sha256": "c7864c2c603a10accdcd07332ac55189fc594c88c49386780a1c660c288c940a"
+    },
+    {
+      "path": "backend/src/rulesets/night-stage-plan.ts",
+      "sha256": "a24fae1e9ab4a0bba86cfe766415e0a7dff5e3c904559066b89da27fc2378b06"
+    },
+    {
+      "path": "packages/game-catalog/src/index.ts",
+      "sha256": "4b1cd6d924a441156457ffa19f9e67e99c709f258ad53ad1dab526ac70b51d25"
+    },
+    {
+      "path": "docs/rules/awa-evil-knight-v1.md",
+      "sha256": "6811c2893301c7887007b850d1aca75f0ff7cb76cf94a00b1f16c944d987be7d"
+    }
+  ],
+  "findings": [
+    {
+      "id": "C01",
+      "status": "closed",
+      "scope": "evilKnightBindings中文说明",
+      "before": "新说明使用历史恶灵骑士名",
+      "actualOwner": "Catalog当前展示名与现行规则卡均为恶夜骑士，旧官方名称只属历史引用",
+      "final": "新说明已使用恶夜骑士，不改机器ID或旧历史资料。"
+    },
+    {
+      "id": "C02",
+      "status": "closed",
+      "scope": "NightStageState说明",
+      "before": "字段存在被写成已捕获提案或效果",
+      "actualOwner": "Pipeline在行动前已经初始化空claim/effect数组与集合",
+      "final": "区分空容器存在、运行效果条目、付款／有效性和实际标死，各自归原owner核对。"
+    },
+    {
+      "id": "C03",
+      "status": "closed",
+      "scope": "NightStageHandler说明",
+      "before": "优先级排序未限定默认收集器",
+      "actualOwner": "默认getStages按priority/id排序；外部override与opaque成员保原计划迭代顺序",
+      "final": "限定默认收集器原排序，流水线仍按计划原顺序执行；execute返回不等于实际死亡。"
+    }
+  ],
+  "behaviorCommentsAudit": [
+    "普通狼刀在原体/版本/目标权限重验后统计acceptedTargets；wolfTargetVoters源于目标对应参与者而非票表键。",
+    "迷雾随机回退只在非空voteOrder全部显式pass且circle可用时发生；严格Mist失败政策在补造pass前拒绝缺失/非法工具；具名day:mist-knife流由Pipeline创建。",
+    "DreamLinks保原actor/target生命与版本，捕获的关系由同一DreamNightFrame查询／累计原因／写damage及事件；Frame不标死，不是纯DTO。",
+    "Scholar receipt.commit在原效果写入前，effectCurrent、目标生命版本和可选marks仍在每阶段前后及伤害组合前核；付款不等于目标最终死亡。",
+    "Evil开夜frame捕获原生命与状态绑定；native reflection在原生验/毒付款后再次核绑定、caster、资源并付款，不把运行回调投影为玩家知识。",
+    "Mechanical/Awakened各自技能资格、使用次数及已付回调保持；claim/intent出现可先于后续付款或发布成功，数组/字段本身不构成行动授权。",
+    "owned intent身份由原domain WeakSet登记，新kind/origin只对owned对象读取；legacy注入保原getter/接受宽度，同名字段不授予owned来源。",
+    "NightStageContext包含真实World/commands而非JSON或隔离权限屏障；异步后isCurrent和具体scope仍由实际handler核。DamageResolution只返回死亡提案并消费印记，Alive写入/死亡波归DR/PM。"
+  ],
+  "authorProofAttribution": {
+    "actualChunk": "f5ce0b",
+    "exitCode": 0,
+    "noncommentASTTokenNodes": 965,
+    "wholeOutputs": 2,
+    "headDiagnostics": 0,
+    "sourceAtProof": "e1e05d92397d2a2d5e1a9f0a1e1ad0744da5648f1b379bf823ecf53b781949a6",
+    "finalExactThreeCommentInverseSame": true,
+    "firstFailure": {
+      "chunk": "75e95e",
+      "exitCode": 1,
+      "reason": "证明工具getChildren包含JSDoc，Root仅修工具滤除TS JSDoc节点；未作为产品失败或绿色回执。"
+    },
+    "limit": "审查者读取完整工具/持久证据及Root真实回执，不重新执行AST/emit/gate/types/tests。"
+  },
+  "limits": [
+    "只审这一契约的中文说明、原注释增量及对应真实调用写权；不宣称已完成私有类型迁移或全仓中文化。",
+    "源/文档指纹按当前最终字节记录；未重写历史sourceHash。",
+    "本次只写独立审查JSON；未编辑产品源码、progress或其它作者证据。"
+  ]
+}

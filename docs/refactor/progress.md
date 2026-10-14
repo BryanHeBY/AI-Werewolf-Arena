@@ -614,3 +614,5 @@
 - C04具名机制公开端口：2源规则明确根kebab-case *-ports(.ts/mts/cts)供实际setup／ability facet，原index/contracts/ports与kinds门控保持；nested、underscore、近似名、任意private/domain/browser不豁免，无旧债回写。new3distinct8assert首2新预期顺序/name错误仅failed2/7重绿，原3/4边界case once，有限2root748958实际0，2CN头6b1910零诊断。Root作者实边界审与独立2SHA/真实before/原约束/收据批准，明确policy变更非旧gate等价；固定27fbbc旧工具报告保持历史不借绿，见 public-port-facets.md。
 
 - C04/I04共享普通狼贡献装配：24源，唯一完整普通狼对象经公共ability端口供20真实profile复用，旧profile同绑定Catalog入口保；376绑定26迁350保，完整294/13265节点与42映射输出保，Mist两query最终同声明公共route桥。初拆固定runtime候选会改公共可写字段晚读取，由Root发现撤回；原直接常量、getter/receiver、metadata→runtime→presentation键序和RNG保持。新3/43一次，24roots37943→7e705e与route1root70244→295e8e实际0；24CN头0，有限367→369值图精确消接线后原owner可达集同，不冒全历史/冷入口。Root代表性源审与独立完整24/21Git/376binding源审批准，末CJS namespace旧data→alias getter反射限制单列，plain对象可写语义保持；无全gate重跑，全角色能力迁移继续。见 wolf-ability-assembly.md。
+
+- I03夜间共享契约随流程补中文说明：1source仅注释，狼刀投票原体、增益回执、梦关系、恶夜绑定和机械／觉醒资源分别解释；两旧英文翻中文，原字段/import/type全保。真实b6d4 before与完整965非comment token/两raw输出同，首工具把JSDoc计入只修工具红保；独立3精度finding（现名/空容器/opaque计划顺序）闭合，以三注释精确逆回verifiedSHA保收据，不重types/tests/gate。Root作者核与独立源审finalSHA批准，全Night私有载荷和C45仍继续。见 night-stage-contract-comments.md。
