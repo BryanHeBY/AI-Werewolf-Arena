@@ -1,0 +1,184 @@
+{
+  "roots": [
+    "backend/src",
+    "backend/tests",
+    "backend/scripts",
+    "frontend/src",
+    "frontend/tests",
+    "packages",
+    "tooling"
+  ],
+  "typedAndJsFiles": 1891,
+  "forms": [
+    "named/namespace/default import",
+    "named/star export",
+    "ImportTypeNode",
+    "ImportEquals",
+    "dynamic import",
+    "require"
+  ],
+  "sites": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/choice.ts",
+      "line": 2,
+      "form": "import",
+      "specifier": "../thief/state",
+      "bindings": [
+        "getThiefState",
+        "readThiefTool"
+      ],
+      "text": "import { getThiefState, readThiefTool } from \"../thief/state\";",
+      "sha256": "552a74b371327e25effd12ba041ec8c112dc0f8e4cfa64be6648e8a253ebd434"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "line": 39,
+      "form": "import",
+      "specifier": "./data-ports",
+      "bindings": [
+        "dataField"
+      ],
+      "text": "import { dataField } from \"./data-ports\";",
+      "sha256": "6a7d05b7ab4f521694107d970275d41a6824ae7deca7c159de183aac4ebc6012"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "line": 11,
+      "form": "import",
+      "specifier": "../initial_identity/data-ports",
+      "bindings": [
+        "dataField"
+      ],
+      "text": "import { dataField } from \"../initial_identity/data-ports\";",
+      "sha256": "a5c0898575b002666d95dfe5b5fc0b3d8efdfd3b9e9855ef951fae72b4f44018"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/ports.ts",
+      "line": 7,
+      "form": "export",
+      "specifier": "./state",
+      "bindings": [
+        "projectThiefState"
+      ],
+      "text": "export { projectThiefState } from \"./state\";",
+      "sha256": "de9a9b72870ec62a0b63b2581c60b8bc5b938c6463d083eac3e4d7d6faf39f32"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/ports.ts",
+      "line": 11,
+      "form": "export",
+      "specifier": "./state",
+      "bindings": [
+        "readThiefChoice"
+      ],
+      "text": "export { readThiefChoice } from \"./state\";",
+      "sha256": "de9a9b72870ec62a0b63b2581c60b8bc5b938c6463d083eac3e4d7d6faf39f32"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/profile.ts",
+      "line": 13,
+      "form": "import",
+      "specifier": "./state",
+      "bindings": [
+        "THIEF_POLICY",
+        "getThiefState",
+        "projectThiefState",
+        "readThiefChoice"
+      ],
+      "text": "import { THIEF_POLICY, getThiefState, projectThiefState, readThiefChoice } from \"./state\";",
+      "sha256": "786a7d6317c66d999af26c719e93d7ccaf75888c50be0c693b9fe08a22f3d107"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "line": 10,
+      "form": "import",
+      "specifier": "../initial_identity/data-ports",
+      "bindings": [
+        "dataField"
+      ],
+      "text": "import { dataField } from \"../initial_identity/data-ports\";",
+      "sha256": "42234cd1201b7d1e2de8cbee1028327e54059a18f779d26e3d8ba81c3dc7ec3e"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "line": 42,
+      "form": "import",
+      "specifier": "../mechanisms/roles/thief/state",
+      "bindings": [
+        "projectThiefState"
+      ],
+      "text": "import { projectThiefState } from \"../mechanisms/roles/thief/state\";",
+      "sha256": "8598def0aa170f14ffea6c86c33225529be74fe5b2cc62705dc1aa24f55fab22"
+    },
+    {
+      "path": "backend/src/game/observation/player-prompt-directives.ts",
+      "line": 34,
+      "form": "import",
+      "specifier": "../mechanisms/roles/thief/state",
+      "bindings": [
+        "projectThiefState"
+      ],
+      "text": "import { projectThiefState } from \"../mechanisms/roles/thief/state\";",
+      "sha256": "839f243b900e74032f959f5b2f846e5232052df524176bb61e91322ea677a240"
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "line": 36,
+      "form": "import",
+      "specifier": "../../../../src/game/mechanisms/roles/thief/state",
+      "bindings": [
+        "readThiefTool",
+        "getThiefState"
+      ],
+      "text": "import { readThiefTool, getThiefState } from \"../../../../src/game/mechanisms/roles/thief/state\";",
+      "sha256": "32639ead018bdffc6d2c19d11e5ea29fd188b01aac0a0803435440c14b6e3b2f"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "line": 18,
+      "form": "import",
+      "specifier": "../../../src/game/mechanisms/roles/thief/state",
+      "bindings": [
+        "getThiefState"
+      ],
+      "text": "import { getThiefState } from \"../../../src/game/mechanisms/roles/thief/state\";",
+      "sha256": "4e2358fcf7005196e13a320f986856193835cfe03189b8c172eb2f013da8f83c"
+    }
+  ],
+  "functionSites": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "line": 39,
+      "form": "import",
+      "specifier": "./data-ports",
+      "bindings": [
+        "dataField"
+      ],
+      "text": "import { dataField } from \"./data-ports\";",
+      "sha256": "6a7d05b7ab4f521694107d970275d41a6824ae7deca7c159de183aac4ebc6012"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "line": 11,
+      "form": "import",
+      "specifier": "../initial_identity/data-ports",
+      "bindings": [
+        "dataField"
+      ],
+      "text": "import { dataField } from \"../initial_identity/data-ports\";",
+      "sha256": "a5c0898575b002666d95dfe5b5fc0b3d8efdfd3b9e9855ef951fae72b4f44018"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "line": 10,
+      "form": "import",
+      "specifier": "../initial_identity/data-ports",
+      "bindings": [
+        "dataField"
+      ],
+      "text": "import { dataField } from \"../initial_identity/data-ports\";",
+      "sha256": "42234cd1201b7d1e2de8cbee1028327e54059a18f779d26e3d8ba81c3dc7ec3e"
+    }
+  ],
+  "limits": "仅这些七个当前源码根（packages排node_modules/dist/generated）；字面静态路由，不声称计算specifier或任意动态外部消费者。"
+}

@@ -1,0 +1,191 @@
+{
+  "baseCommit": "22abe7fa5b1258bdec3611b095e6f6deed1e0778",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "sha256": "42234cd1201b7d1e2de8cbee1028327e54059a18f779d26e3d8ba81c3dc7ec3e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "sha256": "a5c0898575b002666d95dfe5b5fc0b3d8efdfd3b9e9855ef951fae72b4f44018"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "6a7d05b7ab4f521694107d970275d41a6824ae7deca7c159de183aac4ebc6012"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/data-ports.ts",
+      "sha256": "6cc42473ec388f359f6776a29b6853968d3a8c11786e1b1dbc661659f7e375c9"
+    }
+  ],
+  "wholePrograms": [
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "beforeSha256": "5d1d9a41f32d518947cb0e0706077402656380b3d2a6c683ccb78929dc602410",
+      "sha256": "42234cd1201b7d1e2de8cbee1028327e54059a18f779d26e3d8ba81c3dc7ec3e",
+      "preciseEdits": 8,
+      "wholeRawForwardInverse": true,
+      "typedNodes": 500,
+      "noncommentLeaves": 560,
+      "wholeTypedAndTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "beforeSha256": "557c979f9cc647bf71b9980951a9eab55888d22e952b2f5c746056ed20f4cee4",
+      "sha256": "a5c0898575b002666d95dfe5b5fc0b3d8efdfd3b9e9855ef951fae72b4f44018",
+      "preciseEdits": 2,
+      "wholeRawForwardInverse": true,
+      "typedNodes": 349,
+      "noncommentLeaves": 390,
+      "wholeTypedAndTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "beforeSha256": "a3a75e8ca52fcc8f9ed6a19e40b236e87aa235459be26d6b69a63bbd42ff0f8f",
+      "sha256": "6a7d05b7ab4f521694107d970275d41a6824ae7deca7c159de183aac4ebc6012",
+      "preciseEdits": 1,
+      "wholeRawForwardInverse": true,
+      "typedNodes": 2725,
+      "noncommentLeaves": 3034,
+      "wholeTypedAndTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true
+        }
+      ]
+    }
+  ],
+  "actualFunction": {
+    "physicalLines": 5,
+    "bodyStatements": 3,
+    "completeActualTextSame": true,
+    "typedNodes": 59,
+    "noncommentLeaves": 67,
+    "wholeTypedAndTokenSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true
+      }
+    ],
+    "hasImports": false,
+    "noWrapper": true
+  },
+  "bindings": [
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/state.ts",
+      "previous": {
+        "form": "local original function declaration"
+      },
+      "current": {
+        "local": "dataField",
+        "imported": "dataField",
+        "specifier": "../initial_identity/data-ports",
+        "typeOnly": false
+      },
+      "canonicalOwner": "backend/src/game/mechanisms/roles/initial_identity/data-ports.ts",
+      "otherNamedBindings": 6,
+      "allOtherNamedBindingsSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "previous": {
+        "local": "dataField",
+        "imported": "dataField",
+        "specifier": "../thief/state",
+        "typeOnly": false
+      },
+      "current": {
+        "local": "dataField",
+        "imported": "dataField",
+        "specifier": "../initial_identity/data-ports",
+        "typeOnly": false
+      },
+      "canonicalOwner": "backend/src/game/mechanisms/roles/initial_identity/data-ports.ts",
+      "otherNamedBindings": 6,
+      "allOtherNamedBindingsSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "previous": {
+        "local": "dataField",
+        "imported": "dataField",
+        "specifier": "../thief/state",
+        "typeOnly": false
+      },
+      "current": {
+        "local": "dataField",
+        "imported": "dataField",
+        "specifier": "./data-ports",
+        "typeOnly": false
+      },
+      "canonicalOwner": "backend/src/game/mechanisms/roles/initial_identity/data-ports.ts",
+      "otherNamedBindings": 46,
+      "allOtherNamedBindingsSame": true
+    }
+  ],
+  "oldDataFieldExportRetired": true,
+  "nonfirstLiteralCounterexampleDetected": true,
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "sha256": "c528993cd54276d1a98ee3e31881c0da4111c48744c4b68a53c2871b7ea78de3",
+      "wholeCurrentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "sha256": "31034848c1e14f7a73da7fb6e72152d8b368a2f549e5186b9e4fc8aa408edda2",
+      "wholeCurrentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "sha256": "890971484a377f4a2e98094cf3071985ea3ff9f981a25b10dec411bc801481dd",
+      "wholeCurrentSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "sha256": "32639ead018bdffc6d2c19d11e5ea29fd188b01aac0a0803435440c14b6e3b2f",
+      "wholeCurrentSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "sha256": "ea3270ba78cc674ffa6ee9e9d9c84cdba4fe20b037c45b4c15e68fe2cbf92909",
+      "wholeCurrentSame": true
+    }
+  ],
+  "limits": [
+    "两个共享读取旧私有edge真实消除，三个消费者直接使用完整公共纯函数；不声称全部initial identity/data schema完成。",
+    "原函数module/调用栈/初始化分配/旧公开出口退休是有界API变化；不承诺任意CJS namespace重赋或反射prototype monkeypatch等价。",
+    "只函数与调用源的完整逆向／真实绑定保持；新旧整体模块raw输出因移动与route本来不同，所列输出属于完整精确逆和实际函数。",
+    "data-ports没有任何import或store，新leaf不形成运行回边；未重全冷加载、类型、行为或全门禁。"
+  ]
+}

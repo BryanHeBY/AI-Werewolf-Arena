@@ -1,0 +1,1 @@
+{"sources":3,"typedNodes":3574,"noncommentLeaves":3984,"function":{"physicalLines":5,"bodyStatements":3,"completeActualTextSame":true,"typedNodes":59,"noncommentLeaves":67,"wholeTypedAndTokenSame":true,"outputs":[{"module":"ESNext","wholeRawSame":true},{"module":"CommonJS","wholeRawSame":true}],"hasImports":false,"noWrapper":true},"bindings":3,"controls":5}

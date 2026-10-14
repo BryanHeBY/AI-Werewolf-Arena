@@ -1,5 +1,5 @@
 /**
- * 负责读取变形者私有状态结构并构造玩家投影，private 槽仍由原角色／初始化 owner 持有。
+ * 负责读取千面人私有状态结构并构造玩家投影，private 槽仍由原角色／初始化 owner 持有。
  * 输入为角色记录，投影另接收 World；输出为合法原槽引用或新 policy／remaining／choice
  * 视图。只在 setup 为 pending 时展示存储 remaining，其他 setup 状态投影为 0，不改 live 库存。
  * 具名工具出口引用同一 shared reader；本模块不发牌或提交身份替换，也不新增未知对象零 trap 保证。
@@ -8,7 +8,7 @@ import type { ShapeshifterState, ShapeshifterReadState } from "@ai-werewolf-aren
 import { Role, type RoleComponent, type World } from "../../../../core/domain";
 import { shapeshifterSetupStatus } from "./deal";
 export const SHAPESHIFTER_POLICY = "awa_netease_shapeshifter_two_extra_villagers_v1" as const;
-import { dataField } from "../thief/state";
+import { dataField } from "../initial_identity/data-ports";
 export function getShapeshifterState(
   role: RoleComponent | undefined,
 ): ShapeshifterReadState | null {

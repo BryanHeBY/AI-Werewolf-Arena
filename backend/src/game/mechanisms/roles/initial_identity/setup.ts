@@ -36,7 +36,7 @@ import {
   type InitialIdentityDeal,
   type InitialIdentitySlot,
 } from "./deal";
-import { dataField } from "../thief/state";
+import { dataField } from "./data-ports";
 import {
   getInitialIdentityState,
   readInitialIdentityTool,

@@ -1,0 +1,73 @@
+{
+  "originalFunction": "export function dataField(value: unknown, key: string): unknown {\n  if (!value || typeof value !== \"object\" || Array.isArray(value)) return undefined;\n  const descriptor = Object.getOwnPropertyDescriptor(value, key);\n  return descriptor && Object.hasOwn(descriptor, \"value\") ? descriptor.value : undefined;\n}\n",
+  "originalFunctionPhysicalLines": 5,
+  "sourceEdits": {
+    "backend/src/game/mechanisms/roles/thief/state.ts": [
+      {
+        "before": "/**\n * Owns Thief descriptor-based state reads and initial-choice tool parsing. Inputs are\n * original role data, setup status and candidate fields; outputs preserve exact slot checks,\n * the live reference and copied player state. This boundary never deals or replaces a role.\n */",
+        "after": "/**\n * 负责盗贼原状态读取、玩家知识副本和初始选择工具解析。输入为原角色记录、World准备状态或未知工具对象；\n * 输出合法原槽引用、policy／remaining／choice新副本或原明确拒绝，不发牌、不替换身份或授予选择许可。\n * 三字段形状、原政策与0／1资源保持；字段契约由共享data-ports拥有，不强化descriptor或Proxy接受面。\n * 展示只在setup pending时保留存储remaining，其它状态归0；这不会消费或更新live库存。\n */",
+        "count": 1
+      },
+      {
+        "before": "export function dataField(value: unknown, key: string): unknown {\n  if (!value || typeof value !== \"object\" || Array.isArray(value)) return undefined;\n  const descriptor = Object.getOwnPropertyDescriptor(value, key);\n  return descriptor && Object.hasOwn(descriptor, \"value\") ? descriptor.value : undefined;\n}\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "import { thiefSetupStatus } from \"./deal\";",
+        "after": "import { thiefSetupStatus } from \"./deal\";\nimport { dataField } from \"../initial_identity/data-ports\";",
+        "count": 1
+      },
+      {
+        "before": "export function getThiefState(role: RoleComponent | undefined): ThiefReadState | null {",
+        "after": "/** 只核原角色／三字段状态；成功保同一live引用，不新增camp、写权或不可反射对象要求。 */\nexport function getThiefState(role: RoleComponent | undefined): ThiefReadState | null {",
+        "count": 1
+      },
+      {
+        "before": "  const policy = dataField(state, \"policy\"),",
+        "after": "  // 原remaining和choice各自允许0／1，choice还允许null；这里只读字段，选择合法性由原scope继续核。\n  const policy = dataField(state, \"policy\"),",
+        "count": 1
+      },
+      {
+        "before": "export function projectThiefState(",
+        "after": "/** 新知识对象只调整显示remaining；原状态、policy和choice读取先后不变，副本不是可提交选择。 */\nexport function projectThiefState(",
+        "count": 1
+      },
+      {
+        "before": "export function readThiefChoice(value: unknown): 0 | 1 | undefined {",
+        "after": "/** 只接受原唯一slot自有键及0／1值；descriptor字段读取不调用普通访问器，但反射仍可能失败。 */\nexport function readThiefChoice(value: unknown): 0 | 1 | undefined {",
+        "count": 1
+      },
+      {
+        "before": "export function readThiefTool(",
+        "after": "/** 先核原两键与工具名，再读取args／slot；首个失败按原null结果或反射异常传播，不补新参数。 */\nexport function readThiefTool(",
+        "count": 1
+      }
+    ],
+    "backend/src/game/mechanisms/roles/shapeshifter/state.ts": [
+      {
+        "before": "负责读取变形者私有状态结构",
+        "after": "负责读取千面人私有状态结构",
+        "count": 1
+      },
+      {
+        "before": "import { dataField } from \"../thief/state\";",
+        "after": "import { dataField } from \"../initial_identity/data-ports\";",
+        "count": 1
+      }
+    ],
+    "backend/src/game/mechanisms/roles/initial_identity/setup.ts": [
+      {
+        "before": "import { dataField } from \"../thief/state\";",
+        "after": "import { dataField } from \"./data-ports\";",
+        "count": 1
+      }
+    ]
+  },
+  "paths": [
+    "backend/src/game/mechanisms/roles/thief/state.ts",
+    "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+    "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+    "backend/src/game/mechanisms/roles/initial_identity/data-ports.ts"
+  ]
+}
