@@ -1,0 +1,27 @@
+{
+  "initial": {
+    "chunk": "d19cc1",
+    "exitCode": 0,
+    "nodes": 3572,
+    "outputs": 2,
+    "diagnostics": 0
+  },
+  "commentCorrection": {
+    "chunk": "aadfc0",
+    "description": "执行说明中文错字终于改最终，无非注释变化；初证据保存。"
+  },
+  "final": {
+    "chunk": "c14826",
+    "exitCode": 0,
+    "nodes": 3572,
+    "outputs": 2,
+    "diagnostics": 0
+  },
+  "notRun": [
+    "tests",
+    "types",
+    "game",
+    "models",
+    "full gates"
+  ]
+}

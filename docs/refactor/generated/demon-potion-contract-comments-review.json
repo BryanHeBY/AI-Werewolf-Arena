@@ -1,0 +1,113 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_presentation_finish",
+  "reviewMode": "Independent complete source and caller/contribution semantics, actual Git/whole-source comment forward and document hashes; no proof/type/runtime/head/gate repeated",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "sha256": "4a1c8a0d1ede5680d405197a78d951cd8fc00ccba08058ebd90715cfe4c6a8bb"
+    }
+  ],
+  "checks": {
+    "actualGitSha256": "868d6489ca83dd2cf13ae7dbd2fd43d9f774a018e47308f45f1c4e220aa1e50e",
+    "recordedBeforeSameGit": true,
+    "currentSha256": "c938323145592cae43484db599441990355b9f6cbf493d864d30065bb5f749e0",
+    "finalScopeMatch": true,
+    "exactCommentSites": 13,
+    "wholeCommentForwardSame": true
+  },
+  "semantics": [
+    "Original accepted request/target is rechecked after await; recordNightAbilityUse precedes conditional mark/write/stock decrement and frame.commit. Later contribution commit, proof construction, delivery cache, settlement, optional gateway diagnostic, event push and finally scope closure preserve committed prefix without rollback.",
+    "Normal poison still has an originalPoisonIntent, committed contribution and delivery despite null proof. Proof existence is registration of native Demon-target poison, not a promise of final immunity/currentness; final qualifier can still revoke it.",
+    "Runtime weak ledgers and Sealed token bind original World/day and are not JSON/DTO authorization. seal occurs before ordinary damage clears marks; successful same-night seal is nonrepeatable. Lower source freeze succeeds before sealed.frozen=true, which stays consumed if output construction later fails; underlying partial failures are not claimed rolled back.",
+    "Final native immunity requires the original proof/contribution/current source and one qualified immunity fact. Unknown and late poison OR branches remain independent, and ordinary native poison continues when current and not immune; heal source has its own independent unknown/late/native-current branches.",
+    "Head and thirteen Chinese explanations accurately distinguish accepted/paid/source-current/immutable metadata, optional logic recording and actual resource owners. Types/fields/error strings remain original; no broad whole C45 or gameplay acceptance assertion."
+  ],
+  "documents": {
+    "markdown": {
+      "path": "docs/refactor/demon-potion-contract-comments.md",
+      "sha256": "b4ae1ec7cf146b57c787127cb3f664cbbb7753b4e232617c2328cec3eb7c90d2"
+    },
+    "evidence": {
+      "path": "docs/refactor/generated/demon-potion-contract-comments-evidence.json",
+      "sha256": "62e991593e23b4df128698c0afa8f83908dccc52ba6df7878e5ecade7de5f739"
+    },
+    "scope": {
+      "path": "docs/refactor/generated/demon-potion-contract-comments-scope-final.json",
+      "sha256": "1cb2f6a96fe947aadc9c40f7ff690f1ad11a00b3a6cb8539ac72251d59eefeff"
+    }
+  },
+  "authorProof": {
+    "hierarchicalNonCommentSyntaxAndLiteralNodes": 3572,
+    "wholeProgramEqual": true,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawEqual": true,
+        "sha256": "7746e2a58bce4abf765c819599f63a51e9241b675365edb660e218abe0bb3238"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawEqual": true,
+        "sha256": "11ad3c01d875ea77e8fa61010437a20a2a97ca2736ea9a4bd42fae16a2e4959c"
+      }
+    ],
+    "commentDiagnostics": [],
+    "receipts": {
+      "initial": {
+        "chunk": "d19cc1",
+        "exitCode": 0,
+        "nodes": 3572,
+        "outputs": 2,
+        "diagnostics": 0
+      },
+      "commentCorrection": {
+        "chunk": "aadfc0",
+        "description": "执行说明中文错字终于改最终，无非注释变化；初证据保存。"
+      },
+      "final": {
+        "chunk": "c14826",
+        "exitCode": 0,
+        "nodes": 3572,
+        "outputs": 2,
+        "diagnostics": 0
+      },
+      "notRun": [
+        "tests",
+        "types",
+        "game",
+        "models",
+        "full gates"
+      ]
+    },
+    "limits": "3572 is the check script hierarchical getChildren traversal count, not just leaf tokens; independent review did not re-execute it."
+  },
+  "findings": [
+    {
+      "source": "Root later semantic review",
+      "finding": "Original head misdescribed actual controller input as sealed body/request/validated choice",
+      "status": "closed",
+      "fix": "One input comment line now describes actual input and internal validation ownership; no algorithm change."
+    }
+  ],
+  "limits": [
+    "Only one product source comments slice; no current full gate/type/runtime conclusion.",
+    "Backend source comments change current strict fingerprint input; original archive fingerprints are unchanged."
+  ],
+  "previousReview": {
+    "path": "docs/refactor/generated/demon-potion-contract-comments-review-before-final-comment.json",
+    "sha256": "1870a61aabc1a57e3287b23f85c38d187cc79287ff5a892dad14e1fd81a37c3d",
+    "status": "Original 13-site review before Root corrected actual controller inputs"
+  },
+  "finalCommentReview": {
+    "approved": true,
+    "scopeSHA": "1cb2f6a96fe947aadc9c40f7ff690f1ad11a00b3a6cb8539ac72251d59eefeff",
+    "bridgeSHA": "23bdda10c738dc72197f030c4c623905773df25165e0159eea4c83edf6920221",
+    "currentSHA": "4a1c8a0d1ede5680d405197a78d951cd8fc00ccba08058ebd90715cfe4c6a8bb",
+    "meaning": "Root corrected head from sealed body/validated choice to actual World/day/knife context/gateway/provider inputs; true request and choice checks occur inside existing controller before payment. Only this accurate input line changed; c14826 proof remains explicitly prefinal c938 stage.",
+    "repeatedChecks": false,
+    "exactInverseSha256": "c938323145592cae43484db599441990355b9f6cbf493d864d30065bb5f749e0",
+    "preciseInverseMatchesVerifiedCandidate": true
+  },
+  "checksStage": "Original thirteen-site prefinal candidate c938, preserved as captured actual before original approval. Final source verification is separate finalCommentReview."
+}

@@ -1,0 +1,95 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "reviewMode": "作者实读原authority/frame/nativePoison/contribution与控制器，14项注释精确forward到实际候选；独立peer另列，末headfinding由Root发现并闭合，不伪重绿色验收。",
+  "baseCommit": "173ef9df85b47c7327328d2c135f79294e417e6d",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "sha256": "4a1c8a0d1ede5680d405197a78d951cd8fc00ccba08058ebd90715cfe4c6a8bb"
+    }
+  ],
+  "scopeSHA256": "1cb2f6a96fe947aadc9c40f7ff690f1ad11a00b3a6cb8539ac72251d59eefeff",
+  "actualGitBeforeSHA256": "868d6489ca83dd2cf13ae7dbd2fd43d9f774a018e47308f45f1c4e220aa1e50e",
+  "preciseComments": 14,
+  "wholeSourceForwardEqual": true,
+  "finalCommentBridge": {
+    "prefinalSourceSHA256": "c938323145592cae43484db599441990355b9f6cbf493d864d30065bb5f749e0",
+    "finalSourceSHA256": "4a1c8a0d1ede5680d405197a78d951cd8fc00ccba08058ebd90715cfe4c6a8bb",
+    "preciseComment": {
+      "before": " * 输入为原封存 body、请求及已验证选择；输出为原已付救/毒及不可复用的 native proof。",
+      "after": " * 输入为原 World、夜号、刀口、网关与 Provider；输出为行动回执、已付救／毒交付及封存来源。"
+    },
+    "exactInverseEqual": true,
+    "prefinalEvidenceSHA256": "62e991593e23b4df128698c0afa8f83908dccc52ba6df7878e5ecade7de5f739",
+    "limit": "最终输入职责说明改为函数的实际输入，不改程序；将唯一注释精确逆还原可得已验证完整程序原文，不重type/runtime/gate。"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/demon-potion-contract-comments-before.json",
+      "sha256": "9a01a576855cd164481fd8af1363145bea6568fdec11611eace7e339e9811c30"
+    },
+    {
+      "path": "docs/refactor/generated/demon-potion-contract-comments-check.ts",
+      "sha256": "36a908b39446d5770a5a3b7891e062b1f798f37ce8a6a3aac9a9e1540cb246b6"
+    },
+    {
+      "path": "docs/refactor/generated/demon-potion-contract-comments-edits.json",
+      "sha256": "4dbb010ff7a229112365f486eb4da943f9517ef7fa5a9815ffdc33996353807e"
+    },
+    {
+      "path": "docs/refactor/generated/demon-potion-contract-comments-evidence-initial.json",
+      "sha256": "d1ed9cabf53e867138eb0875e25399aa66c25e3ccf58673f534ee9dd8e4c3554"
+    },
+    {
+      "path": "docs/refactor/generated/demon-potion-contract-comments-evidence.json",
+      "sha256": "62e991593e23b4df128698c0afa8f83908dccc52ba6df7878e5ecade7de5f739"
+    },
+    {
+      "path": "docs/refactor/generated/demon-potion-contract-comments-final-comment-bridge.json",
+      "sha256": "23bdda10c738dc72197f030c4c623905773df25165e0159eea4c83edf6920221"
+    },
+    {
+      "path": "docs/refactor/generated/demon-potion-contract-comments-receipts.json",
+      "sha256": "1faf35a2662d667961a771e1a31265cae84cf9e7c6e53ae15f5df39c5851f4c1"
+    },
+    {
+      "path": "docs/refactor/generated/demon-potion-contract-comments-review-before-final-comment.json",
+      "sha256": "1870a61aabc1a57e3287b23f85c38d187cc79287ff5a892dad14e1fd81a37c3d"
+    },
+    {
+      "path": "docs/refactor/generated/demon-potion-contract-comments-review.json",
+      "sha256": "42e91afae421edaf484810e39532919d6a23b7547464a6183781b671d9ecee0e"
+    },
+    {
+      "path": "docs/refactor/generated/demon-potion-contract-comments-scope-final.json",
+      "sha256": "1cb2f6a96fe947aadc9c40f7ff690f1ad11a00b3a6cb8539ac72251d59eefeff"
+    }
+  ],
+  "documentation": {
+    "path": "docs/refactor/demon-potion-contract-comments.md",
+    "sha256": "b4ae1ec7cf146b57c787127cb3f664cbbb7753b4e232617c2328cec3eb7c90d2"
+  },
+  "independentReview": {
+    "path": "docs/refactor/generated/demon-potion-contract-comments-review.json",
+    "sha256": "42e91afae421edaf484810e39532919d6a23b7547464a6183781b671d9ecee0e",
+    "approved": true
+  },
+  "findings": [
+    {
+      "description": "旧首头将输入写为封存body/请求，非实际执行函数参数。",
+      "resolution": "末一行明确World/夜号/刀口/网关/Provider；独立peer窄复核实际源码与精确注释桥，已关闭。",
+      "closed": true
+    }
+  ],
+  "semantics": [
+    "登记use→mark→stock→frame.commit的原写入前缀没有事务回滚；后续贡献/proof/delivery与事件失败保已有前缀。",
+    "普通原生毒nullproof仍保claim和贡献；proof token只被本控制器/底层登记，不由DTO授予。",
+    "seal绑定原World/day，底层freeze成功后frozen立即置true，输出构造失败也不恢复token。",
+    "unknown/late独立毒与原生免疫分别组合，不把同一目标所有毒一律免疫。"
+  ],
+  "limits": [
+    "首实际3572tokens/两raw outputs/head为prefinalc938，末source通过唯一注释精确逆桥闭合；没有重tests/types/game/gates。",
+    "sourceHash改变不改历史指纹，不代表全C45或P9完成。"
+  ]
+}

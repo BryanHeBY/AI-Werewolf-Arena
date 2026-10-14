@@ -1,8 +1,8 @@
 /**
- * 负责已交付的恶魔猎手板原女巫回执和封存用药执行。
- * 输入为原封存 body、请求及已验证选择；输出为原已付救/毒及不可复用的 native proof。
+ * 负责有限猎魔人板的原生女巫行动、真实用药交付及夜间来源封存。
+ * 输入为原 World、夜号、刀口、网关与 Provider；输出为行动回执、已付救／毒交付及封存来源。
  * 两条原毒分支在原 claim 创建位置附加 sourced intent，复用已捕获 source/target/day。
- * 原瓶数付款、commit、交付缓存、必需记录失败前缀和 callback 完整保留。
+ * 保留瓶数付款、commit、交付缓存、事实发布与关闭的原次序；后续失败不回滚已提交前缀。
  * 新来源 metadata 与 life 句柄仅运行时使用，不加入事件、player DTO 或归档字段。
  */
 import {
@@ -62,12 +62,17 @@ import {
   lateUnknownHealContribution,
   type NativeHealContributions,
 } from "./heal_contribution";
+/** 已付救药的运行交付；原生命查询与贡献封存回调不能进入玩家 DTO 或归档。 */
 interface DeliveredDemonHeal {
   readonly claim: Readonly<NightPoisonClaim>;
   readonly lateUnknown: () => boolean;
   readonly sealContribution: () => Readonly<NativeHealContributions>;
 }
 const deliveredHeals = new WeakMap<World, Map<number, Readonly<DeliveredDemonHeal>>>();
+/**
+ * 已付原生毒的运行交付；proof 仅在毒向猎魔人且原生免疫来源被登记时存在。
+ * 普通原生毒仍保留 claim 与独立贡献；null proof 不表示没有付款或没有毒来源。
+ */
 export interface DeliveredDemonPoison {
   readonly proof: object | null;
   readonly claim: Readonly<NightPoisonClaim>;
@@ -76,6 +81,10 @@ export interface DeliveredDemonPoison {
 }
 const nativeAddMark = StatusMarksComponent.prototype.add;
 const delivered = new WeakMap<World, Map<number, Readonly<DeliveredDemonPoison> | null>>();
+/**
+ * 私有 token 对应的唯一封存账本，绑定原 World 与夜号。贡献在普通伤害清标记前捕获；
+ * frozen 只在底层来源冻结成功后置位，后续构造失败也不恢复该 token 的可用性。
+ */
 interface Sealed {
   world: World;
   day: number;
@@ -87,11 +96,12 @@ interface Sealed {
 }
 const sealedSources = new WeakMap<object, Sealed>();
 const sealedNights = new WeakMap<World, Set<number>>();
+/** 本次行动交付结果；used 只区分用药与放弃，poison 不承载救药回执。 */
 export interface DemonWitchTurnResult {
   readonly poison: Readonly<DeliveredDemonPoison> | null;
   readonly used: boolean;
 }
-/** Explicit candidate runtime path for the one original Witch in the finite Demon boards. */
+/** 原有限猎魔人板中唯一原生女巫的执行路径；await 后复验原请求与目标，最终关闭交付窗口。 */
 export async function executeDemonWitchTurn(input: {
   world: World;
   gateway: ToolGateway;
@@ -185,6 +195,7 @@ export async function executeDemonWitchTurn(input: {
       potion === PotionType.Heal && marks
         ? openNativeHealContribution(world, targetId, marks)
         : null;
+    // 先登记使用、写标记及扣瓶，再由 frame 核对真实库存提交；失败不伪造付款回滚。
     recordNightAbilityUse(ability, day, potion !== PotionType.None);
     if (potion !== PotionType.None) {
       nativeAddMark.call(
@@ -196,7 +207,7 @@ export async function executeDemonWitchTurn(input: {
         true;
     }
     if (!frame.commit(potion)) throw new Error("demon_hunter_native_witch_commit_failed");
-    // Cache real consumption before proof/event recording can fail.
+    // frame 已提交后先登记真实贡献；随后 proof、交付或事实发布失败仍保留这段已付前缀。
     if (contribution) commitNativePoisonContribution(contribution);
     if (healContribution) {
       commitNativeHealContribution(healContribution);
@@ -242,7 +253,7 @@ export async function executeDemonWitchTurn(input: {
         sealContribution: () => sealNativePoisonContribution(contribution),
       });
     } else if (potion === PotionType.Poison) {
-      // The ordinary native toxin has no Demon-immunity proof.
+      // 普通原生毒不持有猎魔人免疫 proof；来源与后续独立毒贡献仍必须保留。
       poison = Object.freeze({
         proof: null,
         claim: Object.freeze(
@@ -295,7 +306,7 @@ export async function executeDemonWitchTurn(input: {
   }
 }
 
-/** Original controller ledger is sealed before ordinary DamageResolution clears marks. */
+/** 在普通伤害清除标记前封存原交付贡献；返回仅本控制器登记的运行 token，同夜不得重封。 */
 export function sealDeliveredDemonWitchSources(world: World, day: number): object {
   if (
     demonHunterFreezeDay(world) !== day ||
@@ -322,11 +333,16 @@ export function sealDeliveredDemonWitchSources(world: World, day: number): objec
   sealedNights.set(world, seen);
   return token;
 }
+/** 冻结后的来源结果；救／毒覆盖只重算本控制器涉及的目标，不替代其它独立来源。 */
 export interface DeliveredDemonNightSources extends DemonNightSources {
   readonly poisonOverrides: readonly Readonly<{ targetId: number; poison: boolean }>[];
   readonly healOverrides: readonly Readonly<{ targetId: number; heal: boolean }>[];
 }
-/** Complete source set comes from the actual controller, never Tape facts or caller-supplied source metadata. */
+/**
+ * 完整来源只取真实控制器与私有 token，不从 Tape 事实或调用方 metadata 恢复授权。
+ * 先查询原来源当前性及迟到的独立贡献，再冻结底层毒／狩猎；底层成功后立即消费封存账本。
+ * 猎魔人的原生毒免疫只抵消该原生贡献，unknown 或迟到独立毒继续参与目标的最终覆盖。
+ */
 export function freezeDeliveredDemonNightSources(
   world: World,
   token: object,
