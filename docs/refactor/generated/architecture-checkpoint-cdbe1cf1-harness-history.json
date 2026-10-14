@@ -1,0 +1,50 @@
+{
+  "fixedCommit": "cdbe1cf15c6046f893436c7a39764e10117ef097",
+  "architectureCheck": {
+    "command": "bun --no-env-file docs/refactor/generated/architecture-checkpoint-cdbe1cf1-run.ts cdbe1cf15c6046f893436c7a39764e10117ef097 > docs/refactor/generated/architecture-checkpoint-cdbe1cf1-run.log 2>&1",
+    "launch": {
+      "chunk_id": "e3558d",
+      "session_id": 16839
+    },
+    "terminal": {
+      "chunk_id": "5bbafd",
+      "exit_code": 0,
+      "output": ""
+    },
+    "executions": 1,
+    "options": {
+      "strict": false,
+      "mappings": []
+    },
+    "gatePassed": true,
+    "failureCount": 0
+  },
+  "inputVerification": {
+    "chunk_id": "b9a350",
+    "exit_code": 0,
+    "files": 3233,
+    "docs": 629,
+    "rawInputBytes": 80432289,
+    "mismatches": 0
+  },
+  "partitionVerification": {
+    "chunk_id": "83eebf",
+    "exit_code": 0,
+    "remaining": 250,
+    "cleared": 1529,
+    "failures": 0,
+    "newlyCleared": 12,
+    "returned": 0,
+    "fullPartition": true
+  },
+  "notRun": [
+    "second fixedcdbe invocation",
+    "strict",
+    "mappings",
+    "new exemptions",
+    "types",
+    "tests",
+    "models",
+    "current WIP check"
+  ]
+}

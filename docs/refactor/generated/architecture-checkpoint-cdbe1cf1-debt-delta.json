@@ -1,0 +1,145 @@
+{
+  "previousFixedCommit": "033218f2c166a369e795745a431421f17ef58b79",
+  "currentFixedCommit": "cdbe1cf15c6046f893436c7a39764e10117ef097",
+  "previousReport": {
+    "path": "docs/refactor/generated/architecture-checkpoint-033218f2-report.json",
+    "sha256": "58f0003ca14cbdb158420b8fc35f640002ae1715d64eb137f44db9f17ab758f4",
+    "counts": {
+      "files": 3225,
+      "violations": 262,
+      "failures": 0,
+      "remainingDebt": 262,
+      "clearedDebt": 1517
+    }
+  },
+  "currentReport": {
+    "path": "docs/refactor/generated/architecture-checkpoint-cdbe1cf1-report.json",
+    "sha256": "593e2fc4d7e6039be3c9159f3bf26f49d00527baf6c89615a466c6893522b2cf",
+    "counts": {
+      "files": 3233,
+      "violations": 250,
+      "failures": 0,
+      "remainingDebt": 250,
+      "clearedDebt": 1529
+    }
+  },
+  "newlyClearedOriginalDebtCount": 12,
+  "newlyClearedOriginalDebt": [
+    {
+      "id": "211e6c3ade032cdaacc9ed5db188cd49c5ff9273231f9b9a5b11796980323694",
+      "rule": "comment.missing-head",
+      "path": "backend/src/audit/evidence_policy.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Missing behavior responsibility contract before first business statement."
+    },
+    {
+      "id": "36f026e335551cb598cbee7df38cdbebd241fb1dd7b9e278693934cb5042bda4",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+      "line": 9,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../thief/state",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:dataField\"]}",
+      "target": "backend/src/game/mechanisms/roles/thief/state.ts"
+    },
+    {
+      "id": "4400e8b26e5a295a5fc1b21de81e05ab2c1a42c4de7bdacf8b96b7ddc4b4f171",
+      "rule": "comment.input",
+      "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its input contract."
+    },
+    {
+      "id": "4cbf478b656dccf9fa0678cf651577a339c4364c5272d2745c601995763af1e2",
+      "rule": "dependency.feature-internal",
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "line": 41,
+      "column": 1,
+      "detail": "Feature imports another feature internal implementation.",
+      "specifier": "../thief/state",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:dataField\"]}",
+      "target": "backend/src/game/mechanisms/roles/thief/state.ts"
+    },
+    {
+      "id": "60786f204bff86ec1a3de163067481e366fa3b7dbf0ea2611805a5e20c9cff67",
+      "rule": "comment.missing-head",
+      "path": "backend/src/recording/file_store.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Missing behavior responsibility contract before first business statement."
+    },
+    {
+      "id": "73beae42cd506c7e1fb21c5c5d24f07ca39dd1a9756d24dbf8c8ad21f94c5047",
+      "rule": "dependency.engine-feature",
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "line": 19,
+      "column": 1,
+      "detail": "Engine timing imports concrete feature rather than an extension contract.",
+      "specifier": "../../mechanisms/roles/order_prince/authority",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:assertOrderPrinceOriginalCurrent\"]}",
+      "target": "backend/src/game/mechanisms/roles/order_prince/authority.ts"
+    },
+    {
+      "id": "93268e0aaf3a2538be7e9e6e7667b3bb4f5a486368062569cc884d23883858e2",
+      "rule": "dependency.engine-feature",
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "line": 126,
+      "column": 1,
+      "detail": "Engine timing imports concrete feature rather than an extension contract.",
+      "specifier": "../mechanisms/roles/knight/commit",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:commitKnightDuel\"]}",
+      "target": "backend/src/game/mechanisms/roles/knight/commit.ts"
+    },
+    {
+      "id": "947e71246ed6ce4ccb3cecab7f70dc54a40844a5cb9bb017cc11ea675fae2b0b",
+      "rule": "comment.input",
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its input contract."
+    },
+    {
+      "id": "bd8aac58e0d7a4db08e0d71ff2374659a28e6474ca47392b2207dbfe22dc17c5",
+      "rule": "comment.output",
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its output contract."
+    },
+    {
+      "id": "c983fd6bdd390001a00f36f724b7e88ee90564a2f51a22658a37d4b1030ac610",
+      "rule": "dependency.engine-feature",
+      "path": "backend/src/game/engine/phase_pipeline/voting_pipeline.ts",
+      "line": 20,
+      "column": 1,
+      "detail": "Engine timing imports concrete feature rather than an extension contract.",
+      "specifier": "../../mechanisms/roles/order_prince/voting_window",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:runOrderPrinceChoice\"]}",
+      "target": "backend/src/game/mechanisms/roles/order_prince/voting_window.ts"
+    },
+    {
+      "id": "d86ea09922ca47b5173ba773e730fb4ec45098503994b4d39ca30c02da6b02fa",
+      "rule": "comment.output",
+      "path": "backend/src/game/mechanisms/roles/thief/deal.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its output contract."
+    },
+    {
+      "id": "f5ae9e81f3005a82f0d4f02c04740b64d225781a7b8203eb0952397effdad5cd",
+      "rule": "comment.missing-head",
+      "path": "backend/src/audit/task_runner.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Missing behavior responsibility contract before first business statement."
+    }
+  ],
+  "returnedOriginalDebtCount": 0,
+  "returnedOriginalDebt": [],
+  "newFailureCount": 0,
+  "previousFailuresRemain": [],
+  "scope": "固定cdbe1cf1相对固定033218f2原债分区；旧报告/分区与原1779全字节不改，不表示玩法或注释内容正确性。"
+}

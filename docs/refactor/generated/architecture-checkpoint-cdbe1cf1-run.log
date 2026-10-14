@@ -1,0 +1,2 @@
+{"phase":"captured-before-gate","commit":"cdbe1cf15c6046f893436c7a39764e10117ef097","files":3233,"docs":629,"sourceDigest":"6b063ad18cef01d9db52e23ebd00f1e9b3284716aa7932ce048bc42aad5de57f","tools":6,"debtSHA":"297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d"}
+{"phase":"completed","commit":"cdbe1cf15c6046f893436c7a39764e10117ef097","counts":{"files":3233,"violations":250,"failures":0,"remainingDebt":250,"clearedDebt":1529},"failures":[]}
