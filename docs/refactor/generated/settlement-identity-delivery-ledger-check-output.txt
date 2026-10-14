@@ -1,0 +1,1 @@
+{"observedCommit": "1336673185e63562733f720446bd5e8fffe0c317", "addedParts": 9, "changedCells": 8, "unchangedCells": 902, "counts": {"baselineRows": 89, "currentOnlyRows": 2, "rows": 91, "cells": 910, "pending": 682, "partial": 228, "complete": 0, "not-applicable": 0}, "matrixSHA256": "11692bde908ebad150c1c8e48e1b4f271cc83b4949670517d2c88e9f72103148"}

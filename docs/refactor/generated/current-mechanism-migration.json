@@ -1,6 +1,6 @@
 {
   "schema": "awa-current-mechanism-migration-v1",
-  "observedCommit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+  "observedCommit": "1336673185e63562733f720446bd5e8fffe0c317",
   "baseline": {
     "path": "docs/refactor/generated/mechanism-matrix.json",
     "commit": "27a97cb66e8f30fceb7cb20130154291559dd14a",
@@ -2959,10 +2959,23 @@
       "baselineOwner": "feature:initial-identity",
       "cells": {
         "state": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "盗贼／千面人和共享setup实际字段读取归唯一纯函数owner，原descriptor／hasOwn／短路与Proxy反射接受面保留，三个真实consumer直达。",
+              "commit": "a78df2261c00478bd105660529d8a30537a32f2d",
+              "owners": [
+                "backend/src/game/mechanisms/roles/initial_identity/data-ports.ts",
+                "backend/src/game/mechanisms/roles/initial_identity/setup.ts"
+              ],
+              "evidence": [
+                "docs/refactor/initial-identity-data-field-owner.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "仅完整字段读取子职责；四族create／install／payment／cancel／schema／codec／copy／transfer仍按各实际owner继续，当前未提交槽批不计入本观察。"
           ]
         },
         "lease": {
@@ -3058,10 +3071,23 @@
           ]
         },
         "oldExports": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "原Thief dataField公开出口退出，三个真实consumer转共享纯函数owner，无旧转发或第二个读取实现。",
+              "commit": "a78df2261c00478bd105660529d8a30537a32f2d",
+              "owners": [
+                "backend/src/game/mechanisms/roles/initial_identity/data-ports.ts",
+                "backend/src/game/mechanisms/roles/thief/state.ts"
+              ],
+              "evidence": [
+                "docs/refactor/initial-identity-data-field-owner.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "只退这一已证明出口，initial identity其余choice／setup／状态／观察／编码入口须逐项全消费者核对。"
           ]
         }
       }
@@ -3126,10 +3152,24 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "骑士白天完整同步结算组合归具名生成器；PM保原死亡结算等待和判胜，原库存／事实付款仍唯一commit，实际后置读取与失败前缀已验。",
+              "commit": "b1122cd2a319ee3a4c0c5463cdb650db5b8fbdcc",
+              "owners": [
+                "backend/src/rulesets/knight-day-settlement.ts",
+                "backend/src/game/mechanisms/roles/knight/ports.ts",
+                "backend/src/game/mechanisms/roles/knight/commit.ts"
+              ],
+              "evidence": [
+                "docs/refactor/knight-day-settlement.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "选择、原生命、资源全部接受面与codec及最终同输入交互继续；具名结算不是整个骑士机制验收。"
           ]
         },
         "effect": {
@@ -4443,10 +4483,23 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "严格放逐重收票完整同步组合归具名生成器，流水线保两原等待；配置、选择、同options替换、现场名单、收票和开票次序已交付。",
+              "commit": "2c4b0b2abf70a82f0805f5014afbdd4b4216bba4",
+              "owners": [
+                "backend/src/rulesets/order-prince-revote.ts",
+                "backend/src/game/mechanisms/roles/order_prince/voting-ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/order-prince-revote.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "原资源／选择窗口、其它阶段、codec及最终组合验收仍须逐职责收口；本part不关闭整个生命周期格。"
           ]
         },
         "effect": {
@@ -4989,10 +5042,34 @@
           ]
         },
         "lifecycle": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "延期到期的完整同步查询、候选与死亡后提交发表归具名序列；PM保实际DR等待、current短路、夜报与唯一封盘。",
+              "commit": "71eb5e37ffef3d604ad82972e71d8c16c6d4f8f3",
+              "owners": [
+                "backend/src/rulesets/red-moon-expiry-settlement.ts"
+              ],
+              "evidence": [
+                "docs/refactor/red-moon-expiry-settlement.md"
+              ]
+            },
+            {
+              "part": "放逐延期的原完整hook接公开同绑定查询／提交；authority保原末狼、原夜、三字段付款与审计，commit后的发表失败保已付前缀。",
+              "commit": "34239c73a92b2e59ed8c3499cf708fd51869a5e7",
+              "owners": [
+                "backend/src/game/mechanisms/roles/red_moon_apostle/voted_out_hook.ts",
+                "backend/src/game/mechanisms/roles/demon_hunter/red-moon-ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/red-moon-exile-contribution.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "原authority资源和全部开夜／延期／死亡／关闭边界、codec及最终同输入验收继续，不能以组合迁移完成全族。",
+            "这是公开接线与原hook保持，不是authority资源、影子、编码、原体全职责迁移或整个生命周期格完成。"
           ]
         },
         "effect": {
@@ -5747,11 +5824,23 @@
               "evidence": [
                 "docs/refactor/role-contributions-and-components.md"
               ]
+            },
+            {
+              "part": "原readShapeshifterCard、sameShapeshifterScope、bindShapeshifterRequest三零消费出口退休；保原kind隔离、投影与构造迟读，不留桥。",
+              "commit": "cdbe1cf15c6046f893436c7a39764e10117ef097",
+              "owners": [
+                "backend/src/game/mechanisms/roles/shapeshifter/deal.ts",
+                "backend/src/game/mechanisms/roles/shapeshifter/setup.ts"
+              ],
+              "evidence": [
+                "docs/refactor/initial-identity-unused-exports.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。",
+            "只退已实查的三出口；剩余状态／setup／数据和生命周期公开边界及全消费者继续，不能清空整个旧出口格。"
           ]
         }
       }
@@ -5865,11 +5954,23 @@
               "evidence": [
                 "docs/refactor/role-contributions-and-components.md"
               ]
+            },
+            {
+              "part": "原readThiefCard、sameThiefScope、bindThiefRequest三零消费出口退休；现模块保真实kind查询、投影与class职责，不以文件短而整删。",
+              "commit": "cdbe1cf15c6046f893436c7a39764e10117ef097",
+              "owners": [
+                "backend/src/game/mechanisms/roles/thief/deal.ts",
+                "backend/src/game/mechanisms/roles/thief/setup.ts"
+              ],
+              "evidence": [
+                "docs/refactor/initial-identity-unused-exports.md"
+              ]
             }
           ],
           "remainingRequirements": [
             "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
-            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。"
+            "本格其它private-state／能力／控制器、旧聚合与命名出口继续逐一迁移，不能据内建展示接口退出清空整个机制出口债务。",
+            "只退已实查的三出口；剩余状态／setup／数据和生命周期公开边界及全消费者继续，不能清空整个旧出口格。"
           ]
         }
       }
@@ -6829,10 +6930,24 @@
           ]
         },
         "effect": {
-          "status": "pending",
-          "deliveredParts": [],
+          "status": "partial",
+          "deliveredParts": [
+            {
+              "part": "普通狼刀收票后完整67行多数决、雾圈随机、原生命、刀口／加成／投票者／诊断和映射印记范围归具名同步组合；原随机和已写失败前缀保持。",
+              "commit": "38534142d75ae372043267e4f3ec4c8d10fbbea1",
+              "owners": [
+                "backend/src/rulesets/ordinary-wolf-knife-routing.ts",
+                "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+                "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts"
+              ],
+              "evidence": [
+                "docs/refactor/ordinary-wolf-knife-routing.md"
+              ]
+            }
+          ],
           "remainingRequirements": [
-            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it."
+            "Verify all current consumers, ownership and rule-specific acceptance for this matrix cell; delivered parts alone do not close it.",
+            "原票／行动者资格、狼队信息、特殊板子政策与最终完整组合验收继续；此part不授新付款或原体许可、不完成整个effect格。"
           ]
         },
         "observation": {
@@ -11213,10 +11328,10 @@
     "currentOnlyRows": 2,
     "rows": 91,
     "cells": 910,
-    "pending": 688,
-    "partial": 222,
+    "pending": 682,
+    "partial": 228,
     "complete": 0,
     "not-applicable": 0
   },
-  "scope": "仅追加21个已提交职责子项：运行效果所有权、完整工具准入、独立归档核验归属和授予／复制／转移；原301个part与所有remaining顺序前缀保持，889个未触及格完整不变。222partial／688pending，无complete或N/A；物理迁移不代表完整行为覆盖、格式兼容或全目标验收。"
+  "scope": "在原222partial／688pending台账上，只补九个实际已提交的结算与初始身份职责子项，涉及八格；原322个parts／全部remaining顺序前缀与冻结89行基线保留。当前观察固定13366731公开Git，未提交native/learned枪与首夜四槽不计。其它902格全文不变，新228partial／682pending，无complete或N/A；更早未登记交付继续追补，不能将有限记录或结构债务清除换算成整机制验收。"
 }

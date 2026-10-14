@@ -822,3 +822,6 @@
 
 
 - C45 玩家checkpoint重要中文契约：仅一源八处说明原Demon非null短路、动物最初授权审计、婚约／孤女优先、私有状态原次序、原孤女两次查询、可选组件二读、普通全容器clone与胜利来源。Root及非作者完整385原稿／三稳定控制／十三附件批准；独审一条“玩家投影”精度finding以单comment限定原孤女特例和普通克隆，最终源ac9f，末窄桥0c6550完整732typed850叶／两raw／原head保持。首proof27ce00／head d1e694真实0/633Gitdocs保f329原阶段，未重类型、业务、模型或全门禁；初rawreader见Root并发末comment不是产品红，如实登记。注释参与新sourceHash、历史保；不是逐55 codec或全中文／P9完成，见 player-checkpoint-chinese-contracts.md。
+
+
+- C48 已提交结算／身份职责有限登记：观察固定13366731 Git，只补九实际交付part涉及八格（Order重收票、RedMoon到期与放逐接线、Knight白天、Wolf刀口、共享字段读取／旧出口、Thief／Shape各三出口）；原322parts和全部remaining顺序前缀保，增至331，902其它格全文不变，原222partial／688pending→228partial／682pending，无complete／N/A。Root与非作者完整原JSON/九真实祖先scope与选owner原文、同观察Git证据、七附件和冻结89行创建Git字节批准，唯一purecheck1c8be0实际0，不重checks/产品；重复contracts名称以kind+name分开。未提交枪／首夜四槽与更早尚未登记交付不被计入，原剩余职责保具体界限；附实际全owner后续规划审计，不冒完整55、C17或P9，见 settlement-identity-delivery-ledger.md。

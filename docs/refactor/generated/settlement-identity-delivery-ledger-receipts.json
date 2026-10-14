@@ -1,0 +1,14 @@
+{
+  "integrityCheck": {
+    "terminalChunk": "1c8be0",
+    "exitCode": 0,
+    "executions": 1,
+    "output": "docs/refactor/generated/settlement-identity-delivery-ledger-check-output.txt"
+  },
+  "notRun": [
+    "types",
+    "behavior",
+    "full architecture gate",
+    "models"
+  ]
+}

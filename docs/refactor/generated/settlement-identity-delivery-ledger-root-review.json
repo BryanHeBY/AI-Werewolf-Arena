@@ -1,0 +1,44 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "1336673185e63562733f720446bd5e8fffe0c317",
+  "source": [
+    {
+      "path": "docs/refactor/generated/current-mechanism-migration.json",
+      "sha256": "11692bde908ebad150c1c8e48e1b4f271cc83b4949670517d2c88e9f72103148",
+      "change": "partial-delivery-registration"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/settlement-identity-delivery-ledger-scope-final.json",
+    "sha256": "243f9f653b5f464729fb7cdc82c4025947f9862dbef51c037ba17961cb9a1731"
+  },
+  "document": {
+    "path": "docs/refactor/settlement-identity-delivery-ledger.md",
+    "sha256": "4cfdd49b507c9ff8da74f08789a8a236b341c78b709780e99a5fd526bb90f046"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/settlement-identity-delivery-ledger-evidence.json",
+    "sha256": "2d9b03a7f831ecc714da8999d16089c5f2b7b961957d8eee6149f8ee54d6a787"
+  },
+  "integrity": {
+    "freshSources": 1,
+    "actualGitBefore": 1,
+    "controls": 1,
+    "artifactHashes": 7,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "九已真实审查的具体交付子项，限定phase/readonly字段/expiry/exile/unusedexports原职责",
+    "全部source scope/MD/owner Git实际来源和observed133，不把并行WIP当提交",
+    "冻结矩阵原字节、原322parts/remaining顺序前缀、其它902格完整保留及全JSON重建",
+    "八格只partial，228/682无complete或N/A，更早未登记与全codec/授权/55验收继续",
+    "完整owner下一批审计是实际cdbe只读规划，未运行行为或承诺已开发完成"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}
