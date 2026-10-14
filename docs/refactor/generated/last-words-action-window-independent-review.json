@@ -1,0 +1,106 @@
+{
+  "approved": true,
+  "reviewer": "native_final_architecture_review",
+  "role": "independent non-author",
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "scope": {
+    "path": "docs/refactor/generated/last-words-action-window-scope-final.json",
+    "sha256": "df03495108336d22e3feda929553d8723747edbeb187962d67df8a7bebbcc0d1"
+  },
+  "scopeSHA256": "df03495108336d22e3feda929553d8723747edbeb187962d67df8a7bebbcc0d1",
+  "document": {
+    "path": "docs/refactor/last-words-action-window.md",
+    "sha256": "1f269f583f1172a29203b62f2688ecb47bbe855aa3bc8c6899564cfd4ca70742"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/last-words-action-window-evidence.json",
+    "sha256": "8b7442d74b60143b14d81d5ff7db2e8be31cc9b9fe36766c60aabe3521f0f696"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "2554d44803b5ddbe1d267ac2840bd370f0df6acba7a76433575b291b97f49389"
+    },
+    {
+      "path": "backend/src/game/mechanisms/last_words/window.ts",
+      "sha256": "f5e84b54ded1d55ae49c9f40cde2017aee09684790ef9d6fd6775a8745f85572"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/last-words-window.test.ts",
+      "sha256": "ebe3f16547a42948d9690c641dc2e1d2b4b29ff652f54801013689fa32d0f6c2"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts",
+      "sha256": "2dd1be56ecfecbe1d355f2ef742ab720c185dfe178af72f98784ad882a2a389e"
+    },
+    {
+      "path": "backend/src/core/domain/world.ts",
+      "sha256": "0422265542c6d782eb52f1dd1c187b5b3a5e9f78c5c7e83d4519d22bd8ac24d1"
+    },
+    {
+      "path": "backend/src/game/engine/action_request_factory.ts",
+      "sha256": "47ca276d4271630035d3aae3bcde79fbff3c2cbf1ecbedcdaae334f42df8f6d6"
+    },
+    {
+      "path": "backend/src/game/gateway/tool_gateway.ts",
+      "sha256": "48d375d498e73d2344ba7e724a6366aefa24c3930e2236e2af003859e8253ef6"
+    },
+    {
+      "path": "backend/src/core/domain/actions.ts",
+      "sha256": "a6d681a7163778ed6433dbb32a11e8c4ed742e8a6f638056cdda5f5e08a44ac9"
+    }
+  ],
+  "artifactBindings": 18,
+  "actualGitBefore": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "actualGitBeforeSHA256": "ffb66b3c11dd0a1ce7d951ca3a43db22b7b3e5e561ff89bd78f133baa0fdd8d7",
+      "gitTreeRecord": "100644 blob d2487bc245d19a3ab64839d3490048c856f44a85\tbackend/src/game/engine/death_resolution.ts",
+      "wholeExactForward": true,
+      "wholeExactInverse": true,
+      "preciseEdits": 5
+    }
+  ],
+  "newAbsence": [
+    {
+      "path": "backend/src/game/mechanisms/last_words/window.ts",
+      "absentInActualGit": true,
+      "presentCurrent": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/last-words-window.test.ts",
+      "absentInActualGit": true,
+      "presentCurrent": true
+    }
+  ],
+  "findings": [],
+  "manualReview": [
+    "完整当前DR、原93行collectLastWords、新窗口／runtime装配、两新单元、既有policy／World／factory／gateway／constructor端口以及完整proof脚本和raw已读。",
+    "新字段装配只捕获原DR，原singleton／grant保；required constructor读取先于World/events/day，new成功后另一次day，24运行字段委托对应原读取点及receiver。",
+    "逐人原shouldGrant／source phase先于current；permit开放在try外、request/await/validator/当前性／事件在内；continue与return仍过finally，close错误覆盖正文错误保持。",
+    "完整resolve只实际callee变更，九原参数／整波死亡、granted→collect await→current→badge→hook/gun顺序及所有paid/取消/过期前缀保持。",
+    "两个字面风险使用真实World许可而非模拟授权；悬挂provider后换原生命、真实清洗事件sink与closedoublethrow oracle有意义。",
+    "API/class field/constructor callback分配与调用栈及CJS/private反射限制明示；窗口全为type imports，模块端点49+10不冒最终物理symbol或全cold图。",
+    "中文说明与实际职责、state/day晚读、失效/错误前缀相符；不以请求/授予事件替代World许可。"
+  ],
+  "checksObservedOnly": {
+    "newUnit": "Rootfe3062/0/2different/22expect",
+    "heads": "Root55af45/0/3sources/719docs",
+    "proof": "Root250f2b/0/5edits/24routes/6mappedoutputs",
+    "jointFiniteFirst": "Root092650/session64038→c3b6ea/exit2, only5foreignunitdiagnostics",
+    "failedOnlyTwo": "Root89b65c/session70497→ac39a5/exit0",
+    "ownSourceAfterFirstChecksUnchanged": true,
+    "ownFiniteThreeNotExecuted": true,
+    "reviewerExecutedProofTypeHeadRuntimeGate": false
+  },
+  "limits": [
+    "本报告仅仅读源码／Git／字节与既有真实收据；未执行作者proof/checker或加载生产。",
+    "原12根类型首红与两外族夹具后继如实保，未据此声称当前全12／全类型重新通过。",
+    "SourceReady的checksRun=false属于首次冻结历史；实际Root后继阶段由receipts记录。",
+    "编辑准备尾换行断言是记录的写前工具失败，非产品或proof红；未将其抹作业务已验证。",
+    "只批准本窗口职责与当前范围，不声明P4/P5/55角色/P9完成。"
+  ]
+}

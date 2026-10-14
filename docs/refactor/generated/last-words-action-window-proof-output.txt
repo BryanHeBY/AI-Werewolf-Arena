@@ -1,0 +1,1 @@
+{"source":3,"oldPrograms":1,"preciseDREdits":5,"movedMethodLines":93,"actualRuntimeRoutes":24,"completeInverseOutputs":2,"completeMovedMappedOutputs":2,"completeResolveMappedOutputs":2,"retainedNamedModuleBindings":49,"movedTypeModuleBindings":10,"controls":5,"nodesBothSides":12976,"nodeArraysBothSides":1978,"leavesBothSides":6560}

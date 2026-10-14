@@ -38,7 +38,7 @@ import { collectDeathShot, type DeathWaveActions } from "../../rulesets/death-sh
 import { prepareInitialDeathRelations } from "../../rulesets/initial-death-relations";
 import { WeddingDeathWavePublication } from "../mechanisms/roles/ghost_bride/ports";
 import { prepareAdditionalDeathRelations } from "../../rulesets/additional-death-relations";
-import type { BoardConfig, LastWordsPolicy } from "../../core/domain/board";
+import type { BoardConfig } from "../../core/domain/board";
 import { livingNightLife } from "../../core/domain/night_effects";
 import { COMPONENT } from "../../core/domain/components/names";
 import {
@@ -56,6 +56,7 @@ import { World } from "../../core/domain/world";
 import { ToolGateway } from "../gateway/tool_gateway";
 import { getDefaultLastWordsMechanism } from "../mechanisms/last_words/last_words_mechanism";
 import type { LastWordsGrantContext } from "../mechanisms/last_words/last_words_mechanism";
+import { LastWordsWindow } from "../mechanisms/last_words/window";
 import { resolveSheriffBadge } from "../mechanisms/sheriff/badge_choice";
 import { GameActionRequestFactory } from "./action_request_factory";
 import { EventRegistry } from "./event_registry";
@@ -86,6 +87,18 @@ export class DeathResolution {
     });
   })();
   private readonly lastWordsMechanism = getDefaultLastWordsMechanism();
+  // 只捕获原结算器；遗言窗口在原读取点取依赖，不在装配时创建请求工厂或开放许可。
+  private readonly lastWordsWindow = (() => {
+    const resolution = this;
+    return new LastWordsWindow({
+      get requestFactory() { return GameActionRequestFactory; },
+      get world() { return resolution.world; },
+      get events() { return resolution.events; },
+      get state() { return resolution.state; },
+      get toolGateway() { return resolution.toolGateway; },
+      get lastWordsMechanism() { return resolution.lastWordsMechanism; },
+    });
+  })();
   // 只捕获结算器本身；每次 World、事件和运行状态读取仍发生在原命令表达式处。
   private readonly deathCommitter = (() => {
     const resolution = this;
@@ -339,7 +352,7 @@ export class DeathResolution {
             lastWordsPolicy,
             wordsContext,
           );
-          await this.collectLastWords(
+          await this.lastWordsWindow.collect(
             pending,
             lastWordsPhase,
             phase,
@@ -665,97 +678,5 @@ export class DeathResolution {
     }
   }
 
-  /** 授予事实不替代发言窗口；每位死者等待回复后复核阶段、日期、终局与原生命许可，再写发言。 */
-  private async collectLastWords(
-    deadIds: EntityId[],
-    phase: Phase,
-    deathPhase: Phase,
-    sources: DeathSources,
-    actionProvider: ActionProvider,
-    deathPhases: Readonly<Record<EntityId, Phase>>,
-    scopeCurrent: () => boolean = () => true,
-    policy: LastWordsPolicy = "awa_initial_wave_v1",
-    wordsContext?: LastWordsGrantContext,
-  ): Promise<void> {
-    const requests = new GameActionRequestFactory(this.world, this.events, this.state.day);
-    const day = this.state.day;
-    for (const deadId of deadIds) {
-      const actualDeathPhase = deathPhases[deadId] ?? deathPhase;
-      if (
-        !this.lastWordsMechanism.shouldGrantLastWords(
-          actualDeathPhase,
-          day,
-          sources[deadId] ?? [],
-          policy,
-          wordsContext,
-        )
-      )
-        continue;
-      if (
-        !scopeCurrent() ||
-        this.state.phase !== phase ||
-        this.state.day !== day ||
-        this.state.gameOver
-      )
-        return;
-      const permit = this.world.openDeathAction(deadId, "speak", phase, day, scopeCurrent);
-      try {
-        const request = requests.create({
-          phase,
-          actorId: deadId,
-          allowedTools: ["speak"],
-          stage: "last_words",
-          requiresAction: true,
-          summary: { key: "request.summary.last_words" },
-          context: {
-            trigger: "last_words",
-            death_phase: actualDeathPhase,
-            death_action_id: permit.id,
-          },
-        });
-        if (!scopeCurrent() || !this.world.hasDeathAction(deadId, "speak", phase, day, permit.id))
-          return;
-        const action = await actionProvider.getAction(request);
-        if (
-          !scopeCurrent() ||
-          this.state.phase !== phase ||
-          this.state.day !== day ||
-          this.state.gameOver ||
-          !this.world.hasDeathAction(deadId, "speak", phase, day, permit.id)
-        )
-          return;
-        if (action?.name !== "speak") {
-          continue;
-        }
-        const validated = this.toolGateway.validateAndSanitize(this.world, deadId, action, {
-          phase,
-          day: this.state.day,
-          deathActionId: permit.id,
-        });
-        if (!validated.ok || !validated.sanitizedCall) {
-          continue;
-        }
-        if (
-          !scopeCurrent() ||
-          this.state.phase !== phase ||
-          this.state.day !== day ||
-          this.state.gameOver ||
-          !this.world.hasDeathAction(deadId, "speak", phase, day, permit.id)
-        )
-          return;
-        this.events.push({
-          timestamp: Date.now(),
-          type: "last_words_spoken",
-          payload: {
-            playerId: deadId,
-            phase,
-            day: this.state.day,
-            text: validated.sanitizedCall.args.text,
-          },
-        });
-      } finally {
-        permit.close();
-      }
-    }
-  }
+
 }

@@ -1,0 +1,50 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "source": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "2554d44803b5ddbe1d267ac2840bd370f0df6acba7a76433575b291b97f49389"
+    },
+    {
+      "path": "backend/src/game/mechanisms/last_words/window.ts",
+      "sha256": "f5e84b54ded1d55ae49c9f40cde2017aee09684790ef9d6fd6775a8745f85572"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/last-words-window.test.ts",
+      "sha256": "ebe3f16547a42948d9690c641dc2e1d2b4b29ff652f54801013689fa32d0f6c2"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/last-words-action-window-scope-final.json",
+    "sha256": "df03495108336d22e3feda929553d8723747edbeb187962d67df8a7bebbcc0d1"
+  },
+  "document": {
+    "path": "docs/refactor/last-words-action-window.md",
+    "sha256": "1f269f583f1172a29203b62f2688ecb47bbe855aa3bc8c6899564cfd4ca70742"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/last-words-action-window-evidence.json",
+    "sha256": "8b7442d74b60143b14d81d5ff7db2e8be31cc9b9fe36766c60aabe3521f0f696"
+  },
+  "integrity": {
+    "freshSources": 3,
+    "actualGitBefore": 1,
+    "controls": 5,
+    "artifactHashes": 18,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "actual4e593完整DR原Git/两newabsence/五稳定控制/18附件，sourceReady131cef与全部Root真实收据一致，共同types首foreign单位失败与only2后继0分层。",
+    "完整93行方法实际归本族LastWordsWindow而非转发桥，原singleton/shouldGrant/grant-before-await/后继波徽枪仍DR；必填late构造器端口不Feature→Engine值导入，入口ctor→World/events/day→第二day保持，同world/events/state/gateway/mechanism引用晚读。",
+    "每人policy先于current、open许可在try外、其后request/await/gateway/复验/发表在try、continue/return及原错误都finally close；原pushcallee/Date/day/text读取与双错优先完整核实。新2不同22断言、3头和全文5edit/24routes/6mapped outputs首绿，未重已绿。",
+    "完整resolve仅callee映射/9args、49named与10type模块端点范围准确；新增类/字段/runtime/getter/API观察面与实际输出变化不冒任意反射/cold/full12或整C28/P9验收，中文关键说明有效。"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

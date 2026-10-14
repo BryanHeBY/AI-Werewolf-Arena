@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/mechanisms/last-words-window.test.ts:
+(pass) last words construct at collection entry and reject a delayed reply after replacing the original life [50.07ms]
+(pass) last words preserve the publication prefix and finally close error priority [1.85ms]
+
+ 2 pass
+ 0 fail
+ 22 expect() calls
+Ran 2 tests across 1 file. [231.00ms]

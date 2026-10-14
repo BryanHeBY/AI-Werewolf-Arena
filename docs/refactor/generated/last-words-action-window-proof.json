@@ -1,0 +1,829 @@
+{
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "source": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "2554d44803b5ddbe1d267ac2840bd370f0df6acba7a76433575b291b97f49389"
+    },
+    {
+      "path": "backend/src/game/mechanisms/last_words/window.ts",
+      "sha256": "f5e84b54ded1d55ae49c9f40cde2017aee09684790ef9d6fd6775a8745f85572"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/last-words-window.test.ts",
+      "sha256": "ebe3f16547a42948d9690c641dc2e1d2b4b29ff652f54801013689fa32d0f6c2"
+    }
+  ],
+  "deleted": [],
+  "input": {
+    "beforeSHA256": "ff721cfee4d8f4950076ebac78b161d8c5a2c42b9802484211056beeb9b209af",
+    "editsSHA256": "f1e519019f47386f4590ed5eb0a93b37cdf436e89e23d7e8392c0b88fa34867f",
+    "sourceReadySHA256": "131cef1934865409bdf1e4b921151f17d95d575ca4f9bd23d709126e7ade0db4"
+  },
+  "wholeDR": {
+    "path": "backend/src/game/engine/death_resolution.ts",
+    "originalSHA256": "ffb66b3c11dd0a1ce7d951ca3a43db22b7b3e5e561ff89bd78f133baa0fdd8d7",
+    "currentSHA256": "2554d44803b5ddbe1d267ac2840bd370f0df6acba7a76433575b291b97f49389",
+    "preciseEdits": 5,
+    "completeForwardAndInverse": true,
+    "completeTreeAndTokensSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "leftSHA256": "fc8d908e21b25079e9c2b1a9f23e3ce3617edc7a77e454e42a31f83b2afa4567",
+        "rightSHA256": "fc8d908e21b25079e9c2b1a9f23e3ce3617edc7a77e454e42a31f83b2afa4567",
+        "completeRawSame": true
+      },
+      {
+        "module": "CommonJS",
+        "leftSHA256": "15fe543dae723bc7be718cf515245459d744443900e8397a8274448a6e1fd87e",
+        "rightSHA256": "15fe543dae723bc7be718cf515245459d744443900e8397a8274448a6e1fd87e",
+        "completeRawSame": true
+      }
+    ],
+    "actualOutputs": [
+      {
+        "module": "ESNext",
+        "originalSHA256": "fc8d908e21b25079e9c2b1a9f23e3ce3617edc7a77e454e42a31f83b2afa4567",
+        "actualCurrentSHA256": "db1f4b30e008326ac2a60a6d5e648a997c0ae119fd580ba4e3b456ca002de12c",
+        "actualRawSame": false
+      },
+      {
+        "module": "CommonJS",
+        "originalSHA256": "15fe543dae723bc7be718cf515245459d744443900e8397a8274448a6e1fd87e",
+        "actualCurrentSHA256": "45e4a6fc863b004cc3404bb38ead4ffd0ca74dce7d4369e33cfd83074dbca431",
+        "actualRawSame": false
+      }
+    ]
+  },
+  "movedMethod": {
+    "originalPhysicalLines": 93,
+    "originalText": "private async collectLastWords(\n    deadIds: EntityId[],\n    phase: Phase,\n    deathPhase: Phase,\n    sources: DeathSources,\n    actionProvider: ActionProvider,\n    deathPhases: Readonly<Record<EntityId, Phase>>,\n    scopeCurrent: () => boolean = () => true,\n    policy: LastWordsPolicy = \"awa_initial_wave_v1\",\n    wordsContext?: LastWordsGrantContext,\n  ): Promise<void> {\n    const requests = new GameActionRequestFactory(this.world, this.events, this.state.day);\n    const day = this.state.day;\n    for (const deadId of deadIds) {\n      const actualDeathPhase = deathPhases[deadId] ?? deathPhase;\n      if (\n        !this.lastWordsMechanism.shouldGrantLastWords(\n          actualDeathPhase,\n          day,\n          sources[deadId] ?? [],\n          policy,\n          wordsContext,\n        )\n      )\n        continue;\n      if (\n        !scopeCurrent() ||\n        this.state.phase !== phase ||\n        this.state.day !== day ||\n        this.state.gameOver\n      )\n        return;\n      const permit = this.world.openDeathAction(deadId, \"speak\", phase, day, scopeCurrent);\n      try {\n        const request = requests.create({\n          phase,\n          actorId: deadId,\n          allowedTools: [\"speak\"],\n          stage: \"last_words\",\n          requiresAction: true,\n          summary: { key: \"request.summary.last_words\" },\n          context: {\n            trigger: \"last_words\",\n            death_phase: actualDeathPhase,\n            death_action_id: permit.id,\n          },\n        });\n        if (!scopeCurrent() || !this.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id))\n          return;\n        const action = await actionProvider.getAction(request);\n        if (\n          !scopeCurrent() ||\n          this.state.phase !== phase ||\n          this.state.day !== day ||\n          this.state.gameOver ||\n          !this.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id)\n        )\n          return;\n        if (action?.name !== \"speak\") {\n          continue;\n        }\n        const validated = this.toolGateway.validateAndSanitize(this.world, deadId, action, {\n          phase,\n          day: this.state.day,\n          deathActionId: permit.id,\n        });\n        if (!validated.ok || !validated.sanitizedCall) {\n          continue;\n        }\n        if (\n          !scopeCurrent() ||\n          this.state.phase !== phase ||\n          this.state.day !== day ||\n          this.state.gameOver ||\n          !this.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id)\n        )\n          return;\n        this.events.push({\n          timestamp: Date.now(),\n          type: \"last_words_spoken\",\n          payload: {\n            playerId: deadId,\n            phase,\n            day: this.state.day,\n            text: validated.sanitizedCall.args.text,\n          },\n        });\n      } finally {\n        permit.close();\n      }\n    }\n  }",
+    "actualNewText": "async collect(\n    deadIds: EntityId[],\n    phase: Phase,\n    deathPhase: Phase,\n    sources: DeathSources,\n    actionProvider: ActionProvider,\n    deathPhases: Readonly<Record<EntityId, Phase>>,\n    scopeCurrent: () => boolean = () => true,\n    policy: LastWordsPolicy = \"awa_initial_wave_v1\",\n    wordsContext?: LastWordsGrantContext,\n  ): Promise<void> {\n    // 构造器先查询，再按原顺序取 World／事件／第一次日期；构造完成后另读本次收集日期。\n    const requests = new this.runtime.requestFactory(this.runtime.world, this.runtime.events, this.runtime.state.day);\n    const day = this.runtime.state.day;\n    for (const deadId of deadIds) {\n      // 来源阶段与政策先于当前性和许可；不以授予事件或请求字段代替 World 的原生命绑定。\n      const actualDeathPhase = deathPhases[deadId] ?? deathPhase;\n      if (\n        !this.runtime.lastWordsMechanism.shouldGrantLastWords(\n          actualDeathPhase,\n          day,\n          sources[deadId] ?? [],\n          policy,\n          wordsContext,\n        )\n      )\n        continue;\n      if (\n        !scopeCurrent() ||\n        this.runtime.state.phase !== phase ||\n        this.runtime.state.day !== day ||\n        this.runtime.state.gameOver\n      )\n        return;\n      // 开放抛错仍发生在 try 外；开放成功后，所有 return／continue 与原异常都经过 finally。\n      const permit = this.runtime.world.openDeathAction(deadId, \"speak\", phase, day, scopeCurrent);\n      try {\n        const request = requests.create({\n          phase,\n          actorId: deadId,\n          allowedTools: [\"speak\"],\n          stage: \"last_words\",\n          requiresAction: true,\n          summary: { key: \"request.summary.last_words\" },\n          context: {\n            trigger: \"last_words\",\n            death_phase: actualDeathPhase,\n            death_action_id: permit.id,\n          },\n        });\n        if (!scopeCurrent() || !this.runtime.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id))\n          return;\n        // 等待前后分别复验；回复不会重开已经撤销的生命许可。\n        const action = await actionProvider.getAction(request);\n        if (\n          !scopeCurrent() ||\n          this.runtime.state.phase !== phase ||\n          this.runtime.state.day !== day ||\n          this.runtime.state.gameOver ||\n          !this.runtime.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id)\n        )\n          return;\n        if (action?.name !== \"speak\") {\n          continue;\n        }\n        const validated = this.runtime.toolGateway.validateAndSanitize(this.runtime.world, deadId, action, {\n          phase,\n          day: this.runtime.state.day,\n          deathActionId: permit.id,\n        });\n        if (!validated.ok || !validated.sanitizedCall) {\n          continue;\n        }\n        if (\n          !scopeCurrent() ||\n          this.runtime.state.phase !== phase ||\n          this.runtime.state.day !== day ||\n          this.runtime.state.gameOver ||\n          !this.runtime.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id)\n        )\n          return;\n        // 保留 push callee→时间戳→日次→清洗后文字的原读取点，发表失败不回滚已完成前缀。\n        this.runtime.events.push({\n          timestamp: Date.now(),\n          type: \"last_words_spoken\",\n          payload: {\n            playerId: deadId,\n            phase,\n            day: this.runtime.state.day,\n            text: validated.sanitizedCall.args.text,\n          },\n        });\n      } finally {\n        // 不捕获关闭错误；close 抛错仍按原 finally 语义覆盖正在传播的正文错误。\n        permit.close();\n      }\n    }\n  }",
+    "mappedActualText": "async collect(\n    deadIds: EntityId[],\n    phase: Phase,\n    deathPhase: Phase,\n    sources: DeathSources,\n    actionProvider: ActionProvider,\n    deathPhases: Readonly<Record<EntityId, Phase>>,\n    scopeCurrent: () => boolean = () => true,\n    policy: LastWordsPolicy = \"awa_initial_wave_v1\",\n    wordsContext?: LastWordsGrantContext,\n  ): Promise<void> {\n    // 构造器先查询，再按原顺序取 World／事件／第一次日期；构造完成后另读本次收集日期。\n    const requests = new GameActionRequestFactory(this.world, this.events, this.state.day);\n    const day = this.state.day;\n    for (const deadId of deadIds) {\n      // 来源阶段与政策先于当前性和许可；不以授予事件或请求字段代替 World 的原生命绑定。\n      const actualDeathPhase = deathPhases[deadId] ?? deathPhase;\n      if (\n        !this.lastWordsMechanism.shouldGrantLastWords(\n          actualDeathPhase,\n          day,\n          sources[deadId] ?? [],\n          policy,\n          wordsContext,\n        )\n      )\n        continue;\n      if (\n        !scopeCurrent() ||\n        this.state.phase !== phase ||\n        this.state.day !== day ||\n        this.state.gameOver\n      )\n        return;\n      // 开放抛错仍发生在 try 外；开放成功后，所有 return／continue 与原异常都经过 finally。\n      const permit = this.world.openDeathAction(deadId, \"speak\", phase, day, scopeCurrent);\n      try {\n        const request = requests.create({\n          phase,\n          actorId: deadId,\n          allowedTools: [\"speak\"],\n          stage: \"last_words\",\n          requiresAction: true,\n          summary: { key: \"request.summary.last_words\" },\n          context: {\n            trigger: \"last_words\",\n            death_phase: actualDeathPhase,\n            death_action_id: permit.id,\n          },\n        });\n        if (!scopeCurrent() || !this.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id))\n          return;\n        // 等待前后分别复验；回复不会重开已经撤销的生命许可。\n        const action = await actionProvider.getAction(request);\n        if (\n          !scopeCurrent() ||\n          this.state.phase !== phase ||\n          this.state.day !== day ||\n          this.state.gameOver ||\n          !this.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id)\n        )\n          return;\n        if (action?.name !== \"speak\") {\n          continue;\n        }\n        const validated = this.toolGateway.validateAndSanitize(this.world, deadId, action, {\n          phase,\n          day: this.state.day,\n          deathActionId: permit.id,\n        });\n        if (!validated.ok || !validated.sanitizedCall) {\n          continue;\n        }\n        if (\n          !scopeCurrent() ||\n          this.state.phase !== phase ||\n          this.state.day !== day ||\n          this.state.gameOver ||\n          !this.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id)\n        )\n          return;\n        // 保留 push callee→时间戳→日次→清洗后文字的原读取点，发表失败不回滚已完成前缀。\n        this.events.push({\n          timestamp: Date.now(),\n          type: \"last_words_spoken\",\n          payload: {\n            playerId: deadId,\n            phase,\n            day: this.state.day,\n            text: validated.sanitizedCall.args.text,\n          },\n        });\n      } finally {\n        // 不捕获关闭错误；close 抛错仍按原 finally 语义覆盖正在传播的正文错误。\n        permit.close();\n      }\n    }\n  }",
+    "routing": [
+      {
+        "before": "this.runtime.requestFactory",
+        "after": "GameActionRequestFactory",
+        "offset": 434,
+        "field": "requestFactory"
+      },
+      {
+        "before": "this.runtime.world",
+        "after": "this.world",
+        "offset": 462,
+        "field": "world"
+      },
+      {
+        "before": "this.runtime.events",
+        "after": "this.events",
+        "offset": 482,
+        "field": "events"
+      },
+      {
+        "before": "this.runtime.state",
+        "after": "this.state",
+        "offset": 503,
+        "field": "state"
+      },
+      {
+        "before": "this.runtime.state",
+        "after": "this.state",
+        "offset": 544,
+        "field": "state"
+      },
+      {
+        "before": "this.runtime.lastWordsMechanism",
+        "after": "this.lastWordsMechanism",
+        "offset": 743,
+        "field": "lastWordsMechanism"
+      },
+      {
+        "before": "this.runtime.state",
+        "after": "this.state",
+        "offset": 997,
+        "field": "state"
+      },
+      {
+        "before": "this.runtime.state",
+        "after": "this.state",
+        "offset": 1043,
+        "field": "state"
+      },
+      {
+        "before": "this.runtime.state",
+        "after": "this.state",
+        "offset": 1085,
+        "field": "state"
+      },
+      {
+        "before": "this.runtime.world",
+        "after": "this.world",
+        "offset": 1224,
+        "field": "world"
+      },
+      {
+        "before": "this.runtime.world",
+        "after": "this.world",
+        "offset": 1753,
+        "field": "world"
+      },
+      {
+        "before": "this.runtime.state",
+        "after": "this.state",
+        "offset": 1999,
+        "field": "state"
+      },
+      {
+        "before": "this.runtime.state",
+        "after": "this.state",
+        "offset": 2047,
+        "field": "state"
+      },
+      {
+        "before": "this.runtime.state",
+        "after": "this.state",
+        "offset": 2091,
+        "field": "state"
+      },
+      {
+        "before": "this.runtime.world",
+        "after": "this.world",
+        "offset": 2133,
+        "field": "world"
+      },
+      {
+        "before": "this.runtime.toolGateway",
+        "after": "this.toolGateway",
+        "offset": 2331,
+        "field": "toolGateway"
+      },
+      {
+        "before": "this.runtime.world",
+        "after": "this.world",
+        "offset": 2376,
+        "field": "world"
+      },
+      {
+        "before": "this.runtime.state",
+        "after": "this.state",
+        "offset": 2446,
+        "field": "state"
+      },
+      {
+        "before": "this.runtime.state",
+        "after": "this.state",
+        "offset": 2657,
+        "field": "state"
+      },
+      {
+        "before": "this.runtime.state",
+        "after": "this.state",
+        "offset": 2705,
+        "field": "state"
+      },
+      {
+        "before": "this.runtime.state",
+        "after": "this.state",
+        "offset": 2749,
+        "field": "state"
+      },
+      {
+        "before": "this.runtime.world",
+        "after": "this.world",
+        "offset": 2791,
+        "field": "world"
+      },
+      {
+        "before": "this.runtime.events",
+        "after": "this.events",
+        "offset": 2959,
+        "field": "events"
+      },
+      {
+        "before": "this.runtime.state",
+        "after": "this.state",
+        "offset": 3143,
+        "field": "state"
+      }
+    ],
+    "accessAndNameChange": "private collectLastWords → public collect",
+    "parameterTrees": [
+      {
+        "index": 0,
+        "name": "deadIds",
+        "completeDeclarationSame": true
+      },
+      {
+        "index": 1,
+        "name": "phase",
+        "completeDeclarationSame": true
+      },
+      {
+        "index": 2,
+        "name": "deathPhase",
+        "completeDeclarationSame": true
+      },
+      {
+        "index": 3,
+        "name": "sources",
+        "completeDeclarationSame": true
+      },
+      {
+        "index": 4,
+        "name": "actionProvider",
+        "completeDeclarationSame": true
+      },
+      {
+        "index": 5,
+        "name": "deathPhases",
+        "completeDeclarationSame": true
+      },
+      {
+        "index": 6,
+        "name": "scopeCurrent",
+        "completeDeclarationSame": true
+      },
+      {
+        "index": 7,
+        "name": "policy",
+        "completeDeclarationSame": true
+      },
+      {
+        "index": 8,
+        "name": "wordsContext",
+        "completeDeclarationSame": true
+      }
+    ],
+    "completeTreeAndTokensSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "leftSHA256": "356b5abf2b88dd6d11a9d3b308722a8416086323ec6b0fc3e81dee7730ef3d30",
+        "rightSHA256": "356b5abf2b88dd6d11a9d3b308722a8416086323ec6b0fc3e81dee7730ef3d30",
+        "completeRawSame": true
+      },
+      {
+        "module": "CommonJS",
+        "leftSHA256": "356b5abf2b88dd6d11a9d3b308722a8416086323ec6b0fc3e81dee7730ef3d30",
+        "rightSHA256": "356b5abf2b88dd6d11a9d3b308722a8416086323ec6b0fc3e81dee7730ef3d30",
+        "completeRawSame": true
+      }
+    ]
+  },
+  "retainedResolve": {
+    "onlyActualCalleeMapping": {
+      "before": "this.collectLastWords",
+      "after": "this.lastWordsWindow.collect"
+    },
+    "argumentsSame": [
+      {
+        "index": 0,
+        "text": "pending",
+        "completeTreeSame": true
+      },
+      {
+        "index": 1,
+        "text": "lastWordsPhase",
+        "completeTreeSame": true
+      },
+      {
+        "index": 2,
+        "text": "phase",
+        "completeTreeSame": true
+      },
+      {
+        "index": 3,
+        "text": "allSources",
+        "completeTreeSame": true
+      },
+      {
+        "index": 4,
+        "text": "actionProvider",
+        "completeTreeSame": true
+      },
+      {
+        "index": 5,
+        "text": "wordsPhases",
+        "completeTreeSame": true
+      },
+      {
+        "index": 6,
+        "text": "lastWordsCurrent",
+        "completeTreeSame": true
+      },
+      {
+        "index": 7,
+        "text": "lastWordsPolicy",
+        "completeTreeSame": true
+      },
+      {
+        "index": 8,
+        "text": "wordsContext",
+        "completeTreeSame": true
+      }
+    ],
+    "completeTreeAndTokensSame": true,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "leftSHA256": "a5a2e3af578ede4002238e619d900bb314e258576cf709876868de5d859f7cad",
+        "rightSHA256": "a5a2e3af578ede4002238e619d900bb314e258576cf709876868de5d859f7cad",
+        "completeRawSame": true
+      },
+      {
+        "module": "CommonJS",
+        "leftSHA256": "a5a2e3af578ede4002238e619d900bb314e258576cf709876868de5d859f7cad",
+        "rightSHA256": "a5a2e3af578ede4002238e619d900bb314e258576cf709876868de5d859f7cad",
+        "completeRawSame": true
+      }
+    ]
+  },
+  "singletonOriginalInitializationSame": true,
+  "runtimeWiring": [
+    {
+      "field": "requestFactory",
+      "getterReturn": "GameActionRequestFactory",
+      "lateSameReference": true
+    },
+    {
+      "field": "world",
+      "getterReturn": "resolution.world",
+      "lateSameReference": true
+    },
+    {
+      "field": "events",
+      "getterReturn": "resolution.events",
+      "lateSameReference": true
+    },
+    {
+      "field": "state",
+      "getterReturn": "resolution.state",
+      "lateSameReference": true
+    },
+    {
+      "field": "toolGateway",
+      "getterReturn": "resolution.toolGateway",
+      "lateSameReference": true
+    },
+    {
+      "field": "lastWordsMechanism",
+      "getterReturn": "resolution.lastWordsMechanism",
+      "lateSameReference": true
+    }
+  ],
+  "factory": {
+    "requiredNeutralConstructorPort": true,
+    "originalArgumentOrder": true,
+    "constructorBeforeSeparateCollectionDayRead": true
+  },
+  "bindings": {
+    "retainedBindings": [
+      {
+        "local": "refreshWolfKnifeInheritanceAtCheckpoint",
+        "imported": "refreshWolfKnifeInheritanceAtCheckpoint",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/rulesets/wolf-knife-inheritance-plan.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "AnimalDeathWavePreparation",
+        "imported": "AnimalDeathWavePreparation",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "planDeathWave",
+        "imported": "planDeathWave",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/engine/death-wave.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "openDeathWave",
+        "imported": "openDeathWave",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/engine/death-wave.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "deathExecutionContext",
+        "imported": "deathExecutionContext",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/engine/death-wave.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "DeathExecutionContext",
+        "imported": "DeathExecutionContext",
+        "typeOnly": true,
+        "moduleEndpoint": "backend/src/game/engine/death-wave.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "deathWaveOriginalLives",
+        "imported": "deathWaveOriginalLives",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/engine/death-wave.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "deathWavePoisonMetadata",
+        "imported": "deathWavePoisonMetadata",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/engine/death-wave.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "DeathWaveUnit",
+        "imported": "DeathWaveUnit",
+        "typeOnly": true,
+        "moduleEndpoint": "backend/src/game/engine/death-wave.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "preflightDeathWaveData",
+        "imported": "preflightDeathWaveData",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/engine/death-wave.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "DeathCommitReceipt",
+        "imported": "DeathCommitReceipt",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/engine/death-wave.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "DeathOriginalLife",
+        "imported": "DeathOriginalLife",
+        "typeOnly": true,
+        "moduleEndpoint": "backend/src/game/engine/death-wave.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "NightPoisonRoute",
+        "imported": "NightPoisonRoute",
+        "typeOnly": true,
+        "moduleEndpoint": "backend/src/core/domain/night_effects.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "DeathCommitter",
+        "imported": "DeathCommitter",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/engine/death-committer.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "ReadonlyBoardConfig",
+        "imported": "ReadonlyBoardConfig",
+        "typeOnly": true,
+        "moduleEndpoint": "packages/game-contract/src/index.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "FRAGRANT_PAIR_POLICY",
+        "imported": "FRAGRANT_PAIR_POLICY",
+        "typeOnly": false,
+        "moduleEndpoint": "packages/game-contract/src/facts/fragrant-pair-seer.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "FragrantDeathWavePublication",
+        "imported": "FragrantDeathWavePublication",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/mechanisms/roles/fragrant_pair_seer/ports.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "isFragrantPairBoard",
+        "imported": "isFragrantPairBoard",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/mechanisms/roles/fragrant_pair_seer/ports.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "commitFragrantDeathWave",
+        "imported": "commitFragrantDeathWave",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/mechanisms/roles/fragrant_pair_seer/ports.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "publishFragrantDeathWave",
+        "imported": "publishFragrantDeathWave",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/mechanisms/roles/fragrant_pair_seer/ports.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "cancelFragrantDeathWave",
+        "imported": "cancelFragrantDeathWave",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/mechanisms/roles/fragrant_pair_seer/ports.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "fragrantAuthoritySnapshot",
+        "imported": "fragrantAuthoritySnapshot",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/mechanisms/roles/fragrant_pair_seer/ports.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "collectDeathShot",
+        "imported": "collectDeathShot",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/rulesets/death-shot-selection.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "DeathWaveActions",
+        "imported": "DeathWaveActions",
+        "typeOnly": true,
+        "moduleEndpoint": "backend/src/rulesets/death-shot-selection.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "prepareInitialDeathRelations",
+        "imported": "prepareInitialDeathRelations",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/rulesets/initial-death-relations.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "WeddingDeathWavePublication",
+        "imported": "WeddingDeathWavePublication",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "prepareAdditionalDeathRelations",
+        "imported": "prepareAdditionalDeathRelations",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/rulesets/additional-death-relations.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "BoardConfig",
+        "imported": "BoardConfig",
+        "typeOnly": true,
+        "moduleEndpoint": "backend/src/core/domain/board.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "livingNightLife",
+        "imported": "livingNightLife",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/core/domain/night_effects.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "COMPONENT",
+        "imported": "COMPONENT",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/core/domain/components/names.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "ActionProvider",
+        "imported": "ActionProvider",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/core/domain/model.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "EntityId",
+        "imported": "EntityId",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/core/domain/model.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "GameEvent",
+        "imported": "GameEvent",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/core/domain/model.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "Phase",
+        "imported": "Phase",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/core/domain/model.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "Role",
+        "imported": "Role",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/core/domain/model.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "RuntimeSnapshot",
+        "imported": "RuntimeSnapshot",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/core/domain/model.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "DeathCause",
+        "imported": "DeathCause",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/core/domain/model.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "DeathSources",
+        "imported": "DeathSources",
+        "typeOnly": true,
+        "moduleEndpoint": "backend/src/core/domain/model.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "RoleComponent",
+        "imported": "RoleComponent",
+        "typeOnly": true,
+        "moduleEndpoint": "backend/src/core/domain/components/role.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "World",
+        "imported": "World",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/core/domain/world.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "ToolGateway",
+        "imported": "ToolGateway",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/gateway/tool_gateway.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "getDefaultLastWordsMechanism",
+        "imported": "getDefaultLastWordsMechanism",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "LastWordsGrantContext",
+        "imported": "LastWordsGrantContext",
+        "typeOnly": true,
+        "moduleEndpoint": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "resolveSheriffBadge",
+        "imported": "resolveSheriffBadge",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/mechanisms/sheriff/badge_choice.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "GameActionRequestFactory",
+        "imported": "GameActionRequestFactory",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/engine/action_request_factory.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "EventRegistry",
+        "imported": "EventRegistry",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/engine/event_registry.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "DreamNightEffects",
+        "imported": "DreamNightEffects",
+        "typeOnly": true,
+        "moduleEndpoint": "backend/src/core/domain/dream-night-effects.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "firstDeathGuns",
+        "imported": "firstDeathGuns",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/mechanisms/roles/death_abilities.ts",
+        "sameModeNameModuleEndpoint": true
+      },
+      {
+        "local": "finishDeathGuns",
+        "imported": "finishDeathGuns",
+        "typeOnly": false,
+        "moduleEndpoint": "backend/src/game/mechanisms/roles/death_abilities.ts",
+        "sameModeNameModuleEndpoint": true
+      }
+    ],
+    "movedBindings": [
+      {
+        "local": "ActionProvider",
+        "moduleEndpoint": "backend/src/core/domain/model.ts",
+        "windowTypeOnly": true
+      },
+      {
+        "local": "EntityId",
+        "moduleEndpoint": "backend/src/core/domain/model.ts",
+        "windowTypeOnly": true
+      },
+      {
+        "local": "GameEvent",
+        "moduleEndpoint": "backend/src/core/domain/model.ts",
+        "windowTypeOnly": true
+      },
+      {
+        "local": "Phase",
+        "moduleEndpoint": "backend/src/core/domain/model.ts",
+        "windowTypeOnly": true
+      },
+      {
+        "local": "RuntimeSnapshot",
+        "moduleEndpoint": "backend/src/core/domain/model.ts",
+        "windowTypeOnly": true
+      },
+      {
+        "local": "DeathSources",
+        "moduleEndpoint": "backend/src/core/domain/model.ts",
+        "windowTypeOnly": true
+      },
+      {
+        "local": "LastWordsPolicy",
+        "moduleEndpoint": "backend/src/core/domain/board.ts",
+        "windowTypeOnly": true
+      },
+      {
+        "local": "World",
+        "moduleEndpoint": "backend/src/core/domain/world.ts",
+        "windowTypeOnly": true
+      },
+      {
+        "local": "ToolGateway",
+        "moduleEndpoint": "backend/src/game/gateway/tool_gateway.ts",
+        "windowTypeOnly": true
+      },
+      {
+        "local": "LastWordsGrantContext",
+        "moduleEndpoint": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts",
+        "windowTypeOnly": true
+      }
+    ],
+    "constructorPortEndpoint": "backend/src/core/domain/actions.ts",
+    "newWindowEndpoint": "backend/src/game/mechanisms/last_words/window.ts",
+    "noWindowValueImports": true
+  },
+  "completeComparisons": {
+    "nodesBothSides": 12976,
+    "nodeArraysBothSides": 1978,
+    "leavesBothSides": 6560
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/last_words/last_words_mechanism.ts",
+      "sha256": "2dd1be56ecfecbe1d355f2ef742ab720c185dfe178af72f98784ad882a2a389e"
+    },
+    {
+      "path": "backend/src/core/domain/world.ts",
+      "sha256": "0422265542c6d782eb52f1dd1c187b5b3a5e9f78c5c7e83d4519d22bd8ac24d1"
+    },
+    {
+      "path": "backend/src/game/engine/action_request_factory.ts",
+      "sha256": "47ca276d4271630035d3aae3bcde79fbff3c2cbf1ecbedcdaae334f42df8f6d6"
+    },
+    {
+      "path": "backend/src/game/gateway/tool_gateway.ts",
+      "sha256": "48d375d498e73d2344ba7e724a6366aefa24c3930e2236e2af003859e8253ef6"
+    },
+    {
+      "path": "backend/src/core/domain/actions.ts",
+      "sha256": "a6d681a7163778ed6433dbb32a11e8c4ed742e8a6f638056cdda5f5e08a44ac9"
+    }
+  ],
+  "newSources": [
+    {
+      "path": "backend/src/game/mechanisms/last_words/window.ts",
+      "beforeGitAbsent": true,
+      "currentSHA256": "f5e84b54ded1d55ae49c9f40cde2017aee09684790ef9d6fd6775a8745f85572"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/last-words-window.test.ts",
+      "beforeGitAbsent": true,
+      "currentSHA256": "ebe3f16547a42948d9690c641dc2e1d2b4b29ff652f54801013689fa32d0f6c2"
+    }
+  ],
+  "limits": [
+    "Whole DR raw equality is only its full precise inverse; actual DR/new window JS and module/class/API layout intentionally differ.",
+    "The complete actual moved method is mapped only at six named runtime routes and the constructor identifier; name/access changes are explicit. No body statements are replaced by the old block.",
+    "Complete actual resolve is compared after mapping its one new callee to the old callee; nine original argument trees, singleton initialization, grant-before-await and all other resolve statements remain.",
+    "Named binding endpoints are resolved module entries; reexport chains are not recursively declared ultimate physical owners.",
+    "A new field/window object, runtime getter delegation, public method and call stack are explicit observations; arbitrary prototype/global/CJS mutation or full cold-load equivalence is not claimed.",
+    "The new unit has no previous program to compare. Runtime evidence belongs to Root receipts, not this static tool; no production import, business test, typecheck or architecture gate runs here."
+  ]
+}

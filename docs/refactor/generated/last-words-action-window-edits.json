@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "edits": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "before": "import type { BoardConfig, LastWordsPolicy } from \"../../core/domain/board\";",
+      "after": "import type { BoardConfig } from \"../../core/domain/board\";",
+      "offsetAtApplication": 1756
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "before": "import type { LastWordsGrantContext } from \"../mechanisms/last_words/last_words_mechanism\";",
+      "after": "import type { LastWordsGrantContext } from \"../mechanisms/last_words/last_words_mechanism\";\nimport { LastWordsWindow } from \"../mechanisms/last_words/window\";",
+      "offsetAtApplication": 2374
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "before": "  private readonly lastWordsMechanism = getDefaultLastWordsMechanism();\n",
+      "after": "  private readonly lastWordsMechanism = getDefaultLastWordsMechanism();\n  // 只捕获原结算器；遗言窗口在原读取点取依赖，不在装配时创建请求工厂或开放许可。\n  private readonly lastWordsWindow = (() => {\n    const resolution = this;\n    return new LastWordsWindow({\n      get requestFactory() { return GameActionRequestFactory; },\n      get world() { return resolution.world; },\n      get events() { return resolution.events; },\n      get state() { return resolution.state; },\n      get toolGateway() { return resolution.toolGateway; },\n      get lastWordsMechanism() { return resolution.lastWordsMechanism; },\n    });\n  })();\n",
+      "offsetAtApplication": 3407
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "before": "          await this.collectLastWords(",
+      "after": "          await this.lastWordsWindow.collect(",
+      "offsetAtApplication": 13204
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "before": "  /** 授予事实不替代发言窗口；每位死者等待回复后复核阶段、日期、终局与原生命许可，再写发言。 */\n  private async collectLastWords(\n    deadIds: EntityId[],\n    phase: Phase,\n    deathPhase: Phase,\n    sources: DeathSources,\n    actionProvider: ActionProvider,\n    deathPhases: Readonly<Record<EntityId, Phase>>,\n    scopeCurrent: () => boolean = () => true,\n    policy: LastWordsPolicy = \"awa_initial_wave_v1\",\n    wordsContext?: LastWordsGrantContext,\n  ): Promise<void> {\n    const requests = new GameActionRequestFactory(this.world, this.events, this.state.day);\n    const day = this.state.day;\n    for (const deadId of deadIds) {\n      const actualDeathPhase = deathPhases[deadId] ?? deathPhase;\n      if (\n        !this.lastWordsMechanism.shouldGrantLastWords(\n          actualDeathPhase,\n          day,\n          sources[deadId] ?? [],\n          policy,\n          wordsContext,\n        )\n      )\n        continue;\n      if (\n        !scopeCurrent() ||\n        this.state.phase !== phase ||\n        this.state.day !== day ||\n        this.state.gameOver\n      )\n        return;\n      const permit = this.world.openDeathAction(deadId, \"speak\", phase, day, scopeCurrent);\n      try {\n        const request = requests.create({\n          phase,\n          actorId: deadId,\n          allowedTools: [\"speak\"],\n          stage: \"last_words\",\n          requiresAction: true,\n          summary: { key: \"request.summary.last_words\" },\n          context: {\n            trigger: \"last_words\",\n            death_phase: actualDeathPhase,\n            death_action_id: permit.id,\n          },\n        });\n        if (!scopeCurrent() || !this.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id))\n          return;\n        const action = await actionProvider.getAction(request);\n        if (\n          !scopeCurrent() ||\n          this.state.phase !== phase ||\n          this.state.day !== day ||\n          this.state.gameOver ||\n          !this.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id)\n        )\n          return;\n        if (action?.name !== \"speak\") {\n          continue;\n        }\n        const validated = this.toolGateway.validateAndSanitize(this.world, deadId, action, {\n          phase,\n          day: this.state.day,\n          deathActionId: permit.id,\n        });\n        if (!validated.ok || !validated.sanitizedCall) {\n          continue;\n        }\n        if (\n          !scopeCurrent() ||\n          this.state.phase !== phase ||\n          this.state.day !== day ||\n          this.state.gameOver ||\n          !this.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id)\n        )\n          return;\n        this.events.push({\n          timestamp: Date.now(),\n          type: \"last_words_spoken\",\n          payload: {\n            playerId: deadId,\n            phase,\n            day: this.state.day,\n            text: validated.sanitizedCall.args.text,\n          },\n        });\n      } finally {\n        permit.close();\n      }\n    }\n  }",
+      "after": "",
+      "offsetAtApplication": 27816
+    }
+  ],
+  "movedMethod": {
+    "originalText": "  /** 授予事实不替代发言窗口；每位死者等待回复后复核阶段、日期、终局与原生命许可，再写发言。 */\n  private async collectLastWords(\n    deadIds: EntityId[],\n    phase: Phase,\n    deathPhase: Phase,\n    sources: DeathSources,\n    actionProvider: ActionProvider,\n    deathPhases: Readonly<Record<EntityId, Phase>>,\n    scopeCurrent: () => boolean = () => true,\n    policy: LastWordsPolicy = \"awa_initial_wave_v1\",\n    wordsContext?: LastWordsGrantContext,\n  ): Promise<void> {\n    const requests = new GameActionRequestFactory(this.world, this.events, this.state.day);\n    const day = this.state.day;\n    for (const deadId of deadIds) {\n      const actualDeathPhase = deathPhases[deadId] ?? deathPhase;\n      if (\n        !this.lastWordsMechanism.shouldGrantLastWords(\n          actualDeathPhase,\n          day,\n          sources[deadId] ?? [],\n          policy,\n          wordsContext,\n        )\n      )\n        continue;\n      if (\n        !scopeCurrent() ||\n        this.state.phase !== phase ||\n        this.state.day !== day ||\n        this.state.gameOver\n      )\n        return;\n      const permit = this.world.openDeathAction(deadId, \"speak\", phase, day, scopeCurrent);\n      try {\n        const request = requests.create({\n          phase,\n          actorId: deadId,\n          allowedTools: [\"speak\"],\n          stage: \"last_words\",\n          requiresAction: true,\n          summary: { key: \"request.summary.last_words\" },\n          context: {\n            trigger: \"last_words\",\n            death_phase: actualDeathPhase,\n            death_action_id: permit.id,\n          },\n        });\n        if (!scopeCurrent() || !this.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id))\n          return;\n        const action = await actionProvider.getAction(request);\n        if (\n          !scopeCurrent() ||\n          this.state.phase !== phase ||\n          this.state.day !== day ||\n          this.state.gameOver ||\n          !this.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id)\n        )\n          return;\n        if (action?.name !== \"speak\") {\n          continue;\n        }\n        const validated = this.toolGateway.validateAndSanitize(this.world, deadId, action, {\n          phase,\n          day: this.state.day,\n          deathActionId: permit.id,\n        });\n        if (!validated.ok || !validated.sanitizedCall) {\n          continue;\n        }\n        if (\n          !scopeCurrent() ||\n          this.state.phase !== phase ||\n          this.state.day !== day ||\n          this.state.gameOver ||\n          !this.world.hasDeathAction(deadId, \"speak\", phase, day, permit.id)\n        )\n          return;\n        this.events.push({\n          timestamp: Date.now(),\n          type: \"last_words_spoken\",\n          payload: {\n            playerId: deadId,\n            phase,\n            day: this.state.day,\n            text: validated.sanitizedCall.args.text,\n          },\n        });\n      } finally {\n        permit.close();\n      }\n    }\n  }",
+    "sha256": "e86eba85a16b273f3f7ef38c62b7568079cbbcf4160ee1997371dc628e33ee2e",
+    "physicalLines": 93,
+    "newOwner": "backend/src/game/mechanisms/last_words/window.ts",
+    "newMethodName": "collect",
+    "changes": [
+      "原 private 方法改为新窗口 public collect；原完整参数、默认值、控制流及语句顺序保留。",
+      "依赖字段路由到 runtime 晚读口；原工厂值查询改为必填构造器端口。",
+      "新增描述性中文注释；不把本次政策／原生命与授权责任迁入数据接口。"
+    ]
+  },
+  "newOwnerTextSha256": "f5e84b54ded1d55ae49c9f40cde2017aee09684790ef9d6fd6775a8745f85572",
+  "preparationHistory": [
+    {
+      "stage": "生成候选之前的编辑边界断言",
+      "result": "AssertionError",
+      "writesBeforeFailure": 0,
+      "reason": "错误预期捕获的末方法片段含尾换行；改为按实际闭括号捕获，不改生产以凑工具。",
+      "toolOutput": "Traceback (most recent call last):\n  File \"<stdin>\", line 6, in <module>\nAssertionError\n",
+      "countsAsProductOrProofCheck": false
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "source": [
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "2554d44803b5ddbe1d267ac2840bd370f0df6acba7a76433575b291b97f49389"
+    },
+    {
+      "path": "backend/src/game/mechanisms/last_words/window.ts",
+      "sha256": "f5e84b54ded1d55ae49c9f40cde2017aee09684790ef9d6fd6775a8745f85572"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/last-words-window.test.ts",
+      "sha256": "ebe3f16547a42948d9690c641dc2e1d2b4b29ff652f54801013689fa32d0f6c2"
+    }
+  ],
+  "deleted": [],
+  "sourceReady": {
+    "path": "docs/refactor/generated/last-words-action-window-source-ready.json",
+    "sha256": "131cef1934865409bdf1e4b921151f17d95d575ca4f9bd23d709126e7ade0db4"
+  },
+  "executionOwner": "Root",
+  "authorExecutedChecks": false,
+  "jointFirstFence": {
+    "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-source-fence.json",
+    "sha256": "7d05bae304459a0eb1fa55cfb7d07633407e031719ca57f30cc0b62034c3e3c6"
+  },
+  "runs": [
+    {
+      "key": "new-unit",
+      "command": "bun --no-env-file test --preload ./backend/tests/setup.ts backend/tests/unit/mechanisms/last-words-window.test.ts",
+      "terminalChunk": "fe3062",
+      "actualExitCode": 0,
+      "firstExecution": true,
+      "cases": 2,
+      "failed": 0,
+      "expectCalls": 22,
+      "stdout": {
+        "path": "docs/refactor/generated/last-words-action-window-unit-output.txt",
+        "sha256": "367ebe39828b725104e7b84fda8f496c6b803f0167a95eb96dcd30ec385d83aa"
+      }
+    },
+    {
+      "key": "heads",
+      "command": "bun --no-env-file docs/refactor/generated/last-words-action-window-heads.ts",
+      "terminalChunk": "55af45",
+      "actualExitCode": 0,
+      "firstExecution": true,
+      "sources": 3,
+      "documentationPaths": 719,
+      "diagnostics": 0,
+      "script": {
+        "path": "docs/refactor/generated/last-words-action-window-heads.ts",
+        "sha256": "60f93e8c769a261f9d16717611eed98d0df21f9c188613bbea0fa4254645fc31"
+      },
+      "report": {
+        "path": "docs/refactor/generated/last-words-action-window-heads.json",
+        "sha256": "e3f11005651b96a58ec40f112e888cfc170ddafcc38d85886da9f0e3e4c1c402"
+      },
+      "stdout": {
+        "path": "docs/refactor/generated/last-words-action-window-heads-output.txt",
+        "sha256": "358332f29963d1f2f31fa25de84583ca377e42c21d87e57ae7a0f9edc2766b49"
+      }
+    },
+    {
+      "key": "proof",
+      "command": "bun --no-env-file docs/refactor/generated/last-words-action-window-proof.cjs",
+      "terminalChunk": "250f2b",
+      "actualExitCode": 0,
+      "firstExecution": true,
+      "script": {
+        "path": "docs/refactor/generated/last-words-action-window-proof.cjs",
+        "sha256": "a5f8b0d8c4985cba4bd7cb3c5b99b0dcd76b45f7e63177f76d44da4aacee34c2"
+      },
+      "report": {
+        "path": "docs/refactor/generated/last-words-action-window-proof.json",
+        "sha256": "537e281b1756371df81efe6568b172f9823748e5b2dc95614e4ca624da571f82"
+      },
+      "stdout": {
+        "path": "docs/refactor/generated/last-words-action-window-proof-output.txt",
+        "sha256": "d2dce82396cedf756247a57387d68319a3a4dc1b3a9bfbb47f4ec7fd1361d7ad"
+      }
+    },
+    {
+      "key": "joint-finite-types-first",
+      "executor": "Root",
+      "config": {
+        "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-types-config.json",
+        "sha256": "53703949f3b7bfc4ca41fae4bc184b6cf9491d9093e968d17322448ad6c86b26"
+      },
+      "launchChunk": "092650",
+      "sessionId": 64038,
+      "terminalChunk": "c3b6ea",
+      "actualExitCode": 2,
+      "roots": 12,
+      "diagnostics": 5,
+      "ownSourceDiagnostics": 0,
+      "failedPaths": [
+        "backend/tests/unit/features/demon-hunter/participant-state-data.test.ts",
+        "backend/tests/unit/features/noble-secret-body/state-installation.test.ts"
+      ],
+      "stdout": {
+        "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-types-output.txt",
+        "sha256": "8bedf987dd7f0a395e7be66fe20cf383a9627cb19d0e3ac871cc221b5c97af6c"
+      },
+      "scope": "本批三源包含在共同12根原输入；首红全保，不能称联合首绿或B独立finite3已执行。",
+      "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc --noEmit --pretty false -p docs/refactor/generated/noble-dawn-lastwords-demon-joint-types-config.json > docs/refactor/generated/noble-dawn-lastwords-demon-joint-types-output.txt 2>&1"
+    },
+    {
+      "key": "only-two-failed-unit-types",
+      "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc --noEmit --pretty false -p docs/refactor/generated/noble-dawn-lastwords-demon-failed-units-types-config.json > docs/refactor/generated/noble-dawn-lastwords-demon-failed-units-types-output.txt 2>&1",
+      "executor": "Root",
+      "config": {
+        "path": "docs/refactor/generated/noble-dawn-lastwords-demon-failed-units-types-config.json",
+        "sha256": "971a3b7c8a4ecb4eda59400a7f0ccd49de9eb4af7474edd70c2d0fe7272698b1"
+      },
+      "launchChunk": "89b65c",
+      "sessionId": 70497,
+      "terminalChunk": "ac39a5",
+      "actualExitCode": 0,
+      "roots": 2,
+      "stdout": {
+        "path": "docs/refactor/generated/noble-dawn-lastwords-demon-failed-units-types-output.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "scope": "只重两个实际失败unit；B所有源与绿业务/头/证明未改未重。不是末全12根重新通过。"
+    }
+  ],
+  "ownFinite3Config": {
+    "path": "docs/refactor/generated/last-words-action-window-types-config.json",
+    "sha256": "dd412f502c416af0efb26d5679155a48a537bc5e3e3ee5e890312480b93842e3",
+    "executed": false,
+    "reason": "Root统一有限12根已覆盖本批，失败根由Root处理，不再重复。"
+  },
+  "runtimeSummary": {
+    "differentCases": 2,
+    "executions": 2,
+    "expectCalls": 22,
+    "failed": 0,
+    "oldCasesRerun": false
+  },
+  "programSummary": {
+    "oldPrograms": 1,
+    "preciseDREdits": 5,
+    "originalPhysicalLines": 93,
+    "actualRuntimeRoutes": 24,
+    "wholeInverseOutputs": 2,
+    "completeMovedMappedOutputs": 2,
+    "completeResolveMappedOutputs": 2,
+    "retainedNamedModuleEndpoints": 49,
+    "movedTypeModuleEndpoints": 10,
+    "controls": 5,
+    "typedNodesBothSides": 12976,
+    "nodeArraysBothSides": 1978,
+    "forEachChildLeavesBothSides": 6560
+  },
+  "sourceUnchangedAfterFirstChecks": true,
+  "wholeCohortLatest12AllSameAsFirstFence": false,
+  "limits": [
+    "首12根及只失败2根的完整命令直接引用Root共同冻结收据832908b6原值；不另运行或补造工具输入。",
+    "SourceReady checksRun=false是首捕获阶段事实，原字节未覆盖；本receipt明确后继真实执行。",
+    "末onlyfailed2不能证明其余10根在后来新夹具下又重编译；本批自身未改、原首样本无诊断。",
+    "全类型、全架构门禁、模型、原绿和两新绿均未重复。"
+  ],
+  "jointTypeReceipt": {
+    "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-type-receipts.json",
+    "sha256": "832908b6d631af4c9fc91fd53da2c9e134879701248ba0f842c68801925c99a3"
+  }
+}
