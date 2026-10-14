@@ -1,0 +1,169 @@
+{
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+      "sha256": "612b2f16df68e005da3c835a08c8a8e635ee8f4407c71496e893773913483bbf"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/profile.ts",
+      "sha256": "90e79e4aa12fa0427d58cec7abe91154355141e55f24b1d02e574fc3aa754ea0"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/state-installation.test.ts",
+      "sha256": "23bc6decdcbab30135291212e80f9dcd9e4fbbaffc34e2ffb0ea9eeb2e7ef450"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "sha256": "1a664d10b50cc7704ab14bafdfb14bbef7d5cc545c02c13338d6c271d9bcadcd",
+      "blob": "08b323a8a6058e04bb78ee33f73a0fe7ebd6d32b",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night_stages.ts",
+      "sha256": "654b16899aaab1e68bcb659a75222d1dc3dc620c96b0ec4d5aee8838ae7b3689",
+      "blob": "f07942fac94ff5a8d427bcfa0513ef4e7292fd35",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/noble-body-format.ts",
+      "sha256": "86cf52d425188c1a5745cc6b23110e98c677ec754007b768cd175bad68ccb499",
+      "blob": "5da1dcb0b6e6f9391384cfe044e01660dcd17c23",
+      "mode": "100644"
+    }
+  ],
+  "before": {
+    "path": "docs/refactor/generated/noble-state-installation-before.json",
+    "sha256": "df5e73d1548a27eefd5fe81b2ada6f4e0056d311282c47e87806c2e8720c21f8"
+  },
+  "firstSourceReady": {
+    "path": "docs/refactor/generated/noble-state-installation-source-ready.json",
+    "sha256": "bc29462e8c5ea50dc39b45f1f893fc00babf6b8842497185898a89df0a139003"
+  },
+  "finalSourceReady": {
+    "path": "docs/refactor/generated/noble-state-installation-source-ready-repair.json",
+    "sha256": "cdbb7e8cdfcaeb06c145814b27183c5076acc63c56264251994ed655bde11172"
+  },
+  "document": {
+    "path": "docs/refactor/noble-state-installation.md",
+    "sha256": "2651b62156d934e0c6d132afac3a9ac9ec47a16d56c3d5eb9a6cd455f33d990f"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/noble-state-installation-before.json",
+      "sha256": "df5e73d1548a27eefd5fe81b2ada6f4e0056d311282c47e87806c2e8720c21f8"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-edits.json",
+      "sha256": "7e3e5256ea1742a89c4131dcc029566fd6a612189b11aca152bd560554af7ade"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-heads-output.txt",
+      "sha256": "358332f29963d1f2f31fa25de84583ca377e42c21d87e57ae7a0f9edc2766b49"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-heads.json",
+      "sha256": "68dbb09cd72a56f1f95891726cc6ddfe3e9900f370a4fc01a6fdd24365853c17"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-heads.ts",
+      "sha256": "ee075d2aa0c984428a53db6b60983097ddcb610c02bf98d4e151bb4fde0a71a9"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-proof-output.txt",
+      "sha256": "305001f093d480b6879335634292ffc63c523d878300839713957f9951f75eea"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-proof.cjs",
+      "sha256": "3ea6a1c39f0a1fd8964671a70f245f8bf16f2305d442e64f27543a49d17c7fde"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-proof.json",
+      "sha256": "5dc5df825ae7b8669cdf2b790cab9dc74bd315cac14b3b160c4beeead061bf18"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-receipts.json",
+      "sha256": "1620710799dd637f468c18121b6217abc2eb35cc09df00f980e4be82c417fe4a"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-repair-before.json",
+      "sha256": "901045fdfe59ad2a3f9463e79d608db797dff0ff9f82e3b55d860920cfdf42f8"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-repair-edits.json",
+      "sha256": "3702b6af1d4cef0e3972088adb3c40fdd601ffd2c889812d2ccfb2a02d13caf4"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-repair-proof-output.txt",
+      "sha256": "0d91004210b8d68f815f3cb730bb0f0a66397a3f6b61375d637ead6d0b35b458"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-repair-proof.cjs",
+      "sha256": "1403f79cb5f84366092f2398f16c62ba3b8a399e2a63916733504459cbaf566c"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-repair-proof.json",
+      "sha256": "9e792d6e99dc8d2a51e7482e9b5cb8c22b09ebe68763d441647d0ca5643628e5"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-repaired-unit-output.txt",
+      "sha256": "790828fc2bbd0d0499db59766e8135ab370feb871a4bb8b07ce9777072957a3a"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-source-ready-repair.json",
+      "sha256": "cdbb7e8cdfcaeb06c145814b27183c5076acc63c56264251994ed655bde11172"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-source-ready.json",
+      "sha256": "bc29462e8c5ea50dc39b45f1f893fc00babf6b8842497185898a89df0a139003"
+    },
+    {
+      "path": "docs/refactor/generated/noble-state-installation-unit-output.txt",
+      "sha256": "3c0d9ab8e24e6dbde42f0340893cec06a548cc792df408092c215e95bacf01b9"
+    },
+    {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-source-fence.json",
+      "sha256": "7d05bae304459a0eb1fa55cfb7d07633407e031719ca57f30cc0b62034c3e3c6"
+    },
+    {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-types-config.json",
+      "sha256": "53703949f3b7bfc4ca41fae4bc184b6cf9491d9093e968d17322448ad6c86b26"
+    },
+    {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-types-output.txt",
+      "sha256": "8bedf987dd7f0a395e7be66fe20cf383a9627cb19d0e3ac871cc221b5c97af6c"
+    },
+    {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-failed-units-types-config.json",
+      "sha256": "971a3b7c8a4ecb4eda59400a7f0ccd49de9eb4af7474edd70c2d0fe7272698b1"
+    },
+    {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-failed-units-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-type-receipts.json",
+      "sha256": "832908b6d631af4c9fc91fd53da2c9e134879701248ba0f842c68801925c99a3"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-state-codec-ownership-audit.json",
+      "sha256": "4e46fa59b12f1cc6dd47cb8d05d977fefe7f46ff619033a86ac38d3e61ec0980"
+    },
+    {
+      "path": "docs/refactor/generated/remaining-state-codec-ownership-inventory.json",
+      "sha256": "b7deafab100746fd386bbaa9ea169285e8320ec00474f42c2271cdf3c3a81608"
+    }
+  ],
+  "sourceFrozen": true,
+  "commentOnly": false,
+  "behaviorPolicyChange": false,
+  "apiObservations": [
+    "两个具体安装导出/调用栈/callback分配以及工厂绑定读取观察变化明确；不承诺任意namespace改写等价。"
+  ],
+  "limits": [
+    "仅两个完整init安装归既有数据owner，不增加strict schema、库存或许可store，也不代表C17整族或P9完成。"
+  ]
+}

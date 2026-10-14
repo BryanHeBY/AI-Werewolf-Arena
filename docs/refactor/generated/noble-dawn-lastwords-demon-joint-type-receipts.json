@@ -1,0 +1,126 @@
+{
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "executor": "/root",
+  "firstSourceFence": {
+    "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-source-fence.json",
+    "sha256": "7d05bae304459a0eb1fa55cfb7d07633407e031719ca57f30cc0b62034c3e3c6"
+  },
+  "firstRootCount": 12,
+  "firstRun": {
+    "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc --noEmit --pretty false -p docs/refactor/generated/noble-dawn-lastwords-demon-joint-types-config.json > docs/refactor/generated/noble-dawn-lastwords-demon-joint-types-output.txt 2>&1",
+    "launchChunk": "092650",
+    "sessionId": 64038,
+    "terminalChunk": "c3b6ea",
+    "actualExitCode": 2,
+    "configuration": {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-types-config.json",
+      "sha256": "53703949f3b7bfc4ca41fae4bc184b6cf9491d9093e968d17322448ad6c86b26"
+    },
+    "output": {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-types-output.txt",
+      "sha256": "8bedf987dd7f0a395e7be66fe20cf383a9627cb19d0e3ac871cc221b5c97af6c"
+    },
+    "diagnostics": [
+      "Demon newunit state-return mistaken for ability metadata: four TS2339",
+      "Noble newunit currentCamp returned enum instead of component: one TS2322"
+    ],
+    "productionRootDiagnostics": 0
+  },
+  "failedOnlyRun": {
+    "command": "bun --no-env-file backend/node_modules/typescript/bin/tsc --noEmit --pretty false -p docs/refactor/generated/noble-dawn-lastwords-demon-failed-units-types-config.json > docs/refactor/generated/noble-dawn-lastwords-demon-failed-units-types-output.txt 2>&1",
+    "launchChunk": "89b65c",
+    "sessionId": 70497,
+    "terminalChunk": "ac39a5",
+    "actualExitCode": 0,
+    "configuration": {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-failed-units-types-config.json",
+      "sha256": "971a3b7c8a4ecb4eda59400a7f0ccd49de9eb4af7474edd70c2d0fe7272698b1"
+    },
+    "output": {
+      "path": "docs/refactor/generated/noble-dawn-lastwords-demon-failed-units-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "rootCount": 2,
+    "roots": [
+      "../../../backend/tests/unit/features/noble-secret-body/state-installation.test.ts",
+      "../../../backend/tests/unit/features/demon-hunter/participant-state-data.test.ts"
+    ]
+  },
+  "currentSource": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+      "sha256": "612b2f16df68e005da3c835a08c8a8e635ee8f4407c71496e893773913483bbf",
+      "sameAsFirstFence": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/profile.ts",
+      "sha256": "90e79e4aa12fa0427d58cec7abe91154355141e55f24b1d02e574fc3aa754ea0",
+      "sameAsFirstFence": true
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/state-installation.test.ts",
+      "sha256": "23bc6decdcbab30135291212e80f9dcd9e4fbbaffc34e2ffb0ea9eeb2e7ef450",
+      "sameAsFirstFence": false
+    },
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "7e435c4484124db9fc7ccba725e922caccf1ce5f74f5777fb20c4ecbee810b20",
+      "sameAsFirstFence": true
+    },
+    {
+      "path": "backend/src/rulesets/ordinary-night-death-preparation.ts",
+      "sha256": "1261c6ca92c2070e628555393bb5017eb67e8e739fd172ab34e29ebc8c951367",
+      "sameAsFirstFence": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/ordinary-night-death-preparation.test.ts",
+      "sha256": "41c524b6f020ad8fbb4300c84da19b3c3188c5b289330e19c282684632d1c646",
+      "sameAsFirstFence": true
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "2554d44803b5ddbe1d267ac2840bd370f0df6acba7a76433575b291b97f49389",
+      "sameAsFirstFence": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/last_words/window.ts",
+      "sha256": "f5e84b54ded1d55ae49c9f40cde2017aee09684790ef9d6fd6775a8745f85572",
+      "sameAsFirstFence": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/last-words-window.test.ts",
+      "sha256": "ebe3f16547a42948d9690c641dc2e1d2b4b29ff652f54801013689fa32d0f6c2",
+      "sameAsFirstFence": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+      "sha256": "58ef77f2fdf99b2c14b566f8cc1e7e42ff955a7b7ff3d6ffe496d3d36fb571c5",
+      "sameAsFirstFence": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/participant-state-data.ts",
+      "sha256": "3d31915430bfbfc93de81d6242afb7212ef657493ee690d2b556ec422226a482",
+      "sameAsFirstFence": true
+    },
+    {
+      "path": "backend/tests/unit/features/demon-hunter/participant-state-data.test.ts",
+      "sha256": "353b7bd908fd89af3671560b859c291682688961fef7cf17dc10fbaa34beb7c5",
+      "sameAsFirstFence": false
+    }
+  ],
+  "successorSourceReady": [
+    {
+      "path": "docs/refactor/generated/noble-state-installation-source-ready-repair.json",
+      "sha256": "cdbb7e8cdfcaeb06c145814b27183c5076acc63c56264251994ed655bde11172"
+    },
+    {
+      "path": "docs/refactor/generated/demon-participant-state-data-owner-source-ready-unit-repair.json",
+      "sha256": "262a5ed597a67620588e2afd6db3ffa2124264f92ba6bd1b876b0abb0a52dd55"
+    }
+  ],
+  "limits": [
+    "原12根没有复跑；生产与其余已绿root据原实际检查和后继精确差分分层。",
+    "Noble state仅一中文精度，Noble/Demon各一新unit为真实输入修复，不伪type-only或原输入已绿。",
+    "只联合有限类型，不是全量类型、全仓验收或P9闭合。"
+  ]
+}

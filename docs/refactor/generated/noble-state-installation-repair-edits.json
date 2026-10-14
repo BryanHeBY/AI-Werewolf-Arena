@@ -1,0 +1,12 @@
+[
+  {
+    "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+    "before": "/** 与身体槽保持相同的左值先读顺序；只安装贵族初态，不重开库存、更新审计影子或授予现场许可。 */",
+    "after": "/** 与身体槽保持相同的左值先读顺序；将贵族槽重设为初态，现场许可和审计影子继续归 authority，本命令不更新它们。 */"
+  },
+  {
+    "path": "backend/tests/unit/features/noble-secret-body/state-installation.test.ts",
+    "before": "currentCamp: () => Camp.Good",
+    "after": "currentCamp: () => ({ camp: Camp.Good })"
+  }
+]

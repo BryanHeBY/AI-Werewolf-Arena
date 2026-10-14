@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/noble-secret-body/state-installation.test.ts:
+(pass) both profile initializers read the original container before a throwing board or policy getter [0.35ms]
+(pass) both initializers send literal selected initial data to the original setter once and retain its Error [0.23ms]
+
+ 2 pass
+ 0 fail
+ 26 expect() calls
+Ran 2 tests across 1 file. [157.00ms]

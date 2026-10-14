@@ -1,0 +1,95 @@
+{
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "runs": [
+    {
+      "key": "proof",
+      "executor": "/root",
+      "terminalChunk": "0a4f6c",
+      "actualExitCode": 0,
+      "output": {
+        "path": "docs/refactor/generated/noble-state-installation-proof-output.txt",
+        "sha256": "305001f093d480b6879335634292ffc63c523d878300839713957f9951f75eea"
+      },
+      "script": {
+        "path": "docs/refactor/generated/noble-state-installation-proof.cjs",
+        "sha256": "3ea6a1c39f0a1fd8964671a70f245f8bf16f2305d442e64f27543a49d17c7fde"
+      },
+      "command": "bun --no-env-file docs/refactor/generated/noble-state-installation-proof.cjs > docs/refactor/generated/noble-state-installation-proof-output.txt 2>&1"
+    },
+    {
+      "key": "heads",
+      "executor": "/root",
+      "terminalChunk": "afadae",
+      "actualExitCode": 0,
+      "output": {
+        "path": "docs/refactor/generated/noble-state-installation-heads-output.txt",
+        "sha256": "358332f29963d1f2f31fa25de84583ca377e42c21d87e57ae7a0f9edc2766b49"
+      },
+      "script": {
+        "path": "docs/refactor/generated/noble-state-installation-heads.ts",
+        "sha256": "ee075d2aa0c984428a53db6b60983097ddcb610c02bf98d4e151bb4fde0a71a9"
+      },
+      "command": "bun --no-env-file docs/refactor/generated/noble-state-installation-heads.ts > docs/refactor/generated/noble-state-installation-heads-output.txt 2>&1"
+    },
+    {
+      "key": "unit",
+      "executor": "/root",
+      "terminalChunk": "3c5f65",
+      "actualExitCode": 0,
+      "output": {
+        "path": "docs/refactor/generated/noble-state-installation-unit-output.txt",
+        "sha256": "3c0d9ab8e24e6dbde42f0340893cec06a548cc792df408092c215e95bacf01b9"
+      },
+      "command": "bun --no-env-file test backend/tests/unit/features/noble-secret-body/state-installation.test.ts > docs/refactor/generated/noble-state-installation-unit-output.txt 2>&1"
+    },
+    {
+      "key": "repaired-unit",
+      "executor": "/root",
+      "terminalChunk": "4d2578",
+      "actualExitCode": 0,
+      "output": {
+        "path": "docs/refactor/generated/noble-state-installation-repaired-unit-output.txt",
+        "sha256": "790828fc2bbd0d0499db59766e8135ab370feb871a4bb8b07ce9777072957a3a"
+      },
+      "command": "bun --no-env-file test backend/tests/unit/features/noble-secret-body/state-installation.test.ts > docs/refactor/generated/noble-state-installation-repaired-unit-output.txt 2>&1"
+    },
+    {
+      "key": "repair-proof",
+      "executor": "/root",
+      "terminalChunk": "c6a7e9",
+      "actualExitCode": 0,
+      "output": {
+        "path": "docs/refactor/generated/noble-state-installation-repair-proof-output.txt",
+        "sha256": "0d91004210b8d68f815f3cb730bb0f0a66397a3f6b61375d637ead6d0b35b458"
+      },
+      "script": {
+        "path": "docs/refactor/generated/noble-state-installation-repair-proof.cjs",
+        "sha256": "1403f79cb5f84366092f2398f16c62ba3b8a399e2a63916733504459cbaf566c"
+      },
+      "command": "bun --no-env-file docs/refactor/generated/noble-state-installation-repair-proof.cjs > docs/refactor/generated/noble-state-installation-repair-proof-output.txt 2>&1"
+    }
+  ],
+  "jointTypes": {
+    "path": "docs/refactor/generated/noble-dawn-lastwords-demon-joint-type-receipts.json",
+    "sha256": "832908b6d631af4c9fc91fd53da2c9e134879701248ba0f842c68801925c99a3"
+  },
+  "runtimeDifferentDeclarations": 2,
+  "runtimeStages": [
+    {
+      "chunk": "3c5f65",
+      "cases": 2,
+      "expectCalls": 26,
+      "sourceStage": "first input; currentCamp fixture later corrected"
+    },
+    {
+      "chunk": "4d2578",
+      "cases": 2,
+      "expectCalls": 26,
+      "sourceStage": "same two declarations; corrected context component input"
+    }
+  ],
+  "limits": [
+    "首两生产逻辑不变；后继只state说明与新unit真实输入。",
+    "不称四不同案例或原12根末全绿；不重绿色主证明/职责头。"
+  ]
+}

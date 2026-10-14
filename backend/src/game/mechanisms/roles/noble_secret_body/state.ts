@@ -5,6 +5,7 @@
  * World、原体／生命、请求、夜间和实际付款仍归 authority；本地影子不是归档 schema 或行动许可。
  */
 import { types } from "node:util";
+import type { RoleInitializationComponent } from "../contracts";
 import type { SecretBodyCause } from "./damage";
 export const NOBLE_SECRET_BODY_POLICY = "awa_noble_secret_body_v1" as const;
 export type NobleWolfPolicy = "standard" | "no_blast_no_self_knife";
@@ -111,6 +112,16 @@ export function createSecretBodyState(
     lastChoice: null,
     body: { kind: "intact" },
   };
+}
+/**
+ * 安装原身体初态；先求值赋值左侧的 privateState，再调用原工厂和惰性政策输入，最后写该槽。
+ * 政策解析仍由 profile 的原 schema 负责；解析／工厂失败不写槽，setter 失败保原异常而不补偿。
+ */
+export function installSecretBodyState(
+  role: Pick<RoleInitializationComponent, "privateState">,
+  readPolicy: () => BodyRepeatPolicy | undefined,
+): void {
+  role.privateState.secretBody = createSecretBodyState(readPolicy());
 }
 export function readSecretBodyState(value: unknown): SecretBodyState | undefined {
   const row = data(value, ["policy", "protectionRepeatPolicy", "lastChoice", "body"]);
@@ -236,6 +247,13 @@ export function createNobleState(policy: NobleWolfPolicy = "standard"): NobleSta
     lastChoice: null,
     contracts: [],
   };
+}
+/** 与身体槽保持相同的左值先读顺序；将贵族槽重设为初态，现场许可和审计影子继续归 authority，本命令不更新它们。 */
+export function installNobleState(
+  role: Pick<RoleInitializationComponent, "privateState">,
+  readPolicy: () => NobleWolfPolicy | undefined,
+): void {
+  role.privateState.noble = createNobleState(readPolicy());
 }
 export function readNobleState(value: unknown): NobleState | undefined {
   const row = data(value, ["policy", "wolfActionPolicy", "lastChoice", "contracts"]);

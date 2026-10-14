@@ -1,0 +1,67 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+      "sha256": "612b2f16df68e005da3c835a08c8a8e635ee8f4407c71496e893773913483bbf"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/profile.ts",
+      "sha256": "90e79e4aa12fa0427d58cec7abe91154355141e55f24b1d02e574fc3aa754ea0"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/state-installation.test.ts",
+      "sha256": "23bc6decdcbab30135291212e80f9dcd9e4fbbaffc34e2ffb0ea9eeb2e7ef450"
+    }
+  ],
+  "results": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+      "beforeSHA256": "cbd4bc110a4ba3049853a94b5a47d1f2c9d54a6d679f701d474707cac7244dbb",
+      "currentSHA256": "612b2f16df68e005da3c835a08c8a8e635ee8f4407c71496e893773913483bbf",
+      "wholeForwardInverse": true,
+      "exactEdits": 1,
+      "outputs": [
+        {
+          "module": 99,
+          "beforeSHA256": "e857448f5c18464827c0e3601e4ba2425b5d02be59c85a923c261befe5f1ac54",
+          "currentSHA256": "e857448f5c18464827c0e3601e4ba2425b5d02be59c85a923c261befe5f1ac54",
+          "actualSame": true
+        },
+        {
+          "module": 1,
+          "beforeSHA256": "fd782fae4991665562c9ca94ca14c5e90b0b2fa0b33aa54329c67d2e58dfa692",
+          "currentSHA256": "fd782fae4991665562c9ca94ca14c5e90b0b2fa0b33aa54329c67d2e58dfa692",
+          "actualSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/state-installation.test.ts",
+      "beforeSHA256": "aa384dde667a5adec1837a06ac88db9f8ba926b9f75d44b907c0ee99c4d24297",
+      "currentSHA256": "23bc6decdcbab30135291212e80f9dcd9e4fbbaffc34e2ffb0ea9eeb2e7ef450",
+      "wholeForwardInverse": true,
+      "exactEdits": 1,
+      "outputs": [
+        {
+          "module": 99,
+          "beforeSHA256": "9409c7556ebc85db929a9c2e581f171440ac301b4125cae74103aaeeb4db38bc",
+          "currentSHA256": "cfe52998a8b7fb2e288a48e9e55dfa699c263ae093b4aec006fa37d8b60a70b6",
+          "actualSame": false
+        },
+        {
+          "module": 1,
+          "beforeSHA256": "497fe168a31e9ba0baedd1f82d98ff85760d8045047945919a13d5335aaf73ac",
+          "currentSHA256": "50d1f94232e8cddf7311f791bf74e4acae67d58817abd4edd0241441ee089944",
+          "actualSame": false
+        }
+      ]
+    }
+  ],
+  "otherProfileSame": true,
+  "unitTwoTestDeclarationsSame": true,
+  "limits": [
+    "state仅一中文说明，两个整输出保持。",
+    "unit的currentCamp callback由错误枚举返回改为实际组件对象，两个整输出有意不同；两完整test声明和字面oracle原文保持。",
+    "首次首proof/head/source-ready与联合类型红不覆写，不重已绿业务作为本工具的一部分。"
+  ]
+}

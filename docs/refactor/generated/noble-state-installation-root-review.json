@@ -1,0 +1,50 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "4e5937fd05d426f80be17487de52e4a602936cff",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+      "sha256": "612b2f16df68e005da3c835a08c8a8e635ee8f4407c71496e893773913483bbf"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/profile.ts",
+      "sha256": "90e79e4aa12fa0427d58cec7abe91154355141e55f24b1d02e574fc3aa754ea0"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/state-installation.test.ts",
+      "sha256": "23bc6decdcbab30135291212e80f9dcd9e4fbbaffc34e2ffb0ea9eeb2e7ef450"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/noble-state-installation-scope-final.json",
+    "sha256": "d92483c86dcfeb69b30c048756bc2d90d344cf2f0dfb6f015eab10830b303ffc"
+  },
+  "document": {
+    "path": "docs/refactor/noble-state-installation.md",
+    "sha256": "2651b62156d934e0c6d132afac3a9ac9ec47a16d56c3d5eb9a6cd455f33d990f"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/noble-state-installation-evidence.json",
+    "sha256": "4641aaf1ce83dbc37859a28612fa50cb291dbbd50b2561e372a36ad2bc2c5d70"
+  },
+  "integrity": {
+    "freshSources": 3,
+    "actualGitBefore": 2,
+    "controls": 3,
+    "artifactHashes": 26,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "Root作者：actual4e593两完整Git及捕获newunit不存在、三个稳定控制、26附件和全部分阶段真实收据/共同type来源绑定。",
+    "原privateState左值→factory→惰性原parse receiver/板子政策→原setter；配置schema/default和24原state声明、Shadow/authority不搬。两真实安装body与callback接线核实，额外exports/lexical factory绑定/callback栈观察明列。",
+    "首2不同26断言通过，联合type只newunit currentCamp坏返回与Demon fixture诊断；后继Root纠正真实Component返回，仍同2声明26，state一中文精度准确说明可重设初态。两源精确桥state输出同、unit输出有意不同，原首proof/head不复。",
+    "共同12首type失败和onlyfailed2后继0准确分层；不称末12全绿、四不同案例或完整Noble/C17/P9闭合；最新用户有效中文逻辑/数据/失败说明贯彻。"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

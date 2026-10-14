@@ -11,7 +11,7 @@ import { roleName, text } from "@ai-werewolf-arena/game-text";
 import { Camp, Phase, Role, WinCondition } from "../../../../core/domain/identity";
 import type { NativeRoleContributions } from "../contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
-import { createNobleState, createSecretBodyState, readNobleState } from "./state";
+import { installNobleState, installSecretBodyState, readNobleState } from "./state";
 import { canSubmitNobleBodyChoice } from "./requests";
 import { NOBLE_CHOICE_STAGE, SECRET_BODY_STAGE } from "./night_stages";
 const noble = z.strictObject({
@@ -57,7 +57,8 @@ export const NIGHT_NOBLE_ROLE_PROFILE: NativeRoleContributions = {
     ...ORDINARY_WOLF_CONTRIBUTIONS.runtime,
     ...common.runtime,
     init: (role, ctx) => {
-      role.privateState.noble = createNobleState(
+      // 完整安装由既有数据 owner 持有；原 parse callee／receiver 与板子读取留在惰性政策输入内。
+      installNobleState(role, () =>
         noble.parse(ctx.boardConfig?.nightNoble ?? {}).wolfActionPolicy,
       );
     },
@@ -124,7 +125,8 @@ export const AWAKENED_IDIOT_ROLE_PROFILE: NativeRoleContributions = {
     ...common.runtime,
     canSelfDestruct: false,
     init: (role, ctx) => {
-      role.privateState.secretBody = createSecretBodyState(
+      // owner 读取原左值容器之后才求值此政策，不把配置提前解析成值或另存状态。
+      installSecretBodyState(role, () =>
         body.parse(ctx.boardConfig?.awakenedIdiot ?? {}).protectionRepeatPolicy,
       );
     },
