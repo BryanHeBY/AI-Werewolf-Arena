@@ -688,3 +688,5 @@
 - C45 受限观察策略中文契约：九业务叶32精确records/34sites，原候选与权限/资源分离、copied先pick后style/商人target后skill RNG、null/undefined/具名空目标、public本人查验和F01仅生产外层literaltrue就地说明。实际813ebb9d九Git/fullforward、2934typed/5082token树/3164叶及18完整emit同，9根519doc头0；同行Mist“去重”过强只头改移走抽中项，单桥513token/2emit保重复接受面，原8source与绿采样不重。证明器模板五→九/六未用写另整，a37bc6实际执行版原bytes另存、当前整理版未执行、18/2历史counts保。Root与独立九源/实际DTO/F01/handlers/末scope-doc-evidence/14附件审批准，无测试/类型/全门禁/模型，完整中文继续。见 observed-bot-chinese-contracts.md。
 
 - C45 AI审计中文契约：九源47精确记录/49处，按实际会话解释等待取消、迟到回收、对象identity去重、主与清理账本、SDK无操作close、MCP控制及context保存/query包装/payload引用。Root全源和实际Git完整forward、独立九源语义与末SHA审批准；原九源完整程序/18输出及九职责头0，末单注释精度桥保原历史，不重类型/测试/全门禁/模型。完整中文C45和资源架构继续，见 ai-audit-chinese-contracts.md。
+
+- C24/C28 秘密之身完整放逐翻牌与必需发言：三源原64行归同族同步序列，Voting保映射/实际单位/原唯一Provider await与最终结果；晚读receiver、付款→事实→必需记录→请求scope、复验→网关→再复验→提交→事实与finally保原序及失败。Root实际Git完整Voting forward、全新owner/六例/七controls与同行完整算法/三SHA审批准；新六+旧精准一共七不同成功例64断言，fixture后的四重复42另列不冒不同数量，末failed1root类型0。有效中文head和关键逻辑随批补充；原9await、新owner0，无新清理框架或额外等待。全部C24/C28/请求端口/P9继续，见 secret-body-exile-reveal.md。

@@ -2,27 +2,18 @@
  * 负责放逐投票的实际单位、候选、席位顺序及既有回合／平票／票权政策。
  * 输入为当前玩家与行动；输出为原票据和放逐结果。preVote中断不制造普通开票单位；
  * 首票前开同一单位，王子复收票与PK共用，零放逐、翻牌或映射落空仍属于已开单位。
+ * 秘密之身的付款、必需发言与关闭归本族同步序列；本流水线只在原请求点 await，不额外等待未触发路径。
  * Animal复用原token且独占计数／到期政策。警长选举和狼刀维持各自流程，不合并为通用投票器。
  */
+import { revealSecretBodyExile } from "../../mechanisms/roles/noble_secret_body/exile-reveal";
 import { openExileUnit, attachExileUnit } from "../../../core/domain/exile-unit";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import {
-  checkpointNobleBodyAuthority,
-  consumeSecretBodyExile,
-} from "../../mechanisms/roles/noble_secret_body/authority";
 import {
   beginAnimalExileUnit,
   recordAnimalBallotRound,
   sealAnimalBallots,
 } from "../../mechanisms/roles/animal_dream/authority";
 import { runAnimalPufferChoice } from "../../mechanisms/roles/animal_dream/puffer_window";
-import {
-  openNobleBodyRevealRequest,
-  nobleBodyRequestScope,
-  commitNobleBodyRevealSpeech,
-  closeNobleBodyRequest,
-} from "../../mechanisms/roles/noble_secret_body/requests";
-import { getSessionRecorder } from "../../../recording/recording_context";
 import { resolveTricksterExile } from "../../mechanisms/roles/trickster/night_frame";
 import { assertOrderPrinceOriginalCurrent } from "../../mechanisms/roles/order_prince/authority";
 import { runOrderPrinceChoice } from "../../mechanisms/roles/order_prince/voting_window";
@@ -182,7 +173,7 @@ export class VotingPipeline {
       .getAliveEntityIds()
       .filter((id) => canVoteExile(this.world, id, options.day));
 
-    // Requests run in parallel; Promise.all retains voter order for deterministic replay events.
+    // 请求并行执行；Promise.all 保留原投票者顺序，公开票据按该顺序稳定发布。
     const voteResults = await this.collectVotes(voters, requests, actionProvider, options);
     if (options.isCurrent?.() === false)
       return attachExileUnit({ summary: { tally: {}, target: null, removed: [] }, interrupted: false, removed: [] }, exileUnit);
@@ -383,69 +374,30 @@ export class VotingPipeline {
     if (mapped)
       this.events.push({ timestamp: Date.now(), type: "exile_target_mapped", payload: mapped });
     const effectiveTarget = mapped?.effectiveId ?? target;
-    if (config.nobleSecretBody) {
-      const owned = checkpointNobleBodyAuthority(this.world, true);
-      if (effectiveTarget === owned.bodyId && owned.body.body.kind === "intact") {
-        const receipt = consumeSecretBodyExile(this.world, options.day),
-          payload = { policy: "awa_noble_secret_body_v1" as const, ...receipt };
-        this.events.push({ timestamp: Date.now(), type: "secret_body_revealed", payload });
-        getSessionRecorder()?.recordRequiredLogicOp({
-          scope: "resolution",
-          op: "secret_body_revealed",
-          actorId: receipt.actorId,
-          phase: Phase.Voting,
-          status: "ok",
-          output: payload,
-        });
-        const request = requests.create({
-            actorId: receipt.actorId,
-            phase: Phase.Voting,
-            allowedTools: ["speak"],
-            stage: "awakened_idiot_reveal_speech",
-            requiresAction: true,
-            summary: { key: "request.summary.secret_body_reveal" },
-            context: { allow_fallback: false, action_failure_policy: "error" },
-          }),
-          scope = openNobleBodyRevealRequest(
-            this.world,
-            options.day,
-            request,
-            options.isCurrent ?? (() => true),
-          );
-        try {
-          const action = await actionProvider.getAction(request);
-          if (nobleBodyRequestScope(this.world, request) !== scope || action?.name !== "speak")
-            throw Error("secret_body_reveal_speech_required");
-          const valid = this.toolGateway.validateAndSanitize(this.world, receipt.actorId, action, {
-            phase: Phase.Voting,
-            day: options.day,
-            deferOperation: true,
-          });
-          if (
-            !valid.ok ||
-            !valid.sanitizedCall ||
-            nobleBodyRequestScope(this.world, request) !== scope
-          )
-            throw Error("secret_body_reveal_speech_required");
-          const spoken = commitNobleBodyRevealSpeech(this.world, scope, valid.sanitizedCall);
-          this.events.push({
-            timestamp: Date.now(),
-            type: "secret_body_reveal_speech",
-            payload: { policy: "awa_noble_secret_body_v1", ...spoken },
-          });
-          safeRecordLogicOp({
-            scope: "gateway",
-            op: "validate_tool_call",
-            actorId: receipt.actorId,
-            phase: Phase.Voting,
-            status: "ok",
-            input: { tool: "speak", args: { text: spoken.text } },
-          });
-        } finally {
-          closeNobleBodyRequest(scope);
-        }
-        return attachExileUnit({ summary: { tally, target, removed: [] }, removed: [], interrupted: false }, exileUnit);
+    const thisPipeline = this;
+    const reveal = revealSecretBodyExile(
+      {
+        get enabled() { return config.nobleSecretBody; },
+        get world() { return thisPipeline.world; },
+        get events() { return thisPipeline.events; },
+        get requests() { return requests; },
+        get toolGateway() { return thisPipeline.toolGateway; },
+        get day() { return options.day; },
+        get isCurrent() { return options.isCurrent; },
+      },
+      effectiveTarget,
+    );
+    const revealStep = reveal.next();
+    if (!revealStep.done) {
+      try {
+        // 只等待原 Provider；未触发翻牌的同步完成路径不进入此处。
+        const action = await actionProvider.getAction(revealStep.value);
+        reveal.next(action);
+      } finally {
+        // Provider 同步抛错／拒绝时驱动本族关闭；已完成或抛错的生成器不会再次关闭 scope。
+        reveal.return(false);
       }
+      return attachExileUnit({ summary: { tally, target, removed: [] }, removed: [], interrupted: false }, exileUnit);
     }
     const votedOut = mapped?.missed
       ? { removed: [] }
@@ -483,7 +435,7 @@ export class VotingPipeline {
     options: VotingPipelineOptions,
     candidates?: EntityId[],
   ): Promise<Array<CollectedVote | null>> {
-    // Capture the entire round before invoking any provider, including synchronous fakes.
+    // 在调用任何 Provider 之前捕获完整轮次；同步测试 Provider 也不能改变后续捕获的原生命。
     const voterLives = voters.map((voterId) => ({
       voterId,
       life: captureNightLife(this.world, voterId),
@@ -620,7 +572,7 @@ export class VotingPipeline {
 
     if (!current()) return null;
     if (options.strictRequired) throw new Error("order_prince_revote_action_missing_or_invalid");
-    // Exhausted requests become an explicit abstention when the gateway accepts it.
+    // 重试耗尽后仍需原网关接受，才将缺失行动修复为明确弃票。
     const repaired = this.toolGateway.validateAndSanitize(
       this.world,
       voterId,
