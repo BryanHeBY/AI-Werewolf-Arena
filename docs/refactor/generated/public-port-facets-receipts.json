@@ -1,0 +1,43 @@
+{
+  "newTests": {
+    "firstChunk": "1b902c",
+    "exitCode": 1,
+    "pass": 1,
+    "failed": 2,
+    "reason": "新预期误把输入顺序写成相反诊断顺序，domain已有稳定错误名称写错；产品未改。",
+    "firstLog": "docs/refactor/generated/public-port-facets-tests-first.log",
+    "failedOnlyChunk": "8cf80e",
+    "failedOnlyExitCode": 0,
+    "cases": 2,
+    "assertions": 7,
+    "log": "docs/refactor/generated/public-port-facets-tests-failed-only.log",
+    "distinctCases": 3,
+    "finalSourceAssertions": 8
+  },
+  "existingTests": {
+    "chunk": "fb90e6",
+    "exitCode": 0,
+    "cases": 3,
+    "assertions": 4,
+    "filtered": 34,
+    "log": "docs/refactor/generated/public-port-facets-existing-cases.log"
+  },
+  "types": {
+    "chunk": "748958",
+    "exitCode": 0,
+    "roots": 2,
+    "config": "docs/refactor/generated/public-port-facets-types-config.json",
+    "log": "docs/refactor/generated/public-port-facets-types.log"
+  },
+  "limits": [
+    "明确公开端口规则变更，非游戏行为或旧门禁二进制等价。",
+    "既有领域／浏览器／任意private与嵌套限制维持，无债务豁免、模型或全量检查。"
+  ],
+  "heads": {
+    "chunk": "6b1910",
+    "exitCode": 0,
+    "sources": 2,
+    "diagnostics": 0,
+    "chineseHeads": 2
+  }
+}

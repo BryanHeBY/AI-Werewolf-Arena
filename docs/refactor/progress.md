@@ -610,3 +610,5 @@
 - 固定27fbbc0e结构检查：后台真实3133公开Git文件／458同Git文档，Root044e7b/session75254→7da5f5实际0，0新增／393余债／1386清债，原1779债务SHA297b不变，比d589减少14原债。独立全部rawblobSHA／路径顺序／sourceDigest10bb2d79／五gates和inventory固定-current字节／393+1386完整不重复分区批准，脚本stdout原字节核同、不重gate。固定输入含O2／Night与三原状态死亡批，不含后续C48／Gun／开局设置WIP，不能借固定绿报全当前树或P9完成；见 architecture-checkpoint-27fbbc0e.md。
 
 - C22–24开局准备完整序列：11源四guard／真实窗口装配归同步generator，PM仅在原execute promise处await，保clock/current/snapshot与原失败生命周期。首async候选新增microtask由Root发现修闭；Wild重型类通用ports新冷环独立setup-ports修，原普通ports恢复control。完整10区域20879／20输出逆及9实际physicalbindings/9controls同，11CN头0；新增5distinct24分阶段、原Lonely1/147仅初阶段，11/3/3 types真实0，末同行漏第二testdriver只改callee，单1/3＋unitroot0闭，不重其它绿。Root完整源/await/权限审与独立final11SHA/首失败/证据批准，公开facet由独立C04支持；全C22–24继续，见 game-setup-sequence.md。
+
+- C04具名机制公开端口：2源规则明确根kebab-case *-ports(.ts/mts/cts)供实际setup／ability facet，原index/contracts/ports与kinds门控保持；nested、underscore、近似名、任意private/domain/browser不豁免，无旧债回写。new3distinct8assert首2新预期顺序/name错误仅failed2/7重绿，原3/4边界case once，有限2root748958实际0，2CN头6b1910零诊断。Root作者实边界审与独立2SHA/真实before/原约束/收据批准，明确policy变更非旧gate等价；固定27fbbc旧工具报告保持历史不借绿，见 public-port-facets.md。

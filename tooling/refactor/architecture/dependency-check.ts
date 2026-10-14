@@ -49,7 +49,11 @@ const featureRoot = (file: string) =>
   /^(backend\/src\/(?:game\/mechanisms\/roles|features)\/[^/]+)\//.exec(file)?.[1] ?? null;
 const publicFeatureTarget = (file: string, kinds = ["index", "contracts", "ports"]) => {
   const root = featureRoot(file);
-  return (
+  // 机制根的具名公开端口可按职责分开，避免一个 ports 同时装配查询和重型窗口导致循环。
+  // 只认 kebab-case 的根文件 *-ports；嵌套目录、下划线和任意内部实现仍不成为公共入口。
+  const facet = !!root && kinds.includes("ports") &&
+    /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*-ports\.(?:ts|mts|cts)$/.test(file.slice(root.length + 1));
+  return facet || (
     !!root &&
     kinds.some(
       (kind) =>

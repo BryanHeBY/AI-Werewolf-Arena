@@ -1,0 +1,27 @@
+{
+  "approved": true,
+  "reviewer": "root author, independent review separate",
+  "source": [
+    {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "sha256": "67f8bedac5b44fa99852e7f595b61626d4287bf7843ebfa5df6281303f9543bb"
+    },
+    {
+      "path": "tooling/refactor/public-port-facets.test.ts",
+      "sha256": "b3abfdd85ce58ddc746c5d0dc821eef57d3547b78038cb00d53f8f555cbb9ca6"
+    }
+  ],
+  "scopeSHA256": "c8248140dd03a5af4a337665a24d5c03aaf0cc3b59b7ee5ba2115ace163f7a37",
+  "intentionalPolicyChange": "只新增机制根kebab-case职责名-ports公开端口；用于同族不同依赖入口，保原通用ports与contracts/index。",
+  "review": {
+    "privateBoundary": "featureRoot严格机制根，facet以相对根完整basename正则识别，slash/underscore/nearname/implementation不匹配；kinds无ports不生效。未修改resolver或domain/browser/package权限规则。",
+    "realConsumers": "Wild开局窗口和普通狼能力装配存在实际公开facet需求，原单公共端口接重型窗口会产生返回环。公开facet只提供所属truebindings，不新增服务/register/状态。",
+    "tests": "新合成四消费层正例+五私有路径反例+domain/browser约束；首预期diagnostic顺序/name写错仅fixture修，失败两例必要重跑；原三公开/私有/嵌套case一次4断言。",
+    "verification": "有限两根类型actual748958/0，职责及CN两头6b1910/0；无整gate/对局/模型，不把固定27fbbc旧工具绿当新工具结果。"
+  },
+  "findings": [],
+  "limits": [
+    "这是门禁公开文件契约变更，不称旧运行程序等价或回写债务。",
+    "文件名不能证明API安全/清环，真实职责及依赖仍需源审。"
+  ]
+}

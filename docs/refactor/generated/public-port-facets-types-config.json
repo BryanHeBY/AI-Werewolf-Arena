@@ -1,0 +1,8 @@
+{
+  "extends": "../../../tooling/tsconfig.json",
+  "include": [
+    "../../../tooling/refactor/architecture/dependency-check.ts",
+    "../../../tooling/refactor/public-port-facets.test.ts"
+  ],
+  "exclude": []
+}

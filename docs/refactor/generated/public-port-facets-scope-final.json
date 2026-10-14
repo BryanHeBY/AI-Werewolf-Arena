@@ -1,0 +1,12 @@
+{
+  "source": [
+    {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "sha256": "67f8bedac5b44fa99852e7f595b61626d4287bf7843ebfa5df6281303f9543bb"
+    },
+    {
+      "path": "tooling/refactor/public-port-facets.test.ts",
+      "sha256": "b3abfdd85ce58ddc746c5d0dc821eef57d3547b78038cb00d53f8f555cbb9ca6"
+    }
+  ]
+}

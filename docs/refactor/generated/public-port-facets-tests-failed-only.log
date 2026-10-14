@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tooling/refactor/public-port-facets.test.ts:
+(pass) private nested and similarly named files stay private for feature and engine [10.52ms]
+(pass) public port naming does not waive the domain and browser dependency boundaries [1.11ms]
+
+ 2 pass
+ 1 filtered out
+ 0 fail
+ 7 expect() calls
+Ran 2 tests across 1 file. [280.00ms]

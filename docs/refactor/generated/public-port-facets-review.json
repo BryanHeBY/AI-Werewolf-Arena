@@ -1,0 +1,74 @@
+{
+  "status": "approved",
+  "reviewer": "/root/preflight_final_review",
+  "base": "0ba755c4dfb352a0de259f7222c6118387e09ec6",
+  "findings": [],
+  "method": "只读实际两源、原完整 dependency-check 差分、解析与全部公开／私有边界调用点、三个新测试和原日志；核真实 Git before 与最终 SHA，不运行测试、编译或门禁。",
+  "source": [
+    {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "sha256": "67f8bedac5b44fa99852e7f595b61626d4287bf7843ebfa5df6281303f9543bb"
+    },
+    {
+      "path": "tooling/refactor/public-port-facets.test.ts",
+      "sha256": "b3abfdd85ce58ddc746c5d0dc821eef57d3547b78038cb00d53f8f555cbb9ca6"
+    }
+  ],
+  "provenance": {
+    "existingSourceActualGit": 1,
+    "newSource": 1,
+    "artifactHashesChecked": 10,
+    "mismatches": 0
+  },
+  "policyReview": [
+    "唯一生产判断变化是 publicFeatureTarget：机制根的 kebab-case 前缀 *-ports.ts/mts/cts 在 kinds 含 ports 时视为公开。原 index/contracts/ports 精确匹配保留，feature 根算法未改。",
+    "正则首尾锚定，仅对根之后的完整余路径匹配；嵌套、下划线、ports-setup、assembly 和 private/index 不符合。扩展名仍使用原解析器支持集合。",
+    "feature、adapter、engine、gateway 原调用点消费同一判断；domain、browser、verifier、生产到测试、包边界和私有路径的独立拒绝仍原样执行，不因公开名称跳过。",
+    "公开 facet 是新的文件命名契约，不验证其导出算法权限或自动去环。Wildcard 文件名不引入机制特例、历史债务豁免或具体实现深导入口。"
+  ],
+  "evidenceReview": {
+    "newCasesDistinct": 3,
+    "finalSourceAssertions": 8,
+    "newFirstReceipt": "1b902c：1 pass/2 fail，三个断言尝试；真实新预期诊断顺序和已有 domain rule 名称错误。",
+    "failedOnlyReceipt": "8cf80e：原失败2 case/7 assert，1 filtered，exit0；没有重第一个已绿case。",
+    "originalReceipt": "fb90e6：3 pass/4 assert，34 filtered，exit0；原私有／公开／nested边界精准一次。",
+    "typeReceipt": "748958：2 roots actual exit0，归 Root 工具收据，不以空log证明终止。",
+    "headerReceipt": "6b1910：2源职责零诊断／中文2；实际中文说明与正则／策略一致。",
+    "noIndependentRecheck": true
+  },
+  "documents": [
+    {
+      "path": "docs/refactor/public-port-facets.md",
+      "sha256": "6a6f9a3baaf625d588cebe8279ca674bdcb4e9da0d9f27aea242f27b2aca2ba7"
+    },
+    {
+      "path": "docs/refactor/generated/public-port-facets-scope-final.json",
+      "sha256": "c8248140dd03a5af4a337665a24d5c03aaf0cc3b59b7ee5ba2115ace163f7a37"
+    },
+    {
+      "path": "docs/refactor/generated/public-port-facets-evidence.json",
+      "sha256": "3c80e08f61157280cd92d6d28a83289a7a12cb349b76098b493c71589fc70b69"
+    },
+    {
+      "path": "docs/refactor/generated/public-port-facets-receipts.json",
+      "sha256": "68ccef72a83409947378737cb098bd539a27bf6b6e946571c3dda71c0280e49a"
+    }
+  ],
+  "limits": [
+    "这是架构门禁公开路径接受政策变化，不是旧 checker 完整程序等价或游戏规则修改。",
+    "单元实际覆盖 .ts 具名端口及独立伪私有／领域／浏览器输入；.mts/.cts 的接受来自实际正则与既有解析器，不冒新增执行覆盖。",
+    "固定27fbbc checkpoint使用原已冻结工具并保持历史字节；本审不重跑固定或全仓架构检查。"
+  ],
+  "reviewToolHistory": [
+    {
+      "chunk": "7604df",
+      "exitCode": 1,
+      "kind": "审查哈希脚本自身括号语法错误；未改源或候选。"
+    },
+    {
+      "chunk": "eba717",
+      "exitCode": 0,
+      "kind": "仅修审查脚本后真实 Git/SHA 核验，零不匹配。"
+    }
+  ]
+}
