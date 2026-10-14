@@ -4,7 +4,7 @@
  * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
  * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
-import { isTimeConsortPreset } from "../verification/board-support";
+import { isTimeConsortPreset } from "../../board-support";
 import {
   readTimeConsortChoiceFact,
   readTimeConsortSkipFact,
@@ -12,7 +12,7 @@ import {
   type TimeConsortReflectionFact,
 } from "@ai-werewolf-arena/game-contract/facts/time-consort";
 import { Camp, Role, Phase } from "@ai-werewolf-arena/game-contract";
-import type { ReproductionRecord } from "./reproduction";
+import type { ReproductionRecord } from "../../../recording/reproduction";
 const choice = "time_consort_lock_committed",
   skip = "time_consort_lock_skipped",
   reflection = "time_consort_reflected";
@@ -223,6 +223,8 @@ export function validateTimeConsortRecord(record: ReproductionRecord): void {
           a.state.poisonUsedThisNight = false;
         }
     }
+    // 反射事实先成为待匹配证据；后续对应原生效果必须核源、请求号码和技能种类，
+    // 该事实不代替后续对应技能结果的核验，阶段切换／夜结算／归档尾部均不允许残留 pending。
     if (e.type === reflection) {
       const f = readTimeConsortReflectionFact(e.type, e.payload);
       check(
@@ -420,6 +422,8 @@ export function validateTimeConsortRecord(record: ReproductionRecord): void {
       check(typeof id === "number" && original.get(id)?.camp === Camp.Wolf && alive.has(id));
       alive.delete(id);
     }
+    // 锁定历史、触发日、存活与原生库存各保存事件前缀，随后按 checkpoint 的
+    // eventCount 验收；这里重建纯归档账本，不读 live World 或恢复旧许可。
     prefixes.push({ history: structuredClone(history), triggeredDay });
     living.push([...alive]);
     goodPrefixes.push(structuredClone(good));

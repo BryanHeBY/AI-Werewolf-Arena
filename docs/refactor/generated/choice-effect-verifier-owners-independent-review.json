@@ -1,0 +1,1637 @@
+{
+  "reviewer": "/root/native_presentation_finish",
+  "approved": true,
+  "baseCommit": "e601e69a0c0904785f5e95e33a1bb56153a43bfc",
+  "reviewMode": "通读三完整实际owner、本地helpers/七现行源/三原场景及证明脚本；独立actualGit全文、声明增量逆、freshSHA和实体边界读取，不执行作者proof/type/runtime/gate。",
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "sha256": "b080e9202289d9a44ecb6d306701ed7994b83ab0aefa5308b4231c844caf041b",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "sha256": "d97d54989d682a2502a2f57177d67d89c8116679f84c330f445e9f538678f942",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "sha256": "51c20883cb055162fe7d82c49ac6239642f2e5f9c3f9befbd5d723a5bf5d884a",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "38c6c6d06e9c922a92b7b6ce482554c3f9c55031caa420bf02a70eaa0c3a4f46",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+      "sha256": "815d744dbb2e6727084621ad4b1f279c4ea12115a31a9463f774b1a89beb1f46",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+      "sha256": "2a0f872310a990ae112c3fb6ccf63681f42dacd3959bb6cb7787d797cdb29aaa",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+      "sha256": "05c39477c3aa6e039ec055293126622426233d34dd7e54b0591f3c28f51a35cf",
+      "change": "modified"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/recording/order_prince_record.ts",
+      "sha256": "957decee843fcfe79b0deda72b84ace7c61b432a47bbe96269c485a7d21a1641",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/time_consort_record.ts",
+      "sha256": "863643e566a80e89dc09fa70b9c4526d0638fdde14d61d58c9571867304e823c",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/scholar_mentor_record.ts",
+      "sha256": "18612f924287da0e1d31f336fd3736059a782ad24f1d380b569e226f70d93073",
+      "expectedAbsent": true
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/choice-effect-verifier-owners-scope-final.json",
+    "sha256": "f958985499df09fadc380cdf18058140d3f6b58734768dfd2a1d04ddc9e7de7c"
+  },
+  "freshSourceChecks": [
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "sha256": "b080e9202289d9a44ecb6d306701ed7994b83ab0aefa5308b4231c844caf041b",
+      "change": "added",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "sha256": "d97d54989d682a2502a2f57177d67d89c8116679f84c330f445e9f538678f942",
+      "change": "added",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "sha256": "51c20883cb055162fe7d82c49ac6239642f2e5f9c3f9befbd5d723a5bf5d884a",
+      "change": "added",
+      "matches": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "38c6c6d06e9c922a92b7b6ce482554c3f9c55031caa420bf02a70eaa0c3a4f46",
+      "change": "modified",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+      "sha256": "815d744dbb2e6727084621ad4b1f279c4ea12115a31a9463f774b1a89beb1f46",
+      "change": "modified",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+      "sha256": "2a0f872310a990ae112c3fb6ccf63681f42dacd3959bb6cb7787d797cdb29aaa",
+      "change": "modified",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+      "sha256": "05c39477c3aa6e039ec055293126622426233d34dd7e54b0591f3c28f51a35cf",
+      "change": "modified",
+      "matches": true
+    }
+  ],
+  "actualBeforeGitChecks": [
+    {
+      "path": "backend/src/recording/order_prince_record.ts",
+      "sha256": "957decee843fcfe79b0deda72b84ace7c61b432a47bbe96269c485a7d21a1641",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/src/recording/time_consort_record.ts",
+      "sha256": "863643e566a80e89dc09fa70b9c4526d0638fdde14d61d58c9571867304e823c",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/src/recording/scholar_mentor_record.ts",
+      "sha256": "18612f924287da0e1d31f336fd3736059a782ad24f1d380b569e226f70d93073",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "0225f846a43c8d92a8c9041a23d0696aa85610510b0c85dca8561fda6da2d297",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+      "sha256": "1c047c0ac0057c2a468a4bf8d63f4f86609f179fe6b2a2e7ad8c7f02751eddf2",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+      "sha256": "9d60de3919fbfbf3d0f7a575755107686c42d678a8442588a1d6c7de036a0cca",
+      "actualGitWholeSourceSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+      "sha256": "c0ceed08676e2ed04e36c112515117e4370c946368b1d9331078c7644cb3e934",
+      "actualGitWholeSourceSame": true
+    }
+  ],
+  "completeDeclaredSourceInverses": [
+    {
+      "from": "backend/src/recording/order_prince_record.ts",
+      "to": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "currentSHA": "b080e9202289d9a44ecb6d306701ed7994b83ab0aefa5308b4231c844caf041b",
+      "exactDeclaredWholeSourceInverseSame": true,
+      "commentEditCount": 4
+    },
+    {
+      "from": "backend/src/recording/time_consort_record.ts",
+      "to": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "currentSHA": "d97d54989d682a2502a2f57177d67d89c8116679f84c330f445e9f538678f942",
+      "exactDeclaredWholeSourceInverseSame": true,
+      "commentEditCount": 2
+    },
+    {
+      "from": "backend/src/recording/scholar_mentor_record.ts",
+      "to": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "currentSHA": "51c20883cb055162fe7d82c49ac6239642f2e5f9c3f9befbd5d723a5bf5d884a",
+      "exactDeclaredWholeSourceInverseSame": true,
+      "commentEditCount": 3
+    },
+    {
+      "from": "backend/src/verification/reproduction/assembly.ts",
+      "to": "backend/src/verification/reproduction/assembly.ts",
+      "currentSHA": "38c6c6d06e9c922a92b7b6ce482554c3f9c55031caa420bf02a70eaa0c3a4f46",
+      "exactDeclaredWholeSourceInverseSame": true,
+      "commentEditCount": 0
+    },
+    {
+      "from": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+      "to": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+      "currentSHA": "815d744dbb2e6727084621ad4b1f279c4ea12115a31a9463f774b1a89beb1f46",
+      "exactDeclaredWholeSourceInverseSame": true,
+      "commentEditCount": 1
+    },
+    {
+      "from": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+      "to": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+      "currentSHA": "2a0f872310a990ae112c3fb6ccf63681f42dacd3959bb6cb7787d797cdb29aaa",
+      "exactDeclaredWholeSourceInverseSame": true,
+      "commentEditCount": 1
+    },
+    {
+      "from": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+      "to": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+      "currentSHA": "05c39477c3aa6e039ec055293126622426233d34dd7e54b0591f3c28f51a35cf",
+      "exactDeclaredWholeSourceInverseSame": true,
+      "commentEditCount": 1
+    }
+  ],
+  "deletedChecks": [
+    {
+      "path": "backend/src/recording/order_prince_record.ts",
+      "sha256": "957decee843fcfe79b0deda72b84ace7c61b432a47bbe96269c485a7d21a1641",
+      "expectedAbsent": true,
+      "absent": true,
+      "actualDeletedGitSame": true
+    },
+    {
+      "path": "backend/src/recording/time_consort_record.ts",
+      "sha256": "863643e566a80e89dc09fa70b9c4526d0638fdde14d61d58c9571867304e823c",
+      "expectedAbsent": true,
+      "absent": true,
+      "actualDeletedGitSame": true
+    },
+    {
+      "path": "backend/src/recording/scholar_mentor_record.ts",
+      "sha256": "18612f924287da0e1d31f336fd3736059a782ad24f1d380b569e226f70d93073",
+      "expectedAbsent": true,
+      "absent": true,
+      "actualDeletedGitSame": true
+    }
+  ],
+  "controlChecks": [
+    {
+      "path": "backend/src/recording/animal_dream_checkpoint.ts",
+      "sha256": "0e688a3f22ff20d800f87856bb17f68e11eaaa315be330903c8e7cf37544e374",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/recording/fragrant_pair_seer_checkpoint.ts",
+      "sha256": "0c6a3c47dc7af3b3426fb391426345c83755d2a20fc1b78ec29b3f9a66ab094f",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/recording/noble_secret_body_checkpoint.ts",
+      "sha256": "8bc3901708ab47dd0f63ae661f25d523949325f0894db39ca704de2d9db4a9be",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "d0033b8d423388999eed05aa7f627513be01854016f0db327ef8a114ec5e6c16",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/tests/unit/verification/reproduction-assembly.test.ts",
+      "sha256": "450a6c1f111f3bcd9ae21b630bdbde9699df986fcc47c1c9455635759cee8a6e",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/recording/noble_secret_body_record.ts",
+      "sha256": "723443961c55dc88a87d6d580810e62fb1cbb5993b74432adb9f496d7ff7e586",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/recording/demon_hunter_record.ts",
+      "sha256": "2ed823cad2e56b70c4e3baa3aea903e4bbd9e93f35b02d055f92b9d18ea61289",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/recording/red_moon_record.ts",
+      "sha256": "03ab03d24e593bc319f3637b3be233c2502f2fbccb27ab762be73723365000be",
+      "currentSame": true,
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/recording/mist_raven_sheriff_record.ts",
+      "sha256": "a619f9834017e99dae703c7b6ac97ff7500cf48db8b40e0d878d6c37cedda8af",
+      "currentSame": true,
+      "actualGitSame": true
+    }
+  ],
+  "artifactChecks": [
+    {
+      "path": "docs/refactor/generated/choice-effect-verifier-owners-before.json",
+      "sha256": "0a09666f0ce8566056697d734d92cacc914d0d9dbfec0030c1c59fd540ef6906",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/choice-effect-verifier-owners-edits.json",
+      "sha256": "376ce4062cd94b11388551991b050dc1f4510201a05c4ca05371ca4db294267f",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/choice-effect-verifier-owners-inventory.json",
+      "sha256": "eaed4c5129fe477245cf25c47e8b931fa59e4f232feca8d701f818b673df05f3",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/choice-effect-verifier-owners-proof.cjs",
+      "sha256": "8e9fa38147c9a4c61f77ff89637db728dcc5b5624277d0428810e5d3c40b3736",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/choice-effect-verifier-owners-proof.json",
+      "sha256": "642ac572604777c054865663311d4b7f7d2141bed5c84cb9d4c9c26074e97848",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/choice-effect-verifier-owners-heads.ts",
+      "sha256": "c39fe979264e2319f15cc3b5b6d472200998d0d588de28996158f57fab9353fe",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/choice-effect-verifier-owners-heads.json",
+      "sha256": "3236408e163a59f52072e14231b46a701cd5e6989444d9754163a92a9c065abd",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/choice-effect-verifier-owners-types-config.json",
+      "sha256": "5dc280d0c79dd273f1ac48e1efb4a53d11569435805db8fe71377a3b89dc0d81",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/choice-effect-verifier-owners-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/choice-effect-verifier-owners-receipts.json",
+      "sha256": "5b4a91c2b97e24afe9856a262fe1dcf86ad96e49559b4256ea3cc45bbe1ea111",
+      "matches": true
+    },
+    {
+      "path": "docs/refactor/generated/choice-effect-verifier-owners-scope-final.json",
+      "sha256": "f958985499df09fadc380cdf18058140d3f6b58734768dfd2a1d04ddc9e7de7c",
+      "matches": true
+    }
+  ],
+  "documentation": {
+    "path": "docs/refactor/choice-effect-verifier-owners.md",
+    "sha256": "9f080c60eeae3bd698cf125a27b470e4e859c244729dfdb47abb21782aa95771",
+    "currentSHA": "9f080c60eeae3bd698cf125a27b470e4e859c244729dfdb47abb21782aa95771"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/choice-effect-verifier-owners-evidence.json",
+    "sha256": "57d709277d86d15858124a61b4dd0cc8d993eeecdee91ff1729d3f7a0c3ab141"
+  },
+  "bindingReview": {
+    "total": 102,
+    "changedPhysicalDeclarations": 36,
+    "unchangedOrderedBindings": 66,
+    "all": [
+      {
+        "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+        "name": "isTimeConsortPreset",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "backend/src/verification/board-support/time-consort-preset.ts",
+          "name": "isTimeConsortPreset"
+        },
+        "canonicalEndpoint": {
+          "path": "backend/src/verification/board-support/time-consort-preset.ts",
+          "name": "isTimeConsortPreset"
+        },
+        "oldLocation": "backend/src/verification/board-support/time-consort-preset.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+        "name": "isTricksterPreset",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "backend/src/verification/board-support/trickster-preset.ts",
+          "name": "isTricksterPreset"
+        },
+        "canonicalEndpoint": {
+          "path": "backend/src/verification/board-support/trickster-preset.ts",
+          "name": "isTricksterPreset"
+        },
+        "oldLocation": "backend/src/verification/board-support/trickster-preset.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+        "name": "readExileMappingFact",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/facts/trickster.ts",
+          "name": "readExileMappingFact"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/facts/trickster.ts",
+          "name": "readExileMappingFact"
+        },
+        "oldLocation": "packages/game-contract/src/facts/trickster.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+        "name": "sanitizeSpeechText",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "backend/src/utils/speech_text.ts",
+          "name": "sanitizeSpeechText"
+        },
+        "canonicalEndpoint": {
+          "path": "backend/src/utils/speech_text.ts",
+          "name": "sanitizeSpeechText"
+        },
+        "oldLocation": "backend/src/utils/speech_text.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+        "name": "readOrderPrinceChoiceFact",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/facts/order-prince.ts",
+          "name": "readOrderPrinceChoiceFact"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/facts/order-prince.ts",
+          "name": "readOrderPrinceChoiceFact"
+        },
+        "oldLocation": "packages/game-contract/src/facts/order-prince.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+        "name": "readOrderPrinceRevoteFact",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/facts/order-prince.ts",
+          "name": "readOrderPrinceRevoteFact"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/facts/order-prince.ts",
+          "name": "readOrderPrinceRevoteFact"
+        },
+        "oldLocation": "packages/game-contract/src/facts/order-prince.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+        "name": "Camp",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Camp"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Camp"
+        },
+        "oldLocation": "packages/game-contract/src/identity.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+        "name": "Role",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Role"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Role"
+        },
+        "oldLocation": "packages/game-contract/src/identity.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+        "name": "Phase",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Phase"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Phase"
+        },
+        "oldLocation": "packages/game-contract/src/identity.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+        "name": "WinCondition",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "WinCondition"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "WinCondition"
+        },
+        "oldLocation": "packages/game-contract/src/identity.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+        "name": "ReproductionRecord",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "backend/src/recording/reproduction.ts",
+          "name": "ReproductionRecord"
+        },
+        "canonicalEndpoint": {
+          "path": "backend/src/recording/reproduction.ts",
+          "name": "ReproductionRecord"
+        },
+        "oldLocation": "backend/src/recording/reproduction.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+        "name": "RecordedDecision",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "backend/src/recording/reproduction.ts",
+          "name": "RecordedDecision"
+        },
+        "canonicalEndpoint": {
+          "path": "backend/src/recording/reproduction.ts",
+          "name": "RecordedDecision"
+        },
+        "oldLocation": "backend/src/recording/reproduction.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+        "name": "isTimeConsortPreset",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "backend/src/verification/board-support/time-consort-preset.ts",
+          "name": "isTimeConsortPreset"
+        },
+        "canonicalEndpoint": {
+          "path": "backend/src/verification/board-support/time-consort-preset.ts",
+          "name": "isTimeConsortPreset"
+        },
+        "oldLocation": "backend/src/verification/board-support/time-consort-preset.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+        "name": "readTimeConsortChoiceFact",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/facts/time-consort.ts",
+          "name": "readTimeConsortChoiceFact"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/facts/time-consort.ts",
+          "name": "readTimeConsortChoiceFact"
+        },
+        "oldLocation": "packages/game-contract/src/facts/time-consort.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+        "name": "readTimeConsortSkipFact",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/facts/time-consort.ts",
+          "name": "readTimeConsortSkipFact"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/facts/time-consort.ts",
+          "name": "readTimeConsortSkipFact"
+        },
+        "oldLocation": "packages/game-contract/src/facts/time-consort.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+        "name": "readTimeConsortReflectionFact",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/facts/time-consort.ts",
+          "name": "readTimeConsortReflectionFact"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/facts/time-consort.ts",
+          "name": "readTimeConsortReflectionFact"
+        },
+        "oldLocation": "packages/game-contract/src/facts/time-consort.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+        "name": "TimeConsortReflectionFact",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/facts/time-consort.ts",
+          "name": "TimeConsortReflectionFact"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/facts/time-consort.ts",
+          "name": "TimeConsortReflectionFact"
+        },
+        "oldLocation": "packages/game-contract/src/facts/time-consort.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+        "name": "Camp",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Camp"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Camp"
+        },
+        "oldLocation": "packages/game-contract/src/identity.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+        "name": "Role",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Role"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Role"
+        },
+        "oldLocation": "packages/game-contract/src/identity.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+        "name": "Phase",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Phase"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Phase"
+        },
+        "oldLocation": "packages/game-contract/src/identity.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+        "name": "ReproductionRecord",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "backend/src/recording/reproduction.ts",
+          "name": "ReproductionRecord"
+        },
+        "canonicalEndpoint": {
+          "path": "backend/src/recording/reproduction.ts",
+          "name": "ReproductionRecord"
+        },
+        "oldLocation": "backend/src/recording/reproduction.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+        "name": "isScholarMentorPreset",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "backend/src/verification/board-support/scholar-mentor-preset.ts",
+          "name": "isScholarMentorPreset"
+        },
+        "canonicalEndpoint": {
+          "path": "backend/src/verification/board-support/scholar-mentor-preset.ts",
+          "name": "isScholarMentorPreset"
+        },
+        "oldLocation": "backend/src/verification/board-support/scholar-mentor-preset.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+        "name": "readModifierChoiceFact",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+          "name": "readModifierChoiceFact"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+          "name": "readModifierChoiceFact"
+        },
+        "oldLocation": "packages/game-contract/src/facts/scholar-mentor.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+        "name": "readModifierSkipFact",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+          "name": "readModifierSkipFact"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+          "name": "readModifierSkipFact"
+        },
+        "oldLocation": "packages/game-contract/src/facts/scholar-mentor.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+        "name": "readModifierConflictFact",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+          "name": "readModifierConflictFact"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+          "name": "readModifierConflictFact"
+        },
+        "oldLocation": "packages/game-contract/src/facts/scholar-mentor.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+        "name": "readModifierBonusFact",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+          "name": "readModifierBonusFact"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+          "name": "readModifierBonusFact"
+        },
+        "oldLocation": "packages/game-contract/src/facts/scholar-mentor.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+        "name": "Camp",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Camp"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Camp"
+        },
+        "oldLocation": "packages/game-contract/src/identity.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+        "name": "Role",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Role"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Role"
+        },
+        "oldLocation": "packages/game-contract/src/identity.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+        "name": "Phase",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Phase"
+        },
+        "canonicalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Phase"
+        },
+        "oldLocation": "packages/game-contract/src/identity.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+        "name": "ReproductionRecord",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "backend/src/recording/reproduction.ts",
+          "name": "ReproductionRecord"
+        },
+        "canonicalEndpoint": {
+          "path": "backend/src/recording/reproduction.ts",
+          "name": "ReproductionRecord"
+        },
+        "oldLocation": "backend/src/recording/reproduction.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "ReproductionRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateInitialIdentityRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateWildChildRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateLonelyGirlRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateGhostBrideRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateAnimalDreamRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateFragrantPairRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateNobleSecretBodyRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateDemonHunterRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateScholarMentorRecord",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "backend/src/recording/scholar_mentor_record.ts",
+          "name": "validateScholarMentorRecord"
+        },
+        "canonicalEndpoint": {
+          "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+          "name": "validateScholarMentorRecord"
+        },
+        "oldLocation": "backend/src/recording/scholar_mentor_record.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateMistRavenRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateRadiantEclipseRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateTimeConsortRecord",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "backend/src/recording/time_consort_record.ts",
+          "name": "validateTimeConsortRecord"
+        },
+        "canonicalEndpoint": {
+          "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+          "name": "validateTimeConsortRecord"
+        },
+        "oldLocation": "backend/src/recording/time_consort_record.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateWolfSorcererRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateTricksterRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateMagicianRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "name": "validateOrderPrinceRecord",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "backend/src/recording/order_prince_record.ts",
+          "name": "validateOrderPrinceRecord"
+        },
+        "canonicalEndpoint": {
+          "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+          "name": "validateOrderPrinceRecord"
+        },
+        "oldLocation": "backend/src/recording/order_prince_record.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "expect",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_builtin_module_and_export_name"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "test",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_builtin_module_and_export_name"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "fs",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_builtin_module_and_export_name"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "bootstrapGame",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "createRandom",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "ActionRequest",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "ToolCall",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "SessionRecordManager",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "runWithSessionRecorder",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "beginGameReproduction",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "captureCheckpoint",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "currentEngineVersion",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "replayReproduction",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "parseReproductionRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "ReproductionRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "RecordedCheckpoint",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "validateOrderPrinceRecord",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "backend/src/recording/order_prince_record.ts",
+          "name": "validateOrderPrinceRecord"
+        },
+        "canonicalEndpoint": {
+          "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+          "name": "validateOrderPrinceRecord"
+        },
+        "oldLocation": "backend/src/recording/order_prince_record.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "GameEventRecorder",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "createTestTempDirectory",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "name": "orderPrinceScenario",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "validateTimeConsortRecord",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "backend/src/recording/time_consort_record.ts",
+          "name": "validateTimeConsortRecord"
+        },
+        "canonicalEndpoint": {
+          "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+          "name": "validateTimeConsortRecord"
+        },
+        "oldLocation": "backend/src/recording/time_consort_record.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "expect",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_builtin_module_and_export_name"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "test",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_builtin_module_and_export_name"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "fs",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_builtin_module_and_export_name"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "bootstrapGame",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "COMPONENT",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "Role",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "PotionType",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "createRandom",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "ActionRequest",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "ToolCall",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "RoleComponent",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "SessionRecordManager",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "runWithSessionRecorder",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "beginGameReproduction",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "captureCheckpoint",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "currentEngineVersion",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "replayReproduction",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "parseReproductionRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "ReproductionRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "RecordedCheckpoint",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "GameEventRecorder",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "createTestTempDirectory",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "timeConsortTwelveConfig",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "ObservedBot",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "ObservedPlayersActionProvider",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "name": "randomDraws",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+        "name": "validateScholarMentorRecord",
+        "modeSame": true,
+        "moved": true,
+        "actualNewPhysicalDeclaration": true,
+        "originalEndpoint": {
+          "path": "backend/src/recording/scholar_mentor_record.ts",
+          "name": "validateScholarMentorRecord"
+        },
+        "canonicalEndpoint": {
+          "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+          "name": "validateScholarMentorRecord"
+        },
+        "oldLocation": "backend/src/recording/scholar_mentor_record.ts",
+        "sameLogicalEndpoint": true
+      },
+      {
+        "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+        "name": "beforeAll",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_builtin_module_and_export_name"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+        "name": "expect",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_builtin_module_and_export_name"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+        "name": "test",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_builtin_module_and_export_name"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+        "name": "runTransportGame",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+        "name": "scholarMentorScenario",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+        "name": "parseReproductionRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      },
+      {
+        "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+        "name": "ReproductionRecord",
+        "modeSame": true,
+        "moved": false,
+        "exactModuleSpecifierSame": true,
+        "boundary": "unchanged_literal_import_binding_in_exact_entire_source"
+      }
+    ],
+    "limit": "36迁移／改route的实体端点实际到当前声明且逆迁同原地址；66未改specifier/mode由完整源逆验证，Node/Bun外部只声明同模块与导入名，不冒其不可读内部实现物理证明。"
+  },
+  "actualAllLiteralModuleForms": {
+    "scannedFiles": 1709,
+    "canonicalConsumers": [
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "form": "import",
+        "target": "backend/src/verification/reproduction/scholar-mentor/validate",
+        "retired": false,
+        "line": 17
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "form": "import",
+        "target": "backend/src/verification/reproduction/time-consort/validate",
+        "retired": false,
+        "line": 20
+      },
+      {
+        "path": "backend/src/verification/reproduction/assembly.ts",
+        "form": "import",
+        "target": "backend/src/verification/reproduction/order-prince/validate",
+        "retired": false,
+        "line": 24
+      },
+      {
+        "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+        "form": "import",
+        "target": "backend/src/verification/reproduction/time-consort/validate",
+        "retired": false,
+        "line": 4
+      },
+      {
+        "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+        "form": "import",
+        "target": "backend/src/verification/reproduction/scholar-mentor/validate",
+        "retired": false,
+        "line": 7
+      },
+      {
+        "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+        "form": "import",
+        "target": "backend/src/verification/reproduction/order-prince/validate",
+        "retired": false,
+        "line": 23
+      }
+    ],
+    "retiredReferences": [],
+    "limit": "代码目录backend/src/tests、packages、frontend/src和tooling的所有字面模块形式；不声明非字面computed module resolution。"
+  },
+  "independentSemanticReview": [
+    "完整定序王子选择/作废票/重投/PK/sheriff权重/最后目标映射/存活/按eventCount历史及原拒绝策略搬走；新增中文对应真实先验证activate再清票和PK/reset清旧目标，无生产投票窗口或资源回退。",
+    "蚀时狼妃事实先登记pending，后续原生技能查source/request/kind消耗pending，phase切换、night_resolved、尾部禁止残留；good原生库存与triggeredDay/history/alive前缀独立重建，不读World、恢复许可或混入source handles。",
+    "白昼学者／寂夜导师local create/select/resolve helpers与本地账本完整保留；优先night选择/冲突、native/bonus次序、资源和alive/good前缀未改。finalized才核原nightOperations，并用已独立算出的expected核output，不以output生成预期。",
+    "assembly原16步receiver／调用点／首异常链保，Noble audit仍原位置传Demon，三个族各一生产装配入口及一原board场景named引用；原函数名字符串unit不改。",
+    "三原场景全部固定装配/action/outcome/变异/titles/asserts/FS finally清理程序只路径／准确中文头变化；本批不运行其transport或生成新record/Golden。",
+    "recording格式仍唯一type-only owner；pure verification board-support与speech sanitizer绑定同源，无World／生产技能算法导入；原三私有recording叶明确退休，无forwardbridge。"
+  ],
+  "chinesePrecision": {
+    "findings": [],
+    "notes": [
+      "实际角色名定序王子、蚀时狼妃、白昼学者／寂夜导师准确；资源/事实/归档账本说明没有扩大 live权限。",
+      "首heads7/495为两内部comment精度前阶段，final两源hash有明示差异；完整final source inverse包含十二comments，不冒重复head/type收据。"
+    ]
+  },
+  "authorChecksReadNotReexecuted": {
+    "originalVerifierLines": [
+      {
+        "path": "backend/src/recording/order_prince_record.ts",
+        "lines": 422
+      },
+      {
+        "path": "backend/src/recording/time_consort_record.ts",
+        "lines": 512
+      },
+      {
+        "path": "backend/src/recording/scholar_mentor_record.ts",
+        "lines": 928
+      }
+    ],
+    "totalOriginalVerifierLines": 1862,
+    "completePrograms": 7,
+    "completeTypedNodes": 22366,
+    "mappedWholeOutputs": 14,
+    "commentOnlyPrograms": 6,
+    "routeSites": 14,
+    "routeEditItems": 13,
+    "comments": 12,
+    "sourceControls": 9,
+    "receipts": {
+      "sourceCapture": {
+        "toolChunk": "a57c8b",
+        "exitCode": 0,
+        "actualGitBeforeCount": 7,
+        "wholeByteControls": 9
+      },
+      "completeProgramProof": {
+        "launchChunk": "6d129c",
+        "sessionId": 22254,
+        "terminalChunk": "02f8e8",
+        "exitCode": 0,
+        "stdout": {
+          "approved": true,
+          "programs": 7,
+          "nodes": 22366,
+          "outputs": 14,
+          "bindings": 102,
+          "movedBindings": 36,
+          "deleted": 3,
+          "controls": 9
+        }
+      },
+      "finiteTypes": {
+        "launchChunk": "5f7654",
+        "sessionId": 42231,
+        "terminalChunk": "4e1187",
+        "exitCode": 0,
+        "rootCount": 7,
+        "config": "docs/refactor/generated/choice-effect-verifier-owners-types-config.json",
+        "log": "docs/refactor/generated/choice-effect-verifier-owners-types.log",
+        "logBytes": 0,
+        "limit": "成功来源为实际终端退出0，不从空日志推断；之后仅两个内部注释调整，完整final程序证明代码／类型与实际Git保真，没有重复类型。"
+      },
+      "comments": {
+        "terminalChunk": "edc9ae",
+        "exitCode": 0,
+        "rootCount": 7,
+        "actualGitDocumentationPaths": 495,
+        "diagnostics": 0,
+        "missingChineseHead": 0,
+        "limit": "首头检查捕获早于两个内部注释精度调整；真实captured source hashes保留，未更新成伪重跑收据。final完整对照包含所有12项注释。"
+      },
+      "testsRun": 0,
+      "fullGateRun": false,
+      "reason": "完整算法／调用与场景输入保持，既有同装配getter已经多次验证；按批准方案不再重复getter、Tape、场景或全量检查。"
+    },
+    "notes": [
+      "完整forEachChild child/array回调均void并独立完整字面叶读取；精确逆声明routes/comments，未恢复whole业务程序冒迁移证明。",
+      "102是bindings不是specifier sites；36实际迁移/改路线且端点nonnull，66未改原有序模式保。",
+      "类型空日志只artifact，实际42231/4e1187终态0归作者收据；本批无runtime cases，不生成新pass数字。"
+    ]
+  },
+  "findings": [],
+  "reviewHarnessNote": "首独立读器对广搜frontend/src/main.tsx错误指定TS而非TSX，尚未写report；只改读器ScriptKind，不改源、不重作者proof/type/runtime/gate。",
+  "limits": [
+    "只该10paths职责归属迁移，非整仓verification/当前全WIP/gate/I04完结。",
+    "API物理路径/加载入口/栈/sourceHash改变明示；历史指纹和跨构建拒绝不改。",
+    "未执行作者证明脚本、编译、运行或结构门禁，未编辑源码。"
+  ]
+}

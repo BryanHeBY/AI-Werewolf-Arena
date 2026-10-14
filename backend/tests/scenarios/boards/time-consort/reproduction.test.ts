@@ -1,7 +1,7 @@
 /**
- * 复现场景测试：验证时间狼妃录制与 verifier 的反射范围、资源及独立死因。输入为固定原生对局、既有政策及明确记录／库存／死亡修改；手写资源和结果 checkpoint 及伪造因果 Tape 的拒绝为预期，不调用计费模型或重写期望归档。
+ * 复现场景测试：验证蚀时狼妃录制与 verifier 的反射范围、资源及独立死因。输入为固定原生对局、既有政策及明确记录／库存／死亡修改；手写资源和结果 checkpoint 及伪造因果 Tape 的拒绝为预期，不调用计费模型或重写期望归档。
  */
-import { validateTimeConsortRecord } from "../../../../src/recording/time_consort_record";
+import { validateTimeConsortRecord } from "../../../../src/verification/reproduction/time-consort/validate";
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
 import { bootstrapGame } from "../../../../src/app/bootstrap";

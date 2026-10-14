@@ -1,0 +1,21 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "include": [],
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/order-prince/validate.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/time-consort/validate.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/scholar-mentor/validate.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/verification/reproduction/assembly.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts"
+  ],
+  "exclude": []
+}

@@ -1,0 +1,36 @@
+{
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "sha256": "b080e9202289d9a44ecb6d306701ed7994b83ab0aefa5308b4231c844caf041b"
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "sha256": "227f94cff0db3d4309a231598c9c84857f2d288cf9778b392e1c4e00c6204bc5"
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "sha256": "1401a2b2eec18ea3dc78256175554bf85e2b390ae2db218bc365464656580b7b"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "38c6c6d06e9c922a92b7b6ce482554c3f9c55031caa420bf02a70eaa0c3a4f46"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+      "sha256": "815d744dbb2e6727084621ad4b1f279c4ea12115a31a9463f774b1a89beb1f46"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+      "sha256": "2a0f872310a990ae112c3fb6ccf63681f42dacd3959bb6cb7787d797cdb29aaa"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+      "sha256": "05c39477c3aa6e039ec055293126622426233d34dd7e54b0591f3c28f51a35cf"
+    }
+  ],
+  "documentationPathCount": 495,
+  "diagnostics": [],
+  "missingChineseHead": [],
+  "limit": "职责词项与中文首头检查只覆盖当时七个候选，旧删除叶不作为存在输入；检查不修改注释，具体内容仍交独立审查。之后仅两处内部逻辑说明精度调整，文件首头不变，最终七程序完整证明另绑定 final SHA。"
+}

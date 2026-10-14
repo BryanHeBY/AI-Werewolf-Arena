@@ -1,0 +1,80 @@
+{
+  "approved": true,
+  "baseCommit": "e601e69a0c0904785f5e95e33a1bb56153a43bfc",
+  "source": [
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "sha256": "b080e9202289d9a44ecb6d306701ed7994b83ab0aefa5308b4231c844caf041b",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "sha256": "d97d54989d682a2502a2f57177d67d89c8116679f84c330f445e9f538678f942",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "sha256": "51c20883cb055162fe7d82c49ac6239642f2e5f9c3f9befbd5d723a5bf5d884a",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "sha256": "38c6c6d06e9c922a92b7b6ce482554c3f9c55031caa420bf02a70eaa0c3a4f46",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+      "sha256": "815d744dbb2e6727084621ad4b1f279c4ea12115a31a9463f774b1a89beb1f46",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+      "sha256": "2a0f872310a990ae112c3fb6ccf63681f42dacd3959bb6cb7787d797cdb29aaa",
+      "change": "modified"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+      "sha256": "05c39477c3aa6e039ec055293126622426233d34dd7e54b0591f3c28f51a35cf",
+      "change": "modified"
+    }
+  ],
+  "scopeSHA256": "f958985499df09fadc380cdf18058140d3f6b58734768dfd2a1d04ddc9e7de7c",
+  "documentation": {
+    "path": "docs/refactor/choice-effect-verifier-owners.md",
+    "sha256": "9f080c60eeae3bd698cf125a27b470e4e859c244729dfdb47abb21782aa95771"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/choice-effect-verifier-owners-evidence.json",
+    "sha256": "57d709277d86d15858124a61b4dd0cc8d993eeecdee91ff1729d3f7a0c3ab141"
+  },
+  "reviewer": "/root",
+  "method": "实际Git before、当前全文与精确声明增量、当前controls、全部artifact哈希及真实源码逻辑/中文语义审；不执行已绿测试或门禁",
+  "checks": [
+    "七实际Git原文与声明十四路线/十二comment逆全文保持，全部assert/title/fixture/body保真",
+    "九control真实Git及当前字节同，三旧叶真实删除",
+    "独立纯归档账本保留：定序清票/目标映射，蚀时pending终态，学者独立expected及eventCount历史",
+    "完整证据14raw/102binding及finite7实际终态0；本批不运行tests",
+    "中文说明核对应实际算法，不把归档账本当运行许可；保留正式角色名与机器标识"
+  ],
+  "limits": [
+    "仅冻结scope；不主张工作区全行为或P9已完成",
+    "源码加载/路径/指纹差异保留，未重写历史证据"
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/recording/order_prince_record.ts",
+      "sha256": "957decee843fcfe79b0deda72b84ace7c61b432a47bbe96269c485a7d21a1641",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/time_consort_record.ts",
+      "sha256": "863643e566a80e89dc09fa70b9c4526d0638fdde14d61d58c9571867304e823c",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/scholar_mentor_record.ts",
+      "sha256": "18612f924287da0e1d31f336fd3736059a782ad24f1d380b569e226f70d93073",
+      "expectedAbsent": true
+    }
+  ]
+}

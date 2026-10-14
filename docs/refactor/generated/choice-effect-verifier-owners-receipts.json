@@ -1,0 +1,47 @@
+{
+  "sourceCapture": {
+    "toolChunk": "a57c8b",
+    "exitCode": 0,
+    "actualGitBeforeCount": 7,
+    "wholeByteControls": 9
+  },
+  "completeProgramProof": {
+    "launchChunk": "6d129c",
+    "sessionId": 22254,
+    "terminalChunk": "02f8e8",
+    "exitCode": 0,
+    "stdout": {
+      "approved": true,
+      "programs": 7,
+      "nodes": 22366,
+      "outputs": 14,
+      "bindings": 102,
+      "movedBindings": 36,
+      "deleted": 3,
+      "controls": 9
+    }
+  },
+  "finiteTypes": {
+    "launchChunk": "5f7654",
+    "sessionId": 42231,
+    "terminalChunk": "4e1187",
+    "exitCode": 0,
+    "rootCount": 7,
+    "config": "docs/refactor/generated/choice-effect-verifier-owners-types-config.json",
+    "log": "docs/refactor/generated/choice-effect-verifier-owners-types.log",
+    "logBytes": 0,
+    "limit": "成功来源为实际终端退出0，不从空日志推断；之后仅两个内部注释调整，完整final程序证明代码／类型与实际Git保真，没有重复类型。"
+  },
+  "comments": {
+    "terminalChunk": "edc9ae",
+    "exitCode": 0,
+    "rootCount": 7,
+    "actualGitDocumentationPaths": 495,
+    "diagnostics": 0,
+    "missingChineseHead": 0,
+    "limit": "首头检查捕获早于两个内部注释精度调整；真实captured source hashes保留，未更新成伪重跑收据。final完整对照包含所有12项注释。"
+  },
+  "testsRun": 0,
+  "fullGateRun": false,
+  "reason": "完整算法／调用与场景输入保持，既有同装配getter已经多次验证；按批准方案不再重复getter、Tape、场景或全量检查。"
+}

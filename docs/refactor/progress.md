@@ -654,3 +654,5 @@
 - C45源码检查工具随边界职责补中文：3script/12精确comment，旧CLI cwd/argv默认src且只.ts、全literal import AST不执行表达式、纯旧layer表find/后缀/包名不匹配，i18n固定roots/逐段symlink/直接zhCN值与exact exception计数旁核真实源；JSDoc类型/shebang/error/原门禁政策不改。真实e601三Git/全comment逆1664JS AST/2041全非comment叶/6raw输出同，5a50c3实际0/3CNheads0，未执行原gates/tests/types。Root完整源及独立三actualGit/fresh/artifact/语义审批准；仅纯注释新sourceHash变化，不冒全C45/P9，见 source-gate-chinese-contracts.md。
 
 - I04 普通查验准入组合：完整规则表移入具名 ruleset，Seer profile 保留声明装配与同一可写表，stage 仍拥有必选行动与实际提交。三源码经 Root 与独立审查；7个上下文字段、3次目标读取、Scholar/Lucky政策、当前角色晚读取与构造fallback均保持。新3例30断言、原精准1例10断言分两次通过，有限4根类型实际终态0；重要中文说明已补齐。原验证采样后第9旧测试仅被后继Inventory改导入，完整逆保真并单列时点，不称当前并行WIP已重验。全I04和阶段验收继续，见 seer-tool-admission.md。
+
+- I10/P7 选择与后续效果归档核验归属：定序王子、蚀时狼妃、学者／导师三份完整独立算法共1,862行迁入verification/reproduction，三个recording旧叶删除，装配及三个真实场景只改导入。十路径经Root与独立全文/中文语义审；十四路线、十二准确注释完整逆回实际e601七原源，22,366节点/14原输出/102绑定与九control保持，七根有限类型实际终态0。所有样本、标题和断言不变，未重复运行测试；共享checkpoint格式、实际录制与其它核验族保原owner。全P7/P8继续，见 choice-effect-verifier-owners.md。

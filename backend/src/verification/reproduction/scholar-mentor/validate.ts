@@ -1,10 +1,10 @@
 /**
- * 负责独立审核导师锁定、奖励能力与冲突证据。输入为归档配置、决定、事实与 checkpoint；
+ * 负责独立审核白昼学者／寂夜导师选择、加成行动与冲突证据。输入为归档配置、决定、事实与 checkpoint；
  * 输出为原一致性结果或明确拒绝，原纯数据推导、迭代与第一失败顺序保持。
  * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
  * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
-import { isScholarMentorPreset } from "../verification/board-support";
+import { isScholarMentorPreset } from "../../board-support";
 import {
   readModifierChoiceFact,
   readModifierSkipFact,
@@ -12,7 +12,7 @@ import {
   readModifierBonusFact,
 } from "@ai-werewolf-arena/game-contract/facts/scholar-mentor";
 import { Camp, Role, Phase } from "@ai-werewolf-arena/game-contract";
-import type { ReproductionRecord } from "./reproduction";
+import type { ReproductionRecord } from "../../../recording/reproduction";
 function check(v: unknown): asserts v {
   if (!v) throw new Error("reproduction_scholar_mentor_invalid");
 }
@@ -535,6 +535,8 @@ export function validateScholarMentorRecord(record: ReproductionRecord): void {
           ),
       );
       if (record.finalized) {
+        // 只在 finalized 归档按顺序核对原夜伤害操作；expected 先由本地账本独立
+        // 算出，不把该操作的 output 当作预期或复用生产伤害结算。
         const op = nightOperations[nightOperationIndex++];
         check(op && op.phase === Phase.Night && op.status === "ok" && op.output);
         check(
@@ -567,6 +569,8 @@ export function validateScholarMentorRecord(record: ReproductionRecord): void {
       check(typeof id === "number" && original.get(id)?.role === Role.Wolf && alive.has(id));
       alive.delete(id);
     }
+    // 选择／资源、存活和原生能力各留同一事件位置的独立前缀；先前已重建选择
+    // 保留在对应历史前缀，checkpoint 按 eventCount 取对应历史而非最终态。
     prefixes.push(structuredClone(states));
     living.push([...alive]);
     goodPrefixes.push(structuredClone(good));

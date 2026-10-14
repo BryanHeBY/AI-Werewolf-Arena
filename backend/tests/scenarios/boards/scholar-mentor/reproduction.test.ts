@@ -1,9 +1,10 @@
 /**
- * Scenario tests first record a complete Scholar/Mentor transport game, then inspect original and deliberately forged reproduction evidence.
- * Inputs are the real recorded prefix and handwritten decision/ability/event/checkpoint mutations; literal parser/verifier rejection and native modifier accounting are the oracle.
- * The beforeAll recording is owned by the transport driver. Forged copies never replace the original record, regenerate a golden archive or turn production execution into expected rule data.
+ * 场景测试先录制完整学者／导师 transport 对局，再核对原始与明确伪造的归档证据。
+ * 输入为真实记录前缀及手写决定／能力／事件／checkpoint 变异，预期为字面 parser／verifier
+ * 拒绝与独立原生增益账本。beforeAll 录制归 transport driver，伪造副本不替换原记录、
+ * 重生 golden 或把生产执行结果当作独立规则预期。
  */
-import { validateScholarMentorRecord } from "../../../../src/recording/scholar_mentor_record";
+import { validateScholarMentorRecord } from "../../../../src/verification/reproduction/scholar-mentor/validate";
 import { beforeAll, expect, test } from "bun:test";
 import { runTransportGame } from "../../../support/drivers/transport/run-game";
 import { scholarMentorScenario } from "../../../support/features/scholar-mentor/builders/transport-plan";

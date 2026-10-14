@@ -1,8 +1,7 @@
 /**
- * Order Prince recording/verifier scenarios verify revote, invalid ballots and voter weight chronology.
- * Input: Recorded fixed native games and independently edited decision/ballot/checkpoint fragments.
- * Output and independent oracle: Handwritten winner/death/resource outcomes and strict rejection of forged void/revote weights.
- * The test never calls a billed model or rewrites expected fixture/Tape bytes.
+ * 场景测试验证定序王子录制与独立核验的重投、作废票和票权时间顺序。
+ * 输入为原固定原生对局及独立修改的决定／票型／checkpoint 片段；输出以手写胜者、死亡、
+ * 资源结果和伪造作废票／重投票权的严格拒绝作为预期，不调用计费模型或重写 Tape 字节。
  */
 import { expect, test } from "bun:test";
 import { promises as fs } from "node:fs";
@@ -21,7 +20,7 @@ import {
   type ReproductionRecord,
   type RecordedCheckpoint,
 } from "../../../../src/recording/reproduction";
-import { validateOrderPrinceRecord } from "../../../../src/recording/order_prince_record";
+import { validateOrderPrinceRecord } from "../../../../src/verification/reproduction/order-prince/validate";
 import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
 import { createTestTempDirectory } from "../../../support/drivers/temp-directories";
 import { orderPrinceScenario } from "../../../support/features/order-prince/builders/transport-plan";

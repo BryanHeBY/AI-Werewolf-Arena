@@ -14,14 +14,14 @@ import { validateAnimalDreamRecord } from "../../recording/animal_dream_record";
 import { validateFragrantPairRecord } from "../../recording/fragrant_pair_seer_record";
 import { validateNobleSecretBodyRecord } from "../../recording/noble_secret_body_record";
 import { validateDemonHunterRecord } from "../../recording/demon_hunter_record";
-import { validateScholarMentorRecord } from "../../recording/scholar_mentor_record";
+import { validateScholarMentorRecord } from "./scholar-mentor/validate";
 import { validateMistRavenRecord } from "../../recording/mist_raven_record";
 import { validateRadiantEclipseRecord } from "../../recording/radiant_eclipse_record";
-import { validateTimeConsortRecord } from "../../recording/time_consort_record";
+import { validateTimeConsortRecord } from "./time-consort/validate";
 import { validateWolfSorcererRecord } from "./wolf-sorcerer/validate";
 import { validateTricksterRecord } from "./trickster/validate";
 import { validateMagicianRecord } from "./magician/validate";
-import { validateOrderPrinceRecord } from "../../recording/order_prince_record";
+import { validateOrderPrinceRecord } from "./order-prince/validate";
 
 export function verifyReproductionMechanisms(result: ReproductionRecord): void {
   validateInitialIdentityRecord(result);

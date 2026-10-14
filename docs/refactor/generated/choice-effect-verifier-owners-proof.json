@@ -1,0 +1,991 @@
+{
+  "baseCommit": "e601e69a0c0904785f5e95e33a1bb56153a43bfc",
+  "exactSpecifierEditItems": 13,
+  "exactSpecifierSites": 14,
+  "exactCommentEditCount": 12,
+  "completePrograms": [
+    {
+      "from": "backend/src/recording/order_prince_record.ts",
+      "to": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "actualCurrentSHA": "b080e9202289d9a44ecb6d306701ed7994b83ab0aefa5308b4231c844caf041b",
+      "commentEditCount": 4,
+      "nodes": 3473,
+      "typedTreeSame": true,
+      "allNoncommentLeavesSame": true,
+      "exactFullSourceInverse": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "642ee0084285cb756430b9be8bf362677966ce49b7e60ee19114da05e203e72f",
+          "inverseSHA": "642ee0084285cb756430b9be8bf362677966ce49b7e60ee19114da05e203e72f"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "a4fa4fe83b956473b5a9b4733036bb9801e64a2c997011d6ffec83141440a16b",
+          "inverseSHA": "a4fa4fe83b956473b5a9b4733036bb9801e64a2c997011d6ffec83141440a16b"
+        }
+      ],
+      "commentOnly": {
+        "nodes": 3473,
+        "typedTreeSame": true,
+        "allNoncommentLeavesSame": true,
+        "exactFullSourceInverse": false,
+        "wholeOutputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true,
+            "beforeSHA": "642ee0084285cb756430b9be8bf362677966ce49b7e60ee19114da05e203e72f",
+            "inverseSHA": "642ee0084285cb756430b9be8bf362677966ce49b7e60ee19114da05e203e72f"
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true,
+            "beforeSHA": "a4fa4fe83b956473b5a9b4733036bb9801e64a2c997011d6ffec83141440a16b",
+            "inverseSHA": "a4fa4fe83b956473b5a9b4733036bb9801e64a2c997011d6ffec83141440a16b"
+          }
+        ],
+        "limit": "comment-only delta intentionally has exactFullSourceInverse=false; all code leaves and outputs must stay same"
+      }
+    },
+    {
+      "from": "backend/src/recording/time_consort_record.ts",
+      "to": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "actualCurrentSHA": "d97d54989d682a2502a2f57177d67d89c8116679f84c330f445e9f538678f942",
+      "commentEditCount": 2,
+      "nodes": 4164,
+      "typedTreeSame": true,
+      "allNoncommentLeavesSame": true,
+      "exactFullSourceInverse": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "363c1223c22a43b7552b53b58792d930bd934fac18c6798c79fb2863854c6ead",
+          "inverseSHA": "363c1223c22a43b7552b53b58792d930bd934fac18c6798c79fb2863854c6ead"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "84de5b8306979887b8e4881d283b082b6036f9a6a599271d7c988e9ac763dfc4",
+          "inverseSHA": "84de5b8306979887b8e4881d283b082b6036f9a6a599271d7c988e9ac763dfc4"
+        }
+      ],
+      "commentOnly": {
+        "nodes": 4164,
+        "typedTreeSame": true,
+        "allNoncommentLeavesSame": true,
+        "exactFullSourceInverse": false,
+        "wholeOutputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true,
+            "beforeSHA": "363c1223c22a43b7552b53b58792d930bd934fac18c6798c79fb2863854c6ead",
+            "inverseSHA": "363c1223c22a43b7552b53b58792d930bd934fac18c6798c79fb2863854c6ead"
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true,
+            "beforeSHA": "84de5b8306979887b8e4881d283b082b6036f9a6a599271d7c988e9ac763dfc4",
+            "inverseSHA": "84de5b8306979887b8e4881d283b082b6036f9a6a599271d7c988e9ac763dfc4"
+          }
+        ],
+        "limit": "comment-only delta intentionally has exactFullSourceInverse=false; all code leaves and outputs must stay same"
+      }
+    },
+    {
+      "from": "backend/src/recording/scholar_mentor_record.ts",
+      "to": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "actualCurrentSHA": "51c20883cb055162fe7d82c49ac6239642f2e5f9c3f9befbd5d723a5bf5d884a",
+      "commentEditCount": 3,
+      "nodes": 7247,
+      "typedTreeSame": true,
+      "allNoncommentLeavesSame": true,
+      "exactFullSourceInverse": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "d8ab7f10f40bfcb7194c73f08050e5250e716ad31ec4ab91127d74a14f722d7a",
+          "inverseSHA": "d8ab7f10f40bfcb7194c73f08050e5250e716ad31ec4ab91127d74a14f722d7a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "541faa5289f74e3a00f38c28044d594c2e81e7ee8fd4a6c8289421ab9980f2c9",
+          "inverseSHA": "541faa5289f74e3a00f38c28044d594c2e81e7ee8fd4a6c8289421ab9980f2c9"
+        }
+      ],
+      "commentOnly": {
+        "nodes": 7247,
+        "typedTreeSame": true,
+        "allNoncommentLeavesSame": true,
+        "exactFullSourceInverse": false,
+        "wholeOutputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true,
+            "beforeSHA": "d8ab7f10f40bfcb7194c73f08050e5250e716ad31ec4ab91127d74a14f722d7a",
+            "inverseSHA": "d8ab7f10f40bfcb7194c73f08050e5250e716ad31ec4ab91127d74a14f722d7a"
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true,
+            "beforeSHA": "541faa5289f74e3a00f38c28044d594c2e81e7ee8fd4a6c8289421ab9980f2c9",
+            "inverseSHA": "541faa5289f74e3a00f38c28044d594c2e81e7ee8fd4a6c8289421ab9980f2c9"
+          }
+        ],
+        "limit": "comment-only delta intentionally has exactFullSourceInverse=false; all code leaves and outputs must stay same"
+      }
+    },
+    {
+      "from": "backend/src/verification/reproduction/assembly.ts",
+      "to": "backend/src/verification/reproduction/assembly.ts",
+      "actualCurrentSHA": "38c6c6d06e9c922a92b7b6ce482554c3f9c55031caa420bf02a70eaa0c3a4f46",
+      "commentEditCount": 0,
+      "nodes": 181,
+      "typedTreeSame": true,
+      "allNoncommentLeavesSame": true,
+      "exactFullSourceInverse": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "cc4b1cff008140d7abd8a255272520fbf8d930feb200d737238bae4fd68e1f01",
+          "inverseSHA": "cc4b1cff008140d7abd8a255272520fbf8d930feb200d737238bae4fd68e1f01"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "2b2634a617518f7589b68180871e716bf96b6ec2a9fe879a638ae3c586e78c5c",
+          "inverseSHA": "2b2634a617518f7589b68180871e716bf96b6ec2a9fe879a638ae3c586e78c5c"
+        }
+      ],
+      "commentOnly": null
+    },
+    {
+      "from": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+      "to": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+      "actualCurrentSHA": "815d744dbb2e6727084621ad4b1f279c4ea12115a31a9463f774b1a89beb1f46",
+      "commentEditCount": 1,
+      "nodes": 2125,
+      "typedTreeSame": true,
+      "allNoncommentLeavesSame": true,
+      "exactFullSourceInverse": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "c744844da2f06d273126a9f1ae01da97f49f45ecc45baf678fa6898eb692691b",
+          "inverseSHA": "c744844da2f06d273126a9f1ae01da97f49f45ecc45baf678fa6898eb692691b"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "46e6dbf754cb088b461c638a36d9fb5facac021dc23b549561c8a6f9cc973694",
+          "inverseSHA": "46e6dbf754cb088b461c638a36d9fb5facac021dc23b549561c8a6f9cc973694"
+        }
+      ],
+      "commentOnly": {
+        "nodes": 2125,
+        "typedTreeSame": true,
+        "allNoncommentLeavesSame": true,
+        "exactFullSourceInverse": false,
+        "wholeOutputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true,
+            "beforeSHA": "c744844da2f06d273126a9f1ae01da97f49f45ecc45baf678fa6898eb692691b",
+            "inverseSHA": "c744844da2f06d273126a9f1ae01da97f49f45ecc45baf678fa6898eb692691b"
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true,
+            "beforeSHA": "46e6dbf754cb088b461c638a36d9fb5facac021dc23b549561c8a6f9cc973694",
+            "inverseSHA": "46e6dbf754cb088b461c638a36d9fb5facac021dc23b549561c8a6f9cc973694"
+          }
+        ],
+        "limit": "comment-only delta intentionally has exactFullSourceInverse=false; all code leaves and outputs must stay same"
+      }
+    },
+    {
+      "from": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+      "to": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+      "actualCurrentSHA": "2a0f872310a990ae112c3fb6ccf63681f42dacd3959bb6cb7787d797cdb29aaa",
+      "commentEditCount": 1,
+      "nodes": 2901,
+      "typedTreeSame": true,
+      "allNoncommentLeavesSame": true,
+      "exactFullSourceInverse": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "1f233878ca5777152a4824df1588f5f25329d7646f652c641e08727a3e6700a4",
+          "inverseSHA": "1f233878ca5777152a4824df1588f5f25329d7646f652c641e08727a3e6700a4"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "1ccb9c16fd1319be23922107072166652564ede8b41f8e5065324586d908e6b8",
+          "inverseSHA": "1ccb9c16fd1319be23922107072166652564ede8b41f8e5065324586d908e6b8"
+        }
+      ],
+      "commentOnly": {
+        "nodes": 2901,
+        "typedTreeSame": true,
+        "allNoncommentLeavesSame": true,
+        "exactFullSourceInverse": false,
+        "wholeOutputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true,
+            "beforeSHA": "1f233878ca5777152a4824df1588f5f25329d7646f652c641e08727a3e6700a4",
+            "inverseSHA": "1f233878ca5777152a4824df1588f5f25329d7646f652c641e08727a3e6700a4"
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true,
+            "beforeSHA": "1ccb9c16fd1319be23922107072166652564ede8b41f8e5065324586d908e6b8",
+            "inverseSHA": "1ccb9c16fd1319be23922107072166652564ede8b41f8e5065324586d908e6b8"
+          }
+        ],
+        "limit": "comment-only delta intentionally has exactFullSourceInverse=false; all code leaves and outputs must stay same"
+      }
+    },
+    {
+      "from": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+      "to": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+      "actualCurrentSHA": "05c39477c3aa6e039ec055293126622426233d34dd7e54b0591f3c28f51a35cf",
+      "commentEditCount": 1,
+      "nodes": 2275,
+      "typedTreeSame": true,
+      "allNoncommentLeavesSame": true,
+      "exactFullSourceInverse": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "4bf4654f295f604116031e3dc131c84af744af066a93f3fb80f43ae28d7c6224",
+          "inverseSHA": "4bf4654f295f604116031e3dc131c84af744af066a93f3fb80f43ae28d7c6224"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "63326ea34fe71a2cb6ea9b121f764c53d130a4fa8b18bb5d174ba93be27dfbbd",
+          "inverseSHA": "63326ea34fe71a2cb6ea9b121f764c53d130a4fa8b18bb5d174ba93be27dfbbd"
+        }
+      ],
+      "commentOnly": {
+        "nodes": 2275,
+        "typedTreeSame": true,
+        "allNoncommentLeavesSame": true,
+        "exactFullSourceInverse": false,
+        "wholeOutputs": [
+          {
+            "module": "ESNext",
+            "wholeRawSame": true,
+            "beforeSHA": "4bf4654f295f604116031e3dc131c84af744af066a93f3fb80f43ae28d7c6224",
+            "inverseSHA": "4bf4654f295f604116031e3dc131c84af744af066a93f3fb80f43ae28d7c6224"
+          },
+          {
+            "module": "CommonJS",
+            "wholeRawSame": true,
+            "beforeSHA": "63326ea34fe71a2cb6ea9b121f764c53d130a4fa8b18bb5d174ba93be27dfbbd",
+            "inverseSHA": "63326ea34fe71a2cb6ea9b121f764c53d130a4fa8b18bb5d174ba93be27dfbbd"
+          }
+        ],
+        "limit": "comment-only delta intentionally has exactFullSourceInverse=false; all code leaves and outputs must stay same"
+      }
+    }
+  ],
+  "allBindingCount": 102,
+  "movedBindings": [
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "name": "isTimeConsortPreset",
+      "typeOnly": false,
+      "oldFrom": "../verification/board-support",
+      "newFrom": "../../board-support",
+      "originalEndpoint": {
+        "path": "backend/src/verification/board-support/time-consort-preset.ts",
+        "name": "isTimeConsortPreset"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/board-support/time-consort-preset.ts",
+        "name": "isTimeConsortPreset"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "name": "isTricksterPreset",
+      "typeOnly": false,
+      "oldFrom": "../verification/board-support",
+      "newFrom": "../../board-support",
+      "originalEndpoint": {
+        "path": "backend/src/verification/board-support/trickster-preset.ts",
+        "name": "isTricksterPreset"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/board-support/trickster-preset.ts",
+        "name": "isTricksterPreset"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "name": "readExileMappingFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/trickster",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/trickster",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/trickster.ts",
+        "name": "readExileMappingFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/trickster.ts",
+        "name": "readExileMappingFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "name": "sanitizeSpeechText",
+      "typeOnly": false,
+      "oldFrom": "../utils/speech_text",
+      "newFrom": "../../../utils/speech_text",
+      "originalEndpoint": {
+        "path": "backend/src/utils/speech_text.ts",
+        "name": "sanitizeSpeechText"
+      },
+      "newEndpoint": {
+        "path": "backend/src/utils/speech_text.ts",
+        "name": "sanitizeSpeechText"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "name": "readOrderPrinceChoiceFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/order-prince",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/order-prince",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/order-prince.ts",
+        "name": "readOrderPrinceChoiceFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/order-prince.ts",
+        "name": "readOrderPrinceChoiceFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "name": "readOrderPrinceRevoteFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/order-prince",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/order-prince",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/order-prince.ts",
+        "name": "readOrderPrinceRevoteFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/order-prince.ts",
+        "name": "readOrderPrinceRevoteFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "name": "Camp",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Camp"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Camp"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "name": "Role",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "name": "Phase",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "name": "WinCondition",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "WinCondition"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "WinCondition"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "name": "ReproductionRecord",
+      "typeOnly": true,
+      "oldFrom": "./reproduction",
+      "newFrom": "../../../recording/reproduction",
+      "originalEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "name": "RecordedDecision",
+      "typeOnly": true,
+      "oldFrom": "./reproduction",
+      "newFrom": "../../../recording/reproduction",
+      "originalEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "RecordedDecision"
+      },
+      "newEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "RecordedDecision"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "name": "isTimeConsortPreset",
+      "typeOnly": false,
+      "oldFrom": "../verification/board-support",
+      "newFrom": "../../board-support",
+      "originalEndpoint": {
+        "path": "backend/src/verification/board-support/time-consort-preset.ts",
+        "name": "isTimeConsortPreset"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/board-support/time-consort-preset.ts",
+        "name": "isTimeConsortPreset"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "name": "readTimeConsortChoiceFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/time-consort",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/time-consort",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/time-consort.ts",
+        "name": "readTimeConsortChoiceFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/time-consort.ts",
+        "name": "readTimeConsortChoiceFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "name": "readTimeConsortSkipFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/time-consort",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/time-consort",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/time-consort.ts",
+        "name": "readTimeConsortSkipFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/time-consort.ts",
+        "name": "readTimeConsortSkipFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "name": "readTimeConsortReflectionFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/time-consort",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/time-consort",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/time-consort.ts",
+        "name": "readTimeConsortReflectionFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/time-consort.ts",
+        "name": "readTimeConsortReflectionFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "name": "TimeConsortReflectionFact",
+      "typeOnly": true,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/time-consort",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/time-consort",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/time-consort.ts",
+        "name": "TimeConsortReflectionFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/time-consort.ts",
+        "name": "TimeConsortReflectionFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "name": "Camp",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Camp"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Camp"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "name": "Role",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "name": "Phase",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "name": "ReproductionRecord",
+      "typeOnly": true,
+      "oldFrom": "./reproduction",
+      "newFrom": "../../../recording/reproduction",
+      "originalEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "name": "isScholarMentorPreset",
+      "typeOnly": false,
+      "oldFrom": "../verification/board-support",
+      "newFrom": "../../board-support",
+      "originalEndpoint": {
+        "path": "backend/src/verification/board-support/scholar-mentor-preset.ts",
+        "name": "isScholarMentorPreset"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/board-support/scholar-mentor-preset.ts",
+        "name": "isScholarMentorPreset"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "name": "readModifierChoiceFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/scholar-mentor",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/scholar-mentor",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+        "name": "readModifierChoiceFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+        "name": "readModifierChoiceFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "name": "readModifierSkipFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/scholar-mentor",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/scholar-mentor",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+        "name": "readModifierSkipFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+        "name": "readModifierSkipFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "name": "readModifierConflictFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/scholar-mentor",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/scholar-mentor",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+        "name": "readModifierConflictFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+        "name": "readModifierConflictFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "name": "readModifierBonusFact",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract/facts/scholar-mentor",
+      "newFrom": "@ai-werewolf-arena/game-contract/facts/scholar-mentor",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+        "name": "readModifierBonusFact"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/facts/scholar-mentor.ts",
+        "name": "readModifierBonusFact"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "name": "Camp",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Camp"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Camp"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "name": "Role",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Role"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "name": "Phase",
+      "typeOnly": false,
+      "oldFrom": "@ai-werewolf-arena/game-contract",
+      "newFrom": "@ai-werewolf-arena/game-contract",
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "newEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "name": "ReproductionRecord",
+      "typeOnly": true,
+      "oldFrom": "./reproduction",
+      "newFrom": "../../../recording/reproduction",
+      "originalEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/recording/reproduction.ts",
+        "name": "ReproductionRecord"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "name": "validateScholarMentorRecord",
+      "typeOnly": false,
+      "oldFrom": "../../recording/scholar_mentor_record",
+      "newFrom": "./scholar-mentor/validate",
+      "originalEndpoint": {
+        "path": "backend/src/recording/scholar_mentor_record.ts",
+        "name": "validateScholarMentorRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+        "name": "validateScholarMentorRecord"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "name": "validateTimeConsortRecord",
+      "typeOnly": false,
+      "oldFrom": "../../recording/time_consort_record",
+      "newFrom": "./time-consort/validate",
+      "originalEndpoint": {
+        "path": "backend/src/recording/time_consort_record.ts",
+        "name": "validateTimeConsortRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+        "name": "validateTimeConsortRecord"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "name": "validateOrderPrinceRecord",
+      "typeOnly": false,
+      "oldFrom": "../../recording/order_prince_record",
+      "newFrom": "./order-prince/validate",
+      "originalEndpoint": {
+        "path": "backend/src/recording/order_prince_record.ts",
+        "name": "validateOrderPrinceRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+        "name": "validateOrderPrinceRecord"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+      "name": "validateOrderPrinceRecord",
+      "typeOnly": false,
+      "oldFrom": "../../../../src/recording/order_prince_record",
+      "newFrom": "../../../../src/verification/reproduction/order-prince/validate",
+      "originalEndpoint": {
+        "path": "backend/src/recording/order_prince_record.ts",
+        "name": "validateOrderPrinceRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+        "name": "validateOrderPrinceRecord"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+      "name": "validateTimeConsortRecord",
+      "typeOnly": false,
+      "oldFrom": "../../../../src/recording/time_consort_record",
+      "newFrom": "../../../../src/verification/reproduction/time-consort/validate",
+      "originalEndpoint": {
+        "path": "backend/src/recording/time_consort_record.ts",
+        "name": "validateTimeConsortRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+        "name": "validateTimeConsortRecord"
+      },
+      "moved": true,
+      "valid": true
+    },
+    {
+      "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+      "name": "validateScholarMentorRecord",
+      "typeOnly": false,
+      "oldFrom": "../../../../src/recording/scholar_mentor_record",
+      "newFrom": "../../../../src/verification/reproduction/scholar-mentor/validate",
+      "originalEndpoint": {
+        "path": "backend/src/recording/scholar_mentor_record.ts",
+        "name": "validateScholarMentorRecord"
+      },
+      "newEndpoint": {
+        "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+        "name": "validateScholarMentorRecord"
+      },
+      "moved": true,
+      "valid": true
+    }
+  ],
+  "unchangedBindingCount": 66,
+  "unchangedOrderedBindingSHA": "68a9e6bc5730fdab6481a0689187d1b42bc11e1092e5dc94e088fd4466fd7819",
+  "allPhysicalBindingsVerified": true,
+  "deletedSources": [
+    {
+      "path": "backend/src/recording/order_prince_record.ts",
+      "sha256": "957decee843fcfe79b0deda72b84ace7c61b432a47bbe96269c485a7d21a1641",
+      "deleted": true
+    },
+    {
+      "path": "backend/src/recording/time_consort_record.ts",
+      "sha256": "863643e566a80e89dc09fa70b9c4526d0638fdde14d61d58c9571867304e823c",
+      "deleted": true
+    },
+    {
+      "path": "backend/src/recording/scholar_mentor_record.ts",
+      "sha256": "18612f924287da0e1d31f336fd3736059a782ad24f1d380b569e226f70d93073",
+      "deleted": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/recording/animal_dream_checkpoint.ts",
+      "sha256": "0e688a3f22ff20d800f87856bb17f68e11eaaa315be330903c8e7cf37544e374",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/src/recording/fragrant_pair_seer_checkpoint.ts",
+      "sha256": "0c6a3c47dc7af3b3426fb391426345c83755d2a20fc1b78ec29b3f9a66ab094f",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/src/recording/noble_secret_body_checkpoint.ts",
+      "sha256": "8bc3901708ab47dd0f63ae661f25d523949325f0894db39ca704de2d9db4a9be",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "d0033b8d423388999eed05aa7f627513be01854016f0db327ef8a114ec5e6c16",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/verification/reproduction-assembly.test.ts",
+      "sha256": "450a6c1f111f3bcd9ae21b630bdbde9699df986fcc47c1c9455635759cee8a6e",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/src/recording/noble_secret_body_record.ts",
+      "sha256": "723443961c55dc88a87d6d580810e62fb1cbb5993b74432adb9f496d7ff7e586",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/src/recording/demon_hunter_record.ts",
+      "sha256": "2ed823cad2e56b70c4e3baa3aea903e4bbd9e93f35b02d055f92b9d18ea61289",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/src/recording/red_moon_record.ts",
+      "sha256": "03ab03d24e593bc319f3637b3be233c2502f2fbccb27ab762be73723365000be",
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/src/recording/mist_raven_sheriff_record.ts",
+      "sha256": "a619f9834017e99dae703c7b6ac97ff7500cf48db8b40e0d878d6c37cedda8af",
+      "currentWholeBytesSame": true
+    }
+  ],
+  "limits": [
+    "物理owner/十四处specifier路径迁移和十二项精确中文comment；逐项逆后全部完整源相同，包括所有原标题/输入/字面/error/policies，无算法或fixture修改。",
+    "旧三个recording private叶API路径明确删除无桥；新模块路径/load/sourceHash不同，不重写历史指纹或主张跨构建重放豁免。",
+    "全部原named/type/default/namespace形态逐binding核；记录type-only仍真实唯一recording/reproduction出口，实际typeowner无value加载。"
+  ],
+  "approved": true
+}

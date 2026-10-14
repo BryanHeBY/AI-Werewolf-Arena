@@ -1,0 +1,181 @@
+{
+  "specifiers": [
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "before": "from \"../verification/board-support\"",
+      "after": "from \"../../board-support\"",
+      "count": 2,
+      "label": "original_preset_owner"
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "before": "from \"./reproduction\"",
+      "after": "from \"../../../recording/reproduction\"",
+      "count": 1,
+      "label": "canonical_record_type_only"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "before": "\"../../recording/order_prince_record\"",
+      "after": "\"./order-prince/validate\"",
+      "count": 1,
+      "label": "assembly_original_function"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+      "before": "\"../../../../src/recording/order_prince_record\"",
+      "after": "\"../../../../src/verification/reproduction/order-prince/validate\"",
+      "count": 1,
+      "label": "original_scene_function"
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "before": "from \"../verification/board-support\"",
+      "after": "from \"../../board-support\"",
+      "count": 1,
+      "label": "original_preset_owner"
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "before": "from \"./reproduction\"",
+      "after": "from \"../../../recording/reproduction\"",
+      "count": 1,
+      "label": "canonical_record_type_only"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "before": "\"../../recording/time_consort_record\"",
+      "after": "\"./time-consort/validate\"",
+      "count": 1,
+      "label": "assembly_original_function"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+      "before": "\"../../../../src/recording/time_consort_record\"",
+      "after": "\"../../../../src/verification/reproduction/time-consort/validate\"",
+      "count": 1,
+      "label": "original_scene_function"
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "before": "from \"../verification/board-support\"",
+      "after": "from \"../../board-support\"",
+      "count": 1,
+      "label": "original_preset_owner"
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "before": "from \"./reproduction\"",
+      "after": "from \"../../../recording/reproduction\"",
+      "count": 1,
+      "label": "canonical_record_type_only"
+    },
+    {
+      "path": "backend/src/verification/reproduction/assembly.ts",
+      "before": "\"../../recording/scholar_mentor_record\"",
+      "after": "\"./scholar-mentor/validate\"",
+      "count": 1,
+      "label": "assembly_original_function"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+      "before": "\"../../../../src/recording/scholar_mentor_record\"",
+      "after": "\"../../../../src/verification/reproduction/scholar-mentor/validate\"",
+      "count": 1,
+      "label": "original_scene_function"
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "before": "from \"../utils/speech_text\"",
+      "after": "from \"../../../utils/speech_text\"",
+      "count": 1,
+      "label": "same_pure_speech_sanitizer"
+    }
+  ],
+  "comments": [
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "before": "负责独立审核秩序王子选择与实际重投票",
+      "after": "负责独立审核定序王子选择与实际重投票",
+      "count": 1,
+      "label": "current_catalog_name"
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "before": "    if (e.type === resetType) {",
+      "after": "    // 只有已核对的激活选择才可重投；这里只清除独立账本的旧票与原始目标，\n    // 不开放真实投票窗口或退回实际资源。\n    if (e.type === resetType) {",
+      "count": 1,
+      "label": "discarded_ballot_prefix"
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "before": "    if (e.type === \"exile_target_mapped\") {",
+      "after": "    // 映射只消费最后 vote_summary 留下的原始目标；重投或 PK 已清除的旧目标\n    // 不能复用为放逐证据，映射也不制造另一轮投票。\n    if (e.type === \"exile_target_mapped\") {",
+      "count": 1,
+      "label": "final_target_mapping_order"
+    },
+    {
+      "path": "backend/src/verification/reproduction/order-prince/validate.ts",
+      "before": "    histories.push(structuredClone(history));",
+      "after": "    // 每事件后保存选择、存活和警徽前缀，checkpoint.eventCount 对应同一位置，\n    // 不拿完整归档的最终票权或历史代替先前状态。\n    histories.push(structuredClone(history));",
+      "count": 1,
+      "label": "original_checkpoint_prefix"
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "before": "    if (e.type === reflection) {",
+      "after": "    // 反射事实先成为待匹配证据；后续对应原生效果必须核源、请求号码和技能种类，\n    // 该事实不代替后续对应技能结果的核验，阶段切换／夜结算／归档尾部均不允许残留 pending。\n    if (e.type === reflection) {",
+      "count": 1,
+      "label": "reflection_pending_not_effect"
+    },
+    {
+      "path": "backend/src/verification/reproduction/time-consort/validate.ts",
+      "before": "    prefixes.push({ history: structuredClone(history), triggeredDay });",
+      "after": "    // 锁定历史、触发日、存活与原生库存各保存事件前缀，随后按 checkpoint 的\n    // eventCount 验收；这里重建纯归档账本，不读 live World 或恢复旧许可。\n    prefixes.push({ history: structuredClone(history), triggeredDay });",
+      "count": 1,
+      "label": "time_history_stock_prefix"
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "before": "负责独立审核导师锁定、奖励能力与冲突证据",
+      "after": "负责独立审核白昼学者／寂夜导师选择、加成行动与冲突证据",
+      "count": 1,
+      "label": "two_actual_modifier_casters"
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "before": "        const op = nightOperations[nightOperationIndex++];",
+      "after": "        // 只在 finalized 归档按顺序核对原夜伤害操作；expected 先由本地账本独立\n        // 算出，不把该操作的 output 当作预期或复用生产伤害结算。\n        const op = nightOperations[nightOperationIndex++];",
+      "count": 1,
+      "label": "independent_operation_oracle"
+    },
+    {
+      "path": "backend/src/verification/reproduction/scholar-mentor/validate.ts",
+      "before": "    prefixes.push(structuredClone(states));",
+      "after": "    // 选择／资源、存活和原生能力各留同一事件位置的独立前缀；先前已重建选择\n    // 保留在对应历史前缀，checkpoint 按 eventCount 取对应历史而非最终态。\n    prefixes.push(structuredClone(states));",
+      "count": 1,
+      "label": "modifier_paid_prefix"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/order-prince/reproduction.test.ts",
+      "before": "/**\n * Order Prince recording/verifier scenarios verify revote, invalid ballots and voter weight chronology.\n * Input: Recorded fixed native games and independently edited decision/ballot/checkpoint fragments.\n * Output and independent oracle: Handwritten winner/death/resource outcomes and strict rejection of forged void/revote weights.\n * The test never calls a billed model or rewrites expected fixture/Tape bytes.\n */",
+      "after": "/**\n * 场景测试验证定序王子录制与独立核验的重投、作废票和票权时间顺序。\n * 输入为原固定原生对局及独立修改的决定／票型／checkpoint 片段；输出以手写胜者、死亡、\n * 资源结果和伪造作废票／重投票权的严格拒绝作为预期，不调用计费模型或重写 Tape 字节。\n */",
+      "count": 1,
+      "label": "translate_order_scene_head"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/time-consort/reproduction.test.ts",
+      "before": "验证时间狼妃录制与 verifier",
+      "after": "验证蚀时狼妃录制与 verifier",
+      "count": 1,
+      "label": "time_current_catalog_name"
+    },
+    {
+      "path": "backend/tests/scenarios/boards/scholar-mentor/reproduction.test.ts",
+      "before": "/**\n * Scenario tests first record a complete Scholar/Mentor transport game, then inspect original and deliberately forged reproduction evidence.\n * Inputs are the real recorded prefix and handwritten decision/ability/event/checkpoint mutations; literal parser/verifier rejection and native modifier accounting are the oracle.\n * The beforeAll recording is owned by the transport driver. Forged copies never replace the original record, regenerate a golden archive or turn production execution into expected rule data.\n */",
+      "after": "/**\n * 场景测试先录制完整学者／导师 transport 对局，再核对原始与明确伪造的归档证据。\n * 输入为真实记录前缀及手写决定／能力／事件／checkpoint 变异，预期为字面 parser／verifier\n * 拒绝与独立原生增益账本。beforeAll 录制归 transport driver，伪造副本不替换原记录、\n * 重生 golden 或把生产执行结果当作独立规则预期。\n */",
+      "count": 1,
+      "label": "translate_modifier_scene_head"
+    }
+  ]
+}

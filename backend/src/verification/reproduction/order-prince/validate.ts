@@ -1,19 +1,19 @@
 /**
- * 负责独立审核秩序王子选择与实际重投票。输入为归档配置、决定、事实与 checkpoint；
+ * 负责独立审核定序王子选择与实际重投票。输入为归档配置、决定、事实与 checkpoint；
  * 输出为原一致性结果或明确拒绝，原纯数据推导、迭代与第一失败顺序保持。
  * 稳定枚举来自中立契约，不通过 barrel 加载 World／生产伤害；不读取或写入真实库存。
  * 结构读器仅确认数据；既有算法只消费归档，不授予游戏权限，也不替换原拒绝政策。
  */
-import { isTimeConsortPreset } from "../verification/board-support";
-import { isTricksterPreset } from "../verification/board-support";
+import { isTimeConsortPreset } from "../../board-support";
+import { isTricksterPreset } from "../../board-support";
 import { readExileMappingFact } from "@ai-werewolf-arena/game-contract/facts/trickster";
-import { sanitizeSpeechText } from "../utils/speech_text";
+import { sanitizeSpeechText } from "../../../utils/speech_text";
 import {
   readOrderPrinceChoiceFact,
   readOrderPrinceRevoteFact,
 } from "@ai-werewolf-arena/game-contract/facts/order-prince";
 import { Camp, Role, Phase, WinCondition } from "@ai-werewolf-arena/game-contract";
-import type { ReproductionRecord, RecordedDecision } from "./reproduction";
+import type { ReproductionRecord, RecordedDecision } from "../../../recording/reproduction";
 const choiceType = "order_prince_choice_committed",
   resetType = "order_prince_revote_started";
 const policy = "awa_order_prince_first_ballot_v1";
@@ -240,6 +240,8 @@ export function validateOrderPrinceRecord(record: ReproductionRecord): void {
       facts.set(day, { activate: fact.activate });
       spent = fact.activate;
     }
+    // 只有已核对的激活选择才可重投；这里只清除独立账本的旧票与原始目标，
+    // 不开放真实投票窗口或退回实际资源。
     if (e.type === resetType) {
       const fact = readOrderPrinceRevoteFact(e.type, e.payload);
       check(
@@ -306,6 +308,8 @@ export function validateOrderPrinceRecord(record: ReproductionRecord): void {
       finalTarget = null;
       rawFinalTargets.set(day, null);
     }
+    // 映射只消费最后 vote_summary 留下的原始目标；重投或 PK 已清除的旧目标
+    // 不能复用为放逐证据，映射也不制造另一轮投票。
     if (e.type === "exile_target_mapped") {
       const f = readExileMappingFact(e.type, e.payload);
       check(
@@ -348,6 +352,8 @@ export function validateOrderPrinceRecord(record: ReproductionRecord): void {
       check(typeof e.payload.targetId === "number" && original.has(e.payload.targetId));
       alive.delete(e.payload.targetId);
     }
+    // 每事件后保存选择、存活和警徽前缀，checkpoint.eventCount 对应同一位置，
+    // 不拿完整归档的最终票权或历史代替先前状态。
     histories.push(structuredClone(history));
     living.push([...alive]);
     sheriffPrefixes.push(sheriff);
