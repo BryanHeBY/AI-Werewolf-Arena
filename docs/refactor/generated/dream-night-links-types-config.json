@@ -1,0 +1,49 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "include": [],
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/stages/night/contracts.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/rulesets/night-damage-composition.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/features/awakened-hidden-wolf/paid-effects-and-death-chain.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/features/psychic/native-night-report-history.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/features/witch/two-potion-native-night.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/support/builders/night-stage-context.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/dreamer/dream-scope.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/evil-knight/night-bindings.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/evil-knight-stage.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/hidden-wolf/pack-permission-contracts.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/pure-white/pure-white-stage.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/red-moon-seal.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/role-inspection-scope.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/scholar-mentor/bonus-effect-records.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/witch/native-policy-resource-boundaries.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/witch/poison-life-scope.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/mechanisms/wolf-ballot-life-binding.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/rulesets/night-commit-admission.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/rulesets/night-damage-composition.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/rulesets/night-stage-plan.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/dreamer/night-links.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/dreamer/night-ports.ts"
+  ],
+  "exclude": []
+}

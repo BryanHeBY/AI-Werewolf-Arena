@@ -13,6 +13,7 @@ import type { NightStageHandler } from "../../stages/night/contracts";
 import { recordNightAbilityUse } from "../ability_changes";
 import { captureNightAbilityScope } from "../ability_scope";
 import { markDreamNightCommitted } from "./night_frame";
+import { dreamNightLinksForAppend } from "./night-links";
 
 export const DREAMER_NIGHT_STAGE: NightStageHandler = {
   id: "dreamer_action",
@@ -101,7 +102,8 @@ export const DREAMER_NIGHT_STAGE: NightStageHandler = {
         recordNightAbilityUse(ability, day, true);
         markDreamNightCommitted(ctx.world, day);
         applied = true;
-        ctx.state.dreamLinks.push({
+        // 历史、次数与开夜提交已经落下；先取本族同数组的 push，再构造原生命／已付效果条目。
+        dreamNightLinksForAppend(ctx.state).push({
           actorId,
           targetId,
           day,

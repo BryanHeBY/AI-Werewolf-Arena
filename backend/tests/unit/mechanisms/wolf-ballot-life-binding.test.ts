@@ -38,7 +38,6 @@ for (const mutation of ["revive", "replace_life"] as const)
       wolfVotes: {},
       wolfTarget: null,
       seerChecks: [],
-      dreamLinks: [],
     };
     await WOLF_NIGHT_STAGES[1]!.execute(
       nightStageContext({
@@ -107,7 +106,6 @@ for (const mutation of ["revive", "replace_life"] as const)
         wolfVotes: {},
         wolfTarget: null,
         seerChecks: [],
-        dreamLinks: [],
       };
     await WOLF_NIGHT_STAGES[1]!.execute(
       nightStageContext({

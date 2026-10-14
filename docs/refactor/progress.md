@@ -19,6 +19,8 @@
 
 重门禁按用户要求在固定输入后台检查点或多个大阶段汇合后执行。机械迁移以实际输入程序、引用和有限类型／边界证据验收；实际行为修改运行对应必要用例。最终 P9 同源全量验收仍需完成，不逐笔重复整局、发现或浏览器。
 
+注释语言按用户追加要求执行：自维护的文件头、重要数据结构与逻辑说明使用中文，随每个职责批次维护并审查，不中断主重构做集中占位翻译。说明须解释实际输入输出、唯一状态／资源归属、顺序与失败前缀；机器标识、错误码、授权凭据、i18n文案、原始AI文本和历史证据字节保留。最终中文覆盖与内容真实性单独核对，英文职责头通过现有形状门禁不能作为中文完成证明。
+
 ## 切片记录
 
 - C01：`144f48b`。完整公共 blob / 实际用例清单及 F01 / F02 反例；characterization 14 / 0、inventory 8 / 0、类型和格式 0；三方向独立审查，历史输入 before / after 与根执行文件 coverage 两处门槛缺口已修。
@@ -636,3 +638,5 @@
 - I10/P7诡术师完整独立验证归属：4paths完整算法/helper移verification，旧recording叶实际删，4specifier＋5精准中文comment完整逆还原实际173ef三Git；4168typednodes/6raw、49实体bindings11迁38保、5controls保持，另2comment程序/4raw同，原枪击说明纠实无算法改。原装配getter单case1/2 once、三roots71529→fbfeb5实际0、3CNheads0；Root全文/真实before/source/delete/artifact及独立1703source allforms/完整算法/中文语义审批准，无旧path桥，无tests/fixtures/golden/title/error变更；指纹差异声明，全P7/P8继续。见 trickster-verification-owner.md。
 
 - 猎魔原生女巫控制器随职责拆分补有效中文契约：1source/14精准comment，五旧英文说明中文化，Delivered/Sealed/result的运行token/普通毒nullproof/同夜封存及底层成功置frozen边界，use→mark→stock→frame→contribution/proof→delivery/fact付款前缀就地解释。真实173ef原Git与prefinal3572完整非comment节点/2raw输出同，末首头输入精度finding由Root纠正，以唯一comment逆c938和独立实际4a1c末SHA桥闭，不伪重green。Root全source forward及独立库存/原体/失败/未知独立毒审批准；无tests/types/game/gate重跑，历史指纹保，全C45继续。见 demon-potion-contract-comments.md。
+
+- I03/C17摄梦夜间关系退出通用私有载荷：35paths（33原＋新owner/facet），同状态identity唯一WeakMap同数组，producer原history/use/nightcommit→push callee→link/paid capture/字段→event次序与Frame后追加保；public仅reader，首次lazy分配/旧dreamLinks getter-prototype-clone注入API退休明确，Frame+8直接constructor9controls原byte。真实7d61三十三Git完整精确edit逆62401nodes/66mappedraw同，新owner103/facet7核；旧getter2/4一次，new3＋迁移compo3＋原scope1一次7pass/48执行assert，另paid1在preset早红且隔离690旧source405ac8同红，全部原oracle保不借红称绿，后续独立fixture修。35root首只newreadonly matcher红，型擦除twooutputs同后仅failed1root88629→49ea63实际0，35CNheads0；Root完整source/实际before/逆/controls/artifact和独立35fresh/full源码/中文/支付失败审批准。全C17/效果/P9仍续，不重7绿/全门禁。见 dream-night-links.md。

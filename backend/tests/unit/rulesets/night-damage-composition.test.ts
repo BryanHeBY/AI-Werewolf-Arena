@@ -14,7 +14,8 @@ import type {
   DamageResolutionSystem,
   DamageResolutionResult,
 } from "../../../src/core/domain/systems/damage_resolution_system";
-import { DreamNightFrame } from "../../../src/game/mechanisms/roles/dreamer/night_frame";
+import { DreamNightFrame, type DreamNightLink } from "../../../src/game/mechanisms/roles/dreamer/night_frame";
+import { installDreamNightLinks } from "../../../src/game/mechanisms/roles/dreamer/night-links";
 import {
   composeNightDamage,
   type NightDamageCompositionRuntime,
@@ -69,14 +70,12 @@ test("a resolve getter failure occurs after frame creation and before World or d
   const trace: string[] = [],
     failure = new Error("literal_resolve_getter_failure");
   const claims: Claims = {
-    get dreamLinks() {
-      trace.push("dreamLinks");
-      return [];
-    },
     get modifierDeaths(): Claims["modifierDeaths"] {
       throw new Error("input_must_not_form_before_resolve_lookup");
     },
   };
+  // 旧通用 getter 不再是关系输入；不能把其读取日志当作本族登记／Frame 构造的证明。
+  Object.defineProperty(claims, "dreamLinks", { get() { throw new Error("retired_dream_getter_must_not_read"); } });
   const solver: Solver = {
     get resolve(): DamageResolutionSystem["resolve"] {
       trace.push("resolve:get");
@@ -84,22 +83,20 @@ test("a resolve getter failure occurs after frame creation and before World or d
     },
   };
   expect(() => composeNightDamage(runtime(new World(), claims, solver, trace))).toThrow(failure);
-  expect(trace).toEqual(["owns", "claims", "dreamLinks", "config", "solver", "resolve:get"]);
+  expect(trace).toEqual(["owns", "claims", "config", "solver", "resolve:get"]);
 });
 
 test("a modifier field failure retains the resolve lookup then World and day prefix without invoking the solver", () => {
   const trace: string[] = [],
     failure = new Error("literal_modifier_field_failure");
   const claims: Claims = {
-    get dreamLinks() {
-      trace.push("dreamLinks");
-      return [];
-    },
     get modifierDeaths(): Claims["modifierDeaths"] {
       trace.push("modifierDeaths");
       throw failure;
     },
   };
+  // 旧通用 getter 不再是关系输入；不能把其读取日志当作本族登记／Frame 构造的证明。
+  Object.defineProperty(claims, "dreamLinks", { get() { throw new Error("retired_dream_getter_must_not_read"); } });
   const solver: Solver = {
     get resolve(): DamageResolutionSystem["resolve"] {
       trace.push("resolve:get");
@@ -112,7 +109,6 @@ test("a modifier field failure retains the resolve lookup then World and day pre
   expect(trace).toEqual([
     "owns",
     "claims",
-    "dreamLinks",
     "config",
     "solver",
     "resolve:get",
@@ -131,24 +127,26 @@ test("the returned frame owns the original reasons and links while solver receiv
     targetLife = createAliveComponent();
   world.addComponent(actor, COMPONENT.Alive, actorLife);
   world.addComponent(target, COMPONENT.Alive, targetLife);
+  const links: DreamNightLink[] = [
+    {
+      actorId: actor,
+      targetId: target,
+      day: 2,
+      abilityId: "literal-dream",
+      consecutive: true,
+      protectionPolicy: "netease_2026_night_immunity_v1",
+      actorLife,
+      actorVersion: aliveLifeVersion(actorLife),
+      targetLife,
+      targetVersion: aliveLifeVersion(targetLife),
+    },
+  ];
   const claims: Claims = {
-    dreamLinks: [
-      {
-        actorId: actor,
-        targetId: target,
-        day: 2,
-        abilityId: "literal-dream",
-        consecutive: true,
-        protectionPolicy: "netease_2026_night_immunity_v1",
-        actorLife,
-        actorVersion: aliveLifeVersion(actorLife),
-        targetLife,
-        targetVersion: aliveLifeVersion(targetLife),
-      },
-    ],
     poisonClaims: [],
     guardClaims: [],
   };
+  // 非空关系通过本族明确登记同一数组；后面 Frame 完成后仍向这个原数组追加。
+  installDreamNightLinks(claims, links);
   const damage: DamageResolutionResult = {
     deaths: [target],
     deathSources: { [target]: [DeathCause.Dream] },
@@ -235,7 +233,7 @@ test("the returned frame owns the original reasons and links while solver receiv
   const next = world.createEntity(),
     nextLife = createAliveComponent();
   world.addComponent(next, COMPONENT.Alive, nextLife);
-  claims.dreamLinks.push({
+  links.push({
     actorId: actor,
     targetId: next,
     day: 2,

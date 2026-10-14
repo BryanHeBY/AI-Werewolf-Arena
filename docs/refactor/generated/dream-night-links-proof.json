@@ -1,0 +1,1108 @@
+{
+  "baseCommit": "7d61cda46985ad7d6e2001d13992d7c3e310de7e",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "798dd22730bf8143736208965862e67549ba2269935884538f47fce9c7049670"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "sha256": "5f66645a70154d22680b6e473f526ab4292067aced0e120e34c9ee55a55e91c9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "sha256": "956bfdae5ad0056c3ecbeb73d46500e51c79e904c0769c9e12064fad1e59b4d4"
+    },
+    {
+      "path": "backend/src/rulesets/night-damage-composition.ts",
+      "sha256": "396a6628055e061ed38becc44d903ed51121386e962bb0aa4fe75007886c6f9c"
+    },
+    {
+      "path": "backend/tests/scenarios/features/awakened-hidden-wolf/paid-effects-and-death-chain.test.ts",
+      "sha256": "12ece62e2635c51babad44158792b3976ab35140076c6ebf2368d1db38d55dc1"
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "sha256": "297590bd9b738140dfb6508dfae24a73a155be7181cc593e3879cc5aee88ec7d"
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "sha256": "72398efe8d4e8f966d5707e206d93ae2c68b92925d2f11d5c137c6f4b9bb7a08"
+    },
+    {
+      "path": "backend/tests/scenarios/features/psychic/native-night-report-history.test.ts",
+      "sha256": "a78f9613bd85625490651b84a2588f14e839583301ac302f1b2c91e5f8cc73d3"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "sha256": "da3d2f1ce77f4729d45a2c1d263e5fd65ac4ddda88614859a64c61b8895a525d"
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/two-potion-native-night.test.ts",
+      "sha256": "79d2367431adc7cdd5fbf6b89317beb3b30bb04c8ce823ecd7561e330e857b27"
+    },
+    {
+      "path": "backend/tests/support/builders/night-stage-context.ts",
+      "sha256": "e1bc32986dad993192241b4e949db3025878886149197c6f0c5f1cf473ba84ee"
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+      "sha256": "c55bf4cb2a7c7c3e72b6b021206cad0884d9f60dcfc501eafefb8cb85e0b57f4"
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "sha256": "1814247db0a55fd51f512d24a8e960b65af6bc0b0aac172095fe1b45123a9048"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "sha256": "70cea97d7f4fbd546063de15f4d792f11c17d480617719102f27a1d97f1b0809"
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight/night-bindings.test.ts",
+      "sha256": "c2446f58b9595c6adf924e7f5fc34130a9e5136223fc47a46098f122a1072958"
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight-stage.test.ts",
+      "sha256": "d45aad1699a1b9fa64a1bfff6175f419db6269dab250cc87c88869747eb48831"
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "sha256": "e639d29cdb386f2b1656fb6d17f4ddcacb545f8ce08dab37d3c436ab5ca06f73"
+    },
+    {
+      "path": "backend/tests/unit/features/hidden-wolf/pack-permission-contracts.test.ts",
+      "sha256": "e8a1897224c64049a666beaa8a954201fb537f0123ec2426d82d332c24be4db5"
+    },
+    {
+      "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+      "sha256": "c77c32bf171b182ae3c8038e95cc176b2c505e1c90255c08118f279aed5b474f"
+    },
+    {
+      "path": "backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts",
+      "sha256": "381b4671ea2351bf768663658953b37cd5935b45b7624ec096314e3a0d015b8a"
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "sha256": "c8b04ecad90d082b9d4eb67ef8ec394c1be6dcccacbdcd170073debc74399241"
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "sha256": "0715658f194f49206c0548f61016debf79611cd60b2e4d2d16826cc59d44670b"
+    },
+    {
+      "path": "backend/tests/unit/features/pure-white/pure-white-stage.test.ts",
+      "sha256": "2ac7dff7630cfd2702ac964b69b6f79149335bde11c03439c5911eb18db23bbc"
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-seal.test.ts",
+      "sha256": "64162e218111774a7c2833cec1bbd44e91a30f9eeaf2a528b2081b57e30c3b03"
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "sha256": "7cc67ac35cb2ff17455f3809e2cfd66d049da67bf59113d4deac3f91fae987da"
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/bonus-effect-records.test.ts",
+      "sha256": "cb033e6450546d7f9840fc46099f0dc8d9835d315402f5bbd9163407603d5cb3"
+    },
+    {
+      "path": "backend/tests/unit/features/witch/native-policy-resource-boundaries.test.ts",
+      "sha256": "30a128e9b8e23d0c951b2811efe74ae7950597fda375226c00bb97d3909335fd"
+    },
+    {
+      "path": "backend/tests/unit/features/witch/poison-life-scope.test.ts",
+      "sha256": "b98c5fe7b15418a6dc7c44bad3f3eb1a88e3ada2e9a8108e006829b6e3befd33"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "sha256": "00b43fed1cec30a93af24cedda7352b29ba07ada53699093b9224459cdaa3cdb"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/wolf-ballot-life-binding.test.ts",
+      "sha256": "11e5dd04860d51b8147202860b3504838329160c97f00ccc545f66b016ed2275"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-commit-admission.test.ts",
+      "sha256": "7510280035733e30399931352009f864a769b4161b2284a3948698f6b0ff2d12"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-damage-composition.test.ts",
+      "sha256": "be730118fa49ef9fa7a80cde2d1c9c3650fb11d3726a3f5df56f9b6d3f2044de"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-stage-plan.test.ts",
+      "sha256": "c55d308bad50bdef1c798b81454595e7d7ae6521386d3a8a39d3f7d4a0e64177"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night-links.ts",
+      "sha256": "16488d838b9299803a7936d5474dd73273eecaed9f309caca595c40cef17ed28"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night-ports.ts",
+      "sha256": "d4924474b6881b8984687ed8a9bfde5e2dfa2e30c40c5b4a886492b8dece8325"
+    }
+  ],
+  "existingPrograms": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field",
+        "pipeline_lazy_owner_note"
+      ],
+      "nodes": 2799,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "d2618d73377423d544f6b0036d3dd1d685755196fecff6bf19c078085837118a",
+          "inverseSHA": "d2618d73377423d544f6b0036d3dd1d685755196fecff6bf19c078085837118a"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "b634c842f4edd493bfca0bd2440d19a12f279bddc05c7d3c44543e3779edd799",
+          "inverseSHA": "b634c842f4edd493bfca0bd2440d19a12f279bddc05c7d3c44543e3779edd799"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "producer_owner_import",
+        "producer_actual_append"
+      ],
+      "nodes": 757,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "90798cab3a143e3784116ccdc458b4b7e10c9a7487e78b2746f8a0d467f4c562",
+          "inverseSHA": "90798cab3a143e3784116ccdc458b4b7e10c9a7487e78b2746f8a0d467f4c562"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "0c8f69ec4d05fac8e7bf71a3fd08fae986f5cea9b56686ec9c903412f0fc72ff",
+          "inverseSHA": "0c8f69ec4d05fac8e7bf71a3fd08fae986f5cea9b56686ec9c903412f0fc72ff"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "retire_private_link_type_import",
+        "retire_generic_private_array",
+        "contract_chinese_owner_note"
+      ],
+      "nodes": 476,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+          "inverseSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230",
+          "inverseSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/rulesets/night-damage-composition.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "composition_public_read_import",
+        "retire_claim_view_field",
+        "composition_actual_same_array"
+      ],
+      "nodes": 377,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "d7feddebb184db985efe8df656f8fa61e879051443ecd70d2dbaa46e4fc53b12",
+          "inverseSHA": "d7feddebb184db985efe8df656f8fa61e879051443ecd70d2dbaa46e4fc53b12"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "b771fc0509f7c90cd78073baab428b2076345b866e4282246d8f4e637b7eb04a",
+          "inverseSHA": "b771fc0509f7c90cd78073baab428b2076345b866e4282246d8f4e637b7eb04a"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/awakened-hidden-wolf/paid-effects-and-death-chain.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 2648,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "69b692d2975fa4246e7e70904b2c741b0c732509dcbfb9a36f1d7f4f5456de51",
+          "inverseSHA": "69b692d2975fa4246e7e70904b2c741b0c732509dcbfb9a36f1d7f4f5456de51"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "2e7202d18c151d266510875b79e5af4875e7cc6034baf81160032c65ece1bde2",
+          "inverseSHA": "2e7202d18c151d266510875b79e5af4875e7cc6034baf81160032c65ece1bde2"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 3846,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "c9b6ebca389d4a34476e5026cc5af80fd942027ec9bec684dda969644b934ea4",
+          "inverseSHA": "c9b6ebca389d4a34476e5026cc5af80fd942027ec9bec684dda969644b934ea4"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "c31f402756adaeda6fa82c9055889e6c33cdb1124c1e961437dbb02267f3f109",
+          "inverseSHA": "c31f402756adaeda6fa82c9055889e6c33cdb1124c1e961437dbb02267f3f109"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 4766,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "c8e6c3548931c081d1b06a96b6800d138c6292d4e34e3c6221d72f6a4ebb924c",
+          "inverseSHA": "c8e6c3548931c081d1b06a96b6800d138c6292d4e34e3c6221d72f6a4ebb924c"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "0be4af743e711373e0c4560c09a6387182a88360d881d26d82d0b8acc60b321f",
+          "inverseSHA": "0be4af743e711373e0c4560c09a6387182a88360d881d26d82d0b8acc60b321f"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/psychic/native-night-report-history.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 1431,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "4f438b47dfb1b68cdf559144fdfcef5881069f0e06ab62286a2e904003b41333",
+          "inverseSHA": "4f438b47dfb1b68cdf559144fdfcef5881069f0e06ab62286a2e904003b41333"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "b143ef93d6fb240df92ef69e3ee834462f28ea43e9d20d3f41d224b821c223b9",
+          "inverseSHA": "b143ef93d6fb240df92ef69e3ee834462f28ea43e9d20d3f41d224b821c223b9"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "paid_links_owner_import",
+        "paid_links_readonly_view",
+        "paid_capture_same_array"
+      ],
+      "nodes": 1330,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "62cd7f094a62d25cfb846a062da8fd1fa21e972edcbc008f7111b8784339dd48",
+          "inverseSHA": "62cd7f094a62d25cfb846a062da8fd1fa21e972edcbc008f7111b8784339dd48"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "005f2ae1231b75d87b77696956dfc004e30d2741f76e8ddc23f5153b73db0667",
+          "inverseSHA": "005f2ae1231b75d87b77696956dfc004e30d2741f76e8ddc23f5153b73db0667"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/two-potion-native-night.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 779,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "5f128165d1c96f232e81ca6cb5db3c5eab8b7ad8bb4c85647c9e62b496278dbb",
+          "inverseSHA": "5f128165d1c96f232e81ca6cb5db3c5eab8b7ad8bb4c85647c9e62b496278dbb"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "99938bbc492a42494c261ce3aa4c2b903c5579606c9a19052804d367c65dc515",
+          "inverseSHA": "99938bbc492a42494c261ce3aa4c2b903c5579606c9a19052804d367c65dc515"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/support/builders/night-stage-context.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 272,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "b8d2e6f620f489dfc91534e2320b0331d78f94aec914217372c8d389ff646746",
+          "inverseSHA": "b8d2e6f620f489dfc91534e2320b0331d78f94aec914217372c8d389ff646746"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "8ecf6f219c7283ae92a58383c93cdd51780c97dcf5b5981d90a6f1da0bbec7ce",
+          "inverseSHA": "8ecf6f219c7283ae92a58383c93cdd51780c97dcf5b5981d90a6f1da0bbec7ce"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 3913,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "0f4dae51996bfef9f75a5ae73eed5741bc8f2d91b4e2bad5adc943d131efa8d9",
+          "inverseSHA": "0f4dae51996bfef9f75a5ae73eed5741bc8f2d91b4e2bad5adc943d131efa8d9"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "6c9066d035d5b65f4b73eff80f512f9df530ae53924d2a1da33fb6d790728725",
+          "inverseSHA": "6c9066d035d5b65f4b73eff80f512f9df530ae53924d2a1da33fb6d790728725"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 2233,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "fd12f659e32a8b7e6ec0e1d385bbeea4076a55564ffbe1141e78c3327cf91a86",
+          "inverseSHA": "fd12f659e32a8b7e6ec0e1d385bbeea4076a55564ffbe1141e78c3327cf91a86"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "d64759b248b66814d3d755c65d939fddcb71bbe8957bccf219b5de421f50b277",
+          "inverseSHA": "d64759b248b66814d3d755c65d939fddcb71bbe8957bccf219b5de421f50b277"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field",
+        "dream_scope_owner_imports",
+        "dream_scope_observation_route",
+        "dream_scope_observation_route",
+        "append_three_new_owner_test_ids",
+        "new_test_life_version_import",
+        "new_prefix_array_owned_before_fault",
+        "new_link_field_fault_same_owned_array",
+        "new_link_field_remove_empty_registration",
+        "new_test_readonly_matcher_type_erasure"
+      ],
+      "nodes": 1303,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "748b1e556726212bcdcef7d097a657591ffab45ebd2477d079aabfc9b85afb31",
+          "inverseSHA": "748b1e556726212bcdcef7d097a657591ffab45ebd2477d079aabfc9b85afb31"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "70bf140fe6fd01076e630975b6b02a984b90692a254044977a9e5daf3a534cd0",
+          "inverseSHA": "70bf140fe6fd01076e630975b6b02a984b90692a254044977a9e5daf3a534cd0"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight/night-bindings.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_inline_empty_dream_field"
+      ],
+      "nodes": 897,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "48a8881e746f4c5132646dcd912aa4aa6a9d30ee56599f199c78ac577df46c65",
+          "inverseSHA": "48a8881e746f4c5132646dcd912aa4aa6a9d30ee56599f199c78ac577df46c65"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "956cf15c6b95a8f4bd9abe8c27e0fdf503fd153de3a55a0710742b93355082e4",
+          "inverseSHA": "956cf15c6b95a8f4bd9abe8c27e0fdf503fd153de3a55a0710742b93355082e4"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight-stage.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 1362,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "3f2e32ef79fea7d967a03bc03b2e8edfc2d53c4af396898e8969c68d12498315",
+          "inverseSHA": "3f2e32ef79fea7d967a03bc03b2e8edfc2d53c4af396898e8969c68d12498315"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "cc73fe0fc3112cd5388d325d6901a730a5d2929579596815eb0eb66c317e01dd",
+          "inverseSHA": "cc73fe0fc3112cd5388d325d6901a730a5d2929579596815eb0eb66c317e01dd"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 2504,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "1800d167864f18391f7d5467a0724429e4b47d70432ea08a48b74da6b54fe470",
+          "inverseSHA": "1800d167864f18391f7d5467a0724429e4b47d70432ea08a48b74da6b54fe470"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "d1e8e379ec49f52a397c18ecc4ce14d8d63ca64c7a4867593c07716ad012e293",
+          "inverseSHA": "d1e8e379ec49f52a397c18ecc4ce14d8d63ca64c7a4867593c07716ad012e293"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/hidden-wolf/pack-permission-contracts.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 1221,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "459f894665e421fa369881a19bf57622933e6040c409a5e5751a000e60ecf326",
+          "inverseSHA": "459f894665e421fa369881a19bf57622933e6040c409a5e5751a000e60ecf326"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "871618cbc00839edcdbe727a29bed56f6e1a32212077f89cf3cd99f42cedcd95",
+          "inverseSHA": "871618cbc00839edcdbe727a29bed56f6e1a32212077f89cf3cd99f42cedcd95"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 3116,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "1ba4a3a44e54faaaaeb2fd56ce3d822f61c2d24ffa000f02063b71706da5fe85",
+          "inverseSHA": "1ba4a3a44e54faaaaeb2fd56ce3d822f61c2d24ffa000f02063b71706da5fe85"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "97da1a1b74372e748098dc360f347594e9234f617accb6d0b3f3da4d5fc3b5d8",
+          "inverseSHA": "97da1a1b74372e748098dc360f347594e9234f617accb6d0b3f3da4d5fc3b5d8"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 1986,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "9c938bb3982f209c1247d7122da6bb130099d45dc4cc96e53bc915946aa18325",
+          "inverseSHA": "9c938bb3982f209c1247d7122da6bb130099d45dc4cc96e53bc915946aa18325"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "76b7193a581e7efeb67fe5aa47032c7344f199d3bb5a526a3e2b119ef4ab7971",
+          "inverseSHA": "76b7193a581e7efeb67fe5aa47032c7344f199d3bb5a526a3e2b119ef4ab7971"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 4194,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "7ea3b00df52250dff1d7ce4b281537718a11d600c699b7ff69014d9cf6af6b83",
+          "inverseSHA": "7ea3b00df52250dff1d7ce4b281537718a11d600c699b7ff69014d9cf6af6b83"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "0bab8dd8ce45a9cab57bf866f235743c9d1bfc7faf12e6a585327321dad78480",
+          "inverseSHA": "0bab8dd8ce45a9cab57bf866f235743c9d1bfc7faf12e6a585327321dad78480"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 3270,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "0d0115594c58ae326c6afce0525196cd626f6e7dc828599383da06d7f7693553",
+          "inverseSHA": "0d0115594c58ae326c6afce0525196cd626f6e7dc828599383da06d7f7693553"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "ed9b9e6126ea57fc523c69c0a1cfeb62e51bbd87b577b2d188a4a835a8f60cab",
+          "inverseSHA": "ed9b9e6126ea57fc523c69c0a1cfeb62e51bbd87b577b2d188a4a835a8f60cab"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/pure-white/pure-white-stage.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 1746,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "bbc7f14de245eaeb05aa144a3b88a6648038723c4f5181be8fc5e9a132808a50",
+          "inverseSHA": "bbc7f14de245eaeb05aa144a3b88a6648038723c4f5181be8fc5e9a132808a50"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "c836d3bbc9f4df77aa7f2e0b9859bc5cab05e413369c1be7068fa4234cecaa6b",
+          "inverseSHA": "c836d3bbc9f4df77aa7f2e0b9859bc5cab05e413369c1be7068fa4234cecaa6b"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-seal.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 888,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "d6ffe1b0c3495354a8b63018ff2465d8ccd0ead07532f3efca99220161b7a38e",
+          "inverseSHA": "d6ffe1b0c3495354a8b63018ff2465d8ccd0ead07532f3efca99220161b7a38e"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "69943c4d3f5e73cf66f623217f370ccaab72da5764de872e497aee4d32924851",
+          "inverseSHA": "69943c4d3f5e73cf66f623217f370ccaab72da5764de872e497aee4d32924851"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 2190,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "89b3fc5a559d5449335648eb34ec5a2e128f22ebdd0e84899d0b75cc01f351b3",
+          "inverseSHA": "89b3fc5a559d5449335648eb34ec5a2e128f22ebdd0e84899d0b75cc01f351b3"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "f582bc76add428bc36de3aacf83c919d946066fe4ce4ed6e26a909097278a9bd",
+          "inverseSHA": "f582bc76add428bc36de3aacf83c919d946066fe4ce4ed6e26a909097278a9bd"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/bonus-effect-records.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_inline_empty_dream_field"
+      ],
+      "nodes": 852,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "cb7db724b84a4e68a8a2e0f1c59c799b4bb323cd97d70fb79db0cc76e771a94c",
+          "inverseSHA": "cb7db724b84a4e68a8a2e0f1c59c799b4bb323cd97d70fb79db0cc76e771a94c"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "930b8dfe5a8004c890c272caa6a5c995ec1c66cf587b50cd893709b42ed320cb",
+          "inverseSHA": "930b8dfe5a8004c890c272caa6a5c995ec1c66cf587b50cd893709b42ed320cb"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/witch/native-policy-resource-boundaries.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 1641,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "11f0babc816207d934e01ce3f572dca4e41397009f1ae271036443ed7a3d66b1",
+          "inverseSHA": "11f0babc816207d934e01ce3f572dca4e41397009f1ae271036443ed7a3d66b1"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "7b3727de3be76d88f4d54754e86d200ec1bd02d7cd0d43910595a0aeebcc82b7",
+          "inverseSHA": "7b3727de3be76d88f4d54754e86d200ec1bd02d7cd0d43910595a0aeebcc82b7"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/witch/poison-life-scope.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 1906,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "d257dac8f1796f5d8a47b38794afbd2ef0b0cf589234fcbaac4542c0e4610619",
+          "inverseSHA": "d257dac8f1796f5d8a47b38794afbd2ef0b0cf589234fcbaac4542c0e4610619"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "83d72f2e64825e0caba6ae5e9ccff5306244d8b33784b63d11fc447d4fc04e4c",
+          "inverseSHA": "83d72f2e64825e0caba6ae5e9ccff5306244d8b33784b63d11fc447d4fc04e4c"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 2932,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "54990611030e09250999effc5ea0501cef86082053da7700a75227e3d37d1288",
+          "inverseSHA": "54990611030e09250999effc5ea0501cef86082053da7700a75227e3d37d1288"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "e68df51e587467204434dd5bf80e9ae55ba9588d23427af935005f7a5fcb0d45",
+          "inverseSHA": "e68df51e587467204434dd5bf80e9ae55ba9588d23427af935005f7a5fcb0d45"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/wolf-ballot-life-binding.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field",
+        "remove_empty_dream_field"
+      ],
+      "nodes": 969,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "4c2f545caf2bab802d2068de9ee0d37066c93e0fb7f2c004f156485235a3c33d",
+          "inverseSHA": "4c2f545caf2bab802d2068de9ee0d37066c93e0fb7f2c004f156485235a3c33d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "87b39350119ea1ce4d85322d0ccb9430c800bbfe31324fb58b34d48cc51d76d7",
+          "inverseSHA": "87b39350119ea1ce4d85322d0ccb9430c800bbfe31324fb58b34d48cc51d76d7"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-commit-admission.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field"
+      ],
+      "nodes": 721,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "3cc1497e9d15d0513651de1026fa088842b9e8c13f96a0a6ad3bfc805aae9cbc",
+          "inverseSHA": "3cc1497e9d15d0513651de1026fa088842b9e8c13f96a0a6ad3bfc805aae9cbc"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "374ca5a942103f043596570b73667e6192149ebc791dd20e959477987cc1f31b",
+          "inverseSHA": "374ca5a942103f043596570b73667e6192149ebc791dd20e959477987cc1f31b"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-damage-composition.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "composition_fixture_owner_import",
+        "retire_old_getter_in_claim_literal",
+        "retire_old_getter_in_claim_literal",
+        "retired_getter_probe_resolve",
+        "retired_getter_probe_modifier",
+        "retired_getter_trace_resolve",
+        "retired_getter_trace_modifier",
+        "register_original_nonempty_fixture_array",
+        "fixture_frame_late_same_array_append"
+      ],
+      "nodes": 1051,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "455b6a9fb4ccb08690a092662d54a017239babd8c0d6ce91f99776efbc67b097",
+          "inverseSHA": "455b6a9fb4ccb08690a092662d54a017239babd8c0d6ce91f99776efbc67b097"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "c83247a3e5c351ac39cc8ac43b164897b66bcb6c7c8cc0094399cd7970161992",
+          "inverseSHA": "c83247a3e5c351ac39cc8ac43b164897b66bcb6c7c8cc0094399cd7970161992"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-stage-plan.test.ts",
+      "inverseWholeSourceBytesSame": true,
+      "edits": [
+        "remove_empty_dream_field",
+        "translate_night_plan_test_head"
+      ],
+      "nodes": 2025,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "185cff12085234dd059da1c92153442156c48dc28214298a833292a3473913d7",
+          "inverseSHA": "185cff12085234dd059da1c92153442156c48dc28214298a833292a3473913d7"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "ffc8380f5198d2a07ddea8b31518e1bef8f701d8fd365053a68b29d46b38caaf",
+          "inverseSHA": "ffc8380f5198d2a07ddea8b31518e1bef8f701d8fd365053a68b29d46b38caaf"
+        }
+      ]
+    }
+  ],
+  "newOwner": {
+    "path": "backend/src/game/mechanisms/roles/dreamer/night-links.ts",
+    "wholeLiteralProgram": {
+      "nodes": 103,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "9bd154d04f132365441dd0a474e8c2bbd10d787ef2b6b7709e80f05dfea57175",
+          "inverseSHA": "9bd154d04f132365441dd0a474e8c2bbd10d787ef2b6b7709e80f05dfea57175"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "bd099485ad9b8f7be8225f2ea6d1720d4dbb8f2fc5b027bace78d3000416d7b3",
+          "inverseSHA": "bd099485ad9b8f7be8225f2ea6d1720d4dbb8f2fc5b027bace78d3000416d7b3"
+        }
+      ]
+    },
+    "valueDependencies": 0,
+    "uniqueWeakMap": true,
+    "originalArrayReference": true,
+    "functions": 4
+  },
+  "publicNightFacet": {
+    "path": "backend/src/game/mechanisms/roles/dreamer/night-ports.ts",
+    "wholeProgram": {
+      "nodes": 7,
+      "typedTreeSame": true,
+      "fullNoncommentLeavesSame": true,
+      "wholeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA": "b83a0a3b9ad2fc4bc98ea6a3747c721ec0870deabf0ecc3de8787aaac5e13402",
+          "inverseSHA": "b83a0a3b9ad2fc4bc98ea6a3747c721ec0870deabf0ecc3de8787aaac5e13402"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA": "4a7e91c856aa5b6399a4cd0d4015ea8967e642322a2e69b5df8e62a90e77df03",
+          "inverseSHA": "4a7e91c856aa5b6399a4cd0d4015ea8967e642322a2e69b5df8e62a90e77df03"
+        }
+      ]
+    },
+    "actualEdge": "backend/src/game/mechanisms/roles/dreamer/night-links.ts",
+    "noOwnerReturnValueEdges": true
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts",
+      "sha256": "134e7e639d0d1a59e67c14ec2dd0a00f7b084b66d4443cbe15bd22f1090c034e",
+      "capturedSameGit": true,
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/radiant-eclipse/damage-snapshot.test.ts",
+      "sha256": "bc1a047c03dc2b102016f2940021009631b269a90cd70765aa5719d2e044f317",
+      "capturedSameGit": true,
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/mist-raven-pending-night.test.ts",
+      "sha256": "b6161b038a7fb29cd6d1e520649acf56a3b2944fb0c8dbade80a62ab6940a744",
+      "capturedSameGit": true,
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/radiant-eclipse-damage.test.ts",
+      "sha256": "07861f1c55d69ed29c0bdae5fbded3a3ae0569f5f2267091d924b8edfb1321fc",
+      "capturedSameGit": true,
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/historical-beauty-and-dream-policies.test.ts",
+      "sha256": "082c0072841922987b995dde77f6c111f8eb2a65f9f3a6f048faad6666abb7f3",
+      "capturedSameGit": true,
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/reception-and-death-scope.test.ts",
+      "sha256": "a95505e4ba367a65115803fedfcabd9891245ab9c0b483e87020bd82666dd5b3",
+      "capturedSameGit": true,
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/tests/unit/domain/damage-poison-evidence.test.ts",
+      "sha256": "3911cdaf501aeaf60d22ede058ab72c9f574acc0a44d9944177c5a54016870d0",
+      "capturedSameGit": true,
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/cupid/ordered-lovers-death-waves.test.ts",
+      "sha256": "5e27c7475d049cee882d403c15a4eb12f05f7a1f9c8af271aa09fcc2ee3d4de9",
+      "capturedSameGit": true,
+      "currentWholeBytesSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/wild-child/committed-death-contribution.test.ts",
+      "sha256": "e95853ba64eddbe1625ebf425e2b3904a3e3a00267cf063baf4b8fbfb5c9331c",
+      "capturedSameGit": true,
+      "currentWholeBytesSame": true
+    }
+  ],
+  "typeOnlyTestFix": {
+    "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+    "beforeSHA": "5c460fdf5b9336392a2431b160dc6cbd3ec7ef5183f89e04265c3fca3aabf1f4",
+    "sourceSHA": "70cea97d7f4fbd546063de15f4d792f11c17d480617719102f27a1d97f1b0809",
+    "nodes": 2031,
+    "typedTreeSame": false,
+    "fullNoncommentLeavesSame": false,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA": "dd4e929f2701bfd2618152951d3b97d5f0dad57578112cf18645e22e2e118c21",
+        "inverseSHA": "dd4e929f2701bfd2618152951d3b97d5f0dad57578112cf18645e22e2e118c21"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA": "4f79ccd01828ff85b39f86803295460ba494a4a828977f78b42dee9af24f27f8",
+        "inverseSHA": "4f79ccd01828ff85b39f86803295460ba494a4a828977f78b42dee9af24f27f8"
+      }
+    ]
+  },
+  "inputAPIMigrations": [
+    "29 empty literal fields retire; generic required field/import and Pick view retire without adding runtime state getter.",
+    "Producer only takes owned same array at original push lookup; history/use/commit/link fields/event body and await policies remain.",
+    "Composition original constructor stays; first argument family lookup consumes original claims identity before original shelters argument.",
+    "Two actual getter traces retire explicitly; original failure assertions and other prefix trace entries remain, old sample/log preserved.",
+    "Nonempty fixture installs same original array; all frame-after-append, death/reason/effect/receiver oracles remain.",
+    "Paid-radiant sample query captures same owned array; original actions/error/oracles unchanged, known preset-invalid case remains red in actual baseline and current."
+  ],
+  "limits": [
+    "33 whole programs are an exact declared-source inverse, not new storage/API/external property acceptance equivalence.",
+    "New owner hand literal is complete actual storage program, not a replacement of a hidden old implementation.",
+    "Local runtime dependency argument only new owner/facet; no full historical load graph, gate, model or archive compatibility claim."
+  ],
+  "approved": true
+}

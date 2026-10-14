@@ -230,13 +230,13 @@ export class NightPipeline {
         },
       });
 
+      // 摄梦关系由本族按此对象身份首次使用时建立；通用状态不保存私有数组或其镜像。
       const stageState: NightStageState = {
         wolfChatOrder: [],
         endedWolves: new Set<EntityId>(),
         wolfVotes: {},
         wolfTarget: null,
         seerChecks: [],
-        dreamLinks: [],
         poisonClaims: [],
         guardClaims: [],
         merchantBacklashes: [],

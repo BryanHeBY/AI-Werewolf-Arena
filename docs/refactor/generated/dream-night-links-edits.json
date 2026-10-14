@@ -1,0 +1,426 @@
+{
+  "baseCommit": "7d61cda46985ad7d6e2001d13992d7c3e310de7e",
+  "edits": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "label": "remove_empty_dream_field",
+      "start": 9857,
+      "old": "        dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/scenarios/features/awakened-hidden-wolf/paid-effects-and-death-chain.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 4588,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/scenarios/features/gargoyle/inspection-inheritance-and-death-chains.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 3682,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/scenarios/features/mechanical-wolf/native-skill-night-lifecycle.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 7216,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/scenarios/features/psychic/native-night-report-history.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 3027,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/scenarios/features/witch/two-potion-native-night.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 3092,
+      "old": "          dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/support/builders/night-stage-context.ts",
+      "label": "remove_empty_dream_field",
+      "start": 2431,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/awakened-hidden-wolf/native-skill-scope-and-activation.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 5179,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/black-market-merchant/trade-and-resource-boundaries.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 4400,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 3737,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight/night-bindings.test.ts",
+      "label": "remove_inline_empty_dream_field",
+      "start": 1447,
+      "old": ", dreamLinks: []",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/evil-knight-stage.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 4419,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/gargoyle/inspection-instance-boundaries.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 3399,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/hidden-wolf/pack-permission-contracts.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 4653,
+      "old": "          dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/hybrid/affiliation-authority.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 5679,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/miracle-merchant/trade-and-backlash-authority.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 4434,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/mirror-girl/inspection-resource-boundaries.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 4781,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/psychic/inspection-policy-boundaries.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 3617,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/pure-white/pure-white-stage.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 3855,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/red-moon-seal.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 3326,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/role-inspection-scope.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 3221,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/scholar-mentor/bonus-effect-records.test.ts",
+      "label": "remove_inline_empty_dream_field",
+      "start": 1227,
+      "old": ", dreamLinks: []",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/witch/native-policy-resource-boundaries.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 3291,
+      "old": "          dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/features/witch/poison-life-scope.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 3099,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/lucky-ability-resource-boundaries.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 5027,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/wolf-ballot-life-binding.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 1898,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/wolf-ballot-life-binding.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 4442,
+      "old": "        dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-commit-admission.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 3073,
+      "old": "    dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-stage-plan.test.ts",
+      "label": "remove_empty_dream_field",
+      "start": 2838,
+      "old": "      dreamLinks: [],\n",
+      "new": ""
+    },
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "label": "retire_private_link_type_import",
+      "start": 798,
+      "old": "import type { DreamNightLink } from \"../../roles/dreamer/night_frame\";\n",
+      "new": ""
+    },
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "label": "retire_generic_private_array",
+      "start": 2382,
+      "old": "  /** 已捕获的摄梦关系保留施法者和目标原生命；保护与死亡闭包由同一梦实例推导。 */\n  dreamLinks: DreamNightLink[];\n",
+      "new": ""
+    },
+    {
+      "path": "backend/src/game/mechanisms/stages/night/contracts.ts",
+      "label": "contract_chinese_owner_note",
+      "start": 298,
+      "old": " * 本族加成回执与恶夜骑士原体绑定不属于通用字段，分别按本夜状态身份由各本族唯一所有者保存。",
+      "new": " * 本族加成回执、恶夜骑士绑定与摄梦关系不属于通用字段，分别按本夜状态身份由各本族唯一所有者保存。"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "label": "producer_owner_import",
+      "start": 704,
+      "old": "import { markDreamNightCommitted } from \"./night_frame\";",
+      "new": "import { markDreamNightCommitted } from \"./night_frame\";\nimport { dreamNightLinksForAppend } from \"./night-links\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_stages.ts",
+      "label": "producer_actual_append",
+      "start": 4138,
+      "old": "        ctx.state.dreamLinks.push({",
+      "new": "        // 历史、次数与开夜提交已经落下；先取本族同数组的 push，再构造原生命／已付效果条目。\n        dreamNightLinksForAppend(ctx.state).push({"
+    },
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "label": "pipeline_lazy_owner_note",
+      "start": 9671,
+      "old": "      const stageState: NightStageState = {",
+      "new": "      // 摄梦关系由本族按此对象身份首次使用时建立；通用状态不保存私有数组或其镜像。\n      const stageState: NightStageState = {"
+    },
+    {
+      "path": "backend/src/rulesets/night-damage-composition.ts",
+      "label": "composition_public_read_import",
+      "start": 703,
+      "old": "import { DreamNightFrame } from \"../game/mechanisms/roles/dreamer/night_frame\";",
+      "new": "import { DreamNightFrame } from \"../game/mechanisms/roles/dreamer/night_frame\";\nimport { readDreamNightLinks } from \"../game/mechanisms/roles/dreamer/night-ports\";"
+    },
+    {
+      "path": "backend/src/rulesets/night-damage-composition.ts",
+      "label": "retire_claim_view_field",
+      "start": 1159,
+      "old": "  | \"dreamLinks\"\n",
+      "new": ""
+    },
+    {
+      "path": "backend/src/rulesets/night-damage-composition.ts",
+      "label": "composition_actual_same_array",
+      "start": 2149,
+      "old": "  const dreamFrame = new DreamNightFrame(runtime.claims().dreamLinks, radiantEffects?.shelters);",
+      "new": "  // 保原 constructor callee、claims 与 shelters 参数顺序；读取同数组，不重建已付／原生命绑定。\n  const dreamFrame = new DreamNightFrame(readDreamNightLinks(runtime.claims()), radiantEffects?.shelters);"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "label": "dream_scope_owner_imports",
+      "start": 1282,
+      "old": "import { hasDreamNightCommit } from \"../../../../src/game/mechanisms/roles/dreamer/night_frame\";",
+      "new": "import { hasDreamNightCommit, DreamNightFrame, type DreamNightLink } from \"../../../../src/game/mechanisms/roles/dreamer/night_frame\";\nimport { readDreamNightLinks, installDreamNightLinks, dreamNightLinksForAppend } from \"../../../../src/game/mechanisms/roles/dreamer/night-links\";"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "label": "dream_scope_observation_route",
+      "start": 5310,
+      "old": "ctx.state.dreamLinks",
+      "new": "readDreamNightLinks(ctx.state)"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "label": "dream_scope_observation_route",
+      "start": 8255,
+      "old": "ctx.state.dreamLinks",
+      "new": "readDreamNightLinks(ctx.state)"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "label": "paid_links_owner_import",
+      "start": 2045,
+      "old": "import { DreamNightFrame } from \"../../../../src/game/mechanisms/roles/dreamer/night_frame\";",
+      "new": "import { DreamNightFrame, type DreamNightLink } from \"../../../../src/game/mechanisms/roles/dreamer/night_frame\";\nimport { readDreamNightLinks } from \"../../../../src/game/mechanisms/roles/dreamer/night-ports\";"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "label": "paid_links_readonly_view",
+      "start": 7289,
+      "old": "  let links: any[] = [];",
+      "new": "  let links: readonly DreamNightLink[] = [];"
+    },
+    {
+      "path": "backend/tests/scenarios/features/radiant-eclipse/paid-dream-effects.test.ts",
+      "label": "paid_capture_same_array",
+      "start": 7548,
+      "old": "            links = ctx.state.dreamLinks;",
+      "new": "            links = readDreamNightLinks(ctx.state);"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-stage-plan.test.ts",
+      "label": "translate_night_plan_test_head",
+      "start": 0,
+      "old": "/**\n * Unit tests for night-plan membership and metadata using literal stage handlers/catalogs.\n * Input controls are custom getStages overrides, lazy source iterators/indices and\n * accessor/Proxy descriptors. Literal order, original receiver identity and zero\n * getter/trap counts are independent oracles. A tiny live context checks actor\n * lookup after compilation. Native membership strengthening is recorded separately\n * from opaque-source prefix preservation; no model or compiler oracle runs.\n * The controlled context binds its query at the original World read position.\n */",
+      "new": "/**\n * 单元测试验证夜间计划成员与元数据，输入为字面处理器／目录、自定义 getStages、惰性来源和访问器／Proxy。\n * 顺序、原 receiver 与零 getter／trap 次数是独立预期；小型真实上下文验证编译后的 actor 查询。\n * 原生成员约束与不透明来源的失败前缀分别登记；查询仍在原 World 读取点绑定，不调用模型或编译器生成预期。\n */"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-damage-composition.test.ts",
+      "label": "composition_fixture_owner_import",
+      "start": 797,
+      "old": "import { DreamNightFrame } from \"../../../src/game/mechanisms/roles/dreamer/night_frame\";",
+      "new": "import { DreamNightFrame, type DreamNightLink } from \"../../../src/game/mechanisms/roles/dreamer/night_frame\";\nimport { installDreamNightLinks } from \"../../../src/game/mechanisms/roles/dreamer/night-links\";"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-damage-composition.test.ts",
+      "label": "retire_old_getter_in_claim_literal",
+      "start": 2220,
+      "old": "    get dreamLinks() {\n      trace.push(\"dreamLinks\");\n      return [];\n    },\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-damage-composition.test.ts",
+      "label": "retire_old_getter_in_claim_literal",
+      "start": 2936,
+      "old": "    get dreamLinks() {\n      trace.push(\"dreamLinks\");\n      return [];\n    },\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-damage-composition.test.ts",
+      "label": "retired_getter_probe_resolve",
+      "start": 2353,
+      "old": "",
+      "new": "  // 旧通用 getter 不再是关系输入；不能把其读取日志当作本族登记／Frame 构造的证明。\n  Object.defineProperty(claims, \"dreamLinks\", { get() { throw new Error(\"retired_dream_getter_must_not_read\"); } });\n"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-damage-composition.test.ts",
+      "label": "retired_getter_probe_modifier",
+      "start": 3227,
+      "old": "",
+      "new": "  // 旧通用 getter 不再是关系输入；不能把其读取日志当作本族登记／Frame 构造的证明。\n  Object.defineProperty(claims, \"dreamLinks\", { get() { throw new Error(\"retired_dream_getter_must_not_read\"); } });\n"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-damage-composition.test.ts",
+      "label": "retired_getter_trace_resolve",
+      "start": 2792,
+      "old": "[\"owns\", \"claims\", \"dreamLinks\", \"config\", \"solver\", \"resolve:get\"]",
+      "new": "[\"owns\", \"claims\", \"config\", \"solver\", \"resolve:get\"]"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-damage-composition.test.ts",
+      "label": "retired_getter_trace_modifier",
+      "start": 3757,
+      "old": "    \"dreamLinks\",\n",
+      "new": ""
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-damage-composition.test.ts",
+      "label": "register_original_nonempty_fixture_array",
+      "start": 4295,
+      "old": "  const claims: Claims = {\n    dreamLinks: [\n      {\n        actorId: actor,\n        targetId: target,\n        day: 2,\n        abilityId: \"literal-dream\",\n        consecutive: true,\n        protectionPolicy: \"netease_2026_night_immunity_v1\",\n        actorLife,\n        actorVersion: aliveLifeVersion(actorLife),\n        targetLife,\n        targetVersion: aliveLifeVersion(targetLife),\n      },\n    ],\n    poisonClaims: [],\n    guardClaims: [],\n  };",
+      "new": "  const links: DreamNightLink[] = [\n    {\n      actorId: actor,\n      targetId: target,\n      day: 2,\n      abilityId: \"literal-dream\",\n      consecutive: true,\n      protectionPolicy: \"netease_2026_night_immunity_v1\",\n      actorLife,\n      actorVersion: aliveLifeVersion(actorLife),\n      targetLife,\n      targetVersion: aliveLifeVersion(targetLife),\n    },\n  ];\n  const claims: Claims = {\n    poisonClaims: [],\n    guardClaims: [],\n  };\n  // 非空关系通过本族明确登记同一数组；后面 Frame 完成后仍向这个原数组追加。\n  installDreamNightLinks(claims, links);"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-damage-composition.test.ts",
+      "label": "fixture_frame_late_same_array_append",
+      "start": 7771,
+      "old": "  claims.dreamLinks.push({",
+      "new": "  links.push({"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "label": "append_three_new_owner_test_ids",
+      "start": 8404,
+      "old": "",
+      "new": "\n// 以下三个新 ID 验证本族关系 owner；上面的原 scope 用例仅迁观察渠道，原预期没有改写。\ntest(\"owned dream links: same array survives frame capture and does not follow cloned state or old getters\", () => {\n  const game = fixture(), ctx = context(game, [], async () => null);\n  const actorLife = game.world.getComponent(1, COMPONENT.Alive)!,\n    targetLife = game.world.getComponent(5, COMPONENT.Alive)!,\n    nextLife = game.world.getComponent(6, COMPONENT.Alive)!;\n  Object.defineProperty(ctx.state, \"dreamLinks\", { get() { throw new Error(\"retired_links_must_not_read\"); } });\n  const empty = readDreamNightLinks(ctx.state);\n  expect(readDreamNightLinks(ctx.state)).toBe(empty);\n  expect(dreamNightLinksForAppend(ctx.state)).toBe(empty);\n  const links: DreamNightLink[] = [{\n    actorId: 1, targetId: 5, day: 1, consecutive: false,\n    actorLife, actorVersion: aliveLifeVersion(actorLife),\n    targetLife, targetVersion: aliveLifeVersion(targetLife),\n  }];\n  installDreamNightLinks(ctx.state, links);\n  expect(readDreamNightLinks(ctx.state)).toBe(links);\n  const frame = new DreamNightFrame(readDreamNightLinks(ctx.state));\n  dreamNightLinksForAppend(ctx.state).push({\n    actorId: 1, targetId: 6, day: 1, consecutive: false,\n    actorLife, actorVersion: aliveLifeVersion(actorLife),\n    targetLife: nextLife, targetVersion: aliveLifeVersion(nextLife),\n  });\n  expect(frame.protectedTargets(game.world)).toEqual([5, 6]);\n  expect(readDreamNightLinks({ ...ctx.state })).toEqual([]);\n  expect(readDreamNightLinks(ctx.state)).toBe(links);\n  // 旧字段退出通用结构，运行数组仍有自己的生命／付款复核，并非权限品牌。\n  // @ts-expect-error 通用状态不再携带摄梦人的私有关系数组。\n  const retiredKey: keyof NightStageContext[\"state\"] = \"dreamLinks\";\n  expect(retiredKey as string).toBe(\"dreamLinks\");\n});\n\ntest(\"owned dream links: push lookup failure keeps paid history and night commit without publishing the dream\", async () => {\n  const game = fixture(), events: GameEvent[] = [], failure = new Error(\"dream_push_lookup_rejected\");\n  (game.ability(2) as { disabled: boolean }).disabled = true;\n  const ability = game.ability(1), ctx = context(game, events, async () => ({ name: \"dream\", args: { target_id: 5 } }));\n  const links: DreamNightLink[] = [];\n  Object.defineProperty(links, \"push\", { get() { throw failure; } });\n  installDreamNightLinks(ctx.state, links);\n  await expect(DREAMER_NIGHT_STAGE.execute(ctx)).rejects.toBe(failure);\n  expect(ability.state.history).toEqual([{ day: 1, targetId: 5 }]);\n  expect(ability.uses).toBe(1);\n  expect(ability.lastUsedDay).toBe(1);\n  expect(hasDreamNightCommit(game.world, 1)).toBe(true);\n  expect(readDreamNightLinks(ctx.state)).toBe(links);\n  expect(links).toEqual([]);\n  expect(events).toEqual([]);\n});\n\ntest(\"owned dream links: link field failure follows push lookup and preserves the already paid prefix\", async () => {\n  const game = fixture(), events: GameEvent[] = [], trace: string[] = [], failure = new Error(\"dream_link_field_rejected\");\n  (game.ability(2) as { disabled: boolean }).disabled = true;\n  const ability = game.ability(1), ctx = context(game, events, async () => ({ name: \"dream\", args: { target_id: 5 } }));\n  const links: DreamNightLink[] = [], push = links.push;\n  Object.defineProperty(links, \"push\", {\n    get() {\n      trace.push(\"push:get\");\n      // 到原追加 callee 点才装故障，避免 scope 的早政策读取先抛错，冒成已付条目构造失败。\n      Object.defineProperty(ability.state, \"protectionPolicy\", { get() { trace.push(\"policy:get\"); throw failure; } });\n      return function(this: DreamNightLink[], ...items: DreamNightLink[]) {\n        trace.push(\"push:call\");\n        return push.apply(this, items);\n      };\n    },\n  });\n  installDreamNightLinks(ctx.state, links);\n  await expect(DREAMER_NIGHT_STAGE.execute(ctx)).rejects.toBe(failure);\n  expect(trace).toEqual([\"push:get\", \"policy:get\"]);\n  expect(ability.state.history).toEqual([{ day: 1, targetId: 5 }]);\n  expect(ability.uses).toBe(1);\n  expect(ability.lastUsedDay).toBe(1);\n  expect(hasDreamNightCommit(game.world, 1)).toBe(true);\n  expect(links).toEqual([]);\n  expect(events).toEqual([]);\n});\n"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "label": "new_test_life_version_import",
+      "start": 739,
+      "old": "import { AliveComponent } from \"../../../../src/core/domain/components/alive\";",
+      "new": "import { AliveComponent, aliveLifeVersion } from \"../../../../src/core/domain/components/alive\";"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "label": "new_prefix_array_owned_before_fault",
+      "start": 10544,
+      "old": "  const links: DreamNightLink[] = [];\n  Object.defineProperty(links, \"push\", { get() { throw failure; } });\n  installDreamNightLinks(ctx.state, links);",
+      "new": "  const links = dreamNightLinksForAppend(ctx.state);\n  Object.defineProperty(links, \"push\", { get() { throw failure; } });"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "label": "new_link_field_fault_same_owned_array",
+      "start": 11478,
+      "old": "  const links: DreamNightLink[] = [], push = links.push;",
+      "new": "  const links = dreamNightLinksForAppend(ctx.state), push = links.push;"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "label": "new_link_field_remove_empty_registration",
+      "start": 11982,
+      "old": "  installDreamNightLinks(ctx.state, links);\n  await expect(DREAMER_NIGHT_STAGE.execute(ctx)).rejects.toBe(failure);",
+      "new": "  await expect(DREAMER_NIGHT_STAGE.execute(ctx)).rejects.toBe(failure);"
+    },
+    {
+      "path": "backend/tests/unit/features/dreamer/dream-scope.test.ts",
+      "label": "new_test_readonly_matcher_type_erasure",
+      "start": 9070,
+      "old": "expect(dreamNightLinksForAppend(ctx.state)).toBe(empty);",
+      "new": "expect(dreamNightLinksForAppend(ctx.state) as readonly DreamNightLink[]).toBe(empty);"
+    }
+  ],
+  "limits": "从真实Gitbefore到当前源码的精确映射；首批移空字段工具停在重复文本计数，实际中间状态另留，不虚称全首轮完成。"
+}

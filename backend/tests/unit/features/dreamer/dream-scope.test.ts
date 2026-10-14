@@ -15,13 +15,14 @@ import {
   type GameEvent,
   type RoleComponent,
 } from "../../../../src/core";
-import { AliveComponent } from "../../../../src/core/domain/components/alive";
+import { AliveComponent, aliveLifeVersion } from "../../../../src/core/domain/components/alive";
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { findNightAbility } from "../../../../src/game/mechanisms/roles/abilities";
 import { transferNightAbility } from "../../../../src/game/mechanisms/roles/ability_changes";
 import { getDefaultRoleCatalog } from "../../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { DREAMER_NIGHT_STAGE } from "../../../../src/game/mechanisms/roles/dreamer/night_stages";
-import { hasDreamNightCommit } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
+import { hasDreamNightCommit, DreamNightFrame, type DreamNightLink } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
+import { readDreamNightLinks, installDreamNightLinks, dreamNightLinksForAppend } from "../../../../src/game/mechanisms/roles/dreamer/night-links";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import type { NightStageContext } from "../../../../src/game/mechanisms/stages/night/contracts";
@@ -92,7 +93,6 @@ function context(
       wolfVotes: {},
       wolfTarget: null,
       seerChecks: [],
-      dreamLinks: [],
     },
   };
 }
@@ -127,7 +127,7 @@ for (const change of ["disabled", "spent", "transferred"] as const)
     expect(laterState.history).toEqual([]);
     expect(later.lastUsedDay).toBeNull();
     expect(later.uses).toBe(change === "spent" ? 1 : 0);
-    expect(ctx.state.dreamLinks.map((link) => link.actorId)).toEqual([1]);
+    expect(readDreamNightLinks(ctx.state).map((link) => link.actorId)).toEqual([1]);
     expect(
       events
         .filter((event) => event.type === "dream_applied")
@@ -201,7 +201,81 @@ for (const point of ["await", "gateway"] as const)
       expect(originalState).toEqual({ lastTarget: null, lastDay: null, history: [] });
       expect(ability.uses).toBe(0);
       expect(ability.lastUsedDay).toBeNull();
-      expect(ctx.state.dreamLinks).toEqual([]);
+      expect(readDreamNightLinks(ctx.state)).toEqual([]);
       expect(events).toEqual([]);
       expect(hasDreamNightCommit(game.world, 1)).toBe(false);
     });
+
+// 以下三个新 ID 验证本族关系 owner；上面的原 scope 用例仅迁观察渠道，原预期没有改写。
+test("owned dream links: same array survives frame capture and does not follow cloned state or old getters", () => {
+  const game = fixture(), ctx = context(game, [], async () => null);
+  const actorLife = game.world.getComponent(1, COMPONENT.Alive)!,
+    targetLife = game.world.getComponent(5, COMPONENT.Alive)!,
+    nextLife = game.world.getComponent(6, COMPONENT.Alive)!;
+  Object.defineProperty(ctx.state, "dreamLinks", { get() { throw new Error("retired_links_must_not_read"); } });
+  const empty = readDreamNightLinks(ctx.state);
+  expect(readDreamNightLinks(ctx.state)).toBe(empty);
+  expect(dreamNightLinksForAppend(ctx.state) as readonly DreamNightLink[]).toBe(empty);
+  const links: DreamNightLink[] = [{
+    actorId: 1, targetId: 5, day: 1, consecutive: false,
+    actorLife, actorVersion: aliveLifeVersion(actorLife),
+    targetLife, targetVersion: aliveLifeVersion(targetLife),
+  }];
+  installDreamNightLinks(ctx.state, links);
+  expect(readDreamNightLinks(ctx.state)).toBe(links);
+  const frame = new DreamNightFrame(readDreamNightLinks(ctx.state));
+  dreamNightLinksForAppend(ctx.state).push({
+    actorId: 1, targetId: 6, day: 1, consecutive: false,
+    actorLife, actorVersion: aliveLifeVersion(actorLife),
+    targetLife: nextLife, targetVersion: aliveLifeVersion(nextLife),
+  });
+  expect(frame.protectedTargets(game.world)).toEqual([5, 6]);
+  expect(readDreamNightLinks({ ...ctx.state })).toEqual([]);
+  expect(readDreamNightLinks(ctx.state)).toBe(links);
+  // 旧字段退出通用结构，运行数组仍有自己的生命／付款复核，并非权限品牌。
+  // @ts-expect-error 通用状态不再携带摄梦人的私有关系数组。
+  const retiredKey: keyof NightStageContext["state"] = "dreamLinks";
+  expect(retiredKey as string).toBe("dreamLinks");
+});
+
+test("owned dream links: push lookup failure keeps paid history and night commit without publishing the dream", async () => {
+  const game = fixture(), events: GameEvent[] = [], failure = new Error("dream_push_lookup_rejected");
+  (game.ability(2) as { disabled: boolean }).disabled = true;
+  const ability = game.ability(1), ctx = context(game, events, async () => ({ name: "dream", args: { target_id: 5 } }));
+  const links = dreamNightLinksForAppend(ctx.state);
+  Object.defineProperty(links, "push", { get() { throw failure; } });
+  await expect(DREAMER_NIGHT_STAGE.execute(ctx)).rejects.toBe(failure);
+  expect(ability.state.history).toEqual([{ day: 1, targetId: 5 }]);
+  expect(ability.uses).toBe(1);
+  expect(ability.lastUsedDay).toBe(1);
+  expect(hasDreamNightCommit(game.world, 1)).toBe(true);
+  expect(readDreamNightLinks(ctx.state)).toBe(links);
+  expect(links).toEqual([]);
+  expect(events).toEqual([]);
+});
+
+test("owned dream links: link field failure follows push lookup and preserves the already paid prefix", async () => {
+  const game = fixture(), events: GameEvent[] = [], trace: string[] = [], failure = new Error("dream_link_field_rejected");
+  (game.ability(2) as { disabled: boolean }).disabled = true;
+  const ability = game.ability(1), ctx = context(game, events, async () => ({ name: "dream", args: { target_id: 5 } }));
+  const links = dreamNightLinksForAppend(ctx.state), push = links.push;
+  Object.defineProperty(links, "push", {
+    get() {
+      trace.push("push:get");
+      // 到原追加 callee 点才装故障，避免 scope 的早政策读取先抛错，冒成已付条目构造失败。
+      Object.defineProperty(ability.state, "protectionPolicy", { get() { trace.push("policy:get"); throw failure; } });
+      return function(this: DreamNightLink[], ...items: DreamNightLink[]) {
+        trace.push("push:call");
+        return push.apply(this, items);
+      };
+    },
+  });
+  await expect(DREAMER_NIGHT_STAGE.execute(ctx)).rejects.toBe(failure);
+  expect(trace).toEqual(["push:get", "policy:get"]);
+  expect(ability.state.history).toEqual([{ day: 1, targetId: 5 }]);
+  expect(ability.uses).toBe(1);
+  expect(ability.lastUsedDay).toBe(1);
+  expect(hasDreamNightCommit(game.world, 1)).toBe(true);
+  expect(links).toEqual([]);
+  expect(events).toEqual([]);
+});

@@ -18,7 +18,7 @@ import {
 } from "../../../../src/game/mechanisms/roles/scholar_mentor/bonus-effect-records";
 
 function state(): NightStageState {
-  return { wolfChatOrder: [], endedWolves: new Set(), wolfVotes: {}, wolfTarget: null, seerChecks: [], dreamLinks: [] };
+  return { wolfChatOrder: [], endedWolves: new Set(), wolfVotes: {}, wolfTarget: null, seerChecks: [] };
 }
 function fixture() {
   const world = new World(), id = world.createEntity(), life = createAliveComponent(), marks = new StatusMarksComponent();

@@ -1,0 +1,7 @@
+backend/tests/unit/features/dreamer/dream-scope.test.ts(218,52): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(expected: DreamNightLink[]): void', gave the following error.
+    Argument of type 'readonly DreamNightLink[]' is not assignable to parameter of type 'DreamNightLink[]'.
+      The type 'readonly DreamNightLink[]' is 'readonly' and cannot be assigned to the mutable type 'DreamNightLink[]'.
+  Overload 2 of 2, '(expected: NoInfer<DreamNightLink[]>): void', gave the following error.
+    Argument of type 'readonly DreamNightLink[]' is not assignable to parameter of type 'DreamNightLink[]'.
+      The type 'readonly DreamNightLink[]' is 'readonly' and cannot be assigned to the mutable type 'DreamNightLink[]'.

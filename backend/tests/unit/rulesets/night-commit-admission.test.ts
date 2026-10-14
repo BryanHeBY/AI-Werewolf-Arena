@@ -87,7 +87,6 @@ test("a committed Fox inspection wins before Dream and Mechanical without readin
     wolfVotes: {},
     wolfTarget: null,
     seerChecks: [],
-    dreamLinks: [],
   };
   commitFoxInspection(world, state, captureNightLife(world, fox)!, 3, () => true);
   markDreamNightCommitted(world, 3);

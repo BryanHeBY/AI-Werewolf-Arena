@@ -27,7 +27,8 @@ import { DREAMER_NIGHT_STAGE } from "../../../../src/game/mechanisms/roles/dream
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { DamageResolutionSystem } from "../../../../src/core/domain/systems/damage_resolution_system";
 import type { ActionProvider, BoardConfig } from "../../../../src/core/domain/model";
-import { DreamNightFrame } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
+import { DreamNightFrame, type DreamNightLink } from "../../../../src/game/mechanisms/roles/dreamer/night_frame";
+import { readDreamNightLinks } from "../../../../src/game/mechanisms/roles/dreamer/night-ports";
 import { StatusMark, DeathCause } from "../../../../src/core/domain/model";
 
 function fixture() {
@@ -175,7 +176,7 @@ for (const dead of [1, 5])
 
 test("actual later-stage failure retains paid Dream fact and stock but revokes handed-out effect", async () => {
   const f = fixture();
-  let links: any[] = [];
+  let links: readonly DreamNightLink[] = [];
   class FailStages extends Stages {
     override getStages() {
       return [
@@ -184,7 +185,7 @@ test("actual later-stage failure retains paid Dream fact and stock but revokes h
           id: "synthetic_failure",
           priority: 999,
           async execute(ctx: any) {
-            links = ctx.state.dreamLinks;
+            links = readDreamNightLinks(ctx.state);
             throw new Error("synthetic_after_payment");
           },
         },

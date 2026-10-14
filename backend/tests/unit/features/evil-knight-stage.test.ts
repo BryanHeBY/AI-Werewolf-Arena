@@ -98,7 +98,6 @@ function fixture(locale: "zh-CN" | "en") {
       wolfVotes: {},
       wolfTarget: null,
       seerChecks: [],
-      dreamLinks: [],
     },
   };
   const run = async () => {

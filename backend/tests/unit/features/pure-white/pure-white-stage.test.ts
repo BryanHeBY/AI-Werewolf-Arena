@@ -91,7 +91,6 @@ function fixture(day: number, locale: "zh-CN" | "en") {
       wolfVotes: {},
       wolfTarget: null,
       seerChecks: [],
-      dreamLinks: [],
     },
   };
   return { world, ctx, pure, wolf, id, calls: () => calls };

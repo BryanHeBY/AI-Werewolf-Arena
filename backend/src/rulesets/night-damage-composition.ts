@@ -11,13 +11,13 @@ import type { DreamNightEffects } from "../core/domain/dream-night-effects";
 import type { DamageResolutionSystem } from "../core/domain/systems/damage_resolution_system";
 import type { NightStageContext, NightStageState } from "../game/mechanisms/stages/night/contracts";
 import { DreamNightFrame } from "../game/mechanisms/roles/dreamer/night_frame";
+import { readDreamNightLinks } from "../game/mechanisms/roles/dreamer/night-ports";
 import { sealRadiantNightEffects } from "../game/mechanisms/roles/radiant_eclipse/ports";
 import { assertScholarMentorBonusEffects } from "../game/mechanisms/roles/scholar_mentor/night_stages";
 
 /** 只声明这一组合实际读取的原字段；这是同一阶段状态的类型视图，不创建或冻结副本。 */
 type NightDamageClaims = Pick<
   NightStageState,
-  | "dreamLinks"
   | "modifierDeaths"
   | "poisonClaims"
   | "retaliationAttacks"
@@ -51,7 +51,8 @@ export function composeNightDamage(runtime: NightDamageCompositionRuntime): {
   const radiantEffects = runtime.ownsRadiant()
     ? sealRadiantNightEffects(runtime.world(), runtime.day())
     : undefined;
-  const dreamFrame = new DreamNightFrame(runtime.claims().dreamLinks, radiantEffects?.shelters);
+  // 保原 constructor callee、claims 与 shelters 参数顺序；读取同数组，不重建已付／原生命绑定。
+  const dreamFrame = new DreamNightFrame(readDreamNightLinks(runtime.claims()), radiantEffects?.shelters);
   if (runtime.config().scholarMentor) assertScholarMentorBonusEffects(runtime.stageContext());
   const damage = runtime.solver().resolve(runtime.world(), {
     intentNight: runtime.day(),

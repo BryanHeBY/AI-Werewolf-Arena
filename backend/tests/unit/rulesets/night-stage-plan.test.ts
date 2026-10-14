@@ -1,11 +1,7 @@
 /**
- * Unit tests for night-plan membership and metadata using literal stage handlers/catalogs.
- * Input controls are custom getStages overrides, lazy source iterators/indices and
- * accessor/Proxy descriptors. Literal order, original receiver identity and zero
- * getter/trap counts are independent oracles. A tiny live context checks actor
- * lookup after compilation. Native membership strengthening is recorded separately
- * from opaque-source prefix preservation; no model or compiler oracle runs.
- * The controlled context binds its query at the original World read position.
+ * 单元测试验证夜间计划成员与元数据，输入为字面处理器／目录、自定义 getStages、惰性来源和访问器／Proxy。
+ * 顺序、原 receiver 与零 getter／trap 次数是独立预期；小型真实上下文验证编译后的 actor 查询。
+ * 原生成员约束与不透明来源的失败前缀分别登记；查询仍在原 World 读取点绑定，不调用模型或编译器生成预期。
  */
 import { createRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";
 import { bindNativeNightFailurePolicy } from "../../../src/rulesets/native-night-failure-policy";
@@ -63,7 +59,6 @@ function context(world = new World("en")): NightStageContext {
       wolfVotes: {},
       wolfTarget: null,
       seerChecks: [],
-      dreamLinks: [],
     },
   };
 }

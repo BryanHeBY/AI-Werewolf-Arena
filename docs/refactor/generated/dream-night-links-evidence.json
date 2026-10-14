@@ -1,0 +1,128 @@
+{
+  "schema": "awa-refactor-evidence-v1",
+  "batch": "dream-night-links-owner",
+  "baseCommit": "7d61cda46985ad7d6e2001d13992d7c3e310de7e",
+  "sourceScope": {
+    "path": "docs/refactor/generated/dream-night-links-scope-final.json",
+    "sha256": "2c9f1043c0889f0275a901a56d064c3981b55593b754fda56a5d2646144c2953",
+    "paths": 35
+  },
+  "documentation": {
+    "path": "docs/refactor/dream-night-links.md",
+    "sha256": "5d3baea4bd08240fd2947be86dd514ae8265339ab3865dccb2be001d8ae24592"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/dream-night-links-before.json",
+      "sha256": "f756a2c39415bd6f08bd4c3aa3d81ff3a72dd6a6bae4b4ea8654b08aab2d7ac2"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-doc-paths.json",
+      "sha256": "0003c8de913eb94f98e7487da3f97af4eb1295193ce0e5ceec4cdb52daa0516f"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-edits.json",
+      "sha256": "c48b4f53e42ccd516117af4d422cb6108e570519c28b56b6c7ad4d4ac8efc484"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-first-inventory-failure.json",
+      "sha256": "a4c426854ca566fac1ace3bc7cd920a6d940f8cc6fcf0e322668c305c03ed2e0"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-git-before-proof.json",
+      "sha256": "fe9f04ca0b7a9c4fb3dcdb954f71ff1dae48e0debbff7a4bb23474e7978bb6c7"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-heads.json",
+      "sha256": "f11f26d30fe6b95e4eade2f5f7661462d17d5c87acf056229def8dd0b58909ec"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-heads.log",
+      "sha256": "91a3bc637474db957da520c7bedb6b323a7a66f6d385cdacda6645ba0ff21dd7"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-heads.ts",
+      "sha256": "5e8d851d56304e6878d2385a976f4869dafcfd5d70e68a42e63fa492c668ebcb"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-old-getter-characterization.log",
+      "sha256": "66b65ad9abee37f3c538d4dc61accbebceab85e14f00469cba45114595be1352"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-old-paid-characterization.json",
+      "sha256": "df9fa34e03fa9628636024df3cb91aa9a8f89318b96ae8467e547d45cb5807d5"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-old-paid-characterization.log",
+      "sha256": "4142d1951c95f4eddb4bd4910adeb68c74546dab204f67f139fbc2f7aadeca12"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-proof-first-harness-failure.json",
+      "sha256": "2313a9589d1e8e9a9abc9534c7ee87176d344d6c47def24bb11b6a3d06569ea8"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-proof.cjs",
+      "sha256": "2d68ea2c4773510a0f46482806d4cba5c3412be87fda769bfbc573a490451839"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-proof.json",
+      "sha256": "05ee12e6f30a9622d35687759d5d60f35631fc9fab35ebc5827526a68e80e16e"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-proof.log",
+      "sha256": "90bcf5323d7df62f6afbd4440c102a12fcd200db058ac5bf8b43c7ec449c835f"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-receipts.json",
+      "sha256": "848b70b2026af263c4032482fa99766e3900ab5fdd9abc0e13ea694f02422650"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-scope-final.json",
+      "sha256": "2c9f1043c0889f0275a901a56d064c3981b55593b754fda56a5d2646144c2953"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-test-typefix-before.json",
+      "sha256": "fc72f269913d4b4e4590540d98aa497e1eec3a0042c237fdd4e3a919781da39f"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-tests.log",
+      "sha256": "c20339dba691dcf8ba9d67b720c6bafcdfe82e0cf706a38767a183b6fcce6e3c"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-types-config.json",
+      "sha256": "300ec61daeadbad98dbc4b573edc6af945c1d69bdaf0824a9c1e669b9c6cc320"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-types-failed-config.json",
+      "sha256": "7f7afb831e3a60a47005140429029fa32e38fc390c3a638143e0e180c0d5667b"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-types-failed.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/dream-night-links-types-first.log",
+      "sha256": "2baa2c806f6113f5c869f3d2b7d1e4f7b3475484fec511322b557a6e2a33b6b2"
+    }
+  ],
+  "runtimeStatus": "7 bounded current pass / 1 known old preset-invalid fail; isolated real baseline reproduces same fail. Not all green.",
+  "actualFiniteTypeReceipts": {
+    "firstRoots": 35,
+    "firstSession": 92766,
+    "firstTerminalChunk": "31ffeb",
+    "firstExitCode": 2,
+    "diagnostics": 1,
+    "onlyNewTest": "readonly matcher TS2769",
+    "failedRoots": 1,
+    "failedSession": 88629,
+    "failedTerminalChunk": "49ea63",
+    "failedExitCode": 0
+  },
+  "sourcePolicy": "unique same-array family WeakMap object identity; no duplicate array, schema/current/payment/refund change; legacy property/injection API explicitly retired; Frame whole program and direct-links constructor API same.",
+  "limits": [
+    "33 old programs have explicit source inverse, not arbitrary external old property/API equivalence.",
+    "Raw Frame and eight direct constructor tests stay controls, not repeat runtime green.",
+    "Root current native_potion_controller comments are independent following source dependency delta, outside this batch.",
+    "Only original failed paid scenario is repeated for necessary baseline attribution; new3/current7 green are not rerun."
+  ]
+}

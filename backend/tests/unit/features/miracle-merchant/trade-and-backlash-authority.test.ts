@@ -109,7 +109,6 @@ function context(
       wolfVotes: {},
       wolfTarget: null,
       seerChecks: [],
-      dreamLinks: [],
       guardClaims: [],
       poisonClaims: [],
       merchantBacklashes: [],

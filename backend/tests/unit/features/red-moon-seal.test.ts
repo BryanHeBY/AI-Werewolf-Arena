@@ -83,7 +83,6 @@ test("Red Moon sealed night runs all good native stages without requests or inve
       wolfVotes: {},
       wolfTarget: 5,
       seerChecks: [],
-      dreamLinks: [],
     },
   };
   for (const stage of [...WITCH_NIGHT_STAGES, ...SEER_NIGHT_STAGES, DEMON_HUNTER_NIGHT_STAGE])

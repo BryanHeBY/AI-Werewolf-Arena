@@ -1,0 +1,7 @@
+{
+  "toolTerminal": "831d3b",
+  "exitCode": 1,
+  "failure": "Node execFileSync git reported spawnSync git EPERM at first source; stdout had Git content but no final proof result.",
+  "classification": "只读工具进程调用失败，未修改产品源码；完整工具输出截断，没有伪造原完整stderr日志。",
+  "fix": "Git读取由实际可用Python先固定校验，JS只核SHA关联与完整当前程序；不重类型/测试。"
+}

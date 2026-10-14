@@ -59,7 +59,6 @@ export function nightStageContext(
       wolfVotes: {},
       wolfTarget: null,
       seerChecks: [],
-      dreamLinks: [],
     },
     // 覆盖最后应用：场景可提供自己的规则端口、阶段状态和 getter，默认值不抢占这些依赖。
     ...input,

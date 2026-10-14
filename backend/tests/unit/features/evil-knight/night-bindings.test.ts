@@ -22,7 +22,7 @@ import {
 } from "../../../../src/game/mechanisms/roles/evil_knight/night-bindings";
 
 function state(): NightStageState {
-  return { wolfChatOrder: [], endedWolves: new Set(), wolfVotes: {}, wolfTarget: null, seerChecks: [], dreamLinks: [] };
+  return { wolfChatOrder: [], endedWolves: new Set(), wolfVotes: {}, wolfTarget: null, seerChecks: [] };
 }
 function fixture() {
   const world = new World(), actorId = world.createEntity(), role = createRoleComponent(Role.EvilKnight, Camp.Wolf), life = createAliveComponent();

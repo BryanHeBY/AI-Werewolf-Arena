@@ -179,7 +179,6 @@ function stageContext(
       wolfVotes: {},
       wolfTarget: null,
       seerChecks: [],
-      dreamLinks: [],
       poisonClaims: [],
       mechanicalEffects: { shields: [], attacks: [], failures: [] },
     },

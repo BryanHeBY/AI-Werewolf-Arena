@@ -5,7 +5,7 @@
  * 旧原毒／机械／觉醒注入 effect/claim 保留接受宽度；其额外 kind/origin/getter 不被当作新协议读取。
  * 所有内建原毒（含受赠及学者加成）均有来源；此契约不查询 World 或提交库存。
  * 这些外部自定义注入仍保留明确 legacy 接受政策，不把同名字段视为 owned 来源。
- * 本族加成回执与恶夜骑士原体绑定不属于通用字段，分别按本夜状态身份由各本族唯一所有者保存。
+ * 本族加成回执、恶夜骑士绑定与摄梦关系不属于通用字段，分别按本夜状态身份由各本族唯一所有者保存。
  */
 import { StatusMarksComponent } from "../../../../core/domain/components/status_marks";
 import {
@@ -22,7 +22,6 @@ import {
 import { World } from "../../../../core/domain/world";
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import type { RoleCatalog } from "../../roles/catalog";
-import type { DreamNightLink } from "../../roles/dreamer/night_frame";
 import type { NightAbilityActorQuery } from "../../roles/night-ability-actors";
 import type { AliveComponent } from "../../../../core/domain/components/alive";
 import type { NativeNightFailurePolicy } from "../../../../rulesets/native-night-failure-policy";
@@ -68,8 +67,6 @@ export interface NightStageState {
   /** 实际参与选定普通狼刀的投票者；票表的目标键不能代替投票者名单。 */
   wolfTargetVoters?: EntityId[];
   seerChecks: NightSummary["seerChecks"];
-  /** 已捕获的摄梦关系保留施法者和目标原生命；保护与死亡闭包由同一梦实例推导。 */
-  dreamLinks: DreamNightLink[];
   /** 内建有来源 intent 与旧注入 claim 共存；仅同名字段不能把旧对象变成内建来源。 */
   poisonClaims?: Array<NightOriginalPoisonIntent | NightPoisonClaim>;
   inspectionAttacks?: NightInspectionAttack[];

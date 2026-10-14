@@ -78,7 +78,6 @@ function context(
       wolfVotes: {},
       wolfTarget: null,
       seerChecks: [],
-      dreamLinks: [],
       poisonClaims: [],
     },
   });

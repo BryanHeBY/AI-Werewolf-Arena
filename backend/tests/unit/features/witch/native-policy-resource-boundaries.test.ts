@@ -91,7 +91,6 @@ function setup(
           wolfVotes: {},
           wolfTarget: 3,
           seerChecks: [],
-          dreamLinks: [],
         },
         makeRequest: (actorId, allowedTools, extra) =>
           factory.create({

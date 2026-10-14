@@ -106,7 +106,6 @@ function context(game: Game, getAction: ActionProvider["getAction"], day = 1): N
       wolfVotes: {},
       wolfTarget: null,
       seerChecks: [],
-      dreamLinks: [],
       poisonClaims: [],
       guardClaims: [],
       merchantBacklashes: [],

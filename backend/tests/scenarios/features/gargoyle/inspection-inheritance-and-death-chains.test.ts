@@ -95,7 +95,6 @@ function stageContext(
       wolfVotes: {},
       wolfTarget: null,
       seerChecks: [],
-      dreamLinks: [],
     },
   });
 }

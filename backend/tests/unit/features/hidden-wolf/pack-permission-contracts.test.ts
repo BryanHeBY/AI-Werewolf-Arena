@@ -124,7 +124,6 @@ for (const change of ["camp", "permission"] as const)
           wolfVotes: {},
           wolfTarget: null,
           seerChecks: [],
-          dreamLinks: [],
         },
       }),
     );
