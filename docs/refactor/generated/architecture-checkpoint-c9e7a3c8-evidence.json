@@ -1,0 +1,70 @@
+{
+  "fixedCommit": "c9e7a3c876a532c880308edb9b8cb71a9773c88b",
+  "source": [],
+  "scope": {
+    "path": "docs/refactor/generated/architecture-checkpoint-c9e7a3c8-scope-final.json",
+    "sha256": "c7f033388f3f896d16cba9f2fc0ce943a107a0876b2a15f94d68f4f14ddbf45e"
+  },
+  "document": {
+    "path": "docs/refactor/architecture-checkpoint-c9e7a3c8.md",
+    "sha256": "f07eb60f7708d8c8ff86d586cebb857cbe2a2ee98664e90688c78a228509091e"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-c9e7a3c8-capture.json",
+      "sha256": "4e2d47f7879d2b07723fdebc06de2e77d45deba9a76e88c3f70a4f29af730b40"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-c9e7a3c8-debt-delta.json",
+      "sha256": "cde4ee7029d2a1c45bcd822227ca1752c95744e70e1bb7adb53630f778b9a643"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-c9e7a3c8-harness-history.json",
+      "sha256": "92b9cf54a19da29f123f7e768eac7d3881b14ae9e7e29394100fd8d95d0e14a4"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-c9e7a3c8-input-verification.json",
+      "sha256": "db1452f70861f2dbd88e7f219440278bea4b37b3ce53f63e5848b07b484b37bb"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-c9e7a3c8-input-verification.py",
+      "sha256": "8ed6139f24dc34cd5ba9f91f6c2efeacae37f254b004afddcf765bc3589136c7"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-c9e7a3c8-partition.json",
+      "sha256": "0148216b279e69e9611d8737164839a495d32c556c5bfdeeb29fbf50512fbf51"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-c9e7a3c8-partition.py",
+      "sha256": "e3256f21548aaab6c475a04612d12c9181cdf0ee72b1c9304db1108da3ccd56f"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-c9e7a3c8-report.json",
+      "sha256": "7ce29ee46322fe3bc26221d3da407babd362e7103b426d12cba4f19c28c3e242"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-c9e7a3c8-run.log",
+      "sha256": "8226e0d6614406ae210e688b6cb4d21fcca332b519c2205a919a4fa30234e6e4"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-c9e7a3c8-run.ts",
+      "sha256": "46209b0e79b076a5bb2b1900c66432f53dec9c92b01f187fcf819637e8698775"
+    }
+  ],
+  "snapshot": {
+    "sourceFileCount": 3202,
+    "documentationPathCount": 587,
+    "sourceDigest": "6f7f01ae44202526562db29f7d8efb87f47b42afe472034ae5541019a42eef23",
+    "originalDebtSHA256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d"
+  },
+  "result": {
+    "files": 3202,
+    "violations": 280,
+    "failures": 0,
+    "remainingDebt": 280,
+    "clearedDebt": 1499
+  },
+  "limits": [
+    "Only fixed Git structure scope; not current WIP or final P9."
+  ]
+}
