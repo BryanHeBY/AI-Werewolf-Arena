@@ -1,0 +1,468 @@
+{
+  "baseCommit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+  "deletedOldOwner": true,
+  "movedInitializer": {
+    "originalOwner": "backend/src/game/mechanisms/roles/wolf/validation_rules.ts",
+    "currentOwner": "backend/src/rulesets/wolf-tool-admission.ts",
+    "initializerNodeCount": 672,
+    "initializerNonCommentLeafCount": 443,
+    "fullTypedInitializerSame": true,
+    "fieldOrder": [
+      "speak_to_wolves",
+      "kill_vote",
+      "self_destruct"
+    ]
+  },
+  "wholePrograms": [
+    {
+      "path": "backend/src/rulesets/wolf-tool-admission.ts",
+      "originalOwner": "backend/src/game/mechanisms/roles/wolf/validation_rules.ts",
+      "basis": "真实新owner完整程序；仅六个依赖路由＋显式 type import 精确逆，绝不恢复旧完整函数体。",
+      "nonCommentNodeCount": 785,
+      "nonCommentLeafCount": 508,
+      "sameTokens": true,
+      "sameShape": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "originalOutputSHA": "c36cc6773ac3fb3b2afe9b55dd6df80caeadce9ed1fdfe84efd690a195536e13",
+          "currentInverseOutputSHA": "c36cc6773ac3fb3b2afe9b55dd6df80caeadce9ed1fdfe84efd690a195536e13",
+          "rawEqual": true
+        },
+        {
+          "module": "CommonJS",
+          "originalOutputSHA": "4532eceac7ea69db38034fef749b089b021fe0c1dd727f7bec35237ee1f3c08c",
+          "currentInverseOutputSHA": "4532eceac7ea69db38034fef749b089b021fe0c1dd727f7bec35237ee1f3c08c",
+          "rawEqual": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/ability-assembly.ts",
+      "originalSHA": "deb4c05de1113c31e76e7c4f65275311260f4381199977eede5b3a7e541bb990",
+      "currentSHA": "7937cea37c1ab26b40b65a869c92216beae7e49436c40d097a80b5125e73577c",
+      "exactForwardInverseBytes": true,
+      "nonCommentNodeCount": 567,
+      "nonCommentLeafCount": 372,
+      "sameTokens": true,
+      "sameShape": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "originalOutputSHA": "f34eb841fc006a957bb7da8b724fdc29a9a246fd5c5927f74e0bdf5c2d00ddb5",
+          "currentInverseOutputSHA": "f34eb841fc006a957bb7da8b724fdc29a9a246fd5c5927f74e0bdf5c2d00ddb5",
+          "rawEqual": true
+        },
+        {
+          "module": "CommonJS",
+          "originalOutputSHA": "94d7e58570e432b623a4279b738dba98911281009b8998690b953dc66a6b438a",
+          "currentInverseOutputSHA": "94d7e58570e432b623a4279b738dba98911281009b8998690b953dc66a6b438a",
+          "rawEqual": true
+        }
+      ],
+      "actualRuntimeRawSame": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/ability-ports.ts",
+      "originalSHA": "e954c51f146c45bb277410f4e9c3f95491206fb8058267b7c223219ab05c5139",
+      "currentSHA": "582285cb5526cc32ecfdc2735e7422f56d0184a7e5a4a53dabdcc9bcbe3017bd",
+      "exactForwardInverseBytes": true,
+      "nonCommentNodeCount": 61,
+      "nonCommentLeafCount": 37,
+      "sameTokens": true,
+      "sameShape": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "originalOutputSHA": "7ccee550513913dcf879e3cd81c62d79d995ea68f2048571aede040aaf076b42",
+          "currentInverseOutputSHA": "7ccee550513913dcf879e3cd81c62d79d995ea68f2048571aede040aaf076b42",
+          "rawEqual": true
+        },
+        {
+          "module": "CommonJS",
+          "originalOutputSHA": "57c3a208790667b810d8378ff4761cff74b25e5bf61af7f04dfc628ff7a97bd4",
+          "currentInverseOutputSHA": "57c3a208790667b810d8378ff4761cff74b25e5bf61af7f04dfc628ff7a97bd4",
+          "rawEqual": true
+        }
+      ],
+      "actualRuntimeRawSame": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+      "originalSHA": "fb838c03ba962b17121b12d9d40d5b42c8af6f79909360e072028d98810c68c5",
+      "currentSHA": "8b71fc9976814327be656d4a49117cac17e9c3a3d678e39f659ca91993b894ac",
+      "exactForwardInverseBytes": true,
+      "nonCommentNodeCount": 381,
+      "nonCommentLeafCount": 245,
+      "sameTokens": true,
+      "sameShape": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "originalOutputSHA": "9c9434e407933ecdb61fdb91b9d027883ae391f8949279ea87d021879d5f0e30",
+          "currentInverseOutputSHA": "9c9434e407933ecdb61fdb91b9d027883ae391f8949279ea87d021879d5f0e30",
+          "rawEqual": true
+        },
+        {
+          "module": "CommonJS",
+          "originalOutputSHA": "ababe193722e30edb184c612069188cbce46cfffe5459a669b84c8fdbe62e6c8",
+          "currentInverseOutputSHA": "ababe193722e30edb184c612069188cbce46cfffe5459a669b84c8fdbe62e6c8",
+          "rawEqual": true
+        }
+      ],
+      "actualRuntimeRawSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "originalSHA": "0b2f635ec8f932cb7de8b866bcf2dce2e5a99810db235a9d5333ed8bcc22942b",
+      "currentSHA": "71c539a3431df993f9c09904ebe4363bc17781b374d508dc76bf1314d6bd14ac",
+      "exactForwardInverseBytes": true,
+      "nonCommentNodeCount": 88,
+      "nonCommentLeafCount": 55,
+      "sameTokens": true,
+      "sameShape": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "originalOutputSHA": "ff2e07e3596eb40cabad3d1725dd00aad4be108de65c27157a5707668798579d",
+          "currentInverseOutputSHA": "ff2e07e3596eb40cabad3d1725dd00aad4be108de65c27157a5707668798579d",
+          "rawEqual": true
+        },
+        {
+          "module": "CommonJS",
+          "originalOutputSHA": "1b6a079553a7d36391c9306ec0412af0130dbdbb88d341b75b7c8159fb569e54",
+          "currentInverseOutputSHA": "1b6a079553a7d36391c9306ec0412af0130dbdbb88d341b75b7c8159fb569e54",
+          "rawEqual": true
+        }
+      ],
+      "actualRuntimeRawSame": false
+    }
+  ],
+  "allMovedBindings": [
+    {
+      "localName": "canRoleSelfDestruct",
+      "original": {
+        "name": "canRoleSelfDestruct",
+        "imported": "canRoleSelfDestruct",
+        "from": "../self_destruct_capability",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "canRoleSelfDestruct",
+        "imported": "canRoleSelfDestruct",
+        "from": "../game/mechanisms/roles/self_destruct_capability",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+        "name": "canRoleSelfDestruct"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+        "name": "canRoleSelfDestruct"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "bindWolfKnifeTargetQuery",
+      "original": {
+        "name": "bindWolfKnifeTargetQuery",
+        "imported": "bindWolfKnifeTargetQuery",
+        "from": "./ports",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "bindWolfKnifeTargetQuery",
+        "imported": "bindWolfKnifeTargetQuery",
+        "from": "../game/mechanisms/roles/wolf/ports",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+        "name": "bindWolfKnifeTargetQuery"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+        "name": "bindWolfKnifeTargetQuery"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "weddingMember",
+      "original": {
+        "name": "weddingMember",
+        "imported": "weddingMember",
+        "from": "../ghost_bride/authority",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "weddingMember",
+        "imported": "weddingMember",
+        "from": "../game/mechanisms/roles/ghost_bride/ports",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "name": "weddingMember"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "name": "weddingMember"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "weddingSetup",
+      "original": {
+        "name": "weddingSetup",
+        "imported": "weddingSetup",
+        "from": "../ghost_bride/authority",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "weddingSetup",
+        "imported": "weddingSetup",
+        "from": "../game/mechanisms/roles/ghost_bride/ports",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "name": "weddingSetup"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "name": "weddingSetup"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "ghostBrideReady",
+      "original": {
+        "name": "ghostBrideReady",
+        "imported": "ghostBrideReady",
+        "from": "../ghost_bride/authority",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "ghostBrideReady",
+        "imported": "ghostBrideReady",
+        "from": "../game/mechanisms/roles/ghost_bride/ports",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "name": "ghostBrideReady"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "name": "ghostBrideReady"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "canSubmitWeddingTool",
+      "original": {
+        "name": "canSubmitWeddingTool",
+        "imported": "canSubmitWeddingTool",
+        "from": "../ghost_bride/authority",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "canSubmitWeddingTool",
+        "imported": "canSubmitWeddingTool",
+        "from": "../game/mechanisms/roles/ghost_bride/ports",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "name": "canSubmitWeddingTool"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "name": "canSubmitWeddingTool"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "RuleError",
+      "original": {
+        "name": "RuleError",
+        "imported": "RuleError",
+        "from": "@ai-werewolf-arena/game-contract",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "RuleError",
+        "imported": "RuleError",
+        "from": "@ai-werewolf-arena/game-contract",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/errors.ts",
+        "name": "RuleError"
+      },
+      "currentEndpoint": {
+        "path": "packages/game-contract/src/errors.ts",
+        "name": "RuleError"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "ActionWindow",
+      "original": {
+        "name": "ActionWindow",
+        "imported": "ActionWindow",
+        "from": "../../../../core/domain/model",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "ActionWindow",
+        "imported": "ActionWindow",
+        "from": "../core/domain/model",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "ActionWindow"
+      },
+      "currentEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "ActionWindow"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "Phase",
+      "original": {
+        "name": "Phase",
+        "imported": "Phase",
+        "from": "../../../../core/domain/model",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "Phase",
+        "imported": "Phase",
+        "from": "../core/domain/model",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "currentEndpoint": {
+        "path": "packages/game-contract/src/identity.ts",
+        "name": "Phase"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    },
+    {
+      "localName": "ToolRuleMap",
+      "original": {
+        "name": "ToolRuleMap",
+        "imported": "ToolRuleMap",
+        "from": "../../validation/contracts",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "ToolRuleMap",
+        "imported": "ToolRuleMap",
+        "from": "../game/mechanisms/validation/contracts",
+        "typeOnly": true
+      },
+      "originalEndpoint": {
+        "path": "backend/src/game/mechanisms/validation/contracts.ts",
+        "name": "ToolRuleMap"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/game/mechanisms/validation/contracts.ts",
+        "name": "ToolRuleMap"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": true
+    },
+    {
+      "localName": "wolfTeamPermissions",
+      "original": {
+        "name": "wolfTeamPermissions",
+        "imported": "wolfTeamPermissions",
+        "from": "../wolf_team",
+        "typeOnly": false
+      },
+      "current": {
+        "name": "wolfTeamPermissions",
+        "imported": "wolfTeamPermissions",
+        "from": "../game/mechanisms/roles/wolf_team",
+        "typeOnly": false
+      },
+      "originalEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+        "name": "wolfTeamPermissions"
+      },
+      "currentEndpoint": {
+        "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+        "name": "wolfTeamPermissions"
+      },
+      "sameEndpoint": true,
+      "typeOnlyDelta": false
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+      "originalSHA": "322b1609aa2b9c85af0dfada72e8d464e6068379668f3cf75f55e4138533cf2f",
+      "currentSHA": "322b1609aa2b9c85af0dfada72e8d464e6068379668f3cf75f55e4138533cf2f",
+      "sameBytes": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+      "originalSHA": "3955b84460f1de82b27fae9f03ed93f73149487f840fa625f370493069dcb1f8",
+      "currentSHA": "3955b84460f1de82b27fae9f03ed93f73149487f840fa625f370493069dcb1f8",
+      "sameBytes": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+      "originalSHA": "1101191319a3a885eab6c478563bb761e792b66fb29ca14202dba7c84839b293",
+      "currentSHA": "1101191319a3a885eab6c478563bb761e792b66fb29ca14202dba7c84839b293",
+      "sameBytes": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+      "originalSHA": "e20626684cf06fcfb7911b686a293cad29e8809990981f962cb2060db465f28f",
+      "currentSHA": "e20626684cf06fcfb7911b686a293cad29e8809990981f962cb2060db465f28f",
+      "sameBytes": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts",
+      "originalSHA": "986313bb1059f8829c4b000bc9ad0a48be113e753377bdb2d572508e686c5ddd",
+      "currentSHA": "986313bb1059f8829c4b000bc9ad0a48be113e753377bdb2d572508e686c5ddd",
+      "sameBytes": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+      "originalSHA": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111",
+      "currentSHA": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111",
+      "sameBytes": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf/ability-assembly.test.ts",
+      "originalSHA": "c79fc629c660209d6e456f62662108314be3790ad4be8be462d641bd687bfa5f",
+      "currentSHA": "c79fc629c660209d6e456f62662108314be3790ad4be8be462d641bd687bfa5f",
+      "sameBytes": true
+    }
+  ],
+  "limitations": [
+    "旧 wolf/validation_rules 公开物理路径退休；共享 ability-ports 继续公开同一个新规则表。新声明位置、模块装配和 CJS reexport descriptor 有意变化，不宣称 namespace 任意覆盖等价。",
+    "四原消费程序精确逆向保全部非改动 imports／exports、类型、字面、getter／回调程序，不比较或修改其它角色玩法。",
+    "只做源码证明，不将 AST／emit 当作全行为或全部 cold entry 保证。"
+  ],
+  "approved": true
+}

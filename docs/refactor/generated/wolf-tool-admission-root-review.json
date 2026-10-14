@@ -1,0 +1,73 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/validation_rules.ts",
+      "change": "deleted",
+      "sha256": null,
+      "originalSHA": "87922d58a4b2103e491628cfab30c97bc6c23fbd020f41f89270910c614729c2"
+    },
+    {
+      "path": "backend/src/rulesets/wolf-tool-admission.ts",
+      "change": "added",
+      "sha256": "7e173c7ac467c3da79eeedc9f02a0d1f52b7831e6d4286a16beedb2085e337f6",
+      "originalSHA": null
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/ability-assembly.ts",
+      "change": "modified",
+      "sha256": "7937cea37c1ab26b40b65a869c92216beae7e49436c40d097a80b5125e73577c",
+      "originalSHA": "deb4c05de1113c31e76e7c4f65275311260f4381199977eede5b3a7e541bb990"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/ability-ports.ts",
+      "change": "modified",
+      "sha256": "582285cb5526cc32ecfdc2735e7422f56d0184a7e5a4a53dabdcc9bcbe3017bd",
+      "originalSHA": "e954c51f146c45bb277410f4e9c3f95491206fb8058267b7c223219ab05c5139"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+      "change": "modified",
+      "sha256": "8b71fc9976814327be656d4a49117cac17e9c3a3d678e39f659ca91993b894ac",
+      "originalSHA": "fb838c03ba962b17121b12d9d40d5b42c8af6f79909360e072028d98810c68c5"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "change": "modified",
+      "sha256": "71c539a3431df993f9c09904ebe4363bc17781b374d508dc76bf1314d6bd14ac",
+      "originalSHA": "0b2f635ec8f932cb7de8b866bcf2dce2e5a99810db235a9d5333ed8bcc22942b"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+      "change": "added",
+      "sha256": "ca1bd306f95eb2c673f2f742adfbd26cf002cb73058a8ab974aa92d7f6bcc544",
+      "originalSHA": null
+    }
+  ],
+  "baseCommit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+  "scopeSHA256": "01560bcc41f89bb4aada9cff71d95755ea1710a52e74e1b71c8c43caadcea35b",
+  "documentation": {
+    "path": "docs/refactor/wolf-tool-admission.md",
+    "sha256": "16b4ff05c5f3c24042043c63dc803c272a2e4cc9ae661527cc2bfa53f2c9b239"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/wolf-tool-admission-evidence.json",
+    "sha256": "6a2b817c3b0935a37d503a736387a15d95a45a4733a7e77e4d8f1a0a9b59d4bb"
+  },
+  "checks": [
+    "6当前与1删除源码最终SHA/actualf5245Git before及7controls完整字节核",
+    "四真实消费者9声明route/comment精确逆全文同；主体原3callback真实initializer/完整newowner五程序十raw/11物理实体保持",
+    "真实kill3args/2target读取，weddingSetup优先day0不落普通permissions，自爆公共ctx先解构、phase/window通过才检查已取allow，错误不回滚",
+    "普通map/ref可写，derived spread原捕获；Beauty每次member-call查当前callback并保table receiver，Registry与actualstage/payment不改",
+    "Wolf查询固定Mist→Noble→alive→Evil→Nightmare，bind原顺序只捕获World，当前候选不授许可；Ghost两query公开仍同authority声明",
+    "新3日志0fail42及原1/21两执行；newwrapper exit0非独立Bun exit声明；typedReason fixture首两真红最终failed-only1bcc94/0，原局部getter不补未读reason或宽生产类型",
+    "29artifact及正式MD核真，机器expecterror token保、解释已中文；Type/owner/annotation末桥保护采样时点不重绿色",
+    "有限398静态预编辑图可增加Ghost setup/factory加载，不主张冻结全共同依赖或所有历史cold/CJS反射布局等价"
+  ],
+  "testsRunByRoot": 0,
+  "limits": [
+    "仅本批准入完整归属；WolfTeam等其它I04/期望P9仍需继续",
+    "旧privateleaf删除无桥；既有public能力端口继续引用新canonicalowner，真实API/加载来源差异明确"
+  ]
+}

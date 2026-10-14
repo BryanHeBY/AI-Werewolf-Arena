@@ -1,22 +1,24 @@
 /**
- * 负责狼聊、狼刀及自爆的校验贡献。输入为可信演员权限、阶段／窗口和提交工具，输出为原首个规则拒绝或预检通过。
- * 原 pass 检查之后才读取公开的只读狼刀候选；校验不消费库存、不制造狼刀或提交效果。
+ * 负责普通狼狼聊、狼刀和自爆的完整工具准入组合，供共享普通狼装配及派生角色引用。
+ * 输入为当前角色运行政策、原 World、阶段／窗口和工具上下文；输出为原首个拒绝或 null。
+ * 婚礼狼刀先由鬼魂新娘原权威复验，否则依次检查狼队刀权、阶段、工具、pass 与只读目标贡献。
+ * 同一可写规则表保留 callback 引用；派生展开与晚读取仍发生在原 profile／Registry 调用点。
+ * 准入不执行工具、付款、开启窗口或授予租约；候选允许结果不能代替真正提交时的权限复验。
  */
-import { canRoleSelfDestruct } from "../self_destruct_capability";
-import { bindWolfKnifeTargetQuery } from "./ports";
+import { canRoleSelfDestruct } from "../game/mechanisms/roles/self_destruct_capability";
+import { bindWolfKnifeTargetQuery } from "../game/mechanisms/roles/wolf/ports";
 import {
   weddingMember,
   weddingSetup,
   ghostBrideReady,
   canSubmitWeddingTool,
-} from "../ghost_bride/authority";
+} from "../game/mechanisms/roles/ghost_bride/ports";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
-/** 文件说明：狼人工具校验规则。 */
-import { ActionWindow, Phase } from "../../../../core/domain/model";
-import { ToolRuleMap } from "../../validation/contracts";
-import { wolfTeamPermissions } from "../wolf_team";
+import { ActionWindow, Phase } from "../core/domain/model";
+import type { ToolRuleMap } from "../game/mechanisms/validation/contracts";
+import { wolfTeamPermissions } from "../game/mechanisms/roles/wolf_team";
 
-/** 狼人工具校验规则集合。 */
+/** 三工具保持各自完整首失败顺序；不把婚礼刀权、普通候选或自爆窗口统一成新授权策略。 */
 export const WOLF_VALIDATION_RULES: ToolRuleMap = {
   speak_to_wolves: ({ world, role, roleCatalog, phase }) => {
     if (!wolfTeamPermissions(role, roleCatalog, world).canChat) {
@@ -26,6 +28,7 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
     return null;
   },
   kill_vote: ({ world, actorId, day, ghostBrideScope, role, roleCatalog, toolCall, phase }) => {
+    // 婚礼分支优先；缺省日次仍为 0，不继续读取普通狼队政策或候选。
     if (weddingSetup(world))
       return canSubmitWeddingTool(world, actorId, phase, day ?? 0, ghostBrideScope, toolCall)
         ? null
@@ -37,6 +40,7 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
     if (toolCall.name !== "kill_vote") {
       return { code: RuleError.ToolMismatch };
     }
+    // 原 pass 先于目标查询；非 pass 且首个目标非 null 时，保留三次 args 与两次 target_id 的现场读取。
     if (toolCall.args.abstain) {
       return null;
     }
@@ -57,6 +61,7 @@ export const WOLF_VALIDATION_RULES: ToolRuleMap = {
     allowSelfDestruct,
     toolCall,
   }) => {
+    // 原婚礼成员排除先于角色自爆能力；阶段与窗口关系通过后检查已取出的 allowSelfDestruct，再读工具名／confirm。
     if (weddingSetup(world) && (!ghostBrideReady(world) || weddingMember(world, role)))
       return { code: RuleError.WolfBlastOnly };
     if (!canRoleSelfDestruct(role, roleCatalog)) {

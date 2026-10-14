@@ -1,0 +1,17 @@
+{
+  "phase": "源码修改前的虚拟新owner静态值图；不是最终全图重跑，也不固定所有共同模块字节。",
+  "plannedNewOwner": "backend/src/rulesets/wolf-tool-admission.ts",
+  "nodes": 398,
+  "ownerReturn": null,
+  "toOld": null,
+  "toAssembly": null,
+  "ghostSetupReach": [
+    "backend/src/rulesets/wolf-tool-admission.ts",
+    "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+    "backend/src/game/mechanisms/roles/ghost_bride/setup.ts"
+  ],
+  "limits": [
+    "按真实TS转译后的静态值import/export追踪；未将函数内延迟require当作冷执行，不包含任意动态入口的首次副作用保证。",
+    "新Ghost公开端口会扩大setup/factory/机制出口的静态加载面，不能声称历史完整初始化图相同。"
+  ]
+}

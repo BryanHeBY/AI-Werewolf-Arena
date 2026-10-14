@@ -1,0 +1,1139 @@
+{
+  "schema": "awa-wolf-tool-admission-evidence-v1",
+  "scope": {
+    "baseCommit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+    "source": [
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/validation_rules.ts",
+        "change": "deleted",
+        "sha256": null,
+        "originalSHA": "87922d58a4b2103e491628cfab30c97bc6c23fbd020f41f89270910c614729c2"
+      },
+      {
+        "path": "backend/src/rulesets/wolf-tool-admission.ts",
+        "change": "added",
+        "sha256": "7e173c7ac467c3da79eeedc9f02a0d1f52b7831e6d4286a16beedb2085e337f6",
+        "originalSHA": null
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ability-assembly.ts",
+        "change": "modified",
+        "sha256": "7937cea37c1ab26b40b65a869c92216beae7e49436c40d097a80b5125e73577c",
+        "originalSHA": "deb4c05de1113c31e76e7c4f65275311260f4381199977eede5b3a7e541bb990"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ability-ports.ts",
+        "change": "modified",
+        "sha256": "582285cb5526cc32ecfdc2735e7422f56d0184a7e5a4a53dabdcc9bcbe3017bd",
+        "originalSHA": "e954c51f146c45bb277410f4e9c3f95491206fb8058267b7c223219ab05c5139"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+        "change": "modified",
+        "sha256": "8b71fc9976814327be656d4a49117cac17e9c3a3d678e39f659ca91993b894ac",
+        "originalSHA": "fb838c03ba962b17121b12d9d40d5b42c8af6f79909360e072028d98810c68c5"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+        "change": "modified",
+        "sha256": "71c539a3431df993f9c09904ebe4363bc17781b374d508dc76bf1314d6bd14ac",
+        "originalSHA": "0b2f635ec8f932cb7de8b866bcf2dce2e5a99810db235a9d5333ed8bcc22942b"
+      },
+      {
+        "path": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+        "change": "added",
+        "sha256": "ca1bd306f95eb2c673f2f742adfbd26cf002cb73058a8ab974aa92d7f6bcc544",
+        "originalSHA": null
+      }
+    ],
+    "sourceCount": 7,
+    "presentSourceCount": 6,
+    "deletedSourceCount": 1,
+    "frozen": true,
+    "policy": "仅7owned源；旧规则表完整归规则集，保四其它运行消费程序。后继注释／type-only桥独立绑定收据采样，不触其它55profiles／Grant／Seer／core／Observation或矩阵。"
+  },
+  "originalPrograms": {
+    "baseCommit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+    "actualGitSources": [
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/validation_rules.ts",
+        "sha256": "87922d58a4b2103e491628cfab30c97bc6c23fbd020f41f89270910c614729c2",
+        "actualGitEqual": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ability-assembly.ts",
+        "sha256": "deb4c05de1113c31e76e7c4f65275311260f4381199977eede5b3a7e541bb990",
+        "actualGitEqual": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ability-ports.ts",
+        "sha256": "e954c51f146c45bb277410f4e9c3f95491206fb8058267b7c223219ab05c5139",
+        "actualGitEqual": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+        "sha256": "fb838c03ba962b17121b12d9d40d5b42c8af6f79909360e072028d98810c68c5",
+        "actualGitEqual": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+        "sha256": "0b2f635ec8f932cb7de8b866bcf2dce2e5a99810db235a9d5333ed8bcc22942b",
+        "actualGitEqual": true
+      }
+    ],
+    "originalControls": [
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+        "sha256": "322b1609aa2b9c85af0dfada72e8d464e6068379668f3cf75f55e4138533cf2f",
+        "actualGitEqual": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+        "sha256": "3955b84460f1de82b27fae9f03ed93f73149487f840fa625f370493069dcb1f8",
+        "actualGitEqual": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+        "sha256": "1101191319a3a885eab6c478563bb761e792b66fb29ca14202dba7c84839b293",
+        "actualGitEqual": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+        "sha256": "e20626684cf06fcfb7911b686a293cad29e8809990981f962cb2060db465f28f",
+        "actualGitEqual": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts",
+        "sha256": "986313bb1059f8829c4b000bc9ad0a48be113e753377bdb2d572508e686c5ddd",
+        "actualGitEqual": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "sha256": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111",
+        "actualGitEqual": true
+      },
+      {
+        "path": "backend/tests/unit/features/wolf/ability-assembly.test.ts",
+        "sha256": "c79fc629c660209d6e456f62662108314be3790ad4be8be462d641bd687bfa5f",
+        "actualGitEqual": true
+      }
+    ]
+  },
+  "wholeProgramProof": {
+    "baseCommit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+    "deletedOldOwner": true,
+    "movedInitializer": {
+      "originalOwner": "backend/src/game/mechanisms/roles/wolf/validation_rules.ts",
+      "currentOwner": "backend/src/rulesets/wolf-tool-admission.ts",
+      "initializerNodeCount": 672,
+      "initializerNonCommentLeafCount": 443,
+      "fullTypedInitializerSame": true,
+      "fieldOrder": [
+        "speak_to_wolves",
+        "kill_vote",
+        "self_destruct"
+      ]
+    },
+    "wholePrograms": [
+      {
+        "path": "backend/src/rulesets/wolf-tool-admission.ts",
+        "originalOwner": "backend/src/game/mechanisms/roles/wolf/validation_rules.ts",
+        "basis": "真实新owner完整程序；仅六个依赖路由＋显式 type import 精确逆，绝不恢复旧完整函数体。",
+        "nonCommentNodeCount": 785,
+        "nonCommentLeafCount": 508,
+        "sameTokens": true,
+        "sameShape": true,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "originalOutputSHA": "c36cc6773ac3fb3b2afe9b55dd6df80caeadce9ed1fdfe84efd690a195536e13",
+            "currentInverseOutputSHA": "c36cc6773ac3fb3b2afe9b55dd6df80caeadce9ed1fdfe84efd690a195536e13",
+            "rawEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "originalOutputSHA": "4532eceac7ea69db38034fef749b089b021fe0c1dd727f7bec35237ee1f3c08c",
+            "currentInverseOutputSHA": "4532eceac7ea69db38034fef749b089b021fe0c1dd727f7bec35237ee1f3c08c",
+            "rawEqual": true
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ability-assembly.ts",
+        "originalSHA": "deb4c05de1113c31e76e7c4f65275311260f4381199977eede5b3a7e541bb990",
+        "currentSHA": "7937cea37c1ab26b40b65a869c92216beae7e49436c40d097a80b5125e73577c",
+        "exactForwardInverseBytes": true,
+        "nonCommentNodeCount": 567,
+        "nonCommentLeafCount": 372,
+        "sameTokens": true,
+        "sameShape": true,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "originalOutputSHA": "f34eb841fc006a957bb7da8b724fdc29a9a246fd5c5927f74e0bdf5c2d00ddb5",
+            "currentInverseOutputSHA": "f34eb841fc006a957bb7da8b724fdc29a9a246fd5c5927f74e0bdf5c2d00ddb5",
+            "rawEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "originalOutputSHA": "94d7e58570e432b623a4279b738dba98911281009b8998690b953dc66a6b438a",
+            "currentInverseOutputSHA": "94d7e58570e432b623a4279b738dba98911281009b8998690b953dc66a6b438a",
+            "rawEqual": true
+          }
+        ],
+        "actualRuntimeRawSame": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ability-ports.ts",
+        "originalSHA": "e954c51f146c45bb277410f4e9c3f95491206fb8058267b7c223219ab05c5139",
+        "currentSHA": "582285cb5526cc32ecfdc2735e7422f56d0184a7e5a4a53dabdcc9bcbe3017bd",
+        "exactForwardInverseBytes": true,
+        "nonCommentNodeCount": 61,
+        "nonCommentLeafCount": 37,
+        "sameTokens": true,
+        "sameShape": true,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "originalOutputSHA": "7ccee550513913dcf879e3cd81c62d79d995ea68f2048571aede040aaf076b42",
+            "currentInverseOutputSHA": "7ccee550513913dcf879e3cd81c62d79d995ea68f2048571aede040aaf076b42",
+            "rawEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "originalOutputSHA": "57c3a208790667b810d8378ff4761cff74b25e5bf61af7f04dfc628ff7a97bd4",
+            "currentInverseOutputSHA": "57c3a208790667b810d8378ff4761cff74b25e5bf61af7f04dfc628ff7a97bd4",
+            "rawEqual": true
+          }
+        ],
+        "actualRuntimeRawSame": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+        "originalSHA": "fb838c03ba962b17121b12d9d40d5b42c8af6f79909360e072028d98810c68c5",
+        "currentSHA": "8b71fc9976814327be656d4a49117cac17e9c3a3d678e39f659ca91993b894ac",
+        "exactForwardInverseBytes": true,
+        "nonCommentNodeCount": 381,
+        "nonCommentLeafCount": 245,
+        "sameTokens": true,
+        "sameShape": true,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "originalOutputSHA": "9c9434e407933ecdb61fdb91b9d027883ae391f8949279ea87d021879d5f0e30",
+            "currentInverseOutputSHA": "9c9434e407933ecdb61fdb91b9d027883ae391f8949279ea87d021879d5f0e30",
+            "rawEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "originalOutputSHA": "ababe193722e30edb184c612069188cbce46cfffe5459a669b84c8fdbe62e6c8",
+            "currentInverseOutputSHA": "ababe193722e30edb184c612069188cbce46cfffe5459a669b84c8fdbe62e6c8",
+            "rawEqual": true
+          }
+        ],
+        "actualRuntimeRawSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+        "originalSHA": "0b2f635ec8f932cb7de8b866bcf2dce2e5a99810db235a9d5333ed8bcc22942b",
+        "currentSHA": "71c539a3431df993f9c09904ebe4363bc17781b374d508dc76bf1314d6bd14ac",
+        "exactForwardInverseBytes": true,
+        "nonCommentNodeCount": 88,
+        "nonCommentLeafCount": 55,
+        "sameTokens": true,
+        "sameShape": true,
+        "outputs": [
+          {
+            "module": "ESNext",
+            "originalOutputSHA": "ff2e07e3596eb40cabad3d1725dd00aad4be108de65c27157a5707668798579d",
+            "currentInverseOutputSHA": "ff2e07e3596eb40cabad3d1725dd00aad4be108de65c27157a5707668798579d",
+            "rawEqual": true
+          },
+          {
+            "module": "CommonJS",
+            "originalOutputSHA": "1b6a079553a7d36391c9306ec0412af0130dbdbb88d341b75b7c8159fb569e54",
+            "currentInverseOutputSHA": "1b6a079553a7d36391c9306ec0412af0130dbdbb88d341b75b7c8159fb569e54",
+            "rawEqual": true
+          }
+        ],
+        "actualRuntimeRawSame": false
+      }
+    ],
+    "allMovedBindings": [
+      {
+        "localName": "canRoleSelfDestruct",
+        "original": {
+          "name": "canRoleSelfDestruct",
+          "imported": "canRoleSelfDestruct",
+          "from": "../self_destruct_capability",
+          "typeOnly": false
+        },
+        "current": {
+          "name": "canRoleSelfDestruct",
+          "imported": "canRoleSelfDestruct",
+          "from": "../game/mechanisms/roles/self_destruct_capability",
+          "typeOnly": false
+        },
+        "originalEndpoint": {
+          "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+          "name": "canRoleSelfDestruct"
+        },
+        "currentEndpoint": {
+          "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+          "name": "canRoleSelfDestruct"
+        },
+        "sameEndpoint": true,
+        "typeOnlyDelta": false
+      },
+      {
+        "localName": "bindWolfKnifeTargetQuery",
+        "original": {
+          "name": "bindWolfKnifeTargetQuery",
+          "imported": "bindWolfKnifeTargetQuery",
+          "from": "./ports",
+          "typeOnly": false
+        },
+        "current": {
+          "name": "bindWolfKnifeTargetQuery",
+          "imported": "bindWolfKnifeTargetQuery",
+          "from": "../game/mechanisms/roles/wolf/ports",
+          "typeOnly": false
+        },
+        "originalEndpoint": {
+          "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+          "name": "bindWolfKnifeTargetQuery"
+        },
+        "currentEndpoint": {
+          "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+          "name": "bindWolfKnifeTargetQuery"
+        },
+        "sameEndpoint": true,
+        "typeOnlyDelta": false
+      },
+      {
+        "localName": "weddingMember",
+        "original": {
+          "name": "weddingMember",
+          "imported": "weddingMember",
+          "from": "../ghost_bride/authority",
+          "typeOnly": false
+        },
+        "current": {
+          "name": "weddingMember",
+          "imported": "weddingMember",
+          "from": "../game/mechanisms/roles/ghost_bride/ports",
+          "typeOnly": false
+        },
+        "originalEndpoint": {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "name": "weddingMember"
+        },
+        "currentEndpoint": {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "name": "weddingMember"
+        },
+        "sameEndpoint": true,
+        "typeOnlyDelta": false
+      },
+      {
+        "localName": "weddingSetup",
+        "original": {
+          "name": "weddingSetup",
+          "imported": "weddingSetup",
+          "from": "../ghost_bride/authority",
+          "typeOnly": false
+        },
+        "current": {
+          "name": "weddingSetup",
+          "imported": "weddingSetup",
+          "from": "../game/mechanisms/roles/ghost_bride/ports",
+          "typeOnly": false
+        },
+        "originalEndpoint": {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "name": "weddingSetup"
+        },
+        "currentEndpoint": {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "name": "weddingSetup"
+        },
+        "sameEndpoint": true,
+        "typeOnlyDelta": false
+      },
+      {
+        "localName": "ghostBrideReady",
+        "original": {
+          "name": "ghostBrideReady",
+          "imported": "ghostBrideReady",
+          "from": "../ghost_bride/authority",
+          "typeOnly": false
+        },
+        "current": {
+          "name": "ghostBrideReady",
+          "imported": "ghostBrideReady",
+          "from": "../game/mechanisms/roles/ghost_bride/ports",
+          "typeOnly": false
+        },
+        "originalEndpoint": {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "name": "ghostBrideReady"
+        },
+        "currentEndpoint": {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "name": "ghostBrideReady"
+        },
+        "sameEndpoint": true,
+        "typeOnlyDelta": false
+      },
+      {
+        "localName": "canSubmitWeddingTool",
+        "original": {
+          "name": "canSubmitWeddingTool",
+          "imported": "canSubmitWeddingTool",
+          "from": "../ghost_bride/authority",
+          "typeOnly": false
+        },
+        "current": {
+          "name": "canSubmitWeddingTool",
+          "imported": "canSubmitWeddingTool",
+          "from": "../game/mechanisms/roles/ghost_bride/ports",
+          "typeOnly": false
+        },
+        "originalEndpoint": {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "name": "canSubmitWeddingTool"
+        },
+        "currentEndpoint": {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "name": "canSubmitWeddingTool"
+        },
+        "sameEndpoint": true,
+        "typeOnlyDelta": false
+      },
+      {
+        "localName": "RuleError",
+        "original": {
+          "name": "RuleError",
+          "imported": "RuleError",
+          "from": "@ai-werewolf-arena/game-contract",
+          "typeOnly": false
+        },
+        "current": {
+          "name": "RuleError",
+          "imported": "RuleError",
+          "from": "@ai-werewolf-arena/game-contract",
+          "typeOnly": false
+        },
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/errors.ts",
+          "name": "RuleError"
+        },
+        "currentEndpoint": {
+          "path": "packages/game-contract/src/errors.ts",
+          "name": "RuleError"
+        },
+        "sameEndpoint": true,
+        "typeOnlyDelta": false
+      },
+      {
+        "localName": "ActionWindow",
+        "original": {
+          "name": "ActionWindow",
+          "imported": "ActionWindow",
+          "from": "../../../../core/domain/model",
+          "typeOnly": false
+        },
+        "current": {
+          "name": "ActionWindow",
+          "imported": "ActionWindow",
+          "from": "../core/domain/model",
+          "typeOnly": false
+        },
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "ActionWindow"
+        },
+        "currentEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "ActionWindow"
+        },
+        "sameEndpoint": true,
+        "typeOnlyDelta": false
+      },
+      {
+        "localName": "Phase",
+        "original": {
+          "name": "Phase",
+          "imported": "Phase",
+          "from": "../../../../core/domain/model",
+          "typeOnly": false
+        },
+        "current": {
+          "name": "Phase",
+          "imported": "Phase",
+          "from": "../core/domain/model",
+          "typeOnly": false
+        },
+        "originalEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Phase"
+        },
+        "currentEndpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "name": "Phase"
+        },
+        "sameEndpoint": true,
+        "typeOnlyDelta": false
+      },
+      {
+        "localName": "ToolRuleMap",
+        "original": {
+          "name": "ToolRuleMap",
+          "imported": "ToolRuleMap",
+          "from": "../../validation/contracts",
+          "typeOnly": false
+        },
+        "current": {
+          "name": "ToolRuleMap",
+          "imported": "ToolRuleMap",
+          "from": "../game/mechanisms/validation/contracts",
+          "typeOnly": true
+        },
+        "originalEndpoint": {
+          "path": "backend/src/game/mechanisms/validation/contracts.ts",
+          "name": "ToolRuleMap"
+        },
+        "currentEndpoint": {
+          "path": "backend/src/game/mechanisms/validation/contracts.ts",
+          "name": "ToolRuleMap"
+        },
+        "sameEndpoint": true,
+        "typeOnlyDelta": true
+      },
+      {
+        "localName": "wolfTeamPermissions",
+        "original": {
+          "name": "wolfTeamPermissions",
+          "imported": "wolfTeamPermissions",
+          "from": "../wolf_team",
+          "typeOnly": false
+        },
+        "current": {
+          "name": "wolfTeamPermissions",
+          "imported": "wolfTeamPermissions",
+          "from": "../game/mechanisms/roles/wolf_team",
+          "typeOnly": false
+        },
+        "originalEndpoint": {
+          "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+          "name": "wolfTeamPermissions"
+        },
+        "currentEndpoint": {
+          "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+          "name": "wolfTeamPermissions"
+        },
+        "sameEndpoint": true,
+        "typeOnlyDelta": false
+      }
+    ],
+    "controls": [
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_beauty/profile.ts",
+        "originalSHA": "322b1609aa2b9c85af0dfada72e8d464e6068379668f3cf75f55e4138533cf2f",
+        "currentSHA": "322b1609aa2b9c85af0dfada72e8d464e6068379668f3cf75f55e4138533cf2f",
+        "sameBytes": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wild_child/profile.ts",
+        "originalSHA": "3955b84460f1de82b27fae9f03ed93f73149487f840fa625f370493069dcb1f8",
+        "currentSHA": "3955b84460f1de82b27fae9f03ed93f73149487f840fa625f370493069dcb1f8",
+        "sameBytes": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf_team.ts",
+        "originalSHA": "1101191319a3a885eab6c478563bb761e792b66fb29ca14202dba7c84839b293",
+        "currentSHA": "1101191319a3a885eab6c478563bb761e792b66fb29ca14202dba7c84839b293",
+        "sameBytes": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/self_destruct_capability.ts",
+        "originalSHA": "e20626684cf06fcfb7911b686a293cad29e8809990981f962cb2060db465f28f",
+        "currentSHA": "e20626684cf06fcfb7911b686a293cad29e8809990981f962cb2060db465f28f",
+        "sameBytes": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/validation/tool_validation_rule_registry.ts",
+        "originalSHA": "986313bb1059f8829c4b000bc9ad0a48be113e753377bdb2d572508e686c5ddd",
+        "currentSHA": "986313bb1059f8829c4b000bc9ad0a48be113e753377bdb2d572508e686c5ddd",
+        "sameBytes": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+        "originalSHA": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111",
+        "currentSHA": "3f00ad94cee4f48d66c5bc55725087cbd341159de9b66385ce920d7f69933111",
+        "sameBytes": true
+      },
+      {
+        "path": "backend/tests/unit/features/wolf/ability-assembly.test.ts",
+        "originalSHA": "c79fc629c660209d6e456f62662108314be3790ad4be8be462d641bd687bfa5f",
+        "currentSHA": "c79fc629c660209d6e456f62662108314be3790ad4be8be462d641bd687bfa5f",
+        "sameBytes": true
+      }
+    ],
+    "limitations": [
+      "旧 wolf/validation_rules 公开物理路径退休；共享 ability-ports 继续公开同一个新规则表。新声明位置、模块装配和 CJS reexport descriptor 有意变化，不宣称 namespace 任意覆盖等价。",
+      "四原消费程序精确逆向保全部非改动 imports／exports、类型、字面、getter／回调程序，不比较或修改其它角色玩法。",
+      "只做源码证明，不将 AST／emit 当作全行为或全部 cold entry 保证。"
+    ],
+    "approved": true
+  },
+  "allFormsInventory": {
+    "baseCommit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+    "scanRootFiles": 1710,
+    "forms": [
+      "import",
+      "export including star",
+      "importType and typeof-import",
+      "literal import()/require()",
+      "importEquals"
+    ],
+    "originalDirectSites": [
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ability-assembly.ts",
+        "form": "import",
+        "specifier": "./validation_rules"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ability-ports.ts",
+        "form": "export",
+        "specifier": "./validation_rules"
+      }
+    ],
+    "currentCanonicalSites": [
+      {
+        "path": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+        "sha256": "09e94cf3d533fd1154820eeaa47e17c28bd95720a2cbafa455aa173c84bf8ba1",
+        "line": 14,
+        "form": "import",
+        "module": "../../../src/rulesets/wolf-tool-admission",
+        "target": "backend/src/rulesets/wolf-tool-admission.ts",
+        "names": [
+          {
+            "name": "WOLF_VALIDATION_RULES",
+            "imported": "WOLF_VALIDATION_RULES",
+            "typeOnly": false
+          }
+        ],
+        "compileNegative": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ability-ports.ts",
+        "sha256": "582285cb5526cc32ecfdc2735e7422f56d0184a7e5a4a53dabdcc9bcbe3017bd",
+        "line": 10,
+        "form": "export",
+        "module": "../../../../rulesets/wolf-tool-admission",
+        "target": "backend/src/rulesets/wolf-tool-admission.ts",
+        "names": [
+          {
+            "name": "WOLF_VALIDATION_RULES",
+            "imported": "WOLF_VALIDATION_RULES",
+            "typeOnly": false
+          }
+        ],
+        "compileNegative": false
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ability-assembly.ts",
+        "sha256": "7937cea37c1ab26b40b65a869c92216beae7e49436c40d097a80b5125e73577c",
+        "line": 15,
+        "form": "import",
+        "module": "../../../../rulesets/wolf-tool-admission",
+        "target": "backend/src/rulesets/wolf-tool-admission.ts",
+        "names": [
+          {
+            "name": "WOLF_VALIDATION_RULES",
+            "imported": "WOLF_VALIDATION_RULES",
+            "typeOnly": false
+          }
+        ],
+        "compileNegative": false
+      }
+    ],
+    "retiredSites": [
+      {
+        "path": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+        "sha256": "09e94cf3d533fd1154820eeaa47e17c28bd95720a2cbafa455aa173c84bf8ba1",
+        "line": 24,
+        "form": "importType",
+        "module": "../../../src/game/mechanisms/roles/wolf/validation_rules",
+        "target": "backend/src/game/mechanisms/roles/wolf/validation_rules.ts",
+        "names": [],
+        "compileNegative": true
+      }
+    ],
+    "nonliteralLoadCount": 1,
+    "nonliteralLoadLimit": "遍历发现但未解析非字面模块表达式；当前字面端点全面扫描不等于仓外或任意计算模块入口保证。",
+    "expectedConsumerEndpoint": "backend/src/rulesets/wolf-tool-admission.ts",
+    "approved": true
+  },
+  "receipts": {
+    "baseCommit": "f524203283956d8c59eb40bb673f071a6b1ec104",
+    "newTests": {
+      "terminalChunk": "8fea5c",
+      "wrapperExitCode": 0,
+      "subprocessExitCodeSeparatelyCaptured": false,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 42,
+      "executions": 1,
+      "log": "docs/refactor/generated/wolf-tool-admission-new-tests.log",
+      "limit": "该工具调用末cat显示日志，记录Bun日志3pass0fail；不把wrapper返回状态当作独立Bun进程状态。原运行程序与最终类型／注释精度通过全输出桥保持。"
+    },
+    "originalTest": {
+      "terminalChunk": "a0e9e2",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 21,
+      "filtered": 2,
+      "executions": 1,
+      "case": "ordinary wolf registration and derived spreads keep shared references and original overrides",
+      "log": "docs/refactor/generated/wolf-tool-admission-original-test.log"
+    },
+    "successfulTotal": {
+      "distinctCases": 4,
+      "assertions": 63,
+      "executions": 2,
+      "limit": "新3和原1分两次执行；没有重跑任一绿色用例。"
+    },
+    "finiteTypes": {
+      "roots": 7,
+      "first": {
+        "session": 26921,
+        "launchChunk": "eedd10",
+        "terminalChunk": "edb9a3",
+        "exitCode": 2,
+        "log": "docs/refactor/generated/wolf-tool-admission-types.log",
+        "diagnostics": 1
+      },
+      "firstFailedOnly": {
+        "roots": 1,
+        "session": 58645,
+        "launchChunk": "b7bdf7",
+        "terminalChunk": "9b4d8f",
+        "exitCode": 2,
+        "log": "docs/refactor/generated/wolf-tool-admission-types-failed-only-first.log",
+        "diagnostics": 1
+      },
+      "finalFailedOnly": {
+        "roots": 1,
+        "session": 67657,
+        "launchChunk": "2b5747",
+        "terminalChunk": "1bcc94",
+        "exitCode": 0,
+        "log": "docs/refactor/generated/wolf-tool-admission-types-failed-only-final.log"
+      },
+      "diagnosis": "首次误认为confirmboolean过宽，显式true未解决；真实原因是局部getter夹具不构造未读reason。末局部args类型断言保持原badobject／trace／断言，未宽化生产ToolCall或准入。",
+      "runtimeProgramBridges": [
+        "docs/refactor/generated/wolf-tool-admission-type-fix.json",
+        "docs/refactor/generated/wolf-tool-admission-type-fix-final.json",
+        "docs/refactor/generated/wolf-tool-admission-unit-final-comment-bridge.json"
+      ]
+    },
+    "completeProgramProof": {
+      "terminalChunk": "02cd63",
+      "exitCode": 0,
+      "actualInitializerNodes": 672,
+      "actualInitializerNonCommentLeaves": 443,
+      "wholePrograms": 5,
+      "mappedWholeESNextAndCJSOutputs": 10,
+      "allMovedNamedBindings": 11,
+      "controls": 7,
+      "report": "docs/refactor/generated/wolf-tool-admission-proof.json",
+      "log": "docs/refactor/generated/wolf-tool-admission-proof.log",
+      "limit": "完整实际新map和新模块精确路由逆，不恢复原整个body；原四consumer运行程序原样。后继owner两条注释桥独立记录，不伪重跑主体证明。"
+    },
+    "heads": {
+      "terminalChunk": "09e746",
+      "exitCode": 0,
+      "sources": 6,
+      "documentationPaths": 504,
+      "diagnostics": 0,
+      "missingChineseHeads": 0,
+      "report": "docs/refactor/generated/wolf-tool-admission-heads.json",
+      "log": "docs/refactor/generated/wolf-tool-admission-heads.log",
+      "limit": "真实职责检查和中文头存在性分别计；后继类型／inline注释不改这些职责头，收据保持原采样SHA。"
+    },
+    "allFormsInventory": {
+      "terminalChunk": "848a01",
+      "exitCode": 0,
+      "report": "docs/refactor/generated/wolf-tool-admission-inventory.json",
+      "log": "docs/refactor/generated/wolf-tool-admission-inventory.log",
+      "limit": "1710实际代码文件；两个原直接入口迁移、三个新canonical站点、一处显式类型退休负例；发现一个非字面load未推断。"
+    },
+    "finalOwnerCommentBridge": {
+      "terminalChunk": "9a3790",
+      "exitCode": 0,
+      "report": "docs/refactor/generated/wolf-tool-admission-final-comment-bridge.json"
+    },
+    "finalUnitChineseCommentBridge": {
+      "terminalChunk": "48367e",
+      "exitCode": 0,
+      "report": "docs/refactor/generated/wolf-tool-admission-unit-final-comment-bridge.json"
+    },
+    "diffCheck": {
+      "terminalChunk": "48367e",
+      "exitCode": 0,
+      "scope": [
+        "backend/src/game/mechanisms/roles/wolf/validation_rules.ts",
+        "backend/src/rulesets/wolf-tool-admission.ts",
+        "backend/src/game/mechanisms/roles/wolf/ability-assembly.ts",
+        "backend/src/game/mechanisms/roles/wolf/ability-ports.ts",
+        "backend/src/game/mechanisms/roles/wolf/ports.ts",
+        "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+        "backend/tests/unit/rulesets/wolf-tool-admission.test.ts"
+      ],
+      "limit": "精确tracked差分检查；新文件由源码／compiler证明核语法与正文，不声称gitdiffcheck枚举untracked内容。"
+    }
+  },
+  "headsAtActualCapture": {
+    "source": [
+      {
+        "path": "backend/src/rulesets/wolf-tool-admission.ts",
+        "sha256": "7985094beb41bb6b1301bc46eac2a5a086c8f293b20d7446a69017833647792a"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ability-assembly.ts",
+        "sha256": "7937cea37c1ab26b40b65a869c92216beae7e49436c40d097a80b5125e73577c"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ability-ports.ts",
+        "sha256": "582285cb5526cc32ecfdc2735e7422f56d0184a7e5a4a53dabdcc9bcbe3017bd"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+        "sha256": "8b71fc9976814327be656d4a49117cac17e9c3a3d678e39f659ca91993b894ac"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+        "sha256": "71c539a3431df993f9c09904ebe4363bc17781b374d508dc76bf1314d6bd14ac"
+      },
+      {
+        "path": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+        "sha256": "ab6649c25b04772d7d14512a591e1a4617e077989c596e4237ff15a793e1c72f"
+      }
+    ],
+    "documentationPathCount": 504,
+    "diagnostics": [],
+    "missingChineseHead": [],
+    "limit": "职责形状检查与中文头存在性分别记录；源码真实规则及顺序仍由独立审查确认。"
+  },
+  "postCaptureBridges": {
+    "firstTypeAttempt": {
+      "path": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+      "beforeText": "/**\n * 单元测试验证普通狼准入组合的可写表身份、原访问器顺序和首失败前缀。\n * 输入为真实内存 World、角色目录、原婚礼安装以及测试自有 getter；输出采用字面规则码与 trace。\n * 只校验既有上下文，不执行狼刀、自爆或付款；派生表／访问器的临时改动在 finally 恢复。\n * 候选名单、成员知识与角色标签不制造回合许可，预期不由生产校验函数生成。\n */\nimport { expect, test } from \"bun:test\";\nimport { ActionWindow, Camp, Phase, Role, RuleError, type ToolCall } from \"@ai-werewolf-arena/game-contract\";\nimport { World } from \"../../../src/core/domain/world\";\nimport { COMPONENT } from \"../../../src/core/domain/components/names\";\nimport { createAliveComponent } from \"../../../src/core/domain/components/alive\";\nimport { createRoleComponent } from \"../../../src/core/domain/components/role\";\nimport { RoleCatalog } from \"../../../src/game/mechanisms/roles/catalog\";\nimport { WOLF_VALIDATION_RULES } from \"../../../src/rulesets/wolf-tool-admission\";\nimport { WOLF_VALIDATION_RULES as publicRules, ORDINARY_WOLF_CONTRIBUTIONS } from \"../../../src/game/mechanisms/roles/wolf/ability-ports\";\nimport { WOLF_BEAUTY_ROLE_PROFILE } from \"../../../src/game/mechanisms/roles/wolf_beauty/profile\";\nimport { WILD_CHILD_ROLE_PROFILE } from \"../../../src/game/mechanisms/roles/wild_child/profile\";\nimport type { ValidationRuleContext } from \"../../../src/game/mechanisms/validation/contracts\";\nimport { bootstrapGame } from \"../../../src/app/bootstrap\";\nimport { ghostBrideBoard, ghostBrideDeck } from \"../../support/features/ghost-bride/builders/scenario\";\n\n// 旧角色私有叶已退休；此被引用类型负例验证原路径不能继续当作公开校验入口。\n// @ts-expect-error the former role-private validation module has been retired\nexport type RetiredWolfRuleOwner = [typeof import(\"../../../src/game/mechanisms/roles/wolf/validation_rules\")];\n\nconst permissions = { recognizedByPack: true, recognizes: \"pack\" as const, canChat: true, canVoteForKill: true };\nfunction fixture(trace: string[] = []) {\n  const world = new World();\n  const players = [Role.Wolf, Role.Villager, Role.Villager].map((kind, i) => {\n    const id = world.createEntity(), role = createRoleComponent(kind, i === 0 ? Camp.Wolf : Camp.Good);\n    world.addComponent(id, COMPONENT.Role, role);\n    world.addComponent(id, COMPONENT.Alive, createAliveComponent());\n    return { id, role };\n  });\n  const profile = {\n    role: Role.Wolf, camp: Camp.Wolf, label: \"literal\", skillBrief: \"literal\",\n    get wolfTeam() {\n      trace.push(\"wolfTeam\");\n      return function(this: unknown, role: typeof players[0][\"role\"], currentWorld?: World) {\n        expect(this).toBeUndefined();\n        expect(role).toBe(players[0]!.role);\n        expect(currentWorld).toBe(world);\n        trace.push(\"permission\");\n        return permissions;\n      };\n    },\n    canSelfDestruct: true,\n  };\n  const roleCatalog = new RoleCatalog([profile], []);\n  const context: ValidationRuleContext = {\n    world, actorId: 1, role: players[0]!.role, roleCatalog, day: 1, phase: Phase.Night,\n    toolCall: { name: \"kill_vote\", args: { target_id: 2, abstain: false } },\n  };\n  return { world, players, profile, context };\n}\n\ntest(\"canonical writable table preserves shared identity and derived capture versus late callback\", () => {\n  const f = fixture(), trace: string[] = [];\n  expect(publicRules).toBe(WOLF_VALIDATION_RULES);\n  expect(ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules).toBe(WOLF_VALIDATION_RULES);\n  const captured = WILD_CHILD_ROLE_PROFILE.runtime.validationRules!.kill_vote;\n  expect(captured).toBe(WOLF_VALIDATION_RULES.kill_vote);\n  const original = Object.getOwnPropertyDescriptor(WOLF_VALIDATION_RULES, \"kill_vote\")!;\n  try {\n    Object.defineProperty(WOLF_VALIDATION_RULES, \"kill_vote\", {\n      configurable: true,\n      get() {\n        trace.push(\"rule\");\n        return function(this: unknown, ctx: ValidationRuleContext) {\n          expect(this).toBe(WOLF_VALIDATION_RULES);\n          expect(ctx).toBe(f.context);\n          trace.push(\"call\");\n          return { code: RuleError.GhostBrideUnavailable };\n        };\n      },\n    });\n    expect(WOLF_BEAUTY_ROLE_PROFILE.runtime.validationRules!.kill_vote!(f.context)).toEqual({ code: RuleError.GhostBrideUnavailable });\n    expect(WOLF_BEAUTY_ROLE_PROFILE.runtime.validationRules!.kill_vote!(f.context)).toEqual({ code: RuleError.GhostBrideUnavailable });\n    expect(WILD_CHILD_ROLE_PROFILE.runtime.validationRules!.kill_vote).toBe(captured);\n    expect(captured!(f.context)).toBeNull();\n    expect(trace).toEqual([\"rule\", \"call\", \"rule\", \"call\"]);\n  } finally {\n    Object.defineProperty(WOLF_VALIDATION_RULES, \"kill_vote\", original);\n  }\n  expect(Object.getOwnPropertyDescriptor(WOLF_VALIDATION_RULES, \"kill_vote\")).toEqual(original);\n});\n\ntest(\"knife keeps three args reads, two late targets and the first thrown prefix without paying\", () => {\n  const trace: string[] = [], f = fixture(trace), rule = WOLF_VALIDATION_RULES.kill_vote!;\n  const failure = new Error(\"literal_second_knife_target_failure\"), before = JSON.stringify(f.players[0]!.role.privateState);\n  let targetReads = 0, fail = true, pass = false;\n  const call: ToolCall = {\n    get name(): \"kill_vote\" { trace.push(\"name\"); return \"kill_vote\"; },\n    get args() {\n      trace.push(\"args\");\n      return {\n        get abstain() { trace.push(\"abstain\"); return pass; },\n        get target_id() {\n          trace.push(\"target\");\n          if (++targetReads === 2 && fail) throw failure;\n          return 2;\n        },\n      };\n    },\n  };\n  const context: ValidationRuleContext = {\n    get world() { trace.push(\"world\"); return f.world; },\n    get actorId() { trace.push(\"actorId\"); return 1; },\n    get day() { trace.push(\"day\"); return 1; },\n    get ghostBrideScope() { trace.push(\"scope\"); return undefined; },\n    get role() { trace.push(\"role\"); return f.players[0]!.role; },\n    get roleCatalog() { trace.push(\"catalog\"); return f.context.roleCatalog; },\n    get toolCall() { trace.push(\"toolCall\"); return call; },\n    get phase() { trace.push(\"phase\"); return Phase.Night; },\n  };\n  const prefix = [\"world\", \"actorId\", \"day\", \"scope\", \"role\", \"catalog\", \"toolCall\", \"phase\", \"wolfTeam\", \"permission\", \"name\", \"args\", \"abstain\"];\n  const original = Object.getOwnPropertyDescriptor(f.world, \"getAliveEntityIds\");\n  Object.defineProperty(f.world, \"getAliveEntityIds\", {\n    configurable: true,\n    get() { trace.push(\"rosterMethod\"); return function(this: World) { expect(this).toBe(f.world); trace.push(\"roster\"); return [1, 2, 3]; }; },\n  });\n  try {\n    expect(() => rule(context)).toThrow(failure);\n    expect(trace).toEqual([...prefix, \"args\", \"target\", \"args\", \"target\"]);\n    expect(JSON.stringify(f.players[0]!.role.privateState)).toBe(before);\n    fail = false; targetReads = 0; trace.length = 0;\n    expect(rule(context)).toBeNull();\n    expect(trace).toEqual([...prefix, \"args\", \"target\", \"args\", \"target\", \"rosterMethod\", \"roster\"]);\n    pass = true; targetReads = 0; trace.length = 0;\n    expect(rule(context)).toBeNull();\n    expect(trace).toEqual(prefix);\n    expect(targetReads).toBe(0);\n  } finally {\n    if (original) Object.defineProperty(f.world, \"getAliveEntityIds\", original);\n    else delete (f.world as Partial<World>).getAliveEntityIds;\n  }\n});\n\ntest(\"wedding takes precedence while self destruct retains phase-window and confirmation short circuits\", () => {\n  const { world } = bootstrapGame(ghostBrideBoard(), { fixedRoles: ghostBrideDeck });\n  const role = world.getComponent(2, COMPONENT.Role)!, trace: string[] = [];\n  const catalog = new RoleCatalog([{\n    role: Role.Wolf, camp: Camp.Wolf, label: \"literal\", skillBrief: \"literal\",\n    get wolfTeam(): typeof permissions { throw new Error(\"ordinary_permission_must_not_run\"); },\n    get canSelfDestruct(): boolean { throw new Error(\"ordinary_blast_must_not_run\"); },\n  }], []);\n  const married: ValidationRuleContext = {\n    world, actorId: 2, role, roleCatalog: catalog, phase: Phase.Day,\n    // 没有原婚礼回合／日次，必须由婚礼权威拒绝，不能回落普通狼刀或自爆资格。\n    toolCall: { name: \"kill_vote\", args: { target_id: 3, abstain: false } },\n  };\n  expect(WOLF_VALIDATION_RULES.kill_vote!(married)).toEqual({ code: RuleError.GhostBrideUnavailable });\n  expect(WOLF_VALIDATION_RULES.self_destruct!(married)).toEqual({ code: RuleError.WolfBlastOnly });\n  const f = fixture();\n  const original = Object.getOwnPropertyDescriptor(f.profile, \"canSelfDestruct\")!;\n  Object.defineProperty(f.profile, \"canSelfDestruct\", { configurable: true, get() { trace.push(\"capability\"); return true; } });\n  const context: ValidationRuleContext = {\n    world: f.world, role: f.players[0]!.role, roleCatalog: f.context.roleCatalog, actorId: 1,\n    phase: Phase.Day, actionWindow: ActionWindow.OnPreVote,\n    allowSelfDestruct: true,\n    get toolCall(): ToolCall {\n      return { get name(): \"self_destruct\" { trace.push(\"name\"); return \"self_destruct\"; }, get args() { trace.push(\"args\"); return { get confirm() { trace.push(\"confirm\"); return true; } }; } };\n    },\n  };\n  try {\n    expect(WOLF_VALIDATION_RULES.self_destruct!(context)).toEqual({ code: RuleError.BlastPhase });\n    expect(trace).toEqual([\"capability\"]);\n    context.phase = Phase.Voting; context.allowSelfDestruct = false; trace.length = 0;\n    expect(WOLF_VALIDATION_RULES.self_destruct!(context)).toEqual({ code: RuleError.BlastDisabled });\n    expect(trace).toEqual([\"capability\"]);\n    context.allowSelfDestruct = true; trace.length = 0;\n    expect(WOLF_VALIDATION_RULES.self_destruct!(context)).toBeNull();\n    expect(trace).toEqual([\"capability\", \"name\", \"args\", \"confirm\"]);\n  } finally {\n    Object.defineProperty(f.profile, \"canSelfDestruct\", original);\n  }\n});\n",
+      "beforeSHA": "ab6649c25b04772d7d14512a591e1a4617e077989c596e4237ff15a793e1c72f",
+      "afterSHA": "09e94cf3d533fd1154820eeaa47e17c28bd95720a2cbafa455aa173c84bf8ba1",
+      "from": "get confirm() { trace.push(\"confirm\"); return true; }",
+      "to": "get confirm(): true { trace.push(\"confirm\"); return true; }",
+      "exactInverseBytes": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "beforeSHA": "fe5bd0b7c1887410816e8a188f39a9ab98b4a76673498f183c6fd9a021cc1dae",
+          "afterSHA": "fe5bd0b7c1887410816e8a188f39a9ab98b4a76673498f183c6fd9a021cc1dae",
+          "rawEqual": true
+        },
+        {
+          "module": "CommonJS",
+          "beforeSHA": "48c72a2fea31719b1abd16b4547b5cd6d19232a6dcab9808d930ab3a36f4e797",
+          "afterSHA": "48c72a2fea31719b1abd16b4547b5cd6d19232a6dcab9808d930ab3a36f4e797",
+          "rawEqual": true
+        }
+      ],
+      "basis": "首有限编译仅新unit confirm访问器推导boolean过宽；只显式true类型，运行体／字面／所有预期不变，不重已绿新3或原1。"
+    },
+    "finalLocalType": {
+      "path": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+      "beforeText": "/**\n * 单元测试验证普通狼准入组合的可写表身份、原访问器顺序和首失败前缀。\n * 输入为真实内存 World、角色目录、原婚礼安装以及测试自有 getter；输出采用字面规则码与 trace。\n * 只校验既有上下文，不执行狼刀、自爆或付款；派生表／访问器的临时改动在 finally 恢复。\n * 候选名单、成员知识与角色标签不制造回合许可，预期不由生产校验函数生成。\n */\nimport { expect, test } from \"bun:test\";\nimport { ActionWindow, Camp, Phase, Role, RuleError, type ToolCall } from \"@ai-werewolf-arena/game-contract\";\nimport { World } from \"../../../src/core/domain/world\";\nimport { COMPONENT } from \"../../../src/core/domain/components/names\";\nimport { createAliveComponent } from \"../../../src/core/domain/components/alive\";\nimport { createRoleComponent } from \"../../../src/core/domain/components/role\";\nimport { RoleCatalog } from \"../../../src/game/mechanisms/roles/catalog\";\nimport { WOLF_VALIDATION_RULES } from \"../../../src/rulesets/wolf-tool-admission\";\nimport { WOLF_VALIDATION_RULES as publicRules, ORDINARY_WOLF_CONTRIBUTIONS } from \"../../../src/game/mechanisms/roles/wolf/ability-ports\";\nimport { WOLF_BEAUTY_ROLE_PROFILE } from \"../../../src/game/mechanisms/roles/wolf_beauty/profile\";\nimport { WILD_CHILD_ROLE_PROFILE } from \"../../../src/game/mechanisms/roles/wild_child/profile\";\nimport type { ValidationRuleContext } from \"../../../src/game/mechanisms/validation/contracts\";\nimport { bootstrapGame } from \"../../../src/app/bootstrap\";\nimport { ghostBrideBoard, ghostBrideDeck } from \"../../support/features/ghost-bride/builders/scenario\";\n\n// 旧角色私有叶已退休；此被引用类型负例验证原路径不能继续当作公开校验入口。\n// @ts-expect-error the former role-private validation module has been retired\nexport type RetiredWolfRuleOwner = [typeof import(\"../../../src/game/mechanisms/roles/wolf/validation_rules\")];\n\nconst permissions = { recognizedByPack: true, recognizes: \"pack\" as const, canChat: true, canVoteForKill: true };\nfunction fixture(trace: string[] = []) {\n  const world = new World();\n  const players = [Role.Wolf, Role.Villager, Role.Villager].map((kind, i) => {\n    const id = world.createEntity(), role = createRoleComponent(kind, i === 0 ? Camp.Wolf : Camp.Good);\n    world.addComponent(id, COMPONENT.Role, role);\n    world.addComponent(id, COMPONENT.Alive, createAliveComponent());\n    return { id, role };\n  });\n  const profile = {\n    role: Role.Wolf, camp: Camp.Wolf, label: \"literal\", skillBrief: \"literal\",\n    get wolfTeam() {\n      trace.push(\"wolfTeam\");\n      return function(this: unknown, role: typeof players[0][\"role\"], currentWorld?: World) {\n        expect(this).toBeUndefined();\n        expect(role).toBe(players[0]!.role);\n        expect(currentWorld).toBe(world);\n        trace.push(\"permission\");\n        return permissions;\n      };\n    },\n    canSelfDestruct: true,\n  };\n  const roleCatalog = new RoleCatalog([profile], []);\n  const context: ValidationRuleContext = {\n    world, actorId: 1, role: players[0]!.role, roleCatalog, day: 1, phase: Phase.Night,\n    toolCall: { name: \"kill_vote\", args: { target_id: 2, abstain: false } },\n  };\n  return { world, players, profile, context };\n}\n\ntest(\"canonical writable table preserves shared identity and derived capture versus late callback\", () => {\n  const f = fixture(), trace: string[] = [];\n  expect(publicRules).toBe(WOLF_VALIDATION_RULES);\n  expect(ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules).toBe(WOLF_VALIDATION_RULES);\n  const captured = WILD_CHILD_ROLE_PROFILE.runtime.validationRules!.kill_vote;\n  expect(captured).toBe(WOLF_VALIDATION_RULES.kill_vote);\n  const original = Object.getOwnPropertyDescriptor(WOLF_VALIDATION_RULES, \"kill_vote\")!;\n  try {\n    Object.defineProperty(WOLF_VALIDATION_RULES, \"kill_vote\", {\n      configurable: true,\n      get() {\n        trace.push(\"rule\");\n        return function(this: unknown, ctx: ValidationRuleContext) {\n          expect(this).toBe(WOLF_VALIDATION_RULES);\n          expect(ctx).toBe(f.context);\n          trace.push(\"call\");\n          return { code: RuleError.GhostBrideUnavailable };\n        };\n      },\n    });\n    expect(WOLF_BEAUTY_ROLE_PROFILE.runtime.validationRules!.kill_vote!(f.context)).toEqual({ code: RuleError.GhostBrideUnavailable });\n    expect(WOLF_BEAUTY_ROLE_PROFILE.runtime.validationRules!.kill_vote!(f.context)).toEqual({ code: RuleError.GhostBrideUnavailable });\n    expect(WILD_CHILD_ROLE_PROFILE.runtime.validationRules!.kill_vote).toBe(captured);\n    expect(captured!(f.context)).toBeNull();\n    expect(trace).toEqual([\"rule\", \"call\", \"rule\", \"call\"]);\n  } finally {\n    Object.defineProperty(WOLF_VALIDATION_RULES, \"kill_vote\", original);\n  }\n  expect(Object.getOwnPropertyDescriptor(WOLF_VALIDATION_RULES, \"kill_vote\")).toEqual(original);\n});\n\ntest(\"knife keeps three args reads, two late targets and the first thrown prefix without paying\", () => {\n  const trace: string[] = [], f = fixture(trace), rule = WOLF_VALIDATION_RULES.kill_vote!;\n  const failure = new Error(\"literal_second_knife_target_failure\"), before = JSON.stringify(f.players[0]!.role.privateState);\n  let targetReads = 0, fail = true, pass = false;\n  const call: ToolCall = {\n    get name(): \"kill_vote\" { trace.push(\"name\"); return \"kill_vote\"; },\n    get args() {\n      trace.push(\"args\");\n      return {\n        get abstain() { trace.push(\"abstain\"); return pass; },\n        get target_id() {\n          trace.push(\"target\");\n          if (++targetReads === 2 && fail) throw failure;\n          return 2;\n        },\n      };\n    },\n  };\n  const context: ValidationRuleContext = {\n    get world() { trace.push(\"world\"); return f.world; },\n    get actorId() { trace.push(\"actorId\"); return 1; },\n    get day() { trace.push(\"day\"); return 1; },\n    get ghostBrideScope() { trace.push(\"scope\"); return undefined; },\n    get role() { trace.push(\"role\"); return f.players[0]!.role; },\n    get roleCatalog() { trace.push(\"catalog\"); return f.context.roleCatalog; },\n    get toolCall() { trace.push(\"toolCall\"); return call; },\n    get phase() { trace.push(\"phase\"); return Phase.Night; },\n  };\n  const prefix = [\"world\", \"actorId\", \"day\", \"scope\", \"role\", \"catalog\", \"toolCall\", \"phase\", \"wolfTeam\", \"permission\", \"name\", \"args\", \"abstain\"];\n  const original = Object.getOwnPropertyDescriptor(f.world, \"getAliveEntityIds\");\n  Object.defineProperty(f.world, \"getAliveEntityIds\", {\n    configurable: true,\n    get() { trace.push(\"rosterMethod\"); return function(this: World) { expect(this).toBe(f.world); trace.push(\"roster\"); return [1, 2, 3]; }; },\n  });\n  try {\n    expect(() => rule(context)).toThrow(failure);\n    expect(trace).toEqual([...prefix, \"args\", \"target\", \"args\", \"target\"]);\n    expect(JSON.stringify(f.players[0]!.role.privateState)).toBe(before);\n    fail = false; targetReads = 0; trace.length = 0;\n    expect(rule(context)).toBeNull();\n    expect(trace).toEqual([...prefix, \"args\", \"target\", \"args\", \"target\", \"rosterMethod\", \"roster\"]);\n    pass = true; targetReads = 0; trace.length = 0;\n    expect(rule(context)).toBeNull();\n    expect(trace).toEqual(prefix);\n    expect(targetReads).toBe(0);\n  } finally {\n    if (original) Object.defineProperty(f.world, \"getAliveEntityIds\", original);\n    else delete (f.world as Partial<World>).getAliveEntityIds;\n  }\n});\n\ntest(\"wedding takes precedence while self destruct retains phase-window and confirmation short circuits\", () => {\n  const { world } = bootstrapGame(ghostBrideBoard(), { fixedRoles: ghostBrideDeck });\n  const role = world.getComponent(2, COMPONENT.Role)!, trace: string[] = [];\n  const catalog = new RoleCatalog([{\n    role: Role.Wolf, camp: Camp.Wolf, label: \"literal\", skillBrief: \"literal\",\n    get wolfTeam(): typeof permissions { throw new Error(\"ordinary_permission_must_not_run\"); },\n    get canSelfDestruct(): boolean { throw new Error(\"ordinary_blast_must_not_run\"); },\n  }], []);\n  const married: ValidationRuleContext = {\n    world, actorId: 2, role, roleCatalog: catalog, phase: Phase.Day,\n    // 没有原婚礼回合／日次，必须由婚礼权威拒绝，不能回落普通狼刀或自爆资格。\n    toolCall: { name: \"kill_vote\", args: { target_id: 3, abstain: false } },\n  };\n  expect(WOLF_VALIDATION_RULES.kill_vote!(married)).toEqual({ code: RuleError.GhostBrideUnavailable });\n  expect(WOLF_VALIDATION_RULES.self_destruct!(married)).toEqual({ code: RuleError.WolfBlastOnly });\n  const f = fixture();\n  const original = Object.getOwnPropertyDescriptor(f.profile, \"canSelfDestruct\")!;\n  Object.defineProperty(f.profile, \"canSelfDestruct\", { configurable: true, get() { trace.push(\"capability\"); return true; } });\n  const context: ValidationRuleContext = {\n    world: f.world, role: f.players[0]!.role, roleCatalog: f.context.roleCatalog, actorId: 1,\n    phase: Phase.Day, actionWindow: ActionWindow.OnPreVote,\n    allowSelfDestruct: true,\n    get toolCall(): ToolCall {\n      return { get name(): \"self_destruct\" { trace.push(\"name\"); return \"self_destruct\"; }, get args() { trace.push(\"args\"); return { get confirm(): true { trace.push(\"confirm\"); return true; } }; } };\n    },\n  };\n  try {\n    expect(WOLF_VALIDATION_RULES.self_destruct!(context)).toEqual({ code: RuleError.BlastPhase });\n    expect(trace).toEqual([\"capability\"]);\n    context.phase = Phase.Voting; context.allowSelfDestruct = false; trace.length = 0;\n    expect(WOLF_VALIDATION_RULES.self_destruct!(context)).toEqual({ code: RuleError.BlastDisabled });\n    expect(trace).toEqual([\"capability\"]);\n    context.allowSelfDestruct = true; trace.length = 0;\n    expect(WOLF_VALIDATION_RULES.self_destruct!(context)).toBeNull();\n    expect(trace).toEqual([\"capability\", \"name\", \"args\", \"confirm\"]);\n  } finally {\n    Object.defineProperty(f.profile, \"canSelfDestruct\", original);\n  }\n});\n",
+      "beforeSHA": "09e94cf3d533fd1154820eeaa47e17c28bd95720a2cbafa455aa173c84bf8ba1",
+      "afterSHA": "4f1485acda86524cec91ed3551a68ac0de0031e5f78af5ee4f4e4ffd991d716e",
+      "edits": [
+        {
+          "from": "return { get confirm(): true { trace.push(\"confirm\"); return true; } };",
+          "to": "return { get confirm(): true { trace.push(\"confirm\"); return true; } } as Extract<ToolCall, { name: \"self_destruct\" }>[\"args\"];"
+        },
+        {
+          "from": "    get toolCall(): ToolCall {\n      return { get name(): \"self_destruct\"",
+          "to": "    // 此 getter 夹具只构造准入实际读取的 confirm，不经过完整工具 schema；局部类型断言不添加未读 reason。\n    get toolCall(): ToolCall {\n      return { get name(): \"self_destruct\""
+        }
+      ],
+      "exactInverseBytes": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "beforeSHA": "fe5bd0b7c1887410816e8a188f39a9ab98b4a76673498f183c6fd9a021cc1dae",
+          "afterSHA": "fe5bd0b7c1887410816e8a188f39a9ab98b4a76673498f183c6fd9a021cc1dae",
+          "rawEqual": true
+        },
+        {
+          "module": "CommonJS",
+          "beforeSHA": "48c72a2fea31719b1abd16b4547b5cd6d19232a6dcab9808d930ab3a36f4e797",
+          "afterSHA": "48c72a2fea31719b1abd16b4547b5cd6d19232a6dcab9808d930ab3a36f4e797",
+          "rawEqual": true
+        }
+      ],
+      "previousDiagnosisCorrection": "前条把首TS2322误归confirmboolean过宽；实际固定未读reason缺失。显式true后第二次同诊断，保留首两次日志/terminal；现在只局部类型断言标明局部getter夹具，不新增badobject字段或重已绿运行。",
+      "originalRuntimeSampleSourceSHA": "ab6649c25b04772d7d14512a591e1a4617e077989c596e4237ff15a793e1c72f"
+    },
+    "ownerCommentPrecision": {
+      "path": "backend/src/rulesets/wolf-tool-admission.ts",
+      "beforeText": "/**\n * 负责普通狼狼聊、狼刀和自爆的完整工具准入组合，供共享普通狼装配及派生角色引用。\n * 输入为当前角色运行政策、原 World、阶段／窗口和工具上下文；输出为原首个拒绝或 null。\n * 婚礼狼刀先由鬼魂新娘原权威复验，否则依次检查狼队刀权、阶段、工具、pass 与只读目标贡献。\n * 同一可写规则表保留 callback 引用；派生展开与晚读取仍发生在原 profile／Registry 调用点。\n * 准入不执行工具、付款、开启窗口或授予租约；候选允许结果不能代替真正提交时的权限复验。\n */\nimport { canRoleSelfDestruct } from \"../game/mechanisms/roles/self_destruct_capability\";\nimport { bindWolfKnifeTargetQuery } from \"../game/mechanisms/roles/wolf/ports\";\nimport {\n  weddingMember,\n  weddingSetup,\n  ghostBrideReady,\n  canSubmitWeddingTool,\n} from \"../game/mechanisms/roles/ghost_bride/ports\";\nimport { RuleError } from \"@ai-werewolf-arena/game-contract\";\nimport { ActionWindow, Phase } from \"../core/domain/model\";\nimport type { ToolRuleMap } from \"../game/mechanisms/validation/contracts\";\nimport { wolfTeamPermissions } from \"../game/mechanisms/roles/wolf_team\";\n\n/** 三工具保持各自完整首失败顺序；不把婚礼刀权、普通候选或自爆窗口统一成新授权策略。 */\nexport const WOLF_VALIDATION_RULES: ToolRuleMap = {\n  speak_to_wolves: ({ world, role, roleCatalog, phase }) => {\n    if (!wolfTeamPermissions(role, roleCatalog, world).canChat) {\n      return { code: RuleError.WolfChatPermission };\n    }\n    if (phase !== Phase.Night) return { code: RuleError.WolfChatPhase };\n    return null;\n  },\n  kill_vote: ({ world, actorId, day, ghostBrideScope, role, roleCatalog, toolCall, phase }) => {\n    // 婚礼分支优先；缺省日次仍为 0，不继续读取普通狼队政策或候选。\n    if (weddingSetup(world))\n      return canSubmitWeddingTool(world, actorId, phase, day ?? 0, ghostBrideScope, toolCall)\n        ? null\n        : { code: RuleError.GhostBrideUnavailable };\n    if (!wolfTeamPermissions(role, roleCatalog, world).canVoteForKill) {\n      return { code: RuleError.WolfKillPermission };\n    }\n    if (phase !== Phase.Night) return { code: RuleError.WolfKillPhase };\n    if (toolCall.name !== \"kill_vote\") {\n      return { code: RuleError.ToolMismatch };\n    }\n    // 原 pass 先于目标查询；非 pass 保留三次 args 与两次 target_id 的现场读取。\n    if (toolCall.args.abstain) {\n      return null;\n    }\n    if (\n      toolCall.args.target_id === null ||\n      !bindWolfKnifeTargetQuery(world).allows(toolCall.args.target_id)\n    ) {\n      return { code: RuleError.KillTarget };\n    }\n    return null;\n  },\n  self_destruct: ({\n    world,\n    role,\n    roleCatalog,\n    phase,\n    actionWindow,\n    allowSelfDestruct,\n    toolCall,\n  }) => {\n    // 原婚礼成员排除先于角色自爆能力；阶段与窗口关系通过后才读 enabled／confirm。\n    if (weddingSetup(world) && (!ghostBrideReady(world) || weddingMember(world, role)))\n      return { code: RuleError.WolfBlastOnly };\n    if (!canRoleSelfDestruct(role, roleCatalog)) {\n      return { code: RuleError.WolfBlastOnly };\n    }\n    if (phase !== Phase.Day && phase !== Phase.Voting) {\n      return { code: RuleError.BlastPhase };\n    }\n    if (actionWindow === undefined || !Object.values(ActionWindow).includes(actionWindow)) {\n      return { code: RuleError.BlastWindow };\n    }\n    if (phase !== (actionWindow === ActionWindow.OnPreVote ? Phase.Voting : Phase.Day))\n      return { code: RuleError.BlastPhase };\n    if (!allowSelfDestruct) {\n      return { code: RuleError.BlastDisabled };\n    }\n    if (toolCall.name !== \"self_destruct\" || toolCall.args.confirm !== true) {\n      return { code: RuleError.BlastConfirm };\n    }\n    return null;\n  },\n};\n",
+      "beforeSHA": "7985094beb41bb6b1301bc46eac2a5a086c8f293b20d7446a69017833647792a",
+      "afterSHA": "7e173c7ac467c3da79eeedc9f02a0d1f52b7831e6d4286a16beedb2085e337f6",
+      "edits": [
+        {
+          "from": "// 原 pass 先于目标查询；非 pass 保留三次 args 与两次 target_id 的现场读取。",
+          "to": "// 原 pass 先于目标查询；非 pass 且首个目标非 null 时，保留三次 args 与两次 target_id 的现场读取。"
+        },
+        {
+          "from": "// 原婚礼成员排除先于角色自爆能力；阶段与窗口关系通过后才读 enabled／confirm。",
+          "to": "// 原婚礼成员排除先于角色自爆能力；阶段与窗口关系通过后检查已取出的 allowSelfDestruct，再读工具名／confirm。"
+        }
+      ],
+      "exactInverseBytes": true,
+      "nonCommentLeafCount": 509,
+      "wholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "beforeSHA": "771cabd0321db700224834a847085cabe5a33bc1e832872f2e1ed762425294d2",
+          "afterSHA": "771cabd0321db700224834a847085cabe5a33bc1e832872f2e1ed762425294d2",
+          "rawEqual": true
+        },
+        {
+          "module": "CommonJS",
+          "beforeSHA": "8b2d543687b76499f1c1c469e83aea0f0ca94cdcedc8a5f76f23c5692a3cb400",
+          "afterSHA": "8b2d543687b76499f1c1c469e83aea0f0ca94cdcedc8a5f76f23c5692a3cb400",
+          "rawEqual": true
+        }
+      ],
+      "basis": "最终文字精度：null目标原短路；allowSelfDestruct参数getter早于body取出，后置条件只使用局部值。仅注释，不重实际绿用例、类型或主体证据。"
+    },
+    "unitChineseDirective": {
+      "path": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+      "beforeText": "/**\n * 单元测试验证普通狼准入组合的可写表身份、原访问器顺序和首失败前缀。\n * 输入为真实内存 World、角色目录、原婚礼安装以及测试自有 getter；输出采用字面规则码与 trace。\n * 只校验既有上下文，不执行狼刀、自爆或付款；派生表／访问器的临时改动在 finally 恢复。\n * 候选名单、成员知识与角色标签不制造回合许可，预期不由生产校验函数生成。\n */\nimport { expect, test } from \"bun:test\";\nimport { ActionWindow, Camp, Phase, Role, RuleError, type ToolCall } from \"@ai-werewolf-arena/game-contract\";\nimport { World } from \"../../../src/core/domain/world\";\nimport { COMPONENT } from \"../../../src/core/domain/components/names\";\nimport { createAliveComponent } from \"../../../src/core/domain/components/alive\";\nimport { createRoleComponent } from \"../../../src/core/domain/components/role\";\nimport { RoleCatalog } from \"../../../src/game/mechanisms/roles/catalog\";\nimport { WOLF_VALIDATION_RULES } from \"../../../src/rulesets/wolf-tool-admission\";\nimport { WOLF_VALIDATION_RULES as publicRules, ORDINARY_WOLF_CONTRIBUTIONS } from \"../../../src/game/mechanisms/roles/wolf/ability-ports\";\nimport { WOLF_BEAUTY_ROLE_PROFILE } from \"../../../src/game/mechanisms/roles/wolf_beauty/profile\";\nimport { WILD_CHILD_ROLE_PROFILE } from \"../../../src/game/mechanisms/roles/wild_child/profile\";\nimport type { ValidationRuleContext } from \"../../../src/game/mechanisms/validation/contracts\";\nimport { bootstrapGame } from \"../../../src/app/bootstrap\";\nimport { ghostBrideBoard, ghostBrideDeck } from \"../../support/features/ghost-bride/builders/scenario\";\n\n// 旧角色私有叶已退休；此被引用类型负例验证原路径不能继续当作公开校验入口。\n// @ts-expect-error the former role-private validation module has been retired\nexport type RetiredWolfRuleOwner = [typeof import(\"../../../src/game/mechanisms/roles/wolf/validation_rules\")];\n\nconst permissions = { recognizedByPack: true, recognizes: \"pack\" as const, canChat: true, canVoteForKill: true };\nfunction fixture(trace: string[] = []) {\n  const world = new World();\n  const players = [Role.Wolf, Role.Villager, Role.Villager].map((kind, i) => {\n    const id = world.createEntity(), role = createRoleComponent(kind, i === 0 ? Camp.Wolf : Camp.Good);\n    world.addComponent(id, COMPONENT.Role, role);\n    world.addComponent(id, COMPONENT.Alive, createAliveComponent());\n    return { id, role };\n  });\n  const profile = {\n    role: Role.Wolf, camp: Camp.Wolf, label: \"literal\", skillBrief: \"literal\",\n    get wolfTeam() {\n      trace.push(\"wolfTeam\");\n      return function(this: unknown, role: typeof players[0][\"role\"], currentWorld?: World) {\n        expect(this).toBeUndefined();\n        expect(role).toBe(players[0]!.role);\n        expect(currentWorld).toBe(world);\n        trace.push(\"permission\");\n        return permissions;\n      };\n    },\n    canSelfDestruct: true,\n  };\n  const roleCatalog = new RoleCatalog([profile], []);\n  const context: ValidationRuleContext = {\n    world, actorId: 1, role: players[0]!.role, roleCatalog, day: 1, phase: Phase.Night,\n    toolCall: { name: \"kill_vote\", args: { target_id: 2, abstain: false } },\n  };\n  return { world, players, profile, context };\n}\n\ntest(\"canonical writable table preserves shared identity and derived capture versus late callback\", () => {\n  const f = fixture(), trace: string[] = [];\n  expect(publicRules).toBe(WOLF_VALIDATION_RULES);\n  expect(ORDINARY_WOLF_CONTRIBUTIONS.runtime.validationRules).toBe(WOLF_VALIDATION_RULES);\n  const captured = WILD_CHILD_ROLE_PROFILE.runtime.validationRules!.kill_vote;\n  expect(captured).toBe(WOLF_VALIDATION_RULES.kill_vote);\n  const original = Object.getOwnPropertyDescriptor(WOLF_VALIDATION_RULES, \"kill_vote\")!;\n  try {\n    Object.defineProperty(WOLF_VALIDATION_RULES, \"kill_vote\", {\n      configurable: true,\n      get() {\n        trace.push(\"rule\");\n        return function(this: unknown, ctx: ValidationRuleContext) {\n          expect(this).toBe(WOLF_VALIDATION_RULES);\n          expect(ctx).toBe(f.context);\n          trace.push(\"call\");\n          return { code: RuleError.GhostBrideUnavailable };\n        };\n      },\n    });\n    expect(WOLF_BEAUTY_ROLE_PROFILE.runtime.validationRules!.kill_vote!(f.context)).toEqual({ code: RuleError.GhostBrideUnavailable });\n    expect(WOLF_BEAUTY_ROLE_PROFILE.runtime.validationRules!.kill_vote!(f.context)).toEqual({ code: RuleError.GhostBrideUnavailable });\n    expect(WILD_CHILD_ROLE_PROFILE.runtime.validationRules!.kill_vote).toBe(captured);\n    expect(captured!(f.context)).toBeNull();\n    expect(trace).toEqual([\"rule\", \"call\", \"rule\", \"call\"]);\n  } finally {\n    Object.defineProperty(WOLF_VALIDATION_RULES, \"kill_vote\", original);\n  }\n  expect(Object.getOwnPropertyDescriptor(WOLF_VALIDATION_RULES, \"kill_vote\")).toEqual(original);\n});\n\ntest(\"knife keeps three args reads, two late targets and the first thrown prefix without paying\", () => {\n  const trace: string[] = [], f = fixture(trace), rule = WOLF_VALIDATION_RULES.kill_vote!;\n  const failure = new Error(\"literal_second_knife_target_failure\"), before = JSON.stringify(f.players[0]!.role.privateState);\n  let targetReads = 0, fail = true, pass = false;\n  const call: ToolCall = {\n    get name(): \"kill_vote\" { trace.push(\"name\"); return \"kill_vote\"; },\n    get args() {\n      trace.push(\"args\");\n      return {\n        get abstain() { trace.push(\"abstain\"); return pass; },\n        get target_id() {\n          trace.push(\"target\");\n          if (++targetReads === 2 && fail) throw failure;\n          return 2;\n        },\n      };\n    },\n  };\n  const context: ValidationRuleContext = {\n    get world() { trace.push(\"world\"); return f.world; },\n    get actorId() { trace.push(\"actorId\"); return 1; },\n    get day() { trace.push(\"day\"); return 1; },\n    get ghostBrideScope() { trace.push(\"scope\"); return undefined; },\n    get role() { trace.push(\"role\"); return f.players[0]!.role; },\n    get roleCatalog() { trace.push(\"catalog\"); return f.context.roleCatalog; },\n    get toolCall() { trace.push(\"toolCall\"); return call; },\n    get phase() { trace.push(\"phase\"); return Phase.Night; },\n  };\n  const prefix = [\"world\", \"actorId\", \"day\", \"scope\", \"role\", \"catalog\", \"toolCall\", \"phase\", \"wolfTeam\", \"permission\", \"name\", \"args\", \"abstain\"];\n  const original = Object.getOwnPropertyDescriptor(f.world, \"getAliveEntityIds\");\n  Object.defineProperty(f.world, \"getAliveEntityIds\", {\n    configurable: true,\n    get() { trace.push(\"rosterMethod\"); return function(this: World) { expect(this).toBe(f.world); trace.push(\"roster\"); return [1, 2, 3]; }; },\n  });\n  try {\n    expect(() => rule(context)).toThrow(failure);\n    expect(trace).toEqual([...prefix, \"args\", \"target\", \"args\", \"target\"]);\n    expect(JSON.stringify(f.players[0]!.role.privateState)).toBe(before);\n    fail = false; targetReads = 0; trace.length = 0;\n    expect(rule(context)).toBeNull();\n    expect(trace).toEqual([...prefix, \"args\", \"target\", \"args\", \"target\", \"rosterMethod\", \"roster\"]);\n    pass = true; targetReads = 0; trace.length = 0;\n    expect(rule(context)).toBeNull();\n    expect(trace).toEqual(prefix);\n    expect(targetReads).toBe(0);\n  } finally {\n    if (original) Object.defineProperty(f.world, \"getAliveEntityIds\", original);\n    else delete (f.world as Partial<World>).getAliveEntityIds;\n  }\n});\n\ntest(\"wedding takes precedence while self destruct retains phase-window and confirmation short circuits\", () => {\n  const { world } = bootstrapGame(ghostBrideBoard(), { fixedRoles: ghostBrideDeck });\n  const role = world.getComponent(2, COMPONENT.Role)!, trace: string[] = [];\n  const catalog = new RoleCatalog([{\n    role: Role.Wolf, camp: Camp.Wolf, label: \"literal\", skillBrief: \"literal\",\n    get wolfTeam(): typeof permissions { throw new Error(\"ordinary_permission_must_not_run\"); },\n    get canSelfDestruct(): boolean { throw new Error(\"ordinary_blast_must_not_run\"); },\n  }], []);\n  const married: ValidationRuleContext = {\n    world, actorId: 2, role, roleCatalog: catalog, phase: Phase.Day,\n    // 没有原婚礼回合／日次，必须由婚礼权威拒绝，不能回落普通狼刀或自爆资格。\n    toolCall: { name: \"kill_vote\", args: { target_id: 3, abstain: false } },\n  };\n  expect(WOLF_VALIDATION_RULES.kill_vote!(married)).toEqual({ code: RuleError.GhostBrideUnavailable });\n  expect(WOLF_VALIDATION_RULES.self_destruct!(married)).toEqual({ code: RuleError.WolfBlastOnly });\n  const f = fixture();\n  const original = Object.getOwnPropertyDescriptor(f.profile, \"canSelfDestruct\")!;\n  Object.defineProperty(f.profile, \"canSelfDestruct\", { configurable: true, get() { trace.push(\"capability\"); return true; } });\n  const context: ValidationRuleContext = {\n    world: f.world, role: f.players[0]!.role, roleCatalog: f.context.roleCatalog, actorId: 1,\n    phase: Phase.Day, actionWindow: ActionWindow.OnPreVote,\n    allowSelfDestruct: true,\n    // 此 getter 夹具只构造准入实际读取的 confirm，不经过完整工具 schema；局部类型断言不添加未读 reason。\n    get toolCall(): ToolCall {\n      return { get name(): \"self_destruct\" { trace.push(\"name\"); return \"self_destruct\"; }, get args() { trace.push(\"args\"); return { get confirm(): true { trace.push(\"confirm\"); return true; } } as Extract<ToolCall, { name: \"self_destruct\" }>[\"args\"]; } };\n    },\n  };\n  try {\n    expect(WOLF_VALIDATION_RULES.self_destruct!(context)).toEqual({ code: RuleError.BlastPhase });\n    expect(trace).toEqual([\"capability\"]);\n    context.phase = Phase.Voting; context.allowSelfDestruct = false; trace.length = 0;\n    expect(WOLF_VALIDATION_RULES.self_destruct!(context)).toEqual({ code: RuleError.BlastDisabled });\n    expect(trace).toEqual([\"capability\"]);\n    context.allowSelfDestruct = true; trace.length = 0;\n    expect(WOLF_VALIDATION_RULES.self_destruct!(context)).toBeNull();\n    expect(trace).toEqual([\"capability\", \"name\", \"args\", \"confirm\"]);\n  } finally {\n    Object.defineProperty(f.profile, \"canSelfDestruct\", original);\n  }\n});\n",
+      "beforeSHA": "4f1485acda86524cec91ed3551a68ac0de0031e5f78af5ee4f4e4ffd991d716e",
+      "afterSHA": "ca1bd306f95eb2c673f2f742adfbd26cf002cb73058a8ab974aa92d7f6bcc544",
+      "from": "// @ts-expect-error the former role-private validation module has been retired",
+      "to": "// @ts-expect-error 旧角色私有校验模块已退休",
+      "exactInverseBytes": true,
+      "nonCommentLeafCount": 2008,
+      "wholeProgramSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "beforeSHA": "fe5bd0b7c1887410816e8a188f39a9ab98b4a76673498f183c6fd9a021cc1dae",
+          "afterSHA": "fe5bd0b7c1887410816e8a188f39a9ab98b4a76673498f183c6fd9a021cc1dae",
+          "rawEqual": true
+        },
+        {
+          "module": "CommonJS",
+          "beforeSHA": "48c72a2fea31719b1abd16b4547b5cd6d19232a6dcab9808d930ab3a36f4e797",
+          "afterSHA": "48c72a2fea31719b1abd16b4547b5cd6d19232a6dcab9808d930ab3a36f4e797",
+          "rawEqual": true
+        }
+      ],
+      "basis": "仅将新写类型负例的英文说明改为中文；机器 ts-expect-error directive 与实际被引用退休入口不变，收据归原采样，不复跑绿色类型／用例。"
+    }
+  },
+  "plannedStaticGraphAtPreEdit": {
+    "phase": "源码修改前的虚拟新owner静态值图；不是最终全图重跑，也不固定所有共同模块字节。",
+    "plannedNewOwner": "backend/src/rulesets/wolf-tool-admission.ts",
+    "nodes": 398,
+    "ownerReturn": null,
+    "toOld": null,
+    "toAssembly": null,
+    "ghostSetupReach": [
+      "backend/src/rulesets/wolf-tool-admission.ts",
+      "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "backend/src/game/mechanisms/roles/ghost_bride/setup.ts"
+    ],
+    "limits": [
+      "按真实TS转译后的静态值import/export追踪；未将函数内延迟require当作冷执行，不包含任意动态入口的首次副作用保证。",
+      "新Ghost公开端口会扩大setup/factory/机制出口的静态加载面，不能声称历史完整初始化图相同。"
+    ]
+  },
+  "artifactDigests": [
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-before.json",
+      "sha256": "b0f4aa73a71a6408a91ade8413f8c858914e9a4cd3e3f59cbeee9266380ca847"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-edits.json",
+      "sha256": "59cf95805d91e07c61f2e3f68bf73a897f90f624270274f9929c7b1d23f0c0b2"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-proof.cjs",
+      "sha256": "1c1eb6006249e89997da2da28de31fff9ae3aa6e8371803ae677dff4cb48d569"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-proof.json",
+      "sha256": "9616b0e30a5fcdd6ea6a704fe51112bf340b4ecdd1191c5622333570fa680c7f"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-proof.log",
+      "sha256": "9fa12ba0eecf878af5c75f75433bf8ed65a87ff8be8f3e21002cd8dadddeaccf"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-inventory.cjs",
+      "sha256": "8461ef0efd77e6fec1241a1bc081684baa7d463f7d3dae195b9db5ef86ff0d38"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-inventory.json",
+      "sha256": "2d677a6e0ac501eb73f25acf1ced4cc37413aafac5857ee6a4da82cdd62d951a"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-inventory.log",
+      "sha256": "fc28f890b94a1a0b5d6faddaee402d92b3ab886e029975e5989b4c34172b63a2"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-types-config.json",
+      "sha256": "fa441baebd991c2c0ed6d731923ccecd2ef490f0b39e88e8093b4be20ca0e5e3"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-types.log",
+      "sha256": "2b2687c3a7ff443d78d917feb97aca9e265d203f0684440952409a128310c5d1"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-types-failed-only-config.json",
+      "sha256": "ea73a92f5de0ae09beefdc8f1750080526ea716d8d03fde9c498562d957c39ca"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-types-failed-only-first.log",
+      "sha256": "5ed8e83447b5f7f44ada23753f28b72ffd6b0b3eb8b0b4d717694daf2e2b3ef1"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-types-failed-only-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-type-fix.json",
+      "sha256": "d8256ae1ba2860b0560a3497c3097722526815f16e6e284f828ff43ac5ef607d"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-type-fix.log",
+      "sha256": "07606145264a3f2ded519b83fdb9ed1dcfce2fc48aa35b639175da5f923e0c93"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-type-fix-final.json",
+      "sha256": "e20ba59a4acee85f70088797f7cb153022cacb52b48ea39aa96fe00f3a57d708"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-type-fix-final.log",
+      "sha256": "07606145264a3f2ded519b83fdb9ed1dcfce2fc48aa35b639175da5f923e0c93"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-new-tests.log",
+      "sha256": "9a77909285ebb9d9194fc97e64f20b23bb81d60185b34c36a9ad867e0f10d451"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-original-test.log",
+      "sha256": "48bf04a85d2495e033e717cfb7439f3b6a3496204b3bed323f608fe0f132eb14"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-heads.ts",
+      "sha256": "8c17835e9c5ba0087769bc0e24b31c8c367d0ece8cd51b21eab6e82f2f746675"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-heads.json",
+      "sha256": "b124de1e1078f18ed78cd1ea8bf080002ac1732dbdaca996aebcb5794554f3c1"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-heads.log",
+      "sha256": "7b3488b99c9d714b8b1120f900590d918a11972355f238221b21cdab55bd5800"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-final-comment-bridge.json",
+      "sha256": "cafae3e737cb6865a686b955bf62f7e3d01ca1ba12c503e145a179057064f43f"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-final-comment-bridge.log",
+      "sha256": "ecd5d14038040a8bb33e6c0d2265a450f27e308fc98182ab085e229a4b5acb00"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-unit-final-comment-bridge.json",
+      "sha256": "74f5ef6784a2fb69998ac5e71c8bf498d17a3a312a6a236b6b57601b82fafb05"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-unit-final-comment-bridge.log",
+      "sha256": "ecd5d14038040a8bb33e6c0d2265a450f27e308fc98182ab085e229a4b5acb00"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-planned-static-graph.json",
+      "sha256": "260c370586c71c65e5a232f525858a4294295129eb5b6872f5ff6fbc40d6b1cc"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-receipts.json",
+      "sha256": "df17e6194c817571d1d60a9f7d5dc35c549aa7cf3b845c1af9480e85b3cd47e2"
+    },
+    {
+      "path": "docs/refactor/generated/wolf-tool-admission-scope-final.json",
+      "sha256": "01560bcc41f89bb4aada9cff71d95755ea1710a52e74e1b71c8c43caadcea35b"
+    }
+  ],
+  "sourceAssertions": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/validation_rules.ts",
+      "expectedSHA": null,
+      "actualSHA": null,
+      "matches": true
+    },
+    {
+      "path": "backend/src/rulesets/wolf-tool-admission.ts",
+      "expectedSHA": "7e173c7ac467c3da79eeedc9f02a0d1f52b7831e6d4286a16beedb2085e337f6",
+      "actualSHA": "7e173c7ac467c3da79eeedc9f02a0d1f52b7831e6d4286a16beedb2085e337f6",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/ability-assembly.ts",
+      "expectedSHA": "7937cea37c1ab26b40b65a869c92216beae7e49436c40d097a80b5125e73577c",
+      "actualSHA": "7937cea37c1ab26b40b65a869c92216beae7e49436c40d097a80b5125e73577c",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/ability-ports.ts",
+      "expectedSHA": "582285cb5526cc32ecfdc2735e7422f56d0184a7e5a4a53dabdcc9bcbe3017bd",
+      "actualSHA": "582285cb5526cc32ecfdc2735e7422f56d0184a7e5a4a53dabdcc9bcbe3017bd",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+      "expectedSHA": "8b71fc9976814327be656d4a49117cac17e9c3a3d678e39f659ca91993b894ac",
+      "actualSHA": "8b71fc9976814327be656d4a49117cac17e9c3a3d678e39f659ca91993b894ac",
+      "matches": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "expectedSHA": "71c539a3431df993f9c09904ebe4363bc17781b374d508dc76bf1314d6bd14ac",
+      "actualSHA": "71c539a3431df993f9c09904ebe4363bc17781b374d508dc76bf1314d6bd14ac",
+      "matches": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/wolf-tool-admission.test.ts",
+      "expectedSHA": "ca1bd306f95eb2c673f2f742adfbd26cf002cb73058a8ab974aa92d7f6bcc544",
+      "actualSHA": "ca1bd306f95eb2c673f2f742adfbd26cf002cb73058a8ab974aa92d7f6bcc544",
+      "matches": true
+    }
+  ],
+  "limits": [
+    "源码scope与原实跑收据逐阶段绑定；末type-only／comment-only精度没有伪重绿色测试、类型、头或主体证据。",
+    "只退休一旧物理API入口，不新增玩法／schema／fallback规则，不改其它角色或原注册表。",
+    "完整getChildren walk比较真实新表及完整程序；说明节点与语法叶计数，不将仅首子节点 traversal 当作全证明。",
+    "未跑全量门禁、全suite、全对局、模型或任意动态模块加载验证。"
+  ],
+  "documentation": {
+    "path": "docs/refactor/wolf-tool-admission.md",
+    "sha256": "16b4ff05c5f3c24042043c63dc803c272a2e4cc9ae661527cc2bfa53f2c9b239"
+  }
+}

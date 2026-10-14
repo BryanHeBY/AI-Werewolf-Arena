@@ -7,7 +7,7 @@
  */
 export { WeddingNightUnit, weddingNightTerminal } from "./night-lifecycle";
 
-/** 原引擎查询保持同一权威函数绑定与参数。 */
+/** 原引擎和狼工具组合查询保持同一权威函数绑定与参数；成员知识不代替提交时的回合复验。 */
 export {
   weddingSetup,
   ghostBrideReady,
@@ -15,6 +15,8 @@ export {
   hasGhostBrideNightCommit,
   weddingAssignment,
   weddingKnifeCurrent,
+  weddingMember,
+  canSubmitWeddingTool,
 } from "./authority";
 
 export { weddingBrideState } from "./authority";

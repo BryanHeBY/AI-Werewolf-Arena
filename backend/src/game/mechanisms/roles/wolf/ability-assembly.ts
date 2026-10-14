@@ -12,7 +12,7 @@ import { NativeRoleContributions } from "../contracts";
 import { WOLF_LLM_REPAIR_PACK } from "./llm_repair";
 import { WOLF_NIGHT_STAGES } from "./night_stages";
 import { WOLF_TOOL_SPECS, WOLF_STAGE_DIRECTIVES } from "./tool_specs";
-import { WOLF_VALIDATION_RULES } from "./validation_rules";
+import { WOLF_VALIDATION_RULES } from "../../../../rulesets/wolf-tool-admission";
 import { isMistRavenBoard, mistKnifeTargets } from "../mist_raven/ports";
 
 /** 同一对象保留原四字段资料、完整运行贡献和最后创建的普通狼人展示；字段仍可写，不预取 runtime。 */

@@ -7,5 +7,5 @@
 export { ORDINARY_WOLF_CONTRIBUTIONS } from "./ability-assembly";
 export { WOLF_NIGHT_STAGES } from "./night_stages";
 export { WOLF_TOOL_SPECS, WOLF_STAGE_DIRECTIVES } from "./tool_specs";
-export { WOLF_VALIDATION_RULES } from "./validation_rules";
+export { WOLF_VALIDATION_RULES } from "../../../../rulesets/wolf-tool-admission";
 export { WOLF_LLM_REPAIR_PACK } from "./llm_repair";
