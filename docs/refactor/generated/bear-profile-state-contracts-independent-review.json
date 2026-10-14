@@ -1,0 +1,142 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_presentation_finish",
+  "baseCommit": "d56440a643fe6346788fc476de0b0ad538a10c14",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+      "sha256": "d2350b165c2f027c02af735e2cf1eeb9b8047ce5c86e49bd292283ae8a94c048",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "sha256": "890159d450215f7758a188b120ada2843fc5c146c40a3688e19905a23f54195f",
+      "change": "modified"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/bear-profile-state-contracts-scope-final.json",
+    "sha256": "d40edb401e6af26bfe2462ee6a2385faecfed97bc65473e4855931eed41c5342"
+  },
+  "document": {
+    "path": "docs/refactor/bear-profile-state-contracts.md",
+    "sha256": "7f8ccf048fa9860803a7baf4e32826c6e54eacbf0c65f341351c9662c9dda186"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/bear-profile-state-contracts-evidence.json",
+    "sha256": "6e51b4a29c661b2441323907996186f8d1de978ee2d9ef1aa60079d7257355b7"
+  },
+  "independentChecks": {
+    "freshSource": 2,
+    "actualGitWholeSources": [
+      {
+        "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+        "actualGitBeforeSHA256": "12ce9a133959d5d22a7bbd5636f5ac56dc2d18f211358f863ed70b3836dd817f",
+        "wholeForwardAndInverse": true,
+        "initialEdits": 3,
+        "finalHeadCommentBridge": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+        "actualGitBeforeSHA256": "b7daee6be78f990578e34dec64861d6b5a9137cf1e2cc7d234c11b7d1e236c46",
+        "wholeForwardAndInverse": true,
+        "initialEdits": 4,
+        "finalHeadCommentBridge": true
+      }
+    ],
+    "twoRealUnusedBindings": true,
+    "stableActualGitAndCurrentControls": 2,
+    "artifactSHA256": 12,
+    "drift": 0,
+    "finalCommentBridgeWholeExact": true
+  },
+  "manualReview": [
+    "Bear profile只装配metadata/configuration/init/presentation；两个Animal私有标识各原仅import声明出现，业务完全未消费，直接删除whole两import。原init/config/schema/default/policy/apply/serialize及presentation语句完整保持，没有移除实际runtime调用。",
+    "setBearState保role.privateState LHS先读→原bear槽赋同state→returnstate；getBearState直接类型断言取live引用，readonly不代表冻结/shape/current/Proxy准入。recordBearRoar保history→push方法/receiver→report原引用追加，返回void。",
+    "完整BearNightFrame普通路径先原history去重、计算report，recordBearRoar再events.push；dawn独立ownData/plain/appendable/current算法、两次defineProperty和lease/finally仍原owner。本叶不合并普通与dawnwriter，不退款或授予行动资格。",
+    "共同native-role-presentation-capture保Animal/Bear实际知识投影，profile不再静态加载未消费私有知识模块。移除static边在保留valueimports设置下有真实加载图差异，不能从TS擦除推导任意runtime初始化恒同。",
+    "末profile head已经按真实四贡献校准，state输出说明区分读取/安装同ref与历史追加void；有效结构/关键逻辑中文准确。MD inert用词已修受控数组，原machine字符串/词典/模型文案完全未变。",
+    "standalone Bun默认保valueimports导致首比较红，保存真实设置/结论且完整stdout未存的限制明确；显式trim配置两文本同和独立前后冷入口metadata/init/default+dawnpolicy样本同仅有界实证，不等于默认配置或整个cold图同。"
+  ],
+  "findings": [
+    {
+      "status": "closed",
+      "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+      "finding": "旧模板头声称存在工具/阶段/mock，而实际本profile只有四类贡献。",
+      "resolution": "只头输出说明精确列metadata/config/init/presentation，末纯comment桥承接原绿阶段。"
+    },
+    {
+      "status": "closed",
+      "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "finding": "state头把历史追加void也泛称输出同原引用。",
+      "resolution": "只头精确区分安装/读取的ref与历史追加无返回值，不改程序。"
+    },
+    {
+      "status": "closed",
+      "path": "docs/refactor/bear-profile-state-contracts.md",
+      "finding": "MD inert arrays误译为惯性数组。",
+      "resolution": "只MD改黎明受控数组；代码/附件/收据不变，末docSHA重新绑定。"
+    }
+  ],
+  "authorEvidenceAttribution": {
+    "firstTSProof": {
+      "chunk": "b34825",
+      "exit_code": 0,
+      "sources": 2,
+      "unusedImports": 2,
+      "commentEditRecords": 5,
+      "typedNodes": 304,
+      "noncommentLeaves": 371,
+      "wholeOriginalRawOutputs": 4
+    },
+    "firstHeads": "5ab5cd exit0，2sources/596当时Gitdocs，0diagnostics/CNfailures；采样早于末2comment精度。",
+    "firstStandaloneBun": {
+      "chunk_id": "8f24b0",
+      "exit_code": 1,
+      "settings": {
+        "loader": "ts",
+        "target": "bun",
+        "minify": true
+      },
+      "reason": "standalone默认保留两个未消费value imports，变量minify分配也随之不同；不把TS擦除证明冒所有Bun配置raw恒同。",
+      "stdoutRetention": "实际完整错误返回于工具；未保存首stdout全文附件，这里只保存真实设置和结论，不能冒完整逐字收据。",
+      "productionUnchangedAfterFailure": true
+    },
+    "explicitBunTrim": {
+      "chunk_id": "7008b3",
+      "wall_time_seconds": 1.4917e-05,
+      "exit_code": 0,
+      "original_token_count": 22,
+      "output": "{\"runtime\":\"1.4.3\",\"wholeRawOutputs\":2,\"same\":true,\"explicitTrimUnusedImports\":true}\n"
+    },
+    "coldBefore": {
+      "chunk_id": "1e2f68",
+      "wall_time_seconds": 1.2441e-05,
+      "exit_code": 0,
+      "original_token_count": 129,
+      "output": "{\"exports\":[\"BEAR_ROLE_PROFILE\"],\"metadata\":{\"role\":\"bear\",\"camp\":\"good\",\"goodSide\":\"god\",\"maxCount\":1,\"label\":\"熊\",\"skillBrief\":\"入夜按座位环跳过已出局玩家取左右邻居，有可感知狼人则次日咆哮；夜间不重算，熊出局则不咆哮。公告不揭熊或邻居编号。\"},\"initialized\":{\"bear\":{\"history\":[]}},\"defaults\":{},\"configuration\":[{},{\"signalPolicy\":\"netease_dawn_live_v1\"}],\"limits\":\"仅一入口实际冷加载与原配置/安装样本，不冒全冷图或玩法验证\"}\n"
+    },
+    "coldCurrent": {
+      "chunk_id": "a132a2",
+      "wall_time_seconds": 1.2437e-05,
+      "exit_code": 0,
+      "original_token_count": 129,
+      "output": "{\"exports\":[\"BEAR_ROLE_PROFILE\"],\"metadata\":{\"role\":\"bear\",\"camp\":\"good\",\"goodSide\":\"god\",\"maxCount\":1,\"label\":\"熊\",\"skillBrief\":\"入夜按座位环跳过已出局玩家取左右邻居，有可感知狼人则次日咆哮；夜间不重算，熊出局则不咆哮。公告不揭熊或邻居编号。\"},\"initialized\":{\"bear\":{\"history\":[]}},\"defaults\":{},\"configuration\":[{},{\"signalPolicy\":\"netease_dawn_live_v1\"}],\"limits\":\"仅一入口实际冷加载与原配置/安装样本，不冒全冷图或玩法验证\"}\n"
+    },
+    "finalCommentBridge": {
+      "chunk_id": "78a7a2",
+      "exit_code": 0,
+      "onlyTwoCommentLines": true,
+      "wholeExactInverse": true,
+      "wholeRawOutputsSame": 4
+    }
+  },
+  "limits": [
+    "独立只读取真实Git、当前source、精确全文变换、作者proof/探针源码及收据；没有重跑任何compiler/transpiler、冷入口、head检查、tests/type/gates或poll。",
+    "作者两个cold进程是同当前传递依赖下的原/现行单入口样本，不声称完整历史transitive树相同。",
+    "8f24b0完整stdout未持全文附件，本报告仅归作者实际metadata和明确限制，不制造完整失败文本。",
+    "首证明/头/显式Bun及cold样本仍属末head之前，4raw comment桥承接final；不回填为新执行。",
+    "只这2source/2controls；不声明完整熊机制、全仓中文、整局或P9完成，无产品/Git/progress/矩阵改动。"
+  ]
+}

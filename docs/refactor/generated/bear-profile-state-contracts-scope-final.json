@@ -1,0 +1,81 @@
+{
+  "baseCommit": "d56440a643fe6346788fc476de0b0ad538a10c14",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+      "sha256": "d2350b165c2f027c02af735e2cf1eeb9b8047ce5c86e49bd292283ae8a94c048",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "sha256": "890159d450215f7758a188b120ada2843fc5c146c40a3688e19905a23f54195f",
+      "change": "modified"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "sha256": "5cc33db1115813bb4277407ec07e8be1d8b4b5602e785b9f7b43a0d355786f39"
+    },
+    {
+      "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+      "sha256": "76df1d7165c9a7008f4a2c1a22730bd89795f35dba73cc608c8bb78845aadca8"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/bear-profile-state-contracts-before.json",
+      "sha256": "70af48547d4fc1e191fe64f467bd13c1dee5de2a58ae08c38efa297604306085"
+    },
+    {
+      "path": "docs/refactor/generated/bear-profile-state-contracts-bun-output-bridge.json",
+      "sha256": "7524e6589976ebd1a838bd0459172cab35186f7bf5f66f3eeec2e3dd38bfb786"
+    },
+    {
+      "path": "docs/refactor/generated/bear-profile-state-contracts-cold-entry.ts",
+      "sha256": "858121a65ff4bb7882d3eb4f748ac8d46622bf6809528cbf058f723b9c7164ba"
+    },
+    {
+      "path": "docs/refactor/generated/bear-profile-state-contracts-controls.json",
+      "sha256": "effe32f3a74496209424357c2adee178f15382b05b9b830955e2a6a6ae4de574"
+    },
+    {
+      "path": "docs/refactor/generated/bear-profile-state-contracts-edits.json",
+      "sha256": "67b32a9b2aae33d6c6ccd2d3a807669cb1c1d72c6dbf9af3172324a9a00013cc"
+    },
+    {
+      "path": "docs/refactor/generated/bear-profile-state-contracts-heads.json",
+      "sha256": "36d612bbcc7588b1eb8a230630825005c98df7641219d9288d608ca5bef5e099"
+    },
+    {
+      "path": "docs/refactor/generated/bear-profile-state-contracts-heads.ts",
+      "sha256": "d9a54d26720a445d18bd37ed0f82a0724877a23f59ffba3854ec74dec5b58a0a"
+    },
+    {
+      "path": "docs/refactor/generated/bear-profile-state-contracts-peer-comment-before.json",
+      "sha256": "0f71744af6b81916bc35b2bd8f02b63ccc8f556733fa6fc57da63d9e2ff7a136"
+    },
+    {
+      "path": "docs/refactor/generated/bear-profile-state-contracts-peer-comment-bridge.json",
+      "sha256": "6bf923074a55d9ef6c5b14a721935d605c38c5a40154e403688f558eb2b6ad07"
+    },
+    {
+      "path": "docs/refactor/generated/bear-profile-state-contracts-proof.cjs",
+      "sha256": "dad09f539936531e89fe4aebad0a839e001b7a07b6845d54eeb34fecf5357474"
+    },
+    {
+      "path": "docs/refactor/generated/bear-profile-state-contracts-proof.json",
+      "sha256": "83300e8d23717967aac1c205320eb3d0dd76c1ce229d2143fb77b32ad9ae5b49"
+    },
+    {
+      "path": "docs/refactor/generated/bear-profile-state-contracts-receipts.json",
+      "sha256": "f854a5575a004d22a556f4261d4a2d456f00bb4615272daab4e4bf87b56e5b12"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/bear-profile-state-contracts.md",
+    "sha256": "7f8ccf048fa9860803a7baf4e32826c6e54eacbf0c65f341351c9662c9dda186"
+  },
+  "frozen": true
+}

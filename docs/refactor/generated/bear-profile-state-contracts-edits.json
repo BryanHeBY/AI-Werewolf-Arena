@@ -1,0 +1,44 @@
+[
+  {
+    "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+    "before": "import { isAnimalDreamBoard } from \"../animal_dream/authority\";\n",
+    "after": "",
+    "kind": "unused-import"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+    "before": "import { animalBearKnowledge } from \"../animal_dream/facts\";\n",
+    "after": "",
+    "kind": "unused-import"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+    "before": " * 展示在实际调用时由角色捕获读取原状态并逐片段交纯展示所有者；本模块不授予租约、执行归档或复制状态。",
+    "after": " * 展示只登记 bear 标识，实际玩家知识投影归共同观察所有者；本模块不读取动物板知识、授予租约、执行归档或复制状态。",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+    "before": "/**\n * Owns Bear state data and access to its existing private-state slot.\n * Inputs are the role component and native state; outputs retain the exact stored object, including assignment-before-return behavior.\n * Existing mutation commands, lifecycle validation, player projection and checkpoint\n * encoding keep their current responsibilities. This leaf creates no mirror state,\n * consumes no resource and does not decide whether a request is authorized.\n * Pure payload/read data structures belong to the neutral role-state data owner;\n * this leaf retains original live references and concrete installation/commit operations.\n */",
+    "after": "/**\n * 负责熊的原私有状态槽直接读写及普通历史追加；输入为原角色／状态／报告，输出保留同一运行引用。\n * 状态安装先赋原槽再返回，读取只是类型断言，不执行 schema／Proxy／当前性检查或深冻结。\n * 数据契约属于共享包，名单、生命、实际吼叫判定、玩家知识和检查点编码仍归各实际所有者。\n * 普通发布取原 history.push 追加；黎明政策保留 frame 自己的受控 writer，本叶不合并两种写入。\n * 原写入或 getter／push 失败直接传播，不保存镜像、退款或授予请求权限。\n */",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+    "before": "export function setBearState(role: RoleComponent, state: BearState): BearReadState {",
+    "after": "/** 保留 privateState 的原 LHS 读取和同对象赋值；允许的状态形状仍由安装调用方负责。 */\nexport function setBearState(role: RoleComponent, state: BearState): BearReadState {",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+    "before": "export function getBearState(role: RoleComponent): BearReadState | undefined {",
+    "after": "/** 返回原 live 引用；BearReadState 的 readonly 约束不代表运行时冻结或合法性验证。 */\nexport function getBearState(role: RoleComponent): BearReadState | undefined {",
+    "kind": "comment"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+    "before": "/** Normal publication keeps original history/push lookup; dawn retains its guarded writer. */",
+    "after": "/** 普通发布先读取 history／push，再追加原报告对象；后错不回滚，黎明独立 writer 不经此命令。 */",
+    "kind": "comment"
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "onlyTwoHeadCommentLines": true,
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/profile.ts",
+      "beforeSHA256": "1cfa6a9970bc5dd3cc47d3ac66ec25ff66793eea59a81c6ffd8492b8c4055120",
+      "afterSHA256": "d2350b165c2f027c02af735e2cf1eeb9b8047ce5c86e49bd292283ae8a94c048",
+      "wholeExactCommentInverse": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "2bdd8178f224afed281544c621b18910aaecc929238f17f5731d3bc92145bafe"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "494e10662e20e36c64702325a0f6b6c874eeaa47af1636ae2aefd439dfc17ae9"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/state.ts",
+      "beforeSHA256": "44da87b97a9923b2dc25c179a7cea8e2856bc280fa2139965623ff599dca17ae",
+      "afterSHA256": "890159d450215f7758a188b120ada2843fc5c146c40a3688e19905a23f54195f",
+      "wholeExactCommentInverse": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "fc8ae3b993fea1c9f8d667776415a3e0e4dfb222fdf035034a93acdecf092650"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "705e7d0b81f3727fe6e1093d5c8e8477fc439c67dc69d747ebcb64dfe213e094"
+        }
+      ]
+    }
+  ],
+  "greenChecksRepeated": false
+}
