@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/scenarios/mechanisms/wolf-team-dynamic-night-scheduling.test.ts:
+(pass) a knife revoked during an in-flight decision is not applied, retried or recorded as a repaired vote [49.52ms]
+
+ 1 pass
+ 2 filtered out
+ 0 fail
+ 4 expect() calls
+Ran 1 test across 1 file. [165.00ms]

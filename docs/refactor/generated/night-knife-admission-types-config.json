@@ -1,0 +1,18 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "include": [],
+  "exclude": [],
+  "files": [
+    "../../../backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+    "../../../backend/src/game/mechanisms/roles/ghost_bride/night_stages.ts",
+    "../../../backend/src/rulesets/night-knife-admission.ts",
+    "../../../backend/tests/unit/rulesets/night-knife-admission.test.ts"
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "approved": true,
+  "baseCommit": "d491710a5fd95051dbafc8d9a6b4b8ced92f24c1",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "e147187ba7c5760fb01a9fd084e3f36fd92b3f2f579f25e85c0c51d64525bc8f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/night_stages.ts",
+      "sha256": "32455beff9a5beee4148f3ea89aeeab9aa562355902f462d8fcf1d5034c37a00"
+    },
+    {
+      "path": "backend/src/rulesets/night-knife-admission.ts",
+      "sha256": "45d23e245fd59fa471152b556b6a4c13f966643844eb8747547e10e79dc94b0c"
+    }
+  ],
+  "deleted": {
+    "path": "backend/src/game/mechanisms/roles/wolf/knife_scope.ts",
+    "expectedAbsent": true
+  },
+  "actualPrograms": [
+    {
+      "path": "actual-ordinary-discard.ts",
+      "typedNodes": 132,
+      "noncommentLeaves": 141,
+      "wholeTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "8d3563f0084094e2f0c3df870e2c6081c389fb73c1845a95bdbb7a010fbcf462"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "e35a390b7067992b4312d5433c07a861b77ee38966f682cd0de092d15eb7260d"
+        }
+      ]
+    },
+    {
+      "path": "actual-wedding-discard.ts",
+      "typedNodes": 62,
+      "noncommentLeaves": 69,
+      "wholeTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "ea23f4036c3a9756002c5e85bbded858ca2662b81f9792c8e532692d22a629ef"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "a13d93bfa7432c9d0d6923f839d07c4d697d047377c898ae8e62a5eb172194ed"
+        }
+      ]
+    },
+    {
+      "path": "actual-night-knife-combination.ts",
+      "typedNodes": 19,
+      "noncommentLeaves": 25,
+      "wholeTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "4d5ef4b69de6ef71f0f231bb0debc88bb4d37b9a663bf47e29365251d0de9b6d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "4d5ef4b69de6ef71f0f231bb0debc88bb4d37b9a663bf47e29365251d0de9b6d"
+        }
+      ]
+    }
+  ],
+  "wholeConsumers": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "typedNodes": 2416,
+      "noncommentLeaves": 3014,
+      "wholeTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "9d7dc620d4b4d2531ad597fac85aa72860bcee1070353b424c4cc0441c75db27"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "06e978622f677b1e9683fd62b3c9d8fefa55c4aee745bf061c50592e665c5bbf"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/night_stages.ts",
+      "typedNodes": 510,
+      "noncommentLeaves": 602,
+      "wholeTypedAndTokenTreeSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "d9d2705e8f49c03e1fb71cc0c09b06d5de7561ea59a8bcb1f9f013dcb2e877ba"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "1da2f197bc7af806facdea5680a59b2f5cd221db9d1854b1b87a764d2678601f"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+      "sha256": "8b71fc9976814327be656d4a49117cac17e9c3a3d678e39f659ca91993b894ac",
+      "actualGitAndCurrentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/ports.ts",
+      "sha256": "71c539a3431df993f9c09904ebe4363bc17781b374d508dc76bf1314d6bd14ac",
+      "actualGitAndCurrentWholeSame": true
+    },
+    {
+      "path": "backend/src/core/domain/components/alive.ts",
+      "sha256": "c6b681bded926aec1568887887baaff9fff7903a1fd8eba94e0c30f4a246e0a4",
+      "actualGitAndCurrentWholeSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/mechanisms/wolf-team-dynamic-night-scheduling.test.ts",
+      "sha256": "19bcb46bb230620f45dd861673fc4456d3c8551ca52e2f9da19d7b92623e76af",
+      "actualGitAndCurrentWholeSame": true
+    }
+  ],
+  "inventory": {
+    "roots": [
+      "backend/src",
+      "backend/tests",
+      "frontend/src",
+      "packages",
+      "tooling"
+    ],
+    "scannedFiles": 1726,
+    "canonicalSites": [
+      {
+        "path": "backend/tests/unit/rulesets/night-knife-admission.test.ts",
+        "route": "../../../src/rulesets/night-knife-admission",
+        "form": "import/export"
+      },
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "route": "../../../rulesets/night-knife-admission",
+        "form": "import/export"
+      }
+    ],
+    "retiredSites": []
+  },
+  "summary": {
+    "actualPrograms": 3,
+    "wholeConsumers": 2,
+    "typedNodes": 3139,
+    "wholeMappedOutputs": 10
+  },
+  "limits": [
+    "真实新算法与组合展开后全NP／Ghoststage精确逆，不恢复旧整个函数代替生产者证明。",
+    "两原子步骤局部return、原marks/现场marks/阶段清空和婚约参数顺序保持；新运行对象和调用栈分配是有界布局变化。",
+    "字面五根盘点，不穷尽computed/仓外加载；不执行coldload/类型/测试/全门禁。"
+  ]
+}

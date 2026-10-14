@@ -1,13 +1,11 @@
 /**
- * Runs Ghost Bride partner chat and wedding knife stages. Inputs are the bound wedding night and
- * validated choices; outputs preserve chat settlement, sourced knife claims and stale-knife
- * removal. Wedding authority owns payment and closure; these stages do not make an old pending
- * turn valid again.
+ * 负责鬼魂新娘伴侣聊天及婚约狼刀请求。输入为绑定婚约夜、原参与者和已验证选择；输出为聊天结算、刀口与事实。
+ * 婚约权威拥有原付款、投票和关闭；本阶段保 await 后真实复验，不令旧 pending 请求重新有效。
+ * priority=150／400 的原顺序保持，过期普通／婚约狼刀清理归规则组合，历史票不重建或退款。
  */
 import { StatusMark, COMPONENT } from "../../../../core/domain";
 import { aliveLifeVersion, type AliveComponent } from "../../../../core/domain/components/alive";
-import type { NightStageHandler, NightStageState } from "../../stages/night/contracts";
-import type { World } from "../../../../core/domain";
+import type { NightStageHandler } from "../../stages/night/contracts";
 import { executeWeddingTurn } from "./setup";
 import {
   weddingPair,
@@ -65,7 +63,7 @@ export const WEDDING_KNIFE_STAGE: NightStageHandler = {
         stage: capture.owner === "ordinary_pack" ? "wolf_vote" : "ghost_bride_knife",
         isCurrent: ctx.isCurrent,
       });
-      // Domain votes remain in the owned authority; the controller never reconstructs ballots.
+      // 原投票仍由婚约权威保存，本阶段不从事实或目标重建票表。
     }
     const targetId = resolveWeddingKnife(ctx.world, day);
     ctx.events.push({
@@ -85,11 +83,3 @@ export const WEDDING_KNIFE_STAGE: NightStageHandler = {
     }
   },
 };
-/** Owner authorization stays live through Witch/Seer and the actual damage commit. */
-export function discardStaleWeddingKnife(world: World, day: number, state: NightStageState): void {
-  const scope = state.wolfTargetScope;
-  if (!scope || weddingKnifeCurrent(world, day, scope.targetId)) return;
-  scope.marks.remove(StatusMark.WolfKillMark);
-  state.wolfTarget = null;
-  state.wolfTargetScope = undefined;
-}

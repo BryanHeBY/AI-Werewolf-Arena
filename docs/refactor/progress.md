@@ -708,3 +708,5 @@
 - C45 AI集成/提示接口中文契约：三源25comment，身份人设/配比数据、原persona双trim和Role序/Map回调/短路/重试1-2-其余文案、提示不授许可与MCP配置/控制/factory声明职责中文说明；index真实直接导出不冒无副作用。Root actuald92三Git完整forward、实际Policy/defaultBridge/Loopback与独立全caller/三freshSHA/14附件审批准，1085noncommenttoken同；首template tail扫描工具红→仅工具修、原3head首index2诊断→failed1补期限取消责任0，历史收据保，不重AST/emit/types/tests/fullgate/model。产品字段/字符串/i18n和历史fingerprint不动，完整C45/P9继续，见 ai-interface-prompt-chinese-contracts.md。
 
 - C17 诡术师唯一状态槽：13 路径（12 现行／旧 state 删除），完整创建、live schema、同引用读取、副本选择及实际安装／历史写／身份编码归本族；frame 保原体生命、夜窗口、finished／exileResolved 与最终映射。Root 实际 fa4 十一 Git 全文精确 forward、四控制源和独立全算法／消费者／中文语义审批准，末 source／scope／MD／21附件无漂移。新三例日志25成功断言＋旧正常 finally 精准一例1断言，四不同用例；十二根有限类型实际 d447ed 0，头只修失败根，不重已绿。公开两个实际 reader，旧入口无桥；中文说明就地覆盖状态、写序及失败保留，不冒全部 C17／整局／P9完成。见 trickster-state-slot.md。
+
+- C24 夜间过期狼刀完整准入：五路径（四现行／旧 Wolf 叶删除），普通刀与婚约刀两个完整算法归 rulesets，NP 三原时点调用同一同步组合。Root 实际 d491 三 Git 全文 forward／四控制源／19附件与独立全算法、参数晚读和中文审批准；普通局部 return 不跳婚约条件，false 不读第二组参数，true 仍 World→day→state；原 marks 与现场 marks 后才清阶段，婚约只原 marks，失败前缀不变。新两例10断言＋旧在途撤刀精准一例4断言两次首绿，四根有限类型与中文头实际0，首取证工具精度红保留，仅工具修；未重复绿或全门禁。本批不改权威、付款、阶段及死亡，C24/P9 全目标继续，见 night-knife-admission.md。

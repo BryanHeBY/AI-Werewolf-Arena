@@ -41,7 +41,6 @@ import {
 import { demonHunterActorId, originalDemonNightLives } from "../../mechanisms/roles/demon_hunter/ports";
 import type { DemonKnifeProtection } from "../../mechanisms/roles/demon_hunter/ports";
 import { weddingSetup } from "../../mechanisms/roles/ghost_bride/ports";
-import { discardStaleWeddingKnife } from "../../mechanisms/roles/ghost_bride/night_stages";
 import { COMPONENT } from "../../../core/domain/components/names";
 import { RoleComponent } from "../../../core/domain/components/role";
 import {
@@ -81,7 +80,7 @@ import { createRandom, shuffled, type RandomSource } from "../../../core/domain/
 import type { DreamNightEffects } from "../../../core/domain/dream-night-effects";
 import { composeNightDamage } from "../../../rulesets/night-damage-composition";
 import { prepareNightSourceDelivery } from "../../../rulesets/night-source-delivery";
-import { discardStaleWolfKnife } from "../../mechanisms/roles/wolf/knife_scope";
+import { discardStaleNightKnives } from "../../../rulesets/night-knife-admission";
 import { livingNightLife } from "../../../core/domain/night_effects";
 import { AliveComponent, aliveLifeVersion } from "../../../core/domain/components/alive";
 import { assertNightCommitAdmission } from "../../../rulesets/night-commit-admission";
@@ -280,14 +279,21 @@ export class NightPipeline {
         state: stageState,
       };
 
+      // 同一运行输入只持延迟表达式；各检查点按原次序读取 World／state、婚约归属和日期。
+      const knifeAdmission = {
+        world: () => this.world,
+        state: () => stageState,
+        ownsWedding: () => ownsWedding,
+        day: () => day,
+      };
+
       for (const entry of rulePlan.nightPlan(this.stageRegistry, () => this.world).entries) {
         const stage = entry.handler;
         assertEvilKnightRosterCurrent(this.world);
         if (!isCurrent())
           return attachNightUnit(attachNobleNightReceiver({ interrupted: true }, nobleNight.receiver), lifecycle.nightUnit);
         assertReadable();
-        discardStaleWolfKnife(this.world, stageState);
-        if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
+        discardStaleNightKnives(knifeAdmission);
         if (config.scholarMentor) assertScholarMentorBonusEffects(stageCtx);
         await stage.execute(stageCtx);
         if (config.scholarMentor) assertScholarMentorBonusEffects(stageCtx);
@@ -295,12 +301,10 @@ export class NightPipeline {
         assertReadable();
         if (!isCurrent())
           return attachNightUnit(attachNobleNightReceiver({ interrupted: true }, nobleNight.receiver), lifecycle.nightUnit);
-        discardStaleWolfKnife(this.world, stageState);
-        if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
+        discardStaleNightKnives(knifeAdmission);
       }
 
-      discardStaleWolfKnife(this.world, stageState);
-      if (ownsWedding) discardStaleWeddingKnife(this.world, day, stageState);
+      discardStaleNightKnives(knifeAdmission);
       const { demonSources, demonWolfSourceCurrent, demonKnifeProtection } = prepareNightSourceDelivery({
         ownsDemon: () => ownsDemon,
         world: () => this.world,

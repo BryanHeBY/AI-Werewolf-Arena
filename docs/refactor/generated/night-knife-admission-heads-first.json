@@ -1,0 +1,23 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "sha256": "e147187ba7c5760fb01a9fd084e3f36fd92b3f2f579f25e85c0c51d64525bc8f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/night_stages.ts",
+      "sha256": "32455beff9a5beee4148f3ea89aeeab9aa562355902f462d8fcf1d5034c37a00"
+    },
+    {
+      "path": "backend/src/rulesets/night-knife-admission.ts",
+      "sha256": "45d23e245fd59fa471152b556b6a4c13f966643844eb8747547e10e79dc94b0c"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-knife-admission.test.ts",
+      "sha256": "b25b888a77835c48e92abfede65970aece5e9e6243ce68d3f516c8c91fb3b5e5"
+    }
+  ],
+  "documentationPaths": 542,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

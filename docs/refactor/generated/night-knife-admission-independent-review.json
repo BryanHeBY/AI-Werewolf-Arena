@@ -1,0 +1,86 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_final_architecture_review",
+  "baseCommit": "d491710a5fd95051dbafc8d9a6b4b8ced92f24c1",
+  "scope": {
+    "path": "docs/refactor/generated/night-knife-admission-scope-final.json",
+    "sha256": "acc9f4b8a3dad02e61a7f837c02dfdf8545b93ec1fe69ca1a2ca396ad003f98c"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "status": "modified",
+      "beforeSHA256": "50266dd7d7b4b559f9c216917ec65447060cfd46131684090d27ccd0595787ac",
+      "sha256": "e147187ba7c5760fb01a9fd084e3f36fd92b3f2f579f25e85c0c51d64525bc8f"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/ghost_bride/night_stages.ts",
+      "status": "modified",
+      "beforeSHA256": "b1c7228059785e5b94d767b7f8a31ea037d2c7cf9448348e2032a7fd3f2197a8",
+      "sha256": "32455beff9a5beee4148f3ea89aeeab9aa562355902f462d8fcf1d5034c37a00"
+    },
+    {
+      "path": "backend/src/rulesets/night-knife-admission.ts",
+      "status": "added",
+      "sha256": "45d23e245fd59fa471152b556b6a4c13f966643844eb8747547e10e79dc94b0c"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/night-knife-admission.test.ts",
+      "status": "added",
+      "sha256": "b25b888a77835c48e92abfede65970aece5e9e6243ce68d3f516c8c91fb3b5e5"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/knife_scope.ts",
+      "status": "deleted",
+      "beforeSHA256": "b8f08749b3b6ddcf6e297bcc98545a192645d457e3c1c39ce523188e18130655",
+      "expectedAbsent": true
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/night-knife-admission.md",
+    "sha256": "9eb5f5fd44de9a0dc060e17fca9bcbf4ba8afa655553af1f09a74a79e8e5e8e8"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/night-knife-admission-evidence.json",
+    "sha256": "c6dda099d5f018d43f3a0c5f790bc3f510a65f1ac573ee03eec92939387531e7"
+  },
+  "actualHashChecks": {
+    "freshPresent": 4,
+    "deletedExpectedAbsent": 1,
+    "actualGitBeforeWholeSources": 3,
+    "actualGitAndCurrentWholeControls": 4,
+    "authorArtifacts": 19,
+    "drift": 0
+  },
+  "sourceReview": [
+    "两完整私有子算法保原接受和短路。普通刀在原life ref/alive/version、marks ref后才调用原目标query；失败分支保原marks.remove→现场marks lookup/remove→wolfTarget null→scope undefined顺序，任意中途throw不补写或回滚。",
+    "婚约刀仍只读原weddingKnifeCurrent，再移原scope.marks后清stage，不误加入现场marks。外组合分别调用两个子步骤；普通return不跳过婚约条件，false不读婚刀参数，true按World→day→state原次序（即使scope空仍求参数）。前步throw终止组合，前步已清后第二world getterthrow保已清前缀。",
+    "NP仅新增延迟表达式对象，在阶段前、阶段后与最终伤害前的三个原点同步调用一次组合；周围Evil名单、isCurrent/readable、Scholar前后、provider await、source delivery、damage、finally和资源写权均原位，无新增await/current补验/RNG。",
+    "Ghost阶段仅退出完整旧清理helper及原unused type imports，聊天/刀stage各原程序与票/付款/目标发布保持。旧Wolf物理叶与Ghost旧named清理API退休无桥；新组合真实包含算法，不是换ports伪装原feature边。",
+    "实际getQuery/authority、Alive版本、COMPONENT、StatusMark和两个类型共七物理终点已沿公开端口核定同binding；World/scope/runtime thunks非JSON/权限。中文头准确解释独立return、原marks vs现场marks、已写前缀及stage时点，产品和machine literal不变。"
+  ],
+  "proofReviewed": "只读作者实际新三个程序展开与完整NP/Ghost消费者精确逆；全forEachChild callback void、NodeArray/trailingcomma和raw非comment叶在内，不以恢复旧整个body代替新owner。未执行作者工具或追加证明。",
+  "authorEvidence": {
+    "actualProducerPrograms": 3,
+    "wholeConsumers": 2,
+    "typedNodes": 3139,
+    "wholeMappedOutputs": 10,
+    "physicalEndpoints": 7,
+    "boundedCurrentValueGraph": "401模块/2117边，当期静态无NP回边，不冒旧全图或coldload；Root后继SelfWindow等排除。",
+    "newRiskCases": "4a165d实际2/0/10",
+    "originalInFlightKnife": "4aec2b实际1/0/4，2filtered",
+    "distinctCases": 3,
+    "successfulAssertions": 14,
+    "finiteTypes": "4roots/session60359→d0a146实际0",
+    "heads": "4roots/542doc，542eb1实际0，CN0",
+    "toolFirstFailure": "907717首inverse六空格误匹配八空格，原脚本/log保；只工具完整行修，24579→bab5ab0，产品未修改求绿。"
+  },
+  "limits": [
+    "新增runtime对象、调用层及两helper退休是明确内部API/布局变化；并行WIP和历史冷初始化全图不在等价声称中。",
+    "静态字面盘点只五个明确根，不穷尽计算/仓外/其它根加载。",
+    "未重作者检查、类型、测试、全门禁或模型，未更改生产源/git/progress。"
+  ],
+  "findings": []
+}

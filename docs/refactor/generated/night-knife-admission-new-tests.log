@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/rulesets/night-knife-admission.test.ts:
+(pass) 普通刀无scope仍晚查婚约条件，false不读取第二组world与day [0.27ms]
+(pass) 普通刀先移原和现场marks再清stage，婚约world失败保留已清前缀 [0.45ms]
+
+ 2 pass
+ 0 fail
+ 10 expect() calls
+Ran 2 tests across 1 file. [112.00ms]
