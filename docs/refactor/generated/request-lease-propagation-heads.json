@@ -1,0 +1,59 @@
+{
+  "source": [
+    {
+      "path": "backend/src/core/domain/request-lease.ts",
+      "sha256": "7750d00b2a226aeadf92dd6b6bffcf016003cb462bae2c0595967535f6aa3c4c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "3eea951ebb9b228bc421c6913ac8fd7ca321eec2efc08a65cf3da1e23b4610dc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "bab83a2eef04f1662c83f6507ed75fb9110d253e2c19688d4c331b5d9cc27aba"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "sha256": "c4e0c047c4117090c0011d31035d9cf75a6673a131e06dd324b0c743738a1ed1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "sha256": "80047b55b9186b7ae2529a20ae67cf8e1b4e9023e303911c0800a3e2a44ca157"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "sha256": "809176154677055564343e62e65e41d3c80148373d519b0b5eee21fe0c2595f8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "sha256": "b023c7fd540438174bae208ac03b6904a11f7cf54cfb4885fad13021059e4a8a"
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "sha256": "42d5bfa551b5cba23b99e02e15c50fa972c1c0fedbf2f94af8f2873bd9d2d172"
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "sha256": "04991585721c167431fd9d5e8882d85f6ba8b8fd2f86b51968d6693b73bcc1e7"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "sha256": "aed646ecab9084616fa0bad85c273e353f0e61925652f2228c27b9afe1736945"
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "sha256": "1281ec8fcd7c86e7cbddf6f7af2d75149721f9627009453b360e05abb34538cc"
+    },
+    {
+      "path": "backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts",
+      "sha256": "982cde6c7c2b6e1f07475584373607d90b791c1f22e19ce15cc6b720e53bdb1f"
+    },
+    {
+      "path": "backend/tests/unit/domain/request-lease.test.ts",
+      "sha256": "69b4396b53de87bcf5753363570a66dcf9a365fe42fa96ce79aeb14758c75f89"
+    }
+  ],
+  "documentationPaths": 658,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

@@ -3,6 +3,7 @@
  */
 import { createCampComponent, createAliveComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test, spyOn } from "bun:test";
+import { inheritRequestAlias } from "../../../../src/core/domain/request_delivery";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role, Camp, Phase, COMPONENT, WinCondition, createVictoryComponent, type BoardConfig, type ActionRequest, type ToolCall, type GameEvent, type RoleComponent, type AliveComponent, type VictoryComponent } from "../../../../src/core";
@@ -20,7 +21,6 @@ import {
   projectLonelyGirl,
   projectLonelyGirlSetup,
   lonelyGirlRequestScope,
-  inheritLonelyGirlDeadlineRequest,
   openLonelyGirlNight,
 } from "../../../../src/game/mechanisms/roles/lonely_girl/lifecycle";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
@@ -413,10 +413,10 @@ test("opaque request only trusted deadline clone and original context", async ()
       bounded = { ...r, deadlineAtMs: Date.now() + 1000 };
     expect(receiver.validate(r, "choose_admired_player", { target_id: 2 }).ok).toBe(true);
     expect(receiver.validate(bounded, "choose_admired_player", { target_id: 2 }).ok).toBe(false);
-    inheritLonelyGirlDeadlineRequest(r, bounded);
+    inheritRequestAlias(r, bounded);
     expect(receiver.validate(bounded, "choose_admired_player", { target_id: 2 }).ok).toBe(true);
     const forged = { ...r, context: { ...r.context } };
-    inheritLonelyGirlDeadlineRequest(r, forged);
+    inheritRequestAlias(r, forged);
     expect(receiver.validate(forged, "choose_admired_player", { target_id: 2 }).ok).toBe(false);
     expect(receiver.validate(r, "choose_exemplar", { target_id: 2 }).ok).toBe(false);
     return choose();

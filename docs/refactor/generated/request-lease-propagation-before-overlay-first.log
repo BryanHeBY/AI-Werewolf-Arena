@@ -1,0 +1,22 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts:
+
+# Unhandled error between tests
+-------------------------------
+TypeError: onLoad() expects an object returned
+-------------------------------
+
+
+backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts:
+
+# Unhandled error between tests
+-------------------------------
+TypeError: onLoad() expects an object returned
+-------------------------------
+
+
+ 0 pass
+ 2 fail
+ 2 errors
+Ran 2 tests across 2 files. [190.00ms]

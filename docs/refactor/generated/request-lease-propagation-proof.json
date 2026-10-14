@@ -1,0 +1,920 @@
+{
+  "approved": true,
+  "baselineCommit": "bd1066307343b1d5c10bc7704fefbc0b77e9a341",
+  "source": [
+    {
+      "path": "backend/src/core/domain/request-lease.ts",
+      "sha256": "85ecdce7fbf17682b0174bff569e3cb63fe9bbd1c2fff7aed66713b67804b600"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "3eea951ebb9b228bc421c6913ac8fd7ca321eec2efc08a65cf3da1e23b4610dc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "bab83a2eef04f1662c83f6507ed75fb9110d253e2c19688d4c331b5d9cc27aba"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "sha256": "c4e0c047c4117090c0011d31035d9cf75a6673a131e06dd324b0c743738a1ed1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "sha256": "a3d2743f7d1eb2ae188451ddfdaf4ea2dd968cf131c950e9102766b455ed4359"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "sha256": "809176154677055564343e62e65e41d3c80148373d519b0b5eee21fe0c2595f8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "sha256": "b023c7fd540438174bae208ac03b6904a11f7cf54cfb4885fad13021059e4a8a"
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "sha256": "42d5bfa551b5cba23b99e02e15c50fa972c1c0fedbf2f94af8f2873bd9d2d172"
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "sha256": "04991585721c167431fd9d5e8882d85f6ba8b8fd2f86b51968d6693b73bcc1e7"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "sha256": "aed646ecab9084616fa0bad85c273e353f0e61925652f2228c27b9afe1736945"
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "sha256": "1281ec8fcd7c86e7cbddf6f7af2d75149721f9627009453b360e05abb34538cc"
+    },
+    {
+      "path": "backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts",
+      "sha256": "982cde6c7c2b6e1f07475584373607d90b791c1f22e19ce15cc6b720e53bdb1f"
+    },
+    {
+      "path": "backend/tests/unit/domain/request-lease.test.ts",
+      "sha256": "c1efed2f5ff1807bb9204ad1b6507cd53a518034ebf8995d57eca4078c0b26e4"
+    }
+  ],
+  "deleted": [],
+  "retained": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "3eea951ebb9b228bc421c6913ac8fd7ca321eec2efc08a65cf3da1e23b4610dc",
+      "exactEdits": 5,
+      "label": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "typedNodes": 2611,
+      "syntaxLeaves": 1377,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "aaff4027bed234d200406b197c7e0165ae12245fce23aecec0e01f24a4bd1edc",
+        "7897ef228f95e8f5026bc39031fe5a52d82fbaa2e4ecc3688fef05c5e33086aa"
+      ],
+      "afterOutputSHA256": [
+        "aaff4027bed234d200406b197c7e0165ae12245fce23aecec0e01f24a4bd1edc",
+        "7897ef228f95e8f5026bc39031fe5a52d82fbaa2e4ecc3688fef05c5e33086aa"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "bab83a2eef04f1662c83f6507ed75fb9110d253e2c19688d4c331b5d9cc27aba",
+      "exactEdits": 5,
+      "label": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "typedNodes": 2637,
+      "syntaxLeaves": 1405,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "236f0860aac8bf71e57e4336d5d07255fe2cd64a6265551b82a13ae485fa8c57",
+        "8c8b0d2f70c00a9eade99fdbdab6141d196e793aef3df21108c30ce144d1facc"
+      ],
+      "afterOutputSHA256": [
+        "236f0860aac8bf71e57e4336d5d07255fe2cd64a6265551b82a13ae485fa8c57",
+        "8c8b0d2f70c00a9eade99fdbdab6141d196e793aef3df21108c30ce144d1facc"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "sha256": "c4e0c047c4117090c0011d31035d9cf75a6673a131e06dd324b0c743738a1ed1",
+      "exactEdits": 6,
+      "label": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "typedNodes": 2256,
+      "syntaxLeaves": 1211,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "dd7dd0b92d3fd8eefd7ab5ba6ddc78b2ab65019535798ac17364bac3f8a3cbf9",
+        "0f5e44ccbf31f36190ea7cb4d1db33eb2b2b966c01533e26c0a4190e1b97333f"
+      ],
+      "afterOutputSHA256": [
+        "dd7dd0b92d3fd8eefd7ab5ba6ddc78b2ab65019535798ac17364bac3f8a3cbf9",
+        "0f5e44ccbf31f36190ea7cb4d1db33eb2b2b966c01533e26c0a4190e1b97333f"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "sha256": "a3d2743f7d1eb2ae188451ddfdaf4ea2dd968cf131c950e9102766b455ed4359",
+      "exactEdits": 7,
+      "label": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "typedNodes": 1311,
+      "syntaxLeaves": 699,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "24a16b7f0f539de4d08236763c36bec16bd5e2d5521b688feb5b76ff9bd399ff",
+        "156ffb1378af426377bd157bd7947e5147b1dfb525f17a6a0d2aee401995dda0"
+      ],
+      "afterOutputSHA256": [
+        "24a16b7f0f539de4d08236763c36bec16bd5e2d5521b688feb5b76ff9bd399ff",
+        "156ffb1378af426377bd157bd7947e5147b1dfb525f17a6a0d2aee401995dda0"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "sha256": "809176154677055564343e62e65e41d3c80148373d519b0b5eee21fe0c2595f8",
+      "exactEdits": 2,
+      "label": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "typedNodes": 262,
+      "syntaxLeaves": 138,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "4430050b4774e96b39f2ed148e708505398782805332b8e964e2da6823e66e74",
+        "1a6a3a2563cf2059148c9e956e1a23a9323f1943723fab90f1bc37b3df713a27"
+      ],
+      "afterOutputSHA256": [
+        "4430050b4774e96b39f2ed148e708505398782805332b8e964e2da6823e66e74",
+        "1a6a3a2563cf2059148c9e956e1a23a9323f1943723fab90f1bc37b3df713a27"
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "sha256": "b023c7fd540438174bae208ac03b6904a11f7cf54cfb4885fad13021059e4a8a",
+      "exactEdits": 2,
+      "label": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "typedNodes": 247,
+      "syntaxLeaves": 129,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "fb7f9c65bd8f91b11f4d76e3bc793793a9ece91eda0bc9c2e942e0dfaf86fff5",
+        "65df8b9bb518a3edce618af22a5247337de7f3840e914e9a67a2b46371911f1d"
+      ],
+      "afterOutputSHA256": [
+        "fb7f9c65bd8f91b11f4d76e3bc793793a9ece91eda0bc9c2e942e0dfaf86fff5",
+        "65df8b9bb518a3edce618af22a5247337de7f3840e914e9a67a2b46371911f1d"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "sha256": "42d5bfa551b5cba23b99e02e15c50fa972c1c0fedbf2f94af8f2873bd9d2d172",
+      "exactEdits": 4,
+      "label": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "typedNodes": 3781,
+      "syntaxLeaves": 1859,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "4170b96f90dd66ad484422ac27a9972c590b036cd25df18c6c700acdce5d4306",
+        "7028cded52bcba0385812aead8b6b2ea0518f9701dee070dfa52a5cabbb19ba7"
+      ],
+      "afterOutputSHA256": [
+        "4170b96f90dd66ad484422ac27a9972c590b036cd25df18c6c700acdce5d4306",
+        "7028cded52bcba0385812aead8b6b2ea0518f9701dee070dfa52a5cabbb19ba7"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "sha256": "04991585721c167431fd9d5e8882d85f6ba8b8fd2f86b51968d6693b73bcc1e7",
+      "exactEdits": 4,
+      "label": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "typedNodes": 4065,
+      "syntaxLeaves": 2015,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "d9f78180460ee4c00931f074d80d9c1da1e3903f0fa97ca6e82fbef1e5f3071a",
+        "0d2d5bbf1b30d3cef4da591a49e9f91acdd25d198c33991cacf8cc5905822865"
+      ],
+      "afterOutputSHA256": [
+        "d9f78180460ee4c00931f074d80d9c1da1e3903f0fa97ca6e82fbef1e5f3071a",
+        "0d2d5bbf1b30d3cef4da591a49e9f91acdd25d198c33991cacf8cc5905822865"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "sha256": "aed646ecab9084616fa0bad85c273e353f0e61925652f2228c27b9afe1736945",
+      "exactEdits": 4,
+      "label": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "typedNodes": 1632,
+      "syntaxLeaves": 788,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "277c1faa097638844bc93e22e129941dea0bec761635519aa673d3fdaa3cc2b9",
+        "e0588d611a2d00b6c2e3ed904aeca578013e447a6cdb435f2289e455335dccc4"
+      ],
+      "afterOutputSHA256": [
+        "277c1faa097638844bc93e22e129941dea0bec761635519aa673d3fdaa3cc2b9",
+        "e0588d611a2d00b6c2e3ed904aeca578013e447a6cdb435f2289e455335dccc4"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "sha256": "1281ec8fcd7c86e7cbddf6f7af2d75149721f9627009453b360e05abb34538cc",
+      "exactEdits": 4,
+      "label": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "typedNodes": 4410,
+      "syntaxLeaves": 2155,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "89c930f42ac0e72d64ec4c6589a98ca04963ecb71a382f08722f8ab56db2add3",
+        "e7b9e5406889557a984f973793bf5c7d348c6dd10c1e2f4c2e6b49350b415a53"
+      ],
+      "afterOutputSHA256": [
+        "89c930f42ac0e72d64ec4c6589a98ca04963ecb71a382f08722f8ab56db2add3",
+        "e7b9e5406889557a984f973793bf5c7d348c6dd10c1e2f4c2e6b49350b415a53"
+      ]
+    },
+    {
+      "path": "backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts",
+      "sha256": "982cde6c7c2b6e1f07475584373607d90b791c1f22e19ce15cc6b720e53bdb1f",
+      "exactEdits": 4,
+      "label": "backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts",
+      "typedNodes": 4978,
+      "syntaxLeaves": 2546,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "79e1641b406b1f1079f0f0ff8b13684da61e03675ede0bb2001ce70b3bc6a77b",
+        "8293383bbdc92a06f7dfb3358e24e4455c0d2e3556926a9fdb6724b0988fb234"
+      ],
+      "afterOutputSHA256": [
+        "79e1641b406b1f1079f0f0ff8b13684da61e03675ede0bb2001ce70b3bc6a77b",
+        "8293383bbdc92a06f7dfb3358e24e4455c0d2e3556926a9fdb6724b0988fb234"
+      ]
+    }
+  ],
+  "kernels": [
+    {
+      "label": "InitialIdentity complete actual bind/set/register",
+      "typedNodes": 80,
+      "syntaxLeaves": 43,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "4f4316da8046f103892231f90de79c035bb8b05ab9761d5b73abffbefef2c81a",
+        "4f4316da8046f103892231f90de79c035bb8b05ab9761d5b73abffbefef2c81a"
+      ],
+      "afterOutputSHA256": [
+        "4f4316da8046f103892231f90de79c035bb8b05ab9761d5b73abffbefef2c81a",
+        "4f4316da8046f103892231f90de79c035bb8b05ab9761d5b73abffbefef2c81a"
+      ]
+    },
+    {
+      "label": "InitialIdentity complete actual scope query",
+      "typedNodes": 102,
+      "syntaxLeaves": 58,
+      "outputs": 2,
+      "wholeRawSame": false,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "0906c29653fadb7a5a6b3a020e26e2da86c56f4c839015015250e06fc3ea0e9c",
+        "0906c29653fadb7a5a6b3a020e26e2da86c56f4c839015015250e06fc3ea0e9c"
+      ],
+      "afterOutputSHA256": [
+        "f6f49e4718730fe5d27ff7e2f208e6a0b1a53c264f2b8639fac108e53c122f3b",
+        "f6f49e4718730fe5d27ff7e2f208e6a0b1a53c264f2b8639fac108e53c122f3b"
+      ]
+    },
+    {
+      "label": "InitialIdentity complete source-query/fields/inherit/register",
+      "typedNodes": 123,
+      "syntaxLeaves": 64,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "8657509d6fcad98c61c5af638f5fd90329bff0ce62fcef37d7caa419ca5a3012",
+        "8657509d6fcad98c61c5af638f5fd90329bff0ce62fcef37d7caa419ca5a3012"
+      ],
+      "afterOutputSHA256": [
+        "8657509d6fcad98c61c5af638f5fd90329bff0ce62fcef37d7caa419ca5a3012",
+        "8657509d6fcad98c61c5af638f5fd90329bff0ce62fcef37d7caa419ca5a3012"
+      ]
+    },
+    {
+      "label": "WildChild complete actual bind/set/register",
+      "typedNodes": 84,
+      "syntaxLeaves": 46,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "bfb08bc1f30f14e577ead418f9601f2663710700da1088801170265381455765",
+        "bfb08bc1f30f14e577ead418f9601f2663710700da1088801170265381455765"
+      ],
+      "afterOutputSHA256": [
+        "bfb08bc1f30f14e577ead418f9601f2663710700da1088801170265381455765",
+        "bfb08bc1f30f14e577ead418f9601f2663710700da1088801170265381455765"
+      ]
+    },
+    {
+      "label": "WildChild complete actual scope query",
+      "typedNodes": 93,
+      "syntaxLeaves": 53,
+      "outputs": 2,
+      "wholeRawSame": false,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "cc94c7e168a35a3a4255d4c7815f9eecadc4fe35ef8843579bb403167e46fd1b",
+        "cc94c7e168a35a3a4255d4c7815f9eecadc4fe35ef8843579bb403167e46fd1b"
+      ],
+      "afterOutputSHA256": [
+        "0f854008358dd85860d4b2033508ffdf1eb1ed6445a5dc8cec2fc3fce31c918d",
+        "0f854008358dd85860d4b2033508ffdf1eb1ed6445a5dc8cec2fc3fce31c918d"
+      ]
+    },
+    {
+      "label": "WildChild complete source-query/fields/inherit/register",
+      "typedNodes": 122,
+      "syntaxLeaves": 65,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "56d3bf0d5918ea7ed88cdf2c83ad09c4ee613a8f1b983250dba31b21f0b0e1e8",
+        "56d3bf0d5918ea7ed88cdf2c83ad09c4ee613a8f1b983250dba31b21f0b0e1e8"
+      ],
+      "afterOutputSHA256": [
+        "56d3bf0d5918ea7ed88cdf2c83ad09c4ee613a8f1b983250dba31b21f0b0e1e8",
+        "56d3bf0d5918ea7ed88cdf2c83ad09c4ee613a8f1b983250dba31b21f0b0e1e8"
+      ]
+    },
+    {
+      "label": "LonelyGirl complete actual bind/set/register",
+      "typedNodes": 84,
+      "syntaxLeaves": 46,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "f43162efc1e613010054bd11e525c7065f88468c60a20826630d88bfbe276794",
+        "f43162efc1e613010054bd11e525c7065f88468c60a20826630d88bfbe276794"
+      ],
+      "afterOutputSHA256": [
+        "f43162efc1e613010054bd11e525c7065f88468c60a20826630d88bfbe276794",
+        "f43162efc1e613010054bd11e525c7065f88468c60a20826630d88bfbe276794"
+      ]
+    },
+    {
+      "label": "LonelyGirl complete actual scope query",
+      "typedNodes": 93,
+      "syntaxLeaves": 53,
+      "outputs": 2,
+      "wholeRawSame": false,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "78e9a7ba67cff2f0ac8970477da60daf4f2ce5f0d797462335b4e6d473962c41",
+        "78e9a7ba67cff2f0ac8970477da60daf4f2ce5f0d797462335b4e6d473962c41"
+      ],
+      "afterOutputSHA256": [
+        "5645e88a43a6d10ef70be428a3f74686d623e9700427beabd45cbdfe376c0777",
+        "5645e88a43a6d10ef70be428a3f74686d623e9700427beabd45cbdfe376c0777"
+      ]
+    },
+    {
+      "label": "LonelyGirl complete source-query/fields/inherit/register",
+      "typedNodes": 122,
+      "syntaxLeaves": 63,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "88216dd288b4f87d47cdfbbec93c6c4c0259101488b0a342d8dadee7253e2ac7",
+        "88216dd288b4f87d47cdfbbec93c6c4c0259101488b0a342d8dadee7253e2ac7"
+      ],
+      "afterOutputSHA256": [
+        "88216dd288b4f87d47cdfbbec93c6c4c0259101488b0a342d8dadee7253e2ac7",
+        "88216dd288b4f87d47cdfbbec93c6c4c0259101488b0a342d8dadee7253e2ac7"
+      ]
+    },
+    {
+      "label": "Wall complete actual bind/set/register",
+      "typedNodes": 90,
+      "syntaxLeaves": 49,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "4826226ef2aeb9dae6a7c5f59b6cc2b1254a4d0ef488c9c4abb966e5654c732c",
+        "4826226ef2aeb9dae6a7c5f59b6cc2b1254a4d0ef488c9c4abb966e5654c732c"
+      ],
+      "afterOutputSHA256": [
+        "4826226ef2aeb9dae6a7c5f59b6cc2b1254a4d0ef488c9c4abb966e5654c732c",
+        "4826226ef2aeb9dae6a7c5f59b6cc2b1254a4d0ef488c9c4abb966e5654c732c"
+      ]
+    },
+    {
+      "label": "Wall complete actual scope query",
+      "typedNodes": 112,
+      "syntaxLeaves": 64,
+      "outputs": 2,
+      "wholeRawSame": false,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "4369ff9621e7d96bfcb0a949956eb2010928fb0d00e4a0f46b23f98463bd2d87",
+        "4369ff9621e7d96bfcb0a949956eb2010928fb0d00e4a0f46b23f98463bd2d87"
+      ],
+      "afterOutputSHA256": [
+        "ece5aeb89d645d6b4f3696e9cd60b15422b88081818a3f65cdb60295ff390cc7",
+        "ece5aeb89d645d6b4f3696e9cd60b15422b88081818a3f65cdb60295ff390cc7"
+      ]
+    },
+    {
+      "label": "Wall complete source-query/fields/inherit/register",
+      "typedNodes": 121,
+      "syntaxLeaves": 63,
+      "outputs": 2,
+      "wholeRawSame": true,
+      "completeEmittedTreesSame": true,
+      "beforeOutputSHA256": [
+        "3728dd00b58b7367957e774a20fd983389d3689a94854d6476ca9481890492ca",
+        "3728dd00b58b7367957e774a20fd983389d3689a94854d6476ca9481890492ca"
+      ],
+      "afterOutputSHA256": [
+        "3728dd00b58b7367957e774a20fd983389d3689a94854d6476ca9481890492ca",
+        "3728dd00b58b7367957e774a20fd983389d3689a94854d6476ca9481890492ca"
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "family": "InitialIdentity",
+      "template": "actorPhaseDayStage",
+      "actualBodySHA256": "8d735e98b3079c8cfa934b1da4ee4c08c39362495714a2939594812fb25f1340",
+      "actualQuerySHA256": "f80665e907c8b7748c26c222dcd0244bc6deb1132b338cb962a1ce3a83ac8285",
+      "normalization": [
+        "read-only late ports expanded to actual original field/callee bindings",
+        "generic store/order/callback mapped to original same instance",
+        "Wall nullish optional get representation only",
+        "comparison helper boolean/early-return shape canonicalized only"
+      ],
+      "recordSameReference": true
+    },
+    {
+      "family": "WildChild",
+      "template": "stagePhaseDayActor",
+      "actualBodySHA256": "d6c502553a25003ed4a463c6738a0ee7ac929e57641405749b33b3c6d317560b",
+      "actualQuerySHA256": "495a91df50fe33feb7bc45f19fba45ea20b4700e322a701315b3e835e9d49ad1",
+      "normalization": [
+        "read-only late ports expanded to actual original field/callee bindings",
+        "generic store/order/callback mapped to original same instance",
+        "Wall nullish optional get representation only",
+        "comparison helper boolean/early-return shape canonicalized only"
+      ],
+      "recordSameReference": true
+    },
+    {
+      "family": "LonelyGirl",
+      "template": "actorPhaseStageDay",
+      "actualBodySHA256": "67e4f9bb265f083a140d4090b4970615bb5899a4a216da03697e3432157327bc",
+      "actualQuerySHA256": "d994f2d604a9ad609e6195a42c899de9f023472a705e9891eaa0fa6b93562d8b",
+      "normalization": [
+        "read-only late ports expanded to actual original field/callee bindings",
+        "generic store/order/callback mapped to original same instance",
+        "Wall nullish optional get representation only",
+        "comparison helper boolean/early-return shape canonicalized only"
+      ],
+      "recordSameReference": true
+    },
+    {
+      "family": "Wall",
+      "template": "item",
+      "actualBodySHA256": "45c200491947995877396d0a020315a0f175da609b524a47fbec4e08a5c47ead",
+      "actualQuerySHA256": "db26e943f2b8d262dc257e279ac12409c3fe4252f5240a79cb5b9b16afb73bd4",
+      "normalization": [
+        "read-only late ports expanded to actual original field/callee bindings",
+        "generic store/order/callback mapped to original same instance",
+        "Wall nullish optional get representation only",
+        "comparison helper boolean/early-return shape canonicalized only"
+      ],
+      "recordSameReference": true
+    }
+  ],
+  "queryPorts": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "template": "actorPhaseDayStage",
+      "order": 20,
+      "properties": {
+        "active": "scopes.get(world)",
+        "owner": "scope.world",
+        "actorId": "scope.actorId",
+        "phase": "Phase.Night",
+        "stage": "scope.kind"
+      },
+      "noCompleteRequestCallback": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "template": "stagePhaseDayActor",
+      "order": 30,
+      "properties": {
+        "active": "bindings.get(world)",
+        "owner": "binding.world",
+        "actorId": "binding.actorId",
+        "phase": "Phase.Night",
+        "stage": "\"wild_child\"",
+        "current": "validWildChildChoice(binding)"
+      },
+      "noCompleteRequestCallback": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "template": "actorPhaseStageDay",
+      "order": 40,
+      "properties": {
+        "active": "bindings.get(world)",
+        "owner": "binding.world",
+        "actorId": "binding.actorId",
+        "phase": "Phase.Night",
+        "stage": "\"lonely_girl\"",
+        "current": "validLonelyGirlChoice(binding)"
+      },
+      "noCompleteRequestCallback": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "template": "item",
+      "order": 10,
+      "properties": {
+        "active": "active.get(world)",
+        "authors": "scope.authors",
+        "token": "scope.token",
+        "instanceId": "author.instanceId",
+        "phase": "Phase.Voting",
+        "stage": "\"wall_notes\""
+      },
+      "noCompleteRequestCallback": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/core/domain/request_delivery.ts",
+      "sha256": "e15174e93f271f17f5392218f33d9854ea35fad7ad46ff0e2090b7af240c1748",
+      "gitAndCurrentSame": true
+    },
+    {
+      "path": "backend/src/rulesets/action-request-bindings.ts",
+      "sha256": "50fe966448f546d888df36ee600aa77e0f04c3e7a81069559f70455ae4307549",
+      "gitAndCurrentSame": true
+    },
+    {
+      "path": "backend/src/game/gateway/action-reception.ts",
+      "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05",
+      "gitAndCurrentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "sha256": "a2274eca1a94e5e22d8bc7ee2f75204b6ffb5f4b32dc281dc422b3f34b4f06a9",
+      "gitAndCurrentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "sha256": "d3b83f449a42a903152ffcb9b6bca96f85516ee91137c7506077c176c243eecc",
+      "gitAndCurrentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/window.ts",
+      "sha256": "dca10207162ae2dd2f1aaea5bca777d282fbf3a69b8fcce131e5c5640b46c5e1",
+      "gitAndCurrentSame": true
+    }
+  ],
+  "unitTypeBridge": {
+    "path": "backend/tests/unit/domain/request-lease.test.ts",
+    "beforeSHA256": "11cdd479dfc3f64ab6dbeaa0391a78e241746428f2b67522f37be7a83df7424c",
+    "afterSHA256": "c1efed2f5ff1807bb9204ad1b6507cd53a518034ebf8995d57eca4078c0b26e4",
+    "outputs": 2,
+    "wholeRawSame": true
+  },
+  "bindings": {
+    "retained": 325,
+    "retired": 9,
+    "introduced": 9,
+    "rows": [
+      {
+        "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+        "retained": 47,
+        "retired": [
+          {
+            "name": "registerRequestAliasPropagation",
+            "route": "../../../../core/domain/request_delivery"
+          }
+        ],
+        "introduced": [
+          {
+            "route": "../../../../core/domain/request-lease",
+            "name": "RequestLease",
+            "local": "RequestLease",
+            "typeOnly": false,
+            "endpoints": [
+              {
+                "path": "backend/src/core/domain/request-lease.ts",
+                "kind": 264,
+                "name": "RequestLease"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+        "retained": 28,
+        "retired": [
+          {
+            "name": "registerRequestAliasPropagation",
+            "route": "../../../../core/domain/request_delivery"
+          }
+        ],
+        "introduced": [
+          {
+            "route": "../../../../core/domain/request-lease",
+            "name": "RequestLease",
+            "local": "RequestLease",
+            "typeOnly": false,
+            "endpoints": [
+              {
+                "path": "backend/src/core/domain/request-lease.ts",
+                "kind": 264,
+                "name": "RequestLease"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+        "retained": 22,
+        "retired": [
+          {
+            "name": "registerRequestAliasPropagation",
+            "route": "../../../../core/domain/request_delivery"
+          }
+        ],
+        "introduced": [
+          {
+            "route": "../../../../core/domain/request-lease",
+            "name": "RequestLease",
+            "local": "RequestLease",
+            "typeOnly": false,
+            "endpoints": [
+              {
+                "path": "backend/src/core/domain/request-lease.ts",
+                "kind": 264,
+                "name": "RequestLease"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+        "retained": 10,
+        "retired": [
+          {
+            "name": "registerRequestAliasPropagation",
+            "route": "../../../../core/domain/request_delivery"
+          }
+        ],
+        "introduced": [
+          {
+            "route": "../../../../core/domain/request-lease",
+            "name": "RequestLease",
+            "local": "RequestLease",
+            "typeOnly": false,
+            "endpoints": [
+              {
+                "path": "backend/src/core/domain/request-lease.ts",
+                "kind": 264,
+                "name": "RequestLease"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+        "retained": 7,
+        "retired": [],
+        "introduced": []
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+        "retained": 7,
+        "retired": [],
+        "introduced": []
+      },
+      {
+        "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+        "retained": 45,
+        "retired": [
+          {
+            "name": "inheritThiefDeadlineRequest",
+            "route": "../../../../src/game/mechanisms/roles/thief/setup"
+          }
+        ],
+        "introduced": [
+          {
+            "route": "../../../../src/core/domain/request_delivery",
+            "name": "inheritRequestAlias",
+            "local": "inheritRequestAlias",
+            "typeOnly": false,
+            "endpoints": [
+              {
+                "path": "backend/src/core/domain/request_delivery.ts",
+                "kind": 263,
+                "name": "inheritRequestAlias"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+        "retained": 45,
+        "retired": [
+          {
+            "name": "inheritShapeshifterDeadlineRequest",
+            "route": "../../../../src/game/mechanisms/roles/shapeshifter/setup"
+          }
+        ],
+        "introduced": [
+          {
+            "route": "../../../../src/core/domain/request_delivery",
+            "name": "inheritRequestAlias",
+            "local": "inheritRequestAlias",
+            "typeOnly": false,
+            "endpoints": [
+              {
+                "path": "backend/src/core/domain/request_delivery.ts",
+                "kind": 263,
+                "name": "inheritRequestAlias"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+        "retained": 30,
+        "retired": [
+          {
+            "name": "inheritWildChildDeadlineRequest",
+            "route": "../../../../src/game/mechanisms/roles/wild_child/lifecycle"
+          }
+        ],
+        "introduced": [
+          {
+            "route": "../../../../src/core/domain/request_delivery",
+            "name": "inheritRequestAlias",
+            "local": "inheritRequestAlias",
+            "typeOnly": false,
+            "endpoints": [
+              {
+                "path": "backend/src/core/domain/request_delivery.ts",
+                "kind": 263,
+                "name": "inheritRequestAlias"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+        "retained": 49,
+        "retired": [
+          {
+            "name": "inheritLonelyGirlDeadlineRequest",
+            "route": "../../../../src/game/mechanisms/roles/lonely_girl/lifecycle"
+          }
+        ],
+        "introduced": [
+          {
+            "route": "../../../../src/core/domain/request_delivery",
+            "name": "inheritRequestAlias",
+            "local": "inheritRequestAlias",
+            "typeOnly": false,
+            "endpoints": [
+              {
+                "path": "backend/src/core/domain/request_delivery.ts",
+                "kind": 263,
+                "name": "inheritRequestAlias"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts",
+        "retained": 35,
+        "retired": [
+          {
+            "name": "inheritWallDeadlineRequest",
+            "route": "../../../../src/game/mechanisms/events/wall_notes/authority"
+          }
+        ],
+        "introduced": [
+          {
+            "route": "../../../../src/core/domain/request_delivery",
+            "name": "inheritRequestAlias",
+            "local": "inheritRequestAlias",
+            "typeOnly": false,
+            "endpoints": [
+              {
+                "path": "backend/src/core/domain/request_delivery.ts",
+                "kind": 263,
+                "name": "inheritRequestAlias"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "owner": [
+      {
+        "route": "./actions",
+        "name": "ActionRequest",
+        "local": "ActionRequest",
+        "typeOnly": true,
+        "endpoints": [
+          {
+            "path": "packages/game-contract/src/requests.ts",
+            "kind": 265,
+            "name": "ActionRequest"
+          }
+        ]
+      },
+      {
+        "route": "./request_delivery",
+        "name": "registerRequestAliasPropagation",
+        "local": "registerRequestAliasPropagation",
+        "typeOnly": false,
+        "endpoints": [
+          {
+            "path": "backend/src/core/domain/request_delivery.ts",
+            "kind": 263,
+            "name": "registerRequestAliasPropagation"
+          }
+        ]
+      }
+    ]
+  },
+  "inventory": {
+    "roots": [
+      "backend/src",
+      "backend/tests",
+      "backend/scripts",
+      "frontend/src",
+      "frontend/tests",
+      "packages",
+      "tooling"
+    ],
+    "files": 1915,
+    "extensions": "TS/TSX/MTS/CTS/JS/JSX/MJS/CJS",
+    "forms": "AST identifiers plus import/export/importType/importEquals/literal call syntax; no nonliteral string evaluation",
+    "relatedModuleSites": 61,
+    "retiredIdentifiers": 0
+  },
+  "summary": {
+    "completeExistingPrograms": 11,
+    "retainedMappedOutputs": 22,
+    "actualCompleteKernels": 12,
+    "kernelMappedOutputs": 24,
+    "comparedTypedNodes": 29416,
+    "comparedSyntaxLeaves": 14989,
+    "privateFeatureRequestCallbacks": 0,
+    "weakTablesPerInstance": 1,
+    "actualInstances": 4
+  },
+  "limits": [
+    "Canonical kernel expansion compares actual complete bind/query/inherit bodies, with explicit late-port/comparator/optional-get normalization; it is not an arbitrary closure/API equivalence proof.",
+    "Module/class/query-adapter allocations and stack change, six exported inherit APIs retire; no arbitrary CJS namespace/prototype monkeypatch equivalence promised.",
+    "First3 runtime/head samples predate concrete set/get timing fix and final unit type assertions; targeted new callee input has its own receipt.",
+    "Two old raw-board fixture failures remain; this proof does not execute baseline cases or declare full tests green.",
+    "C18 retains no deadline/current latch/guard/completion; F02 remains a separate behavior batch."
+  ]
+}

@@ -3,12 +3,13 @@
  * 输出保留原选择结果与请求绑定；setup 仍当前时调用数据所有者写选择，再沿原物理换牌／身份安装顺序提交。
  * 工厂在原 scope 复验之后才 new，固定日次仍为 1；构造／请求异常保留已开准备前缀并由原 finally 关闭。
  * 失败选择与已关闭 setup 保留原终结决定；构造端口和元数据均不携带行动许可。
+ * 请求记录及别名传播归独立公共实例；失配只拒本次查询，字段恢复仍按原规则检查，不新增期限校验。
  */
 import { createCampComponent } from "../../../observation/component-presentation";
 import type {
   ReadonlyBoardConfig,
 } from "@ai-werewolf-arena/game-contract";
-import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
+import { RequestLease } from "../../../../core/domain/request-lease";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT, Camp, Phase, Role, createVictoryComponent, type ActionProvider, type ActionRequest, type CampComponent, type GameEvent, type RoleComponent, type VictoryComponent, type World } from "../../../../core/domain";
 import { createRoleComponent } from "../../../observation/role-presentation";
@@ -74,10 +75,17 @@ export interface InitialIdentityScope {
   allowedSlots: readonly InitialIdentitySlot[];
 }
 const scopes = new WeakMap<World, InitialIdentityScope>();
-const requests = new WeakMap<
-  ActionRequest,
-  { scope: InitialIdentityScope; context: ActionRequest["context"] }
->();
+/** 请求登记由独立公共实例持有；query 仍晚读原 scope，不替代完整选择许可。 */
+const requestLease = RequestLease.actorPhaseDayStage<World, InitialIdentityScope>(
+  {
+    active: (world) => scopes.get(world),
+    owner: (scope) => scope.world,
+    actorId: (scope) => scope.actorId,
+    phase: () => Phase.Night,
+    stage: (scope) => scope.kind,
+  },
+  20,
+);
 function frozenJson(value: unknown): string | null {
   try {
     const copy = copyEventData(value);
@@ -162,49 +170,13 @@ export function authorizedInitialIdentityScope(
     : null;
 }
 export function bindInitialIdentityRequest(world: World, request: ActionRequest): void {
-  const scope = scopes.get(world);
-  if (
-    scope &&
-    request.actorId === scope.actorId &&
-    request.phase === Phase.Night &&
-    request.context.day === 1 &&
-    request.context.stage === scope.kind
-  ) {
-    requests.set(request, { scope, context: request.context });
-    registerRequestAliasPropagation(request, 20, inheritInitialIdentityDeadlineRequest);
-  }
+  requestLease.bind(world, request);
 }
 export function initialIdentityRequestScope(
   world: World,
   request: ActionRequest,
 ): InitialIdentityScope | undefined {
-  const binding = requests.get(request);
-  return binding &&
-    binding.scope.world === world &&
-    scopes.get(world) === binding.scope &&
-    request.actorId === binding.scope.actorId &&
-    request.context === binding.context &&
-    request.phase === Phase.Night &&
-    request.context.day === 1 &&
-    request.context.stage === binding.scope.kind
-    ? binding.scope
-    : undefined;
-}
-export function inheritInitialIdentityDeadlineRequest(
-  source: ActionRequest,
-  target: ActionRequest,
-): void {
-  const binding = requests.get(source);
-  if (!binding || !initialIdentityRequestScope(binding.scope.world, source)) return;
-  const keys = Object.keys(source).filter((k) => k !== "deadlineAtMs"),
-    other = Object.keys(target).filter((k) => k !== "deadlineAtMs");
-  if (
-    keys.length !== other.length ||
-    keys.some((k) => !other.includes(k) || (source as any)[k] !== (target as any)[k])
-  )
-    return;
-  requests.set(target, binding);
-  registerRequestAliasPropagation(target, 20, inheritInitialIdentityDeadlineRequest);
+  return requestLease.scope(world, request);
 }
 export function initialIdentityRequestChoices(
   world: World,

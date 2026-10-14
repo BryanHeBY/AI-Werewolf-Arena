@@ -1,0 +1,42 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts:
+(pass) actual Reception rejects tampered author; only otherwise-identical deadline derivations keep authority [55.51ms]
+
+backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts:
+34 |   ): Promise<boolean> {
+35 |     if (hasActiveLonelyGirl(this.world)) throw new Error("lonely_girl_setup_reentry");
+36 |     if (lonelyGirlReady(this.world)) return true;
+37 |     const b = lonelyGirlBinding(this.world);
+38 |     if (!b || b.status !== "pending" || config !== b.config || day !== 1)
+39 |       throw new Error("lonely_girl_setup_unavailable");
+                     ^
+error: lonely_girl_setup_unavailable
+      at execute (/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/lonely_girl/setup.ts:39:17)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts:411:9)
+(fail) opaque request only trusted deadline clone and original context [2.33ms]
+
+backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts:
+34 |   ): Promise<boolean> {
+35 |     if (hasActiveWildChild(this.world)) throw new Error("wild_child_setup_reentry");
+36 |     if (wildChildReady(this.world)) return true;
+37 |     const b = wildChildBinding(this.world);
+38 |     if (!b || config !== b.config || day !== 1 || !isCurrent())
+39 |       throw new Error("wild_child_setup_unavailable");
+                     ^
+error: wild_child_setup_unavailable
+      at execute (/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/wild_child/setup.ts:39:17)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts:206:9)
+(fail) opaque factory request is World-bound and only deadline copies inherit it [3.56ms]
+
+backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts:
+(pass) factory request capability is World-bound and survives only deadline-only derivation [11.99ms]
+
+backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts:
+(pass) factory request capability is World-bound and survives only deadline-only derivation [13.43ms]
+
+ 3 pass
+ 213 filtered out
+ 2 fail
+ 13 expect() calls
+Ran 5 tests across 5 files. [261.00ms]

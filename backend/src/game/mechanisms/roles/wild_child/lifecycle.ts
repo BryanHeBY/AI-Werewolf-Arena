@@ -3,11 +3,12 @@
  * 输入为原组件、首夜请求和实际死亡波；输出为原许可结果、阵营／Victory 及有界事实。
  * 不变量：仅在原身份／生命仍当前时提交；关闭、替换或截止别名仍按原政策撤权。
  * 槽所有者执行数据与 expectedState 写入；先发布榜样死亡事实再转换，失败不撤回已发表前缀。
+ * 请求记录及别名传播归独立公共实例；请求字段失配只拒本次查询，原生命／准备撤权仍由本族决定。
  */
 import { createCampComponent } from "../../../observation/component-presentation";
 import type { WildChildReadState } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
+import { RequestLease } from "../../../../core/domain/request-lease";
 import { COMPONENT, Camp, Role, Phase, createVictoryComponent, type World, type ActionRequest, type RoleComponent, type CampComponent, type VictoryComponent, type GameEvent, type DeathSources } from "../../../../core/domain";
 import { aliveLifeVersion } from "../../../../core/domain/components/alive";
 import {
@@ -39,10 +40,18 @@ export interface WildChildBinding {
 const bindings = new WeakMap<World, WildChildBinding>();
 const nights = new WeakMap<World, Set<number>>();
 const activeNights = new WeakSet<World>();
-const requests = new WeakMap<
-  ActionRequest,
-  { binding: WildChildBinding; context: ActionRequest["context"] }
->();
+/** 只传原绑定字段／当前性晚查询；请求、context 和别名记录由本实例唯一持有。 */
+const requestLease = RequestLease.stagePhaseDayActor<World, WildChildBinding>(
+  {
+    active: (world) => bindings.get(world),
+    owner: (binding) => binding.world,
+    actorId: (binding) => binding.actorId,
+    phase: () => Phase.Night,
+    stage: () => "wild_child",
+    current: (binding) => validWildChildChoice(binding),
+  },
+  30,
+);
 const windows = new WeakMap<
   World,
   { isCurrent: () => boolean; targets: Map<number, DebateParticipant> }
@@ -194,50 +203,13 @@ export function authorizedWildChild(
   );
 }
 export function bindWildChildRequest(world: World, request: ActionRequest): void {
-  const b = bindings.get(world);
-  if (
-    b &&
-    request.context.stage === "wild_child" &&
-    request.phase === Phase.Night &&
-    request.context.day === 1 &&
-    request.actorId === b.actorId &&
-    validWildChildChoice(b)
-  ) {
-    requests.set(request, { binding: b, context: request.context });
-    registerRequestAliasPropagation(request, 30, inheritWildChildDeadlineRequest);
-  }
+  requestLease.bind(world, request);
 }
 export function wildChildRequestScope(
   world: World,
   request: ActionRequest,
 ): WildChildBinding | undefined {
-  const a = requests.get(request);
-  return a &&
-    a.binding.world === world &&
-    request.actorId === a.binding.actorId &&
-    request.context === a.context &&
-    request.context.stage === "wild_child" &&
-    request.context.day === 1 &&
-    request.phase === Phase.Night &&
-    validWildChildChoice(a.binding)
-    ? a.binding
-    : undefined;
-}
-export function inheritWildChildDeadlineRequest(
-  source: ActionRequest,
-  target: ActionRequest,
-): void {
-  const b = requests.get(source);
-  if (!b || !wildChildRequestScope(b.binding.world, source)) return;
-  const keys = Object.keys(source).filter((k) => k !== "deadlineAtMs"),
-    other = Object.keys(target).filter((k) => k !== "deadlineAtMs");
-  if (
-    keys.length === other.length &&
-    keys.every((k) => other.includes(k) && Reflect.get(source, k) === Reflect.get(target, k))
-  ) {
-    requests.set(target, b);
-    registerRequestAliasPropagation(target, 30, inheritWildChildDeadlineRequest);
-  }
+  return requestLease.scope(world, request);
 }
 export function commitWildChildChoice(b: WildChildBinding, targetId: number): boolean {
   const target = windows.get(b.world)?.targets.get(targetId);

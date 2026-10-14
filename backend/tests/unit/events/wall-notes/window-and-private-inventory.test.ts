@@ -5,6 +5,7 @@ import { captureCheckpoint } from "../../../../src/runtime/simulation/reproducti
 import { GameEventRecorder } from "../../../../src/runtime/game_event_recorder";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";
 import { expect, test } from "bun:test";
+import { inheritRequestAlias } from "../../../../src/core/domain/request_delivery";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
   COMPONENT,
@@ -29,7 +30,6 @@ import {
   closeWall,
   authorizedWallAuthor,
   wallRequestScope,
-  inheritWallDeadlineRequest,
 } from "../../../../src/game/mechanisms/events/wall_notes/authority";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
@@ -656,10 +656,10 @@ test("actual Reception rejects tampered author; only otherwise-identical deadlin
     }),
     reception = new ActionReception(g.world),
     timed = { ...request, deadlineAtMs: 100 };
-  inheritWallDeadlineRequest(request, timed);
+  inheritRequestAlias(request, timed);
   expect(reception.validate(timed, "write_note", { text: "original" }).ok).toBe(true);
   const changed = { ...timed, actorId: 2 };
-  inheritWallDeadlineRequest(timed, changed);
+  inheritRequestAlias(timed, changed);
   expect(reception.validate(changed, "write_note", { text: "forged" }).ok).toBe(false);
   request.actorId = 2;
   request.context.item_instance_id = "wall:1:2";

@@ -3,6 +3,7 @@
  */
 import { createAliveComponent, createCampComponent } from "../../../../src/game/observation/component-presentation";
 import { expect, test } from "bun:test";
+import { inheritRequestAlias } from "../../../../src/core/domain/request_delivery";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { Role, Camp, COMPONENT, createVictoryComponent, type BoardConfig, type RoleComponent, type AliveComponent, type GameEvent, type ToolCall, type ActionRequest } from "../../../../src/core";
 import { createRoleComponent } from "../../../../src/game/observation/role-presentation";
@@ -15,7 +16,6 @@ import {
 import {
   wildChildBinding,
   wildChildRequestScope,
-  inheritWildChildDeadlineRequest,
   hasActiveWildChild,
   wildChildReady,
 } from "../../../../src/game/mechanisms/roles/wild_child/lifecycle";
@@ -205,12 +205,12 @@ test("opaque factory request is World-bound and only deadline copies inherit it"
     other = fixture();
   await setup(g, async (r) => {
     const timed = { ...r, deadlineAtMs: 200 };
-    inheritWildChildDeadlineRequest(r, timed);
+    inheritRequestAlias(r, timed);
     expect(wildChildRequestScope(g.world, timed)).toBeDefined();
     expect(wildChildRequestScope(other.world, timed)).toBeUndefined();
     expect(wildChildRequestScope(g.world, { ...r })).toBeUndefined();
     const altered = { ...r, allowedTools: [] };
-    inheritWildChildDeadlineRequest(r, altered);
+    inheritRequestAlias(r, altered);
     expect(wildChildRequestScope(g.world, altered)).toBeUndefined();
     return choose(2);
   });

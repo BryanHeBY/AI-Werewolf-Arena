@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/domain/request-lease.test.ts:
+(pass) independent bindings survive a later route failure and inherited routes remain stable [0.81ms]
+(pass) four fixed protocols preserve getter order and recover their original context references [0.51ms]
+(pass) invalid sources skip target enumeration and field exceptions leave the original binding [0.52ms]
+
+ 3 pass
+ 0 fail
+ 41 expect() calls
+Ran 3 tests across 1 file. [60.00ms]

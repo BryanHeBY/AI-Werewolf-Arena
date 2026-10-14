@@ -1,0 +1,226 @@
+{
+  "baseCommit": "bd1066307343b1d5c10bc7704fefbc0b77e9a341",
+  "source": [
+    {
+      "path": "backend/src/core/domain/request-lease.ts",
+      "sha256": "85ecdce7fbf17682b0174bff569e3cb63fe9bbd1c2fff7aed66713b67804b600"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "3eea951ebb9b228bc421c6913ac8fd7ca321eec2efc08a65cf3da1e23b4610dc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "bab83a2eef04f1662c83f6507ed75fb9110d253e2c19688d4c331b5d9cc27aba"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "sha256": "c4e0c047c4117090c0011d31035d9cf75a6673a131e06dd324b0c743738a1ed1"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "sha256": "a3d2743f7d1eb2ae188451ddfdaf4ea2dd968cf131c950e9102766b455ed4359"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/thief/setup.ts",
+      "sha256": "809176154677055564343e62e65e41d3c80148373d519b0b5eee21fe0c2595f8"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+      "sha256": "b023c7fd540438174bae208ac03b6904a11f7cf54cfb4885fad13021059e4a8a"
+    },
+    {
+      "path": "backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+      "sha256": "42d5bfa551b5cba23b99e02e15c50fa972c1c0fedbf2f94af8f2873bd9d2d172"
+    },
+    {
+      "path": "backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+      "sha256": "04991585721c167431fd9d5e8882d85f6ba8b8fd2f86b51968d6693b73bcc1e7"
+    },
+    {
+      "path": "backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+      "sha256": "aed646ecab9084616fa0bad85c273e353f0e61925652f2228c27b9afe1736945"
+    },
+    {
+      "path": "backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+      "sha256": "1281ec8fcd7c86e7cbddf6f7af2d75149721f9627009453b360e05abb34538cc"
+    },
+    {
+      "path": "backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts",
+      "sha256": "982cde6c7c2b6e1f07475584373607d90b791c1f22e19ce15cc6b720e53bdb1f"
+    },
+    {
+      "path": "backend/tests/unit/domain/request-lease.test.ts",
+      "sha256": "c1efed2f5ff1807bb9204ad1b6507cd53a518034ebf8995d57eca4078c0b26e4"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/core/domain/request_delivery.ts",
+      "sha256": "e15174e93f271f17f5392218f33d9854ea35fad7ad46ff0e2090b7af240c1748"
+    },
+    {
+      "path": "backend/src/rulesets/action-request-bindings.ts",
+      "sha256": "50fe966448f546d888df36ee600aa77e0f04c3e7a81069559f70455ae4307549"
+    },
+    {
+      "path": "backend/src/game/gateway/action-reception.ts",
+      "sha256": "1527d0329e206935c426027adcb6c0e756c144d876db2b897d14d4aaf2573e05"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/setup.ts",
+      "sha256": "a2274eca1a94e5e22d8bc7ee2f75204b6ffb5f4b32dc281dc422b3f34b4f06a9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/setup.ts",
+      "sha256": "d3b83f449a42a903152ffcb9b6bca96f85516ee91137c7506077c176c243eecc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/window.ts",
+      "sha256": "dca10207162ae2dd2f1aaea5bca777d282fbf3a69b8fcce131e5c5640b46c5e1"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/request-lease-propagation.md",
+    "sha256": "064d2798891f61135d0edcb31923d17e48797a38c8405763513fcbb75858dc5b"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-before-overlay-first.json",
+      "sha256": "ad51ad4534c4550a2eb4034c7a3ba6e4703d73e7418cbaa0706ae9c0020a99d5"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-before-overlay-first.log",
+      "sha256": "a3d0755c6f68225a23475ebc6a5bf674d7e41d568fcddf05626d643ae490e48f"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-before-overlay-first.ts",
+      "sha256": "e78d215f06e59cbf5d6b5437869cbe6c56175087fb0537cd688993ab9a6345a7"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-before-overlay.json",
+      "sha256": "76bdbdb5e6770639130864fe17757090d1455e99b49ff66f5ac48b25e6ff9c7e"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-before-overlay.log",
+      "sha256": "fa93e51fb63652991724e2aa895e9f02685014cc50fe027b0efdc3fad1e5fa04"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-before-overlay.ts",
+      "sha256": "d0f456f68813d2751e79eecd32f9346b1b50c324cd62d8c578f8cfd7ed1bd3b1"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-before.json",
+      "sha256": "1e11cef3d24ed30ffb33552108c43639d0e47fba6c296f988bba59730e20d158"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-callee-tests.log",
+      "sha256": "f9bed9d9fde6ba389c0eac21e6b58188091822a0159e6029604229efc01a7ba5"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-edits.json",
+      "sha256": "699229b8d9e50519b567cf9a258fdd15a6e9887b12f775df521d0bb176bc56b5"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-heads.json",
+      "sha256": "4283fcb386b0525d3de0153f64766b1cfc8baec6b8103b2cfbb48eabcb6da3c0"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-heads.log",
+      "sha256": "4f74c56f6d8ef1229327ccb338c8333d2aeab1b8a86e25e23998d0f1d84b536d"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-heads.ts",
+      "sha256": "8018e162f668178479739031b89ad585db86a61269fd71beb0fdedffc09b749d"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-legacy-before.json",
+      "sha256": "5c8f293fc5986210d668e1a6bcb94d2c9694bc680dc82c71122661bf34c759df"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-legacy-characterization.test.ts",
+      "sha256": "92f162c813b03b5ff101c37f38caef65dab425a9335aa117146f738e4b92f4e0"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-legacy-first-output.txt",
+      "sha256": "c0471a371e9274902469ef968e8d86e1f39eabc5ba6a733a1b77ca2edf571233"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-legacy-launch.json",
+      "sha256": "b6adfbf67b595cfed442af83a3754e18eef4e3a88f2881970ceab7da224aeff0"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-legacy-receipt.json",
+      "sha256": "ff1e23f745874a34c6cbae8b96678492b9e61a2b4a12add964328016e0355fe6"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-legacy-results.json",
+      "sha256": "721e5db708f52cd245321c51010cd6f487d8a9d759dd98b6242bd060e5bd65fd"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-new-tests.log",
+      "sha256": "e20df872ceeb57ce29234d3a316e681aab533b7fdbb0833c9c9a74b46528eeaa"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-old-tests.log",
+      "sha256": "ffd4f55c30b370c59c4f743df30f37cea31bb31685dd472a618896d55aa96446"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-owner-first-before.json",
+      "sha256": "9ee10d851cf50103d91da2f95f9c837b294bb40d2e714c054cb1bcf63a55bf50"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-paths.json",
+      "sha256": "30e39f38e7c3650580999da1d1476f6aec93290b5341fe3260b6a02345fba1e4"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-proof-tool-history.json",
+      "sha256": "9ea739db6758451b9513d0a869c6d42206ecaff41da8a33a1ee552c64120b352"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-proof.cjs",
+      "sha256": "e5cdec0a50f0fd393c56fadb4efa9d210c5a29c70c1ae6c69d6d3af0ba2761cf"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-proof.json",
+      "sha256": "21255b4e5bc4bba515c8eddadd242db716096817d9108a60c9f0756df50d74c2"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-proof.log",
+      "sha256": "72c7f3183fb95503e8ec2b4906b3b2395891071232f013694cd0a3364ecf6fed"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-receipts.json",
+      "sha256": "4e91b0a499e75a463a794a3118086bf4f1b4b77e7acb90ea5e96a25517974c15"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-types-config.json",
+      "sha256": "263f5b1c6183dbcc03587cb6aebab2712514151ad5bb047fbbab9179286e4f0a"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-types-failed-config.json",
+      "sha256": "35e5533d4d497c9281432eefa0ce4ee6135dc5c6571a108f438a990b174c419f"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-types-failed-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-types-failed.log",
+      "sha256": "e394535c3b6e37d4657aa2c5b3f1e477c67cf8f9ea770b4491a69eb9521d05cf"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-types.log",
+      "sha256": "fceb0ea637b444163e10a13ddb41d7ba5e6e4aab670bfb4bea1605020264f61d"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-unit-first-before.json",
+      "sha256": "52ea7e57fc145ba96063469096faca3c181c7b8889f1f557a14d735f4d6cd96f"
+    },
+    {
+      "path": "docs/refactor/generated/request-lease-propagation-unit-type-before.json",
+      "sha256": "0e4e7cfa172d75cff154bad8ce93efe24a94baf2858adad68c2fdaad08c764a3"
+    }
+  ]
+}

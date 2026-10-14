@@ -1,0 +1,27 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "include": [],
+  "exclude": [],
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/core/domain/request-lease.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/events/wall_notes/authority.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/thief/setup.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/thief/deal-and-setup-contracts.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/shapeshifter/deal-and-setup-contracts.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/wild-child/model-choice-and-fact-contracts.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/lonely-girl/setup-and-audit-contracts.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/events/wall-notes/window-and-private-inventory.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/domain/request-lease.test.ts"
+  ]
+}

@@ -2,6 +2,7 @@
  * 单元测试验证千面人原 N+2 发牌、备用牌／租约修改和严格 provider 失败 Tape。原字面回执、引用／getter／错误轨迹、事实和状态是预期，覆盖发牌／配置／多重集及有界设置窗口／capability／库存投影。原 case11 只在设置期间探测被拒 PhaseManager 入口，不完成周期；不运行完整阶段或付费模型，原本地窗口及被拒探针保持有界。
  */
 import { expect, test } from "bun:test";
+import { inheritRequestAlias } from "../../../../src/core/domain/request_delivery";
 import { shuffled } from "../../../../src/core";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import {
@@ -23,7 +24,6 @@ import {
   ShapeshifterSetupWindow,
   projectShapeshifterChoices,
   shapeshifterRequestScope,
-  inheritShapeshifterDeadlineRequest,
 } from "../../../../src/game/mechanisms/roles/shapeshifter/setup";
 import {
   shapeshifterDeal,
@@ -549,10 +549,10 @@ test("factory request capability is World-bound and survives only deadline-only 
     const reception = new ActionReception(g.world),
       bounded = { ...r, deadlineAtMs: Date.now() + 500 };
     expect(reception.validate(bounded, "choose_shapeshifter_card", { slot: 0 }).ok).toBe(false);
-    inheritShapeshifterDeadlineRequest(r, bounded);
+    inheritRequestAlias(r, bounded);
     expect(reception.validate(bounded, "choose_shapeshifter_card", { slot: 0 }).ok).toBe(true);
     const forged = { ...r, actorId: 2 };
-    inheritShapeshifterDeadlineRequest(r, forged);
+    inheritRequestAlias(r, forged);
     expect(reception.validate(forged, "choose_shapeshifter_card", { slot: 0 }).ok).toBe(false);
     return choose(0);
   });

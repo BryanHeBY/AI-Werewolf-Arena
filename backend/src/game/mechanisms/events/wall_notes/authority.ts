@@ -3,8 +3,9 @@
  * 输入为原 World、作者与请求；输出为已接受墙操作，写权只覆盖该作者／窗口的库存及绑定。
  * 不变量：别名必须保留原请求身份和窗口校验。关闭墙或参与者替换撤销本地权限，
  * 失败仍保留原已提交前缀，不以别名跳过 authority 检查。
+ * 请求记录及别名传播归独立公共实例；不新增期限检查或永久撤权，原作者与活跃墙仍按原条件查询。
  */
-import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
+import { RequestLease } from "../../../../core/domain/request-lease";
 import { readWallNoteData } from "@ai-werewolf-arena/game-contract/facts/wall-notes";
 import {
   COMPONENT,
@@ -48,48 +49,23 @@ export interface WallAuthority {
 const active = new WeakMap<World, WallAuthority>();
 const commits = new WeakSet<World>();
 const owned = new WeakMap<World, Map<number, WallAuthor>>();
-const requestScopes = new WeakMap<
-  ActionRequest,
+/** 本实例只登记请求；原 active/author/库存表仍归本 authority，入口不提前核阶段或当前作者。 */
+const requestLease = RequestLease.item<World, WallAuthority, WallAuthor>(
   {
-    scope: WallAuthority;
-    world: World;
-    actorId: number;
-    instanceId: string;
-    context: ActionRequest["context"];
-  }
->();
+    active: (world) => active.get(world),
+    authors: (scope) => scope.authors,
+    token: (scope) => scope.token,
+    instanceId: (author) => author.instanceId,
+    phase: () => Phase.Voting,
+    stage: () => "wall_notes",
+  },
+  10,
+);
 export function bindWallRequest(world: World, request: ActionRequest): void {
-  const a = active.get(world),
-    author = a?.authors.get(request.actorId);
-  if (
-    a &&
-    author &&
-    request.context.wall_id === a.token &&
-    request.context.item_instance_id === author.instanceId
-  ) {
-    requestScopes.set(request, {
-      scope: a,
-      world,
-      actorId: request.actorId,
-      instanceId: author.instanceId,
-      context: request.context,
-    });
-    registerRequestAliasPropagation(request, 10, inheritWallDeadlineRequest);
-  }
+  requestLease.bind(world, request);
 }
 export function wallRequestScope(world: World, request: ActionRequest): WallAuthority | undefined {
-  const binding = requestScopes.get(request);
-  return binding &&
-    active.get(world) === binding.scope &&
-    request.actorId === binding.actorId &&
-    request.context === binding.context &&
-    request.context.wall_id === binding.scope.token &&
-    request.context.item_instance_id === binding.instanceId &&
-    request.phase === Phase.Voting &&
-    request.context.day === 1 &&
-    request.context.stage === "wall_notes"
-    ? binding.scope
-    : undefined;
+  return requestLease.scope(world, request);
 }
 export function hasActiveWall(world: World): boolean {
   return active.has(world);
@@ -211,19 +187,4 @@ export function projectWallNote(
     expired: owned.get(world)!.get(id)!.closed || data.expired,
     effectiveRemaining: a && author && sameWallAuthor(world, a, author) ? author.remaining : 0,
   };
-}
-
-/** 仅 runtime 期限包装可派生其余字段相同的请求。 */
-export function inheritWallDeadlineRequest(source: ActionRequest, target: ActionRequest): void {
-  const binding = requestScopes.get(source);
-  if (!binding || !wallRequestScope(binding.world, source)) return;
-  const keys = Object.keys(source).filter((k) => k !== "deadlineAtMs"),
-    targetKeys = Object.keys(target).filter((k) => k !== "deadlineAtMs");
-  if (
-    keys.length !== targetKeys.length ||
-    keys.some((k) => !targetKeys.includes(k) || (source as any)[k] !== (target as any)[k])
-  )
-    return;
-  requestScopes.set(target, binding);
-  registerRequestAliasPropagation(target, 10, inheritWallDeadlineRequest);
 }

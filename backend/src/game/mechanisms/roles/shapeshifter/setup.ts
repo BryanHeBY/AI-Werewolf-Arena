@@ -1,6 +1,6 @@
 /**
- * 负责千面人对共享初始身份 scope、别名和选择查询的本族接线；输入为原参与者与请求，输出保留原绑定。
- * 只在对应 stage 传播别名；生命周期、库存及选择提交仍由共享所有者复验，不以查询或构造依赖授予许可。
+ * 负责千面人对共享初始身份 scope 和选择查询的本族接线；输入为原参与者与请求，输出保留原绑定。
+ * 生命周期、库存及选择提交仍由共享所有者复验；请求别名统一走公共传播入口，不以查询或构造依赖授予许可。
  * 包装类构造时才读取 shared 类，并透传同一惰性依赖；请求工厂仍在共享窗口原执行点创建，异常原样传播。
  */
 import type { World, ActionRequest, Phase, GameEvent } from "../../../../core/domain";
@@ -19,10 +19,6 @@ export const authorizedShapeshifterScope = (
 export const shapeshifterRequestScope = (world: World, r: ActionRequest) => {
   const s = shared.initialIdentityRequestScope(world, r);
   return s?.kind === "shapeshifter" ? s : undefined;
-};
-/** 原stage先短路；共享owner才复验仅deadline差异和别名绑定，错误阶段不传播另一族请求。 */
-export const inheritShapeshifterDeadlineRequest = (a: ActionRequest, b: ActionRequest) => {
-  if (a.context.stage === "shapeshifter") shared.inheritInitialIdentityDeadlineRequest(a, b);
 };
 /** 返回原共享选择对象，保mustChoose／allowedSlots／cards形状；不照盗贼裁剪或重新推导必选政策。 */
 export function projectShapeshifterChoices(world: World, actorId: number) {

@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "experiment": "real legacy request field validity and close characterization",
+  "baseCommitForFourLegacySources": "bd1066307343b1d5c10bc7704fefbc0b77e9a341",
+  "currentWorkspaceHeadAtLaunch": "bd1066307343b1d5c10bc7704fefbc0b77e9a341",
+  "legacySource": [
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "a505041e8b23cfee3113ef4622c23237feaa4489d5a921a8571669c417a0f5b6",
+      "gitBlob": "59dd4c22b2f8eeb9e7a02990cc12b1b4ca1b3f20",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "1abd878a107988af5fc61d001731115304af3252e78e2ca6d79c0ff4e4c33622",
+      "gitBlob": "056a52eb0531bd39000545e9a107a14d714af7eb",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+      "sha256": "287b392d2ac7a21fe00d05db5dbb1ea4daf5e3409f2cc6b814c295e4f6dcc050",
+      "gitBlob": "c4bbc26963d70609473ceaea13383b7fab23ff37",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "sha256": "d7e927967bee44f80661c23d21174d5fa5d8e111b7537586ab4cb17cfea74187",
+      "gitBlob": "3c206ddf57516acb37261a4fe64467e7fa9c4460",
+      "mode": "100644"
+    }
+  ],
+  "transitiveSourcePolicy": "当时A35与Root shared已经明确allsource-ready，使用当前工作区传递模块；不是完整fixed bd106隔离树。",
+  "execution": {
+    "command": "bun --no-env-file test --preload ./backend/tests/setup.ts /tmp/awa-legacy-request-f02/characterization.test.ts",
+    "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+    "terminalChunk": "f9df9b",
+    "exitCode": 0,
+    "executions": 1,
+    "passed": 4,
+    "failed": 0,
+    "assertions": 87,
+    "stdout": "first-output.txt",
+    "stdoutSHA256": "c0471a371e9274902469ef968e8d86e1f39eabc5ba6a733a1b77ca2edf571233",
+    "noGreenReruns": true
+  },
+  "results": [
+    {
+      "name": "initial_identity:thief",
+      "trace": [
+        "original:same-scope",
+        "bad-stage:undefined",
+        "restored:same-scope",
+        "copied-context:undefined",
+        "restored-context:same-scope",
+        "registered-alias:same-scope",
+        "registered-alias-copied-context:undefined",
+        "original-after-registered-alias:same-scope",
+        "registered-alias-restored:same-scope",
+        "bad-alias:undefined",
+        "original-after-alias:same-scope",
+        "closed:undefined",
+        "closed-registered-alias:undefined",
+        "closed-restored:undefined"
+      ],
+      "restoredSameReference": true,
+      "contextRestoredSameReference": true,
+      "registeredAliasRestoredSameReference": true,
+      "providerCalls": 1,
+      "windowResult": true,
+      "originalContextRetained": true,
+      "originalStage": "thief"
+    },
+    {
+      "name": "wild_child",
+      "trace": [
+        "original:same-scope",
+        "bad-stage:undefined",
+        "restored:same-scope",
+        "copied-context:undefined",
+        "restored-context:same-scope",
+        "registered-alias:same-scope",
+        "registered-alias-copied-context:undefined",
+        "original-after-registered-alias:same-scope",
+        "registered-alias-restored:same-scope",
+        "bad-alias:undefined",
+        "original-after-alias:same-scope",
+        "closed:undefined",
+        "closed-registered-alias:undefined",
+        "closed-restored:undefined"
+      ],
+      "restoredSameReference": true,
+      "contextRestoredSameReference": true,
+      "registeredAliasRestoredSameReference": true,
+      "providerCalls": 1,
+      "windowResult": true,
+      "originalContextRetained": true,
+      "originalStage": "wild_child"
+    },
+    {
+      "name": "lonely_girl",
+      "trace": [
+        "original:same-scope",
+        "bad-stage:undefined",
+        "restored:same-scope",
+        "copied-context:undefined",
+        "restored-context:same-scope",
+        "registered-alias:same-scope",
+        "registered-alias-copied-context:undefined",
+        "original-after-registered-alias:same-scope",
+        "registered-alias-restored:same-scope",
+        "bad-alias:undefined",
+        "original-after-alias:same-scope",
+        "closed:undefined",
+        "closed-registered-alias:undefined",
+        "closed-restored:undefined"
+      ],
+      "restoredSameReference": true,
+      "contextRestoredSameReference": true,
+      "registeredAliasRestoredSameReference": true,
+      "providerCalls": 1,
+      "windowResult": true,
+      "originalContextRetained": true,
+      "originalStage": "lonely_girl"
+    },
+    {
+      "name": "wall",
+      "trace": [
+        "original:same-scope",
+        "bad-stage:undefined",
+        "restored:same-scope",
+        "copied-context:undefined",
+        "restored-context:same-scope",
+        "registered-alias:same-scope",
+        "registered-alias-copied-context:undefined",
+        "original-after-registered-alias:same-scope",
+        "registered-alias-restored:same-scope",
+        "bad-alias:undefined",
+        "original-after-alias:same-scope",
+        "closed:undefined",
+        "closed-registered-alias:undefined",
+        "closed-restored:undefined"
+      ],
+      "restoredSameReference": true,
+      "contextRestoredSameReference": true,
+      "registeredAliasRestoredSameReference": true,
+      "providerCalls": 6,
+      "windowResult": "void",
+      "originalContextRetained": true,
+      "originalStage": "wall_notes"
+    }
+  ],
+  "literalExpectedTrace": [
+    "original:same-scope",
+    "bad-stage:undefined",
+    "restored:same-scope",
+    "copied-context:undefined",
+    "restored-context:same-scope",
+    "registered-alias:same-scope",
+    "registered-alias-copied-context:undefined",
+    "original-after-registered-alias:same-scope",
+    "registered-alias-restored:same-scope",
+    "bad-alias:undefined",
+    "original-after-alias:same-scope",
+    "closed:undefined",
+    "closed-registered-alias:undefined",
+    "closed-restored:undefined"
+  ],
+  "observedBoundary": [
+    "阶段字段改坏会拒scope查询，恢复原stage后四族均返回原scope同引用；这不是不可逆终态。",
+    "原context换成同字段新对象会拒；恢复原context引用后四族均返回原scope同引用。",
+    "合法期限alias先实际登记并返回原scope，单独alias.context换新对象只使alias查询被拒，原request始终同scope；恢复alias原context后该alias也再返回同scope。",
+    "另未登记坏context clone不能取得scope且不损坏原request。",
+    "原实际Window正常完成后，原request与已登记alias查询均拒；再次改坏/恢复原stage也不能重新取得closed scope。"
+  ],
+  "limits": [
+    "InitialIdentity实际只执行盗贼；千面人共用同owner是源码事实，未执行其case。",
+    "四个新本地case不运行旧green、完整对局、模型、类型或架构gate；仅原正常setup/Wall窗口。",
+    "前三各1真实provider调用并完成合法选择；Wall实际6作者provider调用，只有actor1执行完整探针，其他作者返回null；不是对所有Wall作者逐个实验。",
+    "同引用scope查询恢复与原正常行动成功是此有界轨迹事实，不泛化为所有领域commit、World/生命/资源权限可恢复。",
+    "未测试past/NaN期限、earliest/shared deadline、不透明授权Guard、回执settle或其它异常取消；registeredalias用原合法same-fields引用和未来deadline。",
+    "没有写任何生产源、正式doc、Git或progress。"
+  ],
+  "artifacts": [
+    {
+      "path": "/tmp/awa-legacy-request-f02/before.json",
+      "sha256": "5c8f293fc5986210d668e1a6bcb94d2c9694bc680dc82c71122661bf34c759df"
+    },
+    {
+      "path": "/tmp/awa-legacy-request-f02/characterization.test.ts",
+      "sha256": "92f162c813b03b5ff101c37f38caef65dab425a9335aa117146f738e4b92f4e0"
+    },
+    {
+      "path": "/tmp/awa-legacy-request-f02/launch.json",
+      "sha256": "b6adfbf67b595cfed442af83a3754e18eef4e3a88f2881970ceab7da224aeff0"
+    },
+    {
+      "path": "/tmp/awa-legacy-request-f02/results.json",
+      "sha256": "721e5db708f52cd245321c51010cd6f487d8a9d759dd98b6242bd060e5bd65fd"
+    },
+    {
+      "path": "/tmp/awa-legacy-request-f02/first-output.txt",
+      "sha256": "c0471a371e9274902469ef968e8d86e1f39eabc5ba6a733a1b77ca2edf571233"
+    }
+  ]
+}

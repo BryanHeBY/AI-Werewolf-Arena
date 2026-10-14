@@ -4,10 +4,11 @@
  * 不变量：仅在原身份／资源仍匹配时提交；关闭或替换参与者使 scope 失效，包括期限别名。
  * 选择不改变演员的 Role／Camp，已选成员关系在双方死亡后仍保留；本模块不新增目标死亡结算。
  * 数据写由槽执行，失败窗口审计保留原授权身份，不读取外来 accessor 或恢复已消耗库存。
+ * 请求记录及别名传播归独立公共实例；请求字段失配只拒本次查询，原生命／准备撤权仍由本族决定。
  */
 import type { LonelyGirlReadState } from "@ai-werewolf-arena/game-contract";
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
-import { registerRequestAliasPropagation } from "../../../../core/domain/request_delivery";
+import { RequestLease } from "../../../../core/domain/request-lease";
 import { copyEventData } from "@ai-werewolf-arena/game-contract";
 import {
   COMPONENT,
@@ -53,12 +54,20 @@ export interface LonelyGirlBinding {
   isCurrent: (() => boolean) | null;
 }
 const bindings = new WeakMap<World, LonelyGirlBinding>(),
-  requests = new WeakMap<
-    ActionRequest,
-    { binding: LonelyGirlBinding; context: ActionRequest["context"] }
-  >(),
   nights = new WeakMap<World, Set<number>>(),
   activeNights = new WeakSet<World>();
+/** phase 先于 context 身份的原协议独立保留；不复制选择许可或引入请求永久撤权。 */
+const requestLease = RequestLease.actorPhaseStageDay<World, LonelyGirlBinding>(
+  {
+    active: (world) => bindings.get(world),
+    owner: (binding) => binding.world,
+    actorId: (binding) => binding.actorId,
+    phase: () => Phase.Night,
+    stage: () => "lonely_girl",
+    current: (binding) => validLonelyGirlChoice(binding),
+  },
+  40,
+);
 function safeJson(value: unknown): string | null {
   try {
     const p = copyEventData(value);
@@ -227,50 +236,13 @@ export function authorizedLonelyGirl(
   );
 }
 export function bindLonelyGirlRequest(world: World, request: ActionRequest): void {
-  const b = bindings.get(world);
-  if (
-    b &&
-    request.actorId === b.actorId &&
-    request.phase === Phase.Night &&
-    request.context.stage === "lonely_girl" &&
-    request.context.day === 1 &&
-    validLonelyGirlChoice(b)
-  ) {
-    requests.set(request, { binding: b, context: request.context });
-    registerRequestAliasPropagation(request, 40, inheritLonelyGirlDeadlineRequest);
-  }
+  requestLease.bind(world, request);
 }
 export function lonelyGirlRequestScope(
   world: World,
   request: ActionRequest,
 ): LonelyGirlBinding | undefined {
-  const a = requests.get(request);
-  return a &&
-    a.binding.world === world &&
-    request.actorId === a.binding.actorId &&
-    request.phase === Phase.Night &&
-    request.context === a.context &&
-    request.context.stage === "lonely_girl" &&
-    request.context.day === 1 &&
-    validLonelyGirlChoice(a.binding)
-    ? a.binding
-    : undefined;
-}
-export function inheritLonelyGirlDeadlineRequest(
-  source: ActionRequest,
-  target: ActionRequest,
-): void {
-  const a = requests.get(source);
-  if (!a || !lonelyGirlRequestScope(a.binding.world, source)) return;
-  const keys = Object.keys(source).filter((k) => k !== "deadlineAtMs"),
-    other = Object.keys(target).filter((k) => k !== "deadlineAtMs");
-  if (
-    keys.length === other.length &&
-    keys.every((k) => other.includes(k) && (source as any)[k] === (target as any)[k])
-  ) {
-    requests.set(target, a);
-    registerRequestAliasPropagation(target, 40, inheritLonelyGirlDeadlineRequest);
-  }
+  return requestLease.scope(world, request);
 }
 export function commitLonelyGirlChoice(b: LonelyGirlBinding, targetId: number): Camp | null {
   const target = b.participants.get(targetId);
