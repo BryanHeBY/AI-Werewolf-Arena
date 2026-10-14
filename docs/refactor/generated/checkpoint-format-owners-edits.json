@@ -1,0 +1,50 @@
+[
+  {
+    "path": "backend/src/recording/reproduction.ts",
+    "before": "\"./animal_dream_checkpoint\"",
+    "after": "\"./checkpoint/animal-format\"",
+    "occurrences": 2
+  },
+  {
+    "path": "backend/src/recording/reproduction.ts",
+    "before": "\"./fragrant_pair_seer_checkpoint\"",
+    "after": "\"./checkpoint/fragrant-pair-format\"",
+    "occurrences": 2
+  },
+  {
+    "path": "backend/src/recording/reproduction.ts",
+    "before": "\"./noble_secret_body_checkpoint\"",
+    "after": "\"./checkpoint/noble-body-format\"",
+    "occurrences": 2
+  },
+  {
+    "path": "backend/src/recording/checkpoint/authority-snapshots.ts",
+    "before": "\"../animal_dream_checkpoint\"",
+    "after": "\"./animal-format\"",
+    "occurrences": 1
+  },
+  {
+    "path": "backend/src/recording/checkpoint/authority-snapshots.ts",
+    "before": "\"../fragrant_pair_seer_checkpoint\"",
+    "after": "\"./fragrant-pair-format\"",
+    "occurrences": 1
+  },
+  {
+    "path": "backend/src/recording/checkpoint/authority-snapshots.ts",
+    "before": "\"../noble_secret_body_checkpoint\"",
+    "after": "\"./noble-body-format\"",
+    "occurrences": 1
+  },
+  {
+    "path": "backend/src/verification/reproduction/fragrant-pair-seer/validate.ts",
+    "before": "\"../../../recording/fragrant_pair_seer_checkpoint\"",
+    "after": "\"../../../recording/checkpoint/fragrant-pair-format\"",
+    "occurrences": 1
+  },
+  {
+    "path": "backend/src/verification/reproduction/noble-secret-body/validate.ts",
+    "before": "\"../../../recording/noble_secret_body_checkpoint\"",
+    "after": "\"../../../recording/checkpoint/noble-body-format\"",
+    "occurrences": 1
+  }
+]

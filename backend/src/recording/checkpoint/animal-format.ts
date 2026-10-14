@@ -7,6 +7,7 @@
 import { z } from "zod";
 import { CAT_SKIPPED_VOTE_POLICIES, PUFFER_BALLOT_POLICIES } from "@ai-werewolf-arena/game-contract";
 const id = z.number().int().positive().safe(),
+  // 三角色库存保留原 JSON 记录形状；各资源字段的归属与实际付款由独立核验计算。
   stock = z.record(z.string(), z.json());
 /** 这里只校验档案形状；独立账本另验证原归属及因果值。 */
 export const animalCheckpointSchema = z.strictObject({
@@ -23,6 +24,7 @@ export const animalCheckpointSchema = z.strictObject({
   puffer: stock,
   cat: stock,
   stopped: z.boolean(),
+  // 保存夜间交接前缀；这些状态字符串描述档案，不会重建开放窗口或原请求许可。
   night: z
     .strictObject({
       day: id,
@@ -36,6 +38,7 @@ export const animalCheckpointSchema = z.strictObject({
     .nullable(),
   completedUnits: z.number().int().nonnegative().safe(),
   beautyLinkBlockedDay: id.nullable(),
+  // 跳日与普通放逐共用原单位格式；票轮和河豚付款分别记录，不由格式推断已生效。
   unit: z
     .strictObject({
       number: id,

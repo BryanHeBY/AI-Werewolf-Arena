@@ -15,7 +15,7 @@ import {
 import { isFragrantPairSeerPreset } from "../../board-support";
 import { Camp, Role, Phase } from "@ai-werewolf-arena/game-contract";
 import type { ReproductionRecord, RecordedDecision, RecordedCheckpoint } from "../../../recording/reproduction";
-import type { RecordedFragrantState } from "../../../recording/fragrant_pair_seer_checkpoint";
+import type { RecordedFragrantState } from "../../../recording/checkpoint/fragrant-pair-format";
 
 function check(v: unknown): asserts v {
   if (!v) throw Error("reproduction_fragrant_pair_invalid");

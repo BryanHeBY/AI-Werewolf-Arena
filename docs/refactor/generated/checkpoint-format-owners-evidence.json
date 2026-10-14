@@ -1,0 +1,203 @@
+{
+  "baseCommit": "e45c972b2a271a09bce51c103399af66714fc527",
+  "scope": {
+    "path": "docs/refactor/generated/checkpoint-format-owners-scope-final.json",
+    "sha256": "992b1e9cc89b9458a725790f39d526334f04835b563ef662d221dd9cdefefff8"
+  },
+  "source": [
+    {
+      "path": "backend/src/recording/checkpoint/animal-format.ts",
+      "sha256": "048fe91e60011dc2273a2dcb8171f2597c2c73ed08b964f1a3329a2c79292dba",
+      "kind": "moved"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/fragrant-pair-format.ts",
+      "sha256": "2879495bc68d731548fb73e7a5a3caf72fefc50422998e578b3ab01e38b0c551",
+      "kind": "moved"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/noble-body-format.ts",
+      "sha256": "86cf52d425188c1a5745cc6b23110e98c677ec754007b768cd175bad68ccb499",
+      "kind": "moved"
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "sha256": "31a7c2092821d0a26cf94a612273c747a52dee865d6e5519f438e7c37f85aa6e",
+      "kind": "modified"
+    },
+    {
+      "path": "backend/src/recording/checkpoint/authority-snapshots.ts",
+      "sha256": "fc5d546ec93a96ed231d2af2daba25b22872004bcfb52d2e80a7e9295a56f86e",
+      "kind": "modified"
+    },
+    {
+      "path": "backend/src/verification/reproduction/fragrant-pair-seer/validate.ts",
+      "sha256": "25bd4eaefb5d3b0a54e674e5b0fcf8db866785a7cadf3c7c1dadfdacf5ef4552",
+      "kind": "modified"
+    },
+    {
+      "path": "backend/src/verification/reproduction/noble-secret-body/validate.ts",
+      "sha256": "7f86412e0b1f011c2f325430346b43c04f8bcb86e638d8f2bc6f73df16e14214",
+      "kind": "modified"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/recording/animal_dream_checkpoint.ts",
+      "sha256": "0e688a3f22ff20d800f87856bb17f68e11eaaa315be330903c8e7cf37544e374",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/fragrant_pair_seer_checkpoint.ts",
+      "sha256": "0c6a3c47dc7af3b3426fb391426345c83755d2a20fc1b78ec29b3f9a66ab094f",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/noble_secret_body_checkpoint.ts",
+      "sha256": "8bc3901708ab47dd0f63ae661f25d523949325f0894db39ca704de2d9db4a9be",
+      "expectedAbsent": true
+    }
+  ],
+  "documentation": {
+    "path": "docs/refactor/checkpoint-format-owners.md",
+    "sha256": "72f3324699d9d63d80664c606a4aa3a42f7277d54e6859af6de4fd3047a42b5b"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-before.json",
+      "sha256": "682ac2bf41b4297ee0a2a62252cb397c9cbaec2e3dcaee830ab747ba53f3a253"
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-documentation-paths.json",
+      "sha256": "d354b175b2bcbbe7ce1046f5399e756e5d7a4f01bf529985640f44454c679120"
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-edits.json",
+      "sha256": "b896bb1eaf13a928c91b11af707fd8807ac5e850699f130d19ed38133aad0b24"
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-final-comment-bridge.json",
+      "sha256": "b92e7461de0098fafe7b51ecfd6cd613115fef5dc9a226ff58cd9cf42e167864"
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-heads.json",
+      "sha256": "08da330be025caf29d049e5fe182ff96a08a65f43bc29c8992cb2e6c17d83d3d"
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-heads.ts",
+      "sha256": "afd791cb8ae1c6906307bd9d7cf1014ea09390499895af70b53b9fa98c577c82"
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-inventory-executed.cjs",
+      "sha256": "80dbef0d6d525def575fc7b45f5be890e1fa039e25baf332bd0a5fa296440f4b"
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-inventory.json",
+      "sha256": "88dabb34f040d1aef585681f6ff1f156d913995a9a4cb17df65e761e66a5b35c"
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-proof.cjs",
+      "sha256": "a5dca5bbc3585a54a425fbd8131d64f5a582e12875f7ec1d0bfd6dd571444fe6"
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-proof.json",
+      "sha256": "7d4a378469152d5f7f82ced0136ca9b9286e360a3ba1214ba2085c577d418259"
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-receipts.json",
+      "sha256": "c1b935722b06ff4948bad6d1d3f774007a80390049ebad9a79c584ccbb4d2f0b"
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-scope-final.json",
+      "sha256": "992b1e9cc89b9458a725790f39d526334f04835b563ef662d221dd9cdefefff8"
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-types-config-first.json",
+      "sha256": "e69a9a1c63bddb564a59d94f5f045d801b43547d9a95ae7f98d4ef6288ab4ba1"
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-types-config.json",
+      "sha256": "61899979be08ae2ac699420d1eea6e309a22fb9727d9c3d63c7d232154fb1d63"
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-types-repair.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-types.log",
+      "sha256": "782793e23d7dde8f9de74dff7a4ae2b000d492ce01f605d6c8cad908869d2651"
+    }
+  ],
+  "proofSummary": {
+    "programs": 7,
+    "nodes": 43515,
+    "leaves": 28751,
+    "wholeMappedOutputs": 14,
+    "specifierSites": 11
+  },
+  "receipts": {
+    "wholeProgramProof": {
+      "first": {
+        "chunk": "b34140",
+        "exitCode": 1,
+        "cause": "Node child_process Git spawn报告EPERM；未改产品。"
+      },
+      "success": {
+        "chunk": "309ccc",
+        "exitCode": 0,
+        "programs": 7,
+        "nodes": 43515,
+        "leaves": 28751,
+        "wholeMappedOutputs": 14
+      },
+      "actualGitInput": "Python按固定Git读取并按before逐SHA核；临时原文JSON可从固定Git恢复。"
+    },
+    "inventory": {
+      "chunk": "09148b",
+      "exitCode": 0,
+      "command": "node /tmp/awa-checkpoint-format-inventory.cjs",
+      "executedScript": {
+        "path": "docs/refactor/generated/checkpoint-format-owners-inventory-executed.cjs",
+        "sha256": "80dbef0d6d525def575fc7b45f5be890e1fa039e25baf332bd0a5fa296440f4b"
+      },
+      "files": 1825,
+      "bindings": 69,
+      "canonicalSites": 11,
+      "oldLiteralSites": 0
+    },
+    "heads": {
+      "chunk": "2a0e26",
+      "exitCode": 0,
+      "roots": 7,
+      "documentationPaths": 525,
+      "violations": 0,
+      "sample": "正式名补之以前；末单comment桥连接final，不重头。"
+    },
+    "finiteTypes": {
+      "first": {
+        "launch": "34a844",
+        "session": 24042,
+        "terminal": "d1c2f9",
+        "exitCode": 2,
+        "cause": "生成config缺backend Node ambient；require/node:util等诊断及其连带类型错误，不修改产品。",
+        "diagnosticLines": 65
+      },
+      "repair": {
+        "launch": "faa898",
+        "session": 31028,
+        "terminal": "196658",
+        "exitCode": 0,
+        "roots": 7,
+        "change": "仅config typeRoots/node环境修复；首7均失败，无绿根重复。"
+      }
+    },
+    "testsExecuted": 0,
+    "modelsCalled": 0,
+    "fullGatesExecuted": 0,
+    "finalCommentBridge": "夜贵族→正式名夜之贵族，仅首头精确逆，不重程序/head/类型绿。"
+  },
+  "limits": [
+    "原before保存实际blob/SHA，完整原文由固定Git可恢复；临时JSON不纳提交。",
+    "格式归属/局部程序证明不代表所有机制/兼容或最终验收。"
+  ]
+}

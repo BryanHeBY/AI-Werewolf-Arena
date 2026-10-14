@@ -1,0 +1,61 @@
+{
+  "wholeProgramProof": {
+    "first": {
+      "chunk": "b34140",
+      "exitCode": 1,
+      "cause": "Node child_process Git spawn报告EPERM；未改产品。"
+    },
+    "success": {
+      "chunk": "309ccc",
+      "exitCode": 0,
+      "programs": 7,
+      "nodes": 43515,
+      "leaves": 28751,
+      "wholeMappedOutputs": 14
+    },
+    "actualGitInput": "Python按固定Git读取并按before逐SHA核；临时原文JSON可从固定Git恢复。"
+  },
+  "inventory": {
+    "chunk": "09148b",
+    "exitCode": 0,
+    "command": "node /tmp/awa-checkpoint-format-inventory.cjs",
+    "executedScript": {
+      "path": "docs/refactor/generated/checkpoint-format-owners-inventory-executed.cjs",
+      "sha256": "80dbef0d6d525def575fc7b45f5be890e1fa039e25baf332bd0a5fa296440f4b"
+    },
+    "files": 1825,
+    "bindings": 69,
+    "canonicalSites": 11,
+    "oldLiteralSites": 0
+  },
+  "heads": {
+    "chunk": "2a0e26",
+    "exitCode": 0,
+    "roots": 7,
+    "documentationPaths": 525,
+    "violations": 0,
+    "sample": "正式名补之以前；末单comment桥连接final，不重头。"
+  },
+  "finiteTypes": {
+    "first": {
+      "launch": "34a844",
+      "session": 24042,
+      "terminal": "d1c2f9",
+      "exitCode": 2,
+      "cause": "生成config缺backend Node ambient；require/node:util等诊断及其连带类型错误，不修改产品。",
+      "diagnosticLines": 65
+    },
+    "repair": {
+      "launch": "faa898",
+      "session": 31028,
+      "terminal": "196658",
+      "exitCode": 0,
+      "roots": 7,
+      "change": "仅config typeRoots/node环境修复；首7均失败，无绿根重复。"
+    }
+  },
+  "testsExecuted": 0,
+  "modelsCalled": 0,
+  "fullGatesExecuted": 0,
+  "finalCommentBridge": "夜贵族→正式名夜之贵族，仅首头精确逆，不重程序/head/类型绿。"
+}

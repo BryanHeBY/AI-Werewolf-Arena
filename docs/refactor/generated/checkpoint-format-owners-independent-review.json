@@ -1,0 +1,1125 @@
+{
+  "reviewer": "/root/native_presentation_finish",
+  "approved": true,
+  "baseCommit": "e45c972b2a271a09bce51c103399af66714fc527",
+  "pathCount": 10,
+  "currentProgramCount": 7,
+  "source": [
+    {
+      "path": "backend/src/recording/checkpoint/animal-format.ts",
+      "beforePath": "backend/src/recording/animal_dream_checkpoint.ts",
+      "status": "moved",
+      "sha256": "048fe91e60011dc2273a2dcb8171f2597c2c73ed08b964f1a3329a2c79292dba",
+      "actualGitSHA": "0e688a3f22ff20d800f87856bb17f68e11eaaa315be330903c8e7cf37544e374",
+      "actualGitBeforeSame": true,
+      "wholeNonCommentProgramSame": true,
+      "wholeNonRouteByteSame": null,
+      "currentBindings": [
+        {
+          "specifier": "zod",
+          "target": "node_modules/.bun/zod@4.6.5/node_modules/zod/index.d.cts",
+          "form": "import",
+          "text": "import { z } from \"zod\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "target": "packages/game-contract/src/index.ts",
+          "form": "import",
+          "text": "import { CAT_SKIPPED_VOTE_POLICIES, PUFFER_BALLOT_POLICIES } from \"@ai-werewolf-arena/game-contract\";"
+        }
+      ],
+      "oldBindings": [
+        {
+          "specifier": "zod",
+          "target": "node_modules/.bun/zod@4.6.5/node_modules/zod/index.d.cts",
+          "form": "import",
+          "text": "import { z } from \"zod\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "target": "packages/game-contract/src/index.ts",
+          "form": "import",
+          "text": "import { CAT_SKIPPED_VOTE_POLICIES, PUFFER_BALLOT_POLICIES } from \"@ai-werewolf-arena/game-contract\";"
+        }
+      ],
+      "freshFinalScopeSHA": true,
+      "capturedSourceByteSame": true
+    },
+    {
+      "path": "backend/src/recording/checkpoint/fragrant-pair-format.ts",
+      "beforePath": "backend/src/recording/fragrant_pair_seer_checkpoint.ts",
+      "status": "moved",
+      "sha256": "2879495bc68d731548fb73e7a5a3caf72fefc50422998e578b3ab01e38b0c551",
+      "actualGitSHA": "0c6a3c47dc7af3b3426fb391426345c83755d2a20fc1b78ec29b3f9a66ab094f",
+      "actualGitBeforeSame": true,
+      "wholeNonCommentProgramSame": true,
+      "wholeNonRouteByteSame": null,
+      "currentBindings": [
+        {
+          "specifier": "zod",
+          "target": "node_modules/.bun/zod@4.6.5/node_modules/zod/index.d.cts",
+          "form": "import",
+          "text": "import { z } from \"zod\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer",
+          "target": "packages/game-contract/src/facts/fragrant-pair-seer.ts",
+          "form": "import",
+          "text": "import {\n  FRAGRANT_PAIR_POLICY,\n  readFragrantKnownState,\n} from \"@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer\";"
+        }
+      ],
+      "oldBindings": [
+        {
+          "specifier": "zod",
+          "target": "node_modules/.bun/zod@4.6.5/node_modules/zod/index.d.cts",
+          "form": "import",
+          "text": "import { z } from \"zod\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer",
+          "target": "packages/game-contract/src/facts/fragrant-pair-seer.ts",
+          "form": "import",
+          "text": "import {\n  FRAGRANT_PAIR_POLICY,\n  readFragrantKnownState,\n} from \"@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer\";"
+        }
+      ],
+      "freshFinalScopeSHA": true,
+      "capturedSourceByteSame": true
+    },
+    {
+      "path": "backend/src/recording/checkpoint/noble-body-format.ts",
+      "beforePath": "backend/src/recording/noble_secret_body_checkpoint.ts",
+      "status": "moved",
+      "sha256": "86cf52d425188c1a5745cc6b23110e98c677ec754007b768cd175bad68ccb499",
+      "actualGitSHA": "8bc3901708ab47dd0f63ae661f25d523949325f0894db39ca704de2d9db4a9be",
+      "actualGitBeforeSame": true,
+      "wholeNonCommentProgramSame": true,
+      "wholeNonRouteByteSame": null,
+      "currentBindings": [
+        {
+          "specifier": "zod",
+          "target": "node_modules/.bun/zod@4.6.5/node_modules/zod/index.d.cts",
+          "form": "import",
+          "text": "import { z } from \"zod\";"
+        }
+      ],
+      "oldBindings": [
+        {
+          "specifier": "zod",
+          "target": "node_modules/.bun/zod@4.6.5/node_modules/zod/index.d.cts",
+          "form": "import",
+          "text": "import { z } from \"zod\";"
+        }
+      ],
+      "freshFinalScopeSHA": true,
+      "capturedSourceByteSame": true
+    },
+    {
+      "path": "backend/src/recording/reproduction.ts",
+      "beforePath": "backend/src/recording/reproduction.ts",
+      "status": "modified",
+      "sha256": "31a7c2092821d0a26cf94a612273c747a52dee865d6e5519f438e7c37f85aa6e",
+      "actualGitSHA": "d0033b8d423388999eed05aa7f627513be01854016f0db327ef8a114ec5e6c16",
+      "actualGitBeforeSame": true,
+      "wholeNonCommentProgramSame": true,
+      "wholeNonRouteByteSame": true,
+      "currentBindings": [
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "target": "packages/replay-contract/src/index.ts",
+          "form": "import",
+          "text": "import { unwrapRecordingEnvelope } from \"@ai-werewolf-arena/replay-contract\";"
+        },
+        {
+          "specifier": "../verification/reproduction/assembly",
+          "target": "backend/src/verification/reproduction/assembly.ts",
+          "form": "import",
+          "text": "import { verifyReproductionMechanisms } from \"../verification/reproduction/assembly\";"
+        },
+        {
+          "specifier": "./checkpoint/animal-format",
+          "target": "backend/src/recording/checkpoint/animal-format.ts",
+          "form": "import",
+          "text": "import { animalCheckpointSchema } from \"./checkpoint/animal-format\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/animal-dream",
+          "target": "packages/game-contract/src/facts/animal-dream.ts",
+          "form": "import",
+          "text": "import {\n  ANIMAL_DREAM_EVENT_TYPES,\n  readAnimalDreamFact,\n  animalDreamFactAudience,\n  type AnimalDreamEventType,\n} from \"@ai-werewolf-arena/game-contract/facts/animal-dream\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer",
+          "target": "packages/game-contract/src/facts/fragrant-pair-seer.ts",
+          "form": "import",
+          "text": "import {\n  FRAGRANT_PAIR_EVENT_TYPES,\n  readFragrantPairFact,\n  fragrantPairVisibility,\n} from \"@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer\";"
+        },
+        {
+          "specifier": "./checkpoint/fragrant-pair-format",
+          "target": "backend/src/recording/checkpoint/fragrant-pair-format.ts",
+          "form": "import",
+          "text": "import { fragrantCheckpointSchema } from \"./checkpoint/fragrant-pair-format\";"
+        },
+        {
+          "specifier": "./checkpoint/noble-body-format",
+          "target": "backend/src/recording/checkpoint/noble-body-format.ts",
+          "form": "import",
+          "text": "import { nobleBodyCheckpointSchema } from \"./checkpoint/noble-body-format\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+          "target": "packages/game-contract/src/facts/noble-secret-body.ts",
+          "form": "import",
+          "text": "import {\n  NOBLE_SECRET_BODY_EVENT_TYPES,\n  readNobleSecretBodyFact,\n  nobleSecretBodyVisibility,\n} from \"@ai-werewolf-arena/game-contract/facts/noble-secret-body\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/radiant-eclipse",
+          "target": "packages/game-contract/src/facts/radiant-eclipse.ts",
+          "form": "import",
+          "text": "import {\n  RADIANT_ECLIPSE_EVENT_TYPES,\n  readRadiantEclipseFact,\n  radiantEclipseAudience,\n} from \"@ai-werewolf-arena/game-contract/facts/radiant-eclipse\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+          "target": "packages/game-contract/src/facts/mist-raven.ts",
+          "form": "import",
+          "text": "import {\n  MIST_RAVEN_EVENT_TYPES,\n  readMistRavenFact,\n} from \"@ai-werewolf-arena/game-contract/facts/mist-raven\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/scholar-mentor",
+          "target": "packages/game-contract/src/facts/scholar-mentor.ts",
+          "form": "import",
+          "text": "import {\n  readModifierChoiceFact,\n  readModifierSkipFact,\n  readModifierBonusFact,\n  readModifierConflictFact,\n} from \"@ai-werewolf-arena/game-contract/facts/scholar-mentor\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/time-consort",
+          "target": "packages/game-contract/src/facts/time-consort.ts",
+          "form": "import",
+          "text": "import {\n  readTimeConsortChoiceFact,\n  readTimeConsortSkipFact,\n  readTimeConsortReflectionFact,\n} from \"@ai-werewolf-arena/game-contract/facts/time-consort\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer",
+          "target": "packages/game-contract/src/facts/wolf-sorcerer.ts",
+          "form": "import",
+          "text": "import {\n  readWolfSorcererExchangeFact,\n  readWolfSorcererSkipFact,\n} from \"@ai-werewolf-arena/game-contract/facts/wolf-sorcerer\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/trickster",
+          "target": "packages/game-contract/src/facts/trickster.ts",
+          "form": "import",
+          "text": "import {\n  readTricksterExchangeFact,\n  readTricksterSkipFact,\n  readExileMappingFact,\n} from \"@ai-werewolf-arena/game-contract/facts/trickster\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/order-prince",
+          "target": "packages/game-contract/src/facts/order-prince.ts",
+          "form": "import",
+          "text": "import {\n  readOrderPrinceChoiceFact,\n  readOrderPrinceRevoteFact,\n} from \"@ai-werewolf-arena/game-contract/facts/order-prince\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/nightmare",
+          "target": "packages/game-contract/src/facts/nightmare.ts",
+          "form": "import",
+          "text": "import { readNightmareFearFact } from \"@ai-werewolf-arena/game-contract/facts/nightmare\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/magician",
+          "target": "packages/game-contract/src/facts/magician.ts",
+          "form": "import",
+          "text": "import {\n  readMagicianExchangeFact,\n  readDeathShotMissFact,\n} from \"@ai-werewolf-arena/game-contract/facts/magician\";"
+        },
+        {
+          "specifier": "../core/domain/fault_plan",
+          "target": "backend/src/core/domain/fault_plan.ts",
+          "form": "import",
+          "text": "import { readFaultPlan, type FaultPlan } from \"../core/domain/fault_plan\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/demon-hunter",
+          "target": "packages/game-contract/src/facts/demon-hunter.ts",
+          "form": "import",
+          "text": "import { DEMON_HUNTER_EVENT_TYPES } from \"@ai-werewolf-arena/game-contract/facts/demon-hunter\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/ghost-bride",
+          "target": "packages/game-contract/src/facts/ghost-bride.ts",
+          "form": "import",
+          "text": "import {\n  GHOST_BRIDE_EVENT_TYPES,\n  GHOST_BRIDE_POLICY,\n  readWeddingSetup,\n} from \"@ai-werewolf-arena/game-contract/facts/ghost-bride\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/lonely-girl",
+          "target": "packages/game-contract/src/facts/lonely-girl.ts",
+          "form": "import",
+          "text": "import { LONELY_GIRL_POLICY } from \"@ai-werewolf-arena/game-contract/facts/lonely-girl\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "target": "packages/game-contract/src/index.ts",
+          "form": "import",
+          "text": "import { CUPID_POLICIES } from \"@ai-werewolf-arena/game-contract\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "target": "packages/game-contract/src/index.ts",
+          "form": "import",
+          "text": "import { boardConfigSchema } from \"@ai-werewolf-arena/game-contract\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "target": "packages/game-text/src/index.ts",
+          "form": "import",
+          "text": "import { dictionaries, text, type MessageKey } from \"@ai-werewolf-arena/game-text\";"
+        },
+        {
+          "specifier": "zod",
+          "target": "node_modules/.bun/zod@4.6.5/node_modules/zod/index.d.cts",
+          "form": "import",
+          "text": "import { z } from \"zod\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "target": "packages/replay-contract/src/index.ts",
+          "form": "import",
+          "text": "import {\n  readGameOutcome,\n  readVictoryPoint,\n  readVictoryAffiliations,\n} from \"@ai-werewolf-arena/replay-contract\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "target": "packages/game-contract/src/index.ts",
+          "form": "import",
+          "text": "import type {\n  GameOutcome,\n  VictoryPoint,\n  VictoryAffiliation,\n} from \"@ai-werewolf-arena/game-contract\";"
+        },
+        {
+          "specifier": "node:util",
+          "target": null,
+          "form": "import",
+          "text": "import { types } from \"node:util\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "target": "packages/game-contract/src/index.ts",
+          "form": "import",
+          "text": "import {\n  ACTION_STAGES,\n  SHERIFF_BADGE_POLICIES,\n  TOOL_NAMES,\n  ActionWindow,\n  KnightDuelWindow,\n  Camp,\n  Phase,\n  Role,\n  WinCondition,\n  WitchSelfHealRule,\n  DeathCause,\n  type BoardConfig,\n  type RuntimeSnapshot,\n  type ToolCall,\n} from \"@ai-werewolf-arena/game-contract\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/events",
+          "target": "packages/game-contract/src/events.ts",
+          "form": "import",
+          "text": "import { WOLF_TEAM_EVENT_TYPES } from \"@ai-werewolf-arena/game-contract/events\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/requests",
+          "target": "packages/game-contract/src/requests.ts",
+          "form": "import",
+          "text": "import type { ActionRequest } from \"@ai-werewolf-arena/game-contract/requests\";"
+        },
+        {
+          "specifier": "../core/domain/random",
+          "target": "backend/src/core/domain/random.ts",
+          "form": "import",
+          "text": "import type { RandomMetadata } from \"../core/domain/random\";"
+        },
+        {
+          "specifier": "../core/domain/components/wall_note",
+          "form": "importType",
+          "text": "import(\"../core/domain/components/wall_note\").WallNoteComponent"
+        },
+        {
+          "specifier": "../core/domain/components/debate_penalty",
+          "form": "importType",
+          "text": "import(\"../core/domain/components/debate_penalty\").DebatePenaltyComponent"
+        },
+        {
+          "specifier": "../core/domain/components/lovers",
+          "form": "importType",
+          "text": "import(\"../core/domain/components/lovers\").LoversComponent"
+        },
+        {
+          "specifier": "../core/domain/board",
+          "form": "importType",
+          "text": "import(\"../core/domain/board\").SheriffBadgePolicy"
+        },
+        {
+          "specifier": "./checkpoint/animal-format",
+          "form": "importType",
+          "text": "import(\"./checkpoint/animal-format\").RecordedAnimalState"
+        },
+        {
+          "specifier": "./checkpoint/fragrant-pair-format",
+          "form": "importType",
+          "text": "import(\"./checkpoint/fragrant-pair-format\").RecordedFragrantState"
+        },
+        {
+          "specifier": "./checkpoint/noble-body-format",
+          "form": "importType",
+          "text": "import(\"./checkpoint/noble-body-format\").RecordedNobleBodyState"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/ghost-bride",
+          "form": "importType",
+          "text": "import(\"@ai-werewolf-arena/game-contract/facts/ghost-bride\").WeddingSetup"
+        }
+      ],
+      "oldBindings": [
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "target": "packages/replay-contract/src/index.ts",
+          "form": "import",
+          "text": "import { unwrapRecordingEnvelope } from \"@ai-werewolf-arena/replay-contract\";"
+        },
+        {
+          "specifier": "../verification/reproduction/assembly",
+          "target": "backend/src/verification/reproduction/assembly.ts",
+          "form": "import",
+          "text": "import { verifyReproductionMechanisms } from \"../verification/reproduction/assembly\";"
+        },
+        {
+          "specifier": "./animal_dream_checkpoint",
+          "target": null,
+          "form": "import",
+          "text": "import { animalCheckpointSchema } from \"./animal_dream_checkpoint\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/animal-dream",
+          "target": "packages/game-contract/src/facts/animal-dream.ts",
+          "form": "import",
+          "text": "import {\n  ANIMAL_DREAM_EVENT_TYPES,\n  readAnimalDreamFact,\n  animalDreamFactAudience,\n  type AnimalDreamEventType,\n} from \"@ai-werewolf-arena/game-contract/facts/animal-dream\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer",
+          "target": "packages/game-contract/src/facts/fragrant-pair-seer.ts",
+          "form": "import",
+          "text": "import {\n  FRAGRANT_PAIR_EVENT_TYPES,\n  readFragrantPairFact,\n  fragrantPairVisibility,\n} from \"@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer\";"
+        },
+        {
+          "specifier": "./fragrant_pair_seer_checkpoint",
+          "target": null,
+          "form": "import",
+          "text": "import { fragrantCheckpointSchema } from \"./fragrant_pair_seer_checkpoint\";"
+        },
+        {
+          "specifier": "./noble_secret_body_checkpoint",
+          "target": null,
+          "form": "import",
+          "text": "import { nobleBodyCheckpointSchema } from \"./noble_secret_body_checkpoint\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+          "target": "packages/game-contract/src/facts/noble-secret-body.ts",
+          "form": "import",
+          "text": "import {\n  NOBLE_SECRET_BODY_EVENT_TYPES,\n  readNobleSecretBodyFact,\n  nobleSecretBodyVisibility,\n} from \"@ai-werewolf-arena/game-contract/facts/noble-secret-body\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/radiant-eclipse",
+          "target": "packages/game-contract/src/facts/radiant-eclipse.ts",
+          "form": "import",
+          "text": "import {\n  RADIANT_ECLIPSE_EVENT_TYPES,\n  readRadiantEclipseFact,\n  radiantEclipseAudience,\n} from \"@ai-werewolf-arena/game-contract/facts/radiant-eclipse\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/mist-raven",
+          "target": "packages/game-contract/src/facts/mist-raven.ts",
+          "form": "import",
+          "text": "import {\n  MIST_RAVEN_EVENT_TYPES,\n  readMistRavenFact,\n} from \"@ai-werewolf-arena/game-contract/facts/mist-raven\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/scholar-mentor",
+          "target": "packages/game-contract/src/facts/scholar-mentor.ts",
+          "form": "import",
+          "text": "import {\n  readModifierChoiceFact,\n  readModifierSkipFact,\n  readModifierBonusFact,\n  readModifierConflictFact,\n} from \"@ai-werewolf-arena/game-contract/facts/scholar-mentor\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/time-consort",
+          "target": "packages/game-contract/src/facts/time-consort.ts",
+          "form": "import",
+          "text": "import {\n  readTimeConsortChoiceFact,\n  readTimeConsortSkipFact,\n  readTimeConsortReflectionFact,\n} from \"@ai-werewolf-arena/game-contract/facts/time-consort\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/wolf-sorcerer",
+          "target": "packages/game-contract/src/facts/wolf-sorcerer.ts",
+          "form": "import",
+          "text": "import {\n  readWolfSorcererExchangeFact,\n  readWolfSorcererSkipFact,\n} from \"@ai-werewolf-arena/game-contract/facts/wolf-sorcerer\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/trickster",
+          "target": "packages/game-contract/src/facts/trickster.ts",
+          "form": "import",
+          "text": "import {\n  readTricksterExchangeFact,\n  readTricksterSkipFact,\n  readExileMappingFact,\n} from \"@ai-werewolf-arena/game-contract/facts/trickster\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/order-prince",
+          "target": "packages/game-contract/src/facts/order-prince.ts",
+          "form": "import",
+          "text": "import {\n  readOrderPrinceChoiceFact,\n  readOrderPrinceRevoteFact,\n} from \"@ai-werewolf-arena/game-contract/facts/order-prince\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/nightmare",
+          "target": "packages/game-contract/src/facts/nightmare.ts",
+          "form": "import",
+          "text": "import { readNightmareFearFact } from \"@ai-werewolf-arena/game-contract/facts/nightmare\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/magician",
+          "target": "packages/game-contract/src/facts/magician.ts",
+          "form": "import",
+          "text": "import {\n  readMagicianExchangeFact,\n  readDeathShotMissFact,\n} from \"@ai-werewolf-arena/game-contract/facts/magician\";"
+        },
+        {
+          "specifier": "../core/domain/fault_plan",
+          "target": "backend/src/core/domain/fault_plan.ts",
+          "form": "import",
+          "text": "import { readFaultPlan, type FaultPlan } from \"../core/domain/fault_plan\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/demon-hunter",
+          "target": "packages/game-contract/src/facts/demon-hunter.ts",
+          "form": "import",
+          "text": "import { DEMON_HUNTER_EVENT_TYPES } from \"@ai-werewolf-arena/game-contract/facts/demon-hunter\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/ghost-bride",
+          "target": "packages/game-contract/src/facts/ghost-bride.ts",
+          "form": "import",
+          "text": "import {\n  GHOST_BRIDE_EVENT_TYPES,\n  GHOST_BRIDE_POLICY,\n  readWeddingSetup,\n} from \"@ai-werewolf-arena/game-contract/facts/ghost-bride\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/lonely-girl",
+          "target": "packages/game-contract/src/facts/lonely-girl.ts",
+          "form": "import",
+          "text": "import { LONELY_GIRL_POLICY } from \"@ai-werewolf-arena/game-contract/facts/lonely-girl\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "target": "packages/game-contract/src/index.ts",
+          "form": "import",
+          "text": "import { CUPID_POLICIES } from \"@ai-werewolf-arena/game-contract\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "target": "packages/game-contract/src/index.ts",
+          "form": "import",
+          "text": "import { boardConfigSchema } from \"@ai-werewolf-arena/game-contract\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-text",
+          "target": "packages/game-text/src/index.ts",
+          "form": "import",
+          "text": "import { dictionaries, text, type MessageKey } from \"@ai-werewolf-arena/game-text\";"
+        },
+        {
+          "specifier": "zod",
+          "target": "node_modules/.bun/zod@4.6.5/node_modules/zod/index.d.cts",
+          "form": "import",
+          "text": "import { z } from \"zod\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/replay-contract",
+          "target": "packages/replay-contract/src/index.ts",
+          "form": "import",
+          "text": "import {\n  readGameOutcome,\n  readVictoryPoint,\n  readVictoryAffiliations,\n} from \"@ai-werewolf-arena/replay-contract\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "target": "packages/game-contract/src/index.ts",
+          "form": "import",
+          "text": "import type {\n  GameOutcome,\n  VictoryPoint,\n  VictoryAffiliation,\n} from \"@ai-werewolf-arena/game-contract\";"
+        },
+        {
+          "specifier": "node:util",
+          "target": null,
+          "form": "import",
+          "text": "import { types } from \"node:util\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "target": "packages/game-contract/src/index.ts",
+          "form": "import",
+          "text": "import {\n  ACTION_STAGES,\n  SHERIFF_BADGE_POLICIES,\n  TOOL_NAMES,\n  ActionWindow,\n  KnightDuelWindow,\n  Camp,\n  Phase,\n  Role,\n  WinCondition,\n  WitchSelfHealRule,\n  DeathCause,\n  type BoardConfig,\n  type RuntimeSnapshot,\n  type ToolCall,\n} from \"@ai-werewolf-arena/game-contract\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/events",
+          "target": "packages/game-contract/src/events.ts",
+          "form": "import",
+          "text": "import { WOLF_TEAM_EVENT_TYPES } from \"@ai-werewolf-arena/game-contract/events\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/requests",
+          "target": "packages/game-contract/src/requests.ts",
+          "form": "import",
+          "text": "import type { ActionRequest } from \"@ai-werewolf-arena/game-contract/requests\";"
+        },
+        {
+          "specifier": "../core/domain/random",
+          "target": "backend/src/core/domain/random.ts",
+          "form": "import",
+          "text": "import type { RandomMetadata } from \"../core/domain/random\";"
+        },
+        {
+          "specifier": "../core/domain/components/wall_note",
+          "form": "importType",
+          "text": "import(\"../core/domain/components/wall_note\").WallNoteComponent"
+        },
+        {
+          "specifier": "../core/domain/components/debate_penalty",
+          "form": "importType",
+          "text": "import(\"../core/domain/components/debate_penalty\").DebatePenaltyComponent"
+        },
+        {
+          "specifier": "../core/domain/components/lovers",
+          "form": "importType",
+          "text": "import(\"../core/domain/components/lovers\").LoversComponent"
+        },
+        {
+          "specifier": "../core/domain/board",
+          "form": "importType",
+          "text": "import(\"../core/domain/board\").SheriffBadgePolicy"
+        },
+        {
+          "specifier": "./animal_dream_checkpoint",
+          "form": "importType",
+          "text": "import(\"./animal_dream_checkpoint\").RecordedAnimalState"
+        },
+        {
+          "specifier": "./fragrant_pair_seer_checkpoint",
+          "form": "importType",
+          "text": "import(\"./fragrant_pair_seer_checkpoint\").RecordedFragrantState"
+        },
+        {
+          "specifier": "./noble_secret_body_checkpoint",
+          "form": "importType",
+          "text": "import(\"./noble_secret_body_checkpoint\").RecordedNobleBodyState"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/ghost-bride",
+          "form": "importType",
+          "text": "import(\"@ai-werewolf-arena/game-contract/facts/ghost-bride\").WeddingSetup"
+        }
+      ],
+      "freshFinalScopeSHA": true,
+      "capturedSourceByteSame": true
+    },
+    {
+      "path": "backend/src/recording/checkpoint/authority-snapshots.ts",
+      "beforePath": "backend/src/recording/checkpoint/authority-snapshots.ts",
+      "status": "modified",
+      "sha256": "fc5d546ec93a96ed231d2af2daba25b22872004bcfb52d2e80a7e9295a56f86e",
+      "actualGitSHA": "fb7a8a9fa39cd55aa96cb6a206a8edeaf30a892a00fce994ebb45cffb92f9690",
+      "actualGitBeforeSame": true,
+      "wholeNonCommentProgramSame": true,
+      "wholeNonRouteByteSame": true,
+      "currentBindings": [
+        {
+          "specifier": "../../core/domain/world",
+          "target": "backend/src/core/domain/world.ts",
+          "form": "import",
+          "text": "import type { World } from \"../../core/domain/world\";"
+        },
+        {
+          "specifier": "../reproduction",
+          "target": "backend/src/recording/reproduction.ts",
+          "form": "import",
+          "text": "import type { RecordedCheckpoint } from \"../reproduction\";"
+        },
+        {
+          "specifier": "./animal-format",
+          "target": "backend/src/recording/checkpoint/animal-format.ts",
+          "form": "import",
+          "text": "import { animalCheckpointSchema } from \"./animal-format\";"
+        },
+        {
+          "specifier": "./fragrant-pair-format",
+          "target": "backend/src/recording/checkpoint/fragrant-pair-format.ts",
+          "form": "import",
+          "text": "import { fragrantCheckpointSchema } from \"./fragrant-pair-format\";"
+        },
+        {
+          "specifier": "./noble-body-format",
+          "target": "backend/src/recording/checkpoint/noble-body-format.ts",
+          "form": "import",
+          "text": "import { nobleBodyCheckpointSchema } from \"./noble-body-format\";"
+        },
+        {
+          "specifier": "../../game/mechanisms/roles/animal_dream/authority",
+          "target": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+          "form": "import",
+          "text": "import {\n  animalAuthoritySnapshot,\n  isAnimalDreamBoard,\n} from \"../../game/mechanisms/roles/animal_dream/authority\";"
+        },
+        {
+          "specifier": "../../game/mechanisms/roles/fragrant_pair_seer/authority",
+          "target": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+          "form": "import",
+          "text": "import {\n  fragrantAuthoritySnapshot,\n  isFragrantPairBoard,\n} from \"../../game/mechanisms/roles/fragrant_pair_seer/authority\";"
+        },
+        {
+          "specifier": "../../game/mechanisms/roles/noble_secret_body/authority",
+          "target": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "form": "import",
+          "text": "import {\n  checkpointNobleBodyAuthority,\n  isNobleBodyBoard,\n} from \"../../game/mechanisms/roles/noble_secret_body/authority\";"
+        },
+        {
+          "specifier": "../recording_context",
+          "target": "backend/src/recording/recording_context.ts",
+          "form": "import",
+          "text": "import { getSessionRecorder } from \"../recording_context\";"
+        }
+      ],
+      "oldBindings": [
+        {
+          "specifier": "../../core/domain/world",
+          "target": "backend/src/core/domain/world.ts",
+          "form": "import",
+          "text": "import type { World } from \"../../core/domain/world\";"
+        },
+        {
+          "specifier": "../reproduction",
+          "target": "backend/src/recording/reproduction.ts",
+          "form": "import",
+          "text": "import type { RecordedCheckpoint } from \"../reproduction\";"
+        },
+        {
+          "specifier": "../animal_dream_checkpoint",
+          "target": null,
+          "form": "import",
+          "text": "import { animalCheckpointSchema } from \"../animal_dream_checkpoint\";"
+        },
+        {
+          "specifier": "../fragrant_pair_seer_checkpoint",
+          "target": null,
+          "form": "import",
+          "text": "import { fragrantCheckpointSchema } from \"../fragrant_pair_seer_checkpoint\";"
+        },
+        {
+          "specifier": "../noble_secret_body_checkpoint",
+          "target": null,
+          "form": "import",
+          "text": "import { nobleBodyCheckpointSchema } from \"../noble_secret_body_checkpoint\";"
+        },
+        {
+          "specifier": "../../game/mechanisms/roles/animal_dream/authority",
+          "target": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+          "form": "import",
+          "text": "import {\n  animalAuthoritySnapshot,\n  isAnimalDreamBoard,\n} from \"../../game/mechanisms/roles/animal_dream/authority\";"
+        },
+        {
+          "specifier": "../../game/mechanisms/roles/fragrant_pair_seer/authority",
+          "target": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+          "form": "import",
+          "text": "import {\n  fragrantAuthoritySnapshot,\n  isFragrantPairBoard,\n} from \"../../game/mechanisms/roles/fragrant_pair_seer/authority\";"
+        },
+        {
+          "specifier": "../../game/mechanisms/roles/noble_secret_body/authority",
+          "target": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "form": "import",
+          "text": "import {\n  checkpointNobleBodyAuthority,\n  isNobleBodyBoard,\n} from \"../../game/mechanisms/roles/noble_secret_body/authority\";"
+        },
+        {
+          "specifier": "../recording_context",
+          "target": "backend/src/recording/recording_context.ts",
+          "form": "import",
+          "text": "import { getSessionRecorder } from \"../recording_context\";"
+        }
+      ],
+      "freshFinalScopeSHA": true,
+      "capturedSourceByteSame": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/fragrant-pair-seer/validate.ts",
+      "beforePath": "backend/src/verification/reproduction/fragrant-pair-seer/validate.ts",
+      "status": "modified",
+      "sha256": "25bd4eaefb5d3b0a54e674e5b0fcf8db866785a7cadf3c7c1dadfdacf5ef4552",
+      "actualGitSHA": "0f1259fa6f4b68e2236ce9cfe5b1f34c8a8f6ed43554730e16ae5b0fb9a97ebc",
+      "actualGitBeforeSame": true,
+      "wholeNonCommentProgramSame": true,
+      "wholeNonRouteByteSame": true,
+      "currentBindings": [
+        {
+          "specifier": "./feed-evidence",
+          "target": "backend/src/verification/reproduction/fragrant-pair-seer/feed-evidence.ts",
+          "form": "import",
+          "text": "import { fragrantFeedAt } from \"./feed-evidence\";"
+        },
+        {
+          "specifier": "../mist-raven/sheriff-evidence",
+          "target": "backend/src/verification/reproduction/mist-raven/sheriff-evidence.ts",
+          "form": "import",
+          "text": "import { createMistSheriffEvidence } from \"../mist-raven/sheriff-evidence\";"
+        },
+        {
+          "specifier": "../../../utils/speech_text",
+          "target": "backend/src/utils/speech_text.ts",
+          "form": "import",
+          "text": "import { sanitizeSpeechText } from \"../../../utils/speech_text\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer",
+          "target": "packages/game-contract/src/facts/fragrant-pair-seer.ts",
+          "form": "import",
+          "text": "import {\n  FRAGRANT_PAIR_POLICY,\n  FRAGRANT_PAIR_EVENT_TYPES,\n  readFragrantPairFact,\n} from \"@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer\";"
+        },
+        {
+          "specifier": "../../board-support",
+          "target": "backend/src/verification/board-support/index.ts",
+          "form": "import",
+          "text": "import { isFragrantPairSeerPreset } from \"../../board-support\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "target": "packages/game-contract/src/index.ts",
+          "form": "import",
+          "text": "import { Camp, Role, Phase } from \"@ai-werewolf-arena/game-contract\";"
+        },
+        {
+          "specifier": "../../../recording/reproduction",
+          "target": "backend/src/recording/reproduction.ts",
+          "form": "import",
+          "text": "import type { ReproductionRecord, RecordedDecision, RecordedCheckpoint } from \"../../../recording/reproduction\";"
+        },
+        {
+          "specifier": "../../../recording/checkpoint/fragrant-pair-format",
+          "target": "backend/src/recording/checkpoint/fragrant-pair-format.ts",
+          "form": "import",
+          "text": "import type { RecordedFragrantState } from \"../../../recording/checkpoint/fragrant-pair-format\";"
+        }
+      ],
+      "oldBindings": [
+        {
+          "specifier": "./feed-evidence",
+          "target": "backend/src/verification/reproduction/fragrant-pair-seer/feed-evidence.ts",
+          "form": "import",
+          "text": "import { fragrantFeedAt } from \"./feed-evidence\";"
+        },
+        {
+          "specifier": "../mist-raven/sheriff-evidence",
+          "target": "backend/src/verification/reproduction/mist-raven/sheriff-evidence.ts",
+          "form": "import",
+          "text": "import { createMistSheriffEvidence } from \"../mist-raven/sheriff-evidence\";"
+        },
+        {
+          "specifier": "../../../utils/speech_text",
+          "target": "backend/src/utils/speech_text.ts",
+          "form": "import",
+          "text": "import { sanitizeSpeechText } from \"../../../utils/speech_text\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer",
+          "target": "packages/game-contract/src/facts/fragrant-pair-seer.ts",
+          "form": "import",
+          "text": "import {\n  FRAGRANT_PAIR_POLICY,\n  FRAGRANT_PAIR_EVENT_TYPES,\n  readFragrantPairFact,\n} from \"@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer\";"
+        },
+        {
+          "specifier": "../../board-support",
+          "target": "backend/src/verification/board-support/index.ts",
+          "form": "import",
+          "text": "import { isFragrantPairSeerPreset } from \"../../board-support\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "target": "packages/game-contract/src/index.ts",
+          "form": "import",
+          "text": "import { Camp, Role, Phase } from \"@ai-werewolf-arena/game-contract\";"
+        },
+        {
+          "specifier": "../../../recording/reproduction",
+          "target": "backend/src/recording/reproduction.ts",
+          "form": "import",
+          "text": "import type { ReproductionRecord, RecordedDecision, RecordedCheckpoint } from \"../../../recording/reproduction\";"
+        },
+        {
+          "specifier": "../../../recording/fragrant_pair_seer_checkpoint",
+          "target": null,
+          "form": "import",
+          "text": "import type { RecordedFragrantState } from \"../../../recording/fragrant_pair_seer_checkpoint\";"
+        }
+      ],
+      "freshFinalScopeSHA": true,
+      "capturedSourceByteSame": true
+    },
+    {
+      "path": "backend/src/verification/reproduction/noble-secret-body/validate.ts",
+      "beforePath": "backend/src/verification/reproduction/noble-secret-body/validate.ts",
+      "status": "modified",
+      "sha256": "7f86412e0b1f011c2f325430346b43c04f8bcb86e638d8f2bc6f73df16e14214",
+      "actualGitSHA": "98c4a274df22d6d5ec32462bc9257c8110f3af588fc0a9a9f08c7668e946464d",
+      "actualGitBeforeSame": true,
+      "wholeNonCommentProgramSame": true,
+      "wholeNonRouteByteSame": true,
+      "currentBindings": [
+        {
+          "specifier": "../mist-raven/sheriff-evidence",
+          "target": "backend/src/verification/reproduction/mist-raven/sheriff-evidence.ts",
+          "form": "import",
+          "text": "import { createMistSheriffEvidence } from \"../mist-raven/sheriff-evidence\";"
+        },
+        {
+          "specifier": "../../board-support",
+          "target": "backend/src/verification/board-support/index.ts",
+          "form": "import",
+          "text": "import { isNobleSecretBodyPreset } from \"../../board-support\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+          "target": "packages/game-contract/src/facts/noble-secret-body.ts",
+          "form": "import",
+          "text": "import {\n  NOBLE_SECRET_BODY_EVENT_TYPES,\n  readNobleSecretBodyFact,\n} from \"@ai-werewolf-arena/game-contract/facts/noble-secret-body\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "target": "packages/game-contract/src/index.ts",
+          "form": "import",
+          "text": "import { Role, Camp, Phase } from \"@ai-werewolf-arena/game-contract\";"
+        },
+        {
+          "specifier": "../../../recording/reproduction",
+          "target": "backend/src/recording/reproduction.ts",
+          "form": "import",
+          "text": "import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from \"../../../recording/reproduction\";"
+        },
+        {
+          "specifier": "../../../recording/checkpoint/noble-body-format",
+          "target": "backend/src/recording/checkpoint/noble-body-format.ts",
+          "form": "import",
+          "text": "import type { RecordedNobleBodyState } from \"../../../recording/checkpoint/noble-body-format\";"
+        },
+        {
+          "specifier": "../../../utils/speech_text",
+          "target": "backend/src/utils/speech_text.ts",
+          "form": "import",
+          "text": "import { sanitizeSpeechText } from \"../../../utils/speech_text\";"
+        }
+      ],
+      "oldBindings": [
+        {
+          "specifier": "../mist-raven/sheriff-evidence",
+          "target": "backend/src/verification/reproduction/mist-raven/sheriff-evidence.ts",
+          "form": "import",
+          "text": "import { createMistSheriffEvidence } from \"../mist-raven/sheriff-evidence\";"
+        },
+        {
+          "specifier": "../../board-support",
+          "target": "backend/src/verification/board-support/index.ts",
+          "form": "import",
+          "text": "import { isNobleSecretBodyPreset } from \"../../board-support\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract/facts/noble-secret-body",
+          "target": "packages/game-contract/src/facts/noble-secret-body.ts",
+          "form": "import",
+          "text": "import {\n  NOBLE_SECRET_BODY_EVENT_TYPES,\n  readNobleSecretBodyFact,\n} from \"@ai-werewolf-arena/game-contract/facts/noble-secret-body\";"
+        },
+        {
+          "specifier": "@ai-werewolf-arena/game-contract",
+          "target": "packages/game-contract/src/index.ts",
+          "form": "import",
+          "text": "import { Role, Camp, Phase } from \"@ai-werewolf-arena/game-contract\";"
+        },
+        {
+          "specifier": "../../../recording/reproduction",
+          "target": "backend/src/recording/reproduction.ts",
+          "form": "import",
+          "text": "import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from \"../../../recording/reproduction\";"
+        },
+        {
+          "specifier": "../../../recording/noble_secret_body_checkpoint",
+          "target": null,
+          "form": "import",
+          "text": "import type { RecordedNobleBodyState } from \"../../../recording/noble_secret_body_checkpoint\";"
+        },
+        {
+          "specifier": "../../../utils/speech_text",
+          "target": "backend/src/utils/speech_text.ts",
+          "form": "import",
+          "text": "import { sanitizeSpeechText } from \"../../../utils/speech_text\";"
+        }
+      ],
+      "freshFinalScopeSHA": true,
+      "capturedSourceByteSame": true
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/recording/animal_dream_checkpoint.ts",
+      "sha256": "0e688a3f22ff20d800f87856bb17f68e11eaaa315be330903c8e7cf37544e374",
+      "expectedAbsent": true,
+      "actualExpectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/fragrant_pair_seer_checkpoint.ts",
+      "sha256": "0c6a3c47dc7af3b3426fb391426345c83755d2a20fc1b78ec29b3f9a66ab094f",
+      "expectedAbsent": true,
+      "actualExpectedAbsent": true
+    },
+    {
+      "path": "backend/src/recording/noble_secret_body_checkpoint.ts",
+      "sha256": "8bc3901708ab47dd0f63ae661f25d523949325f0894db39ca704de2d9db4a9be",
+      "expectedAbsent": true,
+      "actualExpectedAbsent": true
+    }
+  ],
+  "scopeArtifact": {
+    "path": "docs/refactor/generated/checkpoint-format-owners-scope-final.json",
+    "sha256": "992b1e9cc89b9458a725790f39d526334f04835b563ef662d221dd9cdefefff8"
+  },
+  "documentation": {
+    "path": "docs/refactor/checkpoint-format-owners.md",
+    "sha256": "72f3324699d9d63d80664c606a4aa3a42f7277d54e6859af6de4fd3047a42b5b"
+  },
+  "evidenceArtifact": {
+    "path": "docs/refactor/generated/checkpoint-format-owners-evidence.json",
+    "sha256": "c3a818d8be5e0c7a6da8aa63d5cd1dd9f6c7ad27f8702f09e73f026f43bd163d"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-before.json",
+      "sha256": "682ac2bf41b4297ee0a2a62252cb397c9cbaec2e3dcaee830ab747ba53f3a253",
+      "actualSHA": "682ac2bf41b4297ee0a2a62252cb397c9cbaec2e3dcaee830ab747ba53f3a253",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-documentation-paths.json",
+      "sha256": "d354b175b2bcbbe7ce1046f5399e756e5d7a4f01bf529985640f44454c679120",
+      "actualSHA": "d354b175b2bcbbe7ce1046f5399e756e5d7a4f01bf529985640f44454c679120",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-edits.json",
+      "sha256": "b896bb1eaf13a928c91b11af707fd8807ac5e850699f130d19ed38133aad0b24",
+      "actualSHA": "b896bb1eaf13a928c91b11af707fd8807ac5e850699f130d19ed38133aad0b24",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-final-comment-bridge.json",
+      "sha256": "b92e7461de0098fafe7b51ecfd6cd613115fef5dc9a226ff58cd9cf42e167864",
+      "actualSHA": "b92e7461de0098fafe7b51ecfd6cd613115fef5dc9a226ff58cd9cf42e167864",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-heads.json",
+      "sha256": "08da330be025caf29d049e5fe182ff96a08a65f43bc29c8992cb2e6c17d83d3d",
+      "actualSHA": "08da330be025caf29d049e5fe182ff96a08a65f43bc29c8992cb2e6c17d83d3d",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-heads.ts",
+      "sha256": "afd791cb8ae1c6906307bd9d7cf1014ea09390499895af70b53b9fa98c577c82",
+      "actualSHA": "afd791cb8ae1c6906307bd9d7cf1014ea09390499895af70b53b9fa98c577c82",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-inventory-executed.cjs",
+      "sha256": "80dbef0d6d525def575fc7b45f5be890e1fa039e25baf332bd0a5fa296440f4b",
+      "actualSHA": "80dbef0d6d525def575fc7b45f5be890e1fa039e25baf332bd0a5fa296440f4b",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-inventory.json",
+      "sha256": "88dabb34f040d1aef585681f6ff1f156d913995a9a4cb17df65e761e66a5b35c",
+      "actualSHA": "88dabb34f040d1aef585681f6ff1f156d913995a9a4cb17df65e761e66a5b35c",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-proof.cjs",
+      "sha256": "a5dca5bbc3585a54a425fbd8131d64f5a582e12875f7ec1d0bfd6dd571444fe6",
+      "actualSHA": "a5dca5bbc3585a54a425fbd8131d64f5a582e12875f7ec1d0bfd6dd571444fe6",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-proof.json",
+      "sha256": "7d4a378469152d5f7f82ced0136ca9b9286e360a3ba1214ba2085c577d418259",
+      "actualSHA": "7d4a378469152d5f7f82ced0136ca9b9286e360a3ba1214ba2085c577d418259",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-receipts.json",
+      "sha256": "c1b935722b06ff4948bad6d1d3f774007a80390049ebad9a79c584ccbb4d2f0b",
+      "actualSHA": "c1b935722b06ff4948bad6d1d3f774007a80390049ebad9a79c584ccbb4d2f0b",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-scope-final.json",
+      "sha256": "992b1e9cc89b9458a725790f39d526334f04835b563ef662d221dd9cdefefff8",
+      "actualSHA": "992b1e9cc89b9458a725790f39d526334f04835b563ef662d221dd9cdefefff8",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-types-config-first.json",
+      "sha256": "e69a9a1c63bddb564a59d94f5f045d801b43547d9a95ae7f98d4ef6288ab4ba1",
+      "actualSHA": "e69a9a1c63bddb564a59d94f5f045d801b43547d9a95ae7f98d4ef6288ab4ba1",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-types-config.json",
+      "sha256": "61899979be08ae2ac699420d1eea6e309a22fb9727d9c3d63c7d232154fb1d63",
+      "actualSHA": "61899979be08ae2ac699420d1eea6e309a22fb9727d9c3d63c7d232154fb1d63",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-types-repair.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actualSHA": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/checkpoint-format-owners-types.log",
+      "sha256": "782793e23d7dde8f9de74dff7a4ae2b000d492ce01f605d6c8cad908869d2651",
+      "actualSHA": "782793e23d7dde8f9de74dff7a4ae2b000d492ce01f605d6c8cad908869d2651",
+      "same": true
+    }
+  ],
+  "finalComment": {
+    "path": "backend/src/recording/checkpoint/noble-body-format.ts",
+    "prefinalSHA": "9c3b281d034a5298e9a82fff3557043b49dafc59b60032472d736340b9489047",
+    "declaredPrefinalSame": true,
+    "finalSHA": "86cf52d425188c1a5745cc6b23110e98c677ec754007b768cd175bad68ccb499",
+    "declaredFinalSame": true,
+    "exactSingleCommentInverseSame": true
+  },
+  "findings": [
+    {
+      "status": "closed",
+      "path": "backend/src/recording/checkpoint/noble-body-format.ts",
+      "initial": "新职责头简称夜贵族，与实际目录正式中文名夜之贵族不一致。",
+      "final": "仅首头加之；完整实际prefinal text和current精确单comment inverse相同，其余源码byte保持。未重新运行原绿色验证。"
+    }
+  ],
+  "semanticReview": [
+    {
+      "area": "唯一格式owner与接受集合",
+      "result": "实际完整三Zod格式移至recording/checkpoint；animal JSON stock/policies/night/unit/ballots/puffer、fragrant pair排序/known reader refine/night前缀、Noble actual body union/known/notices/revealOpened/Completed各字段完整保持。int/safe/max/nullable/strict/discriminants/导出名不变；schema不付款/标死/恢复scope，也不提供独立账本oracle。"
+    },
+    {
+      "area": "真实消费者与引用",
+      "result": "reproduction三值import及三inline type，authority-snapshots三value和两个verifier type-only共11路线；四consumer除specifier外完整原字节同。三个新leaf所有非comment程序与actual Git完整同，当前Zod/GC实际物理解析端点均已独立读取，未增加backend反向运行依赖。三旧leaf真实删除无bridge。"
+    },
+    {
+      "area": "执行/失败顺序保持",
+      "result": "schema构建/refine函数literal及对象字段顺序原样；writer authority queries/schema.parse/计数读取及parser版本/envelope→safeParse→mechanism verifier顺序没改。纯type verifier import仍擦除，独立算法没有并入生产或schema。没有改histories/life/resource/事件/期限。"
+    },
+    {
+      "area": "中文说明与边界",
+      "result": "所有新增head/重要数据说明结合真实接受集合、付款与告知分开、开放/中止和必需发言失败前缀准确；Noble正式名finding闭。公开记录数据≠live对象，结构接受≠归属/因果已验真。"
+    }
+  ],
+  "proofAttribution": {
+    "originalProgram": "作者实际e45七Git blob/SHA，七全非comment token树43515nodes/28751leaves和14mapped ESNext/CJS；Node EPERM首工具红、Python actualGit缓存逐SHA恢复后309ccc actual0。本人未重跑作者proof或emit。",
+    "inventory": "作者真实1825allform/69module endpoints/11canonical/0old；执行临时脚本另存executed字节，Root读取阶段已明确，不把外部specifier字符串标记冒成完整coldload等价。独立读四实际routes、旧字面入口rg与TS物理resolve以及完整source inverse。",
+    "heads": "作者7roots/525Gitdocpaths2a0e26 actual0，prefinal Noble9c头；末仅+之comment桥明确，不伪装重新检查final86头。",
+    "types": "生成config漏Node ambient首65diagnosticlines，原产品无改；仅config修actualtypeRoots/node，首七均失败后31028→196658 actual0。此peer只读记录，不运行checks。"
+  },
+  "reviewExecution": {
+    "sourceReadOnlyReceipt": "899b3a",
+    "actions": [
+      "完整三新owner/body和四consumer路线/原body字节比较",
+      "actuale45 Git七来源／全非comment程序；四consumer完整specifier逆后byte相同",
+      "当前七SHA／三删除／16artifact／MDJSON最终绑定",
+      "读原proof/temporary执行副本/receipts与末comment精确桥"
+    ],
+    "notExecuted": [
+      "types",
+      "tests",
+      "authorproof/emit",
+      "commentgate",
+      "wholegate",
+      "model/network"
+    ]
+  },
+  "limits": [
+    "旧三私有导入路径明确退休，移动改变模块路径/缓存键/新sourceHash；不承诺任意计算导入、namespace重赋或跨构建Tape兼容。",
+    "format是recording-owned共享写/独立核验的数据接口，不是game-contract新schema或新权限。",
+    "完整P7/P8、全中文、完整矩阵和同源验收不由本批声明完成。"
+  ]
+}

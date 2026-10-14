@@ -1,15 +1,15 @@
 /**
- * Responsibility: validate the serialized fragrant-pair knowledge checkpoint shape.
- * Input: unknown archived checkpoint data.
- * Output: the strict shape schema and detached validated knowledge DTO.
- * Boundary: inert data never carries a runtime component identity or action permission.
+ * 负责寻香／双生 checkpoint 的严格档案形状。输入为未知归档数据；输出为原 Zod schema
+ * 及 RecordedFragrantState 类型，保存真实关系、已告知知识与各夜提交前缀。
+ * 本模块拥有格式声明，记录写方与独立核验共同消费；结构接受不证明账本因果正确。
+ * 纯数据不携带运行组件、关系原体或行动许可，不能重建已关闭的窗口。
  */
 import { z } from "zod";
 import {
   FRAGRANT_PAIR_POLICY,
   readFragrantKnownState,
 } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
-/** God checkpoint shape only. The archive ledger independently computes its values. */
+/** 正整数边界与有序二人组保持原约束；同一格式也用于关系、选择和已知状态中的名单。 */
 const id = z
     .number()
     .int()
@@ -44,6 +44,7 @@ export const fragrantCheckpointSchema = z.strictObject({
     policy: z.literal(FRAGRANT_PAIR_POLICY),
     history: z.array(z.strictObject({ day: id, targetIds: pair, containsWerewolf: z.boolean() })),
   }),
+  // 已知状态独立保存；原共享数据 reader 继续核其内部关系，不把真实状态补写给玩家。
   known: z
     .strictObject({
       knownWolfId: id.nullable(),
@@ -56,6 +57,7 @@ export const fragrantCheckpointSchema = z.strictObject({
       knifeNotices: z.array(z.strictObject({ day: id, eligible: z.boolean() })),
     })
     .refine((v) => readFragrantKnownState(v) !== null),
+  // 记录打开／正常关闭／中止及两项提交标志；独立账本另核这些前缀与动作、事件的对应。
   nights: z.array(
     z.strictObject({
       day: id,

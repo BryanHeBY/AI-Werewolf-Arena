@@ -1,0 +1,18 @@
+{
+  "extends": "../../../backend/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "../../..",
+    "noEmit": true
+  },
+  "files": [
+    "../../../backend/src/recording/checkpoint/animal-format.ts",
+    "../../../backend/src/recording/checkpoint/fragrant-pair-format.ts",
+    "../../../backend/src/recording/checkpoint/noble-body-format.ts",
+    "../../../backend/src/recording/reproduction.ts",
+    "../../../backend/src/recording/checkpoint/authority-snapshots.ts",
+    "../../../backend/src/verification/reproduction/fragrant-pair-seer/validate.ts",
+    "../../../backend/src/verification/reproduction/noble-secret-body/validate.ts"
+  ],
+  "include": [],
+  "exclude": []
+}

@@ -6,7 +6,7 @@
  */
 import { unwrapRecordingEnvelope } from "@ai-werewolf-arena/replay-contract";
 import { verifyReproductionMechanisms } from "../verification/reproduction/assembly";
-import { animalCheckpointSchema } from "./animal_dream_checkpoint";
+import { animalCheckpointSchema } from "./checkpoint/animal-format";
 import {
   ANIMAL_DREAM_EVENT_TYPES,
   readAnimalDreamFact,
@@ -18,8 +18,8 @@ import {
   readFragrantPairFact,
   fragrantPairVisibility,
 } from "@ai-werewolf-arena/game-contract/facts/fragrant-pair-seer";
-import { fragrantCheckpointSchema } from "./fragrant_pair_seer_checkpoint";
-import { nobleBodyCheckpointSchema } from "./noble_secret_body_checkpoint";
+import { fragrantCheckpointSchema } from "./checkpoint/fragrant-pair-format";
+import { nobleBodyCheckpointSchema } from "./checkpoint/noble-body-format";
 import {
   NOBLE_SECRET_BODY_EVENT_TYPES,
   readNobleSecretBodyFact,
@@ -194,9 +194,9 @@ export interface RecordedPlayerState {
   victory: { affiliations: VictoryAffiliation[] };
 }
 export interface RecordedCheckpoint {
-  animalDream?: import("./animal_dream_checkpoint").RecordedAnimalState;
-  fragrantPair?: import("./fragrant_pair_seer_checkpoint").RecordedFragrantState;
-  nobleBody?: import("./noble_secret_body_checkpoint").RecordedNobleBodyState;
+  animalDream?: import("./checkpoint/animal-format").RecordedAnimalState;
+  fragrantPair?: import("./checkpoint/fragrant-pair-format").RecordedFragrantState;
+  nobleBody?: import("./checkpoint/noble-body-format").RecordedNobleBodyState;
   operationCount?: number;
   settlementCount?: number;
   decisionCount?: number;

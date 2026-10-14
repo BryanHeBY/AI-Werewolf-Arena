@@ -12,7 +12,7 @@ import {
 } from "@ai-werewolf-arena/game-contract/facts/noble-secret-body";
 import { Role, Camp, Phase } from "@ai-werewolf-arena/game-contract";
 import type { RecordedCheckpoint, RecordedDecision, ReproductionRecord } from "../../../recording/reproduction";
-import type { RecordedNobleBodyState } from "../../../recording/noble_secret_body_checkpoint";
+import type { RecordedNobleBodyState } from "../../../recording/checkpoint/noble-body-format";
 import { sanitizeSpeechText } from "../../../utils/speech_text";
 export function nobleRecordCheck(v: unknown): asserts v {
   if (!v) throw Error("reproduction_noble_secret_body_invalid");

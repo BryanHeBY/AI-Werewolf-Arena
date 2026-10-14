@@ -5,9 +5,9 @@
  */
 import type { World } from "../../core/domain/world";
 import type { RecordedCheckpoint } from "../reproduction";
-import { animalCheckpointSchema } from "../animal_dream_checkpoint";
-import { fragrantCheckpointSchema } from "../fragrant_pair_seer_checkpoint";
-import { nobleBodyCheckpointSchema } from "../noble_secret_body_checkpoint";
+import { animalCheckpointSchema } from "./animal-format";
+import { fragrantCheckpointSchema } from "./fragrant-pair-format";
+import { nobleBodyCheckpointSchema } from "./noble-body-format";
 import {
   animalAuthoritySnapshot,
   isAnimalDreamBoard,
