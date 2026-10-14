@@ -7,7 +7,8 @@ import { prohibitsLoversVote } from "../roles/cupid/relation";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
 /** 文件说明：定义通用工具的校验规则。 */
 import { ToolRuleMap } from "../validation/contracts";
-import { debateAuthority, sameDebateParticipant } from "../roles/debater/authority";
+import { debateAuthority } from "../roles/debater/authority";
+import { sameOriginalParticipant as sameDebateParticipant } from "../../../core/domain/original-participant";
 import { Phase } from "../../../core/domain";
 import { canBeExiled, canVoteExile } from "./participation";
 

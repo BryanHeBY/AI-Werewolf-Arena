@@ -1,0 +1,150 @@
+{
+  "approved": true,
+  "reviewer": "native_presentation_finish",
+  "baseCommit": "15b680d9d55f4ead009a0fb363c6736523def03a",
+  "source": [
+    {
+      "path": "backend/src/core/domain/original-participant.ts",
+      "sha256": "66f03294e2a84d922973e1a0eb932323d0b7632bf19cefc64d09a76433bf8467"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/authority.ts",
+      "sha256": "e83bbc1d73641acb2561b9eb44564975cbc848d12100385bd210a8ab5dcf81ab"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "sha256": "bd675e17531805ee2f250f93ae81d474da8f1b7efe9a6e51dc32b6951f6874dc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "sha256": "25a8cad2591d98cd1b6a9923621448a4a44b15f65e6191aa056c1ca8dc98cd79"
+    },
+    {
+      "path": "backend/src/game/mechanisms/common/validation_rules.ts",
+      "sha256": "c0d79068da51362937b4a6bd5eadbad1942d607e04f8399507684b557d450836"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "06949a4306bd99d23add6fa99905f4c15303a771af0b8ac6f803741f52d327eb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "86ce818fe51ce5b5436f757b1c6bf72f7edfa5ec4881200ad2728ae734b48687"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "sha256": "4a1c0e71ecb0b3509d2cd4355dc6e4e113d6bb1df952a2cf46c09c5cd8d14b3b"
+    },
+    {
+      "path": "backend/tests/unit/domain/original-participant.test.ts",
+      "sha256": "ec76b0e8b1ada90d002c05c2c8a9c221fd2f67baa2fe3c3aa0a7308a67a3bb62"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/original-participant-owner-scope-final.json",
+    "sha256": "ce74ea0cbc01fea273143f0e2c05a0bac0f7a9a42982997f608832deea7affb0"
+  },
+  "document": {
+    "path": "docs/refactor/original-participant-owner.md",
+    "sha256": "27231e73aa7871b80aff410e366cabc6e9a009f00356e7d22a68e412243d4b26"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/original-participant-owner-evidence.json",
+    "sha256": "f434ac2a38ff7b3d044f086f070d2bc3cc4614bf960fc59808dc0e3b8d552049"
+  },
+  "integrity": {
+    "freshSource": 9,
+    "actualOldGitWholeSources": 7,
+    "newAbsentInGit": 2,
+    "wholeGitCurrentControls": 4,
+    "authorArtifacts": 18,
+    "exactWholeForwardsAndInverses": 7,
+    "exactSourceEdits": 11,
+    "threeActualCompleteKernelDeclarationsByteSameAfterCanonicalNames": true,
+    "firstChecksAndFinalNineSourceBytesSame": true,
+    "onlyProofComparatorOffsetRepair": true,
+    "mismatches": 0
+  },
+  "businessReview": {
+    "owner": "OriginalParticipant五字段及两个完整原算法真正归新core唯一声明；authority原三公开声明实际退休，未有reexport/forwardbridge。",
+    "widthAndTiming": "capture保原生命callee/参数→Role lookup，缺生命仍查Role；有生命和Role才普通读role/camp/privateState。getter、Proxy、循环容器、顶层可写及原引用接受均保，错误对象原样传播。",
+    "revalidation": "先原生命/版本短路，后同Role引用与三字段严格相等；不新增Camp组件、JSON内容、enum、own descriptor、冻结或Worldbrand。",
+    "realConsumers": "六运行consumer保原localaliases/calls，authority只有type import；15具名路径直达实际3export声明。",
+    "retainedOwners": "Debater窗口/参与者更新/await后复验/提交库存/处罚及finally，Initial物理牌/安装/F02complete，Wild原榜样/F04 WeakSet，Wall逐作者库存/关闭均保全原body。",
+    "separateStrictPolicy": "OriginalPlayerScope另有strict Proxy/descriptor/enum/Camp/ref/freeze/brand，四完整控制证明未合并或强化。",
+    "loaderAndAPI": "新owner仅core names/night_effects值依赖、World/Role纯type，无feature反向边、新store或注册；公开名字/模块拓扑及实际JS变化明确。",
+    "chineseContracts": "原广读取、原引用、非权限及杠精生命周期/处罚边界准确。"
+  },
+  "receiptsReviewed": {
+    "runtime": [
+      {
+        "receipt": "022adb",
+        "exitCode": 0,
+        "pass": 2,
+        "fail": 0,
+        "assertions": 20,
+        "log": "docs/refactor/generated/original-participant-owner-new-tests-output.txt"
+      },
+      {
+        "receipt": "968b64",
+        "exitCode": 0,
+        "pass": 1,
+        "fail": 0,
+        "assertions": 6,
+        "filtered": 61,
+        "title": "debate_speech / target_revive revokes pending outcome",
+        "log": "docs/refactor/generated/original-participant-owner-old-test-output.txt"
+      }
+    ],
+    "runtimeTotals": {
+      "distinctCases": 3,
+      "assertions": 26,
+      "greenRepeat": false
+    },
+    "types": {
+      "launch": "492fcc",
+      "sessionId": 76053,
+      "terminal": "1c9fc5",
+      "exitCode": 0,
+      "roots": 9,
+      "executions": 1,
+      "log": "docs/refactor/generated/original-participant-owner-types-output.txt"
+    },
+    "heads": {
+      "receipt": "0ecb30",
+      "exitCode": 0,
+      "roots": 9,
+      "documents": 679,
+      "executions": 1,
+      "log": "docs/refactor/generated/original-participant-owner-heads-output.txt"
+    },
+    "proof": [
+      {
+        "receipt": "1a8b13",
+        "exitCode": 1,
+        "reason": "Tool inverse substring check mis-handled intentionally empty after for physical declaration deletions. Product source unchanged.",
+        "script": "docs/refactor/generated/original-participant-owner-proof-first.cjs",
+        "edits": "docs/refactor/generated/original-participant-owner-edits-first.json",
+        "log": "docs/refactor/generated/original-participant-owner-proof-output-first.txt"
+      },
+      {
+        "receipt": "8ee1bb",
+        "exitCode": 0,
+        "reason": "Only comparator tool fixed to apply exact recorded offsets for inversion.",
+        "script": "docs/refactor/generated/original-participant-owner-proof.cjs",
+        "log": "docs/refactor/generated/original-participant-owner-proof-output.txt"
+      }
+    ]
+  },
+  "findings": [],
+  "reviewerMetadataHistory": "首纯数据脚本假定first-source每行含text，KeyError；实际只有两新源含text，七旧源由before+edits完整正演，修此metadata读取后核对。非产品/类型/测试失败，未执行作者工具。",
+  "limitations": [
+    "批准完整源/实际声明/原体读序及有限证据；不将14整逆输出称为实际新旧完整JS相同。",
+    "15项是具名相对路径及实际export声明核，不称全TypeChecker或全仓动态计算属性/namespace反射覆盖。",
+    "首proof空after uniqueness工具红保，offset修复未改生产或重复任何绿。",
+    "本批不实现Camp sole-source，也不统一各族strict/值/ref/JSON/生命周期权限政策。",
+    "Initial setup的06949a后继route与我的InitialPublic6控制桥同阶段，未混称原15b whole控制。",
+    "独立仅完整源码/真实Git/文本/摘要/收据核；没有执行作者proof/type/head/tests/gate、生产加载或模型。"
+  ]
+}

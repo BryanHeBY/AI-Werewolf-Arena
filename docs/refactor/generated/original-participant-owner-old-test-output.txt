@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/debater/debater.test.ts:
+(pass) debate_speech / target_revive revokes pending outcome [42.64ms]
+
+ 1 pass
+ 61 filtered out
+ 0 fail
+ 6 expect() calls
+Ran 1 test across 1 file. [197.00ms]

@@ -1,13 +1,11 @@
 /**
- * Owns Debater participant snapshots, one debate window and vote-block penalties. Inputs are
- * original bodies and validated debate choices; writes record a committed debate and its penalty
- * only for the same current window. Close retires the window without converting a rejected
- * choice into a penalty.
+ * 负责杠精辩论窗口、一次提交登记及原生命绑定的禁票处罚。输入为原参与者和已校验选择，
+ * 输出为窗口、提交及处罚查询；参与者捕获／复验归中立数据所有者，不在此复制其政策。
+ * 不变量：关闭仅退休同一窗口；原已提交选择不退款，处罚仍在实际查询时按原生命版本失效。
  */
 import {
   COMPONENT,
   type World,
-  type RoleComponent,
   type DebatePenaltyComponent,
 } from "../../../../core/domain";
 import {
@@ -16,13 +14,8 @@ import {
   type NightLifeScope,
 } from "../../../../core/domain/night_effects";
 
-export interface DebateParticipant {
-  life: NightLifeScope;
-  role: RoleComponent;
-  roleId: RoleComponent["role"];
-  camp: RoleComponent["camp"];
-  state: RoleComponent["privateState"];
-}
+import type { OriginalParticipant as DebateParticipant } from "../../../../core/domain/original-participant";
+
 export interface DebateAuthority {
   id: string;
   day: number;
@@ -47,22 +40,6 @@ const penalties = new WeakMap<
   World,
   Map<number, { record: DebatePenaltyComponent; life: NightLifeScope }>
 >();
-export function captureDebateParticipant(world: World, id: number): DebateParticipant | null {
-  const life = captureNightLife(world, id),
-    role = world.getComponent(id, COMPONENT.Role);
-  return life && role
-    ? { life, role, roleId: role.role, camp: role.camp, state: role.privateState }
-    : null;
-}
-export function sameDebateParticipant(world: World, snapshot: DebateParticipant): boolean {
-  return (
-    livingNightLife(world, snapshot.life) &&
-    world.getComponent(snapshot.life.id, COMPONENT.Role) === snapshot.role &&
-    snapshot.role.role === snapshot.roleId &&
-    snapshot.role.camp === snapshot.camp &&
-    snapshot.role.privateState === snapshot.state
-  );
-}
 export function openDebate(world: World, authority: DebateAuthority): void {
   if (active.has(world)) throw new Error("debate_window_reentry");
   active.set(world, authority);

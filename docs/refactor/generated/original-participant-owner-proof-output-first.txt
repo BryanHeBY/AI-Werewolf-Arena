@@ -1,0 +1,21 @@
+30 | for(const x of before.source){
+31 |   if(!x.text)continue;
+32 |   const current=fs.readFileSync(x.path,'utf8');assert.equal(sha(x.text),x.sha256);
+33 |   let f=x.text,r=current;const rows=edits.filter(e=>e.path===x.path);
+34 |   for(const e of rows){assert.equal(f.split(e.before).length,2);f=f.replace(e.before,e.after);}
+35 |   for(const e of [...rows].reverse()){assert.equal(r.split(e.after).length,2);r=r.replace(e.after,e.before);}
+                                                  ^
+AssertionError: Expected values to be strictly equal:
+
+3012 !== 2
+
+ generatedMessage: true,
+     actual: 3012,
+   expected: 2,
+   operator: "strictEqual",
+       diff: "simple",
+       code: "ERR_ASSERTION"
+
+      at /home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/original-participant-owner-proof.cjs:35:46
+
+Bun v1.4.3 (Linux x64)

@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/domain/original-participant.test.ts:
+(pass) participant keeps getter and Proxy acceptance, original references and a writable snapshot without Camp or JSON inspection [0.59ms]
+(pass) capture retains Role lookup after missing life, original getter errors and life-first recheck short circuit [0.17ms]
+
+ 2 pass
+ 0 fail
+ 20 expect() calls
+Ran 2 tests across 1 file. [51.00ms]

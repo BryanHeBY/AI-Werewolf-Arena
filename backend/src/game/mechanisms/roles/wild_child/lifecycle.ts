@@ -17,7 +17,7 @@ import {
   livingNightLife,
   type NightLifeScope,
 } from "../../../../core/domain/night_effects";
-import { captureDebateParticipant, type DebateParticipant } from "../debater/authority";
+import { captureOriginalParticipant as captureDebateParticipant, type OriginalParticipant as DebateParticipant } from "../../../../core/domain/original-participant";
 import { getWildChildState, encodeWildChildData as safeJson,
   commitWildChildState, cancelWildChildState, transformWildChildState, activateWildChildState,
   projectWildChildData } from "./state-slot";

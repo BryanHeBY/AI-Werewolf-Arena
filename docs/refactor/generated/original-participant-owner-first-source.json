@@ -1,0 +1,44 @@
+{
+  "source": [
+    {
+      "path": "backend/src/core/domain/original-participant.ts",
+      "sha256": "66f03294e2a84d922973e1a0eb932323d0b7632bf19cefc64d09a76433bf8467",
+      "text": "/**\n * 负责共用参与者的原生命、Role 与私有容器引用捕获和晚复验。输入为原 World／玩家 ID，\n * 输出保留原可写快照及当前性布尔值；不写 World、资源、阶段或领域许可。\n * 只复用原生命版本规则，Role 字段按原普通属性读取；getter／Proxy 可执行并按原时点抛错。\n * 不读取 Camp 组件、不校验枚举／JSON／完整槽、不建立 brand 或冻结快照；严格原体契约另有所有者。\n */\nimport { COMPONENT } from \"./components/names\";\nimport type { RoleComponent } from \"./components/role\";\nimport type { World } from \"./world\";\nimport { captureNightLife, livingNightLife, type NightLifeScope } from \"./night_effects\";\n\n/** 保原可写顶层字段与组件引用；camp 是捕获的 Role.camp 值，不是 Camp 组件或独立行动权限。 */\nexport interface OriginalParticipant {\n  life: NightLifeScope;\n  role: RoleComponent;\n  roleId: RoleComponent[\"role\"];\n  camp: RoleComponent[\"camp\"];\n  state: RoleComponent[\"privateState\"];\n}\n/** 原生命先捕获，再查询 Role；仅两者存在才按 role→camp→privateState 读取，不复制或提前取字段。 */\nexport function captureOriginalParticipant(world: World, id: number): OriginalParticipant | null {\n  const life = captureNightLife(world, id),\n    role = world.getComponent(id, COMPONENT.Role);\n  return life && role\n    ? { life, role, roleId: role.role, camp: role.camp, state: role.privateState }\n    : null;\n}\n/** 生命／版本先短路，再核同 Role 引用及原三个字段；不新增 descriptor、Camp 引用或状态内容检查。 */\nexport function sameOriginalParticipant(world: World, snapshot: OriginalParticipant): boolean {\n  return (\n    livingNightLife(world, snapshot.life) &&\n    world.getComponent(snapshot.life.id, COMPONENT.Role) === snapshot.role &&\n    snapshot.role.role === snapshot.roleId &&\n    snapshot.role.camp === snapshot.camp &&\n    snapshot.role.privateState === snapshot.state\n  );\n}\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/authority.ts",
+      "sha256": "e83bbc1d73641acb2561b9eb44564975cbc848d12100385bd210a8ab5dcf81ab"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "sha256": "bd675e17531805ee2f250f93ae81d474da8f1b7efe9a6e51dc32b6951f6874dc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "sha256": "25a8cad2591d98cd1b6a9923621448a4a44b15f65e6191aa056c1ca8dc98cd79"
+    },
+    {
+      "path": "backend/src/game/mechanisms/common/validation_rules.ts",
+      "sha256": "c0d79068da51362937b4a6bd5eadbad1942d607e04f8399507684b557d450836"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "06949a4306bd99d23add6fa99905f4c15303a771af0b8ac6f803741f52d327eb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "86ce818fe51ce5b5436f757b1c6bf72f7edfa5ec4881200ad2728ae734b48687"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "sha256": "4a1c0e71ecb0b3509d2cd4355dc6e4e113d6bb1df952a2cf46c09c5cd8d14b3b"
+    },
+    {
+      "path": "backend/tests/unit/domain/original-participant.test.ts",
+      "sha256": "ec76b0e8b1ada90d002c05c2c8a9c221fd2f67baa2fe3c3aa0a7308a67a3bb62",
+      "text": "/**\n * 单元测试负责共用参与者的原读取顺序与宽接受规则。输入为原 World／工厂生命和含\n * getter／Proxy／循环私有容器的 Role，字面读取轨迹、引用、拒绝短路和同 Error 为预期。\n * 只核捕获与复验，不运行角色窗口或付款；普通属性读取不等于严格原体 schema 或权限。\n */\nimport { expect, test } from \"bun:test\";\nimport { World } from \"../../../src/core/domain/world\";\nimport { COMPONENT } from \"../../../src/core/domain/components/names\";\nimport { createAliveComponent } from \"../../../src/core/domain/components/alive\";\nimport { createCampComponent } from \"../../../src/core/domain/components/camp\";\nimport type { RoleComponent } from \"../../../src/core/domain/components/role\";\nimport { Camp, Role } from \"../../../src/core/domain/identity\";\nimport {\n  captureOriginalParticipant,\n  sameOriginalParticipant,\n} from \"../../../src/core/domain/original-participant\";\n\ntest(\"participant keeps getter and Proxy acceptance, original references and a writable snapshot without Camp or JSON inspection\", () => {\n  const world = new World(), id = world.createEntity(), life = createAliveComponent();\n  world.addComponent(id, COMPONENT.Alive, life);\n  const reads: string[] = [];\n  const state: { cycle?: object } = {};\n  state.cycle = state;\n  const values = { role: Role.Villager, camp: Camp.Good, state: state as object };\n  // 原算法使用普通属性读取；继承 getter 与 Proxy 不被新 owner 改成 descriptor／JSON 拒绝。\n  const role = new Proxy(Object.create({\n    get role() { reads.push(\"role\"); return values.role; },\n    get camp() { reads.push(\"camp\"); return values.camp; },\n    get privateState() { reads.push(\"state\"); return values.state; },\n  }) as RoleComponent, {});\n  world.addComponent(id, COMPONENT.Role, role);\n  const original = world.getComponent;\n  world.getComponent = new Proxy(original, {\n    apply(target, receiver, args) {\n      reads.push(String(args[1]));\n      return Reflect.apply(target, receiver, args);\n    },\n  });\n  const snapshot = captureOriginalParticipant(world, id)!;\n  expect(reads).toEqual([\"AliveComponent\", \"RoleComponent\", \"role\", \"camp\", \"state\"]);\n  expect(snapshot.role).toBe(role);\n  expect(snapshot.state).toBe(state);\n  expect(snapshot.life.life).toBe(life);\n  expect(Object.isFrozen(snapshot)).toBe(false);\n  expect(Object.getOwnPropertyDescriptor(snapshot, \"camp\")?.writable).toBe(true);\n  reads.length = 0;\n  expect(sameOriginalParticipant(world, snapshot)).toBe(true);\n  expect(reads).toEqual([\"AliveComponent\", \"RoleComponent\", \"role\", \"camp\", \"state\"]);\n  world.addComponent(id, COMPONENT.Camp, createCampComponent(Camp.ThirdParty));\n  expect(sameOriginalParticipant(world, snapshot)).toBe(true);\n  values.state = { cycle: state };\n  expect(sameOriginalParticipant(world, snapshot)).toBe(false);\n  values.state = state;\n  expect(sameOriginalParticipant(world, snapshot)).toBe(true);\n  snapshot.roleId = Role.Wolf;\n  expect(sameOriginalParticipant(world, snapshot)).toBe(false);\n  snapshot.roleId = Role.Villager;\n  expect(sameOriginalParticipant(world, snapshot)).toBe(true);\n  world.getComponent = original;\n});\n\ntest(\"capture retains Role lookup after missing life, original getter errors and life-first recheck short circuit\", () => {\n  const world = new World(), id = world.createEntity(), reads: string[] = [];\n  const error = new Error(\"literal_original_participant_role_getter\");\n  let throws = false;\n  const state = {};\n  const role = {\n    get role() { reads.push(\"kind\"); if (throws) throw error; return Role.Villager; },\n    get camp() { reads.push(\"camp\"); return Camp.Good; },\n    get privateState() { reads.push(\"state\"); return state; },\n  };\n  world.addComponent(id, COMPONENT.Role, role);\n  const original = world.getComponent;\n  world.getComponent = new Proxy(original, {\n    apply(target, receiver, args) { reads.push(String(args[1])); return Reflect.apply(target, receiver, args); },\n  });\n  expect(captureOriginalParticipant(world, id)).toBeNull();\n  expect(reads).toEqual([\"AliveComponent\", \"RoleComponent\"]);\n  const life = createAliveComponent();\n  world.addComponent(id, COMPONENT.Alive, life);\n  throws = true;\n  reads.length = 0;\n  let caught: unknown;\n  try { captureOriginalParticipant(world, id); } catch (e) { caught = e; }\n  expect(caught).toBe(error);\n  expect(reads).toEqual([\"AliveComponent\", \"RoleComponent\", \"kind\"]);\n  throws = false;\n  const snapshot = captureOriginalParticipant(world, id)!;\n  life.alive = false;\n  throws = true;\n  reads.length = 0;\n  expect(sameOriginalParticipant(world, snapshot)).toBe(false);\n  expect(reads).toEqual([\"AliveComponent\"]);\n  life.alive = true;\n  expect(sameOriginalParticipant(world, snapshot)).toBe(false);\n  world.getComponent = original;\n});\n"
+    }
+  ],
+  "existingFullTextReconstruction": "before.json + edits.json exact forward",
+  "sourceFrozenForFirstChecks": true
+}

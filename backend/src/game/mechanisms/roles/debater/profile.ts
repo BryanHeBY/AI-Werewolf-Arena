@@ -19,7 +19,8 @@ import {
 import type { NativeRoleContributions } from "../contracts";
 import { numberOrNull } from "../../llm/helpers";
 import { getDebaterState, projectDebaterState, initializeDebaterState } from "./state";
-import { debateAuthority, hasDebateCommit, sameDebateParticipant } from "./authority";
+import { debateAuthority, hasDebateCommit } from "./authority";
+import { sameOriginalParticipant as sameDebateParticipant } from "../../../../core/domain/original-participant";
 const parameters = z.strictObject({
   policy: z.enum(DEBATER_POLICIES).default("awa_melbourne_2026_speech_gap_v1"),
 });

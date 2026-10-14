@@ -17,10 +17,10 @@ import type { ActionRequestFactoryConstructorPort } from "../../../../core/domai
 import { ToolGateway } from "../../../gateway/tool_gateway";
 import { getDefaultRoleCatalog } from "../role-catalog-assembly";
 import {
-  captureDebateParticipant,
-  sameDebateParticipant,
-  type DebateParticipant,
-} from "../debater/authority";
+  captureOriginalParticipant as captureDebateParticipant,
+  sameOriginalParticipant as sameDebateParticipant,
+  type OriginalParticipant as DebateParticipant,
+} from "../../../../core/domain/original-participant";
 import {
   openInitialIdentitySetup,
   closeInitialIdentitySetup,

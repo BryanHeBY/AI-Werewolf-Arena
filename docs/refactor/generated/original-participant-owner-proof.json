@@ -1,0 +1,333 @@
+{
+  "baseCommit": "15b680d9d55f4ead009a0fb363c6736523def03a",
+  "source": [
+    {
+      "path": "backend/src/core/domain/original-participant.ts",
+      "sha256": "66f03294e2a84d922973e1a0eb932323d0b7632bf19cefc64d09a76433bf8467"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/authority.ts",
+      "sha256": "e83bbc1d73641acb2561b9eb44564975cbc848d12100385bd210a8ab5dcf81ab"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "sha256": "bd675e17531805ee2f250f93ae81d474da8f1b7efe9a6e51dc32b6951f6874dc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "sha256": "25a8cad2591d98cd1b6a9923621448a4a44b15f65e6191aa056c1ca8dc98cd79"
+    },
+    {
+      "path": "backend/src/game/mechanisms/common/validation_rules.ts",
+      "sha256": "c0d79068da51362937b4a6bd5eadbad1942d607e04f8399507684b557d450836"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "06949a4306bd99d23add6fa99905f4c15303a771af0b8ac6f803741f52d327eb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "86ce818fe51ce5b5436f757b1c6bf72f7edfa5ec4881200ad2728ae734b48687"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "sha256": "4a1c0e71ecb0b3509d2cd4355dc6e4e113d6bb1df952a2cf46c09c5cd8d14b3b"
+    },
+    {
+      "path": "backend/tests/unit/domain/original-participant.test.ts",
+      "sha256": "ec76b0e8b1ada90d002c05c2c8a9c221fd2f67baa2fe3c3aa0a7308a67a3bb62"
+    }
+  ],
+  "deleted": [],
+  "completeOwnedDeclarations": [
+    {
+      "oldName": "DebateParticipant",
+      "newName": "OriginalParticipant",
+      "completeDeclarationSameAfterNameMapping": true
+    },
+    {
+      "oldName": "captureDebateParticipant",
+      "newName": "captureOriginalParticipant",
+      "completeDeclarationSameAfterNameMapping": true
+    },
+    {
+      "oldName": "sameDebateParticipant",
+      "newName": "sameOriginalParticipant",
+      "completeDeclarationSameAfterNameMapping": true
+    }
+  ],
+  "whole": [
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/authority.ts",
+      "exactCompleteForwardInverse": true,
+      "edits": 4
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "exactCompleteForwardInverse": true,
+      "edits": 2
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "exactCompleteForwardInverse": true,
+      "edits": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/common/validation_rules.ts",
+      "exactCompleteForwardInverse": true,
+      "edits": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "exactCompleteForwardInverse": true,
+      "edits": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "exactCompleteForwardInverse": true,
+      "edits": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "exactCompleteForwardInverse": true,
+      "edits": 1
+    }
+  ],
+  "outputs": [
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/authority.ts",
+      "module": "ESNext",
+      "completeInverseRawSame": true,
+      "actualRawSame": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/authority.ts",
+      "module": "CommonJS",
+      "completeInverseRawSame": true,
+      "actualRawSame": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "module": "ESNext",
+      "completeInverseRawSame": true,
+      "actualRawSame": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "module": "CommonJS",
+      "completeInverseRawSame": true,
+      "actualRawSame": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "module": "ESNext",
+      "completeInverseRawSame": true,
+      "actualRawSame": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "module": "CommonJS",
+      "completeInverseRawSame": true,
+      "actualRawSame": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/common/validation_rules.ts",
+      "module": "ESNext",
+      "completeInverseRawSame": true,
+      "actualRawSame": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/common/validation_rules.ts",
+      "module": "CommonJS",
+      "completeInverseRawSame": true,
+      "actualRawSame": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "module": "ESNext",
+      "completeInverseRawSame": true,
+      "actualRawSame": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "module": "CommonJS",
+      "completeInverseRawSame": true,
+      "actualRawSame": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "module": "ESNext",
+      "completeInverseRawSame": true,
+      "actualRawSame": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "module": "CommonJS",
+      "completeInverseRawSame": true,
+      "actualRawSame": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "module": "ESNext",
+      "completeInverseRawSame": true,
+      "actualRawSame": false
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "module": "CommonJS",
+      "completeInverseRawSame": true,
+      "actualRawSame": false
+    }
+  ],
+  "cumulativeTypedComparisons": 19416,
+  "cumulativeASTLeaves": 10106,
+  "physicalBindings": [
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/authority.ts",
+      "imported": "OriginalParticipant",
+      "local": "DebateParticipant",
+      "typeOnly": true,
+      "physicalOwner": "backend/src/core/domain/original-participant.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "imported": "captureOriginalParticipant",
+      "local": "captureDebateParticipant",
+      "typeOnly": false,
+      "physicalOwner": "backend/src/core/domain/original-participant.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "imported": "sameOriginalParticipant",
+      "local": "sameDebateParticipant",
+      "typeOnly": false,
+      "physicalOwner": "backend/src/core/domain/original-participant.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "imported": "sameOriginalParticipant",
+      "local": "sameDebateParticipant",
+      "typeOnly": false,
+      "physicalOwner": "backend/src/core/domain/original-participant.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/common/validation_rules.ts",
+      "imported": "sameOriginalParticipant",
+      "local": "sameDebateParticipant",
+      "typeOnly": false,
+      "physicalOwner": "backend/src/core/domain/original-participant.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "imported": "captureOriginalParticipant",
+      "local": "captureDebateParticipant",
+      "typeOnly": false,
+      "physicalOwner": "backend/src/core/domain/original-participant.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "imported": "sameOriginalParticipant",
+      "local": "sameDebateParticipant",
+      "typeOnly": false,
+      "physicalOwner": "backend/src/core/domain/original-participant.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "imported": "OriginalParticipant",
+      "local": "DebateParticipant",
+      "typeOnly": true,
+      "physicalOwner": "backend/src/core/domain/original-participant.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "imported": "captureOriginalParticipant",
+      "local": "captureDebateParticipant",
+      "typeOnly": false,
+      "physicalOwner": "backend/src/core/domain/original-participant.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "imported": "OriginalParticipant",
+      "local": "DebateParticipant",
+      "typeOnly": true,
+      "physicalOwner": "backend/src/core/domain/original-participant.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "imported": "captureOriginalParticipant",
+      "local": "captureDebateParticipant",
+      "typeOnly": false,
+      "physicalOwner": "backend/src/core/domain/original-participant.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "imported": "sameOriginalParticipant",
+      "local": "sameDebateParticipant",
+      "typeOnly": false,
+      "physicalOwner": "backend/src/core/domain/original-participant.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "imported": "OriginalParticipant",
+      "local": "DebateParticipant",
+      "typeOnly": true,
+      "physicalOwner": "backend/src/core/domain/original-participant.ts"
+    },
+    {
+      "path": "backend/tests/unit/domain/original-participant.test.ts",
+      "imported": "captureOriginalParticipant",
+      "local": "captureOriginalParticipant",
+      "typeOnly": false,
+      "physicalOwner": "backend/src/core/domain/original-participant.ts"
+    },
+    {
+      "path": "backend/tests/unit/domain/original-participant.test.ts",
+      "imported": "sameOriginalParticipant",
+      "local": "sameOriginalParticipant",
+      "typeOnly": false,
+      "physicalOwner": "backend/src/core/domain/original-participant.ts"
+    }
+  ],
+  "ownerImports": [
+    {
+      "route": "./components/names",
+      "typeOnly": false
+    },
+    {
+      "route": "./components/role",
+      "typeOnly": true
+    },
+    {
+      "route": "./world",
+      "typeOnly": true
+    },
+    {
+      "route": "./night_effects",
+      "typeOnly": false
+    }
+  ],
+  "oldThreeAuthorityExportsRetired": true,
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/original_player_scope.ts",
+      "sha256": "e150a4d2ab8d96a645f30d780f58fabde5716ac5777acc0ea553776043b1d0f6"
+    },
+    {
+      "path": "backend/src/core/domain/night_effects.ts",
+      "sha256": "0f7c0734ba2585213dbeb11509845efeba4e4afd2c61f27de5cdc84812dcdd97"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "sha256": "15908775ab360ad2802202cb9387790bd7a269c188979af8824e5fc539593a3d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "sha256": "c528993cd54276d1a98ee3e31881c0da4111c48744c4b68a53c2871b7ea78de3"
+    }
+  ],
+  "limits": [
+    "Actual import paths and module API change; only inverse/mapped programs match original, not arbitrary CJS namespace reassignment.",
+    "OriginalPlayerScope stricter ref/descriptor/brand policy is a whole-byte control and is not merged.",
+    "No all-repo cold execution or Camp sole-source policy."
+  ]
+}

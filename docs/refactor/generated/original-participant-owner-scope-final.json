@@ -1,0 +1,144 @@
+{
+  "baseCommit": "15b680d9d55f4ead009a0fb363c6736523def03a",
+  "source": [
+    {
+      "path": "backend/src/core/domain/original-participant.ts",
+      "sha256": "66f03294e2a84d922973e1a0eb932323d0b7632bf19cefc64d09a76433bf8467"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/authority.ts",
+      "sha256": "e83bbc1d73641acb2561b9eb44564975cbc848d12100385bd210a8ab5dcf81ab"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/window.ts",
+      "sha256": "bd675e17531805ee2f250f93ae81d474da8f1b7efe9a6e51dc32b6951f6874dc"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/profile.ts",
+      "sha256": "25a8cad2591d98cd1b6a9923621448a4a44b15f65e6191aa056c1ca8dc98cd79"
+    },
+    {
+      "path": "backend/src/game/mechanisms/common/validation_rules.ts",
+      "sha256": "c0d79068da51362937b4a6bd5eadbad1942d607e04f8399507684b557d450836"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/setup.ts",
+      "sha256": "06949a4306bd99d23add6fa99905f4c15303a771af0b8ac6f803741f52d327eb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+      "sha256": "86ce818fe51ce5b5436f757b1c6bf72f7edfa5ec4881200ad2728ae734b48687"
+    },
+    {
+      "path": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+      "sha256": "4a1c0e71ecb0b3509d2cd4355dc6e4e113d6bb1df952a2cf46c09c5cd8d14b3b"
+    },
+    {
+      "path": "backend/tests/unit/domain/original-participant.test.ts",
+      "sha256": "ec76b0e8b1ada90d002c05c2c8a9c221fd2f67baa2fe3c3aa0a7308a67a3bb62"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/original_player_scope.ts",
+      "sha256": "e150a4d2ab8d96a645f30d780f58fabde5716ac5777acc0ea553776043b1d0f6"
+    },
+    {
+      "path": "backend/src/core/domain/night_effects.ts",
+      "sha256": "0f7c0734ba2585213dbeb11509845efeba4e4afd2c61f27de5cdc84812dcdd97"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/debater/state.ts",
+      "sha256": "15908775ab360ad2802202cb9387790bd7a269c188979af8824e5fc539593a3d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/deal.ts",
+      "sha256": "c528993cd54276d1a98ee3e31881c0da4111c48744c4b68a53c2871b7ea78de3"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/original-participant-owner.md",
+    "sha256": "27231e73aa7871b80aff410e366cabc6e9a009f00356e7d22a68e412243d4b26"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/original-participant-owner-before.json",
+      "sha256": "0e6e93871cc50c4779af0f7e848bb1339eec9f70cb08128b1d40fd311ba74bf4"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-edits-first.json",
+      "sha256": "745fb8afa1a9eaeed60448ee850079b864d65c4c8c21e7a3f983749ca1bcc942"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-edits.json",
+      "sha256": "34f057ee4591cb04e73a68ef1683e55fe05fd6f619d45e4bd2d62281c9a4b3a0"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-first-source.json",
+      "sha256": "e267118d6052dd2e9124f471b27c7aad0027b33eb108c6317771e08f0de0273a"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-heads-output.txt",
+      "sha256": "c87aa364b9e6faa10368676712ade5a3bc43b82ce6f88a567b0d98ed3c425aa9"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-heads.json",
+      "sha256": "84cc11802aca2b8d44022c71ba626adb4b24f51028db13340b20c98d8954d9e4"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-heads.ts",
+      "sha256": "ee8795a8216c2a54c187c84c292be8662ed95cb55602a99cc8377e91497c363c"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-new-tests-output.txt",
+      "sha256": "0bcb504a5c98ef7b23b0622df9ef74980d7fcac312e91b1ea4b7bde374ad437f"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-old-test-output.txt",
+      "sha256": "007840a64144f4479154e12f15cbe7f2044f260d20b63b029fe2ece0201abe1b"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-paths.json",
+      "sha256": "da9f2cc9c7e8f05acc423db5a557cbb1a4c72a973505f72e17c7dc52863f16df"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-proof-first.cjs",
+      "sha256": "ab8f8083cc6336232a5c82fc8a7c2b9de27ec93752b677b878c56d0422003465"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-proof-output-first.txt",
+      "sha256": "0e9d3387c9f0886a20a958f9c2968471b49b97f0aaf856e567a8329d9615da43"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-proof-output.txt",
+      "sha256": "77ed35836f711e426da9da599aba235da3faa8b8f3379f7bee09da18099abb57"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-proof.cjs",
+      "sha256": "8df30299399b88d45f9ca325954d5ea7186d98053265a8edd81c91cd9b51c731"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-proof.json",
+      "sha256": "081e8a84b868cf5368d297b0a99db1523225051a229b96bdc4b0b3e6f73e1c00"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-receipts.json",
+      "sha256": "07ab327812415069ace1d8f7893995cea1082cff5c3f7ba7e690e1c0aaa577d2"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-types-config.json",
+      "sha256": "5a8c26d1494739ca6d253f264d486f5bf08632b77a6834b6a5fa3cd15a9a6f3e"
+    },
+    {
+      "path": "docs/refactor/generated/original-participant-owner-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "counts": {
+    "existing": 7,
+    "new": 2,
+    "present": 9,
+    "deleted": 0
+  }
+}

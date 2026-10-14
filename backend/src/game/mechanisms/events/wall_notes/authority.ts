@@ -16,10 +16,10 @@ import {
   type WallNoteComponent,
 } from "../../../../core/domain";
 import {
-  captureDebateParticipant,
-  sameDebateParticipant,
-  type DebateParticipant,
-} from "../../roles/debater/authority";
+  captureOriginalParticipant as captureDebateParticipant,
+  sameOriginalParticipant as sameDebateParticipant,
+  type OriginalParticipant as DebateParticipant,
+} from "../../../../core/domain/original-participant";
 export const WALL_ROLES: readonly Role[] = [
   Role.Wolf,
   Role.Villager,
