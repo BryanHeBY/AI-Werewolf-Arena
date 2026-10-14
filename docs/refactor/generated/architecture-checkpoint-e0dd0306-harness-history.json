@@ -1,0 +1,43 @@
+{
+  "runnerWholeBytesSameAs": "docs/refactor/generated/architecture-checkpoint-2da71936-run.ts",
+  "newPurePrograms": {
+    "inputVerification": "只替换输出prefix",
+    "partitionEdits": [
+      [
+        "p='docs/refactor/generated/architecture-checkpoint-2da71936-'",
+        "p='docs/refactor/generated/architecture-checkpoint-e0dd0306-'"
+      ],
+      [
+        "architecture-checkpoint-cdbe1cf1",
+        "architecture-checkpoint-2da71936"
+      ],
+      [
+        "'previousFixedCommit':'cdbe1cf15c6046f893436c7a39764e10117ef097'",
+        "'previousFixedCommit':'2da71936599900756983d4d7afb677417c66e4d2'"
+      ],
+      [
+        "固定2da71936相对固定cdbe1cf1",
+        "固定e0dd0306相对固定2da71936"
+      ]
+    ]
+  },
+  "gateReceipt": {
+    "launchChunk": "f86f4f",
+    "session": 85553,
+    "terminalChunk": "5df82e",
+    "exitCode": 0,
+    "executions": 1,
+    "fixedCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc"
+  },
+  "originalGateNeverRepeated": true,
+  "pureInputReceipt": {
+    "terminalChunk": "1654e9",
+    "exitCode": 0,
+    "executions": 1
+  },
+  "purePartitionReceipt": {
+    "terminalChunk": "7e0cfe",
+    "exitCode": 0,
+    "executions": 1
+  }
+}

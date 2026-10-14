@@ -1,0 +1,59 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_final_architecture_review",
+  "baseCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc",
+  "fixedCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc",
+  "source": [],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/architecture-checkpoint-e0dd0306-scope-final.json",
+    "sha256": "d52e292e5d122f5753f31e2a893b55bf30335422b6afc5c80a55b4cea3e22597"
+  },
+  "scopeSHA256": "d52e292e5d122f5753f31e2a893b55bf30335422b6afc5c80a55b4cea3e22597",
+  "document": {
+    "path": "docs/refactor/architecture-checkpoint-e0dd0306.md",
+    "sha256": "199ad1ee00270ba81feb019f2c0986f9876ca1ee33bc32184558dd64cd8150dd"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/architecture-checkpoint-e0dd0306-evidence.json",
+    "sha256": "2065414b3a399439de7fa7301a8dcf655afbf91e85df2b22b5c1cfb24c40a394"
+  },
+  "integrity": {
+    "actualGitRawFiles": 3257,
+    "sameGitDocumentationPaths": 665,
+    "everyBlobModeRawSHAAndDecodedTextSame": true,
+    "rawInput": {
+      "path": "/tmp/awa-architecture-checkpoint-e0dd0306-input.json",
+      "sha256": "e72708dacac53047490fc561a73bf49657e787246bf74a73527080b24a62c2ba",
+      "bytes": 80581224
+    },
+    "sourceDigest": "62a6686677515d535457e3a8cf86eb9ff43dfe5de755fcf4d0ac0a34d493870a",
+    "fixedGitCurrentToolHashes": 6,
+    "artifactHashes": 11,
+    "originalDebtSHA256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+    "mismatches": []
+  },
+  "partition": {
+    "originalDebt": 1779,
+    "remaining": 240,
+    "cleared": 1539,
+    "newFailures": 0,
+    "disjointExactOriginalUnion": true,
+    "previousFixedCommit": "2da71936599900756983d4d7afb677417c66e4d2",
+    "newlyCleared": 2,
+    "returned": 0
+  },
+  "recordedExecution": {
+    "launchChunk": "f86f4f",
+    "session": 85553,
+    "terminalChunk": "5df82e",
+    "exitCode": 0,
+    "executions": 1,
+    "fixedCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc"
+  },
+  "findings": [],
+  "limits": [
+    "只读独立核原固定 Git/public-policy 输入、blob/mode/每份解码文本与 SHA、同 Git 文档、原1779分区、工具和实际日志；未执行作者 runner/两 pure脚本、checkArchitecture、compiler、tests、head 或模型。",
+    "仅固定 e0dd progressive stage，strict=false/mappings=[]。C45、F02、F03后继WIP排除；不代表55机制、完整中文质量、C18a行为、全P9或零债务验收。"
+  ]
+}

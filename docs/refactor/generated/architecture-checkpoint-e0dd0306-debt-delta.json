@@ -1,0 +1,53 @@
+{
+  "previousFixedCommit": "2da71936599900756983d4d7afb677417c66e4d2",
+  "currentFixedCommit": "e0dd0306998ec7ffa5fe52bb01f2c75cc1d279cc",
+  "previousReport": {
+    "path": "docs/refactor/generated/architecture-checkpoint-2da71936-report.json",
+    "sha256": "95aaa039490d54ddfc2af9d37c0c49d6e627364a2472f95f3a3cf402fd7dd251",
+    "counts": {
+      "files": 3241,
+      "violations": 242,
+      "failures": 0,
+      "remainingDebt": 242,
+      "clearedDebt": 1537
+    }
+  },
+  "currentReport": {
+    "path": "docs/refactor/generated/architecture-checkpoint-e0dd0306-report.json",
+    "sha256": "ca183ea980e652bb582a26edd1e5cdd6d349db6db3cced6c2ec0574edd342585",
+    "counts": {
+      "files": 3257,
+      "violations": 240,
+      "failures": 0,
+      "remainingDebt": 240,
+      "clearedDebt": 1539
+    }
+  },
+  "newlyClearedOriginalDebtCount": 2,
+  "newlyClearedOriginalDebt": [
+    {
+      "id": "2b669b66186a0090cc79b0ce9fa3fd238fcd4915f0041931847ab8f16e145376",
+      "rule": "comment.missing-head",
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_poison.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "Missing behavior responsibility contract before first business statement."
+    },
+    {
+      "id": "fbe1194e6f57156d87edad373076b8f1371553d793bc34df492f4fe631327039",
+      "rule": "dependency.engine-feature",
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "line": 120,
+      "column": 1,
+      "detail": "Engine timing imports concrete feature rather than an extension contract.",
+      "specifier": "../mechanisms/roles/fragrant_pair_seer/authority",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:installFragrantPairAuthority\"]}",
+      "target": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts"
+    }
+  ],
+  "returnedOriginalDebtCount": 0,
+  "returnedOriginalDebt": [],
+  "newFailureCount": 0,
+  "previousFailuresRemain": [],
+  "scope": "固定e0dd0306相对固定2da71936原债分区；旧报告/分区与原1779全字节不改，不表示玩法或注释内容正确性。"
+}

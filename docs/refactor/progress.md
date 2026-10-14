@@ -871,3 +871,5 @@
 - C37 玩家检查点格式完整 owner：三源将原 affiliations transform、14 个字段及 Lovers／Wall refine 实际归 player-format；原 reproduction 持续具名 type 出口，两个原 schema 引用在原声明点传入，16 个独立 verifier 顺序不改。中文说明明确 optional 组件、正常 JSON 扩展与 live 权限的区别、capture 后 build 才拒绝的边界。Root 与非作者核实际全文和接线；新三案例 21 断言加原精准 4 断言首绿，有限三根只有新单元纯类型诊断且仅失败根修后通过，职责头无诊断。首证明计数错误为零保留原收据，仅工具修计数；不重复玩法或已绿门禁、不称完整 55 codec／P9 验收，见 player-checkpoint-format-owner.md。
 
 - 两首夜请求夹具输入独立修正：仅野孩子／孤独少女此前两个失败标题传同一 bootstrap.boardConfig；Wild helper 类型只收实际 World／事件／板子，原动作与 159 个 expect 表达式全文保留，其它 raw 输入不改。Root 与非作者核五处精确全文正逆及四生产控制，实际 JS 输入变化明列；唯一 failed-title run 两案例九断言通过，有限两根类型及两中文头一次无诊断。没有新增测试或复跑已绿案例，原 C18 两红与 before-overlay 收据仍保；见 setup-request-fixture-board.md。
+
+- 固定 e0dd0306 阶段结构检查：后台唯一 gate 实际退出 0；3,257 原 Git blob／665 同 Git 文档，0 新增、240 原债剩余、1,539 已清。相对固定 2da71936 清两原 ID（猎魔人毒请求职责头、PhaseManager 对寻香 authority 直接依赖），无返回；原 1,779 ID／SHA、无映射渐进政策不改。纯输入／分区各一次核对通过，Root 与独立审查核完整 blob、来源、分区及原收据，不复门禁。后继 F02／F03／ACP 中文工作树排除；不是全类型／行为、全部有效中文或 P9 严格零债，见 architecture-checkpoint-e0dd0306.md。
