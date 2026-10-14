@@ -1,0 +1,84 @@
+{
+  "baseCommit": "4e0d25c88e4aa70a0f942b8361d43986ebed8893",
+  "source": [
+    {
+      "path": "backend/src/rulesets/board-parameters.ts",
+      "sha256": "a7ef285ce0fb618adc97f4d2f4b1434fef4aa2cffd4fed971b53a5c894dfb7b6",
+      "change": "comments-only"
+    },
+    {
+      "path": "backend/src/recording/engine-fingerprint.ts",
+      "sha256": "7b6f145f6386172ba6ae5ea85ab79759a5a27d5c9398643db8f06b7404194933",
+      "change": "comments-only"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/tests/unit/rulesets/board-parameters.test.ts",
+      "sha256": "5de6dff6107153836aba5d5aae967731eb0b0cca1cd112ee41fa97d441d0e062"
+    },
+    {
+      "path": "backend/tests/architecture/engine-fingerprint.test.ts",
+      "sha256": "627feed1055bd69d6a329cc0b45ff7f3f2997a82556c37b05c8f5d3d6ee09243"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/parameters-fingerprint-chinese-contracts.md",
+    "sha256": "e2f1cf94bd69b1ba908cff84490d2a3acd8e1a53f16ad460fb58dea5be48f3bb"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-before.json",
+      "sha256": "a478ffa173ef024e621b0df40d836b01329985a0ef369c4f22b07fc02817f3b3"
+    },
+    {
+      "path": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-edits.json",
+      "sha256": "795fff4f805a2ec19ccde9835b2801102bba6f5931b86963c144a515abf6388a"
+    },
+    {
+      "path": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-heads-output.txt",
+      "sha256": "e8f168ec4ffcba9ceb44cd821dd5fda031e8f719c9c9c50d95d37feaf15e4eaf"
+    },
+    {
+      "path": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-heads.json",
+      "sha256": "f43eaa593e4f58da11d28adc5acdf4e4660564130a213ffc37508af2ada4864c"
+    },
+    {
+      "path": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-heads.ts",
+      "sha256": "775aeaa4eb5c4945b88f829d8c970f13b62d05cf66ab2f7a1aa44d84273ec9ca"
+    },
+    {
+      "path": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-peer-comment-before.json",
+      "sha256": "fd21eef2c58f59519d4d58f3526985153febb480789686aa1c89c707a99a7597"
+    },
+    {
+      "path": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-peer-comment-bridge-output.txt",
+      "sha256": "26889ad6f04b544b61f6143d5b91d5e17a05ed748cc06bd90ea24dd645520411"
+    },
+    {
+      "path": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-peer-comment-bridge.cjs",
+      "sha256": "ce114a4452c0baf1fe475c38c4c2368f19280449ff863b4686a9a57e705d5bc5"
+    },
+    {
+      "path": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-peer-comment-bridge.json",
+      "sha256": "9a619ea63b7d0c102d82f1c697d43abc99f37fa8205c5f973caf3d9ad1935ebc"
+    },
+    {
+      "path": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-proof-output.txt",
+      "sha256": "3c6fff65af4a2a3559bac72a704540bc6dca7b25202c74ba01e94b6c6af45252"
+    },
+    {
+      "path": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-proof.cjs",
+      "sha256": "d450a26ce45cad90e555d250a0a40bd5666702efa36abb7719c0bf6c57fd150c"
+    },
+    {
+      "path": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-proof.json",
+      "sha256": "869e2f532d058f000353b1729b3daf2d5d18108c41728dee9bc9b5b01b488c36"
+    },
+    {
+      "path": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-receipts.json",
+      "sha256": "d820f6041afdeb32b7af86b1c9bf6e5adf3cabae3b3e804cf1721a91c8e25462"
+    }
+  ]
+}

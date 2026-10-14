@@ -1,12 +1,9 @@
 /**
- * Responsibility: identify all maintained engine, runtime, agent, recording and
- * shared-package source bytes used by a native reproduction build.
- * Input: explicit repository root; output: ordered public paths and source/lock
- * SHA-256. This filesystem adapter owns no World, rules or compatibility policy.
- * Paths, comments, dictionaries, inert schemas and package/primary compiler
- * manifests participate in exact identity.
- * Local configuration/auth, dependencies, generated records and tests are outside
- * this source scope; dependency versions are represented by the unchanged lock.
+ * 负责识别原生复现构建所用的自维护引擎、运行时、Agent、录制及共享包源码字节。
+ * 输入为显式仓库根目录；输出为有序公开路径及源码／锁文件 SHA-256。文件系统适配
+ * 不拥有 World、规则或历史兼容政策。路径、注释、词典、未执行 schema、包配置和根／
+ * 应用／共享包的 tsconfig 清单均参与精确身份；前端源码与测试不在本源码范围。
+ * 本地配置／认证、依赖目录和生成记录不参与枚举，依赖版本由独立锁文件指纹表示。
  */
 import { createHash } from "node:crypto";
 import { readdir, readFile, lstat } from "node:fs/promises";
@@ -15,10 +12,11 @@ import path from "node:path";
 export const ENGINE_FINGERPRINT_POLICY = "awa-all-runtime-and-shared-source-v2" as const;
 const privateDirectories = new Set(["node_modules", ".git", ".codex", ".agents", ".aws"]);
 
-/** Enumerate source membership deterministically without following source symlinks. */
+/** 按确定顺序枚举实际源码成员；在已解析根目录下逐段检查路径与遍历子项，拒绝源码路径链接。 */
 export async function engineFingerprintInputs(repositoryRoot: string): Promise<string[]> {
   const root = path.resolve(repositoryRoot),
     files: string[] = [];
+  // 从已解析根目录开始检查相对路径各段；不读取源码路径中软链接指向的内容。
   const rejectSymlinkAncestors = async (relative: string) => {
     let current = root;
     for (const segment of relative.split("/")) {
@@ -39,6 +37,7 @@ export async function engineFingerprintInputs(repositoryRoot: string): Promise<s
       if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
     }
   }
+  // 只读取各所有者目录当层的 tsconfig 清单；缺文件允许跳过，其它 I/O 或链接错误原样传播。
   const compilerManifests = async (owner: string) => {
     try {
       if (owner) await rejectSymlinkAncestors(owner);
@@ -53,6 +52,7 @@ export async function engineFingerprintInputs(repositoryRoot: string): Promise<s
     }
   };
   for (const owner of ["", "backend", "frontend"]) await compilerManifests(owner);
+  // 递归只接受源码扩展名；私有目录、环境文件和认证文件在加入路径集合前排除。
   const walk = async (relative: string): Promise<void> => {
     await rejectSymlinkAncestors(relative);
     for (const entry of (await readdir(path.join(root, relative), { withFileTypes: true })).sort(
@@ -70,6 +70,7 @@ export async function engineFingerprintInputs(repositoryRoot: string): Promise<s
       else if (entry.isFile() && /\.(?:[cm]?[jt]sx?|json)$/.test(entry.name)) files.push(name);
     }
   };
+  // 后端全部 src 与每个共享包 src 参与身份，不按是否被某次对局导入缩小集合。
   await walk("backend/src");
   await rejectSymlinkAncestors("packages");
   for (const entry of (await readdir(path.join(root, "packages"), { withFileTypes: true })).sort(
@@ -95,9 +96,11 @@ export async function engineFingerprintInputs(repositoryRoot: string): Promise<s
     }
     await walk(source);
   }
+  // 最终去重并用固定字符比较排序，避免目录枚举顺序改变同一构建的指纹。
   return [...new Set(files)].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
 }
 
+/** 先拒绝锁文件链接，再按路径／原始字节的零字符分隔串计算源码身份；锁身份单独计算。 */
 export async function fingerprintEngine(
   repositoryRoot: string,
 ): Promise<{ sourceHash: string; lockHash: string }> {
@@ -105,6 +108,7 @@ export async function fingerprintEngine(
     hash = createHash("sha256");
   if ((await lstat(path.join(root, "bun.lock"))).isSymbolicLink())
     throw Error("engine_source_symlink_rejected");
+  // 不规范化换行或注释；纯目录迁移、中文注释和词典改动也产生新 sourceHash。
   for (const name of await engineFingerprintInputs(root))
     hash
       .update(name)

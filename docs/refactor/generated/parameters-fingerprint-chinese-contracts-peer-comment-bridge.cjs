@@ -1,0 +1,10 @@
+/** 只核同行指出的一条范围注释；整源非注释树及输出承接首证明，不重复已绿检查。 */
+const fs=require('node:fs'),ts=require('../../../backend/node_modules/typescript'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const pre='docs/refactor/generated/parameters-fingerprint-chinese-contracts-',b=JSON.parse(fs.readFileSync(pre+'peer-comment-before.json','utf8'));
+const current=fs.readFileSync(b.path,'utf8'),sha=t=>crypto.createHash('sha256').update(t).digest('hex');
+assert.equal(sha(b.text),b.sha256);assert.equal(b.text.split(b.beforeComment).length-1,1);assert.equal(current,b.text.replace(b.beforeComment,b.afterComment));
+function shape(text){const s=ts.createSourceFile('fingerprint.ts',text,ts.ScriptTarget.Latest,true);assert.deepEqual(s.parseDiagnostics,[]);let count=0;function visit(n){if(n.kind>=ts.SyntaxKind.FirstJSDocNode&&n.kind<=ts.SyntaxKind.LastJSDocNode)return null;const c=n.getChildren(s).filter(x=>x.kind<ts.SyntaxKind.FirstJSDocNode||x.kind>ts.SyntaxKind.LastJSDocNode);if(!c.length){count++;return[n.kind,n.getText(s)];}return[n.kind,c.map(visit)];}return{tree:visit(s),leaves:count};}
+const a=shape(b.text),z=shape(current);assert.deepEqual(z,a);assert.equal(current.slice(0,current.indexOf('*/')+2),b.text.slice(0,b.text.indexOf('*/')+2));
+const emits=[ts.ModuleKind.ESNext,ts.ModuleKind.CommonJS].map(module=>{const emit=t=>ts.transpileModule(t,{compilerOptions:{target:ts.ScriptTarget.ES2022,module,removeComments:true}}).outputText;const x=emit(b.text);assert.equal(emit(current),x);return{module:ts.ModuleKind[module],sha256:sha(x),same:true};});
+for(const r of b.firstProofSource){if(r.path===b.path)assert.equal(r.sha256,b.sha256);else assert.equal(sha(fs.readFileSync(r.path)),r.sha256);}
+const report={path:b.path,beforeSHA256:b.sha256,sha256:sha(current),exactSingleComment:true,headSame:true,noncommentLeaves:z.leaves,wholeTreeSame:true,outputs:emits,otherSourceSame:true};fs.writeFileSync(pre+'peer-comment-bridge.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

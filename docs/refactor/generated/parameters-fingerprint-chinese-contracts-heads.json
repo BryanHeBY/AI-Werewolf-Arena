@@ -1,0 +1,15 @@
+{
+  "source": [
+    {
+      "path": "backend/src/rulesets/board-parameters.ts",
+      "sha256": "a7ef285ce0fb618adc97f4d2f4b1434fef4aa2cffd4fed971b53a5c894dfb7b6"
+    },
+    {
+      "path": "backend/src/recording/engine-fingerprint.ts",
+      "sha256": "c112568d23f32523a4a4e23a64acafda7529c590069412929137b86c1a510ea1"
+    }
+  ],
+  "documentationPaths": 645,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

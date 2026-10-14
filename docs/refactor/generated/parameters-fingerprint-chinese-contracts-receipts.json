@@ -1,0 +1,41 @@
+{
+  "failedToolRun": {
+    "command": "node docs/refactor/generated/parameters-fingerprint-chinese-contracts-proof.cjs",
+    "terminalChunk": "9f8c3b",
+    "exitCode": 1,
+    "error": "spawnSync git EPERM; status:0 with stdout exists, not accepted as success",
+    "productionChecksFailed": false
+  },
+  "proof": {
+    "command": "bun --no-env-file docs/refactor/generated/parameters-fingerprint-chinese-contracts-proof.cjs",
+    "terminalChunk": "b2a50f",
+    "exitCode": 0,
+    "executions": 1,
+    "output": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-proof-output.txt"
+  },
+  "heads": {
+    "terminalChunk": "cd30d1",
+    "exitCode": 0,
+    "executions": 1,
+    "roots": 2,
+    "documentationPaths": 645,
+    "diagnostics": 0,
+    "output": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-heads-output.txt"
+  },
+  "notRun": [
+    "types",
+    "behavior tests",
+    "models",
+    "full architecture gates"
+  ],
+  "finalCommentBridge": {
+    "terminalChunk": "e3c1f5",
+    "exitCode": 0,
+    "executions": 1,
+    "comments": 1,
+    "noncommentLeaves": 979,
+    "rawOutputs": 2,
+    "headSame": true,
+    "output": "docs/refactor/generated/parameters-fingerprint-chinese-contracts-peer-comment-bridge-output.txt"
+  }
+}

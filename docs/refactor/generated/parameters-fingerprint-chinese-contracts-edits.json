@@ -1,0 +1,126 @@
+{
+  "backend/src/rulesets/board-parameters.ts": [
+    {
+      "before": "/**\n * Owns the one immutable board-parameter binding for each original World identity.\n * Inputs are complete own-data board configurations; outputs are a deeply readonly\n * execution view and detached serialization DTOs, or explicit data/revision failures.\n * Node Proxy checks precede reflection; no accessor, iterator or inherited field is\n * evaluated. Checked clones alone freeze, never callers, World, actors or handlers.\n * Equal complete inputs reuse the bound owner; a World has no parameter replacement\n * or reset command. Binding reads no World methods, clock or RNG and grants no action.\n * Safe dispatch structures retain legacy family refusals before complete shape validation.\n */",
+      "after": "/**\n * 负责按原 World 对象绑定唯一不可变板子参数。输入为完整自有数据配置；输出为深只读\n * 执行视图、独立归档 DTO 或明确的数据／修订错误。Node Proxy 检测先于反射；不执行\n * accessor、迭代器或继承字段。只冻结校验后副本，不冻结调用方对象、World 或处理器。\n * 相等完整输入复用原所有者；同一 World 不支持参数替换或重置。绑定不读 World 方法、\n * 时钟或 RNG，也不授予行动权限；安全结构预检保留原板子拒绝优先级，再做完整 schema 校验。\n */",
+      "count": 1
+    },
+    {
+      "before": "const owners = new WeakMap<object, BoardParameters>();",
+      "after": "// 权威按 World 原对象身份保存；工厂实例与私有构造凭据分别防止外部伪造已编译参数。\nconst owners = new WeakMap<object, BoardParameters>();",
+      "count": 1
+    },
+    {
+      "before": "/** Validate descriptors first; structuredClone only receives already proven own data. */",
+      "after": "/** 先验证自有描述符；只有已证明的纯数据才传给 structuredClone，拒绝路径不触发 getter。 */",
+      "count": 1
+    },
+    {
+      "before": "  const array = Array.isArray(value),",
+      "after": "  // 数组必须是稠密标准数组；普通对象仅接受标准或 null 原型，symbol／accessor 不进入后续克隆。\n  const array = Array.isArray(value),",
+      "count": 1
+    },
+    {
+      "before": "  ancestors.add(value);",
+      "after": "  // 只记录当前递归祖先：拒绝环，允许不同路径共享同一数据对象；finally 保持分支隔离。\n  ancestors.add(value);",
+      "count": 1
+    },
+    {
+      "before": "function freezeData(value: unknown): void {",
+      "after": "/** 递归冻结已复制并解析的数据；不把外部输入引用变成只读。 */\nfunction freezeData(value: unknown): void {",
+      "count": 1
+    },
+    {
+      "before": "function equalData(left: unknown, right: unknown): boolean {",
+      "after": "/** 比较完整数据值而非字段插入顺序；两侧均已校验，不读取可替换上下文别名。 */\nfunction equalData(left: unknown, right: unknown): boolean {",
+      "count": 1
+    },
+    {
+      "before": "/** The only mutable DTO view returned here is detached archival data, not runtime rules. */",
+      "after": "/** 唯一参数所有者持有深冻结配置；encode 返回可修改的独立归档副本，不修改运行规则。 */",
+      "count": 1
+    },
+    {
+      "before": "    // This qualifies only the two structures dereferenced by the legacy dispatch.\n    // It is not a normalized-board verdict or a runtime permission.",
+      "after": "    // 这里只预检原板子分派会解引用的两份结构；不代表完整规范化通过，也不是运行时许可。",
+      "count": 1
+    },
+    {
+      "before": "    // Read-only partial qualification preserves original family refusal priority;\n    // only the subsequent strict schema result can create an owned instance.",
+      "after": "    // 先保留原板子拒绝的错误优先级；后续严格 schema 成功才允许创建参数所有者。",
+      "count": 1
+    },
+    {
+      "before": "  get board(): ReadonlyBoardConfig {",
+      "after": "  /** 返回所有者的同一只读引用，供运行期按身份核验。 */\n  get board(): ReadonlyBoardConfig {",
+      "count": 1
+    },
+    {
+      "before": "  encode(): BoardConfig {",
+      "after": "  /** 每次产生独立副本；归档数据不能反向替换 World 已绑定的执行参数。 */\n  encode(): BoardConfig {",
+      "count": 1
+    },
+    {
+      "before": "/** Publish once; equal data reuses the original owner without granting a recompile command. */",
+      "after": "/** 只发布一次；同值新输入仍先校验／编译再复用旧所有者，异值修订按原错误拒绝。 */",
+      "count": 1
+    },
+    {
+      "before": "  if (previous && input === previous.board) return previous;",
+      "after": "  // 唯有已绑定视图的同一引用直接返回；其它候选失败不改变旧绑定，首次编译成功后才写入。\n  if (previous && input === previous.board) return previous;",
+      "count": 1
+    },
+    {
+      "before": "/** Authoritative lookup never trusts replaceable context aliases or compiles a new source. */",
+      "after": "/** 只查原 World 身份的权威绑定；缺失即失败，不信任可替换上下文，也不临时编译新来源。 */",
+      "count": 1
+    }
+  ],
+  "backend/src/recording/engine-fingerprint.ts": [
+    {
+      "before": "/**\n * Responsibility: identify all maintained engine, runtime, agent, recording and\n * shared-package source bytes used by a native reproduction build.\n * Input: explicit repository root; output: ordered public paths and source/lock\n * SHA-256. This filesystem adapter owns no World, rules or compatibility policy.\n * Paths, comments, dictionaries, inert schemas and package/primary compiler\n * manifests participate in exact identity.\n * Local configuration/auth, dependencies, generated records and tests are outside\n * this source scope; dependency versions are represented by the unchanged lock.\n */",
+      "after": "/**\n * 负责识别原生复现构建所用的自维护引擎、运行时、Agent、录制及共享包源码字节。\n * 输入为显式仓库根目录；输出为有序公开路径及源码／锁文件 SHA-256。文件系统适配\n * 不拥有 World、规则或历史兼容政策。路径、注释、词典、未执行 schema、包配置和根／\n * 应用／共享包的 tsconfig 清单均参与精确身份；前端源码与测试不在本源码范围。\n * 本地配置／认证、依赖目录和生成记录不参与枚举，依赖版本由独立锁文件指纹表示。\n */",
+      "count": 1
+    },
+    {
+      "before": "/** Enumerate source membership deterministically without following source symlinks. */",
+      "after": "/** 按确定顺序枚举实际源码成员；每个路径的祖先与子项拒绝软链接，避免读取链接目标。 */",
+      "count": 1
+    },
+    {
+      "before": "  const rejectSymlinkAncestors = async (relative: string) => {",
+      "after": "  // 从已解析根目录开始检查相对路径各段；不读取源码路径中软链接指向的内容。\n  const rejectSymlinkAncestors = async (relative: string) => {",
+      "count": 1
+    },
+    {
+      "before": "  const compilerManifests = async (owner: string) => {",
+      "after": "  // 只读取各所有者目录当层的 tsconfig 清单；缺文件允许跳过，其它 I/O 或链接错误原样传播。\n  const compilerManifests = async (owner: string) => {",
+      "count": 1
+    },
+    {
+      "before": "  const walk = async (relative: string): Promise<void> => {",
+      "after": "  // 递归只接受源码扩展名；私有目录、环境文件和认证文件在加入路径集合前排除。\n  const walk = async (relative: string): Promise<void> => {",
+      "count": 1
+    },
+    {
+      "before": "  await walk(\"backend/src\");",
+      "after": "  // 后端全部 src 与每个共享包 src 参与身份，不按是否被某次对局导入缩小集合。\n  await walk(\"backend/src\");",
+      "count": 1
+    },
+    {
+      "before": "  return [...new Set(files)].sort",
+      "after": "  // 最终去重并用固定字符比较排序，避免目录枚举顺序改变同一构建的指纹。\n  return [...new Set(files)].sort",
+      "count": 1
+    },
+    {
+      "before": "export async function fingerprintEngine(",
+      "after": "/** 先拒绝锁文件链接，再按路径／原始字节的零字符分隔串计算源码身份；锁身份单独计算。 */\nexport async function fingerprintEngine(",
+      "count": 1
+    },
+    {
+      "before": "  for (const name of await engineFingerprintInputs(root))",
+      "after": "  // 不规范化换行或注释；纯目录迁移、中文注释和词典改动也产生新 sourceHash。\n  for (const name of await engineFingerprintInputs(root))",
+      "count": 1
+    }
+  ]
+}

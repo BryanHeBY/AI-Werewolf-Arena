@@ -843,3 +843,5 @@
 
 
 - 固定2da71936阶段结构检查：3241实际publicGit原blob/mode/SHA/UTF8/order和642同Gitdocs，完整80,482,708 bytes输入SHA62c8e847/sourceDigestdedcd4，六fixed-current工具和原1779债务SHA297b保；唯一dd1927/session36054→ac870b实际0，0new/242原余债/1537原ID已清，相对固定cdbe清8返0。pureInput66579→43437e／purePartition549156一次各0，Root和非作者完整fixedGit／rawinput／互斥全集／十附件／八实际提交和唯一终态批准，不重门禁/类型/业务。固定树不含后继9a夹具和a3dfa开局贡献，历史623红及其它fixed绿各保；progressive不是strict零债、有效全中文或全55/51/P9验收。剩余原债与完整目标继续，见 architecture-checkpoint-2da71936.md。
+
+- C45 板子参数／复现指纹中文契约：仅两源24注释，原World唯一深只读绑定、Proxy先反射／克隆副本／原拒绝优先、同值输入先编译与独立DTO、源路径与原字节hash及lock独立身份就地说明；不修改源码算法／错误／历史政策。Root及非作者完整actual4e0d两Git／两个测试字节控制／13附件和重要结构失败边界批准。首Node Git读器9f8c3b EPERM真红不接受status0附输出，Bun同program b2a50f真实0（1722typed2119leaf四raw），两个head cd30d1/645MD首0。同行指出根目录未核及package src先readdir探测范围，末唯一JSDoc准确限定根下，MD说明原探测顺序，单桥e3c1f5完整979叶两raw首head/另一源保；未重绿／types／业务／models／fullgates。两源有效中文与原档案身份保，全55状态/codec、全仓中文和完整P9继续，见 parameters-fingerprint-chinese-contracts.md。
