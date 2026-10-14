@@ -1,0 +1,103 @@
+{
+  "newRisk": {
+    "command": "bun --no-env-file test backend/tests/unit/rulesets/dawn-knowledge-publication.test.ts",
+    "chunk": "729d62",
+    "exitCode": 0,
+    "log": "docs/refactor/generated/dawn-knowledge-publication-new-tests.log",
+    "pass": 3,
+    "fail": 0,
+    "assertions": 26
+  },
+  "originalPrecise": {
+    "command": "bun --no-env-file test backend/tests/scenarios/features/bear/native-night-announcement.test.ts -t 'real night last wolf death keeps'",
+    "chunk": "e97c1f",
+    "exitCode": 0,
+    "log": "docs/refactor/generated/dawn-knowledge-publication-original-test.log",
+    "pass": 1,
+    "fail": 0,
+    "assertions": 4,
+    "filtered": 13
+  },
+  "typesFirst": {
+    "launchChunk": "5f8903",
+    "sessionId": 59238,
+    "terminalChunk": "e9bbed",
+    "exitCode": 2,
+    "roots": 5,
+    "config": "docs/refactor/generated/dawn-knowledge-publication-types-config.json",
+    "log": "docs/refactor/generated/dawn-knowledge-publication-types.log",
+    "onlyFailedSource": "backend/tests/unit/rulesets/dawn-knowledge-publication.test.ts",
+    "diagnostics": 1,
+    "reason": "newunit GameEvent 联合数组未收窄第2元素 audience，TS2339；四生产 roots 无诊断。"
+  },
+  "typesFailedOnly": {
+    "launchChunk": "2fdb49",
+    "sessionId": 84191,
+    "terminalChunk": "47a14b",
+    "exitCode": 0,
+    "roots": 1,
+    "config": "docs/refactor/generated/dawn-knowledge-publication-types-failed-config.json",
+    "log": "docs/refactor/generated/dawn-knowledge-publication-types-failed.log",
+    "typeOnlyDelta": "docs/refactor/generated/dawn-knowledge-publication-test-typefix-before.json",
+    "sameFullRuntimeOutputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "sha256": "d2d3ab56cc25486510dcdc9139dd66603ad1a7600911d428a11703a00f49d9c6"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "sha256": "0f467c8bf2bad80443a9e064c9cf71cd1b17d92df4552d1401c260a74d317237"
+      }
+    ]
+  },
+  "heads": {
+    "chunk": "28fefd",
+    "exitCode": 0,
+    "roots": 5,
+    "documentationCommit": "83822442e7d7883b65323491d8defc14937ac6b1",
+    "documentationPaths": 600,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0,
+    "log": "docs/refactor/generated/dawn-knowledge-publication-heads.log",
+    "report": "docs/refactor/generated/dawn-knowledge-publication-heads.json",
+    "sampling": "newunit 局部 type cast/中文解释之前，头与运行不变；不重原绿。"
+  },
+  "programProof": {
+    "chunk": "ad7b84",
+    "exitCode": 0,
+    "log": "docs/refactor/generated/dawn-knowledge-publication-proof.log",
+    "report": "docs/refactor/generated/dawn-knowledge-publication-proof.json",
+    "summary": {
+      "wholeOriginalPrograms": 3,
+      "completeOwnerPrograms": 2,
+      "typedNodes": 5242,
+      "noncommentLeaves": 6566,
+      "wholeMappedOutputs": 10,
+      "rawSame": 10,
+      "testTypeOnlyOutputs": 2
+    }
+  },
+  "scopedTrackedDiff": {
+    "chunk": "1ad7c6",
+    "exitCode": 0,
+    "paths": [
+      "backend/src/game/engine/phase_manager.ts",
+      "backend/src/game/mechanisms/roles/bear/ports.ts",
+      "backend/src/game/mechanisms/roles/animal_dream/ports.ts"
+    ]
+  },
+  "summary": {
+    "successfulDistinctCases": 4,
+    "successfulDistinctAssertions": 30,
+    "runtimeExecutions": 2,
+    "newDistinctCases": 3,
+    "newAssertions": 26,
+    "oldDistinctCases": 1,
+    "oldAssertions": 4,
+    "typePolicy": "first5 唯一newunit红→onlyfailed1真实terminal0；不复查四无诊断源或重复原绿运行",
+    "fullGateOrModels": false
+  },
+  "baselineCorrection": "实际 before 83822442 是 Guard3 功能提交，不是 Bear2；此前 readiness 消息对归属推断错误已纠正，真实捕获SHA/source未改。Root Bear profile/state中文WIP明确排除所有whole-byte controls。"
+}

@@ -1,0 +1,2 @@
+backend/tests/unit/rulesets/dawn-knowledge-publication.test.ts(28,21): error TS2339: Property 'audience' does not exist on type 'GameEvent'.
+  Property 'audience' does not exist on type 'EventBase<"game_over", GameResult>'.

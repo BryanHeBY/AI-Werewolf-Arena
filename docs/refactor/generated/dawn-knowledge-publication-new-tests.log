@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/rulesets/dawn-knowledge-publication.test.ts:
+(pass) null frame skips publish parameters but still scans only new Animal events before Beauty notice [4.41ms]
+(pass) capture reads World before policy and dawn publication precedes knowledge and private notice [151.84ms]
+(pass) publication or knowledge failure keeps its original prefix and prevents later notices [8.07ms]
+
+ 3 pass
+ 0 fail
+ 26 expect() calls
+Ran 3 tests across 1 file. [244.00ms]

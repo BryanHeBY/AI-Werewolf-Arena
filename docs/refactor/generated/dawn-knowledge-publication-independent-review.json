@@ -1,0 +1,192 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_presentation_finish",
+  "baseCommit": "83822442e7d7883b65323491d8defc14937ac6b1",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "ff4ffa8d0c010bb16f43a092c54467847b0a289f113a645929e98ff4e007a410",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+      "sha256": "fea79c2158ecdd51fcc5cdebec78e6233185e081583d02e38cc8f08f4669a4dd",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+      "sha256": "aabaa479da4223e0f5f2a62a9f1197b8d42470cdf064f332f29b1ca7731f326c",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/dawn-knowledge-publication.ts",
+      "sha256": "63666bb96e72cd15de4904a457b0f092a61e2f81a54fdbf0e72bd8c1c477a889",
+      "change": "added"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/dawn-knowledge-publication.test.ts",
+      "sha256": "1eae4968855a5bb1bb059e65ff4d83c820548f80731ae853e06cf83a2abbb3bb",
+      "change": "added"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/dawn-knowledge-publication-scope-final.json",
+    "sha256": "16ed1f398708f19e190cb51fb2a2c1e85e4d5261396ef7c40a5605adf4837ca6"
+  },
+  "document": {
+    "path": "docs/refactor/dawn-knowledge-publication.md",
+    "sha256": "e5ef7983b1acb9728868e9dd084551f6ca2c793d7fbe0d09e103c20875db8a58"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/dawn-knowledge-publication-evidence.json",
+    "sha256": "2c6a55df0060e3ee04a224ccdc9423bc552322861e4a59b38714b5f85e977028"
+  },
+  "independentChecks": {
+    "freshSource": 5,
+    "actualGitWholeSource": [
+      {
+        "path": "backend/src/game/engine/phase_manager.ts",
+        "beforeSHA256": "9518cc59ce3b9a0f6b451a01da5234c9dc19a2ec2d6ecf575db52288c521d514",
+        "wholeExactForwardAndInverse": true,
+        "edits": 5
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+        "beforeSHA256": "94c9eaa830ed02f617025e83c54c9fdb63b3cfcbaa13b746974fa2cffaadbded",
+        "wholeExactForwardAndInverse": true,
+        "edits": 2
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+        "beforeSHA256": "e28edaf67313754824fd9710887aa1d3433de3d87a95f131e2ff653bdbf35c8e",
+        "wholeExactForwardAndInverse": true,
+        "edits": 2
+      }
+    ],
+    "wholeExactEditFragments": 9,
+    "stableActualGitAndCurrentControls": 5,
+    "artifactSHA256": 18,
+    "drift": 0,
+    "newOwnerCaptureAndPublicationEntireBodiesMappedToOriginalStatements": true,
+    "unitOnlyTypeAndCommentWholeForward": true
+  },
+  "manualReview": [
+    "新具名组合拥有完整夜前capture与黎明publish两步骤；PM仍setup完成→Demon roster→capture→NP await，原settleNight DR/finish/finally/current/animalSkip之后→publish→判胜。无新增await、current查询、状态账本或清理策略。",
+    "capture使用原BearNightFrame同class/static callee，World与signalPolicy在表达式点延迟读取，保undefined catalog默认在原capture内部求值；返回同nullable frame。Bear ports直class binding，不包装或复制。",
+    "publish首先events.length，nullable frame可选调用保receiver：null仅跳过其World/events参数，不跳过随后animalDream读取。truthy Animal仍现场World/events→note，再World/events→Beauty，无frame成功守卫。",
+    "note原journal/events.slice(fromIndex)/day去重知识写保持；Beauty原originalRole/原life/state查询后通知，facts仍唯一知识owner。frame原采样/生命/两policy/history/发布lease全部未迁。普通history.push先于events.push，dawn descriptor事件→history→published/finally撤销保持。",
+    "frame publish或note异常直接传播且停止后项，已发表熊事实/历史/知识前缀不回滚；Beauty异常也停止判胜。runtime thunks/readonly类型和公开frame都是运行引用，不是JSON/行动或发布许可。",
+    "三public exports物理同class/函数；新owner只三个type imports和两个实际feature公开运行入口，不反导PM。公共输入API/模块路线/namespace限制明列，保守图不是完整cold执行图。",
+    "三新literal预期核null短路、World→policy、真实dawn/知识次序、push/slice失败；原lastwolf标题/动作/oracle全保。unit仅局部Extract事件type与一中文说明修型，不改变任何runtime输入/读点/断言。中文head和关键数据/失败说明准确。"
+  ],
+  "findings": [],
+  "authorEvidenceAttribution": {
+    "programProof": {
+      "chunk": "ad7b84",
+      "exitCode": 0,
+      "log": "docs/refactor/generated/dawn-knowledge-publication-proof.log",
+      "report": "docs/refactor/generated/dawn-knowledge-publication-proof.json",
+      "summary": {
+        "wholeOriginalPrograms": 3,
+        "completeOwnerPrograms": 2,
+        "typedNodes": 5242,
+        "noncommentLeaves": 6566,
+        "wholeMappedOutputs": 10,
+        "rawSame": 10,
+        "testTypeOnlyOutputs": 2
+      }
+    },
+    "runtime": {
+      "successfulDistinctCases": 4,
+      "successfulDistinctAssertions": 30,
+      "runtimeExecutions": 2,
+      "newDistinctCases": 3,
+      "newAssertions": 26,
+      "oldDistinctCases": 1,
+      "oldAssertions": 4,
+      "typePolicy": "first5 唯一newunit红→onlyfailed1真实terminal0；不复查四无诊断源或重复原绿运行",
+      "fullGateOrModels": false
+    },
+    "newRisk": {
+      "command": "bun --no-env-file test backend/tests/unit/rulesets/dawn-knowledge-publication.test.ts",
+      "chunk": "729d62",
+      "exitCode": 0,
+      "log": "docs/refactor/generated/dawn-knowledge-publication-new-tests.log",
+      "pass": 3,
+      "fail": 0,
+      "assertions": 26
+    },
+    "originalPrecise": {
+      "command": "bun --no-env-file test backend/tests/scenarios/features/bear/native-night-announcement.test.ts -t 'real night last wolf death keeps'",
+      "chunk": "e97c1f",
+      "exitCode": 0,
+      "log": "docs/refactor/generated/dawn-knowledge-publication-original-test.log",
+      "pass": 1,
+      "fail": 0,
+      "assertions": 4,
+      "filtered": 13
+    },
+    "typesFirst": {
+      "launchChunk": "5f8903",
+      "sessionId": 59238,
+      "terminalChunk": "e9bbed",
+      "exitCode": 2,
+      "roots": 5,
+      "config": "docs/refactor/generated/dawn-knowledge-publication-types-config.json",
+      "log": "docs/refactor/generated/dawn-knowledge-publication-types.log",
+      "onlyFailedSource": "backend/tests/unit/rulesets/dawn-knowledge-publication.test.ts",
+      "diagnostics": 1,
+      "reason": "newunit GameEvent 联合数组未收窄第2元素 audience，TS2339；四生产 roots 无诊断。"
+    },
+    "typesFailedOnly": {
+      "launchChunk": "2fdb49",
+      "sessionId": 84191,
+      "terminalChunk": "47a14b",
+      "exitCode": 0,
+      "roots": 1,
+      "config": "docs/refactor/generated/dawn-knowledge-publication-types-failed-config.json",
+      "log": "docs/refactor/generated/dawn-knowledge-publication-types-failed.log",
+      "typeOnlyDelta": "docs/refactor/generated/dawn-knowledge-publication-test-typefix-before.json",
+      "sameFullRuntimeOutputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "sha256": "d2d3ab56cc25486510dcdc9139dd66603ad1a7600911d428a11703a00f49d9c6"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "sha256": "0f467c8bf2bad80443a9e064c9cf71cd1b17d92df4552d1401c260a74d317237"
+        }
+      ]
+    },
+    "heads": {
+      "chunk": "28fefd",
+      "exitCode": 0,
+      "roots": 5,
+      "documentationCommit": "83822442e7d7883b65323491d8defc14937ac6b1",
+      "documentationPaths": 600,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "log": "docs/refactor/generated/dawn-knowledge-publication-heads.log",
+      "report": "docs/refactor/generated/dawn-knowledge-publication-heads.json",
+      "sampling": "newunit 局部 type cast/中文解释之前，头与运行不变；不重原绿。"
+    },
+    "graph": {
+      "root": "backend/src/rulesets/dawn-knowledge-publication.ts",
+      "backendModules": 500,
+      "relativeDeclaredValueEdges": 1641,
+      "backEdges": [],
+      "limits": "保守相对字面声明值边；外部包、importEquals、非字面入口及完整 cold 执行不计；不排除未标 type 的实际擦除 import。"
+    },
+    "baselineCorrection": "实际 before 83822442 是 Guard3 功能提交，不是 Bear2；此前 readiness 消息对归属推断错误已纠正，真实捕获SHA/source未改。Root Bear profile/state中文WIP明确排除所有whole-byte controls。"
+  },
+  "limits": [
+    "只读真实Git、源码、全文变换、作者脚本/收据；未执行作者proof/compiler/type/tests/head/gate或poll。",
+    "独立原3全文9编辑正逆与new两body各自有限字段映射实核，非恢复整个旧PM后声称newowner成立；没有新AST编译执行。",
+    "Root Bear profile/state排除whole控制，已提交注释亦不混本批；graph500/1641当前保守relative declaration边，会计入实际擦除import，不计包/importEquals/非字面或完整cold。",
+    "作者new3/26+old1/4共4不同30两run，首5type仅newunit红→failed1root0，head5/600原阶段；末type/comment2输出桥承接source而不伪重green。",
+    "未修改产品、Git、progress、矩阵或golden；本批不代表全C17/C28/P9完成。"
+  ]
+}

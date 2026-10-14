@@ -1,0 +1,28 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "ff4ffa8d0c010bb16f43a092c54467847b0a289f113a645929e98ff4e007a410"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+      "sha256": "fea79c2158ecdd51fcc5cdebec78e6233185e081583d02e38cc8f08f4669a4dd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+      "sha256": "aabaa479da4223e0f5f2a62a9f1197b8d42470cdf064f332f29b1ca7731f326c"
+    },
+    {
+      "path": "backend/src/rulesets/dawn-knowledge-publication.ts",
+      "sha256": "63666bb96e72cd15de4904a457b0f092a61e2f81a54fdbf0e72bd8c1c477a889"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/dawn-knowledge-publication.test.ts",
+      "sha256": "0b5e994b202dc5ce9ac18146de3ded0bc2f9090b08239c70b94399a1eb984d21"
+    }
+  ],
+  "documentationCommit": "83822442e7d7883b65323491d8defc14937ac6b1",
+  "documentationPaths": 600,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

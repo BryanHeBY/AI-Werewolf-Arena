@@ -10,6 +10,7 @@
  * 终局候选规则只选择配置、改写狐狸候选并校验婚约／成员；原评估点、故障核对与唯一封盘写入仍归本经理。
  * 放逐名单／来源和反馈门控归具体规则组合；动物板先标死后反馈，普通板先捕获后死亡，原 await 与提交仍在这里。
  * 狼美人候选和屠边覆盖归具名组合，原两处捕获／评估点、配置首命中顺序和唯一封盘仍由本经理推进。
+ * 熊夜前采样与黎明知识发布归具名同步组合；本经理保原阶段、await／当前性和发布之后的判胜。
  */
 import { openExileUnit, exileUnitOf, type ExileUnit } from "../../core/domain/exile-unit";
 import { nightUnitOf } from "../../core/domain/night-unit";
@@ -91,7 +92,7 @@ import {
   beautyExileVictoryOverrides,
   type BeautyExileCandidate,
 } from "../../rulesets/beauty-exile-victory";
-import { BearNightFrame } from "../mechanisms/roles/bear/night_frame";
+import { captureDawnKnowledge, publishDawnKnowledge } from "../../rulesets/dawn-knowledge-publication";
 import type { AliveComponent } from "../../core/domain/components/alive";
 import {
   beginAnimalExileUnit,
@@ -102,8 +103,6 @@ import {
 } from "../mechanisms/roles/animal_dream/ports";
 import {
   appendAnimalFact,
-  appendAnimalBeautyNotice,
-  noteAnimalBearPublication,
 } from "../mechanisms/roles/animal_dream/facts";
 import { aliveLifeVersion } from "../../core/domain/components/alive";
 import { VotingRightComponent } from "../../core/domain/components/voting_right";
@@ -405,12 +404,11 @@ export class PhaseManager {
     while (!setupStep.done) setupStep = setupSequence.next(await setupStep.value);
     if (!setupStep.value) return this.getSnapshot();
     assertDemonOriginalRoster(this.world);
-    const bearFrame = BearNightFrame.capture(
-      this.world,
-      nightDay,
-      undefined,
-      this.config.bear?.signalPolicy,
-    );
+    // 夜前只捕获同一熊 frame；原 World／policy 读取保持晚读，不提前发表或授予许可。
+    const bearFrame = captureDawnKnowledge({
+      world: () => this.world,
+      signalPolicy: () => this.config.bear?.signalPolicy,
+    }, nightDay);
     const night = await this.nightPipeline.execute(this.config, actionProvider, this.state.day, {
       previousExile: this.previousExile,
       isCurrent: nightIsCurrent,
@@ -691,12 +689,12 @@ export class PhaseManager {
           kind: u.kind,
         });
       }
-      const bearStart = this.events.length;
-      bearFrame?.publish(this.world, this.events, dayIsCurrent);
-      if (this.config.animalDream) {
-        noteAnimalBearPublication(this.world, this.events, bearStart);
-        appendAnimalBeautyNotice(this.world, this.events, cycleDay);
-      }
+      // 原死亡波／清理和当前性之后，串行发表熊→Animal 知识→Beauty 通知，再进入原判胜。
+      publishDawnKnowledge(bearFrame, {
+        world: () => this.world,
+        events: () => this.events,
+        animalDream: () => this.config.animalDream,
+      }, cycleDay, dayIsCurrent);
       return this.checkAndSealResult(
         blast !== undefined
           ? this.#rulePlan.checkpoints.dayInterrupted

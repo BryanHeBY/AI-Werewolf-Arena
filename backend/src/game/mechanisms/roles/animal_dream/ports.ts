@@ -5,6 +5,7 @@
  * 白猫过滤与到期准备保留事实、原因修改和失败前缀的原顺序。
  * 本入口仅具名公开本角色的函数与具体机制，不另设状态、跳过当前性检查或合并猫与河豚的死亡规则。
  * 展示与预检新增查询仍返回原玩家知识或请求 scope 绑定，不把知识转换为提交权限。
+ * 黎明组合在熊事件发表之后按原起点推进知识，再发表狼美人通知；本入口不增加调用或恢复失败前项。
  */
 export { AnimalNightUnit } from "./night-lifecycle";
 export {
@@ -25,6 +26,6 @@ export type { AnimalDeathWaveRuntime } from "./death-wave";
 
 export { animalBeautyKnowledge } from "./facts";
 
-export { animalBearKnowledge } from "./facts";
+export { animalBearKnowledge, noteAnimalBearPublication, appendAnimalBeautyNotice } from "./facts";
 
 export { animalRequestScope } from "./requests";

@@ -1,0 +1,19 @@
+{
+  "extends": "../../../backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "../../..",
+    "typeRoots": [
+      "../../../backend/node_modules/@types",
+      "../../../backend/node_modules"
+    ]
+  },
+  "files": [
+    "../../../backend/src/game/engine/phase_manager.ts",
+    "../../../backend/src/game/mechanisms/roles/bear/ports.ts",
+    "../../../backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+    "../../../backend/src/rulesets/dawn-knowledge-publication.ts",
+    "../../../backend/tests/unit/rulesets/dawn-knowledge-publication.test.ts"
+  ],
+  "include": [],
+  "exclude": []
+}

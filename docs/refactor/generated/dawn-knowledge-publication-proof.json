@@ -1,0 +1,264 @@
+{
+  "approved": true,
+  "baseCommit": "83822442e7d7883b65323491d8defc14937ac6b1",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "ff4ffa8d0c010bb16f43a092c54467847b0a289f113a645929e98ff4e007a410"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+      "sha256": "fea79c2158ecdd51fcc5cdebec78e6233185e081583d02e38cc8f08f4669a4dd"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+      "sha256": "aabaa479da4223e0f5f2a62a9f1197b8d42470cdf064f332f29b1ca7731f326c"
+    },
+    {
+      "path": "backend/src/rulesets/dawn-knowledge-publication.ts",
+      "sha256": "63666bb96e72cd15de4904a457b0f092a61e2f81a54fdbf0e72bd8c1c477a889"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/dawn-knowledge-publication.test.ts",
+      "sha256": "1eae4968855a5bb1bb059e65ff4d83c820548f80731ae853e06cf83a2abbb3bb"
+    }
+  ],
+  "wholeOriginalPrograms": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sourceSHA256": "ff4ffa8d0c010bb16f43a092c54467847b0a289f113a645929e98ff4e007a410",
+      "exactEdits": 5,
+      "exactForwardInverse": true,
+      "typedNodes": 5094,
+      "noncommentLeaves": 6373,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA256": "63cf197e7ab943bdea17d231c24699fb3859c6134d0ac8ae87e6beb1339b4c5d",
+          "afterSHA256": "63cf197e7ab943bdea17d231c24699fb3859c6134d0ac8ae87e6beb1339b4c5d"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA256": "79be1d35adfcec5f288b20979bc4f24b1aaadef9afdc00f01521283577a5a21a",
+          "afterSHA256": "79be1d35adfcec5f288b20979bc4f24b1aaadef9afdc00f01521283577a5a21a"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+      "sourceSHA256": "fea79c2158ecdd51fcc5cdebec78e6233185e081583d02e38cc8f08f4669a4dd",
+      "exactEdits": 2,
+      "exactForwardInverse": true,
+      "typedNodes": 9,
+      "noncommentLeaves": 10,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA256": "0116a6659e8f34f480091d469245becca377ec8e52362f6c76d49fe158294588",
+          "afterSHA256": "0116a6659e8f34f480091d469245becca377ec8e52362f6c76d49fe158294588"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA256": "65b8f282c6ab7a8d3f7d70a3a1ef26015385d9fab6f74271102c30e1296bba61",
+          "afterSHA256": "65b8f282c6ab7a8d3f7d70a3a1ef26015385d9fab6f74271102c30e1296bba61"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+      "sourceSHA256": "aabaa479da4223e0f5f2a62a9f1197b8d42470cdf064f332f29b1ca7731f326c",
+      "exactEdits": 2,
+      "exactForwardInverse": true,
+      "typedNodes": 62,
+      "noncommentLeaves": 84,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "wholeRawSame": true,
+          "beforeSHA256": "b8d853332488b70af61063054c048cdcb4e7e00c18610a16cbb19c1c575b5da4",
+          "afterSHA256": "b8d853332488b70af61063054c048cdcb4e7e00c18610a16cbb19c1c575b5da4"
+        },
+        {
+          "module": "CommonJS",
+          "wholeRawSame": true,
+          "beforeSHA256": "fad32cfff45d5a796b521ea8cae12b4d9fc9ef553fa53622b0e4ab39d08d9c0f",
+          "afterSHA256": "fad32cfff45d5a796b521ea8cae12b4d9fc9ef553fa53622b0e4ab39d08d9c0f"
+        }
+      ]
+    }
+  ],
+  "completeCapture": {
+    "statements": 1,
+    "returnsOriginalFrame": true,
+    "typedNodes": 23,
+    "noncommentLeaves": 31,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA256": "e267377629a19234d93d09dba8ee56b3433c5d417ac06d67de8c7cfb8fa48965",
+        "afterSHA256": "e267377629a19234d93d09dba8ee56b3433c5d417ac06d67de8c7cfb8fa48965"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA256": "e267377629a19234d93d09dba8ee56b3433c5d417ac06d67de8c7cfb8fa48965",
+        "afterSHA256": "e267377629a19234d93d09dba8ee56b3433c5d417ac06d67de8c7cfb8fa48965"
+      }
+    ]
+  },
+  "completePublication": {
+    "topLevelStatements": 3,
+    "conditionalFacts": 2,
+    "nullablePublishRetainsReceiver": true,
+    "typedNodes": 54,
+    "noncommentLeaves": 68,
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "beforeSHA256": "931926e78ebe8c39463aa349cbd437cb8d8d168b953ea20d59be89e0693fef25",
+        "afterSHA256": "931926e78ebe8c39463aa349cbd437cb8d8d168b953ea20d59be89e0693fef25"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "beforeSHA256": "931926e78ebe8c39463aa349cbd437cb8d8d168b953ea20d59be89e0693fef25",
+        "afterSHA256": "931926e78ebe8c39463aa349cbd437cb8d8d168b953ea20d59be89e0693fef25"
+      }
+    ]
+  },
+  "routes": [
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+      "name": "BearNightFrame",
+      "specifier": "./night_frame",
+      "endpoint": "backend/src/game/mechanisms/roles/bear/night_frame.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+      "name": "noteAnimalBearPublication",
+      "specifier": "./facts",
+      "endpoint": "backend/src/game/mechanisms/roles/animal_dream/facts.ts"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+      "name": "appendAnimalBeautyNotice",
+      "specifier": "./facts",
+      "endpoint": "backend/src/game/mechanisms/roles/animal_dream/facts.ts"
+    }
+  ],
+  "ownerImports": [
+    {
+      "module": "@ai-werewolf-arena/game-contract",
+      "typeOnly": true,
+      "names": [
+        "BearSignalPolicy",
+        "ReadonlyBoardConfig"
+      ]
+    },
+    {
+      "module": "../core/domain/events",
+      "typeOnly": true,
+      "names": [
+        "GameEvent"
+      ]
+    },
+    {
+      "module": "../core/domain/world",
+      "typeOnly": true,
+      "names": [
+        "World"
+      ]
+    },
+    {
+      "module": "../game/mechanisms/roles/bear/ports",
+      "typeOnly": false,
+      "names": [
+        "BearNightFrame"
+      ]
+    },
+    {
+      "module": "../game/mechanisms/roles/animal_dream/ports",
+      "typeOnly": false,
+      "names": [
+        "noteAnimalBearPublication",
+        "appendAnimalBeautyNotice"
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/bear/night_frame.ts",
+      "sha256": "5cc33db1115813bb4277407ec07e8be1d8b4b5602e785b9f7b43a0d355786f39",
+      "wholeGitBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+      "sha256": "a8f2ba86e4015bac4eb9a89c5b632e23d092cc4247a965428a84f6e62b57479d",
+      "wholeGitBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/animal_dream/roster.ts",
+      "sha256": "535131d9555e0533b7238bb6b1ef9b8b16bdaba65e6f4a10d5d24fec92c39436",
+      "wholeGitBytesSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/original_player_scope.ts",
+      "sha256": "e150a4d2ab8d96a645f30d780f58fabde5716ac5777acc0ea553776043b1d0f6",
+      "wholeGitBytesSame": true
+    },
+    {
+      "path": "backend/tests/scenarios/features/bear/native-night-announcement.test.ts",
+      "sha256": "38432c0b9e443e8f7b445bca20cd8322c75e968ec1bd841a60503527d9218026",
+      "wholeGitBytesSame": true
+    }
+  ],
+  "excludedControls": [
+    "backend/src/game/mechanisms/roles/bear/profile.ts",
+    "backend/src/game/mechanisms/roles/bear/state.ts"
+  ],
+  "testTypeOnlyDelta": {
+    "path": "backend/tests/unit/rulesets/dawn-knowledge-publication.test.ts",
+    "beforeSHA256": "0b5e994b202dc5ce9ac18146de3ded0bc2f9090b08239c70b94399a1eb984d21",
+    "finalSHA256": "1eae4968855a5bb1bb059e65ff4d83c820548f80731ae853e06cf83a2abbb3bb",
+    "outputs": [
+      {
+        "module": "ESNext",
+        "wholeRawSame": true,
+        "sha256": "d2d3ab56cc25486510dcdc9139dd66603ad1a7600911d428a11703a00f49d9c6"
+      },
+      {
+        "module": "CommonJS",
+        "wholeRawSame": true,
+        "sha256": "0f467c8bf2bad80443a9e064c9cf71cd1b17d92df4552d1401c260a74d317237"
+      }
+    ]
+  },
+  "graph": {
+    "root": "backend/src/rulesets/dawn-knowledge-publication.ts",
+    "backendModules": 500,
+    "relativeDeclaredValueEdges": 1641,
+    "backEdges": [],
+    "limits": "保守相对字面声明值边；外部包、importEquals、非字面入口及完整 cold 执行不计；不排除未标 type 的实际擦除 import。"
+  },
+  "summary": {
+    "wholeOriginalPrograms": 3,
+    "completeOwnerPrograms": 2,
+    "typedNodes": 5242,
+    "noncommentLeaves": 6566,
+    "wholeMappedOutputs": 10,
+    "rawSame": 10,
+    "testTypeOnlyOutputs": 2
+  },
+  "limits": [
+    "完整 PM/两 ports 精准正逆，新 capture 唯一 return／publish 全三语句分别核；不恢复整个旧 PM body 掩新组合。",
+    "新函数、公开 class/查询绑定与输入 API 改变模块路线及来源指纹，未承诺任意 namespace 反射或全 cold 相同。",
+    "原 frame 仍唯一原体／历史／发布租约 owner，Animal facts 唯一知识日志；原 runtime 对象不是 JSON 或权限。",
+    "Root Bear profile/state 并行中文变化明确排除 whole-byte controls；其他并行源与传递图不声称原字节相同。"
+  ]
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "kind": "actual-combination-owner-import",
+    "before": "import { BearNightFrame } from \"../mechanisms/roles/bear/night_frame\";",
+    "after": "import { captureDawnKnowledge, publishDawnKnowledge } from \"../../rulesets/dawn-knowledge-publication\";",
+    "beforeOffset": 4400
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "kind": "retire-private-facts-caller-imports",
+    "before": "  appendAnimalBeautyNotice,\n  noteAnimalBearPublication,\n",
+    "after": "",
+    "beforeOffset": 4790
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "kind": "complete-pre-night-capture",
+    "before": "    const bearFrame = BearNightFrame.capture(\n      this.world,\n      nightDay,\n      undefined,\n      this.config.bear?.signalPolicy,\n    );",
+    "after": "    // 夜前只捕获同一熊 frame；原 World／policy 读取保持晚读，不提前发表或授予许可。\n    const bearFrame = captureDawnKnowledge({\n      world: () => this.world,\n      signalPolicy: () => this.config.bear?.signalPolicy,\n    }, nightDay);",
+    "beforeOffset": 14342
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "kind": "complete-dawn-publication",
+    "before": "      const bearStart = this.events.length;\n      bearFrame?.publish(this.world, this.events, dayIsCurrent);\n      if (this.config.animalDream) {\n        noteAnimalBearPublication(this.world, this.events, bearStart);\n        appendAnimalBeautyNotice(this.world, this.events, cycleDay);\n      }",
+    "after": "      // 原死亡波／清理和当前性之后，串行发表熊→Animal 知识→Beauty 通知，再进入原判胜。\n      publishDawnKnowledge(bearFrame, {\n        world: () => this.world,\n        events: () => this.events,\n        animalDream: () => this.config.animalDream,\n      }, cycleDay, dayIsCurrent);",
+    "beforeOffset": 25631
+  },
+  {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "kind": "manager-head-owner",
+    "before": " * 狼美人候选和屠边覆盖归具名组合，原两处捕获／评估点、配置首命中顺序和唯一封盘仍由本经理推进。",
+    "after": " * 狼美人候选和屠边覆盖归具名组合，原两处捕获／评估点、配置首命中顺序和唯一封盘仍由本经理推进。\n * 熊夜前采样与黎明知识发布归具名同步组合；本经理保原阶段、await／当前性和发布之后的判胜。",
+    "beforeOffset": 499
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+    "kind": "bear-public-head",
+    "before": " * 提供熊状态读取与既有初始化命令的公开入口。输入是调用方原角色对象和安装数据；\n * 输出保留原只读状态引用及初始化写契约。每次读取或安装之前，权限检查与失败、关闭窗口\n * 仍由原调用方和状态所有者负责。本入口仅具名导出本角色状态函数，不校验、复制、冻结或存储状态。",
+    "after": " * 提供熊状态与夜前采样／黎明发布 frame 的实际公开绑定。输入为原角色、安装数据或 World／日期／政策；\n * 输出保留原状态引用和同一 frame，不另做采样、校验、复制、冻结或存储。\n * 初始化写权与请求权限仍归原调用方；frame 在原时点校验生命、原体和发布租约，关闭／失败保原前缀。\n * 本入口只具名导出真实状态函数和 class，公开 frame 不是行动许可或 JSON 数据。",
+    "beforeOffset": 4
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/bear/ports.ts",
+    "kind": "bear-direct-class-binding",
+    "before": "export { getBearState, setBearState } from \"./state\";",
+    "after": "export { getBearState, setBearState } from \"./state\";\nexport { BearNightFrame } from \"./night_frame\";",
+    "beforeOffset": 213
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+    "kind": "animal-direct-publication-bindings",
+    "before": "export { animalBearKnowledge } from \"./facts\";",
+    "after": "export { animalBearKnowledge, noteAnimalBearPublication, appendAnimalBeautyNotice } from \"./facts\";",
+    "beforeOffset": 898
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/animal_dream/ports.ts",
+    "kind": "animal-public-head",
+    "before": " * 展示与预检新增查询仍返回原玩家知识或请求 scope 绑定，不把知识转换为提交权限。",
+    "after": " * 展示与预检新增查询仍返回原玩家知识或请求 scope 绑定，不把知识转换为提交权限。\n * 黎明组合在熊事件发表之后按原起点推进知识，再发表狼美人通知；本入口不增加调用或恢复失败前项。",
+    "beforeOffset": 226
+  }
+]
