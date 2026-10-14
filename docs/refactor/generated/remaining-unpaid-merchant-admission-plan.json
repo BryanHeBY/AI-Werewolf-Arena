@@ -1,0 +1,33 @@
+{
+  "baseCommit": "620673877a23d2e0a748b08c17ec0ca57a3cd4b9",
+  "sourceScope": [
+    "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+    "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+    "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+    "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+    "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+    "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+    "backend/tests/unit/domain/remaining-unpaid-merchant-admission.test.ts"
+  ],
+  "sourceOnly": true,
+  "checksAllowed": false,
+  "newRiskUnit": "backend/tests/unit/domain/remaining-unpaid-merchant-admission.test.ts",
+  "plannedInputs": [
+    "retired actor before opening; fresh object and pure retired Wolf target remain independent",
+    "real suspended null reply and no-target capture retire before close",
+    "gateway-sanctioned args/last target getters retire or throw same Error before first write",
+    "Good target resource accepted then source retires; complete stock/record/facts without new guard",
+    "Wolf merchant first remaining setter retires source; complete original paid backlash and facts",
+    "late merchant fact throw preserves accepted inventory and same Error"
+  ],
+  "explicitExclusions": [
+    "common gift/gun owners",
+    "paid ownerCurrent/backlash or target filtering",
+    "new rollback/default/schema acceptance",
+    "Root Git/progress/matrix"
+  ],
+  "stateCommentOnly": [
+    "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+    "backend/src/game/mechanisms/roles/black_market_merchant/state.ts"
+  ]
+}

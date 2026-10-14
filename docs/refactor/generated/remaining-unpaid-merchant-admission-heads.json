@@ -1,0 +1,36 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "sha256": "07c331256d555644831ccf3f722ed1147f83a07e7b0f189a01d837a7cbf9b399"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+      "sha256": "116c4443406ff1a54c33c0a074ef347afcffe5335307963642a3aa94c590ed6a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+      "sha256": "dee115fc83af7286c8c834fc25f06a3242bcd2f286efbaf389fc83e8f5d68de9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "sha256": "a9f2fb1608ddd962c75139b639476f9dd6b6fb4762a6718d65f8d8ec7a0f7301"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+      "sha256": "7a7b1eb3a004aecf9e8a5f0d1a2463ec4eb2ed806485daad49159bdaea8fa401"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+      "sha256": "0f95d279f52c462754e8a7f8c8800bb92deb8e5b1b8c906b2104858deea46cac"
+    },
+    {
+      "path": "backend/tests/unit/domain/remaining-unpaid-merchant-admission.test.ts",
+      "sha256": "9aa0b899a0c4ea5caf2217bd140a91d44e51ffaaf8e6cf1c3a55c201c3d25ec6"
+    }
+  ],
+  "sourceReadySHA256": "d22349faeabc5a704bd8e4a0bdc86a5d10aedfafd5b3c644924527ba720fdba4",
+  "documentationPaths": 717,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

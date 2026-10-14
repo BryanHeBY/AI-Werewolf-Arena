@@ -1,15 +1,17 @@
 /**
- * 负责奇迹商人从实际库存选择赠予。输入为当前原体和已验证的技能／收货选择；
- * 阵营只晚查实际值，同值组件替换不增加引用撤权；已付反噬仍使用原 owner 谓词。
- * 输出为实际拥有的赠予、反噬提案和跳过／提交事实。已付提案保留原生命资格，不转给替换赠予者。
+ * 负责奇迹商人从实际库存选择赠予。输入为当前原体与验证后的技能／收货选择，输出为赠予、反噬及交易事实。
+ * 阵营只在原点晚查实际值，同值组件替换不增加引用撤权；新请求、关窗或首付款之前拒绝已退休源。
+ * 原 ownerCurrent 仍复验已付反噬的生命与身份，目标／知识不按运行墓碑裁剪。Good 授予正常返回后，
+ * 商人库存、成交记录和事实仍按原完成前缀继续；Wolf 在商人库存首写付款，异常不退款或回滚。
  */
 import { closeMerchantTrade, recordMerchantTrade } from "./state";
 
 import type { MiracleSkill } from "@ai-werewolf-arena/game-contract";
 
 import { COMPONENT } from "../../../../core/domain/components/names";
+import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
 import type { RoleComponent } from "../../../../core/domain/components/role";
-import { Camp, Role, Phase, WitchSelfHealRule } from "../../../../core/domain/model";
+import { Camp, Role, Phase, WitchSelfHealRule, type ToolCall } from "../../../../core/domain/model";
 import { captureNightLife, livingNightLife } from "../../../../core/domain/night_effects";
 import type { World } from "../../../../core/domain/world";
 import type { NightStageHandler } from "../../stages/night/contracts";
@@ -45,7 +47,8 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
         role.privateState === privateState &&
         getMerchantState(role) === state &&
         livingNightLife(ctx.world, life);
-      const current = () => ownerCurrent() && canMerchantTrade(state, day);
+      // 先完成原体／库存的原有序复验，再否决新交易；纯 ownerCurrent 仍供已付反噬使用。
+      const current = () => ownerCurrent() && canMerchantTrade(state, day) && !isRoleExecutionRetired(role);
       if (!current()) continue;
       let completed = false;
       for (let attempt = 0; attempt < 3; attempt++) {
@@ -68,18 +71,33 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
               ] as const;
             }),
         );
-        const action = targets.size
-          ? await ctx.actionProvider.getAction(
-              ctx.makeRequest(actorId, ["bestow_ability"], {
-                stage: "miracle_merchant",
-                requiresAction: false,
-                ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),
-              }),
-            )
-          : null;
+        // 候选捕获的原 getter 已全部执行；退休源不再打开新的请求，目标名单本身不按墓碑过滤。
+        if (isRoleExecutionRetired(role)) break;
+        let action: ToolCall | null = null;
+        if (targets.size) {
+          // 保原 receiver／getAction callee → makeRequest callee → 请求实参的求值序；不提前要求原 callee 可调用。
+          const provider = ctx.actionProvider,
+            getAction = provider.getAction,
+            makeRequest = ctx.makeRequest,
+            requestArgs = [actorId, ["bestow_ability"], {
+              stage: "miracle_merchant",
+              requiresAction: false,
+              ...(attempt ? { retry_attempt: attempt, retry_max: 2 } : {}),
+            }],
+            invoke = Reflect.apply.bind(Reflect);
+          // 新 Reflect／bind 查找与分配都先完成；末旗后只裸调用已准备 invoker，不再查方法属性。
+          if (isRoleExecutionRetired(role)) break;
+          const request = invoke(makeRequest, ctx, requestArgs), actionArgs = [request];
+          // builder 已完成的请求前缀不回滚；它退休源时不再调用 provider，await 后仍走原 current。
+          if (isRoleExecutionRetired(role)) break;
+          action = await invoke(getAction, provider, actionArgs);
+        }
         if (!current()) break;
         if (action === null) {
-          closeMerchantTrade(state, day);
+          // 空回复也会写当日关窗；只在首写之前拒绝，既有 callee 和局部实参顺序不改。
+          const closeTrade = closeMerchantTrade;
+          if (isRoleExecutionRetired(role)) break;
+          closeTrade(state, day);
           recordCommit(ctx.world, day);
           ctx.events.push({
             timestamp: Date.now(),
@@ -107,6 +125,8 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
         )
           continue;
         const failure = target.camp === Camp.Wolf;
+        // 原 args／目标末字段与阵营判断已完成；Wolf 在 record 内首付，Good 由原赠予 owner 首装。
+        if (isRoleExecutionRetired(role)) break;
         if (!failure) {
           const base = {
             id: "gift:miracle",
@@ -116,44 +136,65 @@ export const MIRACLE_MERCHANT_STAGE: NightStageHandler = {
             startsOnDay: day,
             maxUses: 1,
           };
-          if (skill === "check")
-            grantNightAbility(
-              ctx.world,
-              targetId,
-              {
-                ...base,
-                kind: "seer_check",
-                state: { lastTarget: null, lastIsWerewolf: null, lastResult: null, history: [] },
-              },
-              ctx.events,
-            );
-          if (skill === "guard")
-            grantNightAbility(
-              ctx.world,
-              targetId,
-              { ...base, kind: "guard", state: { lastTarget: null } },
-              ctx.events,
-            );
-          if (skill === "poison")
-            grantNightAbility(
-              ctx.world,
-              targetId,
-              {
-                ...base,
-                kind: "potion",
-                state: {
-                  heal: 0,
-                  poison: 1,
-                  selfHealRule: WitchSelfHealRule.Disabled,
-                  canSelfHeal: false,
-                  healUsedThisNight: false,
-                  poisonUsedThisNight: false,
+          if (skill === "check") {
+            const grant = grantNightAbility,
+              grantArgs: Parameters<typeof grantNightAbility<"seer_check">> = [
+                ctx.world,
+                targetId,
+                {
+                  ...base,
+                  kind: "seer_check",
+                  state: { lastTarget: null, lastIsWerewolf: null, lastResult: null, history: [] },
                 },
-              },
-              ctx.events,
-            );
+                ctx.events,
+              ],
+              grantWorld = grantArgs[0], grantTarget = grantArgs[1], grantInput = grantArgs[2], grantEvents = grantArgs[3];
+            // 原 callee 与全部 World／payload／events 实参已经求值；共同资源 owner 不能替代本阶段捕获源的末拒绝。
+            if (isRoleExecutionRetired(role)) break;
+            grant(grantWorld, grantTarget, grantInput, grantEvents);
+          }
+          if (skill === "guard") {
+            const grant = grantNightAbility,
+              grantArgs: Parameters<typeof grantNightAbility<"guard">> = [
+                ctx.world,
+                targetId,
+                { ...base, kind: "guard", state: { lastTarget: null } },
+                ctx.events,
+              ],
+              grantWorld = grantArgs[0], grantTarget = grantArgs[1], grantInput = grantArgs[2], grantEvents = grantArgs[3];
+            // 原 callee 与全部 World／payload／events 实参已经求值；共同资源 owner 不能替代本阶段捕获源的末拒绝。
+            if (isRoleExecutionRetired(role)) break;
+            grant(grantWorld, grantTarget, grantInput, grantEvents);
+          }
+          if (skill === "poison") {
+            const grant = grantNightAbility,
+              grantArgs: Parameters<typeof grantNightAbility<"potion">> = [
+                ctx.world,
+                targetId,
+                {
+                  ...base,
+                  kind: "potion",
+                  state: {
+                    heal: 0,
+                    poison: 1,
+                    selfHealRule: WitchSelfHealRule.Disabled,
+                    canSelfHeal: false,
+                    healUsedThisNight: false,
+                    poisonUsedThisNight: false,
+                  },
+                },
+                ctx.events,
+              ],
+              grantWorld = grantArgs[0], grantTarget = grantArgs[1], grantInput = grantArgs[2], grantEvents = grantArgs[3];
+            // 原 callee 与全部 World／payload／events 实参已经求值；共同资源 owner 不能替代本阶段捕获源的末拒绝。
+            if (isRoleExecutionRetired(role)) break;
+            grant(grantWorld, grantTarget, grantInput, grantEvents);
+          }
         }
-        recordMerchantTrade(state, day, targetId, skill as MiracleSkill);
+        // Good 授予正常返回后属于已接受前缀；不以晚退休截断商人库存、记录和事实，原抛错仍传播。
+        const recordTrade = recordMerchantTrade;
+        if (failure && isRoleExecutionRetired(role)) break;
+        recordTrade(state, day, targetId, skill as MiracleSkill);
         recordCommit(ctx.world, day);
         if (failure)
           (ctx.state.merchantBacklashes ??= []).push({ target: life, isCurrent: ownerCurrent });

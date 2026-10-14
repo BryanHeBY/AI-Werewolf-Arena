@@ -47,7 +47,7 @@ export function canBlackMarketTrade(state: BlackMarketReadState, day: number): b
 export function closeBlackMarketTrade(state: BlackMarketReadState, day: number): void {
   (state as { closedDay: number | null }).closedDay = day;
 }
-/** 已付交易依次写库存、关窗日和选择对象；失败保留先完成的字段，不回滚或补发通知。 */
+/** 已获准交易先消费商人库存，再写关窗日与选择对象；Good 路径此前已接受目标资源，Wolf 在此首付。失败保留已完成字段，不回滚或补发通知。 */
 export function recordBlackMarketTrade(
   state: BlackMarketReadState,
   day: number,

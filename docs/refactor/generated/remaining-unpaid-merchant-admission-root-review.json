@@ -1,0 +1,72 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "620673877a23d2e0a748b08c17ec0ca57a3cd4b9",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "sha256": "07c331256d555644831ccf3f722ed1147f83a07e7b0f189a01d837a7cbf9b399"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+      "sha256": "116c4443406ff1a54c33c0a074ef347afcffe5335307963642a3aa94c590ed6a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+      "sha256": "dee115fc83af7286c8c834fc25f06a3242bcd2f286efbaf389fc83e8f5d68de9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "sha256": "a9f2fb1608ddd962c75139b639476f9dd6b6fb4762a6718d65f8d8ec7a0f7301"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+      "sha256": "7a7b1eb3a004aecf9e8a5f0d1a2463ec4eb2ed806485daad49159bdaea8fa401"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+      "sha256": "0f95d279f52c462754e8a7f8c8800bb92deb8e5b1b8c906b2104858deea46cac"
+    },
+    {
+      "path": "backend/tests/unit/domain/remaining-unpaid-merchant-admission.test.ts",
+      "sha256": "9aa0b899a0c4ea5caf2217bd140a91d44e51ffaaf8e6cf1c3a55c201c3d25ec6"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-scope-final.json",
+    "sha256": "8f5f14dd7c4d98f0d425b6afadccebc84f076f59eaa4faa2177eb6823dcf970d"
+  },
+  "document": {
+    "path": "docs/refactor/remaining-unpaid-merchant-admission.md",
+    "sha256": "2f75bbf13786848b8a8c88e6d5d89186159d69451276317284f7d9a9ebc374ce"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-evidence.json",
+    "sha256": "c3ec3024f0ecaf441e448383cfe5f5411f0d1d38a3f6d0e37cd630e574d6c270"
+  },
+  "integrity": {
+    "freshSources": 7,
+    "actualGitBefore": 6,
+    "controls": 6,
+    "artifactHashes": 19,
+    "fullExactForward": 0,
+    "mismatches": [],
+    "actualGitNewUnitAbsence": {
+      "checked": true,
+      "terminalChunk": "bd4cad",
+      "source": "backend/tests/unit/domain/remaining-unpaid-merchant-admission.test.ts",
+      "baseCommit": "620673877a23d2e0a748b08c17ec0ca57a3cd4b9"
+    }
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "实际620六完整Git/newunit原不存在bd4cad，七冻结源/六控制/19附件/末MD范围与所有真实首收据；Root未再运行业务或门禁。",
+    "两纯ownerCurrent与Black paid首次死亡分支原样；请求callee/receiver/args/Reflect最后拒绝顺序，原null/no-target/unsupported-Camp异常与Wolf库存首付，六Good全部callee/实参先求值再拒绝捕获Role，另真实World不新增身份策略。",
+    "Good资源正常返回后与Wolf首写后完成原stock/closed/choice/commit/backlash/facts，同Error和部分通知失败前缀；state两源仅中文JSDoc，目标/知识/default/gift资源接受未另改。",
+    "new19different204成功断言及有限7根type/7heads/6whole35inverse/两state4actual输出首绿；保护26准确拆24actual与2Good逆块，六当前实际grant树另核，新增Reflect/tuple/call API观察面、非任意JS事务及未全55权限閉合界限准确。"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

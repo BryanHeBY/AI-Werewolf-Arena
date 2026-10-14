@@ -5,6 +5,7 @@
  * 失败和关闭时仍遵守原机制权限与已付费前缀，不把文案当授权。
  */
 import { COMPONENT } from "../../../../core/domain/components/names";
+import { isRoleExecutionRetired } from "../../../../core/domain/role-execution-authority";
 import { nativeRolePresentation } from "../presentation-contribution";
 import { z } from "zod";
 import { RuleError } from "@ai-werewolf-arena/game-contract";
@@ -92,6 +93,8 @@ export const BLACK_MARKET_MERCHANT_ROLE_PROFILE: NativeRoleContributions = {
           !isAliveTarget(world, toolCall.args.target_id)
         )
           return { code: RuleError.MerchantTarget };
+        // 原阶段、工具、技能与目标校验先完整执行；只在原成功尾拒绝新动作，不改原错误优先级。
+        if (isRoleExecutionRetired(role)) return { code: RuleError.MerchantUnavailable };
         return null;
       },
     },

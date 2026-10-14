@@ -1,0 +1,330 @@
+{
+  "baseCommit": "620673877a23d2e0a748b08c17ec0ca57a3cd4b9",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "sha256": "07c331256d555644831ccf3f722ed1147f83a07e7b0f189a01d837a7cbf9b399"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+      "sha256": "116c4443406ff1a54c33c0a074ef347afcffe5335307963642a3aa94c590ed6a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+      "sha256": "dee115fc83af7286c8c834fc25f06a3242bcd2f286efbaf389fc83e8f5d68de9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "sha256": "a9f2fb1608ddd962c75139b639476f9dd6b6fb4762a6718d65f8d8ec7a0f7301"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+      "sha256": "7a7b1eb3a004aecf9e8a5f0d1a2463ec4eb2ed806485daad49159bdaea8fa401"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+      "sha256": "0f95d279f52c462754e8a7f8c8800bb92deb8e5b1b8c906b2104858deea46cac"
+    },
+    {
+      "path": "backend/tests/unit/domain/remaining-unpaid-merchant-admission.test.ts",
+      "sha256": "9aa0b899a0c4ea5caf2217bd140a91d44e51ffaaf8e6cf1c3a55c201c3d25ec6"
+    }
+  ],
+  "deleted": [],
+  "sourceReady": {
+    "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-source-ready.json",
+    "sha256": "d22349faeabc5a704bd8e4a0bdc86a5d10aedfafd5b3c644924527ba720fdba4"
+  },
+  "runs": [
+    {
+      "key": "new-unit",
+      "command": "bun --no-env-file test --preload ./backend/tests/setup.ts backend/tests/unit/domain/remaining-unpaid-merchant-admission.test.ts",
+      "terminalChunk": "2b825f",
+      "actualExitCode": 0,
+      "stdout": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-unit-output.txt",
+        "sha256": "9e815f9d034e93bcc638095bb11eeeccad7c45734147b6dff001e83c1b8ef215"
+      },
+      "cases": 19,
+      "failed": 0,
+      "expectCalls": 204,
+      "firstExecution": true,
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+      "executionOwner": "Root",
+      "sourceReady": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-source-ready.json",
+        "sha256": "d22349faeabc5a704bd8e4a0bdc86a5d10aedfafd5b3c644924527ba720fdba4"
+      },
+      "source": [
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+          "sha256": "07c331256d555644831ccf3f722ed1147f83a07e7b0f189a01d837a7cbf9b399"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+          "sha256": "116c4443406ff1a54c33c0a074ef347afcffe5335307963642a3aa94c590ed6a"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+          "sha256": "dee115fc83af7286c8c834fc25f06a3242bcd2f286efbaf389fc83e8f5d68de9"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+          "sha256": "a9f2fb1608ddd962c75139b639476f9dd6b6fb4762a6718d65f8d8ec7a0f7301"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+          "sha256": "7a7b1eb3a004aecf9e8a5f0d1a2463ec4eb2ed806485daad49159bdaea8fa401"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+          "sha256": "0f95d279f52c462754e8a7f8c8800bb92deb8e5b1b8c906b2104858deea46cac"
+        },
+        {
+          "path": "backend/tests/unit/domain/remaining-unpaid-merchant-admission.test.ts",
+          "sha256": "9aa0b899a0c4ea5caf2217bd140a91d44e51ffaaf8e6cf1c3a55c201c3d25ec6"
+        }
+      ]
+    },
+    {
+      "key": "finite-types",
+      "command": "./backend/node_modules/.bin/tsc --noEmit -p docs/refactor/generated/remaining-unpaid-merchant-admission-types-config.json",
+      "launchChunk": "17e31d",
+      "sessionId": 94804,
+      "terminalChunk": "141703",
+      "actualExitCode": 0,
+      "config": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-types-config.json",
+        "sha256": "48298df9691fe799b28906d676c23e186fb1e7bf8e55c1bb91169ab1dac0cfac"
+      },
+      "stdout": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-types-output.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "roots": 7,
+      "firstExecution": true,
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+      "executionOwner": "Root",
+      "sourceReady": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-source-ready.json",
+        "sha256": "d22349faeabc5a704bd8e4a0bdc86a5d10aedfafd5b3c644924527ba720fdba4"
+      },
+      "source": [
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+          "sha256": "07c331256d555644831ccf3f722ed1147f83a07e7b0f189a01d837a7cbf9b399"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+          "sha256": "116c4443406ff1a54c33c0a074ef347afcffe5335307963642a3aa94c590ed6a"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+          "sha256": "dee115fc83af7286c8c834fc25f06a3242bcd2f286efbaf389fc83e8f5d68de9"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+          "sha256": "a9f2fb1608ddd962c75139b639476f9dd6b6fb4762a6718d65f8d8ec7a0f7301"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+          "sha256": "7a7b1eb3a004aecf9e8a5f0d1a2463ec4eb2ed806485daad49159bdaea8fa401"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+          "sha256": "0f95d279f52c462754e8a7f8c8800bb92deb8e5b1b8c906b2104858deea46cac"
+        },
+        {
+          "path": "backend/tests/unit/domain/remaining-unpaid-merchant-admission.test.ts",
+          "sha256": "9aa0b899a0c4ea5caf2217bd140a91d44e51ffaaf8e6cf1c3a55c201c3d25ec6"
+        }
+      ]
+    },
+    {
+      "key": "heads",
+      "command": "bun --no-env-file docs/refactor/generated/remaining-unpaid-merchant-admission-heads.ts",
+      "terminalChunk": "b176cf",
+      "actualExitCode": 0,
+      "script": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-heads.ts",
+        "sha256": "046ee007b7efc26be8deef4e0bbf431fec57ed7419767d9ece8722d69f438930"
+      },
+      "report": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-heads.json",
+        "sha256": "43d39ca5d62c66b9b25567f5cc3fb55365cbe343247f015dfeaf05a92f0b2fee"
+      },
+      "stdout": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-heads-output.txt",
+        "sha256": "027a907f7da7d92709cfec09a1c6dd3ef48a4ea1861e45284c139282f0d0db9c"
+      },
+      "sources": 7,
+      "documentationPaths": 717,
+      "diagnostics": 0,
+      "firstExecution": true,
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+      "executionOwner": "Root",
+      "sourceReady": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-source-ready.json",
+        "sha256": "d22349faeabc5a704bd8e4a0bdc86a5d10aedfafd5b3c644924527ba720fdba4"
+      },
+      "source": [
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+          "sha256": "07c331256d555644831ccf3f722ed1147f83a07e7b0f189a01d837a7cbf9b399"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+          "sha256": "116c4443406ff1a54c33c0a074ef347afcffe5335307963642a3aa94c590ed6a"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+          "sha256": "dee115fc83af7286c8c834fc25f06a3242bcd2f286efbaf389fc83e8f5d68de9"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+          "sha256": "a9f2fb1608ddd962c75139b639476f9dd6b6fb4762a6718d65f8d8ec7a0f7301"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+          "sha256": "7a7b1eb3a004aecf9e8a5f0d1a2463ec4eb2ed806485daad49159bdaea8fa401"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+          "sha256": "0f95d279f52c462754e8a7f8c8800bb92deb8e5b1b8c906b2104858deea46cac"
+        },
+        {
+          "path": "backend/tests/unit/domain/remaining-unpaid-merchant-admission.test.ts",
+          "sha256": "9aa0b899a0c4ea5caf2217bd140a91d44e51ffaaf8e6cf1c3a55c201c3d25ec6"
+        }
+      ]
+    },
+    {
+      "key": "proof",
+      "command": "bun --no-env-file docs/refactor/generated/remaining-unpaid-merchant-admission-proof.cjs",
+      "terminalChunk": "655075",
+      "actualExitCode": 0,
+      "script": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-proof.cjs",
+        "sha256": "c236a472371163c7ec4f66be67bd347eb2cfdbdb6ee5de56d22dfa4cca871b25"
+      },
+      "report": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-proof.json",
+        "sha256": "081eaf2a88853bf79f2e0a5dbd9000fe9dc7bde4c1ac2612bcff3443e86ef9db"
+      },
+      "stdout": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-proof-output.txt",
+        "sha256": "fdf76841616096962b1a392da7b2ebb6c14e96bacbcceb4a73ebfe176564cfe3"
+      },
+      "firstExecution": true,
+      "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+      "executionOwner": "Root",
+      "sourceReady": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-source-ready.json",
+        "sha256": "d22349faeabc5a704bd8e4a0bdc86a5d10aedfafd5b3c644924527ba720fdba4"
+      },
+      "source": [
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+          "sha256": "07c331256d555644831ccf3f722ed1147f83a07e7b0f189a01d837a7cbf9b399"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+          "sha256": "116c4443406ff1a54c33c0a074ef347afcffe5335307963642a3aa94c590ed6a"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+          "sha256": "dee115fc83af7286c8c834fc25f06a3242bcd2f286efbaf389fc83e8f5d68de9"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+          "sha256": "a9f2fb1608ddd962c75139b639476f9dd6b6fb4762a6718d65f8d8ec7a0f7301"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+          "sha256": "7a7b1eb3a004aecf9e8a5f0d1a2463ec4eb2ed806485daad49159bdaea8fa401"
+        },
+        {
+          "path": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+          "sha256": "0f95d279f52c462754e8a7f8c8800bb92deb8e5b1b8c906b2104858deea46cac"
+        },
+        {
+          "path": "backend/tests/unit/domain/remaining-unpaid-merchant-admission.test.ts",
+          "sha256": "9aa0b899a0c4ea5caf2217bd140a91d44e51ffaaf8e6cf1c3a55c201c3d25ec6"
+        }
+      ]
+    }
+  ],
+  "runtimeSummary": {
+    "differentCases": 19,
+    "executions": 19,
+    "expectCalls": 204,
+    "failed": 0,
+    "oldF04F05CasesRerun": false
+  },
+  "typesPolicy": {
+    "extends": "backend/tsconfig.tests.json",
+    "strictOptionsRetained": true,
+    "ambientSelection": [
+      "node",
+      "bun-types",
+      "bun-types/test-globals"
+    ],
+    "explicitInstalledRoots": [
+      "backend/node_modules",
+      "backend/node_modules/@types"
+    ],
+    "unexecutedFirstDraft": {
+      "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-types-config-unexecuted-first.json",
+      "sha256": "76cf145f52078d4f6c605f3696270b1edbf0fe1f00d9d94c7398fa0ee3cf8523"
+    },
+    "note": "@types-only draft was changed before any merchant check following Root diagnostic from another group. No merchant type failure occurred."
+  },
+  "staticFindingStages": [
+    {
+      "finding": "request getter preparation occurred after initial rejection tail",
+      "executedFailure": false,
+      "before": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-request-preparation-before.json",
+        "sha256": "d01b8063abb852fddb65ca1c3924c4e92b85334aa61e68d6bda037053639969b"
+      },
+      "fix": "original callee/receiver/args plus Reflect.apply.bind preparation before last flag; builder returns then last flag before provider."
+    },
+    {
+      "finding": "Good resource original ctx.world/events args were later than captured stage Role guard",
+      "executedFailure": false,
+      "firstReady": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-source-ready-first-snapshot.json",
+        "sha256": "ae1699ce987f4e6fe14b6e2e1fada12b0f12753787d8f3f8d8927ce9ea425884"
+      },
+      "before": {
+        "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-good-args-before.json",
+        "sha256": "64828bba041f515995c8803bf89a5ee6c5219e4959c2396bf3db0eb983de3869"
+      },
+      "fix": "six actual callee/full argument preparations before a captured Role terminal check; bare original callee with local values; no additional World identity policy."
+    }
+  ],
+  "firstChecksAllGreen": true,
+  "sourceUnchangedAfterFirstChecks": true,
+  "authorExecutedChecks": false,
+  "fullTypeCheck": false,
+  "fullArchitectureGate": false,
+  "oldGreenRepeated": false,
+  "modelsExecuted": false,
+  "protectedProofCounts": {
+    "wholeOldPrograms": 6,
+    "preciseEdits": 35,
+    "inverseEmits": 12,
+    "stateOnlyActualSameOutputs": 4,
+    "protectedProgramsReported": 26,
+    "actualUnchangedSnippets": 24,
+    "actualUnchangedSnippetOutputs": 48,
+    "exactInverseGoodBlocks": 2,
+    "exactInverseGoodOutputs": 4,
+    "actualPreparedGrantCalls": 6,
+    "countsBothSides": {
+      "nodesBothSides": 12208,
+      "nodeArraysBothSides": 1712,
+      "leavesBothSides": 6256
+    }
+  }
+}

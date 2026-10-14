@@ -1,0 +1,117 @@
+{
+  "baseCommit": "620673877a23d2e0a748b08c17ec0ca57a3cd4b9",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/night_stage.ts",
+      "sha256": "ff03be2ad9a1bacfffdd9da82a23828a155f0e938b0d5ebafc9f85a1d814323e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/profile.ts",
+      "sha256": "116c4443406ff1a54c33c0a074ef347afcffe5335307963642a3aa94c590ed6a"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+      "sha256": "dee115fc83af7286c8c834fc25f06a3242bcd2f286efbaf389fc83e8f5d68de9"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/night_stage.ts",
+      "sha256": "d0ea4082785012433c040268cd2c1be039e884273f2a52794e3e1156b763b797"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/profile.ts",
+      "sha256": "7a7b1eb3a004aecf9e8a5f0d1a2463ec4eb2ed806485daad49159bdaea8fa401"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+      "sha256": "0f95d279f52c462754e8a7f8c8800bb92deb8e5b1b8c906b2104858deea46cac"
+    },
+    {
+      "path": "backend/tests/unit/domain/remaining-unpaid-merchant-admission.test.ts",
+      "sha256": "026797bec4842d426bdbcaea905549476bc249edb54840bf599a6589c6c1bc78"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/core/domain/role-execution-authority.ts",
+      "sha256": "4291bac65f9aa1d25e8ddc883069adaac3d39f75b12867288f08188766a81756",
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/night-ability-grants.ts",
+      "sha256": "154cc40f73ac8caf748b0399036f20ea6935df495a2595871565b184f5b4c237",
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/abilities.ts",
+      "sha256": "50ec7c3574bd036af80e6f3d7feaee2bc3163589cdf7bb732003548a018a9505",
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+      "sha256": "883050c82241de386c62bb467f837e4d7972172600955f5d688649c27fc9fd1c",
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/miracle_merchant/lucky_stage.ts",
+      "sha256": "1a8941cc306e0f4f3ba28d22dcfe84776fa035c4e2f8d31fd3e25795f0a5069c",
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/recipient_ability_stage.ts",
+      "sha256": "939fadf80a6094082ab1c39b5459b58d5f05705319ce92de0370a433e35e22bc",
+      "currentSame": true
+    }
+  ],
+  "production": 6,
+  "newRiskUnit": 1,
+  "sourcePaths": 7,
+  "statePrograms": "Both state.ts changes are one JSDoc each; statements/imports/writers unchanged. No proof or check has run yet.",
+  "staticRequestFinding": {
+    "executedFailure": false,
+    "firstStageSnapshot": "docs/refactor/generated/remaining-unpaid-merchant-admission-request-preparation-before.json",
+    "resolution": "prepare original provider receiver/getAction and makeRequest callee and request args; prepare Reflect.apply.bind(Reflect) before terminal flag; bare invoke builder with ctx receiver; prepare action arg array then terminal flag; bare invoke provider with original receiver; original await/current follows.",
+    "newObservationSurface": [
+      "Reflect.apply property read",
+      "apply.bind property read/call",
+      "bound invoker allocation",
+      "request argument array allocation",
+      "provider argument array allocation"
+    ],
+    "limits": [
+      "Original typed callee receiver/getter relative order and default body calls retained; noncallable callee is not eagerly bound/validated before original builder prefix.",
+      "New Reflect/bind may itself throw before the retirement check; these are explicit F05e observations, not a whole-JS/environment equality claim.",
+      "Builder-side completed request prefix is preserved if its body retires the source; no provider then runs.",
+      "No guarantee against arbitrary overwritten namespaces/builtins or external setters internals; actual owned first-write boundaries are guarded."
+    ]
+  },
+  "unpaidBoundaries": [
+    "original owner and inventory full reads then captured Role retirement",
+    "targets preparation then request admission; callee/builder guards",
+    "original postawait current and postvalidator checks",
+    "original target complete fields and Black unsupported-Camp throw then initial debit/grant flag",
+    "original close callee preparation then first closedDay flag",
+    "original record callee point then Wolf-only first inventory flag; Good returned grant completion does not read flag"
+  ],
+  "protectedPolicies": [
+    "pure ownerCurrent and Black paid=true first death",
+    "committed WeakMap/set function",
+    "target data/knowledge roster and original args/Camp/Role/life/privateState rules",
+    "Good target resource acceptance followed by merchant stock/record/facts",
+    "Wolf first merchant remaining assignment followed by paid prefix/backlash/facts"
+  ],
+  "checksExecuted": [],
+  "pending": "Root authorizes and executes the first bounded unit/types/heads/proof; no checks are run by this source-ready preparation.",
+  "preparedChecks": {
+    "runtime": "bun --no-env-file test --preload ./backend/tests/setup.ts backend/tests/unit/domain/remaining-unpaid-merchant-admission.test.ts",
+    "typesConfig": {
+      "path": "docs/refactor/generated/remaining-unpaid-merchant-admission-types-config.json",
+      "sha256": "48298df9691fe799b28906d676c23e186fb1e7bf8e55c1bb91169ab1dac0cfac",
+      "policy": "extends original tests strict options; explicit node/bun-types/bun-types/test-globals selection with actual backend node_modules and @types directories, matching already committed F05c finite configuration. First @types-only draft was never executed."
+    },
+    "headsScript": "docs/refactor/generated/remaining-unpaid-merchant-admission-heads.ts",
+    "proofScript": "docs/refactor/generated/remaining-unpaid-merchant-admission-proof.cjs",
+    "executedByAuthor": false,
+    "firstExecutionOwner": "Root"
+  }
+}
