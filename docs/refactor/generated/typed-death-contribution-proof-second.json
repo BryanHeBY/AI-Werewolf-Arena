@@ -1,0 +1,346 @@
+{
+  "base": "b6d4a7adf96eee0130540b7b4e25e853b144471f",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+      "sha256": "fd757f0e66e354cf22e15bb90cbd2b9aa8a1dde23d768d2b0e023293f7b5f68b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/hooks/death-wave-contribution.ts",
+      "sha256": "42a93f286f9bda2fda358e9941af5a51dba3710bc218f17ffde13d93f94c7167"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/death_hook.ts",
+      "sha256": "9150c17a5685eaf697f8c46619f7651e9c9ea6356db5950dd5339817d495063c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts",
+      "sha256": "d930ea069b275c2fb012ee7ab840dc7149a4381d4a23215db51eac815711ab45"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+      "sha256": "fc22dd712951cf2e9260b8248a2ae440dfcec7aef67cad0bf93e3dc1218b386e"
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "e5236f48284fe7e7cb960b1d77f0fdf30aa76525cb03c683a2ac6fa182a99e09"
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-beauty/death-wave-publication.test.ts",
+      "sha256": "8d47109b6336081ec74e6fe98a26c3293b7b130349eba5eb93aeb39907170e4e"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/death-wave-contributions.test.ts",
+      "sha256": "12800a98a5806e6a0e27b41dafd4409f115cd99d101997a6bf157f2cf2889e69"
+    }
+  ],
+  "rows": [
+    {
+      "label": "实际完整领取/阻断/原容器写前缀（不含新增描述返回接口）",
+      "typedSame": true,
+      "firstMismatch": null,
+      "nodes": 374,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": false,
+          "beforeSHA": "bb74814164ceaa303ecff5ab64f200b0cf66012a4a03cbd2abc1e6156e0fae97",
+          "mappedSHA": "e7fd5fda9286b6b38dcfcc2ef515e129aedf35b6635f704b293fef8b4f80871f"
+        },
+        {
+          "module": "CommonJS",
+          "same": false,
+          "beforeSHA": "bb74814164ceaa303ecff5ab64f200b0cf66012a4a03cbd2abc1e6156e0fae97",
+          "mappedSHA": "e7fd5fda9286b6b38dcfcc2ef515e129aedf35b6635f704b293fef8b4f80871f"
+        }
+      ]
+    },
+    {
+      "label": "实际完整 applied/事实发布程序",
+      "typedSame": true,
+      "firstMismatch": null,
+      "nodes": 143,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSHA": "bedfc0ec7e6213a9d6b11719a3b1c4beb27a189c255ae607c6ac483fd2a61053",
+          "mappedSHA": "bedfc0ec7e6213a9d6b11719a3b1c4beb27a189c255ae607c6ac483fd2a61053"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSHA": "bedfc0ec7e6213a9d6b11719a3b1c4beb27a189c255ae607c6ac483fd2a61053",
+          "mappedSHA": "bedfc0ec7e6213a9d6b11719a3b1c4beb27a189c255ae607c6ac483fd2a61053"
+        }
+      ]
+    },
+    {
+      "label": "完整后置元数据构造的独立字面契约",
+      "typedSame": true,
+      "firstMismatch": null,
+      "nodes": 62,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": false,
+          "beforeSHA": "7819c354d9eb8107483a89b911e20729b986200f7904fc3dd630a2b3f790f631",
+          "mappedSHA": "08de06b79cd8f4c1fe92b35b55a88532577610675688b456eb34dec5cc35601f"
+        },
+        {
+          "module": "CommonJS",
+          "same": false,
+          "beforeSHA": "7819c354d9eb8107483a89b911e20729b986200f7904fc3dd630a2b3f790f631",
+          "mappedSHA": "08de06b79cd8f4c1fe92b35b55a88532577610675688b456eb34dec5cc35601f"
+        }
+      ]
+    },
+    {
+      "label": "实际保护 query 的 callee/World/惰性target/seen完整次序",
+      "typedSame": true,
+      "firstMismatch": null,
+      "nodes": 40,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSHA": "05e7d903988dea49c36c72370c06296794b561754f21b5532b67360f10425dba",
+          "mappedSHA": "05e7d903988dea49c36c72370c06296794b561754f21b5532b67360f10425dba"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSHA": "05e7d903988dea49c36c72370c06296794b561754f21b5532b67360f10425dba",
+          "mappedSHA": "05e7d903988dea49c36c72370c06296794b561754f21b5532b67360f10425dba"
+        }
+      ]
+    },
+    {
+      "label": "通用接线完整现体：准备与描述读前缀",
+      "typedSame": false,
+      "firstMismatch": {
+        "path": [
+          1,
+          0,
+          1,
+          4,
+          1,
+          6,
+          1,
+          6,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          2,
+          1,
+          2,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          3,
+          1,
+          0,
+          1,
+          1,
+          1,
+          3
+        ],
+        "b": [
+          28,
+          ","
+        ]
+      },
+      "nodes": 300,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": false,
+          "beforeSHA": "c9c343237145b699d82b5ccec61c9999e75a9c2adde0f321653f300267d3d838",
+          "mappedSHA": "a541b295ae37a576a68476b7ce099934729674c1e022f51638f840ff160a8d5d"
+        },
+        {
+          "module": "CommonJS",
+          "same": false,
+          "beforeSHA": "c9c343237145b699d82b5ccec61c9999e75a9c2adde0f321653f300267d3d838",
+          "mappedSHA": "a541b295ae37a576a68476b7ce099934729674c1e022f51638f840ff160a8d5d"
+        }
+      ]
+    },
+    {
+      "label": "完整结算器经已核单生产者接口逆后的程序（不是当前多贡献运行二进制）",
+      "typedSame": true,
+      "firstMismatch": null,
+      "nodes": 8569,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSHA": "2fa7023f885f2bcf3b9041fd3ac301781bea8b88a734b19745fd0a6aca64ad97",
+          "mappedSHA": "2fa7023f885f2bcf3b9041fd3ac301781bea8b88a734b19745fd0a6aca64ad97"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSHA": "1e79f285c143b5a2877167a211d08d3d720ec6ac55dd053a4375ac4b63bd8f64",
+          "mappedSHA": "1e79f285c143b5a2877167a211d08d3d720ec6ac55dd053a4375ac4b63bd8f64"
+        }
+      ]
+    },
+    {
+      "label": "生产者新增闭包/late命令装配完整体",
+      "typedSame": true,
+      "firstMismatch": null,
+      "nodes": 65,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": false,
+          "beforeSHA": "4030f54015f73e46c4e5a81f9412caf689da91dd897525e089db3190774dd113",
+          "mappedSHA": "57728732288b44a4bb88f8d7649ce5ee7ff26e42a96f2886ff01b1b1667b0bba"
+        },
+        {
+          "module": "CommonJS",
+          "same": false,
+          "beforeSHA": "4030f54015f73e46c4e5a81f9412caf689da91dd897525e089db3190774dd113",
+          "mappedSHA": "57728732288b44a4bb88f8d7649ce5ee7ff26e42a96f2886ff01b1b1667b0bba"
+        }
+      ]
+    },
+    {
+      "label": "完整真实 producer 原条件/绑定/旗标读序",
+      "typedSame": true,
+      "firstMismatch": null,
+      "nodes": 438,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSHA": "a5ce2ebf2d078656d66c2a91da4667ae722b3e85f87de4844dce8db98ec4ccb0",
+          "mappedSHA": "a5ce2ebf2d078656d66c2a91da4667ae722b3e85f87de4844dce8db98ec4ccb0"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSHA": "7f7e4f39873c436d544f29ac541fc6b76fc72b2f6a33934c62e892090c11f43e",
+          "mappedSHA": "7f7e4f39873c436d544f29ac541fc6b76fc72b2f6a33934c62e892090c11f43e"
+        }
+      ]
+    },
+    {
+      "label": "完整 Registry 仅结果字段/类型接口逆；每hook提交和聚合未屏蔽",
+      "typedSame": true,
+      "firstMismatch": null,
+      "nodes": 1341,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSHA": "ef624cb215826796e9243fe90b51899bf33278e3edafe740d617db658a94379d",
+          "mappedSHA": "ef624cb215826796e9243fe90b51899bf33278e3edafe740d617db658a94379d"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSHA": "fe42df7bfd775a727b156a7ffbe2e183bd1e1e20c38b73c27e3a558a8adf0573",
+          "mappedSHA": "fe42df7bfd775a727b156a7ffbe2e183bd1e1e20c38b73c27e3a558a8adf0573"
+        }
+      ]
+    },
+    {
+      "label": "契约职责时点末中文说明：完整非注释/双输出",
+      "typedSame": true,
+      "firstMismatch": null,
+      "nodes": 223,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "same": true,
+          "beforeSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+          "mappedSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "module": "CommonJS",
+          "same": true,
+          "beforeSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230",
+          "mappedSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "sha256": "298a4bb9105bf9fae457b0de7e9a358fe2571d617f8ab5b2d4116943cc02af3a",
+      "actualWorkingSameGit": true,
+      "currentSHA": "298a4bb9105bf9fae457b0de7e9a358fe2571d617f8ab5b2d4116943cc02af3a",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/state.ts",
+      "sha256": "d040dd3bc528648a07ed6cd26db1656bc86d218cfde462587e89bb4c031bb4a1",
+      "actualWorkingSameGit": true,
+      "currentSHA": "d040dd3bc528648a07ed6cd26db1656bc86d218cfde462587e89bb4c031bb4a1",
+      "same": true
+    },
+    {
+      "path": "backend/src/core/domain/dream-night-effects.ts",
+      "sha256": "fe8cd205bb2b03b7734d971b8ca4130c2d33569e1adc5fa232e6a2ab50e18b98",
+      "actualWorkingSameGit": true,
+      "currentSHA": "fe8cd205bb2b03b7734d971b8ca4130c2d33569e1adc5fa232e6a2ab50e18b98",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts",
+      "sha256": "134e7e639d0d1a59e67c14ec2dd0a00f7b084b66d4443cbe15bd22f1090c034e",
+      "actualWorkingSameGit": true,
+      "currentSHA": "134e7e639d0d1a59e67c14ec2dd0a00f7b084b66d4443cbe15bd22f1090c034e",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/engine/event_registry.ts",
+      "sha256": "b0fca96b021813bc196248f9c715e444649bab28c4939b8cc66521d4efae8c16",
+      "actualWorkingSameGit": true,
+      "currentSHA": "b0fca96b021813bc196248f9c715e444649bab28c4939b8cc66521d4efae8c16",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_shot.ts",
+      "sha256": "3e1ab1b1d0b5f98cc9e7e70f67d3a4fbf63c8b0f27d101c7a55fbb5ad4c92adb",
+      "actualWorkingSameGit": true,
+      "currentSHA": "3e1ab1b1d0b5f98cc9e7e70f67d3a4fbf63c8b0f27d101c7a55fbb5ad4c92adb",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gift_gun_death_hook.ts",
+      "sha256": "ca561e4b5ca761ca92eb651672d092c563fb7ffb1a97a505c6922f18b73bb72d",
+      "actualWorkingSameGit": true,
+      "currentSHA": "ca561e4b5ca761ca92eb651672d092c563fb7ffb1a97a505c6922f18b73bb72d",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-beauty/trigger-receipts.test.ts",
+      "sha256": "a328229a688ca3e5e4cb2182f47a232e9578d93b742ec93f9756c94377d54036",
+      "actualWorkingSameGit": true,
+      "currentSHA": "a328229a688ca3e5e4cb2182f47a232e9578d93b742ec93f9756c94377d54036",
+      "same": true
+    }
+  ],
+  "counts": {
+    "regions": 10,
+    "nodes": 11555,
+    "outputs": 20
+  },
+  "limits": [
+    "新增通用运行描述、生命周期callback及私有布局是显式API变化；完整现体验证之后的单一真实Wolf生产者逆，不代表任意外部多贡献行为原本存在。",
+    "每hook同步准备/实际mark/publication/aggregate原位，原机制资格/付款/夜flag规则不迁；literal metadata与完整保护query另强核。",
+    "旧class、CharmDeathWaveTrigger publictype、DeathHookResult.charmLinks退休；旧3case实际API输入/2退休字段断言变化明列，不把它们声称全程序相同。"
+  ]
+}

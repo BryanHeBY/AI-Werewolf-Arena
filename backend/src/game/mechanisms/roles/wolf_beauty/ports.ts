@@ -17,5 +17,4 @@ export type {
   CharmProtectionReceipt,
 } from "./relation";
 
-export { WolfBeautyDeathWavePublication } from "./death-wave-publication";
-export type { CharmDeathWaveTrigger } from "./death-wave-publication";
+export { createWolfBeautyDeathContribution } from "./death-wave-publication";

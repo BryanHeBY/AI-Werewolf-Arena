@@ -14,7 +14,7 @@ import {
 import { World } from "../../../core/domain/world";
 import { getDefaultRoleCatalog } from "../roles/role-catalog-assembly";
 import type { NightLifeScope } from "../../../core/domain/night_effects";
-import type { CharmBinding } from "../roles/wolf_beauty/relation";
+import type { DeathWaveContribution } from "./death-wave-contribution";
 import { giftGunDeathHook } from "../roles/gift_gun_death_hook";
 import { resolveWildChildDeathWave } from "../roles/wild_child/ports";
 
@@ -50,7 +50,8 @@ export interface DeathHookResult {
     event: GameEvent;
     isCurrent?: () => boolean;
   }>;
-  charmLinks?: Array<{ binding: CharmBinding; nightEffect: boolean }>;
+  /** 每 hook 同步消费的本族运行贡献；具体绑定／回执不属于通用结果。 */
+  deathWaveContributions?: DeathWaveContribution[];
 }
 export interface DeathHookContext {
   readonly deathOriginPhase?: Phase;
@@ -135,7 +136,8 @@ export class HookRegistry {
         (aggregated.nightEffectTargets ??= []).push(...result.nightEffectTargets);
       if (result.pendingShots?.length)
         (aggregated.pendingShots ??= []).push(...result.pendingShots);
-      if (result.charmLinks?.length) (aggregated.charmLinks ??= []).push(...result.charmLinks);
+      if (result.deathWaveContributions?.length)
+        (aggregated.deathWaveContributions ??= []).push(...result.deathWaveContributions);
       for (const [id, marks] of Object.entries(result.extraDeathSources)) {
         aggregated.extraDeathSources[Number(id)] = [
           ...new Set([...(aggregated.extraDeathSources[Number(id)] ?? []), ...marks]),

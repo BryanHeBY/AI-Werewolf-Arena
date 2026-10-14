@@ -1,0 +1,68 @@
+{
+  "tests": {
+    "chunk": "ecc539",
+    "exitCode": 0,
+    "cases": 6,
+    "newCases": 3,
+    "apiMigratedCases": 3,
+    "assertions": 50,
+    "log": "docs/refactor/generated/typed-death-contribution-tests.log",
+    "logProvenance": "首次命令未重定向，此日志是原实际工具输出的逐字持久复制；未重跑绿例。"
+  },
+  "originalPrecise": {
+    "chunk": "0234fb",
+    "exitCode": 0,
+    "cases": 1,
+    "assertions": 7,
+    "filtered": 5,
+    "log": "docs/refactor/generated/typed-death-contribution-original-case.log"
+  },
+  "types": {
+    "launch": "d2937f",
+    "session": 24092,
+    "terminal": "bc5b67",
+    "exitCode": 0,
+    "roots": 8,
+    "log": "docs/refactor/generated/typed-death-contribution-types.log"
+  },
+  "heads": {
+    "first": "33eec5",
+    "firstExitCode": 1,
+    "firstSources": 8,
+    "firstDiagnostics": 1,
+    "failedOnly": "a5f792",
+    "failedOnlyExitCode": 0,
+    "failedOnlySources": 1,
+    "diagnostics": 0,
+    "chineseHeads": 8,
+    "docsAtCheck": 971
+  },
+  "proof": {
+    "first": "edfbd1",
+    "firstExitCode": 1,
+    "second": "f631e7",
+    "secondExitCode": 1,
+    "reason": "独立字面接线模板遗漏真实排版尾逗号，且首验收误要求布局原始字节相同；保首/第二报告，未改生产玩法以求绿。",
+    "final": "34f438",
+    "finalExitCode": 0,
+    "regions": 10,
+    "typedNodes": 11557,
+    "wholeOutputs": 20,
+    "wholeEmittedTreesSame": 20,
+    "rawOutputsSame": 12,
+    "rawOutputsDifferent": 8
+  },
+  "bindingsGraph": {
+    "chunk": "0dcdc0",
+    "exitCode": 0,
+    "modules": 49,
+    "commands": 2,
+    "controls": 8,
+    "reversePaths": 0
+  },
+  "limits": [
+    "原3API测试真正变更输入接口，退休字段断言实际替换；不声称这些测试完整字节等价。",
+    "两次执行各不重复，6+1=7不同有限case/57断言；未全类型/gate/整局/模型/网络。",
+    "type终态来自真实poll，不凭空日志；之后只有契约说明与恢复DR原无关排版，不重编译。"
+  ]
+}

@@ -66,11 +66,6 @@ import { GameActionRequestFactory } from "./action_request_factory";
 import { EventRegistry } from "./event_registry";
 import type { DreamNightEffects } from "../../core/domain/dream-night-effects";
 import {
-  attemptCharmTrigger,
-  commitCharmDeath,
-  WolfBeautyDeathWavePublication,
-} from "../mechanisms/roles/wolf_beauty/ports";
-import {
   captureDeathShotEligibility,
   firstDeathGuns,
   finishDeathGuns,
@@ -102,16 +97,6 @@ export class DeathResolution {
       get phase() {
         return resolution.state.phase;
       },
-    });
-  })();
-  // 仅捕获结算器；关系领取／标死后发布各自在原调用点读取 World 与事件，不缓存保护或资源。
-  private readonly wolfBeautyDeathWave = (() => {
-    const resolution = this;
-    return new WolfBeautyDeathWavePublication({
-      get world() { return resolution.world; },
-      get events() { return resolution.events; },
-      get attemptCharmTrigger() { return attemptCharmTrigger; },
-      get commitCharmDeath() { return commitCharmDeath; },
     });
   })();
   private readonly lastWordsMechanism = getDefaultLastWordsMechanism();
@@ -500,17 +485,42 @@ export class DeathResolution {
                 let newlyMarked = false;
                 const marked: number[] = [];
                 const additionalReceipts: DeathCommitReceipt[] = [];
-                const charmTriggers = this.wolfBeautyDeathWave.prepare(
-                  result,
-                  proposed,
-                  proposedSources,
-                  nightTargets,
-                  allSources,
-                  nativeHunterShotTargets,
-                  seen,
-                  nightEffects,
+                // 每个 hook 的贡献在原准备点同步完成；描述只影响追加原因和公开关联，不授予标死权限。
+                const resolution = this;
+                const preparedContributions = (result.deathWaveContributions ?? []).map(
+                  (contribution) =>
+                    contribution.prepare(
+                      {
+                        get world() {
+                          return resolution.world;
+                        },
+                        get events() {
+                          return resolution.events;
+                        },
+                        blocksNightLinkedDeath: (target) =>
+                          nightEffects?.dreams?.blocksNightCharm(this.world, target(), seen),
+                      },
+                      proposed,
+                      proposedSources,
+                      nightTargets,
+                      allSources,
+                      nativeHunterShotTargets,
+                      seen,
+                    ),
                 );
-                const charmTargets = new Set(charmTriggers.map(({ binding }) => binding.targetId));
+                const contributedCauses = new Map<EntityId, readonly DeathCause[]>();
+                const publicContributionTargets = new Set<EntityId>();
+                for (const contribution of preparedContributions)
+                  for (const linkedDeath of contribution.linkedDeaths) {
+                    contributedCauses.set(linkedDeath.targetId, [
+                      ...new Set([
+                        ...(contributedCauses.get(linkedDeath.targetId) ?? []),
+                        ...linkedDeath.addedCauses,
+                      ]),
+                    ]);
+                    if (linkedDeath.publicAdditionalDeath)
+                      publicContributionTargets.add(linkedDeath.targetId);
+                  }
                 for (const id of nightTargets) nightOrigin.add(id);
                 if (nightEffects?.dreams && nightTargets.length)
                   for (const id of nightEffects.dreams.linkedDeaths(
@@ -573,9 +583,9 @@ export class DeathResolution {
                         allSources[id] = [
                           ...new Set([...(allSources[id] ?? []), DeathCause.Dream]),
                         ];
-                      if (charmTargets.has(id))
+                      if (contributedCauses.has(id))
                         allSources[id] = [
-                          ...new Set([...(allSources[id] ?? []), DeathCause.Charm]),
+                          ...new Set([...(allSources[id] ?? []), ...contributedCauses.get(id)!]),
                         ];
                       continue;
                     }
@@ -632,7 +642,7 @@ export class DeathResolution {
                       receipt.recordPublication(shot.event, [id]);
                     }
                     if (
-                      charmTargets.has(id) ||
+                      publicContributionTargets.has(id) ||
                       (linked.has(id) && !result.extraDeaths.includes(id)) ||
                       (!shot && !(proposedSources[id] ?? []).includes(DeathCause.Shot))
                     )
@@ -674,7 +684,9 @@ export class DeathResolution {
                       );
                     this.fragrantDeathWave.publishVisibleWave(fragrantGun, event);
                   }
-                  this.wolfBeautyDeathWave.publish(charmTriggers);
+                  // 只在原标死／公开追加事实之后交回本族发布；异常保留前缀并阻止后续 hook。
+                  for (const contribution of preparedContributions)
+                    contribution.publishAfterDeaths();
                   nightEffects?.dreams?.recordDeaths([...next, ...linked], this.events);
                   for (const permit of actions.permits.splice(0)) permit.close();
                 } finally {

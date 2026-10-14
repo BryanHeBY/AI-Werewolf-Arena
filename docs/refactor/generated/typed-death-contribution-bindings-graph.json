@@ -1,0 +1,328 @@
+{
+  "base": "b6d4a7adf96eee0130540b7b4e25e853b144471f",
+  "commands": [
+    {
+      "name": "attemptCharmTrigger",
+      "producerValueImportPhysical": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "ownerTypeOnlyPhysical": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "originalEnginePortPhysical": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "originalFunctionBodySHA": "2c55c147aba751730648857fbc3a35caebf0490edcc59cb8c59c480950038cef",
+      "samePhysicalBinding": true
+    },
+    {
+      "name": "commitCharmDeath",
+      "producerValueImportPhysical": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "ownerTypeOnlyPhysical": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "originalEnginePortPhysical": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "originalFunctionBodySHA": "3fcd88e74160fc1b3006e83587acc96409d86530eb759c2d40c6a58b7c9cd8e5",
+      "samePhysicalBinding": true
+    }
+  ],
+  "publicFactory": {
+    "port": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+    "physical": "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts",
+    "sameFunctionExport": true
+  },
+  "ownerNamedImports": [
+    {
+      "name": "DeathCause",
+      "imported": "DeathCause",
+      "specifier": "@ai-werewolf-arena/game-contract",
+      "typeOnly": false
+    },
+    {
+      "name": "EntityId",
+      "imported": "EntityId",
+      "specifier": "@ai-werewolf-arena/game-contract",
+      "typeOnly": true
+    },
+    {
+      "name": "DeathWaveContribution",
+      "imported": "DeathWaveContribution",
+      "specifier": "../../hooks/death-wave-contribution",
+      "typeOnly": true
+    },
+    {
+      "name": "attemptCharmTrigger",
+      "imported": "attemptCharmTrigger",
+      "specifier": "./relation",
+      "typeOnly": true
+    },
+    {
+      "name": "commitCharmDeath",
+      "imported": "commitCharmDeath",
+      "specifier": "./relation",
+      "typeOnly": true
+    },
+    {
+      "name": "CharmBinding",
+      "imported": "CharmBinding",
+      "specifier": "./relation",
+      "typeOnly": true
+    },
+    {
+      "name": "CharmClaimReceipt",
+      "imported": "CharmClaimReceipt",
+      "specifier": "./relation",
+      "typeOnly": true
+    }
+  ],
+  "producerOriginalFunctions": [
+    "activeCharm",
+    "permitsCharm",
+    "getWolfBeautyState",
+    "animalBeautyLinkBlocked"
+  ],
+  "retiredAPI": {
+    "DeathHookResult": "charmLinks",
+    "class": "WolfBeautyDeathWavePublication",
+    "publicType": "CharmDeathWaveTrigger",
+    "oldClassReferences": [
+      "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts",
+      "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+      "backend/src/game/engine/death_resolution.ts",
+      "backend/tests/unit/features/wolf-beauty/death-wave-publication.test.ts"
+    ]
+  },
+  "graph": {
+    "entry": "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts",
+    "modules": 49,
+    "edges": {
+      "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts": [
+        "packages/game-contract/src/index.ts"
+      ],
+      "packages/game-contract/src/index.ts": [
+        "packages/game-contract/src/identity.ts",
+        "packages/game-contract/src/role-ids.ts",
+        "packages/game-contract/src/locale.ts",
+        "packages/game-contract/src/event-ids.ts",
+        "packages/game-contract/src/inert-event-data.ts",
+        "packages/game-contract/src/outcomes.ts",
+        "packages/game-contract/src/inspection.ts",
+        "packages/game-contract/src/errors.ts",
+        "packages/game-contract/src/death-facts.ts",
+        "packages/game-contract/src/results.ts",
+        "packages/game-contract/src/message-ids.ts",
+        "packages/game-contract/src/facts/scholar-mentor.ts",
+        "packages/game-contract/src/facts/time-consort.ts",
+        "packages/game-contract/src/facts/wolf-sorcerer.ts",
+        "packages/game-contract/src/facts/trickster.ts",
+        "packages/game-contract/src/facts/order-prince.ts",
+        "packages/game-contract/src/facts/magician.ts",
+        "packages/game-contract/src/board-policy-identifiers.ts",
+        "packages/game-contract/src/boards.ts",
+        "packages/game-contract/src/board-schema.ts",
+        "packages/game-contract/src/actions.ts",
+        "packages/game-contract/src/facts/nightmare.ts",
+        "packages/game-contract/src/facts/red-moon.ts",
+        "packages/game-contract/src/facts/demon-hunter.ts",
+        "packages/game-contract/src/facts/radiant-eclipse.ts",
+        "packages/game-contract/src/facts/mist-raven.ts",
+        "packages/game-contract/src/facts/noble-secret-body.ts",
+        "packages/game-contract/src/facts/fragrant-pair-seer.ts",
+        "packages/game-contract/src/facts/animal-dream.ts",
+        "packages/game-contract/src/facts/cupid.ts",
+        "packages/game-contract/src/facts/debate.ts",
+        "packages/game-contract/src/facts/ghost-bride.ts",
+        "packages/game-contract/src/facts/thief.ts",
+        "packages/game-contract/src/facts/shapeshifter.ts",
+        "packages/game-contract/src/facts/wild-child.ts",
+        "packages/game-contract/src/facts/lonely-girl.ts",
+        "packages/game-contract/src/facts/wall-notes.ts",
+        "packages/game-contract/src/events.ts",
+        "packages/game-contract/src/requests.ts",
+        "packages/game-contract/src/facts/hybrid.ts",
+        "packages/game-contract/src/facts/awakened.ts",
+        "packages/game-contract/src/facts/mechanical.ts",
+        "packages/game-contract/src/facts/merchant.ts",
+        "packages/game-contract/src/facts/death-ability.ts",
+        "packages/game-contract/src/facts/black-market.ts",
+        "packages/game-contract/src/request-version.ts",
+        "packages/game-contract/src/presentation-version.ts"
+      ],
+      "packages/game-contract/src/identity.ts": [],
+      "packages/game-contract/src/role-ids.ts": [
+        "packages/game-contract/src/identity.ts"
+      ],
+      "packages/game-contract/src/locale.ts": [],
+      "packages/game-contract/src/event-ids.ts": [],
+      "packages/game-contract/src/inert-event-data.ts": [],
+      "packages/game-contract/src/outcomes.ts": [],
+      "packages/game-contract/src/inspection.ts": [],
+      "packages/game-contract/src/errors.ts": [],
+      "packages/game-contract/src/death-facts.ts": [],
+      "packages/game-contract/src/results.ts": [],
+      "packages/game-contract/src/message-ids.ts": [],
+      "packages/game-contract/src/facts/scholar-mentor.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/time-consort.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/wolf-sorcerer.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/trickster.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/order-prince.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/magician.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/board-policy-identifiers.ts": [],
+      "packages/game-contract/src/boards.ts": [
+        "packages/game-contract/src/event-ids.ts"
+      ],
+      "packages/game-contract/src/board-schema.ts": [
+        "packages/game-contract/src/board-policy-identifiers.ts",
+        "packages/game-contract/src/boards.ts",
+        "packages/game-contract/src/identity.ts"
+      ],
+      "packages/game-contract/src/actions.ts": [
+        "packages/game-contract/src/identity.ts"
+      ],
+      "packages/game-contract/src/facts/nightmare.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/red-moon.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/demon-hunter.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/radiant-eclipse.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/mist-raven.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/noble-secret-body.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/fragrant-pair-seer.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/animal-dream.ts": [
+        "packages/game-contract/src/inert-event-data.ts",
+        "packages/game-contract/src/board-policy-identifiers.ts"
+      ],
+      "packages/game-contract/src/facts/cupid.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/debate.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/ghost-bride.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/thief.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/shapeshifter.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/wild-child.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/lonely-girl.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/facts/wall-notes.ts": [
+        "packages/game-contract/src/inert-event-data.ts"
+      ],
+      "packages/game-contract/src/events.ts": [],
+      "packages/game-contract/src/requests.ts": [],
+      "packages/game-contract/src/facts/hybrid.ts": [],
+      "packages/game-contract/src/facts/awakened.ts": [
+        "packages/game-contract/src/role-ids.ts"
+      ],
+      "packages/game-contract/src/facts/mechanical.ts": [
+        "packages/game-contract/src/role-ids.ts"
+      ],
+      "packages/game-contract/src/facts/merchant.ts": [],
+      "packages/game-contract/src/facts/death-ability.ts": [],
+      "packages/game-contract/src/facts/black-market.ts": [],
+      "packages/game-contract/src/request-version.ts": [],
+      "packages/game-contract/src/presentation-version.ts": []
+    },
+    "reverseChecks": [
+      {
+        "target": "backend/src/game/engine/death_resolution.ts",
+        "reachable": false
+      },
+      {
+        "target": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+        "reachable": false
+      },
+      {
+        "target": "backend/src/game/mechanisms/roles/wolf_beauty/death_hook.ts",
+        "reachable": false
+      },
+      {
+        "target": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+        "reachable": false
+      },
+      {
+        "target": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+        "reachable": false
+      }
+    ],
+    "reachableAI": [],
+    "external": [
+      "zod"
+    ],
+    "limits": "只从新 owner 开始的当前可解析声明式值导入/导出及literal动态/require闭包；不是全部旧模块初始化、全仓或任意计算型导入。"
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "sha256": "298a4bb9105bf9fae457b0de7e9a358fe2571d617f8ab5b2d4116943cc02af3a",
+      "currentSha256": "298a4bb9105bf9fae457b0de7e9a358fe2571d617f8ab5b2d4116943cc02af3a",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/state.ts",
+      "sha256": "d040dd3bc528648a07ed6cd26db1656bc86d218cfde462587e89bb4c031bb4a1",
+      "currentSha256": "d040dd3bc528648a07ed6cd26db1656bc86d218cfde462587e89bb4c031bb4a1",
+      "same": true
+    },
+    {
+      "path": "backend/src/core/domain/dream-night-effects.ts",
+      "sha256": "fe8cd205bb2b03b7734d971b8ca4130c2d33569e1adc5fa232e6a2ab50e18b98",
+      "currentSha256": "fe8cd205bb2b03b7734d971b8ca4130c2d33569e1adc5fa232e6a2ab50e18b98",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts",
+      "sha256": "134e7e639d0d1a59e67c14ec2dd0a00f7b084b66d4443cbe15bd22f1090c034e",
+      "currentSha256": "134e7e639d0d1a59e67c14ec2dd0a00f7b084b66d4443cbe15bd22f1090c034e",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/engine/event_registry.ts",
+      "sha256": "b0fca96b021813bc196248f9c715e444649bab28c4939b8cc66521d4efae8c16",
+      "currentSha256": "b0fca96b021813bc196248f9c715e444649bab28c4939b8cc66521d4efae8c16",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_shot.ts",
+      "sha256": "3e1ab1b1d0b5f98cc9e7e70f67d3a4fbf63c8b0f27d101c7a55fbb5ad4c92adb",
+      "currentSha256": "3e1ab1b1d0b5f98cc9e7e70f67d3a4fbf63c8b0f27d101c7a55fbb5ad4c92adb",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gift_gun_death_hook.ts",
+      "sha256": "ca561e4b5ca761ca92eb651672d092c563fb7ffb1a97a505c6922f18b73bb72d",
+      "currentSha256": "ca561e4b5ca761ca92eb651672d092c563fb7ffb1a97a505c6922f18b73bb72d",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-beauty/trigger-receipts.test.ts",
+      "sha256": "a328229a688ca3e5e4cb2182f47a232e9578d93b742ec93f9756c94377d54036",
+      "currentSha256": "a328229a688ca3e5e4cb2182f47a232e9578d93b742ec93f9756c94377d54036",
+      "same": true
+    }
+  ]
+}

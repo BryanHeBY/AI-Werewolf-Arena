@@ -1,100 +1,101 @@
 /**
- * 负责狼美人追加死亡波的完整牵连准备及实际标死后的关系事实发布。
- * 输入为原 hook proposals、死亡名单／死因、夜间目标和原运行查询；输出为同绑定的领取回执列表，
- * 并在原位置修改提案或发布事实。relation 独自拥有原体、来源资格及 resolved/applied；
- * 领取先于梦阻断，阻断或发布失败保留已消费关系及先前写入，不退款或重触发。
- * 本模块不标死、不消费枪或遗言许可、不处理其它关系，也不推进阶段或判胜。
- * 规则来源：docs/rules/awa-wolf-beauty-v1.md。
+ * 负责狼美人批量死亡贡献的领取、梦阻断、原提案写入及实际标死后的关系事实发布。
+ * 输入为 hook 捕获的原绑定／夜间旗标，以及晚读的原命令和结算查询；输出是追加原因、
+ * 公开关联与本族发布回调。绑定和 claimed 回执只保在本闭包，不进入通用 hook 载荷或归档。
+ * relation 独自拥有 resolved／applied；先领取再保护，阻断或发布失败保留已付与已提交前缀。
+ * 本模块不标死、选择阶段、消费枪或遗言许可；规则见 docs/rules/awa-wolf-beauty-v1.md。
  */
-import { DeathCause, type DeathSources, type EntityId, type GameEvent } from "@ai-werewolf-arena/game-contract";
-import type { World } from "../../../../core/domain/world";
-import type { DreamNightEffects } from "../../../../core/domain/dream-night-effects";
-import type { attemptCharmTrigger, commitCharmDeath, CharmBinding, CharmClaimReceipt } from "./relation";
+import { DeathCause, type EntityId } from "@ai-werewolf-arena/game-contract";
+import type { DeathWaveContribution } from "../../hooks/death-wave-contribution";
+import type {
+  attemptCharmTrigger,
+  commitCharmDeath,
+  CharmBinding,
+  CharmClaimReceipt,
+} from "./relation";
 
-/** 惰性读取原运行对象；字段只读不限制 events 的原发布写权，也不是运行授权屏障或归档 DTO。 */
-interface WolfBeautyDeathWaveRuntime {
-  readonly world: World;
-  readonly events: GameEvent[];
-  /** 原命令只在每次 callee 位置获取；绑定库存与实际付款仍由 relation 拥有。 */
+interface WolfBeautyDeathCommands {
   readonly attemptCharmTrigger: typeof attemptCharmTrigger;
   readonly commitCharmDeath: typeof commitCharmDeath;
 }
 
-/** 只收本族实际 proposal；保护在领取之后才读取，不把知识、窗口或 JSON 当作死亡许可。 */
-interface CharmDeathWaveProposals {
-  readonly charmLinks?: readonly { readonly binding: CharmBinding; readonly nightEffect: boolean }[];
+/** 一次 hook 的原 proposal 数组；未领取绑定仍由唯一 relation 库存持有，不复制原体。 */
+export function createWolfBeautyDeathContribution(
+  proposals: readonly { readonly binding: CharmBinding; readonly nightEffect: boolean }[],
+  commands: WolfBeautyDeathCommands,
+): DeathWaveContribution {
+  return {
+    prepare(
+      runtime,
+      proposed,
+      proposedSources,
+      nightTargets,
+      allSources,
+      nativeHunterShotTargets,
+      seen,
+    ) {
+      const charmTriggers: CharmDeathWaveTrigger[] = [];
+      for (const proposal of proposals) {
+        const binding = proposal.binding;
+        // 具体关系 owner 在原位置领取和查询保护；延迟 World，permit 失败不新增读取。
+        // 先取原命令再裸调用，保留 callee 读取时点与 receiver；之后才求值原参数。
+        const attemptCharmTrigger = commands.attemptCharmTrigger;
+        const trigger = attemptCharmTrigger(
+          binding,
+          allSources,
+          nativeHunterShotTargets,
+          seen,
+          () => runtime.world,
+          () => proposal.nightEffect && runtime.blocksNightLinkedDeath(() => binding.targetId),
+        );
+        if (!trigger) continue;
+        if (trigger.kind === "blocked") {
+          runtime.events.push({
+            timestamp: Date.now(),
+            type: "charm_blocked",
+            payload: {
+              actorId: binding.actorId,
+              targetId: binding.targetId,
+              reason: "night_protection",
+            },
+          });
+          continue;
+        }
+        charmTriggers.push({ binding, receipt: trigger });
+        if (!proposed.includes(binding.targetId)) proposed.push(binding.targetId);
+        proposedSources[binding.targetId] = [
+          ...new Set([...(proposedSources[binding.targetId] ?? []), DeathCause.Charm]),
+        ];
+        if (proposal.nightEffect) nightTargets.push(binding.targetId);
+      }
+      // 完整批量准备之后才读目标，保持原 triggers.map 时点；内部绑定和回执不交给引擎。
+      const linkedDeaths = charmTriggers.map(({ binding }) => ({
+        targetId: binding.targetId,
+        addedCauses: [DeathCause.Charm],
+        publicAdditionalDeath: true,
+      }));
+      return {
+        linkedDeaths,
+        // 原实际标死之后才核 applied；事件失败不能撤销已 applied 或既有事件。
+        publishAfterDeaths() {
+          for (const { binding, receipt } of charmTriggers) {
+            const commitCharmDeath = commands.commitCharmDeath;
+            const applied = commitCharmDeath(runtime.world, receipt);
+            if (applied?.kind === "applied")
+              runtime.events.push({
+                timestamp: Date.now(),
+                type: "charm_death",
+                payload: { actorId: binding.actorId, targetId: binding.targetId },
+              });
+          }
+        },
+      };
+    },
+  };
 }
 
-/** 原绑定和 opaque 领取回执的运行关联，实际死亡仍须原 relation 再核原体与生命版本。 */
-export interface CharmDeathWaveTrigger {
+/** 仅在本族准备／发布闭包内传递，具体权威回执不能替代死亡提交。 */
+interface CharmDeathWaveTrigger {
   readonly binding: CharmBinding;
   readonly receipt: CharmClaimReceipt;
-}
-
-export class WolfBeautyDeathWavePublication {
-  constructor(private readonly runtime: WolfBeautyDeathWaveRuntime) {}
-
-  /** 完整原领取／阻断／提案步骤；所有容器为原引用，拒绝来源时不读取 World 或保护。 */
-  prepare(
-    result: CharmDeathWaveProposals,
-    proposed: EntityId[],
-    proposedSources: DeathSources,
-    nightTargets: EntityId[],
-    allSources: DeathSources,
-    nativeHunterShotTargets: ReadonlySet<EntityId>,
-    seen: ReadonlySet<EntityId>,
-    nightEffects?: { readonly dreams?: Readonly<Pick<DreamNightEffects, "blocksNightCharm">> },
-  ): CharmDeathWaveTrigger[] {
-    const charmTriggers: CharmDeathWaveTrigger[] = [];
-    for (const proposal of result.charmLinks ?? []) {
-      const binding = proposal.binding;
-      // 具体关系 owner 在原位置领取和查询保护；延迟 World，permit 失败不新增读取。
-      // 先取原命令再裸调用，保留 callee 读取时点与 receiver；之后才求值原参数。
-      const attemptCharmTrigger = this.runtime.attemptCharmTrigger;
-      const trigger = attemptCharmTrigger(
-        binding,
-        allSources,
-        nativeHunterShotTargets,
-        seen,
-        () => this.runtime.world,
-        () =>
-          proposal.nightEffect &&
-          nightEffects?.dreams?.blocksNightCharm(this.runtime.world, binding.targetId, seen),
-      );
-      if (!trigger) continue;
-      if (trigger.kind === "blocked") {
-        this.runtime.events.push({
-          timestamp: Date.now(),
-          type: "charm_blocked",
-          payload: {
-            actorId: binding.actorId,
-            targetId: binding.targetId,
-            reason: "night_protection",
-          },
-        });
-        continue;
-      }
-      charmTriggers.push({ binding, receipt: trigger });
-      if (!proposed.includes(binding.targetId)) proposed.push(binding.targetId);
-      proposedSources[binding.targetId] = [
-        ...new Set([...(proposedSources[binding.targetId] ?? []), DeathCause.Charm]),
-      ];
-      if (proposal.nightEffect) nightTargets.push(binding.targetId);
-    }
-    return charmTriggers;
-  }
-
-  /** 由结算器在原实际 mark 之后调用；只有 applied 才发布，发布抛错不撤销 applied 或既有事件。 */
-  publish(charmTriggers: readonly CharmDeathWaveTrigger[]): void {
-    for (const { binding, receipt } of charmTriggers) {
-      const commitCharmDeath = this.runtime.commitCharmDeath;
-      const applied = commitCharmDeath(this.runtime.world, receipt);
-      if (applied?.kind === "applied")
-        this.runtime.events.push({
-          timestamp: Date.now(),
-          type: "charm_death",
-          payload: { actorId: binding.actorId, targetId: binding.targetId },
-        });
-    }
-  }
 }

@@ -1,0 +1,23 @@
+{
+  "path": "backend/src/game/mechanisms/hooks/death-wave-contribution.ts",
+  "beforeSHA": "42a93f286f9bda2fda358e9941af5a51dba3710bc218f17ffde13d93f94c7167",
+  "afterSHA": "c68309f66ae627a86df1041af31906f3f93e5eaa606284d636a000ae7942fe78",
+  "onlyExactComment": true,
+  "nodes": 223,
+  "fullTreeAndNoncommentLeavesSame": true,
+  "outputs": [
+    {
+      "module": "ESNext",
+      "wholeBytesSame": true,
+      "beforeSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "afterSHA": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "module": "CommonJS",
+      "wholeBytesSame": true,
+      "beforeSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230",
+      "afterSHA": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+    }
+  ],
+  "meaning": "true额外公开；false不覆盖DR其它已有公开OR条件。首职责头不变，未重门禁/types/tests。"
+}

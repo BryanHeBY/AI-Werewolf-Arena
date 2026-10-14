@@ -1,0 +1,16 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/mechanisms/death-wave-contributions.test.ts:
+(pass) each real Wolf Beauty contribution marks and publishes before the next hook, whose failure keeps the prefix [38.90ms]
+(pass) a linked target already in the initial wave keeps its prior cause and adds the declared cause before later hooks [0.68ms]
+(pass) a declared-cause getter failure after real preparation keeps the paid claim but never marks its target or starts another hook [0.49ms]
+
+tests/unit/features/wolf-beauty/death-wave-publication.test.ts:
+(pass) a suppressed source refuses before runtime World, protection or publication reads [0.22ms]
+(pass) blocked publication failure keeps the paid claim and original receiver/read prefix [0.26ms]
+(pass) claimed preparation preserves container prefixes and applies only after real death even if publishing throws [0.17ms]
+
+ 6 pass
+ 0 fail
+ 50 expect() calls
+Ran 6 tests across 2 files. [138.00ms]

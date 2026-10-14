@@ -1,0 +1,10 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/features/wolf-beauty/trigger-receipts.test.ts:
+(pass) the real death hook and resolver consume a claimed receipt before publishing only actual charm death [42.09ms]
+
+ 1 pass
+ 5 filtered out
+ 0 fail
+ 7 expect() calls
+Ran 1 test across 1 file. [149.00ms]

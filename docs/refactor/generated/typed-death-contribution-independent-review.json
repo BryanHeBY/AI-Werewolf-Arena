@@ -1,0 +1,305 @@
+{
+  "approved": true,
+  "reviewer": "native_presentation_finish",
+  "base": "b6d4a7adf96eee0130540b7b4e25e853b144471f",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+      "sha256": "fd757f0e66e354cf22e15bb90cbd2b9aa8a1dde23d768d2b0e023293f7b5f68b",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/hooks/death-wave-contribution.ts",
+      "sha256": "c68309f66ae627a86df1041af31906f3f93e5eaa606284d636a000ae7942fe78",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/death_hook.ts",
+      "sha256": "9150c17a5685eaf697f8c46619f7651e9c9ea6356db5950dd5339817d495063c",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts",
+      "sha256": "d930ea069b275c2fb012ee7ab840dc7149a4381d4a23215db51eac815711ab45",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+      "sha256": "fc22dd712951cf2e9260b8248a2ae440dfcec7aef67cad0bf93e3dc1218b386e",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "e5236f48284fe7e7cb960b1d77f0fdf30aa76525cb03c683a2ac6fa182a99e09",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-beauty/death-wave-publication.test.ts",
+      "sha256": "8d47109b6336081ec74e6fe98a26c3293b7b130349eba5eb93aeb39907170e4e",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/death-wave-contributions.test.ts",
+      "sha256": "12800a98a5806e6a0e27b41dafd4409f115cd99d101997a6bf157f2cf2889e69",
+      "same": true
+    }
+  ],
+  "actualGitBefore": [
+    {
+      "path": "backend/src/game/mechanisms/hooks/hook_registry.ts",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/death_hook.ts",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/death-wave-publication.ts",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "same": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-beauty/death-wave-publication.test.ts",
+      "same": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/relation.ts",
+      "sha256": "298a4bb9105bf9fae457b0de7e9a358fe2571d617f8ab5b2d4116943cc02af3a",
+      "actualWorkingSameGit": true,
+      "currentSHA": "298a4bb9105bf9fae457b0de7e9a358fe2571d617f8ab5b2d4116943cc02af3a",
+      "same": true,
+      "sameActualGit": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf_beauty/state.ts",
+      "sha256": "d040dd3bc528648a07ed6cd26db1656bc86d218cfde462587e89bb4c031bb4a1",
+      "actualWorkingSameGit": true,
+      "currentSHA": "d040dd3bc528648a07ed6cd26db1656bc86d218cfde462587e89bb4c031bb4a1",
+      "same": true,
+      "sameActualGit": true
+    },
+    {
+      "path": "backend/src/core/domain/dream-night-effects.ts",
+      "sha256": "fe8cd205bb2b03b7734d971b8ca4130c2d33569e1adc5fa232e6a2ab50e18b98",
+      "actualWorkingSameGit": true,
+      "currentSHA": "fe8cd205bb2b03b7734d971b8ca4130c2d33569e1adc5fa232e6a2ab50e18b98",
+      "same": true,
+      "sameActualGit": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/dreamer/night_frame.ts",
+      "sha256": "134e7e639d0d1a59e67c14ec2dd0a00f7b084b66d4443cbe15bd22f1090c034e",
+      "actualWorkingSameGit": true,
+      "currentSHA": "134e7e639d0d1a59e67c14ec2dd0a00f7b084b66d4443cbe15bd22f1090c034e",
+      "same": true,
+      "sameActualGit": true
+    },
+    {
+      "path": "backend/src/game/engine/event_registry.ts",
+      "sha256": "b0fca96b021813bc196248f9c715e444649bab28c4939b8cc66521d4efae8c16",
+      "actualWorkingSameGit": true,
+      "currentSHA": "b0fca96b021813bc196248f9c715e444649bab28c4939b8cc66521d4efae8c16",
+      "same": true,
+      "sameActualGit": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/death_shot.ts",
+      "sha256": "3e1ab1b1d0b5f98cc9e7e70f67d3a4fbf63c8b0f27d101c7a55fbb5ad4c92adb",
+      "actualWorkingSameGit": true,
+      "currentSHA": "3e1ab1b1d0b5f98cc9e7e70f67d3a4fbf63c8b0f27d101c7a55fbb5ad4c92adb",
+      "same": true,
+      "sameActualGit": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/gift_gun_death_hook.ts",
+      "sha256": "ca561e4b5ca761ca92eb651672d092c563fb7ffb1a97a505c6922f18b73bb72d",
+      "actualWorkingSameGit": true,
+      "currentSHA": "ca561e4b5ca761ca92eb651672d092c563fb7ffb1a97a505c6922f18b73bb72d",
+      "same": true,
+      "sameActualGit": true
+    },
+    {
+      "path": "backend/tests/unit/features/wolf-beauty/trigger-receipts.test.ts",
+      "sha256": "a328229a688ca3e5e4cb2182f47a232e9578d93b742ec93f9756c94377d54036",
+      "actualWorkingSameGit": true,
+      "currentSHA": "a328229a688ca3e5e4cb2182f47a232e9578d93b742ec93f9756c94377d54036",
+      "same": true,
+      "sameActualGit": true
+    }
+  ],
+  "artifactChecks": [
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-before.json",
+      "sha256": "2c7752a4a39fc242c9e81b8a5ffb27bc8d404751b9cf7d3e747682d83a09293f",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-proof.cjs",
+      "sha256": "f4eb84e8b2dd4c9f41053660e7fa28c02aa9a843112fed8c93ceeda2d6f9490e",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-proof.json",
+      "sha256": "c7c673066adfe395dea4d7a5d91ac08b43560d775bee14f6c5c12f294718181d",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-proof-first.json",
+      "sha256": "e7179856f5e18089270dc86fe20eb73efa962571856389c6725551bced6a7ff1",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-proof-second.json",
+      "sha256": "93272276eb1af5b79f94dc4b39aa38b70c437d489da062c8458b3e41a32a9bae",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-bindings-graph.cjs",
+      "sha256": "68377cf4c96c3af53d612f7276e77ae71204a1b8280f7476dee2b87f9571e416",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-bindings-graph.json",
+      "sha256": "073a59f8dd7f4378422472353e7c48b94c0002fdda1dfd4d720638e3c5cdf75a",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-receipts.json",
+      "sha256": "338b6b065ba3699bdbec53eb89f7092e5a17d34bd4db4c0ba56e38d0ea5ff855",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-heads-first.json",
+      "sha256": "8868868def2b7ee53f001f0626292d42586530e1852692eebfb980915d7092b9",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-heads-failed-only.json",
+      "sha256": "929c042567b69a7f7146676f05499b3b819020955ff87e3b2065da21278d6771",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-heads.json",
+      "sha256": "d3023a80ef6e64f1da8bd3ebc3e6d7f2fc9c8a8f15ac004d8ebb42e59bc05896",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-types-config.json",
+      "sha256": "5ea2c52090a65e53014d4df8b150f80c89f17fbfd425c03f4a09f001799d2770",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-tests.log",
+      "sha256": "740b5171de5b6957cf94e3147b5b096ccda27c9d08013868c1b1c9d760645b43",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-original-case.log",
+      "sha256": "8a1e662a4931f5138bca6adc0d274048b28be93871d5b16b0832d67231887ca8",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-contract-before-comment.json",
+      "sha256": "6f6072a1cb3bdddd411b6de6c0ef87a067bc8f0fc2f5d801fc7463a08c1f1b19",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-scope-before-public-visibility-comment.json",
+      "sha256": "71cdf6ef063a09741a5c6552156745e10f247457d442f7208b84439cfa20ed42",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-public-visibility-comment-before.json",
+      "sha256": "ad1c751d6cf12c54072100fb300d0438ffea12b1f8f6d2d85523fdc1c11a7306",
+      "same": true
+    },
+    {
+      "path": "docs/refactor/generated/typed-death-contribution-public-visibility-comment-delta.json",
+      "sha256": "94c7269326eba5256b2a51ab78802991e409e9bb919b870aac7c78c31bbc6af9",
+      "same": true
+    }
+  ],
+  "independentSourceRead": {
+    "originalCompletePrepareAndPublishAlgorithms": {
+      "prepare": true,
+      "publish": true
+    },
+    "genericNoPrivateBindingsBoundary": {
+      "genericContractHasNoCharmBinding": true,
+      "engineAndRegistryHaveNoCharmSpecificRefs": true,
+      "producerOnlyRuntimeContribution": true
+    },
+    "firstReadStage": "Source/algorithm/Git/control checks completed during requested visibility comment and receipts correction. Previous freeze SHA for contract and receipts temporarily differed; not treated as gameplay regression. Final rebinding checks current8 and artifacts19 exact.",
+    "method": "Complete getChildren typed/token inspection of actual current owner prepare/publish and actual original Git algorithms, only declared runtime/query/parameter interface inverse. No repeated author emitted programs, type check, runtime cases or gate.",
+    "finalCommentDelta": {
+      "exactOnlyAddedFieldComment": true,
+      "beforeSHA": "42a93f286f9bda2fda358e9941af5a51dba3710bc218f17ffde13d93f94c7167",
+      "afterSHA": "c68309f66ae627a86df1041af31906f3f93e5eaa606284d636a000ae7942fe78",
+      "otherSevenSourceBytesSame": true,
+      "authorReceipt": "3c753d",
+      "author223NodesAndTwoWholeOutputsSame": true
+    }
+  },
+  "findings": [
+    {
+      "kind": "documentation_precision",
+      "status": "closed_by_author",
+      "detail": "Six new/API cases and one original case ran in two separate executions without repetition; MD and receipts now expressly state two executions, seven different cases/57 assertions."
+    },
+    {
+      "kind": "contract_semantics_comment",
+      "status": "closed_by_author_comment_only",
+      "detail": "publicAdditionalDeath true additionally includes a target. False does not veto the original dream/noShot OR publication routes. Field-local Chinese comment and MD now accurately state this; no algorithm changed."
+    }
+  ],
+  "semantics": {
+    "perHookOrder": "Registry retains current check, await original hook, synchronous additional-death callback, aggregation including ordered contributions, then next hook. There is no extra await, deferred all-hook batch, snapshot, error swallowing or rollback.",
+    "ownerAndResources": "Current only producer Wolf Beauty owns proposals/bindings/night flag and claimed receipts in its closure. Original relation WeakMap/raw life/version/source policy and resolved/applied writes stay unique; new generic types do not create a store or permission.",
+    "prepareReadOrder": "Native permission refusal still precedes World/protection. Command getter is read at callee position and invoked bare. Claim is paid before protection. Dream optional method/receiver precedes World then lazy binding.targetId and seen; false native night flag skips protection. Original proposed/source/nightTargets writes and post-full-batch targets.map read remain in place.",
+    "DRMergeAndMark": "Native linked deaths declare only original Charm cause and extra-public flag. next/seen/settled handling, independent Lovers/Dream causes, shots and animal filtering, origin phases, actual DeathCommitter marks, receipts, inheritance and publication preserve their original order. General contribution indexes are new trusted runtime data; they do not grant mark permission or validate arbitrary JSON.",
+    "publicationAndFailure": "After actual marks/public additional facts, native callback uses original relation commit to check claimed identity and target death before applied/event publication. Preparation/cause getter/publication failure retains paid claim, already committed deaths/facts/applied state and stops the next hook. Original dream record, permits.close and fragrant/gun finally retain their ordering.",
+    "APIAndPrivacy": "DeathHookResult.charmLinks, old class prepare/publish and exported CharmDeathWaveTrigger and DR private field retire explicitly. Engine/hooks no longer hold CharmBinding or receipts; prepared descriptions and callbacks are internal runtime values, not player DTOs, proof brands or serializable replay schema. Family-specific CharmBinding public type remains only for its actual family consumers.",
+    "tests": "Read all six new/API-migrated literal cases plus actual original resolver log. Tests use real binding/World/life; throw prefixes and order expectations are handwritten. Old two retired-result assertions intentionally change representation rather than claim full test-body equality.",
+    "chineseComments": "Heads and important callback/claim/mark/visibility comments accurately separate family payment and privileges, state-free descriptive indexes, synchronous checkpoints, failure prefixes and JSON boundaries. Visibility precision is now closed."
+  },
+  "authorEvidenceRead": {
+    "proof": "Final10 complete regions11557 nodes/20 whole emitted trees same, with12 raw same and8 layout raw different preserved. All children traversed with void callbacks; complete generic driver/new metadata/protection query separately compared before the explicit single-native-producer interface inverse for DR. No restored entire old DR body.",
+    "types": "8roots d2937f/session24092→bc5b67 actual0; later edits only field comment/unchanged body formatting, no repeated compilation.",
+    "runtime": "ecc539 six distinct new/API cases50 assertions;0234fb one original resolver7 assertions/5filtered; two actual executions, no repeat or full suite.",
+    "headers": "First8-head check one missing timing descriptor; failed-only1-source recheck0, Chinese8;971 doc inputs. Shape checks are author receipts rather than proof of semantic accuracy.",
+    "boundedGraph": "Actual owner has only GC enum value import, all commands/hook contract are type-only imports and injected late queries.49 reachable value modules/no returnDR/hooks/producer/ports/relation/AI; two actual command endpoints and8 unchanged controls read. No full historical, npm or calculated dynamic import claim.",
+    "redStages": "First/second template trailing-comma and raw layout proof failures retained. Final accepting equal whole emitted trees does not conceal the actual8 raw differences."
+  },
+  "limits": [
+    "No source edit by reviewer and no runtime/types/gate/models/author whole-emission proof rerun.",
+    "Single current native producer behavior is preserved; no claim arbitrary new external multi-contributor code or retired charmLinks monkey patch API is equivalent.",
+    "No new schema/refusal/payment/death/visibility policy; full I03/P5 and other role relation boundaries remain incomplete.",
+    "Earlier head/proof/type/runtime receipts keep their pre-comment source stage; final only-comment bridge and fresh SHA are separate."
+  ],
+  "documentation": {
+    "path": "docs/refactor/typed-death-contribution.md",
+    "sha256": "dba63868caa9e4c0074e1a174f23ae75db35c392b886793c56e23684e962b3da"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/typed-death-contribution-evidence.json",
+    "sha256": "0c4f073fca02d8feb87d48ec76b73eb235dd687def3d01e7097c572efb78d5d3"
+  },
+  "scopeArtifact": {
+    "path": "docs/refactor/generated/typed-death-contribution-scope-final.json",
+    "sha256": "5632e014e4aeb97199b480dcdeeb25e0ce36aed791d040feb452ac4d9bf32dd9"
+  }
+}
