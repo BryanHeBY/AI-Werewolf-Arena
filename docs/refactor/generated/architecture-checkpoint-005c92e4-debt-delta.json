@@ -1,0 +1,217 @@
+{
+  "previousFixedCommit": "5d42b6f866bb91a3fcb0deac88efd618397ba051",
+  "currentFixedCommit": "005c92e4a29aec3fb8c0985cc792ed027190debd",
+  "previousReport": {
+    "path": "docs/refactor/generated/architecture-checkpoint-5d42b6f8-report.json",
+    "sha256": "45d8627fa20e9d2322fc606b1cd6b3547f8f9c625f3bc5cbe22a4beb01c2e357",
+    "counts": {
+      "files": 3172,
+      "violations": 321,
+      "failures": 0,
+      "remainingDebt": 321,
+      "clearedDebt": 1458
+    }
+  },
+  "currentReport": {
+    "path": "docs/refactor/generated/architecture-checkpoint-005c92e4-report.json",
+    "sha256": "16f57e44c534d215718d0292217e0cecccb0888140bebc6e00363131f0e3b300",
+    "counts": {
+      "files": 3177,
+      "violations": 300,
+      "failures": 0,
+      "remainingDebt": 300,
+      "clearedDebt": 1479
+    }
+  },
+  "newlyClearedOriginalDebtCount": 21,
+  "newlyClearedOriginalDebt": [
+    {
+      "id": "1319069214c7de50342ca0f9e7e27d8e149e1cd2973a8a1fe894d0e17faa20dd",
+      "rule": "comment.boundary",
+      "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "adapter head lacks its boundary contract."
+    },
+    {
+      "id": "384e69c622a9e6ea0efcf15fa9eb51dd4f25c4d6be575b7502be312d4486f7d2",
+      "rule": "comment.input",
+      "path": "backend/src/ai/agents/player/prompt_templates.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its input contract."
+    },
+    {
+      "id": "3cf6c7aaec45d8113aede5142e8c328af204b52d10909606b6c026d7f138436a",
+      "rule": "comment.cancellation",
+      "path": "backend/src/ai/integrations/index.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "adapter head lacks its cancellation contract."
+    },
+    {
+      "id": "41a8a7d2645eab0f273b9aa3970d1c1637de23ddc0ab010c54a7140e31b54a85",
+      "rule": "dependency.engine-feature",
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "line": 90,
+      "column": 1,
+      "detail": "Engine timing imports concrete feature rather than an extension contract.",
+      "specifier": "../../mechanisms/roles/ghost_bride/night_stages",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:discardStaleWeddingKnife\"]}",
+      "target": "backend/src/game/mechanisms/roles/ghost_bride/night_stages.ts"
+    },
+    {
+      "id": "5cf0f1d307455d407774d71a55648f0619501b953343e06d42ce394f70ad64a6",
+      "rule": "comment.first-paragraph",
+      "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "First substantive paragraph does not name a responsibility."
+    },
+    {
+      "id": "60c2140e56a4a21e0af97b3fd6afe6c7c1512c8b0d01a1515e390296b3b3fecb",
+      "rule": "comment.responsibility",
+      "path": "backend/src/ai/agents/player/prompt_templates.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its responsibility contract."
+    },
+    {
+      "id": "6f5a077b6b9c5dfbd9767850db4137fa9291355eab6a13646f2ea79a07592c7c",
+      "rule": "comment.output",
+      "path": "backend/src/ai/agents/player/prompt_templates.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its output contract."
+    },
+    {
+      "id": "8db1ef60bba1b020e91d7397d9c9c7fd83a769832e78e76246c6aff071776178",
+      "rule": "comment.sideEffect",
+      "path": "backend/src/ai/integrations/index.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "adapter head lacks its sideEffect contract."
+    },
+    {
+      "id": "9ded9e0b9ffacf94795be43520e2f12d722c5cc740dcca7d10e7e91e1638d792",
+      "rule": "comment.first-paragraph",
+      "path": "backend/src/ai/integrations/index.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "First substantive paragraph does not name a responsibility."
+    },
+    {
+      "id": "a0bae618ecf58f58136d46fdd8655370db7e14d4ff989fb5db7f3331810c3f1d",
+      "rule": "comment.boundary",
+      "path": "backend/src/ai/agents/player/prompt_templates.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "behavior head lacks its boundary contract."
+    },
+    {
+      "id": "ae36d017f802f0da4ff4c27c1863d2d4faa3634ac4a214d1f5b8209a6b7acd93",
+      "rule": "comment.responsibility",
+      "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "adapter head lacks its responsibility contract."
+    },
+    {
+      "id": "b0e9236b96ee01e16f9919fdf104185d72223b4941a4987cef2fa567dd50997c",
+      "rule": "dependency.engine-feature",
+      "path": "backend/src/game/engine/self_destruct_window.ts",
+      "line": 2,
+      "column": 1,
+      "detail": "Engine timing imports concrete feature rather than an extension contract.",
+      "specifier": "../mechanisms/roles/demon_hunter/authority",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:demonRedMoonCanBlast\"]}",
+      "target": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts"
+    },
+    {
+      "id": "cc7be017f9cd74abd22136b8bf544bc39cf69aa7030578ee3fdb76c5031f671c",
+      "rule": "dependency.engine-feature",
+      "path": "backend/src/game/engine/self_destruct_window.ts",
+      "line": 5,
+      "column": 1,
+      "detail": "Engine timing imports concrete feature rather than an extension contract.",
+      "specifier": "../mechanisms/roles/ghost_bride/authority",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:ghostBrideReady\",\"value:weddingMember\",\"value:weddingSetup\"]}",
+      "target": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts"
+    },
+    {
+      "id": "cd52929b27b11f7c8c76744ec1d991a5eeded781aad610fa1022fab83beee330",
+      "rule": "comment.deadline",
+      "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "adapter head lacks its deadline contract."
+    },
+    {
+      "id": "e14b286517bd41c638f3bb4eb817567a3e75a4af3139efb9f26415290adba4a5",
+      "rule": "dependency.engine-feature",
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "line": 50,
+      "column": 1,
+      "detail": "Engine timing imports concrete feature rather than an extension contract.",
+      "specifier": "../mechanisms/roles/demon_hunter/native_potion_controller",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:freezeDeliveredDemonNightSources\"]}",
+      "target": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts"
+    },
+    {
+      "id": "e31c97ee34aae360ea06eb1328ca5f078cecf68cce3d2439544d659c50feb111",
+      "rule": "dependency.engine-feature",
+      "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+      "line": 150,
+      "column": 1,
+      "detail": "Engine timing imports concrete feature rather than an extension contract.",
+      "specifier": "../../mechanisms/roles/wolf/knife_scope",
+      "binding": "{\"kind\":\"import\",\"typeOnly\":false,\"symbols\":[\"value:discardStaleWolfKnife\"]}",
+      "target": "backend/src/game/mechanisms/roles/wolf/knife_scope.ts"
+    },
+    {
+      "id": "e7883121d0484387310f663da92d0ffbdff79716b4f5f8a31ebd270987b92ee9",
+      "rule": "comment.first-paragraph",
+      "path": "backend/src/ai/agents/player/prompt_templates.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "First substantive paragraph does not name a responsibility."
+    },
+    {
+      "id": "f1bc2743ea66cdd53fd5bd042f379281043de51b3cb095ee288eff6a420b3008",
+      "rule": "comment.cancellation",
+      "path": "backend/src/ai/integrations/acp/acp_mcp_bridge.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "adapter head lacks its cancellation contract."
+    },
+    {
+      "id": "f1f465a3df91f32feca7df544007bc6c9a79fec4878a19fa5fa6f4a2264d3b0c",
+      "rule": "comment.boundary",
+      "path": "backend/src/ai/integrations/index.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "adapter head lacks its boundary contract."
+    },
+    {
+      "id": "f7b3a50c6adbf8251766ab7a76d55b9854d0e24eb51deb95b240007ece93a10d",
+      "rule": "comment.responsibility",
+      "path": "backend/src/ai/integrations/index.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "adapter head lacks its responsibility contract."
+    },
+    {
+      "id": "fa428583df9801cf55ae190e2324d5620b98552bbca846ac0f3fe7e4b368e721",
+      "rule": "comment.deadline",
+      "path": "backend/src/ai/integrations/index.ts",
+      "line": 1,
+      "column": 1,
+      "detail": "adapter head lacks its deadline contract."
+    }
+  ],
+  "returnedOriginalDebtCount": 0,
+  "returnedOriginalDebt": [],
+  "newFailureCount": 0,
+  "previousFailuresRemain": [],
+  "scope": "固定005相对固定5d42原债分区；旧报告/分区与原1779全字节不改，不表示玩法或注释内容正确性。"
+}

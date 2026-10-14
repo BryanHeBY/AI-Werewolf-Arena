@@ -1,0 +1,41 @@
+{
+  "fixedCommit": "005c92e4a29aec3fb8c0985cc792ed027190debd",
+  "tools": [
+    {
+      "path": "tooling/refactor/inventory.ts",
+      "sha256": "3905f88d6124cb9a1cb2b468b812561292a60b021f65b03427f0e717859db9ce",
+      "sameFixedGitAndActualCurrent": true
+    },
+    {
+      "path": "tooling/refactor/architecture/run.ts",
+      "sha256": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394",
+      "sameFixedGitAndActualCurrent": true
+    },
+    {
+      "path": "tooling/refactor/architecture/contracts.ts",
+      "sha256": "4fb704dfc26fd1e326c520856c8d751e86b9ae62d73bf1d2350d4ac1e5a0863d",
+      "sameFixedGitAndActualCurrent": true
+    },
+    {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "sha256": "67f8bedac5b44fa99852e7f595b61626d4287bf7843ebfa5df6281303f9543bb",
+      "sameFixedGitAndActualCurrent": true
+    },
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "sha256": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db",
+      "sameFixedGitAndActualCurrent": true
+    },
+    {
+      "path": "tooling/refactor/architecture/naming-check.ts",
+      "sha256": "2747a2f36e3b5ffe21dae807a70a6a894cd10b1df96439ab799ef292ecb9ccb3",
+      "sameFixedGitAndActualCurrent": true
+    }
+  ],
+  "originalDebtSHA256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+  "originalDebtCount": 1779,
+  "runnerExactByteSameAs5d42": true,
+  "runnerSHA256": "46209b0e79b076a5bb2b1900c66432f53dec9c92b01f187fcf819637e8698775",
+  "executionRuntime": "Bun (not Node process), same original readPublicGitBlobs Git reader",
+  "publicInput": "actual immutable Git blobs/modes, no WIP reader"
+}

@@ -1,0 +1,70 @@
+{
+  "approved": true,
+  "fixedCommit": "005c92e4a29aec3fb8c0985cc792ed027190debd",
+  "source": [],
+  "publicGitFiles": 3177,
+  "sameGitDocumentationPaths": 550,
+  "sourceDigest": "ba1cc85da58eebf4467bda938309562c303e51158754804cdd98494a8b7db77b",
+  "rawInput": {
+    "path": "/tmp/awa-architecture-checkpoint-005c92e4-input.json",
+    "sha256": "6d6c97540319a19aad64b3c18b2db0f7a52b07171338c9e3bdfaa8b4032101f5",
+    "bytes": 80162360
+  },
+  "wholeTreePathBlobModeSHAUTF8OrderSame": true,
+  "sixToolCurrentAndFixedGitByteSame": true,
+  "originalDebtSHA256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+  "originalDebtCount": 1779,
+  "remainingCount": 300,
+  "clearedCount": 1479,
+  "newFailureCount": 0,
+  "originalDebtMutuallyExclusiveCompletePartition": true,
+  "newlyClearedComparedWith5d42": 21,
+  "returnedComparedWith5d42": 0,
+  "captureSHA256": "d8098d9dfd0d9a966e3162e412d5ac412a39474e2544aee794e7143ed57be8d3",
+  "reportSHA256": "16f57e44c534d215718d0292217e0cecccb0888140bebc6e00363131f0e3b300",
+  "mismatches": 0,
+  "reviewScope": "独立只读实际Git全部path/blob/mode/rawSHA/UTF8/order与原债分区，随后仅正式11附件／scope／MD／evidence和真实收据终绑；未调用原gate、inventory主入口、类型、测试、模型或poll作者session。",
+  "reviewer": "/root/native_final_architecture_review",
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/architecture-checkpoint-005c92e4-scope-final.json",
+    "sha256": "2ab138ef75cc26e5e8321d9f516824c7fc75841947c79044acb9ef7fad20dc49"
+  },
+  "scopeSHA256": "2ab138ef75cc26e5e8321d9f516824c7fc75841947c79044acb9ef7fad20dc49",
+  "document": {
+    "path": "docs/refactor/architecture-checkpoint-005c92e4.md",
+    "sha256": "200dd965a1e33c5fb112cbeec7bbd4c38a9afe249543581060cb3046915a6db8"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/architecture-checkpoint-005c92e4-evidence.json",
+    "sha256": "0ff6c7c9340d653d1f1fea8987a7f16cd0762559d3c92ae875481e88e9a5a17d"
+  },
+  "findings": [],
+  "freshArtifacts": {
+    "count": 11,
+    "mismatches": 0
+  },
+  "receipt": {
+    "launchChunk": "7e5309",
+    "sessionId": 32034,
+    "terminalChunk": "a3fbd7",
+    "exitCode": 0,
+    "executions": 1,
+    "runtime": "Bun",
+    "runnerSHA256": "46209b0e79b076a5bb2b1900c66432f53dec9c92b01f187fcf819637e8698775",
+    "runnerExactSameAsExecuted5d42": true,
+    "options": {
+      "strict": false,
+      "mappings": []
+    },
+    "completedLogMatchesReport": true
+  },
+  "previous5d42ReportAndPartitionSameAsFixedGit": true,
+  "documentReview": [
+    "3177固定公开Git原始文件与550同Git文档、80,162,360byte原输入及结构sourceDigest均真绑定，不混当前工作区或Knight后继。",
+    "0新增与300剩余／1479已清只表示原progressive结构诊断；300旧债、中文内容真实性与最终P9未完成，不把结构inputHash当Tape engine sourceHash。",
+    "原债1779及SHA297b保持，全部remaining/cleared精确身份全集互斥，原5d42再清21／返回0；并非21玩法规则或全部状态所有权完成。",
+    "真实一次后台launch/terminal明确，不以空log推断退出；两项只读输入／分区核对不是重复门禁。",
+    "source/deleted为空、11作者附件均真，不包含review附件形成循环；新文档未伪装为固定005文档路径。"
+  ]
+}
