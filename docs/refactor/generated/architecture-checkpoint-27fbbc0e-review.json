@@ -1,0 +1,112 @@
+{
+  "status": "approved",
+  "reviewer": "/root/native_final_architecture_review",
+  "fixedCommit": "27fbbc0e556027119d452d4dcb1d0409b99b620f",
+  "capture": {
+    "path": "docs/refactor/generated/architecture-checkpoint-27fbbc0e.json",
+    "sha256": "9a77de3e27d6b72d9ccd22a7be13a30da98e61b88ecaa94ac53bc6fcb2ea588f"
+  },
+  "documents": [
+    {
+      "path": "docs/refactor/architecture-checkpoint-27fbbc0e.md",
+      "sha256": "b2f74ad6bf702954e823778ffb3d7ecea12c5e372cdad7a953bd3531082be0c2"
+    },
+    {
+      "path": "docs/refactor/generated/architecture-checkpoint-27fbbc0e-harness-history.json",
+      "sha256": "4e2e0817b52f00d0584c5098bce9481c54495238b53cc065c7a5a92df48ed3e1"
+    }
+  ],
+  "inputAudit": {
+    "rawPublicGitBlobs": 3133,
+    "allPathsAndOrderSame": true,
+    "allRawByteSHAsSame": true,
+    "inputHash": "10bb2d793eeda9e5f30c6cfaa725b48e54111e8a08a5917e12a39627e7300779",
+    "sameIndependentSourceDigest": true,
+    "sameGitDocumentationPaths": 458,
+    "regularPublicBlobsOnly": true,
+    "privateAndParallelWIPExcluded": true
+  },
+  "fiveFixedToolSources": [
+    {
+      "path": "tooling/refactor/architecture/run.ts",
+      "sha256": "986206347d92c930e6aae78acffab4d63e459090bdece4fe0a19fbac85541394",
+      "currentSameFixedGit": true
+    },
+    {
+      "path": "tooling/refactor/architecture/contracts.ts",
+      "sha256": "4fb704dfc26fd1e326c520856c8d751e86b9ae62d73bf1d2350d4ac1e5a0863d",
+      "currentSameFixedGit": true
+    },
+    {
+      "path": "tooling/refactor/architecture/dependency-check.ts",
+      "sha256": "acfd1dae8ad2142178ed1a67ebb573a618cfc2f3808913401b75ee5071e9c069",
+      "currentSameFixedGit": true
+    },
+    {
+      "path": "tooling/refactor/architecture/comment-check.ts",
+      "sha256": "d4ceaffa9f0441275d2cb46d46a6d94b44c5f344b6f550e1cd5f73c9424263db",
+      "currentSameFixedGit": true
+    },
+    {
+      "path": "tooling/refactor/architecture/naming-check.ts",
+      "sha256": "2747a2f36e3b5ffe21dae807a70a6a894cd10b1df96439ab799ef292ecb9ccb3",
+      "currentSameFixedGit": true
+    }
+  ],
+  "inventoryReader": {
+    "path": "tooling/refactor/inventory.ts",
+    "sha256": "3905f88d6124cb9a1cb2b468b812561292a60b021f65b03427f0e717859db9ce",
+    "currentSameFixedGit": true
+  },
+  "originalDebt": {
+    "path": "docs/refactor/generated/architecture-debt.json",
+    "sha256": "297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d",
+    "count": 1779,
+    "sameCurrentAndCreationCommitBytes": true,
+    "creationCommit": "7876be4a0d42ed20e5bda9ae53e4de00e5e16dca",
+    "baselineInputMetadataDigestSame": true
+  },
+  "partitionAudit": {
+    "counts": {
+      "files": 3133,
+      "violations": 393,
+      "failures": 0,
+      "remainingDebt": 393,
+      "clearedDebt": 1386
+    },
+    "exactOriginalPolicyMatchedIdentities": 393,
+    "clearedOriginalIdentities": 1386,
+    "disjointCompleteOriginal1779": true,
+    "noDebtOrPolicyMutation": true,
+    "limits": "只核已有结果的原绑定身份、changed-head条件与完整分区；不重新发现违规。"
+  },
+  "actualExecution": {
+    "launchChunk": "044e7b",
+    "session": 75254,
+    "terminalChunk": "7da5f5",
+    "exitCode": 0,
+    "attribution": "Root实际工具关闭回执；审查者只读取持久历史及可读原临时脚本/stdout，未重跑门禁。"
+  },
+  "harnessAudit": {
+    "persistedScriptAndReadableOriginalBytesSame": true,
+    "scriptSHA256": "da7d968545f75aa40e783aca5020716bcec10588cbcbbc84f2575337f0b13f6e",
+    "persistedStdoutAndReadableOriginalBytesSame": true,
+    "stdoutSHA256": "a8a73a4082a272bb42f410fe065053f246a2229eb9412dbedb89dc3f6454e591",
+    "stdoutSummarySameCapture": true
+  },
+  "scopeLimits": [
+    "固定27fbbc输入含已提交Noble/Mist/WolfBeauty、Eclipse/Wall和夜间名单组合；不含Gun、开局序列等并行WIP，C48台账后提交亦不属于本次输入。",
+    "0新增不是零余债；393项原余债仍未清，不能关闭P9或称整个工作树类型/行为验收通过。",
+    "sourceDigest是已验证rawSHA与路径元数据，不是动作回放复现授权。"
+  ],
+  "reviewHarnessHistory": [
+    {
+      "chunk": "bec41e",
+      "exitCode": 1,
+      "cause": "审查脚本误用了台账基线的创建提交 b56d2824 验证架构债务；该提交没有 architecture-debt.json。仅审查工具错误，未运行gate或改变源码/债务。",
+      "correction": "实际 git log --follow 确认架构债务创建提交7876be4a；下次只读原字节与全部分区验证。"
+    }
+  ],
+  "findings": [],
+  "executed": "只读实际Git路径/完整blob/摘要/工具字节、债务原政策分区与脚本/日志；未运行门禁、类型、测试或模型；未改源码。"
+}

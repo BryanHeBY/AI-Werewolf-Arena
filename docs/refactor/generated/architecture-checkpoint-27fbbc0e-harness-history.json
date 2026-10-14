@@ -1,0 +1,21 @@
+{
+  "fixedCommit": "27fbbc0e556027119d452d4dcb1d0409b99b620f",
+  "actualExecution": {
+    "launchChunk": "044e7b",
+    "session": 75254,
+    "terminalChunk": "7da5f5",
+    "exitCode": 0
+  },
+  "script": {
+    "originalPath": "/tmp/awa-checkpoint-27fbbc0e.ts",
+    "source": "import fs from 'node:fs';\nimport {execFileSync} from 'node:child_process';\nimport {createHash} from 'node:crypto';\nimport {readPublicGitBlobs} from '/home/hby/dev/AI-Werewolf-Arena/tooling/refactor/inventory';\nimport {checkArchitecture} from '/home/hby/dev/AI-Werewolf-Arena/tooling/refactor/architecture/run';\nconst repository='/home/hby/dev/AI-Werewolf-Arena',commit='27fbbc0e556027119d452d4dcb1d0409b99b620f';\nconst hash=(s:Uint8Array|string)=>createHash('sha256').update(s).digest('hex');\nconst blobs=readPublicGitBlobs(repository,commit);\nconst files=blobs.files.map(({path,bytes})=>({path,text:bytes.toString('utf8'),sha256:hash(bytes)}));\nconst documentationPaths=execFileSync('git',['ls-tree','-r','--name-only',commit],{cwd:repository,encoding:'utf8'}).trim().split('\\n').filter(p=>/^docs\\/.*\\.md$/.test(p)||p==='README.md').sort();\nconst debtBytes=execFileSync('git',['show',commit+':docs/refactor/generated/architecture-debt.json'],{cwd:repository,maxBuffer:32*1024*1024});\nconst debt=JSON.parse(debtBytes.toString('utf8'));\nconst report=checkArchitecture(repository,{files,documentationPaths},debt);\nconst capture={commit,files:files.map(({path,sha256})=>({path,sha256})),documentationPaths,debtSha256:hash(debtBytes),gateModules:['tooling/refactor/architecture/run.ts','tooling/refactor/architecture/contracts.ts','tooling/refactor/architecture/dependency-check.ts','tooling/refactor/architecture/comment-check.ts','tooling/refactor/architecture/naming-check.ts'].map(path=>{const git=execFileSync('git',['show',commit+':'+path],{cwd:repository});const current=fs.readFileSync(repository+'/'+path);if(!git.equals(current))throw Error('checkpoint_gate_source_changed');return{path,sha256:hash(git)};}),report};\nfs.writeFileSync(repository+'/docs/refactor/generated/architecture-checkpoint-27fbbc0e.json',JSON.stringify(capture,null,2)+'\\n');\nconsole.log(JSON.stringify({commit,files:files.length,documentationPaths:documentationPaths.length,debtSha256:capture.debtSha256,counts:report.counts,failures:report.failures}));if(report.failures.length)process.exitCode=1;\n",
+    "sha256": "da7d968545f75aa40e783aca5020716bcec10588cbcbbc84f2575337f0b13f6e"
+  },
+  "log": {
+    "originalPath": "/tmp/awa-checkpoint-27fbbc0e.log",
+    "text": "{\"commit\":\"27fbbc0e556027119d452d4dcb1d0409b99b620f\",\"files\":3133,\"documentationPaths\":458,\"debtSha256\":\"297b945bcdc85873b1d44e9e0ae705cddc1af8fd3e2fa5acfdb443f036550e5d\",\"counts\":{\"files\":3133,\"violations\":393,\"failures\":0,\"remainingDebt\":393,\"clearedDebt\":1386},\"failures\":[]}\n",
+    "sha256": "a8a73a4082a272bb42f410fe065053f246a2229eb9412dbedb89dc3f6454e591"
+  },
+  "recordedFailures": [],
+  "limits": "仅固定Git结构形状及依赖/包/命名/注释检查；不是全类型、离线对局、55矩阵或最终P9完成。"
+}
