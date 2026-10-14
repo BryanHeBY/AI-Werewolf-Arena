@@ -1,0 +1,60 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "cdbe1cf15c6046f893436c7a39764e10117ef097",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+      "sha256": "434d69c2b67089c2ce2475738f7c8ce99e955950118a58f90da669bc42223496",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/ordinary-wolf-knife-routing.ts",
+      "sha256": "199ca2064cab9f95bfd3ab319496ecb22e1b90be6f443751be3bc66f68fa3d47",
+      "status": "added"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+      "sha256": "03d26a09cb2fc5e39b526a51532c897ef09edea0b4050c617f1327d661f975b7",
+      "status": "added"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/ordinary-wolf-knife-routing.test.ts",
+      "sha256": "856d21421da4174615b6699d12dcedeeb981bc23e863ae782baad0de5fcce21c",
+      "status": "added"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/ordinary-wolf-knife-routing-scope-final.json",
+    "sha256": "1131d5baa33f7ab7a173bb078903b24efbcd079de00020b07403e8b5470539a4"
+  },
+  "document": {
+    "path": "docs/refactor/ordinary-wolf-knife-routing.md",
+    "sha256": "cbdb6b4e21f178944432dbcb012195062a179e97fb026ea5212fc2d8e6f4f2af"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/ordinary-wolf-knife-routing-evidence.json",
+    "sha256": "b8b451200718e1e58683c4bf05ef2c34b55a247bc4965c592297f9757b347358"
+  },
+  "integrity": {
+    "freshSources": 4,
+    "actualGitBefore": 1,
+    "controls": 5,
+    "artifactHashes": 17,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "完整原67行及真实新body保序复读，多数callee与votes/板谓词/空刀/圈查询原短路",
+    "RNG两lookup一次call同receiver及抽刀后原生命查询，不追加RNG或校验",
+    "抽刀事件先于刀口写入，加成/投票者/诊断/映射/印记/范围setter各保失败前缀",
+    "原stage全部等待和逐票body与current复验、同ctx/arrays/Set和末Noble发布原点",
+    "三原函数samebinding facet与生命类型契约，无state/许可/JSON复制",
+    "新三个手写trace故障用例和原迷雾集成oracle、实际首绿收据、中文结构说明与作用域API限制"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

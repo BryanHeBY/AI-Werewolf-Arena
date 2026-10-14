@@ -1,0 +1,42 @@
+{
+  "paths": [
+    "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+    "backend/src/rulesets/ordinary-wolf-knife-routing.ts",
+    "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+    "backend/tests/unit/rulesets/ordinary-wolf-knife-routing.test.ts"
+  ],
+  "sourceEdits": {
+    "backend/src/game/mechanisms/roles/wolf/night_stages.ts": [
+      {
+        "before": " * 普通刀票、迷雾随机刀、映射和印记仍在原时点处理；贵族 God 刀口事实及必需记录归贵族发布 owner。",
+        "after": " * 收票后由普通狼刀规则组合按原时点处理迷雾抽刀、映射和印记；贵族 God 刀口事实及必需记录归贵族发布 owner。",
+        "count": 1
+      },
+      {
+        "before": "import { isMistRavenBoard, mistKnifeTargets, originalMistTarget } from \"../mist_raven/night_frame\";",
+        "after": "import { isMistRavenBoard } from \"../mist_raven/knife-ports\";\nimport { resolveOrdinaryWolfKnife, type AcceptedWolfKnifeTarget } from \"../../../../rulesets/ordinary-wolf-knife-routing\";",
+        "count": 1
+      },
+      {
+        "before": "import { EntityId, Phase, StatusMark } from \"../../../../core/domain/model\";",
+        "after": "import { EntityId, Phase } from \"../../../../core/domain/model\";",
+        "count": 1
+      },
+      {
+        "before": "    const acceptedTargets: Array<{\n      actorId: EntityId;\n      targetId: EntityId;\n      life: AliveComponent;\n      version: number;\n    }> = [];",
+        "after": "    const acceptedTargets: AcceptedWolfKnifeTarget[] = [];",
+        "count": 1
+      },
+      {
+        "before": "    let wolfTarget = ctx.pickMajorityTarget(ctx.state.wolfVotes);\n    let mistRandomScope: import(\"../../../../core/domain/night_effects\").NightLifeScope | null =\n      null;\n    if (isMistRavenBoard(ctx.world) && wolfTarget === null) {\n      const circle = mistKnifeTargets(ctx.world);\n      if (circle !== null) {\n        if (voteOrder.length === 0 || explicitPasses.size !== voteOrder.length)\n          throw new Error(\"mist_knife_requires_explicit_passes\");\n        if (!ctx.pickMistKnife) throw new Error(\"mist_knife_rng_missing\");\n        wolfTarget = ctx.pickMistKnife(circle);\n        mistRandomScope =\n          wolfTarget === null ? null : originalMistTarget(ctx.world, ctx.currentDay(), wolfTarget);\n        if (wolfTarget !== null && !mistRandomScope) throw new Error(\"mist_knife_target_stale\");\n        ctx.events.push(\n          wolfTeamEvent(ctx.world, ctx.roleCatalog, {\n            timestamp: Date.now(),\n            type: \"mist_knife_drawn\",\n            payload: { day: ctx.currentDay(), candidates: [...circle], targetId: wolfTarget },\n          }),\n        );\n      }\n    }\n    ctx.state.wolfTarget = wolfTarget;\n    ctx.nativeNightEffects.recordKnifeModifierTarget(() => wolfTarget);\n    ctx.state.wolfTargetVoters = acceptedTargets\n      .filter((target) => target.targetId === wolfTarget)\n      .map((target) => target.actorId);\n    safeRecordLogicOp({\n      scope: \"phase_pipeline\",\n      op: \"wolf_kill_vote_resolved\",\n      phase: Phase.Night,\n      status: \"ok\",\n      output: { tally: ctx.state.wolfVotes, wolf_target: wolfTarget },\n    });\n    if (wolfTarget !== null) {\n      const target =\n        (mistRandomScope\n          ? { targetId: wolfTarget, life: mistRandomScope.life, version: mistRandomScope.version }\n          : undefined) ??\n        acceptedTargets.find(\n          (item) =>\n            item.targetId === wolfTarget &&\n            ctx.world.getComponent(item.targetId, COMPONENT.Alive) === item.life &&\n            item.life.alive &&\n            aliveLifeVersion(item.life) === item.version &&\n            bindWolfKnifeTargetQuery(ctx.world).allows(item.targetId),\n        );\n      if (target) {\n        const mapping = ctx.nativeNightTargets.mappedTarget(\n          () => ctx.currentDay(),\n          () => wolfTarget,\n        );\n        if (mapping && !mapping.isCurrent()) throw new Error(\"magician_knife_target_stale\");\n        const effectiveId = mapping?.effectiveId ?? wolfTarget;\n        const marks = ctx.ensureMarks(effectiveId);\n        marks.add(StatusMark.WolfKillMark);\n        ctx.state.wolfTargetScope = mapping\n          ? {\n              ...target,\n              targetId: effectiveId,\n              life: mapping.scope.life,\n              version: mapping.scope.version,\n              marks,\n            }\n          : { ...target, marks };\n      }\n    }\n",
+        "after": "    const wolfTarget = resolveOrdinaryWolfKnife(ctx, acceptedTargets, voteOrder, explicitPasses);\n",
+        "count": 1
+      }
+    ]
+  },
+  "originalRouting": "    let wolfTarget = ctx.pickMajorityTarget(ctx.state.wolfVotes);\n    let mistRandomScope: import(\"../../../../core/domain/night_effects\").NightLifeScope | null =\n      null;\n    if (isMistRavenBoard(ctx.world) && wolfTarget === null) {\n      const circle = mistKnifeTargets(ctx.world);\n      if (circle !== null) {\n        if (voteOrder.length === 0 || explicitPasses.size !== voteOrder.length)\n          throw new Error(\"mist_knife_requires_explicit_passes\");\n        if (!ctx.pickMistKnife) throw new Error(\"mist_knife_rng_missing\");\n        wolfTarget = ctx.pickMistKnife(circle);\n        mistRandomScope =\n          wolfTarget === null ? null : originalMistTarget(ctx.world, ctx.currentDay(), wolfTarget);\n        if (wolfTarget !== null && !mistRandomScope) throw new Error(\"mist_knife_target_stale\");\n        ctx.events.push(\n          wolfTeamEvent(ctx.world, ctx.roleCatalog, {\n            timestamp: Date.now(),\n            type: \"mist_knife_drawn\",\n            payload: { day: ctx.currentDay(), candidates: [...circle], targetId: wolfTarget },\n          }),\n        );\n      }\n    }\n    ctx.state.wolfTarget = wolfTarget;\n    ctx.nativeNightEffects.recordKnifeModifierTarget(() => wolfTarget);\n    ctx.state.wolfTargetVoters = acceptedTargets\n      .filter((target) => target.targetId === wolfTarget)\n      .map((target) => target.actorId);\n    safeRecordLogicOp({\n      scope: \"phase_pipeline\",\n      op: \"wolf_kill_vote_resolved\",\n      phase: Phase.Night,\n      status: \"ok\",\n      output: { tally: ctx.state.wolfVotes, wolf_target: wolfTarget },\n    });\n    if (wolfTarget !== null) {\n      const target =\n        (mistRandomScope\n          ? { targetId: wolfTarget, life: mistRandomScope.life, version: mistRandomScope.version }\n          : undefined) ??\n        acceptedTargets.find(\n          (item) =>\n            item.targetId === wolfTarget &&\n            ctx.world.getComponent(item.targetId, COMPONENT.Alive) === item.life &&\n            item.life.alive &&\n            aliveLifeVersion(item.life) === item.version &&\n            bindWolfKnifeTargetQuery(ctx.world).allows(item.targetId),\n        );\n      if (target) {\n        const mapping = ctx.nativeNightTargets.mappedTarget(\n          () => ctx.currentDay(),\n          () => wolfTarget,\n        );\n        if (mapping && !mapping.isCurrent()) throw new Error(\"magician_knife_target_stale\");\n        const effectiveId = mapping?.effectiveId ?? wolfTarget;\n        const marks = ctx.ensureMarks(effectiveId);\n        marks.add(StatusMark.WolfKillMark);\n        ctx.state.wolfTargetScope = mapping\n          ? {\n              ...target,\n              targetId: effectiveId,\n              life: mapping.scope.life,\n              version: mapping.scope.version,\n              marks,\n            }\n          : { ...target, marks };\n      }\n    }\n",
+  "physicalLines": 67,
+  "addedProtocol": "return wolfTarget;",
+  "newOwner": "backend/src/rulesets/ordinary-wolf-knife-routing.ts",
+  "publicFacet": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts"
+}

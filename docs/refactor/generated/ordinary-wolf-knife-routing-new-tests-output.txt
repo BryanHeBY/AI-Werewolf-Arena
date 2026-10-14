@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+tests/unit/rulesets/ordinary-wolf-knife-routing.test.ts:
+(pass) mist draw publication failure preserves paid mist and reads RNG twice before any knife write [50.37ms]
+(pass) modifier failure keeps selected knife but precedes voter and mapping writes [0.20ms]
+(pass) scope setter failure follows current mapping and real mark without refund [0.60ms]
+
+ 3 pass
+ 0 fail
+ 28 expect() calls
+Ran 3 tests across 1 file. [178.00ms]

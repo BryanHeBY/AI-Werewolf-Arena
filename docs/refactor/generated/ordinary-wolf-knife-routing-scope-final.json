@@ -1,0 +1,56 @@
+{
+  "prefix": "ordinary-wolf-knife-routing",
+  "baseCommit": "cdbe1cf15c6046f893436c7a39764e10117ef097",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+      "sha256": "434d69c2b67089c2ce2475738f7c8ce99e955950118a58f90da669bc42223496",
+      "status": "modified"
+    },
+    {
+      "path": "backend/src/rulesets/ordinary-wolf-knife-routing.ts",
+      "sha256": "199ca2064cab9f95bfd3ab319496ecb22e1b90be6f443751be3bc66f68fa3d47",
+      "status": "added"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+      "sha256": "03d26a09cb2fc5e39b526a51532c897ef09edea0b4050c617f1327d661f975b7",
+      "status": "added"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/ordinary-wolf-knife-routing.test.ts",
+      "sha256": "856d21421da4174615b6699d12dcedeeb981bc23e863ae782baad0de5fcce21c",
+      "status": "added"
+    }
+  ],
+  "deleted": [],
+  "sourceCount": 4,
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+      "sha256": "624457eaf93c0bd0782edccf5effb35ecb892b8e0989191c1128a5d62a8bc802"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+      "sha256": "8b71fc9976814327be656d4a49117cac17e9c3a3d678e39f659ca91993b894ac"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-effects.ts",
+      "sha256": "526b5765d4951b1a82221cabb9b1f0a0f390b7b93ff9887a07ef67eaba96b3e4"
+    },
+    {
+      "path": "backend/src/rulesets/native-night-target-policy.ts",
+      "sha256": "d27f1662dee42b65cb4bf2d8507efd71f2c63d307b5df2ef7067dc5041a87a1d"
+    },
+    {
+      "path": "backend/tests/scenarios/interactions/mist-raven/native-night-settlement.test.ts",
+      "sha256": "0eee31196364e48803430acad334dd00585cd702490aca4a36dcc6a2e2bcb5a2"
+    }
+  ],
+  "documentation": {
+    "path": "docs/refactor/ordinary-wolf-knife-routing.md",
+    "sha256": "cbdb6b4e21f178944432dbcb012195062a179e97fb026ea5212fc2d8e6f4f2af"
+  },
+  "scope": "完整普通狼刀收票后的同步路由；狼阶段仍持票／行动者复验、原 await 与末贵族发表。",
+  "stateOwner": "库存、雾圈、原生命、映射、租约与清理由原 feature owner 持有。"
+}

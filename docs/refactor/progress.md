@@ -816,3 +816,6 @@
 
 
 - C24 赤月放逐贡献接线：三源新增Demon族实际公开同binding查询/提交端口，原voted-out hook完整算法与profile/Hooks身份不动；原末狼/原夜/原体/三字段写与审计仍唯一authority。重要中文注释说明原hook时点和commit已付后push方法→clock失败前缀，不退款、不新增阶段验证。Root及非作者完整cdbe旧hook/四逐项正逆/八控制/22附件与末单head桥独审批准；95typed118leaf逆输出同、raw route差异保真；new3/19+原audit1/6共四不同25assert，三finite type0，head首仅hook timing红→单comment精确桥→onlyfailed1头0，不重绿。不是完整资源/codec/lifecycle或C17/P9验收，见 red-moon-exile-contribution.md。
+
+
+- C24 普通狼刀完整路由组合：四源收原67行多数决→雾圈一次随机→原生命→刀口/已付加成/投票者/诊断→魔术师映射/印记/范围至具名同步owner，原stage持全部聊天/等待/逐票复验和末Noble发布。三个Mist查询public同binding，四参传原ctx/array/Set，原RNG双lookup单call与所有callee/lategetter/receiver/已付和setter失败前缀保；重要中文结构与权限界限就地补。Root及非作者实际cdbe整Wolf/五全文edit/五稳定控制/17附件双审批准，完整Wolf2426typed2948叶逆两raw同，真实newbody463typed538叶两raw同，不冒整个新模块等价。new3/28+old精准all-pass1/19四不同47assert；4finite types/head/proof首0，无重绿/fullgate。新增返回API/函数scope和当前1896七根20site有界路由限制明示；完整所有狼刀与P9继续，见 ordinary-wolf-knife-routing.md。

@@ -1,0 +1,725 @@
+{
+  "scope": {
+    "prefix": "ordinary-wolf-knife-routing",
+    "baseCommit": "cdbe1cf15c6046f893436c7a39764e10117ef097",
+    "source": [
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+        "sha256": "434d69c2b67089c2ce2475738f7c8ce99e955950118a58f90da669bc42223496",
+        "status": "modified"
+      },
+      {
+        "path": "backend/src/rulesets/ordinary-wolf-knife-routing.ts",
+        "sha256": "199ca2064cab9f95bfd3ab319496ecb22e1b90be6f443751be3bc66f68fa3d47",
+        "status": "added"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+        "sha256": "03d26a09cb2fc5e39b526a51532c897ef09edea0b4050c617f1327d661f975b7",
+        "status": "added"
+      },
+      {
+        "path": "backend/tests/unit/rulesets/ordinary-wolf-knife-routing.test.ts",
+        "sha256": "856d21421da4174615b6699d12dcedeeb981bc23e863ae782baad0de5fcce21c",
+        "status": "added"
+      }
+    ],
+    "deleted": [],
+    "sourceCount": 4,
+    "controls": [
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+        "sha256": "624457eaf93c0bd0782edccf5effb35ecb892b8e0989191c1128a5d62a8bc802"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+        "sha256": "8b71fc9976814327be656d4a49117cac17e9c3a3d678e39f659ca91993b894ac"
+      },
+      {
+        "path": "backend/src/rulesets/native-night-effects.ts",
+        "sha256": "526b5765d4951b1a82221cabb9b1f0a0f390b7b93ff9887a07ef67eaba96b3e4"
+      },
+      {
+        "path": "backend/src/rulesets/native-night-target-policy.ts",
+        "sha256": "d27f1662dee42b65cb4bf2d8507efd71f2c63d307b5df2ef7067dc5041a87a1d"
+      },
+      {
+        "path": "backend/tests/scenarios/interactions/mist-raven/native-night-settlement.test.ts",
+        "sha256": "0eee31196364e48803430acad334dd00585cd702490aca4a36dcc6a2e2bcb5a2"
+      }
+    ],
+    "documentation": {
+      "path": "docs/refactor/ordinary-wolf-knife-routing.md",
+      "sha256": "cbdb6b4e21f178944432dbcb012195062a179e97fb026ea5212fc2d8e6f4f2af"
+    },
+    "scope": "完整普通狼刀收票后的同步路由；狼阶段仍持票／行动者复验、原 await 与末贵族发表。",
+    "stateOwner": "库存、雾圈、原生命、映射、租约与清理由原 feature owner 持有。"
+  },
+  "scopeArtifact": {
+    "path": "docs/refactor/generated/ordinary-wolf-knife-routing-scope-final.json",
+    "sha256": "1131d5baa33f7ab7a173bb078903b24efbcd079de00020b07403e8b5470539a4"
+  },
+  "proof": {
+    "baseCommit": "cdbe1cf15c6046f893436c7a39764e10117ef097",
+    "source": [
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+        "sha256": "434d69c2b67089c2ce2475738f7c8ce99e955950118a58f90da669bc42223496"
+      },
+      {
+        "path": "backend/src/rulesets/ordinary-wolf-knife-routing.ts",
+        "sha256": "199ca2064cab9f95bfd3ab319496ecb22e1b90be6f443751be3bc66f68fa3d47"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+        "sha256": "03d26a09cb2fc5e39b526a51532c897ef09edea0b4050c617f1327d661f975b7"
+      },
+      {
+        "path": "backend/tests/unit/rulesets/ordinary-wolf-knife-routing.test.ts",
+        "sha256": "856d21421da4174615b6699d12dcedeeb981bc23e863ae782baad0de5fcce21c"
+      }
+    ],
+    "retainedWolf": {
+      "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+      "preciseEdits": 5,
+      "completeForwardInverse": true,
+      "typedNodes": 2426,
+      "noncommentLeaves": 2948,
+      "completeTypedAndTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true
+        }
+      ]
+    },
+    "actualRouting": {
+      "originalPhysicalLines": 67,
+      "addedReturn": "return wolfTarget;",
+      "originalInlineTypeSameEndpoint": true,
+      "actualNewBodyCompared": true,
+      "typedNodes": 463,
+      "noncommentLeaves": 538,
+      "completeTypedAndTokenSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true
+        }
+      ]
+    },
+    "movedBindings": [
+      {
+        "local": "EntityId",
+        "oldEndpoint": "backend/src/core/domain/model.ts",
+        "currentRoute": "backend/src/core/domain/model.ts",
+        "actualEndpoint": "backend/src/core/domain/model.ts",
+        "samePhysicalOwner": true
+      },
+      {
+        "local": "Phase",
+        "oldEndpoint": "backend/src/core/domain/model.ts",
+        "currentRoute": "backend/src/core/domain/model.ts",
+        "actualEndpoint": "backend/src/core/domain/model.ts",
+        "samePhysicalOwner": true
+      },
+      {
+        "local": "StatusMark",
+        "oldEndpoint": "backend/src/core/domain/model.ts",
+        "currentRoute": "backend/src/core/domain/model.ts",
+        "actualEndpoint": "backend/src/core/domain/model.ts",
+        "samePhysicalOwner": true
+      },
+      {
+        "local": "COMPONENT",
+        "oldEndpoint": "backend/src/core/domain/components/names.ts",
+        "currentRoute": "backend/src/core/domain/components/names.ts",
+        "actualEndpoint": "backend/src/core/domain/components/names.ts",
+        "samePhysicalOwner": true
+      },
+      {
+        "local": "aliveLifeVersion",
+        "oldEndpoint": "backend/src/core/domain/components/alive.ts",
+        "currentRoute": "backend/src/core/domain/components/alive.ts",
+        "actualEndpoint": "backend/src/core/domain/components/alive.ts",
+        "samePhysicalOwner": true
+      },
+      {
+        "local": "safeRecordLogicOp",
+        "oldEndpoint": "backend/src/recording/session_recorder.ts",
+        "currentRoute": "backend/src/recording/session_recorder.ts",
+        "actualEndpoint": "backend/src/recording/session_recorder.ts",
+        "samePhysicalOwner": true
+      },
+      {
+        "local": "wolfTeamEvent",
+        "oldEndpoint": "backend/src/game/mechanisms/roles/wolf_team.ts",
+        "currentRoute": "backend/src/game/mechanisms/roles/wolf_team.ts",
+        "actualEndpoint": "backend/src/game/mechanisms/roles/wolf_team.ts",
+        "samePhysicalOwner": true
+      },
+      {
+        "local": "bindWolfKnifeTargetQuery",
+        "oldEndpoint": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+        "currentRoute": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+        "actualEndpoint": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+        "samePhysicalOwner": true
+      },
+      {
+        "local": "isMistRavenBoard",
+        "oldEndpoint": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+        "currentRoute": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+        "actualEndpoint": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+        "samePhysicalOwner": true
+      },
+      {
+        "local": "mistKnifeTargets",
+        "oldEndpoint": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+        "currentRoute": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+        "actualEndpoint": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+        "samePhysicalOwner": true
+      },
+      {
+        "local": "originalMistTarget",
+        "oldEndpoint": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+        "currentRoute": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+        "actualEndpoint": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+        "samePhysicalOwner": true
+      },
+      {
+        "local": "NightStageContext",
+        "oldEndpoint": "backend/src/game/mechanisms/stages/night/contracts.ts",
+        "currentRoute": "backend/src/game/mechanisms/stages/night/contracts.ts",
+        "actualEndpoint": "backend/src/game/mechanisms/stages/night/contracts.ts",
+        "samePhysicalOwner": true
+      }
+    ],
+    "retainedBindings": [
+      {
+        "local": "publishNobleNightKnife",
+        "physicalEndpoint": "backend/src/game/mechanisms/roles/noble_secret_body/knife-ports.ts",
+        "typeOnly": false,
+        "same": true
+      },
+      {
+        "local": "isMistRavenBoard",
+        "physicalEndpoint": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+        "typeOnly": false,
+        "same": true
+      },
+      {
+        "local": "nightmareKnifeBlocked",
+        "physicalEndpoint": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+        "typeOnly": false,
+        "same": true
+      },
+      {
+        "local": "bindWolfKnifeTargetQuery",
+        "physicalEndpoint": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+        "typeOnly": false,
+        "same": true
+      },
+      {
+        "local": "EntityId",
+        "physicalEndpoint": "backend/src/core/domain/model.ts",
+        "typeOnly": false,
+        "same": true
+      },
+      {
+        "local": "Phase",
+        "physicalEndpoint": "backend/src/core/domain/model.ts",
+        "typeOnly": false,
+        "same": true
+      },
+      {
+        "local": "safeRecordLogicOp",
+        "physicalEndpoint": "backend/src/recording/session_recorder.ts",
+        "typeOnly": false,
+        "same": true
+      },
+      {
+        "local": "NightStageHandler",
+        "physicalEndpoint": "backend/src/game/mechanisms/stages/night/contracts.ts",
+        "typeOnly": false,
+        "same": true
+      },
+      {
+        "local": "wolfChatParticipants",
+        "physicalEndpoint": "backend/src/game/mechanisms/roles/wolf_team.ts",
+        "typeOnly": false,
+        "same": true
+      },
+      {
+        "local": "wolfKnifeHolders",
+        "physicalEndpoint": "backend/src/game/mechanisms/roles/wolf_team.ts",
+        "typeOnly": false,
+        "same": true
+      },
+      {
+        "local": "wolfTeamEvent",
+        "physicalEndpoint": "backend/src/game/mechanisms/roles/wolf_team.ts",
+        "typeOnly": false,
+        "same": true
+      },
+      {
+        "local": "COMPONENT",
+        "physicalEndpoint": "backend/src/core/domain/components/names.ts",
+        "typeOnly": false,
+        "same": true
+      },
+      {
+        "local": "AliveComponent",
+        "physicalEndpoint": "backend/src/core/domain/components/alive.ts",
+        "typeOnly": false,
+        "same": true
+      },
+      {
+        "local": "aliveLifeVersion",
+        "physicalEndpoint": "backend/src/core/domain/components/alive.ts",
+        "typeOnly": false,
+        "same": true
+      },
+      {
+        "local": "RoleComponent",
+        "physicalEndpoint": "backend/src/core/domain/components/role.ts",
+        "typeOnly": true,
+        "same": true
+      },
+      {
+        "local": "NightStageContext",
+        "physicalEndpoint": "backend/src/game/mechanisms/stages/night/contracts.ts",
+        "typeOnly": true,
+        "same": true
+      }
+    ],
+    "facet": {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+      "exactDirectBindings": 3,
+      "noWrapper": true
+    },
+    "acceptedTargets": {
+      "fields": [
+        "actorId",
+        "targetId",
+        "life",
+        "version"
+      ],
+      "sharedOriginalLifeContract": true
+    },
+    "inventory": {
+      "roots": [
+        "backend/src",
+        "backend/tests",
+        "backend/scripts",
+        "frontend/src",
+        "frontend/tests",
+        "packages",
+        "tooling"
+      ],
+      "files": 1896,
+      "relevant": [
+        {
+          "file": "backend/src/app/bootstrap.ts",
+          "form": "import",
+          "specifier": "../game/mechanisms/roles/mist_raven/night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 22,
+          "text": "import { installMistRavenBoard } from \"../game/mechanisms/roles/mist_raven/night_frame\";"
+        },
+        {
+          "file": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+          "form": "export",
+          "specifier": "./night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 7,
+          "text": "export { isMistRavenBoard, mistKnifeTargets, originalMistTarget } from \"./night_frame\";"
+        },
+        {
+          "file": "backend/src/game/mechanisms/roles/mist_raven/night-lifecycle.ts",
+          "form": "import",
+          "specifier": "./night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 13,
+          "text": "import { beginMistNight, handOffMistNight, closeMistNight, abortMistNight } from \"./night_frame\";"
+        },
+        {
+          "file": "backend/src/game/mechanisms/roles/mist_raven/night_stages.ts",
+          "form": "import",
+          "specifier": "./night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 10,
+          "text": "import {\n  assertMistRosterCurrent,\n  mistCasterId,\n  mistChoiceTargets,\n  commitMistChoice,\n  ravenKnifeTargets,\n  commitRavenKnife,\n} from \"./night_frame\";"
+        },
+        {
+          "file": "backend/src/game/mechanisms/roles/mist_raven/ports.ts",
+          "form": "import",
+          "specifier": "./night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 13,
+          "text": "import { isMistRavenBoard, mistKnifeTargets } from \"./night_frame\";"
+        },
+        {
+          "file": "backend/src/game/mechanisms/roles/mist_raven/ports.ts",
+          "form": "export",
+          "specifier": "./night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 16,
+          "text": "export { isMistRavenBoard, mistKnifeTargets, assertMistRosterCurrent } from \"./night_frame\";"
+        },
+        {
+          "file": "backend/src/game/mechanisms/roles/mist_raven/profile.ts",
+          "form": "import",
+          "specifier": "./night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 24,
+          "text": "import {\n  isMistRavenBoard,\n  mistCasterId,\n  mistChoiceTargets,\n  ravenAwakened,\n  ravenKnownTeammates,\n  ravenKnifeTargets,\n  snakeWindowTargets,\n} from \"./night_frame\";"
+        },
+        {
+          "file": "backend/src/game/mechanisms/roles/mist_raven/snake_window.ts",
+          "form": "import",
+          "specifier": "./night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 12,
+          "text": "import {\n  assertMistRosterCurrent,\n  mistCasterId,\n  openSnakeWindow,\n  commitSnakeChoice,\n} from \"./night_frame\";"
+        },
+        {
+          "file": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+          "form": "import",
+          "specifier": "../mist_raven/knife-ports",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+          "line": 8,
+          "text": "import { isMistRavenBoard } from \"../mist_raven/knife-ports\";"
+        },
+        {
+          "file": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+          "form": "import",
+          "specifier": "../../../../rulesets/ordinary-wolf-knife-routing",
+          "target": "backend/src/rulesets/ordinary-wolf-knife-routing.ts",
+          "line": 9,
+          "text": "import { resolveOrdinaryWolfKnife, type AcceptedWolfKnifeTarget } from \"../../../../rulesets/ordinary-wolf-knife-routing\";"
+        },
+        {
+          "file": "backend/src/rulesets/ordinary-wolf-knife-routing.ts",
+          "form": "import",
+          "specifier": "../game/mechanisms/roles/mist_raven/knife-ports",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+          "line": 13,
+          "text": "import {\n  isMistRavenBoard,\n  mistKnifeTargets,\n  originalMistTarget,\n} from \"../game/mechanisms/roles/mist_raven/knife-ports\";"
+        },
+        {
+          "file": "backend/tests/scenarios/interactions/mist-raven/pending-owner-boundaries.test.ts",
+          "form": "import",
+          "specifier": "../../../../src/game/mechanisms/roles/mist_raven/night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 12,
+          "text": "import {\n  beginMistNight,\n  snakeWindowTargets,\n} from \"../../../../src/game/mechanisms/roles/mist_raven/night_frame\";"
+        },
+        {
+          "file": "backend/tests/unit/features/mist-raven/mist-raven-profile.test.ts",
+          "form": "import",
+          "specifier": "../../../../src/game/mechanisms/roles/mist_raven/night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 33,
+          "text": "import {\n  installMistRavenBoard,\n  beginMistNight,\n  commitMistChoice,\n  handOffMistNight,\n  openSnakeWindow,\n  commitSnakeChoice,\n  closeMistNight,\n  ravenAwakened,\n} from \"../../../../src/game/mechanisms/roles/mist_raven/night_frame\";"
+        },
+        {
+          "file": "backend/tests/unit/features/mist-raven/night-frame.test.ts",
+          "form": "import",
+          "specifier": "../../../../src/game/mechanisms/roles/mist_raven/night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 22,
+          "text": "import {\n  installMistRavenBoard,\n  beginMistNight,\n  assertMistRosterCurrent,\n  abortMistNight,\n  closeMistNight,\n  commitMistChoice,\n  mistChoiceTargets,\n  mistKnifeTargets,\n  originalMistTarget,\n  ravenKnownTeammates,\n  ravenAwakened,\n  ravenKnifeTargets,\n  commitRavenKnife,\n  handOffMistNight,\n  openSnakeWindow,\n  snakeWindowTargets,\n  commitSnakeChoice,\n} from \"../../../../src/game/mechanisms/roles/mist_raven/night_frame\";"
+        },
+        {
+          "file": "backend/tests/unit/features/mist-raven/night-lifecycle.test.ts",
+          "form": "import",
+          "specifier": "../../../../src/game/mechanisms/roles/mist_raven/night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 19,
+          "text": "import {\n  beginMistNight,\n  commitMistChoice,\n  openSnakeWindow,\n  snakeWindowTargets,\n  commitSnakeChoice,\n  ravenAwakened,\n  ravenKnownTeammates,\n} from \"../../../../src/game/mechanisms/roles/mist_raven/night_frame\";"
+        },
+        {
+          "file": "backend/tests/unit/mechanisms/night-choice/request-construction.test.ts",
+          "form": "import",
+          "specifier": "../../../../src/game/mechanisms/roles/mist_raven/night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 19,
+          "text": "import { beginMistNight, commitMistChoice, handOffMistNight, snakeWindowTargets, openSnakeWindow, abortMistNight } from \"../../../../src/game/mechanisms/roles/mist_raven/night_frame\";"
+        },
+        {
+          "file": "backend/tests/unit/mechanisms/wolf-knife-target-query.test.ts",
+          "form": "import",
+          "specifier": "../../../src/game/mechanisms/roles/mist_raven/night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 27,
+          "text": "import {\n  beginMistNight,\n  commitMistChoice,\n  abortMistNight,\n} from \"../../../src/game/mechanisms/roles/mist_raven/night_frame\";"
+        },
+        {
+          "file": "backend/tests/unit/rulesets/mist-delayed-night-settlement.test.ts",
+          "form": "import",
+          "specifier": "../../../src/game/mechanisms/roles/mist_raven/night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 15,
+          "text": "import { beginMistNight, commitMistChoice, handOffMistNight, closeMistNight, abortMistNight } from \"../../../src/game/mechanisms/roles/mist_raven/night_frame\";"
+        },
+        {
+          "file": "backend/tests/unit/rulesets/ordinary-wolf-knife-routing.test.ts",
+          "form": "import",
+          "specifier": "../../../src/game/mechanisms/roles/mist_raven/night_frame",
+          "target": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "line": 16,
+          "text": "import { beginMistNight, commitMistChoice } from \"../../../src/game/mechanisms/roles/mist_raven/night_frame\";"
+        },
+        {
+          "file": "backend/tests/unit/rulesets/ordinary-wolf-knife-routing.test.ts",
+          "form": "import",
+          "specifier": "../../../src/rulesets/ordinary-wolf-knife-routing",
+          "target": "backend/src/rulesets/ordinary-wolf-knife-routing.ts",
+          "line": 19,
+          "text": "import { resolveOrdinaryWolfKnife, type AcceptedWolfKnifeTarget } from \"../../../src/rulesets/ordinary-wolf-knife-routing\";"
+        }
+      ],
+      "limits": "当前七源码根的字面模块入口；不覆盖计算路径、eval、仓外代码或历史 generated。"
+    },
+    "controls": [
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+        "sha256": "624457eaf93c0bd0782edccf5effb35ecb892b8e0989191c1128a5d62a8bc802",
+        "currentWholeSame": true
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+        "sha256": "8b71fc9976814327be656d4a49117cac17e9c3a3d678e39f659ca91993b894ac",
+        "currentWholeSame": true
+      },
+      {
+        "path": "backend/src/rulesets/native-night-effects.ts",
+        "sha256": "526b5765d4951b1a82221cabb9b1f0a0f390b7b93ff9887a07ef67eaba96b3e4",
+        "currentWholeSame": true
+      },
+      {
+        "path": "backend/src/rulesets/native-night-target-policy.ts",
+        "sha256": "d27f1662dee42b65cb4bf2d8507efd71f2c63d307b5df2ef7067dc5041a87a1d",
+        "currentWholeSame": true
+      },
+      {
+        "path": "backend/tests/scenarios/interactions/mist-raven/native-night-settlement.test.ts",
+        "sha256": "0eee31196364e48803430acad334dd00585cd702490aca4a36dcc6a2e2bcb5a2",
+        "currentWholeSame": true
+      }
+    ],
+    "nonfirstLiteralCounterexamplesDetected": 2,
+    "limits": [
+      "全模块输出相同仅属于五项完整逆向；真实新 owner 的完整原业务体另经实际函数比较，不声称新旧模块整体原始 JS 相同。",
+      "新增具名组合调用栈、函数作用域及公开 knife facet；不承诺任意私有反射、namespace 重赋或 prototype monkeypatch 等价。",
+      "直接传原 ctx，不新增读取快照或 await；生命、目标政策、付款和关闭仍由原 feature owner 管理。",
+      "新组合的所有值依赖端点在原 Wolf 源已存在；这不是完整冷图／任意初始化副作用验收。"
+    ]
+  },
+  "heads": {
+    "source": [
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+        "sha256": "434d69c2b67089c2ce2475738f7c8ce99e955950118a58f90da669bc42223496"
+      },
+      {
+        "path": "backend/src/rulesets/ordinary-wolf-knife-routing.ts",
+        "sha256": "199ca2064cab9f95bfd3ab319496ecb22e1b90be6f443751be3bc66f68fa3d47"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+        "sha256": "03d26a09cb2fc5e39b526a51532c897ef09edea0b4050c617f1327d661f975b7"
+      },
+      {
+        "path": "backend/tests/unit/rulesets/ordinary-wolf-knife-routing.test.ts",
+        "sha256": "856d21421da4174615b6699d12dcedeeb981bc23e863ae782baad0de5fcce21c"
+      }
+    ],
+    "documentationPaths": 628,
+    "diagnostics": [],
+    "chineseHeadFailures": []
+  },
+  "bindingSupplement": {
+    "source": [
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+        "sha256": "434d69c2b67089c2ce2475738f7c8ce99e955950118a58f90da669bc42223496"
+      },
+      {
+        "path": "backend/src/rulesets/ordinary-wolf-knife-routing.ts",
+        "sha256": "199ca2064cab9f95bfd3ab319496ecb22e1b90be6f443751be3bc66f68fa3d47"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+        "sha256": "03d26a09cb2fc5e39b526a51532c897ef09edea0b4050c617f1327d661f975b7"
+      },
+      {
+        "path": "backend/tests/unit/rulesets/ordinary-wolf-knife-routing.test.ts",
+        "sha256": "856d21421da4174615b6699d12dcedeeb981bc23e863ae782baad0de5fcce21c"
+      }
+    ],
+    "callerBindings": [
+      {
+        "name": "resolveOrdinaryWolfKnife",
+        "physicalOwner": "backend/src/rulesets/ordinary-wolf-knife-routing.ts"
+      },
+      {
+        "name": "AcceptedWolfKnifeTarget",
+        "physicalOwner": "backend/src/rulesets/ordinary-wolf-knife-routing.ts"
+      }
+    ],
+    "sharedScopeContract": "backend/src/game/mechanisms/stages/night/contracts.ts",
+    "originalInlineType": "backend/src/core/domain/night_effects.ts",
+    "movedInlineType": "backend/src/core/domain/night_effects.ts",
+    "samePhysicalTypeOwners": true,
+    "limits": "仅核新增两binding与类型路径端点，未重复首次完整程序／输出、类型或玩法检查。"
+  },
+  "receipts": {
+    "newTests": {
+      "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/rulesets/ordinary-wolf-knife-routing.test.ts",
+      "cwd": "backend",
+      "terminalChunk": "18c777",
+      "exitCode": 0,
+      "tests": 3,
+      "failures": 0,
+      "assertions": 28,
+      "output": "docs/refactor/generated/ordinary-wolf-knife-routing-new-tests-output.txt"
+    },
+    "originalTest": {
+      "command": "bun --no-env-file test --preload ./tests/setup.ts tests/scenarios/interactions/mist-raven/native-night-settlement.test.ts -t 'real all-pass mist draw binds an actual original knife and strikes inside an all-wolf circle'",
+      "cwd": "backend",
+      "terminalChunk": "4d8a34",
+      "exitCode": 0,
+      "tests": 1,
+      "filtered": 6,
+      "failures": 0,
+      "assertions": 19,
+      "output": "docs/refactor/generated/ordinary-wolf-knife-routing-old-test-output.txt"
+    },
+    "finiteTypes": {
+      "command": "backend/node_modules/.bin/tsc -p docs/refactor/generated/ordinary-wolf-knife-routing-types-config.json --pretty false",
+      "launchChunk": "9fb368",
+      "session": 97275,
+      "terminalChunk": "de17cf",
+      "exitCode": 0,
+      "roots": 4,
+      "output": "docs/refactor/generated/ordinary-wolf-knife-routing-types-output.txt",
+      "phase": "首轮；仅 Mist 公开端口职责头的输出说明在启动后补充，其余三个源和全部执行／类型 token 未再修改。"
+    },
+    "wholeProgramProof": {
+      "launchChunk": "e23bb3",
+      "session": 67725,
+      "terminalChunk": "aef4c0",
+      "exitCode": 0,
+      "command": "node docs/refactor/generated/ordinary-wolf-knife-routing-proof.cjs",
+      "output": "docs/refactor/generated/ordinary-wolf-knife-routing-proof-output.txt"
+    },
+    "heads": {
+      "terminalChunk": "9f9805",
+      "exitCode": 0,
+      "sources": 4,
+      "documentationPaths": 628,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "command": "bun docs/refactor/generated/ordinary-wolf-knife-routing-heads.ts",
+      "output": "docs/refactor/generated/ordinary-wolf-knife-routing-heads-output.txt"
+    },
+    "bindingSupplement": {
+      "terminalChunk": "045376",
+      "exitCode": 0,
+      "command": "node docs/refactor/generated/ordinary-wolf-knife-routing-binding-supplement.cjs",
+      "output": "docs/refactor/generated/ordinary-wolf-knife-routing-binding-supplement-output.txt"
+    },
+    "commentPhase": {
+      "path": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+      "firstWrittenHeaderSha256": "933b596bbc0e76babba29344eb9d5b411112ab08f3e8ff4f25d10a32eb1e8785",
+      "finalSha256": "03d26a09cb2fc5e39b526a51532c897ef09edea0b4050c617f1327d661f975b7",
+      "originalLine": " * 输入为原 World／夜号／目标；读取顺序由调用方保留，失效与关闭仍由原夜 frame 处理。",
+      "finalLine": " * 输入为原 World／夜号／目标，输出为原函数绑定及其查询结果；读取顺序由调用方保留，失效与关闭仍由原夜 frame 处理。",
+      "provenance": "首次写入的原句由实际编辑记录给出；非重新运行或在类型启动时额外采样的全文。正式完整正文证明与四头检查均使用末源码。"
+    },
+    "limits": [
+      "两个运行进程各一次，合计四个不同用例／47成功断言，不是一次整组运行。",
+      "未执行全门禁、模型或全局编译；后台有限类型传递依赖使用当次真实工作区，不宣称固定 cdbe 完整闭包。"
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-before.json",
+      "sha256": "93ab8485c603495821a442d0b66aacf9831bff7c5a82f6220cdf80464017cb32"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-edits.json",
+      "sha256": "a0e3def72ccd7b385b76aa665b3e28caaf1fdd447e786bd9d7765341c2413bc6"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-paths.json",
+      "sha256": "96d81746b26dcf73b2a586c69882bb216ec882ccef66f6581e5148072367aaf6"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-new-tests-output.txt",
+      "sha256": "4757552f334f4133ac360e0f15c4bb9c652f355945a36a3fcc4fbd9532194bb0"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-old-test-output.txt",
+      "sha256": "ec2b8a11bdf5bf9994c4629a35cd7dd56a26f948215bf3e382b13c20874fe21d"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-types-config.json",
+      "sha256": "ab65a2fcc352f5fec041b038c4a5f5b026ab4ca6ef21a6dbf38e8f7e49a2392e"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-proof.cjs",
+      "sha256": "785b96bfede719be4160866c2aedb5eeb58541c0b4dc2cbd93312b482d4cc49a"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-proof.json",
+      "sha256": "7b3ba829f2c0ebaa563723a025025aab269e88684c759a96b090397b4eb9663b"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-proof-output.txt",
+      "sha256": "421c053a2356193d0eb92d73778a30202698ca064b6adcb935048b2ecd42356a"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-heads.ts",
+      "sha256": "859b406316a940860f0727ba4c2287be52f5bfa2e97144fc2a19b0707242e52f"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-heads.json",
+      "sha256": "8a0abbff79f857cc60f6f94087cc67f61a74bcd2aa0df4d6d8c64b54eb57e0e5"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-heads-output.txt",
+      "sha256": "d899e91d339223a2d191c61b446c94ad141612eecb1b7b63bf64db7af4c0d708"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-binding-supplement.cjs",
+      "sha256": "c3824a92fcf6e6dc2af6d5a2387b45ba65783a8430235efd0b9d48422bfd0a90"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-binding-supplement.json",
+      "sha256": "c585ee2a09767ea2faf3ea3922f7f798d53d95e4ed247bc5e1c24b3c738ac663"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-binding-supplement-output.txt",
+      "sha256": "802b78eca8a2263ceb4efad7d3c9f6ab34ed9776c1f8f16218eec0f9a64d9efe"
+    },
+    {
+      "path": "docs/refactor/generated/ordinary-wolf-knife-routing-receipts.json",
+      "sha256": "159acb0895a93cb6b4c5c54c240bea5f96ca1e9ab768171fbbddc3c9d61f80d5"
+    }
+  ],
+  "independentReview": "待非作者另存；此摘要排除 Root／peer 报告以避免循环。"
+}

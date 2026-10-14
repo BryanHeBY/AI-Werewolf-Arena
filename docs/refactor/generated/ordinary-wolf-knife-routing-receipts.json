@@ -1,0 +1,69 @@
+{
+  "newTests": {
+    "command": "bun --no-env-file test --preload ./tests/setup.ts tests/unit/rulesets/ordinary-wolf-knife-routing.test.ts",
+    "cwd": "backend",
+    "terminalChunk": "18c777",
+    "exitCode": 0,
+    "tests": 3,
+    "failures": 0,
+    "assertions": 28,
+    "output": "docs/refactor/generated/ordinary-wolf-knife-routing-new-tests-output.txt"
+  },
+  "originalTest": {
+    "command": "bun --no-env-file test --preload ./tests/setup.ts tests/scenarios/interactions/mist-raven/native-night-settlement.test.ts -t 'real all-pass mist draw binds an actual original knife and strikes inside an all-wolf circle'",
+    "cwd": "backend",
+    "terminalChunk": "4d8a34",
+    "exitCode": 0,
+    "tests": 1,
+    "filtered": 6,
+    "failures": 0,
+    "assertions": 19,
+    "output": "docs/refactor/generated/ordinary-wolf-knife-routing-old-test-output.txt"
+  },
+  "finiteTypes": {
+    "command": "backend/node_modules/.bin/tsc -p docs/refactor/generated/ordinary-wolf-knife-routing-types-config.json --pretty false",
+    "launchChunk": "9fb368",
+    "session": 97275,
+    "terminalChunk": "de17cf",
+    "exitCode": 0,
+    "roots": 4,
+    "output": "docs/refactor/generated/ordinary-wolf-knife-routing-types-output.txt",
+    "phase": "首轮；仅 Mist 公开端口职责头的输出说明在启动后补充，其余三个源和全部执行／类型 token 未再修改。"
+  },
+  "wholeProgramProof": {
+    "launchChunk": "e23bb3",
+    "session": 67725,
+    "terminalChunk": "aef4c0",
+    "exitCode": 0,
+    "command": "node docs/refactor/generated/ordinary-wolf-knife-routing-proof.cjs",
+    "output": "docs/refactor/generated/ordinary-wolf-knife-routing-proof-output.txt"
+  },
+  "heads": {
+    "terminalChunk": "9f9805",
+    "exitCode": 0,
+    "sources": 4,
+    "documentationPaths": 628,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0,
+    "command": "bun docs/refactor/generated/ordinary-wolf-knife-routing-heads.ts",
+    "output": "docs/refactor/generated/ordinary-wolf-knife-routing-heads-output.txt"
+  },
+  "bindingSupplement": {
+    "terminalChunk": "045376",
+    "exitCode": 0,
+    "command": "node docs/refactor/generated/ordinary-wolf-knife-routing-binding-supplement.cjs",
+    "output": "docs/refactor/generated/ordinary-wolf-knife-routing-binding-supplement-output.txt"
+  },
+  "commentPhase": {
+    "path": "backend/src/game/mechanisms/roles/mist_raven/knife-ports.ts",
+    "firstWrittenHeaderSha256": "933b596bbc0e76babba29344eb9d5b411112ab08f3e8ff4f25d10a32eb1e8785",
+    "finalSha256": "03d26a09cb2fc5e39b526a51532c897ef09edea0b4050c617f1327d661f975b7",
+    "originalLine": " * 输入为原 World／夜号／目标；读取顺序由调用方保留，失效与关闭仍由原夜 frame 处理。",
+    "finalLine": " * 输入为原 World／夜号／目标，输出为原函数绑定及其查询结果；读取顺序由调用方保留，失效与关闭仍由原夜 frame 处理。",
+    "provenance": "首次写入的原句由实际编辑记录给出；非重新运行或在类型启动时额外采样的全文。正式完整正文证明与四头检查均使用末源码。"
+  },
+  "limits": [
+    "两个运行进程各一次，合计四个不同用例／47成功断言，不是一次整组运行。",
+    "未执行全门禁、模型或全局编译；后台有限类型传递依赖使用当次真实工作区，不宣称固定 cdbe 完整闭包。"
+  ]
+}
