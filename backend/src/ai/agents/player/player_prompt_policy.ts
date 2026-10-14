@@ -40,6 +40,7 @@ import { buildBoardInfoPrompt, buildSystemPrompt, buildUserPrompt } from "./prom
 import { renderTurnConstraintUserHint } from "./turn_constraints";
 import { resolveTurnConstraints } from "../../../game/gateway/turn-constraints";
 
+/** 装配对象与 registry 保原引用；人设回调收到原 request/role，不能把这个类型契约称作脱离数据或隔离沙箱。 */
 export interface PlayerPromptPolicyOptions {
   personalityPromptResolver?: (request: ActionRequest, role?: RoleComponent) => string | undefined;
   toolSpecRegistry: ToolSpecRegistry;
@@ -52,6 +53,7 @@ export interface PlayerPromptPolicyOptions {
 
 /** SDK／ACP 共用提示策略；传输适配器只选择其协议提示。 */
 export class PlayerPromptPolicy {
+  // 这里只缓存构造时公开配比与人数，不把其当作当前存活、已觉醒或可用库存；后续展示 callback 仍晚读。
   private readonly publicRoleCounts = new Map<Role, number>();
   private readonly publicBoardSize: number;
 
@@ -87,6 +89,7 @@ export class PlayerPromptPolicy {
     request: ActionRequest,
     options: { supportsDebugReporting: boolean; includeToolUseInstructions?: boolean },
   ) {
+    // role→开局配比展示→可选板配置→模板参数依序求值；后续 renderer/回调抛错不回滚已发生副作用。
     const role = this.role(request.actorId);
     const boardInfoPrompt = this.buildBoardInfo();
     const configPrompt = this.options.boardConfig
@@ -124,6 +127,7 @@ export class PlayerPromptPolicy {
     },
   ): string {
     const role = this.role(request.actorId);
+    // 解析实例只为提示与目标标签选择；min/effective tools/candidates 仍是知识，提交要走实际规则与原体复验。
     const { bound, targetRuleRole } = resolvePlayerPromptAbility(request, role);
     const constraints = resolveTurnConstraints(request);
     const stage = getActionRequestStage(request);
@@ -168,6 +172,7 @@ export class PlayerPromptPolicy {
           request.context.modifier_poison_blocked === true
             ? text(this.locale, "prompt.stage.modifier_poison_blocked")
             : undefined,
+          // 原 retry_notice 即便空串也优先；只有 undefined 才渲染引用，随后 filter(Boolean) 不会重新回退。
           request.context.retry_notice !== undefined
             ? request.context.retry_notice
             : request.context.retry_notice_message
@@ -195,6 +200,7 @@ export class PlayerPromptPolicy {
     });
   }
 
+  /** 静态配比先形成文本，再追加当前板子说明与初始身份知识；追加失败不撤销 此前回调，函数不返回部分文本。 */
   buildBoardInfo(): string {
     let info = buildBoardInfoPrompt({
       locale: this.locale,
@@ -232,6 +238,7 @@ export class PlayerPromptPolicy {
     return knownWolfTeammates(this.world, actorId, this.options.roleCatalog);
   }
 
+  /** registry 提示按输入工具顺序取得并去掉假值；文本不是工具注册、schema 校验或现场许可。 */
   private toolArgHints(allowedTools: ToolName[]): string {
     const hints = allowedTools
       .map((tool) => this.options.toolSpecRegistry.getArgHint(tool))

@@ -1,0 +1,162 @@
+[
+  {
+    "path": "backend/src/ai/agents/player/action-turn.ts",
+    "before": " * 输出保留脱离后的 selected、拒绝计数和 applied:false；截止／关闭只封住本选择窗口。",
+    "after": " * 输出保留脱离后的 selected、拒绝计数和 applied:false；截止在授权点检查，close 只封住本选择窗口。"
+  },
+  {
+    "path": "backend/src/ai/agents/player/action-turn.ts",
+    "before": " * 本 owner 不持有 World 写权限、不消耗资源、不订阅领域 settlement，也不等待实际 commit。",
+    "after": " * 本 owner 只消费预检接口与 World locale，不调用 World 写方法、不消耗资源、不订阅领域 settlement，也不等待实际 commit。"
+  },
+  {
+    "path": "backend/src/ai/agents/player/action-turn.ts",
+    "before": "export type ActionReceipt =",
+    "after": "/** accepted:true 只表示本次候选被选择且 applied 固定 false；拒绝字段保原回包，不是领域付款／回滚回执。 */\nexport type ActionReceipt ="
+  },
+  {
+    "path": "backend/src/ai/agents/player/action-turn.ts",
+    "before": "/** 每个开放回合只有一个选择 owner；可恢复拒绝保留窗口，成功选择只封住一次。 */",
+    "after": "/** 每个开放回合只有一个选择 owner；拒绝按原政策保留窗口，selected 本身阻止后续选择，不等于 closed 已被设置。 */"
+  },
+  {
+    "path": "backend/src/ai/agents/player/action-turn.ts",
+    "before": "  private selected: ToolCall | null = null;",
+    "after": "  // selected 与 closed 分别保候选和显式关闭；拒绝次数不等于资源消耗，严格三次门槛每次从原请求政策求值。\n  private selected: ToolCall | null = null;"
+  },
+  {
+    "path": "backend/src/ai/agents/player/action-turn.ts",
+    "before": "  get action(): ToolCall | null {",
+    "after": "  /** 每次访问克隆已选候选；克隆失败不撤回 selected，也不改变 closed 或补做领域提交。 */\n  get action(): ToolCall | null {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/action-turn.ts",
+    "before": "  authorize(turnId: unknown, tool = \"submit_action\"): Extract<ActionReceipt, { ok: false }> | null {",
+    "after": "  // locale→closed/selected/期限→严格失败上限→turnId 按原顺序读取；没有计时器或新增期限数值校验。\n  authorize(turnId: unknown, tool = \"submit_action\"): Extract<ActionReceipt, { ok: false }> | null {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/action-turn.ts",
+    "before": "    const result = this.reception.validate(this.request, name, args);",
+    "after": "    // 预检返回拒绝才计数；预检直接抛错不在这里 catch 或换成拒绝，原异常留给实际传输调用方。\n    const result = this.reception.validate(this.request, name, args);"
+  },
+  {
+    "path": "backend/src/ai/agents/player/action-turn.ts",
+    "before": "    this.selected = result.action;",
+    "after": "    // 候选引用先保存，再读回包 action.name；后续 getter／调用方序列化失败也保已经选择的前缀。\n    this.selected = result.action;"
+  },
+  {
+    "path": "backend/src/ai/agents/player/action-turn.ts",
+    "before": "  close(): void {",
+    "after": "  /** 只写本窗口 closed；不取消模型、关闭会话、清理候选或通知领域完成，这些仍归原调用链。 */\n  close(): void {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/contracts.ts",
+    "before": "  messages: ChatMessage[];",
+    "after": "  /** 原提示消息数组可写；声明不复制、冻结或保证与任一传输内部历史共享同一对象。 */\n  messages: ChatMessage[];"
+  },
+  {
+    "path": "backend/src/ai/agents/player/contracts.ts",
+    "before": "  auditMetadata?: string[];",
+    "after": "  /** 仅轮次记录的附加文本，不在此形成完整协议档案、隐藏信息过滤或运行权限。 */\n  auditMetadata?: string[];"
+  },
+  {
+    "path": "backend/src/ai/agents/player/contracts.ts",
+    "before": "  attempt: number;",
+    "after": "  /** 编排器提供的尝试编号；字段本身不限制循环预算或证明领域尚未付款。 */\n  attempt: number;"
+  },
+  {
+    "path": "backend/src/ai/agents/player/contracts.ts",
+    "before": "  fallback?: {",
+    "after": "  /** 回退状态由调用方填入；used 为真也可没有 action，不据此推断回退成功或已生效。 */\n  fallback?: {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/player_observer.ts",
+    "before": "export interface LlmObserverOptions {",
+    "after": "/** 仅控制日志展示；printThinking 不创建思考结果，transport 只选择原标签，locale 不改变模型原文。 */\nexport interface LlmObserverOptions {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/player_observer.ts",
+    "before": "  trace(line: string): void {",
+    "after": "  // 先记原 line 并裁到最近 80 条，再决定是否打印；装饰／console 失败不会撤回已改缓冲。\n  trace(line: string): void {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/player_observer.ts",
+    "before": "  prompt(messages: ChatMessage[], request: ActionRequest): void {",
+    "after": "  /** 原调用方负责可见数据范围；此处只按消息顺序打印，未知 role 显示原标签，不自行过滤或转交行动。 */\n  prompt(messages: ChatMessage[], request: ActionRequest): void {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/player_observer.ts",
+    "before": "  rawResponse(raw: string, request: ActionRequest): void {",
+    "after": "  /** 原回应不解析成工具；打印开关关闭则早返，日志／翻译错误保持原抛出，不变成请求校验结果。 */\n  rawResponse(raw: string, request: ActionRequest): void {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/player_observer.ts",
+    "before": "  thinking(trace: ToolLoopStepTrace[], request: ActionRequest): void {",
+    "after": "  /** 按原 step 和 toolCalls 顺序展示文本与原工具轨迹；不由 accepted 字段推断资源付款或隐藏信息许可。 */\n  thinking(trace: ToolLoopStepTrace[], request: ActionRequest): void {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/player_observer.ts",
+    "before": "  private decorate(line: string): string {",
+    "after": "  // 只按原首 token 查展示 key，再按包含的机器标签选颜色；没有解码事件或改变原 line 的诊断含义。\n  private decorate(line: string): string {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/player_prompt_policy.ts",
+    "before": "export interface PlayerPromptPolicyOptions {",
+    "after": "/** 装配对象与 registry 保原引用；人设回调收到原 request/role，不能把这个类型契约称作脱离数据或隔离沙箱。 */\nexport interface PlayerPromptPolicyOptions {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/player_prompt_policy.ts",
+    "before": "  private readonly publicRoleCounts = new Map<Role, number>();",
+    "after": "  // 这里只缓存构造时公开配比与人数，不把其当作当前存活、已觉醒或可用库存；后续展示 callback 仍晚读。\n  private readonly publicRoleCounts = new Map<Role, number>();"
+  },
+  {
+    "path": "backend/src/ai/agents/player/player_prompt_policy.ts",
+    "before": "    const role = this.role(request.actorId);\n    const boardInfoPrompt = this.buildBoardInfo();",
+    "after": "    // role→开局配比展示→可选板配置→模板参数依序求值；后续 renderer/回调抛错不回滚已发生副作用。\n    const role = this.role(request.actorId);\n    const boardInfoPrompt = this.buildBoardInfo();"
+  },
+  {
+    "path": "backend/src/ai/agents/player/player_prompt_policy.ts",
+    "before": "    const { bound, targetRuleRole } = resolvePlayerPromptAbility(request, role);",
+    "after": "    // 解析实例只为提示与目标标签选择；min/effective tools/candidates 仍是知识，提交要走实际规则与原体复验。\n    const { bound, targetRuleRole } = resolvePlayerPromptAbility(request, role);"
+  },
+  {
+    "path": "backend/src/ai/agents/player/player_prompt_policy.ts",
+    "before": "          request.context.retry_notice !== undefined",
+    "after": "          // 原 retry_notice 即便空串也优先；只有 undefined 才渲染引用，随后 filter(Boolean) 不会重新回退。\n          request.context.retry_notice !== undefined"
+  },
+  {
+    "path": "backend/src/ai/agents/player/player_prompt_policy.ts",
+    "before": "  buildBoardInfo(): string {",
+    "after": "  /** 静态配比先形成文本，再追加当前板子说明与初始身份知识；追加失败不撤销 此前回调，函数不返回部分文本。 */\n  buildBoardInfo(): string {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/player_prompt_policy.ts",
+    "before": "  private toolArgHints(allowedTools: ToolName[]): string {",
+    "after": "  /** registry 提示按输入工具顺序取得并去掉假值；文本不是工具注册、schema 校验或现场许可。 */\n  private toolArgHints(allowedTools: ToolName[]): string {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "export function buildSystemPrompt(input: SystemPromptInput): string {",
+    "after": "// 数组段落按表达式顺序求值；后段 formatter/getter 失败不返回已拼部分，也不撤销人设／回调已有副作用。\nexport function buildSystemPrompt(input: SystemPromptInput): string {"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "      effective: input.effectiveActionTools?.join(\", \") || none,",
+    "after": "      // 缺失／空 effective 列表在此显示 none，不自行复制 allowedTools 或新增本夜可用工具。\n      effective: input.effectiveActionTools?.join(\", \") || none,"
+  },
+  {
+    "path": "backend/src/ai/agents/player/prompt_templates.ts",
+    "before": "  const roles = Object.values(Role).filter((role) => (input.roleCounts.get(role) ?? 0) > 0);",
+    "after": "  // 此列表只固定本次筛出的角色；显示回调和 Map 仍各在原位置读取，不保证一次一致的快照。\n  const roles = Object.values(Role).filter((role) => (input.roleCounts.get(role) ?? 0) > 0);"
+  },
+  {
+    "path": "backend/src/ai/agents/player/turn_constraints.ts",
+    "before": "    ...(constraints.summary !== undefined",
+    "after": "    // summary !== undefined 优先于 MessageRef；空串会省略这一段，但不能再从引用补文案。\n    ...(constraints.summary !== undefined"
+  },
+  {
+    "path": "backend/src/ai/agents/player/turn_constraints.ts",
+    "before": "export function renderTurnConstraintUserHint(",
+    "after": "/** 先形成原基础 hint 再选择 summary；空串优先且不追加，格式化失败原样抛，不触发重试或补执行动作。 */\nexport function renderTurnConstraintUserHint("
+  }
+]

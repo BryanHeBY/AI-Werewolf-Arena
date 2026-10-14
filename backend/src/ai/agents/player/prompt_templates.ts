@@ -57,6 +57,7 @@ export interface BoardInfoPromptInput {
 }
 
 /** 身份、名字、队友和人设仍依原顺序拼接；工具说明与报告说明保原开关短路。 */
+// 数组段落按表达式顺序求值；后段 formatter/getter 失败不返回已拼部分，也不撤销人设／回调已有副作用。
 export function buildSystemPrompt(input: SystemPromptInput): string {
   const locale = input.locale ?? "zh-CN";
   return [
@@ -107,6 +108,7 @@ export function buildUserPrompt(input: UserPromptInput): string {
         input.turnConstraintHint ||
         text(locale, input.requiresAction ? "prompt.user.required" : "prompt.user.optional"),
       tools: input.allowedTools.join(", ") || none,
+      // 缺失／空 effective 列表在此显示 none，不自行复制 allowedTools 或新增本夜可用工具。
       effective: input.effectiveActionTools?.join(", ") || none,
     }),
     text(locale, "prompt.user.arguments", {
@@ -121,6 +123,7 @@ export function buildUserPrompt(input: UserPromptInput): string {
 /** 按原 Role 枚举值顺序筛正配比，两个 map 各在原位置读取 Map 与 callback，不缓存结果或吞错。 */
 export function buildBoardInfoPrompt(input: BoardInfoPromptInput): string {
   const locale = input.locale ?? "zh-CN";
+  // 此列表只固定本次筛出的角色；显示回调和 Map 仍各在原位置读取，不保证一次一致的快照。
   const roles = Object.values(Role).filter((role) => (input.roleCounts.get(role) ?? 0) > 0);
   return [
     text(locale, "prompt.board.title"),

@@ -9,6 +9,7 @@ import { ChatMessage } from "../../integrations/llm/transport";
 
 /** 本次提示及记录定位信息；各传输自行维护历史，因此窗口指标不承诺相同实现。 */
 export interface BuiltPlayerPrompt {
+  /** 原提示消息数组可写；声明不复制、冻结或保证与任一传输内部历史共享同一对象。 */
   messages: ChatMessage[];
   systemPrompt: string;
   userPrompt: string;
@@ -24,11 +25,13 @@ export interface BuiltPlayerPrompt {
   contextWindowTotal: number;
   // 本轮生成、供模型回传的关联标识；字符串本身不授予引擎行动权限。
   turnId: string;
+  /** 仅轮次记录的附加文本，不在此形成完整协议档案、隐藏信息过滤或运行权限。 */
   auditMetadata?: string[];
 }
 
 /** 保留每次失败／未得到有效行动的原因、诊断和原始回应，供事后审查。 */
 export interface PlayerRetryTraceEntry {
+  /** 编排器提供的尝试编号；字段本身不限制循环预算或证明领域尚未付款。 */
   attempt: number;
   status: "request_error" | "no_valid_action";
   reason?: string;
@@ -50,6 +53,7 @@ export interface PlayerRoundOutcome {
   }>;
   thinkingText?: string;
   finalAction?: ToolCall | null;
+  /** 回退状态由调用方填入；used 为真也可没有 action，不据此推断回退成功或已生效。 */
   fallback?: {
     used: boolean;
     reason?: string;

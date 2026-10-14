@@ -1,0 +1,62 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "7c8456949e3370a0d8585d40826763aff1b30f3a",
+  "source": [
+    {
+      "path": "backend/src/ai/agents/player/action-turn.ts",
+      "sha256": "3258cb7ec0897c87fb250b698ee505b6a43597f8279df03ca2f11b4c05dc6774"
+    },
+    {
+      "path": "backend/src/ai/agents/player/contracts.ts",
+      "sha256": "506aed38e51419f220c4a372341fdef85b4c45a6c388ca39d8cbdc14a4ec3035"
+    },
+    {
+      "path": "backend/src/ai/agents/player/player_observer.ts",
+      "sha256": "83902e75c20fee15fabe2a04fbdb213fa38a55d00a429189d1dd0f847f39bb6f"
+    },
+    {
+      "path": "backend/src/ai/agents/player/player_prompt_policy.ts",
+      "sha256": "87ce3e81f764cac5cc1419f011092f7345adab0bfad5f5e477e306cb166145bc"
+    },
+    {
+      "path": "backend/src/ai/agents/player/prompt_templates.ts",
+      "sha256": "5bc1ea3ab9762c7b85c44cd1f31e3889cb15053ee5ad3845513882d84ab2561d"
+    },
+    {
+      "path": "backend/src/ai/agents/player/turn_constraints.ts",
+      "sha256": "ee57a8e2a4db4b3d2c7d27719fa68e367c615c43c8f742a651c146c267e51e93"
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/player-ai-chinese-contracts-scope-final.json",
+    "sha256": "797581662a48305a02012187f61d8c0ccae4fe3c90d07bf19e185d68e13342ed"
+  },
+  "document": {
+    "path": "docs/refactor/player-ai-chinese-contracts.md",
+    "sha256": "3cab1217967b0788b6fe1f63d1534c1055cffbdc4415473a02bfafa3521ddf21"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/player-ai-chinese-contracts-evidence.json",
+    "sha256": "9e0dd8357a69c7d6ed5734679e484bfd07882db802ddb097a419cee2e2fbd439"
+  },
+  "integrity": {
+    "freshSources": 6,
+    "actualGitBefore": 6,
+    "controls": 2,
+    "artifactHashes": 11,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": [
+    "完整六源与真实LLM/ACP caller：只预检候选、selected/closed、appliedfalse、clone和late授权时点",
+    "直接预检异常/拒绝次数、观察缓冲先写后console、模型原文与上游可见性职责",
+    "配比缓存非当前状态，原request/role callback、晚查询、Map读取与空串优先MessageRef",
+    "真实7c六Git前态/两controls/11附件/32精确comment与完整AST叶/JSDoc十二输出同，首head/diff实际0；无check重跑"
+  ],
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

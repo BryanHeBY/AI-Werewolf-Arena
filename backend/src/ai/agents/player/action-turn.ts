@@ -1,7 +1,7 @@
 /**
  * 负责单个 Agent 行动选择窗口及接收回执；输入为游戏预检窄端口、原请求和提交的 turnId。
- * 输出保留脱离后的 selected、拒绝计数和 applied:false；截止／关闭只封住本选择窗口。
- * 本 owner 不持有 World 写权限、不消耗资源、不订阅领域 settlement，也不等待实际 commit。
+ * 输出保留脱离后的 selected、拒绝计数和 applied:false；截止在授权点检查，close 只封住本选择窗口。
+ * 本 owner 只消费预检接口与 World locale，不调用 World 写方法、不消耗资源、不订阅领域 settlement，也不等待实际 commit。
  * 规则预检属于游戏 Gateway，领域完成责任仍由 reproduction 与各机制所有者持有。
  */
 import { text, toolFailure } from "@ai-werewolf-arena/game-text";
@@ -11,6 +11,7 @@ import type {
   GameActionValidation,
 } from "../../../game/gateway/action-reception";
 
+/** accepted:true 只表示本次候选被选择且 applied 固定 false；拒绝字段保原回包，不是领域付款／回滚回执。 */
 export type ActionReceipt =
   | { ok: true; accepted: true; applied: false; action: ToolName }
   | {
@@ -23,8 +24,9 @@ export type ActionReceipt =
     };
 export type ActionValidation = GameActionValidation;
 
-/** 每个开放回合只有一个选择 owner；可恢复拒绝保留窗口，成功选择只封住一次。 */
+/** 每个开放回合只有一个选择 owner；拒绝按原政策保留窗口，selected 本身阻止后续选择，不等于 closed 已被设置。 */
 export class ActionTurn {
+  // selected 与 closed 分别保候选和显式关闭；拒绝次数不等于资源消耗，严格三次门槛每次从原请求政策求值。
   private selected: ToolCall | null = null;
   private closed = false;
   private rejectedActions = 0;
@@ -34,6 +36,7 @@ export class ActionTurn {
     readonly turnId: string,
   ) {}
 
+  /** 每次访问克隆已选候选；克隆失败不撤回 selected，也不改变 closed 或补做领域提交。 */
   get action(): ToolCall | null {
     return this.selected ? structuredClone(this.selected) : null;
   }
@@ -49,6 +52,7 @@ export class ActionTurn {
     };
   }
 
+  // locale→closed/selected/期限→严格失败上限→turnId 按原顺序读取；没有计时器或新增期限数值校验。
   authorize(turnId: unknown, tool = "submit_action"): Extract<ActionReceipt, { ok: false }> | null {
     const locale = this.reception.world.locale;
     if (this.closed || this.selected || (this.request.deadlineAtMs ?? Infinity) <= Date.now()) {
@@ -78,11 +82,13 @@ export class ActionTurn {
       this.rejectedActions++;
       return toolFailure(this.reception.world.locale, "invalid_submit_action_arguments");
     }
+    // 预检返回拒绝才计数；预检直接抛错不在这里 catch 或换成拒绝，原异常留给实际传输调用方。
     const result = this.reception.validate(this.request, name, args);
     if (!result.ok) {
       this.rejectedActions++;
       return result;
     }
+    // 候选引用先保存，再读回包 action.name；后续 getter／调用方序列化失败也保已经选择的前缀。
     this.selected = result.action;
     return { ok: true, accepted: true, applied: false, action: result.action.name };
   }
@@ -94,6 +100,7 @@ export class ActionTurn {
     return toolFailure(this.reception.world.locale, "invalid_submit_action_arguments");
   }
 
+  /** 只写本窗口 closed；不取消模型、关闭会话、清理候选或通知领域完成，这些仍归原调用链。 */
   close(): void {
     this.closed = true;
   }

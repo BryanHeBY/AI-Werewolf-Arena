@@ -1,0 +1,108 @@
+{
+  "capture": {
+    "actualGitCommit": "7c8456949e3370a0d8585d40826763aff1b30f3a",
+    "chunk": "5337b6",
+    "exitCode": 0,
+    "wholeGitBeforeEqualsWorkingSources": 6,
+    "controls": 2
+  },
+  "commentPreparation": {
+    "initialEditsChunk": "4746c3",
+    "edits": 32,
+    "precheckWordingChunk": "931086",
+    "scope": "唯一英文 earlier callback 改为此前回调，并更新同一edit after；首proof/head之前，无行为变动"
+  },
+  "proof": {
+    "command": "bun --no-env-file docs/refactor/generated/player-ai-chinese-contracts-proof.cjs > docs/refactor/generated/player-ai-chinese-contracts-proof-output.txt 2>&1",
+    "chunk": "f69680",
+    "exitCode": 0,
+    "executions": 1,
+    "scriptSha256": "89349bf37a7afbdace32cdae44483e3f99b64623bc45fd3b4b5f9a8404611e0f",
+    "summary": {
+      "sources": 6,
+      "typedNodes": 3853,
+      "noncommentLeaves": 4574,
+      "jsdocTags": 0,
+      "protectedCommentRecords": 0,
+      "wholeRawOutputs": 12
+    },
+    "source": [
+      {
+        "path": "backend/src/ai/agents/player/action-turn.ts",
+        "sha256": "3258cb7ec0897c87fb250b698ee505b6a43597f8279df03ca2f11b4c05dc6774"
+      },
+      {
+        "path": "backend/src/ai/agents/player/contracts.ts",
+        "sha256": "506aed38e51419f220c4a372341fdef85b4c45a6c388ca39d8cbdc14a4ec3035"
+      },
+      {
+        "path": "backend/src/ai/agents/player/player_observer.ts",
+        "sha256": "83902e75c20fee15fabe2a04fbdb213fa38a55d00a429189d1dd0f847f39bb6f"
+      },
+      {
+        "path": "backend/src/ai/agents/player/player_prompt_policy.ts",
+        "sha256": "87ce3e81f764cac5cc1419f011092f7345adab0bfad5f5e477e306cb166145bc"
+      },
+      {
+        "path": "backend/src/ai/agents/player/prompt_templates.ts",
+        "sha256": "5bc1ea3ab9762c7b85c44cd1f31e3889cb15053ee5ad3845513882d84ab2561d"
+      },
+      {
+        "path": "backend/src/ai/agents/player/turn_constraints.ts",
+        "sha256": "ee57a8e2a4db4b3d2c7d27719fa68e367c615c43c8f742a651c146c267e51e93"
+      }
+    ]
+  },
+  "heads": {
+    "command": "bun --no-env-file docs/refactor/generated/player-ai-chinese-contracts-heads.ts > docs/refactor/generated/player-ai-chinese-contracts-heads-output.txt 2>&1",
+    "chunk": "1d4535",
+    "exitCode": 0,
+    "executions": 1,
+    "scriptSha256": "f0db076289517a25bd4969620a8963044d527e81e931edcb5b02bd4dc85587d5",
+    "source": [
+      {
+        "path": "backend/src/ai/agents/player/action-turn.ts",
+        "sha256": "3258cb7ec0897c87fb250b698ee505b6a43597f8279df03ca2f11b4c05dc6774"
+      },
+      {
+        "path": "backend/src/ai/agents/player/contracts.ts",
+        "sha256": "506aed38e51419f220c4a372341fdef85b4c45a6c388ca39d8cbdc14a4ec3035"
+      },
+      {
+        "path": "backend/src/ai/agents/player/player_observer.ts",
+        "sha256": "83902e75c20fee15fabe2a04fbdb213fa38a55d00a429189d1dd0f847f39bb6f"
+      },
+      {
+        "path": "backend/src/ai/agents/player/player_prompt_policy.ts",
+        "sha256": "87ce3e81f764cac5cc1419f011092f7345adab0bfad5f5e477e306cb166145bc"
+      },
+      {
+        "path": "backend/src/ai/agents/player/prompt_templates.ts",
+        "sha256": "5bc1ea3ab9762c7b85c44cd1f31e3889cb15053ee5ad3845513882d84ab2561d"
+      },
+      {
+        "path": "backend/src/ai/agents/player/turn_constraints.ts",
+        "sha256": "ee57a8e2a4db4b3d2c7d27719fa68e367c615c43c8f742a651c146c267e51e93"
+      }
+    ],
+    "trackedDocumentationPathsAtSampling": 673,
+    "documentationPathsSha256": "77bfe4836c2b6f6e49d921a089b5b263cbc988977db3091dfba3b21fd98f0812",
+    "diagnostics": 0,
+    "chineseHeadFailures": 0
+  },
+  "diffCheck": {
+    "chunk": "377bd2",
+    "exitCode": 0,
+    "scope": "六source精确路径"
+  },
+  "notRun": [
+    "production loading",
+    "tests",
+    "types",
+    "models",
+    "network",
+    "private configs",
+    "full gates",
+    "green repeats"
+  ]
+}

@@ -19,6 +19,7 @@ export function renderTurnConstraintSystemRule(
     ...(constraints.requiredAnyTools.length
       ? [text(locale, "turn.required_tools", { tools: constraints.requiredAnyTools.join(", ") })]
       : []),
+    // summary !== undefined 优先于 MessageRef；空串会省略这一段，但不能再从引用补文案。
     ...(constraints.summary !== undefined
       ? constraints.summary
         ? [constraints.summary]
@@ -29,6 +30,7 @@ export function renderTurnConstraintSystemRule(
   ].join(" ");
 }
 
+/** 先形成原基础 hint 再选择 summary；空串优先且不追加，格式化失败原样抛，不触发重试或补执行动作。 */
 export function renderTurnConstraintUserHint(
   constraints: ResolvedTurnConstraints,
   locale: Locale = "zh-CN",

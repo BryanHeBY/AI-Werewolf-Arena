@@ -8,6 +8,7 @@ import { ActionRequest } from "../../../core/domain";
 import { colorize, isAnsiEnabled } from "../../../utils/ansi";
 import { ChatMessage, ToolLoopStepTrace } from "../../integrations/llm/transport";
 
+/** 仅控制日志展示；printThinking 不创建思考结果，transport 只选择原标签，locale 不改变模型原文。 */
 export interface LlmObserverOptions {
   trace: boolean;
   locale?: Locale;
@@ -30,12 +31,14 @@ export class LlmObserver {
     return this.options.locale ?? "zh-CN";
   }
 
+  // 先记原 line 并裁到最近 80 条，再决定是否打印；装饰／console 失败不会撤回已改缓冲。
   trace(line: string): void {
     this.recentEvents.push(line);
     if (this.recentEvents.length > 80) this.recentEvents.shift();
     if (this.options.trace) console.log(this.decorate(line));
   }
 
+  /** 原调用方负责可见数据范围；此处只按消息顺序打印，未知 role 显示原标签，不自行过滤或转交行动。 */
   prompt(messages: ChatMessage[], request: ActionRequest): void {
     if (!this.options.printLlmIo) return;
     const prefix = colorize(
@@ -56,6 +59,7 @@ export class LlmObserver {
     console.log(`${prefix} prompt_end ${marker} · ${text(this.locale, "runtime.prompt_end")}`);
   }
 
+  /** 原回应不解析成工具；打印开关关闭则早返，日志／翻译错误保持原抛出，不变成请求校验结果。 */
   rawResponse(raw: string, request: ActionRequest): void {
     if (!this.options.printLlmIo) return;
     const prefix = colorize(
@@ -73,6 +77,7 @@ export class LlmObserver {
     );
   }
 
+  /** 按原 step 和 toolCalls 顺序展示文本与原工具轨迹；不由 accepted 字段推断资源付款或隐藏信息许可。 */
   thinking(trace: ToolLoopStepTrace[], request: ActionRequest): void {
     if (!this.options.printThinking || trace.length === 0) return;
     const prefix = colorize("[THINKING]", "muted", this.colorizeLogs);
@@ -107,6 +112,7 @@ export class LlmObserver {
     return null;
   }
 
+  // 只按原首 token 查展示 key，再按包含的机器标签选颜色；没有解码事件或改变原 line 的诊断含义。
   private decorate(line: string): string {
     const prefix = this.options.transport === "acp" ? "[ACPActionProvider]" : "[LLMActionProvider]";
     const key = `runtime.trace.${line.split(" ", 1)[0]}` as MessageKey;
