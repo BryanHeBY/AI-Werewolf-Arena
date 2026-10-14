@@ -1,0 +1,23 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "4bc72dda16e8a138d3b8e9014e0940b2b247469780001657795550af5a3077eb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "sha256": "dbea79f470b0ba4b6c4159d5eba48a7120d6772de0db55d6fd346d47db2836d2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/initial-deal-publication.ts",
+      "sha256": "b6716f16de0d270f6e8970216b6f01f39f705dfefddebae1f7edb12d9ffd6578"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/initial-deal-publication.test.ts",
+      "sha256": "afeb95368b7b2a14ccbfd3d7bc397e416a052ca762011e285f8142d774d417ce"
+    }
+  ],
+  "documentationPaths": 586,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

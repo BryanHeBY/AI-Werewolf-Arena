@@ -15,3 +15,6 @@ export {
 
 /** 开局组合使用同一准备类绑定；具体窗口仍拥有选择校验、提交与失败关闭。 */
 export { InitialIdentitySetupWindow } from "./setup";
+
+/** 开局整副牌组事实由具体owner完整构造；公共角色名单不含手牌映射或设置许可。 */
+export { publishInitialIdentityDeal } from "./initial-deal-publication";

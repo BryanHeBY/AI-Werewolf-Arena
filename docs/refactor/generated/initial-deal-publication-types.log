@@ -1,0 +1,23 @@
+backend/tests/unit/features/initial-identity/initial-deal-publication.test.ts(57,7): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(expected: GameEvent[]): void', gave the following error.
+    Type '{ roles: ("wolf" | "villager")[]; boardSize: number; policy: "lui_meme_thief_two_extra_villagers_v1" | "awa_netease_shapeshifter_two_extra_villagers_v1"; }' is not assignable to type 'GameResult | Base | NobleContractClosedFact | (Base & { targetId: number | null; }) | (Base & { notifiedActorIds: number[]; }) | ... 173 more ... | { ...; }'.
+      Types of property 'roles' are incompatible.
+        Type '("wolf" | "villager")[]' is not assignable to type 'Role[]'.
+          Type '"wolf" | "villager"' is not assignable to type 'Role'.
+            Type '"wolf"' is not assignable to type 'Role'.
+  Overload 2 of 2, '(expected: NoInfer<GameEvent[]>): void', gave the following error.
+    Type '{ roles: ("wolf" | "villager")[]; boardSize: number; policy: "lui_meme_thief_two_extra_villagers_v1" | "awa_netease_shapeshifter_two_extra_villagers_v1"; }' is not assignable to type 'GameResult | Base | NobleContractClosedFact | (Base & { targetId: number | null; }) | (Base & { notifiedActorIds: number[]; }) | ... 173 more ... | { ...; }'.
+      Types of property 'roles' are incompatible.
+        Type '("wolf" | "villager")[]' is not assignable to type 'Role[]'.
+          Type '"wolf" | "villager"' is not assignable to type 'Role'.
+            Type '"wolf"' is not assignable to type 'Role'.
+backend/tests/unit/features/initial-identity/initial-deal-publication.test.ts(64,48): error TS2769: No overload matches this call.
+  Overload 2 of 2, '(expected: NoInfer<readonly Role[] | undefined>): void', gave the following error.
+    Argument of type '("wolf" | "villager")[]' is not assignable to parameter of type 'readonly Role[]'.
+      Type '"wolf" | "villager"' is not assignable to type 'Role'.
+        Type '"wolf"' is not assignable to type 'Role'.
+backend/tests/unit/features/initial-identity/initial-deal-publication.test.ts(83,46): error TS2769: No overload matches this call.
+  Overload 2 of 2, '(expected: NoInfer<readonly Role[] | undefined>): void', gave the following error.
+    Argument of type '("wolf" | "villager")[]' is not assignable to parameter of type 'readonly Role[]'.
+      Type '"wolf" | "villager"' is not assignable to type 'Role'.
+        Type '"wolf"' is not assignable to type 'Role'.

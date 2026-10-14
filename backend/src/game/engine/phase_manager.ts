@@ -42,13 +42,7 @@ import { demonWitchMarksSafe } from "../mechanisms/roles/demon_hunter/ports";
 import {
   weddingSetup,
 } from "../mechanisms/roles/ghost_bride/ports";
-import {
-  initialIdentityDeal,
-  INITIAL_IDENTITY_POLICIES,
-} from "../mechanisms/roles/initial_identity/deal";
-import {
-  initialIdentityKind,
-} from "../mechanisms/roles/initial_identity/ports";
+import { publishInitialIdentityDeal } from "../mechanisms/roles/initial_identity/ports";
 import { WallNotesWindow } from "../mechanisms/events/wall_notes/window";
 import { GameActionRequestFactory } from "./action_request_factory";
 import { TERMINAL_VICTORY_POLICY } from "../../rulesets/terminal-victory-policy";
@@ -216,24 +210,12 @@ export class PhaseManager {
         }),
       },
     });
-    const initialDeal = initialIdentityDeal(this.world),
-      initialKind = initialIdentityKind(this.world);
-    if (initialDeal) {
-      const data = { roles: [...initialDeal], boardSize: this.config.boardSize };
-      this.events.push(
-        initialKind === "shapeshifter"
-          ? {
-              timestamp: Date.now(),
-              type: "shapeshifter_initial_deal",
-              payload: { ...data, policy: INITIAL_IDENTITY_POLICIES.shapeshifter },
-            }
-          : {
-              timestamp: Date.now(),
-              type: "thief_initial_deal",
-              payload: { ...data, policy: INITIAL_IDENTITY_POLICIES.thief },
-            },
-      );
-    }
+    // 仅发布原整副公共牌组；各运行引用晚读，前面的私密牌表与后续阶段广播顺序不变。
+    publishInitialIdentityDeal({
+      world: () => this.world,
+      events: () => this.events,
+      boardSize: () => this.config.boardSize,
+    });
     // 初始阶段也写入上帝公开广播，确保首轮请求前玩家可见当前阶段。
     this.events.push({
       timestamp: Date.now(),

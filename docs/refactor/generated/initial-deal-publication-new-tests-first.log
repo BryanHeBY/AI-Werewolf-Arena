@@ -1,0 +1,39 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/initial-identity/initial-deal-publication.test.ts:
+(pass) no initial deal still queries kind before skipping public fields [0.30ms]
+14 |     typeof value === "string" ||
+15 |     typeof value === "boolean" ||
+16 |     (typeof value === "number" && Number.isFinite(value))
+17 |   )
+18 |     return value;
+19 |   if (!value || typeof value !== "object" || depth > 3) throw new Error("event_fact_not_data");
+                                                                                                  ^
+error: event_fact_not_data
+      at copyEventData (/home/hby/dev/AI-Werewolf-Arena/packages/game-contract/src/inert-event-data.ts:19:94)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/initial_identity/deal.ts:123:35)
+      at map (1:11)
+      at installInitialIdentityDeal (/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/initial_identity/deal.ts:111:29)
+      at fixture (/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/initial-identity/initial-deal-publication.test.ts:22:3)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/initial-identity/initial-deal-publication.test.ts:39:19)
+(fail) both initial kinds publish the copied public deck with original push receiver and clock order [0.56ms]
+14 |     typeof value === "string" ||
+15 |     typeof value === "boolean" ||
+16 |     (typeof value === "number" && Number.isFinite(value))
+17 |   )
+18 |     return value;
+19 |   if (!value || typeof value !== "object" || depth > 3) throw new Error("event_fact_not_data");
+                                                                                                  ^
+error: event_fact_not_data
+      at copyEventData (/home/hby/dev/AI-Werewolf-Arena/packages/game-contract/src/inert-event-data.ts:19:94)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/initial_identity/deal.ts:123:35)
+      at map (1:11)
+      at installInitialIdentityDeal (/home/hby/dev/AI-Werewolf-Arena/backend/src/game/mechanisms/roles/initial_identity/deal.ts:111:29)
+      at fixture (/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/initial-identity/initial-deal-publication.test.ts:22:3)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/features/initial-identity/initial-deal-publication.test.ts:66:17)
+(fail) push lookup failure follows board size and precedes clock without changing the initial stock [0.13ms]
+
+ 1 pass
+ 2 fail
+ 2 expect() calls
+Ran 3 tests across 1 file. [61.00ms]

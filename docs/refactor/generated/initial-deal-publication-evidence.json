@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "scope": {
+    "path": "docs/refactor/generated/initial-deal-publication-scope-final.json",
+    "sha256": "97e6a2efa3559a901cc2f2cab34e58fd44f464caf06313d223d1e47fc82e3aab"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "4bc72dda16e8a138d3b8e9014e0940b2b247469780001657795550af5a3077eb"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/ports.ts",
+      "sha256": "dbea79f470b0ba4b6c4159d5eba48a7120d6772de0db55d6fd346d47db2836d2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/initial_identity/initial-deal-publication.ts",
+      "sha256": "b6716f16de0d270f6e8970216b6f01f39f705dfefddebae1f7edb12d9ffd6578"
+    },
+    {
+      "path": "backend/tests/unit/features/initial-identity/initial-deal-publication.test.ts",
+      "sha256": "eab39761392471d08f8d4f65fe9b4a8cbf6c2e3f367ca01f75bd400c30f2429a"
+    }
+  ],
+  "deleted": [],
+  "documentation": {
+    "path": "docs/refactor/initial-deal-publication.md",
+    "sha256": "0904211dd778db0ea50e1cb59f50b6e149c0fda10d0fc73ca159f83aa529d632"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-before.json",
+      "sha256": "39dc661d074ceeba5d3a6d5e9e16c9acf4dd4b2b6af050d0c24bba9d03e0c36b"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-paths.json",
+      "sha256": "036df276f7cac88fb1cc0bd8b9199f4637296ff6f62abed0dbcfc74fb08d99c8"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-edits.json",
+      "sha256": "a99049edc4d18cedf5226efdfd537d2b26c1c51929ee3bfac886ef8e9dc4e839"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-new-tests-first.log",
+      "sha256": "ee9363128c8342d933bfe45c35d0888e24d3c0fbafbfba218c8859684278c438"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-new-tests.log",
+      "sha256": "7e4b597d6187447605bbb20c55d0b910ae944c0ebf6670f8002f0533e4ea162f"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-fixture-delta.json",
+      "sha256": "b704104a2c0305dac7b2a92a892f1394af1d662d27f56fad51f3bfe1d2a204b3"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-original-tests.log",
+      "sha256": "5183a8ee9ddfdc1d30afde1c0f13f9dda1a8c7cb45023c9e5dac352b6b88309e"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-types-config.json",
+      "sha256": "ca9e971f0e467f01090a133c4b639c2559b15694bfa010ec0ac4da5f26c53eff"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-types.log",
+      "sha256": "c4824674abbbcbc2d2a5b81cd14d24effe786538d7a31d13f1eda8756a114576"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-types-failed-config.json",
+      "sha256": "7216df59e266bd426b492052a50218f8b6034cef86a8d4d161c581734f69c16c"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-types-failed.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-test-typefix-before.json",
+      "sha256": "72b2395d82e32cc42bd1d90eb7fef3a2012f9e6343c9837de3e13b7f394c12ac"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-test-typefix-proof.json",
+      "sha256": "7b2888f34a9da291d030912d765ee6918b7c48d06021b267776153e075a6eceb"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-heads.ts",
+      "sha256": "919db9838229bca4464503174d6cfa1bae5047ccdbd82e509cf50a8f344363ec"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-heads.json",
+      "sha256": "7cd64a24054c433297013591a856645f3a385503dbdec94c3cec924b0ae17537"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-heads.log",
+      "sha256": "b613e847770069d9cca90c0f379e56a509c8ba757e0260b10a47a87dbeb57095"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-proof.cjs",
+      "sha256": "1e6e1aef06e07e5027f16563fe61e163348fd86e268525f8b1bd2dbfc1e82d05"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-proof.json",
+      "sha256": "a99caf8a522812191ec981f75d84f25c6c7294fdf3f66953f8aa80bb322bc500"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-proof.log",
+      "sha256": "02ccc8e81ff7adcde85355a0c4993d5348e4fc5184cffdd11de3676a319d9a58"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-receipts.json",
+      "sha256": "3e3947a7a8d0fc20b3442c5c5d133d93635a3ba04a41c976b0e40d5211bed157"
+    },
+    {
+      "path": "docs/refactor/generated/initial-deal-publication-scope-final.json",
+      "sha256": "97e6a2efa3559a901cc2f2cab34e58fd44f464caf06313d223d1e47fc82e3aab"
+    }
+  ],
+  "proofSummary": {
+    "wholeConsumers": 2,
+    "completeOwnerPrograms": 1,
+    "typedNodes": 5317,
+    "noncommentLeaves": 6644,
+    "wholeMappedOutputs": 6
+  },
+  "receipts": {
+    "newFirst": {
+      "chunk": "533acf",
+      "exitCode": 1,
+      "pass": 1,
+      "fail": 2,
+      "assertions": 2,
+      "reason": "新fixture缺Victory，原copyEventData早拒undefined"
+    },
+    "newFailedOnly": {
+      "chunk": "3b84ac",
+      "exitCode": 0,
+      "pass": 2,
+      "fail": 0,
+      "assertions": 12,
+      "filtered": 1
+    },
+    "oldPrecise": {
+      "chunk": "945de6",
+      "exitCode": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 3,
+      "filtered": 1
+    },
+    "successSummary": {
+      "distinctCases": 4,
+      "assertions": 17,
+      "runtimeExecutions": 3,
+      "greenNotRepeated": true
+    },
+    "types": {
+      "first": {
+        "launch": "13b0ac",
+        "session": 50141,
+        "terminal": "fb4d7a",
+        "exitCode": 2,
+        "roots": 4,
+        "diagnostics": "仅newunit三Bun matcher字面Role TS2769"
+      },
+      "failedOnly": {
+        "launch": "0e1b83",
+        "session": 75390,
+        "terminal": "b9dda1",
+        "exitCode": 0,
+        "roots": 1
+      }
+    },
+    "typeBridge": {
+      "chunk": "ad282e",
+      "exitCode": 0,
+      "sites": 3,
+      "wholeOutputs": 2
+    },
+    "heads": {
+      "chunk": "80c2e1",
+      "exitCode": 0,
+      "roots": 4,
+      "documentationPaths": 586,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0
+    },
+    "proof": {
+      "chunk": "de9e4e",
+      "exitCode": 0,
+      "summary": {
+        "wholeConsumers": 2,
+        "completeOwnerPrograms": 1,
+        "typedNodes": 5317,
+        "noncommentLeaves": 6644,
+        "wholeMappedOutputs": 6
+      }
+    },
+    "notRun": [
+      "full gates",
+      "full types",
+      "full suite",
+      "games",
+      "models",
+      "private configs"
+    ],
+    "sourceStage": "原runtime后只新unit3个type-only subject cast，双wholeJS同；未重复原绿。"
+  },
+  "limits": [
+    "完整PM/ports精准逆，actualpublisher完整两语句逐体适配运行读取；不恢复旧整个PM体掩新owner。",
+    "新公开函数/运行输入端口/模块初始化路线是明确API变化，不承诺任意namespace monkeypatch或完整cold图恒同。",
+    "events返回原可追加数组、World晚读；运行类型不是许可，公共牌组不是手牌映射。"
+  ],
+  "independentReview": "等待Root/非作者source/doc/SHA审；不纳peer/root reports避免循环digest。"
+}

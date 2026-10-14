@@ -1,0 +1,83 @@
+{
+  "newFirst": {
+    "chunk": "533acf",
+    "exitCode": 1,
+    "pass": 1,
+    "fail": 2,
+    "assertions": 2,
+    "reason": "新fixture缺Victory，原copyEventData早拒undefined"
+  },
+  "newFailedOnly": {
+    "chunk": "3b84ac",
+    "exitCode": 0,
+    "pass": 2,
+    "fail": 0,
+    "assertions": 12,
+    "filtered": 1
+  },
+  "oldPrecise": {
+    "chunk": "945de6",
+    "exitCode": 0,
+    "pass": 1,
+    "fail": 0,
+    "assertions": 3,
+    "filtered": 1
+  },
+  "successSummary": {
+    "distinctCases": 4,
+    "assertions": 17,
+    "runtimeExecutions": 3,
+    "greenNotRepeated": true
+  },
+  "types": {
+    "first": {
+      "launch": "13b0ac",
+      "session": 50141,
+      "terminal": "fb4d7a",
+      "exitCode": 2,
+      "roots": 4,
+      "diagnostics": "仅newunit三Bun matcher字面Role TS2769"
+    },
+    "failedOnly": {
+      "launch": "0e1b83",
+      "session": 75390,
+      "terminal": "b9dda1",
+      "exitCode": 0,
+      "roots": 1
+    }
+  },
+  "typeBridge": {
+    "chunk": "ad282e",
+    "exitCode": 0,
+    "sites": 3,
+    "wholeOutputs": 2
+  },
+  "heads": {
+    "chunk": "80c2e1",
+    "exitCode": 0,
+    "roots": 4,
+    "documentationPaths": 586,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0
+  },
+  "proof": {
+    "chunk": "de9e4e",
+    "exitCode": 0,
+    "summary": {
+      "wholeConsumers": 2,
+      "completeOwnerPrograms": 1,
+      "typedNodes": 5317,
+      "noncommentLeaves": 6644,
+      "wholeMappedOutputs": 6
+    }
+  },
+  "notRun": [
+    "full gates",
+    "full types",
+    "full suite",
+    "games",
+    "models",
+    "private configs"
+  ],
+  "sourceStage": "原runtime后只新unit3个type-only subject cast，双wholeJS同；未重复原绿。"
+}
