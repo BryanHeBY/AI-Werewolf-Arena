@@ -1,0 +1,99 @@
+{
+  "source": "backend/src/game/engine/phase_manager.ts",
+  "owner": "backend/src/rulesets/special-night-damage-preparation.ts",
+  "bodySubstitutions": [
+    [
+      "this.assertDemonReadable()",
+      "runtime.assertReadable()"
+    ],
+    [
+      "this.nightFaultPlan",
+      "runtime.nightFaultPlan"
+    ],
+    [
+      "this.world",
+      "runtime.world"
+    ],
+    [
+      "this.config",
+      "runtime.config"
+    ],
+    [
+      "this.events",
+      "runtime.events"
+    ],
+    [
+      "const manager = this;",
+      "const manager = runtime;"
+    ]
+  ],
+  "bodyComments": [
+    {
+      "anchor": "const faults =",
+      "comment": "// 原故障驱动可先换生命并消费计划；必需记录失败保此前前缀，不能跳过回调继续封存。\n"
+    },
+    {
+      "anchor": "const deaths =",
+      "comment": "// 每目标才读取原 deathLives；空来源不读取它，originalLives 保留 undefined，不预抓新的生命。\n"
+    },
+    {
+      "anchor": "const livingBeforeChain =",
+      "comment": "// 先完成原保护、夜仆和事实发布，再捕获活人生命；这里只准备，真实标死与追加波仍归经理的 DR。\n"
+    }
+  ],
+  "callRegion": "        const { deaths, sources, originalLives, sourceDamage, livingBeforeChain } = prepareSpecialNightDamage(\n          {\n            get world() { return manager.world; },\n            get config() { return manager.config; },\n            get events() { return manager.events; },\n            get nightFaultPlan() { return manager.nightFaultPlan; },\n            assertReadable() { manager.assertDemonReadable(); },\n          },\n          night,\n          nightDay,\n          ownsWedding,\n          ownsDemon,\n          lifecycle,\n        );\n",
+  "importEdits": [
+    [
+      "import { prepareGameSetup } from \"../../rulesets/game-setup\";\n",
+      "import { prepareGameSetup } from \"../../rulesets/game-setup\";\nimport { prepareSpecialNightDamage } from \"../../rulesets/special-night-damage-preparation\";\n"
+    ],
+    [
+      "  publishNobleNightDamage,\n",
+      ""
+    ],
+    [
+      "  appendNobleContractClosure,\n",
+      ""
+    ],
+    [
+      "  appendDemonNightDamageSources,\n",
+      ""
+    ],
+    [
+      "  publishDemonNightDamageSources,\n",
+      ""
+    ],
+    [
+      "import { StatusMark } from \"../../core\";\n",
+      ""
+    ],
+    [
+      "import { statusMarkSnapshot } from \"../../core/domain/components/status_marks\";\n",
+      ""
+    ],
+    [
+      "  committedDemonFaultBoundary,\n",
+      ""
+    ],
+    [
+      "import { freezeDeliveredDemonNightSources } from \"../mechanisms/roles/demon_hunter/native_potion_controller\";\n",
+      ""
+    ],
+    [
+      "  weddingKnifeCurrent,\n",
+      ""
+    ]
+  ],
+  "managerComments": [
+    [
+      "  /**\n   * 写入夜晚结算公开信息（用于“昨夜死亡/平安夜”广播）。\n   */\n  private assertDemonReadable(): void {",
+      "  /** 只检验猎魔原体／夜状态和全体药印记可读性；失败原样拒绝，不发布夜报或恢复资源。 */\n  private assertDemonReadable(): void {"
+    ],
+    [
+      "  private emitNightResolved(deaths: EntityId[]): GameEvent {",
+      "  /** 发布原“昨夜死亡／平安夜”公开事实；名单当时取副本，广播时点仍由阶段经理决定。 */\n  private emitNightResolved(deaths: EntityId[]): GameEvent {"
+    ]
+  ],
+  "returnStatement": "  return { deaths, sources, originalLives, sourceDamage: sourceDamage!, livingBeforeChain };\n",
+  "scope": "完整117行同步程序实际迁移；getter只闭包manager，四owns/branch/DRawait/expiry/判胜/finally不搬。"
+}

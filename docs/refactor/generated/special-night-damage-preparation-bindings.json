@@ -1,0 +1,565 @@
+{
+  "baseCommit": "d491710a5fd95051dbafc8d9a6b4b8ced92f24c1",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "ecc677dd2b7cdbfe1c5edd7d61dbec07694acf16c9150f381f6165efa13c902e"
+    },
+    {
+      "path": "backend/src/rulesets/special-night-damage-preparation.ts",
+      "sha256": "5429020b7c5951fc82c83e02461ca962da61e3d9b6a5856c529fb7af3337e655"
+    }
+  ],
+  "movedBindings": [
+    {
+      "name": "DeathOriginalLife",
+      "old": {
+        "name": "DeathOriginalLife",
+        "imported": "DeathOriginalLife",
+        "route": "./death-wave",
+        "typeOnly": true,
+        "endpoint": {
+          "path": "backend/src/game/engine/death-wave.ts",
+          "kind": "InterfaceDeclaration",
+          "name": "DeathOriginalLife",
+          "textSha256": "f6e62158612d1ccace4003de9b2a6df990cbea72ef4e2d6293af1cc938f6ae68"
+        }
+      },
+      "new": {
+        "name": "DeathOriginalLife",
+        "imported": "DeathOriginalLife",
+        "route": "../game/engine/death-wave",
+        "typeOnly": true,
+        "endpoint": {
+          "path": "backend/src/game/engine/death-wave.ts",
+          "kind": "InterfaceDeclaration",
+          "name": "DeathOriginalLife",
+          "textSha256": "f6e62158612d1ccace4003de9b2a6df990cbea72ef4e2d6293af1cc938f6ae68"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "DamageResolutionResult",
+      "old": {
+        "name": "DamageResolutionResult",
+        "imported": "DamageResolutionResult",
+        "route": "../../core/domain/systems/damage_resolution_system",
+        "typeOnly": true,
+        "endpoint": {
+          "path": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "kind": "InterfaceDeclaration",
+          "name": "DamageResolutionResult",
+          "textSha256": "8bfbc9623058dd97c661e595f9b754a193a1fdeb324f9eaf9e5193a8891e1a85"
+        }
+      },
+      "new": {
+        "name": "DamageResolutionResult",
+        "imported": "DamageResolutionResult",
+        "route": "../core/domain/systems/damage_resolution_system",
+        "typeOnly": true,
+        "endpoint": {
+          "path": "backend/src/core/domain/systems/damage_resolution_system.ts",
+          "kind": "InterfaceDeclaration",
+          "name": "DamageResolutionResult",
+          "textSha256": "8bfbc9623058dd97c661e595f9b754a193a1fdeb324f9eaf9e5193a8891e1a85"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "publishNobleNightDamage",
+      "old": {
+        "name": "publishNobleNightDamage",
+        "imported": "publishNobleNightDamage",
+        "route": "../mechanisms/roles/noble_secret_body/ports",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-damage-publication.ts",
+          "kind": "FunctionDeclaration",
+          "name": "publishNobleNightDamage",
+          "textSha256": "cc5be44d6366ac88bae8579f8dc7fba2da843f5a3370808e4c6362972cdc6f8e"
+        }
+      },
+      "new": {
+        "name": "publishNobleNightDamage",
+        "imported": "publishNobleNightDamage",
+        "route": "../game/mechanisms/roles/noble_secret_body/ports",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-damage-publication.ts",
+          "kind": "FunctionDeclaration",
+          "name": "publishNobleNightDamage",
+          "textSha256": "cc5be44d6366ac88bae8579f8dc7fba2da843f5a3370808e4c6362972cdc6f8e"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "appendNobleContractClosure",
+      "old": {
+        "name": "appendNobleContractClosure",
+        "imported": "appendNobleContractClosure",
+        "route": "../mechanisms/roles/noble_secret_body/ports",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+          "kind": "FunctionDeclaration",
+          "name": "appendNobleContractClosure",
+          "textSha256": "94974a5f3b968738b2fabe5af3f0e4e6093af8de6232e3be7cd0e0666617aa16"
+        }
+      },
+      "new": {
+        "name": "appendNobleContractClosure",
+        "imported": "appendNobleContractClosure",
+        "route": "../game/mechanisms/roles/noble_secret_body/ports",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+          "kind": "FunctionDeclaration",
+          "name": "appendNobleContractClosure",
+          "textSha256": "94974a5f3b968738b2fabe5af3f0e4e6093af8de6232e3be7cd0e0666617aa16"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "appendDemonNightDamageSources",
+      "old": {
+        "name": "appendDemonNightDamageSources",
+        "imported": "appendDemonNightDamageSources",
+        "route": "../mechanisms/roles/demon_hunter/ports",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+          "kind": "FunctionDeclaration",
+          "name": "appendDemonNightDamageSources",
+          "textSha256": "5304c4331955a23f418b8dfefdc9c12ee524cc08b42f217b6c88688d409d2e87"
+        }
+      },
+      "new": {
+        "name": "appendDemonNightDamageSources",
+        "imported": "appendDemonNightDamageSources",
+        "route": "../game/mechanisms/roles/demon_hunter/ports",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+          "kind": "FunctionDeclaration",
+          "name": "appendDemonNightDamageSources",
+          "textSha256": "5304c4331955a23f418b8dfefdc9c12ee524cc08b42f217b6c88688d409d2e87"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "publishDemonNightDamageSources",
+      "old": {
+        "name": "publishDemonNightDamageSources",
+        "imported": "publishDemonNightDamageSources",
+        "route": "../mechanisms/roles/demon_hunter/ports",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+          "kind": "FunctionDeclaration",
+          "name": "publishDemonNightDamageSources",
+          "textSha256": "7de4f12b6c75201204ca6b17c01eb9dd3f7f6a6ec108285643558459fbfb9cf7"
+        }
+      },
+      "new": {
+        "name": "publishDemonNightDamageSources",
+        "imported": "publishDemonNightDamageSources",
+        "route": "../game/mechanisms/roles/demon_hunter/ports",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+          "kind": "FunctionDeclaration",
+          "name": "publishDemonNightDamageSources",
+          "textSha256": "7de4f12b6c75201204ca6b17c01eb9dd3f7f6a6ec108285643558459fbfb9cf7"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "StatusMark",
+      "old": {
+        "name": "StatusMark",
+        "imported": "StatusMark",
+        "route": "../../core",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "kind": "EnumDeclaration",
+          "name": "StatusMark",
+          "textSha256": "9bd6e1edc0b66bc330ab945b4e80f764fa5eb7ff17db8be1999f7b59847b15ef"
+        }
+      },
+      "new": {
+        "name": "StatusMark",
+        "imported": "StatusMark",
+        "route": "@ai-werewolf-arena/game-contract",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "kind": "EnumDeclaration",
+          "name": "StatusMark",
+          "textSha256": "9bd6e1edc0b66bc330ab945b4e80f764fa5eb7ff17db8be1999f7b59847b15ef"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "statusMarkSnapshot",
+      "old": {
+        "name": "statusMarkSnapshot",
+        "imported": "statusMarkSnapshot",
+        "route": "../../core/domain/components/status_marks",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/core/domain/components/status_marks.ts",
+          "kind": "FunctionDeclaration",
+          "name": "statusMarkSnapshot",
+          "textSha256": "6d4c09d965e970ee14cecab4ae9eea7ea4a42c7100831396a7a551a34727975e"
+        }
+      },
+      "new": {
+        "name": "statusMarkSnapshot",
+        "imported": "statusMarkSnapshot",
+        "route": "../core/domain/components/status_marks",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/core/domain/components/status_marks.ts",
+          "kind": "FunctionDeclaration",
+          "name": "statusMarkSnapshot",
+          "textSha256": "6d4c09d965e970ee14cecab4ae9eea7ea4a42c7100831396a7a551a34727975e"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "committedDemonFaultBoundary",
+      "old": {
+        "name": "committedDemonFaultBoundary",
+        "imported": "committedDemonFaultBoundary",
+        "route": "../mechanisms/roles/demon_hunter/ports",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "kind": "FunctionDeclaration",
+          "name": "committedDemonFaultBoundary",
+          "textSha256": "52212384759496beb346a0a68770759f4958e4434fce6920eaca4601b4f1f53b"
+        }
+      },
+      "new": {
+        "name": "committedDemonFaultBoundary",
+        "imported": "committedDemonFaultBoundary",
+        "route": "../game/mechanisms/roles/demon_hunter/ports",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "kind": "FunctionDeclaration",
+          "name": "committedDemonFaultBoundary",
+          "textSha256": "52212384759496beb346a0a68770759f4958e4434fce6920eaca4601b4f1f53b"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "freezeDeliveredDemonNightSources",
+      "old": {
+        "name": "freezeDeliveredDemonNightSources",
+        "imported": "freezeDeliveredDemonNightSources",
+        "route": "../mechanisms/roles/demon_hunter/native_potion_controller",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+          "kind": "FunctionDeclaration",
+          "name": "freezeDeliveredDemonNightSources",
+          "textSha256": "1769f213c363efeef6fbb1bae240bf35e03b62de13343e0f4d440e3216584199"
+        }
+      },
+      "new": {
+        "name": "freezeDeliveredDemonNightSources",
+        "imported": "freezeDeliveredDemonNightSources",
+        "route": "../game/mechanisms/roles/demon_hunter/native_potion_controller",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+          "kind": "FunctionDeclaration",
+          "name": "freezeDeliveredDemonNightSources",
+          "textSha256": "1769f213c363efeef6fbb1bae240bf35e03b62de13343e0f4d440e3216584199"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "weddingKnifeCurrent",
+      "old": {
+        "name": "weddingKnifeCurrent",
+        "imported": "weddingKnifeCurrent",
+        "route": "../mechanisms/roles/ghost_bride/ports",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "kind": "FunctionDeclaration",
+          "name": "weddingKnifeCurrent",
+          "textSha256": "d3ca017c74bbe905f2ee86d1407996cb2ed2168d41d4c64173960a08b5d8d80c"
+        }
+      },
+      "new": {
+        "name": "weddingKnifeCurrent",
+        "imported": "weddingKnifeCurrent",
+        "route": "../game/mechanisms/roles/ghost_bride/ports",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "kind": "FunctionDeclaration",
+          "name": "weddingKnifeCurrent",
+          "textSha256": "d3ca017c74bbe905f2ee86d1407996cb2ed2168d41d4c64173960a08b5d8d80c"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "getSessionRecorder",
+      "old": {
+        "name": "getSessionRecorder",
+        "imported": "getSessionRecorder",
+        "route": "../../recording/recording_context",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/recording/recording_context.ts",
+          "kind": "FunctionDeclaration",
+          "name": "getSessionRecorder",
+          "textSha256": "ed3e36186e6d3ec59cd538b84fc3b0b617826733e54121d0c4a637bc2f5e5e2e"
+        }
+      },
+      "new": {
+        "name": "getSessionRecorder",
+        "imported": "getSessionRecorder",
+        "route": "../recording/recording_context",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/recording/recording_context.ts",
+          "kind": "FunctionDeclaration",
+          "name": "getSessionRecorder",
+          "textSha256": "ed3e36186e6d3ec59cd538b84fc3b0b617826733e54121d0c4a637bc2f5e5e2e"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "EntityId",
+      "old": {
+        "name": "EntityId",
+        "imported": "EntityId",
+        "route": "../../core/domain/model",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "kind": "TypeAliasDeclaration",
+          "name": "EntityId",
+          "textSha256": "f4facebe6c5444dfa91a9e2afda51da1d841e89db4ec95746ed3a50ea066947c"
+        }
+      },
+      "new": {
+        "name": "EntityId",
+        "imported": "EntityId",
+        "route": "@ai-werewolf-arena/game-contract",
+        "typeOnly": true,
+        "endpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "kind": "TypeAliasDeclaration",
+          "name": "EntityId",
+          "textSha256": "f4facebe6c5444dfa91a9e2afda51da1d841e89db4ec95746ed3a50ea066947c"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "Phase",
+      "old": {
+        "name": "Phase",
+        "imported": "Phase",
+        "route": "../../core/domain/model",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "kind": "EnumDeclaration",
+          "name": "Phase",
+          "textSha256": "bf46aeac62b12ffb53400e25fd913a6011773982336bf8fff42a3ca00cb68dd5"
+        }
+      },
+      "new": {
+        "name": "Phase",
+        "imported": "Phase",
+        "route": "@ai-werewolf-arena/game-contract",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "packages/game-contract/src/identity.ts",
+          "kind": "EnumDeclaration",
+          "name": "Phase",
+          "textSha256": "bf46aeac62b12ffb53400e25fd913a6011773982336bf8fff42a3ca00cb68dd5"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "DeathCause",
+      "old": {
+        "name": "DeathCause",
+        "imported": "DeathCause",
+        "route": "../../core/domain/model",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "packages/game-contract/src/death-facts.ts",
+          "kind": "EnumDeclaration",
+          "name": "DeathCause",
+          "textSha256": "793daa3994ab65a2e4947ac1d41bdec072c7f01063a5a52751861546c7040582"
+        }
+      },
+      "new": {
+        "name": "DeathCause",
+        "imported": "DeathCause",
+        "route": "@ai-werewolf-arena/game-contract",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "packages/game-contract/src/death-facts.ts",
+          "kind": "EnumDeclaration",
+          "name": "DeathCause",
+          "textSha256": "793daa3994ab65a2e4947ac1d41bdec072c7f01063a5a52751861546c7040582"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "DeathSources",
+      "old": {
+        "name": "DeathSources",
+        "imported": "DeathSources",
+        "route": "../../core/domain/model",
+        "typeOnly": true,
+        "endpoint": {
+          "path": "packages/game-contract/src/death-facts.ts",
+          "kind": "TypeAliasDeclaration",
+          "name": "DeathSources",
+          "textSha256": "32b5c4f3550f96a43db4ffc2ff89b87dda0c239d3bb113c33f552afbffa83d0c"
+        }
+      },
+      "new": {
+        "name": "DeathSources",
+        "imported": "DeathSources",
+        "route": "@ai-werewolf-arena/game-contract",
+        "typeOnly": true,
+        "endpoint": {
+          "path": "packages/game-contract/src/death-facts.ts",
+          "kind": "TypeAliasDeclaration",
+          "name": "DeathSources",
+          "textSha256": "32b5c4f3550f96a43db4ffc2ff89b87dda0c239d3bb113c33f552afbffa83d0c"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "COMPONENT",
+      "old": {
+        "name": "COMPONENT",
+        "imported": "COMPONENT",
+        "route": "../../core/domain/components/names",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/core/domain/components/names.ts",
+          "kind": "VariableDeclaration",
+          "name": "COMPONENT",
+          "textSha256": "560e08fb03da7c476dbcf94c70fca3d82ee2903c9929a018fef16d927f9d0995"
+        }
+      },
+      "new": {
+        "name": "COMPONENT",
+        "imported": "COMPONENT",
+        "route": "../core/domain/components/names",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/core/domain/components/names.ts",
+          "kind": "VariableDeclaration",
+          "name": "COMPONENT",
+          "textSha256": "560e08fb03da7c476dbcf94c70fca3d82ee2903c9929a018fef16d927f9d0995"
+        }
+      },
+      "samePhysicalDeclaration": true
+    },
+    {
+      "name": "aliveLifeVersion",
+      "old": {
+        "name": "aliveLifeVersion",
+        "imported": "aliveLifeVersion",
+        "route": "../../core/domain/components/alive",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/core/domain/components/alive.ts",
+          "kind": "FunctionDeclaration",
+          "name": "aliveLifeVersion",
+          "textSha256": "158e6a3bc83318bcfebf4e669075e56d517e4bbc95821c2881d9a0281a60ad74"
+        }
+      },
+      "new": {
+        "name": "aliveLifeVersion",
+        "imported": "aliveLifeVersion",
+        "route": "../core/domain/components/alive",
+        "typeOnly": false,
+        "endpoint": {
+          "path": "backend/src/core/domain/components/alive.ts",
+          "kind": "FunctionDeclaration",
+          "name": "aliveLifeVersion",
+          "textSha256": "158e6a3bc83318bcfebf4e669075e56d517e4bbc95821c2881d9a0281a60ad74"
+        }
+      },
+      "samePhysicalDeclaration": true
+    }
+  ],
+  "ownerRuntimeEngineImports": [],
+  "staticRuntimeGraph": {
+    "root": "backend/src/rulesets/special-night-damage-preparation.ts",
+    "modules": 405,
+    "edges": 1238,
+    "returnsPhaseManager": false,
+    "ownerDirectEdges": [
+      [
+        "backend/src/rulesets/special-night-damage-preparation.ts",
+        "packages/game-contract/src/index.ts"
+      ],
+      [
+        "backend/src/rulesets/special-night-damage-preparation.ts",
+        "backend/src/core/domain/components/names.ts"
+      ],
+      [
+        "backend/src/rulesets/special-night-damage-preparation.ts",
+        "backend/src/core/domain/components/alive.ts"
+      ],
+      [
+        "backend/src/rulesets/special-night-damage-preparation.ts",
+        "backend/src/core/domain/components/status_marks.ts"
+      ],
+      [
+        "backend/src/rulesets/special-night-damage-preparation.ts",
+        "backend/src/game/mechanisms/roles/demon_hunter/ports.ts"
+      ],
+      [
+        "backend/src/rulesets/special-night-damage-preparation.ts",
+        "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts"
+      ],
+      [
+        "backend/src/rulesets/special-night-damage-preparation.ts",
+        "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts"
+      ],
+      [
+        "backend/src/rulesets/special-night-damage-preparation.ts",
+        "backend/src/game/mechanisms/roles/ghost_bride/ports.ts"
+      ],
+      [
+        "backend/src/rulesets/special-night-damage-preparation.ts",
+        "backend/src/recording/recording_context.ts"
+      ]
+    ],
+    "limits": "当次当前工作树的type消除后静态import/export闭包采样；NP/Ghost/Demonports后继独立修改未主张整byte未改。dynamic import/require、缓存、模块初始化顺序和任意反射未宣称相等。"
+  }
+}

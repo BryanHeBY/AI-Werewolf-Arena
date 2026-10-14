@@ -1,0 +1,18 @@
+{
+  "extends": "/home/hby/dev/AI-Werewolf-Arena/backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "/home/hby/dev/AI-Werewolf-Arena",
+    "typeRoots": [
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules/@types",
+      "/home/hby/dev/AI-Werewolf-Arena/backend/node_modules"
+    ]
+  },
+  "files": [
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/game/engine/phase_manager.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/src/rulesets/special-night-damage-preparation.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/unit/rulesets/special-night-damage-preparation.test.ts",
+    "/home/hby/dev/AI-Werewolf-Arena/backend/tests/scenarios/interactions/demon-hunter/native-night-receipts.test.ts"
+  ],
+  "include": [],
+  "exclude": []
+}

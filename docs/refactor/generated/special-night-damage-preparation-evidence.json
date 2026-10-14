@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "scope": {
+    "path": "docs/refactor/generated/special-night-damage-preparation-scope-final.json",
+    "sha256": "00ddfb0762ceff1c0284a30c61532e8f5d8a1eeb9387046062ee9be7096e5258"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "ecc677dd2b7cdbfe1c5edd7d61dbec07694acf16c9150f381f6165efa13c902e"
+    },
+    {
+      "path": "backend/src/rulesets/special-night-damage-preparation.ts",
+      "sha256": "5429020b7c5951fc82c83e02461ca962da61e3d9b6a5856c529fb7af3337e655"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/special-night-damage-preparation.test.ts",
+      "sha256": "16fa19c05bf1a4e7a89ef28a2e7b166ea99b5224a46c56ebfae53bc35979bea2"
+    }
+  ],
+  "deleted": [],
+  "documentation": {
+    "path": "docs/refactor/special-night-damage-preparation.md",
+    "sha256": "99031d3579ec3c10b57eb6a201e18f82b8b6d89e28a466f2653e89f3a7075909"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-before.json",
+      "sha256": "be4b2646e160065fba127e4d9aa59e7de5e5652a5028566502a3ec45636f5490"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-edits.json",
+      "sha256": "27557a3cd2773efba688d071f0a1b502d6e3e354f4e573c0c362171feee14924"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-type-fix.json",
+      "sha256": "c10d54c2ae8dcd0cdda5c43e960872238e9c57aae6b91e881084ea9baa6d08ac"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-proof-first.cjs",
+      "sha256": "47e80e0c5c5837de475fcfdc18e73cbeaf7baa2d513dfaf3d52401413a64ab55"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-proof-second.cjs",
+      "sha256": "c06252c7978f6445d3f47a8a18722155ee4f11aacecfb071fa99fcbbdb1b6689"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-proof.cjs",
+      "sha256": "9fbb58663f448e8197ad0f6a3eda853decc1fd830878a2f4b83a819b96bbf40a"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-proof.json",
+      "sha256": "a7f09af52a39cd17f2d5da3045521db48007eb3747bd774706998ac67742b784"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-bindings.cjs",
+      "sha256": "bbe6aa507bc6d0b9aa937108b2a228616f1d0ff472819c78e6331551cdb627d0"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-bindings.json",
+      "sha256": "b06b9dad04e41de1340d4ea4d31ef5dad64dce22c9e8e57de735ec27c82261fc"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-heads.ts",
+      "sha256": "f1e5d913cf8174418b2e7a154af4500f3c5b43010da01f339150f916771b7565"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-heads.json",
+      "sha256": "bc6837aa055941dd860af0611828e8100db84b1fd3c3de55c34d48a6fbf333e2"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-types-config.json",
+      "sha256": "63747ad49645c31dfab8589792def4a56a848a027b0a14bb20a543422560eae1"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-types-failed-config.json",
+      "sha256": "508a53442f77a679966ec9a2d3bcc3a28aa6a1adfcf6769fb05ec3dbc81da61a"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-new-tests-output.txt",
+      "sha256": "e6c4c893b2d0efd8c5f428dd5427e002874b35a89e2a40f148a693dedb6675e4"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-original-test-output.txt",
+      "sha256": "3a08347b0d107b8b7fae05f5048bcb71982f215c08bc1b1d15a1a1d98a1fbee3"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-types-output.txt",
+      "sha256": "c578ab8c79b28752dab1b0753844bf0bc82b9bec2e4d86b5466cc2eaacf5015d"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-types-failed-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-receipts.json",
+      "sha256": "5725b4d79e3f96a317e22bc0d9de89e0c5505803f019de5a40209651a9c9022f"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-scope-final.json",
+      "sha256": "00ddfb0762ceff1c0284a30c61532e8f5d8a1eeb9387046062ee9be7096e5258"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-metric-label-correction.json",
+      "sha256": "ecd6bfdadd0a4b70f595069bd711536c35cf22b5e0606f9dc7192d30c3b276c4"
+    }
+  ],
+  "summary": {
+    "movedLines": 117,
+    "distinctCases": 4,
+    "asserts": 23,
+    "finiteFirstRoots": 4,
+    "failedOnlyRoots": 1,
+    "sourceHeads": 3,
+    "documentationPaths": 544,
+    "movedPhysicalBindings": 18
+  },
+  "limits": [
+    "有限真实源码／测试／类型／职责头；不是全仓或玩法正确性完结。",
+    "静态图是并行工作树当前采样，动态及加载初始化不承诺保持。"
+  ],
+  "metricLabelCorrection": {
+    "path": "docs/refactor/generated/special-night-damage-preparation-metric-label-correction.json",
+    "sha256": "ecd6bfdadd0a4b70f595069bd711536c35cf22b5e0606f9dc7192d30c3b276c4",
+    "meaning": "11362全语法节点／7584全叶含12JSDoc；原nonCommentLeaves误名，原proof／script／receipts字节保持。"
+  }
+}

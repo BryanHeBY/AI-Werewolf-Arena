@@ -1,0 +1,19 @@
+{
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "ecc677dd2b7cdbfe1c5edd7d61dbec07694acf16c9150f381f6165efa13c902e"
+    },
+    {
+      "path": "backend/src/rulesets/special-night-damage-preparation.ts",
+      "sha256": "5429020b7c5951fc82c83e02461ca962da61e3d9b6a5856c529fb7af3337e655"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/special-night-damage-preparation.test.ts",
+      "sha256": "16fa19c05bf1a4e7a89ef28a2e7b166ea99b5224a46c56ebfae53bc35979bea2"
+    }
+  ],
+  "documentationPaths": 544,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

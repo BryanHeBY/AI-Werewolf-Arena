@@ -1,0 +1,104 @@
+{
+  "newTests": {
+    "command": "bun --no-env-file test backend/tests/unit/rulesets/special-night-damage-preparation.test.ts",
+    "chunk": "838b89",
+    "exitCode": 0,
+    "pass": 3,
+    "fail": 0,
+    "asserts": 21,
+    "output": {
+      "path": "docs/refactor/generated/special-night-damage-preparation-new-tests-output.txt",
+      "sha256": "e6c4c893b2d0efd8c5f428dd5427e002874b35a89e2a40f148a693dedb6675e4",
+      "stdout": "bun test v1.4.3 (c6da4a4d3)\n\nbackend/tests/unit/rulesets/special-night-damage-preparation.test.ts:\n(pass) 可读性首失败不读取故障、World或夜伤害，也不产生新的等待 [0.39ms]\n(pass) 同步故障必需记录失败保已换生命，不继续封存或读取伤害 [0.49ms]\n(pass) 原夜逐目标晚读生命和来源，返回最后原表；空来源不读deathLives [0.40ms]\n\n 3 pass\n 0 fail\n 21 expect() calls\nRan 3 tests across 1 file. [105.00ms]\n"
+    }
+  },
+  "originalPreciseCase": {
+    "command": "bun --no-env-file test --preload ./backend/tests/setup.ts backend/tests/scenarios/interactions/demon-hunter/native-night-receipts.test.ts --test-name-pattern actual native Guard source revocation after_damage/false: ordinary collision recomputes",
+    "chunk": "a93d9a",
+    "exitCode": 0,
+    "pass": 1,
+    "fail": 0,
+    "filtered": 50,
+    "asserts": 2,
+    "output": {
+      "path": "docs/refactor/generated/special-night-damage-preparation-original-test-output.txt",
+      "sha256": "3a08347b0d107b8b7fae05f5048bcb71982f215c08bc1b1d15a1a1d98a1fbee3",
+      "stdout": "bun test v1.4.3 (c6da4a4d3)\n\nbackend/tests/scenarios/interactions/demon-hunter/native-night-receipts.test.ts:\n(pass) actual native Guard source revocation after_damage/false: ordinary collision recomputes [162.37ms]\n\n 1 pass\n 50 filtered out\n 0 fail\n 2 expect() calls\nRan 1 test across 1 file. [276.00ms]\n"
+    }
+  },
+  "finiteTypesFirst": {
+    "roots": 4,
+    "config": "docs/refactor/generated/special-night-damage-preparation-types-config.json",
+    "launchChunk": "103d95",
+    "sessionId": 62741,
+    "terminalChunk": "f53ffb",
+    "exitCode": 2,
+    "diagnostics": "仅newunit第105行字面期望enum matcher TS2769。三生产／原场景根无诊断，不重这些根。",
+    "output": {
+      "path": "docs/refactor/generated/special-night-damage-preparation-types-output.txt",
+      "sha256": "c578ab8c79b28752dab1b0753844bf0bc82b9bec2e4d86b5466cc2eaacf5015d",
+      "stdout": "backend/tests/unit/rulesets/special-night-damage-preparation.test.ts(105,28): error TS2769: No overload matches this call.\n  Overload 2 of 2, '(expected: NoInfer<DeathSources>): void', gave the following error.\n    Type '\"pure_white_inspection\"' is not assignable to type 'DeathCause'.\n  Overload 2 of 2, '(expected: NoInfer<DeathSources>): void', gave the following error.\n    Type '\"poison\"' is not assignable to type 'DeathCause'.\n"
+    }
+  },
+  "finiteFailedOnly": {
+    "roots": 1,
+    "config": "docs/refactor/generated/special-night-damage-preparation-types-failed-config.json",
+    "launchChunk": "c7e341",
+    "sessionId": 41587,
+    "terminalChunk": "8c3637",
+    "exitCode": 0,
+    "output": {
+      "path": "docs/refactor/generated/special-night-damage-preparation-types-failed-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": ""
+    }
+  },
+  "wholeProgramProof": {
+    "firstChunk": "81176e",
+    "firstExitCode": 1,
+    "secondChunk": "88adeb",
+    "secondExitCode": 1,
+    "firstTwoFailures": "仅审查器恢复已删相邻import时先用不存在后继、再以非唯一import {行作锚点；保首两执行脚本，产品不改。最终对原完整import前缀逐精确edits正向生成，证明当前一致，再逆为原前缀。",
+    "finalChunk": "e2b8b7",
+    "exitCode": 0,
+    "regionLines": 117,
+    "typedNodes": 11362,
+    "nonCommentLeaves": 7584,
+    "wholeManagerOutputs": 2,
+    "typeFixOutputs": 2,
+    "controls": 7
+  },
+  "bindings": {
+    "launchChunk": "e5a570",
+    "sessionId": 7107,
+    "terminalChunk": "e63f63",
+    "exitCode": 0,
+    "movedPhysicalBindings": 18,
+    "staticModules": 405,
+    "staticEdges": 1238,
+    "runtimeEngineImports": 0,
+    "returnsPhaseManager": false
+  },
+  "heads": {
+    "chunk": "1a0ccc",
+    "exitCode": 0,
+    "roots": 3,
+    "documentationPaths": 544,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0
+  },
+  "diffCheck": {
+    "chunk": "ae51a1",
+    "exitCode": 0,
+    "paths": [
+      "backend/src/game/engine/phase_manager.ts",
+      "backend/src/rulesets/special-night-damage-preparation.ts",
+      "backend/tests/unit/rulesets/special-night-damage-preparation.test.ts"
+    ]
+  },
+  "limits": [
+    "四不同case共23断言，两个运行分别3/21和1/2，无绿色重复。",
+    "首类型和失败根复查都发生在新owner唯一DR措辞末修前；末改仅头“唯一DR”等待→“初始死亡波DR”等待，不动类型或算法；最终头检查采当前源。",
+    "所有记录为有限批次实际工具终态，不声称全仓类型／行为门禁。"
+  ]
+}

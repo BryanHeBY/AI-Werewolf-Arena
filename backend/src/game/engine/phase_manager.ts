@@ -17,13 +17,12 @@ import type { DamageResolutionResult } from "../../core/domain/systems/damage_re
 import type { ReadonlyBoardConfig } from "@ai-werewolf-arena/game-contract";
 import { NightManagerLifecycle } from "../../rulesets/night-lifecycle-plan";
 import { prepareGameSetup } from "../../rulesets/game-setup";
+import { prepareSpecialNightDamage } from "../../rulesets/special-night-damage-preparation";
 
 import { bindBoardParameters } from "../../rulesets/board-parameters";
 import { RulePlan } from "../../rulesets/rule-plan";
 import {
-  publishNobleNightDamage,
   checkpointNobleBodyAuthority,
-  appendNobleContractClosure,
 } from "../mechanisms/roles/noble_secret_body/ports";
 
 import { prepareMistDelayedNight, settleMistDelayedNight, type MistPreparedNightDamage } from "../../rulesets/mist-delayed-night-settlement";
@@ -31,23 +30,16 @@ import { prepareMistDelayedNight, settleMistDelayedNight, type MistPreparedNight
 import {
   demonRedMoonExpiry,
   commitDemonRedMoonTransition,
-  appendDemonNightDamageSources,
-  publishDemonNightDamageSources,
 } from "../mechanisms/roles/demon_hunter/ports";
-import { StatusMark } from "../../core";
-import { statusMarkSnapshot } from "../../core/domain/components/status_marks";
 import {
   demonHunterActorId,
-  committedDemonFaultBoundary,
   assertDemonOriginalRoster,
   assertDemonNightReadable,
 } from "../mechanisms/roles/demon_hunter/ports";
 import { demonWitchMarksSafe } from "../mechanisms/roles/demon_hunter/native_potion_requests";
-import { freezeDeliveredDemonNightSources } from "../mechanisms/roles/demon_hunter/native_potion_controller";
 import {
   weddingSetup,
   weddingAssignment,
-  weddingKnifeCurrent,
 } from "../mechanisms/roles/ghost_bride/ports";
 import {
   initialIdentityDeal,
@@ -450,122 +442,19 @@ export class PhaseManager {
     const ownsEvilKnight = this.config.evilKnight !== undefined;
     if (ownsWedding || ownsDemon || ownsPureWhite || ownsEvilKnight) {
       try {
-        this.assertDemonReadable();
-
-        const faults =
-          this.nightFaultPlan?.applyBeforeNightSourceFreeze(
-            nightDay,
-            committedDemonFaultBoundary(this.world),
-            (fault) => {
-              // 开启录制时这是必需写入；写入失败不能生成缺少证据却标记成功的 Tape。
-              getSessionRecorder()?.recordRequiredLogicOp({
-                scope: "resolution",
-                op: "fault_applied",
-                phase: Phase.Night,
-                status: "ok",
-                input: { version: "awa_fault_plan_v1", step: fault.step },
-                output: {
-                  originalVersion: fault.originalVersion,
-                  replacementVersion: fault.replacementVersion,
-                },
-              });
-            },
-          ) ?? [];
-        const demon = ownsDemon
-          ? freezeDeliveredDemonNightSources(this.world, night.demonSources!, faults[0] ?? null)
-          : null;
-        let sourceDamage: DamageResolutionResult;
-        let originalLives: ReadonlyMap<EntityId, DeathOriginalLife> | undefined;
-        const proposedSources: DeathSources = Object.fromEntries(
-          (sourceDamage = night.damage).deaths.map((id) => [
-            id,
-            [...(night.damage.deathSources[id] ?? [])],
-          ]),
-        );
-        const guardOverrides: Array<{ targetId: number; guard: boolean }> = [];
-        if (demon) {
-          const manager = this;
-          appendDemonNightDamageSources({
-            get knifeProtection() { return night.demonKnifeProtection; },
-            healMarkPresent(target) {
-              return statusMarkSnapshot(
-                manager.world.getComponent(target(), COMPONENT.StatusMarks),
-                StatusMark.HealMark,
-              )?.present === true;
-            },
-            wolfSourceCurrent(target) { return night.demonWolfSourceCurrent?.(target()); },
-          }, demon, proposedSources, guardOverrides);
-        }
-        if (this.config.nobleSecretBody) {
-          if (demon?.hunt.servantCleared)
-            this.events.push({
-              timestamp: Date.now(),
-              type: "noble_contract_closed",
-              payload: demon.hunt.servantCleared,
-              audience: Object.freeze([]),
-            });
-          const expiry = lifecycle.expireNobleAtNightEnd(night, () => nightDay);
-          if (expiry) {
-            appendNobleContractClosure(this.world, nightDay, expiry, this.events, Phase.Night);
-            (proposedSources[expiry.targetId] ??= []).push(DeathCause.ServantExpiry);
-          }
-          lifecycle.closeNobleNormally(night, nightDay);
-        }
-        const deaths = Object.keys(proposedSources)
-          .map(Number)
-          .filter((id) => {
-            const scope = (originalLives = night.deathLives).get(id);
-            return (
-              scope &&
-              this.world.getComponent(id, COMPONENT.Alive) === scope.life &&
-              scope.life.alive &&
-              aliveLifeVersion(scope.life) === scope.version
-            );
-          });
-        const sources: DeathSources = Object.fromEntries(
-          deaths.map((id) => [
-            id,
-            proposedSources[id]!.filter(
-              (cause) =>
-                (cause !== DeathCause.WolfKill ||
-                  (ownsWedding
-                    ? weddingKnifeCurrent(this.world, nightDay, id)
-                    : ownsDemon
-                      ? night.demonWolfSourceCurrent?.(id) === true
-                      : true)) &&
-                (cause !== DeathCause.EvilKnightReflection ||
-                  night.retaliationAttacks?.some(
-                    (attack) => attack.target.id === id && attack.isCurrent(),
-                  ) === true) &&
-                ((cause !== DeathCause.PureWhiteInspection &&
-                  cause !== DeathCause.WolfWitchInspection) ||
-                  night.inspectionAttacks?.some(
-                    (attack) =>
-                      attack.target.id === id && attack.cause === cause && attack.isCurrent(),
-                  ) === true),
-            ),
-          ]),
-        );
-        for (let i = deaths.length - 1; i >= 0; i--)
-          if (!sources[deaths[i]!]!.length) deaths.splice(i, 1);
-        if (this.config.nobleSecretBody) {
-          const manager = this;
-          publishNobleNightDamage({
+        const { deaths, sources, originalLives, sourceDamage, livingBeforeChain } = prepareSpecialNightDamage(
+          {
             get world() { return manager.world; },
+            get config() { return manager.config; },
             get events() { return manager.events; },
-          }, nightDay, sources, deaths);
-        }
-        if (demon) {
-          const manager = this;
-          publishDemonNightDamageSources({
-            get events() { return manager.events; },
-          }, demon, nightDay, guardOverrides, deaths, sources);
-        }
-        const livingBeforeChain = new Map(
-          this.world.getAliveEntityIds().map((id) => {
-            const life = this.world.getComponent(id, COMPONENT.Alive)!;
-            return [id, { life, version: aliveLifeVersion(life) }] as const;
-          }),
+            get nightFaultPlan() { return manager.nightFaultPlan; },
+            assertReadable() { manager.assertDemonReadable(); },
+          },
+          night,
+          nightDay,
+          ownsWedding,
+          ownsDemon,
+          lifecycle,
         );
         await this.deathResolution.resolve(
           deaths,
@@ -1152,9 +1041,7 @@ export class PhaseManager {
     return [WinCondition.SlaughterCity];
   }
 
-  /**
-   * 写入夜晚结算公开信息（用于“昨夜死亡/平安夜”广播）。
-   */
+  /** 只检验猎魔原体／夜状态和全体药印记可读性；失败原样拒绝，不发布夜报或恢复资源。 */
   private assertDemonReadable(): void {
     if (demonHunterActorId(this.world) === null) return;
     assertDemonNightReadable(this.world);
@@ -1162,6 +1049,7 @@ export class PhaseManager {
       throw new Error("demon_hunter_unreadable_marks");
   }
 
+  /** 发布原“昨夜死亡／平安夜”公开事实；名单当时取副本，广播时点仍由阶段经理决定。 */
   private emitNightResolved(deaths: EntityId[]): GameEvent {
     const event: GameEvent = {
       timestamp: Date.now(),

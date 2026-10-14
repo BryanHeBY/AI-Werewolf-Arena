@@ -1,0 +1,213 @@
+{
+  "approved": true,
+  "reviewer": "/root/native_presentation_finish",
+  "baseCommit": "d491710a5fd95051dbafc8d9a6b4b8ced92f24c1",
+  "mode": "只读完整生产／旧Git区域／真实消费者与证据审，未重复作者工具或运行验收",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "ecc677dd2b7cdbfe1c5edd7d61dbec07694acf16c9150f381f6165efa13c902e",
+      "freshSame": true
+    },
+    {
+      "path": "backend/src/rulesets/special-night-damage-preparation.ts",
+      "sha256": "5429020b7c5951fc82c83e02461ca962da61e3d9b6a5856c529fb7af3337e655",
+      "freshSame": true
+    },
+    {
+      "path": "backend/tests/unit/rulesets/special-night-damage-preparation.test.ts",
+      "sha256": "16fa19c05bf1a4e7a89ef28a2e7b166ea99b5224a46c56ebfae53bc35979bea2",
+      "freshSame": true
+    }
+  ],
+  "deleted": [],
+  "scope": {
+    "path": "docs/refactor/generated/special-night-damage-preparation-scope-final.json",
+    "sha256": "00ddfb0762ceff1c0284a30c61532e8f5d8a1eeb9387046062ee9be7096e5258"
+  },
+  "document": {
+    "path": "docs/refactor/special-night-damage-preparation.md",
+    "sha256": "99031d3579ec3c10b57eb6a201e18f82b8b6d89e28a466f2653e89f3a7075909"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/special-night-damage-preparation-evidence.json",
+    "sha256": "fd743d7371988f9a6ff42002b88c6c17d46975264e67d5cbaad35e534f3113ba"
+  },
+  "actualBefore": {
+    "path": "backend/src/game/engine/phase_manager.ts",
+    "sha256": "01a3d3895cbca7ad8a8e38023d20c10cb0ec26fa47a8fd766145a87c339fea04",
+    "actualGitWholeBeforeSame": true,
+    "movedLines": 117,
+    "movedRegionSHA256": "42e45c9563752ff77885ca504fbfb24aa4b4a3757748663b0ff9ef7aada86d1f"
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "sha256": "4a1c8a0d1ede5680d405197a78d951cd8fc00ccba08058ebd90715cfe4c6a8bb",
+      "actualGitAndCurrentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+      "sha256": "5495db42881ba5a3b0dd90caac90ee7f3c98bd684300f8c65b5891c11732a0da",
+      "actualGitAndCurrentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "sha256": "6dc988147279d525b33d7e305e3963a5a43fc1e162f210f9e8ec59cb8399cae7",
+      "actualGitAndCurrentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-damage-publication.ts",
+      "sha256": "0bf89bbe777ec69fddb45204a4c46a067f37f392706f0fbc3d4b1173ee78a50d",
+      "actualGitAndCurrentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/engine/fault_plan.ts",
+      "sha256": "277a409b61332db28252fb5c385d1b99fd91e3889900b71d9547b0494c6a8002",
+      "actualGitAndCurrentWholeSame": true
+    },
+    {
+      "path": "backend/src/recording/session_recorder.ts",
+      "sha256": "fe05aedd6aa2324462547124ee2d1bfdde69a38b179b7956bc7f7d5603e59527",
+      "actualGitAndCurrentWholeSame": true
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "af02b472670c9dd3ef568c2fee2f052076cc69cfe5a7324cf25f64d571314690",
+      "actualGitAndCurrentWholeSame": true
+    }
+  ],
+  "authorArtifacts": [
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-before.json",
+      "sha256": "be4b2646e160065fba127e4d9aa59e7de5e5652a5028566502a3ec45636f5490"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-edits.json",
+      "sha256": "27557a3cd2773efba688d071f0a1b502d6e3e354f4e573c0c362171feee14924"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-type-fix.json",
+      "sha256": "c10d54c2ae8dcd0cdda5c43e960872238e9c57aae6b91e881084ea9baa6d08ac"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-proof-first.cjs",
+      "sha256": "47e80e0c5c5837de475fcfdc18e73cbeaf7baa2d513dfaf3d52401413a64ab55"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-proof-second.cjs",
+      "sha256": "c06252c7978f6445d3f47a8a18722155ee4f11aacecfb071fa99fcbbdb1b6689"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-proof.cjs",
+      "sha256": "9fbb58663f448e8197ad0f6a3eda853decc1fd830878a2f4b83a819b96bbf40a"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-proof.json",
+      "sha256": "a7f09af52a39cd17f2d5da3045521db48007eb3747bd774706998ac67742b784"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-bindings.cjs",
+      "sha256": "bbe6aa507bc6d0b9aa937108b2a228616f1d0ff472819c78e6331551cdb627d0"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-bindings.json",
+      "sha256": "b06b9dad04e41de1340d4ea4d31ef5dad64dce22c9e8e57de735ec27c82261fc"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-heads.ts",
+      "sha256": "f1e5d913cf8174418b2e7a154af4500f3c5b43010da01f339150f916771b7565"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-heads.json",
+      "sha256": "bc6837aa055941dd860af0611828e8100db84b1fd3c3de55c34d48a6fbf333e2"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-types-config.json",
+      "sha256": "63747ad49645c31dfab8589792def4a56a848a027b0a14bb20a543422560eae1"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-types-failed-config.json",
+      "sha256": "508a53442f77a679966ec9a2d3bcc3a28aa6a1adfcf6769fb05ec3dbc81da61a"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-new-tests-output.txt",
+      "sha256": "e6c4c893b2d0efd8c5f428dd5427e002874b35a89e2a40f148a693dedb6675e4"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-original-test-output.txt",
+      "sha256": "3a08347b0d107b8b7fae05f5048bcb71982f215c08bc1b1d15a1a1d98a1fbee3"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-types-output.txt",
+      "sha256": "c578ab8c79b28752dab1b0753844bf0bc82b9bec2e4d86b5466cc2eaacf5015d"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-types-failed-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-receipts.json",
+      "sha256": "5725b4d79e3f96a317e22bc0d9de89e0c5505803f019de5a40209651a9c9022f"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-scope-final.json",
+      "sha256": "00ddfb0762ceff1c0284a30c61532e8f5d8a1eeb9387046062ee9be7096e5258"
+    },
+    {
+      "path": "docs/refactor/generated/special-night-damage-preparation-metric-label-correction.json",
+      "sha256": "ecd6bfdadd0a4b70f595069bd711536c35cf22b5e0606f9dc7192d30c3b276c4"
+    }
+  ],
+  "freshMismatchCount": 0,
+  "sourceReview": [
+    "完整阅读新owner、原117行及PM完整差分／调用周边、所有五返回值与后续DR／到期／finally；通读三unit及期望，仅typecast修正与实际源码精确一致。",
+    "原四owns判断在try前；runtime getter闭包同一manager不预读world/config/events/fault，assertReadable wrapper在原表达式才查manager方法，receiver保同一经理。同步helper不创建Promise或额外await。",
+    "首可读性→plan getter／apply callee与原receiver→故障原体及同步必需记录→来源封存→基础sources→Demon保护／guardOverrides→Noble夜仆expiry与close，原顺序与短路完整保持。真实FaultPlan先换Alive、consume与lastDay后record，失败原对象上抛不退款或继续封存。",
+    "sourceDamage仍赋原night.damage，逐id仍晚读night.damage.deathSources；originalLives在每目标过滤时赋night.deathLives，空source保持undefined，不批量预抓或复制生命。",
+    "来源过滤先婚约Wolf资格，其次Demon资格，反噬／查验current callback仍按cause短路；逆序splice仅清空death名单的原元素，sources字典保原原地语义。",
+    "Noble付款与sources/deaths原地折叠→God事实→必需录制→可选诊断，以及后继Demon取消／免疫／诊断，仍各真实owner执行；livingBeforeChain只在全部前述工作后读取World活人和每个life/version。",
+    "返回deaths、sources、originalLives、sourceDamage、livingBeforeChain保真实局部原引用，不clone或freeze；运行callback/Map/World不是JSON知识或提交许可。",
+    "PM保原初始死亡DR await、复验/current、可选赤月expiry第二DR/提交/判胜、链后名单、夜报与原finally关闭。非特殊分支无新调用或await；原私有assertDemonReadable保留其它消费者，只纠正误挂广播注释。",
+    "阅读完整117实际owner逆与wholePM精确importprefix/source字节脚本，getChildren完整递归无first-child漏；18物理端点、type-only engine依赖与当期静态值图限制准确，不把NP/Ghost/SelfWindow/Demonports当wholecontrol。"
+  ],
+  "findings": {
+    "open": [],
+    "closed": [
+      {
+        "kind": "中文头精度",
+        "issue": "唯一DR等待容易涵盖后继赤月第二DR",
+        "resolution": "新owner最终明确初始死亡波DR等待；仅评论，不改运行或重绿。"
+      },
+      {
+        "kind": "证据标签精度",
+        "issue": "原nonCommentLeaves=7584含12JSDoc，不能称非注释叶",
+        "independentReadOnlyMetadataChunk": "bd0500",
+        "actual": {
+          "wholeSyntaxNodes": 11362,
+          "wholeLeaves": 7584,
+          "JSDocNodesAndLeaves": 12,
+          "withoutJSDocLeaves": 7572
+        },
+        "resolution": "MD及evidence精确标注全语法树／含JSDoc叶；原e2脚本、报告及收据完全保持，新增纠正记录解释旧字段误名。",
+        "correction": {
+          "path": "docs/refactor/generated/special-night-damage-preparation-metric-label-correction.json",
+          "sha256": "ecd6bfdadd0a4b70f595069bd711536c35cf22b5e0606f9dc7192d30c3b276c4"
+        }
+      }
+    ]
+  },
+  "verificationAttribution": {
+    "authorWholeProgram": "实际e2b8b7：117行owner完整展开＋wholePM精确逆字节同，11362完整语法节点/7584全部叶含12JSDoc，2whole manager outputs；新增test typefix2whole输出，7control保持。未重作者证明或emits。",
+    "authorRuntime": "838b89新3/0/21；a93d9a原精准1/0/2/50filtered，两执行四不同成功case23assert，未复绿。",
+    "authorTypes": "首4root f53ffb真实2仅新unit enum matcher TS2769；保持字面值，只加expected typeof sources类型断言；failed-only1root41587→8c3637真实0，其它根无诊断但未声称首整个进程绿。",
+    "authorHeads": "1a0ccc最终3源/544Git文档路径实际0；type/runtime收据采末中文头修前阶段，正文未变。",
+    "authorHistory": "捕获工具误118行及81176e/88adeb两import锚点工具红原样保；产品不为证明修改。",
+    "authorGraph": "18同声明binding，当期type擦除静态405/1238无返回PM；不主张动态／初始化／并行全闭包字节等价。"
+  },
+  "limitations": [
+    "新增具名调用、读取包装、结果对象、额外调用栈与加载路线为有界布局/API变化，不承诺任意私有反射或外部namespace猴子补丁等价。",
+    "未编辑产品/Git/progress/矩阵；未重作者proof、emit、types、tests、headcheck、gate、模型或coldload。独立bd0500只用于核证据字段标签元信息。",
+    "NP、NightKnife、RootSelfWindow/Demonports、Trickster不属于本batch wholebyte控制；不代表C24/26或全部主目标完成。"
+  ]
+}

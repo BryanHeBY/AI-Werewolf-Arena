@@ -1,0 +1,5 @@
+backend/tests/unit/rulesets/special-night-damage-preparation.test.ts(105,28): error TS2769: No overload matches this call.
+  Overload 2 of 2, '(expected: NoInfer<DeathSources>): void', gave the following error.
+    Type '"pure_white_inspection"' is not assignable to type 'DeathCause'.
+  Overload 2 of 2, '(expected: NoInfer<DeathSources>): void', gave the following error.
+    Type '"poison"' is not assignable to type 'DeathCause'.

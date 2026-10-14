@@ -1,0 +1,114 @@
+{
+  "baseCommit": "d491710a5fd95051dbafc8d9a6b4b8ced92f24c1",
+  "source": [
+    {
+      "path": "backend/src/game/engine/phase_manager.ts",
+      "sha256": "ecc677dd2b7cdbfe1c5edd7d61dbec07694acf16c9150f381f6165efa13c902e"
+    },
+    {
+      "path": "backend/src/rulesets/special-night-damage-preparation.ts",
+      "sha256": "5429020b7c5951fc82c83e02461ca962da61e3d9b6a5856c529fb7af3337e655"
+    },
+    {
+      "path": "backend/tests/unit/rulesets/special-night-damage-preparation.test.ts",
+      "sha256": "16fa19c05bf1a4e7a89ef28a2e7b166ea99b5224a46c56ebfae53bc35979bea2"
+    }
+  ],
+  "movedRegion": {
+    "lines": 117,
+    "sameWholeByte": true,
+    "sha256": "42e45c9563752ff77885ca504fbfb24aa4b4a3757748663b0ff9ef7aada86d1f"
+  },
+  "retainedManager": {
+    "sameWholeByte": true,
+    "typedNodes": 11362,
+    "nonCommentLeaves": 7584,
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "same": true,
+        "sha256": "6bc3d6fae80570f28fb50f4619af2c999ba18079fd9c6d75bd0388b7227bf114"
+      },
+      {
+        "module": "CommonJS",
+        "same": true,
+        "sha256": "cdbe4ee40f7c8814bd1240d80f5c13b6d21efcf03e02c88e4a71a59c0dcf420a"
+      }
+    ]
+  },
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/native_potion_controller.ts",
+      "sha256": "4a1c8a0d1ede5680d405197a78d951cd8fc00ccba08058ebd90715cfe4c6a8bb",
+      "currentSha256": "4a1c8a0d1ede5680d405197a78d951cd8fc00ccba08058ebd90715cfe4c6a8bb",
+      "gitSha256": "4a1c8a0d1ede5680d405197a78d951cd8fc00ccba08058ebd90715cfe4c6a8bb",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/demon_hunter/night-damage-contribution.ts",
+      "sha256": "5495db42881ba5a3b0dd90caac90ee7f3c98bd684300f8c65b5891c11732a0da",
+      "currentSha256": "5495db42881ba5a3b0dd90caac90ee7f3c98bd684300f8c65b5891c11732a0da",
+      "gitSha256": "5495db42881ba5a3b0dd90caac90ee7f3c98bd684300f8c65b5891c11732a0da",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "sha256": "6dc988147279d525b33d7e305e3963a5a43fc1e162f210f9e8ec59cb8399cae7",
+      "currentSha256": "6dc988147279d525b33d7e305e3963a5a43fc1e162f210f9e8ec59cb8399cae7",
+      "gitSha256": "6dc988147279d525b33d7e305e3963a5a43fc1e162f210f9e8ec59cb8399cae7",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-damage-publication.ts",
+      "sha256": "0bf89bbe777ec69fddb45204a4c46a067f37f392706f0fbc3d4b1173ee78a50d",
+      "currentSha256": "0bf89bbe777ec69fddb45204a4c46a067f37f392706f0fbc3d4b1173ee78a50d",
+      "gitSha256": "0bf89bbe777ec69fddb45204a4c46a067f37f392706f0fbc3d4b1173ee78a50d",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/engine/fault_plan.ts",
+      "sha256": "277a409b61332db28252fb5c385d1b99fd91e3889900b71d9547b0494c6a8002",
+      "currentSha256": "277a409b61332db28252fb5c385d1b99fd91e3889900b71d9547b0494c6a8002",
+      "gitSha256": "277a409b61332db28252fb5c385d1b99fd91e3889900b71d9547b0494c6a8002",
+      "same": true
+    },
+    {
+      "path": "backend/src/recording/session_recorder.ts",
+      "sha256": "fe05aedd6aa2324462547124ee2d1bfdde69a38b179b7956bc7f7d5603e59527",
+      "currentSha256": "fe05aedd6aa2324462547124ee2d1bfdde69a38b179b7956bc7f7d5603e59527",
+      "gitSha256": "fe05aedd6aa2324462547124ee2d1bfdde69a38b179b7956bc7f7d5603e59527",
+      "same": true
+    },
+    {
+      "path": "backend/src/game/engine/death_resolution.ts",
+      "sha256": "af02b472670c9dd3ef568c2fee2f052076cc69cfe5a7324cf25f64d571314690",
+      "currentSha256": "af02b472670c9dd3ef568c2fee2f052076cc69cfe5a7324cf25f64d571314690",
+      "gitSha256": "af02b472670c9dd3ef568c2fee2f052076cc69cfe5a7324cf25f64d571314690",
+      "same": true
+    }
+  ],
+  "typeFix": {
+    "path": "backend/tests/unit/rulesets/special-night-damage-preparation.test.ts",
+    "beforeSha256": "80cd52daa75b0697036e1a8fca100fbc7d730b0d5f2de9230ad7791aacbb8383",
+    "old": "expect(prepared.sources).toEqual({ 1: [\"pure_white_inspection\"], 2: [\"poison\"] });",
+    "new": "expect(prepared.sources).toEqual({ 1: [\"pure_white_inspection\"], 2: [\"poison\"] } as typeof prepared.sources);",
+    "afterSha256": "16fa19c05bf1a4e7a89ef28a2e7b166ea99b5224a46c56ebfae53bc35979bea2",
+    "change": "仅新测试期望加原结果类型断言，字面值／原运行断言不变；首finite4根仅此TS2769，f53ffb实际exit2。",
+    "wholeOutputs": [
+      {
+        "module": "ESNext",
+        "same": true,
+        "sha256": "d4b450f3c0a8a3b0caae9cef3ddb6d8f3532a7abfea1a65f734ea046a52b7d10"
+      },
+      {
+        "module": "CommonJS",
+        "same": true,
+        "sha256": "7b1820a8f5fae593e51b27fc269370a36377a4caa91ada775087d33cdd778309"
+      }
+    ]
+  },
+  "limits": [
+    "仅按明确body/runtime映射、新增返回和import/comment逆核完整程序；真实新具名调用、查询对象与结果对象分配／堆栈变化不冒任意环境机械等价。",
+    "NP/Ghost NightKnife和后继Demonports/SelfDestruct不当全字节控制；两种type-only engine依赖不形成规则组运行边。"
+  ]
+}
