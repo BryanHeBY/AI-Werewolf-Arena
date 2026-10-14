@@ -1,0 +1,5 @@
+{
+  "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+  "sha256": "e2dc810de0c30b26c0fc5400834911569687bcc542e67b026b41ef1ebd4c652c",
+  "text": "/**\n * 提供骑士决斗窗口与原生库存读取的具名公开入口。输入保留原 World、配置、角色、请求端口及回调，\n * 输出为原窗口类绑定和同一库存对象的只读类型视图；不复制资源或把类型当成运行权限屏障。\n * 窗口在等待后与提交前复验身体、生命版本和库存；具体提交拥有消耗，经理拥有死亡与阶段推进。\n * 读取、请求或提交失败保留原异常及已写前缀；公开入口不新增租约、镜像或自动清理。\n */\nexport { getKnightState } from \"./state\";\nexport { KnightDuelWindow } from \"./duel-window\";\n"
+}

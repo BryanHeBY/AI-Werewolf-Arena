@@ -1,0 +1,128 @@
+{
+  "oldPath": "backend/src/game/engine/knight_duel_window.ts",
+  "newPath": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+  "edits": [
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "/**\n * Executes the configured Knight duel opportunity with captured actor and target bodies. Inputs\n * are the day context, provider and gateway; outputs are a validated duel selection and its\n * existing commit effects. It does not let a replaced or dead actor reuse the captured window.\n */\n",
+      "after": "/**\n * 负责骑士白天决斗的完整选择窗口。输入为板子、原 World、请求构造端口、Provider、网关与提交回调；\n * 输出为原选择和是否结束白天，不在本窗口付款、标死或判胜。\n * 捕获演员和目标的存活组件、生命版本及角色／阵营字段，等待后按原顺序复验同一身体和库存。\n * 多骑士并发请求按编号尝试；网关预检两侧均复验，只有有效候选才要求提交回调。\n * 读取、Provider、网关及提交异常原样传播；已写前缀不回滚，缺少回调和明确 rejected 保留原分支。\n */\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "\"../../core/",
+      "after": "\"../../../../core/",
+      "count": 5
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "\"../gateway/tool_gateway\"",
+      "after": "\"../../../gateway/tool_gateway\"",
+      "count": 1
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "import { GameActionRequestFactory } from \"./action_request_factory\";",
+      "after": "import type { ActionRequestConstructionPort } from \"../../../../core/domain/actions\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "import { getKnightState } from \"../mechanisms/roles/knight/ports\";",
+      "after": "import { getKnightState } from \"./state\";"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "interface DuelParticipantSnapshot {",
+      "after": "/** 本次窗口保留原组件引用与当时字段值；不是可序列化玩家资料，也不授予资源或死亡写权。 */\ninterface DuelParticipantSnapshot {"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "  life: AliveComponent;",
+      "after": "  // 生命版本记录活跃身体的变化；仅将 alive 改回 true 不恢复旧选择。\n  life: AliveComponent;"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "  roleId: Role;",
+      "after": "  // 角色与阵营按原读取点捕获，复验时仍检查同一 Role 对象及这两个字段。\n  roleId: Role;"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "/** A discrete living-player action; all final mutations belong to the supplied manager callback. */",
+      "after": "/** 决斗收集保留原提交等待点；真实付款、事实和死亡提案仍归回调与后续经理结算。 */"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "    requests: GameActionRequestFactory,",
+      "after": "    requests: ActionRequestConstructionPort,"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "    const empty = { selection: null, endsDay: false };",
+      "after": "    // 原空结果在本次调用内共用；先查当前窗口，再按原配置或默认发言后机会筛选。\n    const empty = { selection: null, endsDay: false };"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "    const snapshots = new Map<number, DuelParticipantSnapshot>(",
+      "after": "    // 先确认存在可决斗骑士，再完整捕获存活名单；不提前缓存配置、角色或库存。\n    const snapshots = new Map<number, DuelParticipantSnapshot>("
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "    const picks = await Promise.all(",
+      "after": "    // 每个演员在请求前读取同一库存，Promise.all 保持快照名单顺序，不以响应先后提交。\n    const picks = await Promise.all("
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "    const sameLife = (id: number, snapshot: DuelParticipantSnapshot) =>",
+      "after": "    // 原生命、组件、角色及阵营字段都需匹配；此查询不消费库存，也不修改捕获对象。\n    const sameLife = (id: number, snapshot: DuelParticipantSnapshot) =>"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "      const valid = () =>",
+      "after": "      // 按编号排序后的每次尝试，均在网关前后复验阶段、同一库存和目标生命。\n      const valid = () =>"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "before": "      if (!commit) throw new Error(\"knight_duel_commit_missing\");",
+      "after": "      // 缺回调只在有效候选处报原错误；rejected 继续下一项，提交抛错不回滚已有写入。\n      if (!commit) throw new Error(\"knight_duel_commit_missing\");"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "before": "/**\n * Exposes the Knight's readonly native-state view to the daytime duel window.\n * Inputs are current role components before eligibility and commit rechecks;\n * outputs are the original stored reference, never a copied resource snapshot.\n * The window may read identity and availability; only the Knight commit consumes\n * stock. Replacement and terminal window failures remain the window owner's checks.\n */\n",
+      "after": "/**\n * 提供骑士决斗窗口与原生库存读取的具名公开入口。输入保留原 World、配置、角色、请求端口及回调，\n * 输出为原窗口类绑定和同一库存对象的只读类型视图；不复制资源或把类型当成运行权限屏障。\n * 窗口在等待后与提交前复验身体、生命版本和库存；具体提交拥有消耗，经理拥有死亡与阶段推进。\n * 读取、请求或提交失败保留原异常及已写前缀；公开入口不新增租约、镜像或自动清理。\n */\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "before": "export { getKnightState } from \"./state\";",
+      "after": "export { getKnightState } from \"./state\";\nexport { KnightDuelWindow } from \"./duel-window\";"
+    },
+    {
+      "path": "backend/src/rulesets/daytime-interruption-composition.ts",
+      "before": "\"../game/engine/knight_duel_window\"",
+      "after": "\"../game/mechanisms/roles/knight/ports\""
+    },
+    {
+      "path": "backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+      "before": "\"../../../src/game/engine/knight_duel_window\"",
+      "after": "\"../../../src/game/mechanisms/roles/knight/ports\""
+    },
+    {
+      "path": "backend/tests/unit/features/knight/duel-authority-boundaries.test.ts",
+      "before": "\"../../../../src/game/engine/knight_duel_window\"",
+      "after": "\"../../../../src/game/mechanisms/roles/knight/ports\""
+    },
+    {
+      "path": "backend/tests/unit/configuration/registered-contribution-consumers.test.ts",
+      "before": "\"../../../src/game/engine/knight_duel_window\"",
+      "after": "\"../../../src/game/mechanisms/roles/knight/ports\""
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "before": " * 窗口在等待后与提交前复验身体、生命版本和库存；具体提交拥有消耗，经理拥有死亡与阶段推进。\n",
+      "after": " * 窗口在原白天阶段开启，等待后与提交前复验身体、生命版本和库存；具体提交拥有消耗，经理拥有死亡与阶段推进。\n"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "before": " * 窗口在原白天阶段开启，等待后与提交前复验身体、生命版本和库存；具体提交拥有消耗，经理拥有死亡与阶段推进。\n",
+      "after": " * 窗口在原白天检查时点执行，等待之后与提交之前复验身体、生命版本和库存；具体提交拥有消耗，经理拥有死亡与阶段推进。\n"
+    }
+  ]
+}

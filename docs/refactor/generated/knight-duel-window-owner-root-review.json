@@ -1,0 +1,127 @@
+{
+  "approved": true,
+  "reviewer": "root",
+  "baseCommit": "7ebd217ccd4d43b7f27e826fe2dec4a21ffbcdcd",
+  "scope": {
+    "path": "docs/refactor/generated/knight-duel-window-owner-scope-final.json",
+    "sha256": "81842fd4ec613aa3b9009afdbdb698bfcc193f130188e99edce82028f0d9bd35"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "sha256": "6ee51443dfc8645490a2aaff39a7f56a6eba1ff986c64e9c905f05865102b3cf"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "sha256": "b7f7aa4ba513aa9aff801597f9e290f2a88c48905b47928f3efca92cd969165d"
+    },
+    {
+      "path": "backend/src/rulesets/daytime-interruption-composition.ts",
+      "sha256": "29a5dc5b36a778be68ec565bd170563fdc2bd197406bc4f03dcd0d47fc830402"
+    },
+    {
+      "path": "backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+      "sha256": "bfdceda803b4e9ccabe92c2c569b456846d0476c8b51789e8bf516f73a4a842b"
+    },
+    {
+      "path": "backend/tests/unit/features/knight/duel-authority-boundaries.test.ts",
+      "sha256": "1ff313a781520edeba7290bf1abdcaedde14a52ded52526f7790837c0197861a"
+    },
+    {
+      "path": "backend/tests/unit/configuration/registered-contribution-consumers.test.ts",
+      "sha256": "1ce4cbd73a16ce7ae5d0f4a581b589bb57effd9117a745999c99a488a47a67d3"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/engine/knight_duel_window.ts",
+      "sha256": "72c55dff09921a7a8570541a9aecdd31c8d89ba05edd961ceafe4b5f86064bca",
+      "expectedAbsent": true
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/knight-duel-window-owner.md",
+    "sha256": "09bfa5a4b58c19a7863a7845956a00fec88ad57326f7e176326454384660c13e"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/knight-duel-window-owner-evidence.json",
+    "sha256": "22de8d68af7e00edf9f52d5447f5802a7eb7055e91899253276df1357f6ec1fd"
+  },
+  "actualGitChecks": [
+    {
+      "path": "backend/src/game/engine/knight_duel_window.ts",
+      "actualGitSHA256": "72c55dff09921a7a8570541a9aecdd31c8d89ba05edd961ceafe4b5f86064bca",
+      "currentTarget": "backend/src/game/mechanisms/roles/knight/duel-window.ts",
+      "wholeForwardEqual": true
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "actualGitSHA256": "888a3f06fb52a87037ac2d56b8e43c40171168e9a4d516ea8e18a5e9f9b115b2",
+      "currentTarget": "backend/src/game/mechanisms/roles/knight/ports.ts",
+      "wholeForwardEqual": true
+    },
+    {
+      "path": "backend/src/rulesets/daytime-interruption-composition.ts",
+      "actualGitSHA256": "e60989b441b8cf3bbb1e9d4b343927ffbd723e0bd049f812fe3ab2ea9cc8defb",
+      "currentTarget": "backend/src/rulesets/daytime-interruption-composition.ts",
+      "wholeForwardEqual": true
+    },
+    {
+      "path": "backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+      "actualGitSHA256": "48bb6b0243cb091fcc7ff5346dfcf13b88ce4ba42224a69becee389e210ebd3f",
+      "currentTarget": "backend/tests/unit/engine/daytime-interruption-composition.test.ts",
+      "wholeForwardEqual": true
+    },
+    {
+      "path": "backend/tests/unit/features/knight/duel-authority-boundaries.test.ts",
+      "actualGitSHA256": "5f23f9ed5376a561e98b80c1721f2887661290c234c2e9ba73437f2a5c378bde",
+      "currentTarget": "backend/tests/unit/features/knight/duel-authority-boundaries.test.ts",
+      "wholeForwardEqual": true
+    },
+    {
+      "path": "backend/tests/unit/configuration/registered-contribution-consumers.test.ts",
+      "actualGitSHA256": "37fd3f8eaef4d2f99ea05e67e2cbf9e7d853738ad8f785aa2e6fa60c9cbb100b",
+      "currentTarget": "backend/tests/unit/configuration/registered-contribution-consumers.test.ts",
+      "wholeForwardEqual": true
+    }
+  ],
+  "stableControls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/state.ts",
+      "sha256": "97ef04cf6ea467ca79c1508a14ea148ce7164e74a117e71a72afb8e894e3a907"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/commit.ts",
+      "sha256": "cb957b3bed3124cf5e97818380e3dcb844c7c4e5c9e6d32e312125e168ece9d2"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/knight/profile.ts",
+      "sha256": "f732c29aaeec079f4aeee7ee5d3aaa2d4390aac7401c2d14b6e9837c5a69793b"
+    },
+    {
+      "path": "backend/src/core/domain/actions.ts",
+      "sha256": "523c8774f3cc5d3598871bf45698d9951a61f43aa1bcb0fc0a8ab7be77eeea49"
+    }
+  ],
+  "artifactsVerified": 25,
+  "findings": [],
+  "review": [
+    "完整旧123行窗口、新同族窗口、participant结构和四消费者、实际getKnightState与提交职责已读；24条精确编辑完整forward真实六Git至终态。",
+    "current/config早短路、存在骑士后捕获两名单、角色/camp/life版本原字段、Promise.all排列/编号排序、同库存/目标与gateway前后valid原顺序保持。",
+    "有效候选才要求commit，missing/rejected/endsDay/异常及原等待点不增加提交后复验或回滚。",
+    "newWindow直接同族state，不导入自己ports；实际class/read两出口而非新通用框架。",
+    "中文头及关键数据/步骤语义有效；create-only静态接受面扩大、当前加载/出口变更和12逆映射输出局限明确列明。",
+    "原两locale迟到例38与组合1例12三不同用例50断言/类型首六根通过，首Node环境失败与两头失败保留，仅失败源补comment并窄桥，不重已绿。"
+  ],
+  "notRun": [
+    "tests",
+    "types",
+    "proof rerun",
+    "fullgates",
+    "models"
+  ],
+  "limitations": [
+    "未承诺任意仓外旧入口/私有反射/完整冷初始化图。",
+    "全部机制/中文/C17/P9验收仍继续。"
+  ]
+}

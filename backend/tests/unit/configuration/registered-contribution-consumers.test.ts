@@ -20,7 +20,7 @@ import type { RoleComponent } from "../../../src/core/domain/components/role";
 import type { StatusMarksComponent } from "../../../src/core/domain/components/status_marks";
 import { boardConfigSchema } from "../../../src/core/domain/board_schema";
 import { GameActionRequestFactory } from "../../../src/game/engine/action_request_factory";
-import { KnightDuelWindow as DuelExecutor } from "../../../src/game/engine/knight_duel_window";
+import { KnightDuelWindow as DuelExecutor } from "../../../src/game/mechanisms/roles/knight/ports";
 import { ToolGateway } from "../../../src/game/gateway/tool_gateway";
 import { getDefaultConfigRenderRegistry } from "../../../src/game/mechanisms/prompt/config_render_registry";
 import { getDefaultRoleCatalog } from "../../../src/game/mechanisms/roles/role-catalog-assembly";

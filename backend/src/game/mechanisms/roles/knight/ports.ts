@@ -1,8 +1,8 @@
 /**
- * Exposes the Knight's readonly native-state view to the daytime duel window.
- * Inputs are current role components before eligibility and commit rechecks;
- * outputs are the original stored reference, never a copied resource snapshot.
- * The window may read identity and availability; only the Knight commit consumes
- * stock. Replacement and terminal window failures remain the window owner's checks.
+ * 提供骑士决斗窗口与原生库存读取的具名公开入口。输入保留原 World、配置、角色、请求端口及回调，
+ * 输出为原窗口类绑定和同一库存对象的只读类型视图；不复制资源或把类型当成运行权限屏障。
+ * 窗口在原白天检查时点执行，等待之后与提交之前复验身体、生命版本和库存；具体提交拥有消耗，经理拥有死亡与阶段推进。
+ * 读取、请求或提交失败保留原异常及已写前缀；公开入口不新增租约、镜像或自动清理。
  */
 export { getKnightState } from "./state";
+export { KnightDuelWindow } from "./duel-window";

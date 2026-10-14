@@ -18,7 +18,7 @@ import {
 import { sixPlayerMvpConfig } from "../../../../src/runtime/scenarios/six_player_mvp";
 import { getKnightState, setKnightState } from "../../../../src/game/mechanisms/roles/knight/state";
 import { commitKnightDuel } from "../../../../src/game/mechanisms/roles/knight/commit";
-import { KnightDuelWindow as DuelCollector } from "../../../../src/game/engine/knight_duel_window";
+import { KnightDuelWindow as DuelCollector } from "../../../../src/game/mechanisms/roles/knight/ports";
 import { GameActionRequestFactory } from "../../../../src/game/engine/action_request_factory";
 import { ToolGateway } from "../../../../src/game/gateway/tool_gateway";
 import { ActionReception } from "../../../../src/game/gateway/action-reception";

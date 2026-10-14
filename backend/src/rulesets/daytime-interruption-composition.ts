@@ -10,7 +10,7 @@ import type { RoleRegistry } from "../core/domain/registries/role_registry";
 import type { ToolGateway } from "../game/gateway/tool_gateway";
 import type { DaytimeInterruptionComposition } from "../game/engine/daytime-interruption-contracts";
 import { SelfDestructWindow } from "./self-destruct-window";
-import { KnightDuelWindow } from "../game/engine/knight_duel_window";
+import { KnightDuelWindow } from "../game/mechanisms/roles/knight/ports";
 import { DebaterWindow } from "../game/mechanisms/roles/debater/window";
 import { hasActiveDebate } from "../game/mechanisms/roles/debater/authority";
 

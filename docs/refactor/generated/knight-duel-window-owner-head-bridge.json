@@ -1,0 +1,29 @@
+{
+  "approved": true,
+  "path": "backend/src/game/mechanisms/roles/knight/ports.ts",
+  "source": [
+    {
+      "beforePath": "docs/refactor/generated/knight-duel-window-owner-ports-before-head-fix.json",
+      "beforeSHA256": "e2dc810de0c30b26c0fc5400834911569687bcc542e67b026b41ef1ebd4c652c",
+      "finalSHA256": "b7f7aa4ba513aa9aff801597f9e290f2a88c48905b47928f3efca92cd969165d",
+      "tokenCount": 14,
+      "fullNonCommentSame": true,
+      "rawOutputSHA256": [
+        "9a77358a161262bc0c3b46a56a1455eb42ae24e242ece08ddd05edc81458bdd5",
+        "b7e7c33eda4cae49a08ddd1c5afbbbd488dae26c86772f28dd631ac0eec47b6c"
+      ]
+    },
+    {
+      "beforePath": "docs/refactor/generated/knight-duel-window-owner-ports-before-head-second-fix.json",
+      "beforeSHA256": "fc9941280adceef2ad69c72ea05430139f93899dd6421c84e79327a7cad25158",
+      "finalSHA256": "b7f7aa4ba513aa9aff801597f9e290f2a88c48905b47928f3efca92cd969165d",
+      "tokenCount": 14,
+      "fullNonCommentSame": true,
+      "rawOutputSHA256": [
+        "9a77358a161262bc0c3b46a56a1455eb42ae24e242ece08ddd05edc81458bdd5",
+        "b7e7c33eda4cae49a08ddd1c5afbbbd488dae26c86772f28dd631ac0eec47b6c"
+      ]
+    }
+  ],
+  "outputs": 4
+}

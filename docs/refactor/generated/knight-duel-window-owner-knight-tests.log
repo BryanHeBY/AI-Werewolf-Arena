@@ -1,0 +1,11 @@
+bun test v1.4.3 (c6da4a4d3)
+
+backend/tests/unit/features/knight/duel-authority-boundaries.test.ts:
+(pass) zh-CN: multiple Knights use the smallest eligible actor and discard role/resource/target-life changes without spending others [42.43ms]
+(pass) en: multiple Knights use the smallest eligible actor and discard role/resource/target-life changes without spending others [3.35ms]
+
+ 2 pass
+ 5 filtered out
+ 0 fail
+ 38 expect() calls
+Ran 2 tests across 1 file. [187.00ms]
