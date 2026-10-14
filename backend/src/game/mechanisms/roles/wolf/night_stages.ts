@@ -1,18 +1,16 @@
 /**
- * Runs wolf discussion rounds and knife ballot retries with captured actor/target scopes. Inputs
- * are current pack permissions and validated wolf tools; outputs preserve chat, consensus and
- * sourced knife claims. It never lets rejected or replaced voters create a fresh pack
- * opportunity or bypass the retry limit. Public target queries retain their
- * original preflight, captured-life and final accepted-target call boundaries.
+ * 负责按原狼队权限执行夜聊轮次与刀票重试，捕获行动者与目标的原身体／生命版本。
+ * 输入为原夜上下文、狼队资格和已校验工具；输出为夜聊、共识和带来源的刀口贡献。
+ * 普通刀票、迷雾随机刀、映射和印记仍在原时点处理；贵族 God 刀口事实及必需记录归贵族发布 owner。
+ * 不增加重试额度、重建已失效的身体或把发表事实当付款；首失败和已写前缀维持原边界。
  */
-import { checkpointNobleBodyAuthority, isNobleBodyBoard } from "../noble_secret_body/authority";
+import { publishNobleNightKnife } from "../noble_secret_body/knife-ports";
 import { isMistRavenBoard, mistKnifeTargets, originalMistTarget } from "../mist_raven/night_frame";
 import { nightmareKnifeBlocked } from "../nightmare_shadow/ports";
 import { bindWolfKnifeTargetQuery } from "./ports";
 /** 文件说明：狼人夜聊与刀人投票阶段处理。 */
 import { EntityId, Phase, StatusMark } from "../../../../core/domain/model";
 import { safeRecordLogicOp } from "../../../../recording/session_recorder";
-import { getSessionRecorder } from "../../../../recording/recording_context";
 import { NightStageHandler } from "../../stages/night/contracts";
 import { wolfChatParticipants, wolfKnifeHolders, wolfTeamEvent } from "../wolf_team";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -23,11 +21,12 @@ import type { NightStageContext } from "../../stages/night/contracts";
 const WOLF_DISCUSSION_MAX_ROUNDS = 3;
 const WOLF_KILL_VOTE_MAX_RETRIES = 3;
 
-/** Keep named board errors while applying one failure policy to chat and knife requests. */
+/** 夜聊与刀票在原查询点读取具体板子的失败前缀，不缓存或改写首个错误。 */
 function strictWolfFailurePrefix(ctx: NightStageContext): string | null {
   return ctx.nativeNightFailure.strictWolfFailurePrefix();
 }
 
+/** 捕获 Role、私有容器／顶层引用与原 Alive 版本；后续只复验同一身体，不复制或延长许可。 */
 function captureActorScope(ctx: NightStageContext, actorId: EntityId): () => boolean {
   const role = ctx.world.getComponent(actorId, COMPONENT.Role),
     kind = role?.role,
@@ -165,7 +164,7 @@ const wolfKillVoteStage: NightStageHandler = {
     }> = [];
     // 顺序收集狼刀票，统一在阶段末做多数决结算，避免中途状态污染。
     const knifeHolders = wolfKnifeHolders(ctx.world, ctx.roleCatalog);
-    // Preserve the ordinary pack's existing order; knife-only roles are independent.
+    // 保留普通狼队原次序；仅有刀权的角色在后半名单独立加入。
     const voteOrder = [
       ...ctx.state.wolfChatOrder.filter((id) => knifeHolders.includes(id)),
       ...knifeHolders.filter((id) => !ctx.state.wolfChatOrder.includes(id)),
@@ -418,28 +417,7 @@ const wolfKillVoteStage: NightStageHandler = {
           : { ...target, marks };
       }
     }
-    if (isNobleBodyBoard(ctx.world)) {
-      const actorId = checkpointNobleBodyAuthority(ctx.world, false).nobleId;
-      const payload = {
-        policy: "awa_noble_secret_body_v1" as const,
-        actorId,
-        day: ctx.currentDay(),
-        targetId: wolfTarget,
-      };
-      ctx.events.push({
-        timestamp: Date.now(),
-        type: "noble_body_knife_committed",
-        payload,
-        audience: Object.freeze([]),
-      });
-      getSessionRecorder()?.recordRequiredLogicOp({
-        scope: "phase_pipeline",
-        op: "noble_body_knife_committed",
-        phase: Phase.Night,
-        status: "ok",
-        output: payload,
-      });
-    }
+    publishNobleNightKnife(() => ctx, wolfTarget);
   },
 };
 

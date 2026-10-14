@@ -1,0 +1,247 @@
+{
+  "baseCommit": "83822442e7d7883b65323491d8defc14937ac6b1",
+  "scope": {
+    "path": "docs/refactor/generated/noble-night-knife-publication-scope-final.json",
+    "sha256": "31ce632220012d92a9b95997f7b8a92f50325dfcf579e5c59bcfacda460557b6"
+  },
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+      "sha256": "36187f8a3bd65da7fafbb540e8546e27a2d80a88228726ede0c8e1e4981ad3f7",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-knife-publication.ts",
+      "sha256": "e79694e3bd7b3753ae84b97f022bbc33e9d2b5a86163a0d450469aa4211a26dc",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/knife-ports.ts",
+      "sha256": "5ed0d4dd36f2ce7dcd7b3664b40df860df8ae34abd3b6ac79b31a11b44aa759c",
+      "change": "added"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/night-knife-publication.test.ts",
+      "sha256": "8a06ee602b1b9361a5f20fe5137566d411615aec458cab49440b3590afb53aed",
+      "change": "added"
+    }
+  ],
+  "deleted": [],
+  "document": {
+    "path": "docs/refactor/noble-night-knife-publication.md",
+    "sha256": "ca3bf5ceb06c198493b8a45cb16984463ec318b5ded6a2225ac704d13ca567ea"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-before.json",
+      "sha256": "6b889af253160aa6633299c4c23eb5fd3ad22417bc7b75dac9680aa3107b0dd1"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-edits.json",
+      "sha256": "9e9cc5765fde867416cca09df5f9fd9a34b09c8f0969912a233c8d1d15b53f74"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-heads-output.txt",
+      "sha256": "11e2d5e19c3475a020f7929bfa8b014a0cf778f226f31a0b1213619d689c6174"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-heads.json",
+      "sha256": "2d057be8a14929a2f0241013e302ecee7c79528237c346f28556b194094272c8"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-heads.ts",
+      "sha256": "f340214c78400d747a93f25d13a60f402f3ecc5c4f2adaa9c3f12bd712e7cda3"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-new-tests-output.txt",
+      "sha256": "8707c11148ca3508ce24b82f9c8d4bd36b59fcdba76957dfe48862e5bbad6853"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-old-wolf-output.txt",
+      "sha256": "060f205be6df56d53d956d0d3a5a12bfffe5833d54f3d01f0a6ca134e62d9bc9"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-owner-before-layout.json",
+      "sha256": "7064c93ea8dd2e1e481e03f47d3c3b0895dba7e6c45409f4e0de117b6ad098ee"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-proof-first-output.txt",
+      "sha256": "e5948441e73d03dcb7be21b7a25d7364d72333d26b41b5192449a7179112fd08"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-proof-first.cjs",
+      "sha256": "20fa02b01bc2762d8762009c9bd02bde77298e3b276f96a3d63222b0966fe94a"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-proof-output.txt",
+      "sha256": "a4f50a3bbce806e692e62f8f15ffae9ac71f964ba92db0c8d881bca285a3f03f"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-proof.cjs",
+      "sha256": "4f359cf2c060b221ed4be0b1ddcb123842484d49f620463c21912a0b1aca1eb5"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-proof.json",
+      "sha256": "234cd002d65bd45c834411518acfb8ba76156e133dc381e3a6ce07814e4bf7b6"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-receipts.json",
+      "sha256": "afa23b90241156ebca8a7b690ee4a881e125f082fbf8a438f2989cd065a1363d"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-types-config.json",
+      "sha256": "f9eb249a8ca6d578685665337c680cfa845b2abb701a3baba51ed7de05f31085"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-types-failed-config.json",
+      "sha256": "58b53b4a64d55db4ed7d4e24b1423efdcb9a87367c8fe42b05b0e9ed95b65c3f"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-types-failed-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-types-output.txt",
+      "sha256": "7188546b5ee5f0dd940ba1a91af3523092b7d45359d665afcc4692571c96bf93"
+    },
+    {
+      "path": "docs/refactor/generated/noble-night-knife-publication-unit-type-before.json",
+      "sha256": "2a10ba1882eed802bcd59849795ada80a2d1f2a89b4544d2911b24c5a0cc4bb6"
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "sha256": "6dc988147279d525b33d7e305e3963a5a43fc1e162f210f9e8ec59cb8399cae7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+      "sha256": "ae1c6dff649c49e8f8c057624e86860c4d51e12e0465dab16effaad58b8f6de7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-damage-publication.ts",
+      "sha256": "0bf89bbe777ec69fddb45204a4c46a067f37f392706f0fbc3d4b1173ee78a50d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+      "sha256": "8b71fc9976814327be656d4a49117cac17e9c3a3d678e39f659ca91993b894ac"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/drivers/authority.ts",
+      "sha256": "d0627ee4936e9cc5a7e117ffe28dfc0cd8b337b8a0b56d9027c29e12c36a978d"
+    }
+  ],
+  "programSummary": {
+    "originalBranchLines": 22,
+    "producerNodes": 4637,
+    "producerLeaves": 3067,
+    "branchNodes": 192,
+    "branchLeaves": 129,
+    "mappedWholeOutputs": 4,
+    "layoutWholeRawOutputs": 2,
+    "unitTypeWholeRawOutputs": 2,
+    "bindings": 4,
+    "staticGraphModules": 59,
+    "contextFieldKinds": 3,
+    "contextReads": 4
+  },
+  "receipts": {
+    "runtime": [
+      {
+        "chunk_id": "b85e41",
+        "exit_code": 0,
+        "pass": 3,
+        "fail": 0,
+        "assertions": 18,
+        "log": "docs/refactor/generated/noble-night-knife-publication-new-tests-output.txt"
+      },
+      {
+        "chunk_id": "2fa62a",
+        "exit_code": 0,
+        "pass": 1,
+        "fail": 0,
+        "assertions": 3,
+        "filtered": 3,
+        "log": "docs/refactor/generated/noble-night-knife-publication-old-wolf-output.txt"
+      }
+    ],
+    "summary": {
+      "distinctSuccessfulCases": 4,
+      "successfulAssertions": 21,
+      "successfulRuntimeExecutions": 2,
+      "greenNotRepeated": true,
+      "oldCaseCoverage": "原直接普通WolfStage生命替换单元，未运行完整Noble对局或原Noble transport场景。"
+    },
+    "types": {
+      "first": {
+        "launchChunk": "d50b56",
+        "session": 94227,
+        "terminalChunk": "4504fd",
+        "exit_code": 2,
+        "roots": 4,
+        "error": "只有newunit GameEvent union上2 audience读取和2 Bun matcher子型诊断",
+        "log": "docs/refactor/generated/noble-night-knife-publication-types-output.txt"
+      },
+      "failedOnly": {
+        "launchChunk": "7431b0",
+        "session": 55090,
+        "terminalChunk": "1d6da6",
+        "exit_code": 0,
+        "roots": 1,
+        "log": "docs/refactor/generated/noble-night-knife-publication-types-failed-output.txt"
+      },
+      "typeOnlyFix": "五处原事件属性表达式补实际Noble事件子型cast与pure typealias，原所有输入／expect／读取位置不变；两个整份JS输出同。"
+    },
+    "heads": {
+      "chunk_id": "f04b32",
+      "exit_code": 0,
+      "roots": 4,
+      "gitDocumentationPaths": 600,
+      "diagnostics": 0,
+      "chineseHeadFailures": 0,
+      "sampling": "新owner格式和中文同ctx精度／newunit纯type修前；首头只正文措辞收窄有完整程序／2raw桥，不冒原sourceSHA最终同。"
+    },
+    "proof": {
+      "first": {
+        "chunk_id": "1bfa03",
+        "exit_code": 1,
+        "reason": "工具把Node builtin node:async_hooks交TypeScript模块resolver并当作必须源码resolved；不是产品新依赖/源码失败。",
+        "script": "docs/refactor/generated/noble-night-knife-publication-proof-first.cjs",
+        "log": "docs/refactor/generated/noble-night-knife-publication-proof-first-output.txt"
+      },
+      "final": {
+        "chunk_id": "851591",
+        "exit_code": 0,
+        "producerNodes": 4637,
+        "producerLeaves": 3067,
+        "publicationNodes": 192,
+        "publicationLeaves": 129,
+        "mappedWholeOutputs": 4,
+        "layoutRawOutputs": 2,
+        "unitTypeRawOutputs": 2,
+        "bindings": 4,
+        "controls": 5,
+        "localStaticModules": 59,
+        "script": "docs/refactor/generated/noble-night-knife-publication-proof.cjs",
+        "log": "docs/refactor/generated/noble-night-knife-publication-proof-output.txt"
+      }
+    },
+    "notRun": [
+      "fullgate",
+      "fullsuite",
+      "fulltypes",
+      "models",
+      "privateconfigs",
+      "golden",
+      "wholegame"
+    ]
+  },
+  "limits": [
+    "本批完整普通狼刀末贵族God发布，不迁票、RNG、映射、刀印记、库存／付款或死亡。",
+    "context实际生产闭包每次返回同ctx；新增局部function/闭包/API和模块布局改变，不称任意外来query/namespace/private反射整体等价。",
+    "原精准用例是普通WolfStage旧单元，不宣称旧完整Noble游戏／transport覆盖。",
+    "首heads/types/runtime采样在后继新增owner布局／中文精度和newunit纯type修之前；全程序两输出桥明确接final，不重绿。",
+    "严格档案格式、指纹算法和历史身份不改；新增source/facet/routes参与新构建sourceHash。",
+    "原proof fieldInverse文案的“三个实际字段位置”实际指world/currentDay/events三类字段：world两处，总四处context读，原报告字节保，不把标签误名作为新的代码或执行证据。"
+  ]
+}

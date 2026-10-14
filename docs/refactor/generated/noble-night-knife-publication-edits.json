@@ -1,0 +1,49 @@
+{
+  "sourceEdits": {
+    "backend/src/game/mechanisms/roles/wolf/night_stages.ts": [
+      {
+        "before": "import { checkpointNobleBodyAuthority, isNobleBodyBoard } from \"../noble_secret_body/authority\";",
+        "after": "import { publishNobleNightKnife } from \"../noble_secret_body/knife-ports\";",
+        "count": 1
+      },
+      {
+        "before": "import { getSessionRecorder } from \"../../../../recording/recording_context\";\n",
+        "after": "",
+        "count": 1
+      },
+      {
+        "before": "    if (isNobleBodyBoard(ctx.world)) {\n      const actorId = checkpointNobleBodyAuthority(ctx.world, false).nobleId;\n      const payload = {\n        policy: \"awa_noble_secret_body_v1\" as const,\n        actorId,\n        day: ctx.currentDay(),\n        targetId: wolfTarget,\n      };\n      ctx.events.push({\n        timestamp: Date.now(),\n        type: \"noble_body_knife_committed\",\n        payload,\n        audience: Object.freeze([]),\n      });\n      getSessionRecorder()?.recordRequiredLogicOp({\n        scope: \"phase_pipeline\",\n        op: \"noble_body_knife_committed\",\n        phase: Phase.Night,\n        status: \"ok\",\n        output: payload,\n      });\n    }",
+        "after": "    publishNobleNightKnife(() => ctx, wolfTarget);",
+        "count": 1
+      },
+      {
+        "before": "/**\n * Runs wolf discussion rounds and knife ballot retries with captured actor/target scopes. Inputs\n * are current pack permissions and validated wolf tools; outputs preserve chat, consensus and\n * sourced knife claims. It never lets rejected or replaced voters create a fresh pack\n * opportunity or bypass the retry limit. Public target queries retain their\n * original preflight, captured-life and final accepted-target call boundaries.\n */",
+        "after": "/**\n * 负责按原狼队权限执行夜聊轮次与刀票重试，捕获行动者与目标的原身体／生命版本。\n * 输入为原夜上下文、狼队资格和已校验工具；输出为夜聊、共识和带来源的刀口贡献。\n * 普通刀票、迷雾随机刀、映射和印记仍在原时点处理；贵族 God 刀口事实及必需记录归贵族发布 owner。\n * 不增加重试额度、重建已失效的身体或把发表事实当付款；首失败和已写前缀维持原边界。\n */",
+        "count": 1
+      },
+      {
+        "before": "/** Keep named board errors while applying one failure policy to chat and knife requests. */",
+        "after": "/** 夜聊与刀票在原查询点读取具体板子的失败前缀，不缓存或改写首个错误。 */",
+        "count": 1
+      },
+      {
+        "before": "function captureActorScope(ctx: NightStageContext, actorId: EntityId): () => boolean {",
+        "after": "/** 捕获 Role、私有容器／顶层引用与原 Alive 版本；后续只复验同一身体，不复制或延长许可。 */\nfunction captureActorScope(ctx: NightStageContext, actorId: EntityId): () => boolean {",
+        "count": 1
+      },
+      {
+        "before": "// Preserve the ordinary pack's existing order; knife-only roles are independent.",
+        "after": "// 保留普通狼队原次序；仅有刀权的角色在后半名单独立加入。",
+        "count": 1
+      }
+    ]
+  },
+  "originalFullBranch": "    if (isNobleBodyBoard(ctx.world)) {\n      const actorId = checkpointNobleBodyAuthority(ctx.world, false).nobleId;\n      const payload = {\n        policy: \"awa_noble_secret_body_v1\" as const,\n        actorId,\n        day: ctx.currentDay(),\n        targetId: wolfTarget,\n      };\n      ctx.events.push({\n        timestamp: Date.now(),\n        type: \"noble_body_knife_committed\",\n        payload,\n        audience: Object.freeze([]),\n      });\n      getSessionRecorder()?.recordRequiredLogicOp({\n        scope: \"phase_pipeline\",\n        op: \"noble_body_knife_committed\",\n        phase: Phase.Night,\n        status: \"ok\",\n        output: payload,\n      });\n    }",
+  "originalBranchLines": 22,
+  "paths": [
+    "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+    "backend/src/game/mechanisms/roles/noble_secret_body/night-knife-publication.ts",
+    "backend/src/game/mechanisms/roles/noble_secret_body/knife-ports.ts",
+    "backend/tests/unit/features/noble-secret-body/night-knife-publication.test.ts"
+  ]
+}

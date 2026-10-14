@@ -1,0 +1,91 @@
+{
+  "runtime": [
+    {
+      "chunk_id": "b85e41",
+      "exit_code": 0,
+      "pass": 3,
+      "fail": 0,
+      "assertions": 18,
+      "log": "docs/refactor/generated/noble-night-knife-publication-new-tests-output.txt"
+    },
+    {
+      "chunk_id": "2fa62a",
+      "exit_code": 0,
+      "pass": 1,
+      "fail": 0,
+      "assertions": 3,
+      "filtered": 3,
+      "log": "docs/refactor/generated/noble-night-knife-publication-old-wolf-output.txt"
+    }
+  ],
+  "summary": {
+    "distinctSuccessfulCases": 4,
+    "successfulAssertions": 21,
+    "successfulRuntimeExecutions": 2,
+    "greenNotRepeated": true,
+    "oldCaseCoverage": "原直接普通WolfStage生命替换单元，未运行完整Noble对局或原Noble transport场景。"
+  },
+  "types": {
+    "first": {
+      "launchChunk": "d50b56",
+      "session": 94227,
+      "terminalChunk": "4504fd",
+      "exit_code": 2,
+      "roots": 4,
+      "error": "只有newunit GameEvent union上2 audience读取和2 Bun matcher子型诊断",
+      "log": "docs/refactor/generated/noble-night-knife-publication-types-output.txt"
+    },
+    "failedOnly": {
+      "launchChunk": "7431b0",
+      "session": 55090,
+      "terminalChunk": "1d6da6",
+      "exit_code": 0,
+      "roots": 1,
+      "log": "docs/refactor/generated/noble-night-knife-publication-types-failed-output.txt"
+    },
+    "typeOnlyFix": "五处原事件属性表达式补实际Noble事件子型cast与pure typealias，原所有输入／expect／读取位置不变；两个整份JS输出同。"
+  },
+  "heads": {
+    "chunk_id": "f04b32",
+    "exit_code": 0,
+    "roots": 4,
+    "gitDocumentationPaths": 600,
+    "diagnostics": 0,
+    "chineseHeadFailures": 0,
+    "sampling": "新owner格式和中文同ctx精度／newunit纯type修前；首头只正文措辞收窄有完整程序／2raw桥，不冒原sourceSHA最终同。"
+  },
+  "proof": {
+    "first": {
+      "chunk_id": "1bfa03",
+      "exit_code": 1,
+      "reason": "工具把Node builtin node:async_hooks交TypeScript模块resolver并当作必须源码resolved；不是产品新依赖/源码失败。",
+      "script": "docs/refactor/generated/noble-night-knife-publication-proof-first.cjs",
+      "log": "docs/refactor/generated/noble-night-knife-publication-proof-first-output.txt"
+    },
+    "final": {
+      "chunk_id": "851591",
+      "exit_code": 0,
+      "producerNodes": 4637,
+      "producerLeaves": 3067,
+      "publicationNodes": 192,
+      "publicationLeaves": 129,
+      "mappedWholeOutputs": 4,
+      "layoutRawOutputs": 2,
+      "unitTypeRawOutputs": 2,
+      "bindings": 4,
+      "controls": 5,
+      "localStaticModules": 59,
+      "script": "docs/refactor/generated/noble-night-knife-publication-proof.cjs",
+      "log": "docs/refactor/generated/noble-night-knife-publication-proof-output.txt"
+    }
+  },
+  "notRun": [
+    "fullgate",
+    "fullsuite",
+    "fulltypes",
+    "models",
+    "privateconfigs",
+    "golden",
+    "wholegame"
+  ]
+}

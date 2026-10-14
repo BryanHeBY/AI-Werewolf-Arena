@@ -1,0 +1,57 @@
+{
+  "baseCommit": "83822442e7d7883b65323491d8defc14937ac6b1",
+  "currentGitAtFreeze": "d1fd9c89f475295bcc087e65b0ebb01ee8124180",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+      "sha256": "36187f8a3bd65da7fafbb540e8546e27a2d80a88228726ede0c8e1e4981ad3f7",
+      "change": "modified"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-knife-publication.ts",
+      "sha256": "e79694e3bd7b3753ae84b97f022bbc33e9d2b5a86163a0d450469aa4211a26dc",
+      "change": "added"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/knife-ports.ts",
+      "sha256": "5ed0d4dd36f2ce7dcd7b3664b40df860df8ae34abd3b6ac79b31a11b44aa759c",
+      "change": "added"
+    },
+    {
+      "path": "backend/tests/unit/features/noble-secret-body/night-knife-publication.test.ts",
+      "sha256": "8a06ee602b1b9361a5f20fe5137566d411615aec458cab49440b3590afb53aed",
+      "change": "added"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+      "sha256": "6dc988147279d525b33d7e305e3963a5a43fc1e162f210f9e8ec59cb8399cae7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/facts.ts",
+      "sha256": "ae1c6dff649c49e8f8c057624e86860c4d51e12e0465dab16effaad58b8f6de7"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/noble_secret_body/night-damage-publication.ts",
+      "sha256": "0bf89bbe777ec69fddb45204a4c46a067f37f392706f0fbc3d4b1173ee78a50d"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+      "sha256": "8b71fc9976814327be656d4a49117cac17e9c3a3d678e39f659ca91993b894ac"
+    },
+    {
+      "path": "backend/tests/support/features/noble-secret-body/drivers/authority.ts",
+      "sha256": "d0627ee4936e9cc5a7e117ffe28dfc0cd8b337b8a0b56d9027c29e12c36a978d"
+    }
+  ],
+  "limits": [
+    "本批完整普通狼刀末贵族God发布，不迁票、RNG、映射、刀印记、库存／付款或死亡。",
+    "context实际生产闭包每次返回同ctx；新增局部function/闭包/API和模块布局改变，不称任意外来query/namespace/private反射整体等价。",
+    "原精准用例是普通WolfStage旧单元，不宣称旧完整Noble游戏／transport覆盖。",
+    "首heads/types/runtime采样在后继新增owner布局／中文精度和newunit纯type修之前；全程序两输出桥明确接final，不重绿。",
+    "严格档案格式、指纹算法和历史身份不改；新增source/facet/routes参与新构建sourceHash。",
+    "原proof fieldInverse文案的“三个实际字段位置”实际指world/currentDay/events三类字段：world两处，总四处context读，原报告字节保，不把标签误名作为新的代码或执行证据。"
+  ]
+}
