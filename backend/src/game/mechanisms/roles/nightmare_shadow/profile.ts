@@ -13,10 +13,10 @@ import type { NativeRoleContributions } from "../contracts";
 import { ORDINARY_WOLF_CONTRIBUTIONS } from "../wolf/ability-ports";
 import {
   NIGHTMARE_SHADOW_POLICY,
-  freshNightmareShadowState,
+  NIGHTMARE_SHADOW_STATE_SLOT,
   getNightmareShadowState,
-  nightmareFearTargets,
-} from "./state";
+} from "./state-slot";
+import { nightmareFearTargets } from "./targets";
 import { NIGHTMARE_FEAR_STAGE } from "./night_stages";
 import { nightmarePackReady, nightmareFearPending } from "./night_frame";
 const parameters = z.strictObject({
@@ -57,10 +57,7 @@ export const NIGHTMARE_SHADOW_ROLE_PROFILE: NativeRoleContributions = {
     },
     init: (role, ctx) => {
       const value = parameters.parse(ctx.boardConfig?.nightmareShadow ?? {});
-      role.privateState.nightmareShadow = freshNightmareShadowState(
-        value.fearActionPolicy,
-        value.wolfActionPolicy,
-      );
+      NIGHTMARE_SHADOW_STATE_SLOT.install(() => role.privateState, value);
     },
     configuration: {
       schema: parameters,

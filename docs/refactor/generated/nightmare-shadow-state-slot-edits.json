@@ -1,0 +1,143 @@
+[
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+    "before": "  freshNightmareShadowState,",
+    "after": "  NIGHTMARE_SHADOW_STATE_SLOT,"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+    "before": "  nightmareFearTargets,\n} from \"./state\";",
+    "after": "} from \"./state-slot\";\nimport { nightmareFearTargets } from \"./targets\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+    "before": "      role.privateState.nightmareShadow = freshNightmareShadowState(\n        value.fearActionPolicy,\n        value.wolfActionPolicy,\n      );",
+    "after": "      NIGHTMARE_SHADOW_STATE_SLOT.install(() => role.privateState, value);"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+    "before": "/**\n * Owns Nightmare roster and fear bindings for one actual night. Inputs are original native roles\n * and the accepted fear choice; outputs are current fear/knife blocking predicates and recorded\n * choice state. Only the bound roster participates; a replaced component cannot silently reopen\n * the night.\n */",
+    "after": "/**\n * 负责噩梦之影原名单、生命绑定、夜窗口与恐惧效果授权；输入为原角色与已通过目标政策的选择。\n * 输出是当前恐惧／狼刀阻断查询和原提交结果；仅原名单参与，组件替换不能悄然重开夜。\n * 数据构造、校验、写入和身份编码归同族状态槽；本 frame 保留 expectedState 更新和夜字段提交顺序。\n * 失败保留已写前缀，不以玩家投影或恐惧文案替代原生命／能力复验，也不回滚历史或补做关闭。\n */"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+    "before": "  NightmareShadowState,\n",
+    "after": ""
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+    "before": "import { getNightmareShadowState, nightmareFearTargets } from \"./state\";",
+    "after": "import { getNightmareShadowState, NIGHTMARE_SHADOW_STATE_SLOT } from \"./state-slot\";\nimport { nightmareFearTargets } from \"./targets\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+    "before": "function stateIdentity(state: NightmareShadowReadState): string {\n  const history: Array<[number, EntityId | null]> = [];\n  for (let i = 0; i < state.history.length; i++) {\n    const entry = state.history[i]!;\n    history.push([entry.day, entry.targetId]);\n  }\n  return JSON.stringify([\n    state.policy,\n    state.fearActionPolicy,\n    state.wolfActionPolicy,\n    state.packReady,\n    state.lastDay,\n    state.lastTarget,\n    history,\n  ]);\n}\n",
+    "after": ""
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+    "before": "expectedState: stateIdentity(state)",
+    "after": "expectedState: NIGHTMARE_SHADOW_STATE_SLOT.checkpoint.identity(state)"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+    "before": "stateIdentity(board.state) !== board.expectedState",
+    "after": "NIGHTMARE_SHADOW_STATE_SLOT.checkpoint.identity(board.state) !== board.expectedState"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+    "before": "board.expectedState = stateIdentity(board.state)",
+    "after": "board.expectedState = NIGHTMARE_SHADOW_STATE_SLOT.checkpoint.identity(board.state)"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+    "before": "  (board.state as Pick<NightmareShadowState, \"lastDay\">).lastDay = day;\n  (board.state as Pick<NightmareShadowState, \"lastTarget\">).lastTarget = targetId;\n  (board.state as Pick<NightmareShadowState, \"packReady\">).packReady = true;\n  Array.prototype.push.call(board.state.history, { day, targetId });",
+    "after": "  NIGHTMARE_SHADOW_STATE_SLOT.allowedWrites.recordFear(() => board.state, day, targetId);"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+    "before": "/** Normal first death preserves this night's silence for the death-action window. */",
+    "after": "/** 原正常首次死亡仍保留本夜禁言供死亡行动窗口使用；复活或生命替换不因此获得续权。 */"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_stages.ts",
+    "before": "/**\n * Runs the Nightmare fear request before affected native night abilities. Inputs are the\n * captured Nightmare frame and validated fear target; outputs are the committed fear choice and\n * event. Blocking predicates remain in the frame and never arise merely from a model refusal.\n */",
+    "after": "/**\n * 负责在受影响的原生夜能力之前推进噩梦之影恐惧请求；输入是原 frame 与校验后的目标选择。\n * 输出为原恐惧提交和事件；Provider 等待前后及提交前按原顺序复验名单、日期与运行窗口。\n * 阻断资格仍由 frame 持有，不因模型拒绝、玩家状态形状或文案直接产生许可。\n */"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_stages.ts",
+    "before": "from \"./state\"",
+    "after": "from \"./state-slot\""
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_stages.ts",
+    "before": "/** First native action: no pack identity may be exposed before this commits. */",
+    "after": "/** 原首次原生行动：恐惧成功提交之前不公开狼同伴知识；声明优先级不授予实际库存。 */"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+    "before": "import { getNightmareShadowState } from \"./state\";",
+    "after": "import { getNightmareShadowState } from \"./state-slot\";"
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+    "before": "export { getNightmareShadowState } from \"./state\";",
+    "after": "export { getNightmareShadowState, projectNightmareShadowState } from \"./state-slot\";"
+  },
+  {
+    "path": "backend/tests/unit/features/nightmare/state.test.ts",
+    "before": "nightmare_shadow/state\"",
+    "after": "nightmare_shadow/state-slot\""
+  },
+  {
+    "path": "backend/tests/unit/features/nightmare/state.test.ts",
+    "before": "/**\n * Unit tests for nightmare; Isolated nightmare state contract; native in-memory owner/frame/readers, no assembled game cycle.\n * Inputs are existing in-memory fixtures, original callback controls and explicit\n * invalid mutations. Original literal expectations, identity snapshots and\n * rejection assertions supply the oracle; none are regenerated during relocation.\n * Test-owned mocks/components exercise this boundary without a model or physical\n * transport. Support files, fixture bytes, policy and state behavior are retained.\n */\n",
+    "after": "/**\n * 单元测试验证噩梦之影独立状态契约；输入是原内存角色、数据字段和明确非法修改。\n * 原字面预期与拒绝断言保留，直接调用同族状态所有者，不运行完整对局、模型或真实传输。\n * 这些测试不以数据形状授予生命／夜许可，也不在迁移中重生成预期或改变状态接受政策。\n */\n"
+  },
+  {
+    "path": "backend/tests/unit/features/nightmare/frame.test.ts",
+    "before": "  nightmareFearTargets,\n",
+    "after": ""
+  },
+  {
+    "path": "backend/tests/unit/features/nightmare/frame.test.ts",
+    "before": "} from \"../../../../src/game/mechanisms/roles/nightmare_shadow/state\";",
+    "after": "} from \"../../../../src/game/mechanisms/roles/nightmare_shadow/state-slot\";\nimport { nightmareFearTargets } from \"../../../../src/game/mechanisms/roles/nightmare_shadow/targets\";"
+  },
+  {
+    "path": "backend/tests/unit/agents/nightmare-shadow/nightmare-observation.test.ts",
+    "before": "nightmare_shadow/state\"",
+    "after": "nightmare_shadow/ports\""
+  },
+  {
+    "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+    "before": "nightmare_shadow/state\"",
+    "after": "nightmare_shadow/ports\""
+  },
+  {
+    "path": "backend/tests/unit/mechanisms/wolf-knife-target-query.test.ts",
+    "before": "nightmare_shadow/state\"",
+    "after": "nightmare_shadow/state-slot\""
+  },
+  {
+    "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+    "before": "nightmare_shadow/state\"",
+    "after": "nightmare_shadow/ports\""
+  },
+  {
+    "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+    "before": "nightmare_shadow/state\"",
+    "after": "nightmare_shadow/ports\""
+  },
+  {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+    "before": "export { getNightmareShadowState, projectNightmareShadowState } from \"./state-slot\";",
+    "after": "export { getNightmareShadowState, projectNightmareShadowState } from \"./state-slot\";\nexport { nightmareFearTargets } from \"./targets\";"
+  },
+  {
+    "path": "backend/src/game/observation/player-observation-projector.ts",
+    "before": "nightmare_shadow/state\"",
+    "after": "nightmare_shadow/ports\"",
+    "writer": "Root actual a974c1"
+  }
+]

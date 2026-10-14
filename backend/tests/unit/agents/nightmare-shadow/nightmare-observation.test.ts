@@ -3,7 +3,7 @@
  * 手写 owner 字段、冻结历史和描述符预期检查脱离状态，不调用模型或完整对局。
  * 观察类型迁移保原输入与 oracle，不把访问器或他人状态猜成已知事实。
  */
-import { getNightmareShadowState } from "../../../../src/game/mechanisms/roles/nightmare_shadow/state";
+import { getNightmareShadowState } from "../../../../src/game/mechanisms/roles/nightmare_shadow/ports";
 import { expect, test } from "bun:test";
 import { bootstrapGame } from "../../../../src/app/bootstrap";
 import { COMPONENT, Phase, Role, type RoleComponent } from "../../../../src/core";

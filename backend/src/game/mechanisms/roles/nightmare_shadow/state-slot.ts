@@ -1,7 +1,9 @@
 /**
- * 负责梦魇私有状态、既有字段校验、目标政策与玩家投影；输入是原角色和候选上下文。
- * 输出为新状态、合法目标或原可读状态引用；玩家投影另复制历史中的 day／targetId。
- * 不执行恐惧阶段或序列化运行授权；历史顺序、已付款状态与当前许可分别保留。
+ * 负责噩梦之影唯一数据槽的创建、既有 live 校验、原引用读取、玩家副本及实际状态写入。
+ * 输入是原角色、参数和晚读容器；输出保持原状态／历史引用或脱离玩家副本。
+ * 校验保留原字段宽度与历史一致性，不新增精确键限制；readonly 视图不提供写权或夜许可。
+ * frame 仍拥有名单、生命、夜窗口及 expectedState，写入或编码失败不回滚已写前缀。
+ * 身份 JSON 仅用于原运行比对，不是档案 decoder；目标政策归同族 targets 所有者。
  */
 import type {
   FearActionPolicy,
@@ -10,10 +12,8 @@ import type {
   NightmareShadowReadState,
 } from "@ai-werewolf-arena/game-contract";
 import { types } from "node:util";
-import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Camp, type EntityId } from "../../../../core/domain/identity";
-import type { World } from "../../../../core/domain/world";
 
 export const NIGHTMARE_SHADOW_ROLE = "nightmare" as const;
 export const NIGHTMARE_SHADOW_POLICY = "awa_nightmare_dreamer_v1" as const;
@@ -42,6 +42,8 @@ function validId(value: unknown): value is EntityId {
 function validDay(value: unknown): value is number {
   return validId(value);
 }
+/** 仅读自身 data descriptor，先拒绝 Proxy；不执行输入 getter。
+ * 合法时返回原 live 状态及 history，不复制、不冻结，也不以形状校验续期运行许可。 */
 export function getNightmareShadowState(
   role: RoleComponent | undefined,
 ): NightmareShadowReadState | undefined {
@@ -88,24 +90,6 @@ export function getNightmareShadowState(
   }
   return state as NightmareShadowReadState;
 }
-/** 请求、校验、基线策略与目标提示使用同一目标政策，避免相邻两夜的禁选规则漂移。 */
-export function nightmareFearTargets(world: World, actorId: EntityId, day: number): EntityId[] {
-  const state = getNightmareShadowState(world.getComponent(actorId, COMPONENT.Role));
-  if (
-    !state ||
-    !validDay(day) ||
-    !world.getAliveEntityIds().includes(actorId) ||
-    (day > 1 && !state.packReady) ||
-    (state.lastDay !== null && day <= state.lastDay)
-  )
-    return [];
-  return world.getAliveEntityIds().filter((id) => {
-    if (id === actorId || (state.lastDay === day - 1 && state.lastTarget === id)) return false;
-    const target = world.getComponent(id, COMPONENT.Role);
-    return !!target && (!state.packReady || target.camp !== Camp.Wolf);
-  });
-}
-
 /** 按原顺序复制玩家字段及每条历史；不返回运行状态或复用 history／entry 对象。 */
 export function projectNightmareShadowState(
   role: RoleComponent | undefined,
@@ -128,3 +112,62 @@ export function projectNightmareShadowState(
     };
   }
 }
+
+/** 同族目标政策复用原日期校验；这是数据谓词，不是目标许可或运行租约。 */
+export { validDay as nightmareStateDayValid };
+
+/** 初始化保留左值容器先读、两项政策随后读取的顺序；setter 失败不补写或回滚。 */
+function installNightmareShadowState(
+  privateState: () => Record<string, unknown>,
+  value: { fearActionPolicy: FearActionPolicy; wolfActionPolicy: NightmareWolfActionPolicy },
+): void {
+  privateState().nightmareShadow = freshNightmareShadowState(
+    value.fearActionPolicy,
+    value.wolfActionPolicy,
+  );
+}
+
+/** 原三项状态赋值先于历史追加；push/call 的查找在 history 容器晚读之前。
+ * push 或后续身份 JSON 失败保留已写状态／历史，frame 不提前标 committed 或安装目标。 */
+function recordNightmareFear(
+  state: () => NightmareShadowReadState,
+  day: number,
+  targetId: EntityId | null,
+): void {
+  (state() as Pick<NightmareShadowState, "lastDay">).lastDay = day;
+  (state() as Pick<NightmareShadowState, "lastTarget">).lastTarget = targetId;
+  (state() as Pick<NightmareShadowState, "packReady">).packReady = true;
+  Array.prototype.push.call(state().history, { day, targetId });
+}
+
+/** 按原字段与逐条历史编码；不调用状态自己的 toJSON，但保留 JSON.stringify 的原失败时点。 */
+function encodeNightmareShadowStateIdentity(state: NightmareShadowReadState): string {
+  const history: Array<[number, EntityId | null]> = [];
+  for (let i = 0; i < state.history.length; i++) {
+    const entry = state.history[i]!;
+    history.push([entry.day, entry.targetId]);
+  }
+  return JSON.stringify([
+    state.policy,
+    state.fearActionPolicy,
+    state.wolfActionPolicy,
+    state.packReady,
+    state.lastDay,
+    state.lastTarget,
+    history,
+  ]);
+}
+
+/**
+ * 唯一本族数据所有者：schema/get 使用同一原 live reader，allowedWrites 收走原恐惧状态／历史写入。
+ * 方法表冻结不冻结输入状态、数组或玩家副本；expectedState 更新、committed 与目标仍属于 frame。
+ */
+export const NIGHTMARE_SHADOW_STATE_SLOT = Object.freeze({
+  create: freshNightmareShadowState,
+  schema: getNightmareShadowState,
+  get: getNightmareShadowState,
+  project: projectNightmareShadowState,
+  install: installNightmareShadowState,
+  allowedWrites: Object.freeze({ recordFear: recordNightmareFear }),
+  checkpoint: Object.freeze({ identity: encodeNightmareShadowStateIdentity }),
+});

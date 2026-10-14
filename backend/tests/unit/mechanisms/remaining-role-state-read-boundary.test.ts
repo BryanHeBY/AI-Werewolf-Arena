@@ -19,7 +19,7 @@ import { getThiefState } from "../../../src/game/mechanisms/roles/thief/state";
 import { getShapeshifterState } from "../../../src/game/mechanisms/roles/shapeshifter/state";
 import { getDebaterState } from "../../../src/game/mechanisms/roles/debater/state";
 import { getEvilKnightState } from "../../../src/game/mechanisms/roles/evil_knight/state";
-import { getNightmareShadowState } from "../../../src/game/mechanisms/roles/nightmare_shadow/state";
+import { getNightmareShadowState } from "../../../src/game/mechanisms/roles/nightmare_shadow/ports";
 import {
   getMagicianState,
   projectMagicianState,

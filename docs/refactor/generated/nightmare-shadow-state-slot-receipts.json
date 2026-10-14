@@ -1,0 +1,95 @@
+{
+  "newPreparationFailure": {
+    "chunk_id": "741859",
+    "exit_code": 1,
+    "output": "zsh:1: no such file or directory: backend/tests/unit/features/nightmare/state-slot.test.ts\nbun test v1.4.3 (c6da4a4d3)\nThe following filters did not match any test files:\n tests/unit/features/nightmare/state-slot.test.ts\n4825 files were searched [7.00ms]\n0 test cases executed; wrong writer cwd was backend while path included backend prefix."
+  },
+  "newRiskTests": {
+    "chunk_id": "1bb95a",
+    "wall_time_seconds": 1.2318e-05,
+    "exit_code": 0,
+    "original_token_count": 120,
+    "output": "bun test v1.4.3 (c6da4a4d3)\n\ntests/unit/features/nightmare/state-slot.test.ts:\n(pass) nightmare slot initialization reads the original left side before both policy fields [0.31ms]\n(pass) nightmare push callee failure preserves three state writes without history or frame completion [0.88ms]\n(pass) nightmare identity lookup failure retains appended history while the old frame checkpoint revokes [0.29ms]\n\n 3 pass\n 0 fail\n 16 expect() calls\nRan 3 tests across 1 file. [50.00ms]\n"
+  },
+  "originalPreciseFrame": {
+    "chunk_id": "ff1850",
+    "wall_time_seconds": 1.6958e-05,
+    "exit_code": 0,
+    "original_token_count": 63,
+    "output": "bun test v1.4.3 (c6da4a4d3)\n\ntests/unit/features/nightmare/frame.test.ts:\n(pass) first fear precedes pack knowledge and blocks all knife but not identity [1.70ms]\n\n 1 pass\n 10 filtered out\n 0 fail\n 13 expect() calls\nRan 1 test across 1 file. [54.00ms]\n"
+  },
+  "finiteTypes": {
+    "roots": 15,
+    "launch": {
+      "chunk_id": "bc9391",
+      "wall_time_seconds": 1.000794716,
+      "session_id": 53239,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "terminal": {
+      "chunk_id": "5139e9",
+      "wall_time_seconds": 1.0233e-05,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  "heads": {
+    "chunk_id": "791175",
+    "exit_code": 0,
+    "roots": 15,
+    "documentationPaths": 571,
+    "diagnostics": 0,
+    "chinesePresenceFailures": 0
+  },
+  "proof": {
+    "launch": {
+      "chunk_id": "761e75",
+      "session_id": 7269
+    },
+    "terminal": {
+      "chunk_id": "3354a4",
+      "wall_time_seconds": 9.157e-06,
+      "exit_code": 0,
+      "original_token_count": 27,
+      "output": "{\"producerPrograms\":4,\"wholeConsumers\":12,\"typedNodes\":14162,\"wholeMappedOutputs\":32,\"oldNamedFunctions\":7}\n"
+    },
+    "firstFailures": [
+      "5b9355",
+      "9a68f9",
+      "5dff08"
+    ]
+  },
+  "beforeVerification": {
+    "chunk_id": "267192",
+    "exit_code": 0,
+    "actualGitSources": 13,
+    "controls": 4
+  },
+  "distinctSuccess": {
+    "tests": 4,
+    "assertions": 29,
+    "executions": 2
+  },
+  "limits": [
+    "测试文件首次写入路径错误时实际 0 case；正确工作区写入后才运行真实3例。",
+    "所有 greens 无重复执行，finite15 首次即0。",
+    "三个证明工具失败只修比较器：empty after 两处及新旧两侧递归端点；产品未改求绿。"
+  ],
+  "finalEOFFix": {
+    "rootFirstDiffCheck": {
+      "chunk": "8c738c",
+      "exitCode": 2,
+      "finding": "单文件 targets.ts 额外 EOF 空行；无业务问题"
+    },
+    "preciseBridge": {
+      "chunk": "0f940f",
+      "exitCode": 0,
+      "wholeTypedNodes": 187,
+      "noncommentLeaves": 205,
+      "wholeRawSameOutputs": 2
+    },
+    "noRepeatedGreen": true
+  }
+}

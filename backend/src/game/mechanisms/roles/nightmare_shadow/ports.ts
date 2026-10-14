@@ -11,7 +11,7 @@ import { COMPONENT } from "../../../../core/domain/components/names";
 import type { World } from "../../../../core/domain/world";
 import { nightmareFearBlocks } from "./night_frame";
 export { isNightmareBoard, nightmareKnifeBlocked, assertNightmareRosterCurrent, nightmareFearBlocks } from "./night_frame";
-import { getNightmareShadowState } from "./state";
+import { getNightmareShadowState } from "./state-slot";
 
 export interface NightmareNightEligibility {
   blocks(actorId: EntityId, day: number): boolean;
@@ -36,4 +36,5 @@ export function bindNightmareKnifeTargetQuery(world: World): NightmareKnifeTarge
   });
 }
 
-export { getNightmareShadowState } from "./state";
+export { getNightmareShadowState, projectNightmareShadowState } from "./state-slot";
+export { nightmareFearTargets } from "./targets";

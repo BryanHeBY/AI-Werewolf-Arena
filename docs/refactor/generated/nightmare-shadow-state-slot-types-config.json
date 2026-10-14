@@ -1,0 +1,29 @@
+{
+  "extends": "../../../backend/tsconfig.tests.json",
+  "compilerOptions": {
+    "rootDir": "../../..",
+    "typeRoots": [
+      "../../../backend/node_modules/@types",
+      "../../../backend/node_modules"
+    ]
+  },
+  "files": [
+    "../../../backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+    "../../../backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+    "../../../backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+    "../../../backend/src/game/mechanisms/roles/nightmare_shadow/night_stages.ts",
+    "../../../backend/tests/unit/features/nightmare/state.test.ts",
+    "../../../backend/tests/unit/features/nightmare/frame.test.ts",
+    "../../../backend/tests/unit/agents/nightmare-shadow/nightmare-observation.test.ts",
+    "../../../backend/tests/unit/engine/feature-player-state-projections.test.ts",
+    "../../../backend/tests/unit/mechanisms/wolf-knife-target-query.test.ts",
+    "../../../backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+    "../../../backend/src/game/observation/player-observation-projector.ts",
+    "../../../backend/src/game/mechanisms/llm/target_hint_registry.ts",
+    "../../../backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+    "../../../backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts",
+    "../../../backend/tests/unit/features/nightmare/state-slot.test.ts"
+  ],
+  "include": [],
+  "exclude": []
+}

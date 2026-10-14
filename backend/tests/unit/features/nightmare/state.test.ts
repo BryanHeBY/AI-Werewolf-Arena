@@ -1,10 +1,7 @@
 /**
- * Unit tests for nightmare; Isolated nightmare state contract; native in-memory owner/frame/readers, no assembled game cycle.
- * Inputs are existing in-memory fixtures, original callback controls and explicit
- * invalid mutations. Original literal expectations, identity snapshots and
- * rejection assertions supply the oracle; none are regenerated during relocation.
- * Test-owned mocks/components exercise this boundary without a model or physical
- * transport. Support files, fixture bytes, policy and state behavior are retained.
+ * 单元测试验证噩梦之影独立状态契约；输入是原内存角色、数据字段和明确非法修改。
+ * 原字面预期与拒绝断言保留，直接调用同族状态所有者，不运行完整对局、模型或真实传输。
+ * 这些测试不以数据形状授予生命／夜许可，也不在迁移中重生成预期或改变状态接受政策。
  */
 import { describe, expect, test } from "bun:test";
 import type { RoleComponent } from "../../../../src/core/domain/components/role";
@@ -12,7 +9,7 @@ import { Camp } from "../../../../src/core/domain/identity";
 import {
   freshNightmareShadowState,
   getNightmareShadowState,
-} from "../../../../src/game/mechanisms/roles/nightmare_shadow/state";
+} from "../../../../src/game/mechanisms/roles/nightmare_shadow/state-slot";
 function role(state: unknown): RoleComponent {
   return {
     role: "nightmare",

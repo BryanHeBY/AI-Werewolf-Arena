@@ -1,0 +1,24 @@
+{
+  "approved": true,
+  "path": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts",
+  "beforeSha256": "1e0fe719821de9ba0e0fe0c925df4892cd410da5ccfdf27365dc8ff19e38c3fd",
+  "afterSha256": "303f3e56312911b9231cbcd4e4e6f6b3a51ec472aeeecde29cbcf28403d1f5e9",
+  "completeTypedNodes": 187,
+  "noncommentLeaves": 205,
+  "onlyRemovedOneFinalLF": true,
+  "outputs": [
+    {
+      "module": "ESNext",
+      "wholeRawSame": true,
+      "sha256": "3f1647892235c0710e3bc5d17dd3c09da3514c9b15a97dda21fa278c8e6d7480"
+    },
+    {
+      "module": "CommonJS",
+      "wholeRawSame": true,
+      "sha256": "792236bbc0ce7c197235455f32d7c0086126a7e60410cc061e36b1932d7f38c6"
+    }
+  ],
+  "limits": [
+    "仅冻结后EOF空白桥；原tests/type/head/wholeproof收据按原阶段保存，没有重跑。"
+  ]
+}

@@ -12,8 +12,8 @@ import { Camp } from "../../../../src/core/domain/identity";
 import type { World } from "../../../../src/core/domain/world";
 import {
   freshNightmareShadowState,
-  nightmareFearTargets,
-} from "../../../../src/game/mechanisms/roles/nightmare_shadow/state";
+} from "../../../../src/game/mechanisms/roles/nightmare_shadow/state-slot";
+import { nightmareFearTargets } from "../../../../src/game/mechanisms/roles/nightmare_shadow/targets";
 import {
   installNightmareBoard,
   beginNightmareNight,

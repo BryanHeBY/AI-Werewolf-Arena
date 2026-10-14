@@ -1,0 +1,12 @@
+{
+  "path": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts",
+  "text": "/**\n * 负责噩梦之影原恐惧目标政策，供请求、校验、基线策略与提示共用同一候选算法。\n * 输入是原 World、演员序号和日期；输出保留原现场候选读取、禁选自身／相邻夜重复及狼同伴规则。\n * 原状态／存活与日期检查按原顺序短路；候选不是许可，此模块不写历史、打开夜窗口或支付资源。\n */\nimport { COMPONENT } from \"../../../../core/domain/components/names\";\nimport { Camp, type EntityId } from \"../../../../core/domain/identity\";\nimport type { World } from \"../../../../core/domain/world\";\nimport { getNightmareShadowState, nightmareStateDayValid } from \"./state-slot\";\n\n/** 请求、校验、基线策略与目标提示使用同一目标政策，避免相邻两夜的禁选规则漂移。 */\nexport function nightmareFearTargets(world: World, actorId: EntityId, day: number): EntityId[] {\n  const state = getNightmareShadowState(world.getComponent(actorId, COMPONENT.Role));\n  if (\n    !state ||\n    !nightmareStateDayValid(day) ||\n    !world.getAliveEntityIds().includes(actorId) ||\n    (day > 1 && !state.packReady) ||\n    (state.lastDay !== null && day <= state.lastDay)\n  )\n    return [];\n  return world.getAliveEntityIds().filter((id) => {\n    if (id === actorId || (state.lastDay === day - 1 && state.lastTarget === id)) return false;\n    const target = world.getComponent(id, COMPONENT.Role);\n    return !!target && (!state.packReady || target.camp !== Camp.Wolf);\n  });\n}\n\n",
+  "beforeSha256": "1e0fe719821de9ba0e0fe0c925df4892cd410da5ccfdf27365dc8ff19e38c3fd",
+  "afterSha256": "303f3e56312911b9231cbcd4e4e6f6b3a51ec472aeeecde29cbcf28403d1f5e9",
+  "onlyDelta": "删除一个EOF额外LF；其余完整字节不变",
+  "rootFinding": {
+    "chunk": "8c738c",
+    "exitCode": 2,
+    "message": "targets.ts:28 new blank line EOF"
+  }
+}

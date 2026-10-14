@@ -746,3 +746,7 @@
 - C24/C28 终局候选规则：四源将PM完整配置选择及婚约封盘前校验归具名规则表，Fox经本族公开facet同原函数绑定；PM保两evaluateMany点/3-4实参数、赤月raw候选到期判断、夜报后改写、fault→婚约→成员→day→唯一封盘序。Root及非作者完整源/真实0cbe PM原稿/七控制/27附件和重要中文说明批准，新3/21+旧Fox1/2共四不同23assert。首四根type只新unit真红、纯type修后failed1根0，头首0；证明工具三红保原记录末32f1f9真实0，映射完整PM与当前204模块静态绑定不冒完整冷加载/任意重绑定等价。没有重绿或全门禁，完整终局/PM/P9继续，见 terminal-victory-policy.md。
 
 - 鬼魂新娘旧配置身份fixture修正：独立单测试源，实际40e411 before与原bootstrap/authority/setup三控制保持，只 execute(g.config→g.boardConfig)；前者raw输入，后者是已编译安装同一BoardParameters.board，生产identity拒绝不放宽。Root与非作者完整场景/所有原assert与10附件批准；此前两次同首错红保留，只原failed2/3精确一例实际1/0/57，单根type/head实际0。全文唯一identifier逆及两完整mapped输出证据区分真实输入变化；Root汇总工具首读singleton before shape失败后只修临时读器，没有重产品检查。其余三个循环case未重跑，不称整组全绿；完整P9继续，见 ghost-bride-config-identity-fixture.md。
+
+- C17 噩梦之影完整数据槽：16路径(15现行+1退休)收原七数据/目标函数、frame身份编码与三字段/历史写序及profile真实install；frame保名单/生命/夜窗口/expectedState与committed→target→wolfBlocked。Root及非作者完整真实0cbe十三before/12消费者/四控制/16附件、原宽schema和有效中文说明批准；Root唯一Observer import纳同源原子提交，漏盘Hintregistry在写前完整核原Git后纳入。新3/16+旧首恐惧1/13共四不同29assert，15根type/head首0；whole proof工具前三红保真实末3354a4实际0、原273binding/16程序32输出有限映射保，不重绿。旧私有state删除，无许可镜像，原push/JSON失败前缀不回滚；完整C17/P9继续，见 nightmare-shadow-state-slot.md。
+
+  - 本批末暂存检查8c738c仅targets多余EOF空行；只删除该LF，旧完整source/scope/evidence及两输出桥保持。Root与非作者末21附件/15源SHA重新绑定批准，未重复任何绿色行为/类型/头检查。

@@ -1,0 +1,106 @@
+{
+  "approved": true,
+  "reviewer": "/root",
+  "baseCommit": "0cbe610f5e5293d6b3f4d64628fb750759a4a0e4",
+  "source": [
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+      "sha256": "4b06b5e8668829f3018025724139d11ba785d97f0fed012dcdd7b5f2b74a873c"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+      "sha256": "7081472fe2cbabe33f450d8f3f3fc76cdf738bacd35922cd535ff3ce35c4e26b"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+      "sha256": "c714305c2d02f41be9287636e6c56b5410fd18e3942d2165813117805537be6e"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_stages.ts",
+      "sha256": "81e151befd93bfce0d23bcac39dc2177c1a3582ad1c688aec1d08e3dd2865460"
+    },
+    {
+      "path": "backend/tests/unit/features/nightmare/state.test.ts",
+      "sha256": "8e0018af4c01874f41345e404469f08ad0273499c53633728385836e0144e065"
+    },
+    {
+      "path": "backend/tests/unit/features/nightmare/frame.test.ts",
+      "sha256": "075a6e189ebb5d77e7ea55908438c8a63cafad3f5852ab736f54fa4af33eecc0"
+    },
+    {
+      "path": "backend/tests/unit/agents/nightmare-shadow/nightmare-observation.test.ts",
+      "sha256": "4fab5234512465236bb2a0ed1e77bafb22efc7e54930fe43fab1ac25b9a3cac9"
+    },
+    {
+      "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+      "sha256": "03dc4366890eb317ea6733365dd047632c2b2df0f3e91d0fad2b4dbf214e0268"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/wolf-knife-target-query.test.ts",
+      "sha256": "c6d4921f91896f5d95fab1a8bb05674c9970bed62ac1291f05e4edfd45175143"
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "sha256": "acf39e259fd35b5248b0ab3ea0b08abd00048be56fca8c1ed1d4eb16091aa00b"
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "sha256": "b3596f7a8ce53d52ec1e2b263b124edd94ca42b07266995643f9117064e6e175"
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+      "sha256": "380b9cd53a5b0ba506366be9def706318ea14a12b2efeb8db8e1245287b95baf"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+      "sha256": "60ee9281b72b51d2d9f1381406d5258926c0c656a9e48c4fb4b4fbe143c8b713"
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts",
+      "sha256": "303f3e56312911b9231cbcd4e4e6f6b3a51ec472aeeecde29cbcf28403d1f5e9"
+    },
+    {
+      "path": "backend/tests/unit/features/nightmare/state-slot.test.ts",
+      "sha256": "a12988365816a2b99d3a8e286195e9937b434679dd8d052c48d1ad03b5d8e70b"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+      "beforeSha256": "a6293977aa3300e0cdb65e8898343638cdc7381bba7c9222ca8632e85b7c92bc",
+      "expectedAbsent": true,
+      "sha256": "a6293977aa3300e0cdb65e8898343638cdc7381bba7c9222ca8632e85b7c92bc"
+    }
+  ],
+  "scope": {
+    "path": "docs/refactor/generated/nightmare-shadow-state-slot-scope-final.json",
+    "sha256": "7d7a91f832074fc9c2c70761b4df1b951078497badc3ded7ffbcda95b2af278d"
+  },
+  "document": {
+    "path": "docs/refactor/nightmare-shadow-state-slot.md",
+    "sha256": "d65bf1b8676e26db33b2fe416c509c296294dc0605eb553fd1ca4e3f855e5dc4"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/nightmare-shadow-state-slot-evidence.json",
+    "sha256": "477429252b3a1d903a7820433f636e51efa0ce0a2e55e7f6dc24dcaf40af2d8c"
+  },
+  "integrity": {
+    "freshSources": 15,
+    "actualGitBefore": 13,
+    "controls": 4,
+    "artifactHashes": 21,
+    "fullExactForward": 0,
+    "mismatches": []
+  },
+  "findings": [],
+  "reviewDimensions": {
+    "状态所有权": "完整原七函数、新slot/targets/frame/profile和12消费者diff已人工读；唯一写操作及身份编码收归槽，expectedState/名单/生命/夜授权仍frame。",
+    "失败与权限": "保原live/history引用和宽schema，三字段→push lookup/call→history→identity→expectedState→committed/target/wolfBlocked次序保持；push或JSON失败不回滚，玩家副本不授权。",
+    "中文说明": "frame/stage/slot/targets及新风险unit有效中文说明原体、玩家数据和失败前缀，名称统一噩梦之影；末MD校准实际committed字段。",
+    "验证": "三新16+旧首恐惧13共四不同29断言；15有限type/head首0，whole证明原tool红和末3354a4真实0，未重跑。",
+    "格式修正": "真实末stage8c738c只targets末多LF；作者仅删除该LF，旧完整快照/精确桥确认187typed/205leaf/两输出不变，21artifact全核，十四其它源不动。"
+  },
+  "limits": [
+    "仅实核本批冻结源码、原Git、已生成证据和真实收据；未重复任何已绿检查，不宣称完整P9完成。"
+  ]
+}

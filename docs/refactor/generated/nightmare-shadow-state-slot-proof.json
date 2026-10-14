@@ -1,0 +1,2469 @@
+{
+  "approved": true,
+  "baseCommit": "0cbe610f5e5293d6b3f4d64628fb750759a4a0e4",
+  "movedNamedFunctions": 7,
+  "movedFunctions": [
+    {
+      "path": "actual-data.ts",
+      "typedNodes": 56,
+      "noncommentLeaves": 61,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "4a8058bf3a163390214a83f7d15d699d41fa9e27518fefd23c90061c6607c941"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "4a8058bf3a163390214a83f7d15d699d41fa9e27518fefd23c90061c6607c941"
+        }
+      ]
+    },
+    {
+      "path": "actual-freshNightmareShadowState.ts",
+      "typedNodes": 39,
+      "noncommentLeaves": 52,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "4c0e0061a5f5b61d8907235bea2b424a421cdd98bc925628c51fe8f28cb1df9b"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "73d53249c5a55fc6988e075a51f1d1cd02892fc0596d408614509291a03f6ba4"
+        }
+      ]
+    },
+    {
+      "path": "actual-validId.ts",
+      "typedNodes": 31,
+      "noncommentLeaves": 31,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "61cf875bff33ea371c7d6591696dae8c0cf09c317f9fe7e8062e2b522588af9d"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "61cf875bff33ea371c7d6591696dae8c0cf09c317f9fe7e8062e2b522588af9d"
+        }
+      ]
+    },
+    {
+      "path": "actual-validDay.ts",
+      "typedNodes": 15,
+      "noncommentLeaves": 20,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "e59efb0feb0e8f4bf55fdcb143751edb50adf35adc427a318b5a814a6a004ac7"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "e59efb0feb0e8f4bf55fdcb143751edb50adf35adc427a318b5a814a6a004ac7"
+        }
+      ]
+    },
+    {
+      "path": "actual-getNightmareShadowState.ts",
+      "typedNodes": 344,
+      "noncommentLeaves": 372,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "993628eb9d6e1effd41666842a51ecd7d58f8160b19d9d4f7e4526470dbc35f3"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "cfaffc3762579c3feadf31f46583afcc7c3206b153a00f3499c948e0e6f12754"
+        }
+      ]
+    },
+    {
+      "path": "actual-nightmareFearTargets.ts",
+      "typedNodes": 159,
+      "noncommentLeaves": 171,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "fb79b3803c62316b508eb17fcca3ba717fe228dae9a2cdaf18f8a23a81e26654"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "0d4b343c76c027d8ffef78fabd924cbfce03d4a2c3f32141c10f7397e63fd84b"
+        }
+      ]
+    },
+    {
+      "path": "actual-projectNightmareShadowState.ts",
+      "typedNodes": 119,
+      "noncommentLeaves": 146,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "73ab163c9011ddf22bf3f032b887e583361ca2c833557a1cb859d3c7b59558cb"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "c8931739186624395cede7950d41d820319cea43cd63f8b2fd4a0e2e76b2dc7b"
+        }
+      ]
+    }
+  ],
+  "producerPrograms": [
+    {
+      "path": "complete-state.ts",
+      "typedNodes": 813,
+      "noncommentLeaves": 918,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "f410b0e24d2362be7c51e170b7ef101b01868182496c09f1748d3bc6b796d4a7"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "946f32071639eba33d4332e2a6187df6ca348bd407b582eb4977943e21308e6f"
+        }
+      ]
+    },
+    {
+      "path": "actual-frame-identity.ts",
+      "typedNodes": 87,
+      "noncommentLeaves": 111,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "977642d2293970d25000ec8e74c4f8c56ac206e0b402405e27b64f8f98ccb83e"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "977642d2293970d25000ec8e74c4f8c56ac206e0b402405e27b64f8f98ccb83e"
+        }
+      ]
+    },
+    {
+      "path": "actual-frame-four-writes.ts",
+      "typedNodes": 72,
+      "noncommentLeaves": 73,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "e7622c90a5e5f4a8cf00df8dd5362c0061442408972b92c719f5806d30a969f5"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "e7622c90a5e5f4a8cf00df8dd5362c0061442408972b92c719f5806d30a969f5"
+        }
+      ]
+    },
+    {
+      "path": "actual-profile-install.ts",
+      "typedNodes": 18,
+      "noncommentLeaves": 19,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "83224152e8128735d0cf48ed1171afc3dfa84456c6289365597e3ff505d34c02"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "83224152e8128735d0cf48ed1171afc3dfa84456c6289365597e3ff505d34c02"
+        }
+      ]
+    }
+  ],
+  "wholeConsumers": [
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+      "typedNodes": 1638,
+      "noncommentLeaves": 1868,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "58825b78048a013e5405bba0a402018082b24b544c3661b7013d28789f74f2fa"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "6bcb75c8123d74e1a47c244fdef1e0f822e7fd12c732d04cfa572e4b299c51c7"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+      "typedNodes": 730,
+      "noncommentLeaves": 875,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "b16d158b0ff9fde6edf3843b1997501c5d22e44018b453d8a9b73cd77d08b92b"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "4f76f4bd5c307c48a394a9137b13b4c1b9a634572e1284a0a097afb4baa6810a"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+      "typedNodes": 167,
+      "noncommentLeaves": 203,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "18282df90baea40ba9bbd9b7dd0ea5ceb88fb4e876bc45d503a033a3a4731dd3"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "8f8dbd605a45ef2d76ea7b9bd6bbbc877baabf79041ef8880a574fa83b142955"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_stages.ts",
+      "typedNodes": 365,
+      "noncommentLeaves": 444,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "319424611105c648d52718da6ad501994a5d709448b4622e6e43fc7d0ec9e593"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "19a9bbda09108ca202735233797882606f0dec5f7b2863192bf7e38cee9c3cce"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/nightmare/state.test.ts",
+      "typedNodes": 669,
+      "noncommentLeaves": 937,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "98de23842a7d16340bc151b13f0a7f10f610776f23f71a38e8cfb4e40e0a2c80"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "9a2b984a86f4b4d1207f3d6b71b42d96a85f25aee9269d01dc64bb4be08e47d4"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/features/nightmare/frame.test.ts",
+      "typedNodes": 1337,
+      "noncommentLeaves": 1825,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "53011063be0c93e0f44443ba1652e9a5893d32ed9fdc520957ff20703e02e08d"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "2a41f6310802fe21f0028735c0537fc3bc8767ab8c4c2e2f8faf35e5af2f26d5"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/agents/nightmare-shadow/nightmare-observation.test.ts",
+      "typedNodes": 718,
+      "noncommentLeaves": 893,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "cf20ddd05534f2c431dcd86780d137d5fdaa5adafa7a42c352bd1f4f7f6f23dc"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "22172f7a21ac1fd04635df183cd75ced8b95a6135b989b434345a949437ad544"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+      "typedNodes": 716,
+      "noncommentLeaves": 942,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "e0641441a266d9f6c91f457b94add85819efdeac6066c5838c91a8f0ef9ea7ed"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "b6f5376df1d12aad20fb625b6f2bea199e6329c585adf1046ef39b7775adb039"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/wolf-knife-target-query.test.ts",
+      "typedNodes": 1587,
+      "noncommentLeaves": 2103,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "92ca8ccc631e0b3440cb245b3b35766a25fcc8cd4f3dce52e78e9ac2ae57213f"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "d495d4b2afc0301b53753947adfc1013ddbc33825f791f56288adb188b7d3d84"
+        }
+      ]
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "typedNodes": 973,
+      "noncommentLeaves": 1194,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "b6e09db6d58a9edfd6e71ba2c514ea676ac58595bd6e14b7792807ca51cbb7b6"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "1e6982d648452b2cad423b9bb8ce960cf73f1a6c78c7dea77d1b159f1403bc93"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "typedNodes": 2494,
+      "noncommentLeaves": 2905,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "78760ef546d802326d682260f17610efe9665938ac253f7e535def4d12fba415"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "db2ede42a539a7df0419bb85fedfc5bddbdc90fe939cd840291c25d66b2dd541"
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+      "typedNodes": 1778,
+      "noncommentLeaves": 2072,
+      "completeProgramsSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "rawSame": true,
+          "sha256": "79bf8d4559b45204d44844f3ebbae343189e842ca2883a3c633d45370ad43169"
+        },
+        {
+          "module": "CommonJS",
+          "rawSame": true,
+          "sha256": "877944a8cc711a774c6d0481a9762ab02dab9e606fbc3d207f93130c5c11818d"
+        }
+      ]
+    }
+  ],
+  "bindingPrograms": [
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+      "retained": [
+        {
+          "local": "NightmareShadowReadState",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/role-state-data.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "COMPONENT",
+          "oldTarget": "backend/src/core/domain/components/names.ts",
+          "newTarget": "backend/src/core/domain/components/names.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "aliveLifeVersion",
+          "oldTarget": "backend/src/core/domain/components/alive.ts",
+          "newTarget": "backend/src/core/domain/components/alive.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "aliveLifeDescriptor",
+          "oldTarget": "backend/src/core/domain/components/alive.ts",
+          "newTarget": "backend/src/core/domain/components/alive.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "AliveComponent",
+          "oldTarget": "backend/src/core/domain/components/alive.ts",
+          "newTarget": "backend/src/core/domain/components/alive.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "World",
+          "oldTarget": "backend/src/core/domain/world.ts",
+          "newTarget": "backend/src/core/domain/world.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "Camp",
+          "oldTarget": "backend/src/core/domain/identity.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "EntityId",
+          "oldTarget": "backend/src/core/domain/identity.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "captureNightLife",
+          "oldTarget": "backend/src/core/domain/night_effects.ts",
+          "newTarget": "backend/src/core/domain/night_effects.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "livingNightLife",
+          "oldTarget": "backend/src/core/domain/night_effects.ts",
+          "newTarget": "backend/src/core/domain/night_effects.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "NightLifeScope",
+          "oldTarget": "backend/src/core/domain/night_effects.ts",
+          "newTarget": "backend/src/core/domain/night_effects.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "NightAbilityReadView",
+          "oldTarget": "backend/src/game/mechanisms/roles/abilities.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/abilities.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "getNightmareShadowState",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "nightmareFearTargets",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts",
+          "typeOnly": false
+        }
+      ],
+      "removed": [
+        {
+          "local": "NightmareShadowState",
+          "imported": "NightmareShadowState",
+          "target": "packages/game-contract/src/index.ts",
+          "route": "@ai-werewolf-arena/game-contract",
+          "typeOnly": true
+        }
+      ],
+      "added": [
+        {
+          "local": "NIGHTMARE_SHADOW_STATE_SLOT",
+          "imported": "NIGHTMARE_SHADOW_STATE_SLOT",
+          "target": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+          "route": "./state-slot",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+      "retained": [
+        {
+          "local": "nativeRolePresentation",
+          "oldTarget": "backend/src/game/mechanisms/roles/presentation-contribution.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/presentation-contribution.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "z",
+          "oldTarget": "node_modules/.bun/zod@4.6.5/node_modules/zod/index.d.cts",
+          "newTarget": "node_modules/.bun/zod@4.6.5/node_modules/zod/index.d.cts",
+          "typeOnly": false
+        },
+        {
+          "local": "roleName",
+          "oldTarget": "packages/game-text/src/index.ts",
+          "newTarget": "packages/game-text/src/index.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "text",
+          "oldTarget": "packages/game-text/src/index.ts",
+          "newTarget": "packages/game-text/src/index.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "RuleError",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/index.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "Role",
+          "oldTarget": "backend/src/core/domain/identity.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "WinCondition",
+          "oldTarget": "backend/src/core/domain/identity.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "Phase",
+          "oldTarget": "backend/src/core/domain/identity.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "NativeRoleContributions",
+          "oldTarget": "backend/src/game/mechanisms/roles/contracts.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/contracts.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "ORDINARY_WOLF_CONTRIBUTIONS",
+          "oldTarget": "backend/src/game/mechanisms/roles/wolf/ability-ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/wolf/ability-assembly.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "NIGHTMARE_SHADOW_POLICY",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getNightmareShadowState",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "nightmareFearTargets",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "NIGHTMARE_FEAR_STAGE",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_stages.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_stages.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "nightmarePackReady",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "nightmareFearPending",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "typeOnly": false
+        }
+      ],
+      "removed": [
+        {
+          "local": "freshNightmareShadowState",
+          "imported": "freshNightmareShadowState",
+          "target": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "route": "./state",
+          "typeOnly": false
+        }
+      ],
+      "added": [
+        {
+          "local": "NIGHTMARE_SHADOW_STATE_SLOT",
+          "imported": "NIGHTMARE_SHADOW_STATE_SLOT",
+          "target": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+          "route": "./state-slot",
+          "typeOnly": false
+        }
+      ]
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+      "retained": [
+        {
+          "local": "EntityId",
+          "oldTarget": "backend/src/core/domain/model.ts",
+          "newTarget": "backend/src/core/domain/model.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "Role",
+          "oldTarget": "backend/src/core/domain/identity.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "COMPONENT",
+          "oldTarget": "backend/src/core/domain/components/names.ts",
+          "newTarget": "backend/src/core/domain/components/names.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "World",
+          "oldTarget": "backend/src/core/domain/world.ts",
+          "newTarget": "backend/src/core/domain/world.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "nightmareFearBlocks",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getNightmareShadowState",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+          "typeOnly": false
+        }
+      ],
+      "removed": [],
+      "added": []
+    },
+    {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_stages.ts",
+      "retained": [
+        {
+          "local": "COMPONENT",
+          "oldTarget": "backend/src/core/domain/components/names.ts",
+          "newTarget": "backend/src/core/domain/components/names.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "RoleComponent",
+          "oldTarget": "backend/src/core/domain/components/role.ts",
+          "newTarget": "backend/src/core/domain/components/role.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "Phase",
+          "oldTarget": "backend/src/core/domain/identity.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "NightStageHandler",
+          "oldTarget": "backend/src/game/mechanisms/stages/night/contracts.ts",
+          "newTarget": "backend/src/game/mechanisms/stages/night/contracts.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "getNightmareShadowState",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "assertNightmareRosterCurrent",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "beginNightmareNight",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "commitNightmareFear",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "typeOnly": false
+        }
+      ],
+      "removed": [],
+      "added": []
+    },
+    {
+      "path": "backend/tests/unit/features/nightmare/state.test.ts",
+      "retained": [
+        {
+          "local": "describe",
+          "typeOnly": false
+        },
+        {
+          "local": "expect",
+          "typeOnly": false
+        },
+        {
+          "local": "test",
+          "typeOnly": false
+        },
+        {
+          "local": "RoleComponent",
+          "oldTarget": "backend/src/core/domain/components/role.ts",
+          "newTarget": "backend/src/core/domain/components/role.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "Camp",
+          "oldTarget": "backend/src/core/domain/identity.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "freshNightmareShadowState",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getNightmareShadowState",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+          "typeOnly": false
+        }
+      ],
+      "removed": [],
+      "added": []
+    },
+    {
+      "path": "backend/tests/unit/features/nightmare/frame.test.ts",
+      "retained": [
+        {
+          "local": "createAliveComponent",
+          "oldTarget": "backend/src/game/observation/component-presentation.ts",
+          "newTarget": "backend/src/game/observation/component-presentation.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "expect",
+          "typeOnly": false
+        },
+        {
+          "local": "test",
+          "typeOnly": false
+        },
+        {
+          "local": "COMPONENT",
+          "oldTarget": "backend/src/core/domain/components/names.ts",
+          "newTarget": "backend/src/core/domain/components/names.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "RoleComponent",
+          "oldTarget": "backend/src/core/domain/components/role.ts",
+          "newTarget": "backend/src/core/domain/components/role.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "Camp",
+          "oldTarget": "backend/src/core/domain/identity.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "World",
+          "oldTarget": "backend/src/core/domain/world.ts",
+          "newTarget": "backend/src/core/domain/world.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "freshNightmareShadowState",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "nightmareFearTargets",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "installNightmareBoard",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "beginNightmareNight",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "commitNightmareFear",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "nightmareFearBlocks",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "nightmareKnifeBlocked",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "nightmarePackReady",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "assertNightmareRosterCurrent",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "typeOnly": false
+        }
+      ],
+      "removed": [],
+      "added": []
+    },
+    {
+      "path": "backend/tests/unit/agents/nightmare-shadow/nightmare-observation.test.ts",
+      "retained": [
+        {
+          "local": "getNightmareShadowState",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "expect",
+          "typeOnly": false
+        },
+        {
+          "local": "test",
+          "typeOnly": false
+        },
+        {
+          "local": "bootstrapGame",
+          "oldTarget": "backend/src/app/bootstrap.ts",
+          "newTarget": "backend/src/app/bootstrap.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "COMPONENT",
+          "oldTarget": "backend/src/core/index.ts",
+          "newTarget": "backend/src/core/index.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "Phase",
+          "oldTarget": "backend/src/core/index.ts",
+          "newTarget": "backend/src/core/index.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "Role",
+          "oldTarget": "backend/src/core/index.ts",
+          "newTarget": "backend/src/core/index.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "RoleComponent",
+          "oldTarget": "backend/src/core/index.ts",
+          "newTarget": "backend/src/core/index.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "createRandom",
+          "oldTarget": "backend/src/core/domain/random.ts",
+          "newTarget": "backend/src/core/domain/random.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "randomDraws",
+          "oldTarget": "backend/src/core/domain/random.ts",
+          "newTarget": "backend/src/core/domain/random.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "GameActionRequestFactory",
+          "oldTarget": "backend/src/game/engine/action_request_factory.ts",
+          "newTarget": "backend/src/game/engine/action_request_factory.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "ObservedBot",
+          "oldTarget": "backend/src/ai/agents/providers/observed_bot.ts",
+          "newTarget": "backend/src/ai/agents/providers/observed_bot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "ObservedPlayersActionProvider",
+          "oldTarget": "backend/src/app/observed-players-action-provider.ts",
+          "newTarget": "backend/src/app/observed-players-action-provider.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "PlayerObservation",
+          "oldTarget": "backend/src/game/observation/player-observation.ts",
+          "newTarget": "backend/src/game/observation/player-observation.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "nightmareTwelveConfig",
+          "oldTarget": "backend/src/runtime/scenarios/nightmare_twelve.ts",
+          "newTarget": "backend/src/runtime/scenarios/nightmare_twelve.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "beginNightmareNight",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "commitNightmareFear",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+          "typeOnly": false
+        }
+      ],
+      "removed": [],
+      "added": []
+    },
+    {
+      "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+      "retained": [
+        {
+          "local": "expect",
+          "typeOnly": false
+        },
+        {
+          "local": "test",
+          "typeOnly": false
+        },
+        {
+          "local": "Camp",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "Phase",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "Role",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "ActionRequest",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/index.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "World",
+          "oldTarget": "backend/src/core/domain/world.ts",
+          "newTarget": "backend/src/core/domain/world.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "COMPONENT",
+          "oldTarget": "backend/src/core/domain/components/names.ts",
+          "newTarget": "backend/src/core/domain/components/names.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "createRoleComponent",
+          "oldTarget": "backend/src/game/observation/role-presentation.ts",
+          "newTarget": "backend/src/game/observation/role-presentation.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectRedMoonState",
+          "oldTarget": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectNightmareShadowState",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectEvilKnightState",
+          "oldTarget": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "capturePlayerObservation",
+          "oldTarget": "backend/src/game/observation/player-observation-projector.ts",
+          "newTarget": "backend/src/game/observation/player-observation-projector.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getDefaultRoleCatalog",
+          "oldTarget": "backend/src/game/mechanisms/roles/role-catalog-assembly.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/role-catalog-assembly.ts",
+          "typeOnly": false
+        }
+      ],
+      "removed": [],
+      "added": []
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/wolf-knife-target-query.test.ts",
+      "retained": [
+        {
+          "local": "createAliveComponent",
+          "oldTarget": "backend/src/game/observation/component-presentation.ts",
+          "newTarget": "backend/src/game/observation/component-presentation.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "expect",
+          "typeOnly": false
+        },
+        {
+          "local": "test",
+          "typeOnly": false
+        },
+        {
+          "local": "Camp",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "Role",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "EntityId",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "World",
+          "oldTarget": "backend/src/core/domain/world.ts",
+          "newTarget": "backend/src/core/domain/world.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "COMPONENT",
+          "oldTarget": "backend/src/core/domain/components/names.ts",
+          "newTarget": "backend/src/core/domain/components/names.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "ComponentName",
+          "oldTarget": "backend/src/core/domain/components/names.ts",
+          "newTarget": "backend/src/core/domain/components/names.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "RoleComponent",
+          "oldTarget": "backend/src/core/domain/components/role.ts",
+          "newTarget": "backend/src/core/domain/components/role.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "createRoleComponent",
+          "oldTarget": "backend/src/game/observation/role-presentation.ts",
+          "newTarget": "backend/src/game/observation/role-presentation.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "createNobleState",
+          "oldTarget": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/noble_secret_body/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "freshNightmareShadowState",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "bindWolfKnifeTargetQuery",
+          "oldTarget": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "createWolfKnifeTargetQuery",
+          "oldTarget": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "WolfKnifeTargetQuery",
+          "oldTarget": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "WolfKnifeRosterQuery",
+          "oldTarget": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "bindMistKnifeTargetQuery",
+          "oldTarget": "backend/src/game/mechanisms/roles/mist_raven/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/mist_raven/ports.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "MistKnifeTargetQuery",
+          "oldTarget": "backend/src/game/mechanisms/roles/mist_raven/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/mist_raven/ports.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "bindNobleKnifeTargetQuery",
+          "oldTarget": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/noble_secret_body/ports.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "bindEvilKnightKnifeTargetQuery",
+          "oldTarget": "backend/src/game/mechanisms/roles/evil_knight/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/evil_knight/ports.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "bindNightmareKnifeTargetQuery",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "beginMistNight",
+          "oldTarget": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "commitMistChoice",
+          "oldTarget": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "abortMistNight",
+          "oldTarget": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/mist_raven/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "bootstrapGame",
+          "oldTarget": "backend/src/app/bootstrap.ts",
+          "newTarget": "backend/src/app/bootstrap.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "parseBoardDefinition",
+          "oldTarget": "backend/src/runtime/config/board_definition.ts",
+          "newTarget": "backend/src/runtime/config/board_definition.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "createRandom",
+          "oldTarget": "backend/src/core/domain/random.ts",
+          "newTarget": "backend/src/core/domain/random.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "mistDefinition",
+          "oldTarget": "configs.example/boards/awa_mist_raven_12_v1.json",
+          "newTarget": "configs.example/boards/awa_mist_raven_12_v1.json",
+          "typeOnly": false
+        }
+      ],
+      "removed": [],
+      "added": []
+    },
+    {
+      "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+      "retained": [
+        {
+          "local": "expect",
+          "typeOnly": false
+        },
+        {
+          "local": "test",
+          "typeOnly": false
+        },
+        {
+          "local": "Camp",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "Role",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "CupidState",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/role-state-data.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "MagicianState",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/role-state-data.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "ModifierState",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/role-state-data.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "createRoleComponent",
+          "oldTarget": "backend/src/game/observation/role-presentation.ts",
+          "newTarget": "backend/src/game/observation/role-presentation.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "RoleInitializationComponent",
+          "oldTarget": "backend/src/game/mechanisms/roles/contracts.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/contracts.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "getCupidState",
+          "oldTarget": "backend/src/game/mechanisms/roles/cupid/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/cupid/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getHybridState",
+          "oldTarget": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getWildChildState",
+          "oldTarget": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/wild_child/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getThiefState",
+          "oldTarget": "backend/src/game/mechanisms/roles/thief/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/thief/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getShapeshifterState",
+          "oldTarget": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getDebaterState",
+          "oldTarget": "backend/src/game/mechanisms/roles/debater/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/debater/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getEvilKnightState",
+          "oldTarget": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getNightmareShadowState",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getMagicianState",
+          "oldTarget": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectMagicianState",
+          "oldTarget": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getTricksterState",
+          "oldTarget": "backend/src/game/mechanisms/roles/trickster/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/trickster/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getWolfSorcererState",
+          "oldTarget": "backend/src/game/mechanisms/roles/wolf_sorcerer/state-slot.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/wolf_sorcerer/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getTimeConsortState",
+          "oldTarget": "backend/src/game/mechanisms/roles/time_wolf_consort/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/time_wolf_consort/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "scholarMentorStateForRole",
+          "oldTarget": "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/scholar_mentor/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "readModifierState",
+          "oldTarget": "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/scholar_mentor/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getLonelyGirlState",
+          "oldTarget": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/lonely_girl/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getRedMoonState",
+          "oldTarget": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+          "typeOnly": false
+        }
+      ],
+      "removed": [],
+      "added": []
+    },
+    {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "retained": [
+        {
+          "local": "getWhiteWolfKingState",
+          "oldTarget": "backend/src/game/mechanisms/roles/white_wolf_king/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/white_wolf_king/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "isAnimalDreamBoard",
+          "oldTarget": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/animal_dream/authority.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "animalFoxKnowledge",
+          "oldTarget": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "animalPufferKnowledge",
+          "oldTarget": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "animalCatKnowledge",
+          "oldTarget": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "animalBeautyKnowledge",
+          "oldTarget": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "animalBearKnowledge",
+          "oldTarget": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/animal_dream/facts.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "isNobleBodyBoard",
+          "oldTarget": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getNobleBodyPlayerState",
+          "oldTarget": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "isFragrantPairBoard",
+          "oldTarget": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "fragrantPlayerKnowledge",
+          "oldTarget": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/fragrant_pair_seer/authority.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectAlchemist",
+          "oldTarget": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectRaven",
+          "oldTarget": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/mist_raven/player_projection.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "readModifierState",
+          "oldTarget": "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/scholar_mentor/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "scholarMentorStateForRole",
+          "oldTarget": "backend/src/game/mechanisms/roles/scholar_mentor/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/scholar_mentor/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectTimeConsortState",
+          "oldTarget": "backend/src/game/mechanisms/roles/time_wolf_consort/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/time_wolf_consort/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectWolfSorcererState",
+          "oldTarget": "backend/src/game/mechanisms/roles/wolf_sorcerer/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/wolf_sorcerer/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectTricksterState",
+          "oldTarget": "backend/src/game/mechanisms/roles/trickster/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/trickster/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectOrderPrinceState",
+          "oldTarget": "backend/src/game/mechanisms/roles/order_prince/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/order_prince/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectMagicianState",
+          "oldTarget": "backend/src/game/mechanisms/roles/magician/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/magician/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectRedMoonState",
+          "oldTarget": "backend/src/game/mechanisms/roles/red_moon_apostle/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/red_moon_apostle/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectNightmareShadowState",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectEvilKnightState",
+          "oldTarget": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/evil_knight/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectDemonHunter",
+          "oldTarget": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/demon_hunter/authority.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "weddingActorView",
+          "oldTarget": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "weddingBrideState",
+          "oldTarget": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/ghost_bride/authority.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectLonelyGirl",
+          "oldTarget": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/lonely_girl/lifecycle.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectWildChild",
+          "oldTarget": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/wild_child/lifecycle.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectShapeshifterState",
+          "oldTarget": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/shapeshifter/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectShapeshifterChoices",
+          "oldTarget": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/shapeshifter/setup.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectThiefState",
+          "oldTarget": "backend/src/game/mechanisms/roles/thief/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/thief/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectThiefChoices",
+          "oldTarget": "backend/src/game/mechanisms/roles/thief/setup.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/thief/setup.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectWallNote",
+          "oldTarget": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+          "newTarget": "backend/src/game/mechanisms/events/wall_notes/authority.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectBearState",
+          "oldTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectDreamerState",
+          "oldTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectGuardState",
+          "oldTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectHunterState",
+          "oldTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectIdiotState",
+          "oldTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectKnightState",
+          "oldTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectWhiteWolfKingState",
+          "oldTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectWolfBeautyState",
+          "oldTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectWolfKingState",
+          "oldTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "readGravekeeperReport",
+          "oldTarget": "packages/replay-contract/src/index.ts",
+          "newTarget": "packages/replay-contract/src/index.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getBearState",
+          "oldTarget": "backend/src/game/mechanisms/roles/bear/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/bear/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getHiddenWolfState",
+          "oldTarget": "backend/src/game/mechanisms/roles/hidden_wolf/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/hidden_wolf/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "canHiddenWolfKnife",
+          "oldTarget": "backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/hidden_wolf/inheritance.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectRoleInspectionState",
+          "oldTarget": "backend/src/game/mechanisms/roles/abilities.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectSeerState",
+          "oldTarget": "backend/src/game/mechanisms/roles/abilities.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectWitchState",
+          "oldTarget": "backend/src/game/mechanisms/roles/abilities.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getBlackMarketState",
+          "oldTarget": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectBlackMarketState",
+          "oldTarget": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/black_market_merchant/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "allDeathGuns",
+          "oldTarget": "backend/src/game/mechanisms/roles/death_abilities.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/death-gun-lifecycle.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectDeathGun",
+          "oldTarget": "backend/src/game/mechanisms/roles/death_abilities.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/player_state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getGargoyleState",
+          "oldTarget": "backend/src/game/mechanisms/roles/gargoyle/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/gargoyle/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getRoleInspectionState",
+          "oldTarget": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "canGargoyleKnife",
+          "oldTarget": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/gargoyle/inheritance.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getMechanicalState",
+          "oldTarget": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectMechanicalState",
+          "oldTarget": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/mechanical_wolf/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getAwakenedState",
+          "oldTarget": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectAwakenedState",
+          "oldTarget": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "ownNightActions",
+          "oldTarget": "backend/src/game/mechanisms/roles/night_action_history.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/night_action_history.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getDebaterState",
+          "oldTarget": "backend/src/game/mechanisms/roles/debater/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/debater/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectDebaterState",
+          "oldTarget": "backend/src/game/mechanisms/roles/debater/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/debater/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "hasDebateCommit",
+          "oldTarget": "backend/src/game/mechanisms/roles/debater/authority.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/debater/authority.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "debateVoteBlocked",
+          "oldTarget": "backend/src/game/mechanisms/roles/debater/authority.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/debater/authority.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getCupidState",
+          "oldTarget": "backend/src/game/mechanisms/roles/cupid/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/cupid/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectCupidState",
+          "oldTarget": "backend/src/game/mechanisms/roles/cupid/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/cupid/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectLover",
+          "oldTarget": "backend/src/game/mechanisms/roles/cupid/relation.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/cupid/relation.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getHybridState",
+          "oldTarget": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectHybridState",
+          "oldTarget": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/hybrid/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getMerchantState",
+          "oldTarget": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectMerchantState",
+          "oldTarget": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/miracle_merchant/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectEclipseState",
+          "oldTarget": "backend/src/game/mechanisms/roles/radiant_eclipse/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/radiant_eclipse/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "COMPONENT",
+          "oldTarget": "backend/src/core/domain/components/names.ts",
+          "newTarget": "backend/src/core/domain/components/names.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "Camp",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "Role",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "ActionRequest",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/index.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "allNightAbilities",
+          "oldTarget": "backend/src/game/mechanisms/index.ts",
+          "newTarget": "backend/src/game/mechanisms/index.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "projectNightAbility",
+          "oldTarget": "backend/src/game/observation/night-ability-projection.ts",
+          "newTarget": "backend/src/game/observation/night-ability-projection.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getGuardState",
+          "oldTarget": "backend/src/game/mechanisms/roles/guard/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/guard/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getHunterState",
+          "oldTarget": "backend/src/game/mechanisms/roles/hunter/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/hunter/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getWolfKingState",
+          "oldTarget": "backend/src/game/mechanisms/roles/wolf_king/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/wolf_king/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getKnightState",
+          "oldTarget": "backend/src/game/mechanisms/roles/knight/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/knight/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getGravekeeperState",
+          "oldTarget": "backend/src/game/mechanisms/roles/gravekeeper/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/gravekeeper/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getDreamerState",
+          "oldTarget": "backend/src/game/mechanisms/roles/dreamer/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/dreamer/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getWolfBeautyState",
+          "oldTarget": "backend/src/game/mechanisms/roles/wolf_beauty/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/wolf_beauty/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getIdiotState",
+          "oldTarget": "backend/src/game/mechanisms/roles/idiot/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/idiot/state.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getWitchState",
+          "oldTarget": "backend/src/game/mechanisms/roles/witch/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/witch/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getSeerState",
+          "oldTarget": "backend/src/game/mechanisms/roles/seer/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/seer/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "freezeObservation",
+          "oldTarget": "backend/src/game/observation/player-observation.ts",
+          "newTarget": "backend/src/game/observation/player-observation.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "PlayerObservation",
+          "oldTarget": "backend/src/game/observation/player-observation.ts",
+          "newTarget": "backend/src/game/observation/player-observation.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "RoleComponent",
+          "oldTarget": "backend/src/core/domain/components/role.ts",
+          "newTarget": "backend/src/core/domain/components/role.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "World",
+          "oldTarget": "backend/src/core/domain/world.ts",
+          "newTarget": "backend/src/core/domain/world.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "EntityId",
+          "oldTarget": "packages/game-contract/src/index.ts",
+          "newTarget": "packages/game-contract/src/identity.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "RoleCatalog",
+          "oldTarget": "backend/src/game/mechanisms/roles/catalog.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/catalog.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "wolfTeamPermissions",
+          "oldTarget": "backend/src/game/mechanisms/roles/wolf_team.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/wolf_team.ts",
+          "typeOnly": false
+        }
+      ],
+      "removed": [],
+      "added": []
+    },
+    {
+      "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+      "retained": [
+        {
+          "local": "nobleBodyChoiceTargets",
+          "oldTarget": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/noble_secret_body/authority.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "shelterTargets",
+          "oldTarget": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "eclipseSwallowTargets",
+          "oldTarget": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "isRadiantEclipseBoard",
+          "oldTarget": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/radiant_eclipse/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "nightmareFearTargets",
+          "oldTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "magicianChoiceTargets",
+          "oldTarget": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/magician/night_frame.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "bindWolfKnifeTargetQuery",
+          "oldTarget": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "prohibitsLoversVote",
+          "oldTarget": "backend/src/game/mechanisms/roles/cupid/relation.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/cupid/relation.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "seerTargetAllowed",
+          "oldTarget": "backend/src/game/mechanisms/roles/seer/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/seer/ports.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "guardTargetRepeated",
+          "oldTarget": "backend/src/game/mechanisms/roles/guard/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/guard/ports.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "text",
+          "oldTarget": "packages/game-text/src/index.ts",
+          "newTarget": "packages/game-text/src/index.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "Role",
+          "oldTarget": "backend/src/core/domain/model.ts",
+          "newTarget": "backend/src/core/domain/model.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "ToolName",
+          "oldTarget": "backend/src/core/domain/model.ts",
+          "newTarget": "backend/src/core/domain/model.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "TargetHintContext",
+          "oldTarget": "backend/src/game/mechanisms/llm/contracts.ts",
+          "newTarget": "backend/src/game/mechanisms/llm/contracts.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "TargetHintRegistry",
+          "oldTarget": "backend/src/game/mechanisms/llm/contracts.ts",
+          "newTarget": "backend/src/game/mechanisms/llm/contracts.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "canBeExiled",
+          "oldTarget": "backend/src/game/mechanisms/common/participation.ts",
+          "newTarget": "backend/src/game/mechanisms/common/participation.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "canBeSheriff",
+          "oldTarget": "backend/src/game/mechanisms/common/participation.ts",
+          "newTarget": "backend/src/game/mechanisms/common/participation.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "inspectionRepeats",
+          "oldTarget": "packages/game-contract/src/role-inspection-policy.ts",
+          "newTarget": "packages/game-contract/src/role-inspection-policy.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getRoleInspectionState",
+          "oldTarget": "backend/src/game/mechanisms/roles/role_inspection/ports.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/role_inspection/state-slot.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "COMPONENT",
+          "oldTarget": "backend/src/core/domain/components/names.ts",
+          "newTarget": "backend/src/core/domain/components/names.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "RoleComponent",
+          "oldTarget": "backend/src/core/domain/components/role.ts",
+          "newTarget": "backend/src/core/domain/components/role.ts",
+          "typeOnly": true
+        },
+        {
+          "local": "findNightAbility",
+          "oldTarget": "backend/src/game/mechanisms/roles/abilities.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/abilities.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "luckyTargetAllowed",
+          "oldTarget": "backend/src/game/mechanisms/roles/night_action_history.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/night_action_history.ts",
+          "typeOnly": false
+        },
+        {
+          "local": "getAwakenedState",
+          "oldTarget": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+          "newTarget": "backend/src/game/mechanisms/roles/awakened_hidden_wolf/state.ts",
+          "typeOnly": false
+        }
+      ],
+      "removed": [],
+      "added": []
+    }
+  ],
+  "originalStateBindings": [
+    {
+      "local": "FearActionPolicy",
+      "imported": "FearActionPolicy",
+      "target": "packages/game-contract/src/index.ts",
+      "route": "@ai-werewolf-arena/game-contract",
+      "typeOnly": true
+    },
+    {
+      "local": "NightmareWolfActionPolicy",
+      "imported": "NightmareWolfActionPolicy",
+      "target": "packages/game-contract/src/index.ts",
+      "route": "@ai-werewolf-arena/game-contract",
+      "typeOnly": true
+    },
+    {
+      "local": "NightmareShadowState",
+      "imported": "NightmareShadowState",
+      "target": "packages/game-contract/src/index.ts",
+      "route": "@ai-werewolf-arena/game-contract",
+      "typeOnly": true
+    },
+    {
+      "local": "NightmareShadowReadState",
+      "imported": "NightmareShadowReadState",
+      "target": "packages/game-contract/src/index.ts",
+      "route": "@ai-werewolf-arena/game-contract",
+      "typeOnly": true
+    },
+    {
+      "local": "types",
+      "imported": "types",
+      "route": "node:util",
+      "typeOnly": false
+    },
+    {
+      "local": "COMPONENT",
+      "imported": "COMPONENT",
+      "target": "backend/src/core/domain/components/names.ts",
+      "route": "../../../../core/domain/components/names",
+      "typeOnly": false
+    },
+    {
+      "local": "RoleComponent",
+      "imported": "RoleComponent",
+      "target": "backend/src/core/domain/components/role.ts",
+      "route": "../../../../core/domain/components/role",
+      "typeOnly": true
+    },
+    {
+      "local": "Camp",
+      "imported": "Camp",
+      "target": "backend/src/core/domain/identity.ts",
+      "route": "../../../../core/domain/identity",
+      "typeOnly": false
+    },
+    {
+      "local": "EntityId",
+      "imported": "EntityId",
+      "target": "backend/src/core/domain/identity.ts",
+      "route": "../../../../core/domain/identity",
+      "typeOnly": true
+    },
+    {
+      "local": "World",
+      "imported": "World",
+      "target": "backend/src/core/domain/world.ts",
+      "route": "../../../../core/domain/world",
+      "typeOnly": true
+    }
+  ],
+  "inventory": {
+    "roots": [
+      "backend/src",
+      "backend/tests",
+      "frontend/src",
+      "packages",
+      "tooling"
+    ],
+    "scannedFiles": 1747,
+    "sites": [
+      {
+        "path": "backend/src/game/observation/native-role-presentation-capture.ts",
+        "route": "../mechanisms/roles/nightmare_shadow/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+      },
+      {
+        "path": "backend/src/game/observation/player-observation-projector.ts",
+        "route": "../mechanisms/roles/nightmare_shadow/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+      },
+      {
+        "path": "backend/src/game/engine/phase_pipeline/night_pipeline.ts",
+        "route": "../../mechanisms/roles/nightmare_shadow/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/night-ability-actors.ts",
+        "route": "./nightmare_shadow/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/ports.ts",
+        "route": "../nightmare_shadow/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/wolf/night_stages.ts",
+        "route": "../nightmare_shadow/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+        "route": "./state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+        "route": "./targets",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+        "route": "./state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+        "route": "./targets",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+        "route": "./state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+        "route": "./state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+        "route": "./targets",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts",
+        "route": "./state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_stages.ts",
+        "route": "./state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts"
+      },
+      {
+        "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+        "route": "../roles/nightmare_shadow/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+      },
+      {
+        "path": "backend/src/rulesets/night-readability.ts",
+        "route": "../game/mechanisms/roles/nightmare_shadow/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+      },
+      {
+        "path": "backend/src/rulesets/native-night-failure-policy.ts",
+        "route": "../game/mechanisms/roles/nightmare_shadow/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+      },
+      {
+        "path": "backend/src/rulesets/death-shot-selection.ts",
+        "route": "../game/mechanisms/roles/nightmare_shadow/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+      },
+      {
+        "path": "backend/tests/unit/agents/nightmare-shadow/nightmare-observation.test.ts",
+        "route": "../../../../src/game/mechanisms/roles/nightmare_shadow/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+      },
+      {
+        "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+        "route": "../../../src/game/mechanisms/roles/nightmare_shadow/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+        "route": "../../../src/game/mechanisms/roles/nightmare_shadow/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/wolf-knife-target-query.test.ts",
+        "route": "../../../src/game/mechanisms/roles/nightmare_shadow/state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/wolf-knife-target-query.test.ts",
+        "route": "../../../src/game/mechanisms/roles/nightmare_shadow/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/night-ability-actors.test.ts",
+        "route": "../../../src/game/mechanisms/roles/nightmare_shadow/ports",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts"
+      },
+      {
+        "path": "backend/tests/unit/features/nightmare/frame.test.ts",
+        "route": "../../../../src/game/mechanisms/roles/nightmare_shadow/state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts"
+      },
+      {
+        "path": "backend/tests/unit/features/nightmare/frame.test.ts",
+        "route": "../../../../src/game/mechanisms/roles/nightmare_shadow/targets",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts"
+      },
+      {
+        "path": "backend/tests/unit/features/nightmare/state-slot.test.ts",
+        "route": "../../../../src/game/mechanisms/roles/nightmare_shadow/state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts"
+      },
+      {
+        "path": "backend/tests/unit/features/nightmare/state.test.ts",
+        "route": "../../../../src/game/mechanisms/roles/nightmare_shadow/state-slot",
+        "form": "import/export",
+        "target": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts"
+      }
+    ],
+    "retired": []
+  },
+  "graph": [
+    {
+      "root": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+      "reached": [
+        "backend/src/core/domain/identity.ts",
+        "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts"
+      ],
+      "noFrameProfileOrStageBackEdge": true
+    },
+    {
+      "root": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts",
+      "reached": [
+        "backend/src/core/domain/components/names.ts",
+        "backend/src/core/domain/identity.ts",
+        "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+        "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts"
+      ],
+      "noFrameProfileOrStageBackEdge": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "packages/game-contract/src/role-state-data.ts",
+      "sha256": "e43cbf73ede59fdb70c367dd05808f808ac52211acd46196d63180e8e9956fc0",
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/core/domain/components/alive.ts",
+      "sha256": "c6b681bded926aec1568887887baaff9fff7903a1fd8eba94e0c30f4a246e0a4",
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/core/domain/components/role.ts",
+      "sha256": "2ef9aeddcfec6176d2f3010a055476974d6f00004a9c555bd57fb8306e531d35",
+      "actualGitSame": true
+    },
+    {
+      "path": "backend/src/core/domain/night_effects.ts",
+      "sha256": "0f7c0734ba2585213dbeb11509845efeba4e4afd2c61f27de5cdc84812dcdd97",
+      "actualGitSame": true
+    }
+  ],
+  "summary": {
+    "producerPrograms": 4,
+    "wholeConsumers": 12,
+    "typedNodes": 14162,
+    "wholeMappedOutputs": 32,
+    "oldNamedFunctions": 7
+  },
+  "limits": [
+    "新 SLOT 冻结方法表、thunk／方法调用、独立模块与旧路径退休是明确 API／调用栈／静态加载变化，不保证任意私有反射或 CJS namespace 整导出替换。",
+    "schema 是原 live 字段／历史校验，不是新严格键 schema 或档案 decoder；raw state 与 history 原引用不冻结。",
+    "frame expectedState、生命、roster、窗口和 committed／target 等仍原 owner，槽不另存 shadow 或授租约。",
+    "完整源码逆只适配精确已声明路由／新 API 调用，并由实际 owner 程序展开；不以恢复旧整个 body 代替新程序比较。",
+    "当前五源码根字面库存不涵盖仓外、历史generated或计算加载；有限新 owner 静态闭包是当前传递采样，不宣称全历史 cold 初始化等价。"
+  ]
+}

@@ -9,7 +9,7 @@ import {
   eclipseSwallowTargets,
   isRadiantEclipseBoard,
 } from "../roles/radiant_eclipse/night_frame";
-import { nightmareFearTargets } from "../roles/nightmare_shadow/state";
+import { nightmareFearTargets } from "../roles/nightmare_shadow/ports";
 import { magicianChoiceTargets } from "../roles/magician/night_frame";
 import { bindWolfKnifeTargetQuery } from "../roles/wolf/ports";
 import { prohibitsLoversVote } from "../roles/cupid/relation";

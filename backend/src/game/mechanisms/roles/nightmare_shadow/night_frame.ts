@@ -1,11 +1,10 @@
 /**
- * Owns Nightmare roster and fear bindings for one actual night. Inputs are original native roles
- * and the accepted fear choice; outputs are current fear/knife blocking predicates and recorded
- * choice state. Only the bound roster participates; a replaced component cannot silently reopen
- * the night.
+ * 负责噩梦之影原名单、生命绑定、夜窗口与恐惧效果授权；输入为原角色与已通过目标政策的选择。
+ * 输出是当前恐惧／狼刀阻断查询和原提交结果；仅原名单参与，组件替换不能悄然重开夜。
+ * 数据构造、校验、写入和身份编码归同族状态槽；本 frame 保留 expectedState 更新和夜字段提交顺序。
+ * 失败保留已写前缀，不以玩家投影或恐惧文案替代原生命／能力复验，也不回滚历史或补做关闭。
  */
 import type {
-  NightmareShadowState,
   NightmareShadowReadState,
 } from "@ai-werewolf-arena/game-contract";
 import { COMPONENT } from "../../../../core/domain/components/names";
@@ -23,24 +22,9 @@ import {
   type NightLifeScope,
 } from "../../../../core/domain/night_effects";
 import type { NightAbilityReadView } from "../abilities";
-import { getNightmareShadowState, nightmareFearTargets } from "./state";
+import { getNightmareShadowState, NIGHTMARE_SHADOW_STATE_SLOT } from "./state-slot";
+import { nightmareFearTargets } from "./targets";
 
-function stateIdentity(state: NightmareShadowReadState): string {
-  const history: Array<[number, EntityId | null]> = [];
-  for (let i = 0; i < state.history.length; i++) {
-    const entry = state.history[i]!;
-    history.push([entry.day, entry.targetId]);
-  }
-  return JSON.stringify([
-    state.policy,
-    state.fearActionPolicy,
-    state.wolfActionPolicy,
-    state.packReady,
-    state.lastDay,
-    state.lastTarget,
-    history,
-  ]);
-}
 function authority(ability: NightAbilityReadView): string {
   const state = ability.state as unknown as Record<string, unknown>;
   return JSON.stringify([
@@ -151,7 +135,7 @@ export function installNightmareBoard(world: World): void {
   boards.set(world, {
     actorId: actors[0].id,
     state,
-    expectedState: stateIdentity(state),
+    expectedState: NIGHTMARE_SHADOW_STATE_SLOT.checkpoint.identity(state),
     roster,
     night: null,
   });
@@ -166,7 +150,7 @@ export function assertNightmareRosterCurrent(world: World): void {
     world.entityIds().length !== board.roster.length ||
     board.roster.some((row) => !row.current()) ||
     getNightmareShadowState(world.getComponent(board.actorId, COMPONENT.Role)) !== board.state ||
-    stateIdentity(board.state) !== board.expectedState
+    NIGHTMARE_SHADOW_STATE_SLOT.checkpoint.identity(board.state) !== board.expectedState
   )
     throw new Error("nightmare_roster_revoked");
 }
@@ -222,16 +206,13 @@ export function commitNightmareFear(
   if (targetId !== null && !target) throw new Error("nightmare_fear_target_invalid");
   const wolfBlocked =
     targetId !== null && world.getComponent(targetId, COMPONENT.Role)?.camp === Camp.Wolf;
-  (board.state as Pick<NightmareShadowState, "lastDay">).lastDay = day;
-  (board.state as Pick<NightmareShadowState, "lastTarget">).lastTarget = targetId;
-  (board.state as Pick<NightmareShadowState, "packReady">).packReady = true;
-  Array.prototype.push.call(board.state.history, { day, targetId });
-  board.expectedState = stateIdentity(board.state);
+  NIGHTMARE_SHADOW_STATE_SLOT.allowedWrites.recordFear(() => board.state, day, targetId);
+  board.expectedState = NIGHTMARE_SHADOW_STATE_SLOT.checkpoint.identity(board.state);
   night.committed = true;
   night.target = target;
   night.wolfBlocked = wolfBlocked;
 }
-/** Normal first death preserves this night's silence for the death-action window. */
+/** 原正常首次死亡仍保留本夜禁言供死亡行动窗口使用；复活或生命替换不因此获得续权。 */
 export function nightmareFearBlocks(
   world: World,
   id: EntityId,

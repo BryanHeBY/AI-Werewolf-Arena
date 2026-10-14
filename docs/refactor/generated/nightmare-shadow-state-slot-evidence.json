@@ -1,0 +1,348 @@
+{
+  "schemaVersion": 1,
+  "scope": {
+    "baseCommit": "0cbe610f5e5293d6b3f4d64628fb750759a4a0e4",
+    "source": [
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts",
+        "sha256": "4b06b5e8668829f3018025724139d11ba785d97f0fed012dcdd7b5f2b74a873c"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/profile.ts",
+        "sha256": "7081472fe2cbabe33f450d8f3f3fc76cdf738bacd35922cd535ff3ce35c4e26b"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/ports.ts",
+        "sha256": "c714305c2d02f41be9287636e6c56b5410fd18e3942d2165813117805537be6e"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/night_stages.ts",
+        "sha256": "81e151befd93bfce0d23bcac39dc2177c1a3582ad1c688aec1d08e3dd2865460"
+      },
+      {
+        "path": "backend/tests/unit/features/nightmare/state.test.ts",
+        "sha256": "8e0018af4c01874f41345e404469f08ad0273499c53633728385836e0144e065"
+      },
+      {
+        "path": "backend/tests/unit/features/nightmare/frame.test.ts",
+        "sha256": "075a6e189ebb5d77e7ea55908438c8a63cafad3f5852ab736f54fa4af33eecc0"
+      },
+      {
+        "path": "backend/tests/unit/agents/nightmare-shadow/nightmare-observation.test.ts",
+        "sha256": "4fab5234512465236bb2a0ed1e77bafb22efc7e54930fe43fab1ac25b9a3cac9"
+      },
+      {
+        "path": "backend/tests/unit/engine/feature-player-state-projections.test.ts",
+        "sha256": "03dc4366890eb317ea6733365dd047632c2b2df0f3e91d0fad2b4dbf214e0268"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/wolf-knife-target-query.test.ts",
+        "sha256": "c6d4921f91896f5d95fab1a8bb05674c9970bed62ac1291f05e4edfd45175143"
+      },
+      {
+        "path": "backend/tests/unit/mechanisms/remaining-role-state-read-boundary.test.ts",
+        "sha256": "acf39e259fd35b5248b0ab3ea0b08abd00048be56fca8c1ed1d4eb16091aa00b"
+      },
+      {
+        "path": "backend/src/game/observation/player-observation-projector.ts",
+        "sha256": "b3596f7a8ce53d52ec1e2b263b124edd94ca42b07266995643f9117064e6e175"
+      },
+      {
+        "path": "backend/src/game/mechanisms/llm/target_hint_registry.ts",
+        "sha256": "380b9cd53a5b0ba506366be9def706318ea14a12b2efeb8db8e1245287b95baf"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state-slot.ts",
+        "sha256": "60ee9281b72b51d2d9f1381406d5258926c0c656a9e48c4fb4b4fbe143c8b713"
+      },
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts",
+        "sha256": "303f3e56312911b9231cbcd4e4e6f6b3a51ec472aeeecde29cbcf28403d1f5e9"
+      },
+      {
+        "path": "backend/tests/unit/features/nightmare/state-slot.test.ts",
+        "sha256": "a12988365816a2b99d3a8e286195e9937b434679dd8d052c48d1ad03b5d8e70b"
+      }
+    ],
+    "deleted": [
+      {
+        "path": "backend/src/game/mechanisms/roles/nightmare_shadow/state.ts",
+        "beforeSha256": "a6293977aa3300e0cdb65e8898343638cdc7381bba7c9222ca8632e85b7c92bc",
+        "expectedAbsent": true
+      }
+    ],
+    "counts": {
+      "paths": 16,
+      "present": 15,
+      "deleted": 1,
+      "actualGitBefore": 13,
+      "new": 3,
+      "controls": 4
+    },
+    "sharedWriter": {
+      "path": "backend/src/game/observation/player-observation-projector.ts",
+      "writer": "Root",
+      "delta": "唯一 projectNightmareShadowState import: state→ports",
+      "receipt": "a974c1",
+      "sha256": "b3596f7a8ce53d52ec1e2b263b124edd94ca42b07266995643f9117064e6e175"
+    },
+    "inventoryCorrection": "首区域盘点漏 target_hint_registry.ts；第16路径在写前完整核为固定Git byte相同后只改该import，详before/edits。",
+    "controls": [
+      {
+        "path": "packages/game-contract/src/role-state-data.ts",
+        "sha256": "e43cbf73ede59fdb70c367dd05808f808ac52211acd46196d63180e8e9956fc0",
+        "actualGitSame": true
+      },
+      {
+        "path": "backend/src/core/domain/components/alive.ts",
+        "sha256": "c6b681bded926aec1568887887baaff9fff7903a1fd8eba94e0c30f4a246e0a4",
+        "actualGitSame": true
+      },
+      {
+        "path": "backend/src/core/domain/components/role.ts",
+        "sha256": "2ef9aeddcfec6176d2f3010a055476974d6f00004a9c555bd57fb8306e531d35",
+        "actualGitSame": true
+      },
+      {
+        "path": "backend/src/core/domain/night_effects.ts",
+        "sha256": "0f7c0734ba2585213dbeb11509845efeba4e4afd2c61f27de5cdc84812dcdd97",
+        "actualGitSame": true
+      }
+    ],
+    "scopeLimits": [
+      "只有本族生产、六旧测试路由、新风险unit及Root projector route；不包含并行PM/NP/夜构造/terminal policy WIP。",
+      "原schema字段宽度、玩家数据可变性、状态/history原引用、world目标规则与原window/生命/permit保持。"
+    ],
+    "postFreezeWhitespaceDelta": {
+      "path": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts",
+      "beforeSha256": "1e0fe719821de9ba0e0fe0c925df4892cd410da5ccfdf27365dc8ff19e38c3fd",
+      "afterSha256": "303f3e56312911b9231cbcd4e4e6f6b3a51ec472aeeecde29cbcf28403d1f5e9",
+      "onlyDelta": "删除一个EOF额外LF；原收据按原阶段保留",
+      "bridge": "docs/refactor/generated/nightmare-shadow-state-slot-eof-whitespace-bridge.json",
+      "receipt": {
+        "chunk": "0f940f",
+        "exitCode": 0,
+        "typedNodes": 187,
+        "noncommentLeaves": 205,
+        "wholeRawSameOutputs": 2
+      }
+    }
+  },
+  "scopeSha256": "7d7a91f832074fc9c2c70761b4df1b951078497badc3ded7ffbcda95b2af278d",
+  "documentation": {
+    "path": "docs/refactor/nightmare-shadow-state-slot.md",
+    "sha256": "d65bf1b8676e26db33b2fe416c509c296294dc0605eb553fd1ca4e3f855e5dc4"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-before-verification.json",
+      "sha256": "36f1fad4a5114379913c37344f05b66bfa3f953782abde3116d9432ea7967c34"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-before.json",
+      "sha256": "1cb676346930b6cb78f42d49d71f5b8653cf98e12b3f556577eac9551959ce49"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-edits.json",
+      "sha256": "80b7cc084a76873e86dbaa212c87e17f31cb00030d9bfa57c61bf1278c70c1a7"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-heads-first.json",
+      "sha256": "74b73f44f259ced1d4a40431dfef9496c19e950acaae275ac26d5ca14eba9007"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-heads.ts",
+      "sha256": "b98aea185b10d187f1573d379f8e1c9c76b23e67e84e592b25402c017a427b6a"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-proof-first-output.json",
+      "sha256": "79f89dc1d08276cee99a3d7bd4a479c58d09714c754d5b1c962fc5be0bfd98e4"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-proof-first.cjs",
+      "sha256": "250b462c0ab77818eda6694edc515adb268fb17c9d7dcfb9e33f7644be70e316"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-proof-second-output.json",
+      "sha256": "48a49519d3a5a20a0d14bfd938e4e5383c4ab1fcdc447fca6d8790fa21816ff5"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-proof-second.cjs",
+      "sha256": "f5ec4d5c149e7a74d51751b46a8b45a46823f66d655724f3c820f8bc2bff6329"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-proof-third-output.json",
+      "sha256": "4241d303ce9a6ab6d03b424e31ffa4a93689316d97c8b268bc764b655ffdb8f9"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-proof-third.cjs",
+      "sha256": "f52f65d7c260f57003ad108cc051f44974bf57b78013a6d103ac9c45279f91c2"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-proof.cjs",
+      "sha256": "da1a7d3e479d8c7156e665862facbf51ddacc440217ab2ca4bddae1982ac968a"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-proof.json",
+      "sha256": "409c1abfea3bf742a9439496e8f3dab8d59db3ab7e2f6cbd9a1715bc77d2a488"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-receipts.json",
+      "sha256": "c4e172ed2720d0eeb6982bd7c08057bc50da80c7405f6f5ed769e56827fdde6f"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-scope-final.json",
+      "sha256": "7d7a91f832074fc9c2c70761b4df1b951078497badc3ded7ffbcda95b2af278d"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-types-config.json",
+      "sha256": "560eb6a93b4726ce92758eb5b0a49ba26f9b0bab416d612a2869bd909f0534c5"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-scope-before-eof-whitespace.json",
+      "sha256": "9531f96bf99b23b3b19fdcb24729ff270821c3d256f8bde334fa722ea7296bd7"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-evidence-before-eof-whitespace.json",
+      "sha256": "e358efa4b9086446f26330736aca1919cd338ee3a4c50a6c9ab3344de589805f"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-eof-whitespace-before.json",
+      "sha256": "aabc953b44758e25b7800ee7f875730cbac2697d9244474f5709bef5e7793c29"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-eof-whitespace-bridge.cjs",
+      "sha256": "0c47034f4cff3f20fd7b1e4d606a575770038fb2d760597391bd6a0aa12e6da6"
+    },
+    {
+      "path": "docs/refactor/generated/nightmare-shadow-state-slot-eof-whitespace-bridge.json",
+      "sha256": "5f995f5df8a30ff1bb6872a48a29a6a2a06e5cb40963dd3240367d5bcf63bb7b"
+    }
+  ],
+  "proofSummary": {
+    "producerPrograms": 4,
+    "wholeConsumers": 12,
+    "typedNodes": 14162,
+    "wholeMappedOutputs": 32,
+    "oldNamedFunctions": 7
+  },
+  "receipts": {
+    "newPreparationFailure": {
+      "chunk_id": "741859",
+      "exit_code": 1,
+      "output": "zsh:1: no such file or directory: backend/tests/unit/features/nightmare/state-slot.test.ts\nbun test v1.4.3 (c6da4a4d3)\nThe following filters did not match any test files:\n tests/unit/features/nightmare/state-slot.test.ts\n4825 files were searched [7.00ms]\n0 test cases executed; wrong writer cwd was backend while path included backend prefix."
+    },
+    "newRiskTests": {
+      "chunk_id": "1bb95a",
+      "wall_time_seconds": 1.2318e-05,
+      "exit_code": 0,
+      "original_token_count": 120,
+      "output": "bun test v1.4.3 (c6da4a4d3)\n\ntests/unit/features/nightmare/state-slot.test.ts:\n(pass) nightmare slot initialization reads the original left side before both policy fields [0.31ms]\n(pass) nightmare push callee failure preserves three state writes without history or frame completion [0.88ms]\n(pass) nightmare identity lookup failure retains appended history while the old frame checkpoint revokes [0.29ms]\n\n 3 pass\n 0 fail\n 16 expect() calls\nRan 3 tests across 1 file. [50.00ms]\n"
+    },
+    "originalPreciseFrame": {
+      "chunk_id": "ff1850",
+      "wall_time_seconds": 1.6958e-05,
+      "exit_code": 0,
+      "original_token_count": 63,
+      "output": "bun test v1.4.3 (c6da4a4d3)\n\ntests/unit/features/nightmare/frame.test.ts:\n(pass) first fear precedes pack knowledge and blocks all knife but not identity [1.70ms]\n\n 1 pass\n 10 filtered out\n 0 fail\n 13 expect() calls\nRan 1 test across 1 file. [54.00ms]\n"
+    },
+    "finiteTypes": {
+      "roots": 15,
+      "launch": {
+        "chunk_id": "bc9391",
+        "wall_time_seconds": 1.000794716,
+        "session_id": 53239,
+        "original_token_count": 0,
+        "output": ""
+      },
+      "terminal": {
+        "chunk_id": "5139e9",
+        "wall_time_seconds": 1.0233e-05,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    "heads": {
+      "chunk_id": "791175",
+      "exit_code": 0,
+      "roots": 15,
+      "documentationPaths": 571,
+      "diagnostics": 0,
+      "chinesePresenceFailures": 0
+    },
+    "proof": {
+      "launch": {
+        "chunk_id": "761e75",
+        "session_id": 7269
+      },
+      "terminal": {
+        "chunk_id": "3354a4",
+        "wall_time_seconds": 9.157e-06,
+        "exit_code": 0,
+        "original_token_count": 27,
+        "output": "{\"producerPrograms\":4,\"wholeConsumers\":12,\"typedNodes\":14162,\"wholeMappedOutputs\":32,\"oldNamedFunctions\":7}\n"
+      },
+      "firstFailures": [
+        "5b9355",
+        "9a68f9",
+        "5dff08"
+      ]
+    },
+    "beforeVerification": {
+      "chunk_id": "267192",
+      "exit_code": 0,
+      "actualGitSources": 13,
+      "controls": 4
+    },
+    "distinctSuccess": {
+      "tests": 4,
+      "assertions": 29,
+      "executions": 2
+    },
+    "limits": [
+      "测试文件首次写入路径错误时实际 0 case；正确工作区写入后才运行真实3例。",
+      "所有 greens 无重复执行，finite15 首次即0。",
+      "三个证明工具失败只修比较器：empty after 两处及新旧两侧递归端点；产品未改求绿。"
+    ],
+    "finalEOFFix": {
+      "rootFirstDiffCheck": {
+        "chunk": "8c738c",
+        "exitCode": 2,
+        "finding": "单文件 targets.ts 额外 EOF 空行；无业务问题"
+      },
+      "preciseBridge": {
+        "chunk": "0f940f",
+        "exitCode": 0,
+        "wholeTypedNodes": 187,
+        "noncommentLeaves": 205,
+        "wholeRawSameOutputs": 2
+      },
+      "noRepeatedGreen": true
+    }
+  },
+  "limits": [
+    "只有本族生产、六旧测试路由、新风险unit及Root projector route；不包含并行PM/NP/夜构造/terminal policy WIP。",
+    "原schema字段宽度、玩家数据可变性、状态/history原引用、world目标规则与原window/生命/permit保持。",
+    "新 SLOT 冻结方法表、thunk／方法调用、独立模块与旧路径退休是明确 API／调用栈／静态加载变化，不保证任意私有反射或 CJS namespace 整导出替换。",
+    "schema 是原 live 字段／历史校验，不是新严格键 schema 或档案 decoder；raw state 与 history 原引用不冻结。",
+    "frame expectedState、生命、roster、窗口和 committed／target 等仍原 owner，槽不另存 shadow 或授租约。",
+    "完整源码逆只适配精确已声明路由／新 API 调用，并由实际 owner 程序展开；不以恢复旧整个 body 代替新程序比较。",
+    "当前五源码根字面库存不涵盖仓外、历史generated或计算加载；有限新 owner 静态闭包是当前传递采样，不宣称全历史 cold 初始化等价。"
+  ],
+  "independentReview": "待非作者最终 source／doc／SHA 审；不纳入artifact以避免循环",
+  "postFreezeWhitespaceBridge": {
+    "path": "backend/src/game/mechanisms/roles/nightmare_shadow/targets.ts",
+    "beforeSha256": "1e0fe719821de9ba0e0fe0c925df4892cd410da5ccfdf27365dc8ff19e38c3fd",
+    "afterSha256": "303f3e56312911b9231cbcd4e4e6f6b3a51ec472aeeecde29cbcf28403d1f5e9",
+    "onlyDelta": "删除一个EOF额外LF；原收据按原阶段保留",
+    "bridge": "docs/refactor/generated/nightmare-shadow-state-slot-eof-whitespace-bridge.json",
+    "receipt": {
+      "chunk": "0f940f",
+      "exitCode": 0,
+      "typedNodes": 187,
+      "noncommentLeaves": 205,
+      "wholeRawSameOutputs": 2
+    }
+  }
+}

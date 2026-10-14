@@ -1,0 +1,6 @@
+{
+  "chunkId": "9a68f9",
+  "exitCode": 1,
+  "failure": "AssertionError: backend/tests/unit/features/nightmare/frame.test.ts exact delta; 7487 !== 2",
+  "cause": "same empty-after split for removed target specifier; first fix already preserved type removal and no source behavior changed"
+}

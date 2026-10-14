@@ -1,20 +1,20 @@
 /**
- * Runs the Nightmare fear request before affected native night abilities. Inputs are the
- * captured Nightmare frame and validated fear target; outputs are the committed fear choice and
- * event. Blocking predicates remain in the frame and never arise merely from a model refusal.
+ * 负责在受影响的原生夜能力之前推进噩梦之影恐惧请求；输入是原 frame 与校验后的目标选择。
+ * 输出为原恐惧提交和事件；Provider 等待前后及提交前按原顺序复验名单、日期与运行窗口。
+ * 阻断资格仍由 frame 持有，不因模型拒绝、玩家状态形状或文案直接产生许可。
  */
 import { COMPONENT } from "../../../../core/domain/components/names";
 import type { RoleComponent } from "../../../../core/domain/components/role";
 import { Phase } from "../../../../core/domain/identity";
 import type { NightStageHandler } from "../../stages/night/contracts";
-import { getNightmareShadowState } from "./state";
+import { getNightmareShadowState } from "./state-slot";
 import {
   assertNightmareRosterCurrent,
   beginNightmareNight,
   commitNightmareFear,
 } from "./night_frame";
 
-/** First native action: no pack identity may be exposed before this commits. */
+/** 原首次原生行动：恐惧成功提交之前不公开狼同伴知识；声明优先级不授予实际库存。 */
 export const NIGHTMARE_FEAR_STAGE: NightStageHandler = {
   id: "nightmare_fear",
   priority: 90,

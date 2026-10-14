@@ -1,0 +1,6 @@
+{
+  "chunkId": "5b9355",
+  "exitCode": 1,
+  "failure": "AssertionError: backend/src/game/mechanisms/roles/nightmare_shadow/night_frame.ts exact delta; 9107 !== 2",
+  "cause": "inverse harness attempted empty-after split for removed pure type specifier; no product change"
+}

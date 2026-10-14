@@ -10,7 +10,7 @@ import { type RoleComponent } from "../../../src/core/domain/components/role";
 import { createRoleComponent } from "../../../src/game/observation/role-presentation";
 
 import { createNobleState } from "../../../src/game/mechanisms/roles/noble_secret_body/state";
-import { freshNightmareShadowState } from "../../../src/game/mechanisms/roles/nightmare_shadow/state";
+import { freshNightmareShadowState } from "../../../src/game/mechanisms/roles/nightmare_shadow/state-slot";
 import {
   bindWolfKnifeTargetQuery,
   createWolfKnifeTargetQuery,
