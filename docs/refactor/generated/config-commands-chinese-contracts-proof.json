@@ -1,0 +1,255 @@
+{
+  "baseCommit": "6714bef448e48dec7d1871d6deb10a0d3d86f06b",
+  "sourceReadySHA256": "181e0d4e4461aef8fce8811db2b080bd5d29ec553006a73f814797a340c43ace",
+  "programs": [
+    {
+      "path": "backend/src/runtime/cli/check_config.ts",
+      "beforeSha256": "d1921d3be5da4240c1a17817101e8a22db27e7afe9b8598fc63669b1999b3029",
+      "sha256": "aba828d185e97a84fe3c84b8c46d9d04176c9dbe519cd93591a3e509c872ccb1",
+      "exactTextEdits": 2,
+      "typedNodes": 294,
+      "nodeArrays": 47,
+      "nonCommentLeaves": 365,
+      "wholeForwardInverse": true,
+      "wholeTypedAndTokenTreeSame": true,
+      "protectedDirectivesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "sha256": "1af3709c4eaee6265207c341fe1870c83e1b5991129c983a9c148e1bca3aa5e5",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "sha256": "5f8491b3f6dece54c10ef9a76a378c21dcda37254bfc04be451be745fed7839b",
+          "wholeRawSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/runtime/cli/config_directory.ts",
+      "beforeSha256": "02596121a0bc79701a409bbee07efd166c39629fc6ac5a9da362f5c2f2d5726d",
+      "sha256": "ee4390fdc6e3d3696260ab7374f622bbf7336d64f783a61a735b48cc0a1c6311",
+      "exactTextEdits": 5,
+      "typedNodes": 41,
+      "nodeArrays": 5,
+      "nonCommentLeaves": 50,
+      "wholeForwardInverse": true,
+      "wholeTypedAndTokenTreeSame": true,
+      "protectedDirectivesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "sha256": "e694aa25dfff31cbd85ea33f13a6828915e0ef3962f9859d689ef2b9d8d1cdcc",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "sha256": "e7135621f90c5d3e38ad53ec992e4149e7eeccbb9115d3de9a4c1890329b1a73",
+          "wholeRawSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/runtime/cli/error_codes.ts",
+      "beforeSha256": "8b39aeffc48ebcd7712ebbff241153ccd9ed21030e5fcf3af18a2cbb18c7345d",
+      "sha256": "94f4e30b84d6a7c5599a4cf1a57346f47b0ea2c970e8a9b13a2620bdd0e37269",
+      "exactTextEdits": 7,
+      "typedNodes": 71,
+      "nodeArrays": 4,
+      "nonCommentLeaves": 130,
+      "wholeForwardInverse": true,
+      "wholeTypedAndTokenTreeSame": true,
+      "protectedDirectivesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "sha256": "f23d91dd08121efd2d3792287a23ed6866258700c243b31fc7fe5bb7b6cc4d52",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "sha256": "231df5a150e0398d9af036689f472c1be4c6188e0daa6c1064231f1f3902674c",
+          "wholeRawSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/runtime/cli/migrate_configs.ts",
+      "beforeSha256": "aa58151bc7efe6b0b9824ac52ad00222ac0917eaa4b4c50989736fcdf229480a",
+      "sha256": "7629359feccf51043ef5cfe50e96e76c16fc92e4d769e9977b231108deee38ff",
+      "exactTextEdits": 6,
+      "typedNodes": 1245,
+      "nodeArrays": 205,
+      "nonCommentLeaves": 1597,
+      "wholeForwardInverse": true,
+      "wholeTypedAndTokenTreeSame": true,
+      "protectedDirectivesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "sha256": "148c39f72b71cef080979c3b8a6e36443ff45fcf51f8116e4c928491c2585b38",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "sha256": "c91fe9ec754eeff49158ee4f4903acc6bd6328054bcf65667a06a27f3e17381b",
+          "wholeRawSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/runtime/config/describe_setup.ts",
+      "beforeSha256": "29fb8ee7da15b00567a77b52c2008dc09695b1933ac4b8bb197b2736ff5b6e61",
+      "sha256": "4597591a3d5536ecc184f7fd8b7b34faf82fe69f7f188d1e8a6ceb9721ddd1c0",
+      "exactTextEdits": 4,
+      "typedNodes": 487,
+      "nodeArrays": 58,
+      "nonCommentLeaves": 580,
+      "wholeForwardInverse": true,
+      "wholeTypedAndTokenTreeSame": true,
+      "protectedDirectivesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "sha256": "9ba0cbb678bc1be2219713d64525de6e29455ed411ddc3ba19f2d88da103f814",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "sha256": "8bb5453129deebffe286673b7ffed195855765164837e65e9d2969042f8de0ba",
+          "wholeRawSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/runtime/config/error_codes.ts",
+      "beforeSha256": "dc9e7abcb4f5c78347547e2c1debd5a2c0a183de943cf276d1c7332114dfc09a",
+      "sha256": "2bb5fb46b6721e73ad172fe3de610d0e74ebd87c824c668506a5f60b7023a5e2",
+      "exactTextEdits": 7,
+      "typedNodes": 293,
+      "nodeArrays": 25,
+      "nonCommentLeaves": 416,
+      "wholeForwardInverse": true,
+      "wholeTypedAndTokenTreeSame": true,
+      "protectedDirectivesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "sha256": "885e68f49eec3749de67baebefb2f7903a5a15f0a2fefbf1a535b39d10cb750c",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "sha256": "e6933d194c768b26feb4101ceaa59c39d151911e10e68cec6a02ada9e8d60028",
+          "wholeRawSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/runtime/config/load_board_override.ts",
+      "beforeSha256": "b68798077ab395fb1392776464c2df6384e175030b72778b69872e38688297fe",
+      "sha256": "a19f8a6724a4400cf16b4a95567bc0de2b4e51b01d7a61fdbcb4cf3df3ffa0d8",
+      "exactTextEdits": 5,
+      "typedNodes": 299,
+      "nodeArrays": 47,
+      "nonCommentLeaves": 353,
+      "wholeForwardInverse": true,
+      "wholeTypedAndTokenTreeSame": true,
+      "protectedDirectivesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "sha256": "0b3600c4b86527fe195f57e6a1d511ab735490e6396483e13b5c004e8a64b938",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "sha256": "d08180775c22bfb0ee53d4868f610fc57df152d06944e7c59c0097dba4d04205",
+          "wholeRawSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/runtime/scenarios/board_config_resolver.ts",
+      "beforeSha256": "239aab3aaeaf0d407dcadd6ff1b9cbb54ef9e71d571481e8017141b587d1d72b",
+      "sha256": "de76a1b2b1b294b08c400f8d9ae08533c3852c3518b5b43e7700e9a32dbd030c",
+      "exactTextEdits": 14,
+      "typedNodes": 2397,
+      "nodeArrays": 402,
+      "nonCommentLeaves": 3077,
+      "wholeForwardInverse": true,
+      "wholeTypedAndTokenTreeSame": true,
+      "protectedDirectivesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "sha256": "e9e48464434b7d10aab63f98498fce68cbaf0f5b07d889be7c3f087a96e61594",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "sha256": "369b8e2c535dda0a76923cb4a8edbe8f5f5faecda47ccb2b3b36dbdf8d6ae342",
+          "wholeRawSame": true
+        }
+      ]
+    },
+    {
+      "path": "backend/src/runtime/scenarios/index.ts",
+      "beforeSha256": "ff8d747458b5ab9dc651a1f5be0638dde8d7fc857597f4abab416192222dfed3",
+      "sha256": "ccfb5521201ed83ab55e13617dfddadafc236353fb8891df096695c50faa1379",
+      "exactTextEdits": 3,
+      "typedNodes": 17,
+      "nodeArrays": 4,
+      "nonCommentLeaves": 22,
+      "wholeForwardInverse": true,
+      "wholeTypedAndTokenTreeSame": true,
+      "protectedDirectivesSame": true,
+      "outputs": [
+        {
+          "module": "ESNext",
+          "sha256": "4aae7110c025d396df5dc2a5a8080af442251ca00d3d94ce10841b4de78b8186",
+          "wholeRawSame": true
+        },
+        {
+          "module": "CommonJS",
+          "sha256": "0ba1f247cf274d61ddafad71614aa2ca335ceee274eb7389c16b38167f8a0e37",
+          "wholeRawSame": true
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/runtime/config/load_config.ts",
+      "sha256": "0b7d0e8f6767b5b641b7946fe8dce543a7a201e15866322123119229aedaca83"
+    },
+    {
+      "path": "backend/src/runtime/config/resolve_game_setup.ts",
+      "sha256": "63d91c220bba4f18f0892f71e2d53459d5804f96dc63b38588b994cee8622bac"
+    },
+    {
+      "path": "backend/src/runtime/cli/display.ts",
+      "sha256": "40c3680eb27f7856ddca4c9d6cfa3a37d51291dd960921c4431979f75d5302c8"
+    },
+    {
+      "path": "backend/src/runtime/config/board_definition.ts",
+      "sha256": "03287c1215eadecc223f8fd6dd245197d83957e0bc80807ae207dec6a5430fbf"
+    },
+    {
+      "path": "backend/src/runtime/config/migrate_board.ts",
+      "sha256": "1b291b5a345bece2f8f5f361b962920f8479dbe90260c6c5ce648d9ddac25a99"
+    }
+  ],
+  "summary": {
+    "sources": 9,
+    "typedNodes": 5144,
+    "nodeArrays": 797,
+    "nonCommentLeaves": 6590,
+    "wholeRawOutputs": 18
+  },
+  "limits": [
+    "只核九个完整源的注释增量、非注释树与移除注释后的整输出；不运行类型、行为、Playwright或全门禁。",
+    "职责真实含义仍需非作者逐源审查；机器文本、协议、类型和历史身份保持。唯一deprecated说明正文按明确中英对照翻译，tag名及语义不变。"
+  ]
+}

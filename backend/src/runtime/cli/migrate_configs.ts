@@ -1,3 +1,8 @@
+/**
+ * 负责旧板子配置的预览、备份及文件发布。输入为显式迁移参数和本地旧文件，输出转换报告或原错误／清理错误集合。
+ * 仅 apply 才创建备份与写文件；逐份转换先完成再批量写，目标冲突、恢复及临时文件归本命令管理。
+ * 配置解析政策归 convertLegacyBoard；不启动游戏、调用模型或迁移 provider／Agent 认证。
+ */
 import { resolveCliConfigDirectory } from "./config_directory";
 import { text, type Locale } from "@ai-werewolf-arena/game-text";
 import { runCli, takeDisplayArguments, type CliDisplayContext } from "./display";
@@ -21,6 +26,7 @@ import { CONFIG_ID_PATTERN } from "../config/board_definition";
 import type { BoardName } from "../scenarios/board_config_resolver";
 
 async function ensureBackup(file: string, original: string): Promise<void> {
+  // 固定备份名只独占创建；已存在时必须与本次原文相同，不能静默覆盖另一轮来源。
   const backup = `${file}.v1.bak`;
   try {
     await writeFile(backup, original, { flag: "wx", mode: 0o600 });
@@ -31,7 +37,7 @@ async function ensureBackup(file: string, original: string): Promise<void> {
   }
 }
 
-/** Publish a complete JSON file; an exclusive target is never removed on collision. */
+/** 完整临时文件关闭后才发布；独占模式的目标冲突不删除别人创建的目标。 */
 async function publishBoard(file: string, content: string, exclusive = false): Promise<void> {
   const temporary = `${file}.${randomUUID()}.tmp`;
   const mode = exclusive ? 0o600 : (await stat(file)).mode & 0o777;
@@ -44,6 +50,7 @@ async function publishBoard(file: string, content: string, exclusive = false): P
     await handle.writeFile(content);
     await handle.close();
     handle = undefined;
+    // 独占新目标用 link，替换已存在目标用 rename；两种写入保持各自原冲突政策。
     if (exclusive) await link(temporary, file);
     else await rename(temporary, file);
   } catch (error) {
@@ -176,12 +183,13 @@ export async function migrateBoards(
     null,
     2,
   );
-  // Validate every conversion before creating backups or replacing any board.
+  // 所有转换均已校验，之后才创建备份并替换板子；预览模式只有读取和报告。
   if (apply) {
     for (const change of changes) await ensureBackup(change.file, change.original);
     const written: typeof changes = [];
     try {
       for (const change of changes) {
+        // 先登记恢复范围再发布，当前这一项即使只完成部分文件操作也在原恢复列表中。
         written.push(change);
         await publishBoard(change.file, change.converted);
       }

@@ -1,5 +1,9 @@
+/**
+ * 负责配置错误的固定代码集合和字段路径裁剪。输入为未知异常，输出白名单代码及可选有限路径。
+ * 仅检查 Error／板子错误的自有数据描述符，不输出冒号后的原异常内容；外来对象查询失败退通用诊断。
+ */
 import { BoardConfigurationError } from "./board_definition";
-/** Only known machine IDs may cross configuration CLI error boundaries. */
+/** 诊断只公开已知机器码，不因一个字符串看起来像命名空间就接受它。 */
 export const CONFIG_ERROR_CODES = [
   "board_config_animal_dream_preset_invalid",
   "board_config_bear_role_required",
@@ -128,12 +132,13 @@ export function configDiagnostic(error: unknown): { code: string; path?: string 
         ? Object.getOwnPropertyDescriptor(error, "fieldPath")?.value
         : undefined;
   } catch {
-    /* Foreign proxies must not break the error-output boundary. */
+    /* 外来 Proxy／描述符查询可能抛错，错误输出仍继续使用已取得的有限字段或通用代码。 */
   }
   const candidate = typeof message === "string" ? message.split(":", 1)[0] : "config_check_failed";
   const code = CONFIG_ERROR_CODES.includes(candidate as ConfigErrorCode)
     ? candidate
     : "config_check_failed";
+  // 只允许已知配置根与有界字段／数字索引；原 message 中的路径、URL 或其它文字不进入返回值。
   const safePath =
     typeof fieldPath === "string" &&
     fieldPath.length <= 160 &&

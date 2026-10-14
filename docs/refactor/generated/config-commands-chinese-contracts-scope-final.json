@@ -1,0 +1,114 @@
+{
+  "baseCommit": "6714bef448e48dec7d1871d6deb10a0d3d86f06b",
+  "source": [
+    {
+      "path": "backend/src/runtime/cli/check_config.ts",
+      "sha256": "aba828d185e97a84fe3c84b8c46d9d04176c9dbe519cd93591a3e509c872ccb1"
+    },
+    {
+      "path": "backend/src/runtime/cli/config_directory.ts",
+      "sha256": "ee4390fdc6e3d3696260ab7374f622bbf7336d64f783a61a735b48cc0a1c6311"
+    },
+    {
+      "path": "backend/src/runtime/cli/error_codes.ts",
+      "sha256": "94f4e30b84d6a7c5599a4cf1a57346f47b0ea2c970e8a9b13a2620bdd0e37269"
+    },
+    {
+      "path": "backend/src/runtime/cli/migrate_configs.ts",
+      "sha256": "7629359feccf51043ef5cfe50e96e76c16fc92e4d769e9977b231108deee38ff"
+    },
+    {
+      "path": "backend/src/runtime/config/describe_setup.ts",
+      "sha256": "4597591a3d5536ecc184f7fd8b7b34faf82fe69f7f188d1e8a6ceb9721ddd1c0"
+    },
+    {
+      "path": "backend/src/runtime/config/error_codes.ts",
+      "sha256": "2bb5fb46b6721e73ad172fe3de610d0e74ebd87c824c668506a5f60b7023a5e2"
+    },
+    {
+      "path": "backend/src/runtime/config/load_board_override.ts",
+      "sha256": "a19f8a6724a4400cf16b4a95567bc0de2b4e51b01d7a61fdbcb4cf3df3ffa0d8"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/board_config_resolver.ts",
+      "sha256": "de76a1b2b1b294b08c400f8d9ae08533c3852c3518b5b43e7700e9a32dbd030c"
+    },
+    {
+      "path": "backend/src/runtime/scenarios/index.ts",
+      "sha256": "ccfb5521201ed83ab55e13617dfddadafc236353fb8891df096695c50faa1379"
+    }
+  ],
+  "deleted": [],
+  "controls": [
+    {
+      "path": "backend/src/runtime/config/load_config.ts",
+      "sha256": "0b7d0e8f6767b5b641b7946fe8dce543a7a201e15866322123119229aedaca83"
+    },
+    {
+      "path": "backend/src/runtime/config/resolve_game_setup.ts",
+      "sha256": "63d91c220bba4f18f0892f71e2d53459d5804f96dc63b38588b994cee8622bac"
+    },
+    {
+      "path": "backend/src/runtime/cli/display.ts",
+      "sha256": "40c3680eb27f7856ddca4c9d6cfa3a37d51291dd960921c4431979f75d5302c8"
+    },
+    {
+      "path": "backend/src/runtime/config/board_definition.ts",
+      "sha256": "03287c1215eadecc223f8fd6dd245197d83957e0bc80807ae207dec6a5430fbf"
+    },
+    {
+      "path": "backend/src/runtime/config/migrate_board.ts",
+      "sha256": "1b291b5a345bece2f8f5f361b962920f8479dbe90260c6c5ce648d9ddac25a99"
+    }
+  ],
+  "document": {
+    "path": "docs/refactor/config-commands-chinese-contracts.md",
+    "sha256": "27d3470c314f0911fe307e19460f1943684237f4f2c8bfc3af3a68a1d719b087"
+  },
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/config-commands-chinese-contracts-before.json",
+      "sha256": "238275d5101cb1b5339309aca6af875b1e82d079366b9a31e51f849f9716e247"
+    },
+    {
+      "path": "docs/refactor/generated/config-commands-chinese-contracts-edits.json",
+      "sha256": "44de3ab13d46d6abdc8af98a305d7a06f636dbde35da3e581c85a9e1002e6f0b"
+    },
+    {
+      "path": "docs/refactor/generated/config-commands-chinese-contracts-heads-output.txt",
+      "sha256": "9654343ae6d4c2acb2a8f07dbf0acc164b1dff6bbcae388cae5c61337d81f19b"
+    },
+    {
+      "path": "docs/refactor/generated/config-commands-chinese-contracts-heads.json",
+      "sha256": "87ffec7a33ae7e1d70abc603e8a6561aa84616d30dbbe30d51a6a9905488be97"
+    },
+    {
+      "path": "docs/refactor/generated/config-commands-chinese-contracts-heads.ts",
+      "sha256": "bb71e147932a534e724ae52bb46ccd7dfd5284730306e7f41a323d94fe9ef585"
+    },
+    {
+      "path": "docs/refactor/generated/config-commands-chinese-contracts-proof-output.txt",
+      "sha256": "a5c643a5a646a32c7a27c31791ed4efa7eb3847086e743b545cf63235b491b35"
+    },
+    {
+      "path": "docs/refactor/generated/config-commands-chinese-contracts-proof.cjs",
+      "sha256": "3e4a87c71fcc44c60425f517d62b5f0a2d3bff1500b2d7a4c26919206a0fb734"
+    },
+    {
+      "path": "docs/refactor/generated/config-commands-chinese-contracts-proof.json",
+      "sha256": "6d4d0678b27de460264b6819ac3ed6ed96a4a54564dfe6ccad552dacb3b61bc5"
+    },
+    {
+      "path": "docs/refactor/generated/config-commands-chinese-contracts-receipts.json",
+      "sha256": "314d0fc7267a631e61c990290dcaa7113d3987d94b2f8ec98cad1dfc75915d45"
+    },
+    {
+      "path": "docs/refactor/generated/config-commands-chinese-contracts-source-ready.json",
+      "sha256": "181e0d4e4461aef8fce8811db2b080bd5d29ec553006a73f814797a340c43ace"
+    }
+  ],
+  "limits": [
+    "纯维护注释与唯一deprecated说明正文翻译；机器tag、类型、API、原代码及所有字符串不变。",
+    "五真实稳定控制，有限形状/完整输出核对不替代语义审查或全仓最终验收。"
+  ]
+}

@@ -1,4 +1,7 @@
-/** Known command failures; arbitrary namespace-shaped exception text is not an output ID. */
+/**
+ * 负责声明命令诊断可公开的固定机器码。输入为命令层待匹配的错误标识，输出字面量候选集合及其静态只读类型。
+ * 仅列已有代码，不按前缀接纳任意异常文字；实际白名单匹配与双语文案由 CLI 显示边界完成。
+ */
 export const COMMAND_ERROR_CODES = [
   "config_migration_usage",
   "reproduction_causal_order_invalid",

@@ -1,3 +1,7 @@
+/**
+ * 负责配置检查命令的装配与有限摘要输出。输入为配置目录、游戏名和显示参数，输出已解析配置摘要或原配置错误。
+ * 依次加载运行配置／板子并解析完整 setup，不创建玩家 Agent、运行对局或写回配置；显式 CLI 语言优先。
+ */
 import { text } from "@ai-werewolf-arena/game-text";
 import { runCli, takeDisplayArguments, type CliDisplayContext } from "./display";
 import { loadRuntimeConfig } from "../config/load_config";
@@ -14,6 +18,7 @@ export async function checkConfig(
   const runtime = await loadRuntimeConfig({ configDir, gameName });
   const board = await loadBoardDefinition(configDir, resolveGameBoard(runtime));
   const setup = resolveGameSetup(runtime, {}, board);
+  // 未显式指定语言才跟随已解析 setup；摘要函数只消费结果，不重复加载配置。
   if (display && !display.explicit) display.locale = setup.context.displayLocale;
   return describeResolvedSetup(setup, display?.locale);
 }

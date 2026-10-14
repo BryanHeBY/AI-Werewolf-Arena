@@ -1,4 +1,7 @@
-/** 将已读取的板子覆盖配置合并为规范化的 BoardConfig。 */
+/**
+ * 负责两个旧内置板子的覆盖层解析与规范化。输入为旧平铺／结构化数据和板子标识，输出覆盖层或合并后的 BoardConfig。
+ * 先按原分支校验，保 default 与板子层优先级；只显式复制已列数组／对象，不作为任意深克隆或版本化板子文件加载器。
+ */
 import { z } from "zod";
 import {
   ActionWindow,
@@ -12,7 +15,7 @@ import { getDefaultConfigNormalizerRegistry } from "../../game/mechanisms";
 import { sixPlayerMvpConfig } from "./six_player_mvp";
 import { twelvePlayerStandardConfig } from "./twelve_player_standard";
 
-/** 已支持的板子标识。 */
+/** 仅此旧兼容解析器的两个标识，不是全部可配置角色／版本化板子的支持目录。 */
 export type BoardName = "six_player_mvp" | "twelve_player_standard";
 type JsonObject = Record<string, unknown>;
 export type BoardOverride = Omit<
@@ -26,6 +29,7 @@ export type BoardOverride = Omit<
   selfDestruct?: NonNullable<BoardConfig["selfDestruct"]>;
 };
 
+/** 旧结构化输入的分区数据；通过 schema 后映射到同一 BoardOverride，不授予执行许可。 */
 type StructuredBoardConfig = {
   board?: {
     size?: number;
@@ -137,7 +141,7 @@ function isJsonObject(value: unknown): value is JsonObject {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-/** 克隆基础板子配置，避免后续 merge 污染静态场景常量。 */
+/** 为旧基础板子复制下列可合并容器；未列字段仍按原 spread 引用保留，不承诺通用深克隆。 */
 function cloneBoardConfig(config: BoardConfig): BoardConfig {
   return {
     ...config,
@@ -400,6 +404,7 @@ function parseStructuredBoardOverride(raw: StructuredBoardConfig): BoardOverride
 
 /** 统一解析“单个配置块”成覆盖层（兼容新旧两种结构）。 */
 function toBoardOverride(value: unknown): BoardOverride | null {
+  // 先识别平铺再识别结构化；命中一种后按其严格字段集合验证，不在失败后换分支求通过。
   if (isBoardOverrideShape(value)) {
     validateOverride(flatOverride, value);
     return value as BoardOverride;
@@ -442,6 +447,7 @@ export function parseBoardOverride(raw: unknown, board: BoardName): BoardOverrid
     }
   }
 
+  // boards 内目标优先，并仅在该分支叠加 default；根级同名板子的原分支不叠加 default。
   const boardsEntry = isJsonObject(raw.boards) ? raw.boards[board] : undefined;
   const boardOverride = toBoardOverride(boardsEntry);
   if (boardOverride) {
