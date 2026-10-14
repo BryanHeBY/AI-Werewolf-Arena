@@ -840,3 +840,6 @@
 
 
 - C23 馥郁双生开局完整贡献：四源把原PM ctor完整7行config门控／两角色现场查询／原authority安装归既有game-setup同步贡献，PM仍bind→compile→assignconfig→此原点→faultplan／系统／初始facts；原world构造参数与events晚读thunk、callee/三World/一events/两index先后保，首失败阻后构造不新发事实/退款。轻setup-ports exact原binding承接必要跨层路线，authority唯一WeakMap／原全部校验和四stablecontrols字节保持，首夜原四窗口generator不动。Root及非作者actualcef两原Git／十二exact edits／末四源／十八附件双审批准；整PM4926typed6235叶／setup344typed528叶四inverse raw、新实际body40typed52叶两mapped raw同、100retained项只module endpoint不冒递归声明解析，相关3binding明确。new3/11+old默认hunter1/3共四不同14assert；finite4 type76657→90d05b/proof51305b/heads1b25f6(642docs)首次0，不重绿。prefacet authority current96/200保守图无返PM/setup、末全源SHA同加唯一lightedge承接，非fixedcef/cold全图保证；void/boolean及依赖标签精度中文准确，无其它schema/规则/付款或完整55/P9声称，见 fragrant-game-setup.md。
+
+
+- 固定2da71936阶段结构检查：3241实际publicGit原blob/mode/SHA/UTF8/order和642同Gitdocs，完整80,482,708 bytes输入SHA62c8e847/sourceDigestdedcd4，六fixed-current工具和原1779债务SHA297b保；唯一dd1927/session36054→ac870b实际0，0new/242原余债/1537原ID已清，相对固定cdbe清8返0。pureInput66579→43437e／purePartition549156一次各0，Root和非作者完整fixedGit／rawinput／互斥全集／十附件／八实际提交和唯一终态批准，不重门禁/类型/业务。固定树不含后继9a夹具和a3dfa开局贡献，历史623红及其它fixed绿各保；progressive不是strict零债、有效全中文或全55/51/P9验收。剩余原债与完整目标继续，见 architecture-checkpoint-2da71936.md。
