@@ -1,0 +1,420 @@
+{
+  "scope": {
+    "path": "docs/refactor/generated/unused-core-facades-exit-scope-final.json",
+    "sha256": "127dee89e047673e06c9c2ba33e2e1dcd9e68e7bce5892dba658e4c2fc63f9ff"
+  },
+  "document": {
+    "path": "docs/refactor/unused-core-facades-exit.md",
+    "sha256": "c26bba930e00e37e6e614553e677909c99106943d602ae1ea2bb8468c7ad5328"
+  },
+  "baseCommit": "64479b4c39da619ce0e7b3817e78e0e8b792c6a0",
+  "source": [
+    {
+      "path": "backend/src/core/domain/index.ts",
+      "sha256": "05b54e501f1db432cf60b80ca5867837c43fdba2826a3586b9b163c7ecab3ed6"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/core/domain/registries/phase_registry.ts",
+      "beforeSHA256": "5dd6c3ed1e35eb255c0f7e5a97ffb01db13c7d5fcac3c8bab82d6eb7bd9666c2",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/core/domain/systems/win_condition_system.ts",
+      "beforeSHA256": "d8cf26cbd15c04678252614ce4021c73a9d11f28348e6867dc194c3694cfd57a",
+      "expectedAbsent": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/core/index.ts",
+      "sha256": "c7919f26fdfe328bff60859222cc5777380ceea90a49da16e339c10a45c866a7"
+    },
+    {
+      "path": "backend/src/index.ts",
+      "sha256": "17df87affc972717b1574a562dad1b35ede3f297f55ce5269c8abfbf02d76a4f"
+    },
+    {
+      "path": "backend/src/core/domain/registries/condition_registry.ts",
+      "sha256": "ef775732af1cb62499b50c664460519460bbb7e7440bd5b07ca5e00d2afbe772"
+    },
+    {
+      "path": "tooling/refactor/trace-game.ts",
+      "sha256": "ade9e879a4229a40ce8053057ad69912c2e1f1debc053c8af63fc8643d1d33ca"
+    },
+    {
+      "path": "backend/src/recording/engine-fingerprint.ts",
+      "sha256": "7b6f145f6386172ba6ae5ea85ab79759a5a27d5c9398643db8f06b7404194933"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-audit-first.cjs",
+      "sha256": "6fa9dc1eb3abdc14532f16d9992fcd4d7a97d0a5387366e23113f0360e9986da"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-audit-output.json",
+      "sha256": "fe5dfa6ceda37f7061317437554517d6515b894ca4ca5d8812f1cc88992308ba"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-audit.cjs",
+      "sha256": "d396ede179a394373330b70ffe8f6828765b766b3b001dd5f993613244dce6bc"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-before.json",
+      "sha256": "27199ad44970c25b36e05da606204a3330b21c9f199fc4d1ed8ba70b4b2233e5"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-consumers.json",
+      "sha256": "027966d83c451ba52470d690449031d43b2ceb9f4c7fcb5e6133c46150c253ff"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-edits.json",
+      "sha256": "7c5a5dbbc9d467fb59adc3c8d03d4355f3cd66bf587059e45917f352bf60ac6d"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-heads-output.txt",
+      "sha256": "7649ce6622d9124b72c7e71cc055a3510dba1d6ac24d0f1bcaccbdf8022168c9"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-heads.json",
+      "sha256": "a1bbab2df70c3db5db612bceb7125aabc6a409acbef0b9953625ef4f3b36d4ea"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-heads.ts",
+      "sha256": "c3f9bdcdf407463d26e46116b2fc7e80eb57989ddf4af8a10b0cd7de83633442"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-proof-first-output.txt",
+      "sha256": "40e77a2cce103fcb5bfec8c90a1201478baeec49eab048a259c194d4a6ed6580"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-proof-first.cjs",
+      "sha256": "a955d3972218275a0b0f61850218434119970dd80c8d142915a2a7257a1848f5"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-proof-output.txt",
+      "sha256": "9fbcb3edf63a6cda0cf3629d519d530ac2c73f48bbc61144e536246f1db09ae6"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-proof.cjs",
+      "sha256": "f3a953425e27790a9b6f9b463175855866f9db0d330afa3ccccac61137b31796"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-proof.json",
+      "sha256": "8ef53fa8a678344c8366b55f3d23054f44b06974442e94dc8df91ff821a9bf7b"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-receipts.json",
+      "sha256": "6e96dfc02a7784c615944a14b1836af7437093088d41d7de9867a2dd588d2967"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-risks.json",
+      "sha256": "6599d9a88947d0427cb0c15e94c59842deaac721fe816db77f8ca1b07fee6b2d"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-source-ready.json",
+      "sha256": "9924d290d26516c824cb79ad406dd1af7839b6e01085d9e834f017ab6e09aad3"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-types-config-first.json",
+      "sha256": "1b3fe09b6ac14b520ac86b3f338c0fac0b197efd6c076471162186e155c13a1e"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-types-config-second.json",
+      "sha256": "fafb1ac7b9cf194741af55c3869c78099e2799335ae6a287b74665f8f7b4c1d0"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-types-config.json",
+      "sha256": "a3a251018a73d7fcbe91d3aa991196bb102dbc34b0edb30ad02ffa69c24e07f9"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-types-first-output.txt",
+      "sha256": "40f343f5bc46d03bbc7ee80aaa503b254384a0b4c18fcddd6cd9c7d2576aa19a"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-types-output.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-types-second-output.txt",
+      "sha256": "eb6ffb9fd0a156120e09e17faa042bdc9263ab852fac6bb0e63945c774ef9d34"
+    },
+    {
+      "path": "docs/refactor/generated/unused-core-facades-exit-doc-precision.json",
+      "sha256": "670b362b6a03a59694f1a8c6f858d8e6a224b5caba0644fff290a6ba3742561f"
+    }
+  ],
+  "checks": {
+    "schemaVersion": 1,
+    "baseCommit": "64479b4c39da619ce0e7b3817e78e0e8b792c6a0",
+    "sourceReady": {
+      "path": "docs/refactor/generated/unused-core-facades-exit-source-ready.json",
+      "sha256": "9924d290d26516c824cb79ad406dd1af7839b6e01085d9e834f017ab6e09aad3"
+    },
+    "source": [
+      {
+        "path": "backend/src/core/domain/index.ts",
+        "sha256": "05b54e501f1db432cf60b80ca5867837c43fdba2826a3586b9b163c7ecab3ed6"
+      }
+    ],
+    "deleted": [
+      {
+        "path": "backend/src/core/domain/registries/phase_registry.ts",
+        "beforeSHA256": "5dd6c3ed1e35eb255c0f7e5a97ffb01db13c7d5fcac3c8bab82d6eb7bd9666c2",
+        "expectedAbsent": true
+      },
+      {
+        "path": "backend/src/core/domain/systems/win_condition_system.ts",
+        "beforeSHA256": "d8cf26cbd15c04678252614ce4021c73a9d11f28348e6867dc194c3694cfd57a",
+        "expectedAbsent": true
+      }
+    ],
+    "runs": [
+      {
+        "key": "type-first",
+        "command": "./backend/node_modules/.bin/tsc --noEmit -p docs/refactor/generated/unused-core-facades-exit-types-config.json > docs/refactor/generated/unused-core-facades-exit-types-output.txt 2>&1",
+        "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+        "terminalChunk": "07d994",
+        "actualExitCode": 2,
+        "source": [
+          {
+            "path": "backend/src/core/domain/index.ts",
+            "sha256": "05b54e501f1db432cf60b80ca5867837c43fdba2826a3586b9b163c7ecab3ed6"
+          }
+        ],
+        "config": {
+          "path": "docs/refactor/generated/unused-core-facades-exit-types-config-first.json",
+          "sha256": "1b3fe09b6ac14b520ac86b3f338c0fac0b197efd6c076471162186e155c13a1e"
+        },
+        "stdout": {
+          "path": "docs/refactor/generated/unused-core-facades-exit-types-first-output.txt",
+          "sha256": "40f343f5bc46d03bbc7ee80aaa503b254384a0b4c18fcddd6cd9c7d2576aa19a"
+        },
+        "interpretation": "配置文件位于 generated 时未定位原 backend ambient 目录；node:util TS2307。生产源码未改。"
+      },
+      {
+        "key": "type-config-second",
+        "command": "./backend/node_modules/.bin/tsc --noEmit -p docs/refactor/generated/unused-core-facades-exit-types-config.json > docs/refactor/generated/unused-core-facades-exit-types-output.txt 2>&1",
+        "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+        "terminalChunk": "829589",
+        "actualExitCode": 2,
+        "source": [
+          {
+            "path": "backend/src/core/domain/index.ts",
+            "sha256": "05b54e501f1db432cf60b80ca5867837c43fdba2826a3586b9b163c7ecab3ed6"
+          }
+        ],
+        "config": {
+          "path": "docs/refactor/generated/unused-core-facades-exit-types-config-second.json",
+          "sha256": "fafb1ac7b9cf194741af55c3869c78099e2799335ae6a287b74665f8f7b4c1d0"
+        },
+        "stdout": {
+          "path": "docs/refactor/generated/unused-core-facades-exit-types-second-output.txt",
+          "sha256": "eb6ffb9fd0a156120e09e17faa042bdc9263ab852fac6bb0e63945c774ef9d34"
+        },
+        "interpretation": "错误扩大 typeRoots 到整个 node_modules，引入七项隐式类型库诊断；保真配置及输出。生产源码未改。"
+      },
+      {
+        "key": "type-final",
+        "command": "./backend/node_modules/.bin/tsc --noEmit -p docs/refactor/generated/unused-core-facades-exit-types-config.json > docs/refactor/generated/unused-core-facades-exit-types-output.txt 2>&1",
+        "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+        "terminalChunk": "61cca8",
+        "actualExitCode": 0,
+        "source": [
+          {
+            "path": "backend/src/core/domain/index.ts",
+            "sha256": "05b54e501f1db432cf60b80ca5867837c43fdba2826a3586b9b163c7ecab3ed6"
+          }
+        ],
+        "config": {
+          "path": "docs/refactor/generated/unused-core-facades-exit-types-config.json",
+          "sha256": "a3a251018a73d7fcbe91d3aa991196bb102dbc34b0edb30ad02ffa69c24e07f9"
+        },
+        "stdout": {
+          "path": "docs/refactor/generated/unused-core-facades-exit-types-output.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "interpretation": "仅同一个失败根：显式原 backend/node_modules/@types（原 node/nock 集合），严格选项与实际入口/依赖保持。"
+      },
+      {
+        "key": "heads-first",
+        "command": "bun --no-env-file docs/refactor/generated/unused-core-facades-exit-heads.ts > docs/refactor/generated/unused-core-facades-exit-heads-output.txt 2>&1",
+        "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+        "terminalChunk": "656bf6",
+        "actualExitCode": 0,
+        "source": [
+          {
+            "path": "backend/src/core/domain/index.ts",
+            "sha256": "05b54e501f1db432cf60b80ca5867837c43fdba2826a3586b9b163c7ecab3ed6"
+          }
+        ],
+        "script": {
+          "path": "docs/refactor/generated/unused-core-facades-exit-heads.ts",
+          "sha256": "c3f9bdcdf407463d26e46116b2fc7e80eb57989ddf4af8a10b0cd7de83633442"
+        },
+        "report": {
+          "path": "docs/refactor/generated/unused-core-facades-exit-heads.json",
+          "sha256": "a1bbab2df70c3db5db612bceb7125aabc6a409acbef0b9953625ef4f3b36d4ea"
+        },
+        "stdout": {
+          "path": "docs/refactor/generated/unused-core-facades-exit-heads-output.txt",
+          "sha256": "7649ce6622d9124b72c7e71cc055a3510dba1d6ac24d0f1bcaccbdf8022168c9"
+        },
+        "sources": 1,
+        "documentationPaths": 714,
+        "diagnostics": 0,
+        "repeated": false
+      },
+      {
+        "key": "proof-first",
+        "command": "bun --no-env-file docs/refactor/generated/unused-core-facades-exit-proof.cjs > docs/refactor/generated/unused-core-facades-exit-proof-output.txt 2>&1",
+        "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+        "terminalChunk": "94d114",
+        "actualExitCode": 1,
+        "source": [
+          {
+            "path": "backend/src/core/domain/index.ts",
+            "sha256": "05b54e501f1db432cf60b80ca5867837c43fdba2826a3586b9b163c7ecab3ed6"
+          }
+        ],
+        "script": {
+          "path": "docs/refactor/generated/unused-core-facades-exit-proof-first.cjs",
+          "sha256": "a955d3972218275a0b0f61850218434119970dd80c8d142915a2a7257a1848f5"
+        },
+        "stdout": {
+          "path": "docs/refactor/generated/unused-core-facades-exit-proof-first-output.txt",
+          "sha256": "40e77a2cce103fcb5bfec8c90a1201478baeec49eab048a259c194d4a6ed6580"
+        },
+        "interpretation": "首工具逆恢复把原空行当唯一邻行锚导致 nonunique_neighbor；只修为完整空白＋下条出口锚，产品未改。"
+      },
+      {
+        "key": "proof-final",
+        "command": "bun --no-env-file docs/refactor/generated/unused-core-facades-exit-proof.cjs > docs/refactor/generated/unused-core-facades-exit-proof-output.txt 2>&1",
+        "cwd": "/home/hby/dev/AI-Werewolf-Arena",
+        "terminalChunk": "03e866",
+        "actualExitCode": 0,
+        "source": [
+          {
+            "path": "backend/src/core/domain/index.ts",
+            "sha256": "05b54e501f1db432cf60b80ca5867837c43fdba2826a3586b9b163c7ecab3ed6"
+          }
+        ],
+        "script": {
+          "path": "docs/refactor/generated/unused-core-facades-exit-proof.cjs",
+          "sha256": "f3a953425e27790a9b6f9b463175855866f9db0d330afa3ccccac61137b31796"
+        },
+        "stdout": {
+          "path": "docs/refactor/generated/unused-core-facades-exit-proof-output.txt",
+          "sha256": "9fbcb3edf63a6cda0cf3629d519d530ac2c73f48bbc61144e536246f1db09ae6"
+        },
+        "interpretation": "完整三步正逆、保留出口和实际旧叶转译成功。"
+      }
+    ],
+    "sourceUnchangedAfterReady": true,
+    "behaviorTestsExecuted": 0,
+    "fullTypeCheckExecuted": false,
+    "productionLoaded": false,
+    "coldRunExecuted": false,
+    "architectureGateExecuted": false,
+    "auditPreparation": {
+      "kind": "AST parsing and static Git/source reads only",
+      "productionLoad": false,
+      "typeCheck": false,
+      "emit": false,
+      "tests": false,
+      "architectureCheck": false,
+      "attempts": [
+        {
+          "chunk": "dc1877",
+          "host": "node",
+          "exitCode": 1,
+          "failure": "Audit script accidentally declared exports, colliding with CommonJS wrapper binding; parsing was not reached.",
+          "script": "/tmp/awa-unused-core-facades-exit-audit-first.cjs",
+          "sha256": "6fa9dc1eb3abdc14532f16d9992fcd4d7a97d0a5387366e23113f0360e9986da"
+        },
+        {
+          "chunk": "e71285",
+          "host": "node",
+          "exitCode": 1,
+          "failure": "Node spawnSync Git returned EPERM in the host; no product program was loaded.",
+          "script": "/tmp/awa-unused-core-facades-exit-audit-node-attempt.cjs",
+          "sha256": "d396ede179a394373330b70ffe8f6828765b766b3b001dd5f993613244dce6bc"
+        },
+        {
+          "chunk": "607d69",
+          "host": "bun --no-env-file",
+          "exitCode": 0,
+          "result": "Same corrected audit script parsed current public source. No application modules imported."
+        }
+      ]
+    },
+    "auditProgram": {
+      "path": "docs/refactor/generated/unused-core-facades-exit-audit.cjs",
+      "sha256": "d396ede179a394373330b70ffe8f6828765b766b3b001dd5f993613244dce6bc"
+    },
+    "auditFirstProgram": {
+      "path": "docs/refactor/generated/unused-core-facades-exit-audit-first.cjs",
+      "sha256": "6fa9dc1eb3abdc14532f16d9992fcd4d7a97d0a5387366e23113f0360e9986da"
+    },
+    "auditResult": {
+      "path": "docs/refactor/generated/unused-core-facades-exit-audit-output.json",
+      "sha256": "fe5dfa6ceda37f7061317437554517d6515b894ca4ca5d8812f1cc88992308ba"
+    },
+    "proofSummary": {
+      "exactEdits": 3,
+      "completeTreeInverse": {
+        "nodesBothSides": 112,
+        "nodeArraysBothSides": 6,
+        "leavesBothSides": 54
+      },
+      "nonCommentTokensBothSides": 244,
+      "retainedExportClauses": 21,
+      "entryActualRawSame": [
+        false,
+        false
+      ],
+      "entryInverseRawSame": [
+        true,
+        true
+      ],
+      "oldLeafActualTranspiles": 4
+    },
+    "limits": [
+      "失败阶段均为检查配置或静态工具，未修改产品代码迎合检查。",
+      "没有新增或执行镜像测试，也没有业务、冷加载、全类型或全门禁。",
+      "生成输出和公开API有意变化；不称整个JS/模块初始化环境相同。"
+    ]
+  },
+  "consumerAudit": {
+    "path": "docs/refactor/generated/unused-core-facades-exit-consumers.json",
+    "sha256": "027966d83c451ba52470d690449031d43b2ceb9f4c7fcb5e6133c46150c253ff"
+  },
+  "publicAPIRetirement": {
+    "names": [
+      "PhaseRegistry",
+      "WinConditionSystem"
+    ],
+    "outerBarrelPaths": [
+      "backend/src/core/domain/index.ts",
+      "backend/src/core/index.ts",
+      "backend/src/index.ts"
+    ],
+    "unknownExternalConsumersNotProvenAbsent": true,
+    "intentionallyDifferentAPIAndEntryEmit": true
+  },
+  "limits": [
+    "Actual entry output changes deliberately because two exported public classes and direct module paths retire.",
+    "No production module loading, cold run, behavior tests, full typecheck or architecture gate.",
+    "The tree/token comparison is the complete precise inverse of the one edited barrel, not a claim that API deletion is pure comment or runtime output equal.",
+    "Leaf transpilation establishes only emitted top-level shape; it does not execute or prove arbitrary external reflective compatibility.",
+    "Fingerprint source paths/raw bytes change; archives and strict validators are not rewritten.",
+    "只完成该无消费兼容出口退出，不是 C17／55机制全部验收。",
+    "排除全部 author/root/independent review，避免循环 artifact 摘要。"
+  ],
+  "documentPrecision": {
+    "path": "docs/refactor/generated/unused-core-facades-exit-doc-precision.json",
+    "sha256": "670b362b6a03a59694f1a8c6f858d8e6a224b5caba0644fff290a6ba3742561f"
+  }
+}

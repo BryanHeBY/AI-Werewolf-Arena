@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "64479b4c39da619ce0e7b3817e78e0e8b792c6a0",
+  "source": [
+    {
+      "path": "backend/src/core/domain/index.ts",
+      "sha256": "05b54e501f1db432cf60b80ca5867837c43fdba2826a3586b9b163c7ecab3ed6"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/core/domain/registries/phase_registry.ts",
+      "beforeSHA256": "5dd6c3ed1e35eb255c0f7e5a97ffb01db13c7d5fcac3c8bab82d6eb7bd9666c2",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/core/domain/systems/win_condition_system.ts",
+      "beforeSHA256": "d8cf26cbd15c04678252614ce4021c73a9d11f28348e6867dc194c3694cfd57a",
+      "expectedAbsent": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "backend/src/core/index.ts",
+      "sha256": "c7919f26fdfe328bff60859222cc5777380ceea90a49da16e339c10a45c866a7",
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/index.ts",
+      "sha256": "17df87affc972717b1574a562dad1b35ede3f297f55ce5269c8abfbf02d76a4f",
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/core/domain/registries/condition_registry.ts",
+      "sha256": "ef775732af1cb62499b50c664460519460bbb7e7440bd5b07ca5e00d2afbe772",
+      "currentSame": true
+    },
+    {
+      "path": "tooling/refactor/trace-game.ts",
+      "sha256": "ade9e879a4229a40ce8053057ad69912c2e1f1debc053c8af63fc8643d1d33ca",
+      "currentSame": true
+    },
+    {
+      "path": "backend/src/recording/engine-fingerprint.ts",
+      "sha256": "7b6f145f6386172ba6ae5ea85ab79759a5a27d5c9398643db8f06b7404194933",
+      "currentSame": true
+    }
+  ],
+  "pendingValidation": true,
+  "checksExecuted": [],
+  "scope": "3 source paths: two physical leaves removed; one domain barrel header and two clauses changed. Public named and direct-path API intentionally retired."
+}

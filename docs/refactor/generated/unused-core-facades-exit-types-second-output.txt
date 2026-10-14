@@ -1,0 +1,21 @@
+error TS2688: Cannot find type definition file for '@agentclientprotocol'.
+  The file is in the program because:
+    Entry point for implicit type library '@agentclientprotocol'
+error TS2688: Cannot find type definition file for '@ai-sdk'.
+  The file is in the program because:
+    Entry point for implicit type library '@ai-sdk'
+error TS2688: Cannot find type definition file for '@ai-werewolf-arena'.
+  The file is in the program because:
+    Entry point for implicit type library '@ai-werewolf-arena'
+error TS2688: Cannot find type definition file for '@modelcontextprotocol'.
+  The file is in the program because:
+    Entry point for implicit type library '@modelcontextprotocol'
+error TS2688: Cannot find type definition file for '@types'.
+  The file is in the program because:
+    Entry point for implicit type library '@types'
+error TS2688: Cannot find type definition file for '@typescript-eslint'.
+  The file is in the program because:
+    Entry point for implicit type library '@typescript-eslint'
+error TS2688: Cannot find type definition file for 'tsx'.
+  The file is in the program because:
+    Entry point for implicit type library 'tsx'

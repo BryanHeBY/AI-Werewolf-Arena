@@ -1,0 +1,12 @@
+{
+  "source": [
+    {
+      "path": "backend/src/core/domain/index.ts",
+      "sha256": "05b54e501f1db432cf60b80ca5867837c43fdba2826a3586b9b163c7ecab3ed6"
+    }
+  ],
+  "sourceReadySHA256": "9924d290d26516c824cb79ad406dd1af7839b6e01085d9e834f017ab6e09aad3",
+  "documentationPaths": 714,
+  "diagnostics": [],
+  "chineseHeadFailures": []
+}

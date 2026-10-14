@@ -1,0 +1,40 @@
+{
+  "baseCommit": "64479b4c39da619ce0e7b3817e78e0e8b792c6a0",
+  "scope": {
+    "path": "docs/refactor/generated/unused-core-facades-exit-scope-final.json",
+    "sha256": "127dee89e047673e06c9c2ba33e2e1dcd9e68e7bce5892dba658e4c2fc63f9ff"
+  },
+  "document": {
+    "path": "docs/refactor/unused-core-facades-exit.md",
+    "sha256": "c26bba930e00e37e6e614553e677909c99106943d602ae1ea2bb8468c7ad5328"
+  },
+  "evidence": {
+    "path": "docs/refactor/generated/unused-core-facades-exit-evidence.json",
+    "sha256": "c44a37827379a614e869db6370cf39cbef4d177eed1be8ac1454229a079fb3d3"
+  },
+  "authorReview": {
+    "path": "docs/refactor/generated/unused-core-facades-exit-author-review.json",
+    "sha256": "b3e086f9d67a8930f6101df0f5641e7268fe03bb3cacd235462977a56ead4373"
+  },
+  "source": [
+    {
+      "path": "backend/src/core/domain/index.ts",
+      "sha256": "05b54e501f1db432cf60b80ca5867837c43fdba2826a3586b9b163c7ecab3ed6"
+    }
+  ],
+  "deleted": [
+    {
+      "path": "backend/src/core/domain/registries/phase_registry.ts",
+      "beforeSHA256": "5dd6c3ed1e35eb255c0f7e5a97ffb01db13c7d5fcac3c8bab82d6eb7bd9666c2",
+      "expectedAbsent": true
+    },
+    {
+      "path": "backend/src/core/domain/systems/win_condition_system.ts",
+      "beforeSHA256": "d8cf26cbd15c04678252614ce4021c73a9d11f28348e6867dc194c3694cfd57a",
+      "expectedAbsent": true
+    }
+  ],
+  "frozen": true,
+  "peer": "native_presentation_finish",
+  "next": "独立只读末绑定；Root 负责 stage/commit/progress。"
+}

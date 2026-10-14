@@ -1,0 +1,12 @@
+ 5 | const sha=x=>crypto.createHash('sha256').update(x).digest('hex');
+ 6 | const before=JSON.parse(fs.readFileSync(prefix+'before.json','utf8'));
+ 7 | const edits=JSON.parse(fs.readFileSync(prefix+'edits.json','utf8'));
+ 8 | const ready=JSON.parse(fs.readFileSync(prefix+'source-ready.json','utf8'));
+ 9 | const file='backend/src/core/domain/index.ts',old=before.source.find(x=>x.path===file).text,current=fs.readFileSync(file,'utf8');
+10 | const assert=(ok,label)=>{if(!ok)throw Error(label)};
+                                            ^
+error: nonunique_neighbor
+      at assert (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/unused-core-facades-exit-proof.cjs:10:40)
+      at <anonymous> (/home/hby/dev/AI-Werewolf-Arena/docs/refactor/generated/unused-core-facades-exit-proof.cjs:18:3)
+
+Bun v1.4.3 (Linux x64)
